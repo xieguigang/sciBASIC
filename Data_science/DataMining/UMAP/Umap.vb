@@ -48,7 +48,6 @@
 Imports Microsoft.VisualBasic.Language.Python
 Imports Microsoft.VisualBasic.Math
 Imports stdNum = System.Math
-Imports Parallel = System.Threading.Tasks.Parallel
 
 Public NotInheritable Class Umap
 

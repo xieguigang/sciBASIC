@@ -47,9 +47,6 @@
 
 #End Region
 
-Imports System
-Imports System.Collections.Generic
-Imports System.Linq
 Imports System.Runtime.CompilerServices
 
 Friend NotInheritable Class SparseMatrix
@@ -74,13 +71,14 @@ Friend NotInheritable Class SparseMatrix
 
     Private Sub New(entries As Dictionary(Of RowCol, Single), dims As (Integer, Integer))
         Me.Dims = dims
-        _entries = entries
+        Me._entries = entries
     End Sub
 
     Private Shared Iterator Function Combine(rows As IEnumerable(Of Integer), cols As IEnumerable(Of Integer), values As IEnumerable(Of Single)) As IEnumerable(Of (Integer, Integer, Single))
         Dim rowsArray = rows.ToArray()
         Dim colsArray = cols.ToArray()
         Dim valuesArray = values.ToArray()
+
         If rowsArray.Length <> valuesArray.Length OrElse colsArray.Length <> valuesArray.Length Then
             Throw New ArgumentException($"The input lists {NameOf(rows)}, {NameOf(cols)} and {NameOf(values)} must all have the same number of elements")
         End If
@@ -148,7 +146,9 @@ Friend NotInheritable Class SparseMatrix
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Sub CheckDims(row As Integer, col As Integer)
 #If DEBUG Then
-        If row >= Dims.rows OrElse col >= Dims.cols Then Throw New Exception("array index out of bounds")
+        If row >= Dims.rows OrElse col >= Dims.cols Then
+            Throw New Exception("array index out of bounds")
+        End If
 #End If
     End Sub
 
@@ -217,8 +217,10 @@ Friend NotInheritable Class SparseMatrix
     End Function
 
     ''' <summary>
-    ''' Helper function for getting data, indices, and indptr arrays from a sparse matrix to follow csr matrix conventions. Super inefficient (and kind of defeats the purpose of this convention)
-    ''' but a lot of the ported python tree search logic depends on this data format.
+    ''' Helper function for getting data, indices, and indptr arrays from a sparse matrix 
+    ''' to follow csr matrix conventions. Super inefficient (and kind of defeats the 
+    ''' purpose of this convention) but a lot of the ported python tree search logic depends 
+    ''' on this data format.
     ''' </summary>
     Public Function GetCSR() As (Integer(), Single(), Integer())
         Dim entries As New List(Of (value As Single, row As Integer, col As Integer))()
