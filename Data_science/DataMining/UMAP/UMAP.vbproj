@@ -64,6 +64,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class1.vb" />
+    <Compile Include="OptimizationState.vb" />
     <Compile Include="Components\ProgressReporter.vb" />
     <Compile Include="Components\DefaultRandomGenerator.vb" />
     <Compile Include="Components\Heaps.vb" />
