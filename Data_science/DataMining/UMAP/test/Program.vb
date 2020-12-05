@@ -65,7 +65,7 @@ Namespace Tester
                                       Console.WriteLine(p)
                                   End Sub)
             Console.WriteLine("Initialize fit..")
-            Dim rawMatrix = data.[Select](Function(entry) entry.Vector).ToArray()
+            Dim rawMatrix = data.[Select](Function(entry) entry.Vector.Select(Function(s) CDbl(s)).ToArray).ToArray()
             Dim nEpochs = umap.InitializeFit(rawMatrix)
             Console.WriteLine("- Done")
             Console.WriteLine()
@@ -157,7 +157,7 @@ Namespace Tester
     Public NotInheritable Class LabelledVector
 
         Public UID As String
-        Public Vector As Double()
+        Public Vector As Single()
 
         Sub New()
 
