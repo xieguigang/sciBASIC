@@ -9,7 +9,6 @@ Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization.Reflection
 
 Public Module MsgPackIO
 
-    Private ReadOnly unixEpocUtc As Date = New DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)
     Private Const nullProhibitedExceptionMessage As String = "Null value encountered but is prohibited"
 
     Friend Function ReadNumArrayElements(reader As BinaryReader) As Integer

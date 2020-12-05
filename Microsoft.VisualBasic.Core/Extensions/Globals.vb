@@ -50,6 +50,8 @@ Public Module Globals
     ''' Nothing
     ''' </summary>
     Friend Const null = Nothing
+
     Public Const void As Object = Nothing
+    Public Const unixEpocUtc As Date = #1970/1/1 0:0:0#
 
 End Module
