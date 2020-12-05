@@ -24,7 +24,7 @@ Public NotInheritable Class Umap
     Private ReadOnly _random As IProvideRandomValues
     Private ReadOnly _nNeighbors As Integer
     Private ReadOnly _customNumberOfEpochs As Integer?
-    Private ReadOnly _progressReporter As Umap.ProgressReporter
+    Private ReadOnly _progressReporter As ProgressReporter
 
     ' KNN state (can be precomputed and supplied via initializeFit)
     Private _knnIndices As Integer()() = Nothing
@@ -42,7 +42,7 @@ Public NotInheritable Class Umap
 
     Public Sub New(ByVal Optional distance As DistanceCalculation = Nothing, ByVal Optional random As IProvideRandomValues = Nothing, ByVal Optional dimensions As Integer = 2, ByVal Optional numberOfNeighbors As Integer = 15, ByVal Optional customNumberOfEpochs As Integer? = Nothing, ByVal Optional progressReporter As Umap.Umap.ProgressReporter = Nothing)
         If customNumberOfEpochs IsNot Nothing AndAlso customNumberOfEpochs <= 0 Then Throw New ArgumentOutOfRangeException(NameOf(customNumberOfEpochs), "if non-null then must be a positive value")
-        _distanceFn = If(distance, AddressOf Umap.DistanceFunctions.Cosine)
+        _distanceFn = If(distance, AddressOf DistanceFunctions.Cosine)
         _random = If(random, DefaultRandomGenerator.Instance)
         _nNeighbors = numberOfNeighbors
         _optimizationState = New Umap.OptimizationState With {

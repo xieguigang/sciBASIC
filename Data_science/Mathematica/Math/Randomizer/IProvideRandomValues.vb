@@ -1,5 +1,4 @@
-﻿Imports System
-Imports System.Runtime.CompilerServices
+﻿Imports System.Runtime.CompilerServices
 
 
 Public Interface IProvideRandomValues
@@ -14,16 +13,17 @@ Public Interface IProvideRandomValues
     ''' <summary>
     ''' Fills the elements of a specified array of bytes with random numbers.
     ''' </summary>
-    ''' <paramname="buffer">An array of bytes to contain random numbers.</param>
+    ''' <param name="buffer">An array of bytes to contain random numbers.</param>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Sub NextFloats(ByVal buffer As Single())
 
     ''' <summary>
     ''' Returns a random integer that is within a specified range.
     ''' </summary>
-    ''' <paramname="minValue">The inclusive lower bound of the random number returned.</param>
-    ''' <paramname="maxValue">The exclusive upper bound of the random number returned. maxValue must be greater than or equal to minValue.</param>
-    ''' <returns>A 32-bit signed integer greater than or equal to minValue and less than maxValue; that is, the range of return values includes minValue but not maxValue. If minValue</returns>        '  equals maxValue, minValue is returned.</returns>
+    ''' <param name="minValue">The inclusive lower bound of the random number returned.</param>
+    ''' <param name="maxValue">The exclusive upper bound of the random number returned. maxValue must be greater than or equal to minValue.</param>
+    ''' <returns>A 32-bit signed integer greater than or equal to minValue and less than maxValue; that is, the range of return values includes minValue but not maxValue. If minValue
+    ''' equals maxValue, minValue is returned.</returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Function [Next](ByVal minValue As Integer, ByVal maxValue As Integer) As Integer
 End Interface

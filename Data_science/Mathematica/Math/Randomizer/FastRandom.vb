@@ -109,7 +109,7 @@ Friend Class FastRandom
 
         ' The explicit int cast before the first multiplication gives better performance.
         ' See comments in NextDouble.
-        Return CInt(UMAP.FastRandom.REAL_UNIT_INT * CInt(&H7FFFFFFF And CSharpImpl.__Assign(wField, wField Xor wField >> 19 Xor t Xor t >> 8)) * upperBound)
+        Return CInt(FastRandom.REAL_UNIT_INT * CInt(&H7FFFFFFF And CSharpImpl.__Assign(wField, wField Xor wField >> 19 Xor t Xor t >> 8)) * upperBound)
     End Function
 
     ''' <summary>
@@ -129,12 +129,12 @@ Friend Class FastRandom
 
         If range < 0 Then   ' If range is <0 then an overflow has occured and must resort to using long integer arithmetic instead (slower).
             ' We also must use all 32 bits of precision, instead of the normal 31, which again is slower.
-            Return lowerBound + CInt(UMAP.FastRandom.REAL_UNIT_UINT * CDbl(CSharpImpl.__Assign(wField, wField Xor wField >> 19 Xor t Xor t >> 8)) * (upperBound - CLng(lowerBound)))
+            Return lowerBound + CInt(FastRandom.REAL_UNIT_UINT * CDbl(CSharpImpl.__Assign(wField, wField Xor wField >> 19 Xor t Xor t >> 8)) * (upperBound - CLng(lowerBound)))
         End If
 
         ' 31 bits of precision will suffice if range<=int.MaxValue. This allows us to cast to an int and gain
         ' a little more performance.
-        Return lowerBound + CInt(UMAP.FastRandom.REAL_UNIT_INT * CInt(&H7FFFFFFF And CSharpImpl.__Assign(wField, wField Xor wField >> 19 Xor t Xor t >> 8)) * range)
+        Return lowerBound + CInt(FastRandom.REAL_UNIT_INT * CInt(&H7FFFFFFF And CSharpImpl.__Assign(wField, wField Xor wField >> 19 Xor t Xor t >> 8)) * range)
     End Function
 
     ''' <summary>

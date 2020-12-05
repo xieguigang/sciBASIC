@@ -329,6 +329,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="crandn.vb" />
+    <Compile Include="FastRandom.vb" />
+    <Compile Include="IProvideRandomValues.vb" />
     <Compile Include="Randomizer.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

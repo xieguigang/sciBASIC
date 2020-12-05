@@ -65,9 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DefaultRandomGenerator.vb" />
-    <Compile Include="FastRandom.vb" />
     <Compile Include="Heaps.vb" />
-    <Compile Include="IProvideRandomValues.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -121,6 +119,13 @@
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>math-core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Mathematica\Math\Randomizer\Randomizer.vbproj">
+      <Project>{4e06139a-d524-417f-a980-db3bf534cbdc}</Project>
+      <Name>Randomizer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Components\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
