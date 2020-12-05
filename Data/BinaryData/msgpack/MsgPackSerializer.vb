@@ -1,6 +1,11 @@
 ﻿Imports System.Collections
 Imports System.IO
 Imports System.Reflection
+Imports Microsoft.VisualBasic.Data.IO.MessagePack.Constants
+Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
+Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization.Reflection
+Imports Microsoft.VisualBasic.Language
+Imports TypeInfo = Microsoft.VisualBasic.Data.IO.MessagePack.Serialization.Reflection.TypeInfo
 
 Public Class MsgPackSerializer
 
@@ -58,9 +63,9 @@ Public Class MsgPackSerializer
         Dim result As MsgPackSerializer = Nothing
 
         SyncLock DefaultContext.Serializers
-
             If Not DefaultContext.Serializers.TryGetValue(t, result) Then
-                result = CSharpImpl.__Assign(DefaultContext.Serializers(t), New MsgPackSerializer(t))
+                result = New MsgPackSerializer(t)
+                DefaultContext.Serializers(t) = result
             End If
         End SyncLock
 
@@ -316,9 +321,10 @@ Public Class MsgPackSerializer
 
     Private Sub BuildMap(propertyDefinitions As IList(Of MessagePackMemberDefinition))
         If Not serializedType.IsPrimitive AndAlso serializedType IsNot GetType(String) AndAlso Not IsSerializableGenericCollection(serializedType) Then
+            Dim id As i32 = 1
+
             props = New List(Of SerializableProperty)()
             propsByName = New Dictionary(Of String, SerializableProperty)()
-            Dim id = 1
 
             For Each def In propertyDefinitions
                 Dim prop = serializedType.GetProperty(def.PropertyName)
@@ -332,7 +338,7 @@ Public Class MsgPackSerializer
                 If DefaultContext.SerializationMethod = SerializationMethod.Map Then
                     serializableProp = New SerializableProperty(prop)
                 Else
-                    serializableProp = New SerializableProperty(prop, Math.Min(Threading.Interlocked.Increment(id), id - 1), def.NilImplication)
+                    serializableProp = New SerializableProperty(prop, ++id, def.NilImplication)
                 End If
 
                 If serializableProp IsNot Nothing Then

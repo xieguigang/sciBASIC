@@ -1,4 +1,6 @@
-﻿Public Class SerializationContext
+﻿Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
+
+Public Class SerializationContext
 
     Private _Serializers As Dictionary(Of System.Type, MsgPackSerializer)
 

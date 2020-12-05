@@ -8,9 +8,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{C473D2D3-65B3-0220-32A8-1E0687D9AE6B}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>
-    </RootNamespace>
-    <AssemblyName>msgpack-sharp</AssemblyName>
+    <RootNamespace>Microsoft.VisualBasic.Data.IO.MessagePack</RootNamespace>
+    <AssemblyName>Microsoft.VisualBasic.Data.IO.MessagePack</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.cs</DefaultItemExcludes>
     <TargetFrameworkProfile />

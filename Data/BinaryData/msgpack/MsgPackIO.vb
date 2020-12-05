@@ -3,6 +3,9 @@ Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.InteropServices
 Imports System.Text
+Imports Microsoft.VisualBasic.Data.IO.MessagePack.Constants
+Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
+Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization.Reflection
 
 Public Module MsgPackIO
 
@@ -268,11 +271,11 @@ Public Module MsgPackIO
         Dim v As Byte = reader.ReadByte()
 
         If v = Formats.NIL Then
-            If nilImplication = nilImplication.MemberDefault Then
+            If nilImplication = NilImplication.MemberDefault Then
                 If t.IsValueType Then
                     result = Activator.CreateInstance(t)
                 End If
-            ElseIf nilImplication = nilImplication.Prohibit Then
+            ElseIf nilImplication = NilImplication.Prohibit Then
                 Throw New ApplicationException(nullProhibitedExceptionMessage)
             End If
         End If

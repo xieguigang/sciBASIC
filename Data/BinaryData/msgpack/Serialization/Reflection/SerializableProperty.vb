@@ -12,7 +12,7 @@ Namespace Serialization.Reflection
         Friend Sub New(propInfo As PropertyInfo, Optional sequence As Integer = 0, Optional nilImplication As NilImplication? = Nothing)
             Me.PropInfo = propInfo
             Name = propInfo.Name
-            _nilImplication = If(nilImplication, MsgPack.Serialization.NilImplication.MemberDefault)
+            _nilImplication = If(nilImplication, Serialization.NilImplication.MemberDefault)
             Me.Sequence = sequence
             ValueType = propInfo.PropertyType
             Dim underlyingType = Nullable.GetUnderlyingType(propInfo.PropertyType)
@@ -21,7 +21,7 @@ Namespace Serialization.Reflection
                 ValueType = underlyingType
 
                 If nilImplication.HasValue = False Then
-                    _nilImplication = MsgPack.Serialization.NilImplication.Null
+                    _nilImplication = Serialization.NilImplication.Null
                 End If
             End If
         End Sub
