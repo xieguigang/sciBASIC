@@ -86,7 +86,6 @@
     <Compile Include="SIMD.vb" />
     <Compile Include="SIMDInt.vb" />
     <Compile Include="SparseMatrix.vb" />
-    <Compile Include="ThreadSafeFastRandom.vb" />
     <Compile Include="Tree.vb" />
     <Compile Include="Umap.vb" />
     <Compile Include="Utils.vb" />
