@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::ef17f592af70d240218e88ee5519da50, Data_science\DataMining\UMAP\Components\SparseMatrix\SparseMatrix.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class SparseMatrix
-    ' 
-    '     Properties: Dims
-    ' 
-    '     Constructor: (+3 Overloads) Sub New
-    ' 
-    '     Function: [Get], Add, Combine, ElementWiseWith, GetAll
-    '               GetCols, GetCSR, GetRows, GetValues, (+2 Overloads) Map
-    '               MultiplyScalar, PairwiseMultiply, Subtract, ToArray, Transpose
-    ' 
-    '     Sub: [Set], CheckDims, ForEach
-    ' 
-    ' /********************************************************************************/
+' Class SparseMatrix
+' 
+'     Properties: Dims
+' 
+'     Constructor: (+3 Overloads) Sub New
+' 
+'     Function: [Get], Add, Combine, ElementWiseWith, GetAll
+'               GetCols, GetCSR, GetRows, GetValues, (+2 Overloads) Map
+'               MultiplyScalar, PairwiseMultiply, Subtract, ToArray, Transpose
+' 
+'     Sub: [Set], CheckDims, ForEach
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -52,15 +52,20 @@ Imports System.Runtime.CompilerServices
 Friend NotInheritable Class SparseMatrix
 
     ReadOnly _entries As Dictionary(Of RowCol, Double)
+    ReadOnly _dims As (rows%, cols%)
 
     Public ReadOnly Property Dims As (rows As Integer, cols As Integer)
+        Get
+            Return _dims
+        End Get
+    End Property
 
     Public Sub New(rows As IEnumerable(Of Integer), cols As IEnumerable(Of Integer), values As IEnumerable(Of Double), dims As (Integer, Integer))
         Me.New(SparseMatrix.Combine(rows, cols, values), dims)
     End Sub
 
     Private Sub New(entries As IEnumerable(Of (row As Integer, col As Integer, value As Double)), dims As (rows As Integer, cols As Integer))
-        _Dims = dims
+        _dims = dims
         _entries = New Dictionary(Of RowCol, Double)()
 
         For Each entryIndex In entries.[Select](Function(entry, index) (entry, index))
@@ -74,7 +79,7 @@ Friend NotInheritable Class SparseMatrix
     End Sub
 
     Private Sub New(entries As Dictionary(Of RowCol, Double), dims As (Integer, Integer))
-        _Dims = dims
+        _dims = dims
         _entries = entries
     End Sub
 
@@ -131,7 +136,11 @@ Friend NotInheritable Class SparseMatrix
     End Function
 
     Public Function Map(fn As Func(Of Double, Integer, Integer, Double)) As SparseMatrix
-        Dim newEntries = _entries.ToDictionary(Function(kv) kv.Key, Function(kv) fn(kv.Value, kv.Key.Row, kv.Key.Col))
+        Dim newEntries = _entries.ToDictionary(Function(kv) kv.Key,
+                                               Function(kv)
+                                                   Return fn(kv.Value, kv.Key.Row, kv.Key.Col)
+                                               End Function)
+
         Return New SparseMatrix(newEntries, Dims)
     End Function
 

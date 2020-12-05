@@ -70,12 +70,17 @@ Friend Structure RowCol : Implements IEquatable(Of RowCol)
         End If
     End Function
 
-    Public Overrides Function GetHashCode() As Integer ' Courtesy of https://stackoverflow.com/a/263416/3813189
-        ' BEGIN TODO : Visual Basic does Not support checked statements!
-        Dim hash = 17 ' Overflow is fine, just wrap
+    ''' <summary>
+    ''' Courtesy of https://stackoverflow.com/a/263416/3813189
+    ''' </summary>
+    ''' <returns></returns>
+    Public Overrides Function GetHashCode() As Integer
+        Dim hash = 17
+
+        ' Overflow is fine, just wrap
         hash = hash * 23 + Row
         hash = hash * 23 + Col
+
         Return hash
-        ' End TODO : Visual Basic does Not support checked statements!
     End Function
 End Structure

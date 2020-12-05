@@ -104,9 +104,10 @@ Namespace Tree
         End Function
 
         ''' <summary>
-        ''' Given a set of ``indices`` for data points from ``data``, create a random hyperplane to split the data, returning two arrays indices that fall on either side of the hyperplane. This is
-        ''' the basis for a random projection tree, which simply uses this splitting recursively. This particular split uses euclidean distance to determine the hyperplane and which side each data
-        ''' sample falls on.
+        ''' Given a set of ``indices`` for data points from ``data``, create a random hyperplane to split the data, 
+        ''' returning two arrays indices that fall on either side of the hyperplane. This is the basis for a random 
+        ''' projection tree, which simply uses this splitting recursively. This particular split uses euclidean 
+        ''' distance to determine the hyperplane and which side each data sample falls on.
         ''' </summary>
         Private Function EuclideanRandomProjectionSplit(data As Double()(), indices As Integer(), random As IProvideRandomValues) As (indicesLeft As Integer(), IndicesRight As Integer(), HyperplaneVector As Double(), HyperplaneOffset As Double)
             Dim [dim] = data(0).Length

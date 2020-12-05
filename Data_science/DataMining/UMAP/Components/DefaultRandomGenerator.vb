@@ -50,6 +50,7 @@ Imports Microsoft.VisualBasic.Math
 
 Public NotInheritable Class DefaultRandomGenerator
     Implements IProvideRandomValues
+
     ''' <summary>
     ''' This is the default configuration (it supports the optimization process to be executed on multiple threads)
     ''' </summary>
