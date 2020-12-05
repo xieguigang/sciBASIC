@@ -107,7 +107,7 @@ Namespace Serialization.Reflection
             SerializeValue(PropInfo.GetValue(o, EmptyObjArgs), writer, serializationMethod)
         End Sub
 
-        Friend Sub Deserialize(o As Object, reader As BinaryReader)
+        Friend Sub Deserialize(o As Object, reader As BinaryDataReader)
             Dim val = DeserializeValue(ValueType, reader, _nilImplication)
             Dim safeValue = If(val Is Nothing, Nothing, Convert.ChangeType(val, ValueType))
             PropInfo.SetValue(o, safeValue, EmptyObjArgs)

@@ -45,8 +45,7 @@
 Namespace Serialization
 
     ''' <summary>
-    ''' Mimic the full CLI namespace and naming so that this library can be used
-    ''' as a drop-in replacement and/or linked file with both frameworks as needed.
+    ''' 必须要使用这个自定义属性标记在对象属性上才会被加入序列化之中
     ''' </summary>
     <AttributeUsage(AttributeTargets.Property, AllowMultiple:=False, Inherited:=True)>
     Public Class MessagePackMemberAttribute

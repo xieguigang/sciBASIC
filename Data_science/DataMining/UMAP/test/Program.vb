@@ -48,9 +48,10 @@ Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Text
 Imports System.IO
-Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.IO.MessagePack
+Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 Imports Microsoft.VisualBasic.DataMining.UMAP
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Tester
     Friend Class Program
@@ -133,8 +134,8 @@ Namespace Tester
                         Dim vector = vectorUid.vector
                         Dim uid = vectorUid.UID
 
-                        ' g.FillEllipse(colors(Integer.Parse(uid)), vector.X * width, vector.Y * height, 5, 5)
-                        g.FillEllipse(colors.First, CSng(vector.X * width), CSng(vector.Y * height), 5, 5)
+                        g.FillEllipse(colors(Integer.Parse(uid)), CSng(vector.X * width), CSng(vector.Y * height), 5, 5)
+                        ' g.FillEllipse(colors.First, CSng(vector.X * width), CSng(vector.Y * height), 5, 5)
                     Next
                 End Using
 
@@ -156,12 +157,18 @@ Namespace Tester
 
     Public NotInheritable Class LabelledVector
 
-        Public UID As String
-        Public Vector As Single()
+        <MessagePackMember(0)>
+        Public Property UID As String
+        <MessagePackMember(1)>
+        Public Property Vector As Single()
 
         Sub New()
 
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
     End Class
 End Namespace
 

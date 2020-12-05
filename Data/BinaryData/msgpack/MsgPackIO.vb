@@ -56,7 +56,7 @@ Public Module MsgPackIO
 
     Private Const nullProhibitedExceptionMessage As String = "Null value encountered but is prohibited"
 
-    Friend Function ReadNumArrayElements(reader As BinaryReader) As Integer
+    Friend Function ReadNumArrayElements(reader As BinaryDataReader) As Integer
         Dim header As Byte = reader.ReadByte()
         Dim numElements = -1
 
@@ -64,9 +64,9 @@ Public Module MsgPackIO
             If header >= FixedArray.MIN AndAlso header <= FixedArray.MAX Then
                 numElements = header - FixedArray.MIN
             ElseIf header = Formats.ARRAY_16 Then
-                numElements = (reader.ReadByte() << 8) + reader.ReadByte()
+                numElements = (CInt(reader.ReadByte) << 8) + reader.ReadByte()
             ElseIf header = Formats.ARRAY_32 Then
-                numElements = (reader.ReadByte() << 24) + (reader.ReadByte() << 16) + (reader.ReadByte() << 8) + reader.ReadByte()
+                numElements = (CInt(reader.ReadByte) << 24) + (CInt(reader.ReadByte) << 16) + (CInt(reader.ReadByte) << 8) + reader.ReadByte()
             Else
                 Throw New ApplicationException("The serialized data format is invalid due to an invalid array size specification at offset " & reader.BaseStream.Position)
             End If
@@ -75,7 +75,7 @@ Public Module MsgPackIO
         Return numElements
     End Function
 
-    Friend Sub DeserializeArray(array As Array, numElements As Integer, reader As BinaryReader)
+    Friend Sub DeserializeArray(array As Array, numElements As Integer, reader As BinaryDataReader)
         Dim elementType As Type = array.GetType().GetElementType()
 
         For i = 0 To numElements - 1
@@ -94,9 +94,13 @@ Public Module MsgPackIO
         Next
     End Sub
 
-    Friend Function DeserializeCollection(collection As IList, reader As BinaryReader) As Boolean
+    Friend Function DeserializeCollection(collection As IList, reader As BinaryDataReader) As Boolean
         Dim isNull = True
-        If Not collection.GetType().IsGenericType Then Throw New NotSupportedException("Only generic List<T> lists are supported")
+
+        If Not collection.GetType().IsGenericType Then
+            Throw New NotSupportedException("Only generic List<T> lists are supported")
+        End If
+
         Dim elementType As Type = collection.GetType().GetGenericArguments()(0)
         Dim numElements = ReadNumArrayElements(reader)
 
@@ -122,7 +126,7 @@ Public Module MsgPackIO
         Return isNull
     End Function
 
-    Friend Function DeserializeCollection(collection As IDictionary, reader As BinaryReader, Optional header As Byte? = Nothing) As Boolean
+    Friend Function DeserializeCollection(collection As IDictionary, reader As BinaryDataReader, Optional header As Byte? = Nothing) As Boolean
         Dim isNull = True
         If Not collection.GetType().IsGenericType Then Throw New NotSupportedException("Only generic Dictionary<T,U> dictionaries are supported")
         Dim keyType As Type = collection.GetType().GetGenericArguments()(0)
@@ -135,9 +139,9 @@ Public Module MsgPackIO
             If header >= FixedMap.MIN AndAlso header <= FixedMap.MAX Then
                 numElements = header.Value - FixedMap.MIN
             ElseIf header = Formats.MAP_16 Then
-                numElements = (reader.ReadByte() << 8) + reader.ReadByte()
+                numElements = (CInt(reader.ReadByte) << 8) + reader.ReadByte()
             ElseIf header = Formats.MAP_32 Then
-                numElements = (reader.ReadByte() << 24) + (reader.ReadByte() << 16) + (reader.ReadByte() << 8) + reader.ReadByte()
+                numElements = (CInt(reader.ReadByte) << 24) + (CInt(reader.ReadByte) << 16) + (CInt(reader.ReadByte) << 8) + reader.ReadByte()
             Else
                 Throw New ApplicationException("The serialized data format is invalid due to an invalid map size specification")
             End If
@@ -183,7 +187,7 @@ Public Module MsgPackIO
         Return New TimeSpan(0, 0, 0, 0, value)
     End Function
 
-    Friend Function DeserializeValue(type As Type, reader As BinaryReader, nilImplication As NilImplication) As Object
+    Friend Function DeserializeValue(type As Type, reader As BinaryDataReader, nilImplication As NilImplication) As Object
         Dim result As Object = Nothing
 
         Select Case type
@@ -268,7 +272,7 @@ Public Module MsgPackIO
         Return result
     End Function
 
-    Private Function DeserializeAnyObj(type As Type, reader As BinaryReader, nilImplication As NilImplication) As Object
+    Private Function DeserializeAnyObj(type As Type, reader As BinaryDataReader, nilImplication As NilImplication) As Object
         Dim header As Byte = reader.ReadByte()
         Dim result As Object
 
@@ -325,7 +329,7 @@ Public Module MsgPackIO
         Return result
     End Function
 
-    Private Function DeserializeRichObj(type As Type, reader As BinaryReader, nilImplication As NilImplication) As Object
+    Private Function DeserializeRichObj(type As Type, reader As BinaryDataReader, nilImplication As NilImplication) As Object
         Dim constructorInfo = type.GetConstructor(Type.EmptyTypes)
         Dim result As Object
 
@@ -339,7 +343,7 @@ Public Module MsgPackIO
         Return result
     End Function
 
-    Friend Function ReadHeader(t As Type, reader As BinaryReader, nilImplication As NilImplication, <Out> ByRef result As Object) As Byte
+    Friend Function ReadHeader(t As Type, reader As BinaryDataReader, nilImplication As NilImplication, <Out> ByRef result As Object) As Byte
         result = Nothing
         Dim v As Byte = reader.ReadByte()
 
@@ -356,7 +360,7 @@ Public Module MsgPackIO
         Return v
     End Function
 
-    Friend Function ReadMsgPackBoolean(reader As BinaryReader, nilImplication As NilImplication) As Object
+    Friend Function ReadMsgPackBoolean(reader As BinaryDataReader, nilImplication As NilImplication) As Object
         Dim result As Object = Nothing
         Dim v As Byte = ReadHeader(GetType(Boolean), reader, nilImplication, result)
 
@@ -367,21 +371,28 @@ Public Module MsgPackIO
         Return result
     End Function
 
-    Friend Function ReadMsgPackFloat(reader As BinaryReader, nilImplication As NilImplication, Optional header As Byte = 0) As Object
+    Friend Function ReadMsgPackFloat(reader As BinaryDataReader, nilImplication As NilImplication, Optional header As Byte = 0) As Object
         Dim result As Object = Nothing
         Dim v = If(header = 0, ReadHeader(GetType(Single), reader, nilImplication, result), header)
 
         If v <> Formats.NIL Then
-            If v <> Formats.FLOAT_32 Then Throw New ApplicationException("Serialized data doesn't match type being deserialized to")
+            If v <> Formats.FLOAT_32 Then
+                Throw New ApplicationException("Serialized data doesn't match type being deserialized to")
+            End If
+
             Dim data = reader.ReadBytes(4)
-            If BitConverter.IsLittleEndian Then Array.Reverse(data)
+
+            If BitConverter.IsLittleEndian Then
+                Array.Reverse(data)
+            End If
+
             result = BitConverter.ToSingle(data, 0)
         End If
 
         Return result
     End Function
 
-    Friend Function ReadMsgPackDouble(reader As BinaryReader, nilImplication As NilImplication, Optional header As Byte = 0) As Object
+    Friend Function ReadMsgPackDouble(reader As BinaryDataReader, nilImplication As NilImplication, Optional header As Byte = 0) As Object
         Dim result As Object = Nothing
         Dim v = If(header = 0, ReadHeader(GetType(Double), reader, nilImplication, result), header)
 
@@ -395,7 +406,7 @@ Public Module MsgPackIO
         Return result
     End Function
 
-    Friend Function ReadMsgPackULong(reader As BinaryReader, nilImplication As NilImplication, Optional header As Byte = 0) As Object
+    Friend Function ReadMsgPackULong(reader As BinaryDataReader, nilImplication As NilImplication, Optional header As Byte = 0) As Object
         Dim result As Object = Nothing
         Dim v = If(header = 0, ReadHeader(GetType(ULong), reader, nilImplication, result), header)
 
@@ -407,7 +418,7 @@ Public Module MsgPackIO
         Return result
     End Function
 
-    Friend Function ReadMsgPackInt(reader As BinaryReader, nilImplication As NilImplication, Optional header As Byte = 0) As Object
+    Friend Function ReadMsgPackInt(reader As BinaryDataReader, nilImplication As NilImplication, Optional header As Byte = 0) As Object
         Dim result As Object = Nothing
         Dim v = If(header = 0, ReadHeader(GetType(Long), reader, nilImplication, result), header)
 
@@ -419,11 +430,11 @@ Public Module MsgPackIO
             ElseIf v = Formats.UINT_8 Then
                 result = reader.ReadByte()
             ElseIf v = Formats.UINT_16 Then
-                result = (reader.ReadByte() << 8) + reader.ReadByte()
+                result = (CInt(reader.ReadByte) << 8) + reader.ReadByte()
             ElseIf v = Formats.UINT_32 Then
-                result = CUInt((reader.ReadByte() << 24)) + CUInt((reader.ReadByte() << 16)) + CUInt((reader.ReadByte() << 8)) + CUInt(reader.ReadByte())
+                result = (CInt(reader.ReadByte) << 24) + (CUInt(reader.ReadByte) << 16) + (CUInt(reader.ReadByte) << 8) + CUInt(reader.ReadByte())
             ElseIf v = Formats.UINT_64 Then
-                result = CULng((reader.ReadByte() << 56)) + CULng((reader.ReadByte() << 48)) + CULng((reader.ReadByte() << 40)) + CULng((reader.ReadByte() << 32)) + CULng((reader.ReadByte() << 24)) + CULng((reader.ReadByte() << 16)) + CULng((reader.ReadByte() << 8)) + CULng(reader.ReadByte())
+                result = (CULng(reader.ReadByte) << 56) + (CULng(reader.ReadByte) << 48) + (CULng(reader.ReadByte) << 40) + (CULng(reader.ReadByte) << 32) + (CULng(reader.ReadByte) << 24) + (CULng(reader.ReadByte) << 16) + (CULng(reader.ReadByte) << 8) + CULng(reader.ReadByte())
             ElseIf v = Formats.INT_8 Then
                 result = reader.ReadSByte()
             ElseIf v = Formats.INT_16 Then
@@ -446,7 +457,7 @@ Public Module MsgPackIO
         Return result
     End Function
 
-    Friend Function ReadMsgPackString(reader As BinaryReader, nilImplication As NilImplication, Optional header As Byte = 0) As Object
+    Friend Function ReadMsgPackString(reader As BinaryDataReader, nilImplication As NilImplication, Optional header As Byte = 0) As Object
         Dim result As Object = Nothing
         Dim v = If(header = 0, ReadHeader(GetType(String), reader, nilImplication, result), header)
 
@@ -458,9 +469,9 @@ Public Module MsgPackIO
             ElseIf v = Formats.STR_8 Then
                 length = reader.ReadByte()
             ElseIf v = Formats.STR_16 Then
-                length = (reader.ReadByte() << 8) + reader.ReadByte()
+                length = (CInt(reader.ReadByte) << 8) + reader.ReadByte()
             ElseIf v = Formats.STR_32 Then
-                length = (reader.ReadByte() << 24) + (reader.ReadByte() << 16) + (reader.ReadByte() << 8) + reader.ReadByte()
+                length = (CInt(reader.ReadByte) << 24) + (CInt(reader.ReadByte) << 16) + (CInt(reader.ReadByte) << 8) + reader.ReadByte()
             End If
 
             Dim stringBuffer = reader.ReadBytes(length)

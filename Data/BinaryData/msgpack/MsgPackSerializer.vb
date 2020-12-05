@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::c5de1ab7055f4620f9f733c728da5413, Data\BinaryData\msgpack\MsgPackSerializer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class MsgPackSerializer
-    ' 
-    '     Constructor: (+2 Overloads) Sub New
-    ' 
-    '     Function: (+4 Overloads) Deserialize, (+2 Overloads) DeserializeObject, DeserializeObjectType, GetSerializer, IsGenericDictionary
-    '               IsGenericList, IsSerializableGenericCollection, (+2 Overloads) Serialize, (+2 Overloads) SerializeObject
-    ' 
-    '     Sub: (+2 Overloads) BuildMap, Serialize, SerializeObject
-    ' 
-    ' /********************************************************************************/
+' Class MsgPackSerializer
+' 
+'     Constructor: (+2 Overloads) Sub New
+' 
+'     Function: (+4 Overloads) Deserialize, (+2 Overloads) DeserializeObject, DeserializeObjectType, GetSerializer, IsGenericDictionary
+'               IsGenericList, IsSerializableGenericCollection, (+2 Overloads) Serialize, (+2 Overloads) SerializeObject
+' 
+'     Sub: (+2 Overloads) BuildMap, Serialize, SerializeObject
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -48,6 +48,7 @@ Imports System.Collections
 Imports System.Diagnostics
 Imports System.IO
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.IO.MessagePack.Constants
 Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization
 Imports Microsoft.VisualBasic.Data.IO.MessagePack.Serialization.Reflection
@@ -160,25 +161,13 @@ Public Class MsgPackSerializer
     End Function
 
     Public Shared Function Deserialize(Of T)(buffer As Byte()) As T
-        Using stream As MemoryStream = New MemoryStream(buffer), reader As BinaryReader = New BinaryReader(stream)
-            If GetType(T).IsArray Then
-                Dim list As Type = GetType(List(Of )).MakeGenericType(GetType(T).GetElementType)
-                Dim listObj As IList = DeserializeObjectType(list, reader)
-                Dim array As Array = Array.CreateInstance(GetType(T).GetElementType, listObj.Count)
-                Dim i As i32 = Scan0
-
-                For Each item As Object In listObj
-                    Call array.SetValue(item, ++i)
-                Next
-
-                Return CObj(array)
-            Else
-                Dim o = DeserializeObjectType(GetType(T), reader)
-                Return Convert.ChangeType(o, GetType(T))
-            End If
+        Using stream As MemoryStream = New MemoryStream(buffer), reader As New BinaryDataReader(stream)
+            Dim o = DeserializeObjectType(GetType(T), reader)
+            Return Convert.ChangeType(o, GetType(T))
         End Using
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function Deserialize(t As Type, buffer As Byte()) As Object
         Return Deserialize(t, buffer, 0)
     End Function
@@ -187,7 +176,7 @@ Public Class MsgPackSerializer
         Using stream As MemoryStream = New MemoryStream(buffer)
             stream.Seek(offset, SeekOrigin.Begin)
 
-            Using reader As BinaryReader = New BinaryReader(stream)
+            Using reader As BinaryDataReader = New BinaryDataReader(stream)
                 Dim o = DeserializeObjectType(t, reader)
                 Return Convert.ChangeType(o, t)
             End Using
@@ -200,7 +189,7 @@ Public Class MsgPackSerializer
         Using stream As MemoryStream = New MemoryStream(buffer)
             stream.Seek(offset, SeekOrigin.Begin)
 
-            Using reader As BinaryReader = New BinaryReader(stream)
+            Using reader As BinaryDataReader = New BinaryDataReader(stream)
                 GetSerializer(o.GetType()).Deserialize(o, reader)
                 numRead = CInt(stream.Position)
             End Using
@@ -209,7 +198,7 @@ Public Class MsgPackSerializer
         Return numRead
     End Function
 
-    Friend Shared Function DeserializeObject(o As Object, reader As BinaryReader, Optional nilImplication As NilImplication = NilImplication.MemberDefault) As Object
+    Friend Shared Function DeserializeObject(o As Object, reader As BinaryDataReader, Optional nilImplication As NilImplication = NilImplication.MemberDefault) As Object
         Dim list = TryCast(o, IList)
 
         If list IsNot Nothing Then
@@ -225,7 +214,7 @@ Public Class MsgPackSerializer
         Return GetSerializer(o.GetType()).Deserialize(o, reader)
     End Function
 
-    Friend Shared Function DeserializeObjectType(type As Type, reader As BinaryReader, Optional nilImplication As NilImplication = NilImplication.MemberDefault) As Object
+    Friend Shared Function DeserializeObjectType(type As Type, reader As BinaryDataReader, Optional nilImplication As NilImplication = NilImplication.MemberDefault) As Object
         If type.IsPrimitive OrElse type Is GetType(String) OrElse IsSerializableGenericCollection(type) Then
             Return DeserializeValue(type, reader, nilImplication)
         End If
@@ -239,7 +228,7 @@ Public Class MsgPackSerializer
         End If
     End Function
 
-    Friend Function Deserialize(result As Object, reader As BinaryReader) As Object
+    Friend Function Deserialize(result As Object, reader As BinaryDataReader) As Object
         Dim header As Byte = reader.ReadByte()
 
         If header = Formats.NIL Then
@@ -268,9 +257,9 @@ Public Class MsgPackSerializer
                 If header >= FixedMap.MIN AndAlso header <= FixedMap.MAX Then
                     numElements = header And &HF
                 ElseIf header = Formats.MAP_16 Then
-                    numElements = (reader.ReadByte() << 8) + reader.ReadByte()
+                    numElements = (CInt(reader.ReadByte) << 8) + reader.ReadByte()
                 ElseIf header = Formats.MAP_32 Then
-                    numElements = (reader.ReadByte() << 24) + (reader.ReadByte() << 16) + (reader.ReadByte() << 8) + reader.ReadByte()
+                    numElements = (CInt(reader.ReadByte) << 24) + (CInt(reader.ReadByte) << 16) + (CInt(reader.ReadByte) << 8) + reader.ReadByte()
                 Else
                     Throw New ApplicationException("The serialized map format isn't valid")
                 End If
