@@ -55,6 +55,8 @@ Namespace Math
     ''' 
     ''' @author Jean-Francois Larcher-Pelland
     ''' </summary>
+    ''' 
+    <HideModuleName>
     Public Module MatrixExtensions
 
         ''' <summary>

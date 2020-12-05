@@ -44,7 +44,7 @@ Namespace Math.Correlations
 
     Public Module Scripting
 
-        Public Function GetComputeAPI(name$) As ICorrelation
+        Public Function GetComputeAPI(name As String) As ICorrelation
             Select Case name.ToLower
                 Case "pearson"
                     Return AddressOf Correlations.GetPearson

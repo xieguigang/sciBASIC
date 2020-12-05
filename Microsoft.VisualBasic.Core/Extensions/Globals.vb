@@ -46,5 +46,11 @@ Public Module Globals
     ''' </summary>
     Public Const Scan0 As Integer = 0
 
+    ''' <summary>
+    ''' Nothing
+    ''' </summary>
+    Friend Const null = Nothing
+    Public Const void As Object = Nothing
+
 End Module
 

@@ -48,7 +48,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Math
 
@@ -156,13 +156,13 @@ Namespace Math
 
         <Extension>
         Public Function LogLevels(data As IEnumerable(Of Double), base%, Optional level As Integer = 100) As Integer()
-            Dim logvalues = data.Select(Function(x) sys.Log(x, base)).ToArray
+            Dim logvalues = data.Select(Function(x) stdNum.Log(x, base)).ToArray
             Return logvalues.GenerateMapping(level)
         End Function
 
         <ExportAPI("Ranks.Log2")>
         <Extension> Public Function Log2Ranks(data As IEnumerable(Of Double), Optional Level As Integer = 100) As Integer()
-            Dim log2Value = data.Select(Function(x) sys.Log(x, 2)).ToArray
+            Dim log2Value = data.Select(Function(x) stdNum.Log(x, 2)).ToArray
             Return log2Value.GenerateMapping(Level)
         End Function
 

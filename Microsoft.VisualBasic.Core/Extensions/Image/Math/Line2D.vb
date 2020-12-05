@@ -46,7 +46,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Point2D = System.Drawing.PointF
 Imports stdNum = System.Math
 
 '

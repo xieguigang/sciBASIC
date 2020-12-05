@@ -1363,12 +1363,6 @@ Public Module Extensions
 #End If
 
     ''' <summary>
-    ''' Nothing
-    ''' </summary>
-    Friend Const null = Nothing
-    Public Const void As Object = Nothing
-
-    ''' <summary>
     ''' Remove all of the element in the <paramref name="collection"></paramref> from target <paramref name="List">list</paramref>
     ''' </summary>
     ''' <typeparam name="T"></typeparam>

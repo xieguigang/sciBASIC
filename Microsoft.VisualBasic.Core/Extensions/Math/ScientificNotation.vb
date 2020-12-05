@@ -1,48 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::81dc3bbe4b63f750c4ac4b1effa1ee76, Microsoft.VisualBasic.Core\Extensions\Math\ScientificNotation.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module ScientificNotation
-    ' 
-    '         Function: FormatScientificNotation, PowerLog10, UsingScientificNotation
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module ScientificNotation
+' 
+'         Function: FormatScientificNotation, PowerLog10, UsingScientificNotation
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Runtime.CompilerServices
-Imports System.Text.RegularExpressions
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Math
 
@@ -58,7 +56,7 @@ Namespace Math
         ''' <param name="INF">当位数超过这个值之后将会被判定为非常大或者非常小的一个数</param>
         ''' <returns></returns>
         Public Function PowerLog10(x#, Optional INF% = 5) As Single
-            Dim pow# = sys.Log10(sys.Abs(x))
+            Dim pow# = stdNum.Log10(stdNum.Abs(x))
 
             If pow < -INF Then
                 Return pow
@@ -90,7 +88,7 @@ Namespace Math
                 Return "0"
             End If
 
-            Dim power = Fix(sys.Log10(n))
+            Dim power = Fix(stdNum.Log10(n))
             Dim s = n.ToString.Split("E"c, "e"c).First
             Dim t$() = s.Split("."c)
 
@@ -100,10 +98,10 @@ Namespace Math
 
             If intpower > 0 Then  ' 整数部分不止一个字符长度，即数位大于等于2
                 int = int.First & "." & Mid(int, 1) & t(1)
-                s = sys.Round(Val(int), [decimal])
+                s = stdNum.Round(Val(int), [decimal])
             Else
                 s = int & "." & t(1)
-                s = sys.Round(Val(s), [decimal])
+                s = stdNum.Round(Val(s), [decimal])
             End If
 
             s = s & $"E{power + intpower}"

@@ -66,13 +66,6 @@ Namespace Math
     ''' </summary>
     Public Module NumberGroups
 
-        ''' <summary>
-        ''' The numeric vector model
-        ''' </summary>
-        Public Interface IVector
-            ReadOnly Property Data As Double()
-        End Interface
-
         <Extension>
         Public Function Match(Of T As IVector)(a As IEnumerable(Of T), b As IEnumerable(Of T)) As Double
             Dim target As New List(Of T)(a)
@@ -361,6 +354,13 @@ Namespace Math
             Return list
         End Function
     End Module
+
+    ''' <summary>
+    ''' The numeric vector model
+    ''' </summary>
+    Public Interface IVector
+        ReadOnly Property Data As Double()
+    End Interface
 
     Public Interface INumberTag
         ReadOnly Property Tag As Integer

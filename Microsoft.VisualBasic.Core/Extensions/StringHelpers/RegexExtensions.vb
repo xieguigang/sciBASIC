@@ -54,6 +54,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 
+<HideModuleName>
 Public Module RegexExtensions
 
     ''' <summary>
