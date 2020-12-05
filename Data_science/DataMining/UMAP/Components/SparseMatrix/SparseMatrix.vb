@@ -55,7 +55,7 @@ Friend NotInheritable Class SparseMatrix
 
     Public ReadOnly Property Dims As (rows As Integer, cols As Integer)
 
-    Public Sub New(rows As IEnumerable(Of Integer), cols As IEnumerable(Of Integer), values As IEnumerable(Of Single), dims As (Integer, Integer))
+    Public Sub New(rows As IEnumerable(Of Integer), cols As IEnumerable(Of Integer), values As IEnumerable(Of Double), dims As (Integer, Integer))
         Me.New(SparseMatrix.Combine(rows, cols, values), dims)
     End Sub
 
@@ -78,7 +78,7 @@ Friend NotInheritable Class SparseMatrix
         _entries = entries
     End Sub
 
-    Private Shared Iterator Function Combine(rows As IEnumerable(Of Integer), cols As IEnumerable(Of Integer), values As IEnumerable(Of Single)) As IEnumerable(Of (Integer, Integer, Double))
+    Private Shared Iterator Function Combine(rows As IEnumerable(Of Integer), cols As IEnumerable(Of Integer), values As IEnumerable(Of Double)) As IEnumerable(Of (Integer, Integer, Double))
         Dim rowsArray = rows.ToArray()
         Dim colsArray = cols.ToArray()
         Dim valuesArray = values.ToArray()
@@ -116,21 +116,21 @@ Friend NotInheritable Class SparseMatrix
         Return _entries.Keys.Select(Function(k) k.Col)
     End Function
 
-    Public Function GetValues() As IEnumerable(Of Single)
+    Public Function GetValues() As IEnumerable(Of Double)
         Return _entries.Values
     End Function
 
-    Public Sub ForEach(fn As Action(Of Single, Integer, Integer))
+    Public Sub ForEach(fn As Action(Of Double, Integer, Integer))
         For Each kv In _entries
             fn(kv.Value, kv.Key.Row, kv.Key.Col)
         Next
     End Sub
 
-    Public Function Map(fn As Func(Of Single, Double)) As SparseMatrix
+    Public Function Map(fn As Func(Of Double, Double)) As SparseMatrix
         Return Map(Function(value, row, col) fn(value))
     End Function
 
-    Public Function Map(fn As Func(Of Single, Integer, Integer, Double)) As SparseMatrix
+    Public Function Map(fn As Func(Of Double, Integer, Integer, Double)) As SparseMatrix
         Dim newEntries = _entries.ToDictionary(Function(kv) kv.Key, Function(kv) fn(kv.Value, kv.Key.Row, kv.Key.Col))
         Return New SparseMatrix(newEntries, Dims)
     End Function
@@ -203,7 +203,7 @@ Friend NotInheritable Class SparseMatrix
     ''' <summary>
     ''' Helper function for element-wise operations
     ''' </summary>
-    Private Function ElementWiseWith(other As SparseMatrix, op As Func(Of Single, Double, Double)) As SparseMatrix
+    Private Function ElementWiseWith(other As SparseMatrix, op As Func(Of Double, Double, Double)) As SparseMatrix
         Dim newEntries = New Dictionary(Of RowCol, Double)(_entries.Count)
         Dim x As Double = Nothing
         Dim y As Double = Nothing
