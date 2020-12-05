@@ -10,7 +10,7 @@ Namespace Tester
 
         Const test_data = "E:\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\data\umap\MNIST-LabelledVectorArray-60000x100.msgpack"
 
-        Private Shared Sub Main()
+        Public Shared Sub Main()
             ' Note: The MNIST data here consist of normalized vectors (so the CosineForNormalizedVectors distance function can be safely used)
             Dim data = MsgPackSerializer.Deserialize(Of LabelledVector())(File.ReadAllBytes(test_data))
             data = data.Take(10_000).ToArray()
