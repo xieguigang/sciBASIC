@@ -81,7 +81,7 @@ Namespace ApplicationServices.DynamicInterop
         ''' Creates a proxy for the specified dll.
         ''' </summary>
         ''' <param name="dllName">The DLL's name.</param>
-        Public Sub New(ByVal dllName As String)
+        Public Sub New(dllName As String)
             If Equals(dllName, Nothing) Then
                 Throw New ArgumentNullException("dllName", "The name of the library to load is a null reference")
             End If
@@ -102,7 +102,7 @@ Namespace ApplicationServices.DynamicInterop
             FileName = dllName
         End Sub
 
-        Private Sub ReportLoadLibError(ByVal dllName As String, ByVal nativeError As String)
+        Private Sub ReportLoadLibError(dllName As String, nativeError As String)
             ' ThrowFailedLibraryLoad(dllName, nativeError)
             ' 
             Dim dllFullName As String = dllName.GetFullPath
@@ -151,7 +151,7 @@ Namespace ApplicationServices.DynamicInterop
             Return msg
         End Function
 
-        Private Sub ThrowFailedLibraryLoad(ByVal dllFullName As String, ByVal nativeError As String)
+        Private Sub ThrowFailedLibraryLoad(dllFullName As String, nativeError As String)
             Dim strMsg = String.Format("This {0}-bit process failed to load the library {1}", If(Environment.Is64BitProcess, "64", "32"), dllFullName)
 
             If Not String.IsNullOrEmpty(nativeError) Then
@@ -183,7 +183,7 @@ Namespace ApplicationServices.DynamicInterop
         ''' <typeparam name="TDelegate">The type of delegate.</typeparam>
         ''' <param name="entryPoint">The name of the function exported by the DLL</param>
         ''' <returns>The delegate.</returns>
-        Public Function GetFunction(Of TDelegate As Class)(ByVal entryPoint As String) As TDelegate
+        Public Function GetFunction(Of TDelegate As Class)(entryPoint As String) As TDelegate
             If String.IsNullOrEmpty(entryPoint) Then
                 Throw New ArgumentNullException("entryPoint", "Native function name cannot be null or empty")
             ElseIf Not GetType(TDelegate).IsSubclassOf(GetType([Delegate])) Then
@@ -214,7 +214,7 @@ Namespace ApplicationServices.DynamicInterop
         ''' </summary>
         ''' <returns>The function address.</returns>
         ''' <param name="lpProcName">name of the function in the native library</param>
-        Public Function GetFunctionAddress(ByVal lpProcName As String) As IntPtr
+        Public Function GetFunctionAddress(lpProcName As String) As IntPtr
             Return handle.GetFunctionAddress(lpProcName)
         End Function
 
@@ -223,7 +223,7 @@ Namespace ApplicationServices.DynamicInterop
         ''' </summary>
         ''' <param name="entryPoint">The name of function.</param>
         ''' <returns>The handle.</returns>
-        Public Function DangerousGetHandle(ByVal entryPoint As String) As IntPtr
+        Public Function DangerousGetHandle(entryPoint As String) As IntPtr
             If String.IsNullOrEmpty(entryPoint) Then
                 Throw New ArgumentNullException("The entry point cannot be null or an empty string", "entryPoint")
             End If
@@ -235,7 +235,7 @@ Namespace ApplicationServices.DynamicInterop
         ''' Frees the native library this objects represents
         ''' </summary>
         ''' <param name="disposing"></param>
-        Protected Overridable Sub Dispose(ByVal disposing As Boolean)
+        Protected Overridable Sub Dispose(disposing As Boolean)
             handle.Dispose()
         End Sub
 
@@ -251,7 +251,7 @@ Namespace ApplicationServices.DynamicInterop
             Dispose(True)
         End Sub
 
-        Private Function checkedGetSymbolHandle(ByVal symbolName As String) As IntPtr
+        Private Function checkedGetSymbolHandle(symbolName As String) As IntPtr
             Dim addr = DangerousGetHandle(symbolName)
             If IntPtr.Zero = addr Then Throw New ArgumentException(String.Format("Could not retrieve a pointer for the symbol '{0}' in file '{1}'", symbolName, FileName))
             Return addr
@@ -263,7 +263,7 @@ Namespace ApplicationServices.DynamicInterop
         ''' <param name="symbolName">Symbol name.</param>
         ''' <param name="value">Value.</param>
         ''' <remarks>Throws an <exception cref="System.ArgumentException">ArgumentException</exception> if the symbol is not exported by the library</remarks>
-        Public Sub WriteInt32(ByVal symbolName As String, ByVal value As Integer)
+        Public Sub WriteInt32(symbolName As String, value As Integer)
             Dim addr = checkedGetSymbolHandle(symbolName)
             Marshal.WriteInt32(addr, value)
         End Sub
@@ -274,7 +274,7 @@ Namespace ApplicationServices.DynamicInterop
         ''' <returns>The value for this symbol, read as an int32</returns>
         ''' <param name="symbolName">Symbol name.</param>
         ''' <remarks>Throws an <exception cref="System.ArgumentException">ArgumentException</exception> if the symbol is not exported by the library</remarks>
-        Public Function GetInt32(ByVal symbolName As String) As Integer
+        Public Function GetInt32(symbolName As String) As Integer
             Dim addr = checkedGetSymbolHandle(symbolName)
             Return Marshal.ReadInt32(addr)
         End Function
@@ -285,7 +285,7 @@ Namespace ApplicationServices.DynamicInterop
         ''' <param name="symbolName">Symbol name.</param>
         ''' <param name="value">Value.</param>
         ''' <remarks>Throws an <exception cref="System.ArgumentException">ArgumentException</exception> if the symbol is not exported by the library</remarks>
-        Public Sub WriteInt64(ByVal symbolName As String, ByVal value As Long)
+        Public Sub WriteInt64(symbolName As String, value As Long)
             Dim addr = checkedGetSymbolHandle(symbolName)
             Marshal.WriteInt64(addr, value)
         End Sub
@@ -296,7 +296,7 @@ Namespace ApplicationServices.DynamicInterop
         ''' <returns>The value for this symbol, read as an int64</returns>
         ''' <param name="symbolName">Symbol name.</param>
         ''' <remarks>Throws an <exception cref="System.ArgumentException">ArgumentException</exception> if the symbol is not exported by the library</remarks>
-        Public Function GetInt64(ByVal symbolName As String) As Long
+        Public Function GetInt64(symbolName As String) As Long
             Dim addr = checkedGetSymbolHandle(symbolName)
             Return Marshal.ReadInt64(addr)
         End Function
@@ -307,7 +307,7 @@ Namespace ApplicationServices.DynamicInterop
         ''' <param name="symbolName">Symbol name.</param>
         ''' <param name="value">Value.</param>
         ''' <remarks>Throws an <exception cref="System.ArgumentException">ArgumentException</exception> if the symbol is not exported by the library</remarks>
-        Public Sub WriteIntPtr(ByVal symbolName As String, ByVal value As IntPtr)
+        Public Sub WriteIntPtr(symbolName As String, value As IntPtr)
             Dim addr = checkedGetSymbolHandle(symbolName)
             Marshal.WriteIntPtr(addr, value)
         End Sub
@@ -318,7 +318,7 @@ Namespace ApplicationServices.DynamicInterop
         ''' <returns>The value for this symbol, read as an IntPtr</returns>
         ''' <param name="symbolName">Symbol name.</param>
         ''' <remarks>Throws an <exception cref="System.ArgumentException">ArgumentException</exception> if the symbol is not exported by the library</remarks>
-        Public Function GetIntPtr(ByVal symbolName As String) As IntPtr
+        Public Function GetIntPtr(symbolName As String) As IntPtr
             Dim addr = checkedGetSymbolHandle(symbolName)
             Return Marshal.ReadIntPtr(addr)
         End Function
@@ -329,7 +329,7 @@ Namespace ApplicationServices.DynamicInterop
         ''' <param name="symbolName">Symbol name.</param>
         ''' <param name="value">Value.</param>
         ''' <remarks>Throws an <exception cref="System.ArgumentException">ArgumentException</exception> if the symbol is not exported by the library</remarks>
-        Public Sub WriteByte(ByVal symbolName As String, ByVal value As Byte)
+        Public Sub WriteByte(symbolName As String, value As Byte)
             Dim addr = checkedGetSymbolHandle(symbolName)
             Marshal.WriteByte(addr, value)
         End Sub
@@ -340,7 +340,7 @@ Namespace ApplicationServices.DynamicInterop
         ''' <returns>The value for this symbol, read as a byte</returns>
         ''' <param name="symbolName">Symbol name.</param>
         ''' <remarks>Throws an <exception cref="System.ArgumentException">ArgumentException</exception> if the symbol is not exported by the library</remarks>
-        Public Function GetByte(ByVal symbolName As String) As Byte
+        Public Function GetByte(symbolName As String) As Byte
             Dim addr = checkedGetSymbolHandle(symbolName)
             Return Marshal.ReadByte(addr)
         End Function
@@ -351,7 +351,7 @@ Namespace ApplicationServices.DynamicInterop
         ''' <returns>The value for this symbol, read as an ANSI string</returns>
         ''' <param name="symbolName">Symbol name.</param>
         ''' <remarks>Throws an <exception cref="System.ArgumentException">ArgumentException</exception> if the symbol is not exported by the library</remarks>
-        Public Function GetAnsiString(ByVal symbolName As String) As String
+        Public Function GetAnsiString(symbolName As String) As String
             Dim addr = checkedGetSymbolHandle(symbolName)
             Return Marshal.PtrToStringAnsi(addr)
         End Function

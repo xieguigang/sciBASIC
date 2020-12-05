@@ -2,7 +2,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 
-Friend Module ThreadSafeFastRandom
+Public Module ThreadSafeFastRandom
     Private ReadOnly _global As Random = New Random()
     <ThreadStatic>
     Private _local As FastRandom
@@ -40,7 +40,7 @@ Friend Module ThreadSafeFastRandom
     ''' <paramname="maxValue">The exclusive upper bound of the random number to be generated. maxValue must be greater than or equal to 0.</param>
     ''' <returns>A 32-bit signed integer that is greater than or equal to 0, and less than maxValue; that is, the range of return values ordinarily includes 0 but not maxValue. However,</returns>        '  if maxValue equals 0, maxValue is returned.</returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function [Next](ByVal maxValue As Integer) As Integer
+    Public Function [Next](maxValue As Integer) As Integer
         Dim inst = ThreadSafeFastRandom._local
 
         If inst Is Nothing Then
@@ -65,7 +65,7 @@ Friend Module ThreadSafeFastRandom
     ''' <paramname="maxValue">The exclusive upper bound of the random number returned. maxValue must be greater than or equal to minValue.</param>
     ''' <returns>A 32-bit signed integer greater than or equal to minValue and less than maxValue; that is, the range of return values includes minValue but not maxValue. If minValue</returns>        '  equals maxValue, minValue is returned.</returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function [Next](ByVal minValue As Integer, ByVal maxValue As Integer) As Integer
+    Public Function [Next](minValue As Integer, maxValue As Integer) As Integer
         Dim inst = ThreadSafeFastRandom._local
 
         If inst Is Nothing Then
@@ -98,7 +98,7 @@ Friend Module ThreadSafeFastRandom
     ''' </summary>
     ''' <paramname="buffer">An array of bytes to contain random numbers.</param>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Sub NextFloats(ByVal buffer As Single())
+    Public Sub NextFloats(buffer As Single())
         Dim inst As FastRandom = ThreadSafeFastRandom._local
 
         If inst Is Nothing Then

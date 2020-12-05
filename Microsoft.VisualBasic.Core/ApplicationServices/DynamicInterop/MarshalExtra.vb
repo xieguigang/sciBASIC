@@ -71,7 +71,7 @@ Namespace ApplicationServices.DynamicInterop
         ''' <param name="cleanup"> (Optional) If true, free the native memory block pointed to by ptr. This feature is handy in generated marshalling code.</param>
         '''
         ''' <returns> A managed object that contains the data that the ptr parameter points to</returns>
-        Public Shared Function PtrToStructure(Of T As Structure)(ByVal ptr As IntPtr, ByVal Optional cleanup As Boolean = False) As T
+        Public Shared Function PtrToStructure(Of T As Structure)(ptr As IntPtr, Optional cleanup As Boolean = False) As T
             If ptr = IntPtr.Zero Then Throw New ArgumentException("pointer must not be IntPtr.Zero")
             Dim result As T = Marshal.PtrToStructure(ptr, GetType(T))
             If cleanup Then Marshal.FreeHGlobal(ptr)
@@ -85,7 +85,7 @@ Namespace ApplicationServices.DynamicInterop
         ''' <param name="structure"> A managed object that holds the data to be marshaled. The object must be a structure.</param>
         '''
         ''' <returns> A pointer to a newly allocated unmanaged block of memory.</returns>
-        Public Shared Function StructureToPtr(Of T As Structure)(ByVal [structure] As T) As IntPtr
+        Public Shared Function StructureToPtr(Of T As Structure)([structure] As T) As IntPtr
             Dim ptr = IntPtr.Zero
             Dim localStruct = [structure]
             Dim iSize = Marshal.SizeOf(GetType(T))
@@ -100,7 +100,7 @@ Namespace ApplicationServices.DynamicInterop
         ''' <param name="ptr">           A pointer to an unmanaged block of memory.</param>
         ''' <param name="managedObject"> [in,out] The managed object.</param>
         ''' <param name="copy">          (Optional) True to copy.</param>
-        Public Shared Sub FreeNativeStruct(Of T As Structure)(ByVal ptr As IntPtr, ByRef managedObject As T, ByVal Optional copy As Boolean = False)
+        Public Shared Sub FreeNativeStruct(Of T As Structure)(ptr As IntPtr, ByRef managedObject As T, Optional copy As Boolean = False)
             If ptr = IntPtr.Zero Then Return '?
 
             If copy Then
@@ -111,7 +111,7 @@ Namespace ApplicationServices.DynamicInterop
             Marshal.FreeHGlobal(ptr)
         End Sub
 
-        Public Shared Function ArrayOfStructureToPtr(Of T As Structure)(ByVal managedObjects As T()) As IntPtr
+        Public Shared Function ArrayOfStructureToPtr(Of T As Structure)(managedObjects As T()) As IntPtr
             Dim structSize As Integer = Marshal.SizeOf(GetType(T))
             Dim result = Marshal.AllocHGlobal(managedObjects.Length * structSize)
 
@@ -123,7 +123,7 @@ Namespace ApplicationServices.DynamicInterop
             Return result
         End Function
 
-        Public Shared Sub FreeNativeArrayOfStruct(Of T As Structure)(ByVal ptr As IntPtr, ByRef managedObjects As T(), ByVal Optional copy As Boolean = False)
+        Public Shared Sub FreeNativeArrayOfStruct(Of T As Structure)(ptr As IntPtr, ByRef managedObjects As T(), Optional copy As Boolean = False)
             If ptr = IntPtr.Zero Then Return
             Marshal.FreeHGlobal(ptr)
         End Sub

@@ -34,7 +34,7 @@
 '''  FastRandom are in use or if being used in a multi-threaded environment.
 '''
 ''' </summary>
-Friend Class FastRandom
+Public Class FastRandom
     ' The +1 ensures NextDouble doesn't generate 1.0
     Const FLOAT_UNIT_INT As Single = 1.0F / (Integer.MaxValue + 1.0F)
     Const REAL_UNIT_INT As Double = 1.0 / (Integer.MaxValue + 1.0)
@@ -55,14 +55,14 @@ Friend Class FastRandom
     ''' This constructor signature is provided to maintain compatibility with
     ''' System.Random
     ''' </summary>
-    Public Sub New(ByVal seed As Integer)
+    Public Sub New(seed As Integer)
         Reinitialise(seed)
     End Sub
 
     ''' <summary>
     ''' Reinitialises using an int value as a seed.
     ''' </summary>
-    Public Sub Reinitialise(ByVal seed As Integer)
+    Public Sub Reinitialise(seed As Integer)
         ' The only stipulation stated for the xorshift RNG is that at least one of
         ' the seeds x,y,z,w is non-zero. We fulfill that requirement by only allowing
         ' resetting of the x seed
@@ -100,7 +100,7 @@ Friend Class FastRandom
     ''' <summary>
     ''' Generates a random int over the range 0 to upperBound-1, and not including upperBound.
     ''' </summary>
-    Public Function [Next](ByVal upperBound As Integer) As Integer
+    Public Function [Next](upperBound As Integer) As Integer
         If upperBound < 0 Then Throw New ArgumentOutOfRangeException("upperBound", upperBound, "upperBound must be >=0")
         Dim t = x Xor x << 11
         x = yField
@@ -116,7 +116,7 @@ Friend Class FastRandom
     ''' Generates a random int over the range lowerBound to upperBound-1, and not including upperBound.
     ''' upperBound must be >= lowerBound. lowerBound may be negative.
     ''' </summary>
-    Public Function [Next](ByVal lowerBound As Integer, ByVal upperBound As Integer) As Integer
+    Public Function [Next](lowerBound As Integer, upperBound As Integer) As Integer
         If lowerBound > upperBound Then Throw New ArgumentOutOfRangeException("upperBound", upperBound, "upperBound must be >=lowerBound")
         Dim t = x Xor x << 11
         x = yField
@@ -179,7 +179,7 @@ Friend Class FastRandom
     ''' <summary>
     ''' Fills the provided byte array with random floats.
     ''' </summary>
-    Public Sub NextFloats(ByVal buffer As Single())
+    Public Sub NextFloats(buffer As Single())
         Dim x = Me.x, y = yField, z = zField, w = wField
         Dim i = 0
         Dim t As UInteger
@@ -205,7 +205,7 @@ Friend Class FastRandom
     ''' Fills the provided byte array with random bytes.
     ''' This method is functionally equivalent to System.Random.NextBytes().
     ''' </summary>
-    Public Sub NextBytes(ByVal buffer As Byte())
+    Public Sub NextBytes(buffer As Byte())
         ' Fill up the bulk of the buffer in chunks of 4 bytes at a time.
         Dim x = Me.x, y = yField, z = zField, w = wField
         Dim i = 0
@@ -261,7 +261,7 @@ Friend Class FastRandom
     ''' Fills the provided byte array with random bytes.
     ''' This method is functionally equivalent to System.Random.NextBytes().
     ''' </summary>
-    Public Sub NextBytes(ByVal buffer As Byte())
+    Public Sub NextBytes(buffer As Byte())
         ' Fill up the bulk of the buffer in chunks of 4 bytes at a time.
         Dim x = Me.x, y = yField, z = zField, w = wField
         Dim i = 0

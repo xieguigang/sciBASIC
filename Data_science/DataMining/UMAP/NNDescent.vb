@@ -1,12 +1,12 @@
 ﻿Imports System
 
 Friend Module NNDescent
-    Public Delegate Function NNDescentFn(ByVal data As Single()(), ByVal leafArray As Integer()(), ByVal nNeighbors As Integer, ByVal Optional nIters As Integer = 10, ByVal Optional maxCandidates As Integer = 50, ByVal Optional delta As Single = 0.001F, ByVal Optional rho As Single = 0.5F, ByVal Optional rpTreeInit As Boolean = True, ByVal Optional startingIteration As Action(Of Integer, Integer) = Nothing) As (Integer()(), Single()())
+    Public Delegate Function NNDescentFn(data As Single()(), leafArray As Integer()(), nNeighbors As Integer, Optional nIters As Integer = 10, Optional maxCandidates As Integer = 50, Optional delta As Single = 0.001F, Optional rho As Single = 0.5F, Optional rpTreeInit As Boolean = True, Optional startingIteration As Action(Of Integer, Integer) = Nothing) As (Integer()(), Single()())
 
     ''' <summary>
     ''' Create a version of nearest neighbor descent.
     ''' </summary>
-    Public Function MakeNNDescent(ByVal distanceFn As DistanceCalculation, ByVal random As IProvideRandomValues) As NNDescent.NNDescentFn
+    Public Function MakeNNDescent(distanceFn As DistanceCalculation, random As IProvideRandomValues) As NNDescent.NNDescentFn
         Return Function(data, leafArray, nNeighbors, nIters, maxCandidates, delta, rho, rpTreeInit, startingIteration)
                    Dim nVertices = data.Length
                    Dim currentGraph = Heaps.MakeHeap(data.Length, nNeighbors)

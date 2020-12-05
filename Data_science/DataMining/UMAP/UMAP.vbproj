@@ -64,7 +64,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DefaultRandomGenerator.vb" />
+    <Compile Include="Components\DefaultRandomGenerator.vb" />
     <Compile Include="Heaps.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -88,7 +88,7 @@
     <Compile Include="SparseMatrix.vb" />
     <Compile Include="Tree.vb" />
     <Compile Include="Umap.vb" />
-    <Compile Include="Utils.vb" />
+    <Compile Include="Components\Utils.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -123,8 +123,6 @@
       <Name>Randomizer</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Components\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

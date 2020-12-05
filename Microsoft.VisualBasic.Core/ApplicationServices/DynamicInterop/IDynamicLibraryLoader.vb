@@ -53,7 +53,7 @@ Namespace ApplicationServices.DynamicInterop
         ''' </summary>
         ''' <param name="filename">The file name (short file name) of the library to load, e.g. R.dll on Windows</param>
         ''' <returns></returns>
-        Function LoadLibrary(ByVal filename As String) As IntPtr
+        Function LoadLibrary(filename As String) As IntPtr
 
         ''' <summary>
         ''' Gets the last error message from the native API used to load the library.
@@ -66,7 +66,7 @@ Namespace ApplicationServices.DynamicInterop
         ''' </summary>
         ''' <param name="handle">The pointer to the entry point of the library</param>
         ''' <returns></returns>
-        Function FreeLibrary(ByVal handle As IntPtr) As Boolean
+        Function FreeLibrary(handle As IntPtr) As Boolean
 
         ''' <summary>
         ''' Gets a pointer to the address of a native function in the specified loaded library
@@ -74,7 +74,7 @@ Namespace ApplicationServices.DynamicInterop
         ''' <param name="hModule">Handle of the module(library)</param>
         ''' <param name="lpProcName">The name of the function sought</param>
         ''' <returns>Handle to the native function</returns>
-        Function GetFunctionAddress(ByVal hModule As IntPtr, ByVal lpProcName As String) As IntPtr
+        Function GetFunctionAddress(hModule As IntPtr, lpProcName As String) As IntPtr
     End Interface
 End Namespace
 

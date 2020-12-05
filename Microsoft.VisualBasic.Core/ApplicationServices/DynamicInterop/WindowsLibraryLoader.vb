@@ -56,7 +56,7 @@ Namespace ApplicationServices.DynamicInterop
     Friend Class WindowsLibraryLoader
         Implements IDynamicLibraryLoader
 
-        Public Function LoadLibrary(ByVal filename As String) As IntPtr Implements IDynamicLibraryLoader.LoadLibrary
+        Public Function LoadLibrary(filename As String) As IntPtr Implements IDynamicLibraryLoader.LoadLibrary
             'new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Demand();
             Dim handle = Win32.LoadLibrary(filename)
 
@@ -75,15 +75,15 @@ Namespace ApplicationServices.DynamicInterop
             Return New Win32Exception().Message
         End Function
 
-        Public Function FreeLibrary(ByVal handle As IntPtr) As Boolean Implements IDynamicLibraryLoader.FreeLibrary
+        Public Function FreeLibrary(handle As IntPtr) As Boolean Implements IDynamicLibraryLoader.FreeLibrary
             Return Win32.FreeLibrary(handle)
         End Function
 
-        Public Function GetFunctionAddress(ByVal hModule As IntPtr, ByVal lpProcName As String) As IntPtr Implements IDynamicLibraryLoader.GetFunctionAddress
+        Public Function GetFunctionAddress(hModule As IntPtr, lpProcName As String) As IntPtr Implements IDynamicLibraryLoader.GetFunctionAddress
             Return GetProcAddress(hModule, lpProcName)
         End Function
 
-        Public Shared Function GetShortPath(ByVal path As String) As String
+        Public Shared Function GetShortPath(path As String) As String
             Dim shortPath = New StringBuilder(MaxPathLength)
             GetShortPathName(path, shortPath, MaxPathLength)
             Return shortPath.ToString()
@@ -94,17 +94,17 @@ Namespace ApplicationServices.DynamicInterop
 
         <DllImport("kernel32.dll", SetLastError:=True)>
         Public Function LoadLibrary(
-        <MarshalAs(UnmanagedType.LPStr)> ByVal lpFileName As String) As IntPtr
+        <MarshalAs(UnmanagedType.LPStr)> lpFileName As String) As IntPtr
         End Function
 
         <DllImport("kernel32.dll")>
         <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
-        Public Function FreeLibrary(ByVal hModule As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
+        Public Function FreeLibrary(hModule As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
         End Function
 
         <DllImport("kernel32.dll")>
-        Public Function GetProcAddress(ByVal hModule As IntPtr,
-        <MarshalAs(UnmanagedType.LPStr)> ByVal lpProcName As String) As IntPtr
+        Public Function GetProcAddress(hModule As IntPtr,
+        <MarshalAs(UnmanagedType.LPStr)> lpProcName As String) As IntPtr
         End Function
 
         ''' <summary>
@@ -115,8 +115,8 @@ Namespace ApplicationServices.DynamicInterop
 
         <DllImport("kernel32.dll", CharSet:=CharSet.Auto)>
         Public Function GetShortPathName(
-        <MarshalAs(UnmanagedType.LPTStr)> ByVal path As String,
-        <MarshalAs(UnmanagedType.LPTStr)> ByVal shortPath As StringBuilder, ByVal shortPathLength As Integer) As Integer
+        <MarshalAs(UnmanagedType.LPTStr)> path As String,
+        <MarshalAs(UnmanagedType.LPTStr)> shortPath As StringBuilder, shortPathLength As Integer) As Integer
         End Function
     End Module
 End Namespace

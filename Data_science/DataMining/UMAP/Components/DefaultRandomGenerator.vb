@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Math
 
 Public NotInheritable Class DefaultRandomGenerator
     Implements IProvideRandomValues
@@ -13,14 +14,14 @@ Public NotInheritable Class DefaultRandomGenerator
     ''' </summary>
     Public Shared ReadOnly Property DisableThreading As DefaultRandomGenerator = New DefaultRandomGenerator(allowParallel:=False)
 
-    Private Sub New(ByVal allowParallel As Boolean)
+    Private Sub New(allowParallel As Boolean)
         IsThreadSafe = allowParallel
     End Sub
 
     Public ReadOnly Property IsThreadSafe As Boolean Implements IProvideRandomValues.IsThreadSafe
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function [Next](ByVal minValue As Integer, ByVal maxValue As Integer) As Integer Implements IProvideRandomValues.Next
+    Public Function [Next](minValue As Integer, maxValue As Integer) As Integer Implements IProvideRandomValues.Next
         Return ThreadSafeFastRandom.Next(minValue, maxValue)
     End Function
 
@@ -30,7 +31,7 @@ Public NotInheritable Class DefaultRandomGenerator
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Sub NextFloats(ByVal buffer As Single()) Implements IProvideRandomValues.NextFloats
+    Public Sub NextFloats(buffer As Single()) Implements IProvideRandomValues.NextFloats
         ThreadSafeFastRandom.NextFloats(buffer)
     End Sub
 

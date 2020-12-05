@@ -53,7 +53,7 @@ Namespace ApplicationServices.DynamicInterop
     Friend NotInheritable Class SafeHandleUnmanagedDll
         Inherits SafeHandleZeroOrMinusOneIsInvalid
 
-        Public Sub New(ByVal dllName As String)
+        Public Sub New(dllName As String)
             MyBase.New(True)
             Dim libraryLoader As IDynamicLibraryLoader = Nothing
 
@@ -99,7 +99,7 @@ Namespace ApplicationServices.DynamicInterop
             End If
         End Function
 
-        Public Function GetFunctionAddress(ByVal lpProcName As String) As IntPtr
+        Public Function GetFunctionAddress(lpProcName As String) As IntPtr
             Return libraryLoader.GetFunctionAddress(handle, lpProcName)
         End Function
 
@@ -107,7 +107,7 @@ Namespace ApplicationServices.DynamicInterop
         ''' Frees the native library this objects represents
         ''' </summary>
         ''' <param name="disposing"></param>
-        Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Protected Overrides Sub Dispose(disposing As Boolean)
             If FreeLibrary() Then
                 SetHandleAsInvalid()
             End If

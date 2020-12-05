@@ -66,7 +66,7 @@ Friend Module SIMD
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Sub Add(ByRef lhs As Single(), ByVal f As Single)
+    Public Sub Add(ByRef lhs As Single(), f As Single)
         Dim count = lhs.Length
         Dim offset = 0
         Dim v = New Vector(Of Single)(f)
@@ -106,7 +106,7 @@ Friend Module SIMD
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Sub Multiply(ByRef lhs As Single(), ByVal f As Single)
+    Public Sub Multiply(ByRef lhs As Single(), f As Single)
         Dim count = lhs.Length
         Dim offset = 0
 

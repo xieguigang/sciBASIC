@@ -5,12 +5,12 @@ Friend Module Tree
     ''' <summary>
     ''' Construct a random projection tree based on ``data`` with leaves of size at most ``leafSize``
     ''' </summary>
-    Public Function MakeTree(ByVal data As Single()(), ByVal leafSize As Integer, ByVal n As Integer, ByVal random As IProvideRandomValues) As Tree.RandomProjectionTreeNode
+    Public Function MakeTree(data As Single()(), leafSize As Integer, n As Integer, random As IProvideRandomValues) As Tree.RandomProjectionTreeNode
         Dim indices = Enumerable.Range(0, data.Length).ToArray()
         Return Tree.MakeEuclideanTree(data, indices, leafSize, n, random)
     End Function
 
-    Private Function MakeEuclideanTree(ByVal data As Single()(), ByVal indices As Integer(), ByVal leafSize As Integer, ByVal q As Integer, ByVal random As IProvideRandomValues) As Tree.RandomProjectionTreeNode
+    Private Function MakeEuclideanTree(data As Single()(), indices As Integer(), leafSize As Integer, q As Integer, random As IProvideRandomValues) As Tree.RandomProjectionTreeNode
         Dim indicesLeftIndicesRightHyperplaneVectorHyperplaneOffset = Nothing
 
         If indices.Length > leafSize Then
@@ -37,7 +37,7 @@ Friend Module Tree
         End If
     End Function
 
-    Public Function FlattenTree(ByVal tree As Tree.RandomProjectionTreeNode, ByVal leafSize As Integer) As Tree.FlatTree
+    Public Function FlattenTree(tree As Tree.RandomProjectionTreeNode, leafSize As Integer) As Tree.FlatTree
         Dim nNodes = Tree.NumNodes(tree)
         Dim nLeaves = Tree.NumLeaves(tree)
 
@@ -60,7 +60,7 @@ Friend Module Tree
     ''' the basis for a random projection tree, which simply uses this splitting recursively. This particular split uses euclidean distance to determine the hyperplane and which side each data
     ''' sample falls on.
     ''' </summary>
-    Private Function EuclideanRandomProjectionSplit(ByVal data As Single()(), ByVal indices As Integer(), ByVal random As IProvideRandomValues) As (Integer(), Integer(), Single(), Single)
+    Private Function EuclideanRandomProjectionSplit(data As Single()(), indices As Integer(), random As IProvideRandomValues) As (Integer(), Integer(), Single(), Single)
         Dim [dim] = data(0).Length
 
         ' Select two random points, set the hyperplane between them
@@ -132,7 +132,7 @@ Friend Module Tree
         Return (indicesLeft, indicesRight, hyperplaneVector, hyperplaneOffset)
     End Function
 
-    Private Function RecursiveFlatten(ByVal tree As Tree.RandomProjectionTreeNode, ByVal hyperplanes As Single()(), ByVal offsets As Single(), ByVal children As Integer()(), ByVal indices As Integer()(), ByVal nodeNum As Integer, ByVal leafNum As Integer) As (Integer, Integer)
+    Private Function RecursiveFlatten(tree As Tree.RandomProjectionTreeNode, hyperplanes As Single()(), offsets As Single(), children As Integer()(), indices As Integer()(), nodeNum As Integer, leafNum As Integer) As (Integer, Integer)
         If tree.IsLeaf Then
             children(nodeNum)(0) = -leafNum
 
@@ -155,11 +155,11 @@ Friend Module Tree
         End If
     End Function
 
-    Private Function NumNodes(ByVal tree As Tree.RandomProjectionTreeNode) As Integer
+    Private Function NumNodes(tree As Tree.RandomProjectionTreeNode) As Integer
         Return If(tree.IsLeaf, 1, 1 + Tree.NumNodes(tree.LeftChild) + Tree.NumNodes(tree.RightChild))
     End Function
 
-    Private Function NumLeaves(ByVal tree As Tree.RandomProjectionTreeNode) As Integer
+    Private Function NumLeaves(tree As Tree.RandomProjectionTreeNode) As Integer
         Return If(tree.IsLeaf, 1, 1 + Tree.NumLeaves(tree.LeftChild) + Tree.NumLeaves(tree.RightChild))
     End Function
 
@@ -168,7 +168,7 @@ Friend Module Tree
     ''' a set of potential nearest neighbors.Given enough trees the set of all such leaves gives a good likelihood of getting a good set of nearest neighbors in composite. Since such
     ''' a random projection forest is inexpensive to compute, this can be a useful means of seeding other nearest neighbor algorithms.
     ''' </summary>
-    Public Function MakeLeafArray(ByVal forest As Tree.FlatTree()) As Integer()()
+    Public Function MakeLeafArray(forest As Tree.FlatTree()) As Integer()()
         If forest.Length > 0 Then
             Dim output = New List(Of Integer())()
 
@@ -189,7 +189,7 @@ Friend Module Tree
     ''' <summary>
     ''' Searches a flattened rp-tree for a point
     ''' </summary>
-    Public Function SearchFlatTree(ByVal point As Single(), ByVal tree As Tree.FlatTree, ByVal random As IProvideRandomValues) As Integer()
+    Public Function SearchFlatTree(point As Single(), tree As Tree.FlatTree, random As IProvideRandomValues) As Integer()
         Dim node = 0
 
         While tree.Children(node)(0) > 0
@@ -209,7 +209,7 @@ Friend Module Tree
     ''' <summary>
     ''' Select the side of the tree to search during flat tree search
     ''' </summary>
-    Private Function SelectSide(ByVal hyperplane As Single(), ByVal offset As Single, ByVal point As Single(), ByVal random As IProvideRandomValues) As Integer
+    Private Function SelectSide(hyperplane As Single(), offset As Single, point As Single(), random As IProvideRandomValues) As Integer
         Dim margin = offset
 
         For d = 0 To point.Length - 1

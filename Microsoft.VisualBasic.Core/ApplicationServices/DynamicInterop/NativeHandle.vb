@@ -59,7 +59,7 @@ Namespace ApplicationServices.DynamicInterop
         ''' <param name="currentRefCount"> (Optional) Number of pre-existing references for the native object</param>
         ''' <remarks>If a native object was created prior to its use by .NET, its lifetime may need to extend its use 
         '''          from .NET. In practice the scenario is unlikely</remarks>
-        Protected Sub New(ByVal pointer As IntPtr, ByVal Optional currentRefCount As Integer = 0)
+        Protected Sub New(pointer As IntPtr, Optional currentRefCount As Integer = 0)
             SetHandle(pointer, currentRefCount)
         End Sub
 
@@ -68,7 +68,7 @@ Namespace ApplicationServices.DynamicInterop
         Protected Sub New()
         End Sub
 
-        Private Function IsValidHandle(ByVal pointer As IntPtr) As Boolean
+        Private Function IsValidHandle(pointer As IntPtr) As Boolean
             Return pointer <> IntPtr.Zero
         End Function
 
@@ -81,7 +81,7 @@ Namespace ApplicationServices.DynamicInterop
         ''' <param name="currentRefCount"> (Optional) Number of pre-existing references for the native object</param>
         ''' <remarks>If a native object was created prior to its use by .NET, its lifetime may need to extend its use 
         '''          from .NET. In practice the scenario is unlikely</remarks>
-        Protected Sub SetHandle(ByVal pointer As IntPtr, ByVal Optional currentRefCount As Integer = 0)
+        Protected Sub SetHandle(pointer As IntPtr, Optional currentRefCount As Integer = 0)
             If Not IsValidHandle(pointer) Then Throw New ArgumentException(String.Format("pointer '{0}' is not valid", pointer.ToString()))
             handle = pointer
             ReferenceCount = currentRefCount + 1
@@ -130,7 +130,7 @@ Namespace ApplicationServices.DynamicInterop
             DisposeImpl(True)
         End Sub
 
-        Private Sub DisposeImpl(ByVal decrement As Boolean)
+        Private Sub DisposeImpl(decrement As Boolean)
             If Disposed Then Return
             If decrement Then ReferenceCount -= 1
 

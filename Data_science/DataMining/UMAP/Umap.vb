@@ -8,7 +8,7 @@ Imports Microsoft.VisualBasic.Language.Python
 ''' <summary>
 ''' The progress will be a value from 0 to 1 that indicates approximately how much of the processing has been completed
 ''' </summary>
-Public Delegate Sub ProgressReporter(ByVal progress As Single)
+Public Delegate Sub ProgressReporter(progress As Single)
 
 Public NotInheritable Class Umap
     Private Const SMOOTH_K_TOLERANCE As Single = 0.00001F
@@ -40,7 +40,7 @@ Public NotInheritable Class Umap
     Private _embedding As Single()
     Private ReadOnly _optimizationState As Umap.OptimizationState
 
-    Public Sub New(ByVal Optional distance As DistanceCalculation = Nothing, ByVal Optional random As IProvideRandomValues = Nothing, ByVal Optional dimensions As Integer = 2, ByVal Optional numberOfNeighbors As Integer = 15, ByVal Optional customNumberOfEpochs As Integer? = Nothing, ByVal Optional progressReporter As Umap.Umap.ProgressReporter = Nothing)
+    Public Sub New(Optional distance As DistanceCalculation = Nothing, Optional random As IProvideRandomValues = Nothing, Optional dimensions As Integer = 2, Optional numberOfNeighbors As Integer = 15, Optional customNumberOfEpochs As Integer? = Nothing, Optional progressReporter As Umap.Umap.ProgressReporter = Nothing)
         If customNumberOfEpochs IsNot Nothing AndAlso customNumberOfEpochs <= 0 Then Throw New ArgumentOutOfRangeException(NameOf(customNumberOfEpochs), "if non-null then must be a positive value")
         _distanceFn = If(distance, AddressOf DistanceFunctions.Cosine)
         _random = If(random, DefaultRandomGenerator.Instance)
@@ -56,7 +56,7 @@ Public NotInheritable Class Umap
     ''' Initializes fit by computing KNN and a fuzzy simplicial set, as well as initializing the projected embeddings. Sets the optimization state ahead of optimization steps.
     ''' Returns the number of epochs to be used for the SGD optimization.
     ''' </summary>
-    Public Function InitializeFit(ByVal x As Single()()) As Integer
+    Public Function InitializeFit(x As Single()()) As Integer
         ' We don't need to reinitialize if we've already initialized for this data
         If _x Is x AndAlso _isInitialized Then Return GetNEpochs()
 
@@ -121,7 +121,7 @@ Public NotInheritable Class Umap
     ''' <summary>
     ''' Compute the ``nNeighbors`` nearest points for each data point in ``X`` - this may be exact, but more likely is approximated via nearest neighbor descent.
     ''' </summary>
-    Friend Function NearestNeighbors(ByVal x As Single()(), ByVal progressReporter As Umap.ProgressReporter) As (Integer()(), Single()())
+    Friend Function NearestNeighbors(x As Single()(), progressReporter As Umap.ProgressReporter) As (Integer()(), Single()())
         Dim metricNNDescent = NNDescent.MakeNNDescent(_distanceFn, _random)
         progressReporter(0.05F)
         Dim nTrees = 5 + Round(Math.Sqrt(x.Length) / 20)
@@ -159,7 +159,7 @@ Public NotInheritable Class Umap
     ''' to the data. This is done by locally approximating geodesic distance at each point, creating a fuzzy simplicial set for each such point, and then combining all the local fuzzy
     ''' simplicial sets into a global one via a fuzzy union.
     ''' </summary>
-    Private Function FuzzySimplicialSet(ByVal x As Single()(), ByVal nNeighbors As Integer, ByVal setOpMixRatio As Single, ByVal progressReporter As Umap.Umap.ProgressReporter) As Umap.SparseMatrix
+    Private Function FuzzySimplicialSet(x As Single()(), nNeighbors As Integer, setOpMixRatio As Single, progressReporter As Umap.Umap.ProgressReporter) As Umap.SparseMatrix
         Dim knnIndices = If(_knnIndices, New Integer(-1)() {})
         Dim knnDistances = If(_knnDistances, New Single(-1)() {})
         progressReporter(0.1F)
@@ -184,7 +184,7 @@ Public NotInheritable Class Umap
         Return result
     End Function
 
-    Private Shared Function SmoothKNNDistance(ByVal distances As Single()(), ByVal k As Integer, ByVal Optional localConnectivity As Single = 1, ByVal Optional nIter As Integer = 64, ByVal Optional bandwidth As Single = 1) As (Single(), Single())
+    Private Shared Function SmoothKNNDistance(distances As Single()(), k As Integer, Optional localConnectivity As Single = 1, Optional nIter As Integer = 64, Optional bandwidth As Single = 1) As (Single(), Single())
         Dim target = Math.Log(k, 2) * bandwidth ' TODO: Use Math.Log2 (when update framework to a version that supports it) or consider a pre-computed table
         Dim rho = New Single(distances.Length - 1) {}
         Dim result = New Single(distances.Length - 1) {}
@@ -256,7 +256,7 @@ Public NotInheritable Class Umap
         Return (result, rho)
     End Function
 
-    Private Shared Function ComputeMembershipStrengths(ByVal knnIndices As Integer()(), ByVal knnDistances As Single()(), ByVal sigmas As Single(), ByVal rhos As Single()) As (Integer(), Integer(), Single())
+    Private Shared Function ComputeMembershipStrengths(knnIndices As Integer()(), knnDistances As Single()(), sigmas As Single(), rhos As Single()) As (Integer(), Integer(), Single())
         Dim nSamples = knnIndices.Length
         Dim nNeighbors = knnIndices(0).Length
         Dim rows = New Integer(nSamples * nNeighbors - 1) {}
@@ -326,7 +326,7 @@ Public NotInheritable Class Umap
         Return (head.ToArray(), tail.ToArray(), Umap.MakeEpochsPerSample(weights.ToArray(), nEpochs))
     End Function
 
-    Private Sub ShuffleTogether(Of T, T2, T3)(ByVal list As List(Of T), ByVal other As List(Of T2), ByVal weights As List(Of T3))
+    Private Sub ShuffleTogether(Of T, T2, T3)(list As List(Of T), other As List(Of T2), weights As List(Of T3))
         Dim n = list.Count
 
         If other.Count <> n Then
@@ -348,7 +348,7 @@ Public NotInheritable Class Umap
         End While
     End Sub
 
-    Private Shared Function MakeEpochsPerSample(ByVal weights As Single(), ByVal nEpochs As Integer) As Single()
+    Private Shared Function MakeEpochsPerSample(weights As Single(), nEpochs As Integer) As Single()
         Dim result = Utils.Filled(weights.Length, -1)
         Dim max = Utils.Max(weights)
 
@@ -378,7 +378,7 @@ Public NotInheritable Class Umap
         _optimizationState.NVertices = nVertices
     End Sub
 
-    Friend Shared Function FindABParams(ByVal spread As Single, ByVal minDist As Single) As (Single, Single)
+    Friend Shared Function FindABParams(spread As Single, minDist As Single) As (Single, Single)
         ' 2019-06-21 DWR: If we need to support other spread, minDist values then we might be able to use the LM implementation in Accord.NET but I'll hard code values that relate to the default configuration for now
         If spread <> 1 OrElse minDist <> 0.1F Then Throw New ArgumentException($"Currently, the {NameOf(FindABParams)} method only supports spread, minDist values of 1, 0.1 (the Levenberg-Marquardt algorithm is required to process other values")
         Return (1.56947052F, 0.8941996F)
@@ -428,7 +428,7 @@ Public NotInheritable Class Umap
     ''' Improve an embedding using stochastic gradient descent to minimize the fuzzy set cross entropy between the 1-skeletons of the high dimensional and low dimensional fuzzy simplicial sets.
     ''' In practice this is done by sampling edges based on their membership strength(with the (1-p) terms coming from negative sampling similar to word2vec).
     ''' </summary>
-    Private Sub OptimizeLayoutStep(ByVal n As Integer)
+    Private Sub OptimizeLayoutStep(n As Integer)
         If _random.IsThreadSafe Then
             Parallel.For(0, _optimizationState.EpochsPerSample.Length, Sub(i) Call Iterate(i, n))
         Else
@@ -505,7 +505,7 @@ Public NotInheritable Class Umap
     ''' <summary>
     ''' Reduced Euclidean distance
     ''' </summary>
-    Private Shared Function RDist(ByVal x As Single(), ByVal y As Single()) As Single
+    Private Shared Function RDist(x As Single(), y As Single()) As Single
         'return Mosaik.Core.SIMD.Euclidean(ref x, ref y);
         Dim distSquared = 0F
 
@@ -520,7 +520,7 @@ Public NotInheritable Class Umap
     ''' <summary>
     ''' Standard clamping of a value into a fixed range
     ''' </summary>
-    Private Shared Function Clip(ByVal x As Single, ByVal clipValue As Single) As Single
+    Private Shared Function Clip(x As Single, clipValue As Single) As Single
         If x > clipValue Then
             Return clipValue
         ElseIf x < -clipValue Then
@@ -530,21 +530,21 @@ Public NotInheritable Class Umap
         End If
     End Function
 
-    Private Shared Function ScaleProgressReporter(ByVal progressReporter As ProgressReporter, ByVal start As Single, ByVal [end] As Single) As ProgressReporter
+    Private Shared Function ScaleProgressReporter(progressReporter As ProgressReporter, start As Single, [end] As Single) As ProgressReporter
         Dim range = [end] - start
         Return Sub(progress) progressReporter(range * progress + start)
     End Function
 
     Public NotInheritable Class DistanceFunctions
-        Public Shared Function Cosine(ByVal lhs As Single(), ByVal rhs As Single()) As Single
+        Public Shared Function Cosine(lhs As Single(), rhs As Single()) As Single
             Return 1 - SIMD.DotProduct(lhs, rhs) / (SIMD.Magnitude(lhs) * SIMD.Magnitude(rhs))
         End Function
 
-        Public Shared Function CosineForNormalizedVectors(ByVal lhs As Single(), ByVal rhs As Single()) As Single
+        Public Shared Function CosineForNormalizedVectors(lhs As Single(), rhs As Single()) As Single
             Return 1 - SIMD.DotProduct(lhs, rhs)
         End Function
 
-        Public Shared Function Euclidean(ByVal lhs As Single(), ByVal rhs As Single()) As Single
+        Public Shared Function Euclidean(lhs As Single(), rhs As Single()) As Single
             Return Math.Sqrt(SIMD.Euclidean(lhs, rhs)) ' TODO: Replace with netcore3 MathF class when the framework is available
         End Function
     End Class
@@ -568,7 +568,7 @@ Public NotInheritable Class Umap
         Public NVertices As Integer = 0
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetDistanceFactor(ByVal distSquared As Single) As Single
+        Public Function GetDistanceFactor(distSquared As Single) As Single
             Return 1.0F / ((0.001F + distSquared) * CSng(A * Math.Pow(distSquared, B) + 1))
         End Function
     End Class

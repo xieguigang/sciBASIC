@@ -101,7 +101,7 @@ Namespace ApplicationServices.DynamicInterop
         ''' <param name="processName">Process name e.g. "uname"</param>
         ''' <param name="arguments">Arguments e.g. "-s"</param>
         ''' <returns>The output of the command to the standard output stream</returns>
-        Public Function ExecCommand(ByVal processName As String, ByVal arguments As String) As String
+        Public Function ExecCommand(processName As String, arguments As String) As String
             Using proc = New Process()
                 proc.StartInfo.FileName = processName
                 proc.StartInfo.Arguments = arguments
@@ -129,7 +129,7 @@ Namespace ApplicationServices.DynamicInterop
         ''' <returns>One or more full file names found to exist</returns>
         ''' <param name="dllName">short file name.</param>
         ''' <param name="envVarName">Environment variable name - default PATH</param>
-        Public Function FindFullPathEnvVar(ByVal dllName As String, ByVal Optional envVarName As String = "PATH") As String()
+        Public Function FindFullPathEnvVar(dllName As String, Optional envVarName As String = "PATH") As String()
             Dim searchPaths = If(Environment.GetEnvironmentVariable(envVarName), "").Split(Path.PathSeparator)
             Return FindFullPath(dllName, searchPaths)
         End Function
@@ -140,7 +140,7 @@ Namespace ApplicationServices.DynamicInterop
         ''' <returns>One or more full file names found to exist</returns>
         ''' <param name="dllName">short file name.</param>
         ''' <param name="directories">Directories in which to search for matching file names</param>
-        Public Function FindFullPath(ByVal dllName As String, ParamArray directories As String()) As String()
+        Public Function FindFullPath(dllName As String, ParamArray directories As String()) As String()
             Return directories.[Select](Function(directory) Path.Combine(directory, dllName)).Where(New Func(Of String, Boolean)(AddressOf File.Exists)).ToArray()
         End Function
 
@@ -154,7 +154,7 @@ Namespace ApplicationServices.DynamicInterop
         '''                                  Environment variable to use for search path(s) - 
         '''                                  defaults according to platform to PATH or LD_LIBRARY_PATH if empty.</param>
         ''' <returns> The found full path.</returns>
-        Public Function FindFirstFullPath(ByVal nativeLibFilename As String, ByVal Optional libname As String = "native library", ByVal Optional envVarName As String = "") As String
+        Public Function FindFirstFullPath(nativeLibFilename As String, Optional libname As String = "native library", Optional envVarName As String = "") As String
             If String.IsNullOrEmpty(nativeLibFilename) OrElse Not Path.IsPathRooted(nativeLibFilename) Then
                 nativeLibFilename = findFirstFullPath(nativeLibFilename, envVarName)
             ElseIf Not File.Exists(nativeLibFilename) Then
@@ -164,7 +164,7 @@ Namespace ApplicationServices.DynamicInterop
             Return nativeLibFilename
         End Function
 
-        Private Function findFirstFullPath(ByVal shortFileName As String, ByVal Optional envVarName As String = "") As String
+        Private Function findFirstFullPath(shortFileName As String, Optional envVarName As String = "") As String
             If String.IsNullOrEmpty(shortFileName) Then Throw New ArgumentNullException("shortFileName")
             Dim libSearchPathEnvVar = envVarName
             If String.IsNullOrEmpty(libSearchPathEnvVar) Then libSearchPathEnvVar = If(Environment.OSVersion.Platform = PlatformID.Win32NT, "PATH", "LD_LIBRARY_PATH")
@@ -188,7 +188,7 @@ Namespace ApplicationServices.DynamicInterop
         ''' <param name="libraryName"> Name of the library.</param>
         '''
         ''' <returns> The likely file name for the shared library.</returns>
-        Public Function CreateLibraryFileName(ByVal libraryName As String) As String
+        Public Function CreateLibraryFileName(libraryName As String) As String
             If String.IsNullOrEmpty(libraryName) Then Throw New ArgumentNullException("libraryName")
             Return If(Environment.OSVersion.Platform = PlatformID.Win32NT, libraryName & ".dll", "lib" & libraryName & ".so")
         End Function

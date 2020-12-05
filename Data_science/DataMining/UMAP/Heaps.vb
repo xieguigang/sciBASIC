@@ -1,5 +1,4 @@
-﻿Imports System
-Imports System.Collections.Generic
+﻿Imports Microsoft.VisualBasic.Math
 
 Friend Module Heaps
     ''' <summary>
@@ -7,27 +6,23 @@ Friend Module Heaps
     ''' are newly added to the list or not.Internally this is stored as a single array; the first axis determines whether we are looking at the array of candidate indices, the array of distances, or the
     ''' flag array for whether elements are new or not.Each of these arrays are of shape (``nPoints``, ``size``)
     ''' </summary>
-    Public Function MakeHeap(ByVal nPoints As Integer, ByVal size As Integer) As Heaps.Heap
+    Public Function MakeHeap(nPoints As Integer, size As Integer) As Heaps.Heap
         Dim heap = New Heaps.Heap()
-        heap.Add(MakeArrays(-1))
-        heap.Add(MakeArrays(Single.MaxValue))
-        heap.Add(MakeArrays(0))
+        heap.Add(MakeArrays(-1, nPoints, size))
+        heap.Add(MakeArrays(Single.MaxValue, nPoints, size))
+        heap.Add(MakeArrays(0, nPoints, size))
         Return heap
-        ''' Cannot convert LocalFunctionStatementSyntax, CONVERSION ERROR: Conversion for LocalFunctionStatement not implemented, please report this issue in 'float[][] MakeArrays(float ...' at character 990
-        ''' 
-        ''' 
-        ''' Input:
-        ''' 
-        Float[][] MakeArrays(float fillValue) => Utils.Empty(nPoints).Select(_ => Utils.Filled(size, fillValue)).ToArray();
+    End Function
 
-''' 
-        End Function
+    Private Function MakeArrays(fillValue As Single, nPoints As Integer, size As Integer)
+        Return Utils.Empty(nPoints).Select(Function(any) Utils.Filled(size, fillValue)).ToArray()
+    End Function
 
     ''' <summary>
     ''' Push a new element onto the heap. The heap stores potential neighbors for each data point.The ``row`` parameter determines which data point we are addressing, the ``weight`` determines the distance
     ''' (for heap sorting), the ``index`` is the element to add, and the flag determines whether this is to be considered a new addition.
     ''' </summary>
-    Public Function HeapPush(ByVal heap As Heaps.Heap, ByVal row As Integer, ByVal weight As Single, ByVal index As Integer, ByVal flag As Integer) As Integer
+    Public Function HeapPush(heap As Heaps.Heap, row As Integer, weight As Single, index As Integer, flag As Integer) As Integer
         Dim indices = heap(0)(row)
         Dim weights = heap(1)(row)
         If weight >= weights(0) Then Return 0
@@ -44,7 +39,7 @@ Friend Module Heaps
     ''' Push a new element onto the heap. The heap stores potential neighbors for each data point. The ``row`` parameter determines which data point we are addressing, the ``weight`` determines the distance
     ''' (for heap sorting), the ``index`` is the element to add, and the flag determines whether this is to be considered a new addition.
     ''' </summary>
-    Public Function UncheckedHeapPush(ByVal heap As Heaps.Heap, ByVal row As Integer, ByVal weight As Single, ByVal index As Integer, ByVal flag As Integer) As Integer
+    Public Function UncheckedHeapPush(heap As Heaps.Heap, row As Integer, weight As Single, index As Integer, flag As Integer) As Integer
         Dim indices = heap(0)(row)
         Dim weights = heap(1)(row)
         Dim isNew = heap(2)(row)
@@ -104,7 +99,7 @@ Friend Module Heaps
     ''' <summary>
     ''' Build a heap of candidate neighbors for nearest neighbor descent. For each vertex the candidate neighbors are any current neighbors, and any vertices that have the vertex as one of their nearest neighbors.
     ''' </summary>
-    Public Function BuildCandidates(ByVal currentGraph As Heaps.Heap, ByVal nVertices As Integer, ByVal nNeighbors As Integer, ByVal maxCandidates As Integer, ByVal random As IProvideRandomValues) As Heaps.Heap
+    Public Function BuildCandidates(currentGraph As Heaps.Heap, nVertices As Integer, nNeighbors As Integer, maxCandidates As Integer, random As IProvideRandomValues) As Heaps.Heap
         Dim candidateNeighbors = Heaps.MakeHeap(nVertices, maxCandidates)
 
         For i = 0 To nVertices - 1
@@ -127,7 +122,7 @@ Friend Module Heaps
     ''' Given an array of heaps (of indices and weights), unpack the heap out to give and array of sorted lists of indices and weights by increasing weight. This is effectively just the second half of heap sort
     ''' (the first half not being required since we already have the data in a heap).
     ''' </summary>
-    Public Function DeHeapSort(ByVal heap As Heaps.Heap) As (Integer()(), Single()())
+    Public Function DeHeapSort(heap As Heaps.Heap) As (Integer()(), Single()())
         ' Note: The comment on this method doesn't seem to quite fit with the method signature (where a single Heap is provided, not an array of Heaps)
         Dim indices = heap(0)
         Dim weights = heap(1)
@@ -156,7 +151,7 @@ Friend Module Heaps
     ''' <summary>
     ''' Restore the heap property for a heap with an out of place element at position ``elt``. This works with a heap pair where heap1 carries the weights and heap2 holds the corresponding elements.
     ''' </summary>
-    Private Sub SiftDown(ByVal heap1 As Single(), ByVal heap2 As Single(), ByVal ceiling As Integer, ByVal elt As Integer)
+    Private Sub SiftDown(heap1 As Single(), heap2 As Single(), ceiling As Integer, elt As Integer)
         While elt * 2 + 1 < ceiling
             Dim leftChild = elt * 2 + 1
             Dim rightChild = leftChild + 1
@@ -181,7 +176,7 @@ Friend Module Heaps
     ''' <summary>
     ''' Search the heap for the smallest element that is still flagged
     ''' </summary>
-    Public Function SmallestFlagged(ByVal heap As Heaps.Heap, ByVal row As Integer) As Integer
+    Public Function SmallestFlagged(heap As Heaps.Heap, row As Integer) As Integer
         Dim ind = heap(0)(row)
         Dim dist = heap(1)(row)
         Dim flag = heap(2)(row)
@@ -211,13 +206,13 @@ Friend Module Heaps
 
         ReadOnly _values As New List(Of Single()())
 
-        Default Public ReadOnly Property Item(ByVal index As Integer) As Single()()
+        Default Public ReadOnly Property Item(index As Integer) As Single()()
             Get
                 Return _values(index)
             End Get
         End Property
 
-        Public Sub Add(ByVal value As Single()())
+        Public Sub Add(value As Single()())
             _values.Add(value)
         End Sub
     End Class

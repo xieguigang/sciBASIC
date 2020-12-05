@@ -51,7 +51,7 @@ Namespace ApplicationServices.DynamicInterop
     <SecurityPermission(SecurityAction.Demand, Flags:=SecurityPermissionFlag.UnmanagedCode)>
     Friend Class UnixLibraryLoader : Implements IDynamicLibraryLoader
 
-        Public Function LoadLibrary(ByVal filename As String) As IntPtr Implements IDynamicLibraryLoader.LoadLibrary
+        Public Function LoadLibrary(filename As String) As IntPtr Implements IDynamicLibraryLoader.LoadLibrary
             Return InternalLoadLibrary(filename)
         End Function
 
@@ -68,18 +68,18 @@ Namespace ApplicationServices.DynamicInterop
         ''' </summary>
         ''' <param name="handle">The pointer resulting from loading the library</param>
         ''' <returns>True if the function dlclose returned 0</returns>
-        Public Function FreeLibrary(ByVal handle As IntPtr) As Boolean Implements IDynamicLibraryLoader.FreeLibrary
+        Public Function FreeLibrary(handle As IntPtr) As Boolean Implements IDynamicLibraryLoader.FreeLibrary
             ' according to the manual page on a Debian box
             ' The function dlclose() returns 0 on success, and nonzero on error.
             Dim status = dlclose(handle)
             Return status = 0
         End Function
 
-        Public Function GetFunctionAddress(ByVal hModule As IntPtr, ByVal lpProcName As String) As IntPtr Implements IDynamicLibraryLoader.GetFunctionAddress
+        Public Function GetFunctionAddress(hModule As IntPtr, lpProcName As String) As IntPtr Implements IDynamicLibraryLoader.GetFunctionAddress
             Return dlsym(hModule, lpProcName)
         End Function
 
-        Friend Shared Function InternalLoadLibrary(ByVal filename As String) As IntPtr
+        Friend Shared Function InternalLoadLibrary(filename As String) As IntPtr
             Const RTLD_LAZY = &H1
             '            if (filename.StartsWith ("/")) {
             '                return dlopen (filename, RTLD_LAZY);
@@ -96,14 +96,14 @@ Namespace ApplicationServices.DynamicInterop
             Return result
         End Function
 
-        Private Shared Function getSearchPaths(ByVal pathsEnvVar As String) As List(Of String)
+        Private Shared Function getSearchPaths(pathsEnvVar As String) As List(Of String)
             Dim searchPaths = If(Environment.GetEnvironmentVariable(pathsEnvVar), "").Split(Path.PathSeparator).ToList()
             Return searchPaths
         End Function
 
         <DllImport("libdl")>
         Private Shared Function dlopen(
-        <MarshalAs(UnmanagedType.LPStr)> ByVal filename As String, ByVal flag As Integer) As IntPtr
+        <MarshalAs(UnmanagedType.LPStr)> filename As String, flag As Integer) As IntPtr
         End Function
 
         <DllImport("libdl")>
@@ -112,12 +112,12 @@ Namespace ApplicationServices.DynamicInterop
 
         <DllImport("libdl", EntryPoint:="dlclose")>
         <ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)>
-        Private Shared Function dlclose(ByVal hModule As IntPtr) As Integer
+        Private Shared Function dlclose(hModule As IntPtr) As Integer
         End Function
 
         <DllImport("libdl", EntryPoint:="dlsym")>
-        Private Shared Function dlsym(ByVal hModule As IntPtr,
-        <MarshalAs(UnmanagedType.LPStr)> ByVal lpProcName As String) As IntPtr
+        Private Shared Function dlsym(hModule As IntPtr,
+        <MarshalAs(UnmanagedType.LPStr)> lpProcName As String) As IntPtr
         End Function
     End Class
 End Namespace

@@ -15,7 +15,7 @@ Public Interface IProvideRandomValues
     ''' </summary>
     ''' <param name="buffer">An array of bytes to contain random numbers.</param>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Sub NextFloats(ByVal buffer As Single())
+    Sub NextFloats(buffer As Single())
 
     ''' <summary>
     ''' Returns a random integer that is within a specified range.
@@ -25,5 +25,5 @@ Public Interface IProvideRandomValues
     ''' <returns>A 32-bit signed integer greater than or equal to minValue and less than maxValue; that is, the range of return values includes minValue but not maxValue. If minValue
     ''' equals maxValue, minValue is returned.</returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Function [Next](ByVal minValue As Integer, ByVal maxValue As Integer) As Integer
+    Function [Next](minValue As Integer, maxValue As Integer) As Integer
 End Interface
