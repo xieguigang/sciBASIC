@@ -12,7 +12,7 @@ Namespace scopely.msgpacksharp
         Private ReadOnly unixEpocUtc As Date = New DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)
         Private Const nullProhibitedExceptionMessage As String = "Null value encountered but is prohibited"
 
-        Friend Function ReadNumArrayElements(ByVal reader As BinaryReader) As Integer
+        Friend Function ReadNumArrayElements(reader As BinaryReader) As Integer
             Dim header As Byte = reader.ReadByte()
             Dim numElements = -1
 
@@ -31,7 +31,7 @@ Namespace scopely.msgpacksharp
             Return numElements
         End Function
 
-        Friend Sub DeserializeArray(ByVal array As Array, ByVal numElements As Integer, ByVal reader As BinaryReader)
+        Friend Sub DeserializeArray(array As Array, numElements As Integer, reader As BinaryReader)
             Dim elementType As Type = array.GetType().GetElementType()
 
             For i = 0 To numElements - 1
@@ -50,7 +50,7 @@ Namespace scopely.msgpacksharp
             Next
         End Sub
 
-        Friend Function DeserializeCollection(ByVal collection As IList, ByVal reader As BinaryReader) As Boolean
+        Friend Function DeserializeCollection(collection As IList, reader As BinaryReader) As Boolean
             Dim isNull = True
             If Not collection.GetType().IsGenericType Then Throw New NotSupportedException("Only generic List<T> lists are supported")
             Dim elementType As Type = collection.GetType().GetGenericArguments()(0)
@@ -78,7 +78,7 @@ Namespace scopely.msgpacksharp
             Return isNull
         End Function
 
-        Friend Function DeserializeCollection(ByVal collection As IDictionary, ByVal reader As BinaryReader, ByVal Optional header As Byte? = Nothing) As Boolean
+        Friend Function DeserializeCollection(collection As IDictionary, reader As BinaryReader, Optional header As Byte? = Nothing) As Boolean
             Dim isNull = True
             If Not collection.GetType().IsGenericType Then Throw New NotSupportedException("Only generic Dictionary<T,U> dictionaries are supported")
             Dim keyType As Type = collection.GetType().GetGenericArguments()(0)
@@ -123,23 +123,23 @@ Namespace scopely.msgpacksharp
             Return isNull
         End Function
 
-        Friend Function ToUnixMillis(ByVal dateTime As Date) As Long
+        Friend Function ToUnixMillis(dateTime As Date) As Long
             Return CLng(dateTime.ToUniversalTime().Subtract(unixEpocUtc).TotalMilliseconds)
         End Function
 
-        Friend Function ToUnixMillis(ByVal span As TimeSpan) As Long
+        Friend Function ToUnixMillis(span As TimeSpan) As Long
             Return span.TotalMilliseconds
         End Function
 
-        Friend Function ToDateTime(ByVal value As Long) As Date
+        Friend Function ToDateTime(value As Long) As Date
             Return unixEpocUtc.AddMilliseconds(value).ToLocalTime()
         End Function
 
-        Friend Function ToTimeSpan(ByVal value As Long) As TimeSpan
+        Friend Function ToTimeSpan(value As Long) As TimeSpan
             Return New TimeSpan(0, 0, 0, 0, value)
         End Function
 
-        Friend Function DeserializeValue(ByVal type As Type, ByVal reader As BinaryReader, ByVal nilImplication As NilImplication) As Object
+        Friend Function DeserializeValue(type As Type, reader As BinaryReader, nilImplication As NilImplication) As Object
             Dim result As Object = Nothing
             Dim isRichType = False
 
@@ -266,7 +266,7 @@ Namespace scopely.msgpacksharp
             Return result
         End Function
 
-        Friend Function ReadHeader(ByVal t As Type, ByVal reader As BinaryReader, ByVal nilImplication As NilImplication, <Out> ByRef result As Object) As Byte
+        Friend Function ReadHeader(t As Type, reader As BinaryReader, nilImplication As NilImplication, <Out> ByRef result As Object) As Byte
             result = Nothing
             Dim v As Byte = reader.ReadByte()
 
@@ -283,9 +283,9 @@ Namespace scopely.msgpacksharp
             Return v
         End Function
 
-        Friend Function ReadMsgPackBoolean(ByVal reader As BinaryReader, ByVal nilImplication As NilImplication) As Object
-            Dim result As Object
-            Dim v = ReadHeader(GetType(Boolean), reader, nilImplication, result)
+        Friend Function ReadMsgPackBoolean(reader As BinaryReader, nilImplication As NilImplication) As Object
+            Dim result As Object = Nothing
+            Dim v As Byte = ReadHeader(GetType(Boolean), reader, nilImplication, result)
 
             If v <> Formats.NIL Then
                 result = v = Bool.TRUE
@@ -294,7 +294,7 @@ Namespace scopely.msgpacksharp
             Return result
         End Function
 
-        Friend Function ReadMsgPackFloat(ByVal reader As BinaryReader, ByVal nilImplication As NilImplication, ByVal Optional header As Byte = 0) As Object
+        Friend Function ReadMsgPackFloat(reader As BinaryReader, nilImplication As NilImplication, Optional header As Byte = 0) As Object
             Dim result As Object = Nothing
             Dim v = If(header = 0, ReadHeader(GetType(Single), reader, nilImplication, result), header)
 
@@ -308,7 +308,7 @@ Namespace scopely.msgpacksharp
             Return result
         End Function
 
-        Friend Function ReadMsgPackDouble(ByVal reader As BinaryReader, ByVal nilImplication As NilImplication, ByVal Optional header As Byte = 0) As Object
+        Friend Function ReadMsgPackDouble(reader As BinaryReader, nilImplication As NilImplication, Optional header As Byte = 0) As Object
             Dim result As Object = Nothing
             Dim v = If(header = 0, ReadHeader(GetType(Double), reader, nilImplication, result), header)
 
@@ -322,7 +322,7 @@ Namespace scopely.msgpacksharp
             Return result
         End Function
 
-        Friend Function ReadMsgPackULong(ByVal reader As BinaryReader, ByVal nilImplication As NilImplication, ByVal Optional header As Byte = 0) As Object
+        Friend Function ReadMsgPackULong(reader As BinaryReader, nilImplication As NilImplication, Optional header As Byte = 0) As Object
             Dim result As Object = Nothing
             Dim v = If(header = 0, ReadHeader(GetType(ULong), reader, nilImplication, result), header)
 
@@ -334,7 +334,7 @@ Namespace scopely.msgpacksharp
             Return result
         End Function
 
-        Friend Function ReadMsgPackInt(ByVal reader As BinaryReader, ByVal nilImplication As NilImplication, ByVal Optional header As Byte = 0) As Object
+        Friend Function ReadMsgPackInt(reader As BinaryReader, nilImplication As NilImplication, Optional header As Byte = 0) As Object
             Dim result As Object = Nothing
             Dim v = If(header = 0, ReadHeader(GetType(Long), reader, nilImplication, result), header)
 
@@ -373,7 +373,7 @@ Namespace scopely.msgpacksharp
             Return result
         End Function
 
-        Friend Function ReadMsgPackString(ByVal reader As BinaryReader, ByVal nilImplication As NilImplication, ByVal Optional header As Byte = 0) As Object
+        Friend Function ReadMsgPackString(reader As BinaryReader, nilImplication As NilImplication, Optional header As Byte = 0) As Object
             Dim result As Object = Nothing
             Dim v = If(header = 0, ReadHeader(GetType(String), reader, nilImplication, result), header)
 
@@ -397,7 +397,7 @@ Namespace scopely.msgpacksharp
             Return result
         End Function
 
-        Friend Sub WriteMsgPack(ByVal writer As BinaryWriter, ByVal val As Boolean)
+        Friend Sub WriteMsgPack(writer As BinaryWriter, val As Boolean)
             If val Then
                 writer.Write(Bool.TRUE)
             Else
@@ -405,43 +405,43 @@ Namespace scopely.msgpacksharp
             End If
         End Sub
 
-        Friend Sub WriteMsgPack(ByVal writer As BinaryWriter, ByVal val As Single)
+        Friend Sub WriteMsgPack(writer As BinaryWriter, val As Single)
             Dim data = BitConverter.GetBytes(val)
             If BitConverter.IsLittleEndian Then Array.Reverse(data)
             writer.Write(Formats.FLOAT_32)
             writer.Write(data)
         End Sub
 
-        Friend Sub WriteMsgPack(ByVal writer As BinaryWriter, ByVal val As Double)
+        Friend Sub WriteMsgPack(writer As BinaryWriter, val As Double)
             Dim data = BitConverter.GetBytes(val)
             If BitConverter.IsLittleEndian Then Array.Reverse(data)
             writer.Write(Formats.FLOAT_64)
             writer.Write(data)
         End Sub
 
-        Friend Sub WriteMsgPack(ByVal writer As BinaryWriter, ByVal val As Date)
+        Friend Sub WriteMsgPack(writer As BinaryWriter, val As Date)
             WriteMsgPack(writer, ToUnixMillis(val))
         End Sub
 
-        Friend Sub WriteMsgPack(ByVal writer As BinaryWriter, ByVal val As TimeSpan)
+        Friend Sub WriteMsgPack(writer As BinaryWriter, val As TimeSpan)
             WriteMsgPack(writer, ToUnixMillis(val))
         End Sub
 
-        Friend Sub WriteMsgPack(ByVal writer As BinaryWriter, ByVal val As SByte)
+        Friend Sub WriteMsgPack(writer As BinaryWriter, val As SByte)
             writer.Write(Formats.INT_8)
             writer.Write(val)
         End Sub
 
-        Friend Sub WriteMsgPack(ByVal writer As BinaryWriter, ByVal val As Byte)
+        Friend Sub WriteMsgPack(writer As BinaryWriter, val As Byte)
             writer.Write(Formats.UINT_8)
             writer.Write(val)
         End Sub
 
-        Friend Sub WriteMsgPack(ByVal writer As BinaryWriter, ByVal val As Char)
+        Friend Sub WriteMsgPack(writer As BinaryWriter, val As Char)
             MsgPackIO.WriteMsgPack(writer, Microsoft.VisualBasic.AscW(val))
         End Sub
 
-        Friend Sub WriteMsgPack(ByVal writer As BinaryWriter, ByVal val As UShort)
+        Friend Sub WriteMsgPack(writer As BinaryWriter, val As UShort)
             If val <= FixedInteger.POSITIVE_MAX Then
                 writer.Write(CByte(val))
             ElseIf val <= Byte.MaxValue Then
@@ -455,7 +455,7 @@ Namespace scopely.msgpacksharp
             End If
         End Sub
 
-        Friend Sub WriteMsgPack(ByVal writer As BinaryWriter, ByVal val As Short)
+        Friend Sub WriteMsgPack(writer As BinaryWriter, val As Short)
             If val >= 0 AndAlso val <= FixedInteger.POSITIVE_MAX Then
                 writer.Write(CByte(val))
             ElseIf val >= 0 AndAlso val <= Byte.MaxValue Then
@@ -472,7 +472,7 @@ Namespace scopely.msgpacksharp
             End If
         End Sub
 
-        Friend Sub WriteMsgPack(ByVal writer As BinaryWriter, ByVal val As UInteger)
+        Friend Sub WriteMsgPack(writer As BinaryWriter, val As UInteger)
             If val <= FixedInteger.POSITIVE_MAX Then
                 writer.Write(CByte(val))
             ElseIf val <= Byte.MaxValue Then
@@ -492,7 +492,7 @@ Namespace scopely.msgpacksharp
             End If
         End Sub
 
-        Friend Sub WriteMsgPack(ByVal writer As BinaryWriter, ByVal val As Integer)
+        Friend Sub WriteMsgPack(writer As BinaryWriter, val As Integer)
             If val >= 0 AndAlso val <= FixedInteger.POSITIVE_MAX Then
                 writer.Write(CByte(val))
             ElseIf val >= 0 AndAlso val <= Byte.MaxValue Then
@@ -521,7 +521,7 @@ Namespace scopely.msgpacksharp
             End If
         End Sub
 
-        Friend Sub WriteMsgPack(ByVal writer As BinaryWriter, ByVal val As ULong)
+        Friend Sub WriteMsgPack(writer As BinaryWriter, val As ULong)
             If val <= FixedInteger.POSITIVE_MAX Then
                 writer.Write(CByte(val))
             ElseIf val <= Byte.MaxValue Then
@@ -547,7 +547,7 @@ Namespace scopely.msgpacksharp
             End If
         End Sub
 
-        Friend Sub WriteMsgPack(ByVal writer As BinaryWriter, ByVal val As Long)
+        Friend Sub WriteMsgPack(writer As BinaryWriter, val As Long)
             If val >= 0 AndAlso val <= FixedInteger.POSITIVE_MAX Then
                 writer.Write(CByte(val))
             ElseIf val >= 0 AndAlso val <= Byte.MaxValue Then
@@ -588,7 +588,7 @@ Namespace scopely.msgpacksharp
             End If
         End Sub
 
-        Friend Sub WriteMsgPack(ByVal writer As BinaryWriter, ByVal s As String)
+        Friend Sub WriteMsgPack(writer As BinaryWriter, s As String)
             If String.IsNullOrEmpty(s) Then
                 writer.Write(FixedString.MIN)
             Else
@@ -621,14 +621,14 @@ Namespace scopely.msgpacksharp
             End If
         End Sub
 
-        Friend Sub SerializeEnumerable(ByVal collection As IEnumerator, ByVal writer As BinaryWriter, ByVal serializationMethod As SerializationMethod)
+        Friend Sub SerializeEnumerable(collection As IEnumerator, writer As BinaryWriter, serializationMethod As SerializationMethod)
             While collection.MoveNext()
                 Dim val = collection.Current
                 SerializeValue(val, writer, serializationMethod)
             End While
         End Sub
 
-        Friend Sub SerializeValue(ByVal val As Object, ByVal writer As BinaryWriter, ByVal serializationMethod As SerializationMethod)
+        Friend Sub SerializeValue(val As Object, writer As BinaryWriter, serializationMethod As SerializationMethod)
             If val Is Nothing Then
                 writer.Write(Formats.NIL)
             Else

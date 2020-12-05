@@ -13,17 +13,17 @@ Namespace scopely.msgpacksharp
         Private serializedType As Type
         Private Shared typeInfos As Dictionary(Of Type, TypeInfo) = New Dictionary(Of Type, TypeInfo)()
 
-        Public Sub New(ByVal type As Type)
+        Public Sub New(type As Type)
             serializedType = type
             BuildMap()
         End Sub
 
-        Public Sub New(ByVal type As Type, ByVal propertyDefinitions As IList(Of MessagePackMemberDefinition))
+        Public Sub New(type As Type, propertyDefinitions As IList(Of MessagePackMemberDefinition))
             serializedType = type
             BuildMap(propertyDefinitions)
         End Sub
 
-        Friend Shared Function IsGenericList(ByVal type As Type) As Boolean
+        Friend Shared Function IsGenericList(type As Type) As Boolean
             Dim info As TypeInfo = Nothing
 
             If Not typeInfos.TryGetValue(type, info) Then
@@ -34,7 +34,7 @@ Namespace scopely.msgpacksharp
             Return info.IsGenericList
         End Function
 
-        Friend Shared Function IsGenericDictionary(ByVal type As Type) As Boolean
+        Friend Shared Function IsGenericDictionary(type As Type) As Boolean
             Dim info As TypeInfo = Nothing
 
             If Not typeInfos.TryGetValue(type, info) Then
@@ -45,7 +45,7 @@ Namespace scopely.msgpacksharp
             Return info.IsGenericDictionary
         End Function
 
-        Friend Shared Function IsSerializableGenericCollection(ByVal type As Type) As Boolean
+        Friend Shared Function IsSerializableGenericCollection(type As Type) As Boolean
             Dim info As TypeInfo = Nothing
 
             If Not typeInfos.TryGetValue(type, info) Then
@@ -56,7 +56,7 @@ Namespace scopely.msgpacksharp
             Return info.IsSerializableGenericCollection
         End Function
 
-        Private Shared Function GetSerializer(ByVal t As Type) As MsgPackSerializer
+        Private Shared Function GetSerializer(t As Type) As MsgPackSerializer
             Dim result As MsgPackSerializer = Nothing
 
             SyncLock DefaultContext.Serializers
@@ -69,15 +69,15 @@ Namespace scopely.msgpacksharp
             Return result
         End Function
 
-        Public Shared Function SerializeObject(ByVal o As Object) As Byte()
+        Public Shared Function SerializeObject(o As Object) As Byte()
             Return GetSerializer(o.GetType()).Serialize(o)
         End Function
 
-        Public Shared Function SerializeObject(ByVal o As Object, ByVal buffer As Byte(), ByVal offset As Integer) As Integer
+        Public Shared Function SerializeObject(o As Object, buffer As Byte(), offset As Integer) As Integer
             Return GetSerializer(o.GetType()).Serialize(o, buffer, offset)
         End Function
 
-        Public Function Serialize(ByVal o As Object) As Byte()
+        Public Function Serialize(o As Object) As Byte()
             Dim result As Byte() = Nothing
 
             Using stream As MemoryStream = New MemoryStream()
@@ -93,7 +93,7 @@ Namespace scopely.msgpacksharp
             Return result
         End Function
 
-        Public Function Serialize(ByVal o As Object, ByVal buffer As Byte(), ByVal offset As Integer) As Integer
+        Public Function Serialize(o As Object, buffer As Byte(), offset As Integer) As Integer
             Dim endPos = 0
 
             Using stream As MemoryStream = New MemoryStream(buffer)
@@ -108,7 +108,7 @@ Namespace scopely.msgpacksharp
             Return endPos
         End Function
 
-        Public Shared Function Deserialize(Of T As New)(ByVal buffer As Byte()) As T
+        Public Shared Function Deserialize(Of T As New)(buffer As Byte()) As T
             Using stream As MemoryStream = New MemoryStream(buffer)
 
                 Using reader As BinaryReader = New BinaryReader(stream)
@@ -118,11 +118,11 @@ Namespace scopely.msgpacksharp
             End Using
         End Function
 
-        Public Shared Function Deserialize(ByVal t As Type, ByVal buffer As Byte()) As Object
+        Public Shared Function Deserialize(t As Type, buffer As Byte()) As Object
             Return Deserialize(t, buffer, 0)
         End Function
 
-        Public Shared Function Deserialize(ByVal t As Type, ByVal buffer As Byte(), ByVal offset As Integer) As Object
+        Public Shared Function Deserialize(t As Type, buffer As Byte(), offset As Integer) As Object
             Using stream As MemoryStream = New MemoryStream(buffer)
                 stream.Seek(offset, SeekOrigin.Begin)
 
@@ -133,7 +133,7 @@ Namespace scopely.msgpacksharp
             End Using
         End Function
 
-        Public Shared Function DeserializeObject(ByVal o As Object, ByVal buffer As Byte(), ByVal offset As Integer) As Integer
+        Public Shared Function DeserializeObject(o As Object, buffer As Byte(), offset As Integer) As Integer
             Dim numRead = 0
 
             Using stream As MemoryStream = New MemoryStream(buffer)
@@ -148,7 +148,7 @@ Namespace scopely.msgpacksharp
             Return numRead
         End Function
 
-        Friend Shared Function DeserializeObject(ByVal o As Object, ByVal reader As BinaryReader, ByVal Optional nilImplication As NilImplication = NilImplication.MemberDefault) As Object
+        Friend Shared Function DeserializeObject(o As Object, reader As BinaryReader, Optional nilImplication As NilImplication = NilImplication.MemberDefault) As Object
             Dim list = TryCast(o, IList)
 
             If list IsNot Nothing Then
@@ -164,7 +164,7 @@ Namespace scopely.msgpacksharp
             Return GetSerializer(o.GetType()).Deserialize(o, reader)
         End Function
 
-        Friend Shared Function DeserializeObjectType(ByVal type As Type, ByVal reader As BinaryReader, ByVal Optional nilImplication As NilImplication = NilImplication.MemberDefault) As Object
+        Friend Shared Function DeserializeObjectType(type As Type, reader As BinaryReader, Optional nilImplication As NilImplication = NilImplication.MemberDefault) As Object
             If type.IsPrimitive OrElse type Is GetType(String) OrElse IsSerializableGenericCollection(type) Then
                 Return DeserializeValue(type, reader, nilImplication)
             End If
@@ -175,7 +175,7 @@ Namespace scopely.msgpacksharp
             Return GetSerializer(type).Deserialize(result, reader)
         End Function
 
-        Friend Function Deserialize(ByVal result As Object, ByVal reader As BinaryReader) As Object
+        Friend Function Deserialize(result As Object, reader As BinaryReader) As Object
             Dim header As Byte = reader.ReadByte()
 
             If header = Formats.NIL Then
@@ -222,11 +222,11 @@ Namespace scopely.msgpacksharp
             Return result
         End Function
 
-        Friend Shared Sub SerializeObject(ByVal o As Object, ByVal writer As BinaryWriter)
+        Friend Shared Sub SerializeObject(o As Object, writer As BinaryWriter)
             GetSerializer(o.GetType()).Serialize(o, writer)
         End Sub
 
-        Private Sub Serialize(ByVal o As Object, ByVal writer As BinaryWriter)
+        Private Sub Serialize(o As Object, writer As BinaryWriter)
             If o Is Nothing Then
                 writer.Write(Formats.NIL)
             Else
@@ -316,7 +316,7 @@ Namespace scopely.msgpacksharp
             End If
         End Sub
 
-        Private Sub BuildMap(ByVal propertyDefinitions As IList(Of MessagePackMemberDefinition))
+        Private Sub BuildMap(propertyDefinitions As IList(Of MessagePackMemberDefinition))
             If Not serializedType.IsPrimitive AndAlso serializedType IsNot GetType(String) AndAlso Not IsSerializableGenericCollection(serializedType) Then
                 props = New List(Of SerializableProperty)()
                 propsByName = New Dictionary(Of String, SerializableProperty)()

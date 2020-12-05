@@ -12,7 +12,7 @@ Namespace MsgPack.Serialization
 
         Private ReadOnly idField As Integer
 
-        Public Sub New(ByVal id As Integer)
+        Public Sub New(id As Integer)
             idField = id
             NilImplication = NilImplication.MemberDefault
         End Sub

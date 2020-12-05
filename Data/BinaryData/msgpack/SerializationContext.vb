@@ -10,7 +10,7 @@ Namespace scopely.msgpacksharp
             Get
                 Return _Serializers
             End Get
-            Private Set(ByVal value As Dictionary(Of Type, MsgPackSerializer))
+            Private Set(value As Dictionary(Of Type, MsgPackSerializer))
                 _Serializers = value
             End Set
         End Property
@@ -21,7 +21,7 @@ Namespace scopely.msgpacksharp
             Get
                 Return _serializationMethod
             End Get
-            Set(ByVal value As SerializationMethod)
+            Set(value As SerializationMethod)
 
                 If _serializationMethod <> value Then
                     Select Case value
@@ -41,7 +41,7 @@ Namespace scopely.msgpacksharp
             _serializationMethod = SerializationMethod.Array
         End Sub
 
-        Public Sub RegisterSerializer(Of T)(ByVal propertyDefinitions As IList(Of MessagePackMemberDefinition))
+        Public Sub RegisterSerializer(Of T)(propertyDefinitions As IList(Of MessagePackMemberDefinition))
             Serializers(GetType(T)) = New MsgPackSerializer(GetType(T), propertyDefinitions)
         End Sub
 

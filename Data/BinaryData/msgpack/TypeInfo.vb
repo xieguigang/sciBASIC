@@ -2,7 +2,7 @@
 
 Namespace scopely.msgpacksharp
     Public Class TypeInfo
-        Public Sub New(ByVal type As Type)
+        Public Sub New(type As Type)
             IsGenericList = type.GetInterface("System.Collections.Generic.IList`1") IsNot Nothing
             IsGenericDictionary = type.GetInterface("System.Collections.Generic.IDictionary`2") IsNot Nothing
             IsSerializableGenericCollection = IsGenericList OrElse IsGenericDictionary
