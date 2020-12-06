@@ -56,6 +56,10 @@ Friend NotInheritable Class OptimizationState
     Public Gamma As Double = 1
     Public A As Double = 1.57694352F
     Public B As Double = 0.8950609F
+
+    ''' <summary>
+    ''' the dimension result of the projection operation
+    ''' </summary>
     Public [Dim] As Integer = 2
     Public NEpochs As Integer = 500
     Public NVertices As Integer = 0

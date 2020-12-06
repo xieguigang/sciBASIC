@@ -52,6 +52,11 @@ Namespace Imaging.LayoutModel
     ''' <summary>
     ''' Implements a 2-dimensional point with <see cref="Double"/> precision coordinates.
     ''' </summary>
+    ''' <remarks>
+    ''' 这个数据对象主要是用来储存作图的原始数据
+    ''' 因为如果作图的原始数据值很高的话，往往会超过single的上限，所以会需要使用double
+    ''' 类型的数据进行存储，在经过绘图函数的scale之后，就可以转换为pointf对象进行作图了
+    ''' </remarks>
     <Serializable> Public Class Point2D : Implements ICloneable
 
         ''' <summary>
