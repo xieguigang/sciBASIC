@@ -1,41 +1,41 @@
 ﻿#Region "Microsoft.VisualBasic::24689a5f426a13cfcc5c14fafd488e64, gr\network-visualization\Visualizer\CanvasScaler.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module CanvasScaler
-    ' 
-    '     Function: (+2 Overloads) AutoScaler, CalculateNodePositions, CentralOffsets
-    ' 
-    ' /********************************************************************************/
+' Module CanvasScaler
+' 
+'     Function: (+2 Overloads) AutoScaler, CalculateNodePositions, CentralOffsets
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -177,6 +177,8 @@ Public Module CanvasScaler
     ''' <param name="nodes"></param>
     ''' <param name="size"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function CentralOffsets(nodes As Dictionary(Of Node, PointF), size As SizeF) As PointF
         Return nodes.Values.CentralOffset(size)
@@ -185,23 +187,16 @@ Public Module CanvasScaler
     <Extension>
     Public Function AutoScaler(boundary As RectangleF, frameSize As SizeF, padding As Padding) As SizeF
         With boundary
-            Dim w = frameSize.Width / (.Width + padding.Horizontal)
-            Dim h = frameSize.Height / (.Height + padding.Vertical)
+            Dim w = (frameSize.Width - padding.Horizontal) / .Width
+            Dim h = (frameSize.Height - padding.Vertical) / .Height
 
             Return New SizeF(w, h)
         End With
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function AutoScaler(shape As IEnumerable(Of PointF), frameSize As SizeF, padding As Padding) As SizeF
-        With shape.GetBounds
-            Dim width = frameSize.Width - padding.Horizontal
-            Dim height = frameSize.Height - padding.Vertical
-
-            Return New SizeF(
-                width:=width / .Width,
-                height:=height / .Height
-            )
-        End With
+        Return shape.GetBounds.AutoScaler(frameSize, padding)
     End Function
 End Module
