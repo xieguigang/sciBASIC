@@ -52,6 +52,12 @@ Imports Microsoft.VisualBasic.Language.Python
 Imports Microsoft.VisualBasic.Math
 Imports stdNum = System.Math
 
+''' <summary>
+''' Umap projection algorithm module
+''' </summary>
+''' <remarks>
+''' https://github.com/curiosity-ai/umap-sharp
+''' </remarks>
 Public NotInheritable Class Umap
 
     Const SMOOTH_K_TOLERANCE As Double = 0.00001F

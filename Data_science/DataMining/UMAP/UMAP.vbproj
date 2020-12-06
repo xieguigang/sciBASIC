@@ -84,6 +84,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UmapProject.vb" />
     <Compile Include="Components\Heaps\Heap.vb" />
     <Compile Include="KNNState.vb" />
     <Compile Include="Components\DistanceCalculation.vb" />
