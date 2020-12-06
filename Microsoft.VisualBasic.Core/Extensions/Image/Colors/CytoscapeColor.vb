@@ -96,6 +96,13 @@ Namespace Imaging
         ''' </summary>
         ''' <param name="color"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 2020-12-06
+        ''' 
+        ''' alpha value in html color is not supported, you will lost the 
+        ''' alpha value from this function when your color value is 
+        ''' translate to html color string.
+        ''' </remarks>
         ''' 
         <DebuggerStepThrough>
         <Extension>

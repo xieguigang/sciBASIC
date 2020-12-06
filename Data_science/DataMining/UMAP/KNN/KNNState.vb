@@ -44,5 +44,7 @@ Friend Class KNNState
     Friend _knnIndices As Integer()() = Nothing
     Friend _knnDistances As Double()() = Nothing
 
+    Friend parameters As KNNArguments
+
 End Class
 

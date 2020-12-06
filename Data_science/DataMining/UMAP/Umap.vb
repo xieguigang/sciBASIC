@@ -60,11 +60,10 @@ Imports stdNum = System.Math
 ''' </remarks>
 Public NotInheritable Class Umap
 
-    Const SMOOTH_K_TOLERANCE As Double = 0.00001F
-    Const MIN_K_DIST_SCALE As Double = 0.001F
+    Friend Const SMOOTH_K_TOLERANCE As Double = 0.00001F
+    Friend Const MIN_K_DIST_SCALE As Double = 0.001F
 
     ReadOnly _learningRate As Double = 1.0F
-    ReadOnly _localConnectivity As Double = 1.0F
     ReadOnly _minDist As Double = 0.1F
     ReadOnly _negativeSampleRate As Integer = 5
     ReadOnly _repulsionStrength As Double = 1
@@ -72,7 +71,6 @@ Public NotInheritable Class Umap
     ReadOnly _spread As Double = 1
     ReadOnly _distanceFn As DistanceCalculation
     ReadOnly _random As IProvideRandomValues
-    ReadOnly _nNeighbors As Integer
     ReadOnly _customNumberOfEpochs As Integer?
     ReadOnly _progressReporter As IProgressReporter
     ReadOnly _optimizationState As OptimizationState
@@ -80,7 +78,7 @@ Public NotInheritable Class Umap
     ''' <summary>
     ''' KNN state (can be precomputed and supplied via initializeFit)
     ''' </summary>
-    ReadOnly knn As New KNNState
+    ReadOnly knn As KNNState
 
     ''' <summary>
     ''' Internal graph connectivity representation
@@ -105,16 +103,22 @@ Public NotInheritable Class Umap
                    Optional random As IProvideRandomValues = Nothing,
                    Optional dimensions As Integer = 2,
                    Optional numberOfNeighbors As Integer = 15,
+                   Optional localConnectivity As Double = 1,
+                   Optional KnnIter As Integer = 64,
+                   Optional bandwidth As Double = 1,
                    Optional customNumberOfEpochs As Integer? = Nothing,
                    Optional progressReporter As IProgressReporter = Nothing)
 
         If customNumberOfEpochs IsNot Nothing AndAlso customNumberOfEpochs <= 0 Then
             Throw New ArgumentOutOfRangeException(NameOf(customNumberOfEpochs), "if non-null then must be a positive value")
+        Else
+            knn = New KNNState With {
+                .parameters = New KNNArguments(numberOfNeighbors, localConnectivity, KnnIter, bandwidth)
+            }
         End If
 
         _distanceFn = If(distance, AddressOf DistanceFunctions.Cosine)
         _random = If(random, DefaultRandomGenerator.Instance)
-        _nNeighbors = numberOfNeighbors
         _optimizationState = New OptimizationState With {
             .[Dim] = dimensions
         }
@@ -167,7 +171,6 @@ Public NotInheritable Class Umap
         ' This part of the process very roughly accounts for 2/3 of the work (the reamining work is in the Step calls)
         _graph = Me.FuzzySimplicialSet(
             x:=x,
-            nNeighbors:=_nNeighbors,
             setOpMixRatio:=_setOpMixRatio,
             progressReporter:=ScaleProgressReporter(initializeFitProgressReporter, 0.3F, 1)
         )
@@ -238,7 +241,7 @@ Public NotInheritable Class Umap
 
         Call progressReporter(0.1F)
 
-        Dim leafSize = stdNum.Max(10, _nNeighbors)
+        Dim leafSize = stdNum.Max(10, knn.parameters.k)
         Dim forestProgressReporter = Umap.ScaleProgressReporter(progressReporter, 0.1F, 0.4F)
 
         _rpForest = Enumerable.Range(0, nTrees) _
@@ -255,7 +258,7 @@ Public NotInheritable Class Umap
         Dim nnDescendProgressReporter = Umap.ScaleProgressReporter(progressReporter, 0.5F, 1)
 
         ' Handle python3 rounding down from 0.5 discrpancy
-        Return metricNNDescent.MakeNNDescent(x, leafArray, _nNeighbors, nIters, startingIteration:=Sub(i, max) nnDescendProgressReporter(CSng(i) / max))
+        Return metricNNDescent.MakeNNDescent(x, leafArray, knn.parameters.k, nIters, startingIteration:=Sub(i, max) nnDescendProgressReporter(CSng(i) / max))
     End Function
 
     ''' <summary>
@@ -276,12 +279,12 @@ Public NotInheritable Class Umap
     ''' to the data. This is done by locally approximating geodesic distance at each point, creating a fuzzy simplicial set for each such point, and then combining all the local fuzzy
     ''' simplicial sets into a global one via a fuzzy union.
     ''' </summary>
-    Private Function FuzzySimplicialSet(x As Double()(), nNeighbors As Integer, setOpMixRatio As Double, progressReporter As IProgressReporter) As SparseMatrix
+    Private Function FuzzySimplicialSet(x As Double()(), setOpMixRatio As Double, progressReporter As IProgressReporter) As SparseMatrix
         Dim knnIndices = If(knn._knnIndices, New Integer(-1)() {})
         Dim knnDistances = If(knn._knnDistances, New Single(-1)() {})
         Dim report As New ProgressReporter With {.report = progressReporter}
-        Dim sigmasRhos = report.Run(Function() Umap.SmoothKNNDistance(knnDistances, nNeighbors, _localConnectivity), 0.1)
-        Dim rowsColsVals = report.Run(Function() Umap.ComputeMembershipStrengths(knnIndices, knnDistances, sigmasRhos.sigmas, sigmasRhos.rhos), 0.2)
+        Dim sigmasRhos = report.Run(Function() UMAP_KNN.SmoothKNNDistance(knnDistances, knn.parameters), 0.1)
+        Dim rowsColsVals = report.Run(Function() UMAP_KNN.ComputeMembershipStrengths(knnIndices, knnDistances, sigmasRhos.sigmas, sigmasRhos.rhos), 0.2)
         Dim sparseMatrix = report.Run(Function() New SparseMatrix(rowsColsVals.rows, rowsColsVals.cols, rowsColsVals.vals, (x.Length, x.Length)), 0.3)
         Dim transpose = sparseMatrix.Transpose()
         Dim prodMatrix = sparseMatrix.PairwiseMultiply(transpose)
@@ -291,126 +294,6 @@ Public NotInheritable Class Umap
         Dim result = report.Run(Function() b.Add(c), 0.7)
 
         Return result
-    End Function
-
-    Private Shared Function SmoothKNNDistance(distances As Double()(), k As Integer,
-                                              Optional localConnectivity As Double = 1,
-                                              Optional nIter As Integer = 64,
-                                              Optional bandwidth As Double = 1) As (sigmas As Double(), rhos As Double())
-
-        ' TODO: Use Math.Log2 (when update framework to a version that supports it) or consider a pre-computed table
-        Dim target = stdNum.Log(k, 2) * bandwidth
-        Dim rho = New Double(distances.Length - 1) {}
-        Dim result = New Double(distances.Length - 1) {}
-
-        For i As Integer = 0 To distances.Length - 1
-            Dim lo = 0F
-            Dim hi = Single.MaxValue
-            Dim mid = 1.0F
-
-            ' TODO[umap-js]: This is very inefficient, but will do for now. FIXME
-            Dim ithDistances = distances(i)
-            Dim nonZeroDists = ithDistances.Where(Function(d) d > 0).ToArray()
-
-            If nonZeroDists.Length >= localConnectivity Then
-                Dim index = CInt(stdNum.Floor(localConnectivity))
-                Dim interpolation = localConnectivity - index
-
-                If index > 0 Then
-                    rho(i) = nonZeroDists(index - 1)
-
-                    If interpolation > Umap.SMOOTH_K_TOLERANCE Then
-                        rho(i) += interpolation * (nonZeroDists(index) - nonZeroDists(index - 1))
-                    End If
-                Else
-                    rho(i) = interpolation * nonZeroDists(0)
-                End If
-            ElseIf nonZeroDists.Length > 0 Then
-                rho(i) = nonZeroDists.Max
-            End If
-
-            For n As Integer = 0 To nIter - 1
-                Dim psum = 0.0
-
-                For j = 1 To distances(i).Length - 1
-                    Dim d = distances(i)(j) - rho(i)
-
-                    If d > 0 Then
-                        psum += stdNum.Exp(-(d / mid))
-                    Else
-                        psum += 1.0
-                    End If
-                Next
-
-                If stdNum.Abs(psum - target) < Umap.SMOOTH_K_TOLERANCE Then
-                    Exit For
-                End If
-
-                If psum > target Then
-                    hi = mid
-                    mid = (lo + hi) / 2
-                Else
-                    lo = mid
-
-                    If hi = Single.MaxValue Then
-                        mid *= 2
-                    Else
-                        mid = (lo + hi) / 2
-                    End If
-                End If
-            Next
-
-            result(i) = mid
-
-            ' TODO[umap-js]: This is very inefficient, but will do for now. FIXME
-            If rho(i) > 0 Then
-                Dim meanIthDistances = ithDistances.Average
-
-                If result(i) < Umap.MIN_K_DIST_SCALE * meanIthDistances Then
-                    result(i) = Umap.MIN_K_DIST_SCALE * meanIthDistances
-                End If
-            Else
-                Dim meanDistances = distances.Select(Function(d) d.Average).Average
-
-                If result(i) < Umap.MIN_K_DIST_SCALE * meanDistances Then
-                    result(i) = Umap.MIN_K_DIST_SCALE * meanDistances
-                End If
-            End If
-        Next
-
-        Return (result, rho)
-    End Function
-
-    Private Shared Function ComputeMembershipStrengths(knnIndices As Integer()(), knnDistances As Double()(), sigmas As Double(), rhos As Double()) As (rows As Integer(), cols As Integer(), vals As Double())
-        Dim nSamples = knnIndices.Length
-        Dim nNeighbors = knnIndices(0).Length
-        Dim rows = New Integer(nSamples * nNeighbors - 1) {}
-        Dim cols = New Integer(nSamples * nNeighbors - 1) {}
-        Dim vals = New Double(nSamples * nNeighbors - 1) {}
-        Dim val As Double
-
-        For i = 0 To nSamples - 1
-            For j = 0 To nNeighbors - 1
-                If knnIndices(i)(j) = -1 Then
-                    ' We didn't get the full knn for i
-                    Continue For
-                End If
-
-                If knnIndices(i)(j) = i Then
-                    val = 0
-                ElseIf knnDistances(i)(j) - rhos(i) <= 0.0 Then
-                    val = 1
-                Else
-                    val = CSng(stdNum.Exp(-((knnDistances(i)(j) - rhos(i)) / sigmas(i))))
-                End If
-
-                rows(i * nNeighbors + j) = i
-                cols(i * nNeighbors + j) = knnIndices(i)(j)
-                vals(i * nNeighbors + j) = val
-            Next
-        Next
-
-        Return (rows, cols, vals)
     End Function
 
     ''' <summary>

@@ -102,9 +102,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="KNN\UMAP_KNN.vb" />
+    <Compile Include="KNN\KNNArguments.vb" />
     <Compile Include="UmapProject.vb" />
     <Compile Include="Components\Heaps\Heap.vb" />
-    <Compile Include="KNNState.vb" />
+    <Compile Include="KNN\KNNState.vb" />
     <Compile Include="Components\DistanceCalculation.vb" />
     <Compile Include="DistanceFunctions.vb" />
     <Compile Include="OptimizationState.vb" />
