@@ -1464,7 +1464,7 @@
     <Compile Include="Extensions\Image\Math\QuadrantRegions.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\SampleObservation.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\Min.vb" />
-    <Compile Include="Extensions\Globals.vb" />
+    <Compile Include="Globals.vb" />
     <Compile Include="Extensions\Reflection\Marshal\Span1.vb" />
     <Compile Include="Extensions\Reflection\Marshal\Span.vb" />
     <Compile Include="Extensions\Reflection\ScriptMeta.vb" />
