@@ -161,11 +161,16 @@ Public Class MsgPackSerializer
         Return endPos
     End Function
 
-    Public Shared Function Deserialize(Of T)(buffer As Byte()) As T
-        Using stream As MemoryStream = New MemoryStream(buffer), reader As New BinaryDataReader(stream)
+    Public Shared Function Deserialize(Of T)(buffer As Stream) As T
+        Using reader As New BinaryDataReader(buffer)
             Dim o = DeserializeObjectType(GetType(T), reader)
             Return Convert.ChangeType(o, GetType(T))
         End Using
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Function Deserialize(Of T)(buffer As Byte()) As T
+        Return Deserialize(Of T)(New MemoryStream(buffer))
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
