@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b403977d40fffbb3c41bcfd3351f4ce, Data_science\DataMining\UMAP\OptimizationState.vb"
+﻿#Region "Microsoft.VisualBasic::882252db883e4a58708cb7fc3fb75e8e, Data_science\DataMining\UMAP\OptimizationState.vb"
 
     ' Author:
     ' 

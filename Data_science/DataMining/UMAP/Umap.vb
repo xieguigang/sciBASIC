@@ -1,48 +1,49 @@
-﻿#Region "Microsoft.VisualBasic::be8d2c2dd97689f3f7f07059ae7662ae, Data_science\DataMining\UMAP\Umap.vb"
+﻿#Region "Microsoft.VisualBasic::78147b0650bf9acbf6856ca4a8467b34, Data_science\DataMining\UMAP\Umap.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Class Umap
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: [Step], Clip, ComputeMembershipStrengths, FindABParams, FuzzySimplicialSet
-'               GetEmbedding, GetNEpochs, GetProgress, InitializeFit, InitializeSimplicialSetEmbedding
-'               MakeEpochsPerSample, NearestNeighbors, RDist, Round, ScaleProgressReporter
-'               SmoothKNNDistance
-' 
-'     Sub: InitializeOptimization, Iterate, OptimizeLayoutStep, PrepareForOptimizationLoop, RunIterate
-' 
-' /********************************************************************************/
+    ' Class Umap
+    ' 
+    '     Properties: dimension
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: [Step], Clip, FindABParams, FuzzySimplicialSet, GetEmbedding
+    '               GetGraph, GetNEpochs, GetProgress, InitializeFit, InitializeSimplicialSetEmbedding
+    '               MakeEpochsPerSample, NearestNeighbors, RDist, Round, ScaleProgressReporter
+    ' 
+    '     Sub: InitializeOptimization, Iterate, OptimizeLayoutStep, PrepareForOptimizationLoop, RunIterate
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

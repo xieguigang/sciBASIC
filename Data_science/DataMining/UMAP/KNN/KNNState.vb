@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a127927ced72009c9234322d37efaced, Data_science\DataMining\UMAP\KNNState.vb"
+﻿#Region "Microsoft.VisualBasic::6689d99299ef9a5b7639da7e6dc0c58c, Data_science\DataMining\UMAP\KNN\KNNState.vb"
 
     ' Author:
     ' 
@@ -47,4 +47,3 @@ Friend Class KNNState
     Friend parameters As KNNArguments
 
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95eda058d22267591944b2430b8fba8e, Data_science\DataMining\UMAP\test\test2.vb"
+﻿#Region "Microsoft.VisualBasic::a8004817b6103dc4e58893f6cf4e4982, Data_science\DataMining\UMAP\test\test2.vb"
 
     ' Author:
     ' 
@@ -56,4 +56,3 @@ Module test2
         Pause()
     End Sub
 End Module
-
