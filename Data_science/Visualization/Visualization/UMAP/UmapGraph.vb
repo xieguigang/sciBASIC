@@ -8,7 +8,7 @@ Imports Microsoft.VisualBasic.Language
 Public Module UmapGraph
 
     <Extension>
-    Public Function CreateGraph(umap As Umap, labels As String()) As NetworkGraph
+    Public Function CreateGraph(umap As Umap, uid As String(), Optional labels As String() = Nothing) As NetworkGraph
         Dim matrix = umap.GetGraph.ToArray
         Dim g As New NetworkGraph
         Dim points As PointF() = Nothing
@@ -19,11 +19,17 @@ Public Module UmapGraph
             points = umap.GetPoint2D
         End If
 
-        For Each label As String In labels
+        If labels Is Nothing Then
+            labels = uid
+        End If
+
+        Dim getLabel As Func(Of String) = Function() labels(index)
+
+        For Each label As String In uid
             If Not points Is Nothing Then
                 data = New NodeData With {
-                    .label = label,
-                    .origID = label,
+                    .label = getLabel(),
+                    .origID = getLabel(),
                     .initialPostion = New FDGVector2(points(++index))
                 }
             Else
@@ -36,7 +42,7 @@ Public Module UmapGraph
         For i As Integer = 0 To matrix.Length - 1
             For j As Integer = 0 To matrix(i).Length - 1
                 If i <> j AndAlso matrix(i)(j) <> 0 Then
-                    g.CreateEdge(labels(i), labels(j), weight:=matrix(i)(j))
+                    g.CreateEdge(uid(i), uid(j), weight:=matrix(i)(j))
                 End If
             Next
         Next

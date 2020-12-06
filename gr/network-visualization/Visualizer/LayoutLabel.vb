@@ -48,6 +48,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Math2D
 
 Friend Class LayoutLabel
+
     Public label As Label
     Public anchor As Anchor
     Public style As Font
@@ -69,6 +70,6 @@ Friend Class LayoutLabel
     End Function
 
     Public Overrides Function ToString() As String
-        Return label.text
+        Return $"{label.text} @ {shapeRectangle.ToString}"
     End Function
 End Class
