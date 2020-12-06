@@ -53,7 +53,7 @@ Imports Microsoft.VisualBasic.Math
 Imports stdNum = System.Math
 
 ''' <summary>
-''' Umap projection algorithm module
+''' UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction
 ''' </summary>
 ''' <remarks>
 ''' https://github.com/curiosity-ai/umap-sharp

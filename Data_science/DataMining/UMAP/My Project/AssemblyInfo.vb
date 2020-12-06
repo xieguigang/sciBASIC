@@ -8,8 +8,8 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("UMAP")>
-<Assembly: AssemblyDescription("")>
+<Assembly: AssemblyTitle("UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction")>
+<Assembly: AssemblyDescription("UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction")>
 <Assembly: AssemblyCompany("")>
 <Assembly: AssemblyProduct("UMAP")>
 <Assembly: AssemblyCopyright("Copyright ©  2020")>
