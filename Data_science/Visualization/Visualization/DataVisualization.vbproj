@@ -335,6 +335,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="BinaryTree\Tree.vb" />
+    <Compile Include="UMAP\UmapRender.vb" />
+    <Compile Include="UMAP\UmapGraph.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -388,6 +390,10 @@
     <ProjectReference Include="..\..\DataMining\DataMining\DataMining.vbproj">
       <Project>{4b877ab2-e15f-4aa9-b7d6-7c11b2213f10}</Project>
       <Name>DataMining</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DataMining\UMAP\UMAP.vbproj">
+      <Project>{c57630a3-33b1-4cad-9dc8-3a9e66ce93ff}</Project>
+      <Name>UMAP</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Graph\GraphTheory.vbproj">
       <Project>{203bc68f-a0cd-443a-ab62-4af4110f752f}</Project>

@@ -120,6 +120,10 @@ Public NotInheritable Class Umap
         End If
     End Function
 
+    Public Function GetGraph() As SparseMatrix
+        Return _graph
+    End Function
+
     ''' <summary>
     ''' Initializes fit by computing KNN and a fuzzy simplicial set, as well as initializing 
     ''' the projected embeddings. Sets the optimization state ahead of optimization steps.

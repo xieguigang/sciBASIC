@@ -49,7 +49,7 @@
 
 Imports System.Runtime.CompilerServices
 
-Friend NotInheritable Class SparseMatrix
+Public NotInheritable Class SparseMatrix
 
     ReadOnly _entries As Dictionary(Of RowCol, Double)
     ReadOnly _dims As (rows%, cols%)
