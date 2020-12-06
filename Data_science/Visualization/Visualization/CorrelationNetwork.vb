@@ -80,7 +80,7 @@ Public Module CorrelationNetwork
         Dim uid As String
 
         For Each id As String In matrix.keys
-            For Each partner As String In matrix.keys
+            For Each partner As String In matrix.keys.Where(Function(b) b <> id)
                 cor = matrix(id, partner)
 
                 If stdNum.Abs(cor) >= cutoff Then
