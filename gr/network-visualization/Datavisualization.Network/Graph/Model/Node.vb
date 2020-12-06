@@ -211,7 +211,7 @@ Namespace Graph
                 .degree = degree,
                 .pinned = pinned,
                 .visited = visited,
-                .adjacencies = adjacencies.Clone,
+                .adjacencies = If(adjacencies Is Nothing, New AdjacencySet(Of Edge)(), adjacencies.Clone),
                 .directedVertex = New DirectedVertex(label),
                 .data = New NodeData With {
                     .color = data.color,
