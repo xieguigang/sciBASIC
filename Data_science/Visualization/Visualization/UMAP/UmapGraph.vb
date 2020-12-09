@@ -45,11 +45,15 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.DataMining.UMAP
 Imports Microsoft.VisualBasic.Language
+Imports stdNum = System.Math
 
 Public Module UmapGraph
 
     <Extension>
-    Public Function CreateGraph(umap As Umap, uid As String(), Optional labels As String() = Nothing) As NetworkGraph
+    Public Function CreateGraph(umap As Umap, uid As String(),
+                                Optional labels As String() = Nothing,
+                                Optional threshold As Double = 0) As NetworkGraph
+
         Dim matrix = umap.GetGraph.ToArray
         Dim g As New NetworkGraph
         Dim points As PointF() = Nothing
@@ -67,23 +71,24 @@ Public Module UmapGraph
         Dim getLabel As Func(Of String) = Function() labels(index)
 
         For Each label As String In uid
+            data = New NodeData With {
+                .label = getLabel(),
+                .origID = getLabel()
+            }
+
             If Not points Is Nothing Then
-                data = New NodeData With {
-                    .label = getLabel(),
-                    .origID = getLabel(),
-                    .initialPostion = New FDGVector2(points(++index))
-                }
+                data.initialPostion = New FDGVector2(points(++index))
             Else
-                data = Nothing
+                index += 1
             End If
 
-            g.CreateNode(label, data)
+            Call g.CreateNode(label, data)
         Next
 
         For i As Integer = 0 To matrix.Length - 1
             For j As Integer = 0 To matrix(i).Length - 1
-                If i <> j AndAlso matrix(i)(j) <> 0 Then
-                    g.CreateEdge(uid(i), uid(j), weight:=matrix(i)(j))
+                If i <> j AndAlso stdNum.Abs(matrix(i)(j)) >= threshold Then
+                    Call g.CreateEdge(uid(i), uid(j), weight:=matrix(i)(j))
                 End If
             Next
         Next

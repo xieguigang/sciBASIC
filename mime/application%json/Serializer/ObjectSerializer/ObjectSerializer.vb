@@ -123,7 +123,14 @@ Public Module ObjectSerializer
         For Each memberKey As Object In obj.Keys
             key = Scripting.ToString(memberKey)
             value = obj.Item(memberKey)
-            json.Add(key, valueSchema.GetJsonElement(value, opt))
+
+            If value Is Nothing Then
+                Call json.Add(key, New JsonValue())
+            ElseIf valueSchema Is GetType(Object) Then
+                Call json.Add(key, value.GetType.GetJsonElement(value, opt))
+            Else
+                Call json.Add(key, valueSchema.GetJsonElement(value, opt))
+            End If
         Next
 
         Return json

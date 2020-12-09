@@ -75,6 +75,7 @@ Public NotInheritable Class Umap
     ReadOnly _customNumberOfEpochs As Integer?
     ReadOnly _progressReporter As IProgressReporter
     ReadOnly _optimizationState As OptimizationState
+    ReadOnly _customMapCutoff As Double?
 
     ''' <summary>
     ''' KNN state (can be precomputed and supplied via initializeFit)
@@ -100,6 +101,19 @@ Public NotInheritable Class Umap
         End Get
     End Property
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="distance"></param>
+    ''' <param name="random"></param>
+    ''' <param name="dimensions"></param>
+    ''' <param name="numberOfNeighbors"></param>
+    ''' <param name="localConnectivity"></param>
+    ''' <param name="KnnIter"></param>
+    ''' <param name="bandwidth"></param>
+    ''' <param name="customNumberOfEpochs"></param>
+    ''' <param name="customMapCutoff">cutoff value in range ``[0,1]``</param>
+    ''' <param name="progressReporter"></param>
     Public Sub New(Optional distance As DistanceCalculation = Nothing,
                    Optional random As IProvideRandomValues = Nothing,
                    Optional dimensions As Integer = 2,
@@ -108,6 +122,7 @@ Public NotInheritable Class Umap
                    Optional KnnIter As Integer = 64,
                    Optional bandwidth As Double = 1,
                    Optional customNumberOfEpochs As Integer? = Nothing,
+                   Optional customMapCutoff As Double? = Nothing,
                    Optional progressReporter As IProgressReporter = Nothing)
 
         If customNumberOfEpochs IsNot Nothing AndAlso customNumberOfEpochs <= 0 Then
@@ -118,6 +133,7 @@ Public NotInheritable Class Umap
             }
         End If
 
+        _customMapCutoff = customMapCutoff
         _distanceFn = If(distance, AddressOf DistanceFunctions.Cosine)
         _random = If(random, DefaultRandomGenerator.Instance)
         _optimizationState = New OptimizationState With {
@@ -311,7 +327,8 @@ Public NotInheritable Class Umap
             End If
         Next
 
-        Dim graph = _graph.Map(Function(value) If(value < graphMax / nEpochs, 0, value))
+        Dim cutoff As Double = If(_customMapCutoff Is Nothing, graphMax / nEpochs, graphMax * _customMapCutoff)
+        Dim graph = _graph.Map(Function(value) If(value < cutoff, 0, value))
 
         ' We're not computing the spectral initialization in this implementation 
         ' until we determine a better eigenvalue/eigenvector computation approach
