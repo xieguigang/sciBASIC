@@ -225,7 +225,7 @@ Namespace LinearAlgebra.Prcomp
                     .ToArray
 
                 means = columns.Select(Function(c) c.Average).AsVector
-                stdevs = columns.Select(Function(c) c.StdError).AsVector
+                stdevs = columns.Select(Function(c) c.SD).AsVector
                 dataset = dataset _
                     .Select(Function(r)
                                 ' 在这里每一行数据减去每一列的平均值

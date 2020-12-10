@@ -937,21 +937,6 @@ Public Module Extensions
 #End If
 
     ''' <summary>
-    ''' 求取该数据集的标准差
-    ''' </summary>
-    ''' <param name="data"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    '''
-    <ExportAPI("StdError")>
-    <Extension> Public Function StdError(data As IEnumerable(Of Double)) As Double
-        Dim Average As Double = data.Average
-        Dim Sum = (From n As Double In data Select (n - Average) ^ 2).Sum
-        Sum /= data.Count
-        Return Global.System.Math.Sqrt(Sum)
-    End Function
-
-    ''' <summary>
     ''' 函数只返回有重复的数据
     ''' </summary>
     ''' <typeparam name="T"></typeparam>

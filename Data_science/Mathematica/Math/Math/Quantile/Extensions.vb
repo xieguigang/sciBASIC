@@ -290,7 +290,7 @@ Namespace Quantile
                 For Each quantile As Double In {0.1, 0.25, 0.5, 0.75, 0.9, 0.95, 0.99, 1}
                     Dim estimate# = q.Query(quantile)
                     Dim lessthan = v(v <= estimate)
-                    Dim out$ = String.Format(SummaryTemplate, quantile * 100, estimate, lessthan.Length, lessthan.Average, lessthan.StdError)
+                    Dim out$ = String.Format(SummaryTemplate, quantile * 100, estimate, lessthan.Length, lessthan.Average, lessthan.SD)
 
                     .WriteLine(out)
                 Next

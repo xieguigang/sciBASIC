@@ -103,7 +103,7 @@ Namespace Distributions
             min = v.Min
             max = v.Max
             average = v.Average
-            stdErr = v.StdError
+            stdErr = v.SD
             size = v.Length
 
             If estimateQuantile Then

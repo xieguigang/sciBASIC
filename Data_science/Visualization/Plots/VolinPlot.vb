@@ -278,8 +278,8 @@ Public Module VolinPlot
                     Call g.FillRectangle(polygonStroke.Brush, iqrBox)
 
                     ' draw 95% CI
-                    upperBound = group.Average + 1.96 * group.StdError
-                    lowerBound = group.Average - 1.96 * group.StdError
+                    upperBound = group.Average + 1.96 * group.SD
+                    lowerBound = group.Average - 1.96 * group.SD
 
                     Call g.DrawLine(
                         pen:=polygonStroke,
