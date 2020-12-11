@@ -597,6 +597,9 @@
     <Compile Include="d3js\scale\linear.vb" />
     <Compile Include="d3js\scale\Extensions.vb" />
     <Compile Include="d3js\scale\ordinal.vb" />
+    <Compile Include="Drawing2D\Colors\Palette.vb" />
+    <Compile Include="Drawing2D\Colors\Office\ObjectAccent.vb" />
+    <Compile Include="Drawing2D\Colors\Office\Xml.vb" />
     <Compile Include="Drawing2D\Polar\PolarGraphics2D.vb" />
     <Compile Include="Drawing2D\PrinterDimension.vb" />
     <Compile Include="Drawing2D\Shadow.vb" />
@@ -620,7 +623,7 @@
     <Compile Include="Drawing2D\Math2D\Spline.vb" />
     <Compile Include="Drawing2D\Path2D.vb" />
     <Compile Include="Drawing2D\Colors\ColorIndex.vb" />
-    <Compile Include="Drawing2D\Colors\OfficeColorThemes.vb" />
+    <Compile Include="Drawing2D\Colors\Office\OfficeColorThemes.vb" />
     <Compile Include="Drawing2D\Colors\ColorBrewer.vb" />
     <Compile Include="Drawing2D\Colors\Designer.vb" />
     <Compile Include="Drawing2D\Colors\Legend.vb" />

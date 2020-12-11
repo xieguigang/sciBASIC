@@ -57,7 +57,60 @@ Namespace HTML.CSS
     ''' <summary>
     ''' Represents padding or margin information associated with a gdi element. (padding: top, right, bottom, left)
     ''' </summary>
-    <TypeConverter(GetType(PaddingConverter))> Public Structure Padding
+    <TypeConverter(GetType(PaddingConverter))>
+    Public Structure Padding
+
+        ''' <summary>
+        ''' Gets the combined padding for the right and left edges.
+        ''' </summary>
+        ''' <returns></returns>
+        <Browsable(False)>
+        Public ReadOnly Property Horizontal As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Left + Right
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Gets or sets the padding value for the top edge.
+        ''' </summary>
+        ''' <returns>The padding, in pixels, for the top edge.</returns>
+        <RefreshProperties(RefreshProperties.All)>
+        Public Property Top As Integer
+
+        ''' <summary>
+        ''' Gets or sets the padding value for the right edge.
+        ''' </summary>
+        ''' <returns>The padding, in pixels, for the right edge.</returns>
+        <RefreshProperties(RefreshProperties.All)>
+        Public Property Right As Integer
+
+        ''' <summary>
+        ''' Gets or sets the padding value for the left edge.
+        ''' </summary>
+        ''' <returns>The padding, in pixels, for the left edge.</returns>
+        <RefreshProperties(RefreshProperties.All)>
+        Public Property Left As Integer
+
+        ''' <summary>
+        ''' Gets or sets the padding value for the bottom edge.
+        ''' </summary>
+        ''' <returns>The padding, in pixels, for the bottom edge.</returns>
+        <RefreshProperties(RefreshProperties.All)>
+        Public Property Bottom As Integer
+
+        ''' <summary>
+        ''' Gets the combined padding for the top and bottom edges.
+        ''' </summary>
+        ''' <returns></returns>
+        <Browsable(False)>
+        Public ReadOnly Property Vertical As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Top + Bottom
+            End Get
+        End Property
 
         Public ReadOnly Property IsEmpty As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -121,56 +174,6 @@ Namespace HTML.CSS
 
             Return New Rectangle(location, New Drawing.Size(width, height))
         End Function
-
-        ''' <summary>
-        ''' Gets the combined padding for the right and left edges.
-        ''' </summary>
-        ''' <returns></returns>
-        <Browsable(False)> Public ReadOnly Property Horizontal As Integer
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return Left + Right
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' Gets or sets the padding value for the top edge.
-        ''' </summary>
-        ''' <returns>The padding, in pixels, for the top edge.</returns>
-        <RefreshProperties(RefreshProperties.All)>
-        Public Property Top As Integer
-
-        ''' <summary>
-        ''' Gets or sets the padding value for the right edge.
-        ''' </summary>
-        ''' <returns>The padding, in pixels, for the right edge.</returns>
-        <RefreshProperties(RefreshProperties.All)>
-        Public Property Right As Integer
-
-        ''' <summary>
-        ''' Gets or sets the padding value for the left edge.
-        ''' </summary>
-        ''' <returns>The padding, in pixels, for the left edge.</returns>
-        <RefreshProperties(RefreshProperties.All)>
-        Public Property Left As Integer
-
-        ''' <summary>
-        ''' Gets or sets the padding value for the bottom edge.
-        ''' </summary>
-        ''' <returns>The padding, in pixels, for the bottom edge.</returns>
-        <RefreshProperties(RefreshProperties.All)>
-        Public Property Bottom As Integer
-
-        ''' <summary>
-        ''' Gets the combined padding for the top and bottom edges.
-        ''' </summary>
-        ''' <returns></returns>
-        <Browsable(False)> Public ReadOnly Property Vertical As Integer
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return Top + Bottom
-            End Get
-        End Property
 
         ''' <summary>
         ''' padding: top, right, bottom, left

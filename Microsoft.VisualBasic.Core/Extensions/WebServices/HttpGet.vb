@@ -69,7 +69,7 @@ Public Module HttpGet
     ''' </summary>
     ''' <param name="url">web http request url or a file path handle</param>
     ''' <param name="retry">发生错误的时候的重试的次数</param>
-    ''' <param name="timeout">设置请求超时的时间长度，单位为秒</param>
+    ''' <param name="timeoutSec">设置请求超时的时间长度，单位为秒</param>
     ''' <returns>失败或者错误会返回空字符串</returns>
     ''' <remarks>这个工具只适合于文本数据的传输操作</remarks>
     ''' 
@@ -84,7 +84,7 @@ Public Module HttpGet
                                       Optional refer$ = Nothing,
                                       Optional ByRef is404 As Boolean = False,
                                       Optional echo As Boolean = True,
-                                      Optional timeout As Long = 600) As String
+                                      Optional timeoutSec As Long = 6000) As String
 #Else
     ''' <summary>
     ''' Get the html page content from a website request or a html file on the local filesystem.
@@ -131,7 +131,7 @@ Public Module HttpGet
             headers(NameOf(refer)) = refer
         End If
 
-        Return url.httpRequest(retry, headers, proxy, doNotRetry404, UA, is404, echo, timeout)
+        Return url.httpRequest(retry, headers, proxy, doNotRetry404, UA, is404, echo, timeoutSec)
     End Function
 
     <Extension>

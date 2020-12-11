@@ -83,6 +83,14 @@ Namespace Parallel
 #End If
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
+        Public Function DoEvents(Of T)(func As Func(Of T)) As T
+            Dim result As T = func()
+            Call DoEvents()
+            Return result
+        End Function
+
         ''' <summary>
         ''' Start a new thread and then returns the background thread task handle.
         ''' </summary>
