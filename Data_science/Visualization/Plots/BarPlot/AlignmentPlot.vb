@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::7446192962014c883da52c721263e340, Data_science\Visualization\Plots\BarPlot\AlignmentPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module AlignmentPlot
-    ' 
-    '         Function: createHits, HighlightGroups, Hit, Keys, PlotAlignment
-    '                   PlotAlignmentGroups, Values
-    '         Structure Signal
-    ' 
-    '             Function: ToString
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module AlignmentPlot
+' 
+'         Function: createHits, HighlightGroups, Hit, Keys, PlotAlignment
+'                   PlotAlignmentGroups, Values
+'         Structure Signal
+' 
+'             Function: ToString
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -98,6 +98,7 @@ Namespace BarPlot
                                       Optional yrange As DoubleRange = Nothing,
                                       Optional size$ = "1200,800",
                                       Optional padding$ = "padding: 70 30 50 100;",
+                                      Optional bg$ = "white",
                                       Optional cla$ = "steelblue",
                                       Optional clb$ = "brown",
                                       Optional xlab$ = "X",
@@ -117,7 +118,8 @@ Namespace BarPlot
                                       Optional labelPlotStrength# = 0.25,
                                       Optional htmlLabel As Boolean = False,
                                       Optional idTag$ = Nothing,
-                                      Optional rectangleStyle As RectangleStyling = Nothing) As GraphicsData
+                                      Optional rectangleStyle As RectangleStyling = Nothing,
+                                      Optional drawLegend As Boolean = True) As GraphicsData
 
             Dim q As New Signal With {
                 .Name = queryName,
@@ -132,8 +134,8 @@ Namespace BarPlot
 
             Return PlotAlignmentGroups(
                 {q}, {s},
-                xrange, yrange,
-                size, padding,
+                xrange:=xrange, yrange:=yrange,
+                size:=size, padding:=padding, bg:=bg,
                 xlab, ylab, labelCSS, queryName, subjectName,
                 title, tickCSS, titleCSS,
                 legendFontCSS, bw, format, displayX, X_CSS,
@@ -141,7 +143,8 @@ Namespace BarPlot
                 labelPlotStrength,
                 htmlLabel:=htmlLabel,
                 idTag:=idTag,
-                rectangleStyle:=rectangleStyle
+                rectangleStyle:=rectangleStyle,
+                drawLegend:=drawLegend
             )
         End Function
 
@@ -190,6 +193,7 @@ Namespace BarPlot
                                             Optional yrange As DoubleRange = Nothing,
                                             Optional size$ = "1200,800",
                                             Optional padding$ = "padding: 70 30 50 100;",
+                                            Optional bg$ = "white",
                                             Optional xlab$ = "X",
                                             Optional ylab$ = "Y",
                                             Optional labelCSS$ = CSSFont.Win7Bold,
@@ -211,7 +215,8 @@ Namespace BarPlot
                                             Optional highlightMargin! = 2,
                                             Optional htmlLabel As Boolean = False,
                                             Optional idTag$ = Nothing,
-                                            Optional rectangleStyle As RectangleStyling = Nothing) As GraphicsData
+                                            Optional rectangleStyle As RectangleStyling = Nothing,
+                                            Optional drawLegend As Boolean = True) As GraphicsData
             If xrange Is Nothing Then
                 Dim ALL = query _
                     .Select(Function(x) x.signals.Keys) _
@@ -426,35 +431,37 @@ Namespace BarPlot
 #End Region
                         rect = region.PlotRegion
 
-                        Dim boxWidth! = 350
+                        If drawLegend Then
+                            Dim boxWidth! = 350
 
-                        ' legend 的圆角矩形
-                        Call Shapes.RoundRect.Draw(
-                            g,
-                            New Point(rect.Right - (boxWidth + 10), rect.Top + 6),
-                            New Size(boxWidth, 80), 8,
-                            Brushes.White,
-                            New Stroke With {
-                                .dash = DashStyle.Solid,
-                                .fill = "black",
-                                .width = 2
-                            })
+                            ' legend 的圆角矩形
+                            Call Shapes.RoundRect.Draw(
+                                g,
+                                New Point(rect.Right - (boxWidth + 10), rect.Top + 6),
+                                New Size(boxWidth, 80), 8,
+                                Brushes.White,
+                                New Stroke With {
+                                    .dash = DashStyle.Solid,
+                                    .fill = "black",
+                                    .width = 2
+                                })
 
-                        Dim box As Rectangle
-                        Dim legendFont As Font = CSSFont _
-                            .TryParse(legendFontCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 16.0!)) _
-                            .GDIObject
-                        Dim fHeight! = g.MeasureString("1", legendFont).Height
+                            Dim box As Rectangle
+                            Dim legendFont As Font = CSSFont _
+                                .TryParse(legendFontCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 16.0!)) _
+                                .GDIObject
+                            Dim fHeight! = g.MeasureString("1", legendFont).Height
 
-                        y = 3
+                            y = 3
 
-                        box = New Rectangle(New Point(rect.Right - boxWidth, rect.Top + 20), New Size(20, 20))
-                        Call g.FillRectangle(query.Last.Color.GetBrush, box)
-                        Call g.DrawString(queryName, legendFont, Brushes.Black, box.Location.OffSet2D(25, -y))
+                            box = New Rectangle(New Point(rect.Right - boxWidth, rect.Top + 20), New Size(20, 20))
+                            Call g.FillRectangle(query.Last.Color.GetBrush, box)
+                            Call g.DrawString(queryName, legendFont, Brushes.Black, box.Location.OffSet2D(25, -y))
 
-                        box = New Rectangle(New Point(box.Left, box.Top + 30), box.Size)
-                        Call g.FillRectangle(subject.Last.Color.GetBrush, box)
-                        Call g.DrawString(subjectName, legendFont, Brushes.Black, box.Location.OffSet2D(25, -y))
+                            box = New Rectangle(New Point(box.Left, box.Top + 30), box.Size)
+                            Call g.FillRectangle(subject.Last.Color.GetBrush, box)
+                            Call g.DrawString(subjectName, legendFont, Brushes.Black, box.Location.OffSet2D(25, -y))
+                        End If
 
                         Dim titleFont As Font = CSSFont _
                             .TryParse(titleCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 16.0!)) _
@@ -482,8 +489,9 @@ Namespace BarPlot
 
             Return g.GraphicsPlots(
                 size.SizeParser, padding,
-                "white",
-                plotInternal)
+                bg,
+                plotInternal
+            )
         End Function
 
         Private Function HighlightGroups(query As Signal(), subject As Signal(), highlights#(), err#) As (xmin#, xmax#, query#, subject#)()
