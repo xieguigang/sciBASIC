@@ -534,6 +534,7 @@
     <Compile Include="3D\Device\RenderEngine.vb" />
     <Compile Include="3D\g\Axis.vb" />
     <Compile Include="3D\g\Grid.vb" />
+    <Compile Include="3D\Plot\Scatter3D.vb" />
     <Compile Include="3D\Serial3D.vb" />
     <Compile Include="3D\Device\Canvas.vb">
       <SubType>UserControl</SubType>

@@ -48,7 +48,6 @@ Imports Microsoft.VisualBasic.Data.csv.Excel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors.OfficeColorThemes
 Imports Microsoft.VisualBasic.Linq
 
 Namespace BarPlot.Data

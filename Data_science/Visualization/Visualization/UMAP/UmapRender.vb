@@ -1,75 +1,44 @@
-﻿#Region "Microsoft.VisualBasic::7898971dbc71f1b96e14e29cd4d61b6d, Data_science\Visualization\Visualization\UMAP\UmapRender.vb"
-
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
-
-    ' Module UmapRender
-    ' 
-    '     Function: DrawUmap2D, GetPoint2D
-    ' 
-    ' /********************************************************************************/
-
-#End Region
-
-Imports System.Drawing
-Imports System.Runtime.CompilerServices
+﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.DataMining.UMAP
-Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Linq
 
-Public Module UmapRender
+Public MustInherit Class UmapRender : Inherits Plot
 
-    <Extension>
-    Public Function GetPoint2D(umap As Umap) As PointF()
-        If umap.dimension <> 2 Then
-            Throw New InvalidProgramException($"the given umap projection result(dimension={umap.dimension}) is not a 2D data!")
-        Else
-            Return umap.GetEmbedding() _
-                .Select(Function(vec)
-                            Return New PointF With {.X = vec(0), .Y = vec(1)}
-                        End Function) _
-                .ToArray()
-        End If
-    End Function
+    Protected ReadOnly labels As String()
+    Protected ReadOnly clusters As Dictionary(Of String, String)
+    Protected ReadOnly umap As Umap
 
-    <Extension>
-    Public Function DrawUmap2D(umap As Umap, Optional labels As IEnumerable(Of String) = Nothing) As GraphicsData
-        Dim labelList As String() = Nothing
+    ReadOnly colorSet As String
+
+    Protected Sub New(umap As Umap, labels$(), clusters As Dictionary(Of String, String), colorSet$, theme As Theme)
+        MyBase.New(theme)
+
+        Me.clusters = clusters
+        Me.colorSet = colorSet
+        Me.umap = umap
 
         If Not labels Is Nothing Then
-            labelList = labels.ToArray
+            Me.labels = labels.ToArray
+        Else
+            Me.labels = umap.GetGraph.Dims.rows _
+                .SeqIterator _
+                .Select(Function(i) $"x_{i + 1}") _
+                .ToArray
         End If
+    End Sub
 
-        Dim embeddings As PointF() = umap.GetPoint2D
+    Protected Function GetClusterColors() As Dictionary(Of String, SolidBrush)
+        Dim clusterLabels As String() = clusters.Values.Distinct.ToArray
+        Dim colors As Color() = Designer.GetColors(colorSet, clusterLabels.Length)
+        Dim map As New Dictionary(Of String, SolidBrush)
 
+        For i As Integer = 0 To clusterLabels.Length - 1
+            map(clusterLabels(i)) = New SolidBrush(colors(i))
+        Next
 
+        Return map
     End Function
-End Module
-
+End Class

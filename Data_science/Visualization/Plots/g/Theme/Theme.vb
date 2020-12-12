@@ -113,6 +113,11 @@ Namespace Graphic.Canvas
         ''' </summary>
         ''' <returns></returns>
         Public Property yAxisLayout As YAxisLayoutStyles
+
+        Public Property xlabel As String = "X"
+        Public Property ylabel As String = "Y"
+        Public Property zlabel As String = "Z"
+
         ''' <summary>
         ''' 坐标轴上的标签的字体样式
         ''' </summary>

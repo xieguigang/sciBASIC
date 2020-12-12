@@ -1,43 +1,43 @@
 ﻿#Region "Microsoft.VisualBasic::a9f16ef687024948a037b2b24545c2f4, Microsoft.VisualBasic.Core\Extensions\StringHelpers\Parser.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module PrimitiveParser
-    ' 
-    '     Function: Eval, IsBooleanFactor, IsInteger, isNaN, IsNumeric
-    '               (+2 Overloads) ParseBoolean, ParseDate, ParseDouble, ParseInteger, ParseLong
-    '               ParseSingle, ParseTimeSpan
-    ' 
-    ' /********************************************************************************/
+' Module PrimitiveParser
+' 
+'     Function: Eval, IsBooleanFactor, IsInteger, isNaN, IsNumeric
+'               (+2 Overloads) ParseBoolean, ParseDate, ParseDouble, ParseInteger, ParseLong
+'               ParseSingle, ParseTimeSpan
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -98,8 +98,14 @@ Public Module PrimitiveParser
     <Extension>
     Public Function IsNumeric(num As String, Optional includesNaNFactor As Boolean = False) As Boolean
         Dim dotCheck As Boolean = False
-        Dim c As Char = num(Scan0)
+        Dim c As Char
         Dim offset As Integer = 0
+
+        If String.IsNullOrEmpty(num) Then
+            Return False
+        Else
+            c = num(Scan0)
+        End If
 
         ' 修复正则匹配的bug
         If num = "e" OrElse num = "E" Then
@@ -147,7 +153,13 @@ Public Module PrimitiveParser
 
     <Extension>
     Public Function IsInteger(num As String, Optional offset As Integer = 0) As Boolean
-        Dim c As Char = num(Scan0)
+        Dim c As Char
+
+        If num Is Nothing OrElse num = "" Then
+            Return False
+        Else
+            c = num(Scan0)
+        End If
 
         ' check for number sign symbol
         If c = "-"c OrElse c = "+"c Then

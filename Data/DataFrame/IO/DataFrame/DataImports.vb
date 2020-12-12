@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::937998757567489ef929954fdff8b737, Data\DataFrame\IO\DataFrame\DataImports.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module DataImports
-    ' 
-    '         Function: (+2 Overloads) ParseVector, SampleForType
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module DataImports
+' 
+'         Function: (+2 Overloads) ParseVector, SampleForType
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -60,6 +60,10 @@ Namespace IO
             Next
 
             For Each r As String In column
+                If String.IsNullOrEmpty(r) Then
+                    Continue For
+                End If
+
                 If r.IsInteger Then
                     typeHits(GetType(Integer)) += 1
                 ElseIf IsBooleanFactor(r) Then
@@ -72,6 +76,10 @@ Namespace IO
                     typeHits(GetType(String)) += 1
                 End If
             Next
+
+            If typeHits.Values.All(Function(x) x = 0) Then
+                Return GetType(String)
+            End If
 
             Return typeHits _
                 .OrderByDescending(Function(a) a.Value) _
