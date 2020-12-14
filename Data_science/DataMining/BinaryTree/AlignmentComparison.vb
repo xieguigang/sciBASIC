@@ -7,11 +7,11 @@ Public Class AlignmentComparison : Inherits ComparisonProvider
 
     ReadOnly dataIndex As Dictionary(Of String, Double())
 
-    Sub New(dataset As NamedValue(Of DynamicPropertyBase(Of Double))(), equals As Double, gt As Double)
+    Sub New(dataset As NamedValue(Of Dictionary(Of String, Double))(), equals As Double, gt As Double)
         Call MyBase.New(equals, gt)
 
         Dim names As String() = dataset _
-            .Select(Function(a) a.Value.Properties.Keys) _
+            .Select(Function(a) a.Value.Keys) _
             .IteratesALL _
             .Distinct _
             .ToArray
@@ -20,7 +20,7 @@ Public Class AlignmentComparison : Inherits ComparisonProvider
             .ToDictionary(Function(d) d.Name,
                           Function(d)
                               Return names _
-                                  .Select(Function(col) d.Value(col)) _
+                                  .Select(Function(col) d.Value.TryGetValue(col)) _
                                   .ToArray
                           End Function)
     End Sub
