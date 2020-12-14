@@ -78,6 +78,9 @@ Namespace Text.Xml.Models
         ''' 在这个列表之中的元素数量的长度
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 这个属性值会在进行XML序列化的时候自动生成，无需设置
+        ''' </remarks>
         <XmlAttribute> Public Property size As Integer
             Get
                 Return getSize()

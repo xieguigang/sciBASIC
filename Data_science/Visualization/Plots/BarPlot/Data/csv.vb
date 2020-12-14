@@ -64,6 +64,8 @@ Namespace BarPlot.Data
     ''' ...
     ''' ```
     ''' </summary>
+    ''' 
+    <HideModuleName>
     Public Module BarDataTableExtensions
 
         ''' <summary>
@@ -105,25 +107,34 @@ Namespace BarPlot.Data
         Public Function LoadBarData(csv As DataFrame, colors As Color()) As BarDataGroup
             Dim header As RowObject = csv.Headers
             Dim names$() = header.Skip(1).ToArray
-            Dim clData As Color() = If(
-                colors.IsNullOrEmpty,
-                Designer.FromSchema(NameOf(Office2016), names.Length),
-                colors)
+            Dim clData As Color()
+
+            If colors.IsNullOrEmpty Then
+                clData = Designer.FromSchema(NameOf(Office2016), names.Length)
+            Else
+                clData = colors
+            End If
 
             Return New BarDataGroup With {
                 .Serials = names _
                     .SeqIterator _
-                    .Select(Function(x) New NamedValue(Of Color) With {
-                        .Name = x.value,
-                        .Value = clData(x.i)
-                    }),
+                    .Select(Function(x)
+                                Return New NamedValue(Of Color) With {
+                                    .Name = x.value,
+                                    .Value = clData(x.i)
+                                }
+                            End Function) _
+                    .ToArray,
                 .Samples = csv.Rows _
-                    .Select(Function(x) New BarDataSample With {
-                        .Tag = x.First,
-                        .data = x _
-                            .Skip(1) _
-                            .Select(AddressOf Val)
-                    })
+                    .Select(Function(x)
+                                Return New BarDataSample With {
+                                    .tag = x.First,
+                                    .data = x _
+                                        .Skip(1) _
+                                        .Select(AddressOf Val)
+                                }
+                            End Function) _
+                    .ToArray
             }
         End Function
     End Module
