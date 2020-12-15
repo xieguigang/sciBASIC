@@ -504,6 +504,10 @@
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
       <Name>MIME-htmls</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\DataMining\BinaryTree\BinaryTree.vbproj">
+      <Project>{3d5402e3-72cd-4e40-a68e-a919250ab5ee}</Project>
+      <Name>BinaryTree</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\DataMining\DataMining\DataMining.vbproj">
       <Project>{4b877ab2-e15f-4aa9-b7d6-7c11b2213f10}</Project>
       <Name>DataMining</Name>

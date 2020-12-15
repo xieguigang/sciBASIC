@@ -156,7 +156,9 @@ Namespace Plot3D.Device
                     shape = shape.BSpline(degree:=bspline).ToArray
                 End If
 
-                Call g.FillPolygon(brush, shape)
+                If shape.Length > 0 Then
+                    Call g.FillPolygon(brush, shape)
+                End If
             End If
         End Sub
     End Class

@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::39916c9fb2973927f3d6a905a2990c73, Data_science\Visualization\Plots\3D\Device\RenderEngine.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module RenderEngine
-    ' 
-    '         Sub: drawLabels, RenderAs3DChart
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module RenderEngine
+' 
+'         Sub: drawLabels, RenderAs3DChart
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -68,7 +68,9 @@ Namespace Plot3D.Device
                                    canvas As IGraphics,
                                    camera As Camera,
                                    region As GraphicsRegion,
-                                   labelFont As Font)
+                                   labelFont As Font,
+                                   labelerItr%,
+                                   showLabel As Boolean)
 
             ' 首先对模型执行rotate和project，然后再进行Z排序
             Dim models As Element3D() = elements.ToArray
@@ -113,8 +115,14 @@ Namespace Plot3D.Device
                 End If
             Next
 
-            If labels > 0 Then
-                Call labels.ToArray.drawLabels(anchors, canvas, region, labelFont)
+            If showLabel AndAlso labels > 0 Then
+                Call labels.ToArray.drawLabels(
+                    anchors:=anchors,
+                    canvas:=canvas,
+                    graphicsRegion:=region,
+                    Font:=labelFont,
+                    labelerItr:=labelerItr
+                )
             End If
         End Sub
 
@@ -126,7 +134,8 @@ Namespace Plot3D.Device
         Private Sub drawLabels(labels As d3js.Layout.Label(), anchors As d3js.Layout.Anchor(),
                                canvas As IGraphics,
                                graphicsRegion As GraphicsRegion,
-                               Font As Font)
+                               Font As Font,
+                               labelerItr%)
 
             Dim label As d3js.Layout.Label
             Dim anchor As d3js.Layout.Anchor
@@ -138,7 +147,7 @@ Namespace Plot3D.Device
                 .Anchors(anchors) _
                 .Width(canvas.Size.Width) _
                 .Height(canvas.Size.Height) _
-                .Start(500, showProgress:=False)
+                .Start(labelerItr%, showProgress:=False)
 
             For i As Integer = 0 To labels.Length - 1
                 label = labels(i)

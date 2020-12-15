@@ -1502,6 +1502,9 @@
     <Compile Include="Extensions\Collection\CategoryOperations.vb" />
     <Compile Include="Extensions\Collection\Linq\JoinExtensions.vb" />
     <Compile Include="Extensions\Collection\CollectionValueGetter.vb" />
+    <Compile Include="Extensions\Collection\DelimiterLocation.vb" />
+    <Compile Include="Extensions\Collection\Linq\EnumerationExtensions.vb" />
+    <Compile Include="Extensions\Collection\Linq\Enumerator.vb" />
     <Compile Include="Extensions\Image\ImageFormats.vb" />
     <Compile Include="Extensions\Image\Math\Intersections.vb" />
     <Compile Include="Extensions\Image\Math\QuadrantRegions.vb" />

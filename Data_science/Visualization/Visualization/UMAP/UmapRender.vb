@@ -20,7 +20,7 @@ Public MustInherit Class UmapRender : Inherits Plot
         Me.colorSet = colorSet
         Me.umap = umap
 
-        If Not labels Is Nothing Then
+        If Not labels.IsNullOrEmpty Then
             Me.labels = labels.ToArray
         Else
             Me.labels = umap.GetGraph.Dims.rows _
@@ -30,14 +30,27 @@ Public MustInherit Class UmapRender : Inherits Plot
         End If
     End Sub
 
+    Protected Function getClusterLabel(i As Integer) As String
+        If clusters.IsNullOrEmpty OrElse Not clusters.ContainsKey(labels(i)) Then
+            Return "n/a"
+        Else
+            Return clusters(labels(i))
+        End If
+    End Function
+
     Protected Function GetClusterColors() As Dictionary(Of String, SolidBrush)
-        Dim clusterLabels As String() = clusters.Values.Distinct.ToArray
-        Dim colors As Color() = Designer.GetColors(colorSet, clusterLabels.Length)
         Dim map As New Dictionary(Of String, SolidBrush)
 
-        For i As Integer = 0 To clusterLabels.Length - 1
-            map(clusterLabels(i)) = New SolidBrush(colors(i))
-        Next
+        If Not clusters.IsNullOrEmpty Then
+            Dim clusterLabels As String() = clusters.Values.Distinct.ToArray
+            Dim colors As Color() = Designer.GetColors(colorSet, clusterLabels.Length)
+
+            For i As Integer = 0 To clusterLabels.Length - 1
+                map(clusterLabels(i)) = New SolidBrush(colors(i))
+            Next
+        End If
+
+        map("n/a") = Brushes.Gray
 
         Return map
     End Function

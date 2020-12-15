@@ -45,6 +45,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Linq.IteratorExtensions
 
+<HideModuleName>
 Public Module ByteStreamExtensions
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

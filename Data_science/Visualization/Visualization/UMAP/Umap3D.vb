@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D.Impl
 Imports Microsoft.VisualBasic.DataMining.UMAP
@@ -12,17 +13,20 @@ Public Class Umap3D : Inherits UmapRender
 
     ReadOnly camera As Camera
 
-    Public Sub New(umap As Umap, labels$(), clusters As Dictionary(Of String, String), colorSet$, theme As Theme)
+    Public Sub New(umap As Umap, camera As Camera, labels$(), clusters As Dictionary(Of String, String), colorSet$, theme As Theme)
         MyBase.New(umap, labels, clusters, colorSet, theme)
+
+        Me.camera = camera
     End Sub
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         Dim embeddings As Point3D() = umap.GetPoint3D
         Dim clusterSerials As New Dictionary(Of String, List(Of NamedValue(Of Point3D)))
         Dim clusterName As String
+        Dim colors = GetClusterColors()
 
         For i As Integer = 0 To embeddings.Length - 1
-            clusterName = clusters(labels(i))
+            clusterName = getClusterLabel(i)
 
             If Not clusterSerials.ContainsKey(clusterName) Then
                 clusterSerials.Add(clusterName, New List(Of NamedValue(Of Point3D)))
@@ -37,11 +41,23 @@ Public Class Umap3D : Inherits UmapRender
         Dim serials As Serial3D() = clusterSerials _
             .Select(Function(cluster)
                         Return New Serial3D With {
-                            .Points = cluster.Value.ToArray
+                            .Points = cluster.Value.ToArray,
+                            .Shape = LegendStyles.Triangle,
+                            .Color = colors(cluster.Key).Color,
+                            .PointSize = 5,
+                            .Title = cluster.Key
                         }
                     End Function) _
             .ToArray
-        Dim engine As New Scatter3D(serials, camera, "1,1", True, 0.5, 2, theme)
+        Dim engine As New Scatter3D(
+            serials:=serials,
+            camera:=camera,
+            arrowFactor:="1,1",
+            showHull:=False,
+            hullAlpha:=0.5,
+            hullBspline:=2,
+            theme:=theme
+        )
 
         Call engine.Plot(g, canvas.PlotRegion)
     End Sub

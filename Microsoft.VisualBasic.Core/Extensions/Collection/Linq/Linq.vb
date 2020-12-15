@@ -109,6 +109,8 @@ Namespace Linq
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
         ''' <returns></returns>
+        ''' 
+        <DebuggerStepThrough>
         <Extension>
         Public Function SafeQuery(Of T)(source As IEnumerable(Of T), <CallerMemberName> Optional trace$ = Nothing) As IEnumerable(Of T)
             If Not source Is Nothing Then

@@ -101,7 +101,7 @@ Namespace Graphic.Canvas
         ''' 数据点的大小值
         ''' </summary>
         ''' <returns></returns>
-        Public Property PointSize As Integer
+        Public Property pointSize As Integer
 
         ''' <summary>
         ''' X坐标轴的布局
@@ -128,7 +128,14 @@ Namespace Graphic.Canvas
         ''' </summary>
         ''' <returns></returns>
         Public Property axisTickCSS As String
+        Public Property axisTickStroke As String
+        Public Property axisTickPadding As Double
         Public Property axisStroke As String
+
+        ''' <summary>
+        ''' 一般为F2或者G3
+        ''' </summary>
+        ''' <returns></returns>
         Public Property axisTickFormat As String = "F2"
 
         ''' <summary>
@@ -136,6 +143,7 @@ Namespace Graphic.Canvas
         ''' </summary>
         ''' <returns></returns>
         Public Property drawLegend As Boolean
+        Public Property drawLabels As Boolean
         ''' <summary>
         ''' 是否再作图区显示网格？
         ''' </summary>

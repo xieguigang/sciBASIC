@@ -43,9 +43,11 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.DataMining.UMAP
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 <HideModuleName>
 Public Module UmapRenderExtensions
@@ -86,29 +88,49 @@ Public Module UmapRenderExtensions
     Public Function DrawUmap2D(umap As Umap,
                                Optional labels As IEnumerable(Of String) = Nothing,
                                Optional size$ = "2048,1600",
+                               Optional padding$ = g.DefaultPadding,
                                Optional colorSet$ = "Set1:c8") As GraphicsData
+        Dim theme As New Theme With {
+            .padding = padding
+        }
 
         Return New Umap2D(
             umap:=umap,
             labels:=labels.SafeQuery.ToArray,
             clusters:=Nothing,
             colorSet:=colorSet,
-            theme:=New Theme
+            theme:=theme
         ).Plot(size)
     End Function
 
     <Extension>
-    Public Function DrawUmap3D(umap As Umap,
+    Public Function DrawUmap3D(umap As Umap, camera As Camera,
                                Optional labels As IEnumerable(Of String) = Nothing,
                                Optional size$ = "2048,2048",
-                               Optional colorSet$ = "Set1:c8") As GraphicsData
+                               Optional padding$ = g.DefaultPadding,
+                               Optional bg$ = "white",
+                               Optional colorSet$ = "Set1:c8",
+                               Optional axisLabelCSS$ = CSSFont.PlotLabelNormal,
+                               Optional axisStroke$ = Stroke.AxisStroke,
+                               Optional labelCSS$ = CSSFont.Win10Normal,
+                               Optional showLabels As Boolean = True) As GraphicsData
 
-        Return New Umap2D(
+        Dim theme As New Theme With {
+            .padding = padding,
+            .axisLabelCSS = axisLabelCSS,
+            .axisStroke = axisStroke,
+            .tagCSS = labelCSS,
+            .background = bg,
+            .drawLabels = showLabels
+        }
+
+        Return New Umap3D(
             umap:=umap,
             labels:=labels.SafeQuery.ToArray,
             clusters:=Nothing,
             colorSet:=colorSet,
-            theme:=New Theme
+            theme:=theme,
+            camera:=camera
         ).Plot(size)
     End Function
 End Module

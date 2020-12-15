@@ -126,7 +126,7 @@ Namespace Plot3D.Impl
             Dim legendSize$ = $"{legendWidth},{legendWidth}"
 
             ' 要先绘制三维图形，要不然会将图例遮住的
-            Call model.RenderAs3DChart(g, camera, canvas, CSSFont.TryParse(theme.tagCSS))
+            Call model.RenderAs3DChart(g, camera, canvas, CSSFont.TryParse(theme.tagCSS), 100, showLabel:=theme.drawLabels)
 
             If theme.drawLegend Then
                 Call g.DrawLegends(
