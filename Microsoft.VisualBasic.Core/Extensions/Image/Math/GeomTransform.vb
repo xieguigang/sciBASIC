@@ -216,7 +216,8 @@ Namespace Imaging.Math2D
         ''' <param name="offset"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function OffSet2D(pt As PointF, offset As PointF, Optional d% = 1) As PointF
+        <Extension>
+        Public Function OffSet2D(pt As PointF, offset As PointF, Optional d% = 1) As PointF
             With pt
                 Return New PointF(d * offset.X + .X, d * offset.Y + .Y)
             End With
@@ -239,6 +240,12 @@ Namespace Imaging.Math2D
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Offsets(points As IEnumerable(Of Point), offset As PointF) As Point()
+            Return points.Select(Function(pt) pt.OffSet2D(offset)).ToArray
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Offsets(points As IEnumerable(Of PointF), offset As PointF) As PointF()
             Return points.Select(Function(pt) pt.OffSet2D(offset)).ToArray
         End Function
 

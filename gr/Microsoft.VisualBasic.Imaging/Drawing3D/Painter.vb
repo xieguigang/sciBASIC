@@ -137,7 +137,7 @@ Namespace Drawing3D
                                   Optional drawPath As Boolean = False,
                                   Optional offset As PointF = Nothing)
 
-            Dim buffer As Point()
+            Dim buffer As PointF()
 
             For Each polygon As Polygon In buf
                 With polygon
@@ -193,7 +193,7 @@ Namespace Drawing3D
             For i As Integer = 0 To sv.Count - 1
                 Dim index As Integer = order(i)
                 Dim s As Surface = sv(index)
-                Dim points() As Point = s _
+                Dim points() As PointF = s _
                     .vertices _
                     .Select(Function(p3D)
                                 Return p3D.PointXY(screen)
@@ -217,7 +217,7 @@ Namespace Drawing3D
             ''' <summary>
             ''' The 3D projection result buffer
             ''' </summary>
-            Dim points As Point()
+            Dim points As PointF()
             ''' <summary>
             ''' Surface fill
             ''' </summary>

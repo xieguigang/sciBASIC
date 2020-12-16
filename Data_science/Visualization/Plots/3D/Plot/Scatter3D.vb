@@ -10,7 +10,6 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D.Model
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
@@ -26,8 +25,16 @@ Namespace Plot3D.Impl
         ReadOnly hullAlpha As Double
         ReadOnly hullBspline As Single
 
-        Dim model As New List(Of Element3D)
-
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="serials"></param>
+        ''' <param name="camera"></param>
+        ''' <param name="arrowFactor"></param>
+        ''' <param name="showHull"></param>
+        ''' <param name="hullAlpha">``[0, 255]``</param>
+        ''' <param name="hullBspline"></param>
+        ''' <param name="theme"></param>
         Public Sub New(serials As IEnumerable(Of Serial3D), camera As Camera, arrowFactor$, showHull As Boolean, hullAlpha As Double, hullBspline As Single, theme As Theme)
             MyBase.New(theme)
 
@@ -41,7 +48,7 @@ Namespace Plot3D.Impl
             Call populateModels()
         End Sub
 
-        Private Sub populateModels()
+        Private Iterator Function populateModels() As IEnumerable(Of Element3D)
             Dim points As Point3D() = serials _
                 .Select(Function(s) s.Points.Values) _
                 .IteratesALL _
@@ -58,12 +65,20 @@ Namespace Plot3D.Impl
             End With
 
             ' 然后生成底部的网格
-            model += GridBottom.Grid(X, Y, (X(1) - X(0), Y(1) - Y(0)), Z.Min)
-            model += AxisDraw.Axis(
-                X, Y, Z, axisLabelFont,
-                (theme.xlabel, theme.ylabel, theme.zlabel),
-                theme.axisStroke,
-                arrowFactor)
+            For Each line As Line In GridBottom.Grid(X, Y, (X(1) - X(0), Y(1) - Y(0)), Z.Min)
+                Yield line
+            Next
+
+            For Each item As Element3D In AxisDraw.Axis(
+                    xrange:=X, yrange:=Y, zrange:=Z,
+                    labelFont:=axisLabelFont,
+                    labels:=(theme.xlabel, theme.ylabel, theme.zlabel),
+                    strokeCSS:=theme.axisStroke,
+                    arrowFactor:=arrowFactor
+                )
+
+                Yield item
+            Next
 
             ' 最后混合进入系列点
             For Each serial As Serial3D In serials
@@ -75,8 +90,8 @@ Namespace Plot3D.Impl
                 Dim color As New SolidBrush(serial.Color)
 
                 If showHull Then
-                    model += New ConvexHullPolygon With {
-                        .brush = New SolidBrush(serial.Color.Alpha(hullAlpha)),
+                    Yield New ConvexHullPolygon With {
+                        .Brush = New SolidBrush(serial.Color.Alpha(hullAlpha)),
                         .Path = data _
                             .Select(Function(pt) pt.Value) _
                             .ToArray,
@@ -84,18 +99,17 @@ Namespace Plot3D.Impl
                     }
                 End If
 
-                model += data _
-                    .Select(Function(pt)
-                                Return New ShapePoint With {
-                                    .Fill = color,
-                                    .Location = pt.Value,
-                                    .Size = size,
-                                    .Style = serial.Shape,
-                                    .Label = pt.Name
-                                }
-                            End Function)
+                For Each pt As NamedValue(Of Point3D) In data
+                    Yield New ShapePoint With {
+                        .Fill = color,
+                        .Location = pt.Value,
+                        .Size = size,
+                        .Style = serial.Shape,
+                        .Label = pt.Name
+                    }
+                Next
             Next
-        End Sub
+        End Function
 
         Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
             Dim legends As Legend() = serials _
@@ -112,7 +126,7 @@ Namespace Plot3D.Impl
             Dim region As Rectangle = canvas.PlotRegion
 
             ' 绘制图例？？
-            Dim legendHeight! = (legends.Length * (Font.Height + 5))
+            Dim legendHeight! = (legends.Length * (font.Height + 5))
             Dim legendTop! = (region.Height - legendHeight) / 2
             Dim maxLegendLabelSize As SizeF = legends.Select(Function(s) s.title) _
                 .MaxLengthString _
@@ -124,9 +138,18 @@ Namespace Plot3D.Impl
                 .Y = legendTop
             }
             Dim legendSize$ = $"{legendWidth},{legendWidth}"
+            Dim labelColor As New SolidBrush(theme.tagColor.TranslateColor)
 
             ' 要先绘制三维图形，要不然会将图例遮住的
-            Call model.RenderAs3DChart(g, camera, canvas, CSSFont.TryParse(theme.tagCSS), 100, showLabel:=theme.drawLabels)
+            Call populateModels.RenderAs3DChart(
+                canvas:=g,
+                camera:=camera,
+                region:=canvas,
+                labelFont:=CSSFont.TryParse(theme.tagCSS),
+                labelerItr:=0,
+                showLabel:=theme.drawLabels,
+                labelColor:=labelColor
+            )
 
             If theme.drawLegend Then
                 Call g.DrawLegends(

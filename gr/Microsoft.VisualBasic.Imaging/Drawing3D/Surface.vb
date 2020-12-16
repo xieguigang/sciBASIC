@@ -78,19 +78,19 @@ Namespace Drawing3D
         End Sub
 
         Public Sub Draw(ByRef canvas As Graphics, camera As Camera) Implements I3DModel.Draw
-            Dim path = New Point(vertices.Length - 1) {}
+            Dim path = New PointF(vertices.Length - 1) {}
             Dim polygon As New GraphicsPath
 
             For Each pt As SeqValue(Of Point3D) In camera.Project(vertices).SeqIterator
                 path(pt.i) = pt.value.PointXY(camera.screen)
             Next
 
-            Dim a As Point = path(0)
-            Dim b As Point
+            Dim a As PointF = path(0)
+            Dim b As PointF
 
             For i As Integer = 1 To path.Length - 1
                 b = path(i)
-                Call polygon.AddLine(a, b)
+                polygon.AddLine(a, b)
                 a = b
             Next
 

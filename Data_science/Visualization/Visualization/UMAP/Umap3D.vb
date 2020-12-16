@@ -12,11 +12,13 @@ Imports Microsoft.VisualBasic.Linq
 Public Class Umap3D : Inherits UmapRender
 
     ReadOnly camera As Camera
+    ReadOnly bubbleAlpha%
 
-    Public Sub New(umap As Umap, camera As Camera, labels$(), clusters As Dictionary(Of String, String), colorSet$, theme As Theme)
+    Public Sub New(umap As Umap, camera As Camera, labels$(), clusters As Dictionary(Of String, String), colorSet$, bubbleAlpha%, theme As Theme)
         MyBase.New(umap, labels, clusters, colorSet, theme)
 
         Me.camera = camera
+        Me.bubbleAlpha = bubbleAlpha
     End Sub
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
@@ -44,7 +46,7 @@ Public Class Umap3D : Inherits UmapRender
                             .Points = cluster.Value.ToArray,
                             .Shape = LegendStyles.Triangle,
                             .Color = colors(cluster.Key).Color,
-                            .PointSize = 5,
+                            .PointSize = theme.pointSize,
                             .Title = cluster.Key
                         }
                     End Function) _
@@ -53,8 +55,8 @@ Public Class Umap3D : Inherits UmapRender
             serials:=serials,
             camera:=camera,
             arrowFactor:="1,1",
-            showHull:=False,
-            hullAlpha:=0.5,
+            showHull:=bubbleAlpha > 0,
+            hullAlpha:=bubbleAlpha,
             hullBspline:=2,
             theme:=theme
         )

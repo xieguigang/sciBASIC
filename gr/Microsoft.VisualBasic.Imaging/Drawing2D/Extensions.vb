@@ -161,7 +161,7 @@ Namespace Drawing2D
         <Extension>
         Public Function Enlarge(size As SizeF, fold#) As SizeF
             With size
-                Return New SizeF(.Width * fold, .Height * fold)
+                Return New SizeF(CSng(.Width * fold), CSng(.Height * fold))
             End With
         End Function
 
@@ -200,9 +200,10 @@ Namespace Drawing2D
         ''' 将一个多边形放大指定的倍数<paramref name="scale"/>
         ''' </summary>
         ''' <param name="shape">矢量图形的点集合</param>
-        ''' <param name="scale#"></param>
+        ''' <param name="scale"></param>
         ''' <returns></returns>
-        <Extension> Public Function Enlarge(shape As IEnumerable(Of PointF), scale As (width#, height#)) As PointF()
+        <Extension>
+        Public Function Enlarge(shape As IEnumerable(Of PointF), scale As (width#, height#)) As PointF()
             Dim shapeVector = shape.ToArray
             Dim center = shapeVector.Centre
             Dim x As New Vector(shapeVector.Select(Function(pt) pt.X))

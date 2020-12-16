@@ -42,10 +42,8 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.DataFrame
 Imports stdNum = System.Math
 
@@ -55,8 +53,8 @@ Imports stdNum = System.Math
 Public Module CorrelationNetwork
 
     <Extension>
-    Public Function BuildNetwork(data As IEnumerable(Of DataSet), cutoff#) As (net As NetworkGraph, matrix As DistanceMatrix)
-        Return data.MatrixBuilder(AddressOf Correlations.GetPearson, False).BuildNetwork(cutoff)
+    Public Function BuildNetwork(data As IEnumerable(Of DataSet), cutoff#, Optional pvalue As Double = 1) As (net As NetworkGraph, matrix As CorrelationMatrix)
+        Return data.Correlation(False).BuildNetwork(cutoff, pvalue)
     End Function
 
     ''' <summary>
@@ -66,7 +64,7 @@ Public Module CorrelationNetwork
     ''' <param name="cutoff"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function BuildNetwork(matrix As DistanceMatrix, cutoff#) As (net As NetworkGraph, matrix As DistanceMatrix)
+    Public Function BuildNetwork(matrix As CorrelationMatrix, cutoff#, Optional pvalue As Double = 1) As (net As NetworkGraph, matrix As CorrelationMatrix)
         Dim g As New NetworkGraph
         Dim cor As Double
         Dim nodeData As NodeData
@@ -78,18 +76,21 @@ Public Module CorrelationNetwork
         Next
 
         Dim uid As String
+        Dim prob As Double
 
         For Each id As String In matrix.keys
             For Each partner As String In matrix.keys.Where(Function(b) b <> id)
                 cor = matrix(id, partner)
+                prob = matrix.pvalue(id, partner)
 
-                If stdNum.Abs(cor) >= cutoff Then
+                If stdNum.Abs(cor) >= cutoff AndAlso prob <= pvalue Then
                     uid$ = {partner, id}.OrderBy(Function(s) s).JoinBy(" - ")
                     linkdata = New EdgeData With {
                         .label = uid,
                         .length = cor,
                         .Properties = New Dictionary(Of String, String) From {
-                            {NamesOf.REFLECTION_ID_MAPPING_INTERACTION_TYPE, HowStrong(cor)}
+                            {NamesOf.REFLECTION_ID_MAPPING_INTERACTION_TYPE, HowStrong(cor)},
+                            {"pvalue", prob}
                         }
                     }
 

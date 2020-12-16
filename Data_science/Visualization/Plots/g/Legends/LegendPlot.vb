@@ -106,7 +106,7 @@ Namespace Graphic.Legend
         ''' <param name="radius%"></param>
         <Extension>
         Public Sub DrawLegendShape(g As IGraphics,
-                                   pos As Point,
+                                   pos As PointF,
                                    gSize As SizeF,
                                    style As LegendStyles,
                                    color As Brush,

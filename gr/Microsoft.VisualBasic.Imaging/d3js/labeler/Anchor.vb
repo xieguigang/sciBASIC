@@ -68,6 +68,13 @@ Namespace d3js.Layout
         Sub New()
         End Sub
 
+        Sub New(location As PointF, r#)
+            Me.r = r
+
+            x = location.X
+            y = location.Y
+        End Sub
+
         Sub New(location As Point, r#)
             Me.r = r
 
@@ -99,13 +106,13 @@ Namespace d3js.Layout
 
         Public Shared Widening Operator CType(anchor As Anchor) As Point
             With anchor
-                Return New Point(.x, .y)
+                Return New Point(CInt(.x), CInt(.y))
             End With
         End Operator
 
         Public Shared Widening Operator CType(anchor As Anchor) As PointF
             With anchor
-                Return New PointF(.x, .y)
+                Return New PointF(CInt(.x), CInt(.y))
             End With
         End Operator
 
@@ -114,7 +121,7 @@ Namespace d3js.Layout
 
             Return New RectangleF With {
                 .Location = anchor,
-                .Size = New SizeF(r, r)
+                .Size = New SizeF(CSng(r), CSng(r))
             }
         End Operator
 

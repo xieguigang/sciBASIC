@@ -56,20 +56,27 @@ Public Module Distance
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Euclidean(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet)) As DistanceMatrix
-        Return data.MatrixBuilder(AddressOf EuclideanDistance, True)
+        Return data.MatrixBuilder(AddressOf EuclideanDistance, type:=DataType.Distance)
     End Function
 
     <Extension>
-    Public Function Correlation(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet), Optional spearman As Boolean = False) As DistanceMatrix
-        Dim cor As Func(Of Double(), Double(), Double)
+    Public Function Correlation(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet), Optional spearman As Boolean = False) As CorrelationMatrix
+        Dim cor As Func(Of Double(), Double(), (Double, Double))
 
         If spearman Then
-            cor = AddressOf Correlations.Spearman
+            cor = Function(x, y)
+                      Return (Correlations.Spearman(x, y), 0)
+                  End Function
         Else
-            cor = AddressOf Correlations.GetPearson
+            cor = Function(x, y)
+                      Dim pvalue As Double
+                      Dim corVal = Correlations.GetPearson(x, y, prob:=pvalue)
+
+                      Return (corVal, pvalue)
+                  End Function
         End If
 
-        Return data.MatrixBuilder(cor, isDistance:=False)
+        Return data.MatrixBuilder(cor, type:=DataType.Correlation)
     End Function
 
     ''' <summary>
@@ -81,6 +88,6 @@ Public Module Distance
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Similarity(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet)) As DistanceMatrix
-        Return data.MatrixBuilder(Function(x, y) SSM(New Vector(x), New Vector(y)), isDistance:=False)
+        Return data.MatrixBuilder(Function(x, y) SSM(New Vector(x), New Vector(y)), type:=DataType.Similarity)
     End Function
 End Module

@@ -44,22 +44,17 @@ Imports System.Drawing
 Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace Drawing3D.Math3D
 
     ''' <summary>
     ''' 3D coordinate transformation tools.
     ''' </summary>
-    <Package("Coordinate.Transformation",
-                      Category:=APICategories.UtilityTools,
-                      Publisher:="xie.guigang@gmail.com",
-                      Description:="3D coordinate transformation tools.")>
     Public Module Projection
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function Projection(points As IEnumerable(Of Point3D), camera As Camera) As Point()
-            Dim result As Point() = camera _
+        <Extension> Public Function Projection(points As IEnumerable(Of Point3D), camera As Camera) As PointF()
+            Dim result As PointF() = camera _
                 .Project(points) _
                 .Select(Function(point)
                             Return point.PointXY(camera.screen)
@@ -79,26 +74,27 @@ Namespace Drawing3D.Math3D
         ''' </summary>
         ''' <param name="rect"></param>
         ''' <returns></returns>
-        <Extension> Public Function PointXY(p As Point3D, Optional rect As Size = Nothing) As Point
-            Dim x! = p.X, y! = p.Y
+        <Extension>
+        Public Function PointXY(p As Point3D, Optional rect As Size = Nothing) As PointF
+            Dim x# = p.X, y# = p.Y
 
-            If x > Integer.MaxValue OrElse Single.IsPositiveInfinity(x) Then
+            If Single.IsPositiveInfinity(CSng(x)) Then
                 x = rect.Width
-            ElseIf x < Integer.MinValue OrElse Single.IsNegativeInfinity(x) Then
+            ElseIf Single.IsNegativeInfinity(CSng(x)) Then
                 x = 0
-            ElseIf Single.IsNaN(x) Then
+            ElseIf Single.IsNaN(CSng(x)) Then
                 x = rect.Width
             End If
 
-            If y > Integer.MaxValue OrElse Single.IsPositiveInfinity(y) Then
+            If Single.IsPositiveInfinity(CSng(y)) Then
                 y = rect.Height
-            ElseIf y < Integer.MinValue OrElse Single.IsNegativeInfinity(y) Then
+            ElseIf Single.IsNegativeInfinity(CSng(y)) Then
                 y = 0
-            ElseIf Single.IsNaN(y) Then
+            ElseIf Single.IsNaN(CSng(y)) Then
                 y = rect.Height
             End If
 
-            Return New Point(x, y)
+            Return New PointF(CSng(x), CSng(y))
         End Function
 
         ''' <summary>
@@ -106,11 +102,12 @@ Namespace Drawing3D.Math3D
         ''' </summary>
         ''' <param name="model"></param>
         ''' <returns></returns>
-        <Extension> Public Function Center(model As IEnumerable(Of Point3D)) As Point3D
+        <Extension>
+        Public Function Center(model As IEnumerable(Of Point3D)) As Point3D
             Dim array As Point3D() = model.ToArray
-            Dim x As Single = array.Select(Function(p) p.X).Sum / array.Length
-            Dim y As Single = array.Select(Function(p) p.Y).Sum / array.Length
-            Dim z As Single = array.Select(Function(p) p.Z).Sum / array.Length
+            Dim x As Single = CSng(array.Select(Function(p) p.X).Sum / array.Length)
+            Dim y As Single = CSng(array.Select(Function(p) p.Y).Sum / array.Length)
+            Dim z As Single = CSng(array.Select(Function(p) p.Z).Sum / array.Length)
 
             Return New Point3D(x, y, z)
         End Function
@@ -122,19 +119,19 @@ Namespace Drawing3D.Math3D
         ''' <param name="xRotate"></param>
         ''' <returns></returns>
         <ExportAPI("SpaceToGrid")>
-        <Extension> Public Function SpaceToGrid(pt3D As Point3D, xRotate As Single) As Point
-            Dim X As Single = Cos(xRotate) * pt3D.X + pt3D.Y
-            Dim Y As Single = Sin(xRotate) * pt3D.X - pt3D.Z
+        <Extension> Public Function SpaceToGrid(pt3D As Point3D, xRotate As Single) As PointF
+            Dim X As Single = CSng(Cos(xRotate) * pt3D.X + pt3D.Y)
+            Dim Y As Single = CSng(Sin(xRotate) * pt3D.X - pt3D.Z)
 
-            Return New Point(X, Y)
+            Return New PointF(X, Y)
         End Function
 
         <ExportAPI("SpaceToGrid")>
-        Public Function SpaceToGrid(px As Single, py As Single, pz As Single, xRotate As Single) As Point
-            Dim X As Single = Cos(xRotate) * px + py
-            Dim Y As Single = Sin(xRotate) * px - pz
+        Public Function SpaceToGrid(px As Single, py As Single, pz As Single, xRotate As Single) As PointF
+            Dim X As Single = CSng(Cos(xRotate) * px + py)
+            Dim Y As Single = CSng(Sin(xRotate) * px - pz)
 
-            Return New Point(X, Y)
+            Return New PointF(X, Y)
         End Function
 
         ''' <summary>
@@ -145,11 +142,11 @@ Namespace Drawing3D.Math3D
         ''' <param name="offset"></param>
         ''' <returns></returns>
         <ExportAPI("SpaceToGrid")>
-        <Extension> Public Function SpaceToGrid(pt3D As Point3D, xRotate As Single, offset As Point) As Point
-            Dim X As Single = Cos(xRotate) * pt3D.X + pt3D.Y + offset.X
-            Dim Y As Single = Sin(xRotate) * pt3D.X - pt3D.Z + offset.Y
+        <Extension> Public Function SpaceToGrid(pt3D As Point3D, xRotate As Single, offset As Point) As PointF
+            Dim X As Single = CSng(Cos(xRotate) * pt3D.X + pt3D.Y + offset.X)
+            Dim Y As Single = CSng(Sin(xRotate) * pt3D.X - pt3D.Z + offset.Y)
 
-            Return New Point(X, Y)
+            Return New PointF(X, Y)
         End Function
     End Module
 End Namespace

@@ -147,9 +147,9 @@ Namespace Plot3D
                 .Evaluate(x, y, xsteps, ysteps) _
                 .IteratesALL _
                 .Select(Function(o) New Point3D(o.X, o.y, o.z))
-            Dim rect As Rectangle
-            Dim previous As Point
-            Dim cur As Point
+            Dim rect As RectangleF
+            Dim previous As PointF
+            Dim cur As PointF
             Dim lcolor As New Pen(lineColor.ToColor)
 
             Dim plotInternal =
@@ -164,7 +164,7 @@ Namespace Plot3D
                         For Each pt As Point3D In data.Skip(1)
                             pt = .Project(.Rotate(pt))   ' 3d project to 2d
                             cur = pt.PointXY(camera.screen)
-                            rect = New Rectangle(cur, New Size(5, 5))
+                            rect = New RectangleF(cur, New SizeF(5, 5))
 
                             Call g.FillPie(Brushes.Red, rect, 0, 360)  ' 画点
                             Call g.DrawLine(lcolor, previous.X, previous.Y, cur.X, cur.Y)       ' 画线

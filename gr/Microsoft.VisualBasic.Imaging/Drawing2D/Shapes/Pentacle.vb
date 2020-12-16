@@ -54,7 +54,7 @@ Namespace Drawing2D.Shapes
     ''' </summary>
     Public Class Pentacle
 
-        Public Shared Sub Draw(ByRef g As IGraphics, topLeft As Point, size As SizeF, Optional br As Brush = Nothing, Optional border As Stroke = Nothing)
+        Public Shared Sub Draw(ByRef g As IGraphics, topLeft As PointF, size As SizeF, Optional br As Brush = Nothing, Optional border As Stroke = Nothing)
             Dim pts As Point() = PathData(topLeft, size)
 
             If br Is Nothing Then
@@ -68,7 +68,7 @@ Namespace Drawing2D.Shapes
             End If
         End Sub
 
-        Public Shared Function PathData(topleft As Point, size As SizeF) As Point()
+        Public Shared Function PathData(topleft As PointF, size As SizeF) As Point()
             Dim pts(9) As Point
             Dim center As New Point(topleft.X + size.Width / 2, topleft.Y + size.Height / 2)
             Dim radius As Integer = Min(size.Width, size.Height) / 2

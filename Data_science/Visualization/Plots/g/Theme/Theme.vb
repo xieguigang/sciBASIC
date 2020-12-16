@@ -97,6 +97,8 @@ Namespace Graphic.Canvas
         ''' </summary>
         ''' <returns></returns>
         Public Property tagCSS As String
+        Public Property tagColor As String
+
         ''' <summary>
         ''' 数据点的大小值
         ''' </summary>

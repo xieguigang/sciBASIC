@@ -55,12 +55,17 @@ Namespace Drawing3D.Models
         Public pen As Pen
 
         Public Sub Draw(ByRef canvas As Graphics, camera As Camera) Implements I3DModel.Draw
-            Dim pts As Point() = camera.Project(Me).Select(Function(pt) pt.PointXY(camera.screen)).ToArray
+            Dim pts As PointF() = camera _
+                .Project(Me) _
+                .Select(Function(pt) pt.PointXY(camera.screen)) _
+                .ToArray
+
             Call canvas.DrawLine(pen, pts(0), pts(1))
         End Sub
 
         Public Function Copy(data As IEnumerable(Of Point3D)) As I3DModel Implements I3DModel.Copy
             Dim array As Point3D() = data.ToArray
+
             Return New Line3D With {
                 .a = data(0),
                 .b = data(1),

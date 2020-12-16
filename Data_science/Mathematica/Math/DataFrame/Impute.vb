@@ -56,14 +56,6 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Public Module Impute
 
-    ''' <summary>
-    ''' 缺失值的模拟推断方法
-    ''' </summary>
-    Public Enum InferMethods
-        Average
-        Min
-    End Enum
-
     <Extension>
     Public Function SimulateMissingValues(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(rawMatrix As IEnumerable(Of DataSet), Optional byRow As Boolean = True, Optional infer As InferMethods = InferMethods.Average) As IEnumerable(Of DataSet)
         Dim method As Func(Of Vector, Double)

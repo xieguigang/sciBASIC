@@ -1,41 +1,41 @@
 ﻿#Region "Microsoft.VisualBasic::a153a64478cf0e4658fb1d830fe41786, gr\network-visualization\Visualizer\CanvasScaler.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module CanvasScaler
-    ' 
-    '     Function: (+2 Overloads) AutoScaler, CalculateNodePositions, CentralOffsets
-    ' 
-    ' /********************************************************************************/
+' Module CanvasScaler
+' 
+'     Function: (+2 Overloads) AutoScaler, CalculateNodePositions, CentralOffsets
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -43,7 +43,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
@@ -132,39 +132,21 @@ Public Module CanvasScaler
                                   .Y = n.data.initialPostion.y
                               }
                           End Function)
-
-        ' 1. 首先计算出边界
-        Dim boundary As RectangleF = points.Values.GetBounds
-        ' 2. 计算出缩放的因子大小
-        Dim factor As SizeF = boundary.AutoScaler(frameSize, padding)
         ' 3. 执行缩放
         Dim keys As String() = points.Keys.ToArray
-        Dim scalePoints As PointF() = keys _
-            .Select(Function(id) points(id)) _
-            .Enlarge((CDbl(factor.Width), CDbl(factor.Height)))
+        Dim polygon As PointF() = keys _
+            .Select(Function(i) points(i)) _
+            .ToArray _
+            .ScalePoints(
+                frameSize:=frameSize,
+                padding:=padding,
+                scaleFactor:=scaleFactor,
+                centraOffset:=centraOffset
+            )
 
-        With keys
-            For i As Integer = 0 To .Count - 1
-                points(.GetValue(i)) = scalePoints(i)
-            Next
-        End With
-
-        ' 4. 计算出中心点平移的偏移值
-        Dim plotSize As New Size With {
-            .Width = frameSize.Width - padding.Horizontal,
-            .Height = frameSize.Height - padding.Vertical
-        }
-        Dim offset As PointF = scalePoints _
-            .CentralOffset(plotSize) _
-            .OffSet2D(New PointF(padding.Left, padding.Top))
-
-        ' 5. 执行中心点平移
-        Call keys.DoEach(Sub(id)
-                             points(id) = points(id).OffSet2D(offset)
-                         End Sub)
-
-        scaleFactor = factor
-        centraOffset = offset
+        For i As Integer = 0 To keys.Length - 1
+            points(keys(i)) = polygon(i)
+        Next
 
         ' 6. 完成节点的位置计算操作
         '    返回节点位置结果
@@ -182,21 +164,5 @@ Public Module CanvasScaler
     <Extension>
     Public Function CentralOffsets(nodes As Dictionary(Of Node, PointF), size As SizeF) As PointF
         Return nodes.Values.CentralOffset(size)
-    End Function
-
-    <Extension>
-    Public Function AutoScaler(boundary As RectangleF, frameSize As SizeF, padding As Padding) As SizeF
-        With boundary
-            Dim w = (frameSize.Width - padding.Horizontal) / .Width
-            Dim h = (frameSize.Height - padding.Vertical) / .Height
-
-            Return New SizeF(w, h)
-        End With
-    End Function
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension>
-    Public Function AutoScaler(shape As IEnumerable(Of PointF), frameSize As SizeF, padding As Padding) As SizeF
-        Return shape.GetBounds.AutoScaler(frameSize, padding)
     End Function
 End Module

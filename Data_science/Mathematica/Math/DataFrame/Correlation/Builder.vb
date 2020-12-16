@@ -54,34 +54,55 @@ Public Module Builder
     ''' <typeparam name="DataSet"></typeparam>
     ''' <param name="data"></param>
     ''' <param name="eval"></param>
-    ''' <param name="isDistance"></param>
+    ''' <param name="type"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function MatrixBuilder(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet), eval As Func(Of Double(), Double(), Double), isDistance As Boolean) As DistanceMatrix
+    Public Function MatrixBuilder(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet), eval As Func(Of Double(), Double(), Double), type As DataType) As DistanceMatrix
+        Return data.MatrixBuilder(Function(x, y) (eval(x, y), 0), type)
+    End Function
+
+    ''' <summary>
+    ''' 一个通用的距离矩阵创建函数
+    ''' </summary>
+    ''' <typeparam name="DataSet"></typeparam>
+    ''' <param name="data"></param>
+    ''' <param name="eval"></param>
+    ''' <param name="type"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function MatrixBuilder(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet), eval As Func(Of Double(), Double(), (Double, Double)), type As DataType) As DataMatrix
         Dim allData As DataSet() = data.ToArray
         Dim names As String() = allData.PropertyNames
         Dim keys As String() = allData.Keys
-        Dim matrix As Double()() = allData _
+        Dim evalData = allData _
             .SeqIterator _
             .AsParallel _
             .Select(Function(d)
                         Dim vec As New List(Of Double)
+                        Dim vec2 As New List(Of Double)
                         Dim sample = d.value.Properties
                         Dim x As Double() = sample.Takes(names).ToArray
                         Dim y As Double()
 
                         For Each row As DataSet In allData
                             y = names.Select(Function(key) row(key)).ToArray
-                            vec += eval(x, y)
+                            vec += eval(x, y).Item1
+                            vec2 += eval(x, y).Item2
                         Next
 
-                        Return (d.i, vec.ToArray)
+                        Return (d.i, vec.ToArray, vec2.ToArray)
                     End Function) _
             .OrderBy(Function(d) d.i) _
+            .ToArray
+        Dim matrix As Double()() = evalData _
             .Select(Function(d) d.Item2) _
             .ToArray
 
-        Return New DistanceMatrix(keys.Indexing, matrix, isDistance)
+        If type = DataType.Correlation Then
+            Return New CorrelationMatrix(keys.Indexing, matrix, evalData.Select(Function(d) d.Item3).ToArray)
+        Else
+            Return New DistanceMatrix(keys.Indexing, matrix, isDistance:=type = DataType.Distance)
+        End If
     End Function
 
     <Extension>

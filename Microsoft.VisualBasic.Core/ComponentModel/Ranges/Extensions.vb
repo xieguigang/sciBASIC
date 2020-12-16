@@ -49,7 +49,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports r = System.Text.RegularExpressions.Regex
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace ComponentModel.Ranges
 
@@ -201,8 +201,8 @@ Namespace ComponentModel.Ranges
 
                     For Each region In unions
                         If region.IsOverlapping(f) OrElse region.IsInside(f) Then
-                            region.Min = sys.Min(region.Min, f.Min)
-                            region.Max = sys.Max(region.Max, f.Max)
+                            region.Min = stdNum.Min(region.Min, f.Min)
+                            region.Max = stdNum.Max(region.Max, f.Max)
 
                             isUnion = True
                         End If
