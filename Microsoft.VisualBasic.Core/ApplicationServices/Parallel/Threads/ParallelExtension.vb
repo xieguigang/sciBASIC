@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed08d88a65a02432b9cde2a8cc1c09dd, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\ParallelExtension.vb"
+﻿#Region "Microsoft.VisualBasic::bfb6d76e539ccba11eb613f5bd659a12, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\ParallelExtension.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module ParallelExtension
     ' 
-    '         Function: AsyncTask, RunTask
+    '         Function: AsyncTask, DoEvents, RunTask
     ' 
     '         Sub: DoEvents
     ' 

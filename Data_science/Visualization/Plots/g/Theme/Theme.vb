@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::577b9c75276491438ce6d0a5b93bd431, Data_science\Visualization\Plots\g\Theme\Theme.vb"
+﻿#Region "Microsoft.VisualBasic::0a1c0e310973767bd872994f4199bf8d, Data_science\Visualization\Plots\g\Theme\Theme.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,12 @@
 
     '     Class Theme
     ' 
-    '         Properties: axisLabelCSS, axisStroke, axisTickCSS, axisTickFormat, background
-    '                     colorSet, drawGrid, drawLegend, gridStroke, legendBoxStroke
-    '                     legendLabelCSS, legendLayout, legendTitleCSS, mainCSS, padding
-    '                     PointSize, subtitleCSS, tagCSS, xAxisLayout, yAxisLayout
+    '         Properties: axisLabelCSS, axisStroke, axisTickCSS, axisTickFormat, axisTickPadding
+    '                     axisTickStroke, background, colorSet, drawGrid, drawLabels
+    '                     drawLegend, gridStroke, legendBoxStroke, legendLabelCSS, legendLayout
+    '                     legendTitleCSS, mainCSS, padding, pointSize, subtitleCSS
+    '                     tagColor, tagCSS, xAxisLayout, xlabel, yAxisLayout
+    '                     ylabel, zlabel
     ' 
     '         Function: ToString
     ' 

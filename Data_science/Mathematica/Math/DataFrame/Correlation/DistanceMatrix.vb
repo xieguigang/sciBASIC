@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cdec6e9dc950b1107d6ee7b11d6d2944, Data_science\Mathematica\Math\DataFrame\Correlation\DistanceMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::5ed51e339853cc6ae7870f538d81eec5, Data_science\Mathematica\Math\DataFrame\Correlation\DistanceMatrix.vb"
 
     ' Author:
     ' 
@@ -33,11 +33,10 @@
 
     ' Class DistanceMatrix
     ' 
-    '     Properties: is_dist, keys, size
+    '     Properties: is_dist
     ' 
     '     Constructor: (+2 Overloads) Sub New
-    '     Function: CreateMatrix, GetQuantile, PopulateRowObjects, PopulateRows, ToString
-    '               Visit
+    '     Function: CreateMatrix, GetQuantile
     ' 
     ' /********************************************************************************/
 

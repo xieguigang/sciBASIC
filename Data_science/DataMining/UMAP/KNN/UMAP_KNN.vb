@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9549a4059ec8007e6883274f6a4a4d79, Data_science\DataMining\UMAP\KNN\UMAP_KNN.vb"
+﻿#Region "Microsoft.VisualBasic::0cea23678d1376a23bd43e15dc6d0cbc, Data_science\DataMining\UMAP\KNN\UMAP_KNN.vb"
 
     ' Author:
     ' 
@@ -165,4 +165,3 @@ Friend Class UMAP_KNN
     End Function
 
 End Class
-

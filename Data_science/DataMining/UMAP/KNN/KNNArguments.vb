@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e583a1b26100778a3107407af47ee17f, Data_science\DataMining\UMAP\KNN\KNNArguments.vb"
+﻿#Region "Microsoft.VisualBasic::a9340d17391d434881e0bf6dfb2efccf, Data_science\DataMining\UMAP\KNN\KNNArguments.vb"
 
     ' Author:
     ' 
@@ -67,4 +67,3 @@ Public Structure KNNArguments
     End Function
 
 End Structure
-

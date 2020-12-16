@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9b182cdf7610a862e74bdcd0038fb93, Data_science\Mathematica\Math\Math\Distributions\Sample.vb"
+﻿#Region "Microsoft.VisualBasic::0157696f8e59108bdfee94a509591dca, Data_science\Mathematica\Math\Math\Distributions\Sample.vb"
 
     ' Author:
     ' 

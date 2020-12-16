@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c92a9eae2e29ab67023e78e124aa2723, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\OfficeColorThemes.vb"
+﻿#Region "Microsoft.VisualBasic::67a546b6e2cb80d94c4ec9f4a836c883, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Office\OfficeColorThemes.vb"
 
     ' Author:
     ' 
@@ -41,34 +41,6 @@
     '         Function: GetAccentColors
     ' 
     '         Sub: InternalLoadAllThemes
-    ' 
-    '     Class OfficeColorTheme
-    ' 
-    '         Properties: accents, dk1, dk2, folHlink, hlink
-    '                     lt1, lt2, name
-    ' 
-    '         Function: GetAccentColors, LoadFromXml, ToString
-    '         Structure ObjectColor
-    ' 
-    '             Properties: sysClr
-    ' 
-    '         Structure Accent
-    ' 
-    '             Properties: srgbClr
-    ' 
-    '         Structure sysClr
-    ' 
-    '             Properties: lastClr, val
-    ' 
-    '             Function: ToString
-    ' 
-    '         Structure srgbClr
-    ' 
-    '             Properties: Color, val
-    ' 
-    '             Function: ToString
-    ' 
-    ' 
     ' 
     ' 
     ' /********************************************************************************/

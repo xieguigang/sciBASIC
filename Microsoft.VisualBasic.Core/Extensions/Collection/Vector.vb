@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d00d41e1901ee5456469b2d421305430, Microsoft.VisualBasic.Core\Extensions\Collection\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::098f1fd4fd20ce9c5885feff37043f7b, Microsoft.VisualBasic.Core\Extensions\Collection\Vector.vb"
 
     ' Author:
     ' 
@@ -39,15 +39,6 @@
     '               Split, VectorShadows
     ' 
     '     Sub: (+4 Overloads) Add, InsertAt, (+2 Overloads) Memset
-    '     Enum DelimiterLocation
-    ' 
-    '         NextFirst, NotIncludes, PreviousLast
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
     ' 
     ' /********************************************************************************/
 

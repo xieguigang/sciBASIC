@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c4b5e020dd25b44ba41feb2c4e20222, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Enumeration.vb"
+﻿#Region "Microsoft.VisualBasic::91f411ba53961fdf1727b672ff2a7f14, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Enumeration.vb"
 
     ' Author:
     ' 
@@ -34,15 +34,6 @@
     '     Interface Enumeration
     ' 
     '         Function: GenericEnumerator, GetEnumerator
-    ' 
-    '     Module EnumerationExtensions
-    ' 
-    '         Function: AsEnumerable, (+2 Overloads) AsObjectEnumerator
-    '         Class Enumerator
-    ' 
-    '             Function: GetEnumerator, IEnumerable_GetEnumerator
-    ' 
-    ' 
     ' 
     ' 
     ' /********************************************************************************/

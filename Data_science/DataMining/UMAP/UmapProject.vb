@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e778bd20d0781077a4dd98e76ee1cfad, Data_science\DataMining\UMAP\UmapProject.vb"
+﻿#Region "Microsoft.VisualBasic::b114a6b524e694af621e2c549ec288d4, Data_science\DataMining\UMAP\UmapProject.vb"
 
     ' Author:
     ' 
@@ -57,4 +57,3 @@ Public Class UmapProject
     End Function
 
 End Class
-

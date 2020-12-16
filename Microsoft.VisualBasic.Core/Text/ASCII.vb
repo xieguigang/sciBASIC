@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::392e3ddd3233c9af8fca7a47ff882ad8, Microsoft.VisualBasic.Core\Text\ASCII.vb"
+﻿#Region "Microsoft.VisualBasic::0679bd06ba91cd3015c6adf83da27bb7, Microsoft.VisualBasic.Core\Text\ASCII.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: AlphaNumericTable, Nonprintings, Symbols
     ' 
-    '         Function: IsASCIIString, IsNonPrinting, ReplaceQuot, TrimNonPrintings
+    '         Function: IsAsciiChar, IsASCIIString, IsNonPrinting, ReplaceQuot, TrimNonPrintings
     '         Class [Byte]
     ' 
     '             Function: GetASCIISymbols

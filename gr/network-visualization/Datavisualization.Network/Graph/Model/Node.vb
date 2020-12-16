@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42b78cf008159e0c998c010f757a0c2c, gr\network-visualization\Datavisualization.Network\Graph\Model\Node.vb"
+﻿#Region "Microsoft.VisualBasic::f7ddc13617722f3008ea4444f1a25e3d, gr\network-visualization\Datavisualization.Network\Graph\Model\Node.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::febded9db4295bfb97dd33dc88d82bf0, Data_science\Visualization\Visualization\UMAP\UmapGraph.vb"
+﻿#Region "Microsoft.VisualBasic::5d1266535f38b574c765f091b0b95414, Data_science\Visualization\Visualization\UMAP\UmapGraph.vb"
 
     ' Author:
     ' 
@@ -96,4 +96,3 @@ Public Module UmapGraph
         Return g
     End Function
 End Module
-

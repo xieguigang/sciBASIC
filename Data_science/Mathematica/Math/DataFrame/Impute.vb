@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a9196b958a38cc76530fc94499a197e, Data_science\Mathematica\Math\DataFrame\Impute.vb"
+﻿#Region "Microsoft.VisualBasic::aa181a1105c8fc75980e14faff0b87ad, Data_science\Mathematica\Math\DataFrame\Impute.vb"
 
     ' Author:
     ' 
@@ -32,15 +32,6 @@
     ' Summaries:
 
     ' Module Impute
-    ' 
-    ' 
-    '     Enum InferMethods
-    ' 
-    '         Average, Min
-    ' 
-    ' 
-    ' 
-    '  
     ' 
     '     Function: inferByAverage, inferByMin, SimulateMissingValues, SimulateMissingValuesByProtein, SimulateMissingValuesBySample
     ' 
