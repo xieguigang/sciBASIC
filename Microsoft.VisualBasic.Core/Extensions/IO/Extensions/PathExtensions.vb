@@ -230,15 +230,22 @@ Public Module PathExtensions
     ''' **当前的**(不是递归的搜索所有的子文件夹)文件夹之中的
     ''' 所有的符合条件的文件路径
     ''' </summary>
-    ''' <param name="DIR">文件夹路径</param>
+    ''' <param name="dir">文件夹路径</param>
     ''' <param name="keyword">
     ''' Default is ``*.*`` for match any kind of files.
     ''' (文件名进行匹配的关键词)
     ''' </param>
     ''' <returns></returns>
     <Extension>
-    Public Function EnumerateFiles(DIR$, ParamArray keyword$()) As IEnumerable(Of String)
-        Return FileIO.FileSystem.GetFiles(DIR, FileIO.SearchOption.SearchTopLevelOnly, keyword Or allKinds)
+    Public Function EnumerateFiles(dir$, ParamArray keyword$()) As IEnumerable(Of String)
+        Const top = FileIO.SearchOption.SearchTopLevelOnly
+
+        If Not dir.DirectoryExists Then
+            Call $"Directory {dir} is not valid on your file system!".Warning
+            Return New String() {}
+        Else
+            Return FileIO.FileSystem.GetFiles(dir, top, keyword Or allKinds)
+        End If
     End Function
 
     ''' <summary>
