@@ -99,14 +99,11 @@ Public Module SVGExtensions
                           Optional viewDistance As Integer = -120) As SVGXml
 
         Dim rect As New Rectangle(New Point, size)
-        Dim getPoint As IGetPoint = If(
-            is3D,
-            New IGetPoint(AddressOf Get3DPoint),
-            New IGetPoint(AddressOf Get2DPoint))
+        Dim getPoint As IGetPoint = If(is3D, New IGetPoint(AddressOf Get3DPoint), New IGetPoint(AddressOf Get2DPoint))
         Dim nodes As circle() =
             LinqAPI.Exec(Of circle) <= From n As Graph.Node
                                        In graph.vertex
-                                       Let pos As Point = getPoint(n, rect, viewDistance)
+                                       Let pos As PointF = getPoint(n, rect, viewDistance)
                                        Let c As Color = If(
                                                TypeOf n.data.color Is SolidBrush,
                                                DirectCast(n.data.color, SolidBrush).Color,
@@ -126,8 +123,8 @@ Public Module SVGExtensions
                                      In graph.graphEdges
                                      Let source As Graph.Node = edge.U
                                      Let target As Graph.Node = edge.V
-                                     Let pts As Point = getPoint(source, rect, viewDistance)
-                                     Let ptt As Point = getPoint(target, rect, viewDistance)
+                                     Let pts As PointF = getPoint(source, rect, viewDistance)
+                                     Let ptt As PointF = getPoint(target, rect, viewDistance)
                                      Let rs As Single = source.getRadius / 2,
                                          rt As Single = target.getRadius / 2
                                      Select New line With {
@@ -141,7 +138,7 @@ Public Module SVGExtensions
  _
             From n As Graph.Node
             In graph.vertex
-            Let pos As Point = getPoint(n, rect, viewDistance)
+            Let pos As PointF = getPoint(n, rect, viewDistance)
             Select New SVG.XML.text With {
                 .x = CStr(pos.X),
                 .y = CStr(pos.Y),
@@ -166,17 +163,18 @@ Public Module SVGExtensions
         Return svg
     End Function
 
-    Public Delegate Function IGetPoint(node As Graph.Node, rect As Rectangle, viewDistance As Integer) As Point
+    Public Delegate Function IGetPoint(node As Graph.Node, rect As Rectangle, viewDistance As Integer) As PointF
 
     <Extension>
-    Public Function Get2DPoint(node As Graph.Node, rect As Rectangle, viewDistance As Integer) As Point
+    Public Function Get2DPoint(node As Graph.Node, rect As Rectangle, viewDistance As Integer) As PointF
         Return Renderer.GraphToScreen(TryCast(node.data.initialPostion, FDGVector2), rect)
     End Function
 
     <Extension>
-    Public Function Get3DPoint(node As Graph.Node, rect As Rectangle, viewDistance As Integer) As Point
+    Public Function Get3DPoint(node As Graph.Node, rect As Rectangle, viewDistance As Integer) As PointF
         Dim d3 As FDGVector3 = TryCast(node.data.initialPostion, FDGVector3)
         Dim pt3 As New Point3D(d3.x, d3.y, d3.z)
+
         Return pt3.Project(rect.Width, rect.Height, 256, viewDistance).PointXY
     End Function
 

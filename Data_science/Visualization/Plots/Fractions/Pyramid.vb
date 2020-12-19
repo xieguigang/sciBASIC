@@ -122,10 +122,10 @@ Namespace Fractions
                 Dim maxL = data.Select(Function(x) gr.MeasureString(x.Name, font).Width).Max
                 left = size.Width - (margin.Horizontal) - maxL
                 Dim top = margin.Top
-                Dim legends As New List(Of Legend)
+                Dim legends As New List(Of LegendObject)
 
                 For Each x As FractionData In data
-                    legends += New Legend With {
+                    legends += New LegendObject With {
                        .color = x.Color.RGBExpression,
                        .style = LegendStyles.Rectangle,
                        .title = x.Name,

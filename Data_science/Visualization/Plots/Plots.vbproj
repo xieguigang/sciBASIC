@@ -606,7 +606,10 @@
     <Compile Include="g\Theme\Layout.vb" />
     <Compile Include="g\Theme\FontStyle.vb" />
     <Compile Include="g\Theme\Theme.vb" />
+    <Compile Include="Scatter\Data\SerialData.vb" />
     <Compile Include="Scatter\LinePlot.vb" />
+    <Compile Include="Scatter\Plot\LinePlot2D.vb" />
+    <Compile Include="Scatter\Plot\Scatter2D.vb" />
     <Compile Include="VolinPlot.vb" />
     <Compile Include="Scatter\Bubble.vb" />
     <Compile Include="BarPlot\Data\csv.vb" />
@@ -621,7 +624,7 @@
     <Compile Include="g\Mapper.vb" />
     <Compile Include="g\ProfileGroup.vb" />
     <Compile Include="g\Legends\LegendPlot.vb" />
-    <Compile Include="g\Legends\Legend.vb" />
+    <Compile Include="g\Legends\LegendObject.vb" />
     <Compile Include="csv\SerialData.vb" />
     <Compile Include="g\Legends\LegendStyles.vb" />
     <Compile Include="BarPlot\Data\BarDataGroup.vb" />
@@ -631,9 +634,9 @@
     <Compile Include="Fractions\PieChart.vb" />
     <Compile Include="PlotTypes.vb" />
     <Compile Include="BarPlot\BarPlot.vb" />
-    <Compile Include="Scatter\Annotation.vb" />
+    <Compile Include="Scatter\Data\Annotation.vb" />
     <Compile Include="Scatter\ManhattanStatics.vb" />
-    <Compile Include="Scatter\Data.vb" />
+    <Compile Include="Scatter\Data\PointData.vb" />
     <Compile Include="Scatter\Heatmap.vb" />
     <Compile Include="Scatter\Scatter.vb" />
     <Compile Include="g\Scaling.vb" />

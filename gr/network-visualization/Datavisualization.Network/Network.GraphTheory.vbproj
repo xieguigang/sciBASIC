@@ -703,8 +703,10 @@
     <Compile Include="Layouts\EdgeBundling\Handle.vb" />
     <Compile Include="Layouts\EdgeBundling\HandleCreator.vb" />
     <Compile Include="Layouts\EdgeBundling\XYMetaHandle.vb" />
+    <Compile Include="Layouts\ForceDirected\CircularPlanner.vb" />
     <Compile Include="Layouts\ForceDirected\MassHandler.vb" />
     <Compile Include="Layouts\ForceDirected\GroupPlanner.vb" />
+    <Compile Include="Layouts\ForceDirected\Algorithms.vb" />
     <Compile Include="Layouts\ForceDirected\Planner.vb" />
     <Compile Include="Layouts\SpringForce\Layout\Layout\ForceDirected3D.vb" />
     <Compile Include="Layouts\SpringForce\Layout\Layout\ForceDirected2D.vb" />

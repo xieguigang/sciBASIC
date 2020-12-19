@@ -96,7 +96,7 @@ Namespace BarPlot.Histogram
                 },
                 .Samples = {
                     New HistProfile With {
-                        .legend = New Legend With {
+                        .legend = New LegendObject With {
                             .color = color,
                             .fontstyle = CSSFont.Win10Normal,
                             .style = LegendStyles.Rectangle,
@@ -392,7 +392,7 @@ Namespace BarPlot.Histogram
                                       Optional yLabel$ = "Y",
                                       Optional xAxis$ = Nothing,
                                       Optional showLegend As Boolean = True) As GraphicsData
-            Dim histLegend As New Legend With {
+            Dim histLegend As New LegendObject With {
                 .color = color,
                 .fontstyle = CSSFont.Win7LargerBold,
                 .style = LegendStyles.Rectangle,

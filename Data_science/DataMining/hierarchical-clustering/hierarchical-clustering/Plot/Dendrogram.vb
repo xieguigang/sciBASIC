@@ -69,8 +69,9 @@ Public Module Dendrogram
             .padding = padding,
             .axisTickCSS = axisTickCss,
             .tagCSS = labelCss,
-            .PointSize = pointSize,
-            .gridStroke = linkStroke,
+            .pointSize = pointSize,
+            .gridStrokeX = linkStroke,
+            .gridStrokeY = linkStroke,
             .axisStroke = axisStroke
         }
         Dim colors As ColorClass() = Nothing

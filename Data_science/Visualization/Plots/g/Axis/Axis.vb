@@ -80,6 +80,7 @@ Namespace Graphic.Axis
 
                 ' 不清楚旋转之后会不会对字符串的大小产生影响，所以measureString放在旋转之后
                 Dim textSize As SizeF = g.MeasureString(text, font)
+
                 Call g.DrawString(text, font, brush, -(textSize.Width / 2), -(textSize.Height / 2))
                 Call g.ResetTransform()
             End With
@@ -116,7 +117,8 @@ Namespace Graphic.Axis
                             Optional labelFont$ = CSSFont.Win7Large,
                             Optional axisStroke$ = Stroke.AxisStroke,
                             Optional gridFill$ = "rgb(245,245,245)",
-                            Optional gridColor$ = "white",
+                            Optional gridX$ = Stroke.AxisGridStroke,
+                            Optional gridY$ = Stroke.AxisGridStroke,
                             Optional htmlLabel As Boolean = True,
                             Optional XtickFormat$ = "F2",
                             Optional YtickFormat$ = "F2",
@@ -134,7 +136,8 @@ Namespace Graphic.Axis
                     XtickFormat:=XtickFormat,
                     YtickFormat:=YtickFormat,
                     tickFontStyle:=tickFontStyle,
-                    gridColor:=gridColor
+                    gridX:=gridX,
+                    gridY:=gridY
                 )
             End With
         End Sub
@@ -170,7 +173,8 @@ Namespace Graphic.Axis
                             Optional xlayout As XAxisLayoutStyles = XAxisLayoutStyles.Bottom,
                             Optional ylayout As YAxisLayoutStyles = YAxisLayoutStyles.Left,
                             Optional gridFill$ = "rgb(245,245,245)",
-                            Optional gridColor$ = "white",
+                            Optional gridX$ = Stroke.AxisGridStroke,
+                            Optional gridY$ = Stroke.AxisGridStroke,
                             Optional axisStroke$ = Stroke.AxisStroke,
                             Optional tickFontStyle$ = CSSFont.Win7Normal,
                             Optional htmlLabel As Boolean = True,
@@ -180,12 +184,8 @@ Namespace Graphic.Axis
             ' 填充网格要先于坐标轴的绘制操作进行，否则会将坐标轴给覆盖掉
             Dim rect As Rectangle = scaler.region
             Dim tickFont As Font = CSSFont.TryParse(tickFontStyle)
-            Dim gridPenX As New Pen(gridColor.TranslateColor, 2) With {
-                .DashStyle = Drawing2D.DashStyle.Dash
-            }
-            Dim gridPenY As New Pen(gridColor.TranslateColor, 2) With {
-                .DashStyle = Drawing2D.DashStyle.Dot
-            }
+            Dim gridPenX As Pen = Stroke.TryParse(gridX)
+            Dim gridPenY As Pen = Stroke.TryParse(gridY)
 
             Call scaler.checkScaler
             Call g.FillRectangle(gridFill.GetBrush, rect)

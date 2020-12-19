@@ -253,7 +253,7 @@ Namespace Graphic.Legend
         Public Function DrawLegend(ByRef g As IGraphics,
                                    pos As Point,
                                    canvas As SizeF,
-                                   l As Legend,
+                                   l As LegendObject,
                                    Optional border As Stroke = Nothing,
                                    Optional radius% = 5,
                                    Optional titleBrush As Brush = Nothing, Optional lineWidth! = -1) As SizeF
@@ -313,7 +313,7 @@ Namespace Graphic.Legend
         <Extension>
         Public Sub DrawLegends(ByRef g As IGraphics,
                                topLeft As Point,
-                               legends As IEnumerable(Of Legend),
+                               legends As IEnumerable(Of LegendObject),
                                Optional gSize$ = "120,45",
                                Optional fillBg$ = Nothing,
                                Optional d% = 10,
@@ -325,7 +325,7 @@ Namespace Graphic.Legend
 
             Dim ZERO As Point = topLeft
             Dim size As SizeF
-            Dim legendList As Legend() = legends.ToArray
+            Dim legendList As LegendObject() = legends.ToArray
             Dim graphicSize As SizeF = gSize.FloatSizeParser
 
             If Not regionBorder Is Nothing Then
@@ -362,7 +362,7 @@ Namespace Graphic.Legend
                 End With
             End If
 
-            For Each l As Legend In legendList
+            For Each l As LegendObject In legendList
                 size = g.DrawLegend(topLeft, graphicSize, l, shapeBorder, radius, titleBrush)
                 topLeft = New Point With {
                     .X = topLeft.X,
@@ -378,10 +378,10 @@ Namespace Graphic.Legend
         ''' <param name="g"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function MaxLegendSize(legends As IEnumerable(Of Legend), g As IGraphics) As SizeF
+        Public Function MaxLegendSize(legends As IEnumerable(Of LegendObject), g As IGraphics) As SizeF
             Dim maxW! = Single.MinValue, maxH! = Single.MinValue
 
-            For Each l As Legend In legends
+            For Each l As LegendObject In legends
                 Dim font As Font = CSSFont.TryParse(l.fontstyle)
                 Dim size As SizeF = g.MeasureString(l.title, font)
 

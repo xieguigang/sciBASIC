@@ -526,8 +526,10 @@
     <Compile Include="ROCPlot.vb" />
     <Compile Include="PCA\ScreePlot.vb" />
     <Compile Include="PCA\PC3.vb" />
-    <Compile Include="TimeTrends.vb" />
-    <Compile Include="VariableWidthBarPlot.vb" />
+    <Compile Include="TimeTrends\TimePoint.vb" />
+    <Compile Include="TimeTrends\TimeTrends.vb" />
+    <Compile Include="VariableWidthBarPlot\VariableBarData.vb" />
+    <Compile Include="VariableWidthBarPlot\VariableWidthBarPlot.vb" />
     <Compile Include="JointPlot.vb" />
     <Compile Include="RegressionPlot.vb" />
     <Compile Include="SampleView.vb" />
@@ -541,7 +543,9 @@
     <Compile Include="Bihistogram.vb" />
     <Compile Include="ScatterExtensions.vb" />
     <Compile Include="QQPlot.vb" />
-    <Compile Include="ZScores.vb" />
+    <Compile Include="Zscore\ZScoresData.vb" />
+    <Compile Include="Zscore\ZScoresPlot.vb" />
+    <Compile Include="Zscore\ZScores.vb" />
     <Compile Include="PCA\PC2.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

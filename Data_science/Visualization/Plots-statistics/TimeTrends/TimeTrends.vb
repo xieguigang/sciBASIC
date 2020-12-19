@@ -67,20 +67,6 @@ Imports stdNum = System.Math
 
 Public Module TimeTrends
 
-    Public Structure TimePoint
-
-        Dim [date] As Date
-        Dim average As Double
-        ''' <summary>
-        ''' [min, max]
-        ''' </summary>
-        Dim range As DoubleRange
-
-        Public Overrides Function ToString() As String
-            Return $"<{[date].ToString}> {average} IN [{range.Min}, {range.Max}]"
-        End Function
-    End Structure
-
     ''' <summary>
     ''' 绘制时间趋势线
     ''' </summary>
@@ -324,14 +310,14 @@ Public Module TimeTrends
 
                 g.DrawString(subTitle, subTitleFont, titleBrush, x, y)
 
-                Dim legends As Legend() = {
-                    New Legend With {
+                Dim legends As LegendObject() = {
+                    New LegendObject With {
                         .color = lineColor,
                         .fontstyle = legendTitleFont,
                         .style = LegendStyles.SolidLine,
                         .title = legendTitle
                     },
-                    New Legend With {
+                    New LegendObject With {
                         .color = rangeColor,
                         .fontstyle = legendTitleFont,
                         .style = LegendStyles.RoundRectangle,

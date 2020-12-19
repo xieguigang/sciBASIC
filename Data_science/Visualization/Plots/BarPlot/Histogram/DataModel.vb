@@ -175,7 +175,7 @@ Namespace BarPlot.Histogram
         ''' <summary>
         ''' The legend plot definition
         ''' </summary>
-        Public legend As Legend
+        Public legend As LegendObject
         Public data As HistogramData()
 
         Public ReadOnly Property SerialData As NamedValue(Of Color)
@@ -187,7 +187,7 @@ Namespace BarPlot.Histogram
             End Get
         End Property
 
-        Sub New(legend As Legend, data As HistogramData())
+        Sub New(legend As LegendObject, data As HistogramData())
             Me.legend = legend
             Me.data = data
         End Sub

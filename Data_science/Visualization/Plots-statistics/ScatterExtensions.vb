@@ -87,7 +87,7 @@ Public Module ScatterExtensions
             In odes.SeqIterator
             Let left = New Value(Of Double)(range.Min)
             Select New HistProfile With {
-                .legend = New Legend With {
+                .legend = New LegendObject With {
                     .color = serials(out.i).Value.RGBExpression,
                     .fontstyle = CSSFont.Win10Normal,
                     .style = LegendStyles.Rectangle,

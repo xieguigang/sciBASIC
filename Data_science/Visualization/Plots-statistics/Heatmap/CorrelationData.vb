@@ -50,7 +50,7 @@ Namespace Heatmap
 
     Public Class CorrelationData
 
-        Friend data As DistanceMatrix
+        Friend data As DataMatrix
         Friend min#, max#
         Friend range As DoubleRange
         Friend levelRange As DoubleRange
@@ -67,7 +67,7 @@ Namespace Heatmap
             End Get
         End Property
 
-        Sub New(data As DistanceMatrix, Optional range As DoubleRange = Nothing)
+        Sub New(data As DataMatrix, Optional range As DoubleRange = Nothing)
             With range Or data _
                 .PopulateRows _
                 .IteratesALL _
@@ -78,7 +78,7 @@ Namespace Heatmap
                 min = .Min
                 max = .Max
 
-                If data.is_dist Then
+                If TypeOf data Is DistanceMatrix Then
                     range = {0, .Max}
                 Else
                     range = {min, max}

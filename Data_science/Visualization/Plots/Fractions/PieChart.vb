@@ -223,14 +223,14 @@ Namespace Fractions
                     If legendAlt Then
                         Dim maxL = g.MeasureString(data.MaxLengthString(Function(x) x.Name), font).Width
                         Dim left = layoutRect.Right + margin.Left
-                        Dim legends As New List(Of Legend)
+                        Dim legends As New List(Of LegendObject)
                         Dim d = font.Size
                         Dim height! = (d + g.MeasureString("1", font).Height) * data.Count
                         ' Excel之中的饼图的示例样式位置为默认右居中的
                         Dim top = (gSize.Height - height) / 2 - margin.Top
 
                         For Each x As FractionData In data
-                            legends += New Legend With {
+                            legends += New LegendObject With {
                                 .color = x.Color.RGBExpression,
                                 .style = LegendStyles.Square,
                                 .title = x.Name,

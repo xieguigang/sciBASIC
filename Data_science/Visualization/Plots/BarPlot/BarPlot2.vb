@@ -132,11 +132,11 @@ Namespace BarPlot
                     Next
 
                     If showLegend Then
-                        Dim legends As Legend() = LinqAPI.Exec(Of Legend) <=
+                        Dim legends As LegendObject() = LinqAPI.Exec(Of LegendObject) <=
  _
                         From x As NamedValue(Of Color)
                         In data.Serials
-                        Select New Legend With {
+                        Select New LegendObject With {
                             .color = x.Value.RGBExpression,
                             .fontstyle = CSSFont.GetFontStyle(
                                 FontFace.MicrosoftYaHei,

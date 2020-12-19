@@ -236,11 +236,11 @@ Namespace BarPlot
                 End If
 
                 Dim cssStyle As String = CSSFont.GetFontStyle(legendFont)
-                Dim legends As Legend() = LinqAPI.Exec(Of Legend) <=
+                Dim legends As LegendObject() = LinqAPI.Exec(Of LegendObject) <=
  _
                 From x As NamedValue(Of Color)
                 In data.Serials
-                Select New Legend With {
+                Select New LegendObject With {
                     .color = x.Value.RGBExpression,
                     .fontstyle = cssStyle,
                     .style = LegendStyles.Circle,

@@ -52,7 +52,7 @@ Namespace Graphic.Legend
     ''' <summary>
     ''' 图例
     ''' </summary>
-    Public Class Legend
+    Public Class LegendObject
 
         ''' <summary>
         ''' The shape of this legend

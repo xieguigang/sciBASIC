@@ -158,9 +158,9 @@ Namespace Plot3D.Impl
         End Function
 
         Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
-            Dim legends As Legend() = serials _
+            Dim legends As LegendObject() = serials _
                 .Select(Function(s)
-                            Return New Legend With {
+                            Return New LegendObject With {
                                 .color = s.Color.RGBExpression,
                                 .fontstyle = theme.axisLabelCSS,
                                 .style = s.Shape,

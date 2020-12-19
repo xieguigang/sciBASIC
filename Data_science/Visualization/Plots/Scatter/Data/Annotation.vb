@@ -112,7 +112,7 @@ Public Structure Annotation
             }
         End With
 
-        Dim legend As New Legend With {
+        Dim legend As New LegendObject With {
             .color = color,
             .fontstyle = Font,
             .style = Me.Legend,

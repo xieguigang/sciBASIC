@@ -207,7 +207,7 @@ Namespace Heatmap
         ''' <param name="variantSize">热图之中的圆圈的半径大小是否随着相关度的值而发生改变？</param>
         ''' <returns></returns>
         ''' 
-        Public Overloads Shared Function Plot(data As DistanceMatrix,
+        Public Overloads Shared Function Plot(data As DataMatrix,
                                               Optional mapLevels% = 30,
                                               Optional mapName$ = "lighter(" & ColorBrewer.DivergingSchemes.RdBu11 & ",0.05)",
                                               Optional size$ = "1600,1600",

@@ -77,17 +77,19 @@ Public Class Renderer3D : Inherits Renderer
 
     Protected Overrides Sub drawEdge(iEdge As Edge, iPosition1 As AbstractVector, iPosition2 As AbstractVector)
         Dim rect As Rectangle = regionProvider()
-        Dim pos1 As Point = New Point3D(iPosition1.x, iPosition1.y, iPosition1.z) _
+        Dim pos1 As PointF = New Point3D(iPosition1.x, iPosition1.y, iPosition1.z) _
             .RotateX(rotate) _
             .RotateY(rotate) _
             .RotateZ(rotate) _
-            .Project(rect.Width, rect.Height, 256, ViewDistance).PointXY
+            .Project(rect.Width, rect.Height, 256, ViewDistance) _
+            .PointXY
         '   pos1 = GraphToScreen(pos1, rect)
-        Dim pos2 As Point = New Point3D(iPosition2.x, iPosition2.y, iPosition2.z) _
+        Dim pos2 As PointF = New Point3D(iPosition2.x, iPosition2.y, iPosition2.z) _
             .RotateX(rotate) _
             .RotateY(rotate) _
             .RotateZ(rotate) _
-            .Project(rect.Width, rect.Height, 256, ViewDistance).PointXY
+            .Project(rect.Width, rect.Height, 256, ViewDistance) _
+            .PointXY
         '   pos2 = GraphToScreen(pos2, rect)
         Dim canvas As Graphics = graphicsProvider()
 
@@ -100,7 +102,8 @@ Public Class Renderer3D : Inherits Renderer
                 pos1.X,
                 pos1.Y,
                 pos2.X,
-                pos2.Y)
+                pos2.Y
+            )
         End SyncLock
     End Sub
 
@@ -112,7 +115,7 @@ Public Class Renderer3D : Inherits Renderer
         End If
 
         Dim client As Rectangle = regionProvider()
-        Dim pos As Point = New Point3D(iPosition.x, iPosition.y, iPosition.z) _
+        Dim pos As PointF = New Point3D(iPosition.x, iPosition.y, iPosition.z) _
             .RotateX(rotate) _
             .RotateY(rotate) _
             .RotateZ(rotate) _
