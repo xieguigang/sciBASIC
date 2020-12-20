@@ -144,6 +144,10 @@ Namespace ComponentModel.DataSourceModel
             Me.Description = describ
         End Sub
 
+        Sub New(item As KeyValuePair(Of String, T))
+            Call Me.New(item.Key, item.Value)
+        End Sub
+
         ''' <summary>
         ''' View object.
         ''' </summary>

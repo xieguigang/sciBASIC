@@ -255,13 +255,15 @@ Public Module PathExtensions
     ''' 
     ''' 的简化拓展函数模式
     ''' </summary>
-    ''' <param name="DIR$"></param>
-    ''' <param name="pattern$"></param>
+    ''' <param name="directory"></param>
+    ''' <param name="pattern">
+    ''' 如果匹配的模式字符串是带有文件后缀名的，那么文件夹之中所有没有后缀名的文件都可能会被忽略掉
+    ''' </param>
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function ListFiles(DIR$, Optional pattern$ = "*.*") As IEnumerable(Of String)
-        Return ls - l - r - pattern <= DIR
+    Public Function ListFiles(directory$, Optional pattern$ = "*.*") As IEnumerable(Of String)
+        Return ls - l - r - pattern <= directory
     End Function
 
     ''' <summary>
