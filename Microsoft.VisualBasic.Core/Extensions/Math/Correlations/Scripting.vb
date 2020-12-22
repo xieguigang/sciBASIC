@@ -42,6 +42,7 @@
 
 Namespace Math.Correlations
 
+    <HideModuleName>
     Public Module Scripting
 
         Public Function GetComputeAPI(name As String) As ICorrelation
