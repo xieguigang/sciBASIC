@@ -50,6 +50,10 @@ Imports Microsoft.VisualBasic.Linq
 Public MustInherit Class UmapRender : Inherits Plot
 
     Protected ReadOnly labels As String()
+
+    ''' <summary>
+    ''' [label => clusterid]
+    ''' </summary>
     Protected ReadOnly clusters As Dictionary(Of String, String)
     Protected ReadOnly umap As Umap
 

@@ -83,6 +83,7 @@ Public Module UmapRenderExtensions
     ''' </summary>
     ''' <param name="umap"></param>
     ''' <param name="labels"></param>
+    ''' <param name="clusters">[label => clusterid]</param>
     ''' <returns></returns>
     <Extension>
     Public Function DrawUmap2D(umap As Umap,
@@ -112,6 +113,25 @@ Public Module UmapRenderExtensions
         ).Plot(size)
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="umap"></param>
+    ''' <param name="camera"></param>
+    ''' <param name="labels"></param>
+    ''' <param name="clusters">[label => clusterid]</param>
+    ''' <param name="size$"></param>
+    ''' <param name="padding$"></param>
+    ''' <param name="bg$"></param>
+    ''' <param name="colorSet$"></param>
+    ''' <param name="axisLabelCSS$"></param>
+    ''' <param name="axisStroke$"></param>
+    ''' <param name="labelCSS$"></param>
+    ''' <param name="pointSize#"></param>
+    ''' <param name="showLabels"></param>
+    ''' <param name="labelColor$"></param>
+    ''' <param name="bubbleAlpha"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function DrawUmap3D(umap As Umap, camera As Camera,
                                Optional labels As IEnumerable(Of String) = Nothing,
