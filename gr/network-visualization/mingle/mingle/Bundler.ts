@@ -55,8 +55,9 @@ class Bundler {
         });
     }
 
-    computeIntermediateNodePositions(node) {
-        var m1, m2, centroids, a, b, c, tau, f, res;
+    computeIntermediateNodePositions(node: Node) {
+        var m1, m2, centroids: number[][]
+        let a: number, b: number, c: number, tau: number, f, res;
         if (!node.data.nodes) {
             return;
         }
@@ -70,7 +71,7 @@ class Bundler {
         f(res); //set m1 and m2;
     }
 
-    costFunction(node, centroids, x) {
+    costFunction(node: Node, centroids: number[][], x: number) {
         var top, bottom, m1, m2, ink, alpha, p;
         x /= 2;
         top = centroids[0];
@@ -86,10 +87,10 @@ class Bundler {
         return ink * (1 + Math.sin(alpha) / p);
     }
 
-    goldenSectionSearch(a, b, c, tau, f) {
+    goldenSectionSearch(a: number, b: number, c: number, tau: number, f): number {
         var phi = PHI,
             resphi = 2 - PHI,
-            abs = Math.abs, x;
+            abs = Math.abs, x: number;
 
         if (c - b > b - a) {
             x = b + resphi * (c - b);
@@ -111,10 +112,10 @@ class Bundler {
         return this.goldenSectionSearch(x, b, c, tau, f);
     }
 
-    getCentroids(nodes) {
+    getCentroids(nodes: Node[]): number[][] {
         var topCentroid = [0, 0],
             bottomCentroid = [0, 0],
-            coords, i, l;
+            coords: number[], i, l;
 
         for (i = 0, l = nodes.length; i < l; ++i) {
             coords = nodes[i].data.coords;
@@ -132,14 +133,12 @@ class Bundler {
         return [topCentroid, bottomCentroid];
     }
 
-    getInkValue(node, depth) {
+    getInkValue(node: Node, depth: number = 0) {
         var data = node.data,
             sqrt = Math.sqrt,
             coords, diffX, diffY,
-            m1, m2, acum, i, l, nodes,
-            ni;
-
-        depth = depth || 0;
+            m1, m2, acum: number, i, l, nodes: Node[],
+            ni: Node;
 
         //bundled node
         if (!depth && (data.bundle || data.nodes)) {
@@ -199,18 +198,18 @@ class Bundler {
 
     }
 
-    getMaxTurningAngleValue(node, m1, m2) {
+    getMaxTurningAngleValue(node: Node, m1: number[], m2: number[]) {
         var sqrt = Math.sqrt,
             abs = Math.abs,
             acos = Math.acos,
             m2Tom1 = [m1[0] - m2[0], m1[1] - m2[1]],
             m1Tom2 = [-m2Tom1[0], -m2Tom1[1]],
             m1m2Norm = $norm(m2Tom1),
-            angle = 0, nodes, vec, norm, dot, angleValue,
-            x, y, coords, i, l, n;
+            angle = 0, nodes, vec: number[], norm: number, dot, angleValue,
+            x, y, coords: number[], i, l, n;
 
         if (node.data.bundle || node.data.nodes) {
-            nodes = node.data.bundle ? node.data.bundle.data.nodes : node.data.nodes;
+            nodes = node.data.bundle ? (<Node>node.data.bundle).data.nodes : node.data.nodes;
             for (i = 0, l = nodes.length; i < l; ++i) {
                 coords = nodes[i].data.coords;
                 vec = [coords[0] - m1[0], coords[1] - m1[1]];
@@ -232,9 +231,9 @@ class Bundler {
         return -1;
     }
 
-    getCombinedNode(node1, node2, data) {
-        node1 = node1.data.bundle || node1;
-        node2 = node2.data.bundle || node2;
+    getCombinedNode(node1: Node, node2: Node, data: nodeData = <any>{}): Node {
+        node1 = <Node>node1.data.bundle || node1;
+        node2 = <Node>node2.data.bundle || node2;
 
         var id = node1.id + '-' + node2.id,
             name = node1.name + '-' + node2.name,
@@ -242,37 +241,37 @@ class Bundler {
             nodes2 = node2.data.nodes || [node2],
             weight1 = node1.data.weight || 0,
             weight2 = node2.data.weight || 0,
-            nodes = [], ans;
+            nodes: Node[] = [], ans: Node;
 
         if (node1.id == node2.id) {
             return node1;
         }
         nodes.push.apply(nodes, nodes1);
         nodes.push.apply(nodes, nodes2);
-        data = data || {};
+
         data.nodes = nodes;
         data.nodeArray = (node1.data.nodeArray || []).concat(node2.data.nodeArray || []);
         data.weight = weight1 + weight2;
-        ans = {
+        ans = new Node({
             id: id,
             name: name,
             data: data
-        };
+        });
 
         this.computeIntermediateNodePositions(ans);
 
         return ans;
     }
 
-    coalesceNodes(nodes) {
+    coalesceNodes(nodes: Node[]): Node {
         var node = nodes[0],
             data = node.data,
             m1 = data.m1,
             m2 = data.m2,
             weight = nodes.reduce(function (acum, n) { return acum + (n.data.weight || 0); }, 0),
             coords = data.coords,
-            bundle = data.bundle,
-            nodeArray = [],
+            bundle: Node = <Node>data.bundle,
+            nodeArray: Node[] = [],
             i, l;
 
         if (m1) {
@@ -291,7 +290,7 @@ class Bundler {
             //debugger;
             //}
 
-            return {
+            return <any>{
                 id: bundle.id,
                 name: bundle.id,
                 data: {
@@ -384,13 +383,13 @@ class Bundler {
             inkFrom = getInkValue(nodeFrom),
             combineNodes = this.getCombinedNode.bind(this),
             inkTotal = Infinity,
-            bundle = Array(2),
-            combinedBundle;
+            bundle: Node[] = Array(2),
+            combinedBundle: Node;
 
         n.eachEdge(function (e) {
             var nodeTo = e.nodeTo,
                 inkTo = getInkValue(nodeTo),
-                combined = combineNodes(nodeFrom, nodeTo),
+                combined: Node = combineNodes(nodeFrom, nodeTo),
                 inkUnion = getInkValue(combined),
                 inkValue = inkUnion - (inkFrom + inkTo);
 
@@ -410,14 +409,14 @@ class Bundler {
     }
 
     MINGLE() {
-        var edgeProximityGraph = this.graph,
+        var edgeProximityGraph: Graph = this.graph,
             that = this,
             totalGain = 0,
             ungrouped = -1,
             gain = 0,
             k = 0,
             clean = function (n) { n.data.group = ungrouped; },
-            nodeMingle = function (node) {
+            nodeMingle = function (node: Node) {
                 if (node.data.group == ungrouped) {
                     var ans = that.getMaximumInkSavingNeighbor(node),
                         bundle = ans.bundle,

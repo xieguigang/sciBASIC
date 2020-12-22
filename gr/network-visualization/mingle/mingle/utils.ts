@@ -1,4 +1,4 @@
-function $lerpPoint(from, to, delta) {
+function $lerpPoint(from: number[][], to: number[][], delta: number) {
     return [$lerp(from[0], to[0], delta), $lerp(from[1], to[1], delta)];
 }
 
@@ -19,7 +19,7 @@ function cloneEdge(json) {
 }
 
 //Extend generic Graph class with bundle methods and rendering options
-function expandEdgesHelper(node, array, collect) {
+function expandEdgesHelper(node: Node, array: any[], collect: any[]) {
     var coords = node.data.coords, i, l, p, ps;
 
     if (!array.length) {
@@ -39,8 +39,10 @@ function expandEdgesHelper(node, array, collect) {
     }
 }
 
-function setNormalVector(nodeFrom, nodeTo) {
-    var node = nodeFrom || nodeTo, dir, coords, normal;
+function setNormalVector(nodeFrom: Node, nodeTo: Node) {
+    let node = nodeFrom || nodeTo, dir, coords;
+    let normal: number[];
+
     if (!nodeFrom || !nodeTo) {
         coords = node.data.coords;
         dir = [coords[2] - coords[0], coords[3] - coords[1]];
@@ -50,7 +52,7 @@ function setNormalVector(nodeFrom, nodeTo) {
     return normal;
 }
 
-function createPosItem(node, pos, index, total) {
+function createPosItem(node: Node, pos, index, total): PosItem {
     return {
         node: node,//.toJSON(),
         pos: pos,
@@ -58,8 +60,12 @@ function createPosItem(node, pos, index, total) {
     };
 }
 
+interface PosItem {
+    node: Node, pos: any, normal: number[]
+}
+
 //Extend generic Graph class with bundle methods and rendering options
-function expandEdgesRichHelper(node, array, collect) {
+function expandEdgesRichHelper(node: Node, array: any[], collect: any[]) {
     var coords = node.data.coords, i, l, p, ps, a, posItem;
     ps = node.data.parents;
     if (ps) {

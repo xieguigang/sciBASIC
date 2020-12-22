@@ -639,10 +639,10 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Biodeep_UNIX_x64\</OutputPath>
-    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <DefineConstants>FRAMEWORD_CORE=1,UNIX=1,NET_48=TRUE</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>Full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -1557,6 +1557,8 @@
     <Compile Include="CommandLine\CLI\ProcessEx.vb" />
     <Compile Include="CommandLine\Parsers\CommandLineTokenlizer.vb" />
     <Compile Include="CommandLine\Parsers\CliArgumentParsers.vb" />
+    <Compile Include="CommandLine\POSIX\POSIXArguments.vb" />
+    <Compile Include="CommandLine\POSIX\POSIXParser.vb" />
     <Compile Include="CommandLine\Reflection\Attributes\IExportAPI.vb" />
     <Compile Include="CommandLine\Reflection\Attributes\LastUpdatedAttribute.vb" />
     <Compile Include="CommandLine\Reflection\Attributes\OutputAttribute.vb" />

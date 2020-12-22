@@ -149,7 +149,11 @@ Namespace CommandLine.Parsers
                                  Optional duplicatedAllows As Boolean = False,
                                  Optional rawInput$ = Nothing) As CommandLine
 
+#If UNIX Then
+            Dim tokens$() = POSIX.JoinTokens(args.SafeQuery).ToArray
+#Else
             Dim tokens$() = args.SafeQuery.ToArray
+#End If
             Dim singleValue$ = ""
 
             If tokens.Length = 0 Then

@@ -37,15 +37,13 @@
 
 class Graph {
 
-    private nodes: {};
-    private edges: {};
+    private nodes: {} = {};
+    private edges: {} = {};
 
     constructor(public opt = null) {
         this.opt = merge({
             node: {}
         }, opt || {});
-        this.nodes = {};
-        this.edges = {};
     }
 
     static fromJSON(json) {
@@ -69,6 +67,11 @@ class Graph {
         return graph;
     }
 
+    public each(action: (n: Node) => void) {
+        for (let id in this.nodes) {
+            action(this.nodes[id]);
+        }
+    }
 
     clear() {
         this.nodes = {};
@@ -111,7 +114,7 @@ class Graph {
            var node = graph.getNode('nodeId');
          (end code)
     */
-    getNode(id) {
+    getNode(id: string): Node | boolean {
         if (this.hasNode(id)) return this.nodes[id];
         return false;
     }
@@ -131,7 +134,7 @@ class Graph {
           var node = graph.get('nodeId');
         (end code)
    */
-    get(id) {
+    get(id: string) {
         return this.getNode(id);
     }
 
@@ -150,9 +153,9 @@ class Graph {
         var node = graph.getByName('someName');
       (end code)
      */
-    getByName(name) {
+    getByName(name: string) {
         for (var id in this.nodes) {
-            var n = this.nodes[id];
+            var n: Node = this.nodes[id];
             if (n.name == name) return n;
         }
         return false;
@@ -168,7 +171,7 @@ class Graph {
        id - (string) A <Graph.Node> id.
        id2 - (string) A <Graph.Node> id.
     */
-    getEdge(id, id2) {
+    getEdge(id: string, id2: string) {
         if (id in this.edges) {
             return this.edges[id][id2];
         }
@@ -220,7 +223,7 @@ class Graph {
  
     <Graph.Node>, <Graph.Edge>
     */
-    addEdge(obj, obj2, data) {
+    addEdge(obj, obj2, data = null) {
         if (!this.hasNode(obj.id)) { this.addNode(obj); }
         if (!this.hasNode(obj2.id)) { this.addNode(obj2); }
         obj = this.nodes[obj.id]; obj2 = this.nodes[obj2.id];
@@ -243,7 +246,7 @@ class Graph {
      id - (string) A node's id.
  
     */
-    removeNode(id) {
+    removeNode(id: string) {
         if (this.hasNode(id)) {
             delete this.nodes[id];
             var adjs = this.edges[id];
@@ -264,7 +267,7 @@ class Graph {
          id1 - (string) A <Graph.Node> id.
          id2 - (string) A <Graph.Node> id.
     */
-    removeEdge(id1, id2) {
+    removeEdge(id1: string, id2: string) {
         delete this.edges[id1][id2];
         delete this.edges[id2][id1];
     }
@@ -278,7 +281,7 @@ class Graph {
  
          id - (string) Node id.
     */
-    hasNode(id) {
+    hasNode(id: string) {
         return id in this.nodes;
     }
 

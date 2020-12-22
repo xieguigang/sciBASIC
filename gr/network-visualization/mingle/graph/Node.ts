@@ -19,6 +19,14 @@
       - <Graph.Util.isDescendantOf>
   */
 class Node {
+
+    public id: string;
+    public name: string
+    public data: nodeData;
+    public adjacencies: {};
+    public expandedEdges: any[];
+    public unbundledEdges: {};
+
     constructor(opt) {
         var innerOptions = {
             'id': '',
@@ -29,8 +37,8 @@ class Node {
         extend(this, merge(innerOptions, opt));
     };
 
-    fromJSON(json) {
-        return new Graph.Node(json);
+    public static fromJSON(json) {
+        return new Node(json);
     };
 
 
@@ -43,7 +51,7 @@ class Node {
     }
 
     serializeData(data) {
-        var serializedData = {},
+        var serializedData = { parents: null, bundle: null },
             parents = data.parents,
             parentsCopy, i, l;
 
@@ -60,6 +68,7 @@ class Node {
 
         delete serializedData.parents;
         delete serializedData.bundle;
+
         serializedData = JSON.parse(JSON.stringify(serializedData));
 
         if (parentsCopy) {
@@ -83,7 +92,7 @@ class Node {
         node.adjacentTo('nodeId') == true;
        (end code)
     */
-    adjacentTo(node) {
+    adjacentTo(node: Node) {
         return node.id in this.adjacencies;
     }
 
@@ -96,7 +105,7 @@ class Node {
  
           id - (string) A node id.
     */
-    getEdge(id) {
+    getEdge(id: string) {
         return this.adjacencies[id];
     }
 
@@ -176,3 +185,19 @@ class Node {
         return ans;
     };
 };
+
+
+interface nodeData {
+    weight: number;
+    color: string | string[];
+    coords: number[];
+    alpha: number;
+    nodeArray: Node[];
+    bundle: Node[] | Node;
+    nodes: Node[];
+    m1: number[];
+    m2: number[];
+    ink: number;
+    parents: Node[];
+    group: number;
+}

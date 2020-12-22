@@ -1,8 +1,7 @@
 
 class Render {
 
-    renderLine(ctx, edges, options) {
-        options = options || {};
+    renderLine(ctx: context, edges, options: options = <any>{}) {
         var lineWidth = options.lineWidth || 1,
             fillStyle = options.fillStyle || 'gray',
             i, l, j, n, e, pos;
@@ -25,14 +24,15 @@ class Render {
         }
     }
 
-    renderQuadratic(ctx, edges, options) {
-        options = options || {};
+    renderQuadratic(ctx: context, edges: Edge[], options: options = <any>{}) {
         var lineWidth = options.lineWidth || 1,
             fillStyle = options.fillStyle || 'gray',
             margin = (options.margin || 0) * (options.delta || 0),
             lengthBefore, lengthAfter,
-            index, i, l, j, k, n, e, node, pos, pos0, pos1, pos2, pos3, pos01, pos02, pos03, pos04, colorFrom, colorTo, grd,
-            midPos, quadStart, weightStart, posStart, nodeStart, posItem, posItemStart,
+            index, i, l, j, k, n, e, node, pos: number[], pos0: number[], pos1: number[], pos2: number[], pos3: number[],
+            pos01, pos02, pos03, pos04, colorFrom, colorTo, grd: Gradient,
+            midPos, quadStart: number[],
+            weightStart, posStart: number[], nodeStart: Node, posItem, posItemStart,
             dist, distMin, nodeArray, nodeLength;
 
         ctx.fillStyle = fillStyle;
@@ -57,7 +57,7 @@ class Render {
                 grd.addColorStop(1, colorTo);
                 ctx.strokeStyle = grd;
             } else {
-                ctx.strokeStyle = nodeStart.data.color || ctx.strokeStyle;
+                ctx.strokeStyle = <string>nodeStart.data.color || ctx.strokeStyle;
             }
             ctx.globalAlpha = nodeStart.data.alpha == undefined ? 1 : nodeStart.data.alpha;
             ctx.beginPath();
@@ -95,11 +95,14 @@ class Render {
         }
     }
 
-    adjustPosition(id, posItem, pos, margin, delta) {
+    adjustPosition(id, posItem: PosItem, pos: number[], margin: number, delta: number) {
         var nodeArray = posItem.node.data.nodeArray,
             epsilon = 1,
-            nodeLength, index, lengthBefore,
-            lengthAfter, k, node;
+            nodeLength: number;
+        let index: number;
+        let lengthBefore: number,
+            lengthAfter: number, k: number;
+        let node: Node;
 
         if (nodeArray) {
             nodeLength = nodeArray.length;
@@ -119,16 +122,17 @@ class Render {
             }
             //remove -margin to get the line weight into account.
             //pos = $add(pos, $mult((lengthBefore - (lengthBefore + lengthAfter) / 2) * -margin, posItem.normal));
-            pos = $add(pos, $mult((lengthBefore - (lengthBefore + lengthAfter) / 2) * Math.min(epsilon, delta), posItem.normal));
+            pos = $add(pos, $mult(posItem.normal, (lengthBefore - (lengthBefore + lengthAfter) / 2) * Math.min(epsilon, delta)));
         }
 
         return pos;
     }
 
-    renderBezier(ctx, edges, options) {
-        options = options || {};
+    renderBezier(ctx: context, edges, options: options = <any>{}) {
         var pct = options.curviness || 0,
-            i, l, j, n, e, pos, midpoint, c1, c2, start, end;
+            i, l, j, n, pos;
+        let midpoint: number[], c1: number[], c2: number[], start: number[], end: number[];
+        let e;
 
         for (i = 0, l = edges.length; i < l; ++i) {
             e = edges[i];

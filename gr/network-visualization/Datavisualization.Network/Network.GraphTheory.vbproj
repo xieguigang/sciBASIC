@@ -698,7 +698,8 @@
     <Compile Include="Layouts\Cola\Models\Accessor\RectAccessors.vb" />
     <Compile Include="Layouts\Cola\Models\DirectedEdge.vb" />
     <Compile Include="Graph\Selector.vb" />
-    <Compile Include="Layouts\BarycentricMethod.vb" />
+    <Compile Include="Layouts\EdgeBundling\Mingle\Bundler.vb" />
+    <Compile Include="Layouts\SpringEmbedder.vb" />
     <Compile Include="Layouts\Cola\Extensions.vb" />
     <Compile Include="Layouts\Cola\Geom\geom.vb" />
     <Compile Include="Layouts\Cola\Geom\Models.vb" />
@@ -729,11 +730,10 @@
     <Compile Include="Layouts\Cola\PowerGraph\Module.vb" />
     <Compile Include="Layouts\Cola\PowerGraph\LinkSet.vb" />
     <Compile Include="Layouts\Cola\PowerGraph\PowerEdge.vb" />
-    <Compile Include="Layouts\EdgeBundling\Extensions.vb" />
-    <Compile Include="Layouts\EdgeBundling\Barycentre.vb" />
-    <Compile Include="Layouts\EdgeBundling\Handle.vb" />
-    <Compile Include="Layouts\EdgeBundling\HandleCreator.vb" />
-    <Compile Include="Layouts\EdgeBundling\XYMetaHandle.vb" />
+    <Compile Include="Layouts\EdgeBundling\Handle\Extensions.vb" />
+    <Compile Include="Layouts\EdgeBundling\Handle\Handle.vb" />
+    <Compile Include="Layouts\EdgeBundling\Handle\HandleCreator.vb" />
+    <Compile Include="Layouts\EdgeBundling\Handle\XYMetaHandle.vb" />
     <Compile Include="Layouts\ForceDirected\CircularPlanner.vb" />
     <Compile Include="Layouts\ForceDirected\MassHandler.vb" />
     <Compile Include="Layouts\ForceDirected\GroupPlanner.vb" />

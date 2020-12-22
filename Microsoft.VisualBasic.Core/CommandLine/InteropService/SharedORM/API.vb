@@ -200,7 +200,7 @@ Namespace CommandLine.InteropService.SharedORM
             Do While Not t.EndRead
                 c = ++t
 
-                If c = " "c Then
+                If c = " "c OrElse c = "="c Then
                     If Not valueEscape Then
                         out += New String(tmp)
                         tmp *= 0

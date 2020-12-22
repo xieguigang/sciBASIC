@@ -1,28 +1,3 @@
-
-function descriptor(object) {
-    var desc = {}, p;
-    for (p in object) {
-        desc[p] = {
-            value: object[p],
-            writable: true,
-            enumerable: true,
-            configurable: true
-        };
-    }
-    return desc;
-}
-
-function merge(proto, object) {
-    return Object.create(proto, descriptor(object));
-}
-
-function extend(proto, object) {
-    var p;
-    for (p in object) {
-        proto[p] = object[p];
-    }
-}
-
 /*
       Object: Graph.Util
    
@@ -32,13 +7,13 @@ function extend(proto, object) {
    
       For your convenience some of these methods have also been appended to <Graph> and <Graph.Node> classes.
    */
-class Util {
+module Util {
     /*
        filter
  
        For internal use only. Provides a filtering function based on flags.
     */
-    filter(param) {
+    export function filter(param = null) {
         if (!param || !(typeof param == 'string')) return function () { return true; };
         var props = param.split(" ");
         return function (elem) {
@@ -72,7 +47,7 @@ class Util {
          graph.getNode('nodeid');
        (end code)
     */
-    getNode(graph, id) {
+    export function getNode(graph, id) {
         return graph.nodes[id];
     }
 
@@ -101,8 +76,8 @@ class Util {
          });
        (end code)
     */
-    eachNode(graph, action, flags) {
-        var filter = this.filter(flags);
+    export function eachNode(graph, action, flags = null) {
+        var filter = Util.filter(flags);
         for (var i in graph.nodes) {
             if (filter(graph.nodes[i])) action(graph.nodes[i]);
         }
@@ -133,8 +108,8 @@ class Util {
         });
       (end code)
     */
-    each(graph, action, flags) {
-        this.eachNode(graph, action, flags);
+    export function each(graph, action, flags) {
+        eachNode(graph, action, flags);
     }
 
     /*
@@ -162,8 +137,8 @@ class Util {
             });
           (end code)
        */
-    eachEdge(node, action, flags) {
-        var adj = node.adjacencies, filter = this.filter(flags);
+    export function eachEdge(node, action, flags = null) {
+        var adj = node.adjacencies, filter = Util.filter(flags);
         for (var id in adj) {
             var a = adj[id];
             if (filter(a)) {
@@ -198,10 +173,10 @@ class Util {
       startDepth - (optional|number) A minimum depth value. Default's 0.
      
     */
-    computeLevels(graph, id, startDepth, flags) {
+    export function computeLevels(graph, id, startDepth, flags) {
         startDepth = startDepth || 0;
-        var filter = this.filter(flags);
-        this.eachNode(graph, function (elem) {
+        var filter = Util.filter(flags);
+        eachNode(graph, function (elem) {
             elem._flag = false;
             elem.depth = -1;
         }, flags);
@@ -211,7 +186,7 @@ class Util {
         while (queue.length != 0) {
             var node = queue.pop();
             node._flag = true;
-            this.eachEdge(node, function (adj) {
+            eachEdge(node, function (adj) {
                 var n = adj.nodeTo;
                 if (n._flag == false && filter(n) && !adj._hiding) {
                     if (n.depth < 0) n.depth = node.depth + 1 + startDepth;
@@ -247,16 +222,16 @@ class Util {
          });
        (end code)
     */
-    eachBFS(graph, id, action, flags) {
-        var filter = this.filter(flags);
-        this.clean(graph);
+    export function eachBFS(graph, id, action, flags) {
+        var filter = Util.filter(flags);
+        clean(graph);
         var queue = [graph.getNode(id)];
         while (queue.length != 0) {
             var node = queue.pop();
             if (!node) return;
             node._flag = true;
             action(node, node.depth);
-            this.eachEdge(node, function (adj) {
+            eachEdge(node, function (adj) {
                 var n = adj.nodeTo;
                 if (n._flag == false && filter(n) && !adj._hiding) {
                     n._flag = true;
@@ -284,8 +259,8 @@ class Util {
        action - (function) A callback function having a <Graph.Node> as first formal parameter.
      
     */
-    eachLevel(node, levelBegin, levelEnd, action, flags) {
-        var d = node.depth, filter = this.filter(flags), that = this, shouldContinue = true;
+    export function eachLevel(node, levelBegin, levelEnd, action, flags) {
+        var d = node.depth, filter = Util.filter(flags), that = this, shouldContinue = true;
         levelEnd = levelEnd === false ? Number.MAX_VALUE - d : levelEnd;
         (function loopLevel(node, levelBegin, levelEnd) {
             if (!shouldContinue) return;
@@ -325,8 +300,8 @@ class Util {
          });
        (end code)
     */
-    eachSubgraph(node, action, flags) {
-        this.eachLevel(node, 0, false, action, flags);
+    export function eachSubgraph(node, action, flags) {
+        eachLevel(node, 0, false, action, flags);
     }
 
     /*
@@ -353,8 +328,8 @@ class Util {
          });
        (end code)
     */
-    eachSubnode(node, action, flags) {
-        this.eachLevel(node, 1, 1, action, flags);
+    export function eachSubnode(node, action, flags) {
+        eachLevel(node, 1, 1, action, flags);
     }
 
     /*
@@ -377,11 +352,11 @@ class Util {
          node.anySubnode(function(node) { return node.name == 'mynodename'; });
        (end code)
     */
-    anySubnode(node, cond, flags) {
+    export function anySubnode(node, cond, flags) {
         var flag = false;
         cond = cond || function () { return true; };
         var c = typeof cond == 'string' ? function (n) { return n[cond]; } : cond;
-        this.eachSubnode(node, function (elem) {
+        eachSubnode(node, function (elem) {
             if (c(elem)) flag = true;
         }, flags);
         return flag;
@@ -405,18 +380,18 @@ class Util {
        An array of nodes.
      
     */
-    getSubnodes(node, level, flags) {
+    export function getSubnodes(node, level: any[] | number, flags) {
         var ans = [], that = this;
         level = level || 0;
         var levelStart, levelEnd;
-        if (Array.isArray(level) == 'array') {
+        if (Array.isArray(level)) {
             levelStart = level[0];
             levelEnd = level[1];
         } else {
             levelStart = level;
             levelEnd = Number.MAX_VALUE - node.depth;
         }
-        this.eachLevel(node, levelStart, levelEnd, function (n) {
+        eachLevel(node, levelStart, levelEnd, function (n) {
             ans.push(n);
         }, flags);
         return ans;
@@ -449,9 +424,9 @@ class Util {
          }
        (end code)
     */
-    getParents(node) {
+    export function getParents(node) {
         var ans = [];
-        this.eachEdge(node, function (adj) {
+        eachEdge(node, function (adj) {
             var n = adj.nodeTo;
             if (n.depth < node.depth) ans.push(n);
         });
@@ -479,11 +454,11 @@ class Util {
       node.isDescendantOf('nodeid');//true|false
     (end code)
     */
-    isDescendantOf(node, id) {
+    export function isDescendantOf(node, id) {
         if (node.id == id) return true;
-        var pars = this.getParents(node), ans = false;
+        var pars = getParents(node), ans = false;
         for (var i = 0; !ans && i < pars.length; i++) {
-            ans = ans || this.isDescendantOf(pars[i], id);
+            ans = ans || isDescendantOf(pars[i], id);
         }
         return ans;
     }
@@ -500,7 +475,7 @@ class Util {
         Parameters:
         graph - A <Graph> instance.
      */
-    clean(graph) {
-        this.eachNode(graph, function (elem) { elem._flag = false; });
+    export function clean(graph) {
+        eachNode(graph, function (elem) { elem._flag = false; });
     }
 };
