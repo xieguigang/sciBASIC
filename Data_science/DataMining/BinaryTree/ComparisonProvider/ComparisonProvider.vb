@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9cf26dfffad51e8f7afe1cf87107f818, Data_science\DataMining\BinaryTree\ComparisonProvider\ComparisonProvider.vb"
+﻿#Region "Microsoft.VisualBasic::b51a9043432967a5af627a4136fa0490, Data_science\DataMining\BinaryTree\ComparisonProvider\ComparisonProvider.vb"
 
     ' Author:
     ' 
@@ -76,4 +76,3 @@ Public MustInherit Class ComparisonProvider
         Return New Comparison(Of String)(AddressOf c.Compares)
     End Operator
 End Class
-

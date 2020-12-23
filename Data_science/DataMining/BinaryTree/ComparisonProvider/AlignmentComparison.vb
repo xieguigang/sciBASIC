@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8dc8ad19713ed978d9cc8dcf776656d3, Data_science\DataMining\BinaryTree\ComparisonProvider\AlignmentComparison.vb"
+﻿#Region "Microsoft.VisualBasic::bf5cbde397fefa05a86d05a92addcfee, Data_science\DataMining\BinaryTree\ComparisonProvider\AlignmentComparison.vb"
 
     ' Author:
     ' 
@@ -74,4 +74,3 @@ Public Class AlignmentComparison : Inherits ComparisonProvider
         Return SSM(xvec, yvec)
     End Function
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::39db82c55a57f1d6d17a423cba829c9b, gr\network-visualization\Datavisualization.Network\Layouts\Models\Vectors\FDGVector2.vb"
+﻿#Region "Microsoft.VisualBasic::a95ce18a1e14c8164a0fcfef057d8bb8, gr\network-visualization\Datavisualization.Network\Layouts\Models\Vectors\FDGVector2.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '                   Magnitude, Multiply, Normal, Normalize, Normalized
     '                   Random, SetIdentity, SetZero, SquaredNorm, Subtract
     '                   Zero
-    '         Operators: -, (+2 Overloads) *, (+2 Overloads) /, +, <>
+    '         Operators: -, (+2 Overloads) *, (+2 Overloads) /, (+2 Overloads) +, <>
     '                    =
     ' 
     ' 
@@ -276,6 +276,14 @@ Namespace Layouts
         Public Shared Function Random(Optional width% = 1440, Optional height% = 900) As AbstractVector
             Return New FDGVector2(width * (randf.RandomSingle() - 0.5F), height * (randf.RandomSingle() - 0.5F))
         End Function
+
+        Public Overloads Shared Operator +(a As FDGVector2, b As Double) As FDGVector2
+            If a Is Nothing Then
+                Return New FDGVector2(b, b)
+            Else
+                Return New FDGVector2(a.x + b, a.y + b)
+            End If
+        End Operator
 
         Public Overloads Shared Operator +(a As FDGVector2, b As FDGVector2) As FDGVector2
             Return New FDGVector2(a.x, a.y).With(Function(f) f.Add(b))

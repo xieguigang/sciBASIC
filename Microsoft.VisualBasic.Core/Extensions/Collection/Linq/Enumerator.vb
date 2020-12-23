@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6fae26fe5ec34b53cffcf49bab4b023a, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Enumerator.vb"
+﻿#Region "Microsoft.VisualBasic::8ef5e07986e9065218497a65eeada9e2, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Enumerator.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 

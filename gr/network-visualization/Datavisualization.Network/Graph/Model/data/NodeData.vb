@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4dc57182b89a879f34739e97a3863104, gr\network-visualization\Datavisualization.Network\Graph\Model\data\NodeData.vb"
+﻿#Region "Microsoft.VisualBasic::6d6b56df4f92397c06471a16c717143d, gr\network-visualization\Datavisualization.Network\Graph\Model\data\NodeData.vb"
 
     ' Author:
     ' 
@@ -129,7 +129,7 @@ Namespace Graph
             Me.weights = copy.weights.SafeQuery.ToArray
         End Sub
 
-        Public Function Clone() As NodeData
+        Public Overridable Function Clone() As NodeData
             Return New NodeData With {
                 .label = label,
                 .betweennessCentrality = betweennessCentrality,

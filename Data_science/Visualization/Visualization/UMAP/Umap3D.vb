@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7fd558a82709039396f469929326cf12, Data_science\Visualization\Visualization\UMAP\Umap3D.vb"
+﻿#Region "Microsoft.VisualBasic::e698ae93ac56d3672c151436b633ad4a, Data_science\Visualization\Visualization\UMAP\Umap3D.vb"
 
     ' Author:
     ' 
@@ -106,4 +106,3 @@ Public Class Umap3D : Inherits UmapRender
         Call engine.Plot(g, canvas.PlotRegion)
     End Sub
 End Class
-

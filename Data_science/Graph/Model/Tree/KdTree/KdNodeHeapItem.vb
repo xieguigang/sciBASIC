@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::632bc8cf627486778c8aa40b8d0d0ec0, Data_science\Graph\Model\Tree\KdTree\Node.vb"
+﻿#Region "Microsoft.VisualBasic::73b53afdae67035ace0b81c145f77432, Data_science\Graph\Model\Tree\KdTree\KdNodeHeapItem.vb"
 
     ' Author:
     ' 
@@ -31,11 +31,12 @@
 
     ' Summaries:
 
-    '     Class Node
+    '     Class KdNodeHeapItem
     ' 
-    '         Properties: dimension, left, obj, parent, right
+    '         Properties: distance, node
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -44,19 +45,19 @@
 
 Namespace KdTree
 
-    Public Class Node : Inherits Vertex
+    Public Class KdNodeHeapItem(Of T)
 
-        Public Property obj As Object
-        Public Property left As Node
-        Public Property right As Node
-        Public Property parent As Node
-        Public Property dimension As Integer
+        Public Property node As KdTreeNode(Of T)
+        Public Property distance As Double
 
-        Sub New(obj As Object, dimension%, parent As Node)
-            Me.obj = obj
-            Me.dimension = dimension
-            Me.parent = parent
+        Sub New(node As KdTreeNode(Of T), dist As Double)
+            Me.node = node
+            Me.distance = dist
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"[{node}, {distance}]"
+        End Function
 
     End Class
 End Namespace

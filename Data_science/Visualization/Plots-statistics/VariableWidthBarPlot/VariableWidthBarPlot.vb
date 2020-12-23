@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::00fcc7f5faff49dbb52400b2ae2b02e6, Data_science\Visualization\Plots-statistics\VariableWidthBarPlot.vb"
+﻿#Region "Microsoft.VisualBasic::82054e4259db7af746b729b81de6781e, Data_science\Visualization\Plots-statistics\VariableWidthBarPlot\VariableWidthBarPlot.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,6 @@
     ' Module VariableWidthBarPlot
     ' 
     '     Function: Plot
-    ' 
-    ' Class VariableBarData
-    ' 
-    '     Properties: Color, Data, Name
-    ' 
-    '     Function: ToString
     ' 
     ' /********************************************************************************/
 
@@ -163,5 +157,3 @@ Public Module VariableWidthBarPlot
         Return g.GraphicsPlots(size.SizeParser, padding, bg, plotInternal)
     End Function
 End Module
-
-

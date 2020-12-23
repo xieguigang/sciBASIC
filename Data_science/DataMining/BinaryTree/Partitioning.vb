@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1be2d07a80f18f6e87cfe1964904a3c, Data_science\DataMining\BinaryTree\Partitioning.vb"
+﻿#Region "Microsoft.VisualBasic::a94046a469114fcc785ca497f2b32af8, Data_science\DataMining\BinaryTree\Partitioning.vb"
 
     ' Author:
     ' 
@@ -48,4 +48,3 @@ Public Module Partitioning
 
     End Function
 End Module
-

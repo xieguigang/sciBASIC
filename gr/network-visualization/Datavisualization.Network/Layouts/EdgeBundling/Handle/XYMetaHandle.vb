@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f10f64ef20bc0a653e5e06d0b133d6d, gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\XYMetaHandle.vb"
+﻿#Region "Microsoft.VisualBasic::2f10f64ef20bc0a653e5e06d0b133d6d, gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Handle\XYMetaHandle.vb"
 
     ' Author:
     ' 

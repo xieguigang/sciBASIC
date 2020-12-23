@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d2ae62110908fa5115040ff5f679ce5, Data_science\Mathematica\Math\DataFrame\DataType.vb"
+﻿#Region "Microsoft.VisualBasic::51435beaf80873816b72565b2007240e, Data_science\Mathematica\Math\DataFrame\DataType.vb"
 
     ' Author:
     ' 
@@ -48,4 +48,3 @@ Public Enum DataType
     Similarity
     Correlation
 End Enum
-

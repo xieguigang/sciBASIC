@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb8869c3d3c958480d4c78e2c9da5ab0, Data_science\DataMining\BinaryTree\ComparisonProvider\Comparison.vb"
+﻿#Region "Microsoft.VisualBasic::a1c8f32e888471aad0d85205013c311c, Data_science\DataMining\BinaryTree\ComparisonProvider\Comparison.vb"
 
     ' Author:
     ' 
@@ -57,4 +57,3 @@ Public Class Comparison : Inherits ComparisonProvider
         Return d(x, y)
     End Function
 End Class
-

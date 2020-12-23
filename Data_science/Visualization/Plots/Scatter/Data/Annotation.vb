@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c72a96d9ff892f084d52df9e2c326f92, Data_science\Visualization\Plots\Scatter\Annotation.vb"
+﻿#Region "Microsoft.VisualBasic::c5d9d32caaefbc1ad8833ba8a6626f9b, Data_science\Visualization\Plots\Scatter\Data\Annotation.vb"
 
     ' Author:
     ' 

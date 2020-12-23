@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17cd8bc99ae6ca58d7bc9f1d62bdb31d, Data_science\Visualization\Plots\Scatter\Data.vb"
+﻿#Region "Microsoft.VisualBasic::5beb4fe7bba87858a957e0f31d78fa62, Data_science\Visualization\Plots\Scatter\Data\PointData.vb"
 
     ' Author:
     ' 
@@ -31,14 +31,6 @@
 
     ' Summaries:
 
-    ' Class SerialData
-    ' 
-    '     Properties: DataAnnotations, title
-    ' 
-    '     Function: GetEnumerator, GetPen, GetPointByX, IEnumerable_GetEnumerator, ToString
-    ' 
-    '     Sub: AddMarker
-    ' 
     ' Structure PointData
     ' 
     '     Constructor: (+3 Overloads) Sub New

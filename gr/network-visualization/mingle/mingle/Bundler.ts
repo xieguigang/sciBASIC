@@ -18,7 +18,7 @@ class Bundler {
     }
 
     buildKdTree() {
-        var nodeArray = [];
+        var nodeArray: Node[] = [];
         this.graph.each(function (n) {
             var coords = n.data.coords;
             n.x = coords[0];
@@ -306,7 +306,7 @@ class Bundler {
         return nodes[0];
     }
 
-    bundle(combinedNode, node1, node2) {
+    bundle(combinedNode: Node, node1: Node, node2: Node) {
         var graph = this.graph;
 
         node1.data.bundle = combinedNode;
@@ -323,7 +323,7 @@ class Bundler {
         //node2.data.nodeArray = combinedNode.data.nodeArray;
     }
 
-    updateGraph(graph, groupedNode, nodes, ids) {
+    updateGraph(graph: Graph, groupedNode: Node, nodes: Node[], ids: {}) {
         var i, l, n, connections,
             checkConnection = function (e) {
                 var nodeToId = e.nodeTo.id;
@@ -377,7 +377,7 @@ class Bundler {
         }
     }
 
-    getMaximumInkSavingNeighbor(n) {
+    getMaximumInkSavingNeighbor(n: Node) {
         var nodeFrom = n,
             getInkValue = this.getInkValue.bind(this),
             inkFrom = getInkValue(nodeFrom),

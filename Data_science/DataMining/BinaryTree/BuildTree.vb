@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bff2c6cd8453434f501b9826e59cbcce, Data_science\DataMining\BinaryTree\BuildTree.vb"
+﻿#Region "Microsoft.VisualBasic::5826dd9e971ade6664c30fad7976552e, Data_science\DataMining\BinaryTree\BuildTree.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,6 @@
     ' Module BuildTree
     ' 
     '     Function: (+2 Overloads) BTreeCluster
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -82,6 +81,3 @@ Public Module BuildTree
         Return BTreeCluster.GetClusters(btree)
     End Function
 End Module
-
-
-

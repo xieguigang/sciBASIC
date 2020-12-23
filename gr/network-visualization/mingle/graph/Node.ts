@@ -129,13 +129,12 @@ class Node {
         return ans;
     };
 
-    unbundleEdges(delta) {
+    unbundleEdges(delta: number = 0) {
         var expandedEdges = this.expandEdges(),
             ans = Array(expandedEdges.length),
             min = Math.min,
             i, l, j, n, edge, edgeCopy, normal, x0, xk, xk_x0, xi, xi_x0, xi_bar, dot, norm, norm2, c, last;
 
-        delta = delta || 0;
         this.unbundledEdges = this.unbundledEdges || {};
 
         if ((delta === 0 || delta === 1) &&

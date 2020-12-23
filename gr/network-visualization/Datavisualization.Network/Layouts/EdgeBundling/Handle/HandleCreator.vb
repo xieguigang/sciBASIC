@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d2286cc75dd5442d235f9b50098dec6, gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\HandleCreator.vb"
+﻿#Region "Microsoft.VisualBasic::8d2286cc75dd5442d235f9b50098dec6, gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Handle\HandleCreator.vb"
 
     ' Author:
     ' 

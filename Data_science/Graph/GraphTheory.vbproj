@@ -624,8 +624,10 @@
     <Compile Include="Model\Abstract\General.vb" />
     <Compile Include="Model\GridNetwork\GridCell.vb" />
     <Compile Include="Model\Tree\AbstractTree.vb" />
+    <Compile Include="Model\Tree\KdTree\KdNodeHeapItem.vb" />
+    <Compile Include="Model\Tree\KdTree\KdNodeAccessor.vb" />
     <Compile Include="Model\Tree\KdTree\KdTree.vb" />
-    <Compile Include="Model\Tree\KdTree\Node.vb" />
+    <Compile Include="Model\Tree\KdTree\KdTreeNode.vb" />
     <Compile Include="Model\Tree\TermTree.vb" />
     <Compile Include="Model\Tree\Trie.vb" />
     <Compile Include="Model\Abstract\Edge.vb" />
@@ -684,9 +686,9 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Mathematica\Math\Math\math-core.vbproj">
+    <ProjectReference Include="..\Mathematica\Math\Math\Math-Core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
-      <Name>math-core</Name>
+      <Name>Math-Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

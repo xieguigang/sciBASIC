@@ -1,10 +1,10 @@
 
 class Render {
 
-    renderLine(ctx: context, edges, options: options = <any>{}) {
+    renderLine(ctx: context, edges: PosItem[][], options: options = <any>{}) {
         var lineWidth = options.lineWidth || 1,
             fillStyle = options.fillStyle || 'gray',
-            i, l, j, n, e, pos;
+            i, l, j, n, e: PosItem[], pos;
 
         ctx.fillStyle = fillStyle;
         ctx.lineWidth = lineWidth;

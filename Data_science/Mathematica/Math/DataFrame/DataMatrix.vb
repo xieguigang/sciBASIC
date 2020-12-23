@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64fb699166883c8bf9531726d9e4c20e, Data_science\Mathematica\Math\DataFrame\DataMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::a89ed97096438e6ec02ea9b48f94860c, Data_science\Mathematica\Math\DataFrame\DataMatrix.vb"
 
     ' Author:
     ' 
@@ -143,4 +143,3 @@ Public Class DataMatrix
         End If
     End Function
 End Class
-

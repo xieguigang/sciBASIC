@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01befc84007c34ef41c2c3b019bad8b3, Data_science\Visualization\Plots-statistics\ZScores.vb"
+﻿#Region "Microsoft.VisualBasic::b1f5189fe0a2fea2ee631b066584f890, Data_science\Visualization\Plots-statistics\Zscore\ZScores.vb"
 
     ' Author:
     ' 
@@ -31,13 +31,9 @@
 
     ' Summaries:
 
-    ' Module ZScoresPlot
+    ' Module ZScoresPlots
     ' 
     '     Function: Plot
-    ' 
-    ' Structure ZScores
-    ' 
-    '     Function: (+3 Overloads) Load, Range
     ' 
     ' /********************************************************************************/
 

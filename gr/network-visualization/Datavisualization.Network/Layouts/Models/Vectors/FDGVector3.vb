@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c568dfc3f6f2d0e21e7d83b6846aa1b, gr\network-visualization\Datavisualization.Network\Layouts\Models\Vectors\FDGVector3.vb"
+﻿#Region "Microsoft.VisualBasic::652ea18de042a22a481791dad1f8580f, gr\network-visualization\Datavisualization.Network\Layouts\Models\Vectors\FDGVector3.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     '         Function: Add, Divide, (+2 Overloads) Equals, GetHashCode, Identity
     '                   Magnitude, Multiply, Normalize, Random, SetIdentity
     '                   SetZero, Subtract, Zero
-    '         Operators: -, (+2 Overloads) *, /, +, <>
+    '         Operators: -, (+2 Overloads) *, /, (+2 Overloads) +, <>
     '                    =
     ' 
     ' 
@@ -235,6 +235,10 @@ Namespace Layouts
         Public Shared Function Random() As AbstractVector
             Return New FDGVector3(10.0F * (RandomSingle() - 0.5F), 10.0F * (RandomSingle() - 0.5F), 10.0F * (RandomSingle() - 0.5F))
         End Function
+
+        Public Overloads Shared Operator +(a As FDGVector3, b As Double) As FDGVector3
+            Return New FDGVector3(a.x + b, a.y + b, a.z + b)
+        End Operator
 
         Public Overloads Shared Operator +(a As FDGVector3, b As FDGVector3) As FDGVector3
             Dim temp As New FDGVector3(a.x, a.y, a.z)

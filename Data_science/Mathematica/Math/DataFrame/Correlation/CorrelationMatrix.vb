@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27a8c430aa6b33b129d2eb3886059628, Data_science\Mathematica\Math\DataFrame\Correlation\CorrelationMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::5977149fe292af55464149de24fc6a3e, Data_science\Mathematica\Math\DataFrame\Correlation\CorrelationMatrix.vb"
 
     ' Author:
     ' 
@@ -76,4 +76,3 @@ Public Class CorrelationMatrix : Inherits DataMatrix
     End Sub
 
 End Class
-

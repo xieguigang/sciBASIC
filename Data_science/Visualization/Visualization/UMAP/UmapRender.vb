@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3a72b593a73ae6c3a2ebae655cf4d82, Data_science\Visualization\Visualization\UMAP\UmapRender.vb"
+﻿#Region "Microsoft.VisualBasic::7da823e68e67084a00ed91633c1e4c4a, Data_science\Visualization\Visualization\UMAP\UmapRender.vb"
 
     ' Author:
     ' 
@@ -101,4 +101,3 @@ Public MustInherit Class UmapRender : Inherits Plot
         Return map
     End Function
 End Class
-

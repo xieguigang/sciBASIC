@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0720034b29f8f278eb3690a35c5c549, Data_science\Visualization\Plots-statistics\TimeTrends.vb"
+﻿#Region "Microsoft.VisualBasic::2266784b1494590e905475acf28f9775, Data_science\Visualization\Plots-statistics\TimeTrends\TimeTrends.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,6 @@
     ' Module TimeTrends
     ' 
     '     Function: Plot
-    '     Structure TimePoint
-    ' 
-    '         Function: ToString
-    ' 
-    ' 
     ' 
     ' /********************************************************************************/
 

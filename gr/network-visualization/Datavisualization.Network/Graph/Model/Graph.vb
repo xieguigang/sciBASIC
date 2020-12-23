@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0052d11fa16e8824844b47fce1a6740, gr\network-visualization\Datavisualization.Network\Graph\Model\Graph.vb"
+﻿#Region "Microsoft.VisualBasic::8bbb7b828ab69db753ed229c9346e023, gr\network-visualization\Datavisualization.Network\Graph\Model\Graph.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     ' 
     '         Sub: AddGraphListener, Clear, (+2 Overloads) CreateEdges, (+2 Overloads) CreateNodes, DetachNode
     '              FilterEdges, FilterNodes, Merge, notify, RemoveEdge
-    '              RemoveNode
+    '              (+2 Overloads) RemoveNode
     ' 
     ' 
     ' /********************************************************************************/
@@ -180,13 +180,17 @@ Namespace Graph
         ''' <returns></returns>
         Public Function AddNode(node As Node) As Node
             If Not vertices.ContainsKey(node.label) Then
-                vertices.Add(node)
+                ' 20201223 ID必须要在哈希表添加之前进行赋值
+                ' 编号必须从零开始
                 node.ID = buffer.GetAvailablePos
-                buffer += node
+
+                buffer.Add(node)
+                vertices.Add(node)
             End If
 
             _index(node.label) = node
             _index(node.label).directedVertex = New DirectedVertex(node.label)
+            _index(node.label).adjacencies = _index.CreateNodeAdjacencySet(node)
 
             Call notify()
 
@@ -415,6 +419,10 @@ Namespace Graph
             Return _index.GetEdges(iNode.label)
         End Function
 
+        Public Sub RemoveNode(labelId As String)
+            Call RemoveNode(GetElementByID(labelId))
+        End Sub
+
         ''' <summary>
         ''' 应该使用这个方法来安全的删除节点
         ''' </summary>
@@ -436,14 +444,13 @@ Namespace Graph
         ''' </summary>
         ''' <param name="iNode"></param>
         Public Sub DetachNode(iNode As Node)
-            Call graphEdges _
-                .ToArray _
-                .DoEach(Sub(e As Edge)
-                            If e.U.label = iNode.label OrElse e.V.label = iNode.label Then
-                                Call RemoveEdge(e)
-                            End If
-                        End Sub)
-            notify()
+            For Each e As Edge In graphEdges.ToArray
+                If e.U.label = iNode.label OrElse e.V.label = iNode.label Then
+                    Call RemoveEdge(e)
+                End If
+            Next
+
+            Call notify()
         End Sub
 
         ''' <summary>

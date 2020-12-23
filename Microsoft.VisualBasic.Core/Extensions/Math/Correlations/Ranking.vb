@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4d7e0eff926a6a46c5ed05c2935484d, Microsoft.VisualBasic.Core\Extensions\Math\Correlations\Ranking.vb"
+﻿#Region "Microsoft.VisualBasic::39f384cb84adce6a7997e14fa808618d, Microsoft.VisualBasic.Core\Extensions\Math\Correlations\Ranking.vb"
 
     ' Author:
     ' 
@@ -41,8 +41,8 @@
     ' 
     '  
     ' 
-    '     Function: DenseRanking, FractionalRanking, ModifiedCompetitionRanking, OrdinalRanking, Ranking
-    '               StandardCompetitionRanking
+    '     Function: DenseRanking, FractionalRanking, ModifiedCompetitionRanking, OrdinalRanking, OrdinalRankingOrder
+    '               Ranking, StandardCompetitionRanking
     ' 
     ' 
     ' /********************************************************************************/
@@ -285,7 +285,33 @@ Namespace Math.Correlations
         ''' <typeparam name="C"></typeparam>
         ''' <param name="list"></param>
         ''' <returns></returns>
-        <Extension> Public Function OrdinalRanking(Of C As IComparable)(list As IEnumerable(Of C), Optional desc As Boolean = False) As Double()
+        <Extension>
+        Public Function OrdinalRanking(Of C As IComparable)(list As IEnumerable(Of C), Optional desc As Boolean = False) As Double()
+            Return list.OrdinalRankingOrder(desc).Select(Function(x) CDbl(x)).ToArray
+        End Function
+
+        ''' <summary>
+        ''' ###### Ordinal ranking ("1234" ranking)
+        ''' 
+        ''' In ordinal ranking, all items receive distinct ordinal numbers, including items that compare equal. 
+        ''' The assignment of distinct ordinal numbers to items that compare equal can be done at random, 
+        ''' or arbitrarily, but it is generally preferable to use a system that is arbitrary but consistent, 
+        ''' as this gives stable results if the ranking is done multiple times. An example of an arbitrary but 
+        ''' consistent system would be to incorporate other attributes into the ranking order (such as 
+        ''' alphabetical ordering of the competitor's name) to ensure that no two items exactly match.
+        ''' 
+        ''' With this strategy, if A ranks ahead of B and C (which compare equal) which are both ranked ahead of D, 
+        ''' then A gets ranking number 1 ("first") and D gets ranking number 4 ("fourth"), and either B gets 
+        ''' ranking number 2 ("second") and C gets ranking number 3 ("third") or C gets ranking number 2 ("second") 
+        ''' and B gets ranking number 3 ("third").
+        ''' 
+        ''' In computer data processing, ordinal ranking is also referred to as "row numbering".
+        ''' </summary>
+        ''' <typeparam name="C"></typeparam>
+        ''' <param name="list"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function OrdinalRankingOrder(Of C As IComparable)(list As IEnumerable(Of C), Optional desc As Boolean = False) As Integer()
             Dim array = list _
                 .SeqIterator _
                 .ToDictionary(Function(x) x,
@@ -295,7 +321,7 @@ Namespace Math.Correlations
             Dim asc() = array.Keys _
                 .Sort(Function(x) x.value, desc) _
                 .ToArray
-            Dim ranks#() = New Double(asc.Length - 1) {}
+            Dim ranks%() = New Integer(asc.Length - 1) {}
             Dim rank% = 1
 
             For i As Integer = 0 To asc.Length - 1

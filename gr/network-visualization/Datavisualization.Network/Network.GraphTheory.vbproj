@@ -699,6 +699,11 @@
     <Compile Include="Layouts\Cola\Models\DirectedEdge.vb" />
     <Compile Include="Graph\Selector.vb" />
     <Compile Include="Layouts\EdgeBundling\Mingle\Bundler.vb" />
+    <Compile Include="Layouts\EdgeBundling\Mingle\Accessor.vb" />
+    <Compile Include="Layouts\EdgeBundling\Mingle\MingleNodeData.vb" />
+    <Compile Include="Layouts\EdgeBundling\Mingle\GraphKdNode.vb" />
+    <Compile Include="Layouts\EdgeBundling\Mingle\InternalMath.vb" />
+    <Compile Include="Layouts\EdgeBundling\Mingle\Options.vb" />
     <Compile Include="Layouts\SpringEmbedder.vb" />
     <Compile Include="Layouts\Cola\Extensions.vb" />
     <Compile Include="Layouts\Cola\Geom\geom.vb" />
@@ -817,9 +822,9 @@
       <Project>{203bc68f-a0cd-443a-ab62-4af4110f752f}</Project>
       <Name>GraphTheory</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\Math\math-core.vbproj">
+    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\Math\Math-Core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
-      <Name>math-core</Name>
+      <Name>Math-Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>

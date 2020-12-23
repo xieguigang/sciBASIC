@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe5b663293de45d49b865eb35839577e, Data_science\Graph\Model\Tree\KdTree\KdTree.vb"
+﻿#Region "Microsoft.VisualBasic::84bf24556f098eb861c49d7edc214b61, Data_science\Graph\Model\Tree\KdTree\KdTree.vb"
 
     ' Author:
     ' 
@@ -48,19 +48,17 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Python
 Imports stdNum = System.Math
 
 Namespace KdTree
 
-    Public Class KdTree
+    Public Class KdTree(Of T As New)
 
-        Dim dimensions As Integer()
-        Dim points As Object()
-        Dim metric As Object
-
-        Dim root As Node
+        Dim dimensions As String()
+        Dim points As T()
+        Dim access As KdNodeAccessor(Of T)
+        Dim root As KdTreeNode(Of T)
 
         Public ReadOnly Property balanceFactor() As Double
             Get
@@ -68,50 +66,48 @@ Namespace KdTree
             End Get
         End Property
 
-        Sub New(points As Object(), metric As Object, dimensions As Integer())
+        Sub New(points As T(), metric As KdNodeAccessor(Of T))
             Me.points = points
-            Me.metric = metric
-            Me.dimensions = dimensions
+            Me.access = metric
+            Me.dimensions = metric.GetDimensions
             Me.root = buildTree(points, Scan0, Nothing)
         End Sub
 
-        Private Function buildTree(points As Object(), depth As Integer, parent As Node) As Node
+        Private Function buildTree(points As T(), depth As Integer, parent As KdTreeNode(Of T)) As KdTreeNode(Of T)
             Dim [dim] = depth Mod dimensions.Length
             Dim median As Integer
-            Dim node As Node
+            Dim node As KdTreeNode(Of T)
 
             If points.Length = 0 Then
                 Return Nothing
             ElseIf points.Length = 1 Then
-                Return New Node(points(Scan0), [dim], parent)
+                Return New KdTreeNode(Of T)(points(Scan0), [dim], parent)
+            Else
+                Call points.Sort(Function(a, b) access(a, dimensions([dim])) - access(b, dimensions([dim])))
             End If
 
-            points.Sort(Function(a, b) As Integer
-                            Return a(dimensions([dim])) - b(dimensions([dim]))
-                        End Function)
-
             median = stdNum.Floor(points.Length / 2)
-            node = New Node(points(median), [dim], parent)
-            node.left = buildTree(points.slice(0, median), depth + 1, node)
-            node.right = buildTree(points.slice(median + 1), depth + 1, node)
+            node = New KdTreeNode(Of T)(points(median), [dim], parent)
+            node.left = buildTree(points.slice(0, median).ToArray, depth + 1, node)
+            node.right = buildTree(points.slice(median + 1).ToArray, depth + 1, node)
 
             Return node
         End Function
 
-        Public Function insert(point) As Node
+        Public Function insert(point As T) As KdTreeNode(Of T)
             Dim insertPosition = innerSearch(point, root, Nothing),
-                newNode As Node,
-                dimension As Object
+                newNode As KdTreeNode(Of T),
+                dimension As String
 
             If insertPosition Is Nothing Then
-                root = New Node(point, 0, Nothing)
+                root = New KdTreeNode(Of T)(point, 0, Nothing)
                 Return root
             Else
-                newNode = New Node(point, (insertPosition.dimension + 1) Mod dimensions.Length, insertPosition)
+                newNode = New KdTreeNode(Of T)(point, (insertPosition.dimension + 1) Mod dimensions.Length, insertPosition)
                 dimension = dimensions(insertPosition.dimension)
             End If
 
-            If point(dimension) < insertPosition.obj(dimension) Then
+            If access.getByDimension(point, dimension) < access.getByDimension(insertPosition.obj, dimension) Then
                 insertPosition.left = newNode
             Else
                 insertPosition.right = newNode
@@ -120,37 +116,37 @@ Namespace KdTree
             Return newNode
         End Function
 
-        Private Function nodeSearch(point As Object, node As Node) As Node
+        Private Function nodeSearch(point As T, node As KdTreeNode(Of T)) As KdTreeNode(Of T)
             If node Is Nothing Then
                 Return Nothing
-            ElseIf node.obj Is point Then
+            ElseIf access.nodeIs(node.obj, point) Then
                 Return node
             End If
 
             Dim dimension = dimensions(node.dimension)
 
-            If point(dimension) < node.obj(dimension) Then
+            If access.getByDimension(point, dimension) < access.getByDimension(node.obj, dimension) Then
                 Return nodeSearch(node.left, node)
             Else
                 Return nodeSearch(node.right, node)
             End If
         End Function
 
-        Private Function innerSearch(point As Object, node As Node, parent As Node)
+        Private Function innerSearch(point As T, node As KdTreeNode(Of T), parent As KdTreeNode(Of T)) As KdTreeNode(Of T)
             If node Is Nothing Then
                 Return parent
             End If
 
             Dim dimension = dimensions(node.dimension)
 
-            If point(dimension) < node.obj(dimension) Then
+            If access.getByDimension(point, dimension) < access.getByDimension(node.obj, dimension) Then
                 Return innerSearch(point, node.left, node)
             Else
                 Return innerSearch(point, node.right, node)
             End If
         End Function
 
-        Public Function remove(point) As Node
+        Public Function remove(point As T) As KdTreeNode(Of T)
             Dim node = nodeSearch(point, root)
 
             If Not node Is Nothing Then
@@ -160,10 +156,10 @@ Namespace KdTree
             Return node
         End Function
 
-        Private Sub removeNode(node As Node)
-            Dim nextNode As Node
-            Dim nextObj
-            Dim pDimension
+        Private Sub removeNode(node As KdTreeNode(Of T))
+            Dim nextNode As KdTreeNode(Of T)
+            Dim nextObj As T
+            Dim pDimension As String
 
             If node.left Is Nothing AndAlso node.right Is Nothing Then
                 If node.parent Is Nothing Then
@@ -173,7 +169,7 @@ Namespace KdTree
 
                 pDimension = dimensions(node.parent.dimension)
 
-                If node.obj(pDimension) < node.parent.obj(pDimension) Then
+                If access.getByDimension(node, pDimension) < access.getByDimension(node.parent.obj, pDimension) Then
                     node.parent.left = Nothing
                 Else
                     node.parent.right = Nothing
@@ -189,14 +185,14 @@ Namespace KdTree
             End If
 
             nextObj = nextNode.obj
-            removeNode(nextNode)
+            Call removeNode(nextNode)
             node.obj = nextObj
         End Sub
 
-        Private Function findMax(node As Node, [dim] As Integer)
+        Private Function findMax(node As KdTreeNode(Of T), [dim] As Integer) As KdTreeNode(Of T)
             Dim dimension As Integer
-            Dim own
-            Dim Left, Right, max As Node
+            Dim own As Double
+            Dim Left, Right, max As KdTreeNode(Of T)
 
             If node Is Nothing Then
                 Return Nothing
@@ -212,27 +208,25 @@ Namespace KdTree
                 End If
             End If
 
-            own = node.obj(dimension)
+            own = access.getByDimension(node.obj, dimension)
             Left = findMax(node.left, [dim])
             Right = findMax(node.right, [dim])
             max = node
 
-            If Not Left Is Nothing AndAlso Left.obj(dimension) > own Then
+            If Not Left Is Nothing AndAlso access.getByDimension(Left.obj, dimension) > own Then
                 max = Left
             End If
-            If Not Right Is Nothing AndAlso Right.obj(dimension) > max.obj(dimension) Then
+            If Not Right Is Nothing AndAlso access.getByDimension(Right.obj, dimension) > access.getByDimension(max.obj, dimension) Then
                 max = Right
             End If
 
             Return max
         End Function
 
-        Private Function findMin(node As Node, [dim] As Integer)
+        Private Function findMin(node As KdTreeNode(Of T), [dim] As Integer) As KdTreeNode(Of T)
             Dim dimension As Integer
-            Dim own
-            Dim Left,
-            Right,
-            min As Node
+            Dim own As Double
+            Dim left, Right, min As KdTreeNode(Of T)
 
             If node Is Nothing Then
                 Return Nothing
@@ -248,67 +242,63 @@ Namespace KdTree
                 End If
             End If
 
-            own = node.obj(dimension)
-            Left = findMin(node.left, [dim])
+            own = access.getByDimension(node.obj, dimension)
+            left = findMin(node.left, [dim])
             Right = findMin(node.right, [dim])
             min = node
 
-            If Not Left Is Nothing AndAlso Left.obj(dimension) < own Then
-                min = Left
+            If Not left Is Nothing AndAlso access.getByDimension(left.obj, dimension) < own Then
+                min = left
             End If
 
-            If Not Right Is Nothing AndAlso Right.obj(dimension) < min.obj(dimension) Then
+            If Not Right Is Nothing AndAlso access.getByDimension(Right.obj, dimension) < access.getByDimension(min.obj, dimension) Then
                 min = Right
             End If
 
             Return min
         End Function
 
-        Public Function nearest(point As Object, maxNodes As Integer, maxDistance As Double)
-            Dim i%
-            Dim result As New List(Of Object)
-            Dim bestNodes As New BinaryHeap(Of Tuple(Of Node, Double))(Function(e) -e.Item2)
+        Public Iterator Function nearest(point As T, maxNodes As Integer, Optional maxDistance As Double? = Nothing) As IEnumerable(Of KdNodeHeapItem(Of T))
+            Dim bestNodes As New BinaryHeap(Of KdNodeHeapItem(Of T))(Function(e) -e.distance)
 
-            If maxDistance Then
-                For i = 0 To maxNodes - 1
-                    bestNodes.push(New Tuple(Of Node, Double)(Nothing, maxDistance))
+            If Not maxDistance Is Nothing Then
+                For i As Integer = 0 To maxNodes - 1
+                    bestNodes.push(New KdNodeHeapItem(Of T)(Nothing, maxDistance))
                 Next
             End If
 
-            nearestSearch(point, root, bestNodes, maxNodes)
+            Call nearestSearch(point, root, bestNodes, maxNodes)
 
-            For i = 0 To maxNodes - 1
+            For i As Integer = 0 To maxNodes - 1
                 If Not bestNodes(i) Is Nothing Then
-                    result.Add(New Tuple(Of Node, Double)(bestNodes(i).Item1.obj, bestNodes(i).Item2))
+                    Yield New KdNodeHeapItem(Of T)(bestNodes(i).node, bestNodes(i).distance)
                 End If
             Next
-
-            Return result
         End Function
 
-        Private Sub nearestSearch(point As Object, node As Node, bestNodes As BinaryHeap(Of Tuple(Of Node, Double)), maxNodes%)
-            Dim bestChild
+        Private Sub nearestSearch(point As T, node As KdTreeNode(Of T), bestNodes As BinaryHeap(Of KdNodeHeapItem(Of T)), maxNodes%)
+            Dim bestChild As KdTreeNode(Of T)
             Dim dimension = dimensions(node.dimension),
-          ownDistance = metric(point, node.obj),
-          linearPoint = New Object,
-          linearDistance,
-          otherChild,
-          i
+          ownDistance = access.metric(point, node.obj),
+          linearPoint = New T,
+          linearDistance As Double,
+          otherChild As KdTreeNode(Of T)
 
-            For i = 0 To dimensions.Length - 1
+            For i As Integer = 0 To dimensions.Length - 1
                 If i = node.dimension Then
-                    linearPoint(dimensions(i)) = point(dimensions(i))
+                    access(linearPoint, dimensions(i)) = access.getByDimension(point, dimensions(i))
                 Else
-                    linearPoint(dimensions(i)) = node.obj(dimensions(i))
+                    access(linearPoint, dimensions(i)) = access.getByDimension(node.obj, dimensions(i))
                 End If
             Next
 
-            linearDistance = metric(linearPoint, node.obj)
+            linearDistance = access.metric(linearPoint, node.obj)
 
             If node.right Is Nothing AndAlso node.left Is Nothing Then
-                If bestNodes.size < maxNodes OrElse ownDistance < bestNodes.peek().Item2 Then
+                If bestNodes.size < maxNodes OrElse ownDistance < bestNodes.peek().distance Then
                     saveNode(bestNodes, node, ownDistance, maxNodes)
                 End If
+
                 Return
             End If
 
@@ -317,20 +307,20 @@ Namespace KdTree
             ElseIf node.left Is Nothing Then
                 bestChild = node.right
             Else
-                If point(dimension) < node.obj(dimension) Then
+                If access.getByDimension(point, dimension) < access.getByDimension(node.obj, dimension) Then
                     bestChild = node.left
                 Else
                     bestChild = node.right
                 End If
             End If
 
-            nearestSearch(point, bestChild, bestNodes, maxNodes)
+            Call nearestSearch(point, bestChild, bestNodes, maxNodes)
 
-            If bestNodes.size() < maxNodes OrElse ownDistance < bestNodes.peek.Item2 Then
+            If bestNodes.size() < maxNodes OrElse ownDistance < bestNodes.peek.distance Then
                 saveNode(bestNodes, node, ownDistance, maxNodes)
             End If
 
-            If bestNodes.size < maxNodes OrElse stdNum.Abs(linearDistance) < bestNodes.peek.Item2 Then
+            If bestNodes.size < maxNodes OrElse stdNum.Abs(linearDistance) < bestNodes.peek.distance Then
                 If bestChild Is node.left Then
                     otherChild = node.right
                 Else
@@ -343,14 +333,15 @@ Namespace KdTree
             End If
         End Sub
 
-        Private Sub saveNode(bestNodes As BinaryHeap(Of Tuple(Of Node, Double)), node As Node, distance#, maxNodes%)
-            bestNodes.push(New Tuple(Of Node, Double)(node, distance))
+        Private Sub saveNode(bestNodes As BinaryHeap(Of KdNodeHeapItem(Of T)), node As KdTreeNode(Of T), distance#, maxNodes%)
+            Call bestNodes.push(New KdNodeHeapItem(Of T)(node, distance))
+
             If (bestNodes.size > maxNodes) Then
                 bestNodes.pop()
             End If
         End Sub
 
-        Private Function height(node As Node) As Integer
+        Private Function height(node As KdTreeNode(Of T)) As Integer
             If node Is Nothing Then
                 Return 0
             Else
@@ -358,7 +349,7 @@ Namespace KdTree
             End If
         End Function
 
-        Private Function count(node As Node) As Integer
+        Private Function count(node As KdTreeNode(Of T)) As Integer
             If node Is Nothing Then
                 Return 0
             Else

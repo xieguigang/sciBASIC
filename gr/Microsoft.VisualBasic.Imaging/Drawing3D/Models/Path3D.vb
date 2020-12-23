@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4bb06885bf38371593e7c38072049eff, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Path3D.vb"
+﻿#Region "Microsoft.VisualBasic::429f0909b137a8cd1e9ef42c85e2bf27, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Path3D.vb"
 
     ' Author:
     ' 
@@ -115,83 +115,97 @@ Namespace Drawing3D.Models.Isometric
         End Function
 
         Public Function Translate(dx As Double, dy As Double, dz As Double) As Path3D
-            Dim ___points As Point3D() = New Point3D(Me.Points.Count - 1) {}
-            Dim ___point As Point3D
+            Dim points As Point3D() = New Point3D(Me.Points.Count - 1) {}
+            Dim pt As Point3D
 
             For i As Integer = 0 To Me.Points.Count - 1
-                ___point = Me.Points(i)
-                ___points(i) = ___point.Translate(dx, dy, dz)
+                pt = Me.Points(i)
+                points(i) = pt.Translate(dx, dy, dz)
             Next
 
-            Return New Path3D(___points)
+            Return New Path3D(points)
         End Function
 
         Public Function RotateX(origin As Point3D, angle As Double) As Path3D
-            Dim ___points As Point3D() = New Point3D(Me.Points.Count - 1) {}
-            Dim ___point As Point3D
+            Dim points As Point3D() = New Point3D(Me.Points.Count - 1) {}
+            Dim pt As Point3D
+
             For i As Integer = 0 To Me.Points.Count - 1
-                ___point = Me.Points(i)
-                ___points(i) = ___point.RotateX(origin, angle)
-            Next i
-            Return New Path3D(___points)
+                pt = Me.Points(i)
+                points(i) = pt.RotateX(origin, angle)
+            Next
+
+            Return New Path3D(points)
         End Function
 
         Public Function RotateY(origin As Point3D, angle As Double) As Path3D
-            Dim ___points As Point3D() = New Point3D(Me.Points.Count - 1) {}
-            Dim ___point As Point3D
+            Dim points As Point3D() = New Point3D(Me.Points.Count - 1) {}
+            Dim pt As Point3D
+
             For i As Integer = 0 To Me.Points.Count - 1
-                ___point = Me.Points(i)
-                ___points(i) = ___point.RotateY(origin, angle)
-            Next i
-            Return New Path3D(___points)
+                pt = Me.Points(i)
+                points(i) = pt.RotateY(origin, angle)
+            Next
+
+            Return New Path3D(points)
         End Function
 
         Public Function RotateZ(origin As Point3D, angle As Double) As Path3D
-            Dim ___points As Point3D() = New Point3D(Me.Points.Count - 1) {}
-            Dim ___point As Point3D
+            Dim points As Point3D() = New Point3D(Me.Points.Count - 1) {}
+            Dim pt As Point3D
+
             For i As Integer = 0 To Me.Points.Count - 1
-                ___point = Me.Points(i)
-                ___points(i) = ___point.RotateZ(origin, angle)
-            Next i
-            Return New Path3D(___points)
+                pt = Me.Points(i)
+                points(i) = pt.RotateZ(origin, angle)
+            Next
+
+            Return New Path3D(points)
         End Function
 
         Public Function Scale(origin As Point3D, dx As Double, dy As Double, dz As Double) As Path3D
-            Dim ___points As Point3D() = New Point3D(Me.Points.Count - 1) {}
-            Dim ___point As Point3D
+            Dim points As Point3D() = New Point3D(Me.Points.Count - 1) {}
+            Dim pt As Point3D
+
             For i As Integer = 0 To Me.Points.Count - 1
-                ___point = Me.Points(i)
-                ___points(i) = ___point.Scale(origin, dx, dy, dz)
-            Next i
-            Return New Path3D(___points)
+                pt = Me.Points(i)
+                points(i) = pt.Scale(origin, dx, dy, dz)
+            Next
+
+            Return New Path3D(points)
         End Function
 
         Public Function Scale(origin As Point3D, dx As Double, dy As Double) As Path3D
-            Dim ___points As Point3D() = New Point3D(Me.Points.Count - 1) {}
-            Dim ___point As Point3D
+            Dim points As Point3D() = New Point3D(Me.Points.Count - 1) {}
+            Dim pt As Point3D
+
             For i As Integer = 0 To Me.Points.Count - 1
-                ___point = Me.Points(i)
-                ___points(i) = ___point.Scale(origin, dx, dy)
-            Next i
-            Return New Path3D(___points)
+                pt = Me.Points(i)
+                points(i) = pt.Scale(origin, dx, dy)
+            Next
+
+            Return New Path3D(points)
         End Function
 
         Public Function Scale(origin As Point3D, dx As Double) As Path3D
-            Dim ___points As Point3D() = New Point3D(Me.Points.Count - 1) {}
-            Dim ___point As Point3D
+            Dim points As Point3D() = New Point3D(Me.Points.Count - 1) {}
+            Dim pt As Point3D
+
             For i As Integer = 0 To Me.Points.Count - 1
-                ___point = Me.Points(i)
-                ___points(i) = ___point.Scale(origin, dx)
-            Next i
-            Return New Path3D(___points)
+                pt = Me.Points(i)
+                points(i) = pt.Scale(origin, dx)
+            Next
+
+            Return New Path3D(points)
         End Function
 
         Public Function TranslatePoints(dx As Double, dy As Double, dz As Double) As Path3D
-            Dim ___point As Point3D
+            Dim pt As Point3D
+
             For i As Integer = 0 To Me.Points.Count - 1
-                ___point = Me.Points(i)
-                Points(i) = ___point.Translate(dx, dy, dz)
-            Next i
+                pt = Me.Points(i)
+                Points(i) = pt.Translate(dx, dy, dz)
+            Next
+
             Return Me
         End Function
 

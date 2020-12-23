@@ -6,7 +6,7 @@ function cloneJSON(json) {
     return JSON.parse(JSON.stringify(json));
 }
 
-function cloneEdge(json) {
+function cloneEdge(json: PosItem[]) {
     var i, l = json.length, ans = Array(json.length);
     for (i = 0; i < l; ++i) {
         ans[i] = {
@@ -19,7 +19,7 @@ function cloneEdge(json) {
 }
 
 //Extend generic Graph class with bundle methods and rendering options
-function expandEdgesHelper(node: Node, array: any[], collect: any[]) {
+function expandEdgesHelper(node: Node, array: number[][], collect: number[][][]) {
     var coords = node.data.coords, i, l, p, ps;
 
     if (!array.length) {
@@ -65,8 +65,8 @@ interface PosItem {
 }
 
 //Extend generic Graph class with bundle methods and rendering options
-function expandEdgesRichHelper(node: Node, array: any[], collect: any[]) {
-    var coords = node.data.coords, i, l, p, ps, a, posItem;
+function expandEdgesRichHelper(node: Node, array: any[], collect: PosItem[][]) {
+    var coords = node.data.coords, i, l, p, ps: Node[], a: PosItem[], posItem: PosItem;
     ps = node.data.parents;
     if (ps) {
         for (i = 0, l = ps.length; i < l; ++i) {

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0df0be03512a14520799e88652c775f4, gr\Microsoft.VisualBasic.Imaging\SVG\CSS\Filter.vb"
+﻿#Region "Microsoft.VisualBasic::11334432aa609cced95db91f0007c779, gr\Microsoft.VisualBasic.Imaging\SVG\CSS\Filter\Filter.vb"
 
     ' Author:
     ' 
@@ -35,30 +35,6 @@
     ' 
     '         Properties: Composites, Floods, GaussianBlurs, height, Merges
     '                     Morphologys, Offsets, width, x, y
-    ' 
-    '     Class feMorphology
-    ' 
-    '         Properties: [in], [operator], radius, result
-    ' 
-    '     Class feGaussianBlur
-    ' 
-    '         Properties: [in], result, stdDeviation
-    ' 
-    '     Class feFlood
-    ' 
-    '         Properties: floodColor, result
-    ' 
-    '     Class feComposite
-    ' 
-    '         Properties: [in], [operator], in2, result
-    ' 
-    '     Class feOffset
-    ' 
-    '         Properties: dx, dy
-    ' 
-    '     Class feMergeNode
-    ' 
-    '         Properties: [in]
     ' 
     ' 
     ' /********************************************************************************/
@@ -97,39 +73,5 @@ Namespace SVG.CSS
         <XmlAttribute> Public Property width As String
         <XmlAttribute> Public Property height As String
 
-    End Class
-
-    Public Class feMorphology
-        <XmlAttribute> Public Property [operator] As String
-        <XmlAttribute> Public Property radius As String
-        <XmlAttribute> Public Property [in] As String
-        <XmlAttribute> Public Property result As String
-    End Class
-
-    Public Class feGaussianBlur
-        <XmlAttribute> Public Property [in] As String
-        <XmlAttribute> Public Property stdDeviation As String
-        <XmlAttribute> Public Property result As String
-    End Class
-
-    Public Class feFlood
-        <XmlAttribute("flood-color")> Public Property floodColor As String
-        <XmlAttribute> Public Property result As String
-    End Class
-
-    Public Class feComposite
-        <XmlAttribute> Public Property [in] As String
-        <XmlAttribute> Public Property in2 As String
-        <XmlAttribute> Public Property [operator] As String
-        <XmlAttribute> Public Property result As String
-    End Class
-
-    Public Class feOffset
-        <XmlAttribute> Public Property dx As String
-        <XmlAttribute> Public Property dy As String
-    End Class
-
-    Public Class feMergeNode
-        <XmlAttribute> Public Property [in] As String
     End Class
 End Namespace

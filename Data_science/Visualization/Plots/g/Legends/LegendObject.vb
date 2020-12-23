@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::591fb035bc3894a0001c247c9a1de53a, Data_science\Visualization\Plots\g\Legends\Legend.vb"
+﻿#Region "Microsoft.VisualBasic::04f5499fbd770927cf864ce1c2c62f55, Data_science\Visualization\Plots\g\Legends\LegendObject.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@
 
     ' Summaries:
 
-    '     Class Legend
+    '     Class LegendObject
     ' 
     '         Properties: color, fontstyle, style, title
     ' 

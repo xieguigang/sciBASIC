@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e9f016653d69c4386429adcdc3d38f3, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\NamedValue.vb"
+﻿#Region "Microsoft.VisualBasic::8a75c007cf1ff7e5420cb1744dbd5bdc, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\NamedValue.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: Description, IsEmpty, Name, Value, ValueType
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: FixValue, ToString
     '         Operators: (+2 Overloads) +, <>, =
     ' 

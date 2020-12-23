@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c037bf1df5dd70485c41b9d7ac0c4036, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::509d81320b78a26c1c036b207ce69cbf, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
 
     ' Author:
     ' 
@@ -167,9 +167,21 @@ Namespace LinearAlgebra
             End Get
         End Property
 
+        ''' <summary>
+        ''' normalize
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Unit As Vector
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
+                ' function $norm(a: Number[]) {
+                '    return Math.sqrt(a[0] * a[0] + a[1] * a[1]);
+                ' }
+
+                ' function $normalize(a: Number[]) {
+                '    var n = $norm(a);
+                '    return $mult(a, 1 / n);
+                ' }
                 Return Me / SumMagnitude
             End Get
         End Property

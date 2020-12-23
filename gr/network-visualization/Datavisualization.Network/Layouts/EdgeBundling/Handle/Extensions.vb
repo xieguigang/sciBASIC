@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2bd69b43c521ebf92a04606d63293e46, gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::97b732cf5e178f2995070cc053fbfb98, gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Handle\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,27 +33,17 @@
 
     '     Module Extensions
     ' 
-    '         Function: lerp
+    ' 
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Drawing
-Imports stdNum = System.Math
-
 Namespace Layouts.EdgeBundling
 
     <HideModuleName> Module Extensions
 
-        Public ReadOnly PHI As Double = (1 + stdNum.Sqrt(5)) / 2
 
-        Public Function lerp(a As PointF, b As PointF, delta As Double) As PointF
-            Return New PointF With {
-                .X = a.X * (1 - delta) + b.X * delta,
-                .Y = a.Y * (1 - delta) + b.Y * delta
-            }
-        End Function
     End Module
 End Namespace
