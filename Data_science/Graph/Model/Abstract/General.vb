@@ -49,8 +49,8 @@ Imports TV = Microsoft.VisualBasic.Data.GraphTheory.Vertex
 Public Class VertexEdge : Inherits Edge(Of TV)
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Shared Function EdgeKey(U%, V%) As String
-        Return $"{U}-{V}"
+    Public Shared Function EdgeKey(U As TV, V As TV) As String
+        Return $"[{U.ID}]{U.label} -> [{V.ID}]{V.label}"
     End Function
 End Class
 

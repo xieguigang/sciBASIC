@@ -171,6 +171,11 @@
     <WarningsAsErrors>
     </WarningsAsErrors>
     <DocumentationFile>Microsoft.VisualBasic.Data.Wave.xml</DocumentationFile>
+    <OutputPath>..\..\..\..\..\..\..\..\GCModeller\bin\</OutputPath>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|AnyCPU'">
     <WarningsAsErrors>
