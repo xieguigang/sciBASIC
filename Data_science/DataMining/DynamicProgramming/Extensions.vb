@@ -42,6 +42,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.DynamicProgramming.NeedlemanWunsch
 
+<HideModuleName>
 Public Module Extensions
 
     ''' <summary>

@@ -192,6 +192,7 @@ Namespace IO
         <Extension>
         Public Function PropertyNames(Of T)(list As IEnumerable(Of DynamicPropertyBase(Of T))) As String()
             Return list _
+                .Where(Function(a) Not a Is Nothing) _
                 .Select(Function(o) o.EnumerateKeys(False)) _
                 .IteratesALL _
                 .Distinct _

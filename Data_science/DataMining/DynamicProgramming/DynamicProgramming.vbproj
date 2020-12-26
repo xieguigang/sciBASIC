@@ -322,9 +322,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GenericSymbol.vb" />
+    <Compile Include="Generic\GenericSymbol.vb" />
     <Compile Include="Extensions.vb" />
-    <Compile Include="GenericSequence.vb" />
+    <Compile Include="Generic\GenericSequence.vb" />
     <Compile Include="NeedlemanWunsch\GNW.vb" />
     <Compile Include="NeedlemanWunsch\GlobalAlign.vb" />
     <Compile Include="NeedlemanWunsch\Workspace.vb" />
