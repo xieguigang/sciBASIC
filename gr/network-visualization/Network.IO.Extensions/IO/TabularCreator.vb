@@ -55,6 +55,48 @@ Namespace FileStream
         ''' 将<see cref="NetworkGraph"/>保存到csv文件之中
         ''' </summary>
         ''' <param name="g"></param>
+        ''' <param name="propertyNames">
+        ''' The data property names of nodes and edges.
+        ''' </param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Tabular(g As NetworkGraph,
+                                Optional propertyNames$() = Nothing,
+                                Optional is2D As Boolean = True,
+                                Optional creators As String() = Nothing,
+                                Optional title$ = Nothing,
+                                Optional description$ = Nothing,
+                                Optional keywords$() = Nothing,
+                                Optional links$() = Nothing,
+                                Optional meta As Dictionary(Of String, String) = Nothing) As NetworkTables
+
+            Dim data As New MetaData With {
+                .create_time = Now,
+                .creators = creators,
+                .description = description,
+                .keywords = keywords,
+                .links = links,
+                .title = title,
+                .additionals = meta
+            }
+
+            Return g.Tabular(propertyNames, is2D, data)
+        End Function
+
+        ''' <summary>
+        ''' 将<see cref="NetworkGraph"/>保存到csv文件之中
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Tabular(g As NetworkGraph) As NetworkTables
+            Return g.Tabular(meta:=New MetaData)
+        End Function
+
+        ''' <summary>
+        ''' 将<see cref="NetworkGraph"/>保存到csv文件之中
+        ''' </summary>
+        ''' <param name="g"></param>
         ''' <param name="properties">
         ''' The data property names of nodes and edges.
         ''' </param>
@@ -63,12 +105,7 @@ Namespace FileStream
         Public Function Tabular(g As NetworkGraph,
                                 Optional properties$() = Nothing,
                                 Optional is2D As Boolean = True,
-                                Optional creators As String() = Nothing,
-                                Optional title$ = Nothing,
-                                Optional description$ = Nothing,
-                                Optional keywords$() = Nothing,
-                                Optional links$() = Nothing,
-                                Optional meta As Dictionary(Of String, String) = Nothing) As NetworkTables
+                                Optional meta As MetaData = Nothing) As NetworkTables
 
             Dim nodes As Node() = g.createNodesTable(properties, is2D).ToArray
             Dim edges As New List(Of NetworkEdge)
@@ -97,15 +134,7 @@ Namespace FileStream
             Return New NetworkTables With {
                 .edges = edges,
                 .nodes = nodes,
-                .meta = New MetaData With {
-                    .create_time = Now,
-                    .creators = creators,
-                    .description = description,
-                    .keywords = keywords,
-                    .links = links,
-                    .title = title,
-                    .additionals = meta
-                }
+                .meta = If(meta, New MetaData)
             }
         End Function
 

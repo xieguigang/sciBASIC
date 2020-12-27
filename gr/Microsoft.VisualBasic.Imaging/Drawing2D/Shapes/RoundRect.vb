@@ -66,13 +66,13 @@ Namespace Drawing2D.Shapes
         ''' </param>
         ''' <param name="border"></param>
         Public Shared Sub Draw(ByRef g As IGraphics,
-                               topLeft As Point,
+                               topLeft As PointF,
                                size As SizeF,
                                radius%,
                                Optional br As Brush = Nothing,
                                Optional border As Stroke = Nothing)
 
-            Dim rect As New Rectangle(topLeft, size.ToSize)
+            Dim rect As New RectangleF(topLeft, size)
             Dim path As GraphicsPath = GetRoundedRectPath(rect, radius)
 
             If Not br Is Nothing Then
@@ -83,16 +83,16 @@ Namespace Drawing2D.Shapes
             End If
         End Sub
 
-        Public Shared Function GetRoundedRectPath(rect As Rectangle, radius%) As GraphicsPath
-            Dim roundRect As Rectangle
+        Public Shared Function GetRoundedRectPath(rect As RectangleF, radius%) As GraphicsPath
+            Dim roundRect As RectangleF
             Dim path As New GraphicsPath
 
             With rect
 
                 .Offset(-1, -1)
-                roundRect = New Rectangle With {
+                roundRect = New RectangleF With {
                     .Location = rect.Location,
-                    .Size = New Size(radius - 1, radius - 1)
+                    .Size = New SizeF(radius - 1, radius - 1)
                 }
 
                 path.AddArc(roundRect, 180, 90)     ' 左上角

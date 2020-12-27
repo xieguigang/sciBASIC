@@ -251,7 +251,7 @@ Namespace Graphic.Legend
         ''' <returns></returns>
         <Extension>
         Public Function DrawLegend(ByRef g As IGraphics,
-                                   pos As Point,
+                                   pos As PointF,
                                    canvas As SizeF,
                                    l As LegendObject,
                                    Optional border As Stroke = Nothing,
@@ -312,7 +312,7 @@ Namespace Graphic.Legend
         ''' <param name="radius">这个是用于圆角矩形的图例图形的绘制参数</param>
         <Extension>
         Public Sub DrawLegends(ByRef g As IGraphics,
-                               topLeft As Point,
+                               topLeft As PointF,
                                legends As IEnumerable(Of LegendObject),
                                Optional gSize$ = "120,45",
                                Optional fillBg$ = Nothing,
@@ -323,14 +323,14 @@ Namespace Graphic.Legend
                                Optional radius% = 5,
                                Optional titleBrush As Brush = Nothing)
 
-            Dim ZERO As Point = topLeft
+            Dim ZERO As PointF = topLeft
             Dim size As SizeF
             Dim legendList As LegendObject() = legends.ToArray
             Dim graphicSize As SizeF = gSize.FloatSizeParser
 
             If Not regionBorder Is Nothing Then
                 Dim maxTitleSize As SizeF = legendList.MaxLegendSize(g)
-                Dim rect As Rectangle
+                Dim rect As RectangleF
 
                 With graphicSize
 
@@ -348,7 +348,7 @@ Namespace Graphic.Legend
                     If roundRectRegion Then
                         Call RoundRect.Draw(g, ZERO, size, 15, background, regionBorder)
                     Else
-                        rect = New Rectangle(ZERO, size.ToSize)
+                        rect = New RectangleF(ZERO, size.ToSize)
 
                         If Not background Is Nothing Then
                             Call g.FillRectangle(background, rect)
