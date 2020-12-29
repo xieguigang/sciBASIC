@@ -1,10 +1,10 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 
-Public Class GenericSequence(Of T)
+Public Class GenericSequence(Of T) : Implements IEnumerable(Of T)
 
     Dim m_seq As T()
-    Dim m_equals As Func(Of T, T, Boolean)
+    Dim m_symbol As GenericSymbol(Of T)
 
     Default Public ReadOnly Property Item(i As Integer) As T
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -20,9 +20,9 @@ Public Class GenericSequence(Of T)
         End Get
     End Property
 
-    Sub New(seq As IEnumerable(Of T), equals As Func(Of T, T, Boolean))
+    Sub New(seq As IEnumerable(Of T), symbol As GenericSymbol(Of T))
         m_seq = seq.ToArray
-        m_equals = equals
+        m_symbol = symbol
     End Sub
 
     Private Sub New()
@@ -39,7 +39,7 @@ Public Class GenericSequence(Of T)
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Operator &(a As GenericSequence(Of T), b As GenericSequence(Of T)) As GenericSequence(Of T)
-        Return New GenericSequence(Of T)(a.m_seq.JoinIterates(b.m_seq), a.m_equals)
+        Return New GenericSequence(Of T)(a.m_seq.JoinIterates(b.m_seq), a.m_symbol)
     End Operator
 
     Public Shared Operator =(a As GenericSequence(Of T), b As GenericSequence(Of T)) As Boolean
@@ -49,7 +49,7 @@ Public Class GenericSequence(Of T)
             Return False
         Else
             For i As Integer = 0 To a.length - 1
-                If Not a.m_equals(a.m_seq(i), b.m_seq(i)) Then
+                If Not a.m_symbol.m_equals(a.m_seq(i), b.m_seq(i)) Then
                     Return False
                 End If
             Next
@@ -62,4 +62,14 @@ Public Class GenericSequence(Of T)
     Public Shared Operator <>(a As GenericSequence(Of T), b As GenericSequence(Of T)) As Boolean
         Return Not a = b
     End Operator
+
+    Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
+        For Each x As T In m_seq
+            Yield x
+        Next
+    End Function
+
+    Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+        Yield GetEnumerator()
+    End Function
 End Class

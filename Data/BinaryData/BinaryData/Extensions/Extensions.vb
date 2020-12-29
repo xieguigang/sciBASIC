@@ -62,6 +62,11 @@ End Interface
 
 <HideModuleName> Public Module Extensions
 
+    <Extension>
+    Public Function VerifyMagicSignature(block As IMagicBlock, buffer As BinaryDataReader) As Boolean
+        Return block.VerifyMagicSignature(buffer.ReadString(block.magic.Length))
+    End Function
+
     ''' <summary>
     ''' 使用整形数存储的验证数据
     ''' </summary>

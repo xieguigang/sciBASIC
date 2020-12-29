@@ -736,13 +736,14 @@
     <Compile Include="BitSet.vb" />
     <Compile Include="Storage\Reflection.vb" />
     <Compile Include="Storage\StringWriter.vb" />
-    <Compile Include="Stream\BinaryDataFormats.vb" />
+    <Compile Include="Stream\BinaryDateTimeFormat.vb" />
     <Compile Include="Stream\BinaryDataReader.vb" />
     <Compile Include="Stream\BinaryDataWriter.vb" />
     <Compile Include="Stream\ByteOrder.vb" />
     <Compile Include="Extensions\Extensions.vb" />
     <Compile Include="Extensions\ReaderProvider.vb" />
     <Compile Include="Stream\ByteOrderHelper.vb" />
+    <Compile Include="Stream\BinaryStringFormat.vb" />
     <Compile Include="Stream\Offset.vb" />
     <Compile Include="Properties\AssemblyInfo.vb" />
     <Compile Include="Stream\SeekTask.vb" />

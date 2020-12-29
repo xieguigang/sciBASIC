@@ -1,4 +1,6 @@
-﻿Public Class GenericSymbol(Of T)
+﻿Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming
+
+Public Class GenericSymbol(Of T)
 
     Friend ReadOnly m_equals As Func(Of T, T, Boolean)
     Friend ReadOnly m_similarity As Func(Of T, T, Double)
@@ -16,6 +18,10 @@
             m_empty = empty
         End If
     End Sub
+
+    Public Function getEquals() As IEquals(Of T)
+        Return Function(x, y) m_equals(x, y)
+    End Function
 
     Public Function getEmpty() As T
         Return m_empty()

@@ -53,8 +53,16 @@ Namespace Math
     ''' </summary>
     Public Class NumberEqualityComparer : Implements IEqualityComparer(Of Double)
 
+        ''' <summary>
+        ''' the threshold value
+        ''' </summary>
+        ''' <returns></returns>
         Public Property DeltaTolerance As Double
 
+        ''' <summary>
+        ''' the threshold value
+        ''' </summary>
+        ''' <param name="tolerance"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(tolerance As Double)
             DeltaTolerance = tolerance

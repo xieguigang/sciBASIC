@@ -59,18 +59,19 @@ Namespace NeedlemanWunsch
         Dim matrix%()() = Nothing
         Dim tracebackMatrix%()() = Nothing
 
-        ReadOnly __empty As T
+        ReadOnly symbol As GenericSymbol(Of T)
 
-        Sub New(q As IEnumerable(Of T), s As IEnumerable(Of T), score As ScoreMatrix(Of T), empty As T, toChar As Func(Of T, Char))
-            Call Me.New(score, empty, toChar)
+        Sub New(q As IEnumerable(Of T), s As IEnumerable(Of T), score As ScoreMatrix(Of T), symbol As GenericSymbol(Of T))
+            Call Me.New(score, symbol)
 
             Sequence1 = q.ToArray
             Sequence2 = s.ToArray
         End Sub
 
-        Sub New(score As ScoreMatrix(Of T), empty As T, toChar As Func(Of T, Char))
-            Call MyBase.New(score, toChar)
-            __empty = empty
+        Sub New(score As ScoreMatrix(Of T), symbol As GenericSymbol(Of T))
+            Call MyBase.New(score, symbol.m_viewChar)
+
+            Me.symbol = symbol
         End Sub
 
         ''' <summary>
@@ -106,7 +107,7 @@ Namespace NeedlemanWunsch
                     Me.AddAligned1(aligned1)
                     Me.AddAligned2(aligned2)
                 Case 1 ' upper cell
-                    s1.Push(__empty)
+                    s1.Push(symbol.getEmpty)
                     s2.Push(Me.Sequence2(i - 2))
                     Me.traceback(s1, s2, i - 1, j)
                 Case 2 ' upperLeft cell
@@ -114,23 +115,23 @@ Namespace NeedlemanWunsch
                     s2.Push(Me.Sequence2(i - 2))
                     Me.traceback(s1, s2, i - 1, j - 1)
                 Case 3 ' upper + upperLeft cell
-                    s1.Push(__empty)
+                    s1.Push(symbol.getEmpty)
                     s2.Push(Me.Sequence2(i - 2))
                     Me.traceback(s1, s2, i - 1, j)
                 Case 4 'left cell
                     s1.Push(Me.Sequence1(j - 2))
-                    s2.Push(__empty)
+                    s2.Push(symbol.getEmpty)
                     Me.traceback(s1, s2, i, j - 1)
                 Case 5 ' left + upper cell
                     s1.Push(Me.Sequence1(j - 2))
-                    s2.Push(__empty)
+                    s2.Push(symbol.getEmpty)
                     Me.traceback(s1, s2, i, j - 1)
                 Case 6 ' left + upperLeft cell
                     s1.Push(Me.Sequence1(j - 2))
-                    s2.Push(__empty)
+                    s2.Push(symbol.getEmpty)
                     Me.traceback(s1, s2, i, j - 1)
                 Case 7 ' all 3 cells
-                    s1.Push(__empty)
+                    s1.Push(symbol.getEmpty)
                     s2.Push(Me.Sequence2(i - 2))
                     Me.traceback(s1, s2, i - 1, j)
             End Select

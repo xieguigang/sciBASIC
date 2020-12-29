@@ -48,11 +48,13 @@ Imports Microsoft.VisualBasic.Text
 
 Namespace NeedlemanWunsch
 
-    Public Structure GlobalAlign(Of T)
+    Public Class GlobalAlign(Of T)
 
-        Dim Score#
-        Dim query As T()
-        Dim subject As T()
+        Public Property score As Double
+        Public Property query As T()
+        Public Property subject As T()
+
+        Private ReadOnly toChar As Func(Of T, Char)
 
         Public ReadOnly Property Length As Integer
             Get
@@ -64,6 +66,10 @@ Namespace NeedlemanWunsch
             End Get
         End Property
 
+        Sub New(toChar As Func(Of T, Char))
+            Me.toChar = toChar
+        End Sub
+
         Public Function Identities(scoreMatrix As ScoreMatrix(Of T)) As Double
             Dim vq As New List(Of Double)
             Dim vs As New List(Of Double)
@@ -71,7 +77,7 @@ Namespace NeedlemanWunsch
             For i As Integer = 0 To Length - 1
                 Call vq.Add(1)
 
-                If scoreMatrix.__equals(query(i), subject(i)) Then
+                If scoreMatrix.m_equals(query(i), subject(i)) Then
                     Call vs.Add(1)
                 Else
                     Call vs.Add(0)
@@ -106,7 +112,7 @@ Namespace NeedlemanWunsch
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return ToString(Function(x) x.ToString.First)
+            Return ToString(toChar)
         End Function
-    End Structure
+    End Class
 End Namespace

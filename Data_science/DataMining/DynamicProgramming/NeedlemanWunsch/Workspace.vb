@@ -68,7 +68,7 @@ Namespace NeedlemanWunsch
         Dim aligned1 As New List(Of T())
         Dim aligned2 As New List(Of T())
 
-        Protected ReadOnly __toChar As Func(Of T, Char)
+        Protected Friend ReadOnly m_toChar As Func(Of T, Char)
 
         ''' <summary>
         ''' get numberOfAlignments </summary>
@@ -83,14 +83,14 @@ Namespace NeedlemanWunsch
         Public ReadOnly Property Query As String
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return New String(Sequence1.Select(Of Char)(__toChar).ToArray)
+                Return New String(Sequence1.Select(Of Char)(m_toChar).ToArray)
             End Get
         End Property
 
         Public ReadOnly Property Subject As String
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return New String(Sequence2.Select(Of Char)(__toChar).ToArray)
+                Return New String(Sequence2.Select(Of Char)(m_toChar).ToArray)
             End Get
         End Property
 
@@ -106,6 +106,16 @@ Namespace NeedlemanWunsch
         Protected Sequence2 As T()
 
         Protected scoreMatrix As ScoreMatrix(Of T)
+
+        ''' <summary>
+        ''' get computed score </summary>
+        ''' <returns> score </returns>
+        Public Property Score As Integer
+
+        Sub New(score As ScoreMatrix(Of T), toChar As Func(Of T, Char))
+            m_toChar = toChar
+            scoreMatrix = score
+        End Sub
 
         ''' <summary>
         ''' get aligned version of sequence 1 </summary>
@@ -135,16 +145,6 @@ Namespace NeedlemanWunsch
         ''' <param name="align"> </param>
         Protected Friend Sub AddAligned2(align As T())
             Me.aligned2.Add(align)
-        End Sub
-
-        ''' <summary>
-        ''' get computed score </summary>
-        ''' <returns> score </returns>
-        Public Property Score As Integer
-
-        Sub New(score As ScoreMatrix(Of T), toChar As Func(Of T, Char))
-            __toChar = toChar
-            scoreMatrix = score
         End Sub
     End Class
 End Namespace

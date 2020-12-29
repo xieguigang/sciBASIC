@@ -54,8 +54,8 @@ Public Module Extensions
     <Extension>
     Public Iterator Function PopulateAlignments(Of T)(nw As Workspace(Of T)) As IEnumerable(Of GlobalAlign(Of T))
         For i As Integer = 0 To nw.NumberOfAlignments - 1
-            Yield New GlobalAlign(Of T) With {
-                .Score = nw.Score,
+            Yield New GlobalAlign(Of T)(nw.m_toChar) With {
+                .score = nw.Score,
                 .query = nw.getAligned1(i),
                 .subject = nw.getAligned2(i)
             }

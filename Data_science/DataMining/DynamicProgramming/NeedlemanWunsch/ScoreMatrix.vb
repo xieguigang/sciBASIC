@@ -20,10 +20,14 @@ Namespace NeedlemanWunsch
         ''' <returns> mismatch score </returns>
         Public Property MismatchScore As Integer = -1
 
-        Friend ReadOnly __equals As IEquals(Of T)
+        Friend ReadOnly m_equals As IEquals(Of T)
 
         Sub New(match As IEquals(Of T))
-            __equals = match
+            m_equals = match
+        End Sub
+
+        Sub New(symbol As GenericSymbol(Of T))
+            Call Me.New(symbol.getEquals)
         End Sub
 
         ''' <summary>
@@ -32,7 +36,7 @@ Namespace NeedlemanWunsch
         ''' else return mismatch score
         ''' </summary>
         Public Overridable Function getMatchScore(a As T, b As T) As Integer
-            If __equals(a, b) Then
+            If m_equals(a, b) Then
                 Return MatchScore
             Else
                 Return MismatchScore
