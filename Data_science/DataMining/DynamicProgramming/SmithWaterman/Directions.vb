@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0959fa9c3b208ff19cb3c79b5ffb3b6d, vs_solutions\dev\VisualStudio\sourceMap\sourceMap.vb"
+﻿#Region "Microsoft.VisualBasic::bf5738edfd5bc6c384d96883eee3c238, Data_science\DataMining\DynamicProgramming\SmithWaterman\Directions.vb"
 
     ' Author:
     ' 
@@ -31,34 +31,40 @@
 
     ' Summaries:
 
-    '     Class sourceMap
+    '     Class Directions
     ' 
-    '         Properties: file, mappings, names, sourceRoot, sources
-    '                     version
+    ' 
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Namespace SourceMap
+Namespace SmithWaterman
 
-    Public Class sourceMap
+    ''' <summary>
+    ''' Constants of directions.
+    ''' Multiple directions are stored by bits.
+    ''' The zero direction is the starting point.
+    ''' </summary>
+    Public Class Directions
 
-        Public Property version As Integer
-        Public Property file As String
-        Public Property sourceRoot As String
         ''' <summary>
-        ''' the source file path
+        ''' 0001
         ''' </summary>
-        ''' <returns></returns>
-        Public Property sources As String()
+        Public Const DR_LEFT As Integer = 1
         ''' <summary>
-        ''' the symbol names
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property names As String()
-        Public Property mappings As String
+        ''' 0010
+        ''' </summary>        
+        Public Const DR_UP As Integer = 2
+        ''' <summary>
+        ''' 0100
+        ''' </summary>        
+        Public Const DR_DIAG As Integer = 4
+        ''' <summary>
+        ''' 1000
+        ''' </summary>        
+        Public Const DR_ZERO As Integer = 8
 
     End Class
 End Namespace

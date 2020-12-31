@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::40f89b1c5e74644d25e450d8183517cf, Data_science\Mathematica\Math\Math\Quantile\QuantileEstimationGK.vb"
+﻿#Region "Microsoft.VisualBasic::56149882e60e5453e138a76dae222f8a, Data_science\Mathematica\Math\Math\Quantile\QuantileEstimationGK.vb"
 
     ' Author:
     ' 
@@ -31,10 +31,6 @@
 
     ' Summaries:
 
-    '     Interface QuantileQuery
-    ' 
-    '         Function: Query
-    ' 
     '     Class QuantileEstimationGK
     ' 
     '         Constructor: (+1 Overloads) Sub New
@@ -68,10 +64,6 @@ Imports stdNum = System.Math
 '
 
 Namespace Quantile
-
-    Public Interface QuantileQuery
-        Function Query(quantile#) As Double
-    End Interface
 
     ''' <summary>
     ''' Implementation of the Greenwald and Khanna algorithm for streaming

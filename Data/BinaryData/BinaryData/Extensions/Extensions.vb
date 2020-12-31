@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::309aaec301ec044722744c5785c1241f, Data\BinaryData\BinaryData\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::967943e7896ddd320b1de080ee2ee575, Data\BinaryData\BinaryData\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     ' Module Extensions
     ' 
-    '     Function: OpenBinaryReader, ReadAsDoubleVector, ReadAsInt64Vector, (+2 Overloads) VerifyMagicSignature
+    '     Function: OpenBinaryReader, ReadAsDoubleVector, ReadAsInt64Vector, (+3 Overloads) VerifyMagicSignature
     ' 
     '     Sub: WriteByte
     ' 

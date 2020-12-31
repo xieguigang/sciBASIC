@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ecdfebe5ed97ac2e69cc4512e9b9f7ec, Data\BinaryData\BinaryData\Stream\BinaryDataFormats.vb"
+﻿#Region "Microsoft.VisualBasic::41081eac9d8b2576f3b6f8cc89c82140, Data\BinaryData\BinaryData\Stream\BinaryDateTimeFormat.vb"
 
     ' Author:
     ' 
@@ -39,15 +39,6 @@
     ' 
     ' 
     ' 
-    ' Enum BinaryStringFormat
-    ' 
-    '     	ByteLengthPrefix, 	WordLengthPrefix, DwordLengthPrefix, NoPrefixOrTermination, UInt32LengthPrefix
-    '     ZeroTerminated
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
     ' /********************************************************************************/
 
 #End Region
@@ -66,4 +57,3 @@ Public Enum BinaryDateTimeFormat
 	''' </summary>
 	NetTicks
 End Enum
-

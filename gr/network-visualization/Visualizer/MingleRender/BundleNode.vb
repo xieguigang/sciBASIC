@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::963b10f38dfe389cdf44035a8beac54e, gr\network-visualization\Visualizer\MingleRender\BundleNode.vb"
+﻿#Region "Microsoft.VisualBasic::c2be6c6811f4f9ecdd124cd61ef25f85, gr\network-visualization\Visualizer\MingleRender\BundleNode.vb"
 
     ' Author:
     ' 
@@ -132,4 +132,3 @@ Public Class BundleNode
         Return ans
     End Function
 End Class
-

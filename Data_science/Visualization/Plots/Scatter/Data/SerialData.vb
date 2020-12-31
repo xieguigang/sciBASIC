@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1bc552a53425624a6d0b8820a9a97a9, Data_science\Visualization\Plots\Scatter\Data\SerialData.vb"
+﻿#Region "Microsoft.VisualBasic::683f1c931f9c8de5a08320d3a88a354b, Data_science\Visualization\Plots\Scatter\Data\SerialData.vb"
 
     ' Author:
     ' 
@@ -137,4 +137,3 @@ Public Class SerialData : Implements INamedValue
         Yield GetEnumerator()
     End Function
 End Class
-

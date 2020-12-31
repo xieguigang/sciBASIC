@@ -361,6 +361,7 @@
     <Compile Include="NeedlemanWunsch\GNW.vb" />
     <Compile Include="NeedlemanWunsch\GlobalAlign.vb" />
     <Compile Include="NeedlemanWunsch\Workspace.vb" />
+    <Compile Include="SmithWaterman\Directions.vb" />
     <Compile Include="SmithWaterman\GSW.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -378,6 +379,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="SmithWaterman\Match.vb" />
+    <Compile Include="SmithWaterman\LocalHSPMatch.vb" />
+    <Compile Include="SmithWaterman\SimpleChaining.vb" />
+    <Compile Include="SmithWaterman\Workspace.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

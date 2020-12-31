@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0959fa9c3b208ff19cb3c79b5ffb3b6d, vs_solutions\dev\VisualStudio\sourceMap\sourceMap.vb"
+﻿#Region "Microsoft.VisualBasic::8b14e9c501370a5bb231d20dbd4fcfa8, Data_science\Mathematica\Math\Math\Quantile\QuartileLevels.vb"
 
     ' Author:
     ' 
@@ -31,34 +31,23 @@
 
     ' Summaries:
 
-    '     Class sourceMap
+    '     Enum QuartileLevels
     ' 
-    '         Properties: file, mappings, names, sourceRoot, sources
-    '                     version
+    ' 
+    '  
+    ' 
+    ' 
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Namespace SourceMap
+Namespace Quantile
 
-    Public Class sourceMap
-
-        Public Property version As Integer
-        Public Property file As String
-        Public Property sourceRoot As String
-        ''' <summary>
-        ''' the source file path
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property sources As String()
-        ''' <summary>
-        ''' the symbol names
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property names As String()
-        Public Property mappings As String
-
-    End Class
+    Public Enum QuartileLevels As Integer
+        Q1 = 1
+        Q2 = 2
+        Q3 = 3
+    End Enum
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0bbf7cb166a7de8b369d54ee8a3958c0, Data_science\Graph\Network\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::9378ca65aab6c76ab728b24a157149f3, Data_science\Graph\Network\Extensions.vb"
 
     ' Author:
     ' 
@@ -89,65 +89,12 @@ Namespace Network
         ''' <param name="network"></param>
         ''' <returns></returns>
         <Extension>
-        Public Iterator Function IteratesSubNetworks(Of Node As {New, Network.Node}, U As {New, Network.Edge(Of Node)}, Graph As {New, NetworkGraph(Of Node, U)})(network As NetworkGraph(Of Node, U), Optional singleNodeAsGraph As Boolean = False) As IEnumerable(Of Graph)
-            Dim edges As List(Of U) = network.edges.Values.AsList
-            Dim popFirstEdge = Function(n As Node) As U
-                                   Return edges _
-                                      .Where(Function(e) e.U Is n OrElse e.V Is n) _
-                                      .FirstOrDefault
-                               End Function
-            Dim populatedNodes As New List(Of Node)
+        Public Function IteratesSubNetworks(Of Node As {New, Network.Node},
+                                               U As {New, Edge(Of Node)},
+                                               Graph As {New, NetworkGraph(Of Node, U)}
+                                            )(network As NetworkGraph(Of Node, U), Optional singleNodeAsGraph As Boolean = False) As Graph()
 
-            Do While edges > 0
-                Dim subnetwork As New Graph
-                Dim edge As U = edges.First
-                Dim list As New List(Of Node)
-
-                Call list.Add(edge.U)
-                Call list.Add(edge.V)
-
-                Do While list > 0
-                    ' U和V是由edge带进来的，可能会产生重复
-                    subnetwork.AddVertex(edge.U)
-                    subnetwork.AddVertex(edge.V)
-                    subnetwork.AddEdge(edge.U, edge.V)
-                    populatedNodes.Add(edge.U)
-                    populatedNodes.Add(edge.V)
-                    edges.Remove(edge)
-
-                    If -1 = list.IndexOf(edge.U) Then
-                        Call list.Add(edge.U)
-                    End If
-                    If -1 = list.IndexOf(edge.V) Then
-                        Call list.Add(edge.V)
-                    End If
-
-                    edge = Nothing
-
-                    Do While edge Is Nothing AndAlso list > 0
-                        edge = popFirstEdge(list.First)
-
-                        If edge Is Nothing Then
-                            ' 当前的这个节点已经没有相连的边了，移除这个节点
-                            Call list.RemoveAt(Scan0)
-                        End If
-                    Loop
-                Loop
-
-                Yield subnetwork
-            Loop
-
-            If singleNodeAsGraph Then
-                Dim removedIndex As Index(Of Node) = populatedNodes.Distinct.Indexing
-                Dim [single] As New Graph
-
-                For Each v As Node In network.vertex.Where(Function(n) removedIndex(n) = -1)
-                    [single] = New Graph
-                    [single].AddVertex(v)
-
-                    Yield [single]
-                Next
-            End If
+            Return New SubNetworkComponents(Of Node, U, Graph)(network, singleNodeAsGraph).ToArray
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

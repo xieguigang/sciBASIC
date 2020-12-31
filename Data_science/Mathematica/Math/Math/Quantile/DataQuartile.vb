@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d238ec20f267286831f51745634a07f3, Data_science\Mathematica\Math\Math\Quantile\DataQuartile.vb"
+﻿#Region "Microsoft.VisualBasic::67431db459db2fdea34833ad4ad8b43c, Data_science\Mathematica\Math\Math\Quantile\DataQuartile.vb"
 
     ' Author:
     ' 
@@ -38,13 +38,6 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: Outlier, ToString
-    ' 
-    '     Enum QuartileLevels
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
     ' 
     ' 
     ' /********************************************************************************/
@@ -111,10 +104,4 @@ Namespace Quantile
             Return $"{range.ToString} -> |{Q1}, {Q2}, {Q3}|"
         End Function
     End Structure
-
-    Public Enum QuartileLevels As Integer
-        Q1 = 1
-        Q2 = 2
-        Q3 = 3
-    End Enum
 End Namespace

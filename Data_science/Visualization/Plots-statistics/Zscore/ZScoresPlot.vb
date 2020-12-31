@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::827f8326fed0c1dc25516afcd03b74ff, Data_science\Visualization\Plots-statistics\Zscore\ZScoresPlot.vb"
+﻿#Region "Microsoft.VisualBasic::17c85c08cf998d30caa37cb006302524, Data_science\Visualization\Plots-statistics\Zscore\ZScoresPlot.vb"
 
     ' Author:
     ' 
@@ -55,4 +55,3 @@ Public Class ZScoresPlot : Inherits Plot
         Throw New NotImplementedException()
     End Sub
 End Class
-

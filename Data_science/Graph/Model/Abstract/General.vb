@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0842b37aea8595c7331f1932da3e0a44, Data_science\Graph\Model\Abstract\General.vb"
+﻿#Region "Microsoft.VisualBasic::cbea04a9a7debf0f487187f198e2a692, Data_science\Graph\Model\Abstract\General.vb"
 
     ' Author:
     ' 

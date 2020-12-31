@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af152b8f6b25cee8846c3568cc8b057b, gr\network-visualization\Visualizer\MingleRender\RenderOptions.vb"
+﻿#Region "Microsoft.VisualBasic::145e12e726b63d26ebcce19e19f4fa6a, gr\network-visualization\Visualizer\MingleRender\RenderOptions.vb"
 
     ' Author:
     ' 
@@ -50,4 +50,3 @@ Public Class RenderOptions
     Public Property scale As Double
 
 End Class
-

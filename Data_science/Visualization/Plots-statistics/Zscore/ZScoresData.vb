@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07486f3d8a92114c1cd3f0138307e649, Data_science\Visualization\Plots-statistics\Zscore\ZScoresData.vb"
+﻿#Region "Microsoft.VisualBasic::843182e2fc04dfcd538a5cf24491fe12, Data_science\Visualization\Plots-statistics\Zscore\ZScoresData.vb"
 
     ' Author:
     ' 
@@ -172,4 +172,3 @@ Public Structure ZScores
         )
     End Function
 End Structure
-

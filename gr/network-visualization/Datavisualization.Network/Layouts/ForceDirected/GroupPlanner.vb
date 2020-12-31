@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::369b90f02269820c57f11f8ede81c48f, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\GroupPlanner.vb"
+﻿#Region "Microsoft.VisualBasic::9e4f822e6e92fabf943fe81bad3f67f3, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\GroupPlanner.vb"
 
     ' Author:
     ' 
@@ -44,6 +44,7 @@
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports stdNum = System.Math
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace Layouts.ForceDirected
 
@@ -83,6 +84,23 @@ Namespace Layouts.ForceDirected
                                       Return classLabel
                                   End If
                               End Function)
+
+            For Each group As IGrouping(Of String, KeyValuePair(Of String, String)) In groupBy _
+                .GroupBy(Function(t) t.Value) _
+                .Where(Function(gi)
+                           Return gi.Key <> "n/a"
+                       End Function)
+
+                Dim idlist As String() = group.Select(Function(t) t.Key).ToArray
+                Dim x As Double = randf.NextInteger(CANVAS_WIDTH)
+                Dim y As Double = randf.NextInteger(CANVAS_HEIGHT)
+
+                For Each id As String In idlist
+                    With g.GetElementByID(id).data
+                        .initialPostion = New FDGVector2(x, y)
+                    End With
+                Next
+            Next
         End Sub
 
         Protected Overrides Sub runAttraction()

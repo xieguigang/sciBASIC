@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::79a2e4fc24c8cb001dbdfbcbd1058613, Data_science\Visualization\Plots\Scatter\Plot\LinePlot2D.vb"
+﻿#Region "Microsoft.VisualBasic::879ddc18a4ba207a0bf905dae9fa94b1, Data_science\Visualization\Plots\Scatter\Plot\LinePlot2D.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D

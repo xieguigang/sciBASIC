@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f71e4e2f30a199253bb2ab8666196461, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\Workspace.vb"
+﻿#Region "Microsoft.VisualBasic::9d334ce4017f1e12a7f845df84cf2f7c, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\Workspace.vb"
 
     ' Author:
     ' 
@@ -40,13 +40,6 @@
     '         Function: getAligned1, getAligned2
     ' 
     '         Sub: AddAligned1, AddAligned2
-    ' 
-    '     Class ScoreMatrix
-    ' 
-    '         Properties: GapPenalty, MatchScore, MismatchScore
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: getMatchScore, ToString
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::469e3f2effe0d5e47952ec2cb5ae1135, Data_science\Visualization\Visualization\CorrelationNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::60310c114e1492b4991556b4f243b4ff, Data_science\Visualization\Visualization\CorrelationNetwork.vb"
 
     ' Author:
     ' 
@@ -61,7 +61,9 @@ Public Module CorrelationNetwork
     ''' 关联网络是没有方向的
     ''' </summary>
     ''' <param name="matrix"></param>
-    ''' <param name="cutoff"></param>
+    ''' <param name="cutoff">
+    ''' 相关度阈值的绝对值
+    ''' </param>
     ''' <returns></returns>
     <Extension>
     Public Function BuildNetwork(matrix As CorrelationMatrix, cutoff#, Optional pvalue As Double = 1) As (net As NetworkGraph, matrix As CorrelationMatrix)

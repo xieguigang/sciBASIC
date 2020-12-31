@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f246076fb7ddca2f90327800ff81986, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\GlobalAlign.vb"
+﻿#Region "Microsoft.VisualBasic::a2711ccf75b6d2a3b317de939a394bdf, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\GlobalAlign.vb"
 
     ' Author:
     ' 
@@ -31,10 +31,11 @@
 
     ' Summaries:
 
-    '     Structure GlobalAlign
+    '     Class GlobalAlign
     ' 
-    '         Properties: Length
+    '         Properties: Length, query, score, subject
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: Identities, (+2 Overloads) ToString
     ' 
     ' 

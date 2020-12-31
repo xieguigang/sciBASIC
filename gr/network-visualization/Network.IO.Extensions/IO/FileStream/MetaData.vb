@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5075c8bee37fb26aeb10077fb30242a7, gr\network-visualization\Network.IO.Extensions\IO\FileStream\MetaData.vb"
+﻿#Region "Microsoft.VisualBasic::ed14054e733e8383d7695ad915c60726, gr\network-visualization\Network.IO.Extensions\IO\FileStream\MetaData.vb"
 
     ' Author:
     ' 
@@ -35,6 +35,8 @@
     ' 
     '         Properties: additionals, create_time, creators, description, keywords
     '                     links, title
+    ' 
+    '         Function: Union
     ' 
     ' 
     ' /********************************************************************************/

@@ -852,6 +852,8 @@
     <Compile Include="Numerics\HalfHelper.vb" />
     <Compile Include="Quantile\FastRankQuantile.vb" />
     <Compile Include="Quantile\DataQuartile.vb" />
+    <Compile Include="Quantile\QuantileQuery.vb" />
+    <Compile Include="Quantile\QuartileLevels.vb" />
     <Compile Include="Scripting\Aggregate\Aggregate.vb" />
     <Compile Include="Scripting\Expression\ExpressionCompiler.vb" />
     <Compile Include="Scripting\Expression\FunctionElement.vb" />

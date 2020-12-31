@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a7eebb7c83bd909671b40f55cd638a2c, Microsoft.VisualBasic.Core\Serialization\JSON\JsonSerialization.vb"
+﻿#Region "Microsoft.VisualBasic::493a346fb18f2dcc91f1990e44fd69c1, Microsoft.VisualBasic.Core\Serialization\JSON\JsonSerialization.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module JsonContract
     ' 
-    '         Function: EnsureDate, GetJson, GetObjectJson, LoadJSON, LoadJsonFile
+    '         Function: EnsureDate, GetJson, (+2 Overloads) GetObjectJson, LoadJSON, LoadJsonFile
     '                   LoadJSONObject, (+2 Overloads) LoadObject, MatrixJson, RemoveJsonNullItems, WriteLargeJson
     ' 
     '         Sub: writeJson
@@ -78,13 +78,28 @@ Namespace Serialization.JSON
             Return json
         End Function
 
+        Public Function GetObjectJson(obj As Object,
+                                      Optional indent As Boolean = True,
+                                      Optional simpleDict As Boolean = True,
+                                      Optional knownTypes As IEnumerable(Of Type) = Nothing) As String
+            If obj Is Nothing Then
+                Return "null"
+            Else
+                Return obj.GetType.GetObjectJson(
+                    obj:=obj,
+                    indent:=indent,
+                    simpleDict:=simpleDict,
+                    knownTypes:=knownTypes
+                )
+            End If
+        End Function
+
         ''' <summary>
         ''' 使用<see cref="ScriptIgnoreAttribute"/>来屏蔽掉不想序列化的属性
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <param name="type"></param>
         ''' <returns></returns>
-        <ExportAPI("Get.Json")>
         <Extension>
         Public Function GetObjectJson(type As Type, obj As Object,
                                       Optional indent As Boolean = True,

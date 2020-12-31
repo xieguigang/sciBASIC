@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0959fa9c3b208ff19cb3c79b5ffb3b6d, vs_solutions\dev\VisualStudio\sourceMap\sourceMap.vb"
+﻿#Region "Microsoft.VisualBasic::3d210dd0092b861e5be1f42df5a92287, Data_science\Mathematica\Math\Math\Quantile\QuantileQuery.vb"
 
     ' Author:
     ' 
@@ -31,34 +31,18 @@
 
     ' Summaries:
 
-    '     Class sourceMap
+    '     Interface QuantileQuery
     ' 
-    '         Properties: file, mappings, names, sourceRoot, sources
-    '                     version
+    '         Function: Query
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Namespace SourceMap
+Namespace Quantile
 
-    Public Class sourceMap
-
-        Public Property version As Integer
-        Public Property file As String
-        Public Property sourceRoot As String
-        ''' <summary>
-        ''' the source file path
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property sources As String()
-        ''' <summary>
-        ''' the symbol names
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property names As String()
-        Public Property mappings As String
-
-    End Class
+    Public Interface QuantileQuery
+        Function Query(quantile#) As Double
+    End Interface
 End Namespace

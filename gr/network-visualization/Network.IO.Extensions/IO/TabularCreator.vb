@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0bb4d02b6cbf32c093e59e9e811347fc, gr\network-visualization\Network.IO.Extensions\IO\TabularCreator.vb"
+﻿#Region "Microsoft.VisualBasic::e73263c1391f44789fc8f4a54caa2607, gr\network-visualization\Network.IO.Extensions\IO\TabularCreator.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module TabularCreator
     ' 
-    '         Function: createNodesTable, Tabular
+    '         Function: createNodesTable, (+3 Overloads) Tabular
     ' 
     ' 
     ' /********************************************************************************/

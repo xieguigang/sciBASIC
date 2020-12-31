@@ -321,6 +321,8 @@
     <Compile Include="IL\MethodBodyReader.vb" />
     <Compile Include="IL\ILInstruction.vb" />
     <Compile Include="IL\Globals.vb" />
+    <Compile Include="sourceMap\mappingEncode.vb" />
+    <Compile Include="sourceMap\mappingLine.vb" />
     <Compile Include="VersionControl\git\log.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

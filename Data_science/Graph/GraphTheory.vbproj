@@ -634,6 +634,7 @@
     <Compile Include="Model\GridNetwork\Grid.vb" />
     <Compile Include="Model\TimeSerialsGraph.vb" />
     <Compile Include="NamespaceDoc.vb" />
+    <Compile Include="Network\SubNetworkComponents.vb" />
     <Compile Include="Network\Extensions.vb" />
     <Compile Include="Network\NetworkGraph.vb" />
     <Compile Include="Network\Node.vb" />

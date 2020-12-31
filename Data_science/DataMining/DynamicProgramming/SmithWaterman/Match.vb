@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1bd8f37a1eef5f763a5f7bbe6fefd409, Data_science\DataMining\DynamicProgramming\SmithWaterman\Match.vb"
+﻿#Region "Microsoft.VisualBasic::5d6c752f4b496aa2afd2493c3ee7ab95, Data_science\DataMining\DynamicProgramming\SmithWaterman\Match.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: fromA, fromB, score, toA, toB
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: isChainable, notOverlap, ToString
     '         Operators: -
     ' 
@@ -83,12 +83,24 @@ Namespace SmithWaterman
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' do match result data copy
+        ''' </summary>
+        ''' <param name="m"></param>
+        Sub New(m As Match)
+            fromA = m.fromA
+            fromB = m.fromB
+            toA = m.toA
+            toB = m.toB
+            score = m.score
+        End Sub
+
         Sub New(fA As Integer, tA As Integer, fB As Integer, tB As Integer, s As Double)
-            _fromA = fA
-            _fromB = fB
-            _toA = tA
-            _toB = tB
-            _score = s
+            fromA = fA
+            fromB = fB
+            toA = tA
+            toB = tB
+            score = s
         End Sub
 
         ''' <summary>
