@@ -50,11 +50,10 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports stdNum = System.Math
-Imports r = System.Text.RegularExpressions.Regex
-Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace Imaging
 

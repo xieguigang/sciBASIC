@@ -139,7 +139,11 @@ Namespace Text.Xml.Models
         End Function
 
         Protected Overrides Function getCollection() As IEnumerable(Of T)
-            Return items
+            If items Is Nothing Then
+                Return {}
+            Else
+                Return items
+            End If
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
