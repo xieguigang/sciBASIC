@@ -75,4 +75,13 @@ Namespace ComponentModel.DataSourceModel
     ''' <returns></returns>
     Public Delegate Function Projector(Of T, Tout)([in] As T) As Tout
 
+#If netcore5 = 1 Then
+
+    ''' <summary>
+    ''' 用于与.NET Framework之中的ScriptIgnore属性标记兼容的一个对象
+    ''' </summary>
+    <AttributeUsage(AttributeTargets.Property, AllowMultiple:=False, Inherited:=True)>
+    Public Class ScriptIgnore : Inherits Attribute
+    End Class
+#End If
 End Namespace

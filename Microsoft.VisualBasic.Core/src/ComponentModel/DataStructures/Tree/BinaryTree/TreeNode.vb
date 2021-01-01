@@ -47,7 +47,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports System.Web.Script.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
 
@@ -96,7 +95,7 @@ Namespace ComponentModel.DataStructures.BinaryTree
             End Get
         End Property
 
-        <ScriptIgnore> Public ReadOnly Property IsLeaf As Boolean
+        Public ReadOnly Property IsLeaf As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Left Is Nothing AndAlso
@@ -104,7 +103,7 @@ Namespace ComponentModel.DataStructures.BinaryTree
             End Get
         End Property
 
-        <ScriptIgnore> Public ReadOnly Property AllChilds As List(Of TreeNode(Of T))
+        Public ReadOnly Property AllChilds As List(Of TreeNode(Of T))
             Get
                 Dim list As New List(Of TreeNode(Of T))
 
@@ -121,7 +120,7 @@ Namespace ComponentModel.DataStructures.BinaryTree
         ''' 递归的得到子节点的数目
         ''' </summary>
         ''' <returns></returns>
-        <ScriptIgnore> Public ReadOnly Property Count As Integer
+        Public ReadOnly Property Count As Integer
             Get
                 Dim n As Integer
 

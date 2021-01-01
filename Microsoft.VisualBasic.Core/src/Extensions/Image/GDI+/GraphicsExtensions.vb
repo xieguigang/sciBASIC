@@ -421,16 +421,16 @@ Namespace Imaging
             End With
         End Function
 
-        <ExportAPI("GrayBitmap")>
-        <Description("Create the gray color of the target image.")>
-        <Extension> Public Function CreateGrayBitmap(res As Image) As Image
-            Using g As Graphics2D = DirectCast(res.Clone, Image).CreateCanvas2D
-                With g
-                    Call ControlPaint.DrawImageDisabled(.Graphics, res, 0, 0, Color.FromArgb(0, 0, 0, 0))
-                    Return .ImageResource
-                End With
-            End Using
-        End Function
+        '<ExportAPI("GrayBitmap")>
+        '<Description("Create the gray color of the target image.")>
+        '<Extension> Public Function CreateGrayBitmap(res As Image) As Image
+        '    Using g As Graphics2D = DirectCast(res.Clone, Image).CreateCanvas2D
+        '        With g
+        '            Call ControlPaint.DrawImageDisabled(.Graphics, res, 0, 0, Color.FromArgb(0, 0, 0, 0))
+        '            Return .ImageResource
+        '        End With
+        '    End Using
+        'End Function
 
         ''' <summary>
         ''' Adding a frame box to the target image source.(为图像添加边框)
@@ -478,17 +478,17 @@ Namespace Imaging
             Return (New Size(CInt(r.Width), CInt(r.Height))).CreateGDIDevice(filled)
         End Function
 
-        <Extension>
-        Public Function OpenDevice(ctrl As Control) As Graphics2D
-            Dim img As Image = New Bitmap(ctrl.Width, ctrl.Height)
-            Dim canvas = img.CreateCanvas2D
+        '<Extension>
+        'Public Function OpenDevice(ctrl As Control) As Graphics2D
+        '    Dim img As Image = New Bitmap(ctrl.Width, ctrl.Height)
+        '    Dim canvas = img.CreateCanvas2D
 
-            If ctrl.BackgroundImage Is Nothing Then
-                Call canvas.FillRectangle(Brushes.White, New Rectangle(New Point, img.Size))
-            End If
+        '    If ctrl.BackgroundImage Is Nothing Then
+        '        Call canvas.FillRectangle(Brushes.White, New Rectangle(New Point, img.Size))
+        '    End If
 
-            Return canvas
-        End Function
+        '    Return canvas
+        'End Function
 
         ''' <summary>
         ''' 从指定的文件之中加载GDI+设备的句柄
@@ -530,18 +530,18 @@ Namespace Imaging
             End If
         End Function
 
-        <Extension> Public Function BackgroundGraphics(ctrl As Control) As Graphics2D
-            If Not ctrl.BackgroundImage Is Nothing Then
-                Try
-                    Return ctrl.BackgroundImage.CreateCanvas2D
-                Catch ex As Exception
-                    Call App.LogException(ex)
-                    Return ctrl.Size.CreateGDIDevice(ctrl.BackColor)
-                End Try
-            Else
-                Return ctrl.Size.CreateGDIDevice(ctrl.BackColor)
-            End If
-        End Function
+        '<Extension> Public Function BackgroundGraphics(ctrl As Control) As Graphics2D
+        '    If Not ctrl.BackgroundImage Is Nothing Then
+        '        Try
+        '            Return ctrl.BackgroundImage.CreateCanvas2D
+        '        Catch ex As Exception
+        '            Call App.LogException(ex)
+        '            Return ctrl.Size.CreateGDIDevice(ctrl.BackColor)
+        '        End Try
+        '    Else
+        '        Return ctrl.Size.CreateGDIDevice(ctrl.BackColor)
+        '    End If
+        'End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function IsValidGDIParameter(size As Size) As Boolean
