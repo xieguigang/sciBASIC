@@ -368,27 +368,27 @@ Public Module Extensions
         Return String.Join(delimiter, values.Select(Function(n) CStr(n)).ToArray)
     End Function
 
-#If FRAMEWORD_CORE Then
-    ''' <summary>
-    ''' Show open file dialog and return the selected file path.
-    ''' </summary>
-    ''' <param name="ext$"></param>
-    ''' <returns></returns>
-    Public Function SelectFile(Optional ext$ = "*.*", Optional title$ = Nothing) As String
-        Dim mime$ = ext.GetMIMEDescrib.Details
+    '#If FRAMEWORD_CORE Then
+    '    ''' <summary>
+    '    ''' Show open file dialog and return the selected file path.
+    '    ''' </summary>
+    '    ''' <param name="ext$"></param>
+    '    ''' <returns></returns>
+    '    Public Function SelectFile(Optional ext$ = "*.*", Optional title$ = Nothing) As String
+    '        Dim mime$ = ext.GetMIMEDescrib.Details
 
-        Using Open As New OpenFileDialog With {
-            .Filter = $"{ext}|{ext}",
-            .Title = If(title.StringEmpty, $"Open {mime}", title)
-        }
-            If Open.ShowDialog = DialogResult.OK Then
-                Return Open.FileName
-            Else
-                Return Nothing
-            End If
-        End Using
-    End Function
-#End If
+    '        Using Open As New OpenFileDialog With {
+    '            .Filter = $"{ext}|{ext}",
+    '            .Title = If(title.StringEmpty, $"Open {mime}", title)
+    '        }
+    '            If Open.ShowDialog = DialogResult.OK Then
+    '                Return Open.FileName
+    '            Else
+    '                Return Nothing
+    '            End If
+    '        End Using
+    '    End Function
+    '#End If
 
     ''' <summary>
     ''' Invoke a folked system process object to execute a parallel task.

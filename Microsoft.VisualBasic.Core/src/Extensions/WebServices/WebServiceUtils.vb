@@ -64,9 +64,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq.Extensions
-Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Http
-Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 Imports IPEndPoint = Microsoft.VisualBasic.Net.IPEndPoint
@@ -704,7 +702,6 @@ Public Module WebServiceUtils
     ''' <returns></returns>
     Public Property DefaultUA As [Default](Of String) = UserAgent.GoogleChrome
 
-#If FRAMEWORD_CORE Then
     ''' <summary>
     ''' download the file from <paramref name="strUrl"></paramref> to <paramref name="save">local file</paramref>.
     ''' </summary>
@@ -714,25 +711,15 @@ Public Module WebServiceUtils
     ''' <remarks></remarks>
     <Extension>
     Public Function DownloadFile(<Parameter("url")> strUrl$,
-                                <Parameter("Path.Save", "The saved location of the downloaded file data.")>
-                                save$,
-                                Optional proxy$ = Nothing,
-                                Optional ua$ = Nothing,
-                                Optional retry% = 0,
-                                Optional progressHandle As DownloadProgressChangedEventHandler = Nothing,
-                                Optional refer$ = Nothing,
-                                <CallerMemberName>
-                                Optional trace$ = Nothing) As Boolean
-#Else
-    ''' <summary>
-    ''' download the file from <paramref name="strUrl"></paramref> to <paramref name="SavedPath">local file</paramref>.
-    ''' </summary>
-    ''' <param name="strUrl"></param>
-    ''' <param name="SavedPath"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <Extension> Public Function DownloadFile(strUrl As String, SavedPath As String) As Boolean
-#End If
+                                 <Parameter("Path.Save", "The saved location of the downloaded file data.")>
+                                 save$,
+                                 Optional proxy$ = Nothing,
+                                 Optional ua$ = Nothing,
+                                 Optional retry% = 0,
+                                 Optional progressHandle As DownloadProgressChangedEventHandler = Nothing,
+                                 Optional refer$ = Nothing,
+                                 <CallerMemberName>
+                                 Optional trace$ = Nothing) As Boolean
 RE0:
         Try
             Using browser As New WebClient()
