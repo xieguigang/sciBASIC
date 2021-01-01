@@ -81,7 +81,7 @@ Namespace ComponentModel.DataSourceModel
     ''' 用于与.NET Framework之中的ScriptIgnore属性标记兼容的一个对象
     ''' </summary>
     <AttributeUsage(AttributeTargets.Property, AllowMultiple:=False, Inherited:=True)>
-    Public Class ScriptIgnore : Inherits Attribute
+    Public Class ScriptIgnoreAttribute : Inherits Attribute
     End Class
 #End If
 End Namespace

@@ -486,8 +486,6 @@ Namespace ComponentModel.Collection
                 .ToArray
         End Function
 
-#If FRAMEWORD_CORE Then
-
         ''' <summary>
         ''' Get a specific item value from the target collction data using its UniqueID property，
         ''' (请注意，请尽量不要使用本方法，因为这个方法的效率有些低，对于获取<see cref="INamedValue">
@@ -525,7 +523,6 @@ Namespace ComponentModel.Collection
                                                   As T
             Return source.GetByKey(uid, If(ignoreCase, StringComparison.OrdinalIgnoreCase, StringComparison.Ordinal))
         End Function
-#End If
 
         ''' <summary>
         ''' Dictionary object contains the specific <see cref="NamedValue(Of T).Name"/>?

@@ -1,63 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::b248626a53da0d6b38f4ec51597ec915, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module App
-    ' 
-    '     Properties: AppSystemTemp, AssemblyName, BufferSize, Command, CommandLine
-    '                 CPUCoreNumbers, CurrentDirectory, CurrentProcessTemp, Desktop, DoNothing
-    '                 ExceptionLogFile, ExecutablePath, GetLastError, Github, HOME
-    '                 Info, InputFile, IsConsoleApp, IsMicrosoftPlatform, LocalData
-    '                 LocalDataTemp, LogErrDIR, NanoTime, NextTempName, OutFile
-    '                 PID, Platform, PreviousDirectory, Process, ProductName
-    '                 ProductProgramData, ProductSharedDIR, ProductSharedTemp, References, Running
-    '                 RunningInGitBash, RunTimeDirectory, StartTime, StartupDirectory, StdErr
-    '                 StdInput, StdOut, SysTemp, UnixTimeStamp, UserHOME
-    '                 Version
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: __listFiles, __sysTEMP, (+2 Overloads) Argument, checkIsMicrosoftPlatform, CLICode
-    '               ElapsedMilliseconds, Exit, finalizeCLI, FormatTime, GenerateTemp
-    '               (+2 Overloads) GetAppLocalData, GetAppSysTempFile, GetAppVariables, GetFile, GetNextUniqueName
-    '               GetProductSharedDIR, GetProductSharedTemp, GetTempFile, GetVariable, (+3 Overloads) LogException
-    '               NullDevice, (+11 Overloads) RunCLI, RunCLIInternal, SelfFolk, SelfFolks
-    '               Shell, tempCode, TemporaryEnvironment, TraceBugs
-    ' 
-    '     Sub: [Stop], __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory
-    '          Free, JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println
-    '          RunAsAdmin, SetBufferSize, StartGC, StopGC
-    ' 
-    ' /********************************************************************************/
+' Module App
+' 
+'     Properties: AppSystemTemp, AssemblyName, BufferSize, Command, CommandLine
+'                 CPUCoreNumbers, CurrentDirectory, CurrentProcessTemp, Desktop, DoNothing
+'                 ExceptionLogFile, ExecutablePath, GetLastError, Github, HOME
+'                 Info, InputFile, IsConsoleApp, IsMicrosoftPlatform, LocalData
+'                 LocalDataTemp, LogErrDIR, NanoTime, NextTempName, OutFile
+'                 PID, Platform, PreviousDirectory, Process, ProductName
+'                 ProductProgramData, ProductSharedDIR, ProductSharedTemp, References, Running
+'                 RunningInGitBash, RunTimeDirectory, StartTime, StartupDirectory, StdErr
+'                 StdInput, StdOut, SysTemp, UnixTimeStamp, UserHOME
+'                 Version
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: __listFiles, __sysTEMP, (+2 Overloads) Argument, checkIsMicrosoftPlatform, CLICode
+'               ElapsedMilliseconds, Exit, finalizeCLI, FormatTime, GenerateTemp
+'               (+2 Overloads) GetAppLocalData, GetAppSysTempFile, GetAppVariables, GetFile, GetNextUniqueName
+'               GetProductSharedDIR, GetProductSharedTemp, GetTempFile, GetVariable, (+3 Overloads) LogException
+'               NullDevice, (+11 Overloads) RunCLI, RunCLIInternal, SelfFolk, SelfFolks
+'               Shell, tempCode, TemporaryEnvironment, TraceBugs
+' 
+'     Sub: [Stop], __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory
+'          Free, JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println
+'          RunAsAdmin, SetBufferSize, StartGC, StopGC
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -71,7 +71,6 @@ Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
-Imports Microsoft.VisualBasic.ApplicationServices.Windows.Forms.VistaSecurity
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
@@ -89,7 +88,7 @@ Imports Microsoft.VisualBasic.Parallel.Threads
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.ValueTypes
-Imports CLI = Microsoft.VisualBasic.CommandLine.CommandLine
+Imports CommandLineArgs = Microsoft.VisualBasic.CommandLine.CommandLine
 Imports DevAssmInfo = Microsoft.VisualBasic.ApplicationServices.Development.AssemblyInfo
 
 '                   _ooOoo_
@@ -187,7 +186,7 @@ Public Module App
     ''' Gets the command-line arguments for this <see cref="Process"/>.
     ''' </summary>
     ''' <returns>Gets the command-line arguments for this process.</returns>
-    Public ReadOnly Property CommandLine As CommandLine.CommandLine = GitBashEnvironment.GetCLIArgs()
+    Public ReadOnly Property CommandLine As CommandLineArgs = GitBashEnvironment.GetCommandLineArgs()
 
     ''' <summary>
     ''' Get argument value from <see cref="CommandLine"/>.
@@ -223,7 +222,7 @@ Public Module App
     ''' Returns the argument portion of the <see cref="Microsoft.VisualBasic.CommandLine.CommandLine"/> used to start Visual Basic or
     ''' an executable program developed with Visual Basic. The My feature provides greater
     ''' productivity and performance than the <see cref="microsoft.VisualBasic.Interaction.Command"/> function. For more information,
-    ''' see <see cref="ConsoleApplicationBase.CommandLineArgs"/>.
+    ''' see <see cref="GitBashEnvironment.GetCommandLineArgs()"/>.
     ''' </summary>
     ''' <returns>Gets the command-line arguments for this process.</returns>
     Public ReadOnly Property Command As String = CLITools.Join(App.CommandLine.Tokens)
@@ -410,7 +409,7 @@ Public Module App
                 .GetDirectoryInfo(RuntimeEnvironment.GetRuntimeDirectory) _
                 .FullName _
                 .Replace("/", "\")
-            App.Desktop = My.Computer.FileSystem.SpecialDirectories.Desktop
+            App.Desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
             App.ExecutablePath = FileIO.FileSystem.GetFileInfo(Application.ExecutablePath).FullName    ' (Process.GetCurrentProcess.StartInfo.FileName).FullName
             App.Info = ApplicationInfoUtils.CurrentExe()
             App.AssemblyName = BaseName(App.ExecutablePath)
@@ -900,7 +899,7 @@ Public Module App
 #End If
 #Else
 #If NET_48 Then
-            Return RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+        Return RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
 #Else
         Return True
 #End If
@@ -1039,7 +1038,7 @@ Public Module App
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
     <ExportAPI("RunCLI")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args As CLI, <CallerMemberName> Optional caller$ = Nothing) As Integer
+    <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLineArgs, <CallerMemberName> Optional caller$ = Nothing) As Integer
         Return Interpreter.RunCLIInternal(args, caller, Nothing, Nothing, Nothing)
     End Function
 
@@ -1051,7 +1050,7 @@ Public Module App
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
     <ExportAPI("RunCLI")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args As CLI, executeEmpty As ExecuteEmptyCLI,
+    <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLineArgs, executeEmpty As ExecuteEmptyCLI,
                                        <CallerMemberName>
                                        Optional caller$ = Nothing) As Integer
         Return Interpreter.RunCLIInternal(args, caller, executeEmpty, Nothing, Nothing)
@@ -1102,14 +1101,14 @@ Public Module App
     ''' </param>
     ''' <param name="executeNotFound">
     ''' ```vbnet
-    ''' Public Delegate Function ExecuteNotFound(args As <see cref="CLI"/>) As <see cref="Integer"/>
+    ''' Public Delegate Function ExecuteNotFound(args As <see cref="CommandLineArgs"/>) As <see cref="Integer"/>
     ''' ```
     ''' </param>
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("RunCLI")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args As CLI,
+    <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLineArgs,
                                        executeEmpty As ExecuteEmptyCLI,
                                        executeFile As ExecuteFile,
                                        executeNotFound As ExecuteNotFound,
@@ -1127,21 +1126,21 @@ Public Module App
     ''' </param>
     ''' <param name="executeNotFound">
     ''' ```vbnet
-    ''' Public Delegate Function ExecuteNotFound(args As <see cref="CLI"/>) As <see cref="Integer"/>
+    ''' Public Delegate Function ExecuteNotFound(args As <see cref="CommandLineArgs"/>) As <see cref="Integer"/>
     ''' ```
     ''' </param>
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("RunCLI")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args As CLI, executeEmpty As ExecuteEmptyCLI, executeNotFound As ExecuteNotFound,
+    <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLineArgs, executeEmpty As ExecuteEmptyCLI, executeNotFound As ExecuteNotFound,
                                        <CallerMemberName>
                                        Optional caller$ = Nothing) As Integer
         Return Interpreter.RunCLIInternal(args, caller, executeEmpty, executeNotFound, Nothing)
     End Function
 
     <Extension>
-    Private Function RunCLIInternal(App As Type, args As CLI, caller$,
+    Private Function RunCLIInternal(App As Type, args As CommandLineArgs, caller$,
                                     executeEmpty As ExecuteEmptyCLI,
                                     executeNotFound As ExecuteNotFound,
                                     executeFile As ExecuteFile) As Integer
@@ -1190,7 +1189,7 @@ Public Module App
     ''' ```
     ''' </param>
     <ExportAPI("RunCLI")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args As CLI, executeFile As ExecuteFile, <CallerMemberName> Optional caller$ = Nothing) As Integer
+    <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLineArgs, executeFile As ExecuteFile, <CallerMemberName> Optional caller$ = Nothing) As Integer
         Return Interpreter.RunCLIInternal(args, caller, Nothing, Nothing, executeFile)
     End Function
 
@@ -1216,7 +1215,7 @@ Public Module App
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
     <ExportAPI("RunCLI")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args As CLI, executeFile As ExecuteFile, executeEmpty As ExecuteEmptyCLI,
+    <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLineArgs, executeFile As ExecuteFile, executeEmpty As ExecuteEmptyCLI,
                                        <CallerMemberName>
                                        Optional caller$ = Nothing) As Integer
         Return Interpreter.RunCLIInternal(args, caller, executeEmpty, Nothing, executeFile)

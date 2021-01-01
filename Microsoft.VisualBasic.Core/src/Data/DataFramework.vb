@@ -347,7 +347,7 @@ Namespace ComponentModel.DataSourceModel
 #End If
 
         ''' <summary>
-        ''' Convert target data object collection into a datatable for the data source of the <see cref="System.Windows.Forms.DataGridView"></see>>.
+        ''' Convert target data object collection into a datatable for the data source of the ``DataGridView``.
         ''' (将目标对象集合转换为一个数据表对象，用作DataGridView控件的数据源)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>

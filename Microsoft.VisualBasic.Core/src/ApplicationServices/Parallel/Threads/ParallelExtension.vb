@@ -55,7 +55,7 @@ Namespace Parallel
     Public Module ParallelExtension
 
         ''' <summary>
-        ''' <see cref="Application.DoEvents()"/>
+        ''' Application.DoEvents() proxy in winform
         ''' </summary>
         ''' <remarks>
         ''' this function will fixed the errors on centos linux system:
@@ -78,8 +78,10 @@ Namespace Parallel
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
         Public Sub DoEvents()
+#If netcore5 = 0 Then
 #If UNIX = False Then
             Call Application.DoEvents()
+#End If
 #End If
         End Sub
 

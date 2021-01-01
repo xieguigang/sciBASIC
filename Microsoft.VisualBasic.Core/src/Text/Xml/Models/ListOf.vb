@@ -122,7 +122,7 @@ Namespace Text.Xml.Models
         ''' </remarks>
         <DataMember>
         <IgnoreDataMember>
-        <ScriptIgnore>
+        <ScriptIgnoreAttribute>
         <SoapIgnore>
         <XmlAnyElement>
         Public Property TypeComment As XmlComment Implements XmlDataModel.IXmlType.TypeComment

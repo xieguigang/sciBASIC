@@ -577,7 +577,7 @@ Public Module PathExtensions
     <Extension>
     Public Function FileMove(source$, target$) As Boolean
         Try
-            Call My.Computer.FileSystem.MoveFile(source, target)
+            Call File.Move(source, target)
             Return True
         Catch ex As Exception
             ex = New Exception("source: " & source, ex)
@@ -597,13 +597,8 @@ Public Module PathExtensions
     ''' <param name="ZERO_Nonexists">将0长度的文件也作为不存在</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-#If FRAMEWORD_CORE Then
-    <ExportAPI("File.Exists")>
-    <Extension> Public Function FileExists(path$, Optional ZERO_Nonexists As Boolean = False) As Boolean
-#Else
-    <Extension> Public Function FileExists(path As String) As Boolean
-#End If
-
+    <Extension>
+    Public Function FileExists(path$, Optional ZERO_Nonexists As Boolean = False) As Boolean
         If path.StringEmpty Then
             Return False
         End If

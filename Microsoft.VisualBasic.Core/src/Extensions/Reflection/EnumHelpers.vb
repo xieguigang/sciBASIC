@@ -103,9 +103,9 @@ Public Module EnumHelpers
         Return enumValues
     End Function
 
-#If FRAMEWORD_CORE Then
     ''' <summary>
-    ''' Get the description data from a enum type value, if the target have no <see cref="DescriptionAttribute"></see> attribute data
+    ''' Get the description data from a enum type value, if the target have no 
+    ''' <see cref="DescriptionAttribute"></see> attribute data
     ''' then function will return the string value from the ToString() function.
     ''' </summary>
     ''' <param name="value"></param>
@@ -113,16 +113,6 @@ Public Module EnumHelpers
     ''' <remarks></remarks>
     <Extension>
     Public Function Description(value As [Enum], Optional deli$ = "|") As String
-#Else
-    ''' <summary>
-    ''' Get the description data from a enum type value, if the target have no <see cref="DescriptionAttribute"></see> attribute data
-    ''' then function will return the string value from the ToString() function.
-    ''' </summary>
-    ''' <param name="e"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <Extension> Public Function Description(value As [Enum]) As String
-#End If
         Static descriptionCache As New Dictionary(Of Object, String)
 
         If descriptionCache.ContainsKey(value) Then

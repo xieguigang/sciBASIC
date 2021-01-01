@@ -154,7 +154,7 @@ Namespace Parallel.Threads
             Dim taskPool As New List(Of AsyncHandle(Of T))
             Dim p As New Pointer
             Dim resultList As New List(Of T)
-            Dim CPU#
+            ' Dim CPU#
 
             If numThreads <= 0 Then
                 numThreads = LQuerySchedule.CPU_NUMBER * 2

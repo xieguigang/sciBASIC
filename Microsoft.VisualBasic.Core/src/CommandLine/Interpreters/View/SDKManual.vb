@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::879b185d4c38c5f09b9a9a0dbff03aef, Microsoft.VisualBasic.Core\CommandLine\Interpreters\View\SDKManual.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module SDKManual
-    ' 
-    '         Function: HelpSummary, LaunchManual, MarkdownDoc
-    ' 
-    '         Sub: AppSummary
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module SDKManual
+' 
+'         Function: HelpSummary, LaunchManual, MarkdownDoc
+' 
+'         Sub: AppSummary
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -46,6 +46,7 @@ Imports System.Globalization
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.Utility
@@ -59,6 +60,7 @@ Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.TokenIcer.Prefix
 Imports Microsoft.VisualBasic.Text
 Imports VBCore = Microsoft.VisualBasic.App
+Imports AssemblyMeta = Microsoft.VisualBasic.ApplicationServices.Development.AssemblyInfo
 
 Namespace CommandLine.ManView
 
@@ -75,7 +77,7 @@ Namespace CommandLine.ManView
         ''' <returns></returns>
         <Extension>
         Public Function LaunchManual(CLI As Interpreter) As Integer
-            Dim assm As AssemblyInfo = ApplicationInfoUtils.FromTypeModule(CLI.Type)
+            Dim assm As AssemblyMeta = ApplicationInfoUtils.FromTypeModule(CLI.Type)
             Dim title As String = $"{Application.ProductName} [version {Application.ProductVersion}]" & vbCrLf &
                 vbCrLf &
                 "## " & assm.AssemblyTitle & vbCrLf &
@@ -118,7 +120,7 @@ Namespace CommandLine.ManView
         Public Function MarkdownDoc(App As Interpreter) As String
             Dim sb As New StringBuilder($"# { VisualBasic.App.ProductName} [version { VisualBasic.App.Version}]")
             Dim type As Type = App.Type
-            Dim assm As AssemblyInfo = ApplicationInfoUtils.FromTypeModule(App.Type)
+            Dim assm As AssemblyMeta = ApplicationInfoUtils.FromTypeModule(App.Type)
 
             Call sb.AppendLine()
             Call sb.AppendLine("> " & App.Type.NamespaceEntry.Description.LineTokens.JoinBy(vbCrLf & "> "))
@@ -195,7 +197,7 @@ Namespace CommandLine.ManView
         ''' <param name="SYNOPSIS">命令行的使用语法</param>
         ''' <param name="write"></param>
         <Extension>
-        Public Sub AppSummary(assem As AssemblyInfo, description$, SYNOPSIS$, write As TextWriter)
+        Public Sub AppSummary(assem As AssemblyMeta, description$, SYNOPSIS$, write As TextWriter)
             Dim descr = assem.AssemblyDescription
 
             Call write.WriteLine()

@@ -62,7 +62,7 @@ Namespace CommandLine
         ''' Makes compatibility with git bash: <see cref="gitBash"/> = ``C:/Program Files/Git``
         ''' </summary>
         ''' <returns></returns>
-        Public Function GetCLIArgs() As CommandLine
+        Public Function GetCommandLineArgs() As CommandLine
             ' 第一个参数为应用程序的文件路径，不需要
             Dim args$() = Environment.GetCommandLineArgs
             Dim tokens$() = args _

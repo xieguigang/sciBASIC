@@ -46,8 +46,10 @@
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
-Imports System.Web.Script.Serialization
 Imports System.Xml.Serialization
+#If netcore5 = 0 Then
+Imports System.Web.Script.Serialization
+#End If
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language.Default
 
