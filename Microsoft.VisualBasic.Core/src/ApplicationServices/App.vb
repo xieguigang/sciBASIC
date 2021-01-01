@@ -1531,12 +1531,4 @@ Public Module App
         Call App.__GCThread.Stop()
     End Sub
 #End Region
-
-    ''' <summary>
-    ''' Restart the current process with administrator credentials.(以管理员的身份重启本应用程序)
-    ''' </summary>
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Sub RunAsAdmin(Optional args$ = "")
-        Call RestartElevated(args)
-    End Sub
 End Module
