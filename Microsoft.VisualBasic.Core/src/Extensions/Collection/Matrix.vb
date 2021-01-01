@@ -187,7 +187,8 @@ Namespace ComponentModel.Collection
         ''' <param name="source">The elements number in each collection should be agreed!(要求集合之中的每一列之中的数据的元素数目都相等)</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Extension> Public Function ToMatrix(Of T)(source As IEnumerable(Of IEnumerable(Of T))) As T(,)
+        <Extension>
+        Public Function ToMatrix(Of T)(source As IEnumerable(Of IEnumerable(Of T))) As T(,)
             Dim array As IEnumerable(Of T)() = source.ToArray
             Dim width As Integer = array(Scan0).Count
             Dim height As Integer = array.Length
