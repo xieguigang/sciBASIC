@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dev", "dev", "{B9F4461B-E5F
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47-dotnet_Microsoft.VisualBasic", "..\..\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ApplicationServices", "EventLog\ApplicationServices.vbproj", "{AFC6D861-8063-4549-8DCE-746206E852B4}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ApplicationServices", "ApplicationServices\ApplicationServices.vbproj", "{AFC6D861-8063-4549-8DCE-746206E852B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
