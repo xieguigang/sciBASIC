@@ -314,7 +314,7 @@ Namespace Scripting.TokenIcer
             Return $"[{name}] {text}"
         End Function
 
-#If NET_48 Then
+#If NET_48 Or netcore5 = 1 Then
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator =(token As CodeToken(Of Tokens), element As (Tokens, String())) As Boolean

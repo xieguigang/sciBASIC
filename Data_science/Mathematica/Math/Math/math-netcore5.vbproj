@@ -21,6 +21,7 @@
 	  <DebugSymbols>true</DebugSymbols>
 	  <DebugType>full</DebugType>
 	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
+	  <DefineConstants>netcore5=1</DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -35,14 +36,12 @@
 	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
 	</PropertyGroup>
 
-	<ItemGroup>
-	  <Compile Remove="My Project\**" />
-	  <EmbeddedResource Remove="My Project\**" />
-	  <None Remove="My Project\**" />
-	</ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Import Include="System.Data" />
   </ItemGroup>
 
 </Project>
