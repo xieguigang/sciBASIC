@@ -8,6 +8,8 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
+#If netcore5 = 0 Then
+
 <Assembly: AssemblyTitle("sciBASIC.NET Framework: Core runtime for Microsoft VisualBasic 2020")>
 <Assembly: AssemblyDescription("sciBASIC.NET Framework: Core runtime for Microsoft VisualBasic 2020")>
 <Assembly: AssemblyCompany("sciBASIC.NET")>
@@ -33,3 +35,5 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("4.7.*")> 
 <Assembly: AssemblyFileVersion("2.13.*")> 
+
+#End If

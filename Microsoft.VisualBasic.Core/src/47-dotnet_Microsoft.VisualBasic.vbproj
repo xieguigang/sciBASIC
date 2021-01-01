@@ -1772,6 +1772,7 @@
     <Compile Include="ComponentModel\ValuePair\NamedTuple.vb" />
     <Compile Include="Extensions\IO\Path\CopyDirectory.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\DataSample.vb" />
+    <Compile Include="Net\MIME\ContentTypeAttribute.vb" />
     <Compile Include="Serialization\BEncoding\BencodeDecoder.vb" />
     <Compile Include="Serialization\BEncoding\BElement.vb" />
     <Compile Include="Serialization\BEncoding\BInteger.vb" />
@@ -2061,7 +2062,6 @@
     <Compile Include="ApplicationServices\Terminal\xConsole\xConsole.vb" />
     <Compile Include="Language\Language\UnixBash\Cowsay.vb" />
     <Compile Include="ApplicationServices\App.vb" />
-    <Compile Include="ComponentModel\DataSource\Property\Controls.vb" />
     <Compile Include="Extensions\Collection\ListExtensions.vb" />
     <Compile Include="Extensions\Collection\Linq\Iterator.vb" />
     <Compile Include="Extensions\Collection\KeyValuePair.vb" />
