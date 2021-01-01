@@ -85,7 +85,7 @@ Namespace ComponentModel.Ranges
 
     Public Module UnitConvertorExtensions
 
-#If NET_48 Then
+#If NET_48 Or netcore5 = 1 Then
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetUnitConvertor(Of T As Structure)() As (unit As T, value As Double)()
@@ -217,7 +217,7 @@ Namespace ComponentModel.Ranges
             Return $"{Value} ({DirectCast(CObj(Unit), [Enum]).Description})"
         End Function
 
-#If NET_48 Then
+#If NET_48 Or netcore5 = 1 Then
 
         Shared ReadOnly converts As (unit As TUnit, value#)() = UnitConvertorExtensions.GetUnitConvertor(Of TUnit)
 

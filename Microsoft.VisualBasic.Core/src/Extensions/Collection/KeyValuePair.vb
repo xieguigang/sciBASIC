@@ -92,7 +92,7 @@ Namespace ComponentModel.Collection
             End If
         End Function
 
-#If NET_48 Then
+#If NET_48 Or netcore5 = 1 Then
 
         <Extension>
         Public Function TupleTable(tuple As (String(), String())) As Dictionary(Of String, String)
@@ -206,7 +206,7 @@ Namespace ComponentModel.Collection
             Return map
         End Function
 
-#If NET_48 Then
+#If NET_48 Or netcore5 = 1 Then
 
         ''' <summary>
         ''' Create a tuple for two elements
@@ -250,7 +250,7 @@ Namespace ComponentModel.Collection
             Return file.SaveTo(saveTo, encoding.CodePage)
         End Function
 
-#If NET_48 Then
+#If NET_48 Or netcore5 = 1 Then
 
         ''' <summary>
         ''' tuple set to dictionary table
@@ -365,7 +365,7 @@ Namespace ComponentModel.Collection
                 .ToArray
         End Function
 
-#If NET_48 Then
+#If NET_48 Or netcore5 = 1 Then
 
         <Extension>
         Public Iterator Function EnumerateTuples(Of T)(table As Dictionary(Of String, T)) As IEnumerable(Of (name As String, obj As T))

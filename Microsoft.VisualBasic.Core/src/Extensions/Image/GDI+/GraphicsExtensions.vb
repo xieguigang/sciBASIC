@@ -550,7 +550,7 @@ Namespace Imaging
 
         Const InvalidSize As String = "One of the size parameter for the gdi+ device is not valid!"
 
-#If NET_48 Then
+#If NET_48 Or netcore5 = 1 Then
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function CreateGDIDevice(t As (width%, height%),

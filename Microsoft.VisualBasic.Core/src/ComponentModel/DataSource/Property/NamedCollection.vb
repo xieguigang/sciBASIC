@@ -217,7 +217,7 @@ Namespace ComponentModel.DataSourceModel
             Yield GetEnumerator()
         End Function
 
-#If NET_48 Then
+#If NET_48 Or netcore5 = 1 Then
 
         Public Shared Widening Operator CType(tuple As (name$, value As T())) As NamedCollection(Of T)
             Return New NamedCollection(Of T)(tuple.name, tuple.value)

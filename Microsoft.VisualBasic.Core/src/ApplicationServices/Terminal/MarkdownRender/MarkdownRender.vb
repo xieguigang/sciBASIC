@@ -65,7 +65,7 @@ Namespace ApplicationServices.Terminal
     ''' </remarks>
     Public Class MarkdownRender
 
-#If NET_48 Then
+#If NET_48 Or netcore5 = 1 Then
 
         Shared ReadOnly defaultTheme As [Default](Of MarkdownTheme) = New MarkdownTheme With {
             .[Global] = Nothing,
@@ -312,7 +312,7 @@ Namespace ApplicationServices.Terminal
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Sub Print(markdown As String, Optional theme As MarkdownTheme = Nothing, Optional indent% = 0)
-#If NET_48 Then
+#If NET_48 Or netcore5 = 1 Then
             Call New MarkdownRender(theme Or defaultTheme).DoPrint(markdown, indent)
 #Else
             Throw New NotImplementedException
@@ -321,7 +321,7 @@ Namespace ApplicationServices.Terminal
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function DefaultStyleRender() As MarkdownRender
-#If NET_48 Then
+#If NET_48 Or netcore5 = 1 Then
             Return New MarkdownRender(defaultTheme)
 #Else
             Throw New NotImplementedException

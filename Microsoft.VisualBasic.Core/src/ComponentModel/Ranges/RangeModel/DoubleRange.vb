@@ -226,7 +226,7 @@ Namespace ComponentModel.Ranges.Model
             End With
         End Operator
 
-#If NET_48 Then
+#If NET_48 Or netcore5 = 1 Then
 
         Public Shared Widening Operator CType(tuple As (min#, max#)) As DoubleRange
             Return New DoubleRange(tuple.min, tuple.max)

@@ -382,7 +382,7 @@ Namespace Imaging.Math2D
             Return CalculateAngle(p1.PointF, p2.PointF)
         End Function
 
-#If NET_48 Then
+#If NET_48 Or netcore5 = 1 Then
 
         ''' <summary>
         ''' 函数返回切线和X轴之间的夹角

@@ -68,7 +68,7 @@ Namespace ComponentModel
             Me.Name = name
         End Sub
 
-#If NET_48 Then
+#If NET_48 Or netcore5 = 1 Then
 
         Public Function AsTuple() As NamedValue(Of (T, T))
             Return New NamedValue(Of (T, T)) With {

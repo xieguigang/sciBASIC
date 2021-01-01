@@ -183,7 +183,7 @@ Namespace Text
             Return sb.ToString
         End Function
 
-#If NET_48 Then
+#If NET_48 Or netcore5 = 1 Then
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>

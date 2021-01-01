@@ -55,7 +55,7 @@ Namespace ComponentModel.TagData
         Public Property factor As T
         Public Property result As V
 
-#If NET_48 Then
+#If NET_48 Or netcore5 = 1 Then
 
         Public Shared Widening Operator CType(value As (factor As T, result As V)) As FactorValue(Of T, V)
             Return New FactorValue(Of T, V) With {

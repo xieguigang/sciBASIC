@@ -108,7 +108,7 @@ Namespace Imaging.Math2D
             Return $"[{{{X1}, {Y1}}}, {{{X2}, {Y2}}}]"
         End Function
 
-#If NET_48 Then
+#If NET_48 Or netcore5 = 1 Then
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(pointTuple As (X#, Y#)()) As Line

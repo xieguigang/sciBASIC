@@ -212,7 +212,7 @@ Namespace ComponentModel.DataSourceModel
             End If
         End Operator
 
-#If NET_48 Then
+#If NET_48 Or netcore5 = 1 Then
 
         ''' <summary>
         ''' Convert from tuple

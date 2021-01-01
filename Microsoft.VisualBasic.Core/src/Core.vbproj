@@ -3,7 +3,7 @@
   <PropertyGroup>
     <RootNamespace>Microsoft.VisualBasic</RootNamespace>
     <TargetFramework>net5.0</TargetFramework>
-    <AssemblyName>Microsoft.VisualBasic.Core</AssemblyName>
+    <AssemblyName>Microsoft.VisualBasic.Runtime</AssemblyName>
     <Authors>xie.guigang@live.com</Authors>
     <Company>sciBASIC.NET</Company>
     <Version>5.0.1.2389</Version>

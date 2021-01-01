@@ -898,7 +898,7 @@ Public Module App
         Return False
 #End If
 #Else
-#If NET_48 Then
+#If NET_48 Or netcore5 = 1 Then
         Return RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
 #Else
         Return True

@@ -204,7 +204,7 @@ Namespace ComponentModel
             Property Maps As V
         End Interface
 
-#If NET_48 Then
+#If NET_48 Or netcore5 = 1 Then
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(map As Map(Of T1, V)) As (key As T1, mapAs As V)

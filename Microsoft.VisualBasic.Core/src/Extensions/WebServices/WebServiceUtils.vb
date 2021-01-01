@@ -64,7 +64,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq.Extensions
-#If NET_48 Then
+#If NET_48 Or netcore5 = 1 Then
 Imports Microsoft.VisualBasic.Net
 #End If
 Imports Microsoft.VisualBasic.Net.Http
@@ -800,7 +800,7 @@ RE0:
     Public Function GetMyIPAddress() As String
         Dim hasInternet As Boolean = False
 
-#If NET_48 Then
+#If NET_48 Or netcore5 = 1 Then
 
         Try
             hasInternet = Not PingUtility.Ping(System.Net.IPAddress.Parse(MicrosoftDNS)) > Integer.MaxValue
