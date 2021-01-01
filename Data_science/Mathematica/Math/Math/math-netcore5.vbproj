@@ -35,6 +35,12 @@
 	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <Compile Remove="My Project\**" />
+	  <EmbeddedResource Remove="My Project\**" />
+	  <None Remove="My Project\**" />
+	</ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
   </ItemGroup>
