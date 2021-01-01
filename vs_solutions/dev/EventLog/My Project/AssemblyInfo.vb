@@ -8,17 +8,17 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("CodeDOM")>
+<Assembly: AssemblyTitle("EventLog")>
 <Assembly: AssemblyDescription("")>
 <Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("CodeDOM")>
+<Assembly: AssemblyProduct("EventLog")>
 <Assembly: AssemblyCopyright("Copyright ©  2021")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
-<Assembly: Guid("9d755e2e-bcfc-4b07-9955-cd826add4fd8")>
+<Assembly: Guid("e941cb1b-608a-42c6-9aed-5beb4c01fa5a")>
 
 ' Version information for an assembly consists of the following four values:
 '

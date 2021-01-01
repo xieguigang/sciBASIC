@@ -2051,12 +2051,6 @@
     <Compile Include="ApplicationServices\VBDev\XmlDoc\ProjectNamespace.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\ProjectSpace.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\ProjectType.vb" />
-    <Compile Include="ApplicationServices\Tools\Win32\HardwareInfo.vb" />
-    <Compile Include="ApplicationServices\Tools\Win32\GetLastErrorAPI.vb" />
-    <Compile Include="ApplicationServices\Tools\Win32\TaskManager.vb" />
-    <Compile Include="ApplicationServices\Tools\Win32\PriorityClass.vb" />
-    <Compile Include="ApplicationServices\Tools\Win32\Win32API.vb" />
-    <Compile Include="ApplicationServices\Tools\Win32\Win32File.vb" />
     <None Include="app.config" />
     <None Include="ApplicationServices\Terminal\xConsole\TestProgram.txt" />
     <Compile Include="ApplicationServices\Terminal\xConsole\xConsole.vb" />
@@ -2122,7 +2116,6 @@
     <Compile Include="Text\IO\TextEncodings.vb" />
     <Compile Include="Net\HTTP\HTTP_RFC.vb" />
     <Compile Include="Net\HTTP\Stream\Base64Codec.vb" />
-    <Compile Include="ApplicationServices\Tools\Win32\WindowsServices.vb" />
     <Compile Include="Extensions\Security\Md5.vb" />
     <Compile Include="Extensions\StringHelpers\StringHelpers.vb" />
     <Compile Include="ComponentModel\Algorithm\DynamicProgramming\Levenshtein\LevenshteinDistance.vb" />
@@ -2158,7 +2151,6 @@
     <Compile Include="ApplicationServices\Parallel\Tasks\Task.vb" />
     <Compile Include="Scripting\MetaData\EntryPointMetaData.vb" />
     <Compile Include="ComponentModel\TimeSpan.vb" />
-    <Compile Include="ApplicationServices\Debugger\Logging\EventLog.vb" />
     <Compile Include="ApplicationServices\Debugger\HeapSizeOf.vb" />
     <Compile Include="Net\Abstract.vb" />
     <Compile Include="Net\MIME\MIME.vb" />

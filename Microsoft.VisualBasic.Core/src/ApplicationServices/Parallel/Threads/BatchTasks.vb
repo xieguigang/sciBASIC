@@ -169,16 +169,16 @@ Namespace Parallel.Threads
                     ' 任务数量小于指定值的情况下，会直接添加计算任务直到满足数量条件
                     taskPool += New AsyncHandle(Of T)(actions(++p)).Run
                 Else
-                    If smart > 0# Then
-                        ' 这里是smart模式
-                        ' CPU的负载在指定值之内，则smart模式开启的情况下会添加新的额外的计算任务
-                        CPU = Win32.TaskManager.ProcessUsage
+                    'If smart > 0# Then
+                    '    ' 这里是smart模式
+                    '    ' CPU的负载在指定值之内，则smart模式开启的情况下会添加新的额外的计算任务
+                    '    CPU = Win32.TaskManager.ProcessUsage
 
-                        If CPU < smart Then
-                            taskPool += New AsyncHandle(Of T)(actions(++p)).Run
-                            Call $"CPU:{CPU}% <= {smart}, join an additional task thread...".__DEBUG_ECHO
-                        End If
-                    End If
+                    '    If CPU < smart Then
+                    '        taskPool += New AsyncHandle(Of T)(actions(++p)).Run
+                    '        Call $"CPU:{CPU}% <= {smart}, join an additional task thread...".__DEBUG_ECHO
+                    '    End If
+                    'End If
                 End If
 
                 ' 在这里获得完成的任务

@@ -102,19 +102,19 @@ Namespace Parallel.Threads
             End Get
         End Property
 
-        ''' <summary>
-        ''' Returns the server load.
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property ServerLoad As Double
-            Get
-                Dim works# = WorkingThreads / NumOfThreads
-                Dim CPU_load# = Win32.TaskManager.ProcessUsage
-                Dim load# = works * CPU_load
+        '''' <summary>
+        '''' Returns the server load.
+        '''' </summary>
+        '''' <returns></returns>
+        'Public ReadOnly Property ServerLoad As Double
+        '    Get
+        '        Dim works# = WorkingThreads / NumOfThreads
+        '        Dim CPU_load# = Win32.TaskManager.ProcessUsage
+        '        Dim load# = works * CPU_load
 
-                Return load
-            End Get
-        End Property
+        '        Return load
+        '    End Get
+        'End Property
 
         ''' <summary>
         ''' 是否所有的线程都是处于工作状态的
