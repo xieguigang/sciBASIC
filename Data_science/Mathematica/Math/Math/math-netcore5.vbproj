@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<RootNamespace>Microsoft.VisualBasic.Math</RootNamespace>
+		<TargetFramework>net5.0</TargetFramework>
+		<AssemblyName>Microsoft.VisualBasic.Math.Core</AssemblyName>
+		<Authors>xie.guigang@live.com</Authors>
+		<Company>sciBASIC.NET</Company>
+		<Version>5.0.1.2389</Version>
+		<Copyright>GPL3</Copyright>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageProjectUrl>http://sciBASIC.NET</PackageProjectUrl>
+		<PackageIcon>logo-white.png</PackageIcon>
+		<RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+		<Platforms>AnyCPU;x64</Platforms>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+	  <OutputPath>bin\x64\</OutputPath>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+	  <DebugSymbols>true</DebugSymbols>
+	  <DebugType>full</DebugType>
+	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
+	</PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+  </ItemGroup>
+
+</Project>
