@@ -1013,8 +1013,6 @@ Public Module App
         Return state
     End Function
 
-#If FRAMEWORD_CORE Then
-
     ''' <summary>
     ''' Running the <see cref="String"/> as cli command line and the specific type define as a <see cref="CommandLine.Interpreter"/>.
     ''' (请注意，在调试模式之下，命令行解释器会在运行完命令之后暂停，而Release模式之下则不会。
@@ -1220,7 +1218,6 @@ Public Module App
                                        Optional caller$ = Nothing) As Integer
         Return Interpreter.RunCLIInternal(args, caller, executeEmpty, Nothing, executeFile)
     End Function
-#End If
 
     ''' <summary>
     ''' IF the flag is True, that means cli API execute successfully, function returns ZERO, or a negative integer(Default -100) for failures.
