@@ -107,6 +107,12 @@ Namespace My.JavaScript
         ''' <returns></returns>
         Protected ReadOnly Property this As JavaScriptObject = Me
 
+        Public ReadOnly Property length As Integer
+            Get
+                Return members.Count
+            End Get
+        End Property
+
         ''' <summary>
         ''' 只针对Public的属性或者字段有效
         ''' </summary>
@@ -146,6 +152,10 @@ Namespace My.JavaScript
             For Each field As FieldInfo In fields
                 members(field.Name) = New BindProperty(Of DataFrameColumnAttribute)(field)
             Next
+        End Sub
+
+        Public Sub Delete(name As String)
+            members.Remove(name)
         End Sub
 
         Public Function GetMemberValue(memberName As String, ByRef access As MemberAccessorResult) As Object
