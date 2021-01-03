@@ -7,7 +7,7 @@ Namespace ApplicationServices
 
     Public Class Application
 
-        Shared ReadOnly main As Assembly = Assembly.GetExecutingAssembly()
+        Shared ReadOnly main As Assembly = Assembly.GetEntryAssembly()
         Shared ReadOnly meta As AssemblyMeta = main.FromAssembly
 
         ''' <summary>
