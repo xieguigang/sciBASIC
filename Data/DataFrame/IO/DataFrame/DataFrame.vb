@@ -92,6 +92,7 @@ Namespace IO
         ''' </summary>
         ''' <remarks></remarks>
         Protected columnList As HeaderSchema
+        Protected typeSchema As Type()
 
         Public ReadOnly Property SchemaOridinal As Dictionary(Of String, Integer) Implements ISchema.SchemaOridinal
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -125,6 +126,18 @@ Namespace IO
             Return columnList.AddAttribute(Name)
         End Function
 
+        Public Function MeasureTypeSchema() As DataFrame
+            Dim types As New List(Of Type)
+
+            For Each col As String() In Columns
+                types.Add(DataImports.SampleForType(col))
+            Next
+
+            typeSchema = types.ToArray
+
+            Return Me
+        End Function
+
         ''' <summary>
         ''' Get the lines data for the convinent data operation.(为了保持一致的顺序，这个函数是非并行化的)
         ''' </summary>
@@ -156,6 +169,16 @@ Namespace IO
                 Next
 
                 Yield out
+            Next
+        End Function
+
+        Public Iterator Function EnumerateRowObjects() As IEnumerable(Of Object())
+            For Each row As RowObject In _innerTable
+                Yield row _
+                    .Select(Function(str, i)
+                                Return Scripting.CTypeDynamic(str, typeSchema(i))
+                            End Function) _
+                    .ToArray
             Next
         End Function
 
@@ -552,20 +575,11 @@ Namespace IO
         End Function
 
         Public Function GetDataTypeName(i As Integer) As String Implements IDataRecord.GetDataTypeName
-            Dim value As String = GetValue(i)
-
-            If value.IsNumeric Then
-                Return "System.Double"
-            ElseIf InStr(value, ", ") > 0 OrElse InStr(value, "; ") > 0 Then
-                Return "System.String()"
-            Else
-                Return "System.String"
-            End If
+            Return typeSchema(i).FullName
         End Function
 
         Public Function GetFieldType(i As Integer) As Type Implements IDataRecord.GetFieldType
-            Dim typeName As String = GetDataTypeName(i)
-            Return InputHandler.GetType(typeName, True)
+            Return typeSchema(i)
         End Function
 
         Private Function IDataRecord_GetValue(i As Integer) As Object Implements IDataRecord.GetValue

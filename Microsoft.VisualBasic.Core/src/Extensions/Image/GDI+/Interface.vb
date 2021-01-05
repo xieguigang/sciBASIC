@@ -51,6 +51,7 @@ Imports System.Drawing.Graphics
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 Imports System.Runtime.CompilerServices
+Imports stdNum = System.Math
 
 Namespace Imaging
 
@@ -110,6 +111,14 @@ Namespace Imaging
         ' Returns:
         '     The value, in dots per inch, for the vertical resolution supported by this System.Drawing.Graphics.
         Public MustOverride ReadOnly Property DpiY As Single
+
+        Public ReadOnly Property Dpi As Single
+            Get
+                Return stdNum.Max(DpiX, DpiY)
+            End Get
+        End Property
+
+
         '
         ' Summary:
         '     Gets or sets the interpolation mode associated with this System.Drawing.Graphics.

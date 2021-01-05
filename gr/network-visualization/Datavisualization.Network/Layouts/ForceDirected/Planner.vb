@@ -1,49 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::65acb62bcdd75aa71ecbbfd4b34d8415, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Planner.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Planner
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: Collide, reset, runAttraction, runRepulsive, setPosition
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Planner
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Sub: Collide, reset, runAttraction, runRepulsive, setPosition
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Imaging.LayoutModel
+Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports stdNum = System.Math
 
@@ -65,6 +69,10 @@ Namespace Layouts.ForceDirected
         Protected ReadOnly maxtx As Integer = 4
         Protected ReadOnly maxty As Integer = 3
         Protected ReadOnly dist_thresh As DoubleRange
+        ''' <summary>
+        ''' 会尽量避免在这个区域内存在网络的节点，这个区域一般为legend的绘制区域
+        ''' </summary>
+        Protected ReadOnly avoidRegions As (rect As Rectangle2D, center As PointF)()
 
         Sub New(g As NetworkGraph,
                 Optional ejectFactor As Integer = 6,
@@ -72,7 +80,8 @@ Namespace Layouts.ForceDirected
                 Optional maxtx As Integer = 4,
                 Optional maxty As Integer = 3,
                 Optional dist_threshold$ = "30,250",
-                Optional size$ = "1000,1000")
+                Optional size$ = "1000,1000",
+                Optional avoidRegions As RectangleF() = Nothing)
 
             Me.g = g
 
@@ -87,6 +96,10 @@ Namespace Layouts.ForceDirected
             Me.condenseFactor = condenseFactor
             Me.ejectFactor = ejectFactor
             Me.k = stdNum.Sqrt(CANVAS_WIDTH * CANVAS_HEIGHT / g.vertex.Count)
+            Me.avoidRegions = avoidRegions _
+                .SafeQuery _
+                .Select(Function(rect) (New Rectangle2D(rect), rect.Centre)) _
+                .ToArray
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -94,6 +107,7 @@ Namespace Layouts.ForceDirected
             Call reset()
             Call runRepulsive()
             Call runAttraction()
+            Call RejectRegions()
             Call setPosition()
         End Sub
 
@@ -101,6 +115,29 @@ Namespace Layouts.ForceDirected
             For Each v As Node In g.vertex
                 mDxMap(v.label) = 0.0
                 mDyMap(v.label) = 0.0
+            Next
+        End Sub
+
+        Protected Sub RejectRegions()
+            Dim dist, distX, distY As Double
+            Dim id As String
+            Dim dx, dy As Double
+
+            For Each rect In avoidRegions
+                For Each v As Node In g.vertex
+                    distX = rect.center.X - v.data.initialPostion.x
+                    distY = rect.center.Y - v.data.initialPostion.y
+                    dist = stdNum.Sqrt(distX * distX + distY * distY)
+                    id = v.label
+
+                    If dist > 0 Then
+                        dx = (distX / dist) * (k * k / dist) * ejectFactor * 5
+                        dy = (distY / dist) * (k * k / dist) * ejectFactor * 5
+
+                        mDxMap(id) = mDxMap(id) + dx
+                        mDyMap(id) = mDyMap(id) + dy
+                    End If
+                Next
             Next
         End Sub
 
@@ -129,8 +166,8 @@ Namespace Layouts.ForceDirected
                     'End If
 
                     If dist > 0 AndAlso dist < dist_thresh.Max Then
-                        dx = (distX / dist * k * k / dist) * ejectFactor
-                        dy = (distY / dist * k * k / dist) * ejectFactor
+                        dx = (distX / dist) * (k * k / dist) * ejectFactor
+                        dy = (distY / dist) * (k * k / dist) * ejectFactor
 
                         mDxMap(id) = mDxMap(id) + dx
                         mDyMap(id) = mDyMap(id) + dy
@@ -177,6 +214,18 @@ Namespace Layouts.ForceDirected
                 y = node.data.initialPostion.y
                 x = x + dx ' If((x + dx) >= CANVAS_WIDTH OrElse (x + dx) <= 0, x - dx, x + dx)
                 y = y + dy ' If((y + dy) >= CANVAS_HEIGHT OrElse (y + dy <= 0), y - dy, y + dy)
+
+                If x >= CANVAS_WIDTH Then
+                    x = CANVAS_WIDTH
+                ElseIf x < 0 Then
+                    x = 0
+                End If
+
+                If y >= CANVAS_HEIGHT Then
+                    y = CANVAS_HEIGHT
+                ElseIf y < 0 Then
+                    y = 0
+                End If
 
                 node.data.initialPostion.x = x
                 node.data.initialPostion.y = y

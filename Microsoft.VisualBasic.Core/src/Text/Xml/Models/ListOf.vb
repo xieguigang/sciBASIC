@@ -140,7 +140,11 @@ Namespace Text.Xml.Models
         <XmlElement("item")> Public Property items As T()
 
         Protected Overrides Function getSize() As Integer
-            Return items.Length
+            If items Is Nothing Then
+                Return 0
+            Else
+                Return items.Length
+            End If
         End Function
 
         Protected Overrides Function getCollection() As IEnumerable(Of T)

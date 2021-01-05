@@ -165,11 +165,14 @@ Namespace HTML.CSS
         ''' <summary>
         ''' Initializes a new <see cref="System.Drawing.Font"/> using a specified size and style.
         ''' </summary>
+        ''' <param name="dpi">
+        ''' bugs fixed for config dpi value on unix mono platform 
+        ''' </param>
         ''' <returns></returns>
-        Public ReadOnly Property GDIObject As Font
+        Public ReadOnly Property GDIObject(Optional dpi As Integer = 100) As Font
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return New Font(family, size, style)
+                Return New Font(family, PointSizeScale(size, dpiResolution:=dpi), style)
             End Get
         End Property
 
@@ -262,7 +265,9 @@ Namespace HTML.CSS
                 .Where(Function(s) Not s.StringEmpty) _
                 .Select(Function(s) s.GetTagValue(":", True)) _
                 .ToDictionary(Function(x) x.Name.Trim.ToLower,
-                              Function(x) x.Value)
+                              Function(x)
+                                  Return x.Value
+                              End Function)
 
             If styles.ContainsKey("font-style") Then
                 hasValue = True

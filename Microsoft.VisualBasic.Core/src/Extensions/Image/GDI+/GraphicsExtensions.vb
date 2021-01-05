@@ -77,13 +77,20 @@ Namespace Imaging
     Public Module GraphicsExtensions
 
         ''' <summary>
+        ''' fix for dpi bugs on unix mono platform when create a font object.
+        ''' 
         ''' https://github.com/dotnet/runtime/issues/28361
         ''' </summary>
         ''' <param name="pointSize"></param>
         ''' <param name="dpiResolution"></param>
         ''' <returns></returns>
         Public Function PointSizeScale(pointSize As Single, dpiResolution As Single) As Single
+#If netcore5 = 1 Then
+            Return pointSize
+#Else
+            ' fix for running on unix mono 
             Return If(App.IsMicrosoftPlatform, pointSize, pointSize * dpiResolution / 96)
+#End If
         End Function
 
         <Extension>

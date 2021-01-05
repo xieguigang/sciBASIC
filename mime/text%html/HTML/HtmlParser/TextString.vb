@@ -141,7 +141,7 @@ Namespace HTML
                     ' 因为解析函数无论是否存在数据都会返回一个cssfont实例
                     ' 所以会需要借助这个hasValue变量来判断
                     If hasValue Then
-                        Return css
+                        Return css.GDIObject
                     Else
                         Return Nothing
                     End If
@@ -176,7 +176,7 @@ Namespace HTML
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function TryParse(html$, Optional defaultFont$ = CSSFont.Win7Normal, Optional defaultColor$ = NameOf(Color.Black)) As IEnumerable(Of TextString)
-            Return TryParse(html, CSSFont.TryParse(defaultFont), defaultColor.TranslateColor)
+            Return TryParse(html, CSSFont.TryParse(defaultFont).GDIObject, defaultColor.TranslateColor)
         End Function
 
         Public Iterator Function TryParse(html$, defaultFont As Font, defaultColor As Color) As IEnumerable(Of TextString)
