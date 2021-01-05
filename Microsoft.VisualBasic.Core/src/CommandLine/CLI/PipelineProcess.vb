@@ -53,7 +53,6 @@ Namespace CommandLine
     ''' How to found the process by CLI
     ''' </summary>
     ''' 
-    <HideModuleName>
     Public Module PipelineProcess
 
         ''' <summary>
