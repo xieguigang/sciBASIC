@@ -83,7 +83,17 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Canvas.vb" />
+    <Compile Include="Canvas.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Device\AutoRotation.vb" />
+    <Compile Include="Device\Debugger.vb" />
+    <Compile Include="Device\GDIDevice.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Device\IDevice.vb" />
+    <Compile Include="Device\Mouse.vb" />
+    <Compile Include="Device\Worker.vb" />
     <Compile Include="FormDevice.Designer.vb">
       <DependentUpon>FormDevice.vb</DependentUpon>
     </Compile>
@@ -110,6 +120,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Canvas.resx">
       <DependentUpon>Canvas.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Device\GDIDevice.resx">
+      <DependentUpon>GDIDevice.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormDevice.resx">
       <DependentUpon>FormDevice.vb</DependentUpon>

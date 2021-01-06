@@ -793,14 +793,9 @@
     <Compile Include="Drawing2D\Shapes\Line.vb" />
     <Compile Include="Drawing2D\Shapes\Shape.vb" />
     <Compile Include="Drawing3D\Camera.vb" />
+    <Compile Include="Drawing3D\Light.vb" />
     <Compile Include="Drawing3D\Model2D.vb" />
     <Compile Include="Drawing3D\Isometric.vb" />
-    <Compile Include="Drawing3D\Device\AutoRotation.vb" />
-    <Compile Include="Drawing3D\Device\IDevice.vb" />
-    <Compile Include="Drawing3D\Device\Debugger.vb" />
-    <Compile Include="Drawing3D\Device\Mouse.vb" />
-    <Compile Include="Drawing3D\Device\Light.vb" />
-    <Compile Include="Drawing3D\Device\Worker.vb" />
     <Compile Include="Drawing3D\Models\Extensions.vb" />
     <Compile Include="Drawing3D\Models\Paths\Circle.vb" />
     <Compile Include="Drawing3D\Models\Paths\Rectangle.vb" />
@@ -816,14 +811,12 @@
     <Compile Include="Drawing3D\Models\Shapes\Prism.vb" />
     <Compile Include="Drawing3D\Models\Shapes\Pyramid.vb" />
     <Compile Include="Drawing3D\Models\Shapes\Stairs.vb" />
+    <Compile Include="Drawing3D\DrawGraphics.vb" />
     <Compile Include="Drawing3D\Painter.vb" />
     <Compile Include="Drawing3D\Models\I3DModel.vb" />
     <Compile Include="Drawing3D\Models\Line.vb" />
     <Compile Include="Drawing3D\Surface.vb" />
     <Compile Include="Drawing3D\Models\Cube.vb" />
-    <Compile Include="Drawing3D\Device\GDIDevice.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Drawing3D\Point3D.vb" />
     <Compile Include="Drawing3D\Math3D\Projection.vb" />
     <Compile Include="Drawing3D\Math3D\Matrix.vb" />
@@ -884,9 +877,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Drawing2D\Colors\ColorPalette.resx">
       <DependentUpon>ColorPalette.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Drawing3D\Device\GDIDevice.resx">
-      <DependentUpon>GDIDevice.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
