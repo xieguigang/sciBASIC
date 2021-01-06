@@ -48,9 +48,9 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Math
 Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Device.Worker
-Imports System.Math
 Imports Keyboard = System.Windows.Forms.Keys
 
 Namespace Drawing3D.Device

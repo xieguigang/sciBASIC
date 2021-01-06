@@ -45,6 +45,9 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.Win32
 
+#If netcore5 = 0 Then
+
+
 Public Module RegistryUtils
 
     ''' <summary>
@@ -124,3 +127,5 @@ Public Module RegistryUtils
         Return bAns
     End Function
 End Module
+
+#End If

@@ -42,6 +42,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.MIME.Markup.MarkDown
 
+<HideModuleName>
 Public Module Extensions
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

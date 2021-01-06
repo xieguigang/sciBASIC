@@ -46,6 +46,8 @@ Imports System.Data
 Imports System.Data.OleDb
 Imports System.Text
 
+#If netcore5 = 0 Then
+
 Namespace Excel
 
     ''' <summary>
@@ -150,3 +152,5 @@ Namespace Excel
         End Function
     End Class
 End Namespace
+
+#End If

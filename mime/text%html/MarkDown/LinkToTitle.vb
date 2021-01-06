@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::4557456d67b1fc93c88d1274cf8fb985, mime\text%html\MarkDown\LinkToTitle.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class LinkToTitle
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: GetExtension, LinkEvaluator, RequestToGoogleApi, Transform, videoIdAlreadyExist
-    ' 
-    '         Sub: ParseApiResponse
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class LinkToTitle
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: GetExtension, LinkEvaluator, RequestToGoogleApi, Transform, videoIdAlreadyExist
+' 
+'         Sub: ParseApiResponse
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -51,13 +51,10 @@
 ' 
 
 
-Imports System.Collections
-Imports System.Collections.Generic
 Imports System.Net
 Imports System.Text
 Imports System.Text.RegularExpressions
-Imports System.Web.Script.Serialization
-
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace MarkDown
 
@@ -167,8 +164,7 @@ Namespace MarkDown
         ''' </summary>
         ''' <param name="res"></param>
         Private Sub ParseApiResponse(res As String)
-            Dim serializer As New JavaScriptSerializer()
-            Dim json = serializer.Deserialize(Of Dictionary(Of String, Object))(res)
+            Dim json = res.LoadJSON(Of Dictionary(Of String, Object))
 
             For Each item As Dictionary(Of String, Object) In DirectCast(json("items"), ArrayList)
                 For i As Integer = 0 To _maxLinks - 1

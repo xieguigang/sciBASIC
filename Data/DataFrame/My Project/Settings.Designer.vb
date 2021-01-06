@@ -11,6 +11,7 @@
 Option Strict On
 Option Explicit On
 
+#If netcore5 = 0 Then
 
 Namespace My
     
@@ -71,3 +72,4 @@ Namespace My
         End Property
     End Module
 End Namespace
+#end if

@@ -45,6 +45,8 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.csv.IO
 
+#If netcore5 = 0 Then
+
 Namespace Excel
 
     <HideModuleName> Public Module Extensions
@@ -131,3 +133,5 @@ Namespace Excel
         End Sub
     End Module
 End Namespace
+
+#End If

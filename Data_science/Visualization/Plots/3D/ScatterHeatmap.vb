@@ -83,8 +83,7 @@ Namespace Plot3D
                              Optional matrix As List(Of EntityObject) = Nothing,
                              Optional axisFont$ = CSSFont.Win10Normal,
                              Optional legendFont As Font = Nothing,
-                             Optional showLegend As Boolean = True,
-                             Optional dev As FormDevice = Nothing) As GraphicsData
+                             Optional showLegend As Boolean = True) As GraphicsData
 
             Dim data As (sf As Surface, C As Double())() =
                 f.Surface(
@@ -97,8 +96,8 @@ Namespace Plot3D
                 camera, legendTitle,
                 mapName, mapLevels,
                 bg,
-                axisFont, legendFont, showLegend,
-                dev:=dev)
+                axisFont, legendFont, showLegend
+            )
         End Function
 
         ''' <summary>
@@ -199,7 +198,6 @@ Namespace Plot3D
                              Optional axisFont$ = CSSFont.Win10Normal,
                              Optional legendFont As Font = Nothing,
                              Optional showLegend As Boolean = True,
-                             Optional dev As FormDevice = Nothing,
                              Optional padding$ = g.ZeroPadding) As GraphicsData
 
             Dim modelPlot As DrawGraphics =
@@ -213,22 +211,13 @@ Namespace Plot3D
                                  showLegend:=showLegend)
             Dim margin As CSS.Padding = padding
 
-            If Not dev Is Nothing Then
-                dev.canvas = New Canvas With {
-                    .Dock = DockStyle.Fill,
-                    .Plot = modelPlot
-                }
-                dev.canvas.Camera.screen =
-                    camera.screen
-
-                Call dev.ShowDialog()
-            End If
-
             Return GraphicsPlots(
                 camera.screen, margin,
                 bg$,
                 driver:=Drivers.GDI,
-                plotAPI:=Sub(ByRef g, region) Call modelPlot(DirectCast(g, Graphics2D).Graphics, camera))
+                plotAPI:=Sub(ByRef g, region)
+                             Call modelPlot(DirectCast(g, Graphics2D).Graphics, camera)
+                         End Sub)
         End Function
 
         Private Structure __plot

@@ -54,7 +54,7 @@ Module heatmapPlot
         Dim theme As New Theme With {
             .padding = g.DefaultPadding,
             .tagCSS = CSSFont.PlotLabelNormal,
-            .gridStroke = Stroke.AxisGridStroke,
+            .gridStrokeX = Stroke.AxisGridStroke,
             .axisTickCSS = CSSFont.PlotLabelNormal,
             .axisStroke = Stroke.AxisGridStroke,
             .background = "white",

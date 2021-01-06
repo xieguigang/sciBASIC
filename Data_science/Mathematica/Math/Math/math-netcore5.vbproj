@@ -28,6 +28,10 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
+	  <DefineConstants>netcore5=1</DefineConstants>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+	  <DebugSymbols>true</DebugSymbols>
+	  <DebugType>full</DebugType>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

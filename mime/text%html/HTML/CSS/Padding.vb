@@ -48,7 +48,6 @@
 Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
@@ -57,7 +56,6 @@ Namespace HTML.CSS
     ''' <summary>
     ''' Represents padding or margin information associated with a gdi element. (padding: top, right, bottom, left)
     ''' </summary>
-    <TypeConverter(GetType(PaddingConverter))>
     Public Structure Padding
 
         ''' <summary>

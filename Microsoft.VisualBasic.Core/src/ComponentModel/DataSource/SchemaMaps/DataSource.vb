@@ -60,6 +60,22 @@ Imports FieldTuple = System.Collections.Generic.KeyValuePair(Of Microsoft.Visual
 
 Namespace ComponentModel.DataSourceModel.SchemaMaps
 
+#If netcore5 = 1 Then
+
+    <AttributeUsage(AttributeTargets.[Property], Inherited:=True, AllowMultiple:=False)>
+    Public Class ColumnAttribute : Inherits Attribute
+
+        Public Property Name As String
+
+        Sub New(name As String)
+            Me.Name = name
+        End Sub
+
+        Sub New()
+        End Sub
+    End Class
+#End If
+
     ''' <summary>
     ''' <see cref="DataFrameColumnAttribute"/>属性的别称
     ''' </summary>

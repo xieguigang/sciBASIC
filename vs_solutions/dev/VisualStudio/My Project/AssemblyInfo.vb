@@ -7,7 +7,7 @@ Imports System.Runtime.InteropServices
 ' associated with an assembly.
 
 ' Review the values of the assembly attributes
-
+#if netcore5=0 then
 <Assembly: AssemblyTitle("VisualStudio tools for *.vbproj")>
 <Assembly: AssemblyDescription("")>
 <Assembly: AssemblyCompany("sciBASIC software foundation")>
@@ -33,3 +33,4 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.13.*")>
 <Assembly: AssemblyFileVersion("1.333.*")>
+#end if
