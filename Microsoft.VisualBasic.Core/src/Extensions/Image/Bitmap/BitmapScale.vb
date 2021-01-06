@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8558b2fb94b68822f62a8bb63df7db18, Microsoft.VisualBasic.Core\Extensions\Image\Bitmap\BitmapScale.vb"
+﻿#Region "Microsoft.VisualBasic::8558b2fb94b68822f62a8bb63df7db18, Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\BitmapScale.vb"
 
     ' Author:
     ' 

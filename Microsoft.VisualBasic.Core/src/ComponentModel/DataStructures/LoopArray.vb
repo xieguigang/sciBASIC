@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6cbca453e2ad0186dd0aa5e35dce4f3a, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\LoopArray.vb"
+﻿#Region "Microsoft.VisualBasic::6cbca453e2ad0186dd0aa5e35dce4f3a, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\LoopArray.vb"
 
     ' Author:
     ' 

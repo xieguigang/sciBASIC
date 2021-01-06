@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b4b53501deba28ff4c7b49fc6245fe8, Microsoft.VisualBasic.Core\ComponentModel\DataSource\SchemaMaps\Schema.vb"
+﻿#Region "Microsoft.VisualBasic::0b4b53501deba28ff4c7b49fc6245fe8, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\Schema.vb"
 
     ' Author:
     ' 

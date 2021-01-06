@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10cd986be3fd926160839206cb975118, Microsoft.VisualBasic.Core\Extensions\Reflection\ScriptMeta.vb"
+﻿#Region "Microsoft.VisualBasic::10cd986be3fd926160839206cb975118, Microsoft.VisualBasic.Core\src\Extensions\Reflection\ScriptMeta.vb"
 
     ' Author:
     ' 

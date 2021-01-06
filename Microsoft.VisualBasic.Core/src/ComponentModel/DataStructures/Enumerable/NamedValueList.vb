@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b28acecbf305e4db101b0452f5ed115e, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Enumerable\NamedValueList.vb"
+﻿#Region "Microsoft.VisualBasic::b28acecbf305e4db101b0452f5ed115e, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Enumerable\NamedValueList.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9972dfc3f040568740d2c80ffbaff018, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Selector\NumericTagged.vb"
+﻿#Region "Microsoft.VisualBasic::9972dfc3f040568740d2c80ffbaff018, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Selector\NumericTagged.vb"
 
     ' Author:
     ' 

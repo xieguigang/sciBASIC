@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3cc3f7edc2d1c7b047a5aa0768856e14, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\IO.vb"
+﻿#Region "Microsoft.VisualBasic::3cc3f7edc2d1c7b047a5aa0768856e14, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\IO.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::633a486a87f1e57733543dbb7304615f, Microsoft.VisualBasic.Core\ComponentModel\DataSource\SchemaMaps\DataSource.vb"
+﻿#Region "Microsoft.VisualBasic::d12d7aa15c4f9dbc784b97509156a7b1, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\DataSource.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,12 @@
 
     ' Summaries:
 
+    '     Class ColumnAttribute
+    ' 
+    '         Properties: Name
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '     Class Field
     ' 
     '         Constructor: (+1 Overloads) Sub New

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41143267e70f799ff23bc3bc88caa538, Microsoft.VisualBasic.Core\Net\HTTP\URL.vb"
+﻿#Region "Microsoft.VisualBasic::41143267e70f799ff23bc3bc88caa538, Microsoft.VisualBasic.Core\src\Net\HTTP\URL.vb"
 
     ' Author:
     ' 

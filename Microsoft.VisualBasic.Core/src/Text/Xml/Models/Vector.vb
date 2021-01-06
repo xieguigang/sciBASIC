@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66246ecfcb788370cee68475bb8589c9, Microsoft.VisualBasic.Core\Text\Xml\Models\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::66246ecfcb788370cee68475bb8589c9, Microsoft.VisualBasic.Core\src\Text\Xml\Models\Vector.vb"
 
     ' Author:
     ' 

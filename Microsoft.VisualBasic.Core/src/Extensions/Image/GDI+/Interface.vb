@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60e734e343b1c5526c060e73de90e90f, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Interface.vb"
+﻿#Region "Microsoft.VisualBasic::8aa8e6dcee3765fb77eabc9f6c6ca27a, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Interface.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,8 @@
     ' Summaries:
 
     '     Class IGraphics
+    ' 
+    '         Properties: Dpi
     ' 
     '         Sub: FillPie, FillRectangle, Finalize
     ' 

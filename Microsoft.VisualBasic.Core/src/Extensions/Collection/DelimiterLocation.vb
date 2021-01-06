@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8fb9d8c3f392482d3d4b812712e6791, Microsoft.VisualBasic.Core\Extensions\Collection\DelimiterLocation.vb"
+﻿#Region "Microsoft.VisualBasic::f8fb9d8c3f392482d3d4b812712e6791, Microsoft.VisualBasic.Core\src\Extensions\Collection\DelimiterLocation.vb"
 
     ' Author:
     ' 

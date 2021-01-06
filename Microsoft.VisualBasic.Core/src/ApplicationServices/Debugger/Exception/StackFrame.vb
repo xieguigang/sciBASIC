@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae375a37e99dda39f7e9152bb2cb5a9e, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Exception\StackFrame.vb"
+﻿#Region "Microsoft.VisualBasic::ae375a37e99dda39f7e9152bb2cb5a9e, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\StackFrame.vb"
 
     ' Author:
     ' 

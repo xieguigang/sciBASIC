@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57256a9215613a36d1a03cec97082c50, Microsoft.VisualBasic.Core\ComponentModel\File\XmlAssembly\DigitalSignature.vb"
+﻿#Region "Microsoft.VisualBasic::57256a9215613a36d1a03cec97082c50, Microsoft.VisualBasic.Core\src\ComponentModel\File\XmlAssembly\DigitalSignature.vb"
 
     ' Author:
     ' 

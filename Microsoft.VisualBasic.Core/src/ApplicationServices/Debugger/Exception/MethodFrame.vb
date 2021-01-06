@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4be2c6aed1bae45a0ef0d6f229ed811e, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Exception\MethodFrame.vb"
+﻿#Region "Microsoft.VisualBasic::4be2c6aed1bae45a0ef0d6f229ed811e, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\MethodFrame.vb"
 
     ' Author:
     ' 

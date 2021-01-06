@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a04d31342f9719ac8e8b95597bb778b3, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::a04d31342f9719ac8e8b95597bb778b3, Microsoft.VisualBasic.Core\src\Language\Linq\Vectorization\Extensions.vb"
 
     ' Author:
     ' 

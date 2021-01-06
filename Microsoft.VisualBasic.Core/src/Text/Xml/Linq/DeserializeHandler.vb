@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73ec576aa7efd1e7c755d62144fc32f4, Microsoft.VisualBasic.Core\Text\Xml\Linq\DeserializeHandler.vb"
+﻿#Region "Microsoft.VisualBasic::73ec576aa7efd1e7c755d62144fc32f4, Microsoft.VisualBasic.Core\src\Text\Xml\Linq\DeserializeHandler.vb"
 
     ' Author:
     ' 

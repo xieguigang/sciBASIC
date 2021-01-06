@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2c26c4d7ba492eb6c8445f3badcfb78, Microsoft.VisualBasic.Core\Serialization\BinaryDumping\ObjectVisitor.vb"
+﻿#Region "Microsoft.VisualBasic::b2c26c4d7ba492eb6c8445f3badcfb78, Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\ObjectVisitor.vb"
 
     ' Author:
     ' 

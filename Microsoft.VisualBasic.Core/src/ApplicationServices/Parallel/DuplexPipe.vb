@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1566ff5b9f0abffc84056b6a5f291cfd, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\DuplexPipe.vb"
+﻿#Region "Microsoft.VisualBasic::1566ff5b9f0abffc84056b6a5f291cfd, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\DuplexPipe.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1961c4174e9956d96625135e986162b, Microsoft.VisualBasic.Core\CommandLine\CLI\IORedirect.vb"
+﻿#Region "Microsoft.VisualBasic::a1961c4174e9956d96625135e986162b, Microsoft.VisualBasic.Core\src\CommandLine\CLI\IORedirect.vb"
 
     ' Author:
     ' 

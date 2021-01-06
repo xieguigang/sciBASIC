@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7eae30de9a7a30da019e1d768ce52f24, Microsoft.VisualBasic.Core\Text\IO\TextEncodings.vb"
+﻿#Region "Microsoft.VisualBasic::7eae30de9a7a30da019e1d768ce52f24, Microsoft.VisualBasic.Core\src\Text\IO\TextEncodings.vb"
 
     ' Author:
     ' 

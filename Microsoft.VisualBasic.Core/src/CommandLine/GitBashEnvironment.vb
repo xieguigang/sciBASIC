@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c67584eb4965fd0acd740b0863144831, Microsoft.VisualBasic.Core\CommandLine\GitBashEnvironment.vb"
+﻿#Region "Microsoft.VisualBasic::054bd1f8370bf193d5254fd978ad2c5d, Microsoft.VisualBasic.Core\src\CommandLine\GitBashEnvironment.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: isRunningOnGitBash
     ' 
-    '         Function: fixWindowsNetworkDirectory, GetCLIArgs
+    '         Function: fixWindowsNetworkDirectory, GetCommandLineArgs
     ' 
     ' 
     ' /********************************************************************************/

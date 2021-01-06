@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fdd744a2f62d1942b365ea191ad05412, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\xConsole\CoolWriteSettings.vb"
+﻿#Region "Microsoft.VisualBasic::fdd744a2f62d1942b365ea191ad05412, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\xConsole\CoolWriteSettings.vb"
 
     ' Author:
     ' 

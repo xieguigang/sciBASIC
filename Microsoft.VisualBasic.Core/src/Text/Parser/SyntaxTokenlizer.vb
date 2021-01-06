@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::280281952dac82bdc43ff46df82c23ff, Microsoft.VisualBasic.Core\Text\Parser\SyntaxTokenlizer.vb"
+﻿#Region "Microsoft.VisualBasic::280281952dac82bdc43ff46df82c23ff, Microsoft.VisualBasic.Core\src\Text\Parser\SyntaxTokenlizer.vb"
 
     ' Author:
     ' 

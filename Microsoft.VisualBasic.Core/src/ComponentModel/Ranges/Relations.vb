@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::46642feb1338db563f29bfee8498d597, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Relations.vb"
+﻿#Region "Microsoft.VisualBasic::46642feb1338db563f29bfee8498d597, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Relations.vb"
 
     ' Author:
     ' 

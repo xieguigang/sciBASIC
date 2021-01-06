@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d29d822507b18e368473917fe944414, Microsoft.VisualBasic.Core\CommandLine\Stream.vb"
+﻿#Region "Microsoft.VisualBasic::1d29d822507b18e368473917fe944414, Microsoft.VisualBasic.Core\src\CommandLine\Stream.vb"
 
     ' Author:
     ' 

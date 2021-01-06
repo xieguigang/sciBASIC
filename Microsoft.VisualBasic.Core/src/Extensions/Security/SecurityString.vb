@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76334608bbcff3839c42f84eed4ddab8, Microsoft.VisualBasic.Core\Extensions\Security\SecurityString.vb"
+﻿#Region "Microsoft.VisualBasic::76334608bbcff3839c42f84eed4ddab8, Microsoft.VisualBasic.Core\src\Extensions\Security\SecurityString.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f47b00a41324cc74d53f3ac361df195f, Data_science\DataMining\DynamicProgramming\Generic\GenericSymbol.vb"
+﻿#Region "Microsoft.VisualBasic::61c1e954ab5b1b2692e6084b6ac0215e, Data_science\DataMining\DynamicProgramming\Generic\GenericSymbol.vb"
 
     ' Author:
     ' 
@@ -77,4 +77,3 @@ Public Class GenericSymbol(Of T)
     End Function
 
 End Class
-

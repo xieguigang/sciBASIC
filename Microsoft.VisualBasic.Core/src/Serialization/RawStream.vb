@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66a434bcb99998cdd531e10a039f64a0, Microsoft.VisualBasic.Core\Serialization\RawStream.vb"
+﻿#Region "Microsoft.VisualBasic::66a434bcb99998cdd531e10a039f64a0, Microsoft.VisualBasic.Core\src\Serialization\RawStream.vb"
 
     ' Author:
     ' 

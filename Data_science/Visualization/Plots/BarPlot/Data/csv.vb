@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3c21682e98fc79f45cab88b92b81b19, Data_science\Visualization\Plots\BarPlot\Data\csv.vb"
+﻿#Region "Microsoft.VisualBasic::406f4b866d5a7c09e6797b6edfff68f0, Data_science\Visualization\Plots\BarPlot\Data\csv.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module BarDataTableExtensions
     ' 
-    '         Function: (+4 Overloads) LoadBarData, LoadBarDataExcel
+    '         Function: (+4 Overloads) LoadBarData
     ' 
     ' 
     ' /********************************************************************************/

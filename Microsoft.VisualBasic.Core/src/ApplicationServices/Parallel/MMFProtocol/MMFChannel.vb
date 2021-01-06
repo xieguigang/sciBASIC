@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::205c05be186b42548f64d0608048ec4a, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\MMFProtocol\MMFChannel.vb"
+﻿#Region "Microsoft.VisualBasic::205c05be186b42548f64d0608048ec4a, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\MMFProtocol\MMFChannel.vb"
 
     ' Author:
     ' 

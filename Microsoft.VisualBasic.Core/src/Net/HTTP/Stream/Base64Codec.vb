@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca14b5fdbc14310fce50c21b66ac1ad4, Microsoft.VisualBasic.Core\Net\HTTP\Stream\Base64Codec.vb"
+﻿#Region "Microsoft.VisualBasic::ca14b5fdbc14310fce50c21b66ac1ad4, Microsoft.VisualBasic.Core\src\Net\HTTP\Stream\Base64Codec.vb"
 
     ' Author:
     ' 

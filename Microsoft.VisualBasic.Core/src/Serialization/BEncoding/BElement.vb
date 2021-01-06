@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::129b1f547a88240045919827921939cc, Microsoft.VisualBasic.Core\Serialization\BEncoding\BElement.vb"
+﻿#Region "Microsoft.VisualBasic::129b1f547a88240045919827921939cc, Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BElement.vb"
 
     ' Author:
     ' 

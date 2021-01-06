@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::062abf9170cbd65288b462d737aac04f, Microsoft.VisualBasic.Core\Extensions\CodeDOM\CodeDOMExpressions.vb"
+﻿#Region "Microsoft.VisualBasic::062abf9170cbd65288b462d737aac04f, vs_solutions\dev\ApplicationServices\CodeDOM\CodeDOMExpressions.vb"
 
     ' Author:
     ' 

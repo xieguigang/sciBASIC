@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::621fac823c2f87d127ece9f31559d0d4, Microsoft.VisualBasic.Core\ApplicationServices\DynamicInterop\UnmanagedDll.vb"
+﻿#Region "Microsoft.VisualBasic::621fac823c2f87d127ece9f31559d0d4, Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\UnmanagedDll.vb"
 
     ' Author:
     ' 

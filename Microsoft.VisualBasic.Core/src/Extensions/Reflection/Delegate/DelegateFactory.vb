@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7de3b38abe167002542f089ac0bcd767, Microsoft.VisualBasic.Core\Extensions\Reflection\Delegate\DelegateFactory.vb"
+﻿#Region "Microsoft.VisualBasic::7de3b38abe167002542f089ac0bcd767, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Delegate\DelegateFactory.vb"
 
     ' Author:
     ' 

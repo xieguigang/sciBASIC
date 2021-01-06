@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7cbe2116c4c0a85a4d59fee4610999e9, Microsoft.VisualBasic.Core\Extensions\Image\Math\Intersections.vb"
+﻿#Region "Microsoft.VisualBasic::7cbe2116c4c0a85a4d59fee4610999e9, Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Intersections.vb"
 
     ' Author:
     ' 

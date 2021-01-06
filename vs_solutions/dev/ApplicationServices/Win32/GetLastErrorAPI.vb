@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd20f5bcd1d85cfbb30980c437ecdbb1, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Win32\GetLastErrorAPI.vb"
+﻿#Region "Microsoft.VisualBasic::dd20f5bcd1d85cfbb30980c437ecdbb1, vs_solutions\dev\ApplicationServices\Win32\GetLastErrorAPI.vb"
 
     ' Author:
     ' 

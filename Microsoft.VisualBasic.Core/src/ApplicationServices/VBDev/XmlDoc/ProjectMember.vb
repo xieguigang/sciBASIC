@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1dc90cb2f12c162a72a05f6fc744aa42, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\ProjectMember.vb"
+﻿#Region "Microsoft.VisualBasic::1dc90cb2f12c162a72a05f6fc744aa42, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\ProjectMember.vb"
 
     ' Author:
     ' 

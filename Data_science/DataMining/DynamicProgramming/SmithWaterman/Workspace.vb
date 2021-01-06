@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b36b20e0b0e9c2dd267a749772d4b4c5, Data_science\DataMining\DynamicProgramming\SmithWaterman\Workspace.vb"
+﻿#Region "Microsoft.VisualBasic::e9d65084b6ac0c81cc8f9828949af17b, Data_science\DataMining\DynamicProgramming\SmithWaterman\Workspace.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,6 @@
 
 #End Region
 
-
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 
@@ -75,4 +74,3 @@ Namespace SmithWaterman
         End Function
     End Module
 End Namespace
-

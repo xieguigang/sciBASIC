@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fda1c38ae53e0b9f9133d16483a1adca, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::fda1c38ae53e0b9f9133d16483a1adca, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\Extensions.vb"
 
     ' Author:
     ' 

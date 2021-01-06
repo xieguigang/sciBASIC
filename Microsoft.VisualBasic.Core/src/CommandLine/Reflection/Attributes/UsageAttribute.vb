@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4eb4ad1c0619509032235140d87e3c1, Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\UsageAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::e4eb4ad1c0619509032235140d87e3c1, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\UsageAttribute.vb"
 
     ' Author:
     ' 

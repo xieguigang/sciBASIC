@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfec2398838c46299331ea4c17705bc3, Data_science\Mathematica\Math\Math\Test\LPPExamples.vb"
+﻿#Region "Microsoft.VisualBasic::cfec2398838c46299331ea4c17705bc3, Data_science\Mathematica\Math\test\LPPExamples.vb"
 
     ' Author:
     ' 

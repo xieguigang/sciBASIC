@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b224ec039db72efb242ec59e37b759f6, Data\BinaryData\BinaryData\Stream\BinaryStringFormat.vb"
+﻿#Region "Microsoft.VisualBasic::e25d4e20023fc702cebecc792629f9c6, Data\BinaryData\BinaryData\Stream\BinaryStringFormat.vb"
 
     ' Author:
     ' 
@@ -81,4 +81,3 @@ Public Enum BinaryStringFormat
     ''' </summary>
     NoPrefixOrTermination
 End Enum
-

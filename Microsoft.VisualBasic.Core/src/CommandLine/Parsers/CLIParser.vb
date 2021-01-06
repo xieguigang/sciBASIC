@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7b82975a8f2a6d5ad70781db8069798, Microsoft.VisualBasic.Core\CommandLine\Parsers\CLIParser.vb"
+﻿#Region "Microsoft.VisualBasic::c7b82975a8f2a6d5ad70781db8069798, Microsoft.VisualBasic.Core\src\CommandLine\Parsers\CLIParser.vb"
 
     ' Author:
     ' 

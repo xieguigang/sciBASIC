@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a59babce3b991950d4db3a227e1593da, Microsoft.VisualBasic.Core\Text\Parser\CharBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::a59babce3b991950d4db3a227e1593da, Microsoft.VisualBasic.Core\src\Text\Parser\CharBuffer.vb"
 
     ' Author:
     ' 

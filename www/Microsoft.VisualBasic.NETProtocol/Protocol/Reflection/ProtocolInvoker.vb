@@ -1,43 +1,43 @@
-﻿#Region "Microsoft.VisualBasic::9994e14f259e6e598ad3fb625cf25a82, www\Microsoft.VisualBasic.NETProtocol\Protocol\Reflection\ProtocolInvoker.vb"
+﻿#Region "Microsoft.VisualBasic::3fb6822350d992e1b8460e4657e78f04, www\Microsoft.VisualBasic.NETProtocol\Protocol\Reflection\ProtocolInvoker.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class ProtocolInvoker
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: InvokeProtocol0, InvokeProtocol1, InvokeProtocol2, ToString
-' 
-' 
-' /********************************************************************************/
+    '     Class ProtocolInvoker
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: InvokeProtocol0, InvokeProtocol1, InvokeProtocol2, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

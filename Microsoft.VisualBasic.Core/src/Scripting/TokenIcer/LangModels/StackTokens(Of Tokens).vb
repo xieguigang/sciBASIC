@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69c1bc07585ea9155b404592040ec672, Microsoft.VisualBasic.Core\Scripting\TokenIcer\LangModels\StackTokens(Of Tokens).vb"
+﻿#Region "Microsoft.VisualBasic::69c1bc07585ea9155b404592040ec672, Microsoft.VisualBasic.Core\src\Scripting\TokenIcer\LangModels\StackTokens(Of Tokens).vb"
 
     ' Author:
     ' 

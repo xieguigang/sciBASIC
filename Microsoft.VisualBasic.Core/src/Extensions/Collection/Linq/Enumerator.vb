@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ef5e07986e9065218497a65eeada9e2, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Enumerator.vb"
+﻿#Region "Microsoft.VisualBasic::8ef5e07986e9065218497a65eeada9e2, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\Enumerator.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3476fa9a65292ec12085b6f71a225118, Microsoft.VisualBasic.Core\Serialization\JSON\AnonymousJSON.vb"
+﻿#Region "Microsoft.VisualBasic::3476fa9a65292ec12085b6f71a225118, Microsoft.VisualBasic.Core\src\Serialization\JSON\AnonymousJSON.vb"
 
     ' Author:
     ' 

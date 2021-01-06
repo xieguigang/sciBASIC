@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e36848874153231ebc1c4829a707141a, Microsoft.VisualBasic.Core\Net\HTTP\HttpHeaderName.vb"
+﻿#Region "Microsoft.VisualBasic::e36848874153231ebc1c4829a707141a, Microsoft.VisualBasic.Core\src\Net\HTTP\HttpHeaderName.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::afd81d48d0503509d6e7de6b256990d5, Microsoft.VisualBasic.Core\ComponentModel\Uid.vb"
+﻿#Region "Microsoft.VisualBasic::afd81d48d0503509d6e7de6b256990d5, Microsoft.VisualBasic.Core\src\ComponentModel\Uid.vb"
 
     ' Author:
     ' 

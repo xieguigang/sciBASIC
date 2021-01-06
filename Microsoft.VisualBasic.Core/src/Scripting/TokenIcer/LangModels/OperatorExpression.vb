@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7264459fc432f41ff7af91c66598588, Microsoft.VisualBasic.Core\Scripting\TokenIcer\LangModels\OperatorExpression.vb"
+﻿#Region "Microsoft.VisualBasic::b7264459fc432f41ff7af91c66598588, Microsoft.VisualBasic.Core\src\Scripting\TokenIcer\LangModels\OperatorExpression.vb"
 
     ' Author:
     ' 

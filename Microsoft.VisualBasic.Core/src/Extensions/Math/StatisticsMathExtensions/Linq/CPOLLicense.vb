@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4449e50ebab5d68ae6a22af3e6da7fe0, Microsoft.VisualBasic.Core\Extensions\Math\StatisticsMathExtensions\Linq\CPOLLicense.vb"
+﻿#Region "Microsoft.VisualBasic::4449e50ebab5d68ae6a22af3e6da7fe0, Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\Linq\CPOLLicense.vb"
 
     ' Author:
     ' 

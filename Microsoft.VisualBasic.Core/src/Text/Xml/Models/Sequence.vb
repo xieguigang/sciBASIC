@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::023e62024aa46f51d84770b70a446c3f, Microsoft.VisualBasic.Core\Text\Xml\Models\Sequence.vb"
+﻿#Region "Microsoft.VisualBasic::023e62024aa46f51d84770b70a446c3f, Microsoft.VisualBasic.Core\src\Text\Xml\Models\Sequence.vb"
 
     ' Author:
     ' 

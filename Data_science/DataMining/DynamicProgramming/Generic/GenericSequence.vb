@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da605b1517852f939735d9208ccc4a2a, Data_science\DataMining\DynamicProgramming\Generic\GenericSequence.vb"
+﻿#Region "Microsoft.VisualBasic::48f70b9883d7db98da5930ec2caf2f81, Data_science\DataMining\DynamicProgramming\Generic\GenericSequence.vb"
 
     ' Author:
     ' 
@@ -118,4 +118,3 @@ Public Class GenericSequence(Of T) : Implements IEnumerable(Of T)
         Yield GetEnumerator()
     End Function
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d20bb5be4046a2734ca54f784bfe4ae8, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\IndexOf.vb"
+﻿#Region "Microsoft.VisualBasic::d20bb5be4046a2734ca54f784bfe4ae8, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\IndexOf.vb"
 
     ' Author:
     ' 

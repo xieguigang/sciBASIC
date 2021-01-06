@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d92e0c5aa27014389535aef2669c1eb, Microsoft.VisualBasic.Core\ComponentModel\Count.vb"
+﻿#Region "Microsoft.VisualBasic::9d92e0c5aa27014389535aef2669c1eb, Microsoft.VisualBasic.Core\src\ComponentModel\Count.vb"
 
     ' Author:
     ' 

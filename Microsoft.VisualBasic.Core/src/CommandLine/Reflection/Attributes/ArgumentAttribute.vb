@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c52e3666517e6b88ff6fc67c40087d51, Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\ArgumentAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::c52e3666517e6b88ff6fc67c40087d51, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\ArgumentAttribute.vb"
 
     ' Author:
     ' 

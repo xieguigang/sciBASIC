@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35513d1acd839863747dd88607d9ea23, Microsoft.VisualBasic.Core\Extensions\IO\IOStream.vb"
+﻿#Region "Microsoft.VisualBasic::35513d1acd839863747dd88607d9ea23, Microsoft.VisualBasic.Core\src\Extensions\IO\IOStream.vb"
 
     ' Author:
     ' 

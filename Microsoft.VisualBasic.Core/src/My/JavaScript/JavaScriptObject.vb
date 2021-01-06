@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36958daa809fe0d15066d99e66fa1d7d, Microsoft.VisualBasic.Core\My\JavaScript\JavaScriptObject.vb"
+﻿#Region "Microsoft.VisualBasic::75371fc279e0a479fbc4ad302efa02f5, Microsoft.VisualBasic.Core\src\My\JavaScript\JavaScriptObject.vb"
 
     ' Author:
     ' 
@@ -49,10 +49,13 @@
     ' 
     '     Class JavaScriptObject
     ' 
-    '         Properties: this
+    '         Properties: length, this
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: GetDescription, GetEnumerator, GetMemberValue, IEnumerable_GetEnumerator, IEnumerable_GetEnumerator1
+    ' 
+    '         Sub: Delete
     ' 
     ' 
     ' /********************************************************************************/

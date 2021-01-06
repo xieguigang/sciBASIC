@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f81c9416833b774b207578261958106e, Microsoft.VisualBasic.Core\ApplicationServices\DynamicInterop\IDynamicLibraryLoader.vb"
+﻿#Region "Microsoft.VisualBasic::f81c9416833b774b207578261958106e, Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\IDynamicLibraryLoader.vb"
 
     ' Author:
     ' 

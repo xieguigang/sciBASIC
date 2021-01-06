@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::509bd70de3e76794dc72672508508751, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\ThreadPool.vb"
+﻿#Region "Microsoft.VisualBasic::c3350a4c5a4d9cbbdbe5ed02e0cac093, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\ThreadPool.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class ThreadPool
     ' 
-    '         Properties: FullCapacity, NumOfThreads, ServerLoad, WorkingThreads
+    '         Properties: FullCapacity, NumOfThreads, WorkingThreads
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 

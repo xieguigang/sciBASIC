@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7fc737e272e77ae07237e66f8bf98aab, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\HeapSizeOf.vb"
+﻿#Region "Microsoft.VisualBasic::7fc737e272e77ae07237e66f8bf98aab, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\HeapSizeOf.vb"
 
     ' Author:
     ' 

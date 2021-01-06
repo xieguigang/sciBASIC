@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a37b6f937164793150a19d2d292c16e, Microsoft.VisualBasic.Core\Extensions\CodeDOM\VBC.vb"
+﻿#Region "Microsoft.VisualBasic::18e9da38f598749618515ebbc06b3cdf, vs_solutions\dev\ApplicationServices\VBC.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,8 @@
     ' Summaries:
 
     '     Module VBC
+    ' 
+    '         Properties: References
     ' 
     '         Function: (+2 Overloads) CompileCode, (+2 Overloads) CreateParameters
     ' 

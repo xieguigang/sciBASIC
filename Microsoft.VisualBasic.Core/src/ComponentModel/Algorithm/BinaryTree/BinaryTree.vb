@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fda547a3430273c710bd626c128ca7b1, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\BinaryTree.vb"
+﻿#Region "Microsoft.VisualBasic::cfc6bcf6877a49f0b31778d7d0153675, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\BinaryTree.vb"
 
     ' Author:
     ' 

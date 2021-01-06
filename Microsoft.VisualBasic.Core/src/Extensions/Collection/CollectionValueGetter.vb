@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::781b185dab07cc8d30b406dfff03edd1, Microsoft.VisualBasic.Core\Extensions\Collection\CollectionValueGetter.vb"
+﻿#Region "Microsoft.VisualBasic::781b185dab07cc8d30b406dfff03edd1, Microsoft.VisualBasic.Core\src\Extensions\Collection\CollectionValueGetter.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95139befeafc8875d31a9c3935bef117, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Selector\IndexSelector.vb"
+﻿#Region "Microsoft.VisualBasic::95139befeafc8875d31a9c3935bef117, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Selector\IndexSelector.vb"
 
     ' Author:
     ' 

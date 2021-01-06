@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30f0809533229e3dc85abb86041f8892, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\VectorAssertExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::30f0809533229e3dc85abb86041f8892, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\VectorAssertExtensions.vb"
 
     ' Author:
     ' 

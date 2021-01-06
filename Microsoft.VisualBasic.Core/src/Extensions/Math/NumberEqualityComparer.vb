@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cad92d5eeb55ae5a2249713b36b9cfa5, Microsoft.VisualBasic.Core\Extensions\Math\NumberEqualityComparer.vb"
+﻿#Region "Microsoft.VisualBasic::cad92d5eeb55ae5a2249713b36b9cfa5, Microsoft.VisualBasic.Core\src\Extensions\Math\NumberEqualityComparer.vb"
 
     ' Author:
     ' 

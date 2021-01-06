@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d6fc50e8d571fb7e37285a9f5e7c4828, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Set\Set.vb"
+﻿#Region "Microsoft.VisualBasic::d6fc50e8d571fb7e37285a9f5e7c4828, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Set\Set.vb"
 
     ' Author:
     ' 

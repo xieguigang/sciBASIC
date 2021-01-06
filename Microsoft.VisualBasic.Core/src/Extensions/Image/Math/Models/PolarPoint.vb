@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::888f79c5299ff5047041e4cd43dc1dd2, Microsoft.VisualBasic.Core\Extensions\Image\Math\Models\PolarPoint.vb"
+﻿#Region "Microsoft.VisualBasic::33ccec3d97a7e3d2d12b9a3a69728f1c, Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Models\PolarPoint.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a6c949f8bd03b2b1555e857dfed4bca, Microsoft.VisualBasic.Core\Scripting\VisualBasic\VBLanguage.vb"
+﻿#Region "Microsoft.VisualBasic::4a6c949f8bd03b2b1555e857dfed4bca, Microsoft.VisualBasic.Core\src\Scripting\VisualBasic\VBLanguage.vb"
 
     ' Author:
     ' 

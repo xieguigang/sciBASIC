@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7349ed8a280f9c2257cbc7d637d3d2dc, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\Serialization\Models\Member.vb"
+﻿#Region "Microsoft.VisualBasic::7349ed8a280f9c2257cbc7d637d3d2dc, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\Serialization\Models\Member.vb"
 
     ' Author:
     ' 

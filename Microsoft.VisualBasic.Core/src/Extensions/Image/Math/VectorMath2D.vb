@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::566a4adfde30cf1a6f4dc770db618305, Microsoft.VisualBasic.Core\Extensions\Image\Math\VectorMath2D.vb"
+﻿#Region "Microsoft.VisualBasic::566a4adfde30cf1a6f4dc770db618305, Microsoft.VisualBasic.Core\src\Extensions\Image\Math\VectorMath2D.vb"
 
     ' Author:
     ' 

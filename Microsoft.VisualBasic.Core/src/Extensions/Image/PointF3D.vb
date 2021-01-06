@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aeea519afd17da857810af769111f0a1, Microsoft.VisualBasic.Core\Extensions\Image\PointF3D.vb"
+﻿#Region "Microsoft.VisualBasic::aeea519afd17da857810af769111f0a1, Microsoft.VisualBasic.Core\src\Extensions\Image\PointF3D.vb"
 
     ' Author:
     ' 

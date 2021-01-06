@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73723afd1dbacd3cfbc032fff893babb, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::536c42bba666f777d6bda8598395092f, Microsoft.VisualBasic.Core\src\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -42,11 +42,10 @@
     '               (+2 Overloads) IsNaNImaginary, (+2 Overloads) JoinBy, (+2 Overloads) LongSeq, MatrixToUltraLargeVector, MatrixTranspose
     '               MatrixTransposeIgnoredDimensionAgreement, MD5, ModifyValue, (+2 Overloads) Offset, Range
     '               Remove, RemoveDuplicates, RemoveFirst, (+2 Overloads) RemoveLast, RunDriver
-    '               Second, SelectFile, SeqRandom, (+3 Overloads) Sequence, (+2 Overloads) SetValue
-    '               (+11 Overloads) ShadowCopy, Shell, Shuffles, Slice, (+2 Overloads) SplitMV
-    '               ToArray, ToBoolean, ToDictionary, ToNormalizedPathString, ToString
-    '               ToStringArray, ToVector, (+3 Overloads) TrimNull, TryCount, Unlist
-    '               WriteAddress
+    '               Second, SeqRandom, (+3 Overloads) Sequence, (+2 Overloads) SetValue, (+11 Overloads) ShadowCopy
+    '               Shell, Shuffles, Slice, (+2 Overloads) SplitMV, ToArray
+    '               ToBoolean, ToDictionary, ToNormalizedPathString, ToString, ToStringArray
+    '               ToVector, (+3 Overloads) TrimNull, TryCount, Unlist, WriteAddress
     ' 
     '     Sub: Add, FillBlank, Removes, (+2 Overloads) Swap, SwapItem
     ' 

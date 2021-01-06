@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa256efcdb8b080b4bf8bef21b08fe77, Microsoft.VisualBasic.Core\Serialization\BEncoding\BString.vb"
+﻿#Region "Microsoft.VisualBasic::fa256efcdb8b080b4bf8bef21b08fe77, Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BString.vb"
 
     ' Author:
     ' 

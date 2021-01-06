@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec9bbaee6431787cf17776fb8f0c20c4, Microsoft.VisualBasic.Core\My\Framework\Config.vb"
+﻿#Region "Microsoft.VisualBasic::ec9bbaee6431787cf17776fb8f0c20c4, Microsoft.VisualBasic.Core\src\My\Framework\Config.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34ca51ba0a998a99b78db02aae4872d6, Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\IExportAPI.vb"
+﻿#Region "Microsoft.VisualBasic::34ca51ba0a998a99b78db02aae4872d6, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\IExportAPI.vb"
 
     ' Author:
     ' 

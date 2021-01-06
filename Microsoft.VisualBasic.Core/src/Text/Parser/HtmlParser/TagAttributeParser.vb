@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a612a286e0f2fbd7d1b4c80e8f4dbeb, Microsoft.VisualBasic.Core\Text\Parser\HtmlParser\TagAttributeParser.vb"
+﻿#Region "Microsoft.VisualBasic::66ef98c51d437d6970376339c404e038, Microsoft.VisualBasic.Core\src\Text\Parser\HtmlParser\TagAttributeParser.vb"
 
     ' Author:
     ' 

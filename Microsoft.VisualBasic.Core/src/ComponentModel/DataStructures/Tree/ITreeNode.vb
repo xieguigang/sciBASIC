@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b6696441a2046b70e2472e46d333064, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Tree\ITreeNode.vb"
+﻿#Region "Microsoft.VisualBasic::1b6696441a2046b70e2472e46d333064, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Tree\ITreeNode.vb"
 
     ' Author:
     ' 

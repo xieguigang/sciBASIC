@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a23b3f3ab00bbcfc05cb0d5141312bc, Microsoft.VisualBasic.Core\Extensions\Math\StatisticsMathExtensions\Min.vb"
+﻿#Region "Microsoft.VisualBasic::8a23b3f3ab00bbcfc05cb0d5141312bc, Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\Min.vb"
 
     ' Author:
     ' 

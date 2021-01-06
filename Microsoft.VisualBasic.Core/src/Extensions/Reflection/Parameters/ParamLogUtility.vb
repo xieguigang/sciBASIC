@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e65ac0e10a02ece50ebe67cb3f1cabe6, Microsoft.VisualBasic.Core\Extensions\Reflection\Parameters\ParamLogUtility.vb"
+﻿#Region "Microsoft.VisualBasic::e65ac0e10a02ece50ebe67cb3f1cabe6, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Parameters\ParamLogUtility.vb"
 
     ' Author:
     ' 

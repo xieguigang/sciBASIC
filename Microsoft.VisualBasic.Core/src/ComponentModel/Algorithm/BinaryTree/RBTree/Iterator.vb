@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5d416823ceb889f45ddda51bb3399da, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\RBTree\Iterator.vb"
+﻿#Region "Microsoft.VisualBasic::b5d416823ceb889f45ddda51bb3399da, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\RBTree\Iterator.vb"
 
     ' Author:
     ' 

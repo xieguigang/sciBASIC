@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4716d19ec99e1438ef94d2a701d8ded, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\OperationTimeOut.vb"
+﻿#Region "Microsoft.VisualBasic::d4716d19ec99e1438ef94d2a701d8ded, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\OperationTimeOut.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a7968d67953fc77c9194e2b6a71927e0, Microsoft.VisualBasic.Core\Text\Xml\Linq\DataSetWriter.vb"
+﻿#Region "Microsoft.VisualBasic::a7968d67953fc77c9194e2b6a71927e0, Microsoft.VisualBasic.Core\src\Text\Xml\Linq\DataSetWriter.vb"
 
     ' Author:
     ' 

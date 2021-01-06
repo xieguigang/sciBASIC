@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eaca38e33d0009246042e31bc7b525e5, Microsoft.VisualBasic.Core\Extensions\Reflection\EnumHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::de9dc9cf1c6af1dd0cfada747461ef98, Microsoft.VisualBasic.Core\src\Extensions\Reflection\EnumHelpers.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module EnumHelpers
     ' 
-    '     Function: (+2 Overloads) Description, Enums, FlagCombinationDescription, (+2 Overloads) GetAllEnumFlags
+    '     Function: Description, Enums, FlagCombinationDescription, (+2 Overloads) GetAllEnumFlags
     ' 
     ' /********************************************************************************/
 

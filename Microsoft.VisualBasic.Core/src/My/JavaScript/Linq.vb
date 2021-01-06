@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e0486640d640d50e9a0c21084bc822e, Microsoft.VisualBasic.Core\My\JavaScript\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::4e0486640d640d50e9a0c21084bc822e, Microsoft.VisualBasic.Core\src\My\JavaScript\Linq.vb"
 
     ' Author:
     ' 

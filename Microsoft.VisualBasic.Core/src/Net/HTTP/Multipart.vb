@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2587947bba388a6f54f5f06c0d5246f1, Microsoft.VisualBasic.Core\Net\HTTP\Multipart.vb"
+﻿#Region "Microsoft.VisualBasic::2587947bba388a6f54f5f06c0d5246f1, Microsoft.VisualBasic.Core\src\Net\HTTP\Multipart.vb"
 
     ' Author:
     ' 

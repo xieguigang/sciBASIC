@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29053b400a3a14f972760567b564efce, Microsoft.VisualBasic.Core\Serialization\BinaryDumping\StructSerializer.vb"
+﻿#Region "Microsoft.VisualBasic::29053b400a3a14f972760567b564efce, Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\StructSerializer.vb"
 
     ' Author:
     ' 

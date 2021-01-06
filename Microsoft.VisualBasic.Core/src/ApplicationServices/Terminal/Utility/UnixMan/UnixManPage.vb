@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35489166c3921897868360271a31e3dd, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\Utility\UnixMan\UnixManPage.vb"
+﻿#Region "Microsoft.VisualBasic::35489166c3921897868360271a31e3dd, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\UnixMan\UnixManPage.vb"
 
     ' Author:
     ' 

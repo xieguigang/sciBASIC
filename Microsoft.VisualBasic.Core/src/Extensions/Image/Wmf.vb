@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21a2f95d22f6789dc482e906c608a118, Microsoft.VisualBasic.Core\Extensions\Image\Wmf.vb"
+﻿#Region "Microsoft.VisualBasic::21a2f95d22f6789dc482e906c608a118, Microsoft.VisualBasic.Core\src\Extensions\Image\Wmf.vb"
 
     ' Author:
     ' 

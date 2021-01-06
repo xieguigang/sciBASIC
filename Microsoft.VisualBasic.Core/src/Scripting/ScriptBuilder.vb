@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb5e471fe8bd0f8e9ed7a80dee4e6be0, Microsoft.VisualBasic.Core\Scripting\ScriptBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::fb5e471fe8bd0f8e9ed7a80dee4e6be0, Microsoft.VisualBasic.Core\src\Scripting\ScriptBuilder.vb"
 
     ' Author:
     ' 

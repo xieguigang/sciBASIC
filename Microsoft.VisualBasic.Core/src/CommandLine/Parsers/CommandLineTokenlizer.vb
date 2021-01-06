@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16ce6bbafd1ac4d26788c7d3c7745416, Microsoft.VisualBasic.Core\CommandLine\Parsers\CommandLineTokenlizer.vb"
+﻿#Region "Microsoft.VisualBasic::16ce6bbafd1ac4d26788c7d3c7745416, Microsoft.VisualBasic.Core\src\CommandLine\Parsers\CommandLineTokenlizer.vb"
 
     ' Author:
     ' 

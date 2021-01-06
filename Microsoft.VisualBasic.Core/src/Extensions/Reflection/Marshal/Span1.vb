@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::853134c9b8f16567c71f1478ebe03ad9, Microsoft.VisualBasic.Core\Extensions\Reflection\Marshal\Span1.vb"
+﻿#Region "Microsoft.VisualBasic::853134c9b8f16567c71f1478ebe03ad9, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Marshal\Span1.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d6a6fde3105e3657661aac7c370b9657, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\JoinExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::d6a6fde3105e3657661aac7c370b9657, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\JoinExtensions.vb"
 
     ' Author:
     ' 

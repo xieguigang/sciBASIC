@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::94d979ef514cb374d6919d8ffa1777f6, Microsoft.VisualBasic.Core\Net\Tcp\TCPExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::94d979ef514cb374d6919d8ffa1777f6, Microsoft.VisualBasic.Core\src\Net\Tcp\TCPExtensions.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1068aea370c4149d1447d03a79ee8d3, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\PathExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::26a3d5f28fa3038b8d1d6808fbaa9637, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\PathExtensions.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     ' Module PathExtensions
     ' 
     '     Function: BaseName, ChangeSuffix, DeleteFile, DIR, DirectoryExists
-    '               DirectoryName, EnumerateFiles, (+2 Overloads) ExtensionSuffix, FileCopy, (+2 Overloads) FileExists
+    '               DirectoryName, EnumerateFiles, (+2 Overloads) ExtensionSuffix, FileCopy, FileExists
     '               FileLength, FileMove, FileName, FileOpened, GetDirectoryFullPath
     '               GetFullPath, ListDirectory, ListFiles, Long2Short, (+2 Overloads) NormalizePathString
     '               ParentDirName, ParentPath, PathCombine, PathIllegal, ReadDirectory

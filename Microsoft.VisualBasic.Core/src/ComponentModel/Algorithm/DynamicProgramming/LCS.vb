@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::552ee95a1179b4dbfe7b774f034ebd00, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\DynamicProgramming\LCS.vb"
+﻿#Region "Microsoft.VisualBasic::552ee95a1179b4dbfe7b774f034ebd00, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\LCS.vb"
 
     ' Author:
     ' 

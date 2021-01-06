@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d813ef73df179417ef25e8c374add697, Microsoft.VisualBasic.Core\Serialization\JSON\Formatter\Strategies\DoubleQuoteStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::d813ef73df179417ef25e8c374add697, Microsoft.VisualBasic.Core\src\Serialization\JSON\Formatter\Strategies\DoubleQuoteStrategy.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b43dd450ac1875ebd780ed6c399af063, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Win32\WindowsServices.vb"
+﻿#Region "Microsoft.VisualBasic::b43dd450ac1875ebd780ed6c399af063, vs_solutions\dev\ApplicationServices\Win32\WindowsServices.vb"
 
     ' Author:
     ' 

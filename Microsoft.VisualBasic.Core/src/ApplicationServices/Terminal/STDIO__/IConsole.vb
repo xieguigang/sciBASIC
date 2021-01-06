@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84ea77c3d8cf4d69b57b2233f4cdaf8f, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\STDIO__\IConsole.vb"
+﻿#Region "Microsoft.VisualBasic::84ea77c3d8cf4d69b57b2233f4cdaf8f, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\STDIO__\IConsole.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17fb9b3d17c8919d3b11a0521564013d, Microsoft.VisualBasic.Core\Extensions\CodeDOM\References.vb"
+﻿#Region "Microsoft.VisualBasic::17fb9b3d17c8919d3b11a0521564013d, vs_solutions\dev\ApplicationServices\CodeDOM\References.vb"
 
     ' Author:
     ' 

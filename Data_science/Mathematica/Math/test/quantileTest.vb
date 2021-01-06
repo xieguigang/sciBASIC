@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43043136898fc0034c6f09b4be51bfe6, Data_science\Mathematica\Math\Math\Test\quantileTest.vb"
+﻿#Region "Microsoft.VisualBasic::43043136898fc0034c6f09b4be51bfe6, Data_science\Mathematica\Math\test\quantileTest.vb"
 
     ' Author:
     ' 

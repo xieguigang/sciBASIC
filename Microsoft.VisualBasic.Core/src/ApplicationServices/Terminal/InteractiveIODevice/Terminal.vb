@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::477663ab5d452c3616594577c897c10d, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\InteractiveIODevice\Terminal.vb"
+﻿#Region "Microsoft.VisualBasic::477663ab5d452c3616594577c897c10d, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\Terminal.vb"
 
     ' Author:
     ' 

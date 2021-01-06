@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b31ffe789fd07f7d6e2741fc15d059fa, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Layouts\Point2D.vb"
+﻿#Region "Microsoft.VisualBasic::b31ffe789fd07f7d6e2741fc15d059fa, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Layouts\Point2D.vb"
 
     ' Author:
     ' 

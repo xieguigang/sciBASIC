@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::552461eb1d09fc878d08785dd5b80bfc, Microsoft.VisualBasic.Core\Extensions\IO\Path\TemporaryEnvironment.vb"
+﻿#Region "Microsoft.VisualBasic::552461eb1d09fc878d08785dd5b80bfc, Microsoft.VisualBasic.Core\src\Extensions\IO\Path\TemporaryEnvironment.vb"
 
     ' Author:
     ' 

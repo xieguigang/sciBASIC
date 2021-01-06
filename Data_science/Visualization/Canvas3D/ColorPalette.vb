@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2727f084d93f4094a10716e80086c086, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ColorPalette.vb"
+﻿#Region "Microsoft.VisualBasic::2727f084d93f4094a10716e80086c086, Data_science\Visualization\Canvas3D\ColorPalette.vb"
 
     ' Author:
     ' 

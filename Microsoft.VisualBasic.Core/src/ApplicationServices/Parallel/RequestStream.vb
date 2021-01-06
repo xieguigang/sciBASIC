@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6b9d4bb045bef0a7323df6e50ee01f4, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\RequestStream.vb"
+﻿#Region "Microsoft.VisualBasic::a6b9d4bb045bef0a7323df6e50ee01f4, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\RequestStream.vb"
 
     ' Author:
     ' 

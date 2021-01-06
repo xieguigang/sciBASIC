@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a932a3b98d366ee02de011c3b4c836eb, Microsoft.VisualBasic.Core\Extensions\CodeDOM\CodeHelper.vb"
+﻿#Region "Microsoft.VisualBasic::a932a3b98d366ee02de011c3b4c836eb, vs_solutions\dev\ApplicationServices\CodeDOM\CodeHelper.vb"
 
     ' Author:
     ' 

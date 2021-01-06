@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e217abf5ba3f2929fef576bfb42c6e8, Microsoft.VisualBasic.Core\Data\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::ecb16db44930a37e854f4e3cd6480dbe, Microsoft.VisualBasic.Core\src\Data\Abstract.vb"
 
     ' Author:
     ' 
@@ -43,6 +43,11 @@
     ' 
     ' 
     '     Delegate Function
+    ' 
+    ' 
+    '     Class ScriptIgnoreAttribute
+    ' 
+    ' 
     ' 
     ' 
     ' 

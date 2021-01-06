@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9469df824995e9fade5353fd0936ea11, Microsoft.VisualBasic.Core\CommandLine\POSIX\POSIXParser.vb"
+﻿#Region "Microsoft.VisualBasic::9469df824995e9fade5353fd0936ea11, Microsoft.VisualBasic.Core\src\CommandLine\POSIX\POSIXParser.vb"
 
     ' Author:
     ' 
