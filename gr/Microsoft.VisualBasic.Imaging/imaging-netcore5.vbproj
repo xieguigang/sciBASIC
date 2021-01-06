@@ -38,8 +38,4 @@
 		<ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
 		<ProjectReference Include="..\..\mime\text%html\html_netcore5.vbproj" />
 	</ItemGroup>
-
-	<ItemGroup>
-		<FrameworkReference Include="Microsoft.WindowsDesktop.App.WindowsForms" />
-	</ItemGroup>
 </Project>

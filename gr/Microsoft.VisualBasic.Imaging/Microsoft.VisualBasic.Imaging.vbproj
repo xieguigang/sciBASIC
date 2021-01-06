@@ -747,12 +747,6 @@
     <Compile Include="Drawing2D\Polar\PolarGraphics2D.vb" />
     <Compile Include="Drawing2D\PrinterDimension.vb" />
     <Compile Include="Drawing2D\Shadow.vb" />
-    <Compile Include="Drawing2D\Colors\ColorPalette.Designer.vb">
-      <DependentUpon>ColorPalette.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Drawing2D\Colors\ColorPalette.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Drawing2D\Colors\Expression.vb" />
     <Compile Include="Drawing2D\Colors\DesignerTerms.vb" />
     <Compile Include="Drawing2D\Math2D\Math2DHelper.vb" />
@@ -875,9 +869,6 @@
     <Compile Include="TextureResourceLoader.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Drawing2D\Colors\ColorPalette.resx">
-      <DependentUpon>ColorPalette.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>

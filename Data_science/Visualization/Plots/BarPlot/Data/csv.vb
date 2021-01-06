@@ -68,23 +68,23 @@ Namespace BarPlot.Data
     <HideModuleName>
     Public Module BarDataTableExtensions
 
-        ''' <summary>
-        ''' Loading bar plot data table from specific excel sheet.
-        ''' </summary>
-        ''' <param name="xlsx$">
-        ''' (*.xlsx) required of excel format version at least office 2010
-        ''' </param>
-        ''' <param name="sheet$">
-        ''' The table sheet name in the excel file.
-        ''' </param>
-        ''' <param name="theme$"></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function LoadBarDataExcel(xlsx$, sheet$, Optional theme$ = "PRGn:c6") As BarDataGroup
-            Dim csv As DataFrame = xlsx.ReadXlsx(sheet)
-            Dim model As BarDataGroup = csv.LoadBarData(Designer.GetColors(theme))
-            Return model
-        End Function
+        '''' <summary>
+        '''' Loading bar plot data table from specific excel sheet.
+        '''' </summary>
+        '''' <param name="xlsx$">
+        '''' (*.xlsx) required of excel format version at least office 2010
+        '''' </param>
+        '''' <param name="sheet$">
+        '''' The table sheet name in the excel file.
+        '''' </param>
+        '''' <param name="theme$"></param>
+        '''' <returns></returns>
+        '<Extension>
+        'Public Function LoadBarDataExcel(xlsx$, sheet$, Optional theme$ = "PRGn:c6") As BarDataGroup
+        '    Dim csv As DataFrame = xlsx.ReadXlsx(sheet)
+        '    Dim model As BarDataGroup = csv.LoadBarData(Designer.GetColors(theme))
+        '    Return model
+        'End Function
 
         <Extension>
         Public Function LoadBarData(csv$, Optional theme$ = NameOf(Office2016)) As BarDataGroup

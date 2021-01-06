@@ -86,6 +86,12 @@
     <Compile Include="Canvas.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="ColorPalette.Designer.vb">
+      <DependentUpon>ColorPalette.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ColorPalette.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Device\AutoRotation.vb" />
     <Compile Include="Device\Debugger.vb" />
     <Compile Include="Device\GDIDevice.vb">
@@ -120,6 +126,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Canvas.resx">
       <DependentUpon>Canvas.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ColorPalette.resx">
+      <DependentUpon>ColorPalette.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Device\GDIDevice.resx">
       <DependentUpon>GDIDevice.vb</DependentUpon>
