@@ -48,7 +48,9 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Namespace KMeans
 
     ''' <summary>
-    ''' 存储在Csv文件里面的数据模型，近似等价于<see cref="DataSet"/>，只不过多带了一个用来描述cluster的<see cref="Cluster"/>属性标签
+    ''' 存储在Csv文件里面的数据模型，近似等价于csv DataSet对象，
+    ''' 只不过多带了一个用来描述cluster的<see cref="Cluster"/>
+    ''' 属性标签
     ''' </summary>
     Public Class EntityClusterModel : Inherits DynamicPropertyBase(Of Double)
         Implements INamedValue
