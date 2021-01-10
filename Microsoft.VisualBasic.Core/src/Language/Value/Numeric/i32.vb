@@ -262,7 +262,7 @@ Namespace Language
         End Operator
 
         ''' <summary>
-        ''' 
+        ''' value -= 1
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
