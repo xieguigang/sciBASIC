@@ -213,7 +213,17 @@ Public Module Scatter
                     Optional axisStroke$ = Stroke.AxisStroke,
                     Optional scatterReorder As Boolean = False)
 
-        Dim theme As New Theme
+        Dim theme As New Theme With {
+            .drawLegend = showLegend,
+            .xlabel = Xlabel,
+            .ylabel = Ylabel,
+            .axisTickFormat = XtickFormat,
+            .drawGrid = showGrid,
+            .gridFill = gridFill,
+            .background = bg,
+            .axisStroke = axisStroke,
+            .drawAxis = drawAxis
+        }
         Dim plot As Plot
 
         If drawLine Then
