@@ -155,9 +155,6 @@ Public Module UmapRenderExtensions
             .tagCSS = labelCSS,
             .background = bg,
             .drawLabels = showLabels,
-            .xlabel = "dim #1",
-            .ylabel = "dim #2",
-            .zlabel = "dim #3",
             .pointSize = pointSize,
             .tagColor = labelColor
         }
@@ -170,6 +167,10 @@ Public Module UmapRenderExtensions
             theme:=theme,
             camera:=camera,
             bubbleAlpha:=bubbleAlpha
-        ).Plot(size)
+        ) With {
+            .xlabel = "dim #1",
+            .ylabel = "dim #2",
+            .zlabel = "dim #3"
+        }.Plot(size)
     End Function
 End Module

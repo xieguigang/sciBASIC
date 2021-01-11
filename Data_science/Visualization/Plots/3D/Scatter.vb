@@ -101,10 +101,7 @@ Namespace Plot3D
                 .axisLabelCSS = axisLabelFontCSS,
                 .tagCSS = elementLabelFont,
                 .drawLegend = showLegend,
-                .legendBoxStroke = boxStroke,
-                .xlabel = labX,
-                .ylabel = labY,
-                .zlabel = labZ
+                .legendBoxStroke = boxStroke
             }
 
             Return New Impl.Scatter3D(
@@ -115,7 +112,11 @@ Namespace Plot3D
                 hullAlpha:=hullAlpha,
                 hullBspline:=hullBspline,
                 theme:=theme
-            ).Plot(size:=size)
+            ) With {
+                .xlabel = labX,
+                .ylabel = labY,
+                .zlabel = labZ
+            }.Plot(size:=size)
         End Function
 
         ''' <summary>

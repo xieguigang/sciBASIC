@@ -118,7 +118,7 @@ Namespace Plot3D.Impl
             For Each item As Element3D In AxisDraw.Axis(
                     xrange:=X, yrange:=Y, zrange:=Z,
                     labelFont:=axisLabelFont,
-                    labels:=(theme.xlabel, theme.ylabel, theme.zlabel),
+                    labels:=(xlabel, ylabel, zlabel),
                     strokeCSS:=theme.axisStroke,
                     arrowFactor:=arrowFactor
                 )

@@ -215,8 +215,6 @@ Public Module Scatter
 
         Dim theme As New Theme With {
             .drawLegend = showLegend,
-            .xlabel = Xlabel,
-            .ylabel = Ylabel,
             .axisTickFormat = XtickFormat,
             .drawGrid = showGrid,
             .gridFill = gridFill,
@@ -227,7 +225,10 @@ Public Module Scatter
         Dim plot As Plot
 
         If drawLine Then
-            plot = New Plots.LinePlot2D(data:=c, theme:=theme)
+            plot = New Plots.LinePlot2D(data:=c, theme:=theme) With {
+                .xlabel = Xlabel,
+                .ylabel = Ylabel
+            }
         Else
             plot = New Plots.Scatter2D(
                 data:=c,
@@ -236,7 +237,10 @@ Public Module Scatter
                 fillPie:=fillPie,
                 ablines:=ablines,
                 hullConvexList:=hullConvexList
-            )
+            ) With {
+                .xlabel = Xlabel,
+                .ylabel = Ylabel
+            }
         End If
 
         Call plot.Plot(g, rect.PlotRegion)
