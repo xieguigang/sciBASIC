@@ -328,6 +328,11 @@ Namespace Text
             Return AscW(c) > 0 AndAlso AscW(c) < 128
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function IsAsciiChar(x As Integer) As Boolean
+            Return x > 0 AndAlso x < 128
+        End Function
+
         ''' <summary>
         ''' Symbols without white space.(可以印刷的ASCII符号列表)
         ''' </summary>

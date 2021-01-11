@@ -65,6 +65,26 @@ Imports Microsoft.VisualBasic.My.JavaScript.Linq
 Public Module VectorExtensions
 
     <Extension>
+    Public Function PadLeft(Of T)(seq As T(), item As T, width As Integer) As T()
+        If seq.Length >= width Then
+            Return seq
+        Else
+            Dim d = width - seq.Length
+            Dim copy As T() = New T(width - 1) {}
+
+            For i As Integer = 0 To d - 1
+                copy(i) = item
+            Next
+
+            For j As Integer = d To width - 1
+                copy(j) = seq(j - d)
+            Next
+
+            Return copy
+        End If
+    End Function
+
+    <Extension>
     Public Function SetValue(a As Array, value As Object, i As SeqValue(Of Integer)) As Array
         Call a.SetValue(value, i.i)
         Return a

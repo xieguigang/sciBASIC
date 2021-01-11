@@ -134,11 +134,11 @@ Namespace Plots
             End If
 
             Dim scaler As New DataScaler With {
-            .X = X,
-            .Y = Y,
-            .region = region,
-            .AxisTicks = (XTicks, YTicks)
-        }
+                .X = X,
+                .Y = Y,
+                .region = region,
+                .AxisTicks = (XTicks, YTicks)
+            }
             Dim gSize As Size = rect.Size
 
             If theme.drawAxis Then

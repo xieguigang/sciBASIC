@@ -57,15 +57,23 @@ Namespace My.UNIX
             Return Encodings.UTF8WithoutBOM.CodePage.GetString(My.Resources.bashRunner)
         End Function
 
+        Private Function getRunnerBash() As Byte()
+#If netcore5 = 1 Then
+            Return My.Resources.runNet5
+#Else
+            Return My.Resources.runMono
+#End If
+        End Function
+
         ''' <summary>
         ''' Run from bash shell
         ''' </summary>
         ''' <returns></returns>
         Public Function BashRun() As String
             Dim utf8 As Encoding = Encodings.UTF8WithoutBOM.CodePage
-            Dim appName = App.AssemblyName
+            Dim appName As String = App.AssemblyName
             Dim locationHelper As String = utf8.GetString(My.Resources.bashRunner)
-            Dim bash As String = utf8.GetString(My.Resources.runMono) _
+            Dim bash As String = utf8.GetString(getRunnerBash) _
                 .Replace("{appName}", appName) _
                 .LineTokens _
                 .JoinBy(ASCII.LF)
@@ -83,7 +91,7 @@ Namespace My.UNIX
         ''' <returns></returns>
         Public Function BashShell() As Integer
             Dim path As String = App.ExecutablePath.TrimSuffix
-            Dim bash As String = BashRun()
+            Dim bash As String = BashRun().LineTokens.JoinBy(ASCII.LF)
 
             ' 在这里写入的bash脚本都是没有文件拓展名的
             '

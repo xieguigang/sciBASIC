@@ -70,7 +70,7 @@ Namespace Distributions.BinBox
         Public ReadOnly Property Sample As SampleDistribution
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return New SampleDistribution(bin)
+                Return New SampleDistribution(bin.Select(Function(x) eval(x)))
             End Get
         End Property
 
@@ -91,7 +91,9 @@ Namespace Distributions.BinBox
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"[{Sample.min}, {Sample.max}] count={Count}"
+            With Sample
+                Return $"[{ .min}, { .max}] count={Count}"
+            End With
         End Function
 
         ''' <summary>

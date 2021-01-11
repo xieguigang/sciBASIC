@@ -124,11 +124,6 @@ Namespace Graphic.Canvas
         ''' </summary>
         ''' <returns></returns>
         Public Property yAxisLayout As YAxisLayoutStyles = YAxisLayoutStyles.Left
-
-        Public Property xlabel As String = "X"
-        Public Property ylabel As String = "Y"
-        Public Property zlabel As String = "Z"
-
         Public Property drawAxis As Boolean = True
 
         ''' <summary>
