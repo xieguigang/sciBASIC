@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c046aa8570517f14bf0a1cf75656c15, Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\Interpreter.vb"
+﻿#Region "Microsoft.VisualBasic::42c52a38848c2e10f4917161f505b1a9, Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\Interpreter.vb"
 
     ' Author:
     ' 
@@ -165,6 +165,7 @@ Namespace CommandLine
                 Catch ex As Exception
                     Call App.LogException(ex)
                     Call ex.PrintException
+                    Call VBDebugger.WaitOutput()
                 End Try
 #End If
                 Return -100

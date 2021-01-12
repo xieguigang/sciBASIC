@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0629ee9ba4af559c36cf27482d1f1757, Data\BinaryData\DataStorage\netCDF\netCDFReader.vb"
+﻿#Region "Microsoft.VisualBasic::eb454cadc31b823a30072eaf8a715640, Data\BinaryData\DataStorage\netCDF\netCDFReader.vb"
 
     ' Author:
     ' 
@@ -46,6 +46,10 @@
     ' /********************************************************************************/
 
 #End Region
+
+#If netcore5 = 1 Then
+Imports System.Data
+#End If
 
 Imports System.IO
 Imports System.Runtime.CompilerServices

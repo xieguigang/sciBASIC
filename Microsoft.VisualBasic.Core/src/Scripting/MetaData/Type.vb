@@ -125,8 +125,11 @@ Namespace Scripting.MetaData
             Dim path As Value(Of String) = ""
             Dim assm As Assembly = Nothing
 
-            For Each directory As String In searchPath.SafeQuery.JoinIterates(App.HOME)
-                If (path = $"{directory}/{Me.assembly}").FileExists Then
+            For Each filepath As String In searchPath.SafeQuery.JoinIterates(App.HOME)
+                If filepath.FileLength > 0 Then
+                    assm = System.Reflection.Assembly.LoadFile(path)
+                    Exit For
+                ElseIf (path = $"{filepath}/{Me.assembly}").FileExists Then
                     assm = System.Reflection.Assembly.LoadFile(path)
                     Exit For
                 End If

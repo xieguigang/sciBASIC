@@ -1595,6 +1595,7 @@
     <Compile Include="ApplicationServices\Terminal\xConsole\Comparer.vb" />
     <Compile Include="ApplicationServices\Terminal\xConsole\Spinner.vb" />
     <Compile Include="ApplicationServices\Terminal\xConsole\CoolWriteSettings.vb" />
+    <Compile Include="ApplicationServices\VBDev\deps.json.vb" />
     <Compile Include="CommandLine\CLI\ProcessEx.vb" />
     <Compile Include="CommandLine\Parsers\CommandLineTokenlizer.vb" />
     <Compile Include="CommandLine\Parsers\CliArgumentParsers.vb" />

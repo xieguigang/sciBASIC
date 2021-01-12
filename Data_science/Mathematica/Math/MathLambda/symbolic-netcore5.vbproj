@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<RootNamespace>Microsoft.VisualBasic.Math</RootNamespace>
+		<RootNamespace>Microsoft.VisualBasic.Math.Lambda</RootNamespace>
 		<TargetFramework>net5.0</TargetFramework>
-		<AssemblyName>Microsoft.VisualBasic.Math.Core</AssemblyName>
+		<AssemblyName>Microsoft.VisualBasic.Math.Lambda</AssemblyName>
 		<Authors>xie.guigang@live.com</Authors>
 		<Company>sciBASIC.NET</Company>
 		<Version>5.0.1.2389</Version>
@@ -15,7 +15,8 @@
 		<Platforms>AnyCPU;x64</Platforms>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release</Configurations>
+		<Description>LAPACK (Linear Algebra PACKage)</Description>
+		<Configurations>Debug;Release;Rsharp_app_release;LipidSearch</Configurations>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -25,14 +26,15 @@
 	  <DebugType>full</DebugType>
 	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
 	  <DefineConstants>netcore5=1</DefineConstants>
+	  <BaseAddress>4194304</BaseAddress>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
-	  <DefineConstants>netcore5=1</DefineConstants>
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <DebugSymbols>true</DebugSymbols>
 	  <DebugType>full</DebugType>
+	  <DefineConstants>netcore5=1</DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -49,52 +51,65 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
 	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
+	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <Optimize>false</Optimize>
 	  <DebugSymbols>true</DebugSymbols>
 	  <DebugType>full</DebugType>
 	  <DefineDebug>false</DefineDebug>
-	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
 	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
-	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
-	  <Optimize>false</Optimize>
-	  <DebugSymbols>true</DebugSymbols>
-	  <DebugType>full</DebugType>
-	  <DefineDebug>false</DefineDebug>
 	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|x64'">
-	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <Optimize>false</Optimize>
 	  <DebugSymbols>true</DebugSymbols>
 	  <DebugType>full</DebugType>
 	  <DefineDebug>false</DefineDebug>
 	  <DefineTrace>true</DefineTrace>
-	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+	  <BaseAddress>4194304</BaseAddress>
+	  <OutputPath>D:\GCModeller\src\R-sharp\App\</OutputPath>
 	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
-  </ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|x64'">
+	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
+	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+	  <Optimize>false</Optimize>
+	  <DebugSymbols>true</DebugSymbols>
+	  <DebugType>full</DebugType>
+	  <DefineDebug>false</DefineDebug>
+	  <DefineTrace>true</DefineTrace>
+	  <BaseAddress>4194304</BaseAddress>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Test\**" />
+	  <EmbeddedResource Remove="Test\**" />
+	  <None Remove="Test\**" />
+	  <None Include="..\..\..\..\LICENSE">
+	    <Pack>True</Pack>
+	    <PackagePath></PackagePath>
+	  </None>
+	  <None Include="..\..\..\..\vs_solutions\logo-knot.png">
+	    <Pack>True</Pack>
+	    <PackagePath></PackagePath>
+	  </None>
+	</ItemGroup>
 
   <ItemGroup>
     <Import Include="System.Data" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\..\..\LICENSE">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-    <None Include="..\..\..\..\vs_solutions\logo-knot.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
+    <PackageReference Include="System.Runtime" Version="4.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\..\..\mime\application%xml\xml-netcore5.vbproj" />
+    <ProjectReference Include="..\Math\math-netcore5.vbproj" />
   </ItemGroup>
 
 </Project>

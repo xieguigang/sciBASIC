@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e238d3647fb8424d4888f04d33ed6d9, Data_science\Visualization\Plots\g\Theme\Theme.vb"
+﻿#Region "Microsoft.VisualBasic::66c537a40890e05c98b9cdb9eec84fb8, Data_science\Visualization\Plots\g\Theme\Theme.vb"
 
     ' Author:
     ' 
@@ -38,8 +38,7 @@
     '                     drawLabels, drawLegend, gridFill, gridStrokeX, gridStrokeY
     '                     htmlLabel, legendBoxBackground, legendBoxStroke, legendLabelCSS, legendLayout
     '                     legendSplitSize, legendTitleCSS, mainCSS, padding, pointSize
-    '                     subtitleCSS, tagColor, tagCSS, xAxisLayout, xlabel
-    '                     yAxisLayout, ylabel, zlabel
+    '                     subtitleCSS, tagColor, tagCSS, xAxisLayout, yAxisLayout
     ' 
     '         Function: GetLegendPosition, ToString
     ' 

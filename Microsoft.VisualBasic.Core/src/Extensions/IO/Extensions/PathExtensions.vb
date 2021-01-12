@@ -201,6 +201,8 @@ Public Module PathExtensions
             DIR = App.CurrentDirectory
         End If
 
+        DIR = DIR.Replace("\", "/")
+
         Try
             Call FileIO.FileSystem.CreateDirectory(DIR)
         Catch ex As Exception

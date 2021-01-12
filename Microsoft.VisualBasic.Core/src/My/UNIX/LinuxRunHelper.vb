@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d42fca8ee586f2cce1638dfe047aa7e, Microsoft.VisualBasic.Core\src\My\UNIX\LinuxRunHelper.vb"
+﻿#Region "Microsoft.VisualBasic::21638f79f2036bed92e6d7eb25b55352, Microsoft.VisualBasic.Core\src\My\UNIX\LinuxRunHelper.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,8 @@
 
     '     Module LinuxRunHelper
     ' 
-    '         Function: BashRun, BashShell, GetLocationHelper, MonoRun, Shell
+    '         Function: BashRun, BashShell, GetLocationHelper, getRunnerBash, MonoRun
+    '                   Shell
     ' 
     ' 
     ' /********************************************************************************/

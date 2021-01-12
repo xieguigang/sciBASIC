@@ -58,7 +58,7 @@ Namespace ApplicationServices.Zip
         Private Sub ExtractToFileInternal(file As ZipArchiveEntry, destinationPath$, overwriteMethod As Overwrite, overridesFullName$)
             ' Gets the complete path for the destination file, including any
             ' relative paths that were in the zip file
-            Dim destinationFileName As String = Path.Combine(destinationPath, overridesFullName Or file.FullName.AsDefault)
+            Dim destinationFileName As String = Path.Combine(destinationPath, overridesFullName Or file.FullName.AsDefault).Replace("\", "/")
 
             ' Gets just the new path, minus the file name so we can create the
             ' directory if it does not exist

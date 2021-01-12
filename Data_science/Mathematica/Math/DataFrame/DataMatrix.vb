@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a89ed97096438e6ec02ea9b48f94860c, Data_science\Mathematica\Math\DataFrame\DataMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::a35f474e7cbddbc57ab198d356bf78ba, Data_science\Mathematica\Math\DataFrame\DataMatrix.vb"
 
     ' Author:
     ' 
@@ -41,6 +41,10 @@
     ' /********************************************************************************/
 
 #End Region
+
+#If netcore5 = 1 Then
+Imports System.Data
+#End If
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic

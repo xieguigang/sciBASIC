@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f4a02196e5d904c443739b01603be6d, mime\text%html\Test\HTMLParserTest.vb"
+﻿#Region "Microsoft.VisualBasic::4f293f9ee69b27a30f114327c367f006, Microsoft.VisualBasic.Core\test\devTest.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@
 
     ' Summaries:
 
-    ' Module HTMLParserTest
+    ' Module devTest
     ' 
     '     Sub: Main
     ' 
@@ -39,20 +39,16 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.MIME.Markup.HTML
+Imports Microsoft.VisualBasic.ApplicationServices.Development.NetCore5
+Imports Microsoft.VisualBasic.Serialization.JSON
 
-Module HTMLParserTest
-
-    ReadOnly testHTML$ =
-        (<div style='font-style: normal; font-size: 14; font-family: Microsoft YaHei;' attr2="99999999 + dd">
-             <span style="color:red;">Hello</span><span style="color:blue;">world!</span> 
-            2<sup>333333</sup> + X<sub>i</sub> = <span style="font-size: 36;">6666666</span>
-         </div>).ToString
+Module devTest
 
     Sub Main()
-
-        Dim content = TextAPI.TryParse(testHTML).ToArray
+        Dim deps = "D:\GCModeller\src\R-sharp\App\net5.0\base.deps.json".LoadJsonFile(Of deps)
+        Dim ref = deps.GetReferenceProject.ToArray
 
         Pause()
     End Sub
 End Module
+

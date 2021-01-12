@@ -414,7 +414,7 @@ Namespace Graphic.Axis
                 Return TextRender.DrawHtmlText(label, css)
             Catch ex As Exception
                 If throwEx Then
-                    Throw ex
+                    Throw
                 Else
                     Call App.LogException(ex)
                     Return New Bitmap(1, 1)

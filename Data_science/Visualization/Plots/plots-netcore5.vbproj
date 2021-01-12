@@ -50,7 +50,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Data\DataFrame\dataframe-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\Data\DataFrame\dataframework-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\gr\Microsoft.VisualBasic.Imaging\imaging-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\..\mime\text%html\html_netcore5.vbproj" />

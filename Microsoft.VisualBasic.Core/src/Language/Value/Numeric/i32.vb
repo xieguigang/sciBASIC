@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee2ff91b50a4f6d0128e842c8fb9e689, Microsoft.VisualBasic.Core\src\Language\Value\Numeric\i32.vb"
+﻿#Region "Microsoft.VisualBasic::f85820ebea1d0c0fdc30b6a9ccf0a105, Microsoft.VisualBasic.Core\src\Language\Value\Numeric\i32.vb"
 
     ' Author:
     ' 

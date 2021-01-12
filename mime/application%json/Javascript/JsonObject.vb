@@ -135,6 +135,10 @@ Namespace Javascript
             Return Me.createObject(parent:=Nothing, schema:=GetType(T))
         End Function
 
+        Public Function CreateObject(type As Type) As Object
+            Return Me.createObject(parent:=Nothing, schema:=type)
+        End Function
+
         Public Overrides Function ToString() As String
             Return "JsonObject::[" & array.Keys.JoinBy(", ") & "]"
         End Function

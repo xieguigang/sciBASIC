@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::098f1fd4fd20ce9c5885feff37043f7b, Microsoft.VisualBasic.Core\src\Extensions\Collection\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::d11c1fee9f48da20a6ce6a913714ff23, Microsoft.VisualBasic.Core\src\Extensions\Collection\Vector.vb"
 
     ' Author:
     ' 
@@ -35,8 +35,8 @@
     ' 
     '     Function: (+2 Overloads) After, Append, Coalesce, (+3 Overloads) Delete, (+2 Overloads) Fill
     '               GetRange, IndexOf, Last, LoadAsNumericVector, MappingData
-    '               Midv, RepeatCalls, Replicate, SetValue, (+3 Overloads) Sort
-    '               Split, VectorShadows
+    '               Midv, PadLeft, RepeatCalls, Replicate, SetValue
+    '               (+3 Overloads) Sort, Split, VectorShadows
     ' 
     '     Sub: (+4 Overloads) Add, InsertAt, (+2 Overloads) Memset
     ' 

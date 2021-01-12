@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a527e0d4e38d9228bd105b3225c64f1f, Data_science\Visualization\Plots\g\Plot.vb"
+﻿#Region "Microsoft.VisualBasic::9fc025d5f257816536caf6edb8ca5029, Data_science\Visualization\Plots\g\Plot.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class Plot
     ' 
-    '         Properties: main, xlabel, ylabel
+    '         Properties: main, xlabel, ylabel, zlabel
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

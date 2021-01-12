@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3263a5aaebb0967d4032bb7151d75a3c, Microsoft.VisualBasic.Core\src\Text\Parser\HtmlParser\HtmlStrips.vb"
+﻿#Region "Microsoft.VisualBasic::450dd0eb3e616839e96d8fd2c0df00fb, Microsoft.VisualBasic.Core\src\Text\Parser\HtmlParser\HtmlStrips.vb"
 
     ' Author:
     ' 
@@ -390,7 +390,7 @@ Namespace Text.Parser.HtmlParser
                 Catch ex As Exception When TypeOf ex Is TimeoutException
                     Call App.LogException(ex, tags.GetJson)
                 Catch ex As Exception
-                    Throw ex
+                    Throw
                 End Try
 
                 html = r.Replace(html, $"<{tag}.*?>", "", RegexICSng)
