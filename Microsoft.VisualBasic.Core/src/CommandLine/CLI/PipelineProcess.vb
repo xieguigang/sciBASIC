@@ -1,50 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::51cc0605bed8568b20788ddf151155b5, Microsoft.VisualBasic.Core\src\CommandLine\CLI\PipelineProcess.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module PipelineProcess
-    ' 
-    '         Function: [Call], FindProc, (+2 Overloads) GetProc
-    ' 
-    '         Sub: ExecSub
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module PipelineProcess
+' 
+'         Function: [Call], FindProc, (+2 Overloads) GetProc
+' 
+'         Sub: ExecSub
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Language
+Imports ConsoleApp = Microsoft.VisualBasic.CommandLine.InteropService.InteropService
 Imports Proc = System.Diagnostics.Process
 
 Namespace CommandLine
@@ -155,6 +157,32 @@ Namespace CommandLine
             Dim stdout As New List(Of String)
             Call ExecSub(app, args, AddressOf stdout.Add, [in])
             Return stdout.JoinBy(vbCrLf)
+        End Function
+
+        ''' <summary>
+        ''' Run process and then gets the ``std_out`` of the child process
+        ''' </summary>
+        ''' <param name="app">The file path of the application to be called by its parent process.</param>
+        ''' <param name="args">CLI arguments</param>
+        ''' <param name="dotnet">
+        ''' Run a .NET core console application?
+        ''' </param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function [Call](app As ConsoleApp,
+                               Optional args As String = "",
+                               Optional [in] As String = "",
+                               Optional dotnet As Boolean = False) As String
+
+            If dotnet Then
+                Dim dll As String = app.Path.TrimSuffix & ".dll"
+                Dim cli As String = $"{dll.CLIPath} {args}"
+
+                ' run on UNIX .net 5 
+                Return [Call]("dotnet", cli, [in])
+            Else
+                Return [Call](app.Path, args, [in])
+            End If
         End Function
     End Module
 End Namespace

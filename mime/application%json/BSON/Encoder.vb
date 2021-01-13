@@ -122,9 +122,9 @@ Namespace BSON
             bw.Write(CByte(0))
         End Sub
 
-        Private Sub encodeArray(ms As MemoryStream, lst As JsonArray)
+        Public Sub encodeArray(ms As MemoryStream, lst As JsonArray)
+            Dim obj As New JsonObject()
 
-            Dim obj = New JsonObject()
             For i As Integer = 0 To lst.Count - 1
                 obj.Add(Convert.ToString(i), lst(i))
             Next

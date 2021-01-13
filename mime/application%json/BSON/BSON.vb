@@ -73,9 +73,35 @@ Namespace BSON
             Call New Encoder().encodeDocument(buffer, obj)
         End Sub
 
+        ''' <summary>
+        ''' 只兼容array或者object
+        ''' </summary>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
+        Public Function SafeGetBuffer(obj As JsonElement) As MemoryStream
+            Dim ms As New MemoryStream
+
+            If TypeOf obj Is JsonObject Then
+                Call WriteBuffer(obj, buffer:=ms)
+            ElseIf TypeOf obj Is JsonArray Then
+                Call New Encoder().encodeArray(ms, obj)
+            Else
+                Throw New NotSupportedException
+            End If
+
+            Call ms.Flush()
+            Call ms.Seek(Scan0, SeekOrigin.Begin)
+
+            Return ms
+        End Function
+
         Public Function GetBuffer(obj As JsonObject) As MemoryStream
             Dim ms As New MemoryStream
-            WriteBuffer(obj, buffer:=ms)
+
+            Call WriteBuffer(obj, buffer:=ms)
+            Call ms.Flush()
+            Call ms.Seek(Scan0, SeekOrigin.Begin)
+
             Return ms
         End Function
     End Module

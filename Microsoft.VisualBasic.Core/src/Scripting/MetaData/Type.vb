@@ -1,50 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::6f28170b4aefe05a7569c8193b51b3f1, Microsoft.VisualBasic.Core\src\Scripting\MetaData\Type.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class TypeInfo
-    ' 
-    '         Properties: assembly, fullName, isSystemKnownType, reference
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: [GetType], (+2 Overloads) LoadAssembly, ToString
-    ' 
-    '         Sub: doInfoParser
-    ' 
-    '         Operators: <>, =
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class TypeInfo
+' 
+'         Properties: assembly, fullName, isSystemKnownType, reference
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: [GetType], (+2 Overloads) LoadAssembly, ToString
+' 
+'         Sub: doInfoParser
+' 
+'         Operators: <>, =
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -53,6 +53,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
+Imports any = Microsoft.VisualBasic.Scripting
 
 Namespace Scripting.MetaData
 
@@ -80,7 +81,7 @@ Namespace Scripting.MetaData
         ''' <returns></returns>
         Public ReadOnly Property isSystemKnownType As Boolean
             Get
-                Return Not Scripting.GetType(fullName) Is Nothing
+                Return Not any.GetType(fullName) Is Nothing
             End Get
         End Property
 
@@ -91,12 +92,17 @@ Namespace Scripting.MetaData
         ''' Creates type reference from the definition.
         ''' </summary>
         ''' <param name="info"></param>
-        Sub New(info As Type)
-            Call doInfoParser(info, assembly, fullName, reference)
+        Sub New(info As Type, Optional fullpath As Boolean = False)
+            Call doInfoParser(info, assembly, fullName, reference, fullpath)
         End Sub
 
-        Private Shared Sub doInfoParser(info As Type, ByRef assm As String, ByRef id As String, ByRef reference As String)
-            assm = info.Assembly.Location.FileName
+        Private Shared Sub doInfoParser(info As Type, ByRef assm As String, ByRef id As String, ByRef reference As String, fullpath As Boolean)
+            If fullpath Then
+                assm = info.Assembly.Location
+            Else
+                assm = info.Assembly.Location.FileName
+            End If
+
             id = info.FullName
             reference = info.Assembly.FullName
         End Sub
@@ -125,9 +131,13 @@ Namespace Scripting.MetaData
             Dim path As Value(Of String) = ""
             Dim assm As Assembly = Nothing
 
+            If assembly.FileLength > 0 Then
+                Return System.Reflection.Assembly.LoadFile(assembly.GetFullPath)
+            End If
+
             For Each filepath As String In searchPath.SafeQuery.JoinIterates(App.HOME)
                 If filepath.FileLength > 0 Then
-                    assm = System.Reflection.Assembly.LoadFile(path)
+                    assm = System.Reflection.Assembly.LoadFile(filepath)
                     Exit For
                 ElseIf (path = $"{filepath}/{Me.assembly}").FileExists Then
                     assm = System.Reflection.Assembly.LoadFile(path)
@@ -136,6 +146,28 @@ Namespace Scripting.MetaData
             Next
 
             Return assm
+        End Function
+
+        Private Function TryHandleKnownType() As Type
+            Dim type As Type = any.GetType(fullName)
+            Dim assm As Assembly
+
+            If Not type Is Nothing Then
+                Return type
+            End If
+
+            Try
+                ' 20200630 fix of the bugs of load the identical assembly file from different location
+                ' due to the reason of context 'LoadNeither' to context 'Default'
+                assm = System.Reflection.Assembly.Load(reference)
+                type = assm.GetType(fullName)
+
+                Return type
+            Catch ex As Exception
+
+            End Try
+
+            Return Nothing
         End Function
 
         ''' <summary>
@@ -156,22 +188,11 @@ Namespace Scripting.MetaData
             Dim assm As Assembly
 
             If knownFirst Then
-                type = Scripting.GetType(fullName)
+                type = TryHandleKnownType()
 
                 If Not type Is Nothing Then
                     Return type
                 End If
-
-                Try
-                    ' 20200630 fix of the bugs of load the identical assembly file from different location
-                    ' due to the reason of context 'LoadNeither' to context 'Default'
-                    assm = System.Reflection.Assembly.Load(reference)
-                    type = assm.GetType(fullName)
-
-                    Return type
-                Catch ex As Exception
-
-                End Try
             End If
 
             ' 错误一般出现在loadassembly阶段
@@ -217,7 +238,7 @@ Namespace Scripting.MetaData
             Dim type As String = Nothing
             Dim reference As String = Nothing
 
-            Call doInfoParser(b, assm, type, reference)
+            Call doInfoParser(b, assm, type, reference, fullpath:=False)
 
             Return String.Equals(a.assembly, assm, StringComparison.OrdinalIgnoreCase) AndAlso
                 String.Equals(a.fullName, type, StringComparison.Ordinal) AndAlso

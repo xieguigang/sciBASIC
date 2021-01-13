@@ -42,7 +42,6 @@
 #End Region
 
 Imports System.Reflection
-Imports Microsoft.VisualBasic.ApplicationServices.Win32
 Imports Microsoft.VisualBasic.Net.HTTP
 Imports Microsoft.VisualBasic.Parallel
 
@@ -73,14 +72,7 @@ Namespace Protocols.Reflection
             Try
                 Return method.Invoke(obj, {request, remoteDevice})
             Catch ex As Exception
-                ex = New Exception(method.FullName, ex)
-
-                If WindowsServices.Initialized Then
-                    Call ServicesLogs.LogException(ex)
-                Else
-                    Call App.LogException(ex)
-                End If
-
+                Call App.LogException(New Exception(method.FullName, ex))
                 Return New DataPipe(NetResponse.RFC_UNKNOWN_ERROR)
             End Try
         End Function

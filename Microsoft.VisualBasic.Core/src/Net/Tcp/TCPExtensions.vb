@@ -84,7 +84,7 @@ Namespace Net.Tcp
         ''' <summary>
         ''' 系统tcp/udp端口数最大是65535
         ''' </summary>
-        Const MAX_PORT As Integer = 65535
+        Public Const MAX_PORT As Integer = 65535
 
         ''' <summary>
         ''' Get the first available TCP port on this local machine.

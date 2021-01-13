@@ -98,7 +98,7 @@ Public Module Deserializer
     End Function
 
     <Extension>
-    Private Function createArray(json As JsonArray, parent As ObjectSchema, elementType As Type) As Object
+    Friend Function createArray(json As JsonArray, parent As ObjectSchema, elementType As Type) As Object
         Dim array As Array = Array.CreateInstance(elementType, json.Length)
         Dim obj As Object
         Dim element As JsonElement

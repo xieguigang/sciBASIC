@@ -58,7 +58,6 @@ Imports System.Net.Sockets
 Imports System.Reflection
 Imports System.Text
 Imports System.Threading
-Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.ExceptionExtensions
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
@@ -149,7 +148,7 @@ Namespace Tcp.Persistent.Socket
         ''' 远程主机强制关闭连接之后触发这个动作
         ''' </summary>
         ''' <returns></returns>
-        Public Property RemoteServerShutdown As MethodInvoker
+        Public Property RemoteServerShutdown As Action
         ''' <summary>
         ''' 将从服务器来的推送消息的处理过程赋值在这个属性之中
         ''' </summary>

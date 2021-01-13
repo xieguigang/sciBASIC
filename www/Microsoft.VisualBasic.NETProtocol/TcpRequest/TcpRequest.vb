@@ -98,6 +98,10 @@ Namespace Tcp
             Return $"Remote_connection={remoteHost}:{port},  local_host={LocalIPAddress}"
         End Function
 
+        Sub New(localPort As Integer)
+            Call Me.New(New IPEndPoint("127.0.0.1", localPort))
+        End Sub
+
         Sub New(remoteDevice As TcpEndPoint, Optional exceptionHandler As ExceptionHandler = Nothing)
             Call Me.New(remoteDevice.Address.ToString, remoteDevice.Port, exceptionHandler)
         End Sub
@@ -118,10 +122,10 @@ Namespace Tcp
         ''' <param name="exceptionHandler"></param>
         ''' <remarks></remarks>
         Sub New(client As TcpRequest, Optional exceptionHandler As ExceptionHandler = Nothing)
-            remoteHost = client.remoteHost
-            port = client.port
+            Me.remoteHost = client.remoteHost
+            Me.port = client.port
             Me.exceptionHandler = exceptionHandler Or defaultHandler
-            remoteEP = New TcpEndPoint(System.Net.IPAddress.Parse(remoteHost), port)
+            Me.remoteEP = New TcpEndPoint(IPAddress.Parse(remoteHost), port)
         End Sub
 
         ''' <summary>
