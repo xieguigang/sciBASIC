@@ -59,7 +59,7 @@ Public Module Reactions
 
         With RepulsiveForce(f, m1.Point, m2.Point)
             .source = NameOf(CoulombsLaw)
-            Return .ref
+            Return .ByRef
         End With
     End Function
 End Module

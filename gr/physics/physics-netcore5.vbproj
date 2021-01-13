@@ -80,6 +80,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="physics_Test\**" />
+    <EmbeddedResource Remove="physics_Test\**" />
+    <None Remove="physics_Test\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Data_science\Mathematica\Math\Math\math-netcore5.vbproj" />
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
   </ItemGroup>
 

@@ -80,9 +80,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Layouts\OrganicLayout\**" />
+    <Compile Remove="test\**" />
+    <EmbeddedResource Remove="Layouts\OrganicLayout\**" />
+    <EmbeddedResource Remove="test\**" />
+    <None Remove="Layouts\OrganicLayout\**" />
+    <None Remove="test\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Graph\mxGraphModel.vb" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\Data_science\Graph\graph-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\physics\physics-netcore5.vbproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Import Include="System.Data" />
   </ItemGroup>
 
 </Project>
