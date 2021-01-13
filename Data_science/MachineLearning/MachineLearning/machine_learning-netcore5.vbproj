@@ -88,6 +88,14 @@
 	  <None Remove="NeuralNetwork\Demo\**" />
 	  <None Remove="QLearning\Maze-Q-Learning\**" />
 	  <None Remove="test\**" />
+	  <None Include="..\..\..\LICENSE">
+	    <Pack>True</Pack>
+	    <PackagePath></PackagePath>
+	  </None>
+	  <None Include="..\..\..\vs_solutions\logo-knot.png">
+	    <Pack>True</Pack>
+	    <PackagePath></PackagePath>
+	  </None>
 	</ItemGroup>
 
   <ItemGroup>
@@ -96,6 +104,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\DataMining\DataMining\datamining-netcore5.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\Math\math-netcore5.vbproj" />
   </ItemGroup>
 
