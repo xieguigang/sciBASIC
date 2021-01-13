@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>Microsoft.VisualBasic.Data.IO</RootNamespace>
+    <RootNamespace>Microsoft.VisualBasic.Imaging.Physics</RootNamespace>
     <TargetFramework>net5.0</TargetFramework>
-    <AssemblyName>Microsoft.VisualBasic.Data.BinaryData</AssemblyName>
+    <AssemblyName>Microsoft.VisualBasic.Imaging.Physics</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release</Configurations>
   </PropertyGroup>
@@ -80,7 +80,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
   </ItemGroup>
 
 </Project>

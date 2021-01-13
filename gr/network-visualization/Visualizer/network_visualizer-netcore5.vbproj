@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>Microsoft.VisualBasic.Data.IO</RootNamespace>
+    <RootNamespace>Microsoft.VisualBasic.Data.visualize.Network</RootNamespace>
     <TargetFramework>net5.0</TargetFramework>
-    <AssemblyName>Microsoft.VisualBasic.Data.BinaryData</AssemblyName>
+    <AssemblyName>Microsoft.VisualBasic.Data.visualize.Network.Visualizer</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release</Configurations>
   </PropertyGroup>
@@ -80,8 +80,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Data\DataFrame\dataframework-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\Graph\graph-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\Math\math-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\..\mime\text%html\html_netcore5.vbproj" />
+    <ProjectReference Include="..\..\Microsoft.VisualBasic.Imaging\imaging-netcore5.vbproj" />
     <ProjectReference Include="..\..\physics\physics-netcore5.vbproj" />
+    <ProjectReference Include="..\Datavisualization.Network\network_graph-netcore5.vbproj" />
+    <ProjectReference Include="..\Network.IO.Extensions\network_io-netcore5.vbproj" />
   </ItemGroup>
 
 </Project>
