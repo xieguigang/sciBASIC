@@ -1,47 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::abe0e686dd1e1517f830f2fdbc7dd72f, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\AsyncHandle.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class AsyncHandle
-    ' 
-    '         Properties: Handle, IsCompleted, Task
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetValue, Run
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class AsyncHandle
+' 
+'         Properties: Handle, IsCompleted, Task
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: GetValue, Run
+' 
+' 
+' /********************************************************************************/
 
 #End Region
+
+Imports System.Threading
 
 Namespace Parallel.Tasks
 
@@ -60,11 +62,13 @@ Namespace Parallel.Tasks
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Task As Func(Of TOut)
-        ''' <summary>
-        ''' 对后台任务的访问
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property Handle As IAsyncResult
+        ' ''' <summary>
+        ' ''' 对后台任务的访问
+        ' ''' </summary>
+        ' ''' <returns></returns>
+        ' Public ReadOnly Property Handle As IAsyncResult
+
+        Dim handle As TOut
 
         ''' <summary>
         ''' Gets a value that indicates whether the asynchronous operation has completed.
@@ -72,14 +76,14 @@ Namespace Parallel.Tasks
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property IsCompleted As Boolean
-            Get
-                If Handle Is Nothing Then
-                    Return True
-                End If
+        '    Get
+        '        If Handle Is Nothing Then
+        '            Return True
+        '        End If
 
-                Return Handle.IsCompleted
-            End Get
-        End Property
+        '        Return Handle.IsCompleted
+        '    End Get
+        'End Property
 
         ''' <summary>
         ''' Creates a new background task from a function handle.
@@ -95,8 +99,17 @@ Namespace Parallel.Tasks
         ''' <returns></returns>
         Public Function Run() As AsyncHandle(Of TOut)
             If IsCompleted Then
+                handle = Nothing
                 ' 假若没有执行完毕也调用的话，会改变handle
-                _Handle = Task.BeginInvoke(Nothing, Nothing)
+                ' _Handle = Task.BeginInvoke(Nothing, Nothing)
+                ' due to the reason of platform not supported on unix .net 5
+                ' use thread model instead of the async model
+                Call ThreadPool.QueueUserWorkItem(
+                    Sub()
+                        _IsCompleted = False
+                        handle = _Task()
+                        _IsCompleted = True
+                    End Sub)
             End If
 
             Return Me
@@ -111,7 +124,12 @@ Namespace Parallel.Tasks
             If Handle Is Nothing Then
                 Return _Task()
             Else
-                Return Task.EndInvoke(Handle)
+                ' Return Task.EndInvoke(Handle)
+                Do While Not IsCompleted
+                    Call Thread.Sleep(1)
+                Loop
+
+                Return handle
             End If
         End Function
 

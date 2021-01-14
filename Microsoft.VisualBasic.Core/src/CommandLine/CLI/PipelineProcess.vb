@@ -120,17 +120,7 @@ Namespace CommandLine
         ''' <param name="onReadLine">行信息（委托）</param>
         ''' <remarks>https://github.com/lishewen/LSWFramework/blob/master/LSWClassLib/CMD/CMDHelper.vb</remarks>
         Public Sub ExecSub(app As String, args As String, onReadLine As Action(Of String), Optional [in] As String = "")
-            Dim p As New Process
-            p.StartInfo = New ProcessStartInfo
-            p.StartInfo.FileName = app
-            p.StartInfo.Arguments = args
-            p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden
-            p.StartInfo.RedirectStandardOutput = True
-            p.StartInfo.RedirectStandardInput = True
-            p.StartInfo.UseShellExecute = False
-            p.StartInfo.CreateNoWindow = True
-            p.Start()
-
+            Dim p As Process = CreatePipeline(app, args)
             Dim reader As StreamReader = p.StandardOutput
 
             If Not String.IsNullOrEmpty([in]) Then
@@ -145,6 +135,63 @@ Namespace CommandLine
 
             Call p.WaitForExit()
         End Sub
+
+        Private Function CreatePipeline(app As String, args As String) As Process
+            Dim p As New Process
+            p.StartInfo = New ProcessStartInfo
+            p.StartInfo.FileName = app
+            p.StartInfo.Arguments = args
+            p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden
+            p.StartInfo.RedirectStandardOutput = True
+            p.StartInfo.RedirectStandardInput = True
+            p.StartInfo.UseShellExecute = False
+            p.StartInfo.CreateNoWindow = True
+            p.Start()
+
+            Return p
+        End Function
+
+        Public Function ExecSub(app$, args$, Optional in$ = "") As MemoryStream
+            Dim p As Process = CreatePipeline(app, args)
+            Dim reader As Stream = p.StandardOutput.BaseStream
+            Dim buffer As New MemoryStream
+
+            If Not String.IsNullOrEmpty([in]) Then
+                Dim writer As StreamWriter = p.StandardInput
+
+                Call writer.WriteLine([in])
+                Call writer.Flush()
+            End If
+
+            Dim chunk As Byte() = New Byte(1024 - 1) {}
+            Dim nbytes As Integer
+
+            Do While True
+                nbytes = reader.Read(chunk, Scan0, chunk.Length)
+
+                If nbytes = 0 Then
+                    Exit Do
+                Else
+                    Call buffer.Write(chunk, Scan0, nbytes)
+                End If
+            Loop
+
+            Erase chunk
+
+            Call p.WaitForExit()
+            Call buffer.Flush()
+            Call buffer.Seek(Scan0, SeekOrigin.Begin)
+
+            Return buffer
+        End Function
+
+        Public Function CallDotNetCorePipeline(app As ConsoleApp, Optional args As String = "", Optional [in] As String = "") As MemoryStream
+            Dim dll As String = app.Path.TrimSuffix & ".dll"
+            Dim cli As String = $"{dll.CLIPath} {args}"
+
+            ' run on UNIX .net 5 
+            Return ExecSub("dotnet", cli, [in])
+        End Function
 
         ''' <summary>
         ''' Run process and then gets the ``std_out`` of the child process

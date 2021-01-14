@@ -81,6 +81,7 @@ Namespace Tcp
         Dim _threadEndAccept As Boolean = True
         Dim _exceptionHandle As ExceptionHandler
         Dim _servicesSocket As Socket
+        Dim _maxAccepts As Integer = 4
 
 #End Region
 
@@ -374,6 +375,13 @@ Namespace Tcp
             ' Complete sending the data to the remote device.
             Call handler.Shutdown(SocketShutdown.Both)
             Call handler.Close()
+
+            ' release data
+            If TypeOf data Is DataPipe Then
+                Call DirectCast(data, DataPipe).Dispose()
+            ElseIf TypeOf data Is StreamPipe Then
+                Call DirectCast(data, StreamPipe).Dispose()
+            End If
         End Sub
 
         ''' <summary>
@@ -405,6 +413,9 @@ Namespace Tcp
 
                     Call _servicesSocket.Dispose()
                     Call _servicesSocket.Free()
+
+                    _Running = False
+
                     ' TODO: dispose managed state (managed objects).
                 End If
 

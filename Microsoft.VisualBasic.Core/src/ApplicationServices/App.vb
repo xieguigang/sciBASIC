@@ -1427,6 +1427,11 @@ Public Module App
     ''' <param name="state"></param>
     ''' <returns></returns>
     Private Function finalizeCLI(state As Integer) As Integer
+        Dim internalPipelineMode As String = App.CommandLine.Tokens _
+            .DoCall(Function(t) JoinElement(Of String).FindElement(t, Function(s) s = FlagInternalPipeline)) _
+            .FirstOrDefault _
+           ?.next
+
         App._Running = False
 
         If _CLIAutoClean Then
@@ -1436,14 +1441,20 @@ Public Module App
         ' 在这里等待终端的内部线程输出工作完毕，防止信息的输出错位
 
         Call My.InnerQueue.WaitQueue()
-        Call Console.WriteLine()
+
+        If Not internalPipelineMode.TextEquals("TRUE") Then
+            Call Console.WriteLine()
+        End If
 
         For Each hook As Action In appExitHooks
             Call hook()
         Next
 
         Call My.InnerQueue.WaitQueue()
-        Call Console.WriteLine()
+
+        If Not internalPipelineMode.TextEquals("TRUE") Then
+            Call Console.WriteLine()
+        End If
 
 #If DEBUG Then
         ' 20190623 在这里禁止程序在调试模式下，如果处于内部流程的调用

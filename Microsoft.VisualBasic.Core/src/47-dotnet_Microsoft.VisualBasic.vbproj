@@ -1620,6 +1620,7 @@
     <Compile Include="ComponentModel\File\XmlAssembly\XmlStyleProcessor.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\BinaryHeap.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\ChangesWatcher.vb" />
+    <Compile Include="ComponentModel\System.Collections.Generic\JoinElement.vb" />
     <Compile Include="Data\NamespaceDoc.vb" />
     <Compile Include="Data\Repository\RepositoryFileSystem.vb" />
     <Compile Include="Data\Trinity\WordSimilarityIndex.vb" />

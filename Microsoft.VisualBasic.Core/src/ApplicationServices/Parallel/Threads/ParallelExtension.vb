@@ -104,7 +104,7 @@ Namespace Parallel
         <DebuggerStepThrough>
         Public Function RunTask(start As ThreadStart) As Thread
             Dim thread As New Thread(start)
-            Call thread.Start()
+            thread.Start()
             Return thread
         End Function
 
