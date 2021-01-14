@@ -1,5 +1,5 @@
 ﻿Imports System.Reflection
-
+#if netcore5=0 then 
 ' Information about this assembly is defined by the following attributes.
 ' Change them to the values specific to your project.
 <Assembly: AssemblyTitle("msgpack-sharp")>
@@ -18,3 +18,4 @@
 '[assembly: AssemblyDelaySign(false)]
 '[assembly: AssemblyKeyFile("")]
 
+#end if
