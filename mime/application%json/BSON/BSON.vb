@@ -81,6 +81,15 @@ Namespace BSON
         Public Function SafeGetBuffer(obj As JsonElement) As MemoryStream
             Dim ms As New MemoryStream
 
+            Call obj.SafeWriteBuffer(ms)
+            Call ms.Flush()
+            Call ms.Seek(Scan0, SeekOrigin.Begin)
+
+            Return ms
+        End Function
+
+        <Extension>
+        Public Sub SafeWriteBuffer(obj As JsonElement, ms As Stream)
             If TypeOf obj Is JsonObject Then
                 Call WriteBuffer(obj, buffer:=ms)
             ElseIf TypeOf obj Is JsonArray Then
@@ -88,12 +97,7 @@ Namespace BSON
             Else
                 Throw New NotSupportedException
             End If
-
-            Call ms.Flush()
-            Call ms.Seek(Scan0, SeekOrigin.Begin)
-
-            Return ms
-        End Function
+        End Sub
 
         Public Function GetBuffer(obj As JsonObject) As MemoryStream
             Dim ms As New MemoryStream

@@ -91,6 +91,7 @@ Namespace Parallel.Tasks
         ''' <param name="Task"></param>
         Sub New(Task As Func(Of TOut))
             Me.Task = Task
+            Me.IsCompleted = True
         End Sub
 
         ''' <summary>
@@ -100,16 +101,16 @@ Namespace Parallel.Tasks
         Public Function Run() As AsyncHandle(Of TOut)
             If IsCompleted Then
                 handle = Nothing
+                _IsCompleted = False
                 ' 假若没有执行完毕也调用的话，会改变handle
                 ' _Handle = Task.BeginInvoke(Nothing, Nothing)
                 ' due to the reason of platform not supported on unix .net 5
                 ' use thread model instead of the async model
-                Call ThreadPool.QueueUserWorkItem(
+                Call New Thread(
                     Sub()
-                        _IsCompleted = False
                         handle = _Task()
                         _IsCompleted = True
-                    End Sub)
+                    End Sub).Start()
             End If
 
             Return Me
