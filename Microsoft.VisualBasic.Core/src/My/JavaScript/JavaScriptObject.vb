@@ -136,6 +136,10 @@ Namespace My.JavaScript
                     End If
                 Else
                     ' 添加一个新的member
+                    If Not TypeOf value Is BindProperty(Of DataFrameColumnAttribute) Then
+                        value = New [Variant](Of BindProperty(Of DataFrameColumnAttribute), Object)(value)
+                    End If
+
                     members(memberName) = value
                 End If
             End Set
@@ -150,6 +154,10 @@ Namespace My.JavaScript
             Dim fields As FieldInfo() = type.GetFields(PublicProperty).ToArray
 
             For Each prop As PropertyInfo In properties
+                If prop.Name = NameOf(Me.length) OrElse Not prop.GetIndexParameters.IsNullOrEmpty Then
+                    Continue For
+                End If
+
                 members(prop.Name) = New BindProperty(Of DataFrameColumnAttribute)(prop)
             Next
             For Each field As FieldInfo In fields
