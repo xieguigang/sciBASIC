@@ -17,11 +17,13 @@
         End Function
 
         Public Shared Iterator Function FindElement(array As T(), find As Func(Of T, Boolean)) As IEnumerable(Of JoinElement(Of T))
-            For i As Integer = 0 To array.Length - 1
-                If find(array(i)) Then
-                    Yield GetByIndex(array, i)
-                End If
-            Next
+            If Not array.IsNullOrEmpty Then
+                For i As Integer = 0 To array.Length - 1
+                    If find(array(i)) Then
+                        Yield GetByIndex(array, i)
+                    End If
+                Next
+            End If
         End Function
     End Class
 End Namespace

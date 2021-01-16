@@ -329,8 +329,10 @@ Namespace CommandLine
         <Example("? example_commandName")>
         Public Function Help(CommandName As String) As Integer
             If String.IsNullOrEmpty(CommandName) Then
-                ' List all commands when command name is empty.
-                Call Console.WriteLine(HelpSummary(False))
+                If Not Me.APIList.IsNullOrEmpty Then
+                    ' List all commands when command name is empty.
+                    Call Console.WriteLine(HelpSummary(False))
+                End If
             Else
                 ' listing the help for specific command name
                 Call PrintCommandHelp(CommandName)
