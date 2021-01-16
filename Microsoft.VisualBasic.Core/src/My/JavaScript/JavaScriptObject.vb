@@ -1,64 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::75371fc279e0a479fbc4ad302efa02f5, Microsoft.VisualBasic.Core\src\My\JavaScript\JavaScriptObject.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Interface IJavaScriptObjectAccessor
-    ' 
-    '         Properties: Accessor
-    ' 
-    '     Class Descriptor
-    ' 
-    '         Properties: configurable, enumerable, value, writable
-    ' 
-    '     Enum MemberAccessorResult
-    ' 
-    '         ClassMemberProperty, ExtensionProperty, Undefined
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Class JavaScriptObject
-    ' 
-    '         Properties: length, this
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: GetDescription, GetEnumerator, GetMemberValue, IEnumerable_GetEnumerator, IEnumerable_GetEnumerator1
-    ' 
-    '         Sub: Delete
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Interface IJavaScriptObjectAccessor
+' 
+'         Properties: Accessor
+' 
+'     Class Descriptor
+' 
+'         Properties: configurable, enumerable, value, writable
+' 
+'     Enum MemberAccessorResult
+' 
+'         ClassMemberProperty, ExtensionProperty, Undefined
+' 
+'  
+' 
+' 
+' 
+'     Class JavaScriptObject
+' 
+'         Properties: length, this
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: GetDescription, GetEnumerator, GetMemberValue, IEnumerable_GetEnumerator, IEnumerable_GetEnumerator1
+' 
+'         Sub: Delete
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -66,6 +66,7 @@ Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
+Imports any = Microsoft.VisualBasic.Scripting
 
 Namespace My.JavaScript
 
@@ -97,12 +98,54 @@ Namespace My.JavaScript
         ExtensionProperty
     End Enum
 
+    Public Class JavaScriptValue
+
+        Public Property Accessor As BindProperty(Of DataFrameColumnAttribute)
+        Public Property Literal As Object
+
+        Dim target As JavaScriptObject
+
+        Public ReadOnly Property IsConstant As Boolean
+            Get
+                Return Accessor.IsNull
+            End Get
+        End Property
+
+        Sub New(bind As BindProperty(Of DataFrameColumnAttribute), target As JavaScriptObject)
+            Me.Accessor = bind
+            Me.target = target
+        End Sub
+
+        Sub New()
+        End Sub
+
+        Public Function GetValue() As Object
+            If IsConstant Then
+                Return Literal
+            Else
+                Return Accessor.GetValue(target)
+            End If
+        End Function
+
+        Public Sub SetValue(value As Object)
+            If IsConstant Then
+                Literal = value
+            Else
+                Accessor.SetValue(target, value)
+            End If
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return any.ToString(GetValue)
+        End Function
+    End Class
+
     ''' <summary>
     ''' javascript object
     ''' </summary>
     Public Class JavaScriptObject : Implements IEnumerable(Of String), IEnumerable(Of NamedValue(Of Object)), IJavaScriptObjectAccessor
 
-        Dim members As New Dictionary(Of String, [Variant](Of BindProperty(Of DataFrameColumnAttribute), Object))
+        Dim members As New Dictionary(Of String, JavaScriptValue)
 
         ''' <summary>
         ''' This javascript object instance
@@ -128,19 +171,15 @@ Namespace My.JavaScript
             Set(value As Object)
                 If members.ContainsKey(memberName) Then
                     If members(memberName) Is Nothing Then
-                        members(memberName) = value
-                    ElseIf members(memberName) Like GetType(BindProperty(Of DataFrameColumnAttribute)) Then
-                        members(memberName).TryCast(Of BindProperty(Of DataFrameColumnAttribute)).SetValue(Me, value)
+                        members(memberName) = New JavaScriptValue With {.Literal = value}
                     Else
-                        members(memberName) = value
+                        members(memberName).SetValue(value)
                     End If
                 Else
                     ' 添加一个新的member
-                    If Not TypeOf value Is BindProperty(Of DataFrameColumnAttribute) Then
-                        value = New [Variant](Of BindProperty(Of DataFrameColumnAttribute), Object)(value)
-                    End If
-
-                    members(memberName) = value
+                    members(memberName) = New JavaScriptValue With {
+                        .Literal = value
+                    }
                 End If
             End Set
         End Property
@@ -152,16 +191,19 @@ Namespace My.JavaScript
             Dim type As Type = MyClass.GetType
             Dim properties As PropertyInfo() = type.GetProperties(PublicProperty).ToArray
             Dim fields As FieldInfo() = type.GetFields(PublicProperty).ToArray
+            Dim value As JavaScriptValue
 
             For Each prop As PropertyInfo In properties
                 If prop.Name = NameOf(Me.length) OrElse Not prop.GetIndexParameters.IsNullOrEmpty Then
                     Continue For
                 End If
 
-                members(prop.Name) = New BindProperty(Of DataFrameColumnAttribute)(prop)
+                value = New JavaScriptValue(New BindProperty(Of DataFrameColumnAttribute)(prop), Me)
+                members(prop.Name) = value
             Next
             For Each field As FieldInfo In fields
-                members(field.Name) = New BindProperty(Of DataFrameColumnAttribute)(field)
+                value = New JavaScriptValue(New BindProperty(Of DataFrameColumnAttribute)(field), Me)
+                members(field.Name) = value
             Next
         End Sub
 
@@ -171,18 +213,18 @@ Namespace My.JavaScript
 
         Public Function GetMemberValue(memberName As String, ByRef access As MemberAccessorResult) As Object
             If members.ContainsKey(memberName) Then
-                Dim value = members(memberName)
+                Dim value As JavaScriptValue = members(memberName)
 
                 If value Is Nothing Then
                     access = MemberAccessorResult.Undefined
                     Return Nothing
-                ElseIf value Like GetType(BindProperty(Of DataFrameColumnAttribute)) Then
-                    access = MemberAccessorResult.ClassMemberProperty
-                    Return value.TryCast(Of BindProperty(Of DataFrameColumnAttribute)).GetValue(Me)
-                Else
+                ElseIf value.IsConstant Then
                     access = MemberAccessorResult.ExtensionProperty
-                    Return value.TryCast(Of Object)
+                Else
+                    access = MemberAccessorResult.ClassMemberProperty
                 End If
+
+                Return value.GetValue
             Else
                 ' Returns undefined in javascript
                 access = MemberAccessorResult.Undefined
@@ -232,6 +274,10 @@ Namespace My.JavaScript
 
                 Yield pop
             Next
+        End Function
+
+        Public Function GetGenericJson() As Dictionary(Of String, Object)
+            Return members.ToDictionary(Function(a) a.Key, Function(a) a.Value.GetValue)
         End Function
     End Class
 End Namespace
