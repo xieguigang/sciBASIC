@@ -66,6 +66,7 @@ Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports any = Microsoft.VisualBasic.Scripting
 
 Namespace My.JavaScript
@@ -278,6 +279,15 @@ Namespace My.JavaScript
 
         Public Function GetGenericJson() As Dictionary(Of String, Object)
             Return members.ToDictionary(Function(a) a.Key, Function(a) a.Value.GetValue)
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return GetGenericJson.GetJson(knownTypes:={
+                GetType(Integer),
+                GetType(String),
+                GetType(Double),
+                GetType(Boolean)
+            })
         End Function
     End Class
 End Namespace
