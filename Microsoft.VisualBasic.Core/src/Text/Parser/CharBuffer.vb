@@ -84,6 +84,12 @@ Namespace Text.Parser
             End Get
         End Property
 
+        Public ReadOnly Property isInteger As Boolean
+            Get
+                Return buffer.All(Function(c) Char.IsDigit(c))
+            End Get
+        End Property
+
         Public Function Add(c As Char) As CharBuffer
             Call buffer.Add(c)
             Return Me
