@@ -249,6 +249,10 @@ Namespace My.JavaScript
             Return desc
         End Function
 
+        Public Function GetNames() As String()
+            Return members.Keys.ToArray
+        End Function
+
         Public Iterator Function GetEnumerator() As IEnumerator(Of String) Implements IEnumerable(Of String).GetEnumerator
             For Each key As String In members.Keys
                 Yield key

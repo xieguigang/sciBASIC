@@ -255,6 +255,10 @@ Namespace IO
         Protected Friend Sub New()
         End Sub
 
+        Sub New(header As IEnumerable(Of String))
+            columnList = New HeaderSchema(header)
+        End Sub
+
         ''' <summary>
         ''' Create a new dataframe with column value assigned
         ''' </summary>
