@@ -201,20 +201,31 @@ Namespace Distributions
 
         <Extension>
         Public Function TabulateMode(data As IEnumerable(Of Double)) As Double
+            Dim resample As Double() = data.TabulateBin
+
+            If resample.Length = 0 Then
+                Return Double.NaN
+            Else
+                Return resample.Average
+            End If
+        End Function
+
+        <Extension>
+        Public Function TabulateBin(data As IEnumerable(Of Double)) As Double()
             With data.ToArray
                 If .Length = 0 Then
-                    Return 0
+                    Return {}
                 ElseIf .All(AddressOf IsNaNImaginary) Then
-                    Return Double.NaN
+                    Return {}
                 ElseIf .Min = .Max Then
                     ' all equals to each other, no needs for calculation
-                    Return .Max
+                    Return .ByRef
                 End If
 
                 Dim steps As Double = New DoubleRange(.Min, .Max).Length / 5
 
                 If steps < 0.000001 Then
-                    Return .Average
+                    Return .ByRef
                 End If
 
                 Dim hist = .Hist([step]:=steps).ToArray
@@ -234,7 +245,7 @@ Namespace Distributions
                         hist(maxN + 1).Raw
                 End If
 
-                Return resample.Average
+                Return resample
             End With
         End Function
     End Module

@@ -68,7 +68,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
     <DocumentationFile>Microsoft.VisualBasic.Core.xml</DocumentationFile>
-    <DefineConstants>netcore5=1,UNIX=0,FRAMEWORD_CORE=1</DefineConstants>
+    <DefineConstants>netcore5=1,UNIX=1,FRAMEWORD_CORE=1</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
     <BaseAddress>4194304</BaseAddress>
