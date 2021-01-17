@@ -72,48 +72,6 @@ Namespace Parallel
         End Function
     End Class
 
-    Public Class ParallelGroup(Of TOut)
-
-        ReadOnly blocks As Func(Of SeqValue(Of TOut()))()
-
-        Sub New(tasks As IEnumerable(Of Func(Of TOut)), Optional parallelism%? = Nothing)
-            Dim taskPool = tasks.ToArray
-            Dim num_threads% = parallelism Or LQuerySchedule.DefaultConfig
-            Dim partionTokens% = TaskPartitions.PartTokens(taskPool.Length, num_threads)
-            Dim blocks = taskPool.SplitIterator(partionTokens).ToArray
-
-            Me.blocks = blocks _
-                .Select(Function(block, i) As Func(Of SeqValue(Of TOut()))
-                            Return Function() As SeqValue(Of TOut())
-                                       Return New SeqValue(Of TOut()) With {
-                                           .i = i,
-                                           .value = block _
-                                               .Select(Function(task) task()) _
-                                               .ToArray
-                                       }
-                                   End Function
-                        End Function) _
-                .ToArray
-        End Sub
-
-        Public Iterator Function SequentialTask() As IEnumerable(Of TOut)
-            For Each block As Func(Of SeqValue(Of TOut())) In blocks
-                For Each x As TOut In block().value
-                    Yield x
-                Next
-            Next
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function ParallelTask() As IEnumerable(Of TOut)
-            Return blocks _
-                .BatchTask _
-                .OrderBy(Function(block) block.i) _
-                .Select(Function(block) block.value) _
-                .IteratesALL
-        End Function
-    End Class
-
     ''' <summary>
     ''' 分组操作的结果
     ''' </summary>
