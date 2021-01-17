@@ -1644,6 +1644,7 @@
     <Compile Include="Extensions\Reflection\EnumHelpers.vb" />
     <Compile Include="Extensions\StringHelpers\StringFormats.vb" />
     <Compile Include="Language\Linq\Rapply.vb" />
+    <Compile Include="Language\Value\Numeric\chr.vb" />
     <Compile Include="My\RlangInterop.vb" />
     <Compile Include="My\Framework\FrameworkConfig.vb" />
     <Compile Include="My\Framework\DoConfiguration.vb" />

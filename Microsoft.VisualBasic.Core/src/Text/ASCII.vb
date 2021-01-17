@@ -69,135 +69,135 @@ Namespace Text
         ''' <summary>
         ''' 0000 0000	0	00	NUL	空字符（Null）
         ''' </summary>
-        Public Const NUL As Char = Chr(0)
+        Public Const NUL As Char = Strings.Chr(0)
         ''' <summary>
         ''' 0000 0001	1	01	SOH	标题开始
         ''' </summary>
-        Public Const SOH As Char = Chr(1)
+        Public Const SOH As Char = Strings.Chr(1)
         ''' <summary>
         ''' 0000 0010	2	02	STX	本文开始
         ''' </summary>
-        Public Const STX As Char = Chr(2)
+        Public Const STX As Char = Strings.Chr(2)
         ''' <summary>
         ''' 0000 0011	3	03	ETX	本文结束
         ''' </summary>
-        Public Const ETX As Char = Chr(3)
+        Public Const ETX As Char = Strings.Chr(3)
         ''' <summary>
         ''' 0000 0100	4	04	EOT	传输结束
         ''' </summary>
-        Public Const EOT As Char = Chr(4)
+        Public Const EOT As Char = Strings.Chr(4)
         ''' <summary>
         ''' 0000 0101	5	05	ENQ	请求
         ''' </summary>
-        Public Const ENQ As Char = Chr(5)
+        Public Const ENQ As Char = Strings.Chr(5)
         ''' <summary>
         ''' 0000 0110	6	06	ACK	确认回应
         ''' </summary>
-        Public Const ACK As Char = Chr(6)
+        Public Const ACK As Char = Strings.Chr(6)
         ''' <summary>
         ''' 0000 0111	7	07	BEL	响铃
         ''' </summary>
-        Public Const BEL As Char = Chr(7)
+        Public Const BEL As Char = Strings.Chr(7)
         ''' <summary>
         ''' 0000 1000	8	08	BS	退格
         ''' </summary>
-        Public Const BS As Char = Chr(8)
+        Public Const BS As Char = Strings.Chr(8)
         ''' <summary>
         ''' 0000 1001	9	09	HT	水平定位符号
         ''' </summary>
-        Public Const HT As Char = Chr(9)
+        Public Const HT As Char = Strings.Chr(9)
         ''' <summary>
         ''' 0000 1010	10	0A	LF	换行键
         ''' </summary>
-        Public Const LF As Char = Chr(10)
+        Public Const LF As Char = Strings.Chr(10)
         ''' <summary>
         ''' 0000 1011	11	0B	VT	垂直定位符号
         ''' </summary>
-        Public Const VT As Char = Chr(11)
+        Public Const VT As Char = Strings.Chr(11)
         ''' <summary>
         ''' 0000 1100	12	0C	FF	换页键
         ''' </summary>
-        Public Const FF As Char = Chr(12)
+        Public Const FF As Char = Strings.Chr(12)
         ''' <summary>
         ''' 0000 1101	13	0D	CR	归位键
         ''' </summary>
-        Public Const CR As Char = Chr(13)
+        Public Const CR As Char = Strings.Chr(13)
         ''' <summary>
         ''' 0000 1110	14	0E	SO	取消变换（Shift out）
         ''' </summary>
-        Public Const SO As Char = Chr(14)
+        Public Const SO As Char = Strings.Chr(14)
         ''' <summary>
         ''' 0000 1111	15	0F	SI	启用变换（Shift in）
         ''' </summary>
-        Public Const SI As Char = Chr(15)
+        Public Const SI As Char = Strings.Chr(15)
         ''' <summary>
         ''' 0001 0000	16	10	DLE	跳出数据通讯
         ''' </summary>
-        Public Const DLE As Char = Chr(16)
+        Public Const DLE As Char = Strings.Chr(16)
         ''' <summary>
         ''' 0001 0001	17	11	DC1	设备控制一（XON 启用软件速度控制）
         ''' </summary>
-        Public Const DC1 As Char = Chr(17)
+        Public Const DC1 As Char = Strings.Chr(17)
         ''' <summary>
         ''' 0001 0010	18	12	DC2	设备控制二
         ''' </summary>
-        Public Const DC2 As Char = Chr(18)
+        Public Const DC2 As Char = Strings.Chr(18)
         ''' <summary>
         ''' 0001 0011	19	13	DC3	设备控制三（XOFF 停用软件速度控制）
         ''' </summary>
-        Public Const DC3 As Char = Chr(19)
+        Public Const DC3 As Char = Strings.Chr(19)
         ''' <summary>
         ''' 0001 0100	20	14	DC4	设备控制四
         ''' </summary>
-        Public Const DC4 As Char = Chr(20)
+        Public Const DC4 As Char = Strings.Chr(20)
         ''' <summary>
         ''' 0001 0101	21	15	NAK	确认失败回应
         ''' </summary>
-        Public Const NAK As Char = Chr(21)
+        Public Const NAK As Char = Strings.Chr(21)
         ''' <summary>
         ''' 0001 0110	22	16	SYN	同步用暂停
         ''' </summary>
-        Public Const SYN As Char = Chr(22)
+        Public Const SYN As Char = Strings.Chr(22)
         ''' <summary>
         ''' 0001 0111	23	17	ETB	区块传输结束
         ''' </summary>
-        Public Const ETB As Char = Chr(23)
+        Public Const ETB As Char = Strings.Chr(23)
         ''' <summary>
         ''' 0001 1000	24	18	CAN	取消
         ''' </summary>
-        Public Const CAN As Char = Chr(24)
+        Public Const CAN As Char = Strings.Chr(24)
         ''' <summary>
         ''' 0001 1001	25	19	EM	连接介质中断
         ''' </summary>
-        Public Const EM As Char = Chr(25)
+        Public Const EM As Char = Strings.Chr(25)
         ''' <summary>
         ''' 0001 1010	26	1A	SUB	替换
         ''' </summary>
-        Public Const [SUB] As Char = Chr(26)
+        Public Const [SUB] As Char = Strings.Chr(26)
         ''' <summary>
         ''' 0001 1011	27	1B	ESC	跳出
         ''' </summary>
-        Public Const ESC As Char = Chr(27)
+        Public Const ESC As Char = Strings.Chr(27)
         ''' <summary>
         ''' 0001 1100	28	1C	FS	文件分割符
         ''' </summary>
-        Public Const FS As Char = Chr(28)
+        Public Const FS As Char = Strings.Chr(28)
         ''' <summary>
         ''' 0001 1101	29	1D	GS	组群分隔符
         ''' </summary>
-        Public Const GS As Char = Chr(29)
+        Public Const GS As Char = Strings.Chr(29)
         ''' <summary>
         ''' 0001 1110	30	1E	RS	记录分隔符
         ''' </summary>
-        Public Const RS As Char = Chr(30)
+        Public Const RS As Char = Strings.Chr(30)
         ''' <summary>
         ''' 0001 1111	31	1F	US	单元分隔符
         ''' </summary>
-        Public Const US As Char = Chr(31)
+        Public Const US As Char = Strings.Chr(31)
         ''' <summary>
         ''' 0111 1111	127	7F	DEL	删除
         ''' </summary>
-        Public Const DEL As Char = Chr(127)
+        Public Const DEL As Char = Strings.Chr(127)
 
         ''' <summary>
         ''' 非打印字符也可以是正则表达式的组成部分。下表列出了表示非打印字符的转义序列：
@@ -258,7 +258,7 @@ Namespace Text
         ''' <summary>
         ''' 双引号``"``
         ''' </summary>
-        Public Const Quot As Char = Chr(34)
+        Public Const Quot As Char = Strings.Chr(34)
         Public Shared ReadOnly QuotBegin_ZHCN As Char = Convert.ToChar(8220)
         Public Shared ReadOnly QuotEnds_ZHCN As Char = Convert.ToChar(8221)
         Public Const QuotUnknown As Char = "″"c
@@ -337,7 +337,7 @@ Namespace Text
         ''' Symbols without white space.(可以印刷的ASCII符号列表)
         ''' </summary>
         ''' <returns></returns>
-        Public Shared ReadOnly Property Symbols As Char() = ASCII.Byte.GetASCIISymbols().Select(AddressOf Chr).ToArray
+        Public Shared ReadOnly Property Symbols As Char() = ASCII.Byte.GetASCIISymbols().Select(AddressOf Strings.Chr).ToArray
         Public Shared ReadOnly Property AlphaNumericTable As New Dictionary(Of Char, Integer)() From {
             {"0"c, 0}, {"1"c, 1}, {"2"c, 2}, {"3"c, 3}, {"4"c, 4},
             {"5"c, 5}, {"6"c, 6}, {"7"c, 7}, {"8"c, 8}, {"9"c, 9},

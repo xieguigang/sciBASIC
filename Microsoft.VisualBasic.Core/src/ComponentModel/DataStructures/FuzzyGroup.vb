@@ -180,7 +180,7 @@ Namespace ComponentModel.Collection
                 Dim edits As DistResult = ComputeDistance(
                     keyASC, x.keyASC,
                     Function(a, b) a = b,
-                    AddressOf Chr)
+                    AddressOf Strings.Chr)
 
                 If edits Is Nothing Then
                     Return False
