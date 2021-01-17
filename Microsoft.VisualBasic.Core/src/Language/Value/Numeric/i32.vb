@@ -317,16 +317,11 @@ Namespace Language
             Return n + x.Value
         End Operator
 
-        ''' <summary>
-        ''' p的值增加x，然后返回之前的值
-        ''' </summary>
-        ''' <param name="p"></param>
-        ''' <param name="x"></param>
-        ''' <returns></returns>
         Public Shared Operator <<(p As i32, x%) As Integer
-            Dim i As Integer = p.Value
-            p.Value += x
-            Return i
+            'Dim i As Integer = p.Value
+            'p.Value += x
+            'Return i
+            Return p.Value << x
         End Operator
 
         Public Shared Operator Not(x As i32) As Integer
@@ -347,5 +342,9 @@ Namespace Language
         Public Overloads Function ToString(format As String, formatProvider As IFormatProvider) As String Implements IFormattable.ToString
             Return Value.ToString(format, formatProvider)
         End Function
+
+        Public Shared Operator And(p As i32, i As Integer) As Integer
+            Return p.Value And i
+        End Operator
     End Class
 End Namespace
