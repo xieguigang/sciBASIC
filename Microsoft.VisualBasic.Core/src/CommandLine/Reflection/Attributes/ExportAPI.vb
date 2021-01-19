@@ -92,8 +92,11 @@ Namespace CommandLine.Reflection
         ''' </summary>
         ''' <param name="Name">The name of the commandline object or you define the exported API name here.(这个命令的名称)</param>
         ''' <remarks></remarks>
-        Sub New(<Parameter("Command.Name", "The name of the commandline object.")> Name As String)
+        Sub New(Name As String)
             _Name = Name
+        End Sub
+
+        Sub New()
         End Sub
 
         Public Overrides Function ToString() As String

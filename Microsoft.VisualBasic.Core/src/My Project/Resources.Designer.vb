@@ -26,7 +26,7 @@ Namespace My.Resources
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
      Global.Microsoft.VisualBasic.HideModuleNameAttribute()>  _
-    Public Module Resources
+    Friend Module Resources
         
         Private resourceMan As Global.System.Resources.ResourceManager
         
@@ -36,7 +36,7 @@ Namespace My.Resources
         '''  返回此类使用的缓存的 ResourceManager 实例。
         '''</summary>
         <Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
-        Public ReadOnly Property ResourceManager() As Global.System.Resources.ResourceManager
+        Friend ReadOnly Property ResourceManager() As Global.System.Resources.ResourceManager
             Get
                 If Object.ReferenceEquals(resourceMan, Nothing) Then
                     Dim temp As Global.System.Resources.ResourceManager = New Global.System.Resources.ResourceManager("Microsoft.VisualBasic.Resources", GetType(Resources).Assembly)
@@ -51,7 +51,7 @@ Namespace My.Resources
         '''  使用此强类型资源类的所有资源查找执行重写。
         '''</summary>
         <Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
-        Public Property Culture() As Global.System.Globalization.CultureInfo
+        Friend Property Culture() As Global.System.Globalization.CultureInfo
             Get
                 Return resourceCulture
             End Get
@@ -63,7 +63,7 @@ Namespace My.Resources
         '''<summary>
         '''  查找 System.Byte[] 类型的本地化资源。
         '''</summary>
-        Public ReadOnly Property bashRunner() As Byte()
+        Friend ReadOnly Property bashRunner() As Byte()
             Get
                 Dim obj As Object = ResourceManager.GetObject("bashRunner", resourceCulture)
                 Return CType(obj,Byte())
@@ -85,7 +85,7 @@ Namespace My.Resources
         '''CODE { COLOR: #990000; FONT-FAMILY: &quot;Courier New&quot;, Courier, mono; }
         '''.S [字符串的其余部分被截断]&quot;; 的本地化字符串。
         '''</summary>
-        Public ReadOnly Property CPOL() As String
+        Friend ReadOnly Property CPOL() As String
             Get
                 Return ResourceManager.GetString("CPOL", resourceCulture)
             End Get
@@ -107,7 +107,7 @@ Namespace My.Resources
         '''  The licenses for most software and other practical works are designed
         '''to [字符串的其余部分被截断]&quot;; 的本地化字符串。
         '''</summary>
-        Public ReadOnly Property gpl() As String
+        Friend ReadOnly Property gpl() As String
             Get
                 Return ResourceManager.GetString("gpl", resourceCulture)
             End Get
@@ -116,7 +116,7 @@ Namespace My.Resources
         '''<summary>
         '''  查找 System.Byte[] 类型的本地化资源。
         '''</summary>
-        Public ReadOnly Property help() As Byte()
+        Friend ReadOnly Property help() As Byte()
             Get
                 Dim obj As Object = ResourceManager.GetObject("help", resourceCulture)
                 Return CType(obj,Byte())
@@ -136,7 +136,7 @@ Namespace My.Resources
         '''
         '''You should have received a copy of the GNU  [字符串的其余部分被截断]&quot;; 的本地化字符串。
         '''</summary>
-        Public ReadOnly Property license() As String
+        Friend ReadOnly Property license() As String
             Get
                 Return ResourceManager.GetString("license", resourceCulture)
             End Get
@@ -152,7 +152,7 @@ Namespace My.Resources
         '''3rd Generation Partnership Project - Pic Large	application/vnd.3gpp.pic-bw-large	.plb	3GPP
         '''3rd Generation Partnership Project - Pic Small	appli [字符串的其余部分被截断]&quot;; 的本地化字符串。
         '''</summary>
-        Public ReadOnly Property List_of_MIME_types___Internet_Media_Types_() As String
+        Friend ReadOnly Property List_of_MIME_types___Internet_Media_Types_() As String
             Get
                 Return ResourceManager.GetString("List_of_MIME_types___Internet_Media_Types_", resourceCulture)
             End Get
@@ -161,7 +161,7 @@ Namespace My.Resources
         '''<summary>
         '''  查找 System.Byte[] 类型的本地化资源。
         '''</summary>
-        Public ReadOnly Property runMono() As Byte()
+        Friend ReadOnly Property runMono() As Byte()
             Get
                 Dim obj As Object = ResourceManager.GetObject("runMono", resourceCulture)
                 Return CType(obj,Byte())
@@ -171,7 +171,7 @@ Namespace My.Resources
         '''<summary>
         '''  查找 System.Byte[] 类型的本地化资源。
         '''</summary>
-        Public ReadOnly Property runNet5() As Byte()
+        Friend ReadOnly Property runNet5() As Byte()
             Get
                 Dim obj As Object = ResourceManager.GetObject("runNet5", resourceCulture)
                 Return CType(obj,Byte())
