@@ -101,9 +101,10 @@ Namespace ComponentModel.DataSourceModel
         ''' </remarks>
         Public Function Schema(Of T)(flag As PropertyAccess,
                                      Optional nonIndex As Boolean = False,
-                                     Optional primitive As Boolean = False) As Dictionary(Of String, PropertyInfo)
+                                     Optional primitive As Boolean = False,
+                                     Optional binds As BindingFlags = PublicProperty) As Dictionary(Of String, PropertyInfo)
 
-            With GetType(T).Schema(flag,, nonIndex)
+            With GetType(T).Schema(flag, binds, nonIndex)
                 If primitive Then
                     Return .Keys _
                         .Where(Function(k)
