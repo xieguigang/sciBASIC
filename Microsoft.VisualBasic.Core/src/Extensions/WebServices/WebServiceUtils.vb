@@ -554,13 +554,7 @@ Public Module WebServiceUtils
                 Call $"[GET] {response.Length} bytes...".__DEBUG_ECHO
             End If
 
-            Dim rtvlHeaders As New Dictionary(Of HttpHeaderName, String)
-            Dim raw As WebHeaderCollection = request.ResponseHeaders
-
-            For Each key As String In raw.AllKeys
-                Call rtvlHeaders.Add(ParseHeaderName(key), raw.Get(key))
-            Next
-
+            Dim rtvlHeaders As New ResponseHeaders(request.ResponseHeaders)
             Dim result As New WebResponseResult With {
                 .url = url,
                 .html = str,

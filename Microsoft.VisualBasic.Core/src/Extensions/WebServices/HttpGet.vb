@@ -236,12 +236,7 @@ Re0:
 
             Dim html As String = htmlBuilder.ToString
             Dim timespan As Long = timer.ElapsedMilliseconds
-            Dim headers As New Dictionary(Of HttpHeaderName, String)
-            Dim raw = response.Headers
-
-            For Each key As String In raw.AllKeys
-                Call headers.Add(ParseHeaderName(key), raw.Get(key))
-            Next
+            Dim headers As New ResponseHeaders(response.Headers)
 
             ' 判断是否是由于还没有登陆校园网客户端而导致的错误
             If InStr(html, "http://www.doctorcom.com", CompareMethod.Text) > 0 Then
@@ -275,12 +270,3 @@ Re0:
         End Using
     End Function
 End Module
-
-Public Class WebResponseResult
-
-    Public Property html As String
-    Public Property headers As Dictionary(Of HttpHeaderName, String)
-    Public Property timespan As Long
-    Public Property url As String
-
-End Class

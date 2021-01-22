@@ -187,9 +187,18 @@ Namespace Net.Http
         WwwAuthenticate = 29
 #End Region
 
+        <Description("Access-Control-Allow-Origin")> AccessControlAllowOrigin
+        <Description("Content-Security-Policy")> ContentSecurityPolicy
+
+        <Description("Referrer-Policy")> ReferrerPolicy
+        <Description("Strict-Transport-Security")> StrictTransportSecurity
+
         <Description("X-Frame-Options")> XFrameOptions
         <Description("X-Powered-By")> XPoweredBy
 
+        <Description("X-UA-Compatible")> XUACompatible
+        <Description("X-XSS-Protection")> XXssProtection
+        <Description("XThrottlingControl")> XThrottlingControl
     End Enum
 
     <HideModuleName>
@@ -201,16 +210,23 @@ Namespace Net.Http
             strMaps = New Dictionary(Of String, HttpHeaderName)
 
             For Each val As HttpHeaderName In Enums(Of HttpHeaderName)()
-                strMaps(val.Description) = val
+                strMaps(val.Description.ToLower) = val
             Next
         End Sub
 
+        ''' <summary>
+        ''' 因为可能存在比较多的自定义header，所以在这里不要直接使用字典的Add方法添加
+        ''' </summary>
+        ''' <param name="key"></param>
+        ''' <returns></returns>
         Public Function ParseHeaderName(key As String) As HttpHeaderName
             Dim nameKey As String = key.Replace("-", "")
             Dim val As HttpHeaderName = Nothing
 
             If [Enum].TryParse(Of HttpHeaderName)(nameKey, val) Then
                 Return val
+            Else
+                key = key.ToLower
             End If
 
             If strMaps.ContainsKey(key) Then

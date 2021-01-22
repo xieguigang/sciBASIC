@@ -803,7 +803,10 @@
     </Compile>
     <Compile Include="netCDF\CDFWriter.vb" />
     <Compile Include="netCDF\Components\CDFData.vb" />
-    <Compile Include="netCDF\Components\Components.vb" />
+    <Compile Include="netCDF\Components\DimensionList.vb" />
+    <Compile Include="netCDF\Components\attribute.vb" />
+    <Compile Include="netCDF\Components\Dimension.vb" />
+    <Compile Include="netCDF\Components\variable.vb" />
     <Compile Include="netCDF\Components\Header.vb" />
     <Compile Include="netCDF\Data\CDFDataTypes.vb" />
     <Compile Include="netCDF\Data\DataReader.vb" />

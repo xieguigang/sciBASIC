@@ -13,7 +13,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-    <DocumentationFile>SMRUCC.genomics.GCModeller.Workbench.ReportBuilder.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -21,19 +21,19 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-    <DocumentationFile>SMRUCC.genomics.GCModeller.Workbench.ReportBuilder.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>SMRUCC.genomics.GCModeller.Workbench.ReportBuilder.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
-    <DocumentationFile>SMRUCC.genomics.GCModeller.Workbench.ReportBuilder.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <DocumentationFile>SMRUCC.genomics.GCModeller.Workbench.ReportBuilder.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
@@ -43,7 +43,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
-    <DocumentationFile>SMRUCC.genomics.GCModeller.Workbench.ReportBuilder.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
