@@ -192,6 +192,11 @@ Namespace Tcp
 
                     callback = New AsyncCallback(AddressOf AcceptCallback)
 
+                    If _servicesSocket Is Nothing Then
+                        Call Console.WriteLine("socket initialize failured!")
+                        Exit While
+                    End If
+
                     Try
                         ' Free 之后可能会出现空引用错误，则忽略掉这个错误，退出线程
                         Call _servicesSocket.BeginAccept(callback, _servicesSocket)

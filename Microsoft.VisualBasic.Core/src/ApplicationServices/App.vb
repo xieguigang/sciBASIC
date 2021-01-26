@@ -753,6 +753,10 @@ Public Module App
         Return d
     End Function
 
+    Public Function ElapsedMilliseconds(startTime As Long) As TimeSpan
+        Return TimeSpan.FromMilliseconds(App.ElapsedMilliseconds - startTime)
+    End Function
+
     ''' <summary>
     ''' The local data dir of the application in the %user%/&lt;CurrentUser>/Local/Product/App
     ''' </summary>

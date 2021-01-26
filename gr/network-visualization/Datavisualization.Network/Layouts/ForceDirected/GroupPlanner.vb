@@ -120,8 +120,14 @@ Namespace Layouts.ForceDirected
                 dy = distY * dist / k * condenseFactor
 
                 If groupBy(v.label) = groupBy(u.label) AndAlso groupBy(v.label) <> "n/a" Then
-                    dx *= groupAttraction
-                    dy *= groupAttraction
+                    ' 如果是相同的分组，则吸引力很大
+                    If (dist < dist_thresh.Min) Then
+                        dx = 0
+                        dy = 0
+                    Else
+                        dx *= groupAttraction
+                        dy *= groupAttraction
+                    End If
                 Else
                     dx /= groupAttraction
                     dy /= groupAttraction
@@ -150,18 +156,23 @@ Namespace Layouts.ForceDirected
                     distY = u.data.initialPostion.y - v.data.initialPostion.y
                     dist = stdNum.Sqrt(distX * distX + distY * distY)
 
-                    If (dist < dist_thresh.Min) Then
-                        ejectFactor = 5
-                    End If
-
                     If dist > 0 AndAlso dist < dist_thresh.Max Then
                         dx = (distX / dist) * (k * k / dist) * ejectFactor
                         dy = (distY / dist) * (k * k / dist) * ejectFactor
 
                         If groupBy(u.label) = groupBy(v.label) AndAlso groupBy(u.label) <> "n/a" Then
-                            dx /= groupRepulsive
-                            dy /= groupRepulsive
+                            ' 是相同的分组，则排斥力很小
+                            If (dist < dist_thresh.Min) Then
+                            Else
+                                dx /= groupRepulsive
+                                dy /= groupRepulsive
+                            End If
                         Else
+                            If (dist < dist_thresh.Min) Then
+                                dx *= 2
+                                dy *= 2
+                            End If
+
                             dx *= groupRepulsive
                             dy *= groupRepulsive
                         End If

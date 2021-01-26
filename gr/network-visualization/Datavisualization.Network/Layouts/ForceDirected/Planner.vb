@@ -202,7 +202,7 @@ Namespace Layouts.ForceDirected
             Dim dx, dy As Double
             Dim x, y As Double
 
-            For Each node As Node In g.vertex
+            For Each node As Node In g.vertex.Where(Function(v) Not v.pinned)
                 dx = mDxMap(node.label)
                 dy = mDyMap(node.label)
 

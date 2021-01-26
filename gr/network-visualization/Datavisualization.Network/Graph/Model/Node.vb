@@ -108,6 +108,10 @@ Namespace Graph
         Public Property adjacencies As AdjacencySet(Of Edge)
         Public Property directedVertex As DirectedVertex
 
+        ''' <summary>
+        ''' 这个节点是被钉住的？在进行布局计算的时候，钉住的节点将不会更新位置
+        ''' </summary>
+        ''' <returns></returns>
         Public Property pinned As Boolean
         Public Property visited As Boolean
 
