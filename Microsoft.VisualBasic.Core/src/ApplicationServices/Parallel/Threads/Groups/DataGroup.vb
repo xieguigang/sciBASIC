@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19568ecf19640f9af2343dfceba0d3f4, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\Groups\DataGroup.vb"
+﻿#Region "Microsoft.VisualBasic::077af45831c994379f79d089e5016e46, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\Groups\DataGroup.vb"
 
     ' Author:
     ' 
@@ -36,11 +36,6 @@
     '         Properties: Tag
     ' 
     '         Function: ToString
-    ' 
-    '     Class ParallelGroup
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: ParallelTask, SequentialTask
     ' 
     '     Class GroupResult
     ' 

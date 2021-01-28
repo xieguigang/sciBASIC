@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7fc3927fa4a2eb573fb9115979245c5a, Data\DataFrame\IO\DataFrame\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::56caf728bb2d5dc2ce28340bd4560d86, Data\DataFrame\IO\DataFrame\DataFrame.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: Depth, FieldCount, Headers, HeadTitles, IDataRecord_Item
     '                     IsClosed, Item, RecordsAffected, SchemaOridinal
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     ' 
     '         Function: [Select], __createTableVector, AddAttribute, ColumnRows, CreateDataSource
     '                   CreateObject, createObjectInternal, csv, EnumerateData, EnumerateRowObjects

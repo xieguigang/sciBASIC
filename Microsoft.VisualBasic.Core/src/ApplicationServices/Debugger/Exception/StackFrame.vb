@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae375a37e99dda39f7e9152bb2cb5a9e, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\StackFrame.vb"
+﻿#Region "Microsoft.VisualBasic::b9532b806ca689105e525c1747bd765b, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\StackFrame.vb"
 
     ' Author:
     ' 
@@ -115,7 +115,7 @@ Namespace ApplicationServices.Debugging.Diagnostics
 
             Return New StackFrame With {
                 .Method = New Method(method),
-                .File = file,
+                .File = file.Replace("\", "/"), ' fix for BSON string storage
                 .Line = lineNumber
             }
         End Function

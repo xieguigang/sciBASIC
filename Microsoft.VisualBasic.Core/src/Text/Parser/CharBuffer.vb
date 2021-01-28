@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a59babce3b991950d4db3a227e1593da, Microsoft.VisualBasic.Core\src\Text\Parser\CharBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::84b66bc41f30126d86759c6a93923a3d, Microsoft.VisualBasic.Core\src\Text\Parser\CharBuffer.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class CharBuffer
     ' 
-    '         Properties: Last, Size
+    '         Properties: isInteger, Last, Size
     ' 
     '         Function: Add, GetLastOrDefault, Pop, PopAllChars, ToString
     ' 

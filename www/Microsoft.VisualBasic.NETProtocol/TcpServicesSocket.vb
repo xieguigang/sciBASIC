@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b9025dc2dc6f277880860549206e639, www\Microsoft.VisualBasic.NETProtocol\TcpServicesSocket.vb"
+﻿#Region "Microsoft.VisualBasic::06a0c791c2ea04f5cad1f7333f5422ae, www\Microsoft.VisualBasic.NETProtocol\TcpServicesSocket.vb"
 
     ' Author:
     ' 

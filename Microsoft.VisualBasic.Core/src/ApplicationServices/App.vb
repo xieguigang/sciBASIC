@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::033bc4b3fb03d3eabc22c235baab1e01, Microsoft.VisualBasic.Core\src\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::2fdfb5d413511091790c6a16ba9b45ea, Microsoft.VisualBasic.Core\src\ApplicationServices\App.vb"
 
     ' Author:
     ' 
@@ -46,11 +46,11 @@
     '     Constructor: (+1 Overloads) Sub New
     ' 
     '     Function: __listFiles, __sysTEMP, (+2 Overloads) Argument, checkIsMicrosoftPlatform, CLICode
-    '               ElapsedMilliseconds, Exit, finalizeCLI, FormatTime, GenerateTemp
+    '               (+2 Overloads) ElapsedMilliseconds, Exit, finalizeCLI, FormatTime, GenerateTemp
     '               (+2 Overloads) GetAppLocalData, GetAppSysTempFile, GetAppVariables, GetFile, GetNextUniqueName
     '               GetProductSharedDIR, GetProductSharedTemp, GetTempFile, GetVariable, (+3 Overloads) LogException
-    '               NullDevice, (+11 Overloads) RunCLI, RunCLIInternal, SelfFolk, SelfFolks
-    '               Shell, tempCode, TemporaryEnvironment, TraceBugs
+    '               NullDevice, (+11 Overloads) RunCLI, RunCLIInternal, SelfFolk, Shell
+    '               tempCode, TemporaryEnvironment, TraceBugs
     ' 
     '     Sub: [Stop], __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory
     '          Free, JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println

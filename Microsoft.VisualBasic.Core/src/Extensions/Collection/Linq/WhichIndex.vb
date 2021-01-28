@@ -50,13 +50,18 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 
 Namespace Linq
 
     <HideModuleName>
     Public Module WhichSymbol
+
+        ''' <summary>
+        ''' # Which indices are TRUE?
+        ''' 
+        ''' Give the TRUE indices of a logical object, allowing for array indices.
+        ''' </summary>
 
         Public ReadOnly Which As New WhichIndex
 
@@ -74,7 +79,23 @@ Namespace Linq
             End Get
         End Property
 
-        Default Public ReadOnly Property Items(booleans As IEnumerable(Of Boolean)) As IEnumerable(Of Integer)
+        ''' <summary>
+        ''' Give the TRUE indices of a logical object, allowing for array indices.
+        ''' </summary>
+        ''' <param name="booleans">
+        ''' a logical vector or array. NAs are allowed and omitted (treated as if FALSE).
+        ''' </param>
+        ''' <returns>
+        ''' Basically, the result is (1:length(x))[x] in typical cases; 
+        ''' more generally, including when x has NA's, which(x) is 
+        ''' seq_along(x)[!is.na(x) & x] plus names when x has.
+        ''' </returns>
+        ''' <remarks>
+        ''' Unlike most other base R functions this does not coerce x to logical: 
+        ''' only arguments with typeof logical are accepted and others give an 
+        ''' error.
+        ''' </remarks>
+        Default Public ReadOnly Property arrayInd(booleans As IEnumerable(Of Boolean)) As IEnumerable(Of Integer)
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Me.IsTrue(booleans)

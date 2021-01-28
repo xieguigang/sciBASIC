@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f293f9ee69b27a30f114327c367f006, Microsoft.VisualBasic.Core\test\devTest.vb"
+﻿#Region "Microsoft.VisualBasic::4de1f1769ae6ce3de1bd62f9056eddfc, Microsoft.VisualBasic.Core\test\devTest.vb"
 
     ' Author:
     ' 
@@ -51,4 +51,3 @@ Module devTest
         Pause()
     End Sub
 End Module
-

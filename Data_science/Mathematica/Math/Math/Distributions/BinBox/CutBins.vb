@@ -61,6 +61,20 @@ Namespace Distributions.BinBox
         ''' <remarks>
         ''' 宽度是自动计算的
         ''' </remarks>
+        Public Function FixedWidthBins(data As IEnumerable(Of Double), k%) As IEnumerable(Of SampleDistribution)
+            Return FixedWidthBins(data, k, Function(x) x).Select(Function(bin) New SampleDistribution(bin.Raw))
+        End Function
+
+        ''' <summary>
+        ''' ### 数据等宽分箱
+        ''' 
+        ''' 将变量的取值范围分为<paramref name="k"/>个等宽的区间，每个区间当作一个分箱。
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 宽度是自动计算的
+        ''' </remarks>
         Public Function FixedWidthBins(Of T)(data As IEnumerable(Of T), k%, eval As Evaluate(Of T)) As IEnumerable(Of DataBinBox(Of T))
             ' 升序排序方便进行快速计算
             Dim v = data.OrderBy(Function(d) eval(d)).ToArray

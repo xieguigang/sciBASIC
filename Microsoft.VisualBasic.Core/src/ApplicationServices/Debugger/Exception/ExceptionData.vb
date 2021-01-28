@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::626d2b64093e22f3527641427fdc424e, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\ExceptionData.vb"
+﻿#Region "Microsoft.VisualBasic::1b4a64758106003be06984267d6c885e, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\ExceptionData.vb"
 
     ' Author:
     ' 
@@ -101,7 +101,9 @@ Namespace ApplicationServices.Debugging.Diagnostics
             Return stackTrace _
                 .LineTokens _
                 .Where(Function(s) Not s.StringEmpty) _
-                .Skip(3) _
+                .Where(Function(s)
+                           Return s.Trim.StartsWith("在") OrElse s.Trim.ToLower.StartsWith("at")
+                       End Function) _
                 .Select(Function(s)
                             s = Mid(s, 6).Trim
                             Return StackFrame.Parser(s)

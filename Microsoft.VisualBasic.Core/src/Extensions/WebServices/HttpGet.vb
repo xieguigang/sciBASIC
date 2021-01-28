@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac580956aa92c1850042e5273d1fdd2a, Microsoft.VisualBasic.Core\src\Extensions\WebServices\HttpGet.vb"
+﻿#Region "Microsoft.VisualBasic::bbc53011fab310abc6f42ffacb678495, Microsoft.VisualBasic.Core\src\Extensions\WebServices\HttpGet.vb"
 
     ' Author:
     ' 
@@ -36,10 +36,6 @@
     '     Properties: HttpRequestTimeOut
     ' 
     '     Function: [GET], BuildWebRequest, httpRequest, LogException, UrlGet
-    ' 
-    ' Class WebResponseResult
-    ' 
-    '     Properties: headers, html, timespan, url
     ' 
     ' /********************************************************************************/
 

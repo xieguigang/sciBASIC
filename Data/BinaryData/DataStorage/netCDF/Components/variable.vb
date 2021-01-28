@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::243b73db73781c629a1dd77c7b8791bc, Data\BinaryData\DataStorage\netCDF\Components\Components.vb"
+﻿#Region "Microsoft.VisualBasic::4b2f9a103a8552596be298d909b00677, Data\BinaryData\DataStorage\netCDF\Components\variable.vb"
 
     ' Author:
     ' 
@@ -31,32 +31,6 @@
 
     ' Summaries:
 
-    '     Structure Dimension
-    ' 
-    '         Properties: [Boolean], [Byte], [Double], [Integer], [Long]
-    '                     [Short], Float, Text
-    ' 
-    '         Function: ToString
-    ' 
-    '     Class DimensionList
-    ' 
-    '         Properties: dimensions, HaveRecordDimension, recordId, recordName
-    ' 
-    '         Function: ToString
-    ' 
-    '     Class recordDimension
-    ' 
-    '         Properties: id, length, name, recordStep
-    ' 
-    '         Function: ToString
-    ' 
-    '     Class attribute
-    ' 
-    '         Properties: name, type, value
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: getBytes, getObjectValue, ToString
-    ' 
     '     Class variable
     ' 
     '         Properties: attributes, dimensions, name, offset, record

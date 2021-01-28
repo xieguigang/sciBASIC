@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dfdb7ba540465fcdc9ec28dac86c6b99, mime\application%json\Javascript\JsonObject.vb"
+﻿#Region "Microsoft.VisualBasic::b42e318a14b082684f220ddf4cd297ac, mime\application%json\Javascript\JsonObject.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,10 @@
 
     '     Class JsonObject
     ' 
-    '         Function: ContainsElement, ContainsKey, CreateObject, GetEnumerator, IEnumerable_GetEnumerator
-    '                   Remove, Score, ToString
+    '         Properties: isArray
+    ' 
+    '         Function: ContainsElement, ContainsKey, (+2 Overloads) CreateObject, GetEnumerator, IEnumerable_GetEnumerator
+    '                   Remove, Score, ToJsonArray, ToString
     ' 
     '         Sub: (+2 Overloads) Add, (+2 Overloads) Dispose, WriteBuffer
     ' 

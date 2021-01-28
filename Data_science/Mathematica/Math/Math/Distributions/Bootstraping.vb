@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::206764fc01716928b50ac62069e78914, Data_science\Mathematica\Math\Math\Distributions\Bootstraping.vb"
+﻿#Region "Microsoft.VisualBasic::a91927b725f7de6ff925a41dc9c380db, Data_science\Mathematica\Math\Math\Distributions\Bootstraping.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     '     Module Bootstraping
     ' 
     '         Function: Distributes, Hist, Sample, (+2 Overloads) Samples, Sampling
-    '                   TabulateMode
+    '                   TabulateBin, TabulateMode
     ' 
     ' 
     ' /********************************************************************************/

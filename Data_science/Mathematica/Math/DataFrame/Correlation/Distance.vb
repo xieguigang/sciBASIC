@@ -68,12 +68,7 @@ Public Module Distance
                       Return (Correlations.Spearman(x, y), 0)
                   End Function
         Else
-            cor = Function(x, y)
-                      Dim pvalue As Double
-                      Dim corVal = Correlations.GetPearson(x, y, prob:=pvalue)
-
-                      Return (corVal, pvalue)
-                  End Function
+            cor = AddressOf Builder.corTuple
         End If
 
         Return data.MatrixBuilder(cor, type:=DataType.Correlation)

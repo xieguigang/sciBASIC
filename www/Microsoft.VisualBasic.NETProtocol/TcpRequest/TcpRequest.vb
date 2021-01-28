@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a201d79640d098ee95eda7f62160d5c1, www\Microsoft.VisualBasic.NETProtocol\TcpRequest\TcpRequest.vb"
+﻿#Region "Microsoft.VisualBasic::8b91d8a3a7c42721656f357b72c9a85b, www\Microsoft.VisualBasic.NETProtocol\TcpRequest\TcpRequest.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class TcpRequest
     ' 
-    '         Constructor: (+4 Overloads) Sub New
+    '         Constructor: (+5 Overloads) Sub New
     ' 
     '         Function: getSocket, LocalConnection, OperationTimeOut, (+6 Overloads) SendMessage, ToString
     ' 

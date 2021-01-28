@@ -87,6 +87,9 @@ Namespace Language.Vectorization
         ''' 如果不希望将内部引用进行修改，请使用迭代器或者<see cref="Enumerable.ToArray"/> Linq拓展
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' <see cref="buffer"/>
+        ''' </remarks>
         Public Overridable ReadOnly Property Array As T()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get

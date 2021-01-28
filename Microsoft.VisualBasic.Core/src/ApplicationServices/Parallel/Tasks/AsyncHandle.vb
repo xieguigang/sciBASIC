@@ -1,45 +1,45 @@
-﻿#Region "Microsoft.VisualBasic::abe0e686dd1e1517f830f2fdbc7dd72f, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\AsyncHandle.vb"
+﻿#Region "Microsoft.VisualBasic::63250daa819121659715ea04a423e765, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\AsyncHandle.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class AsyncHandle
-' 
-'         Properties: Handle, IsCompleted, Task
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: GetValue, Run
-' 
-' 
-' /********************************************************************************/
+    '     Class AsyncHandle
+    ' 
+    '         Properties: IsCompleted, Task
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetValue, Run
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
