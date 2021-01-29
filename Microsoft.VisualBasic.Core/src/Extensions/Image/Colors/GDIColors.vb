@@ -324,6 +324,8 @@ Namespace Imaging
                 ' 2017-2-2
                 ' 经过测试与3mf文件之中的材质颜色定义一致，没有问题
                 Return HexColor.ConvertToRbg(exp)
+            ElseIf exp.TextEquals("grey") Then
+                Return Color.Gray
             End If
             If Regex.Match(exp, "\d+").Value = exp Then
                 Return ColorTranslator.FromOle(CInt(exp))
