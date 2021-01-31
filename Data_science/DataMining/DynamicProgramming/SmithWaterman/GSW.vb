@@ -397,9 +397,13 @@ Namespace SmithWaterman
                         score_ij > score(i - 1)(j) AndAlso
                         score_ij > score(i)(j - 1) Then
 
-                        score_ijNext = score(i + 1)(j + 1)
+                        If i < queryLength - 1 AndAlso j < subjectLength - 1 Then
+                            score_ijNext = score(i + 1)(j + 1)
+                        Else
+                            score_ijNext = -10000
+                        End If
 
-                        If i = queryLength OrElse j = subjectLength OrElse score_ij >= score_ijNext Then
+                        If i = queryLength - 1 OrElse j = subjectLength - 1 OrElse score_ij >= score_ijNext Then
                             ' should be lesser than prev maxScore					    	
                             fA = i
                             fB = j
