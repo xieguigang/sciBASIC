@@ -236,6 +236,11 @@ Public Module StringHelpers
         Return source.OrderByDescending(Function(s) Len(s)).First
     End Function
 
+    <Extension>
+    Public Function MinLengthString(source As IEnumerable(Of String)) As String
+        Return source.OrderBy(Function(s) Len(s)).First
+    End Function
+
     ''' <summary>
     ''' 获取最大长度的字符串
     ''' </summary>
