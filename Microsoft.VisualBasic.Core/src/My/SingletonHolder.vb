@@ -153,6 +153,5 @@ Namespace My
         Public Shared Sub SetObject(guid As String, obj As Object)
             instances(guid) = obj
         End Sub
-
     End Class
 End Namespace

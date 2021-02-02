@@ -88,7 +88,7 @@ Namespace Linq
         ''' <returns>
         ''' Basically, the result is (1:length(x))[x] in typical cases; 
         ''' more generally, including when x has NA's, which(x) is 
-        ''' seq_along(x)[!is.na(x) & x] plus names when x has.
+        ''' seq_along(x)[!is.na(x) &amp; x] plus names when x has.
         ''' </returns>
         ''' <remarks>
         ''' Unlike most other base R functions this does not coerce x to logical: 
