@@ -117,7 +117,8 @@ Public Module RegressionPlot
                          Optional yAxisTickFormat$ = "F2",
                          Optional factorFormat$ = "G4",
                          Optional showErrorBand As Boolean = True,
-                         Optional labelerIterations% = 1000) As GraphicsData
+                         Optional labelerIterations% = 1000,
+                         Optional gridFill$ = NameOf(Color.LightGray)) As GraphicsData
 
         Dim xTicks#() = fit.X.AsEnumerable _
             .Range(scale:=1.125) _
@@ -161,7 +162,8 @@ Public Module RegressionPlot
                     xlabel:=xLabel, ylabel:=yLabel,
                     htmlLabel:=False,
                     XtickFormat:=xAxisTickFormat,
-                    YtickFormat:=yAxisTickFormat
+                    YtickFormat:=yAxisTickFormat,
+                    gridFill:=gridFill
                 )
 
                 ' scatter plot

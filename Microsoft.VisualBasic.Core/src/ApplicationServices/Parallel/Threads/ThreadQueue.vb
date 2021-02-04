@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::d848c444cd8b4c033637d955426bf46b, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\ThreadQueue.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class ThreadQueue
-    ' 
-    '         Properties: MultiThreadSupport, Sleep
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: AddToQueue, (+2 Overloads) Dispose, exeQueue, WaitQueue
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class ThreadQueue
+' 
+'         Properties: MultiThreadSupport, Sleep
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Sub: AddToQueue, (+2 Overloads) Dispose, exeQueue, WaitQueue
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -89,6 +89,8 @@ Namespace Parallel
             End Get
         End Property
 
+        Public ReadOnly Property runningTask As Action
+
         Sub New()
             QSolverRunning = False
         End Sub
@@ -136,26 +138,31 @@ Namespace Parallel
 
             While queue IsNot Nothing AndAlso queue.Count > 0
                 Call Thread.MemoryBarrier()
-
-                While True
-                    Dim task As Action = Nothing
-
-                    SyncLock queue
-                        If queue.Count = 0 Then
-                            Exit While
-                        Else
-                            task = queue.Dequeue()
-                        End If
-                    End SyncLock
-
-                    If task IsNot Nothing Then
-                        Call task()
-                    End If
-                End While
+                Call tickLoop()
             End While
 
             QSolverRunning = False
         End Sub
+
+        Private Sub tickLoop()
+            While True
+                SyncLock queue
+                    If queue.Count = 0 Then
+                        Exit While
+                    Else
+                        _runningTask = queue.Dequeue()
+                    End If
+                End SyncLock
+
+                If _runningTask IsNot Nothing Then
+                    Call _runningTask()
+                End If
+            End While
+        End Sub
+
+        Public Function GetPendingTasks() As Action()
+            Return queue.AsEnumerable.ToArray
+        End Function
 
 #Region "IDisposable Support"
         Private disposedValue As Boolean ' 要检测冗余调用
