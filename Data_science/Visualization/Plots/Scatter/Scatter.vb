@@ -519,14 +519,18 @@ Public Module Scatter
                          Optional title$ = "Plot Of Points",
                          Optional lineWidth! = 5.0!,
                          Optional ptSize! = 15.0!,
-                         Optional lineType As DashStyle = DashStyle.Solid) As GraphicsData
-        Dim s As SerialData = points _
-            .FromPoints(lineColor$,
-                        title$,
-                        lineWidth!,
-                        ptSize!,
-                        lineType)
-        Return Bubble.Plot({s}, size:=$"{size.Width},{size.Height}", padding:=padding, bg:=bg)
+                         Optional lineType As DashStyle = DashStyle.Solid,
+                         Optional gridFill$ = "rgb(250,250,250)") As GraphicsData
+
+        Dim s As SerialData = points.FromPoints(
+            lineColor:=lineColor$,
+            title:=title$,
+            lineWidth:=lineWidth!,
+            ptSize:=ptSize!,
+            lineType:=lineType
+        )
+
+        Return Bubble.Plot({s}, size:=$"{size.Width},{size.Height}", padding:=padding, bg:=bg, gridFill:=gridFill)
     End Function
 
     <Extension>

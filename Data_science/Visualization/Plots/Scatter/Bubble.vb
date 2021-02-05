@@ -110,7 +110,8 @@ Public Class Bubble : Inherits Plot
                                           Optional positiveRangeY As Boolean = False,
                                           Optional legendTitleFontCSS$ = CSSFont.PlotSubTitle,
                                           Optional legendAnchor As PointF = Nothing,
-                                          Optional ylayout As YAxisLayoutStyles = YAxisLayoutStyles.Left) As GraphicsData
+                                          Optional ylayout As YAxisLayoutStyles = YAxisLayoutStyles.Left,
+                                          Optional gridFill$ = "rgb(250,250,250)") As GraphicsData
 
         Dim theme As New Theme With {
             .background = bg,
@@ -123,7 +124,8 @@ Public Class Bubble : Inherits Plot
             .drawLegend = legend,
             .legendLayout = New Absolute(legendAnchor),
             .legendBoxStroke = legendBorder?.ToString,
-            .axisLabelCSS = axisLabelFontCSS
+            .axisLabelCSS = axisLabelFontCSS,
+            .gridFill = gridFill
         }
 
         Return New Bubble(theme) With {
@@ -193,7 +195,8 @@ Public Class Bubble : Inherits Plot
             ylabel:=ylabel,
             labelFont:=theme.axisLabelCSS,
             htmlLabel:=False,
-            ylayout:=theme.yAxisLayout
+            ylayout:=theme.yAxisLayout,
+            gridFill:=theme.gridFill
         )
 
         Dim bubblePen As Pen = Nothing
