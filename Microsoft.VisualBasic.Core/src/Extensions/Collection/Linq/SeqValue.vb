@@ -166,6 +166,12 @@ Namespace Linq
             Return x.value
         End Operator
 
+        ''' <summary>
+        ''' <see cref="i"/> + <paramref name="i"/>
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="i"></param>
+        ''' <returns></returns>
         Public Shared Operator +(x As SeqValue(Of T), i As Integer) As Integer
             Return x.i + i
         End Operator
