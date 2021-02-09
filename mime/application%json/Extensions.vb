@@ -62,6 +62,11 @@ Imports Microsoft.VisualBasic.MIME.application.json.Javascript
         Return New JsonParser().Open(JsonFile)
     End Function
 
+    ''' <summary>
+    ''' try cast of the json element object as json literal value
+    ''' </summary>
+    ''' <param name="obj"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function AsString(obj As JsonElement) As String
