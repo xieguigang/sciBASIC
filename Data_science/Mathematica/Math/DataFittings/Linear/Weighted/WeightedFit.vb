@@ -93,6 +93,10 @@ Public Class WeightedFit : Implements IFitted
         End Get
     End Property
 
+    ''' <summary>
+    ''' 一元多项式的数据模型
+    ''' </summary>
+    ''' <returns></returns>
     Public Property Polynomial As Formula Implements IFitted.Polynomial
 
     ''' <summary>

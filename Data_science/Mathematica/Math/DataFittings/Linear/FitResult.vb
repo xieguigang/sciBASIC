@@ -63,7 +63,8 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Public Class FitResult : Implements IFitted
 
     ''' <summary>
-    ''' 拟合后的方程系数，根据阶次获取拟合方程的系数，如getFactor(2),就是获取``y = a0 + a1*x + a2*x^2 + ... + apoly_n*x^poly_n``中a2的值
+    ''' 拟合后的方程系数，根据阶次获取拟合方程的系数，
+    ''' 如getFactor(2)，就是获取``y = a0 + a1*x + a2*x^2 + ... + apoly_n*x^poly_n``中a2的值
     ''' </summary>
     Public Property Polynomial As Formula Implements IFitted.Polynomial
     ''' <summary>
