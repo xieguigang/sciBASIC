@@ -199,14 +199,20 @@ Namespace netCDF
 
 #End Region
 
-        Dim output As BinaryDataWriter
-        Dim globalAttrs As New List(Of attribute)
-        Dim dimensionList As New Dictionary(Of String, SeqValue(Of Dimension))
+        ReadOnly output As BinaryDataWriter
+        ReadOnly globalAttrs As New List(Of attribute)
+
         Dim variables As New List(Of variable)
+        Dim dimensionList As New Dictionary(Of String, SeqValue(Of Dimension))
         Dim recordDimensionLength As UInteger
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(path As String, Optional encoding As Encodings = Encodings.UTF8)
-            output = New BinaryDataWriter(path.Open, encoding) With {
+            Call Me.New(path.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False), encoding)
+        End Sub
+
+        Sub New(file As Stream, Optional encoding As Encodings = Encodings.UTF8)
+            output = New BinaryDataWriter(file, encoding) With {
                 .ByteOrder = ByteOrder.BigEndian,
                 .RerouteInt32ToUnsigned = True
             }

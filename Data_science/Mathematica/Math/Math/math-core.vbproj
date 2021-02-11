@@ -858,6 +858,8 @@
     <Compile Include="Algebra\Extensions.vb" />
     <Compile Include="Algebra\PCA\Algorithm.vb" />
     <Compile Include="Algebra\PCA\Helper.vb" />
+    <Compile Include="Algebra\Polynomial\Formula.vb" />
+    <Compile Include="Algebra\Polynomial\MultivariatePolynomial.vb" />
     <Compile Include="Numerics\Framework\VariableObject.vb" />
     <Compile Include="Numerics\Framework\Iterator.vb" />
     <Compile Include="Algebra\LP\Extensions.vb" />
@@ -870,7 +872,7 @@
     <Compile Include="Algebra\Vector\Class\SparseVector.vb" />
     <Compile Include="Algebra\Vector\Class\Linq.vb" />
     <Compile Include="Algebra\Vector\Class\DoCall.vb" />
-    <Compile Include="Algebra\Vector\Polynomial.vb" />
+    <Compile Include="Algebra\Polynomial\Polynomial.vb" />
     <Compile Include="Distributions\Abundance.vb" />
     <Compile Include="FuzzyLogic\Models\Extensions.vb" />
     <Compile Include="Numerics\BigDecimal.vb" />
