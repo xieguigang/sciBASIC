@@ -408,6 +408,12 @@ Namespace netCDF
                     Case CDFDataTypes.LONG
                         Call output.Write(1)
                         Call output.Write(Long.Parse(attr.value))
+                    Case CDFDataTypes.BOOLEAN
+
+                        ' 20210212 using byte flag for boolean?
+                        Call output.Write(1)
+                        Call output.Write(CByte(If(attr.value.ParseBoolean, 1, 0)))
+
                     Case Else
                         Throw New NotImplementedException(attr.type.Description)
                 End Select

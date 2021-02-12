@@ -92,6 +92,13 @@ Namespace netCDF.Components
                 Case CDFDataTypes.INT : Return Integer.Parse(value)
                 Case CDFDataTypes.SHORT : Return Short.Parse(value)
                 Case CDFDataTypes.LONG : Return Long.Parse(value)
+                Case CDFDataTypes.BOOLEAN
+
+                    If value.IsPattern("\d+") Then
+                        Return Long.Parse(value) <> 0
+                    Else
+                        Return value.ParseBoolean
+                    End If
 
                 Case Else
                     Throw New NotSupportedException
