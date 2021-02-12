@@ -122,7 +122,7 @@ Namespace Serialization.Bencoding
                     Call dict.Add(K, V)
                 End While
 
-            Catch __unusedBencodingException1__ As BencodingException
+            Catch unusedBencodingException As BencodingException
                 Throw
             Catch e As Exception
                 Throw [Error](e)
