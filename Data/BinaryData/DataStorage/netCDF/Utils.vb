@@ -174,7 +174,9 @@ Namespace netCDF
                 Case CDFDataTypes.BOOLEAN
 
                     ' 20210212 bytes flags for maps boolean
-                    Return buffer.ReadBytes(size)
+                    Return buffer.ReadBytes(size) _
+                        .Select(Function(b) b <> 0) _
+                        .ToArray
 
                 Case Else
                     ' istanbul ignore next

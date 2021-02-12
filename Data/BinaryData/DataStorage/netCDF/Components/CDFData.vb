@@ -264,7 +264,15 @@ Namespace netCDF.Components
         Public Shared Widening Operator CType(data As (values As Object(), type As CDFDataTypes)) As CDFData
             Select Case data.type
                 Case CDFDataTypes.BYTE
-                    Return data.values.As(Of Byte).ToArray
+                    If data.values.All(Function(obj) TypeOf obj Is Byte()) Then
+                        Return data.values _
+                            .Select(Function(obj)
+                                        Return DirectCast(obj, Byte())(Scan0)
+                                    End Function) _
+                            .ToArray
+                    Else
+                        Return data.values.As(Of Byte).ToArray
+                    End If
                 Case CDFDataTypes.BOOLEAN
                     Return data.values.As(Of Boolean).ToArray
                 Case CDFDataTypes.CHAR

@@ -144,14 +144,18 @@ Namespace netCDF
                 ' Read type
                 Dim type As CDFDataTypes = buffer.ReadUInt32()
 
-                Utils.notNetcdf(((type < 1) Or (type > 6)), $"non valid type {type}")
+                Call Utils.notNetcdf(type < 1, $"non valid type {type}")
 
                 ' Read attribute
-                Dim size = buffer.ReadUInt32()
-                Dim val = Utils.readType(buffer, type, size)
+                Dim size As Integer = buffer.ReadUInt32()
+                Dim val As Object = Utils.readType(buffer, type, size)
 
                 ' Apply padding
                 Call Utils.padding(buffer)
+
+                If TypeOf val Is Boolean() Then
+                    val = val(Scan0)
+                End If
 
                 Yield New Attribute With {
                     .name = name,
