@@ -251,7 +251,7 @@ Namespace netCDF
         ''' <summary>
         ''' 会需要在这个函数之中进行offset的计算操作
         ''' </summary>
-        Private Sub Save()
+        Public Sub Save()
 
             Call output.Write(recordDimensionLength)
             ' -------------------------dimensionsList----------------------------
@@ -297,6 +297,10 @@ Namespace netCDF
                 ' 接着就是写入数据块了
                 Call output.Write(buffer)
             End Using
+        End Sub
+
+        Public Sub Flush()
+            Call output.Flush()
         End Sub
 
         ''' <summary>
