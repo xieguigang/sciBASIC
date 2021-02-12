@@ -289,6 +289,11 @@ Public Module Extensions
     End Function
 
     <Extension>
+    Public Function DataFrame(Of T)(source As IEnumerable(Of T)) As EntityObject()
+        Return IO.DataFrame.CreateObject(source.ToCsvDoc).AsDataSource(Of EntityObject)(False).ToArray
+    End Function
+
+    <Extension>
     Public Function SaveTable(table As IEnumerable(Of KeyValuePair(Of String, Double)), path$, Optional encoding As Encoding = Nothing) As Boolean
         Dim csv As New File_csv
 
@@ -414,20 +419,20 @@ Public Module Extensions
     ''' Convert the csv data file to a type specific collection.(将目标Csv文件转换为特定类型的集合数据)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="df"></param>
+    ''' <param name="dataframe"></param>
     ''' <param name="explicit"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function AsDataSource(Of T As Class)(df As DataFrame,
+    <Extension> Public Function AsDataSource(Of T As Class)(dataframe As DataFrame,
                                                             Optional explicit As Boolean = False,
                                                             Optional maps As Dictionary(Of String, String) = Nothing,
                                                             Optional silent As Boolean = False) As IEnumerable(Of T)
-        With df
+        With dataframe
             If Not maps Is Nothing Then
                 Call .ChangeMapping(maps)
             End If
 
-            Return Reflector.Convert(Of T)(.ByRef, explicit, silent:=silent)
+            Return .DoCall(Function(table) Reflector.Convert(Of T)(table, explicit, silent:=silent))
         End With
     End Function
 
