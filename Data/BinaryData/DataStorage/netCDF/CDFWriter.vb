@@ -217,12 +217,13 @@ Namespace netCDF
                 .ByteOrder = ByteOrder.BigEndian,
                 .RerouteInt32ToUnsigned = True
             }
-            init0 = file.Position
 
             ' magic and version
             Call output.Write(netCDFReader.Magic, BinaryStringFormat.NoPrefixOrTermination)
             ' classic format, version = 1
             Call output.Write(CByte(1))
+
+            init0 = file.Position
         End Sub
 
         ''' <summary>
