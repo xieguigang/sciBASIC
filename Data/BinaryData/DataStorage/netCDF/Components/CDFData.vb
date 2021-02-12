@@ -102,21 +102,21 @@ Namespace netCDF.Components
 
         Public ReadOnly Property cdfDataType As CDFDataTypes
             Get
-                If Not byteStream.StringEmpty Then
+                If Not byteStream Is Nothing Then
                     Return CDFDataTypes.BYTE
-                ElseIf Not chars.StringEmpty Then
+                ElseIf Not chars Is Nothing Then
                     Return CDFDataTypes.CHAR
-                ElseIf Not tiny_int.IsNullOrEmpty Then
+                ElseIf Not tiny_int Is Nothing Then
                     Return CDFDataTypes.SHORT
-                ElseIf Not integers.IsNullOrEmpty Then
+                ElseIf Not integers Is Nothing Then
                     Return CDFDataTypes.INT
-                ElseIf Not tiny_num.IsNullOrEmpty Then
+                ElseIf Not tiny_num Is Nothing Then
                     Return CDFDataTypes.FLOAT
-                ElseIf Not numerics.IsNullOrEmpty Then
+                ElseIf Not numerics Is Nothing Then
                     Return CDFDataTypes.DOUBLE
-                ElseIf Not longs.IsNullOrEmpty Then
+                ElseIf Not longs Is Nothing Then
                     Return CDFDataTypes.LONG
-                ElseIf Not flags.IsNullOrEmpty Then
+                ElseIf Not flags Is Nothing Then
                     Return CDFDataTypes.BOOLEAN
                 Else
                     ' null
