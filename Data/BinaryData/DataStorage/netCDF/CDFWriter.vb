@@ -205,6 +205,7 @@ Namespace netCDF
         Dim variables As New List(Of variable)
         Dim dimensionList As New Dictionary(Of String, SeqValue(Of Dimension))
         Dim recordDimensionLength As UInteger
+        Dim init0 As Long
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(path As String, Optional encoding As Encodings = Encodings.UTF8)
@@ -216,6 +217,7 @@ Namespace netCDF
                 .ByteOrder = ByteOrder.BigEndian,
                 .RerouteInt32ToUnsigned = True
             }
+            init0 = file.Position
 
             ' magic and version
             Call output.Write(netCDFReader.Magic, BinaryStringFormat.NoPrefixOrTermination)
@@ -252,6 +254,7 @@ Namespace netCDF
         ''' 会需要在这个函数之中进行offset的计算操作
         ''' </summary>
         Public Sub Save()
+            Call output.Seek(init0, SeekOrigin.Begin)
 
             Call output.Write(recordDimensionLength)
             ' -------------------------dimensionsList----------------------------
