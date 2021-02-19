@@ -71,30 +71,18 @@ Namespace MarkDown
     ''' </summary>
     Public Class MarkdownHTML
 
-#Region "Constructors and Options"
+        Const MarkerUL As String = "[*+-]"
+        Const MarkerOL As String = "\d+[.]"
 
-        ''' <summary>
-        ''' Create a new Markdown instance and set the options from the MarkdownOptions object.
-        ''' </summary>
-        Public Sub New(options As MarkdownOptions)
-            If Not String.IsNullOrEmpty(options.EmptyElementSuffix) Then
-                _EmptyElementSuffix = options.EmptyElementSuffix
-            End If
-            _AllowEmptyLinkText = options.AllowEmptyLinkText
-            _DisableHr = options.DisableHr
-            _DisableHeaders = options.DisableHeaders
-            _DisableImages = options.DisableImages
-            _QuoteSingleLine = options.QuoteSingleLine
-            _AutoHyperlink = options.AutoHyperlink
-            _AutoNewLines = options.AutoNewlines
-            _LinkEmails = options.LinkEmails
-            _StrictBoldItalic = options.StrictBoldItalic
-            _AsteriskIntraWordEmphasis = options.AsteriskIntraWordEmphasis
-        End Sub
+        ReadOnly _urls As New Dictionary(Of String, String)()
+        ReadOnly _titles As New Dictionary(Of String, String)()
+        ReadOnly _htmlBlocks As New Dictionary(Of String, String)()
 
-        Sub New()
-            Call Me.New(MarkdownOptions.DefaultOption.DefaultValue)
-        End Sub
+        Dim _listLevel As Integer
+
+        Shared ReadOnly AutoLinkPreventionMarker As String = ChrW(26) & "P"
+
+#Region "Options"
 
         Public Property AllowEmptyLinkText() As Boolean
 
@@ -155,15 +143,31 @@ Namespace MarkDown
 
 #End Region
 
-        Private Const _markerUL As String = "[*+-]"
-        Private Const _markerOL As String = "\d+[.]"
+#Region "Constructors"
 
-        Private ReadOnly _urls As New Dictionary(Of String, String)()
-        Private ReadOnly _titles As New Dictionary(Of String, String)()
-        Private ReadOnly _htmlBlocks As New Dictionary(Of String, String)()
+        ''' <summary>
+        ''' Create a new Markdown instance and set the options from the MarkdownOptions object.
+        ''' </summary>
+        Public Sub New(options As MarkdownOptions)
+            If Not String.IsNullOrEmpty(options.EmptyElementSuffix) Then
+                _EmptyElementSuffix = options.EmptyElementSuffix
+            End If
+            _AllowEmptyLinkText = options.AllowEmptyLinkText
+            _DisableHr = options.DisableHr
+            _DisableHeaders = options.DisableHeaders
+            _DisableImages = options.DisableImages
+            _QuoteSingleLine = options.QuoteSingleLine
+            _AutoHyperlink = options.AutoHyperlink
+            _AutoNewLines = options.AutoNewlines
+            _LinkEmails = options.LinkEmails
+            _StrictBoldItalic = options.StrictBoldItalic
+            _AsteriskIntraWordEmphasis = options.AsteriskIntraWordEmphasis
+        End Sub
 
-        Private _listLevel As Integer
-        Private Shared AutoLinkPreventionMarker As String = ChrW(26) & "P"
+        Sub New()
+            Call Me.New(MarkdownOptions.DefaultOption.DefaultValue)
+        End Sub
+#End Region
 
         ''' <summary>
         ''' Transforms the provided Markdown-formatted text to HTML;  
@@ -1032,7 +1036,7 @@ Namespace MarkDown
                   )
                 )"
 
-        Shared ReadOnly _wholeList As String = String.Format(regex_wholeList, String.Format("(?:{0}|{1})", _markerUL, _markerOL), _tabWidth - 1)
+        Shared ReadOnly _wholeList As String = String.Format(regex_wholeList, String.Format("(?:{0}|{1})", MarkerUL, MarkerOL), _tabWidth - 1)
         Shared _listNested As New Regex("^" & _wholeList, RegexOptions.Multiline Or RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
         Shared _listTopLevel As New Regex("(?:(?<=\n\n)|\A\n?)" & _wholeList, RegexOptions.Multiline Or RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
 
@@ -1067,7 +1071,7 @@ Namespace MarkDown
         Private Function ListEvaluator(match As Match) As String
             Dim list As String = match.Groups(1).Value
             Dim marker As String = match.Groups(3).Value
-            Dim listType As String = If(Regex.IsMatch(marker, _markerUL), "ul", "ol")
+            Dim listType As String = If(Regex.IsMatch(marker, MarkerUL), "ul", "ol")
             Dim result As String
             Dim start As String = ""
             If listType = "ol" Then
@@ -1077,7 +1081,7 @@ Namespace MarkDown
                 End If
             End If
 
-            result = ProcessListItems(list, If(listType = "ul", _markerUL, _markerOL))
+            result = ProcessListItems(list, If(listType = "ul", MarkerUL, MarkerOL))
             result = String.Format("<{0}{1}>" & vbLf & "{2}</{0}>" & vbLf, listType, start, result)
 
             Return result

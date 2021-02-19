@@ -60,8 +60,8 @@ Namespace FileIO
         ''' <summary>
         ''' 这个函数会在这个模块内被递归调用
         ''' </summary>
-        ''' <param name="src$"></param>
-        ''' <param name="destination$"></param>
+        ''' <param name="src">the file path of source directory.</param>
+        ''' <param name="destination">the file path of the target data directory.</param>
         Public Sub Copy(src$, destination$, Optional includeSrc As Boolean = True)
             Dim directory As New DirectoryInfo(src)
 

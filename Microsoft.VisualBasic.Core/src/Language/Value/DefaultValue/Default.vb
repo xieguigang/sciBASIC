@@ -234,17 +234,17 @@ Namespace Language.Default
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator Or(obj As T, [default] As [Default](Of T)) As T
-            Return getDefault(obj, [default].DefaultValue, If([default].assert, ExceptionHandle.defaultHandler))
+            Return getDefault(obj, Function() [default].DefaultValue, If([default].assert, ExceptionHandle.defaultHandler))
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Shared Function getDefault(value As T, [default] As T, assert As Predicate(Of Object))
-            Return If(assert(value), [default], value)
+        Private Shared Function getDefault(value As T, [default] As Func(Of T), assert As Predicate(Of Object))
+            Return If(assert(value), [default](), value)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator Or([default] As [Default](Of T), obj As T) As T
-            Return getDefault([default].DefaultValue, obj, If([default].assert, ExceptionHandle.defaultHandler))
+            Return getDefault([default].DefaultValue, Function() obj, If([default].assert, ExceptionHandle.defaultHandler))
         End Operator
 
         ''' <summary>

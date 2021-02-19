@@ -188,7 +188,8 @@ Namespace CommandLine
                 .UseShellExecute = False
             }
 
-            If IOredirect Then  '只是重定向输出设备流
+            If IOredirect Then
+                ' 只是重定向输出设备流
                 pInfo.RedirectStandardOutput = True
                 pInfo.RedirectStandardError = True
                 pInfo.RedirectStandardInput = True
