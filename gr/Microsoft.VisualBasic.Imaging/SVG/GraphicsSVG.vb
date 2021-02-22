@@ -1056,18 +1056,6 @@ Namespace SVG
             Call __svgData.Add(rect)
         End Sub
 
-        Public Overrides Sub FillRectangles(brush As Brush, rects() As RectangleF)
-            For Each rect In rects
-                Call FillRectangle(brush, rect)
-            Next
-        End Sub
-
-        Public Overrides Sub FillRectangles(brush As Brush, rects() As Rectangle)
-            For Each rect In rects
-                Call FillRectangle(brush, rect)
-            Next
-        End Sub
-
         Public Overrides Sub FillRegion(brush As Brush, region As Region)
             Throw New NotImplementedException()
         End Sub

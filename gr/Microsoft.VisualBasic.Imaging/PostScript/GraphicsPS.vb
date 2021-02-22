@@ -787,14 +787,6 @@ Namespace PostScript
             Throw New NotImplementedException()
         End Sub
 
-        Public Overrides Sub FillRectangles(brush As Brush, rects() As RectangleF)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub FillRectangles(brush As Brush, rects() As Rectangle)
-            Throw New NotImplementedException()
-        End Sub
-
         Public Overrides Sub FillRegion(brush As Brush, region As Region)
             Throw New NotImplementedException()
         End Sub
