@@ -3724,46 +3724,32 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.
         Public MustOverride Sub FillRectangle(brush As Brush, x As Single, y As Single, width As Single, height As Single)
-        '
-        ' Summary:
-        '     Fills the interiors of a series of rectangles specified by System.Drawing.RectangleF
-        '     structures.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   rects:
-        '     Array of System.Drawing.RectangleF structures that represent the rectangles to
-        '     fill.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.-or-rects is null.
-        '
-        '   T:System.ArgumentException:
-        '     Rects is a zero-length array.
-        Public MustOverride Sub FillRectangles(brush As Brush, rects() As RectangleF)
-        '
-        ' Summary:
-        '     Fills the interiors of a series of rectangles specified by System.Drawing.Rectangle
-        '     structures.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   rects:
-        '     Array of System.Drawing.Rectangle structures that represent the rectangles to
-        '     fill.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.-or-rects is null.
-        '
-        '   T:System.ArgumentException:
-        '     rects is a zero-length array.
-        Public MustOverride Sub FillRectangles(brush As Brush, rects() As Rectangle)
+
+        ''' <summary>
+        ''' Fills the interiors of a series of rectangles specified by System.Drawing.Rectangle
+        ''' structures.
+        ''' </summary>
+        ''' <param name="brush">System.Drawing.Brush that determines the characteristics of the fill.</param>
+        ''' <param name="rects">Array of System.Drawing.Rectangle structures that represent the rectangles to
+        ''' fill.</param>
+        Public Sub FillRectangles(brush As Brush, rects() As RectangleF)
+            For Each rect In rects
+                Call FillRectangle(brush, rect)
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' Fills the interiors of a series of rectangles specified by System.Drawing.Rectangle
+        ''' structures.
+        ''' </summary>
+        ''' <param name="brush">System.Drawing.Brush that determines the characteristics of the fill.</param>
+        ''' <param name="rects">Array of System.Drawing.Rectangle structures that represent the rectangles to
+        ''' fill.</param>
+        Public Sub FillRectangles(brush As Brush, rects() As Rectangle)
+            For Each rect In rects
+                Call FillRectangle(brush, rect.ToFloat)
+            Next
+        End Sub
         '
         ' Summary:
         '     Fills the interior of a System.Drawing.Region.
