@@ -1,56 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::86f515ee4ac66d9d5d7d66ee8c592a59, Data_science\Mathematica\SignalProcessing\SignalProcessing\PeakFinding\SignalPeak.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Structure SignalPeak
-    ' 
-    '         Properties: rt, rtmax, rtmin, snratio
-    ' 
-    '         Function: Subset, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Structure SignalPeak
+' 
+'         Properties: rt, rtmax, rtmin, snratio
+' 
+'         Function: Subset, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language.Default
 
 Namespace PeakFinding
 
-    Public Structure SignalPeak
+    Public Structure SignalPeak : Implements IsEmpty
 
         Dim region As ITimeSignal()
         Dim integration As Double
         Dim baseline As Double
+
+        Public ReadOnly Property isEmpty As Boolean Implements IsEmpty.IsEmpty
+            Get
+                Return region.IsNullOrEmpty AndAlso integration = 0 AndAlso baseline = 0
+            End Get
+        End Property
 
         Default Public ReadOnly Property tick(index As Integer) As ITimeSignal
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -77,6 +84,15 @@ Namespace PeakFinding
         Public ReadOnly Property rtmax As Double
             Get
                 Return region.Last.time
+            End Get
+        End Property
+
+        Public ReadOnly Property signalMax As Double
+            Get
+                Return Aggregate tick As ITimeSignal
+                       In region
+                       Let data As Double = tick.intensity
+                       Into Max(data)
             End Get
         End Property
 
