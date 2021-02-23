@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::2b877027c0c00c9b37d9d70826589e2d, Microsoft.VisualBasic.Core\src\Text\Xml\Linq\Linq.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Data
-    ' 
-    '         Function: ArrayNodesFromDocument, GetNodeNameDefine, GetTypeName, GetXmlNodeDoc, InternalIterates
-    '                   IteratesArrayNodes, LoadArrayNodes, LoadUltraLargeXMLDataSet, LoadXmlDataSet, LoadXmlDocument
-    '                   NodeInstanceBuilder, PopulateXmlElementText, (+2 Overloads) UltraLargeXmlNodesIterator
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Data
+' 
+'         Function: ArrayNodesFromDocument, GetNodeNameDefine, GetTypeName, GetXmlNodeDoc, InternalIterates
+'                   IteratesArrayNodes, LoadArrayNodes, LoadUltraLargeXMLDataSet, LoadXmlDataSet, LoadXmlDocument
+'                   NodeInstanceBuilder, PopulateXmlElementText, (+2 Overloads) UltraLargeXmlNodesIterator
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -147,6 +147,13 @@ Namespace Text.Xml.Linq
             Return type.Name
         End Function
 
+        ''' <summary>
+        ''' 使用<see cref="XmlDocument"/>进行小文件的加载操作
+        ''' </summary>
+        ''' <param name="XML$"></param>
+        ''' <param name="nodeName$"></param>
+        ''' <param name="filter"></param>
+        ''' <returns></returns>
         Private Iterator Function InternalIterates(XML$, nodeName$, filter As Func(Of String, Boolean)) As IEnumerable(Of String)
             Dim XmlNodeList As XmlNodeList = XML _
                 .LoadXmlDocument _
@@ -214,6 +221,11 @@ Namespace Text.Xml.Linq
             End If
 
             Return source.NodeInstanceBuilder(Of T)(xmlns, xmlNode:=nodeName)
+        End Function
+
+        <Extension>
+        Public Function NodeStream(Of T As Class)(stream As IEnumerable(Of String), Optional typeName$ = Nothing, Optional xmlns$ = Nothing) As IEnumerable(Of T)
+            Return stream.NodeInstanceBuilder(Of T)(xmlns, xmlNode:=GetType(T).GetTypeName([default]:=typeName))
         End Function
 
         ''' <summary>

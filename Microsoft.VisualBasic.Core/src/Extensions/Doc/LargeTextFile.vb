@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::639cee403c486f27d72d6321ecdb4cb4, Microsoft.VisualBasic.Core\src\Extensions\Doc\LargeTextFile.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module LargeTextFile
-    ' 
-    '     Function: FixEscapes, GetLastLine, IteratesStream, IteratesTableData, Merge
-    '               Peeks, Tails
-    ' 
-    ' /********************************************************************************/
+' Module LargeTextFile
+' 
+'     Function: FixEscapes, GetLastLine, IteratesStream, IteratesTableData, Merge
+'               Peeks, Tails
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -133,36 +133,55 @@ Public Module LargeTextFile
     ''' Peek the tails of a large text file.(尝试查看大文件的尾部的数据)
     ''' </summary>
     ''' <param name="path">If the file is not exists, then this function will returns nothing.</param>
-    ''' <param name="length">Peeks of the number of characters.(字符的数目)</param>
+    ''' <param name="length">
+    ''' Peeks of the number of characters. The number of the characters, not the bytes value.
+    ''' (字符的数目)
+    ''' </param>
     ''' <param name="encoding">Default value is <see cref="DefaultEncoding"/></param>
     ''' <returns></returns>
     ''' <remarks>
     ''' 请注意，如果字符编码是不定长的，则返回的字符串可能会出现乱码的问题
     ''' </remarks>
-    <ExportAPI("Tails")>
     <Extension>
-    Public Function Tails(path$, <Parameter("characters", "The number of the characters, not the bytes value.")> length%, Optional encoding As Encoding = Nothing) As String
-        Dim textEncoder As Encoding = encoding Or DefaultEncoding
-
+    Public Function Tails(path$, length%, Optional encoding As Encoding = Nothing) As String
         If Not path.FileExists Then
             Return Nothing
         Else
-            length *= (textEncoder.GetBytes("a").Length + 1)
+            Using reader As New FileStream(path, FileMode.Open)
+                Return reader.Tails(length, encoding)
+            End Using
+        End If
+    End Function
+
+    ''' <summary>
+    ''' Peek the tails of a large text file.(尝试查看大文件的尾部的数据)
+    ''' </summary>
+    ''' <param name="length">
+    ''' Peeks of the number of characters. The number of the characters, not the bytes value.
+    ''' (字符的数目)
+    ''' </param>
+    ''' <param name="encoding">Default value is <see cref="DefaultEncoding"/></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' 请注意，如果字符编码是不定长的，则返回的字符串可能会出现乱码的问题
+    ''' </remarks>
+    <Extension>
+    Public Function Tails(file As Stream, length%, Optional encoding As Encoding = Nothing) As String
+        Dim textEncoder As Encoding = encoding Or DefaultEncoding
+
+        length *= (textEncoder.GetBytes("a").Length + 1)
+
+        If file.Length < length Then
+            length = file.Length
         End If
 
-        Using reader As New FileStream(path, FileMode.Open)
-            If reader.Length < length Then
-                length = reader.Length
-            End If
+        Dim buffer As Byte() = New Byte(length - 1) {}
 
-            Dim buffer As Byte() = New Byte(length - 1) {}
+        Call file.Seek(file.Length - length, SeekOrigin.Begin)
+        Call file.Read(buffer, 0, buffer.Length)
 
-            Call reader.Seek(reader.Length - length, SeekOrigin.Begin)
-            Call reader.Read(buffer, 0, buffer.Length)
-
-            Dim value$ = textEncoder.GetString(buffer)
-            Return value
-        End Using
+        Dim value$ = textEncoder.GetString(buffer)
+        Return value
     End Function
 
     ''' <summary>

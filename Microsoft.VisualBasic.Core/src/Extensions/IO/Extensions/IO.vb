@@ -247,7 +247,7 @@ Public Module IOExtensions
     ''' <remarks></remarks>
     '''
     <ExportAPI("FlushStream")>
-    <Extension> Public Function FlushStream(buf As IEnumerable(Of Byte), <Parameter("Path.Save")> path$) As Boolean
+    <Extension> Public Function FlushStream(buf As IEnumerable(Of Byte), path$) As Boolean
         Using write As New BinaryWriter(path.Open)
             For Each b As Byte In buf
                 Call write.Write(b)

@@ -93,12 +93,21 @@ Namespace My.UNIX
         Public Function BashShell() As Integer
             Dim path As String = App.ExecutablePath.TrimSuffix
             Dim bash As String = BashRun().LineTokens.JoinBy(ASCII.LF)
+            Dim dir As String = path.ParentPath
+            Dim bashfile As String = dir & "/help"
+
+            Console.WriteLine("Bash script save at:")
+            Console.WriteLine(path)
 
             ' 在这里写入的bash脚本都是没有文件拓展名的
             '
             ' 同时写入man命令帮助脚本
-            Call My.Resources.help.FlushStream(path.ParentPath & "/help")
-            Call BashRun.SaveTo(path, Encodings.UTF8WithoutBOM.CodePage)
+            Call My.Resources.help.FlushStream(bashfile)
+            ' bash run script of current application
+            Call BashRun _
+                .LineTokens _
+                .JoinBy(ASCII.LF) _
+                .SaveTo(path, Encodings.UTF8WithoutBOM.CodePage)
 
             Return 0
         End Function
