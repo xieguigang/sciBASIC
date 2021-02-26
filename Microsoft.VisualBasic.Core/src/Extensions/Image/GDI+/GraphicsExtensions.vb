@@ -76,6 +76,30 @@ Namespace Imaging
     Public Module GraphicsExtensions
 
         ''' <summary>
+        ''' Internal create gdi device helper.(这个函数不会克隆原来的图像对象<paramref name="res"/>)
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="res">绘图的基础图像对象</param>
+        ''' <returns></returns>
+        Friend Function CreateObject(g As Graphics, res As Image) As Graphics2D
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic
+            g.PixelOffsetMode = PixelOffsetMode.HighQuality
+            g.CompositingQuality = CompositingQuality.HighQuality
+            g.SmoothingMode = SmoothingMode.HighQuality
+            g.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit
+
+            With New Graphics2D With {
+                .ImageResource = res,
+                .g = g,
+                .Font = New Font(FontFace.MicrosoftYaHei, 12),
+                .Stroke = Pens.Black
+            }
+                ' .Clear(Color.Transparent)
+                Return .ByRef
+            End With
+        End Function
+
+        ''' <summary>
         ''' fix for dpi bugs on unix mono platform when create a font object.
         ''' 
         ''' https://github.com/dotnet/runtime/issues/28361

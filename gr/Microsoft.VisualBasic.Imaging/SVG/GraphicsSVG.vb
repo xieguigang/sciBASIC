@@ -113,39 +113,6 @@ Namespace SVG
             Me.New(New Size(width, height))
         End Sub
 
-        Public Overrides Property Clip As Region
-            Get
-                Throw New NotImplementedException()
-            End Get
-            Set(value As Region)
-                Throw New NotImplementedException()
-            End Set
-        End Property
-
-        Public Overrides ReadOnly Property ClipBounds As RectangleF
-            Get
-                Throw New NotImplementedException()
-            End Get
-        End Property
-
-        Public Overrides Property CompositingMode As CompositingMode
-            Get
-                Throw New NotImplementedException()
-            End Get
-            Set(value As CompositingMode)
-                Throw New NotImplementedException()
-            End Set
-        End Property
-
-        Public Overrides Property CompositingQuality As CompositingQuality
-            Get
-                Throw New NotImplementedException()
-            End Get
-            Set(value As CompositingQuality)
-                Throw New NotImplementedException()
-            End Set
-        End Property
-
         Public Overrides ReadOnly Property DpiX As Single
             Get
                 Return 1
@@ -240,24 +207,6 @@ Namespace SVG
             Set(value As TextRenderingHint)
                 Throw New NotImplementedException()
             End Set
-        End Property
-
-        Public Overrides Property Transform As Matrix
-            Get
-                Throw New NotImplementedException()
-            End Get
-            Set(value As Matrix)
-                Throw New NotImplementedException()
-            End Set
-        End Property
-
-        Public Overrides ReadOnly Property VisibleClipBounds As RectangleF
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return New RectangleF With {
-                    .Size = Size.SizeF
-                }
-            End Get
         End Property
 
         Public Overrides ReadOnly Property Size As Size
@@ -1089,23 +1038,11 @@ Namespace SVG
             Throw New NotImplementedException()
         End Sub
 
-        Public Overrides Sub ReleaseHdc(hdc As IntPtr)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub ReleaseHdcInternal(hdc As IntPtr)
-            Throw New NotImplementedException()
-        End Sub
-
         Public Overrides Sub ResetClip()
             Throw New NotImplementedException()
         End Sub
 
         Public Overrides Sub ResetTransform()
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub Restore(gstate As GraphicsState)
             Throw New NotImplementedException()
         End Sub
 

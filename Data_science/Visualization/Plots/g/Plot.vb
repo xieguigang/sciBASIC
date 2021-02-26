@@ -1,52 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::9fc025d5f257816536caf6edb8ca5029, Data_science\Visualization\Plots\g\Plot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Plot
-    ' 
-    '         Properties: main, xlabel, ylabel, zlabel
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: EvaluateLayout, Plot
-    ' 
-    '         Sub: DrawLegends, DrawMainTitle, Plot
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Plot
+' 
+'         Properties: main, xlabel, ylabel, zlabel
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: EvaluateLayout, Plot
+' 
+'         Sub: DrawLegends, DrawMainTitle, Plot
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
@@ -71,10 +72,12 @@ Namespace Graphic
         ''' <returns></returns>
         Public Property main As String
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(theme As Theme)
             Me.theme = theme
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Plot(Optional size$ = Resolution2K.Size, Optional ppi As Integer = 300, Optional driver As Drivers = Drivers.Default) As GraphicsData
             Return g.GraphicsPlots(
                 size:=size.SizeParser,
@@ -86,6 +89,15 @@ Namespace Graphic
             )
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="layout">
+        ''' 一般而言，这个属性是<see cref="GraphicsRegion.PlotRegion"/>的属性值
+        ''' </param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Plot(ByRef g As IGraphics, layout As Rectangle)
             Call PlotInternal(g, EvaluateLayout(g, layout))
         End Sub

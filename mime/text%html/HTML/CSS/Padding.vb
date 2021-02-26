@@ -54,7 +54,8 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 Namespace HTML.CSS
 
     ''' <summary>
-    ''' Represents padding or margin information associated with a gdi element. (padding: top, right, bottom, left)
+    ''' Represents padding or margin information associated with a gdi element. 
+    ''' (padding: top, right, bottom, left)
     ''' </summary>
     Public Structure Padding
 
@@ -113,7 +114,10 @@ Namespace HTML.CSS
         Public ReadOnly Property IsEmpty As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Top = 0 AndAlso Bottom = 0 AndAlso Left = 0 AndAlso Right = 0
+                Return Top = 0 AndAlso
+                    Bottom = 0 AndAlso
+                    Left = 0 AndAlso
+                    Right = 0
             End Get
         End Property
 
@@ -165,12 +169,23 @@ Namespace HTML.CSS
             Left = layoutVector(3)
         End Sub
 
-        Public Function GetCanvasRegion(size As Drawing.Size) As Rectangle
+        Public Function GetCanvasRegion(size As Size) As Rectangle
             Dim location As New Point(Left, Top)
             Dim width = size.Width - Horizontal
             Dim height = size.Height - Vertical
 
-            Return New Rectangle(location, New Drawing.Size(width, height))
+            Return New Rectangle(location, New Size(width, height))
+        End Function
+
+        <DebuggerStepThrough>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Offset2D(dx As Double, dy As Double) As Padding
+            Return New Padding With {
+                .Left = Left + dx,
+                .Right = Right - dx,
+                .Top = Top + dy,
+                .Bottom = Bottom - dy
+            }
         End Function
 
         ''' <summary>
@@ -271,20 +286,14 @@ Namespace HTML.CSS
 
             Return New Padding(layoutVector:=out)
         End Operator
-        '
-        ' Summary:
-        '     Performs vector subtraction on the two specified System.Windows.Forms.Padding
-        '     objects, resulting in a new System.Windows.Forms.Padding.
-        '
-        ' Parameters:
-        '   p1:
-        '     The System.Windows.Forms.Padding to subtract from (the minuend).
-        '
-        '   p2:
-        '     The System.Windows.Forms.Padding to subtract from (the subtrahend).
-        '
-        ' Returns:
-        '     The System.Windows.Forms.Padding result of subtracting p2 from p1.
+
+        ''' <summary>
+        ''' Performs vector subtraction on the two specified System.Windows.Forms.Padding
+        ''' objects, resulting in a new System.Windows.Forms.Padding.
+        ''' </summary>
+        ''' <param name="p1">The System.Windows.Forms.Padding to subtract from (the minuend).</param>
+        ''' <param name="p2">The System.Windows.Forms.Padding to subtract from (the subtrahend).</param>
+        ''' <returns>The System.Windows.Forms.Padding result of subtracting p2 from p1.</returns>
         Public Shared Operator -(p1 As Padding, p2 As Padding) As Padding
             Dim a = p1.LayoutVector
             Dim b = p2.LayoutVector
@@ -297,36 +306,23 @@ Namespace HTML.CSS
             Return New Padding(layoutVector:=out)
         End Operator
 
-        '
-        ' Summary:
-        '     Tests whether two specified System.Windows.Forms.Padding objects are equivalent.
-        '
-        ' Parameters:
-        '   p1:
-        '     A System.Windows.Forms.Padding to test.
-        '
-        '   p2:
-        '     A System.Windows.Forms.Padding to test.
-        '
-        ' Returns:
-        '     true if the two System.Windows.Forms.Padding objects are equal; otherwise, false.
+        ''' <summary>
+        ''' Tests whether two specified System.Windows.Forms.Padding objects are equivalent.
+        ''' </summary>
+        ''' <param name="p1">A System.Windows.Forms.Padding to test.</param>
+        ''' <param name="p2">A System.Windows.Forms.Padding to test.</param>
+        ''' <returns>true if the two System.Windows.Forms.Padding objects are equal; otherwise, false.</returns>
         Public Shared Operator =(p1 As Padding, p2 As Padding) As Boolean
             Return p1.LayoutVector.SequenceEqual(p2.LayoutVector)
         End Operator
-        '
-        ' Summary:
-        '     Tests whether two specified System.Windows.Forms.Padding objects are not equivalent.
-        '
-        ' Parameters:
-        '   p1:
-        '     A System.Windows.Forms.Padding to test.
-        '
-        '   p2:
-        '     A System.Windows.Forms.Padding to test.
-        '
-        ' Returns:
-        '     true if the two System.Windows.Forms.Padding objects are different; otherwise,
-        '     false.
+
+        ''' <summary>
+        ''' Tests whether two specified System.Windows.Forms.Padding objects are not equivalent.
+        ''' </summary>
+        ''' <param name="p1">A System.Windows.Forms.Padding to test.</param>
+        ''' <param name="p2">A System.Windows.Forms.Padding to test.</param>
+        ''' <returns>true if the two System.Windows.Forms.Padding objects are different; otherwise,
+        ''' false.</returns>
         Public Shared Operator <>(p1 As Padding, p2 As Padding) As Boolean
             Return Not (p1 = p2)
         End Operator

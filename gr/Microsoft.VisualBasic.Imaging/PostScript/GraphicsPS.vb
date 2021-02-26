@@ -71,10 +71,6 @@ Namespace PostScript
     Public Class GraphicsPS : Inherits IGraphics
 
         Public Overrides ReadOnly Property Size As Size
-        Public Overrides Property Clip As Region
-        Public Overrides ReadOnly Property ClipBounds As RectangleF
-        Public Overrides Property CompositingMode As CompositingMode
-        Public Overrides Property CompositingQuality As CompositingQuality
         Public Overrides ReadOnly Property DpiX As Single
         Public Overrides ReadOnly Property DpiY As Single
         Public Overrides Property InterpolationMode As InterpolationMode
@@ -87,8 +83,6 @@ Namespace PostScript
         Public Overrides Property SmoothingMode As SmoothingMode
         Public Overrides Property TextContrast As Integer
         Public Overrides Property TextRenderingHint As TextRenderingHint
-        Public Overrides Property Transform As Matrix
-        Public Overrides ReadOnly Property VisibleClipBounds As RectangleF
 
         Dim ps_fontsize% = 15
         Dim buffer As New MemoryStream
@@ -820,23 +814,11 @@ Namespace PostScript
             Throw New NotImplementedException()
         End Sub
 
-        Public Overrides Sub ReleaseHdc(hdc As IntPtr)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub ReleaseHdcInternal(hdc As IntPtr)
-            Throw New NotImplementedException()
-        End Sub
-
         Public Overrides Sub ResetClip()
             Throw New NotImplementedException()
         End Sub
 
         Public Overrides Sub ResetTransform()
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub Restore(gstate As GraphicsState)
             Throw New NotImplementedException()
         End Sub
 

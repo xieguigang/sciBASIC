@@ -65,39 +65,39 @@ Namespace Imaging
 
         Public MustOverride ReadOnly Property Size As Size
 
-        '
-        ' Summary:
-        '     Gets or sets a System.Drawing.Region that limits the drawing region of this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     A System.Drawing.Region that limits the portion of this System.Drawing.Graphics
-        '     that is currently available for drawing.
-        Public MustOverride Property Clip As Region
-        '
-        ' Summary:
-        '     Gets a System.Drawing.RectangleF structure that bounds the clipping region of
-        '     this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     A System.Drawing.RectangleF structure that represents a bounding rectangle for
-        '     the clipping region of this System.Drawing.Graphics.
-        Public MustOverride ReadOnly Property ClipBounds As RectangleF
-        '
-        ' Summary:
-        '     Gets a value that specifies how composited images are drawn to this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     This property specifies a member of the System.Drawing.Drawing2D.CompositingMode
-        '     enumeration. The default is System.Drawing.Drawing2D.CompositingMode.SourceOver.
-        Public MustOverride Property CompositingMode As CompositingMode
-        '
-        ' Summary:
-        '     Gets or sets the rendering quality of composited images drawn to this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     This property specifies a member of the System.Drawing.Drawing2D.CompositingQuality
-        '     enumeration. The default is System.Drawing.Drawing2D.CompositingQuality.Default.
-        Public MustOverride Property CompositingQuality As CompositingQuality
+        ''
+        '' Summary:
+        ''     Gets or sets a System.Drawing.Region that limits the drawing region of this System.Drawing.Graphics.
+        ''
+        '' Returns:
+        ''     A System.Drawing.Region that limits the portion of this System.Drawing.Graphics
+        ''     that is currently available for drawing.
+        'Public MustOverride Property Clip As Region
+        ''
+        '' Summary:
+        ''     Gets a System.Drawing.RectangleF structure that bounds the clipping region of
+        ''     this System.Drawing.Graphics.
+        ''
+        '' Returns:
+        ''     A System.Drawing.RectangleF structure that represents a bounding rectangle for
+        ''     the clipping region of this System.Drawing.Graphics.
+        'Public MustOverride ReadOnly Property ClipBounds As RectangleF
+        ''
+        '' Summary:
+        ''     Gets a value that specifies how composited images are drawn to this System.Drawing.Graphics.
+        ''
+        '' Returns:
+        ''     This property specifies a member of the System.Drawing.Drawing2D.CompositingMode
+        ''     enumeration. The default is System.Drawing.Drawing2D.CompositingMode.SourceOver.
+        'Public MustOverride Property CompositingMode As CompositingMode
+        ''
+        '' Summary:
+        ''     Gets or sets the rendering quality of composited images drawn to this System.Drawing.Graphics.
+        ''
+        '' Returns:
+        ''     This property specifies a member of the System.Drawing.Drawing2D.CompositingQuality
+        ''     enumeration. The default is System.Drawing.Drawing2D.CompositingQuality.Default.
+        'Public MustOverride Property CompositingQuality As CompositingQuality
         '
         ' Summary:
         '     Gets the horizontal resolution of this System.Drawing.Graphics.
@@ -206,22 +206,22 @@ Namespace Imaging
         ' Returns:
         '     One of the System.Drawing.Text.TextRenderingHint values.
         Public MustOverride Property TextRenderingHint As TextRenderingHint
-        '
-        ' Summary:
-        '     Gets or sets a copy of the geometric world transformation for this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     A copy of the System.Drawing.Drawing2D.Matrix that represents the geometric world
-        '     transformation for this System.Drawing.Graphics.
-        Public MustOverride Property Transform As Matrix
-        '
-        ' Summary:
-        '     Gets the bounding rectangle of the visible clipping region of this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     A System.Drawing.RectangleF structure that represents a bounding rectangle for
-        '     the visible clipping region of this System.Drawing.Graphics.
-        Public MustOverride ReadOnly Property VisibleClipBounds As RectangleF
+        ''
+        '' Summary:
+        ''     Gets or sets a copy of the geometric world transformation for this System.Drawing.Graphics.
+        ''
+        '' Returns:
+        ''     A copy of the System.Drawing.Drawing2D.Matrix that represents the geometric world
+        ''     transformation for this System.Drawing.Graphics.
+        'Public MustOverride Property Transform As Matrix
+        ''
+        '' Summary:
+        ''     Gets the bounding rectangle of the visible clipping region of this System.Drawing.Graphics.
+        ''
+        '' Returns:
+        ''     A System.Drawing.RectangleF structure that represents a bounding rectangle for
+        ''     the visible clipping region of this System.Drawing.Graphics.
+        'Public MustOverride ReadOnly Property VisibleClipBounds As RectangleF
 
         '
         ' Summary:
@@ -3831,26 +3831,26 @@ Namespace Imaging
         '     the order of the multiplication.
         Public MustOverride Sub MultiplyTransform(matrix As Matrix, order As MatrixOrder)
 
-        '
-        ' Summary:
-        '     Releases a device context handle obtained by a previous call to the System.Drawing.Graphics.GetHdc
-        '     method of this System.Drawing.Graphics.
-        '
-        ' Parameters:
-        '   hdc:
-        '     Handle to a device context obtained by a previous call to the System.Drawing.Graphics.GetHdc
-        '     method of this System.Drawing.Graphics.
-        <EditorBrowsable(EditorBrowsableState.Advanced)>
-        Public MustOverride Sub ReleaseHdc(hdc As IntPtr)
-        '
-        ' Summary:
-        '     Releases a handle to a device context.
-        '
-        ' Parameters:
-        '   hdc:
-        '     Handle to a device context.
-        <EditorBrowsable(EditorBrowsableState.Never)>
-        Public MustOverride Sub ReleaseHdcInternal(hdc As IntPtr)
+        ''
+        '' Summary:
+        ''     Releases a device context handle obtained by a previous call to the System.Drawing.Graphics.GetHdc
+        ''     method of this System.Drawing.Graphics.
+        ''
+        '' Parameters:
+        ''   hdc:
+        ''     Handle to a device context obtained by a previous call to the System.Drawing.Graphics.GetHdc
+        ''     method of this System.Drawing.Graphics.
+        '<EditorBrowsable(EditorBrowsableState.Advanced)>
+        'Public MustOverride Sub ReleaseHdc(hdc As IntPtr)
+        ''
+        '' Summary:
+        ''     Releases a handle to a device context.
+        ''
+        '' Parameters:
+        ''   hdc:
+        ''     Handle to a device context.
+        '<EditorBrowsable(EditorBrowsableState.Never)>
+        'Public MustOverride Sub ReleaseHdcInternal(hdc As IntPtr)
         '
         ' Summary:
         '     Resets the clip region of this System.Drawing.Graphics to an infinite region.
@@ -3860,16 +3860,16 @@ Namespace Imaging
         '     Resets the world transformation matrix of this System.Drawing.Graphics to the
         '     identity matrix.
         Public MustOverride Sub ResetTransform()
-        '
-        ' Summary:
-        '     Restores the state of this System.Drawing.Graphics to the state represented by
-        '     a System.Drawing.Drawing2D.GraphicsState.
-        '
-        ' Parameters:
-        '   gstate:
-        '     System.Drawing.Drawing2D.GraphicsState that represents the state to which to
-        '     restore this System.Drawing.Graphics.
-        Public MustOverride Sub Restore(gstate As GraphicsState)
+        ''
+        '' Summary:
+        ''     Restores the state of this System.Drawing.Graphics to the state represented by
+        ''     a System.Drawing.Drawing2D.GraphicsState.
+        ''
+        '' Parameters:
+        ''   gstate:
+        ''     System.Drawing.Drawing2D.GraphicsState that represents the state to which to
+        ''     restore this System.Drawing.Graphics.
+        'Public MustOverride Sub Restore(gstate As GraphicsState)
         '
         ' Summary:
         '     Applies the specified rotation to the transformation matrix of this System.Drawing.Graphics.

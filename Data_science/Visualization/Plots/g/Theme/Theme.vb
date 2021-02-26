@@ -55,7 +55,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Graphic.Canvas
 
-    Public Class Theme
+    Public Class Theme : Implements ICloneable
 
         ''' <summary>
         ''' 背景色
@@ -77,6 +77,9 @@ Namespace Graphic.Canvas
         ''' </summary>
         ''' <returns></returns>
         Public Property subtitleCSS As String = CSSFont.PlotSubTitle
+
+#Region "legend styles"
+
         ''' <summary>
         ''' 图例标题字体样式
         ''' </summary>
@@ -100,18 +103,31 @@ Namespace Graphic.Canvas
         Public Property legendBoxStroke As String = Stroke.AxisStroke
         Public Property legendBoxBackground As String = "transparent"
 
+#End Region
+
+#Region "data point styles"
+
         ''' <summary>
         ''' 在图表之中的某一个数据点的显示字体样式
         ''' </summary>
         ''' <returns></returns>
         Public Property tagCSS As String = CSSFont.PlotLabelNormal
         Public Property tagColor As String = "black"
+        ''' <summary>
+        ''' 数据点与数据标签之间的连接线的样式
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property tagLinkStroke As String = Stroke.HighlightStroke
 
         ''' <summary>
         ''' 数据点的大小值
         ''' </summary>
         ''' <returns></returns>
         Public Property pointSize As Integer = 5
+
+#End Region
+
+#Region "axis styles"
 
         ''' <summary>
         ''' X坐标轴的布局
@@ -123,7 +139,6 @@ Namespace Graphic.Canvas
         ''' </summary>
         ''' <returns></returns>
         Public Property yAxisLayout As YAxisLayoutStyles = YAxisLayoutStyles.Left
-        Public Property drawAxis As Boolean = True
 
         ''' <summary>
         ''' 坐标轴上的标签的字体样式
@@ -145,6 +160,11 @@ Namespace Graphic.Canvas
         ''' <returns></returns>
         Public Property axisTickFormat As String = "F2"
 
+#End Region
+
+#Region "options"
+
+        Public Property drawAxis As Boolean = True
         ''' <summary>
         ''' 是否显示图例
         ''' </summary>
@@ -156,6 +176,15 @@ Namespace Graphic.Canvas
         ''' </summary>
         ''' <returns></returns>
         Public Property drawGrid As Boolean = True
+
+#End Region
+
+        ''' <summary>
+        ''' 绘制的线条的样式
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property lineStroke As String = Stroke.AxisStroke
+
         Public Property gridStrokeX As String = Stroke.AxisGridStroke
         Public Property gridStrokeY As String = Stroke.AxisGridStroke
         Public Property gridFill As String = "white"
@@ -171,5 +200,8 @@ Namespace Graphic.Canvas
             Return legendLayout.GetLocation(canvas, dependency)
         End Function
 
+        Public Function Clone() As Object Implements ICloneable.Clone
+            Return Me.GetJson.LoadJSON(Of Theme)
+        End Function
     End Class
 End Namespace
