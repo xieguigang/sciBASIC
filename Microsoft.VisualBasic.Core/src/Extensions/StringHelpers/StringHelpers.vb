@@ -471,7 +471,10 @@ Public Module StringHelpers
     ''' </summary>
     ''' <param name="s">The input test string</param>
     ''' <returns></returns>
-    <Extension> Public Function StringEmpty(s$, Optional whitespaceAsEmpty As Boolean = True) As Boolean
+    ''' 
+    <DebuggerStepThrough>
+    <Extension>
+    Public Function StringEmpty(s$, Optional whitespaceAsEmpty As Boolean = True) As Boolean
         If s Is Nothing OrElse String.IsNullOrEmpty(s) Then
             Return True
         Else
@@ -490,6 +493,7 @@ Public Module StringHelpers
     ''' <param name="whitespaceAsEmpty"></param>
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <DebuggerStepThrough>
     <Extension>
     Public Function NotEmpty(s$, Optional whitespaceAsEmpty As Boolean = True) As Boolean
         Return Not s.StringEmpty(whitespaceAsEmpty)
