@@ -1,15 +1,7 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Microsoft.VisualBasic.Core",
-    "\\Microsoft.VisualBasic.Core\\ApplicationServices",
-    "\\Microsoft.VisualBasic.Core\\ApplicationServices\\Parallel",
-    "\\Microsoft.VisualBasic.Core\\ApplicationServices\\Parallel\\MMFProtocol",
-    "\\Microsoft.VisualBasic.Core\\ComponentModel",
-    "\\Microsoft.VisualBasic.Core\\ComponentModel\\Algorithm",
-    "\\Microsoft.VisualBasic.Core\\ComponentModel\\Algorithm\\BinaryTree",
-    "\\Microsoft.VisualBasic.Core\\ComponentModel\\System.Collections.Generic",
-    "\\Microsoft.VisualBasic.Core\\Extensions"
+    "\\Microsoft.VisualBasic.Core"
   ],
   "SelectedNode": "\\CODE_OF_CONDUCT.md",
   "PreviewInSolutionExplorer": false
