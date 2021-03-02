@@ -131,7 +131,10 @@ Namespace Bzip2
 
             If bytesRead <> -1 Then Return bytesRead
             bytesRead = 0
-            If InitialiseNextBlock() Then bytesRead = blockDecompressor.Read(destination, offset, length)
+            If InitialiseNextBlock() Then
+                bytesRead = blockDecompressor.Read(destination, offset, length)
+            End If
+
             Return bytesRead
         End Function
 

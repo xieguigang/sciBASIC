@@ -101,6 +101,7 @@ Namespace Bzip2
             Dim decompressor = New BZip2InputStream(output, False)
             decompressor.CopyTo(output2)
             Assert.AreEqual(Buffer.Length, output2.Length)
+            Assert.IsTrue(Buffer.SequenceEqual(output2.ToArray))
         End Sub
     End Class
 End Namespace
