@@ -1,7 +1,8 @@
 ﻿Imports System.IO
-Imports Microsoft.VisualBasic.Data.IO.Bzip2
-Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
+Imports Microsoft.VisualBasic.Data.IO.Bzip2
+Imports Microsoft.VisualBasic.Data.IO.Bzip2.Math
 
 Namespace Bzip2
 

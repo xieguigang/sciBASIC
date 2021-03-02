@@ -5,7 +5,7 @@
 
 Imports System
 
-Namespace Bzip2
+Namespace Bzip2.Math
     ''' <summary>
     ''' A 256 entry Move To Front transform
     ''' </summary>

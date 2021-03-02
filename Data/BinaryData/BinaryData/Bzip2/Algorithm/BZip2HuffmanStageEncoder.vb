@@ -3,6 +3,7 @@
 ' Location: http://github.com/jaime-olivares/bzip2
 ' Ported from the Java implementation by Matthew Francis: https://github.com/MateuszBartosiewicz/bzip2
 
+Imports Microsoft.VisualBasic.Data.IO.Bzip2.Math
 Imports stdNum = System.Math
 
 Namespace Bzip2
@@ -133,7 +134,7 @@ Namespace Bzip2
 
             ' Reverse the sort to place the code lengths in the same order as the symbols whose frequencies were passed in
             For i = 0 To alphabetSize - 1
-                codeLengths(index, mergedFrequenciesAndIndices(i) And &H1fF) = sortedFrequencies(i)
+                codeLengths(index, mergedFrequenciesAndIndices(i) And &H1FF) = sortedFrequencies(i)
             Next
         End Sub
 
@@ -255,7 +256,7 @@ Namespace Bzip2
 
                     For k = 0 To mtfAlphabetSize - 1
 
-                        If (huffmanCodeLengths(i, k) And &HfF) = j Then
+                        If (huffmanCodeLengths(i, k) And &HFF) = j Then
                             huffmanMergedCodeSymbols(i, k) = j << 24 Or code
                             code += 1
                         End If

@@ -3,6 +3,7 @@
 ' Location: http://github.com/jaime-olivares/bzip2
 ' Ported from the Java implementation by Matthew Francis: https://github.com/MateuszBartosiewicz/bzip2
 
+Imports Microsoft.VisualBasic.Data.IO.Bzip2.Math
 Imports stdNum = System.Math
 
 Namespace Bzip2
@@ -113,7 +114,7 @@ Namespace Bzip2
 
             For i = 0 To bwtLength - 1
                 ' Move To Front
-                Dim mtfPosition = symbolMTF.ValueToFront(huffmanSymbolMap(bwtBlock(i) And &HfF))
+                Dim mtfPosition = symbolMTF.ValueToFront(huffmanSymbolMap(bwtBlock(i) And &HFF))
 
                 ' Run Length Encode
                 If mtfPosition = 0 Then

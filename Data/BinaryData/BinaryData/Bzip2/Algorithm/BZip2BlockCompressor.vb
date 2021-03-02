@@ -3,6 +3,7 @@
 ' Location: http://github.com/jaime-olivares/bzip2
 ' Ported from the Java implementation by Matthew Francis: https://github.com/MateuszBartosiewicz/bzip2
 
+Imports Microsoft.VisualBasic.Data.IO.Bzip2.Math
 Imports stdNum = System.Math
 
 Namespace Bzip2
@@ -111,13 +112,13 @@ Namespace Bzip2
                 rleLength = 1
             ElseIf rleCurrentValue <> value Then
                 ' This path commits us to write 6 bytes - one RLE run (5 bytes) plus one extra
-                WriteRun(rleCurrentValue And &HfF, rleLength)
+                WriteRun(rleCurrentValue And &HFF, rleLength)
                 rleCurrentValue = value
                 rleLength = 1
             Else
 
                 If rleLength = 254 Then
-                    WriteRun(rleCurrentValue And &HfF, 255)
+                    WriteRun(rleCurrentValue And &HFF, 255)
                     rleLength = 0
                 Else
                     rleLength += 1
@@ -154,7 +155,7 @@ Namespace Bzip2
 
         Public Sub Close()
             ' If an RLE run is in progress, write it out
-            If rleLength > 0 Then WriteRun(rleCurrentValue And &HfF, rleLength)
+            If rleLength > 0 Then WriteRun(rleCurrentValue And &HFF, rleLength)
 
             ' Apply a one byte block wrap required by the BWT implementation
             block(blockLength) = block(0)

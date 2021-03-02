@@ -3,6 +3,7 @@
 ' Location: http://github.com/jaime-olivares/bzip2
 ' Ported from the Java implementation by Matthew Francis: https://github.com/MateuszBartosiewicz/bzip2
 
+Imports Microsoft.VisualBasic.Data.IO.Bzip2.Math
 Imports stdNum = System.Math
 
 Namespace Bzip2
@@ -227,7 +228,7 @@ Namespace Bzip2
                     If repeatCount > 0 Then
                         If _bwtBlockLength + repeatCount > bwtBlock.Length Then Throw New Exception("BZip2 block exceeds declared block size")
                         nextByte = huffmanSymbolMap(mtfValue)
-                        bwtByteCounts(nextByte And &HfF) += repeatCount
+                        bwtByteCounts(nextByte And &HFF) += repeatCount
 
                         While Threading.Interlocked.Decrement(repeatCount) >= 0
                             bwtBlock(stdNum.Min(Threading.Interlocked.Increment(_bwtBlockLength), _bwtBlockLength - 1)) = nextByte
@@ -239,9 +240,9 @@ Namespace Bzip2
 
                     If nextSymbol = huffmanEndOfBlockSymbol Then Exit While
                     If _bwtBlockLength >= bwtBlock.Length Then Throw New Exception("BZip2 block exceeds declared block size")
-                    mtfValue = symbolMTF.IndexToFront(nextSymbol - 1) And &HfF
+                    mtfValue = symbolMTF.IndexToFront(nextSymbol - 1) And &HFF
                     nextByte = huffmanSymbolMap(mtfValue)
-                    bwtByteCounts(nextByte And &HfF) += 1
+                    bwtByteCounts(nextByte And &HFF) += 1
                     bwtBlock(stdNum.Min(Threading.Interlocked.Increment(_bwtBlockLength), _bwtBlockLength - 1)) = nextByte
                 End If
             End While
@@ -272,7 +273,7 @@ Namespace Bzip2
             ' have already read both of the corresponding values, cuts down on memory accesses in the
             ' final walk through the array
             For i = 0 To bwtBlockLength - 1
-                Dim value = bwtBlock(i) And &HfF
+                Dim value = bwtBlock(i) And &HFF
                 _bwtMergedPointers(stdNum.Min(Threading.Interlocked.Increment(characterBase(value)), characterBase(value) - 1)) = (i << 8) + value
             Next
 
@@ -288,7 +289,7 @@ Namespace Bzip2
         ' 
 
         Private Function decodeNextBWTByte() As Integer
-            Dim nextDecodedByte = bwtCurrentMergedPointer And &HfF
+            Dim nextDecodedByte = bwtCurrentMergedPointer And &HFF
             bwtCurrentMergedPointer = bwtMergedPointers(bwtCurrentMergedPointer >> 8)
 
             If blockRandomised Then

@@ -5,7 +5,8 @@
 
 Imports stdNum = System.Math
 
-Namespace Bzip2
+Namespace Bzip2.Math
+
     ''' <summary>
     ''' A CRC32 calculator
     ''' </summary>

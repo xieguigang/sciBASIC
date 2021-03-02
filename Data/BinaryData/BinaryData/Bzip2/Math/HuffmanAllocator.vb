@@ -5,7 +5,7 @@
 
 Imports stdNum = System.Math
 
-Namespace Bzip2
+Namespace Bzip2.Math
     ''' <summary>An in-place, length restricted Canonical Huffman code length allocator</summary>
     ''' <remarks>
 	''' Based on the algorithm proposed by R.L.Milidiú, A.A.Pessoa and E.S.Laber 
