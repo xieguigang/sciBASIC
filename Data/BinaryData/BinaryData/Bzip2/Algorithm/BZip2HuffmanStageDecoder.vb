@@ -81,10 +81,11 @@ Namespace Bzip2
             End If
 
             Dim codeLength = minimumLengths(currentTable)
+            Dim startBits As UInteger = bitInputStream.ReadBits(codeLength)
 
             ' Starting with the minimum bit length for the table, read additional bits one at a time
             ' until a complete code is recognised
-            For codeBits As UInteger = bitInputStream.ReadBits(codeLength) To HUFFMAN_DECODE_MAXIMUM_CODE_LENGTH
+            For codeBits As UInteger = startBits To HUFFMAN_DECODE_MAXIMUM_CODE_LENGTH
 
                 If codeBits <= codeLimits(currentTable, codeLength) Then
                     ' Convert the code to a symbol index and return
