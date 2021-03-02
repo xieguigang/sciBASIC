@@ -27,6 +27,7 @@
     <DefineTrace>true</DefineTrace>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -736,6 +737,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ByteBuffer.vb" />
+    <Compile Include="Bzip2\Algorithm\BZip2BitInputStream.vb" />
+    <Compile Include="Bzip2\Algorithm\BZip2BitOutputStream.vb" />
+    <Compile Include="Bzip2\Algorithm\BZip2BlockCompressor.vb" />
+    <Compile Include="Bzip2\Algorithm\BZip2BlockDecompressor.vb" />
+    <Compile Include="Bzip2\Algorithm\BZip2DivSufSort.vb" />
+    <Compile Include="Bzip2\Algorithm\BZip2HuffmanStageDecoder.vb" />
+    <Compile Include="Bzip2\Algorithm\BZip2HuffmanStageEncoder.vb" />
+    <Compile Include="Bzip2\BZip2InputStream.vb" />
+    <Compile Include="Bzip2\Algorithm\Bzip2MTFAndRLE2StageEncoder.vb" />
+    <Compile Include="Bzip2\BZip2OutputStream.vb" />
+    <Compile Include="Bzip2\Math\CRC32.vb" />
+    <Compile Include="Bzip2\Math\HuffmanAllocator.vb" />
+    <Compile Include="Bzip2\Math\MoveToFront.vb" />
     <Compile Include="Extensions\FixLengthString.vb" />
     <Compile Include="Extensions\MSWindows.vb" />
     <Compile Include="BitSet.vb" />
