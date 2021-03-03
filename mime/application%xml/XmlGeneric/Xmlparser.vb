@@ -44,6 +44,11 @@ Imports System.Xml
 
 Public Module XmlParser
 
+    ''' <summary>
+    ''' parse the xml document text
+    ''' </summary>
+    ''' <param name="xml">the xml dcument text</param>
+    ''' <returns></returns>
     Public Function ParseXml(xml As String) As XmlElement
         Dim doc As XDocument = XDocument.Load(New StringReader(xml))
         Dim root As XElement = doc.Root

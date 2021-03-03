@@ -441,10 +441,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CodeGenerator.vb" />
-    <Compile Include="MathML\BinaryExpression.vb" />
+    <Compile Include="MathML\actiontypes.vb" />
+    <Compile Include="MathML\Expression\BinaryExpression.vb" />
     <Compile Include="MathML\ContentBuilder.vb" />
-    <Compile Include="MathML\maction.vb" />
-    <Compile Include="MathML\Math.vb" />
+    <Compile Include="MathML\Expression\MathFunctionExpression.vb" />
+    <Compile Include="MathML\Expression\LambdaExpression.vb" />
+    <Compile Include="MathML\Expression\SymbolExpression.vb" />
+    <Compile Include="MathML\XML\Apply.vb" />
+    <Compile Include="MathML\XML\maction.vb" />
+    <Compile Include="MathML\XML\Math.vb" />
     <Compile Include="MathML\mathOperators.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

@@ -119,7 +119,9 @@ Namespace BarPlot
                                       Optional htmlLabel As Boolean = False,
                                       Optional idTag$ = Nothing,
                                       Optional rectangleStyle As RectangleStyling = Nothing,
-                                      Optional drawLegend As Boolean = True) As GraphicsData
+                                      Optional drawLegend As Boolean = True,
+                                      Optional drawGrid As Boolean = True,
+                                      Optional tagXFormat$ = "F2") As GraphicsData
 
             Dim q As New Signal With {
                 .Name = queryName,
@@ -144,7 +146,9 @@ Namespace BarPlot
                 htmlLabel:=htmlLabel,
                 idTag:=idTag,
                 rectangleStyle:=rectangleStyle,
-                drawLegend:=drawLegend
+                drawLegend:=drawLegend,
+                drawGrid:=drawGrid,
+                tagXFormat:=tagXFormat
             )
         End Function
 
@@ -186,6 +190,7 @@ Namespace BarPlot
         ''' <param name="query">The query signals</param>
         ''' <param name="subject">The subject signal values</param>
         ''' <param name="displayX">是否在信号的柱子上面显示出X坐标的信息</param>
+        ''' <param name="format">the number format of the X axis ticks</param>
         ''' <returns></returns>
         <Extension>
         Public Function PlotAlignmentGroups(query As Signal(), subject As Signal(),
@@ -216,7 +221,9 @@ Namespace BarPlot
                                             Optional htmlLabel As Boolean = False,
                                             Optional idTag$ = Nothing,
                                             Optional rectangleStyle As RectangleStyling = Nothing,
-                                            Optional drawLegend As Boolean = True) As GraphicsData
+                                            Optional drawLegend As Boolean = True,
+                                            Optional drawGrid As Boolean = True,
+                                            Optional tagXFormat$ = "F2") As GraphicsData
             If xrange Is Nothing Then
                 Dim ALL = query _
                     .Select(Function(x) x.signals.Keys) _
@@ -280,7 +287,11 @@ Namespace BarPlot
 
                             y = ymid - yscale(i * dy) ' 上半部分
                             Call g.DrawLine(tickPen, New PointF(.Left, y), New Point(.Left - dt, y))
-                            Call g.DrawLine(gridPen, New Point(.Left, y), New Point(.Right, y))
+
+                            If drawGrid Then
+                                Call g.DrawLine(gridPen, New Point(.Left, y), New Point(.Right, y))
+                            End If
+
                             Call drawlabel(g, label)
 
                             If i = 0 Then
@@ -289,7 +300,11 @@ Namespace BarPlot
 
                             y = ymid + yscale(i * dy) ' 下半部分
                             Call g.DrawLine(tickPen, New PointF(.Left, y), New Point(.Left - dt, y))
-                            Call g.DrawLine(gridPen, New Point(.Left, y), New Point(.Right, y))
+
+                            If drawGrid Then
+                                Call g.DrawLine(gridPen, New Point(.Left, y), New Point(.Right, y))
+                            End If
+
                             Call drawlabel(g, label)
                         Next
 
@@ -405,7 +420,7 @@ Namespace BarPlot
                                 rect = New Rectangle(New Point(left, y), New Size(bw, yscale(o.value)))
 
                                 If displayX AndAlso o.value / yLength >= labelPlotStrength Then
-                                    xlabel = o.x.ToString("F2")
+                                    xlabel = o.x.ToString(tagXFormat)
                                     xsz = g.MeasureString(xlabel, xCSSFont)
                                     xpos = New PointF(rect.Left + (rect.Width - xsz.Width) / 2, rect.Top - xsz.Height)
                                     g.DrawString(xlabel, xCSSFont, Brushes.Black, xpos)
@@ -421,7 +436,7 @@ Namespace BarPlot
                                 rect = Rectangle(ymid, left, left + bw, y)
 
                                 If displayX AndAlso o.value / yLength >= labelPlotStrength Then
-                                    xlabel = o.x.ToString("F2")
+                                    xlabel = o.x.ToString(tagXFormat)
                                     xsz = g.MeasureString(xlabel, xCSSFont)
                                     xpos = New PointF(rect.Left + (rect.Width - xsz.Width) / 2, rect.Bottom + 3)
                                     g.DrawString(xlabel, xCSSFont, Brushes.Black, xpos)
