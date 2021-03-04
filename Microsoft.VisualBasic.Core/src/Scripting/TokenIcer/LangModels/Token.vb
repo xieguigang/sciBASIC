@@ -293,7 +293,7 @@ Namespace Scripting.TokenIcer
         Public ReadOnly Property isNumeric As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Information.IsNumeric(text)
+                Return text.IsNumeric
             End Get
         End Property
 

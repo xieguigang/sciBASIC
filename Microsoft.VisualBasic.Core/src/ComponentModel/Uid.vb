@@ -72,7 +72,11 @@ Namespace ComponentModel
         ''' </summary>
         Dim value As Integer = 0
 
-        ReadOnly __chars As Char() = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        Public Const AlphabetUCase As String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        Public Const AlphabetLCase As String = "abcdefghijklmnopqrstuvwxyz"
+        Public Const Numbers As String = "0123456789"
+
+        ReadOnly __chars As Char() = Numbers & AlphabetLCase & AlphabetUCase
         ReadOnly __upbound As Integer = __chars.Length - 1
 
         ''' <summary>
