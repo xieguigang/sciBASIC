@@ -96,18 +96,28 @@ Public Module PathExtensions
     ''' </summary>
     ''' <param name="path">The file path or the directory path.</param>
     ''' <param name="throwEx"></param>
+    ''' <param name="strictFile">
+    ''' this function is not allowed for delete a directory by default.
+    ''' </param>
     ''' <returns></returns>
     <Extension>
-    Public Function DeleteFile(path$, Optional throwEx As Boolean = False) As Boolean
+    Public Function DeleteFile(path$,
+                               Optional throwEx As Boolean = False,
+                               Optional strictFile As Boolean = True) As Boolean
         Try
             If path.FileExists Then
                 Call FileIO.FileSystem.DeleteFile(
                    path, UIOption.OnlyErrorDialogs, RecycleOption.DeletePermanently
                 )
             ElseIf path.DirectoryExists Then
-                Call FileIO.FileSystem.DeleteDirectory(
-                    path, DeleteDirectoryOption.DeleteAllContents
-                )
+                If strictFile Then
+                    Throw New InvalidOperationException($"the given target is a directory, which the option of this operation is not allowed by default, you could set `strictFile` parameter to FALSE for removes this restriction!")
+                Else
+                    Call $"All content files in directory '{path}' is removed.".Warning
+                    Call FileIO.FileSystem.DeleteDirectory(
+                        path, DeleteDirectoryOption.DeleteAllContents
+                    )
+                End If
             End If
 
             Return True
