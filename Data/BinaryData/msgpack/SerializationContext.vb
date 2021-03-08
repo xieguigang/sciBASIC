@@ -98,15 +98,17 @@ Public Class SerializationContext
     End Sub
 
     Public Sub RegisterSerializer(Of T)(provider As SchemaProvider(Of T))
-        Dim defs As New List(Of MessagePackMemberDefinition)()
+        For Each define In provider.GetObjectSchema
+            Dim defs As New List(Of MessagePackMemberDefinition)()
 
-        For Each propertyName In provider.GetObjectSchema
-            defs.Add(New MessagePackMemberDefinition() With {
-                .PropertyName = propertyName.Key,
-                .NilImplication = propertyName.Value
-            })
+            For Each propertyName In define.schema
+                defs.Add(New MessagePackMemberDefinition() With {
+                    .PropertyName = propertyName.Key,
+                    .NilImplication = propertyName.Value
+                })
+            Next
+
+            _serializers(define.obj) = New MsgPackSerializer(define.obj, defs)
         Next
-
-        _serializers(GetType(T)) = New MsgPackSerializer(GetType(T), defs)
     End Sub
 End Class

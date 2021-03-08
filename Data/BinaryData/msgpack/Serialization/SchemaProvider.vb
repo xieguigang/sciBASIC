@@ -1,12 +1,7 @@
 ﻿Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 
 Namespace Serialization
-
-    Public Interface ISchemaProvider
-        Function GetMembers() As IEnumerable(Of BindProperty(Of MessagePackMemberAttribute))
-    End Interface
 
     ''' <summary>
     ''' 
@@ -17,7 +12,7 @@ Namespace Serialization
     ''' 例如模块A没有引用messagepack模块，则没有办法添加<see cref="MessagePackMemberAttribute"/>
     ''' 来完成序列化，则这个时候会需要通过这个模块来提供这样的映射关系
     ''' </remarks>
-    Public MustInherit Class SchemaProvider(Of T) : Implements ISchemaProvider
+    Public MustInherit Class SchemaProvider(Of T)
 
         Shared ReadOnly slotList As Dictionary(Of String, PropertyInfo) = DataFramework.Schema(Of T)(
             flag:=PropertyAccess.ReadWrite,
@@ -31,20 +26,7 @@ Namespace Serialization
         ''' a sequence of <see cref="MessagePackMemberAttribute"/>
         ''' </summary>
         ''' <returns></returns>
-        Protected Friend MustOverride Function GetObjectSchema() As Dictionary(Of String, NilImplication)
-
-        Public Iterator Function GetMembers() As IEnumerable(Of BindProperty(Of MessagePackMemberAttribute)) Implements ISchemaProvider.GetMembers
-            For Each item In GetObjectSchema()
-                If Not slotList.ContainsKey(item.Key) Then
-                    Throw New NotImplementedException($"invalid member name: {item.Key}!")
-                End If
-
-                Dim attr As New MessagePackMemberAttribute(item.Value)
-                Dim bind As New BindProperty(Of MessagePackMemberAttribute)(attr, slotList(item.Key))
-
-                Yield bind
-            Next
-        End Function
+        Protected Friend MustOverride Iterator Function GetObjectSchema() As IEnumerable(Of (obj As Type, schema As Dictionary(Of String, NilImplication)))
 
     End Class
 End Namespace
