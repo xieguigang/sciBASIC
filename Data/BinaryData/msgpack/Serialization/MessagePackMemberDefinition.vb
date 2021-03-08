@@ -52,5 +52,9 @@ Namespace Serialization
         Public Sub New()
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return $"{PropertyName} = {NilImplication.Description}"
+        End Function
+
     End Class
 End Namespace

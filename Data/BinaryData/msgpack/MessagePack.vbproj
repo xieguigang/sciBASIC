@@ -30,6 +30,7 @@
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
+    <DocumentationFile>Microsoft.VisualBasic.Data.IO.MessagePack.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
@@ -41,6 +42,7 @@
     <WarningsAsErrors>
     </WarningsAsErrors>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DocumentationFile>Microsoft.VisualBasic.Data.IO.MessagePack.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <OptionStrict>Off</OptionStrict>
@@ -55,36 +57,42 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
+    <DocumentationFile>Microsoft.VisualBasic.Data.IO.MessagePack.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <PlatformTarget>x64</PlatformTarget>
+    <DocumentationFile>Microsoft.VisualBasic.Data.IO.MessagePack.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|AnyCPU'">
     <OutputPath>bin\Rsharp_app_release\</OutputPath>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <DocumentationFile>Microsoft.VisualBasic.Data.IO.MessagePack.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|x64'">
     <OutputPath>bin\x64\Rsharp_app_release\</OutputPath>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <PlatformTarget>x64</PlatformTarget>
+    <DocumentationFile>Microsoft.VisualBasic.Data.IO.MessagePack.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|AnyCPU'">
     <OutputPath>bin\GCModeller%28Release_X64%29\</OutputPath>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <DocumentationFile>Microsoft.VisualBasic.Data.IO.MessagePack.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|x64'">
     <OutputPath>..\..\..\..\..\..\GCModeller\bin\</OutputPath>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <PlatformTarget>x64</PlatformTarget>
+    <DocumentationFile>Microsoft.VisualBasic.Data.IO.MessagePack.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|AnyCPU'">
     <OutputPath>bin\mzkit\</OutputPath>
@@ -95,12 +103,14 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineTrace>true</DefineTrace>
+    <DocumentationFile>Microsoft.VisualBasic.Data.IO.MessagePack.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|x64'">
     <OutputPath>bin\x64\mzkit\</OutputPath>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <PlatformTarget>x64</PlatformTarget>
+    <DocumentationFile>Microsoft.VisualBasic.Data.IO.MessagePack.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit_UnixDocker|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -112,6 +122,7 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <DocumentationFile>Microsoft.VisualBasic.Data.IO.MessagePack.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit_UnixDocker|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -123,30 +134,35 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
+    <DocumentationFile>Microsoft.VisualBasic.Data.IO.MessagePack.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|AnyCPU'">
     <OutputPath>bin\BioDeep_database\</OutputPath>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <DocumentationFile>Microsoft.VisualBasic.Data.IO.MessagePack.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|x64'">
     <OutputPath>bin\x64\BioDeep_database\</OutputPath>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <PlatformTarget>x64</PlatformTarget>
+    <DocumentationFile>Microsoft.VisualBasic.Data.IO.MessagePack.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|AnyCPU'">
     <OutputPath>bin\GCModeller%28UNIX-Release_X64%29\</OutputPath>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <DocumentationFile>Microsoft.VisualBasic.Data.IO.MessagePack.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|x64'">
     <OutputPath>bin\x64\GCModeller%28UNIX-Release_X64%29\</OutputPath>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <PlatformTarget>x64</PlatformTarget>
+    <DocumentationFile>Microsoft.VisualBasic.Data.IO.MessagePack.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'LipidSearch|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -158,6 +174,7 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <DocumentationFile>Microsoft.VisualBasic.Data.IO.MessagePack.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'LipidSearch|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -169,6 +186,7 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
+    <DocumentationFile>Microsoft.VisualBasic.Data.IO.MessagePack.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -183,6 +201,7 @@
     <Compile Include="Properties\AssemblyInfo.vb" />
     <Compile Include="ObjectExtensions.vb" />
     <Compile Include="MsgPackSerializer.vb" />
+    <Compile Include="Serialization\SchemaProvider.vb" />
     <Compile Include="Serialization\Reflection\SerializableProperty.vb" />
     <Compile Include="Constants\MsgPackConstants.vb" />
     <Compile Include="MsgPackIO.vb" />

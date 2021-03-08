@@ -58,7 +58,7 @@ Imports System.Net.Sockets
 Imports System.Reflection
 Imports System.Text
 Imports System.Threading
-Imports Microsoft.VisualBasic.ApplicationServices.Debugging.ExceptionExtensions
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Tcp.Persistent.Application.Protocols

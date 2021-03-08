@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::e574b87641a4a4c99c7e11231776fb98, Data\BinaryData\msgpack\MsgPackSerializer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class MsgPackSerializer
-    ' 
-    '     Constructor: (+2 Overloads) Sub New
-    ' 
-    '     Function: (+5 Overloads) Deserialize, (+2 Overloads) DeserializeObject, DeserializeObjectType, GetSerializer, IsGenericDictionary
-    '               IsGenericList, IsSerializableGenericCollection, (+2 Overloads) Serialize, (+2 Overloads) SerializeObject
-    ' 
-    '     Sub: (+2 Overloads) BuildMap, Serialize, SerializeObject
-    ' 
-    ' /********************************************************************************/
+' Class MsgPackSerializer
+' 
+'     Constructor: (+2 Overloads) Sub New
+' 
+'     Function: (+5 Overloads) Deserialize, (+2 Overloads) DeserializeObject, DeserializeObjectType, GetSerializer, IsGenericDictionary
+'               IsGenericList, IsSerializableGenericCollection, (+2 Overloads) Serialize, (+2 Overloads) SerializeObject
+' 
+'     Sub: (+2 Overloads) BuildMap, Serialize, SerializeObject
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -57,7 +57,7 @@ Imports TypeInfo = Microsoft.VisualBasic.Data.IO.MessagePack.Serialization.Refle
 
 Public Class MsgPackSerializer
 
-    Public Shared ReadOnly DefaultContext As SerializationContext = New SerializationContext()
+    Public Shared ReadOnly DefaultContext As New SerializationContext()
 
     Shared ReadOnly typeInfos As New Dictionary(Of Type, TypeInfo)()
 
@@ -75,37 +75,30 @@ Public Class MsgPackSerializer
         BuildMap(propertyDefinitions)
     End Sub
 
+    Private Shared Function GetInfo(type As Type) As TypeInfo
+        Dim info As TypeInfo = Nothing
+
+        If Not typeInfos.TryGetValue(type, info) Then
+            info = New TypeInfo(type)
+            typeInfos(type) = info
+        End If
+
+        Return info
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Friend Shared Function IsGenericList(type As Type) As Boolean
-        Dim info As TypeInfo = Nothing
-
-        If Not typeInfos.TryGetValue(type, info) Then
-            info = New TypeInfo(type)
-            typeInfos(type) = info
-        End If
-
-        Return info.IsGenericList
+        Return GetInfo(type).IsGenericList
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Friend Shared Function IsGenericDictionary(type As Type) As Boolean
-        Dim info As TypeInfo = Nothing
-
-        If Not typeInfos.TryGetValue(type, info) Then
-            info = New TypeInfo(type)
-            typeInfos(type) = info
-        End If
-
-        Return info.IsGenericDictionary
+        Return GetInfo(type).IsGenericDictionary
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Friend Shared Function IsSerializableGenericCollection(type As Type) As Boolean
-        Dim info As TypeInfo = Nothing
-
-        If Not typeInfos.TryGetValue(type, info) Then
-            info = New TypeInfo(type)
-            typeInfos(type) = info
-        End If
-
-        Return info.IsSerializableGenericCollection
+        Return GetInfo(type).IsSerializableGenericCollection
     End Function
 
     <DebuggerStepThrough>
@@ -122,35 +115,38 @@ Public Class MsgPackSerializer
         Return result
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function SerializeObject(o As Object) As Byte()
         Return GetSerializer(o.GetType()).Serialize(o)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Sub SerializeObject(o As Object, file As Stream)
+        Call GetSerializer(o.GetType()).Serialize(o, file)
+    End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function SerializeObject(o As Object, buffer As Byte(), offset As Integer) As Integer
         Return GetSerializer(o.GetType()).Serialize(o, buffer, offset)
     End Function
 
-    Public Function Serialize(o As Object) As Byte()
-        Dim result As Byte() = Nothing
-
-        Using stream As MemoryStream = New MemoryStream()
-
-            Using writer As BinaryWriter = New BinaryWriter(stream)
-                Serialize(o, writer)
-                result = New Byte(stream.Position - 1) {}
-            End Using
-
-            result = stream.ToArray()
+    Public Sub Serialize(o As Object, stream As Stream)
+        Using writer As BinaryWriter = New BinaryWriter(stream)
+            Serialize(o, writer)
         End Using
+    End Sub
 
-        Return result
+    Public Function Serialize(o As Object) As Byte()
+        Using stream As New MemoryStream()
+            Call Serialize(o, stream)
+            Return stream.ToArray
+        End Using
     End Function
 
     Public Function Serialize(o As Object, buffer As Byte(), offset As Integer) As Integer
         Dim endPos = 0
 
         Using stream As MemoryStream = New MemoryStream(buffer)
-
             Using writer As BinaryWriter = New BinaryWriter(stream)
                 stream.Seek(offset, SeekOrigin.Begin)
                 Serialize(o, writer)
@@ -290,54 +286,47 @@ Public Class MsgPackSerializer
     Private Sub Serialize(o As Object, writer As BinaryWriter)
         If o Is Nothing Then
             writer.Write(Formats.NIL)
-        Else
-
-            If serializedType.IsPrimitive OrElse serializedType Is GetType(String) OrElse IsSerializableGenericCollection(serializedType) Then
-                SerializeValue(o, writer, DefaultContext.SerializationMethod)
+        ElseIf serializedType.IsPrimitive OrElse serializedType Is GetType(String) OrElse IsSerializableGenericCollection(serializedType) Then
+            SerializeValue(o, writer, DefaultContext.SerializationMethod)
+        ElseIf DefaultContext.SerializationMethod = SerializationMethod.Map Then
+            If props.Count <= 15 Then
+                Dim arrayVal As Byte = FixedMap.MIN + props.Count
+                writer.Write(arrayVal)
+            ElseIf props.Count <= UShort.MaxValue Then
+                writer.Write(Formats.MAP_16)
+                Dim data = BitConverter.GetBytes(CUShort(props.Count))
+                If BitConverter.IsLittleEndian Then Array.Reverse(data)
+                writer.Write(data)
             Else
-
-                If DefaultContext.SerializationMethod = SerializationMethod.Map Then
-                    If props.Count <= 15 Then
-                        Dim arrayVal As Byte = FixedMap.MIN + props.Count
-                        writer.Write(arrayVal)
-                    ElseIf props.Count <= UShort.MaxValue Then
-                        writer.Write(Formats.MAP_16)
-                        Dim data = BitConverter.GetBytes(CUShort(props.Count))
-                        If BitConverter.IsLittleEndian Then Array.Reverse(data)
-                        writer.Write(data)
-                    Else
-                        writer.Write(Formats.MAP_32)
-                        Dim data = BitConverter.GetBytes(CUInt(props.Count))
-                        If BitConverter.IsLittleEndian Then Array.Reverse(data)
-                        writer.Write(data)
-                    End If
-
-                    For Each prop In props
-                        WriteMsgPack(writer, prop.name)
-                        prop.Serialize(o, writer, DefaultContext.SerializationMethod)
-                    Next
-                Else
-
-                    If props.Count <= 15 Then
-                        Dim arrayVal As Byte = FixedArray.MIN + props.Count
-                        writer.Write(arrayVal)
-                    ElseIf props.Count <= UShort.MaxValue Then
-                        writer.Write(Formats.ARRAY_16)
-                        Dim data = BitConverter.GetBytes(CUShort(props.Count))
-                        If BitConverter.IsLittleEndian Then Array.Reverse(data)
-                        writer.Write(data)
-                    Else
-                        writer.Write(Formats.ARRAY_32)
-                        Dim data = BitConverter.GetBytes(CUInt(props.Count))
-                        If BitConverter.IsLittleEndian Then Array.Reverse(data)
-                        writer.Write(data)
-                    End If
-
-                    For Each prop In props
-                        prop.Serialize(o, writer, DefaultContext.SerializationMethod)
-                    Next
-                End If
+                writer.Write(Formats.MAP_32)
+                Dim data = BitConverter.GetBytes(CUInt(props.Count))
+                If BitConverter.IsLittleEndian Then Array.Reverse(data)
+                writer.Write(data)
             End If
+
+            For Each prop In props
+                WriteMsgPack(writer, prop.name)
+                prop.Serialize(o, writer, DefaultContext.SerializationMethod)
+            Next
+        Else
+            If props.Count <= 15 Then
+                Dim arrayVal As Byte = FixedArray.MIN + props.Count
+                writer.Write(arrayVal)
+            ElseIf props.Count <= UShort.MaxValue Then
+                writer.Write(Formats.ARRAY_16)
+                Dim data = BitConverter.GetBytes(CUShort(props.Count))
+                If BitConverter.IsLittleEndian Then Array.Reverse(data)
+                writer.Write(data)
+            Else
+                writer.Write(Formats.ARRAY_32)
+                Dim data = BitConverter.GetBytes(CUInt(props.Count))
+                If BitConverter.IsLittleEndian Then Array.Reverse(data)
+                writer.Write(data)
+            End If
+
+            For Each prop In props
+                prop.Serialize(o, writer, DefaultContext.SerializationMethod)
+            Next
         End If
     End Sub
 
@@ -347,7 +336,6 @@ Public Class MsgPackSerializer
             propsByName = New Dictionary(Of String, SerializableProperty)()
 
             For Each prop In serializedType.GetProperties(BindingFlags.Public Or BindingFlags.Instance)
-
                 If prop.CanRead = False OrElse prop.CanWrite = False Then
                     Continue For
                 End If

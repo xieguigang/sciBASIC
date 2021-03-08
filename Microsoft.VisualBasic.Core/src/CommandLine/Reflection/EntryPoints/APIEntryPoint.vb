@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::91f190c969bd8ce7ba229be04bca2bcc, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class APIEntryPoint
-    ' 
-    '         Properties: Arguments, EntryPoint, IsInstanceMethod, target
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: DirectInvoke, EntryPointFullName, handleUnexpectedErrorCalls, HelpInformation, (+2 Overloads) Invoke
-    '                   InvokeCLI, tryInvoke
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class APIEntryPoint
+' 
+'         Properties: Arguments, EntryPoint, IsInstanceMethod, target
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Function: DirectInvoke, EntryPointFullName, handleUnexpectedErrorCalls, HelpInformation, (+2 Overloads) Invoke
+'                   InvokeCLI, tryInvoke
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -48,6 +48,7 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.CommandLine.ManView
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq.Extensions
@@ -262,14 +263,14 @@ Namespace CommandLine.Reflection.EntryPoints
                 VBDebugger.Mute = False
 
                 Call App.LogException(ex, trace)
-                Call DebuggerArgs.SaveErrorLog(VBDebugger.BugsFormatter(ex))
+                Call DebuggerArgs.SaveErrorLog(ErrorLog.BugsFormatter(ex))
                 Call VBDebugger.WaitOutput()
 
                 If [throw] Then
                     Throw ex
                 Else
                     Call "".EchoLine
-                    Call ExceptionHandler.Print(source, EntryPoint)
+                    Call ManView.ExceptionHandler.Print(source, EntryPoint)
                     Call "".EchoLine
                     Call $"[Log] {trace.GetFullPath}".__INFO_ECHO
                     Call VBDebugger.WaitOutput()

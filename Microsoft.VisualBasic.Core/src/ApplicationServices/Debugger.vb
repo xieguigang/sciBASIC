@@ -60,14 +60,11 @@ Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.Utility
-Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.ComponentModel.Settings
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Language.Perl
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
 ''' Debugger helper module for VisualBasic Enterprises System.
@@ -477,60 +474,4 @@ Public Module VBDebugger
                 End Sub)
         End If
     End Sub
-
-    ''' <summary>
-    ''' Generates the formatted error log file content.(生成简单的日志板块的内容)
-    ''' </summary>
-    ''' <param name="ex"></param>
-    ''' <param name="trace"></param>
-    ''' <returns></returns>
-    '''
-    <ExportAPI("Bugs.Formatter")>
-    <Extension>
-    Public Function BugsFormatter(ex As Exception, <CallerMemberName> Optional trace$ = "") As String
-        Dim logs = ex.ToString.LineTokens
-        Dim stackTrace = logs _
-            .Where(Function(s)
-                       Return InStr(s, "   在 ") = 1 OrElse InStr(s, "   at ") = 1
-                   End Function) _
-            .AsList
-        Dim message = logs _
-            .Where(Function(s)
-                       Return Not s.IsPattern("\s+[-]{3}.+?[-]{3}\s*") AndAlso stackTrace.IndexOf(s) = -1
-                   End Function) _
-            .JoinBy(ASCII.LF) _
-            .Trim _
-            .StringSplit("\s[-]{3}>\s")
-
-        Return New StringBuilder() _
-            .AppendLine("TIME:  " & Now.ToString) _
-            .AppendLine("TRACE: " & trace) _
-            .AppendLine(New String("=", 120)) _
-            .Append(LogFile.SystemInfo) _
-            .AppendLine(New String("=", 120)) _
-            .AppendLine() _
-            .AppendLine($"Environment Variables from {GetType(App).FullName}:") _
-            .AppendLine(ConfigEngine.Prints(App.GetAppVariables)) _
-            .AppendLine(New String("=", 120)) _
-            .AppendLine() _
-            .AppendLine(ex.GetType.FullName & ":") _
-            .AppendLine() _
-            .AppendLine(message _
-                .Select(Function(s) "    ---> " & s) _
-                .JoinBy(ASCII.LF)) _
-            .AppendLine() _
-            .AppendLine(stackTrace _
-                .Select(Function(s)
-                            If InStr(s, "   在 ") = 1 Then
-                                Return Mid(s, 6).Trim
-                            ElseIf InStr(s, "   at ") = 1 Then
-                                Return Mid(s, 7).Trim
-                            Else
-                                Return s
-                            End If
-                        End Function) _
-                .Select(Function(s) "   at " & s) _
-                .JoinBy(ASCII.LF)) _
-            .ToString()
-    End Function
 End Module

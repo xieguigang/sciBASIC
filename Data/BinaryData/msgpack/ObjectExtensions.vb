@@ -45,11 +45,11 @@ Imports System.Runtime.CompilerServices
 Public Module ObjectExtensions
 
     <Extension()>
-    Public Function ToMsgPack(o As Object) As Byte()
-        If o Is Nothing Then
-            Throw New ArgumentException("Can't serialize null references", "o")
+    Public Function ToMsgPack(Of T)(obj As T) As Byte()
+        If obj Is Nothing Then
+            Throw New ArgumentException("Can't serialize null references", NameOf(obj))
         Else
-            Return MsgPackSerializer.SerializeObject(o)
+            Return MsgPackSerializer.SerializeObject(obj)
         End If
     End Function
 End Module
