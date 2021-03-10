@@ -222,18 +222,34 @@ Namespace Language
         End Function
 #End Region
 
+        ''' <summary>
+        ''' 确保总是返回一个目标类型的数组
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="var"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function TryCastArray(Of T)(var As [Variant](Of T, T())) As T()
-            If var Like GetType(T) Then
+            If var Is Nothing Then
+                Return {}
+            ElseIf var Like GetType(T) Then
                 Return {var.TryCast(Of T)}
             Else
                 Return var.TryCast(Of T())
             End If
         End Function
 
+        ''' <summary>
+        ''' 确保总是返回一个目标类型的数组
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="var"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function TryCastArray(Of T)(var As [Variant](Of T(), T)) As T()
-            If var Like GetType(T) Then
+            If var Is Nothing Then
+                Return {}
+            ElseIf var Like GetType(T) Then
                 Return {var.TryCast(Of T)}
             Else
                 Return var.TryCast(Of T())

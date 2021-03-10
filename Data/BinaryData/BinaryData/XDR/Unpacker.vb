@@ -4,17 +4,18 @@
 
         ReadOnly data As BinaryDataReader
 
+        Public Property Position As Long
+            Get
+                Return data.Position
+            End Get
+            Set(value As Long)
+                data.Position = value
+            End Set
+        End Property
+
         Sub New(data As BinaryDataReader)
             Me.data = data
         End Sub
-
-        Public Sub set_position(position As Integer)
-            data.Position = position
-        End Sub
-
-        Public Function get_position() As Integer
-            Return data.Position
-        End Function
 
         Public Function unpack_int() As Object
             Return XdrEncoding.DecodeInt32(Me)

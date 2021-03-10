@@ -70,9 +70,11 @@ Public Class Resampler
     Public Function GetIntensity(x As Double) As Double
         Dim i As Integer = getPosition(x)
 
-        If i = Me.x.Length Then
-            Return Me.x(i - 1)
-        ElseIf Me.x(i) = x OrElse i = Me.x.Length - 1 Then
+        If i >= Me.x.Length - 1 Then
+            Return Me.y(Me.y.Length - 1)
+        ElseIf i <= 0 Then
+            Return Me.y(0)
+        ElseIf Me.x(i) = x Then
             Return Me.y(i)
         Else
             Dim x1 = Me.x(i)
