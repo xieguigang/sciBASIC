@@ -102,6 +102,11 @@ Namespace Graphic
             Call PlotInternal(g, EvaluateLayout(g, layout))
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub Plot(ByRef g As IGraphics, canvas As GraphicsRegion)
+            Call PlotInternal(g, canvas)
+        End Sub
+
         Protected Shared Function EvaluateLayout(g As IGraphics, layout As Rectangle) As GraphicsRegion
             Dim padding As New Padding With {
                 .Left = layout.Left,
