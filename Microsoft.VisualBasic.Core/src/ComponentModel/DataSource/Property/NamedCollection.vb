@@ -207,28 +207,33 @@ Namespace ComponentModel.DataSourceModel
             End If
         End Function
 
+        <DebuggerStepThrough>
         Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
             For Each obj As T In value.SafeQuery
                 Yield obj
             Next
         End Function
 
+        <DebuggerStepThrough>
         Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
             Yield GetEnumerator()
         End Function
 
 #If NET_48 Or netcore5 = 1 Then
 
+        <DebuggerStepThrough>
         Public Shared Widening Operator CType(tuple As (name$, value As T())) As NamedCollection(Of T)
             Return New NamedCollection(Of T)(tuple.name, tuple.value)
         End Operator
 
 #End If
 
+        <DebuggerStepThrough>
         Public Shared Operator =(list As NamedCollection(Of T), count As Integer) As Boolean
             Return list.Count = count
         End Operator
 
+        <DebuggerStepThrough>
         Public Shared Operator <>(list As NamedCollection(Of T), count As Integer) As Boolean
             Return Not list = count
         End Operator

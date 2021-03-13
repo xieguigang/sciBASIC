@@ -72,7 +72,12 @@ Namespace Language.Vectorization
         ''' <returns></returns>
         <Extension>
         Public Function Add(Of T)(x As Vector(Of T), obj As T) As Vector(Of T)
-            Call x.Array.Add(obj)
+            If x.buffer Is Nothing Then
+                x.buffer = {obj}
+            Else
+                x.Array.Add(obj)
+            End If
+
             Return x
         End Function
     End Module

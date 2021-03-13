@@ -63,7 +63,7 @@ Namespace Language.Vectorization
         ''' <summary>
         ''' Array that hold the .NET object in this collection
         ''' </summary>
-        Protected buffer As T()
+        Protected Friend buffer As T()
 
         ''' <summary>
         ''' Gets the element counts in this vector collection
@@ -329,11 +329,23 @@ Namespace Language.Vectorization
                 Return New Vector(Of T)(Me(indices:=Linq.Which(booleans)))
             End Get
             Set(value As Vector(Of T))
-                For Each i In booleans.SeqIterator
-                    If i.value Then
-                        buffer(i) = value(i)
-                    End If
-                Next
+                Dim flags As Boolean() = booleans.ToArray
+
+                If value.Length = 1 Then
+                    Dim [single] As T = value.First
+
+                    For i As Integer = 0 To flags.Length - 1
+                        If flags(i) Then
+                            buffer(i) = [single]
+                        End If
+                    Next
+                Else
+                    For Each i In flags.SeqIterator
+                        If i.value Then
+                            buffer(i) = value(i)
+                        End If
+                    Next
+                End If
             End Set
         End Property
 #End Region
