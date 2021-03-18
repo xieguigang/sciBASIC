@@ -89,6 +89,8 @@ Namespace Parallel
             End Get
         End Property
 
+        Public Property lockQueue As Boolean = False
+
         Public ReadOnly Property runningTask As Action
 
         Sub New()
@@ -146,6 +148,10 @@ Namespace Parallel
 
         Private Sub tickLoop()
             While True
+                If lockQueue Then
+                    Continue While
+                End If
+
                 SyncLock queue
                     If queue.Count = 0 Then
                         Exit While
@@ -161,7 +167,9 @@ Namespace Parallel
         End Sub
 
         Public Function GetPendingTasks() As Action()
-            Return queue.AsEnumerable.ToArray
+            SyncLock queue
+                Return queue.AsEnumerable.ToArray
+            End SyncLock
         End Function
 
 #Region "IDisposable Support"

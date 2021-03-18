@@ -63,19 +63,23 @@ Namespace ComponentModel.Collection
         Private Sub DoRefresh()
             Dim pendings As String() = getItems().Distinct.ToArray
 
-            For Each newItem As String In pendings
-                If Not newItem Like exists Then
-                    RaiseEvent AddNew(newItem)
-                End If
-            Next
+            SyncLock exists
+                For Each newItem As String In pendings
+                    If Not newItem Like exists Then
+                        RaiseEvent AddNew(newItem)
+                    End If
+                Next
+            End SyncLock
 
             Dim pendingIndex As Index(Of String) = pendings
 
-            For Each item As String In exists.Objects
-                If Not item Like pendingIndex Then
-                    RaiseEvent Remove(item)
-                End If
-            Next
+            SyncLock exists
+                For Each item As String In exists.Objects
+                    If Not item Like pendingIndex Then
+                        RaiseEvent Remove(item)
+                    End If
+                Next
+            End SyncLock
 
             exists = pendingIndex
         End Sub
@@ -89,11 +93,15 @@ Namespace ComponentModel.Collection
         End Sub
 
         Public Function Items() As IEnumerable(Of String)
-            Return exists.Objects
+            SyncLock exists
+                Return exists.Objects
+            End SyncLock
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"Exists {exists.Count} items."
+            SyncLock exists
+                Return $"Exists {exists.Count} items."
+            End SyncLock
         End Function
 
     End Class

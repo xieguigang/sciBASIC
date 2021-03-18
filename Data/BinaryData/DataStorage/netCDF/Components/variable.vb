@@ -101,6 +101,13 @@ Namespace netCDF.Components
             Return attributes.FirstOrDefault(Function(a) a.name = name)
         End Function
 
+        Public Function GetRegion() As BufferRegion
+            Return New BufferRegion With {
+                .position = offset,
+                .size = size
+            }
+        End Function
+
         Public Overrides Function ToString() As String
             Return $"Dim {name}[offset={offset}] As {type.Description}"
         End Function
