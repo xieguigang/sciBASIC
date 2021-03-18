@@ -203,7 +203,7 @@ Namespace Drawing2D.Colors
             Dim rect As RectangleF
 
             ' 绘制标题
-            x = layout.Left + legendOffsetLeft + (legendWidth - titleSize.Width) / 2
+            x = layout.Left + legendOffsetLeft - titleSize.Width / title.Length
             y = layout.Top
             point = New PointF(x, y)
 
