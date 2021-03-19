@@ -256,7 +256,7 @@ Namespace Language
         Default Public Overloads Property Item(booleans As IEnumerable(Of Boolean)) As T()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Me(Which(booleans))
+                Return Me(which(booleans))
             End Get
             Set(value As T())
                 For Each i In booleans.SeqIterator

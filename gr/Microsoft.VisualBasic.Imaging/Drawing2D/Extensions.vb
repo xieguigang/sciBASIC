@@ -141,7 +141,7 @@ Namespace Drawing2D
             }
             Dim d#() = points.Distance(anchor.ToPoint)
 
-            Return points(Which.Min(d))
+            Return points(which.Min(d))
         End Function
 
         ''' <summary>

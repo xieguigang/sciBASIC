@@ -93,8 +93,8 @@ Namespace Language.Vectorization
         End Function
 
         Public Overrides Function ToString() As String
-            Dim countTrue% = Linq.Which(buffer).Count
-            Dim countFalse% = Linq.Which(Not Me).Count
+            Dim countTrue% = Linq.which(buffer).Count
+            Dim countFalse% = Linq.which(Not Me).Count
 
             Return $"ALL({Length}) = {countTrue} true + {countFalse} false"
         End Function

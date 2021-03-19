@@ -233,7 +233,7 @@ Namespace Graphic.Axis
             dMax = dMax / dMax.Max
 
             Dim scores As Vector = dSteps * w_steps + dMin * w_min + dMax * w_max
-            Dim tickArray#() = candidateArray(Which.Max(scores))
+            Dim tickArray#() = candidateArray(which.Max(scores))
 
             ' 2018-2-1
             ' 如果数值是 1E-10 这样子的小数的话，在这里直接使用Round或导致返回的ticks全部都是零的bugs

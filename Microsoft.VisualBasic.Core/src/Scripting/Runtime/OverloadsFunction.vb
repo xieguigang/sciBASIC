@@ -64,7 +64,7 @@ Namespace Scripting.Runtime
 
         Public Function Match(args As Type()) As MethodInfo
             Dim alignments = functions.Select(Function(m) Align(m, args)).ToArray
-            Dim p = Which.Max(alignments)
+            Dim p = which.Max(alignments)
 
             If alignments(p) <= 0 Then
                 Return Nothing

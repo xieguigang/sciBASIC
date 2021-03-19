@@ -229,7 +229,7 @@ Namespace Distributions
                 End If
 
                 Dim hist = .Hist([step]:=steps).ToArray
-                Dim maxN = Which.Max(hist.Select(Function(bin) bin.Count))
+                Dim maxN = which.Max(hist.Select(Function(bin) bin.Count))
                 Dim resample As Double()
 
                 If maxN = 0 Then

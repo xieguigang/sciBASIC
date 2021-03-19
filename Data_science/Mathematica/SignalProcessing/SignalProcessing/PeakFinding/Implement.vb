@@ -110,7 +110,7 @@ Namespace PeakFinding
             Dim halfPeakWidth As Double = peakwidth.Length / 2
 
             For Each region In regions
-                rt = region(Which.Max(region.region.Select(Function(a) a.intensity))).time
+                rt = region(which.Max(region.region.Select(Function(a) a.intensity))).time
                 rtmin = region.rtmin
                 rtmax = region.rtmax
                 dt = rtmax - rtmin

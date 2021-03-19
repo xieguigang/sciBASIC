@@ -62,13 +62,13 @@ Namespace Language
             ElseIf type.ImplementInterface(GetType(IEnumerable(Of Integer))) Then
                 Return DirectCast(args, IEnumerable(Of Integer))
             ElseIf type.ImplementInterface(GetType(IEnumerable(Of Boolean))) Then
-                Return Which(DirectCast(args, IEnumerable(Of Boolean)))
+                Return which(DirectCast(args, IEnumerable(Of Boolean)))
             ElseIf type.ImplementInterface(GetType(IEnumerable(Of Object))) Then
                 Dim array = DirectCast(args, IEnumerable(Of Object)).ToArray
 
                 With array(Scan0).GetType
                     If .ByRef Is GetType(Boolean) Then
-                        Return Which(array.Select(Function(o) CBool(o)))
+                        Return which(array.Select(Function(o) CBool(o)))
                     ElseIf .ByRef Is GetType(Integer) Then
                         Return array.Select(Function(o) CInt(o))
                     Else

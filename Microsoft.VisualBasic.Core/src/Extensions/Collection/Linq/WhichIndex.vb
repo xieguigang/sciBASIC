@@ -63,7 +63,7 @@ Namespace Linq
         ''' Give the TRUE indices of a logical object, allowing for array indices.
         ''' </summary>
 
-        Public ReadOnly Which As New WhichIndex
+        Public ReadOnly which As New WhichIndex
 
     End Module
 
@@ -75,7 +75,7 @@ Namespace Linq
 
         Public Shared ReadOnly Property Symbol As WhichIndex
             Get
-                Return Which
+                Return which
             End Get
         End Property
 
@@ -269,7 +269,7 @@ Namespace Linq
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function IsGreaterThan(Of T, C As IComparable)(source As IEnumerable(Of T), getValue As Func(Of T, C), compareTo As C) As IEnumerable(Of Integer)
-            Return Which.IsGreaterThan(source.Select(getValue), compareTo)
+            Return which.IsGreaterThan(source.Select(getValue), compareTo)
         End Function
     End Class
 End Namespace

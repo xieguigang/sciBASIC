@@ -75,6 +75,12 @@ Namespace Graphic.Axis
             Call MyBase.New(reversed:=rev)
         End Sub
 
+        ''' <summary>
+        ''' translate the realworld data into the view model world point 2D 
+        ''' </summary>
+        ''' <param name="x#"></param>
+        ''' <param name="y#"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Translate(x#, y#) As PointF
             Return New PointF With {

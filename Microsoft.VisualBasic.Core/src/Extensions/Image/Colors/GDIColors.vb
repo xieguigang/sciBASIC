@@ -218,6 +218,12 @@ Namespace Imaging
             End Get
         End Property
 
+        Public ReadOnly Property AllDotNetColorNames As IEnumerable(Of String)
+            Get
+                Return __allDotNETPrefixColors.Keys
+            End Get
+        End Property
+
         ''' <summary>
         ''' 经过人工筛选的颜色，不会出现过白或者过黑，过度相似的情况
         ''' </summary>

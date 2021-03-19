@@ -465,7 +465,7 @@ Namespace IO
             If index = -1 AndAlso caseSensitive Then
                 Return Function(r) Nothing
             ElseIf index = -1 Then
-                With Which(columnList.Headers.Select(Function(c) c.TextEquals(columnName))).ToArray
+                With which(columnList.Headers.Select(Function(c) c.TextEquals(columnName))).ToArray
                     If .IsNullOrEmpty Then
                         Return Function(r) Nothing
                     Else

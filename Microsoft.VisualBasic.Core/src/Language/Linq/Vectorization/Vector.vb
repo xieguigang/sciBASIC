@@ -326,7 +326,7 @@ Namespace Language.Vectorization
         Default Public Overridable Overloads Property Item(booleans As IEnumerable(Of Boolean)) As Vector(Of T)
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return New Vector(Of T)(Me(indices:=Linq.Which(booleans)))
+                Return New Vector(Of T)(Me(indices:=Linq.which(booleans)))
             End Get
             Set(value As Vector(Of T))
                 Dim flags As Boolean() = booleans.ToArray
@@ -390,7 +390,7 @@ Namespace Language.Vectorization
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Which(assert As Func(Of T, Boolean)) As Integer()
-            Return Linq.Which(Me.Select(assert))
+            Return Linq.which(Me.Select(assert))
         End Function
 
         ''' <summary>

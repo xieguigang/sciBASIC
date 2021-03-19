@@ -144,7 +144,7 @@ Namespace ComponentModel.Evaluation
                 .Ranking(, desc:=False) _
                 .AsVector
             ' 然后把所有的正类样本的rank相加
-            Dim positiveRankSum = Which _
+            Dim positiveRankSum = which _
                 .IsTrue(orderScoreDesc.Select(Function(test) test.actual > 0)) _
                 .DoCall(Function(indices) ranks(indices)) _
                 .Sum

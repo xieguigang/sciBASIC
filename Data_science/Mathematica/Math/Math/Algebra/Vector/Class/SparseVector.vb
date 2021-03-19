@@ -136,10 +136,10 @@ Namespace LinearAlgebra
 
         Default Public Overrides Property Item(booleans As IEnumerable(Of Boolean)) As Vector(Of Double)
             Get
-                Return New Vector(Of Double)(Linq.Which.IsTrue(booleans).Select(Function(index) Me(index)))
+                Return New Vector(Of Double)(Linq.which.IsTrue(booleans).Select(Function(index) Me(index)))
             End Get
             Set(value As Vector(Of Double))
-                For Each index As SeqValue(Of Integer) In Linq.Which.IsTrue(booleans).SeqIterator
+                For Each index As SeqValue(Of Integer) In Linq.which.IsTrue(booleans).SeqIterator
                     Call SetValue(index.value, value(index))
                 Next
             End Set
