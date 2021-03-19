@@ -758,8 +758,6 @@
     <Compile Include="Extensions\FixLengthString.vb" />
     <Compile Include="Extensions\MSWindows.vb" />
     <Compile Include="BitSet.vb" />
-    <Compile Include="Storage\Reflection.vb" />
-    <Compile Include="Storage\StringWriter.vb" />
     <Compile Include="Stream\BinaryDateTimeFormat.vb" />
     <Compile Include="Stream\BinaryDataReader.vb" />
     <Compile Include="Stream\BinaryDataWriter.vb" />
