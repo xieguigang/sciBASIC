@@ -439,9 +439,12 @@ Public Module WebServiceUtils
     ''' <returns></returns>
     <Extension>
     Public Function GetRequestRaw(url As String,
-                                Optional https As Boolean = False,
-                                Optional userAgent As String = Nothing) As Stream
+                                  Optional https As Boolean = False,
+                                  Optional userAgent As String = Nothing,
+                                  Optional headers As Dictionary(Of String, String) = Nothing) As Stream
+
         Dim request As HttpWebRequest
+
         If https Then
             request = WebRequest.CreateDefault(New Uri(url))
         Else
@@ -453,8 +456,15 @@ Public Module WebServiceUtils
         request.ServicePoint.Expect100Continue = False
         request.UserAgent = userAgent Or DefaultUA
 
+        If Not headers.IsNullOrEmpty Then
+            For Each x As KeyValuePair(Of String, String) In headers
+                request.Headers(x.Key) = x.Value
+            Next
+        End If
+
         Dim response As HttpWebResponse = DirectCast(request.GetResponse, HttpWebResponse)
         Dim s As Stream = response.GetResponseStream()
+
         Return s
     End Function
 

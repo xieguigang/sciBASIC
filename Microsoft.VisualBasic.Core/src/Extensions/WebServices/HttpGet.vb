@@ -45,7 +45,6 @@ Imports System.IO
 Imports System.Net
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -78,6 +77,7 @@ Public Module HttpGet
                                       Optional ByRef is404 As Boolean = False,
                                       Optional echo As Boolean = True,
                                       Optional timeoutSec As Long = 6000) As String
+
         Dim isFileUrl As String = (InStr(url, "http://", CompareMethod.Text) <> 1) AndAlso (InStr(url, "https://", CompareMethod.Text) <> 1)
 
         If echo Then
