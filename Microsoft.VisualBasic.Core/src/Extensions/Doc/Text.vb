@@ -279,6 +279,7 @@ Public Module TextDoc
     '''
     <ExportAPI("Read.TXT")>
     <Extension>
+    <DebuggerStepThrough>
     Public Function ReadAllText(path$,
                                 Optional encoding As Encoding = Nothing,
                                 Optional throwEx As Boolean = True,

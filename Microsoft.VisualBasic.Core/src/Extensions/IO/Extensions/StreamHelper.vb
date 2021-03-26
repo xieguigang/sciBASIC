@@ -53,7 +53,7 @@ Public Module StreamHelper
     ''' Download stream data from the http response.
     ''' </summary>
     ''' <param name="stream">
-    ''' Create from <see cref="WebServiceUtils.GetRequestRaw(String, Boolean, String)"/>
+    ''' Create from <see cref="WebServiceUtils.GetRequestRaw"/>
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("Stream.Copy")>

@@ -256,7 +256,7 @@ Namespace ApplicationServices.Zip
 
             'Opens the zip file in the mode we specified
             Using zipFile As ZipArchive = IO.Compression.ZipFile.Open(archiveFullName, mode)
-                Call zipFile.WriteFiles(files, mode, fileOverwrite, compression, relativeDir)
+                Call zipFile.WriteFiles(files.ToArray, mode, fileOverwrite, compression, relativeDir)
             End Using
         End Sub
 
