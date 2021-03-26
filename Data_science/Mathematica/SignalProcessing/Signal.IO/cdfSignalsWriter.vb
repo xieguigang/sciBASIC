@@ -59,8 +59,8 @@ Public Module cdfSignalsWriter
         Dim signals As Integer = file.getAttribute("signals")
         Dim metaNames = file.getAttribute("metadata").ToString.LoadJSON(Of String())
         Dim description = file.getAttribute("description").ToString
-        Dim x As New Vector(Of Double)(file.getDataVariable("measure_buffer").numerics)
-        Dim y As New Vector(Of Double)(file.getDataVariable("signal_buffer").numerics)
+        Dim x As New Vector(Of Double)(DirectCast(file.getDataVariable("measure_buffer"), doubles).Array)
+        Dim y As New Vector(Of Double)(DirectCast(file.getDataVariable("signal_buffer"), doubles).Array)
         Dim chunk_size = file.getDataVariable("chunk_size")
         Dim signal_guid = file.getDataVariable("signal_guid").chars.LoadJSON(Of String())
         Dim measure_unit = file.getDataVariable("measure_unit").chars.LoadJSON(Of String())
@@ -200,12 +200,12 @@ Public Module cdfSignalsWriter
     End Function
 
     <Extension>
-    Private Iterator Function createAttributes(package As GeneralSignal(), enableCDFExtension As Boolean) As IEnumerable(Of NamedValue(Of CDFData))
+    Private Iterator Function createAttributes(package As GeneralSignal(), enableCDFExtension As Boolean) As IEnumerable(Of NamedValue(Of ICDFDataVector))
         Dim allNames As String() = package.Select(Function(sig) sig.meta.Keys).IteratesALL.Distinct.ToArray
 
         For Each name As String In allNames
             Dim values As New List(Of String)
-            Dim data As CDFData
+            Dim data As ICDFDataVector
             Dim type As String
 
             For Each signal As GeneralSignal In package

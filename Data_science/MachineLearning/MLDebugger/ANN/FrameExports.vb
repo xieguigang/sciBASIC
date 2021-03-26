@@ -78,8 +78,8 @@ Public Module FrameExports
     ''' </summary>
     ''' <returns></returns>
     Public Function ExportErrorCurve(cdf As netCDFReader) As DataFrame
-        Dim errors = cdf.getDataVariable("fitness").numerics
-        Dim index = cdf.getDataVariable("iterations").integers
+        Dim errors As Double() = DirectCast(cdf.getDataVariable("fitness"), doubles).Array
+        Dim index As Integer() = DirectCast(cdf.getDataVariable("iterations"), integers).Array
 
         With New Basic
             Return New DataFrame(!iterations = index, !fitness = errors)
@@ -88,8 +88,8 @@ Public Module FrameExports
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetTimeIndex(cdf As netCDFReader) As String()
-        Return cdf.getDataVariable("iterations") _
-            .integers _
+        Return DirectCast(cdf.getDataVariable("iterations"), integers) _
+            .Array _
             .Select(Function(i) $"T{i}") _
             .ToArray
     End Function
@@ -113,7 +113,7 @@ Public Module FrameExports
         Dim nodeValue As Double()
 
         For Each node As variable In nodes
-            nodeValue = cdf.getDataVariable(node).numerics
+            nodeValue = DirectCast(cdf.getDataVariable(node), doubles).Array
             row = New Excel With {
                 .ID = node.name,
                 .Properties = times.ToDictionary(
