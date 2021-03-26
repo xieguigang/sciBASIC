@@ -6,7 +6,7 @@ Namespace netCDF.Components
     <HideModuleName>
     Public Module VectorHelper
 
-        Public Function FromAny(data As Object(), type As CDFDataTypes) As Object
+        Public Function FromAny(data As Object(), type As CDFDataTypes) As ICDFDataVector
             Select Case type
                 Case CDFDataTypes.BYTE
                     Dim bytes As Byte()
@@ -21,21 +21,21 @@ Namespace netCDF.Components
                         bytes = data.As(Of Byte).ToArray
                     End If
 
-                    Return New bytes With {.buffer = bytes}
+                    Return CType(bytes, bytes)
                 Case CDFDataTypes.BOOLEAN
-                    Return New flags With {.buffer = data.As(Of Boolean).ToArray}
+                    Return CType(data.As(Of Boolean).ToArray, flags)
                 Case CDFDataTypes.CHAR
-                    Return New chars With {.buffer = data.As(Of Char).ToArray}
+                    Return CType(data.As(Of Char).ToArray, chars)
                 Case CDFDataTypes.DOUBLE
-                    Return New doubles With {.buffer = data.As(Of Double).ToArray}
+                    Return CType(data.As(Of Double).ToArray, doubles)
                 Case CDFDataTypes.FLOAT
-                    Return New floats With {.buffer = data.As(Of Single).ToArray}
+                    Return CType(data.As(Of Single).ToArray, floats)
                 Case CDFDataTypes.INT
-                    Return New integers With {.buffer = data.As(Of Integer).ToArray}
+                    Return CType(data.As(Of Integer).ToArray, integers)
                 Case CDFDataTypes.SHORT
-                    Return New shorts With {.buffer = data.As(Of Short).ToArray}
+                    Return CType(data.As(Of Short).ToArray, shorts)
                 Case CDFDataTypes.LONG
-                    Return New longs With {.buffer = data.As(Of Long).ToArray}
+                    Return CType(data.As(Of Long).ToArray, longs)
                 Case Else
                     Throw New NotImplementedException(type.Description)
             End Select

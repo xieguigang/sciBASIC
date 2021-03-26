@@ -243,7 +243,7 @@ Namespace netCDF
                 values = DataReader.nonRecord(buffer, variable)
             End If
 
-            Return (values, variable.type)
+            Return VectorHelper.FromAny(values, variable.type)
         End Function
 
         ''' <summary>

@@ -86,7 +86,7 @@ Namespace netCDF
             Call dev.WriteLine("VARIABLES:")
 
             For Each variable As variable In file.variables
-                Dim value As CDFData = file.getDataVariable(variable)
+                Dim value As ICDFDataVector = file.getDataVariable(variable)
                 Dim stringify = value.ToString
 
                 Call dev.WriteLine($"  {variable.name.PadEnd(30)} = {stringify}")
