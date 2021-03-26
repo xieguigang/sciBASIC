@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::044df3b1ece33d4020deed8e698f0728, Data_science\MachineLearning\MLDebugger\ANN\ANNDebugger.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class ANNDebugger
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: createLocationTable
-    ' 
-    '     Sub: Save, WriteCDF, writeErrors, WriteFrame, writeIndex
-    '          writeNodeBias, writeUnixtime, writeWeight
-    ' 
-    ' /********************************************************************************/
+' Class ANNDebugger
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: createLocationTable
+' 
+'     Sub: Save, WriteCDF, writeErrors, WriteFrame, writeIndex
+'          writeNodeBias, writeUnixtime, writeWeight
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -49,6 +49,7 @@ Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Data.IO.netCDF
+Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork
@@ -198,7 +199,7 @@ Public Class ANNDebugger
         Call writeUnixtime(debugger)
 
         For Each active In network.Activations
-            Call debugger.AddVariable("active=" & active.Key, active.Value.ToString, {GetType(String).FullName})
+            Call debugger.AddVariable("active=" & active.Key, CType(active.Value.ToString, chars), {GetType(String).FullName})
         Next
 
         Using reader As BinaryDataReader = biasTemp.OpenBinaryReader
@@ -241,7 +242,7 @@ Public Class ANNDebugger
                       End Function
 
         Call reader.Seek(offsetDouble * i, SeekOrigin.Begin)
-        Call debugger.AddVariable(name, popBias().ToArray, {GetType(Double).FullName}, attrs)
+        Call debugger.AddVariable(name, CType(popBias().ToArray, doubles), {GetType(Double).FullName}, attrs)
     End Sub
 
     Private Sub writeWeight(debugger As CDFWriter, reader As BinaryDataReader, name$, i As Integer, attrs As Components.attribute())
@@ -256,7 +257,7 @@ Public Class ANNDebugger
                          End Function
 
         Call reader.Seek(offsetDouble * i, SeekOrigin.Begin)
-        Call debugger.AddVariable(name, popWeights().ToArray, {GetType(Double).FullName}, attrs)
+        Call debugger.AddVariable(name, CType(popWeights().ToArray, doubles), {GetType(Double).FullName}, attrs)
     End Sub
 
     Private Sub writeUnixtime(debugger As CDFWriter)
@@ -264,7 +265,7 @@ Public Class ANNDebugger
             .ReadAsDoubleVector _
             .ToArray
 
-            Call debugger.AddVariable("unixtimestamp", .ByRef, {GetType(Long).FullName})
+            Call debugger.AddVariable("unixtimestamp", CType(.ByRef, doubles), {GetType(Long).FullName})
         End With
     End Sub
 
@@ -277,7 +278,7 @@ Public Class ANNDebugger
                           Next
                       End Function
 
-        Call debugger.AddVariable("iterations", indexer().ToArray, {"index_number"})
+        Call debugger.AddVariable("iterations", CType(indexer().ToArray, integers), {"index_number"})
     End Sub
 
     Private Sub writeErrors(debugger As CDFWriter)
@@ -285,7 +286,7 @@ Public Class ANNDebugger
             .ReadAsDoubleVector _
             .ToArray
 
-            Call debugger.AddVariable("fitness", .ByRef, {GetType(Double).FullName})
+            Call debugger.AddVariable("fitness", CType(.ByRef, doubles), {GetType(Double).FullName})
         End With
     End Sub
 End Class

@@ -11,6 +11,11 @@ Namespace netCDF.Components
         End Property
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Widening Operator CType(data As String) As chars
+            Return New chars With {.buffer = data.ToArray}
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Widening Operator CType(data As Char()) As chars
             Return New chars With {.buffer = data}
         End Operator
