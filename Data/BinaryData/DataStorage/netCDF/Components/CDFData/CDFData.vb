@@ -102,28 +102,9 @@ Namespace netCDF.Components
 
         Public MustOverride ReadOnly Property cdfDataType As CDFDataTypes
 
-        Public ReadOnly Property genericValue As Object
+        Public ReadOnly Property genericValue As Array
             Get
-                Select Case cdfDataType
-                    Case CDFDataTypes.BYTE
-                        Return byteStream.Base64RawBytes
-                    Case CDFDataTypes.CHAR
-                        Return chars
-                    Case CDFDataTypes.DOUBLE
-                        Return numerics
-                    Case CDFDataTypes.FLOAT
-                        Return tiny_num
-                    Case CDFDataTypes.INT
-                        Return integers
-                    Case CDFDataTypes.LONG
-                        Return longs
-                    Case CDFDataTypes.SHORT
-                        Return tiny_int
-                    Case CDFDataTypes.BOOLEAN
-                        Return flags
-                    Case Else
-                        Return Nothing
-                End Select
+                Return buffer
             End Get
         End Property
 
@@ -193,50 +174,20 @@ Namespace netCDF.Components
             End Select
         End Function
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Widening Operator CType(data As Byte()) As CDFData
-            Return New CDFData With {.byteStream = data.ToBase64String}
-        End Operator
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Widening Operator CType(data As Boolean()) As CDFData
-            Return New CDFData With {.flags = data}
-        End Operator
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Widening Operator CType(data As Char()) As CDFData
-            Return New CDFData With {.chars = New String(data)}
-        End Operator
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Widening Operator CType(data As Integer()) As CDFData
-            Return New CDFData With {.integers = data}
-        End Operator
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Widening Operator CType(data As Short()) As CDFData
-            Return New CDFData With {.tiny_int = data}
-        End Operator
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Widening Operator CType(data As Single()) As CDFData
-            Return New CDFData With {.tiny_num = data}
-        End Operator
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Widening Operator CType(data As Double()) As CDFData
-            Return New CDFData With {.numerics = data}
-        End Operator
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Widening Operator CType(data As Vector(Of Double)) As CDFData
-            Return New CDFData With {.numerics = data.Array}
-        End Operator
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Widening Operator CType(data As Long()) As CDFData
-            Return New CDFData With {.longs = data.ToArray}
-        End Operator
+
+
+
+
+
+
 
         Public Shared Widening Operator CType(data As (values As Object(), type As CDFDataTypes)) As CDFData
             Select Case data.type

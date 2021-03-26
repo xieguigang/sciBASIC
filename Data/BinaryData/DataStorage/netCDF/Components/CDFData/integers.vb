@@ -1,4 +1,6 @@
 ﻿
+Imports System.Runtime.CompilerServices
+
 Namespace netCDF.Components
 
     Public Class integers : Inherits CDFData(Of Integer)
@@ -8,5 +10,10 @@ Namespace netCDF.Components
                 Return CDFDataTypes.INT
             End Get
         End Property
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Widening Operator CType(data As Integer()) As integers
+            Return New integers With {.buffer = data}
+        End Operator
     End Class
 End Namespace
