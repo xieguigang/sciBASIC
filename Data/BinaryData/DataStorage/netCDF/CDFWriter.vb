@@ -470,6 +470,10 @@ Namespace netCDF
                 .ToArray
         End Function
 
+        Public Overloads Sub AddVector(name$, vec As IEnumerable(Of Double), [dim] As Dimension, Optional attrs As attribute() = Nothing)
+            Call AddVariable(name, CType(vec.ToArray, doubles), [dim], attrs)
+        End Sub
+
         Public Sub AddVariable(name$, data As ICDFDataVector, [dim] As Dimension, Optional attrs As attribute() = Nothing)
             Call AddVariable(name, data, {[dim]}, attrs)
         End Sub

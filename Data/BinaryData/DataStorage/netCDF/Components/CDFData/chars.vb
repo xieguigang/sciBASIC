@@ -24,5 +24,10 @@ Namespace netCDF.Components
         Public Overloads Shared Widening Operator CType(data As Char()) As chars
             Return New chars With {.buffer = data}
         End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Narrowing Operator CType(chars As chars) As String
+            Return New String(chars.buffer)
+        End Operator
     End Class
 End Namespace
