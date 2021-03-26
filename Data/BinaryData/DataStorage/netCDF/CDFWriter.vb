@@ -444,11 +444,11 @@ Namespace netCDF
         ''' 这个列表必须要是<see cref="CDFWriter.Dimensions(Dimension())"/>之中的
         ''' </param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub AddVariable(name$, data As CDFData, dims As [Variant](Of String(), String), Optional attrs As [Variant](Of attribute, attribute()) = Nothing)
+        Public Sub AddVariable(name$, data As ICDFDataVector, dims As [Variant](Of String(), String), Optional attrs As [Variant](Of attribute, attribute()) = Nothing)
             variables += New variable With {
                 .name = name,
                 .type = data.cdfDataType,
-                .size = data.Length * sizeof(.type),
+                .size = data.length * sizeof(.type),
                 .value = data,
                 .attributes = attrs.TryCastArray,
                 .dimensions = getDimensionList(dims)
@@ -470,7 +470,7 @@ Namespace netCDF
                 .ToArray
         End Function
 
-        Public Sub AddVariable(name$, data As CDFData, [dim] As Dimension, Optional attrs As attribute() = Nothing)
+        Public Sub AddVariable(name$, data As ICDFDataVector, [dim] As Dimension, Optional attrs As attribute() = Nothing)
             Call AddVariable(name, data, {[dim]}, attrs)
         End Sub
 
@@ -482,7 +482,7 @@ Namespace netCDF
         ''' <param name="data"></param>
         ''' <param name="dims"></param>
         ''' <param name="attrs"></param>
-        Public Sub AddVariable(name$, data As CDFData, dims As Dimension(), Optional attrs As attribute() = Nothing)
+        Public Sub AddVariable(name$, data As ICDFDataVector, dims As Dimension(), Optional attrs As attribute() = Nothing)
             Dim dimNames As New List(Of String)
 
             For Each d As Dimension In dims

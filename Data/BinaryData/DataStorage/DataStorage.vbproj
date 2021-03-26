@@ -808,6 +808,9 @@
     <Compile Include="netCDF\Components\CDFData\CDFData.vb" />
     <Compile Include="netCDF\Components\CDFData\chars.vb" />
     <Compile Include="netCDF\Components\CDFData\bytes.vb" />
+    <Compile Include="netCDF\Components\VectorHelper.vb" />
+    <Compile Include="netCDF\Components\recordDimension.vb" />
+    <Compile Include="netCDF\Components\ICDFDataVector.vb" />
     <Compile Include="netCDF\Components\CDFData\flags.vb" />
     <Compile Include="netCDF\Components\CDFData\longs.vb" />
     <Compile Include="netCDF\Components\CDFData\doubles.vb" />

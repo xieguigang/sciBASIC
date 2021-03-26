@@ -48,28 +48,26 @@ Imports System.Text
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Http
-Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace netCDF.Components
-
-    Public Interface ICDFData
-
-        ReadOnly Property cdfDataType As CDFDataTypes
-        ReadOnly Property genericValue As Array
-
-    End Interface
 
     ''' <summary>
     '''  存储在CDF文件之中的数据的统一接口模块
     ''' </summary>
     Public MustInherit Class CDFData(Of T) : Inherits Vector(Of T)
-        Implements ICDFData
+        Implements ICDFDataVector
 
-        Public MustOverride ReadOnly Property cdfDataType As CDFDataTypes Implements ICDFData.cdfDataType
+        Public MustOverride ReadOnly Property cdfDataType As CDFDataTypes Implements ICDFDataVector.cdfDataType
 
-        Public ReadOnly Property genericValue As Array Implements ICDFData.genericValue
+        Public ReadOnly Property genericValue As Array Implements ICDFDataVector.genericValue
             Get
                 Return buffer
+            End Get
+        End Property
+
+        Private ReadOnly Property ICDFDataVector_length As Integer Implements ICDFDataVector.length
+            Get
+                Return buffer.Length
             End Get
         End Property
 
@@ -99,7 +97,7 @@ Namespace netCDF.Components
             Return $"[{cdfDataType}] {stringify}"
         End Function
 
-        Public Function GetBuffer(encoding As Encoding) As Byte()
+        Public Function GetBuffer(encoding As Encoding) As Byte() Implements ICDFDataVector.GetBuffer
             Dim chunks As Byte()()
 
             Select Case cdfDataType
@@ -141,41 +139,6 @@ Namespace netCDF.Components
             Else
                 Return chunks.IteratesALL.ToArray
             End If
-        End Function
-
-        Public Shared Function FromAny(data As Object(), type As CDFDataTypes) As Object
-            Select Case type
-                Case CDFDataTypes.BYTE
-                    Dim bytes As Byte()
-
-                    If data.All(Function(obj) TypeOf obj Is Byte()) Then
-                        bytes = data _
-                            .Select(Function(obj)
-                                        Return DirectCast(obj, Byte())(Scan0)
-                                    End Function) _
-                            .ToArray
-                    Else
-                        bytes = data.As(Of Byte).ToArray
-                    End If
-
-                    Return New bytes With {.buffer = bytes}
-                Case CDFDataTypes.BOOLEAN
-                    Return New flags With {.buffer = data.As(Of Boolean).ToArray}
-                Case CDFDataTypes.CHAR
-                    Return New chars With {.buffer = data.As(Of Char).ToArray}
-                Case CDFDataTypes.DOUBLE
-                    Return New doubles With {.buffer = data.As(Of Double).ToArray}
-                Case CDFDataTypes.FLOAT
-                    Return New floats With {.buffer = data.As(Of Single).ToArray}
-                Case CDFDataTypes.INT
-                    Return New integers With {.buffer = data.As(Of Integer).ToArray}
-                Case CDFDataTypes.SHORT
-                    Return New shorts With {.buffer = data.As(Of Short).ToArray}
-                Case CDFDataTypes.LONG
-                    Return New longs With {.buffer = data.As(Of Long).ToArray}
-                Case Else
-                    Throw New NotImplementedException(type.Description)
-            End Select
         End Function
     End Class
 End Namespace

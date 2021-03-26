@@ -229,7 +229,7 @@ Namespace netCDF
         ''' Retrieves the data for a given variable
         ''' </summary>
         ''' <returns>List with the variable values</returns>
-        Public Function getDataVariable(variable As variable) As CDFData
+        Public Function getDataVariable(variable As variable) As ICDFDataVector
             Dim values As Object()
 
             ' go to the offset position
@@ -251,7 +251,7 @@ Namespace netCDF
         ''' </summary>
         ''' <param name="variableName">Name of the variable to search Or variable object</param>
         ''' <returns>List with the variable values</returns>
-        Public Function getDataVariable(variableName As String) As CDFData
+        Public Function getDataVariable(variableName As String) As ICDFDataVector
             ' search the variable
             Dim variable As variable = variableTable.TryGetValue(variableName)
             ' throws if variable Not found

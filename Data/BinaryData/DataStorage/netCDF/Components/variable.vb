@@ -94,7 +94,7 @@ Namespace netCDF.Components
         ''' 惰性求值的属性
         ''' </summary>
         ''' <returns></returns>
-        Public Property value As CDFData
+        Public Property value As ICDFDataVector
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function FindAttribute(name As String) As attribute
