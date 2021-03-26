@@ -45,6 +45,7 @@
 #End Region
 
 Imports System.Text
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Http
@@ -69,6 +70,15 @@ Namespace netCDF.Components
             Get
                 Return buffer.Length
             End Get
+        End Property
+
+        Default Public Overloads Property Item(i As i32) As T
+            Get
+                Return buffer(i)
+            End Get
+            Set(value As T)
+                buffer(i) = value
+            End Set
         End Property
 
         Public Overrides Function ToString() As String
