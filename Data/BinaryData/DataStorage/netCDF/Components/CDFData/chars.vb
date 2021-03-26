@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace netCDF.Components
 
@@ -9,6 +10,10 @@ Namespace netCDF.Components
                 Return CDFDataTypes.CHAR
             End Get
         End Property
+
+        Public Function LoadJSON(Of T)() As T
+            Return New String(buffer).LoadJSON(Of T)
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Widening Operator CType(data As String) As chars
