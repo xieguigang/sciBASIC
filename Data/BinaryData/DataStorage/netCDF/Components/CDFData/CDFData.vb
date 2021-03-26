@@ -1,50 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::b7e0fff7fd2c090cf52c8261144118ae, Data\BinaryData\DataStorage\netCDF\Components\CDFData.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class CDFData
-    ' 
-    '         Properties: byteStream, cdfDataType, chars, flags, genericValue
-    '                     integers, Length, longs, numerics, tiny_int
-    '                     tiny_num
-    ' 
-    '         Function: GetBuffer, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class CDFData
+' 
+'         Properties: byteStream, cdfDataType, chars, flags, genericValue
+'                     integers, Length, longs, numerics, tiny_int
+'                     tiny_num
+' 
+'         Function: GetBuffer, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
@@ -53,56 +52,22 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace netCDF.Components
 
+    Public Interface ICDFData
+
+        ReadOnly Property cdfDataType As CDFDataTypes
+        ReadOnly Property genericValue As Array
+
+    End Interface
+
     ''' <summary>
     '''  存储在CDF文件之中的数据的统一接口模块
     ''' </summary>
     Public MustInherit Class CDFData(Of T) : Inherits Vector(Of T)
+        Implements ICDFData
 
-        ''' <summary>
-        ''' byte集合，base64字符串编码
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property byteStream As String
-        ''' <summary>
-        ''' char集合
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property chars As String
-        Public Property tiny_int As Short()
-        Public Property integers As Integer()
-        Public Property tiny_num As Single()
-        Public Property numerics As Double()
-        Public Property longs As Long()
-        Public Property flags As Boolean()
+        Public MustOverride ReadOnly Property cdfDataType As CDFDataTypes Implements ICDFData.cdfDataType
 
-        Public ReadOnly Property Length As Integer
-            Get
-                Select Case cdfDataType
-                    Case CDFDataTypes.BYTE
-                        Return Convert.FromBase64String(byteStream).Length
-                    Case CDFDataTypes.CHAR
-                        Return chars.Length
-                    Case CDFDataTypes.DOUBLE
-                        Return numerics.Length
-                    Case CDFDataTypes.FLOAT
-                        Return tiny_num.Length
-                    Case CDFDataTypes.INT
-                        Return integers.Length
-                    Case CDFDataTypes.SHORT
-                        Return tiny_int.Length
-                    Case CDFDataTypes.LONG
-                        Return longs.Length
-                    Case CDFDataTypes.BOOLEAN
-                        Return flags.Length
-                    Case Else
-                        Return 0
-                End Select
-            End Get
-        End Property
-
-        Public MustOverride ReadOnly Property cdfDataType As CDFDataTypes
-
-        Public ReadOnly Property genericValue As Array
+        Public ReadOnly Property genericValue As Array Implements ICDFData.genericValue
             Get
                 Return buffer
             End Get
@@ -112,16 +77,16 @@ Namespace netCDF.Components
             Dim stringify$
 
             Select Case cdfDataType
-                Case CDFDataTypes.BYTE : stringify = byteStream
-                Case CDFDataTypes.CHAR : stringify = chars
-                Case CDFDataTypes.DOUBLE : stringify = numerics.JoinBy(",")
-                Case CDFDataTypes.FLOAT : stringify = tiny_num.JoinBy(",")
-                Case CDFDataTypes.INT : stringify = integers.JoinBy(",")
-                Case CDFDataTypes.SHORT : stringify = tiny_int.JoinBy(",")
-                Case CDFDataTypes.LONG : stringify = longs.JoinBy(",")
-                Case CDFDataTypes.BOOLEAN : stringify = flags.Select(Function(b) If(b, 1, 0)).JoinBy(",")
+                Case CDFDataTypes.BYTE : stringify = DirectCast(genericValue, Byte()).ToBase64String
+                Case CDFDataTypes.CHAR : stringify = DirectCast(genericValue, Char()).CharString
+                Case CDFDataTypes.DOUBLE : stringify = DirectCast(genericValue, Double()).Select(Function(d) d.ToString("G3")).JoinBy(",")
+                Case CDFDataTypes.FLOAT : stringify = DirectCast(genericValue, Single()).Select(Function(d) d.ToString("G3")).JoinBy(",")
+                Case CDFDataTypes.INT : stringify = DirectCast(genericValue, Integer()).JoinBy(",")
+                Case CDFDataTypes.SHORT : stringify = DirectCast(genericValue, Short()).JoinBy(",")
+                Case CDFDataTypes.LONG : stringify = DirectCast(genericValue, Long()).JoinBy(",")
+                Case CDFDataTypes.BOOLEAN : stringify = DirectCast(genericValue, Boolean()).Select(Function(b) If(b, 1, 0)).JoinBy(",")
                 Case Else
-                    Return "null"
+                    Return "invalid!"
             End Select
 
             If (stringify.Length > 50) Then
@@ -135,89 +100,82 @@ Namespace netCDF.Components
         End Function
 
         Public Function GetBuffer(encoding As Encoding) As Byte()
+            Dim chunks As Byte()()
+
             Select Case cdfDataType
-                Case CDFDataTypes.BYTE : Return Convert.FromBase64String(byteStream)
-                Case CDFDataTypes.BOOLEAN : Return flags.Select(Function(b) CByte(If(b, 1, 0))).ToArray
-                Case CDFDataTypes.CHAR : Return encoding.GetBytes(chars)
+                Case CDFDataTypes.BYTE : Return DirectCast(CObj(Me), bytes).Array
+                Case CDFDataTypes.BOOLEAN : Return DirectCast(CObj(Me), flags).Array.Select(Function(b) CByte(If(b, 1, 0))).ToArray
+                Case CDFDataTypes.CHAR : Return encoding.GetBytes(DirectCast(CObj(Me), chars).CharString)
                 Case CDFDataTypes.DOUBLE
-                    Return numerics _
+                    chunks = DirectCast(CObj(Me), doubles).Array _
                         .Select(AddressOf BitConverter.GetBytes) _
-                        .Select(Function(b) DirectCast(b, IEnumerable(Of Byte)).Reverse) _
-                        .IteratesALL _
                         .ToArray
                 Case CDFDataTypes.FLOAT
-                    Return tiny_num _
+                    chunks = DirectCast(CObj(Me), floats).Array _
                         .Select(AddressOf BitConverter.GetBytes) _
-                        .Select(Function(b) DirectCast(b, IEnumerable(Of Byte)).Reverse) _
-                        .IteratesALL _
                         .ToArray
                 Case CDFDataTypes.INT
-                    Return integers _
+                    chunks = DirectCast(CObj(Me), integers).Array _
                         .Select(AddressOf BitConverter.GetBytes) _
-                        .Select(Function(b) DirectCast(b, IEnumerable(Of Byte)).Reverse) _
-                        .IteratesALL _
                         .ToArray
                 Case CDFDataTypes.SHORT
-                    Return tiny_int _
+                    chunks = DirectCast(CObj(Me), shorts).Array _
                         .Select(AddressOf BitConverter.GetBytes) _
-                        .Select(Function(b) DirectCast(b, IEnumerable(Of Byte)).Reverse) _
-                        .IteratesALL _
                         .ToArray
                 Case CDFDataTypes.LONG
-                    Return longs _
+                    chunks = DirectCast(CObj(Me), longs).Array _
                         .Select(AddressOf BitConverter.GetBytes) _
-                        .Select(Function(b) DirectCast(b, IEnumerable(Of Byte)).Reverse) _
-                        .IteratesALL _
                         .ToArray
                 Case Else
                     Throw New NotImplementedException(cdfDataType.Description)
             End Select
+
+            If BitConverter.IsLittleEndian Then
+                Return chunks _
+                    .Select(Function(c)
+                                System.Array.Reverse(c)
+                                Return c
+                            End Function) _
+                    .IteratesALL _
+                    .ToArray
+            Else
+                Return chunks.IteratesALL.ToArray
+            End If
         End Function
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        Public Shared Widening Operator CType(data As (values As Object(), type As CDFDataTypes)) As CDFData
-            Select Case data.type
+        Public Shared Function FromAny(data As Object(), type As CDFDataTypes) As Object
+            Select Case type
                 Case CDFDataTypes.BYTE
-                    If data.values.All(Function(obj) TypeOf obj Is Byte()) Then
-                        Return data.values _
+                    Dim bytes As Byte()
+
+                    If data.All(Function(obj) TypeOf obj Is Byte()) Then
+                        bytes = data _
                             .Select(Function(obj)
                                         Return DirectCast(obj, Byte())(Scan0)
                                     End Function) _
                             .ToArray
                     Else
-                        Return data.values.As(Of Byte).ToArray
+                        bytes = data.As(Of Byte).ToArray
                     End If
+
+                    Return New bytes With {.buffer = bytes}
                 Case CDFDataTypes.BOOLEAN
-                    Return data.values.As(Of Boolean).ToArray
+                    Return New flags With {.buffer = data.As(Of Boolean).ToArray}
                 Case CDFDataTypes.CHAR
-                    Return data.values.As(Of Char).ToArray
+                    Return New chars With {.buffer = data.As(Of Char).ToArray}
                 Case CDFDataTypes.DOUBLE
-                    Return data.values.As(Of Double).ToArray
+                    Return New doubles With {.buffer = data.As(Of Double).ToArray}
                 Case CDFDataTypes.FLOAT
-                    Return data.values.As(Of Single).ToArray
+                    Return New floats With {.buffer = data.As(Of Single).ToArray}
                 Case CDFDataTypes.INT
-                    Return data.values.As(Of Integer).ToArray
+                    Return New integers With {.buffer = data.As(Of Integer).ToArray}
                 Case CDFDataTypes.SHORT
-                    Return data.values.As(Of Short).ToArray
+                    Return New shorts With {.buffer = data.As(Of Short).ToArray}
                 Case CDFDataTypes.LONG
-                    Return data.values.As(Of Long).ToArray
+                    Return New longs With {.buffer = data.As(Of Long).ToArray}
                 Case Else
-                    Return New CDFData
+                    Throw New NotImplementedException(type.Description)
             End Select
-        End Operator
+        End Function
     End Class
 End Namespace

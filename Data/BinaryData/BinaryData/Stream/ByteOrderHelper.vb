@@ -57,6 +57,9 @@ Public Module ByteOrderHelper
     ''' <summary>
     ''' Gets the <see cref="ByteOrder"/> of the system executing the assembly.
     ''' </summary>
+    ''' <remarks>
+    ''' 当这个属性返回<see cref="ByteOrder.LittleEndian"/>的时候，networkByteOrder需要对数据进行反转
+    ''' </remarks>
     Public ReadOnly Property SystemByteOrder() As ByteOrder
         Get
             If _systemByteOrder = 0 Then
