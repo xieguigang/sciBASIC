@@ -56,7 +56,7 @@ Namespace netCDF.Components
     ''' <summary>
     '''  存储在CDF文件之中的数据的统一接口模块
     ''' </summary>
-    Public Class CDFData
+    Public MustInherit Class CDFData(Of T) : Inherits Vector(Of T)
 
         ''' <summary>
         ''' byte集合，base64字符串编码
@@ -100,30 +100,7 @@ Namespace netCDF.Components
             End Get
         End Property
 
-        Public ReadOnly Property cdfDataType As CDFDataTypes
-            Get
-                If Not byteStream Is Nothing Then
-                    Return CDFDataTypes.BYTE
-                ElseIf Not chars Is Nothing Then
-                    Return CDFDataTypes.CHAR
-                ElseIf Not tiny_int Is Nothing Then
-                    Return CDFDataTypes.SHORT
-                ElseIf Not integers Is Nothing Then
-                    Return CDFDataTypes.INT
-                ElseIf Not tiny_num Is Nothing Then
-                    Return CDFDataTypes.FLOAT
-                ElseIf Not numerics Is Nothing Then
-                    Return CDFDataTypes.DOUBLE
-                ElseIf Not longs Is Nothing Then
-                    Return CDFDataTypes.LONG
-                ElseIf Not flags Is Nothing Then
-                    Return CDFDataTypes.BOOLEAN
-                Else
-                    ' null
-                    Return CDFDataTypes.undefined
-                End If
-            End Get
-        End Property
+        Public MustOverride ReadOnly Property cdfDataType As CDFDataTypes
 
         Public ReadOnly Property genericValue As Object
             Get

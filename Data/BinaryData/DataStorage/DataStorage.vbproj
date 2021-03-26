@@ -805,7 +805,15 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="netCDF\CDFWriter.vb" />
-    <Compile Include="netCDF\Components\CDFData.vb" />
+    <Compile Include="netCDF\Components\CDFData\CDFData.vb" />
+    <Compile Include="netCDF\Components\CDFData\chars.vb" />
+    <Compile Include="netCDF\Components\CDFData\bytes.vb" />
+    <Compile Include="netCDF\Components\CDFData\flags.vb" />
+    <Compile Include="netCDF\Components\CDFData\longs.vb" />
+    <Compile Include="netCDF\Components\CDFData\doubles.vb" />
+    <Compile Include="netCDF\Components\CDFData\floats.vb" />
+    <Compile Include="netCDF\Components\CDFData\shorts.vb" />
+    <Compile Include="netCDF\Components\CDFData\integers.vb" />
     <Compile Include="netCDF\Components\DimensionList.vb" />
     <Compile Include="netCDF\Components\attribute.vb" />
     <Compile Include="netCDF\Components\Dimension.vb" />
