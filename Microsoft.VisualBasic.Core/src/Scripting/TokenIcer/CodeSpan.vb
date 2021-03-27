@@ -1,4 +1,6 @@
-﻿Namespace Scripting.TokenIcer
+﻿Imports System.Xml.Serialization
+
+Namespace Scripting.TokenIcer
 
     ''' <summary>
     ''' 目标Token对象在原始代码文本之中的定位位置

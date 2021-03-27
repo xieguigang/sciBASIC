@@ -1821,7 +1821,7 @@
     <Compile Include="Extensions\IO\Path\CopyDirectory.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\DataSample.vb" />
     <Compile Include="Net\MIME\ContentTypeAttribute.vb" />
-    <Compile Include="Scripting\TokenIcer\Class1.vb" />
+    <Compile Include="Scripting\TokenIcer\CodeSpan.vb" />
     <Compile Include="Scripting\TokenIcer\Token.vb" />
     <Compile Include="Serialization\BEncoding\BencodeDecoder.vb" />
     <Compile Include="Serialization\BEncoding\BElement.vb" />

@@ -1,43 +1,43 @@
 ﻿#Region "Microsoft.VisualBasic::0c1951e4214c058cf64c4091e94a8136, Microsoft.VisualBasic.Core\src\Scripting\TokenIcer\ParserCommon.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module ParserCommon
-    ' 
-    '         Function: [As], [CType], [TryCast], GetCodeComment, GetTokens
-    '                   (+2 Overloads) StartEscaping, TokenParser
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module ParserCommon
+' 
+'         Function: [As], [CType], [TryCast], GetCodeComment, GetTokens
+'                   (+2 Overloads) StartEscaping, TokenParser
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -108,8 +108,8 @@ Namespace Scripting.TokenIcer
         ''' <typeparam name="T"></typeparam>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        <Extension> Public Function [As](Of Tokens As IComparable, T)(x As codeToken(Of Tokens)) As T
-            Dim obj As T = InputHandler.CTypeDynamic(Of T)(x.Value)
+        <Extension> Public Function [As](Of Tokens As IComparable, T)(x As CodeToken(Of Tokens)) As T
+            Dim obj As T = InputHandler.CTypeDynamic(Of T)(x.text)
             Return obj
         End Function
 
@@ -120,8 +120,8 @@ Namespace Scripting.TokenIcer
         ''' <param name="x"></param>
         ''' <param name="type"></param>
         ''' <returns></returns>
-        <Extension> Public Function [CType](Of Tokens As IComparable)(x As Token(Of Tokens), type As Type) As Object
-            Dim obj As Object = InputHandler.CTypeDynamic(x.Value, type)
+        <Extension> Public Function [CType](Of Tokens As IComparable)(x As CodeToken(Of Tokens), type As Type) As Object
+            Dim obj As Object = InputHandler.CTypeDynamic(x.text, type)
             Return obj
         End Function
 
@@ -131,14 +131,14 @@ Namespace Scripting.TokenIcer
         ''' <typeparam name="Tokens"></typeparam>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        <Extension> Public Function [TryCast](Of Tokens As IComparable)(x As Token(Of Tokens)) As Object
+        <Extension> Public Function [TryCast](Of Tokens As IComparable)(x As CodeToken(Of Tokens)) As Object
             Dim typeName As String = Scripting.ToString(x.name)
             Dim type As New Value(Of Type)
 
             If type = Scripting.GetType(typeName, False) Is Nothing Then
-                Return x.Value
+                Return x.text
             Else
-                Return CTypeDynamic(x.Value, +type)
+                Return CTypeDynamic(x.text, +type)
             End If
         End Function
     End Module
