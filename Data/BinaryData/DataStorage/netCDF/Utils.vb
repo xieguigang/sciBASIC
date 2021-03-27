@@ -124,12 +124,12 @@ Namespace netCDF
         ''' <param name="size%">size - Size of the element to read</param>
         ''' <param name="bufferReader">bufferReader - Function to read next value</param>
         ''' <returns>{Array&lt;number>|number}</returns>
-        Public Function readNumber(size%, bufferReader As Func(Of Object)) As Object
+        Public Function readNumber(Of T)(size%, bufferReader As Func(Of T)) As Object
             If (size <> 1) Then
-                Dim numbers As New List(Of Object)
+                Dim numbers As T() = New T(size - 1) {}
 
                 For i As Integer = 0 To size - 1
-                    numbers.Add(bufferReader())
+                    numbers(i) = bufferReader()
                 Next
 
                 Return numbers
