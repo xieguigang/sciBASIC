@@ -70,6 +70,8 @@ Namespace CommandLine.Reflection.EntryPoints
             End Get
         End Property
 
+#Disable Warning
+
         Public ReadOnly Property Info() As String Implements IExportAPI.Info
             Get
                 Return _metaData.Bind.Info
@@ -87,6 +89,7 @@ Namespace CommandLine.Reflection.EntryPoints
                 Return _metaData.Bind.Example
             End Get
         End Property
+#Enable Warning
 
         ''' <summary>
         ''' 不可以使用本方法初始化目标对象为实例方法的类型
