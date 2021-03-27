@@ -138,6 +138,33 @@ Namespace netCDF
             End If
         End Function
 
+        <Extension>
+        Public Function readVector(buffer As BinaryDataReader, size As Integer, type As CDFDataTypes) As Array
+            If buffer.EndOfStream Then
+                Call $"Binary reader ""{buffer.ToString}"" offset out of boundary!".Warning
+                ' 已经出现越界了
+                Return Nothing
+            End If
+
+            Select Case type
+                Case CDFDataTypes.BYTE : Return buffer.ReadBytes(size)
+                Case CDFDataTypes.CHAR : Return buffer.ReadChars(size)
+                Case CDFDataTypes.BOOLEAN
+                    ' 20210212 bytes flags for maps boolean
+                    Return buffer.ReadBytes(size) _
+                        .Select(Function(b) b <> 0) _
+                        .ToArray
+                Case CDFDataTypes.DOUBLE : Return buffer.ReadDoubles(size)
+                Case CDFDataTypes.FLOAT : Return buffer.ReadSingles(size)
+                Case CDFDataTypes.INT : Return buffer.ReadInt32s(size)
+                Case CDFDataTypes.LONG : Return buffer.ReadInt64s(size)
+                Case CDFDataTypes.SHORT : Return buffer.ReadInt16s(size)
+                Case Else
+                    ' istanbul ignore next
+                    Return Utils.notNetcdf(True, $"non valid type {type}")
+            End Select
+        End Function
+
         ''' <summary>
         ''' Given a type And a size reads the next element.
         ''' (这个函数会根据<paramref name="type"/>类以及<paramref name="size"/>的不同而返回不同的数据结果:

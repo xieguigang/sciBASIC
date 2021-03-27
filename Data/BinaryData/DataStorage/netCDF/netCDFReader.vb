@@ -230,7 +230,7 @@ Namespace netCDF
         ''' </summary>
         ''' <returns>List with the variable values</returns>
         Public Function getDataVariable(variable As variable) As ICDFDataVector
-            Dim values As Object()
+            Dim values As Array
 
             ' go to the offset position
             Call buffer.Seek(variable.offset, SeekOrigin.Begin)

@@ -81,12 +81,12 @@ Namespace netCDF
             ' size of the data
             Dim size = variable.size / sizeof(variable.type)
             ' iterates over the data
-            Dim data As Array = variable.CreateArray(size)
+            Dim data As Array = buffer.readVector(size, variable.type) ' variable.CreateArray(size)
 
             ' 读取的结果是一个T()数组
-            For i As Integer = 0 To size - 1
-                data(i) = Utils.readType(buffer, variable.type, 1)
-            Next
+            ' For i As Integer = 0 To size - 1
+            ' data(i) = Utils.readType(buffer, variable.type, 1)
+            ' Next
 
             Return data
         End Function
