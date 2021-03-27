@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::40ad0d33c0819399fc952e585aa5619c, Data_science\Mathematica\Math\DataFrame\Correlation\Builder.vb"
+﻿#Region "Microsoft.VisualBasic::24d161ac9d27d305305dfad96dc62db2, Data_science\Mathematica\Math\DataFrame\Correlation\Builder.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module Builder
     ' 
-    '     Function: FromTabular, loadAsMatrix, (+2 Overloads) MatrixBuilder
+    '     Function: Correlation, corTuple, (+3 Overloads) MatrixBuilder
     ' 
     ' /********************************************************************************/
 

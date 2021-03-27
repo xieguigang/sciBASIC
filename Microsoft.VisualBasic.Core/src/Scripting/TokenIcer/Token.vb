@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3ca27ad2ba69fbc58e396589b4535b9, Microsoft.VisualBasic.Core\src\Scripting\TokenIcer\LangModels\Token.vb"
+﻿#Region "Microsoft.VisualBasic::26d1dc834a3ee048d6cd1d9646830ed8, Microsoft.VisualBasic.Core\src\Scripting\TokenIcer\Token.vb"
 
     ' Author:
     ' 
@@ -31,31 +31,6 @@
 
     ' Summaries:
 
-    '     Class Token
-    ' 
-    '         Properties: Arguments, Closure, IsClosure, IsFunction, IsNumeric
-    '                     IsObject, name, Text, Type, UNDEFINED
-    '                     Value
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: GetValue, ToString
-    ' 
-    '     Class Statement
-    ' 
-    '         Properties: tokens, Trace
-    ' 
-    '         Function: ToString
-    ' 
-    '     Class Main
-    ' 
-    '         Properties: program
-    ' 
-    '     Class CodeSpan
-    ' 
-    '         Properties: line, start, stops
-    ' 
-    '         Function: ToString
-    ' 
     '     Class CodeToken
     ' 
     '         Properties: isNumeric, name, span, text

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7316b87e52da389b3ad1214c9dfc8cab, mime\application%xml\MathML\Math.vb"
+﻿#Region "Microsoft.VisualBasic::daea8d1568fd6a0d367f5b39b6a0f8b5, mime\application%xml\MathML\XML\Math.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,6 @@
     '     Class Math
     ' 
     '         Properties: apply, lambda
-    ' 
-    '     Class Apply
-    ' 
-    '         Properties: [operator], apply, cn, divide, plus
-    '                     power, times
     ' 
     '     Class mathOperator
     ' 

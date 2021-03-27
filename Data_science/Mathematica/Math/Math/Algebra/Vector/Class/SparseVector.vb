@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3644ead52f7fed7006544637c703b072, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\SparseVector.vb"
+﻿#Region "Microsoft.VisualBasic::8ee6bcf25ddc0a349cb6fe8935983ff2, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\SparseVector.vb"
 
     ' Author:
     ' 

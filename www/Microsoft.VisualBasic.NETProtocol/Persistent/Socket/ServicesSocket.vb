@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f90417c3ffe5266d91a764ec1865bfe, www\Microsoft.VisualBasic.NETProtocol\Persistent\Socket\ServicesSocket.vb"
+﻿#Region "Microsoft.VisualBasic::4ab8299998078471f08da3aaa9a66160, www\Microsoft.VisualBasic.NETProtocol\Persistent\Socket\ServicesSocket.vb"
 
     ' Author:
     ' 

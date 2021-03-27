@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1cb495362d06e159857805a1fab69bf2, mime\application%xml\MathML\BinaryExpression.vb"
+﻿#Region "Microsoft.VisualBasic::6d4799c36d68864681e102bf49b045c8, mime\application%xml\MathML\Expression\BinaryExpression.vb"
 
     ' Author:
     ' 
@@ -37,27 +37,9 @@
     ' 
     '         Function: ToString
     ' 
-    '     Class SymbolExpression
-    ' 
-    '         Properties: isNumericLiteral, text
-    ' 
-    '         Function: ToString
-    ' 
     '     Class MathExpression
     ' 
     ' 
-    ' 
-    '     Class LambdaExpression
-    ' 
-    '         Properties: lambda, parameters
-    ' 
-    '         Function: (+2 Overloads) FromMathML, ToString
-    ' 
-    '     Class MathFunctionExpression
-    ' 
-    '         Properties: name, parameters
-    ' 
-    '         Function: ToString
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66c537a40890e05c98b9cdb9eec84fb8, Data_science\Visualization\Plots\g\Theme\Theme.vb"
+﻿#Region "Microsoft.VisualBasic::22e1c5540ab7bebdd6f19a5d07296baa, Data_science\Visualization\Plots\g\Theme\Theme.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,11 @@
     '                     axisTickStroke, background, colorSet, drawAxis, drawGrid
     '                     drawLabels, drawLegend, gridFill, gridStrokeX, gridStrokeY
     '                     htmlLabel, legendBoxBackground, legendBoxStroke, legendLabelCSS, legendLayout
-    '                     legendSplitSize, legendTitleCSS, mainCSS, padding, pointSize
-    '                     subtitleCSS, tagColor, tagCSS, xAxisLayout, yAxisLayout
+    '                     legendSplitSize, legendTitleCSS, lineStroke, mainCSS, padding
+    '                     pointSize, subtitleCSS, tagColor, tagCSS, tagLinkStroke
+    '                     xAxisLayout, yAxisLayout
     ' 
-    '         Function: GetLegendPosition, ToString
+    '         Function: Clone, GetLegendPosition, ToString
     ' 
     ' 
     ' /********************************************************************************/

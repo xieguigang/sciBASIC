@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e64e3fb6f64a2c56f48bc280b862c76e, Data\BinaryData\msgpack\Serialization\MessagePackMemberDefinition.vb"
+﻿#Region "Microsoft.VisualBasic::e9fdc06d74b4c32a801eecfd48d34517, Data\BinaryData\msgpack\Serialization\MessagePackMemberDefinition.vb"
 
     ' Author:
     ' 
@@ -36,6 +36,7 @@
     '         Properties: NilImplication, PropertyName
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
     ' 
     ' 
     ' /********************************************************************************/

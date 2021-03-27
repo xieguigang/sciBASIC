@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e500da39b02f91cf8ca54a0104877d9c, mime\text%html\HTML\CSS\Padding.vb"
+﻿#Region "Microsoft.VisualBasic::2aa8cf3e7c2d279f4bfc6a5e93f0cb52, mime\text%html\HTML\CSS\Padding.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     '                     Right, Top, Vertical
     ' 
     '         Constructor: (+5 Overloads) Sub New
-    '         Function: Equals, GetCanvasRegion, ToString, TryParse
+    '         Function: Equals, GetCanvasRegion, Offset2D, ToString, TryParse
     '         Operators: -, +, <>, =
     ' 
     ' 

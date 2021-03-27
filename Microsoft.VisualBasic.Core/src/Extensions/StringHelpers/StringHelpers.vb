@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c29662f4454da7bf5f2c1a7925ba40b, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::692f3054ae558a09cd1d46d4388fda27, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringHelpers.vb"
 
     ' Author:
     ' 
@@ -41,11 +41,11 @@
     '               GetStackValue, GetString, (+2 Overloads) GetTagValue, GetURLs, IgnoreCase
     '               InStrAny, (+2 Overloads) Intersection, IsEmptyStringVector, JoinBy, LineTokens
     '               Located, Lookup, (+2 Overloads) Match, Matches, MatchPattern
-    '               (+2 Overloads) MaxLengthString, NotEmpty, PadEnd, Parts, RepeatString
-    '               ReplaceChars, (+2 Overloads) Reverse, RNull, SaveTo, (+2 Overloads) Split
-    '               SplitBy, StringEmpty, StringHashCode, StringReplace, StringSplit
-    '               StripBlank, Strips, TextEquals, TextLast, TokenCount
-    '               TokenCountIgnoreCase, TrimNewLine, TrimNull, WildcardsLocated
+    '               (+2 Overloads) MaxLengthString, MinLengthString, NotEmpty, PadEnd, Parts
+    '               RepeatString, ReplaceChars, (+2 Overloads) Reverse, RNull, SaveTo
+    '               (+2 Overloads) Split, SplitBy, StringEmpty, StringHashCode, StringReplace
+    '               StringSplit, StripBlank, Strips, TextEquals, TextLast
+    '               TokenCount, TokenCountIgnoreCase, TrimNewLine, TrimNull, WildcardsLocated
     ' 
     '     Sub: Parts, RemoveLast
     ' 

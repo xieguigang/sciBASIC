@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e186cd27e19d2a7d3bb47e59493a19b, Microsoft.VisualBasic.Core\src\Extensions\Image\Colors\GDIColors.vb"
+﻿#Region "Microsoft.VisualBasic::7f1a80f26d3ae3ab31478c1b52f44d96, Microsoft.VisualBasic.Core\src\Extensions\Image\Colors\GDIColors.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module GDIColors
     ' 
-    '         Properties: AllDotNetPrefixColors, ChartColors
+    '         Properties: AllDotNetColorNames, AllDotNetPrefixColors, ChartColors
     ' 
     '         Function: __getDotNetColors, (+2 Overloads) Alpha, ARGBExpression, AsDefaultColor, Average
     '                   ColorTranslatorInternal, Darken, Equals, EuclideanDistance, Greyscale

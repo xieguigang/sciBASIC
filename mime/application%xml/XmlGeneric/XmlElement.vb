@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58ae6372c475a9c0b6c594f154ec2bf5, mime\application%xml\XmlGeneric\XmlElement.vb"
+﻿#Region "Microsoft.VisualBasic::220fb2fc26c4801f852da9f89216fe3e, mime\application%xml\XmlGeneric\XmlElement.vb"
 
     ' Author:
     ' 

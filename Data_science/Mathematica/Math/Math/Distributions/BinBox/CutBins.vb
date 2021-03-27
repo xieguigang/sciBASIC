@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9a663d1ff6d25e02ddcfd4fca491d64, Data_science\Mathematica\Math\Math\Distributions\BinBox\CutBins.vb"
+﻿#Region "Microsoft.VisualBasic::d68c6535f36c61428cadd377b2c9c35d, Data_science\Mathematica\Math\Math\Distributions\BinBox\CutBins.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module CutBins
     ' 
-    '         Function: EqualFrequencyBins, (+3 Overloads) FixedWidthBins
+    '         Function: EqualFrequencyBins, (+4 Overloads) FixedWidthBins
     ' 
     ' 
     ' /********************************************************************************/

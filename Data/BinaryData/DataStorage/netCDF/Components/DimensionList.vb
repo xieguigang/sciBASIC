@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::500d9e7de943d49ace05d35f59306aa1, Data\BinaryData\DataStorage\netCDF\Components\DimensionList.vb"
+﻿#Region "Microsoft.VisualBasic::13737a7d8a3c8579738e173c9b569448, Data\BinaryData\DataStorage\netCDF\Components\DimensionList.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,6 @@
     '     Class DimensionList
     ' 
     '         Properties: dimensions, HaveRecordDimension, recordId, recordName
-    ' 
-    '         Function: ToString
-    ' 
-    '     Class recordDimension
-    ' 
-    '         Properties: id, length, name, recordStep
     ' 
     '         Function: ToString
     ' 

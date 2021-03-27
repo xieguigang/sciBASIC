@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8da35ac14aa529946f4cc211f23d1ca, mime\application%xml\MathML\maction.vb"
+﻿#Region "Microsoft.VisualBasic::29afd3833f7c25be169196a4e1c45d8b, mime\application%xml\MathML\XML\maction.vb"
 
     ' Author:
     ' 
@@ -34,14 +34,6 @@
     '     Class maction
     ' 
     '         Properties: [class], actiontype, id, style
-    ' 
-    '     Enum actiontypes
-    ' 
-    '         statusline, toggle, tooltip
-    ' 
-    '  
-    ' 
-    ' 
     ' 
     ' 
     ' /********************************************************************************/

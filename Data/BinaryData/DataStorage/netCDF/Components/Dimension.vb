@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ecb9bed2cc6c856e7a0e5d62f3e8708c, Data\BinaryData\DataStorage\netCDF\Components\Dimension.vb"
+﻿#Region "Microsoft.VisualBasic::c271317e8de629af7c8ab626c4d4c1f7, Data\BinaryData\DataStorage\netCDF\Components\Dimension.vb"
 
     ' Author:
     ' 
@@ -32,9 +32,6 @@
     ' Summaries:
 
     '     Structure Dimension
-    ' 
-    '         Properties: [Boolean], [Byte], [Double], [Integer], [Long]
-    '                     [Short], Float, Text
     ' 
     '         Function: ToString
     ' 

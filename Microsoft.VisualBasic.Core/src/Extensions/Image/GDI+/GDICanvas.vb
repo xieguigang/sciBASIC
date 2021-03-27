@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c414c088d57c879f02abd6c00ffe00a, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\GDICanvas.vb"
+﻿#Region "Microsoft.VisualBasic::7e86cca7eb10a3b5cbc44bb33910b212, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\GDICanvas.vb"
 
     ' Author:
     ' 
@@ -33,11 +33,9 @@
 
     '     Class GDICanvas
     ' 
-    '         Properties: Clip, ClipBounds, CompositingMode, CompositingQuality, DpiX
-    '                     DpiY, Font, Graphics, InterpolationMode, IsClipEmpty
-    '                     IsVisibleClipEmpty, PageScale, PageUnit, PixelOffsetMode, RenderingOrigin
-    '                     SmoothingMode, Stroke, TextContrast, TextRenderingHint, Transform
-    '                     VisibleClipBounds
+    '         Properties: DpiX, DpiY, Font, Graphics, InterpolationMode
+    '                     IsClipEmpty, IsVisibleClipEmpty, PageScale, PageUnit, PixelOffsetMode
+    '                     RenderingOrigin, SmoothingMode, Stroke, TextContrast, TextRenderingHint
     ' 
     '         Function: (+3 Overloads) BeginContainer, GetContextInfo, GetNearestColor, (+8 Overloads) IsVisible, MeasureCharacterRanges
     '                   (+8 Overloads) MeasureString
@@ -48,10 +46,10 @@
     '              DrawImageUnscaledAndClipped, (+5 Overloads) DrawLine, (+2 Overloads) DrawLines, DrawPath, (+4 Overloads) DrawPie
     '              (+2 Overloads) DrawPolygon, (+4 Overloads) DrawRectangle, (+2 Overloads) DrawRectangles, (+7 Overloads) DrawString, EndContainer
     '              (+36 Overloads) EnumerateMetafile, (+2 Overloads) ExcludeClip, (+6 Overloads) FillClosedCurve, (+4 Overloads) FillEllipse, FillPath
-    '              (+3 Overloads) FillPie, (+4 Overloads) FillPolygon, (+4 Overloads) FillRectangle, (+2 Overloads) FillRectangles, FillRegion
-    '              Finalize, (+2 Overloads) Flush, (+3 Overloads) IntersectClip, (+2 Overloads) MultiplyTransform, ReleaseHdc
-    '              ReleaseHdcInternal, ResetClip, ResetTransform, Restore, (+2 Overloads) RotateTransform
-    '              (+2 Overloads) ScaleTransform, (+9 Overloads) SetClip, (+2 Overloads) TransformPoints, (+2 Overloads) TranslateClip, (+2 Overloads) TranslateTransform
+    '              (+3 Overloads) FillPie, (+4 Overloads) FillPolygon, (+4 Overloads) FillRectangle, FillRegion, Finalize
+    '              (+2 Overloads) Flush, (+3 Overloads) IntersectClip, (+2 Overloads) MultiplyTransform, ResetClip, ResetTransform
+    '              (+2 Overloads) RotateTransform, (+2 Overloads) ScaleTransform, (+9 Overloads) SetClip, (+2 Overloads) TransformPoints, (+2 Overloads) TranslateClip
+    '              (+2 Overloads) TranslateTransform
     ' 
     ' 
     ' /********************************************************************************/

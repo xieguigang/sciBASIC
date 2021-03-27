@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05ff5f21ec8299753ec13d016b506386, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\ChangesWatcher.vb"
+﻿#Region "Microsoft.VisualBasic::45b0679e782c9fe3e8e5d9767b561dba, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\ChangesWatcher.vb"
 
     ' Author:
     ' 

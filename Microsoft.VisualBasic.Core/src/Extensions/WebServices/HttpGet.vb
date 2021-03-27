@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bbc53011fab310abc6f42ffacb678495, Microsoft.VisualBasic.Core\src\Extensions\WebServices\HttpGet.vb"
+﻿#Region "Microsoft.VisualBasic::798a57d74898ed651d239cd4758cf766, Microsoft.VisualBasic.Core\src\Extensions\WebServices\HttpGet.vb"
 
     ' Author:
     ' 

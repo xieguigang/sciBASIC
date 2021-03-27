@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a0f42e369feeec6ff303771d5761c55, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::4386b36bb119a01ac39a8c786e579740, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger.vb"
 
     ' Author:
     ' 
@@ -40,8 +40,7 @@
     ' 
     '         Properties: ForceSTDError, Mute, UsingxConsole
     ' 
-    '         Function: __DEBUG_ECHO, Assert, BENCHMARK, BugsFormatter, (+2 Overloads) PrintException
-    '                   Warning
+    '         Function: __DEBUG_ECHO, Assert, BENCHMARK, (+2 Overloads) PrintException, Warning
     ' 
     '         Sub: (+2 Overloads) __DEBUG_ECHO, __INFO_ECHO, (+3 Overloads) Assertion, AttachLoggingDriver, cat
     '              (+3 Overloads) Echo, EchoLine, WaitOutput, WriteLine

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b6440fa8dbd88f61e62f5a63663f0d0, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\VisualBasicAppException.vb"
+﻿#Region "Microsoft.VisualBasic::a0f641fb6ef0df2e32b739fa1c8cdad8, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\VisualBasicAppException.vb"
 
     ' Author:
     ' 
@@ -35,16 +35,8 @@
     ' 
     '         Properties: args, Environment, System
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: Creates
-    ' 
-    '     Module ExceptionExtensions
-    ' 
-    ' 
-    '         Delegate Sub
-    ' 
-    '             Function: Fail
-    ' 
     ' 
     ' 
     ' /********************************************************************************/

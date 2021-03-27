@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10f4c00db325d3ccae434f2d2a5a8017, gr\Microsoft.VisualBasic.Imaging\Drawing2D\GraphicsRegion.vb"
+﻿#Region "Microsoft.VisualBasic::5fe8d7305876eaa1416b60cc50b0c808, gr\Microsoft.VisualBasic.Imaging\Drawing2D\GraphicsRegion.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,8 @@
     '                     XRange, YRange
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: scaler, TopCentra, ToString, XScaler, YScaler
+    '         Function: Offset2D, scaler, TopCentra, ToString, XScaler
+    '                   YScaler
     ' 
     ' 
     ' /********************************************************************************/

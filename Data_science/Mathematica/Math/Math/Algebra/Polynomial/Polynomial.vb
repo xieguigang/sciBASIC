@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c85c574ea4eb8274169be2dbae9e6356, Data_science\Mathematica\Math\Math\Algebra\Vector\Polynomial.vb"
+﻿#Region "Microsoft.VisualBasic::876d1d753054eda02a58df9b7edc67ea, Data_science\Mathematica\Math\Math\Algebra\Polynomial\Polynomial.vb"
 
     ' Author:
     ' 
@@ -31,16 +31,6 @@
 
     ' Summaries:
 
-    '     Class Formula
-    ' 
-    '         Properties: Factors
-    ' 
-    '         Function: ToString
-    ' 
-    '     Class MultivariatePolynomial
-    ' 
-    '         Function: Evaluate, (+2 Overloads) ToString
-    ' 
     '     Class Polynomial
     ' 
     '         Properties: IsLinear

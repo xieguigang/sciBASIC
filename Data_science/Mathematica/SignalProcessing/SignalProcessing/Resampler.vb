@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad51cfe09b19532c6384f8433954cac6, Data_science\Mathematica\SignalProcessing\SignalProcessing\Resampler.vb"
+﻿#Region "Microsoft.VisualBasic::f5c4848179aa59575e050f23c3ce185b, Data_science\Mathematica\SignalProcessing\SignalProcessing\Resampler.vb"
 
     ' Author:
     ' 
