@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::e9b674ac337576fde2b9c848c0fb977b, Data\BinaryData\DataStorage\netCDF\Data\StructureParser.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module StructureParser
-    ' 
-    '         Function: attributesList, dimensionsList, variablesList
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module StructureParser
+' 
+'         Function: attributesList, dimensionsList, variablesList
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -157,7 +157,7 @@ Namespace netCDF
                     val = val(Scan0)
                 End If
 
-                Yield New Attribute With {
+                Yield New attribute With {
                     .name = name,
                     .type = type,
                     .value = val
@@ -187,7 +187,7 @@ Namespace netCDF
         <Extension>
         Friend Function variablesList(buffer As BinaryDataReader, recordId%?, version As Byte) As (variables As variable(), recordStep%)
             Dim varList = buffer.ReadUInt32()
-            Dim recordStep = 0
+            Dim recordStep As Integer = 0
 
             If (varList = ZERO) Then
                 Utils.notNetcdf((buffer.ReadUInt32() <> ZERO), "wrong empty tag for list of variables")
@@ -201,56 +201,61 @@ Namespace netCDF
             Dim variables As New List(Of variable)
 
             For v As Integer = 0 To variableSize - 1
-                ' Read name
-                Dim name = Utils.readName(buffer)
-                ' Read dimensionality of the variable
-                Dim dimensionality = buffer.ReadUInt32()
-                ' Index into the list of dimensions
-                Dim dimensionsIds = New Integer(dimensionality - 1) {}
-
-                For [dim] As Integer = 0 To dimensionality - 1
-                    dimensionsIds([dim]) = buffer.ReadUInt32()
-                Next
-
-                ' Read variables size
-                Dim attributes = attributesList(buffer).ToArray
-                ' Read type
-                Dim type As CDFDataTypes = buffer.ReadUInt32()
-
-                Utils.notNetcdf(((type < 1) AndAlso (type > 6)), $"non valid type {type}")
-
-                ' Read variable size
-                ' The 32-bit varSize field Is Not large enough to contain the size of variables that require
-                ' more than 2^32 - 4 bytes, so 2^32 - 1 Is used in the varSize field for such variables.
-                Dim varSize = buffer.ReadUInt32()
-                ' Read offset
-                Dim offset = buffer.ReadUInt32()
-
-                If (version = 2) Then
-                    Utils.notNetcdf((offset > 0), "offsets larger than 4GB not supported")
-                    offset = buffer.ReadUInt32()
-                End If
-
-                Dim record As Boolean = False
-
-                ' Count amount of record variables
-                If ((recordId IsNot Nothing) AndAlso (dimensionsIds(0) = recordId)) Then
-                    recordStep += varSize
-                    record = True
-                End If
-
-                variables += New variable With {
-                    .name = name,
-                    .dimensions = dimensionsIds,
-                    .attributes = attributes,
-                    .type = type,
-                    .size = varSize,
-                    .offset = offset,
-                    .record = record
-                }
+                variables += buffer.readVariableInternal(recordId, version, recordStep)
             Next
 
             Return (variables:=variables, recordStep:=recordStep)
+        End Function
+
+        <Extension>
+        Private Function readVariableInternal(buffer As BinaryDataReader, recordId%?, version As Byte, ByRef recordStep%) As variable
+            ' Read name
+            Dim name = Utils.readName(buffer)
+            ' Read dimensionality of the variable
+            Dim dimensionality = buffer.ReadUInt32()
+            ' Index into the list of dimensions
+            Dim dimensionsIds = New Integer(dimensionality - 1) {}
+
+            For [dim] As Integer = 0 To dimensionality - 1
+                dimensionsIds([dim]) = buffer.ReadUInt32()
+            Next
+
+            ' Read variables size
+            Dim attributes = attributesList(buffer).ToArray
+            ' Read type
+            Dim type As CDFDataTypes = buffer.ReadUInt32()
+
+            Utils.notNetcdf(((type < 1) AndAlso (type > 6)), $"non valid type {type}")
+
+            ' Read variable size
+            ' The 32-bit varSize field Is Not large enough to contain the size of variables that require
+            ' more than 2^32 - 4 bytes, so 2^32 - 1 Is used in the varSize field for such variables.
+            Dim varSize = buffer.ReadUInt32()
+            ' Read offset
+            Dim offset = buffer.ReadUInt32()
+
+            If (version = 2) Then
+                Utils.notNetcdf((offset > 0), "offsets larger than 4GB not supported")
+                offset = buffer.ReadUInt32()
+            End If
+
+            Dim record As Boolean = False
+
+            ' Count amount of record variables
+            If ((recordId IsNot Nothing) AndAlso (dimensionsIds(0) = recordId)) Then
+                recordStep += varSize
+                record = True
+            End If
+
+            Return New variable With {
+                .name = name,
+                .dimensions = dimensionsIds,
+                .attributes = attributes,
+                .type = type,
+                .size = varSize,
+                .offset = offset,
+                .record = record
+            }
         End Function
     End Module
 End Namespace

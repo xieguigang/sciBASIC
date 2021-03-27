@@ -63,7 +63,8 @@ Imports Microsoft.VisualBasic.Text
 Namespace netCDF
 
     ''' <summary>
-    ''' 
+    ''' The dotCDF file of a CDF contains magic numbers and numerous internal records are used to organize information
+    ''' about the contents Of the CDF (For both Single-file And multi-file CDFs).
     ''' </summary>
     ''' <remarks>
     ''' https://github.com/cheminfo-js/netcdfjs
