@@ -1821,6 +1821,8 @@
     <Compile Include="Extensions\IO\Path\CopyDirectory.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\DataSample.vb" />
     <Compile Include="Net\MIME\ContentTypeAttribute.vb" />
+    <Compile Include="Scripting\TokenIcer\Class1.vb" />
+    <Compile Include="Scripting\TokenIcer\Token.vb" />
     <Compile Include="Serialization\BEncoding\BencodeDecoder.vb" />
     <Compile Include="Serialization\BEncoding\BElement.vb" />
     <Compile Include="Serialization\BEncoding\BInteger.vb" />
@@ -1932,8 +1934,7 @@
     <Compile Include="Scripting\Runtime\CType\CastStringVector.vb" />
     <Compile Include="Scripting\Runtime\OverloadsFunction.vb" />
     <Compile Include="Scripting\Runtime\Extensions.vb" />
-    <Compile Include="Scripting\TokenIcer\LangModels\OperatorExpression.vb" />
-    <Compile Include="Scripting\TokenIcer\LangModels\PeekToken.vb" />
+    <Compile Include="Scripting\TokenIcer\OperatorExpression.vb" />
     <Compile Include="Scripting\VisualBasic\VBLanguage.vb" />
     <Compile Include="Text\GreekAlphabets.vb" />
     <Compile Include="Text\StringSimilarity\Levenshtein\LevenshteinString.vb" />
@@ -2170,12 +2171,6 @@
     <Compile Include="Scripting\MetaData\MetaAPI.vb" />
     <Compile Include="Scripting\MetaData\Type.vb" />
     <Compile Include="Scripting\TokenIcer\ParserCommon.vb" />
-    <Compile Include="Scripting\TokenIcer\LangModels\StackTokens%28Of Tokens%29.vb" />
-    <Compile Include="Scripting\TokenIcer\LangModels\Func.vb" />
-    <Compile Include="Scripting\TokenIcer\LangModels\Token.vb" />
-    <Compile Include="Scripting\TokenIcer\Prefix.vb" />
-    <Compile Include="Scripting\TokenIcer\StackParser.vb" />
-    <Compile Include="Scripting\TokenIcer\TokenParser.vb" />
     <Compile Include="Serialization\BinaryDumping\BinaryReader.vb" />
     <Compile Include="Serialization\JSON\JsonSerialization.vb" />
     <Compile Include="ApplicationServices\Parallel\MMFProtocol\MapStream\MSWriter.vb" />

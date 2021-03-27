@@ -101,46 +101,6 @@ Namespace Scripting.TokenIcer
             Return Nothing
         End Function
 
-        <Extension>
-        Public Function GetTokens(Of Tokens As IComparable)(parser As TokenParser(Of Tokens), expr As String) As Token(Of Tokens)()
-            Dim lstToken As New List(Of Token(Of Tokens))
-            Dim tmp As New Value(Of Token(Of Tokens))
-
-            parser.InputString = expr
-            Do While Not (tmp = parser.GetToken) Is Nothing
-                Call lstToken.Add(+tmp)
-            Loop
-
-            Return lstToken.ToArray
-        End Function
-
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <typeparam name="Tokens"></typeparam>
-        ''' <param name="parser"></param>
-        ''' <param name="expr">表达式字符串</param>
-        ''' <param name="stackT"></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function TokenParser(Of Tokens As IComparable)(parser As TokenParser(Of Tokens),
-                                               expr$,
-                                               stackT As StackTokens(Of Tokens)) As Func(Of Tokens)
-
-            Dim lstToken As Token(Of Tokens)() = parser.GetTokens(expr)
-            Dim whiteSpace As Tokens = stackT.WhiteSpace
-            Dim source As Token(Of Tokens)() = LinqAPI.Exec(Of Token(Of Tokens)) <=
- _
-                From x As Token(Of Tokens)
-                In lstToken
-                Where Not stackT.Equals(x.name, whiteSpace)
-                Select x
-
-            Dim func As Func(Of Tokens) =
-                StackParser.Parsing(Of Tokens)(source, stackT)
-            Return func
-        End Function
-
         ''' <summary>
         ''' Dynamics casting the token value expression as target type object.
         ''' </summary>
@@ -148,7 +108,7 @@ Namespace Scripting.TokenIcer
         ''' <typeparam name="T"></typeparam>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        <Extension> Public Function [As](Of Tokens As IComparable, T)(x As Token(Of Tokens)) As T
+        <Extension> Public Function [As](Of Tokens As IComparable, T)(x As codeToken(Of Tokens)) As T
             Dim obj As T = InputHandler.CTypeDynamic(Of T)(x.Value)
             Return obj
         End Function
