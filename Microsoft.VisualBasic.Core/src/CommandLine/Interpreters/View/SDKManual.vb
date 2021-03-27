@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::6618210d97b831710e2d2cab9b9fcc32, Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\View\SDKManual.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module SDKManual
-    ' 
-    '         Function: HelpSummary, LaunchManual, MarkdownDoc
-    ' 
-    '         Sub: AppSummary
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module SDKManual
+' 
+'         Function: HelpSummary, LaunchManual, MarkdownDoc
+' 
+'         Sub: AppSummary
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -56,11 +56,11 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.My.JavaScript
 Imports Microsoft.VisualBasic.Scripting
-Imports Microsoft.VisualBasic.Scripting.TokenIcer.Prefix
 Imports Microsoft.VisualBasic.Text
-Imports VBCore = Microsoft.VisualBasic.App
 Imports AssemblyMeta = Microsoft.VisualBasic.ApplicationServices.Development.AssemblyInfo
+Imports VBCore = Microsoft.VisualBasic.App
 
 Namespace CommandLine.ManView
 
@@ -291,12 +291,12 @@ Namespace CommandLine.ManView
                             Call sb.AppendLine()
                         End Sub
 
-            If gg.GroupData.ContainsKey(undefined) Then
+            If gg.GroupData.ContainsKey(JavaScriptObject.undefined) Then
                 If markdown Then
                     Call sb.AppendLine("##### Generic function API list")
                 End If
 
-                Dim undefines = gg.GroupData(undefined)
+                Dim undefines = gg.GroupData(JavaScriptObject.undefined)
                 Call print(undefines.Data, " ")
             Else
                 ' 2017-1-20
@@ -309,7 +309,7 @@ Namespace CommandLine.ManView
             End If
 
             For Each g As SeqValue(Of Groups) In gg _
-                .Where(Function(list) list.Name <> undefined) _
+                .Where(Function(list) list.Name <> JavaScriptObject.undefined) _
                 .SeqIterator(offset:=1)
 
                 If markdown Then

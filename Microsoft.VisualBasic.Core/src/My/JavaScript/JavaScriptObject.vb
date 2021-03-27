@@ -171,6 +171,8 @@ Namespace My.JavaScript
             End Get
         End Property
 
+        Public Const undefined$ = "UNDEFINED"
+
         ''' <summary>
         ''' 只针对Public的属性或者字段有效
         ''' </summary>
