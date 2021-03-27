@@ -49,12 +49,18 @@ Namespace netCDF
 
     ''' <summary>
     ''' The enum values of the CDF data types.
+    ''' 
+    ''' > https://github.com/Unidata/netcdf-java/blob/a2bfa6b5e817d06ee317d223f9834ca9362b5da0/netcdf4/src/main/java/ucar/nc2/jni/netcdf/Nc4prototypes.java#L67
     ''' </summary>
     ''' <remarks>
     ''' 这个枚举值是直接可以和CDF文件之中读取出来的值之间相互转换的
     ''' </remarks>
     Public Enum CDFDataTypes As Integer
-        <Description("undefined")> undefined = -1
+
+        ''' <summary>
+        ''' int NC_NAT = 0; /* Not-A-Type */
+        ''' </summary>
+        <Description("undefined")> undefined = 0
 
         ' NC_BYTE      = \x00 \x00 \x00 \x01  // 8-bit signed integers
         ' NC_CHAR      = \x00 \x00 \x00 \x02  // text characters
@@ -64,11 +70,11 @@ Namespace netCDF
         ' NC_DOUBLE    = \x00 \x00 \x00 \x06  // IEEE double precision floats
 
         ''' <summary>
-        ''' 8-bit signed integers
+        ''' 8-bit signed integers, signed 1 byte integer 
         ''' </summary>
         <Description("byte")> [BYTE] = 1
         ''' <summary>
-        ''' text characters
+        ''' text characters, ISO/ASCII character
         ''' </summary>
         <Description("char")> [CHAR] = 2
         ''' <summary>
@@ -88,6 +94,10 @@ Namespace netCDF
         ''' </summary>
         <Description("double")> [DOUBLE] = 6
 
+        [UBYTE] = 7
+        [USHORT] = 8
+        [UINT] = 9
+
         ' 下面是拓展类型
 
         ''' <summary>
@@ -97,8 +107,40 @@ Namespace netCDF
         ''' </summary>
         <Description("long")> [LONG] = 10
         ''' <summary>
+        ''' unsigned 8-byte int 
+        ''' </summary>
+        [ULONG] = 11
+
+        ''' <summary>
+        ''' string
+        ''' </summary>
+        [STRING] = 12
+
+        ' /*
+        '  * The following are use internally in support of user-defines
+        '  * types. They are also the class returned by nc_inq_user_type.
+        '  */
+
+        ''' <summary>
+        ''' used internally for vlen types
+        ''' </summary>
+        VLEN = 13
+        ''' <summary>
+        ''' used internally for opaque types
+        ''' </summary>
+        OPAQUE = 14
+        ''' <summary>
+        ''' used internally for enum types
+        ''' </summary>
+        [ENUM] = 15
+        ''' <summary>
+        ''' used internally for compound types
+        ''' </summary>
+        COMPOUND = 16
+
+        ''' <summary>
         ''' probably not supports by the standard netCDF4 library on linux and NASA Panoply software...
         ''' </summary>
-        <Description("boolean")> [BOOLEAN] = 11
+        <Description("boolean")> [BOOLEAN] = 25
     End Enum
 End Namespace
