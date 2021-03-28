@@ -393,6 +393,12 @@ Namespace Language.Vectorization
             Return Linq.which(Me.Select(assert))
         End Function
 
+        Public Function Copy(start As Integer, size As Integer) As T()
+            Dim slice As T() = New T(size - 1) {}
+            Call System.Array.ConstrainedCopy(buffer, start, slice, Scan0, size)
+            Return slice
+        End Function
+
         ''' <summary>
         ''' 没用？？？
         ''' </summary>

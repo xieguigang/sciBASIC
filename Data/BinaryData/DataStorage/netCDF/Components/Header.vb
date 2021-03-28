@@ -134,7 +134,6 @@ Namespace netCDF.Components
             Dim variables = buffer.variablesList(dimList.recordId, version)
             Me.variables = variables.variables
             Me.recordDimension.recordStep = variables.recordStep
-            Me.recordDimension.length -= variables.recordStep
         End Sub
 
         Public Iterator Function checkVariableIdConflicts() As IEnumerable(Of String)
