@@ -120,5 +120,24 @@ Namespace netCDF
         Public Function str2num(type As String) As CDFDataTypes
             Return enumParser.TryGetValue(LCase(type), [default]:=CDFDataTypes.undefined)
         End Function
+
+        <Extension>
+        Public Function ToType(type As CDFDataTypes) As Type
+            Select Case type
+                Case CDFDataTypes.BYTE : Return GetType(Byte)
+                Case CDFDataTypes.CHAR : Return GetType(Char)
+                Case CDFDataTypes.BOOLEAN
+                    ' 20210212 bytes flags for maps boolean
+                    Return GetType(Boolean)
+                Case CDFDataTypes.DOUBLE : Return GetType(Double)
+                Case CDFDataTypes.FLOAT : Return GetType(Single)
+                Case CDFDataTypes.INT : Return GetType(Integer)
+                Case CDFDataTypes.LONG : Return GetType(Long)
+                Case CDFDataTypes.SHORT : Return GetType(Short)
+                Case Else
+                    ' istanbul ignore next
+                    Return Utils.notNetcdf(True, $"non valid type {type}")
+            End Select
+        End Function
     End Module
 End Namespace

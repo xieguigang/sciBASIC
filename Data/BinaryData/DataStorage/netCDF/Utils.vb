@@ -103,7 +103,8 @@ Namespace netCDF
         ''' buffer - Buffer for the file data
         ''' </param>
         ''' <returns>Name</returns>
-        <Extension> Public Function readName(buffer As BinaryDataReader) As String
+        <Extension>
+        Public Function readName(buffer As BinaryDataReader) As String
             ' Read name
             Dim nameLength = buffer.ReadUInt32()
             Dim name() = buffer.ReadChars(nameLength)
@@ -159,6 +160,25 @@ Namespace netCDF
                 Case CDFDataTypes.INT : Return buffer.ReadInt32s(size)
                 Case CDFDataTypes.LONG : Return buffer.ReadInt64s(size)
                 Case CDFDataTypes.SHORT : Return buffer.ReadInt16s(size)
+                Case Else
+                    ' istanbul ignore next
+                    Return Utils.notNetcdf(True, $"non valid type {type}")
+            End Select
+        End Function
+
+        <Extension>
+        Public Function GetReader(buffer As BinaryDataReader, type As CDFDataTypes) As Func(Of Object)
+            Select Case type
+                Case CDFDataTypes.BYTE : Return Function() buffer.ReadByte
+                Case CDFDataTypes.CHAR : Return Function() buffer.ReadChar
+                Case CDFDataTypes.BOOLEAN
+                    ' 20210212 bytes flags for maps boolean
+                    Return Function() buffer.ReadByte <> 0
+                Case CDFDataTypes.DOUBLE : Return Function() buffer.ReadDouble
+                Case CDFDataTypes.FLOAT : Return Function() buffer.ReadSingle
+                Case CDFDataTypes.INT : Return Function() buffer.ReadInt32
+                Case CDFDataTypes.LONG : Return Function() buffer.ReadInt64
+                Case CDFDataTypes.SHORT : Return Function() buffer.ReadInt16
                 Case Else
                     ' istanbul ignore next
                     Return Utils.notNetcdf(True, $"non valid type {type}")

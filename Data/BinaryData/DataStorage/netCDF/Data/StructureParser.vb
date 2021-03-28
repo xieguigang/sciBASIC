@@ -207,6 +207,14 @@ Namespace netCDF
             Return (variables:=variables, recordStep:=recordStep)
         End Function
 
+        ''' <summary>
+        ''' var = name nelems [dimid ...] vatt_list nc_type vsize begin	
+        ''' </summary>
+        ''' <param name="buffer"></param>
+        ''' <param name="recordId%"></param>
+        ''' <param name="version"></param>
+        ''' <param name="recordStep%"></param>
+        ''' <returns></returns>
         <Extension>
         Private Function readVariableInternal(buffer As BinaryDataReader, recordId%?, version As Byte, ByRef recordStep%) As variable
             ' Read name
@@ -243,6 +251,8 @@ Namespace netCDF
 
             ' Count amount of record variables
             If ((recordId IsNot Nothing) AndAlso (dimensionsIds(0) = recordId)) Then
+                ' For record variables, it is the amount of space per
+                ' record.
                 recordStep += varSize
                 record = True
             End If

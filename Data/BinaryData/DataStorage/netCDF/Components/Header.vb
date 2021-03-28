@@ -60,8 +60,21 @@ Namespace netCDF.Components
     Public Class Header
 
 #Region "Grammar constants"
+
+        ''' <summary>
+        ''' NC_DIMENSION = \x00 \x00 \x00 \x0A	
+        ''' tag for list of dimensions
+        ''' </summary>
         Public Const NC_DIMENSION = 10
+        ''' <summary>
+        ''' NC_VARIABLE = \x00 \x00 \x00 \x0B
+        ''' tag for list of variables
+        ''' </summary>
         Public Const NC_VARIABLE = 11
+        ''' <summary>
+        ''' NC_ATTRIBUTE = \x00 \x00 \x00 \x0C
+        ''' tag for list of attributes
+        ''' </summary>
         Public Const NC_ATTRIBUTE = 12
 #End Region
 
@@ -85,6 +98,12 @@ Namespace netCDF.Components
         ''' </summary>
         ''' <returns></returns>
         Public Property variables As variable()
+
+        ''' <summary>
+        ''' + \x01 classic format (CDF-1)
+        ''' + \x02 64-bit offset format (CDF-2)
+        ''' </summary>
+        ''' <returns></returns>
         Public Property version As Byte
 
         Sub New()
@@ -115,6 +134,7 @@ Namespace netCDF.Components
             Dim variables = buffer.variablesList(dimList.recordId, version)
             Me.variables = variables.variables
             Me.recordDimension.recordStep = variables.recordStep
+            Me.recordDimension.length -= variables.recordStep
         End Sub
 
         Public Iterator Function checkVariableIdConflicts() As IEnumerable(Of String)

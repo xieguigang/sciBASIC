@@ -63,7 +63,25 @@ Namespace netCDF.Components
         ''' (<see cref="Header.dimensions"/>)
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' Dimension ID (index into dim_list) for variable
+        ''' shape. We say this Is a "record variable" if And only
+        ''' if the first dimension Is the record dimension.
+        ''' </remarks>
         <XmlAttribute> Public Property dimensions As Integer()
+
+        Public ReadOnly Property dimensionality As dimensionality
+            Get
+                If dimensions.IsNullOrEmpty Then
+                    Return dimensionality.scalar
+                ElseIf dimensions.Length = 1 Then
+                    Return dimensionality.vector
+                Else
+                    Return dimensionality.matrix
+                End If
+            End Get
+        End Property
+
         ''' <summary>
         ''' Array with the attributes of the variable
         ''' </summary>
@@ -78,6 +96,10 @@ Namespace netCDF.Components
         ''' Number with the size of the variable.(在文件之中的数据字节大小)
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' Variable size. If not a record variable, the amount
+        ''' of space in bytes allocated to the variable's data.
+        ''' </remarks>
         <XmlAttribute> Public Property size As Integer
         ''' <summary>
         ''' Number with the offset where of the variable begins
@@ -112,4 +134,15 @@ Namespace netCDF.Components
             Return $"Dim {name}[offset={offset}] As {type.Description}"
         End Function
     End Class
+
+    ''' <summary>
+    ''' dimensionality (rank) of the variable
+    ''' 
+    ''' 0 for scalar, 1 for vector, 2 for matrix
+    ''' </summary>
+    Public Enum dimensionality
+        scalar = 0
+        vector = 1
+        matrix = 2
+    End Enum
 End Namespace
