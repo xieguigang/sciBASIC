@@ -642,6 +642,7 @@
     <Compile Include="BarPlot\RectangleStyles.vb" />
     <Compile Include="BarPlot\StackedBarPlot.vb" />
     <Compile Include="BarPlot\StyledBarplot.vb" />
+    <Compile Include="Contour\Utils.vb" />
     <Compile Include="csv\Extensions.vb" />
     <Compile Include="Fractions\LabelStyles.vb" />
     <Compile Include="Fractions\RadarChart.vb" />
@@ -680,7 +681,7 @@
     <Compile Include="csv\SerialData.vb" />
     <Compile Include="g\Legends\LegendStyles.vb" />
     <Compile Include="BarPlot\Data\BarDataGroup.vb" />
-    <Compile Include="Contour.vb" />
+    <Compile Include="Contour\ContourPlot.vb" />
     <Compile Include="BarPlot\Histogram\Histogram.vb" />
     <Compile Include="ImageData.vb" />
     <Compile Include="Fractions\PieChart.vb" />

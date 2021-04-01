@@ -53,6 +53,10 @@ Namespace Drawing2D.Colors
 
     Public Enum Palettes
 
+        NA
+
+        BlackGreenRed
+
         ''' <summary>
         ''' Includes 20 typical colors that used in Google Android material design.
         ''' </summary>
@@ -150,7 +154,7 @@ Namespace Drawing2D.Colors
         ''' <summary>
         ''' ColorBrewer Sequential schemes
         ''' </summary>
-        <Description("YlOrRd:c9")> YlOrRd
+        <Description("YlOrRd:c8")> YlOrRd
         ''' <summary>
         ''' ColorBrewer Sequential schemes
         ''' </summary>

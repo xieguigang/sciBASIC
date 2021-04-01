@@ -1,51 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::a01bf2dba2d11e424c373d562f34caad, Data\BinaryData\DataStorage\HDF5\HDF5File.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class HDF5File
-    ' 
-    '         Properties: attributes, fileName, superblock
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: attributeTable, GetCacheObject, ToString
-    ' 
-    '         Sub: addCache, (+2 Overloads) Dispose, parseHeader
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class HDF5File
+' 
+'         Properties: attributes, fileName, superblock
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: attributeTable, GetCacheObject, ToString
+' 
+'         Sub: addCache, (+2 Overloads) Dispose, parseHeader
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO.HDF5.device
@@ -133,6 +134,18 @@ Namespace HDF5
             Me.reader = New BinaryFileReader(fileName)
             Me.fileName = fileName.GetFullPath
             Me.superblock = New Superblock(Me, address:=Scan0)
+
+            Call parseHeader()
+        End Sub
+
+        Sub New(buffer As Stream)
+            Me.reader = New BinaryFileReader(buffer)
+            Me.fileName = buffer.ToString
+            Me.superblock = New Superblock(Me, address:=Scan0)
+
+            If TypeOf buffer Is FileStream Then
+                Me.fileName = DirectCast(buffer, FileStream).Name
+            End If
 
             Call parseHeader()
         End Sub

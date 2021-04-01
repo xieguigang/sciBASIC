@@ -76,6 +76,14 @@ Namespace My
         ''' LoggingDriver(header$, message$, level As MSG_TYPES)
         ''' </summary>
         Public redirectError As LoggingDriver
+        ''' <summary>
+        ''' LoggingDriver(header$, message$, level As MSG_TYPES)
+        ''' </summary>
+        Public redirectDebug As LoggingDriver
+        ''' <summary>
+        ''' LoggingDriver(header$, message$, level As MSG_TYPES)
+        ''' </summary>
+        Public redirectInfo As LoggingDriver
 
         ''' <summary>
         ''' Translate <see cref="MSG_TYPES"/> to <see cref="ConsoleColor"/>

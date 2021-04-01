@@ -13,10 +13,10 @@
 		<PackageIcon>logo-knot.png</PackageIcon>
 		<RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
 		<Platforms>AnyCPU;x64</Platforms>
-		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Description>LAPACK (Linear Algebra PACKage)</Description>
-		<Configurations>Debug;Release;Rsharp_app_release;LipidSearch</Configurations>
+		<Configurations>Debug;Release;Rsharp_app_release;LipidSearch;mzkit</Configurations>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -41,6 +41,10 @@
 	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|AnyCPU'">
+	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
+	</PropertyGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
 	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
 	</PropertyGroup>
@@ -50,6 +54,16 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
+	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+	  <Optimize>false</Optimize>
+	  <DebugSymbols>true</DebugSymbols>
+	  <DebugType>full</DebugType>
+	  <DefineDebug>false</DefineDebug>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|x64'">
 	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
 	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>

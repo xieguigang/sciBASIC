@@ -1055,7 +1055,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\Rsharp_app_release\</OutputPath>
+    <OutputPath>..\..\..\..\R-sharp\App\</OutputPath>
     <DefineConstants>FRAMEWORD_CORE=1,UNIX=0,NET_48=TRUE</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
@@ -1428,7 +1428,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'LipidSearch|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\..\..\..\..\biodeep\biodeep_pipeline\lipidsearch\assembly\</OutputPath>
+    <OutputPath>..\..\..\..\..\..\biodeep\biodeep_pipeline\lipidsearch\LipidSearch\assembly\</OutputPath>
     <DefineConstants>FRAMEWORD_CORE=1,UNIX=1,NET_48=TRUE</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
@@ -1598,7 +1598,8 @@
     <Compile Include="ApplicationServices\Terminal\xConsole\Comparer.vb" />
     <Compile Include="ApplicationServices\Terminal\xConsole\Spinner.vb" />
     <Compile Include="ApplicationServices\Terminal\xConsole\CoolWriteSettings.vb" />
-    <Compile Include="ApplicationServices\VBDev\deps.json.vb" />
+    <Compile Include="ApplicationServices\VBDev\NetCore5\Elements.vb" />
+    <Compile Include="ApplicationServices\VBDev\NetCore5\deps.json.vb" />
     <Compile Include="CommandLine\CLI\ProcessEx.vb" />
     <Compile Include="CommandLine\Parsers\CommandLineTokenlizer.vb" />
     <Compile Include="CommandLine\Parsers\CliArgumentParsers.vb" />

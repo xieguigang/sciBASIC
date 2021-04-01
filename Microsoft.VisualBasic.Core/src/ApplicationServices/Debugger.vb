@@ -171,11 +171,12 @@ Public Module VBDebugger
         Dim start = Now.ToLongTimeString
         Dim ms& = Utils.Time(test)
         Dim end$ = Now.ToLongTimeString
+        Dim head$ = $"Benchmark `{ms.FormatTicks}` {start} - {[end]}"
+        Dim str$ = " " & $"{trace} -> {CStrSafe(test.Target, "null")}::{test.Method.Name}"
 
-        If Not Mute AndAlso m_level < DebuggerLevels.Warning Then
-            Dim head$ = $"Benchmark `{ms.FormatTicks}` {start} - {[end]}"
-            Dim str$ = " " & $"{trace} -> {CStrSafe(test.Target, "null")}::{test.Method.Name}"
-
+        If Not My.Log4VB.redirectInfo Is Nothing Then
+            Call My.Log4VB.redirectInfo(head, str, MSG_TYPES.INF)
+        ElseIf Not Mute AndAlso m_level < DebuggerLevels.Warning Then
             Call My.Log4VB.Print(head, str, ConsoleColor.Magenta, ConsoleColor.Magenta)
         End If
 
@@ -206,7 +207,9 @@ Public Module VBDebugger
             New String(" ", 9), New String(" ", 10)
         }
 
-        If Not mute AndAlso Not VBDebugger.Mute AndAlso m_level < DebuggerLevels.Warning Then
+        If Not My.Log4VB.redirectDebug Is Nothing Then
+            Call My.Log4VB.redirectDebug($"{Now.ToString}", msg, MSG_TYPES.DEBUG)
+        ElseIf Not mute AndAlso Not VBDebugger.Mute AndAlso m_level < DebuggerLevels.Warning Then
             Dim head As String = $"DEBUG {Now.ToString}"
             Dim str As String = $"{indents(indent)} {msg}"
 
@@ -224,7 +227,9 @@ Public Module VBDebugger
     End Function
 
     <Extension> Public Sub __INFO_ECHO(msg$, Optional silent As Boolean = False)
-        If Not Mute AndAlso m_level < DebuggerLevels.Warning Then
+        If Not My.Log4VB.redirectInfo Is Nothing Then
+            Call My.Log4VB.redirectInfo(Now.ToString, msg, MSG_TYPES.INF)
+        ElseIf Not Mute AndAlso m_level < DebuggerLevels.Warning Then
             Dim head As String = $"INFOM {Now.ToString}"
             Dim str As String = " " & msg
 
@@ -310,7 +315,11 @@ Public Module VBDebugger
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Sub WriteLine(msg$, color As ConsoleColor)
-        My.Log4VB.Println(msg, color)
+        If Not My.redirectInfo Is Nothing Then
+            My.Log4VB.redirectInfo(Now.ToString, msg, MSG_TYPES.INF)
+        Else
+            My.Log4VB.Println(msg, color)
+        End If
     End Sub
 
     ''' <summary>
@@ -322,7 +331,7 @@ Public Module VBDebugger
     <Extension>
     Public Function Warning(msg As String, <CallerMemberName> Optional calls As String = "") As String
         If Not My.Log4VB.redirectWarning Is Nothing Then
-            Call My.Log4VB.redirectError(calls, msg, MSG_TYPES.WRN)
+            Call My.Log4VB.redirectWarning(calls, msg, MSG_TYPES.WRN)
         ElseIf Not Mute Then
             Dim head As String = $"WARNG <{calls}> {Now.ToString}"
 

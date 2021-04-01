@@ -76,13 +76,12 @@ Public Module ExpressionBuilder
                           Optional allowInStr As Boolean = True,
                           Optional caseSensitive As Boolean = False) As Expression
 
-        Dim tks As IEnumerable(Of Token(Of Tokens)) =
-            SyntaxParser.Parser(query$)
+        Dim tks As IEnumerable(Of CodeToken(Of Tokens)) = SyntaxParser.Parser(query$)
 
-        If LinqAPI.IsEquals(Of Token(Of Tokens))(tks.Count) <=
-            From x As Token(Of Tokens)
+        If LinqAPI.IsEquals(Of CodeToken(Of Tokens))(tks.Count) <=
+            From x As CodeToken(Of Tokens)
             In tks
-            Where x.Name = Tokens.AnyTerm
+            Where x.name = Tokens.AnyTerm
             Select x Then
 
             If anyDefault <> Tokens.op_AND AndAlso
@@ -104,12 +103,12 @@ Public Module ExpressionBuilder
             '        }
             '    }
             '}
-            Dim list As New List(Of Token(Of Tokens))(tks.First)
+            Dim list As New List(Of CodeToken(Of Tokens))(tks.First)
 
-            For Each x As Token(Of Tokens) In tks.Skip(1)
-                list += New Token(Of Tokens) With {
-                    .Name = anyDefault,
-                    .Value = anyDefault.ToString
+            For Each x As CodeToken(Of Tokens) In tks.Skip(1)
+                list += New CodeToken(Of Tokens) With {
+                    .name = anyDefault,
+                    .text = anyDefault.ToString
                 }
                 list += x
             Next
@@ -118,7 +117,7 @@ Public Module ExpressionBuilder
         End If
 
         Try
-            Return New Pointer(Of Token(Of Tokens))(tks).Build(allowInStr, caseSensitive)
+            Return New Pointer(Of CodeToken(Of Tokens))(tks).Build(allowInStr, caseSensitive)
         Catch ex As Exception
             ex = New Exception("$query_expression:= " & query, ex)
             Throw ex
@@ -126,7 +125,7 @@ Public Module ExpressionBuilder
     End Function
 
     <Extension>
-    Public Function Build(tks As Pointer(Of Token(Of Tokens)),
+    Public Function Build(tks As Pointer(Of CodeToken(Of Tokens)),
                           Optional allowInStr As Boolean = True,
                           Optional caseSensitive As Boolean = False) As Expression
 
@@ -138,7 +137,7 @@ Public Module ExpressionBuilder
 
             meta = New MetaExpression
 
-            Select Case t.Type
+            Select Case t.name
                 Case SyntaxParser.Tokens.AnyTerm
                     meta.Expression = AssertionProvider.ContainsAny(t, allowInStr, caseSensitive)
                 Case SyntaxParser.Tokens.MustTerm
@@ -165,7 +164,7 @@ Public Module ExpressionBuilder
                 t = +tks
             End If
 
-            Select Case t.Type
+            Select Case t.name
                 Case SyntaxParser.Tokens.stackClose
                     metas += meta
 
@@ -190,8 +189,8 @@ Public Module ExpressionBuilder
         }
     End Function
 
-    Public Function IsOperator(x As Token(Of Tokens)) As Boolean
-        Dim t As Tokens = x.Type
+    Public Function IsOperator(x As CodeToken(Of Tokens)) As Boolean
+        Dim t As Tokens = x.name
 
         Return t = SyntaxParser.Tokens.op_AND OrElse
             t = SyntaxParser.Tokens.op_NOT OrElse

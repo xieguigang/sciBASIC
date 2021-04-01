@@ -70,12 +70,30 @@ Namespace XML.docProps
 
         <XmlElement(ElementName:=NameOf(creator), [Namespace]:=OpenXML.dc)>
         Public Property creator As String
+
         <XmlElement(ElementName:=NameOf(lastModifiedBy), [Namespace]:=OpenXML.cp)>
         Public Property lastModifiedBy As String
+
         <XmlElement(NameOf(created), [Namespace]:=OpenXML.dcterms)>
         Public Property created As W3CDTF
+
         <XmlElement(NameOf(modified), [Namespace]:=OpenXML.dcterms)>
         Public Property modified As W3CDTF
+
+        Public Property title As String
+        Public Property subject As String
+        
+        <XmlElement([Namespace]:=OpenXML.cp)>
+        Public Property keywords As String
+
+        <XmlElement([Namespace]:=OpenXML.dc)>
+        Public Property description As String
+
+        <XmlElement([Namespace]:=OpenXML.cp)>
+        Public Property category As String
+
+        <XmlElement([Namespace]:=OpenXML.cp)>
+        Public Property contentStatus As String
 
         Protected Overrides Function filePath() As String
             Return "docProps/core.xml"

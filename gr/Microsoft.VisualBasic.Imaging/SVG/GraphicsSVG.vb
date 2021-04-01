@@ -132,6 +132,24 @@ Namespace SVG
             End Set
         End Property
 
+        Public Overrides Property CompositingQuality As CompositingQuality
+            Get
+                Throw New NotImplementedException()
+            End Get
+            Set(value As CompositingQuality)
+                Throw New NotImplementedException()
+            End Set
+        End Property
+
+        Public Overrides Property CompositingMode As CompositingMode
+            Get
+                Throw New NotImplementedException()
+            End Get
+            Set(value As CompositingMode)
+                Throw New NotImplementedException()
+            End Set
+        End Property
+
         Public Overrides ReadOnly Property IsClipEmpty As Boolean
             Get
                 Throw New NotImplementedException()

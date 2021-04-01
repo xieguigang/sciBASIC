@@ -56,8 +56,8 @@ Public Module AssertionProvider
     ''' <param name="t"></param>
     ''' <returns></returns>
     ''' <remarks>得分最高</remarks>
-    Public Function MustContains(t As Token(Of Tokens), Optional caseSensitive As Boolean = True) As IAssertion
-        Dim term$ = t.Text.GetString
+    Public Function MustContains(t As CodeToken(Of Tokens), Optional caseSensitive As Boolean = True) As IAssertion
+        Dim term$ = t.text.GetString
         Dim evaluate As Func(Of String, Boolean) =
             term$.CompileMustSearch(caseSensitive)
 
@@ -76,8 +76,8 @@ Public Module AssertionProvider
                End Function
     End Function
 
-    Public Function ContainsAny(t As Token(Of Tokens), Optional allowInstr As Boolean = True, Optional caseSensitive As Boolean = True) As IAssertion
-        Dim term$ = t.Text.GetString("'")
+    Public Function ContainsAny(t As CodeToken(Of Tokens), Optional allowInstr As Boolean = True, Optional caseSensitive As Boolean = True) As IAssertion
+        Dim term$ = t.text.GetString("'")
 
         If Not term.Contains(":"c) Then  ' 并不是对特定的域进行搜索
             Dim evaluate As Func(Of String, Boolean) =

@@ -59,21 +59,21 @@ Imports Microsoft.VisualBasic.Language
 Public Module SyntaxParser
 
     <Extension>
-    Public Function Debug(exp As IEnumerable(Of Token(Of Tokens))) As String
+    Public Function Debug(exp As IEnumerable(Of CodeToken(Of Tokens))) As String
         Dim list As New List(Of String)
 
-        For Each x As Token(Of Tokens) In exp
-            If x.Type = Tokens.AnyTerm OrElse x.Type = Tokens.MustTerm Then
-                list += $"[{x.Type.ToString}, {x.Text}]"
-            ElseIf x.Type = Tokens.stackClose Then
+        For Each x As CodeToken(Of Tokens) In exp
+            If x.name = Tokens.AnyTerm OrElse x.name = Tokens.MustTerm Then
+                list += $"[{x.name.ToString}, {x.text}]"
+            ElseIf x.name = Tokens.stackClose Then
                 list += "("
-            ElseIf x.Type = Tokens.stackOpen Then
+            ElseIf x.name = Tokens.stackOpen Then
                 list += ")"
-            ElseIf x.Type = Tokens.op_AND Then
+            ElseIf x.name = Tokens.op_AND Then
                 list += "AND"
-            ElseIf x.Type = Tokens.op_NOT Then
+            ElseIf x.name = Tokens.op_NOT Then
                 list += "NOT"
-            ElseIf x.Type = Tokens.op_OR Then
+            ElseIf x.name = Tokens.op_OR Then
                 list += "OR"
             End If
         Next
@@ -143,8 +143,8 @@ Public Module SyntaxParser
 
     Const Marks As Char = "'"c
 
-    Public Function Parser(query$) As List(Of Token(Of Tokens))
-        Dim tklist As New List(Of Token(Of Tokens))
+    Public Function Parser(query$) As List(Of CodeToken(Of Tokens))
+        Dim tklist As New List(Of CodeToken(Of Tokens))
         Dim quotOpen As Boolean
         Dim markOpen As Boolean
         Dim escape As Boolean
@@ -166,13 +166,13 @@ Public Module SyntaxParser
                     tmp += c
 
                     If isQuotClose Then  ' 这里的这个双引号是结束符
-                        tklist += New Token(Of Tokens)(Tokens.MustTerm, New String(tmp))
+                        tklist += New CodeToken(Of Tokens)(Tokens.MustTerm, New String(tmp))
                         tmp.Clear()
                     End If
                 End If
             ElseIf c = " "c OrElse c = ASCII.TAB Then
                 If Not quotOpen AndAlso Not escape AndAlso Not markOpen Then
-                    tklist += New Token(Of Tokens)(Tokens.AnyTerm, New String(tmp))
+                    tklist += New CodeToken(Of Tokens)(Tokens.AnyTerm, New String(tmp))
                     tmp.Clear()
                 Else
                     tmp += c
@@ -200,7 +200,7 @@ Public Module SyntaxParser
                         markOpen = Not markOpen
 
                         If ismarkClose Then  ' 这里的这个双引号是结束符
-                            tklist += New Token(Of Tokens)(Tokens.AnyTerm, New String(tmp))
+                            tklist += New CodeToken(Of Tokens)(Tokens.AnyTerm, New String(tmp))
                             tmp.Clear()
                         End If
                     End If
@@ -218,7 +218,7 @@ Public Module SyntaxParser
                 End If
 
                 If c = stackOpen Then
-                    tklist += New Token(Of Tokens)(Tokens.stackOpen, "(")
+                    tklist += New CodeToken(Of Tokens)(Tokens.stackOpen, "(")
                     tmp.Clear()
                     Continue Do
                 ElseIf c = stackClose Then
@@ -226,8 +226,8 @@ Public Module SyntaxParser
                         tmp.RemoveLast
                     End If
 
-                    tklist += New Token(Of Tokens)(Tokens.AnyTerm, New String(tmp))
-                    tklist += New Token(Of Tokens)(Tokens.stackClose, ")")
+                    tklist += New CodeToken(Of Tokens)(Tokens.AnyTerm, New String(tmp))
+                    tklist += New CodeToken(Of Tokens)(Tokens.stackClose, ")")
                     tmp.Clear()
                     Continue Do
                 End If
@@ -248,7 +248,7 @@ Public Module SyntaxParser
 
                             If t.Current = " "c Then
                                 ' 是OR
-                                tklist += New Token(Of Tokens)(Tokens.op_OR, "OR")
+                                tklist += New CodeToken(Of Tokens)(Tokens.op_OR, "OR")
                                 tmp.Clear()
                                 t += 1
 
@@ -261,7 +261,7 @@ Public Module SyntaxParser
 
                             If t.Current = " "c Then
                                 ' 是AND/NOT
-                                tklist += New Token(Of Tokens)(type, type.ToString)
+                                tklist += New CodeToken(Of Tokens)(type, type.ToString)
                                 tmp.Clear()
                                 t += 1
 
@@ -273,8 +273,8 @@ Public Module SyntaxParser
             End If
         Loop
 
-        tklist += New Token(Of Tokens)(Tokens.AnyTerm, New String(tmp))
-        tklist = New List(Of Token(Of Tokens))(tklist.Where(Function(x) Not String.IsNullOrEmpty(x.Text)))
+        tklist += New CodeToken(Of Tokens)(Tokens.AnyTerm, New String(tmp))
+        tklist = New List(Of CodeToken(Of Tokens))(tklist.Where(Function(x) Not String.IsNullOrEmpty(x.text)))
 
         Return tklist
     End Function

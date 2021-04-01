@@ -680,11 +680,14 @@
     <OutputPath>bin\x64\LipidSearch\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <DocumentationFile>Microsoft.VisualBasic.Data.BinaryData.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'LipidSearch|x86'">
     <OutputPath>bin\x86\LipidSearch\</OutputPath>
@@ -726,6 +729,38 @@
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'PlantMAT|AnyCPU'">
+    <OutputPath>bin\PlantMAT\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Data.BinaryData.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'PlantMAT|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\PlantMAT\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Data.BinaryData.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'PlantMAT|x86'">
+    <OutputPath>bin\x86\PlantMAT\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Data.BinaryData.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
     <Import Include="System" />
@@ -756,6 +791,8 @@
     <Compile Include="Bzip2\Math\HuffmanAllocator.vb" />
     <Compile Include="Bzip2\Math\MoveToFront.vb" />
     <Compile Include="Extensions\FixLengthString.vb" />
+    <Compile Include="Extensions\IByteReader.vb" />
+    <Compile Include="Extensions\IByteWriter.vb" />
     <Compile Include="Extensions\MSWindows.vb" />
     <Compile Include="BitSet.vb" />
     <Compile Include="Stream\BinaryDateTimeFormat.vb" />
@@ -769,42 +806,7 @@
     <Compile Include="Stream\Offset.vb" />
     <Compile Include="Properties\AssemblyInfo.vb" />
     <Compile Include="Stream\SeekTask.vb" />
-    <Compile Include="XDR\Attributes\CaseAttribute.vb" />
-    <Compile Include="XDR\Attributes\FixAttribute.vb" />
-    <Compile Include="XDR\Attributes\OptionAttribute.vb" />
-    <Compile Include="XDR\Attributes\OrderAttribute.vb" />
-    <Compile Include="XDR\Attributes\SwitchAttribute.vb" />
-    <Compile Include="XDR\Attributes\VarAttribute.vb" />
     <Compile Include="XDR\Unpacker.vb" />
-    <Compile Include="XDR\Delegates.vb" />
-    <Compile Include="XDR\EmitContexts\EmitContext.vb" />
-    <Compile Include="XDR\EmitContexts\EmitResult.vb" />
-    <Compile Include="XDR\EmitContexts\FieldDesc.vb" />
-    <Compile Include="XDR\EmitContexts\OrderModel.vb" />
-    <Compile Include="XDR\EmitContexts\SwitchModel.vb" />
-    <Compile Include="XDR\Emit\BuildRequest.vb" />
-    <Compile Include="XDR\Emit\DelegateCacheDescription.vb" />
-    <Compile Include="XDR\Emit\ErrorStub.vb" />
-    <Compile Include="XDR\Emit\ErrorStubType.vb" />
-    <Compile Include="XDR\Emit\StaticCacheDescription.vb" />
-    <Compile Include="XDR\EnumHelper.vb" />
-    <Compile Include="XDR\IByteReader.vb" />
-    <Compile Include="XDR\IByteWriter.vb" />
-    <Compile Include="XDR\MapException.vb" />
-    <Compile Include="XDR\NamespaceDoc.vb" />
-    <Compile Include="XDR\OpaqueType.vb" />
-    <Compile Include="XDR\Reading\ReadBuilder.EmitDynReader.vb" />
-    <Compile Include="XDR\Reading\ReadBuilder.EmitDynReadMapper.vb" />
-    <Compile Include="XDR\Reading\ReadBuilder.vb" />
-    <Compile Include="XDR\Reading\Reader.vb" />
-    <Compile Include="XDR\Reading\ReadMapper.vb" />
-    <Compile Include="XDR\TypeExtensions.vb" />
-    <Compile Include="XDR\Void.vb" />
-    <Compile Include="XDR\Writing\WriteBuilder.EmitDynWriteMapper.vb" />
-    <Compile Include="XDR\Writing\WriteBuilder.EmitDynWriter.vb" />
-    <Compile Include="XDR\Writing\WriteBuilder.vb" />
-    <Compile Include="XDR\Writing\WriteMapper.vb" />
-    <Compile Include="XDR\Writing\Writer.vb" />
     <Compile Include="XDR\XdrEncoding.vb" />
   </ItemGroup>
   <ItemGroup>
@@ -813,6 +815,5 @@
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

@@ -72,6 +72,25 @@ Namespace PostScript
         Public Overrides ReadOnly Property DpiX As Single
         Public Overrides ReadOnly Property DpiY As Single
         Public Overrides Property InterpolationMode As InterpolationMode
+
+        Public Overrides Property CompositingMode As CompositingMode
+            Get
+                Throw New NotImplementedException()
+            End Get
+            Set(value As CompositingMode)
+                Throw New NotImplementedException()
+            End Set
+        End Property
+
+        Public Overrides Property CompositingQuality As CompositingQuality
+            Get
+                Throw New NotImplementedException()
+            End Get
+            Set(value As CompositingQuality)
+                Throw New NotImplementedException()
+            End Set
+        End Property
+
         Public Overrides ReadOnly Property IsClipEmpty As Boolean
         Public Overrides ReadOnly Property IsVisibleClipEmpty As Boolean
         Public Overrides Property PageScale As Single

@@ -1,66 +1,67 @@
 ﻿#Region "Microsoft.VisualBasic::e6b1a252538a6ee7d7c23d74ab2c6ce6, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\deps.json.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class deps
-    ' 
-    '         Properties: compilationOptions, libraries, runtimeTarget, targets
-    ' 
-    '         Function: GetReferenceProject, RetriveLoadedAssembly
-    ' 
-    '         Sub: TryHandleNetCore5AssemblyBugs
-    ' 
-    '     Class target
-    ' 
-    '         Properties: dependencies
-    ' 
-    '     Class library
-    ' 
-    '         Properties: hashPath, path, serviceable, sha512, type
-    ' 
-    '     Class runtimeTarget
-    ' 
-    '         Properties: name, signature
-    ' 
-    '     Class compilationOptions
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class deps
+' 
+'         Properties: compilationOptions, libraries, runtimeTarget, targets
+' 
+'         Function: GetReferenceProject, RetriveLoadedAssembly
+' 
+'         Sub: TryHandleNetCore5AssemblyBugs
+' 
+'     Class target
+' 
+'         Properties: dependencies
+' 
+'     Class library
+' 
+'         Properties: hashPath, path, serviceable, sha512, type
+' 
+'     Class runtimeTarget
+' 
+'         Properties: name, signature
+' 
+'     Class compilationOptions
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -80,6 +81,8 @@ Namespace ApplicationServices.Development.NetCore5
         ''' get list of project reference name
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetReferenceProject() As IEnumerable(Of String)
             Return From entry As KeyValuePair(Of String, library)
                    In libraries
@@ -88,6 +91,7 @@ Namespace ApplicationServices.Development.NetCore5
                    Select entry.Key.StringReplace("/\d+(\.\d+)+", "")
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Shared Function RetriveLoadedAssembly() As IEnumerable(Of String)
             Return From assembly As Assembly
                    In AppDomain.CurrentDomain.GetAssemblies()
@@ -100,9 +104,20 @@ Namespace ApplicationServices.Development.NetCore5
         ''' missing assembly when load reference type module
         ''' </summary>
         ''' <param name="package"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Sub TryHandleNetCore5AssemblyBugs(package As Type)
-            Dim home As String = package.Assembly.Location.ParentPath
-            Dim moduleName As String = package.Assembly.GetName.Name
+            Call TryHandleNetCore5AssemblyBugs(package.Assembly)
+        End Sub
+
+        ''' <summary>
+        ''' handling of the bugs on .NET 5 runtime
+        ''' missing assembly when load reference type module
+        ''' </summary>
+        ''' <param name="package"></param>
+        Public Shared Sub TryHandleNetCore5AssemblyBugs(package As Assembly)
+            Dim home As String = package.Location.ParentPath
+            Dim moduleName As String = package.GetName.Name
             Dim deps As deps = $"{home}/{moduleName}.deps.json".LoadJsonFile(Of deps)
             Dim referenceList As String() = deps _
                 .GetReferenceProject _
@@ -125,28 +140,5 @@ Namespace ApplicationServices.Development.NetCore5
                 globalsReference(name) = assembly
             Next
         End Sub
-    End Class
-
-    Public Class target
-        Public Property dependencies As Dictionary(Of String, String)
-    End Class
-
-    Public Class library
-        Public Property type As String
-        Public Property serviceable As Boolean
-        Public Property sha512 As String
-        Public Property path As String
-        Public Property hashPath As String
-    End Class
-
-    Public Class runtimeTarget
-
-        Public Property name As String
-        Public Property signature As String
-
-    End Class
-
-    Public Class compilationOptions
-
     End Class
 End Namespace

@@ -199,7 +199,7 @@ Namespace ComponentModel.Ranges
         Sub New()
         End Sub
 
-#If NET_48 Then
+#If NET_48 Or netcore5 Then
 
         ''' <summary>
         ''' Unit convert

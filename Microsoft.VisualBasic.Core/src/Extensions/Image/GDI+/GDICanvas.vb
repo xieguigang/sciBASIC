@@ -88,6 +88,24 @@ Namespace Imaging
             End Set
         End Property
 
+        Public Overrides Property CompositingMode As CompositingMode
+            Get
+                Return g.CompositingMode
+            End Get
+            Set(value As CompositingMode)
+                g.CompositingMode = value
+            End Set
+        End Property
+
+        Public Overrides Property CompositingQuality As CompositingQuality
+            Get
+                Return g.CompositingQuality
+            End Get
+            Set(value As CompositingQuality)
+                g.CompositingQuality = value
+            End Set
+        End Property
+
 #Region "Default canvas style values"
         ''' <summary>
         ''' Default pen for drawing

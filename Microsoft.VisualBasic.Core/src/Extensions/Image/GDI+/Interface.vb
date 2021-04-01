@@ -54,12 +54,16 @@ Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 Imports System.Runtime.CompilerServices
 Imports stdNum = System.Math
+Imports Interpolation2D = System.Drawing.Drawing2D.InterpolationMode
 
 Namespace Imaging
 
     ''' <summary>
     ''' Encapsulates a GDI+(bitmap, wmf)/SVG etc drawing surface. This class must be inherited.
     ''' </summary>
+    ''' <remarks>
+    ''' <see cref="Graphics"/>
+    ''' </remarks>
     Public MustInherit Class IGraphics
         Implements IDisposable
 
@@ -82,22 +86,22 @@ Namespace Imaging
         ''     A System.Drawing.RectangleF structure that represents a bounding rectangle for
         ''     the clipping region of this System.Drawing.Graphics.
         'Public MustOverride ReadOnly Property ClipBounds As RectangleF
-        ''
-        '' Summary:
-        ''     Gets a value that specifies how composited images are drawn to this System.Drawing.Graphics.
-        ''
-        '' Returns:
-        ''     This property specifies a member of the System.Drawing.Drawing2D.CompositingMode
-        ''     enumeration. The default is System.Drawing.Drawing2D.CompositingMode.SourceOver.
-        'Public MustOverride Property CompositingMode As CompositingMode
-        ''
-        '' Summary:
-        ''     Gets or sets the rendering quality of composited images drawn to this System.Drawing.Graphics.
-        ''
-        '' Returns:
-        ''     This property specifies a member of the System.Drawing.Drawing2D.CompositingQuality
-        ''     enumeration. The default is System.Drawing.Drawing2D.CompositingQuality.Default.
-        'Public MustOverride Property CompositingQuality As CompositingQuality
+
+        ''' <summary>
+        ''' Gets a value that specifies how composited images are drawn to this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <returns>This property specifies a member of the System.Drawing.Drawing2D.CompositingMode
+        ''' enumeration. The default is System.Drawing.Drawing2D.CompositingMode.SourceOver.
+        ''' </returns>
+        Public MustOverride Property CompositingMode As CompositingMode
+
+        ''' <summary>
+        ''' Gets or sets the rendering quality of composited images drawn to this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <returns>This property specifies a member of the System.Drawing.Drawing2D.CompositingQuality
+        ''' enumeration. The default is System.Drawing.Drawing2D.CompositingQuality.Default.</returns>
+        Public MustOverride Property CompositingQuality As CompositingQuality
+
         '
         ' Summary:
         '     Gets the horizontal resolution of this System.Drawing.Graphics.

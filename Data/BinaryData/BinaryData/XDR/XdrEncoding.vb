@@ -136,7 +136,7 @@ Namespace Xdr
         ''' Decodes the Single.
         ''' http://tools.ietf.org/html/rfc4506#section-4.6
         ''' </summary>
-        Public Function DecodeSingle(r As Xdr.IByteReader) As Single
+        Public Function DecodeSingle(r As IByteReader) As Single
             Dim num As Integer = Xdr.XdrEncoding.DecodeInt32(r)
             Return unsafeSingle(num)
         End Function
@@ -145,7 +145,7 @@ Namespace Xdr
         ''' Encodes the Single.
         ''' http://tools.ietf.org/html/rfc4506#section-4.6
         ''' </summary>
-        Public Sub EncodeSingle(v As Single, w As Xdr.IByteWriter)
+        Public Sub EncodeSingle(v As Single, w As IByteWriter)
             Xdr.XdrEncoding.EncodeInt32(unsafeInteger(v), w)
         End Sub
 
@@ -153,7 +153,7 @@ Namespace Xdr
         ''' Decodes the Double.
         ''' http://tools.ietf.org/html/rfc4506#section-4.7
         ''' </summary>
-        Public Function DecodeDouble(r As Xdr.IByteReader) As Double
+        Public Function DecodeDouble(r As IByteReader) As Double
             Dim num As Long = Xdr.XdrEncoding.DecodeInt64(r)
             Return unsafeDouble(num)
         End Function
@@ -162,7 +162,7 @@ Namespace Xdr
         ''' Encodes the Double.
         ''' http://tools.ietf.org/html/rfc4506#section-4.7
         ''' </summary>
-        Public Sub EncodeDouble(v As Double, w As Xdr.IByteWriter)
+        Public Sub EncodeDouble(v As Double, w As IByteWriter)
             Xdr.XdrEncoding.EncodeInt64(unsafeLong(v), w)
         End Sub
 

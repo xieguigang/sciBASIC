@@ -1,51 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::ec9bbaee6431787cf17776fb8f0c20c4, Microsoft.VisualBasic.Core\src\My\Framework\Config.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Config
-    ' 
-    '         Properties: DefaultFile, environment, level, mute, updates
-    ' 
-    '         Function: Load, Save, saveDefault, ToString
-    ' 
-    '         Sub: fetchConfig
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Config
+' 
+'         Properties: DefaultFile, environment, level, mute, updates
+' 
+'         Function: Load, Save, saveDefault, ToString
+' 
+'         Sub: fetchConfig
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Reflection
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
+#If netcore5 = 1 Then
+Imports Microsoft.VisualBasic.ApplicationServices.Development.NetCore5
+#End If
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -136,6 +139,11 @@ Namespace My.FrameworkInternal
 
         Private Shared Sub fetchConfig(config As Config, file$)
             Dim assembly As Assembly = Assembly.LoadFile(file)
+
+#If netcore5 = 1 Then
+            Call deps.TryHandleNetCore5AssemblyBugs(package:=assembly)
+#End If
+
             Dim configNames As FrameworkConfigAttribute() = assembly.GetTypes _
                 .Select(Function(type)
                             Return type.GetCustomAttributes(Of FrameworkConfigAttribute)

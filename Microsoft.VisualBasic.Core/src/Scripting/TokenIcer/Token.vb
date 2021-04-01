@@ -57,7 +57,7 @@ Namespace Scripting.TokenIcer
     ''' <remarks>
     ''' A Token object holds the token and token value.
     ''' </remarks>
-    Public MustInherit Class CodeToken(Of Tokens As IComparable) : Implements Value(Of String).IValueOf
+    Public Class CodeToken(Of Tokens As IComparable) : Implements Value(Of String).IValueOf
 
         ''' <summary>
         ''' Token type

@@ -136,6 +136,8 @@ Namespace Drawing2D.Colors
         ''' </summary>
         Friend Const Clusters$ = NameOf(Clusters)
 
+        ReadOnly BlackGreenRed As Color() = {Color.Black, Color.Green, Color.Red}
+
         ''' <summary>
         ''' From TSF launcher on Android
         ''' </summary>
@@ -431,6 +433,8 @@ Namespace Drawing2D.Colors
                 Return Category31
             ElseIf term.TextEquals(Designer.Clusters) Then
                 Return ClusterColour
+            ElseIf term.TextEquals(NameOf(BlackGreenRed)) Then
+                Return BlackGreenRed
             End If
 
             ' d3.js colors

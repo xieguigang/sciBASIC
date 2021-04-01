@@ -128,7 +128,7 @@ Namespace My.UNIX
         ''' <param name="verbose"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Shell(command As String, args As String, Optional verbose As Boolean = False) As String
+        Public Function Shell(command As String, args As String, Optional verbose As Boolean = False, Optional stdin$ = Nothing) As String
             Dim cmdl As String
 
             If args.StringEmpty Then
@@ -142,7 +142,7 @@ Namespace My.UNIX
                 Call Console.WriteLine($"/bin/bash -c ""{cmdl}""")
             End If
 
-            Return CommandLine.Call("/bin/bash", $"-c ""{cmdl}""")
+            Return CommandLine.Call("/bin/bash", $"-c ""{cmdl}""", [in]:=stdin)
         End Function
     End Module
 End Namespace

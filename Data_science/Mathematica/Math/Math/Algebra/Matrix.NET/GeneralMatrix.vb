@@ -391,7 +391,7 @@ Namespace LinearAlgebra.Matrix
         ''' <summary>
         ''' Make a deep copy of a matrix
         ''' </summary>
-        Public Overridable Function Copy() As GeneralMatrix
+        Public Overridable Overloads Function Copy() As GeneralMatrix
             Dim X As New GeneralMatrix(m, n)
             Dim C As Double()() = X.Array
             For i As Integer = 0 To m - 1
