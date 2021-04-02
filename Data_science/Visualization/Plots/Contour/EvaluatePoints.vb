@@ -1,5 +1,4 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Algorithm
-Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
 Imports stdNum = System.Math
@@ -19,11 +18,20 @@ Namespace Contour
         ''' </summary>
         Public formula As Func(Of Double, Double, Double)
 
+        ''' <summary>
+        ''' 得到通过计算返回来的数据
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <returns></returns>
         Public Overrides Function Evaluate(x As Double, y As Double) As Double
             Return formula(x, y)
         End Function
     End Class
 
+    ''' <summary>
+    ''' 直接返回矩阵数据
+    ''' </summary>
     Public Class MatrixEvaluate : Inherits EvaluatePoints
 
         ''' <summary>

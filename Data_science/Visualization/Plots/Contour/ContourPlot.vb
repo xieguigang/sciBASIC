@@ -79,7 +79,7 @@ Namespace Contour
     Public Class ContourPlot : Inherits Plot
 
         Public offset As Point
-
+        Public matrix As EvaluatePoints
         Public xrange As DoubleRange, yrange As DoubleRange
         Public xsteps!, ysteps!
         Public parallel As Boolean
@@ -95,24 +95,8 @@ Namespace Contour
             MyBase.New(theme)
         End Sub
 
-        Public Function GetData(plotSize As Size) As (x#, y#, z#)()
-            If func Is Nothing Then
-                ' 直接返回矩阵数据
-                Return LinqAPI.Exec(Of (x#, y#, Z#)) _
-                () <= From line As DataSet
-                      In matrix
-                      Let xi = Val(line.ID)
-                      Let data = line.Properties.Select(Function(o) (X:=xi, Y:=Val(o.Key), Z:=o.Value))
-                      Select data
-            Else
-
-                Return func _
-                .__getData(plotSize,  ' 得到通过计算返回来的数据
-                           xrange, yrange,
-                           xsteps, ysteps,
-                           parallel, matrix,
-                           unit)
-            End If
+        Private Function GetData(plotSize As Size) As (x#, y#, z#)()
+            Return matrix.__getData(plotSize, xrange, yrange, xsteps, ysteps, parallel, Nothing, unit)
         End Function
 
         ''' <summary>

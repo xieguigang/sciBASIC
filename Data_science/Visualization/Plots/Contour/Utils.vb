@@ -29,7 +29,6 @@ Namespace Contour
         ''' <returns></returns>
         Public Function Compile(exp As String) As Func(Of Double, Double, Double)
             With New ExpressionEngine()
-
                 !x = 0
                 !y = 0
 
@@ -139,7 +138,6 @@ Namespace Contour
 
             Dim theme As New Theme With {.padding = padding, .axisTickCSS = tickFont, .legendLabelCSS = legendFont, .colorSet = colorMap, .background = bg}
             Dim plotInternal As New ContourPlot(theme) With {
-                .func = fun,
                 .offset = New Point(-300, 0),
                 .xrange = xrange,
                 .yrange = yrange,
@@ -148,7 +146,7 @@ Namespace Contour
                 .ysteps = ysteps,
                 .legendTitle = legendTitle,
                 .mapLevels = mapLevels,
-                .matrix = matrix,
+                .matrix = New FormulaEvaluate With {.formula = fun},
                 .unit = unit,
                 .xlabel = xlabel,
                 .ylabel = ylabel,
@@ -206,7 +204,7 @@ Namespace Contour
                 .offset = New Point(-300, 0),
                 .legendTitle = legendTitle,
                 .mapLevels = mapLevels,
-                .matrix = matrix.AsList,
+                .matrix = New MatrixEvaluate(matrix, 1),
                 .xlabel = xlabel,
                 .ylabel = ylabel,
                 .minZ = minZ,
@@ -229,7 +227,7 @@ Namespace Contour
         ''' </param>
         ''' <returns></returns>
         <Extension>
-        Friend Function __getData(fun As Func(Of Double, Double, Double),
+        Friend Function __getData(fun As EvaluatePoints,
                                size As Size,
                                xrange As DoubleRange,
                                yrange As DoubleRange,
@@ -246,9 +244,8 @@ Namespace Contour
 
             ' x: a -> b
             ' 每一行数据都是y在发生变化
-            Dim data As (X#, y#, Z#)()() =
-            DataProvider.Evaluate(
-                fun, xrange, yrange,
+            Dim data As (X#, y#, Z#)()() = DataProvider.Evaluate(
+                AddressOf fun.Evaluate, xrange, yrange,
                 xsteps, ysteps,
                 parallel, matrix).ToArray
 
