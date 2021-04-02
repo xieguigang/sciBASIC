@@ -326,8 +326,7 @@ Namespace Parallel
         ''' <summary>
         ''' 执行序列化进行网络之间的数据传输
         ''' </summary>
-        ''' <returns></returns>
-        Public Overrides Function Serialize() As Byte() Implements ISerializable.Serialize
+        Public Overrides Sub Serialize(buffer As Stream)
             Dim protocolCategory As Byte() = BitConverter.GetBytes(Me.ProtocolCategory)
             Dim protocol As Byte() = BitConverter.GetBytes(Me.Protocol)
             Dim bufferSize As Byte() = BitConverter.GetBytes(Me.BufferLength)
@@ -342,8 +341,9 @@ Namespace Parallel
             Call Array.ConstrainedCopy(bufferSize, Scan0, bufs, INT64 + 1 + INT64 + 1, INT64)
             Call Array.ConstrainedCopy(ChunkBuffer, Scan0, bufs, INT64 + 1 + INT64 + 1 + INT64, ChunkBuffer.Length)
 
-            Return bufs
-        End Function
+            Call buffer.Write(bufs, Scan0, bufs.Length)
+            Call buffer.Flush()
+        End Sub
 
         Public Sub WriteBuffer(buf As Stream)
             Dim protocolCategory As Byte() = BitConverter.GetBytes(Me.ProtocolCategory)

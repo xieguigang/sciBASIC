@@ -189,18 +189,22 @@ Namespace Parallel
         Dim data As Byte()
         Dim disposedValue As Boolean
 
+        <DebuggerStepThrough>
         Sub New(data As IEnumerable(Of Byte))
             Me.data = data.ToArray
         End Sub
 
+        <DebuggerStepThrough>
         Sub New(data As RawStream)
             Call Me.New(data.Serialize)
         End Sub
 
+        <DebuggerStepThrough>
         Public Overrides Iterator Function GetBlocks() As IEnumerable(Of Byte())
             Yield data
         End Function
 
+        <DebuggerStepThrough>
         Public Overrides Function Read() As Byte()
             Return data
         End Function

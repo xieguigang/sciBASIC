@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::8af67c27ad4676b87bc29989f9f6d063, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\TraceBuffer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class TraceBuffer
-    ' 
-    '         Properties: StackTrace
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: Decode, DecodeFrames, EachFrame, Serialize
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class TraceBuffer
+' 
+'         Properties: StackTrace
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: Decode, DecodeFrames, EachFrame, Serialize
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -108,29 +108,25 @@ Namespace ApplicationServices.Debugging.Diagnostics
             Return frames
         End Function
 
-        Public Overrides Function Serialize() As Byte()
-            Using buffer As New MemoryStream
-                Dim totalSize As Integer
-                Dim bytes As Byte()
+        Public Overrides Sub Serialize(buffer As Stream)
+            Dim totalSize As Integer
+            Dim bytes As Byte()
 
-                buffer.Write(BitConverter.GetBytes(Scan0), Scan0, 4)
-                buffer.Write(BitConverter.GetBytes(StackTrace.Length), Scan0, 4)
+            buffer.Write(BitConverter.GetBytes(Scan0), Scan0, 4)
+            buffer.Write(BitConverter.GetBytes(StackTrace.Length), Scan0, 4)
 
-                For Each frame As StackFrame In StackTrace
-                    bytes = EachFrame(frame)
-                    buffer.Write(BitConverter.GetBytes(bytes.Length), Scan0, 4)
-                    buffer.Write(bytes, Scan0, bytes.Length)
+            For Each frame As StackFrame In StackTrace
+                bytes = EachFrame(frame)
+                buffer.Write(BitConverter.GetBytes(bytes.Length), Scan0, 4)
+                buffer.Write(bytes, Scan0, bytes.Length)
 
-                    totalSize += 4 + bytes.Length
-                Next
+                totalSize += 4 + bytes.Length
+            Next
 
-                buffer.Seek(Scan0, SeekOrigin.Begin)
-                buffer.Write(BitConverter.GetBytes(totalSize), Scan0, 4)
+            buffer.Seek(Scan0, SeekOrigin.Begin)
+            buffer.Write(BitConverter.GetBytes(totalSize), Scan0, 4)
 
-                buffer.Flush()
-
-                Return buffer.ToArray
-            End Using
-        End Function
+            buffer.Flush()
+        End Sub
     End Class
 End Namespace

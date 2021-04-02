@@ -85,7 +85,8 @@ Namespace ComponentModel.DataSourceModel
  _
                 {PropertyAccess.Readable, Function(p) p.CanRead},
                 {PropertyAccess.ReadWrite, Function(p) p.CanRead AndAlso p.CanWrite},
-                {PropertyAccess.Writeable, Function(p) p.CanWrite}
+                {PropertyAccess.Writeable, Function(p) p.CanWrite},
+                {PropertyAccess.NotSure, Function(p) True}
             }
         End Sub
 
@@ -144,8 +145,7 @@ Namespace ComponentModel.DataSourceModel
                                Optional binds As BindingFlags = PublicProperty,
                                Optional nonIndex As Boolean = False) As Dictionary(Of String, PropertyInfo)
 
-            Dim props As IEnumerable(Of PropertyInfo) =
-                type _
+            Dim props As IEnumerable(Of PropertyInfo) = type _
                 .GetProperties(binds) _
                 .ToArray
 

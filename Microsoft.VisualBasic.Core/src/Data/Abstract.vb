@@ -61,7 +61,7 @@ Namespace ComponentModel.DataSourceModel
         NotSure = 0
         Readable = 2
         Writeable = 4
-        ReadWrite = Readable And Writeable
+        ReadWrite = Readable + Writeable
     End Enum
 
     ''' <summary>

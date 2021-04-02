@@ -102,7 +102,7 @@ Friend Class ObjectSchema
 
     Private Shared Function CreateSchema(schema As Type) As ObjectSchema
         Dim isTable As Boolean = schema.IsInheritsFrom(GetType(DictionaryBase)) OrElse schema.ImplementInterface(GetType(IDictionary))
-        Dim writers = schema.Schema(PropertyAccess.Writeable, PublicProperty, nonIndex:=True)
+        Dim writers = schema.Schema(PropertyAccess.NotSure, PublicProperty, nonIndex:=True)
         Dim addMethod As MethodInfo = schema.GetMethods _
             .Where(Function(m)
                        Dim params = m.GetParameters

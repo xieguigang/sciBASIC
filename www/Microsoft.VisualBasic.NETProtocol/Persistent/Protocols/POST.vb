@@ -1,59 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::2eeb84f77ff1722054696c79dc78d4a7, www\Microsoft.VisualBasic.NETProtocol\Persistent\Protocols\POST.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class LogonPOST
-    ' 
-    '         Properties: Socket, USER_ID
-    ' 
-    '     Class SendMessagePost
-    ' 
-    '         Properties: [FROM], Message, USER_ID
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: Serialize
-    ' 
-    '     Class BroadcastPOST
-    ' 
-    '         Properties: Message, USER_ID
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: Serialize
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class LogonPOST
+' 
+'         Properties: Socket, USER_ID
+' 
+'     Class SendMessagePost
+' 
+'         Properties: [FROM], Message, USER_ID
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: Serialize
+' 
+'     Class BroadcastPOST
+' 
+'         Properties: Message, USER_ID
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: Serialize
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Parallel
@@ -93,7 +94,7 @@ Namespace Tcp.Persistent.Application.Protocols
         Sub New()
         End Sub
 
-        Public Overrides Function Serialize() As Byte()
+        Public Overrides Sub Serialize(buffer As Stream)
             Dim RequestStream As Byte() = Message.Serialize
             Dim ChunkBuffer As Byte() = New Byte(INT64 + INT64 + RequestStream.Length - 1) {}
             Dim p As i32 = 0
@@ -101,8 +102,12 @@ Namespace Tcp.Persistent.Application.Protocols
             Call Array.ConstrainedCopy(BitConverter.GetBytes(FROM), Scan0, ChunkBuffer, p + INT64, INT64)
             Call Array.ConstrainedCopy(BitConverter.GetBytes(USER_ID), Scan0, ChunkBuffer, p + INT64, INT64)
             Call Array.ConstrainedCopy(RequestStream, Scan0, ChunkBuffer, p, RequestStream.Length)
-            Return ChunkBuffer
-        End Function
+
+            Call buffer.Write(ChunkBuffer, Scan0, ChunkBuffer.Length)
+            Call buffer.Flush()
+
+            Erase ChunkBuffer
+        End Sub
     End Class
 
     Public Class BroadcastPOST : Inherits RawStream
@@ -122,12 +127,16 @@ Namespace Tcp.Persistent.Application.Protocols
             Message = New RequestStream(pTemp)
         End Sub
 
-        Public Overrides Function Serialize() As Byte()
+        Public Overrides Sub Serialize(buffer As Stream)
             Dim RequestStream As Byte() = Message.Serialize
             Dim ChunkBuffer As Byte() = New Byte(INT64 + RequestStream.Length - 1) {}
             Call Array.ConstrainedCopy(BitConverter.GetBytes(USER_ID), Scan0, ChunkBuffer, Scan0, INT64)
             Call Array.ConstrainedCopy(RequestStream, Scan0, ChunkBuffer, INT64, RequestStream.Length)
-            Return ChunkBuffer
-        End Function
+
+            Call buffer.Write(ChunkBuffer, Scan0, ChunkBuffer.Length)
+            Call buffer.Flush()
+
+            Erase ChunkBuffer
+        End Sub
     End Class
 End Namespace

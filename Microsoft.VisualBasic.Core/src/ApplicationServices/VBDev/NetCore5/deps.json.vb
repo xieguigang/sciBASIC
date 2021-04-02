@@ -118,7 +118,14 @@ Namespace ApplicationServices.Development.NetCore5
         Public Shared Sub TryHandleNetCore5AssemblyBugs(package As Assembly)
             Dim home As String = package.Location.ParentPath
             Dim moduleName As String = package.GetName.Name
-            Dim deps As deps = $"{home}/{moduleName}.deps.json".LoadJsonFile(Of deps)
+            Dim depsJson As String = $"{home}/{moduleName}.deps.json"
+            Dim deps As deps = If(depsJson.FileExists, depsJson.LoadJsonFile(Of deps), Nothing)
+
+            If deps Is Nothing Then
+                Call $"{depsJson} is missing or format incorrect!".Warning
+                Return
+            End If
+
             Dim referenceList As String() = deps _
                 .GetReferenceProject _
                 .Where(Function(name) name <> moduleName) _

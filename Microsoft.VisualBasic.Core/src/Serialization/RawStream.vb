@@ -97,7 +97,16 @@ Namespace Serialization
         ''' <see cref="ISerializable.Serialize"/>序列化方法
         ''' </summary>
         ''' <returns></returns>
-        Public MustOverride Function Serialize() As Byte() Implements ISerializable.Serialize
+        Public Overloads Function Serialize() As Byte() Implements ISerializable.Serialize
+            Using memory As New MemoryStream()
+                Call Serialize(memory)
+                Call memory.Flush()
+
+                Return memory.ToArray
+            End Using
+        End Function
+
+        Public MustOverride Overloads Sub Serialize(buffer As Stream)
 
         ''' <summary>
         ''' 按照类型的定义进行反序列化操作
