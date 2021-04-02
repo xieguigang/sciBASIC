@@ -79,13 +79,13 @@ Namespace Contour
     Public Class ContourPlot : Inherits Plot
 
         Public offset As Point
-        Public func As Func(Of Double, Double, Double)
+
         Public xrange As DoubleRange, yrange As DoubleRange
         Public xsteps!, ysteps!
         Public parallel As Boolean
         Public legendTitle$
         Public mapLevels%
-        Public matrix As List(Of DataSet)
+
         Public unit%
         Public logBase#
         Public minZ, maxZ As Double
