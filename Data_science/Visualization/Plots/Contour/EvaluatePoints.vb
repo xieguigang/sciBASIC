@@ -1,6 +1,8 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.TagData
+﻿Imports Microsoft.VisualBasic.ComponentModel.Algorithm
+Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
+Imports stdNum = System.Math
 
 Namespace Contour
 
@@ -24,7 +26,10 @@ Namespace Contour
 
     Public Class MatrixEvaluate : Inherits EvaluatePoints
 
-        ReadOnly matrix As (x As Double, (y As Double, z As Double)())()
+        ''' <summary>
+        ''' [x -> [y, z]]
+        ''' </summary>
+        ReadOnly matrix As BinarySearchFunction(Of Double, (x#, bin As BinarySearchFunction(Of Double, (y#, z#))))
 
         ''' <summary>
         ''' 
@@ -33,11 +38,27 @@ Namespace Contour
         ''' id is the x axis value
         ''' properties in one data set object is the y vector and z vector
         ''' </param>
-        Sub New(matrix As IEnumerable(Of DataSet))
-            Me.matrix = matrix _
+        Sub New(matrix As IEnumerable(Of DataSet), error#)
+            Dim compareWithError As Comparison(Of Double) =
+                Function(a, b)
+                    If stdNum.Abs(a - b) <= [error] Then
+                        Return 0
+                    ElseIf a < b Then
+                        Return -1
+                    Else
+                        Return 1
+                    End If
+                End Function
+            Dim ySearch = matrix _
                 .DoCall(AddressOf fromMatrixQuery) _
-                .OrderBy(Function(row) row.x) _
+                .Select(Function(row)
+                            Dim bin As New BinarySearchFunction(Of Double, (y#, z#))(row.Item2, Function(p) p.y, compareWithError)
+
+                            Return (row.x, bin)
+                        End Function) _
                 .ToArray
+
+            Me.matrix = New BinarySearchFunction(Of Double, (x#, BinarySearchFunction(Of Double, (y#, z#))))(ySearch, Function(p) p.x, compareWithError)
         End Sub
 
         Private Shared Function fromMatrixQuery(matrix As IEnumerable(Of DataSet)) As IEnumerable(Of (x As Double, (y As Double, z As Double)()))
@@ -55,12 +76,18 @@ Namespace Contour
         ''' <param name="y"></param>
         ''' <returns></returns>
         Public Overrides Function Evaluate(x As Double, y As Double) As Double
-            Dim row = matrix.BinarySearch(x, Function(r) r.x, Nothing)
+            Dim row = matrix.BinarySearch(x)
 
-            If row.Item2.IsNullOrEmpty Then
-                Return 0
+            If row = -1 Then
+                Return 0.0
+            End If
+
+            Dim point = matrix(row).bin.BinarySearch(y)
+
+            If point = -1 Then
+                Return 0.0
             Else
-                Return row.Item2.BinarySearch(y, Function(c) c.y, Nothing).z
+                Return matrix(row).bin(point).z
             End If
         End Function
     End Class

@@ -6,10 +6,22 @@ Namespace ComponentModel.Algorithm
 
         ReadOnly sequence As (index As Integer, key As K, T)()
         ReadOnly order As Comparison(Of K)
+        ReadOnly rawOrder As T()
+
+        Default Public ReadOnly Property Item(i As Integer) As T
+            Get
+                If i = -1 Then
+                    Return Nothing
+                Else
+                    Return rawOrder(i)
+                End If
+            End Get
+        End Property
 
         Sub New(source As IEnumerable(Of T), key As Func(Of T, K), compares As Comparison(Of K))
             order = compares
-            sequence = source _
+            rawOrder = source.ToArray
+            sequence = rawOrder _
                 .Select(Function(d, i) (i, key(d), d)) _
                 .DoCall(Function(data)
                             Return New QuickSortFunction(Of K, (index As Integer, K, T))(compares).QuickSort(
