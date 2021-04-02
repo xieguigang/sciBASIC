@@ -120,7 +120,7 @@ Namespace Math
         ''' <param name="equals"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function BinarySearch(seq As IEnumerable(Of Double), target#, equals As GenericLambda(Of Double).IEquals) As Double
+        Public Function BinarySearch(seq As IEnumerable(Of Double), target#, equals As GenericLambda(Of Double).IEquals) As Integer
             With seq _
                 .SeqIterator _
                 .OrderBy(Function(x) x.value) _
