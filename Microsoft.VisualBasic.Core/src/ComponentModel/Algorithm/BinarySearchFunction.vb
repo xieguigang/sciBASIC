@@ -1,12 +1,22 @@
-﻿Namespace ComponentModel.Algorithm
+﻿Imports Microsoft.VisualBasic.Linq
+
+Namespace ComponentModel.Algorithm
 
     Public Class BinarySearchFunction(Of K, T)
 
-        ReadOnly sequence As (K, T)()
+        ReadOnly sequence As (index As Integer, K, T)()
         ReadOnly order As Comparison(Of K)
 
         Sub New(source As IEnumerable(Of T), key As Func(Of T, K), compares As Comparison(Of K))
-            sequence = source.Select(Function(d) (key(d), d)).OrderBy(compares).ToArray
+            order = compares
+            sequence = source _
+                .Select(Function(d, i) (i, key(d), d)) _
+                .DoCall(Function(data)
+                            Return New QuickSortFunction(Of K, (index As Integer, K, T))(compares).QuickSort(
+                                list:=data,
+                                key:=Function(i) i.Item2
+                            )
+                        End Function)
         End Sub
 
         ''' <summary>
