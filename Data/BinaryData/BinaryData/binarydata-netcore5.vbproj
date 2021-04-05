@@ -22,6 +22,7 @@
     <DefineConstants>netcore5=1</DefineConstants>
     <DocumentationFile>Microsoft.VisualBasic.Data.BinaryData.xml</DocumentationFile>
     <OutputPath>bin\</OutputPath>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
