@@ -142,9 +142,12 @@ Namespace ApplicationServices.Development.NetCore5
                 ' 由于.net5环境下没有办法将dll自动生成在library文件夹之中
                 ' 所以在这里就直接在应用程序文件夹之中查找了
                 Dim dllName As String = $"{home}/{name}.dll"
-                Dim assembly As Assembly = Assembly.LoadFrom(dllName)
 
-                globalsReference(name) = assembly
+                If dllName.FileExists Then
+                    globalsReference(name) = Assembly.LoadFrom(dllName)
+                Else
+                    Call $"Missing assembly file: {dllName}...".Warning
+                End If
             Next
         End Sub
     End Class

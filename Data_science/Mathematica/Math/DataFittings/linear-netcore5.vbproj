@@ -24,13 +24,13 @@
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <DebugSymbols>true</DebugSymbols>
 	  <DebugType>full</DebugType>
-	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
+	  <DocumentationFile>Microsoft.VisualBasic.Data.Bootstrapping.Fittings.xml</DocumentationFile>
 	  <DefineConstants>netcore5=1</DefineConstants>
 	  <BaseAddress>4194304</BaseAddress>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
+	  <DocumentationFile>Microsoft.VisualBasic.Data.Bootstrapping.Fittings.xml</DocumentationFile>
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <DebugSymbols>true</DebugSymbols>
 	  <DebugType>full</DebugType>
@@ -38,23 +38,23 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
+	  <DocumentationFile>Microsoft.VisualBasic.Data.Bootstrapping.Fittings.xml</DocumentationFile>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|AnyCPU'">
-	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
+	  <DocumentationFile>Microsoft.VisualBasic.Data.Bootstrapping.Fittings.xml</DocumentationFile>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
-	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
+	  <DocumentationFile>Microsoft.VisualBasic.Data.Bootstrapping.Fittings.xml</DocumentationFile>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|AnyCPU'">
-	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
+	  <DocumentationFile>Microsoft.VisualBasic.Data.Bootstrapping.Fittings.xml</DocumentationFile>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
+	  <DocumentationFile>Microsoft.VisualBasic.Data.Bootstrapping.Fittings.xml</DocumentationFile>
 	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <Optimize>false</Optimize>
@@ -64,7 +64,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|x64'">
-	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
+	  <DocumentationFile>Microsoft.VisualBasic.Data.Bootstrapping.Fittings.xml</DocumentationFile>
 	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <Optimize>false</Optimize>
@@ -74,7 +74,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
-	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
+	  <DocumentationFile>Microsoft.VisualBasic.Data.Bootstrapping.Fittings.xml</DocumentationFile>
 	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <Optimize>false</Optimize>
@@ -87,7 +87,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|x64'">
-	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
+	  <DocumentationFile>Microsoft.VisualBasic.Data.Bootstrapping.Fittings.xml</DocumentationFile>
 	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <Optimize>false</Optimize>

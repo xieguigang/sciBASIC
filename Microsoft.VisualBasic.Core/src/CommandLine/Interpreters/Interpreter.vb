@@ -234,6 +234,7 @@ Namespace CommandLine
                     Catch ex As Exception
                         ex = New Exception("Execute file failure!", ex)
                         ex = New Exception(cli.ToString, ex)
+
                         Call App.LogException(ex)
                         Call ex.PrintException
 
@@ -248,11 +249,12 @@ Namespace CommandLine
                 Catch ex As Exception
                     ex = New Exception("Execute not found failure!", ex)
                     ex = New Exception(cli.ToString, ex)
+
                     Call App.LogException(ex)
                     Call ex.PrintException
-                End Try
 
-                Return -1000
+                    Return ex.InnerException.HResult
+                End Try
             Else
                 Dim list$() = Me.ListingRelated(commandName)
 

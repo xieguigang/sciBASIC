@@ -48,6 +48,13 @@ Imports ScriptExpression = Microsoft.VisualBasic.Math.Scripting.MathExpression.I
 
 Namespace Scripting.MathExpression
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="eval">evaluate the variable as numeric value.</param>
+    ''' <returns></returns>
+    Public Delegate Function DynamicInvoke(eval As Func(Of String, Double)) As Double
+
     Public Module ExpressionCompiler
 
         Public Function CreateLambda(arguments As String(), model As ScriptExpression) As LambdaExpression
