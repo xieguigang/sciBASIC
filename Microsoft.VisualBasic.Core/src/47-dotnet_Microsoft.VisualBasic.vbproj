@@ -1598,7 +1598,8 @@
     <Compile Include="ApplicationServices\Terminal\xConsole\Comparer.vb" />
     <Compile Include="ApplicationServices\Terminal\xConsole\Spinner.vb" />
     <Compile Include="ApplicationServices\Terminal\xConsole\CoolWriteSettings.vb" />
-    <Compile Include="ApplicationServices\VBDev\NetCore5\Elements.vb" />
+    <Compile Include="ApplicationServices\VBDev\NetCore5\runtime.vb" />
+    <Compile Include="ApplicationServices\VBDev\NetCore5\target.vb" />
     <Compile Include="ApplicationServices\VBDev\NetCore5\deps.json.vb" />
     <Compile Include="CommandLine\CLI\ProcessEx.vb" />
     <Compile Include="CommandLine\Parsers\CommandLineTokenlizer.vb" />
