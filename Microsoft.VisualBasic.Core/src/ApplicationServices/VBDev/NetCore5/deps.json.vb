@@ -63,6 +63,8 @@
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ApplicationServices.Development.NetCore5
@@ -72,10 +74,37 @@ Namespace ApplicationServices.Development.NetCore5
     ''' </summary>
     Public Class deps
 
-        Public Property runtimeTarget As runtimeTarget
+        ''' <summary>
+        ''' ".NETCoreApp,Version=v5.0"
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property runtimeTarget As frameworkTarget
         Public Property compilationOptions As compilationOptions
-        Public Property targets As Dictionary(Of String, target)
+        Public Property targets As Dictionary(Of String, Dictionary(Of String, target))
         Public Property libraries As Dictionary(Of String, library)
+
+        Public Iterator Function LoadDependencies(package As Assembly) As IEnumerable(Of NamedValue(Of runtime))
+            Dim info As AssemblyInfo = package.FromAssembly
+            Dim assemblyKey As String = $"{info.Name}/{info.AssemblyInformationalVersion}"
+            Dim targets As Dictionary(Of String, target) = Me.targets(runtimeTarget.name)
+            Dim packageTarget As target = targets(assemblyKey)
+            Dim dependencies = packageTarget.dependencies
+            Dim dllFile As String
+
+            For Each project In dependencies
+                assemblyKey = $"{project.Key}/{project.Value}"
+                packageTarget = targets(assemblyKey)
+                dllFile = packageTarget.LibraryFile
+
+                If Not dllFile.StringEmpty Then
+                    Yield New NamedValue(Of runtime) With {
+                        .Name = assemblyKey,
+                        .Value = packageTarget.runtime(dllFile),
+                        .Description = dllFile
+                    }
+                End If
+            Next
+        End Function
 
         ''' <summary>
         ''' get list of project reference name
@@ -83,20 +112,49 @@ Namespace ApplicationServices.Development.NetCore5
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetReferenceProject() As IEnumerable(Of String)
+        Public Function GetReferenceProject() As IEnumerable(Of NamedValue(Of String))
             Return From entry As KeyValuePair(Of String, library)
                    In libraries
                    Let ref As library = entry.Value
                    Where ref.type = "project"
-                   Select entry.Key.StringReplace("/\d+(\.\d+)+", "")
+                   Select entry.Key.GetTagValue("/")
         End Function
 
+        ''' <summary>
+        ''' returns a list of file path loaded assembly files
+        ''' </summary>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Shared Function RetriveLoadedAssembly() As IEnumerable(Of String)
             Return From assembly As Assembly
                    In AppDomain.CurrentDomain.GetAssemblies()
                    Where Not assembly.IsDynamic
-                   Select assembly.Location.BaseName
+                   Select assembly.Location
+        End Function
+
+        ''' <summary>
+        ''' load assembly from a given file path
+        ''' </summary>
+        ''' <param name="dllFile"></param>
+        ''' <returns></returns>
+        Public Shared Function LoadAssemblyOrCache(dllFile As String) As Assembly
+            Dim dllFullName As String = dllFile.FileName
+            Dim result As New Value(Of Assembly)
+
+            ' R# identical package dll file in different file location
+            ' so just test with dll file name
+            Dim queryLoaded = From assembly As Assembly
+                              In AppDomain.CurrentDomain.GetAssemblies()
+                              Where Not assembly.IsDynamic
+                              Where assembly.Location.FileName = dllFullName
+                              Select assembly
+
+            If (result = queryLoaded.FirstOrDefault) Is Nothing Then
+                ' not loaded yet
+                Return Assembly.LoadFrom(dllFile.GetFullPath)
+            Else
+                Return result
+            End If
         End Function
 
         ''' <summary>
@@ -126,27 +184,27 @@ Namespace ApplicationServices.Development.NetCore5
                 Return
             End If
 
-            Dim referenceList As String() = deps _
+            Dim referenceList As NamedValue(Of String)() = deps _
                 .GetReferenceProject _
-                .Where(Function(name) name <> moduleName) _
+                .Where(Function(pkg) pkg.Name <> moduleName) _
                 .ToArray
-            Dim asmsIndex As Index(Of String) = RetriveLoadedAssembly.Indexing
+            Dim dependencies = deps.LoadDependencies(package).ToDictionary(Function(d) d.Name)
 
-            Static globalsReference As New Dictionary(Of String, Assembly)
+            For Each project As NamedValue(Of String) In referenceList
+                Dim dllFileName As NamedValue(Of runtime) = dependencies.TryGetValue(project.Description)
 
-            For Each name As String In referenceList _
-                .Where(Function(nameKey)
-                           Return (Not globalsReference.ContainsKey(nameKey)) AndAlso Not nameKey Like asmsIndex
-                       End Function)
-
-                ' 由于.net5环境下没有办法将dll自动生成在library文件夹之中
-                ' 所以在这里就直接在应用程序文件夹之中查找了
-                Dim dllName As String = $"{home}/{name}.dll"
-
-                If dllName.FileExists Then
-                    globalsReference(name) = Assembly.LoadFrom(dllName)
+                If dllFileName.Description.StringEmpty Then
+                    Call $"no dll file module of: {project.Description}?".Warning
                 Else
-                    Call $"Missing assembly file: {dllName}...".Warning
+                    ' 由于.net5环境下没有办法将dll自动生成在library文件夹之中
+                    ' 所以在这里就直接在应用程序文件夹之中查找了
+                    Dim dllName As String = $"{home}/{dllFileName.Description}"
+
+                    If dllName.FileExists Then
+                        Call LoadAssemblyOrCache(dllName)
+                    Else
+                        Call $"missing assembly file: {dllName}...".Warning
+                    End If
                 End If
             Next
         End Sub

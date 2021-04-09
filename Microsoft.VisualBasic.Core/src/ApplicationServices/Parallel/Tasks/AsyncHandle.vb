@@ -76,14 +76,7 @@ Namespace Parallel.Tasks
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property IsCompleted As Boolean
-        '    Get
-        '        If Handle Is Nothing Then
-        '            Return True
-        '        End If
-
-        '        Return Handle.IsCompleted
-        '    End Get
-        'End Property
+        Public ReadOnly Property StartTicks As Double
 
         ''' <summary>
         ''' Creates a new background task from a function handle.
@@ -101,7 +94,10 @@ Namespace Parallel.Tasks
         Public Function Run() As AsyncHandle(Of TOut)
             If IsCompleted Then
                 handle = Nothing
+
                 _IsCompleted = False
+                _StartTicks = App.ElapsedMilliseconds
+
                 ' 假若没有执行完毕也调用的话，会改变handle
                 ' _Handle = Task.BeginInvoke(Nothing, Nothing)
                 ' due to the reason of platform not supported on unix .net 5
@@ -132,6 +128,13 @@ Namespace Parallel.Tasks
 
                 Return handle
             End If
+        End Function
+
+        Public Function GetTaskExecTimeSpan() As TimeSpan
+            Dim dtMs As Double = App.ElapsedMilliseconds - StartTicks
+            Dim span As TimeSpan = TimeSpan.FromMilliseconds(dtMs)
+
+            Return span
         End Function
 
         Public Async Function GetValueAsyn() As Threading.Tasks.Task(Of TOut)

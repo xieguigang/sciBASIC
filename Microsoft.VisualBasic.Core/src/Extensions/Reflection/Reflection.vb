@@ -53,11 +53,11 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports any = Microsoft.VisualBasic.Scripting
 Imports DevAssmInfo = Microsoft.VisualBasic.ApplicationServices.Development.AssemblyInfo
 
 ''' <summary>
@@ -312,7 +312,7 @@ Public Module EmitReflection
         If vLQuery.Value Is Nothing Then
             Return New Version("1.0.0.0")
         Else
-            Return New Version(Scripting.ToString(vLQuery.Value))
+            Return New Version(any.ToString(vLQuery.Value))
         End If
 #Else
         Throw New NotSupportedException

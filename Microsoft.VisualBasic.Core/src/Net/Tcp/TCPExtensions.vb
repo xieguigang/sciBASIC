@@ -114,13 +114,13 @@ Namespace Net.Tcp
         ''' <returns></returns>
         Public Function PortIsUsed() As Integer()
             '获取本地计算机的网络连接和通信统计数据的信息
-            Dim ipGlobalProperties__1 As IPGlobalProperties = IPGlobalProperties.GetIPGlobalProperties()
+            Dim ipGlobalProperties As IPGlobalProperties = IPGlobalProperties.GetIPGlobalProperties()
             '返回本地计算机上的所有Tcp监听程序
-            Dim ipsTCP As System.Net.IPEndPoint() = ipGlobalProperties__1.GetActiveTcpListeners()
+            Dim ipsTCP As System.Net.IPEndPoint() = ipGlobalProperties.GetActiveTcpListeners()
             '返回本地计算机上的所有UDP监听程序
-            Dim ipsUDP As System.Net.IPEndPoint() = ipGlobalProperties__1.GetActiveUdpListeners()
+            Dim ipsUDP As System.Net.IPEndPoint() = ipGlobalProperties.GetActiveUdpListeners()
             '返回本地计算机上的Internet协议版本4(IPV4 传输控制协议(TCP)连接的信息。
-            Dim tcpConnInfoArray As TcpConnectionInformation() = ipGlobalProperties__1.GetActiveTcpConnections()
+            Dim tcpConnInfoArray As TcpConnectionInformation() = ipGlobalProperties.GetActiveTcpConnections()
 
             Dim allPorts As New List(Of Integer)
 

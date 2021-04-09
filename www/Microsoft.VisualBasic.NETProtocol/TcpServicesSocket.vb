@@ -183,6 +183,7 @@ Namespace Tcp
         ''' <remarks></remarks>
         Public Function Run(localEndPoint As TcpEndPoint) As Integer Implements IServicesSocket.Run
             Dim callback As AsyncCallback
+            Dim exitCode As Integer
 
             Call startSocket(localEndPoint)
 
@@ -194,6 +195,7 @@ Namespace Tcp
 
                     If _servicesSocket Is Nothing Then
                         Call Console.WriteLine("socket initialize failured!")
+                        exitCode = -1
                         Exit While
                     End If
 
@@ -210,16 +212,20 @@ Namespace Tcp
 
             _Running = False
 
-            Return 0
+            Return exitCode
         End Function
 
+        ''' <summary>
+        ''' Create a TCP/IP socket.
+        ''' </summary>
+        ''' <param name="localEndPoint"></param>
         Private Sub startSocket(localEndPoint As TcpEndPoint)
             _LocalPort = localEndPoint.Port
-            ' Create a TCP/IP socket.
             _servicesSocket = New Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)
-            ' Bind the socket to the local endpoint and listen for incoming connections.
 
             Try
+                ' Bind the socket to the local endpoint and listen
+                ' for incoming connections.
                 Call _servicesSocket.Bind(localEndPoint)
                 Call _servicesSocket.ReceiveBufferSize.SetValue(4096 * 1024 * 10)
                 Call _servicesSocket.SendBufferSize.SetValue(4096 * 1024 * 10)

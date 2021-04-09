@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::cf8455df341b24dd64c369f064f14400, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\ApplicationInfoUtils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module ApplicationInfoUtils
-    ' 
-    '         Function: CalculateCompileTime, CurrentExe, FromAssembly, FromTypeModule, GetCompanyName
-    '                   GetCopyRightsDetail, GetGuid, GetProductDescription, GetProductName, GetProductTitle
-    '                   GetProductVersion, RetrieveLinkerTimestamp, tryGetVersion, VBCore
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module ApplicationInfoUtils
+' 
+'         Function: CalculateCompileTime, CurrentExe, FromAssembly, FromTypeModule, GetCompanyName
+'                   GetCopyRightsDetail, GetGuid, GetProductDescription, GetProductName, GetProductTitle
+'                   GetProductVersion, RetrieveLinkerTimestamp, tryGetVersion, VBCore
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -46,6 +46,7 @@ Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
+Imports System.Runtime.Versioning
 Imports Microsoft.VisualBasic.Linq
 
 Namespace ApplicationServices.Development
@@ -145,7 +146,11 @@ Namespace ApplicationServices.Development
                 .Guid = GetGuid(assm),
                 .AssemblyVersion = assm.tryGetVersion.ToString,
                 .BuiltTime = assm.CalculateCompileTime,
-                .AssemblyFullName = assm.GetName.ToString
+                .AssemblyFullName = assm.GetName.ToString,
+                .AssemblyInformationalVersion = GetInformationalVersion(assm),
+                .AssemblyTrademark = GetTrademark(assm),
+                .TargetFramework = GetTargetFramework(assm),
+                .Name = assm.GetName.Name
             }
         End Function
 
@@ -206,6 +211,23 @@ Namespace ApplicationServices.Development
             End If
         End Function
 
+        Public Function GetTargetFramework(assm As Assembly) As String
+            If assm IsNot Nothing Then
+                Dim targetFramework As String = ""
+                Dim customAttributes As Object() = assm.GetCustomAttributes(GetType(TargetFrameworkAttribute), False)
+                If (customAttributes IsNot Nothing) AndAlso (customAttributes.Length > 0) Then
+                    targetFramework = DirectCast(customAttributes(0), TargetFrameworkAttribute).FrameworkName
+                End If
+                If String.IsNullOrEmpty(targetFramework) Then
+                    targetFramework = String.Empty
+                End If
+
+                Return targetFramework
+            Else
+                Return ""
+            End If
+        End Function
+
         ''' <summary>
         ''' Get the name of the system provider name from the assembly
         ''' </summary>
@@ -223,6 +245,42 @@ Namespace ApplicationServices.Development
                 End If
 
                 Return companyName
+            Else
+                Return ""
+            End If
+        End Function
+
+        Public Function GetTrademark(assm As Assembly) As String
+            If assm IsNot Nothing Then
+                Dim trademark As String = ""
+                Dim customAttributes As Object() = assm.GetCustomAttributes(GetType(AssemblyTrademarkAttribute), False)
+
+                If customAttributes IsNot Nothing AndAlso customAttributes.Length > 0 Then
+                    trademark = DirectCast(customAttributes(Scan0), AssemblyTrademarkAttribute).Trademark
+                End If
+                If String.IsNullOrEmpty(trademark) Then
+                    trademark = String.Empty
+                End If
+
+                Return trademark
+            Else
+                Return ""
+            End If
+        End Function
+
+        Public Function GetInformationalVersion(assm As Assembly) As String
+            If assm IsNot Nothing Then
+                Dim infoVer As String = ""
+                Dim customAttributes As Object() = assm.GetCustomAttributes(GetType(AssemblyInformationalVersionAttribute), False)
+
+                If customAttributes IsNot Nothing AndAlso customAttributes.Length > 0 Then
+                    infoVer = DirectCast(customAttributes(Scan0), AssemblyInformationalVersionAttribute).InformationalVersion
+                End If
+                If String.IsNullOrEmpty(infoVer) Then
+                    infoVer = String.Empty
+                End If
+
+                Return infoVer
             Else
                 Return ""
             End If
