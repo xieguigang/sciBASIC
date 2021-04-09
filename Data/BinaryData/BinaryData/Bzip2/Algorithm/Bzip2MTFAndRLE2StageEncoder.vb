@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d13a2f330ca97e0b2416e32acb179e81, Data\BinaryData\BinaryData\Bzip2\Algorithm\Bzip2MTFAndRLE2StageEncoder.vb"
+﻿#Region "Microsoft.VisualBasic::9f56cbd58ab573460eba7aadda0b0404, Data\BinaryData\BinaryData\Bzip2\Algorithm\Bzip2MTFAndRLE2StageEncoder.vb"
 
     ' Author:
     ' 
@@ -219,4 +219,3 @@ Namespace Bzip2
 #End Region
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da33824b804f11f888e7e7eadf77df96, Data\BinaryData\BinaryData\Bzip2\Algorithm\BZip2BitOutputStream.vb"
+﻿#Region "Microsoft.VisualBasic::b194581fbf0fbb2761d26f18fdecac57, Data\BinaryData\BinaryData\Bzip2\Algorithm\BZip2BitOutputStream.vb"
 
     ' Author:
     ' 
@@ -149,4 +149,3 @@ Namespace Bzip2
 #End Region
     End Class
 End Namespace
-

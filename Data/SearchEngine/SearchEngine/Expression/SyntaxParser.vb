@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::180d95007ba6d1647606bdf864e6c018, Data\SearchEngine\SearchEngine\Expression\SyntaxParser.vb"
+﻿#Region "Microsoft.VisualBasic::e53d8d192ec7718ba398e05bd536c1b3, Data\SearchEngine\SearchEngine\Expression\SyntaxParser.vb"
 
     ' Author:
     ' 

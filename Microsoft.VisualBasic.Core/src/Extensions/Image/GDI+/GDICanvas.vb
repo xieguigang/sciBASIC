@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e86cca7eb10a3b5cbc44bb33910b212, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\GDICanvas.vb"
+﻿#Region "Microsoft.VisualBasic::69c3b155ffbc11bec813324df1d4df31, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\GDICanvas.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,10 @@
 
     '     Class GDICanvas
     ' 
-    '         Properties: DpiX, DpiY, Font, Graphics, InterpolationMode
-    '                     IsClipEmpty, IsVisibleClipEmpty, PageScale, PageUnit, PixelOffsetMode
-    '                     RenderingOrigin, SmoothingMode, Stroke, TextContrast, TextRenderingHint
+    '         Properties: CompositingMode, CompositingQuality, DpiX, DpiY, Font
+    '                     Graphics, InterpolationMode, IsClipEmpty, IsVisibleClipEmpty, PageScale
+    '                     PageUnit, PixelOffsetMode, RenderingOrigin, SmoothingMode, Stroke
+    '                     TextContrast, TextRenderingHint
     ' 
     '         Function: (+3 Overloads) BeginContainer, GetContextInfo, GetNearestColor, (+8 Overloads) IsVisible, MeasureCharacterRanges
     '                   (+8 Overloads) MeasureString

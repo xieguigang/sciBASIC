@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e2678c16dc7e8f82c1a8f291a8f2592, Data\BinaryData\BinaryData\Bzip2\Algorithm\BZip2HuffmanStageEncoder.vb"
+﻿#Region "Microsoft.VisualBasic::c76082b9a34f338e3c9eb3181636cc94, Data\BinaryData\BinaryData\Bzip2\Algorithm\BZip2HuffmanStageEncoder.vb"
 
     ' Author:
     ' 
@@ -374,4 +374,3 @@ Namespace Bzip2
 #End Region
     End Class
 End Namespace
-

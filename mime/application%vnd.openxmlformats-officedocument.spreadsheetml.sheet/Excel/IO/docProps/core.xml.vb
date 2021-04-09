@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58309957174e69b7821a47cfa5e1faca, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\docProps\core.xml.vb"
+﻿#Region "Microsoft.VisualBasic::2d49332076fd5277e12362444dd4a2b9, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\docProps\core.xml.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,8 @@
 
     '     Class core
     ' 
-    '         Properties: created, creator, lastModifiedBy, modified
+    '         Properties: category, contentStatus, created, creator, description
+    '                     keywords, lastModifiedBy, modified, subject, title
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: filePath, toXml

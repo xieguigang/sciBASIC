@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::179dc48165463a9f40041bc49244ebfa, gr\Microsoft.VisualBasic.Imaging\PostScript\GraphicsPS.vb"
+﻿#Region "Microsoft.VisualBasic::99b8dfeeceef79c95a6d4b51d76655b5, gr\Microsoft.VisualBasic.Imaging\PostScript\GraphicsPS.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,9 @@
 
     '     Class GraphicsPS
     ' 
-    '         Properties: DpiX, DpiY, InterpolationMode, IsClipEmpty, IsVisibleClipEmpty
-    '                     PageScale, PageUnit, PixelOffsetMode, RenderingOrigin, Size
-    '                     SmoothingMode, TextContrast, TextRenderingHint
+    '         Properties: CompositingMode, CompositingQuality, DpiX, DpiY, InterpolationMode
+    '                     IsClipEmpty, IsVisibleClipEmpty, PageScale, PageUnit, PixelOffsetMode
+    '                     RenderingOrigin, Size, SmoothingMode, TextContrast, TextRenderingHint
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

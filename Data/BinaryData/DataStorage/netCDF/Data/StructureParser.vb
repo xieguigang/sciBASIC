@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df5aa91487823e1f8c4cda9c2fb66d16, Data\BinaryData\DataStorage\netCDF\Data\StructureParser.vb"
+﻿#Region "Microsoft.VisualBasic::4bb35695fa8f004fa107a6c69d05e7f2, Data\BinaryData\DataStorage\netCDF\Data\StructureParser.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e64b154041dbc46e39e8ce553f277974, Data\BinaryData\DataStorage\netCDF\Components\variable.vb"
+﻿#Region "Microsoft.VisualBasic::545bc6802b266c850b7610f45b185990, Data\BinaryData\DataStorage\netCDF\Components\variable.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,17 @@
 
     '     Class variable
     ' 
-    '         Properties: attributes, dimensions, name, offset, record
-    '                     size, type, value
+    '         Properties: attributes, dimensionality, dimensions, name, offset
+    '                     record, size, type, value
     ' 
     '         Function: FindAttribute, GetRegion, ToString
+    ' 
+    '     Enum dimensionality
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
     ' 
     ' 
     ' /********************************************************************************/

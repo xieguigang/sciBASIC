@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::856aa61fdc584ffefa54b09e062f975e, Data\BinaryData\test\sqliteTest.vb"
+﻿#Region "Microsoft.VisualBasic::a0d3a68d33ee112d4cd6b30316f85dcf, Data\BinaryData\test\sqliteTest.vb"
 
     ' Author:
     ' 
@@ -89,4 +89,3 @@
 '        End Using
 '    End Sub
 'End Module
-

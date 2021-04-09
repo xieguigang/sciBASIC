@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4c101e2cf356820b7bd0082866b52d8, Data\BinaryData\BinaryData\Bzip2\Math\MoveToFront.vb"
+﻿#Region "Microsoft.VisualBasic::630b9b0ad2d45201a39f301719f51855, Data\BinaryData\BinaryData\Bzip2\Math\MoveToFront.vb"
 
     ' Author:
     ' 
@@ -99,4 +99,3 @@ Namespace Bzip2.Math
 #End Region
     End Class
 End Namespace
-

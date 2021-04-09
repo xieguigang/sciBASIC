@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f326167675b0989d010c99ddf791f0ce, Data\BinaryData\BinaryData\Bzip2\Math\HuffmanAllocator.vb"
+﻿#Region "Microsoft.VisualBasic::219844aa92422a1346ae9a7d55782134, Data\BinaryData\BinaryData\Bzip2\Math\HuffmanAllocator.vb"
 
     ' Author:
     ' 
@@ -240,4 +240,3 @@ Namespace Bzip2.Math
 #End Region
     End Module
 End Namespace
-

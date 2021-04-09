@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::925df266b3a72422b31082356182a58b, Data_science\Mathematica\Math\Math\Scripting\Expression\ExpressionCompiler.vb"
+﻿#Region "Microsoft.VisualBasic::639f7377931baa4aaa6fcf3c309403a1, Data_science\Mathematica\Math\Math\Scripting\Expression\ExpressionCompiler.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,13 @@
 
     ' Summaries:
 
+    '     Delegate Function
+    ' 
+    ' 
     '     Module ExpressionCompiler
     ' 
     '         Function: CreateExpression, CreateLambda
+    ' 
     ' 
     ' 
     ' /********************************************************************************/

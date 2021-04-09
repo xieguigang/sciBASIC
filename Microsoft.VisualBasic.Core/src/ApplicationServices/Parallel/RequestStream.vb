@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c36c68275f78d17ca3652f21e825716b, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\RequestStream.vb"
+﻿#Region "Microsoft.VisualBasic::cc27284be3ecf5c6745c7b913a4dee36, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\RequestStream.vb"
 
     ' Author:
     ' 
@@ -46,9 +46,9 @@
     '         Constructor: (+7 Overloads) Sub New
     ' 
     '         Function: (+2 Overloads) CreatePackage, CreateProtocol, GetRawStream, GetString, GetUTF8String
-    '                   IsAvaliableStream, (+2 Overloads) LoadObject, Serialize, ToString
+    '                   IsAvaliableStream, (+2 Overloads) LoadObject, ToString
     ' 
-    '         Sub: WriteBuffer
+    '         Sub: Serialize, WriteBuffer
     '         Enum Protocols
     ' 
     ' 

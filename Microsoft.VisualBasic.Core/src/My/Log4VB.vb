@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee3dc174777e5f473318adfcc80a9915, Microsoft.VisualBasic.Core\src\My\Log4VB.vb"
+﻿#Region "Microsoft.VisualBasic::953e2b4e23b621025ea248508f9b639d, Microsoft.VisualBasic.Core\src\My\Log4VB.vb"
 
     ' Author:
     ' 

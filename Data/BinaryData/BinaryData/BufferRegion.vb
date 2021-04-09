@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1ab85a868f9dcf64f908275104e6b9c, Data\BinaryData\BinaryData\BufferRegion.vb"
+﻿#Region "Microsoft.VisualBasic::7344cef4fa9e83ffc02b4af5705d356f, Data\BinaryData\BinaryData\BufferRegion.vb"
 
     ' Author:
     ' 
@@ -57,4 +57,3 @@ Public Class BufferRegion
     End Function
 
 End Class
-

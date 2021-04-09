@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86c49cc7b27c871aa49f9a65a2483211, Data\BinaryData\BinaryData\Bzip2\Algorithm\BZip2DivSufSort.vb"
+﻿#Region "Microsoft.VisualBasic::0a9cf150a0c573f5fff03811159eb8f9, Data\BinaryData\BinaryData\Bzip2\Algorithm\BZip2DivSufSort.vb"
 
     ' Author:
     ' 
@@ -2622,4 +2622,3 @@ Namespace Bzip2
 #End Region
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d79740d0bf8a030e8688da3423f1d3d, Data\BinaryData\BinaryData\Bzip2\Math\CRC32.vb"
+﻿#Region "Microsoft.VisualBasic::bf9b7b38e9df9e4f8be10ac7d8c37a79, Data\BinaryData\BinaryData\Bzip2\Math\CRC32.vb"
 
     ' Author:
     ' 
@@ -90,4 +90,3 @@ Namespace Bzip2.Math
 #End Region
     End Class
 End Namespace
-

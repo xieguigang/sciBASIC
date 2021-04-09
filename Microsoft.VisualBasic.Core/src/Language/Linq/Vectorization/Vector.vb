@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7105283b8ba3b6fda67f11cc0c068510, Microsoft.VisualBasic.Core\src\Language\Linq\Vectorization\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::bfe52e8d58007c37110e5e3532a6dd86, Microsoft.VisualBasic.Core\src\Language\Linq\Vectorization\Vector.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,8 @@
     '         Properties: Array, First, IsSingle, Last, Length
     ' 
     '         Constructor: (+3 Overloads) Sub New
-    '         Function: GetEnumerator, IEnumerable_GetEnumerator, Subset, ToString, Which
+    '         Function: Copy, GetEnumerator, IEnumerable_GetEnumerator, Subset, ToString
+    '                   Which
     ' 
     ' 
     ' /********************************************************************************/

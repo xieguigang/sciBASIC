@@ -1,44 +1,45 @@
-﻿#Region "Microsoft.VisualBasic::cf8455df341b24dd64c369f064f14400, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\ApplicationInfoUtils.vb"
+﻿#Region "Microsoft.VisualBasic::dd76920345fdde26b9e5d255e3824b27, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\ApplicationInfoUtils.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Module ApplicationInfoUtils
-' 
-'         Function: CalculateCompileTime, CurrentExe, FromAssembly, FromTypeModule, GetCompanyName
-'                   GetCopyRightsDetail, GetGuid, GetProductDescription, GetProductName, GetProductTitle
-'                   GetProductVersion, RetrieveLinkerTimestamp, tryGetVersion, VBCore
-' 
-' 
-' /********************************************************************************/
+    '     Module ApplicationInfoUtils
+    ' 
+    '         Function: CalculateCompileTime, CurrentExe, FromAssembly, FromTypeModule, GetCompanyName
+    '                   GetCopyRightsDetail, GetGuid, GetInformationalVersion, GetProductDescription, GetProductName
+    '                   GetProductTitle, GetProductVersion, GetTargetFramework, GetTrademark, RetrieveLinkerTimestamp
+    '                   tryGetVersion, VBCore
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bae05438aa248187d67f28e9eed187d5, mime\application%json\Serializer\ObjectSchema.vb"
+﻿#Region "Microsoft.VisualBasic::e60b8ad39a90c810c090f46f60e62eea, mime\application%json\Serializer\ObjectSchema.vb"
 
     ' Author:
     ' 

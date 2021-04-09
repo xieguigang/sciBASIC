@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66a434bcb99998cdd531e10a039f64a0, Microsoft.VisualBasic.Core\src\Serialization\RawStream.vb"
+﻿#Region "Microsoft.VisualBasic::04555cff435ac9f30423b4f6b5bc4acc, Microsoft.VisualBasic.Core\src\Serialization\RawStream.vb"
 
     ' Author:
     ' 
@@ -42,6 +42,7 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: BytesInternal, GetBytes, (+2 Overloads) GetData, GetRawStream, readInternal
+    '                   Serialize
     ' 
     ' 
     ' 

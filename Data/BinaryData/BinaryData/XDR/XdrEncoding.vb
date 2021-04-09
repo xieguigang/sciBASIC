@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0433c5af0103bf7e6701660d65c09e53, Data\BinaryData\BinaryData\XDR\XdrEncoding.vb"
+﻿#Region "Microsoft.VisualBasic::3bf9a5b767b4d15548badc7186564f89, Data\BinaryData\BinaryData\XDR\XdrEncoding.vb"
 
     ' Author:
     ' 
@@ -195,4 +195,3 @@ Namespace Xdr
         End Function
     End Module
 End Namespace
-

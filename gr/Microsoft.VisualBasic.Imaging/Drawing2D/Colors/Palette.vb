@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::729707623f82038a797a3cc172ac1de8, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Palette.vb"
+﻿#Region "Microsoft.VisualBasic::7d7f855b826d0220a067c5e2038e80a8, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Palette.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,10 @@
 
     '     Enum Palettes
     ' 
-    '         Aspect, Autumn, Clusters, Cool, Gray
-    '         Hot, Jet, Marquee, material, Office2010
-    '         Office2016, Paper, rainbow, Slipstream, Spring
-    '         Summer, TSF, Winter
+    '         Aspect, Autumn, BlackGreenRed, Clusters, Cool
+    '         Gray, Hot, Jet, Marquee, material
+    '         NA, Office2010, Office2016, Paper, rainbow
+    '         Slipstream, Spring, Summer, TSF, Winter
     ' 
     '  
     ' 

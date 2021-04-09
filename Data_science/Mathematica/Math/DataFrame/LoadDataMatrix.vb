@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1818229ee419cba9e8a50aaca9a28ded, Data_science\Mathematica\Math\DataFrame\LoadDataMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::5f6e8e13d9e3537a3c76c3b8a325ec1d, Data_science\Mathematica\Math\DataFrame\LoadDataMatrix.vb"
 
     ' Author:
     ' 
@@ -118,4 +118,3 @@ Public Module LoadDataMatrix
         End With
     End Function
 End Module
-

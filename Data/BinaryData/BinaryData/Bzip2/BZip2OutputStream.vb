@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2e84c7a656250c424641fc17f9f031f, Data\BinaryData\BinaryData\Bzip2\BZip2OutputStream.vb"
+﻿#Region "Microsoft.VisualBasic::31887ab87bfa382e2d5ea4edadb38234, Data\BinaryData\BinaryData\Bzip2\BZip2OutputStream.vb"
 
     ' Author:
     ' 
@@ -243,4 +243,3 @@ Namespace Bzip2
 #End Region
     End Class
 End Namespace
-

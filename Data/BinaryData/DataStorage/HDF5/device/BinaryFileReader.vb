@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9ee90b0dc9aa1eaccfd8aca9a9f222e, Data\BinaryData\DataStorage\HDF5\device\BinaryFileReader.vb"
+﻿#Region "Microsoft.VisualBasic::31f36bd5119b9e4c596b4a7f964ce94d, Data\BinaryData\DataStorage\HDF5\device\BinaryFileReader.vb"
 
     ' Author:
     ' 
@@ -35,11 +35,11 @@
     ' 
     '         Properties: offset
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     ' 
-    '         Function: readByte, ToString
+    '         Function: readByte, StopIfMissingFile, ToString
     ' 
-    '         Sub: _BinaryFileReader, close, setPosition
+    '         Sub: close, setPosition
     ' 
     ' 
     ' /********************************************************************************/

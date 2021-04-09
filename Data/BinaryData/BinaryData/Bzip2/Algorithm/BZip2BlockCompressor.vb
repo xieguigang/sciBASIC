@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c2a16048970c80a79de307b164758c2, Data\BinaryData\BinaryData\Bzip2\Algorithm\BZip2BlockCompressor.vb"
+﻿#Region "Microsoft.VisualBasic::827a4e281df612eb04044ede91a72ff8, Data\BinaryData\BinaryData\Bzip2\Algorithm\BZip2BlockCompressor.vb"
 
     ' Author:
     ' 
@@ -311,4 +311,3 @@ Namespace Bzip2
 #End Region
     End Class
 End Namespace
-

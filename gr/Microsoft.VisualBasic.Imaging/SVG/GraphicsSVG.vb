@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aed6244ecbb45cf4c52c71608e1be02e, gr\Microsoft.VisualBasic.Imaging\SVG\GraphicsSVG.vb"
+﻿#Region "Microsoft.VisualBasic::440396246b24b8be7f0f366a6738506e, gr\Microsoft.VisualBasic.Imaging\SVG\GraphicsSVG.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,10 @@
 
     '     Class GraphicsSVG
     ' 
-    '         Properties: DpiX, DpiY, GetLastLayer, InterpolationMode, IsClipEmpty
-    '                     IsVisibleClipEmpty, PageScale, PageUnit, PixelOffsetMode, RenderingOrigin
-    '                     Size, SmoothingMode, TextContrast, TextRenderingHint
+    '         Properties: CompositingMode, CompositingQuality, DpiX, DpiY, GetLastLayer
+    '                     InterpolationMode, IsClipEmpty, IsVisibleClipEmpty, PageScale, PageUnit
+    '                     PixelOffsetMode, RenderingOrigin, Size, SmoothingMode, TextContrast
+    '                     TextRenderingHint
     ' 
     '         Constructor: (+3 Overloads) Sub New
     ' 

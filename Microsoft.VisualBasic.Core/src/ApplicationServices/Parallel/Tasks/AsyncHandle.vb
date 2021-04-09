@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63250daa819121659715ea04a423e765, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\AsyncHandle.vb"
+﻿#Region "Microsoft.VisualBasic::df3f3d6bc0e4aef67d91a551a747f264, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\AsyncHandle.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,10 @@
 
     '     Class AsyncHandle
     ' 
-    '         Properties: IsCompleted, Task
+    '         Properties: IsCompleted, StartTicks, Task
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetValue, Run
+    '         Function: GetTaskExecTimeSpan, GetValue, Run
     ' 
     ' 
     ' /********************************************************************************/

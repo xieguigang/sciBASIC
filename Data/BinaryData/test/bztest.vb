@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a0e3740d913293ef48adab626c1cb37, Data\BinaryData\test\bztest.vb"
+﻿#Region "Microsoft.VisualBasic::31acbad62043abcfca0f22231e974719, Data\BinaryData\test\bztest.vb"
 
     ' Author:
     ' 
@@ -149,4 +149,3 @@ Namespace Bzip2
         End Sub
     End Class
 End Namespace
-

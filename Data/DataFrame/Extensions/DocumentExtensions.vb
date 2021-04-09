@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6544d8a058e5b468246005cb84dca6cc, Data\DataFrame\Extensions\DocumentExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::712111467c00118ab7d611755a0cf7c4, Data\DataFrame\Extensions\DocumentExtensions.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,10 @@
 
     ' Module DocumentExtensions
     ' 
-    '     Function: Apply, CreateTable, DirectAppends, GetColumnObjects, GetColumnValues
-    '               GetLastRow, JoinColumns, LoadCsv, LoadData, LoadDictionary
-    '               LoadMappings, LoadTable, (+2 Overloads) LoadTsv, ParseDoc, (+2 Overloads) SaveAsDataFrame
-    '               SaveTsv, TsvLine
+    '     Function: Apply, CreateTable, DirectAppends, Distinct, GetColumnObjects
+    '               GetColumnValues, GetLastRow, JoinColumns, LoadCsv, LoadData
+    '               LoadDictionary, LoadMappings, LoadTable, (+2 Overloads) LoadTsv, Normalization
+    '               ParseDoc, (+2 Overloads) SaveAsDataFrame, SaveTsv, TsvLine
     '     Class GenericTable
     ' 
     '         Properties: data
