@@ -20,12 +20,12 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>netcore5=1</DefineConstants>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Csv.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Framework.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <DefineConstants>netcore5=1</DefineConstants>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Csv.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Framework.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|x64'">
@@ -36,7 +36,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Csv.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Framework.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -46,7 +46,7 @@
     <DebugType>full</DebugType>
     <DefineDebug>false</DefineDebug>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Csv.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Framework.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
@@ -58,7 +58,7 @@
 	  <BaseAddress>4194304</BaseAddress>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DefineTrace>true</DefineTrace>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Csv.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Framework.xml</DocumentationFile>
     <OutputPath>D:\GCModeller\src\R-sharp\App\</OutputPath>
   </PropertyGroup>
 
@@ -71,7 +71,7 @@
     <BaseAddress>4194304</BaseAddress>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DefineTrace>true</DefineTrace>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Csv.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Framework.xml</DocumentationFile>
     <OutputPath>D:\mzkit\Rscript\Library\mzkit_app\assembly\</OutputPath>
   </PropertyGroup>
 
@@ -84,7 +84,7 @@
     <BaseAddress>4194304</BaseAddress>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DefineTrace>true</DefineTrace>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Csv.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Framework.xml</DocumentationFile>
     <OutputPath>D:\PlantMAT\PlantMAT\assembly\</OutputPath>
   </PropertyGroup>
 
@@ -97,32 +97,32 @@
     <BaseAddress>4194304</BaseAddress>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DefineTrace>true</DefineTrace>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Csv.xml</DocumentationFile>
-    <OutputPath>D:\PlantMAT\PlantMAT\assembly\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Framework.xml</DocumentationFile>
+    <OutputPath>D:\biodeep\biodeepdb_v3\metaCluster\NPSearch\assembly\</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>Microsoft.VisualBasic.Data.Csv.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Framework.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|AnyCPU'">
-    <DocumentationFile>Microsoft.VisualBasic.Data.Csv.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Framework.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
-    <DocumentationFile>Microsoft.VisualBasic.Data.Csv.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Framework.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|AnyCPU'">
-    <DocumentationFile>Microsoft.VisualBasic.Data.Csv.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Framework.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|AnyCPU'">
-    <DocumentationFile>Microsoft.VisualBasic.Data.Csv.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Framework.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NPSearch|AnyCPU'">
-    <DocumentationFile>Microsoft.VisualBasic.Data.Csv.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Framework.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

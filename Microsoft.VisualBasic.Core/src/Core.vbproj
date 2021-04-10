@@ -25,7 +25,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineConstants>netcore5=1,FRAMEWORD_CORE=1</DefineConstants>
-    <DocumentationFile>Microsoft.VisualBasic.Core.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -34,13 +34,13 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineConstants>netcore5=1,FRAMEWORD_CORE=1</DefineConstants>
-    <DocumentationFile>Microsoft.VisualBasic.Core.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
     <BaseAddress>4194304</BaseAddress>
     <OutputPath>bin\</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>Microsoft.VisualBasic.Core.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
     <RemoveIntegerChecks>false</RemoveIntegerChecks>
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
@@ -50,7 +50,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|AnyCPU'">
-    <DocumentationFile>Microsoft.VisualBasic.Core.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
     <RemoveIntegerChecks>false</RemoveIntegerChecks>
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
@@ -60,23 +60,23 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
-    <DocumentationFile>Microsoft.VisualBasic.Core.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|AnyCPU'">
-    <DocumentationFile>Microsoft.VisualBasic.Core.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NPSearch|AnyCPU'">
-    <DocumentationFile>Microsoft.VisualBasic.Core.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|AnyCPU'">
-    <DocumentationFile>Microsoft.VisualBasic.Core.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <DocumentationFile>Microsoft.VisualBasic.Core.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
@@ -86,7 +86,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|x64'">
-    <DocumentationFile>Microsoft.VisualBasic.Core.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
     <DefineConstants>netcore5=1,UNIX=1,FRAMEWORD_CORE=1</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
@@ -97,7 +97,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
-    <DocumentationFile>Microsoft.VisualBasic.Core.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
     <DefineConstants>netcore5=1,UNIX=1,FRAMEWORD_CORE=1</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
@@ -110,7 +110,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|x64'">
-    <DocumentationFile>Microsoft.VisualBasic.Core.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
     <DefineConstants>netcore5=1,UNIX=1,FRAMEWORD_CORE=1</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
@@ -123,7 +123,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NPSearch|x64'">
-    <DocumentationFile>Microsoft.VisualBasic.Core.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
     <DefineConstants>netcore5=1,UNIX=1,FRAMEWORD_CORE=1</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
@@ -136,7 +136,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|x64'">
-    <DocumentationFile>Microsoft.VisualBasic.Core.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
     <DefineConstants>netcore5=1,UNIX=1,FRAMEWORD_CORE=1</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
