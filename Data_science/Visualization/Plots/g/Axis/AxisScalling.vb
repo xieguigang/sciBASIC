@@ -112,9 +112,9 @@ Namespace Graphic.Axis
         Public Function CreateAxisTicks(min#, max#,
                                         Optional ticks% = 10,
                                         Optional decimalDigits% = 2,
-                                        Optional w_steps As Double = 0.8,
-                                        Optional w_max As Double = 0.1,
-                                        Optional w_min As Double = 0.1) As Double()
+                                        Optional w_steps As Double = 0.95,
+                                        Optional w_max As Double = 0.025,
+                                        Optional w_min As Double = 0.025) As Double()
 
             ' First, get the minimum and maximum of the series, toggle the zero_flag variable 
             ' if 0 Is between Then the min And max, And Get the range Of the data.

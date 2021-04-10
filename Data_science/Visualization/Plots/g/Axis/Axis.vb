@@ -1,47 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::80e1c5b96ef0c71ce9f59ec9720951a7, Data_science\Visualization\Plots\g\Axis\Axis.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Axis
-    ' 
-    '         Properties: delta
-    ' 
-    '         Function: __plotLabel, (+2 Overloads) DrawLabel
-    ' 
-    '         Sub: checkScaler, (+2 Overloads) DrawAxis, DrawString, DrawX, DrawY
-    '              DrawYGrid
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Axis
+' 
+'         Properties: delta
+' 
+'         Function: __plotLabel, (+2 Overloads) DrawLabel
+' 
+'         Sub: checkScaler, (+2 Overloads) DrawAxis, DrawString, DrawX, DrawY
+'              DrawYGrid
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -162,6 +162,7 @@ Namespace Graphic.Axis
         ''' <param name="showGrid">Show axis grid on the plot region?</param>
         ''' <param name="xlayout">修改y属性</param>
         ''' <param name="ylayout">修改x属性</param>
+        ''' <param name="gridX">空值表示不进行绘制</param>
         <Extension>
         Public Sub DrawAxis(ByRef g As IGraphics,
                             scaler As DataScaler,
@@ -206,17 +207,20 @@ Namespace Graphic.Axis
                         .ToArray
                 End If
 
-                For Each tick As Double In ticks
-                    Dim x As Single = tick + offset.X
-                    Dim top As New PointF(x, rect.Top)
-                    Dim bottom As New PointF(x, rect.Bottom)
+                ' nothing for not drawing
+                If Not gridPenX Is Nothing Then
+                    For Each tick As Double In ticks
+                        Dim x As Single = tick + offset.X
+                        Dim top As New PointF(x, rect.Top)
+                        Dim bottom As New PointF(x, rect.Bottom)
 
-                    ' 绘制x网格线
-                    Call g.DrawLine(gridPenX, top, bottom)
-                Next
+                        ' 绘制x网格线
+                        Call g.DrawLine(gridPenX, top, bottom)
+                    Next
+                End If
             End If
 
-            If showGrid AndAlso Not scaler.AxisTicks.Y.IsNullOrEmpty Then
+            If showGrid AndAlso (Not scaler.AxisTicks.Y.IsNullOrEmpty) AndAlso Not gridPenY Is Nothing Then
                 For Each tick In scaler.AxisTicks.Y
                     Dim y = scaler.TranslateY(tick) + offset.Y
                     Dim left As New Point(rect.Left, y)
