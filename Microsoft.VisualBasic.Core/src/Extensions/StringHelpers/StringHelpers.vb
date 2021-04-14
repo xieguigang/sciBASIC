@@ -947,16 +947,9 @@ Public Module StringHelpers
         If Not TrimTrailingEmptyStrings OrElse splitArray.Length <= 1 Then
             Return splitArray
         Else
-            If splitArray.Length > 1 Then
-                For i = splitArray.Length To 0 + 1 Step -1
-                    If splitArray(i - 1).Length > 0 Then
-                        If i < splitArray.Length Then Array.Resize(splitArray, i)
-                        Exit For
-                    End If
-                Next
-            End If
-
-            Return splitArray
+            Return splitArray _
+                .Where(Function(s) Not s.StringEmpty) _
+                .ToArray
         End If
     End Function
 
