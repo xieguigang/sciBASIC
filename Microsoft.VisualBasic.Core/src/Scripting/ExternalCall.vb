@@ -83,7 +83,7 @@ Namespace Scripting
         ''' <param name="args"></param>
         ''' <returns></returns>
         Public Function Run(script As String, Optional args As NameValueCollection = Nothing) As ShellValue
-            Dim tmp As String = App.GetAppSysTempFile(ext)
+            Dim tmp As String = TempFileSystem.GetAppSysTempFile(ext)
             Call script.SaveTo(tmp, Encodings.ASCII.CodePage)
             Return Shell(path:=tmp, args:=args)
         End Function
@@ -106,8 +106,7 @@ Namespace Scripting
             If args Is Nothing Then
                 Return ""
             Else
-                Return args _
-                    .AllKeys _
+                Return args.AllKeys _
                     .Select(Function(s)
                                 Return $"{s} {args.Get(s).CLIToken}"
                             End Function) _

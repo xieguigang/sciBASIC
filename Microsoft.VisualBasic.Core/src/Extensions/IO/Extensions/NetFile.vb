@@ -114,7 +114,7 @@ Namespace FileIO
                 url = tokens.Last.NormalizePathString
                 url = App.AppSystemTemp & "/" & folders & "/" & url
 
-                Call folders.MkDIR
+                Call folders.MakeDir
 
                 Return url
             ElseIf InStr(url, "file://", CompareMethod.Text) = 1 Then

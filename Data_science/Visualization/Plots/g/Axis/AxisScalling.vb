@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac44b73ac7e41f3510cfc2df67b82165, Data_science\Visualization\Plots\g\Axis\AxisScalling.vb"
+﻿#Region "Microsoft.VisualBasic::f3d86333d2beea01228a65d5940b83cf, Data_science\Visualization\Plots\g\Axis\AxisScalling.vb"
 
     ' Author:
     ' 

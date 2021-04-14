@@ -84,6 +84,18 @@ Namespace Net
 #End Region
 
         ''' <summary>
+        ''' 格式是否正确
+        ''' </summary>
+        ''' <returns></returns>
+        <SoapIgnore>
+        Public ReadOnly Property IsValid As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return port > 0 AndAlso System.Net.IPAddress.TryParse(ipAddress, Nothing)
+            End Get
+        End Property
+
+        ''' <summary>
         ''' This parameterless constructor is required for the xml serialization.(XML序列化所需要的)
         ''' </summary>
         ''' <remarks></remarks>
@@ -148,25 +160,21 @@ Namespace Net
             Return ipAddress & ":" & port.ToString
         End Function
 
-        ''' <summary>
-        ''' 格式是否正确
-        ''' </summary>
-        ''' <returns></returns>
-        <SoapIgnore> Public ReadOnly Property IsValid As Boolean
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return port > 0 AndAlso System.Net.IPAddress.TryParse(ipAddress, Nothing)
-            End Get
-        End Property
-
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(ep As IPEndPoint) As System.Net.IPEndPoint
             Return ep.GetIPEndPoint
         End Operator
 
         Public Const RegexIPAddress As String = "\d{1,3}(\.\d{1,3}){3}"
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsIpv4Address(addr As String) As Boolean
             Return addr.IsPattern(RegexIPAddress)
         End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(endpoint As (ip$, port%)) As IPEndPoint
+            Return New IPEndPoint(endpoint.ip, endpoint.port)
+        End Operator
     End Class
 End Namespace

@@ -69,7 +69,7 @@ Namespace FileIO
 
         Private Shared Function makeDirectoryExists(dir As String) As String
             If Not dir.DirectoryExists Then
-                Call dir.MkDIR
+                Call dir.MakeDir
             End If
 
             Return dir

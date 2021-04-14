@@ -80,5 +80,13 @@ Namespace ApplicationServices
                 Return meta.AssemblyVersion
             End Get
         End Property
+
+        Public Shared Sub DoEvents()
+#If netcore5 = 0 Then
+#If UNIX = False Then
+            Call Parallel.DoEvents()
+#End If
+#End If
+        End Sub
     End Class
 End Namespace

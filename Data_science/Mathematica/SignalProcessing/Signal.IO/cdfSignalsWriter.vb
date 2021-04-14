@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de20b66bcfabe041ba0a28f7a1dca9d3, Data_science\Mathematica\SignalProcessing\Signal.IO\cdfSignalsWriter.vb"
+﻿#Region "Microsoft.VisualBasic::13a6b9995db7ed631e9b5e0f62d8f063, Data_science\Mathematica\SignalProcessing\Signal.IO\cdfSignalsWriter.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5feb658d3b1bd9f419c4dee180380c01, Microsoft.VisualBasic.Core\src\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::371a293e12579e8226b9d57121e50e00, Microsoft.VisualBasic.Core\src\ApplicationServices\App.vb"
 
     ' Author:
     ' 
@@ -45,12 +45,11 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: __listFiles, __sysTEMP, (+2 Overloads) Argument, checkIsMicrosoftPlatform, CLICode
-    '               (+2 Overloads) ElapsedMilliseconds, Exit, finalizeCLI, FormatTime, GenerateTemp
-    '               (+2 Overloads) GetAppLocalData, GetAppSysTempFile, GetAppVariables, GetFile, GetNextUniqueName
-    '               GetProductSharedDIR, GetProductSharedTemp, GetTempFile, GetVariable, (+3 Overloads) LogException
-    '               NullDevice, (+11 Overloads) RunCLI, RunCLIInternal, SelfFolk, Shell
-    '               tempCode, TemporaryEnvironment, TraceBugs
+    '     Function: __listFiles, (+2 Overloads) Argument, checkIsMicrosoftPlatform, CLICode, (+2 Overloads) ElapsedMilliseconds
+    '               Exit, finalizeCLI, FormatTime, (+2 Overloads) GetAppLocalData, GetAppVariables
+    '               GetFile, GetNextUniqueName, GetProductSharedDIR, GetProductSharedTemp, GetTempFile
+    '               GetVariable, (+3 Overloads) LogException, NullDevice, (+11 Overloads) RunCLI, RunCLIInternal
+    '               SelfFolk, Shell, tempCode, TemporaryEnvironment, TraceBugs
     ' 
     '     Sub: [Stop], __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory
     '          Free, JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println
@@ -84,12 +83,12 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.My.UNIX
 Imports Microsoft.VisualBasic.Parallel.Linq
 Imports Microsoft.VisualBasic.Parallel.Tasks
-Imports Microsoft.VisualBasic.Parallel.Threads
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.ValueTypes
 Imports CommandLineArgs = Microsoft.VisualBasic.CommandLine.CommandLine
 Imports DevAssmInfo = Microsoft.VisualBasic.ApplicationServices.Development.AssemblyInfo
+Imports FS = Microsoft.VisualBasic.FileIO.FileSystem
 
 '                   _ooOoo_
 '                  o8888888o
@@ -344,17 +343,17 @@ Public Module App
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             ' 由于会因为切换目录而发生变化，所以这里不适用简写形式了
-            Return FileIO.FileSystem.CurrentDirectory
+            Return FS.CurrentDirectory
         End Get
         Set(value As String)
             If String.Equals(value, "-") Then  ' 切换到前一个工作目录
                 value = PreviousDirectory
             Else
-                _PreviousDirectory = FileIO.FileSystem.CurrentDirectory
+                _PreviousDirectory = FS.CurrentDirectory
             End If
 
-            FileIO.FileSystem.CreateDirectory(value)
-            FileIO.FileSystem.CurrentDirectory = value
+            FS.CreateDirectory(value)
+            FS.CurrentDirectory = value
         End Set
     End Property
 
@@ -405,21 +404,21 @@ Public Module App
 
         ' 请注意，这里的变量都是有先后的初始化顺序的
         Try
-            App.RunTimeDirectory = FileIO.FileSystem _
+            App.RunTimeDirectory = FS _
                 .GetDirectoryInfo(RuntimeEnvironment.GetRuntimeDirectory) _
                 .FullName _
                 .Replace("/", "\")
             App.Desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
-            App.ExecutablePath = FileIO.FileSystem.GetFileInfo(Application.ExecutablePath).FullName    ' (Process.GetCurrentProcess.StartInfo.FileName).FullName
+            App.ExecutablePath = FS.GetFileInfo(Application.ExecutablePath).FullName    ' (Process.GetCurrentProcess.StartInfo.FileName).FullName
             App.Info = ApplicationInfoUtils.CurrentExe()
             App.AssemblyName = BaseName(App.ExecutablePath)
             App.ProductName = Application.ProductName Or AssemblyName.AsDefault(Function(s) String.IsNullOrEmpty(s))
-            App.HOME = FileIO.FileSystem.GetParentPath(App.ExecutablePath)
+            App.HOME = FS.GetParentPath(App.ExecutablePath)
             App.UserHOME = PathMapper.HOME.GetDirectoryFullPath("App.New(.cctor)")
             App.ProductProgramData = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{ProductName}".GetDirectoryFullPath("App.New(.cctor)")
             App.ProductSharedDIR = $"{ProductProgramData}/.shared".GetDirectoryFullPath
             App.LocalData = App.GetAppLocalData(ProductName, AssemblyName, "App.New(.cctor)")
-            App.CurrentProcessTemp = GenerateTemp(App.SysTemp & "/tmp.io", App.PID).GetDirectoryFullPath("App.New(.cctor)")
+            App.CurrentProcessTemp = TempFileSystem.GenerateTemp(App.SysTemp & "/tmp.io", App.PID).GetDirectoryFullPath("App.New(.cctor)")
             App.ProductSharedTemp = App.ProductSharedDIR & "/tmp/"
             App.LogErrDIR = App.LocalData & $"/.logs/err/"
         Catch ex As Exception
@@ -428,10 +427,10 @@ Public Module App
 #End Region
 
         If App.HOME.StringEmpty Then
-            App.HOME = System.IO.Directory.GetCurrentDirectory
+            App.HOME = Directory.GetCurrentDirectory
         End If
 
-        Call FileIO.FileSystem.CreateDirectory(AppSystemTemp)
+        Call FS.CreateDirectory(AppSystemTemp)
         ' Call FileIO.FileSystem.CreateDirectory(App.HOME & "/Resources/")
 
         ' 2018-08-14 因为经过测试发现text encoding模块会优先于命令行参数设置模块的初始化的加载
@@ -475,7 +474,7 @@ Public Module App
     End Function
 
     Public Function GetAppLocalData(exe$) As String
-        Dim app As DevAssmInfo = Assembly.LoadFile(path:=IO.Path.GetFullPath(exe)).FromAssembly
+        Dim app As DevAssmInfo = Assembly.LoadFile(path:=Path.GetFullPath(exe)).FromAssembly
         Return GetAppLocalData(app:=app.AssemblyProduct, assemblyName:=exe.BaseName)
     End Function
 
@@ -514,13 +513,15 @@ Public Module App
     End Sub
 
     Public Sub JoinVariables(vars As Dictionary(Of String, String))
-        Call App.JoinVariables(vars.Select(
-            Function(x)
-                Return New NamedValue(Of String) With {
-                    .Name = x.Key,
-                    .Value = x.Value
-                }
-            End Function).ToArray)
+        Call vars _
+            .Select(Function(x)
+                        Return New NamedValue(Of String) With {
+                            .Name = x.Key,
+                            .Value = x.Value
+                        }
+                    End Function) _
+            .ToArray _
+            .DoCall(AddressOf App.JoinVariables)
     End Sub
 
     ''' <summary>
@@ -534,7 +535,7 @@ Public Module App
     ''' 因为由于是从命令行之中输入进来的，所以可能有些时候大小写会影响直接字典查找，在这里需要用字符串手工查找
     ''' </param>
     ''' <returns>当没有查找到相对应的环境变量的时候会返回空值</returns>
-    Public Function GetVariable(<CallerMemberName> Optional name$ = Nothing) As String
+    Public Function GetVariable(<CallerMemberName> Optional name$ = Nothing, Optional defaultValue$ = Nothing) As String
         If m_joinedVariables.ContainsKey(name) Then
             Return m_joinedVariables(name).Value
         Else
@@ -545,7 +546,7 @@ Public Module App
             Next
         End If
 
-        Return Nothing
+        Return defaultValue
     End Function
 
     ''' <summary>
@@ -659,7 +660,8 @@ Public Module App
     ''' <typeparam name="T">假若该对象类型实现了<see cref="System.IDisposable"></see>接口，则函数还会在销毁前调用该接口的销毁函数</typeparam>
     ''' <param name="obj"></param>
     ''' <remarks></remarks>
-    <Extension> Public Sub Free(Of T As Class)(ByRef obj As T)
+    <Extension>
+    Public Sub Free(Of T As Class)(ByRef obj As T)
         If Not obj Is Nothing Then
             Dim TypeInfo As Type = obj.GetType
             If Array.IndexOf(TypeInfo.GetInterfaces, GetType(IDisposable)) > -1 Then
@@ -779,29 +781,7 @@ Public Module App
     ''' The directory path of the system temp data.
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property SysTemp As String = App.__sysTEMP
-
-    ''' <summary>
-    ''' <see cref="FileIO.FileSystem.GetParentPath"/>(<see cref="FileIO.FileSystem.GetTempFileName"/>)
-    ''' 当临时文件夹被删除掉了的时候，会出现崩溃。。。。所以弃用改用读取环境变量
-    ''' </summary>
-    ''' <returns></returns>
-    Private Function __sysTEMP() As String
-        Dim DIR As String = Environment.GetEnvironmentVariable("TMP") ' Linux系统可能没有这个东西
-
-        If String.IsNullOrEmpty(DIR) Then
-            DIR = IO.Path.GetTempPath
-        End If
-
-        Try
-            Call FileIO.FileSystem.CreateDirectory(DIR)
-        Catch ex As Exception
-            ' 不知道应该怎样处理，但是由于只是得到一个路径，所以在这里干脆忽略掉这个错误就可以了
-            Call New Exception(DIR, ex).PrintException
-        End Try
-
-        Return DIR
-    End Function
+    Public ReadOnly Property SysTemp As String = TempFileSystem.__sysTEMP
 
     ''' <summary>
     ''' Application temp data directory in the system temp root: %<see cref="App.SysTemp"/>%/<see cref="App.AssemblyName"/>
@@ -1244,24 +1224,8 @@ Public Module App
     '''
     <ExportAPI("GetTempFile")>
     Public Function GetTempFile() As String
-        Dim temp As String = FileIO.FileSystem.GetTempFileName
-        Return GenerateTemp(temp, "")
-    End Function
-
-    ''' <summary>
-    ''' Get temp file name in app system temp directory.
-    ''' </summary>
-    ''' <param name="ext"></param>
-    ''' <param name="sessionID">It is recommended that use <see cref="App.PID"/> for this parameter.</param>
-    ''' <returns></returns>
-    '''
-    <ExportAPI("GetTempFile.AppSys")>
-    Public Function GetAppSysTempFile(Optional ext$ = ".tmp", Optional sessionID$ = "", Optional prefix$ = Nothing) As String
-        Dim tmp As String = App.SysTemp & "/" & GetNextUniqueName(prefix) & ext
-        tmp = GenerateTemp(tmp, sessionID)
-        Call FileIO.FileSystem.CreateDirectory(FileIO.FileSystem.GetParentPath(tmp))
-        tmp = FileIO.FileSystem.GetFileInfo(tmp).FullName.Replace("\", "/")
-        Return tmp
+        Dim temp As String = FS.GetTempFileName
+        Return TempFileSystem.GenerateTemp(temp, "")
     End Function
 
     ''' <summary>
@@ -1269,20 +1233,6 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property CurrentProcessTemp As String
-
-    ''' <summary>
-    '''
-    ''' </summary>
-    ''' <param name="sysTemp">临时文件路径</param>
-    ''' <returns></returns>
-    '''
-    <ExportAPI("CreateTempFile")>
-    Public Function GenerateTemp(sysTemp$, SessionID$) As String
-        Dim Dir As String = FileIO.FileSystem.GetParentPath(sysTemp)
-        Dim Name As String = FileIO.FileSystem.GetFileInfo(sysTemp).Name
-        sysTemp = $"{Dir}/{App.AssemblyName}/{SessionID}/{Name}"
-        Return sysTemp
-    End Function
 
     ''' <summary>
     ''' Gets a temp file name which is located at directory <see cref="App.ProductSharedDIR"/>.
@@ -1461,6 +1411,7 @@ Public Module App
     ''' 自动垃圾回收线程
     ''' </summary>
     Private Sub __GCThreadInvoke()
+        On Error Resume Next
 
         Call App.__removesTEMP(App.SysTemp)
         Call App.__removesTEMP(App.AppSystemTemp)
@@ -1489,7 +1440,7 @@ Public Module App
     Private Sub __removesTEMP(TEMP As String)
         For Each file As String In TEMP.__listFiles
             Try
-                Call FileIO.FileSystem.DeleteFile(file)
+                Call FS.DeleteFile(file)
             Finally
                 ' DO Nothing
             End Try

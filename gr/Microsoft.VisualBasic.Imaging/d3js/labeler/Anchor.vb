@@ -47,6 +47,12 @@ Imports stdNum = System.Math
 
 Namespace d3js.Layout
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <remarks>
+    ''' anchor point can be created via <see cref="GetLabelAnchors"/> function
+    ''' </remarks>
     Public Class Anchor
 
         ''' <summary>
@@ -103,6 +109,10 @@ Namespace d3js.Layout
             x = circle.Left + r
             y = circle.Top + r
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"[{x}, {y}]"
+        End Function
 
         Public Shared Widening Operator CType(anchor As Anchor) As Point
             With anchor

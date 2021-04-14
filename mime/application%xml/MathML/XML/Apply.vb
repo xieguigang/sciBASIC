@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::920759a2b3cc9ff083af085f97622086, mime\application%xml\MathML\XML\Apply.vb"
+﻿#Region "Microsoft.VisualBasic::aa54d136fc46a30781b7b6788e133989, mime\application%xml\MathML\XML\Apply.vb"
 
     ' Author:
     ' 

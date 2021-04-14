@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4afd3d38885aac0739638328325a31eb, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\PathExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::3efaa760fef179b1663aaebd366bdc45, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\PathExtensions.vb"
 
     ' Author:
     ' 
@@ -201,7 +201,7 @@ Public Module PathExtensions
     ''' Make directory
     ''' </summary>
     ''' <param name="DIR"></param>
-    <Extension> Public Sub MkDIR(DIR$, Optional throwEx As Boolean = True)
+    <Extension> Public Sub MakeDir(DIR$, Optional throwEx As Boolean = True)
         If DIR.StringEmpty OrElse DIR = "./" OrElse DIR = ".\" Then
             ' 2017-12-25
             ' 当前文件夹
@@ -572,7 +572,7 @@ Public Module PathExtensions
             If copyTo.FileExists Then
                 Call FileIO.FileSystem.DeleteFile(copyTo)
             Else
-                Call copyTo.ParentPath.MkDIR
+                Call copyTo.ParentPath.MakeDir
             End If
 
             Call FileIO.FileSystem.CopyFile(source, copyTo)

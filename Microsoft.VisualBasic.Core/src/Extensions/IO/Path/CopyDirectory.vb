@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fed64921c144de377c9c217ad2ae23c5, Microsoft.VisualBasic.Core\src\Extensions\IO\Path\CopyDirectory.vb"
+﻿#Region "Microsoft.VisualBasic::0006d63c9a255ccf18ca5813854f53ec, Microsoft.VisualBasic.Core\src\Extensions\IO\Path\CopyDirectory.vb"
 
     ' Author:
     ' 
@@ -84,7 +84,7 @@ Namespace FileIO
         Private Shared Function CreateDestinationFolderAndReturnNewPath(src As String, destinationFolder$) As String
             Dim directory As New DirectoryInfo(src)
             Dim path = IO.Path.Combine(destinationFolder, directory.Name)
-            Call path.MkDIR
+            Call path.MakeDir
             Return path
         End Function
 

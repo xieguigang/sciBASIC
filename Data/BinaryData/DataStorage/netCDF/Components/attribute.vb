@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a4eedc42dc822538b5ae473f6b77c0f, Data\BinaryData\DataStorage\netCDF\Components\attribute.vb"
+﻿#Region "Microsoft.VisualBasic::9fd621b24d4aa1ba22c4c451575f05f1, Data\BinaryData\DataStorage\netCDF\Components\attribute.vb"
 
     ' Author:
     ' 

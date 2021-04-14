@@ -1,57 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::31cb50bb1407bea1da1194a21e7c69ec, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\labeler.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Delegate Function
-    ' 
-    ' 
-    '     Class Labeler
-    ' 
-    '         Function: Anchors, coolingSchedule, CoolingSchedule, defaultEnergyGet, energy
-    '                   EnergyFunction, GetEnumerator, Height, IEnumerable_GetEnumerator, intersect
-    '                   Labels, Size, Start, Width
-    ' 
-    '         Sub: mclMove, mclRotate, MonteCarlo
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Delegate Function
+' 
+' 
+'     Class Labeler
+' 
+'         Function: Anchors, coolingSchedule, CoolingSchedule, defaultEnergyGet, energy
+'                   EnergyFunction, GetEnumerator, Height, IEnumerable_GetEnumerator, intersect
+'                   Labels, Size, Start, Width
+' 
+'         Sub: mclMove, mclRotate, MonteCarlo
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
-Imports Microsoft.VisualBasic.Linq
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports stdNum = System.Math
 
@@ -67,16 +65,7 @@ Namespace d3js.Layout
     ''' <remarks>
     ''' https://github.com/tinker10/D3-Labeler
     ''' </remarks>
-    Public Class Labeler : Implements IEnumerable(Of Label)
-
-        Dim lab As Label()
-        Dim anc As Anchor()
-        Dim unpinnedLabels As Integer()
-
-        ''' <summary>
-        ''' box width/height
-        ''' </summary>
-        Dim w As Double = 1, h As Double = 1
+    Public Class Labeler : Inherits DataLabeler
 
         Dim acc As Integer = 0
         Dim rej As Integer = 0
@@ -106,10 +95,10 @@ Namespace d3js.Layout
         ''' <param name="index%"></param>
         ''' <returns></returns>
         Public Function energy(index%) As Double
-            Dim m = lab.Length,
+            Dim m = m_labels.Length,
                 ener# = 0,
-                dx = lab(index).X - anc(index).x,
-                dy = anc(index).y - lab(index).Y
+                dx = m_labels(index).X - m_anchors(index).x,
+                dy = m_anchors(index).y - m_labels(index).Y
 
             ' 标签与anchor锚点之间的距离
             Dim dist = stdNum.Sqrt(dx * dx + dy * dy),
@@ -135,10 +124,10 @@ Namespace d3js.Layout
                 ener += 3 * w_orient
             End If
 
-            Dim x21 = lab(index).X,
-                y21 = lab(index).Y - lab(index).height + 2.0,
-                x22 = lab(index).X + lab(index).width,
-                y22 = lab(index).Y + 2.0
+            Dim x21 = m_labels(index).X,
+                y21 = m_labels(index).Y - m_labels(index).height + 2.0,
+                x22 = m_labels(index).X + m_labels(index).width,
+                y22 = m_labels(index).Y + 2.0
             Dim x11, x12, y11, y12, x_overlap, y_overlap, overlap_area
 
             For i As Integer = 0 To m - 1
@@ -146,18 +135,19 @@ Namespace d3js.Layout
 
                     ' penalty for intersection of leader lines
                     overlap = intersect(
-                        anc(index).x, lab(index).X, anc(i).x, lab(i).X,
-                        anc(index).y, lab(index).Y, anc(i).y, lab(i).Y)
+                        m_anchors(index).x, m_labels(index).X, m_anchors(i).x, m_labels(i).X,
+                        m_anchors(index).y, m_labels(index).Y, m_anchors(i).y, m_labels(i).Y
+                    )
 
                     If (overlap) Then
                         ener += w_inter
                     End If
 
                     ' penalty for label-label overlap
-                    x11 = lab(i).X
-                    y11 = lab(i).Y - lab(i).height + 2.0
-                    x12 = lab(i).X + lab(i).width
-                    y12 = lab(i).Y + 2.0
+                    x11 = m_labels(i).X
+                    y11 = m_labels(i).Y - m_labels(i).height + 2.0
+                    x12 = m_labels(i).X + m_labels(i).width
+                    y12 = m_labels(i).Y + 2.0
                     x_overlap = stdNum.Max(0, stdNum.Min(x12, x22) - stdNum.Max(x11, x21))
                     y_overlap = stdNum.Max(0, stdNum.Min(y12, y22) - stdNum.Max(y11, y21))
                     overlap_area = x_overlap * y_overlap
@@ -165,10 +155,10 @@ Namespace d3js.Layout
                 End If
 
                 ' penalty for label-anchor overlap
-                x11 = anc(i).x - anc(i).r
-                y11 = anc(i).y - anc(i).r
-                x12 = anc(i).x + anc(i).r
-                y12 = anc(i).y + anc(i).r
+                x11 = m_anchors(i).x - m_anchors(i).r
+                y11 = m_anchors(i).y - m_anchors(i).r
+                x12 = m_anchors(i).x + m_anchors(i).r
+                y12 = m_anchors(i).y + m_anchors(i).r
 
                 x_overlap = stdNum.Max(0, stdNum.Min(x12, x22) - stdNum.Max(x11, x21))
                 y_overlap = stdNum.Max(0, stdNum.Min(y12, y22) - stdNum.Max(y11, y21))
@@ -219,31 +209,32 @@ Namespace d3js.Layout
         ''' </summary>
         Private Sub mclMove(i%)
             ' random translation
-            lab(i).X += (Rnd() - 0.5) * maxMove
-            lab(i).Y += (Rnd() - 0.5) * maxMove
+            m_labels(i).X += (Rnd() - 0.5) * maxMove
+            m_labels(i).Y += (Rnd() - 0.5) * maxMove
         End Sub
 
         Private Sub MonteCarlo(currT#, action As Action(Of Integer))
             ' select a random label which is not pinned
             Dim i As Integer = unpinnedLabels(stdNum.Floor(Rnd() * unpinnedLabels.Length))
+            Dim label As Label = m_labels(i)
 
             ' save old coordinates
-            Dim x_old = lab(i).X
-            Dim y_old = lab(i).Y
+            Dim x_old = label.X
+            Dim y_old = label.Y
 
             ' old energy
-            Dim old_energy# = calcEnergy(i, lab, anc)
+            Dim old_energy# = calcEnergy(i, m_labels, m_anchors)
 
             Call action(i)
 
             ' hard wall boundaries
-            If (lab(i).X > w) Then lab(i).X = x_old
-            If (lab(i).X < 0) Then lab(i).X = x_old
-            If (lab(i).Y > h) Then lab(i).Y = y_old
-            If (lab(i).Y < 0) Then lab(i).Y = y_old
+            If (label.X + label.width > w + offset.X) Then m_labels(i).X = x_old
+            If (label.X < 0) Then m_labels(i).X = x_old
+            If (label.Y + label.height > h + offset.Y) Then m_labels(i).Y = y_old
+            If (label.Y < 0) Then m_labels(i).Y = y_old
 
             ' New energy
-            Dim new_energy# = calcEnergy(i, lab, anc)
+            Dim new_energy# = calcEnergy(i, m_labels, m_anchors)
             ' delta E
             Dim delta_energy = new_energy - old_energy
 
@@ -251,8 +242,8 @@ Namespace d3js.Layout
                 acc += 1
             Else
                 ' move back to old coordinates
-                lab(i).X = x_old
-                lab(i).Y = y_old
+                m_labels(i).X = x_old
+                m_labels(i).Y = y_old
                 rej += 1
             End If
         End Sub
@@ -268,16 +259,16 @@ Namespace d3js.Layout
             Dim c = stdNum.Cos(angle)
 
             ' translate label (relative to anchor at origin):
-            lab(i).X -= anc(i).x
-            lab(i).Y -= anc(i).y
+            m_labels(i).X -= m_anchors(i).x
+            m_labels(i).Y -= m_anchors(i).y
 
             ' rotate label
-            Dim x_new = lab(i).X * c - lab(i).Y * s,
-                y_new = lab(i).X * s + lab(i).Y * c
+            Dim x_new = m_labels(i).X * c - m_labels(i).Y * s,
+                y_new = m_labels(i).X * s + m_labels(i).Y * c
 
             ' translate label back
-            lab(i).X = x_new + anc(i).x
-            lab(i).Y = y_new + anc(i).y
+            m_labels(i).X = x_new + m_anchors(i).x
+            m_labels(i).Y = y_new + m_anchors(i).y
         End Sub
 #End Region
 
@@ -294,34 +285,39 @@ Namespace d3js.Layout
             Return (currT - (initialT / nsweeps))
         End Function
 
+        Dim T# = 1
+        Dim initialT# = 1
+        Dim rotate# = 0.5
+
+        Public Function Temperature(Optional T# = 1, Optional initialT# = 1) As Labeler
+            Me.T = T
+            Me.initialT = initialT
+            Return Me
+        End Function
+
+        Public Function RotateChance(Optional rotate# = 0.5) As Labeler
+            Me.rotate = rotate
+            Return Me
+        End Function
+
         ''' <summary>
         ''' main simulated annealing function.(这个函数运行完成之后，可以直接使用<see cref="Label.X"/>和<see cref="Label.Y"/>位置数据进行作图)
         ''' </summary>
         ''' <param name="nsweeps"></param>
         ''' <returns></returns>
-        Public Function Start(Optional nsweeps% = 2000,
-                              Optional T# = 1,
-                              Optional initialT# = 1,
-                              Optional rotate# = 0.5,
-                              Optional showProgress As Boolean = True) As Labeler
-
+        Public Overrides Function Start(Optional nsweeps% = 2000, Optional showProgress As Boolean = True) As Labeler
             Dim moves As Action(Of Integer) = AddressOf mclMove
             Dim rotat As Action(Of Integer) = AddressOf mclRotate
             Dim progress As ProgressBar = Nothing
             Dim tick As Action(Of Double)
 
             ' 在计算之前需要将label的坐标赋值为anchor的值，否则会无法正常的生成label的最终位置
-            For i As Integer = 0 To lab.Length - 1
-                If lab(i).X = 0.0 AndAlso lab(i).Y = 0.0 Then
-                    lab(i).X = anc(i).x
-                    lab(i).Y = anc(i).y
+            For i As Integer = 0 To m_labels.Length - 1
+                If m_labels(i).X = 0.0 AndAlso m_labels(i).Y = 0.0 Then
+                    m_labels(i).X = m_anchors(i).x
+                    m_labels(i).Y = m_anchors(i).y
                 End If
             Next
-
-            unpinnedLabels = lab.SeqIterator _
-                .Where(Function(l) Not l.value.pinned) _
-                .Select(Function(lb) lb.i) _
-                .ToArray
 
             If unpinnedLabels.Length = 0 Then
                 Call "No unpinned label to be re-layout!".Warning
@@ -344,7 +340,7 @@ Namespace d3js.Layout
             End If
 
             For i As Integer = 0 To nsweeps
-                For j As Integer = 0 To lab.Length
+                For j As Integer = 0 To m_labels.Length
                     If (randf.seeds.NextDouble < rotate) Then
                         Call MonteCarlo(T, moves)
                     Else
@@ -358,55 +354,6 @@ Namespace d3js.Layout
 
             Call progress?.Dispose()
 
-            Return Me
-        End Function
-
-        ''' <summary>
-        ''' users insert graph width
-        ''' </summary>
-        ''' <param name="x"></param>
-        ''' <returns></returns>
-        Public Function Width(x#) As Labeler
-            w = x
-            Return Me
-        End Function
-
-        ''' <summary>
-        ''' users insert graph height
-        ''' </summary>
-        ''' <param name="x"></param>
-        ''' <returns></returns>
-        Public Function Height(x#) As Labeler
-            h = x
-            Return Me
-        End Function
-
-        Public Function Size(x As SizeF) As Labeler
-            With x
-                w = .Width
-                h = .Height
-            End With
-
-            Return Me
-        End Function
-
-        ''' <summary>
-        ''' users insert label positions
-        ''' </summary>
-        ''' <param name="x"></param>
-        ''' <returns></returns>
-        Public Function Labels(x As IEnumerable(Of Label)) As Labeler
-            lab = x.ToArray
-            Return Me
-        End Function
-
-        ''' <summary>
-        ''' users insert anchor positions
-        ''' </summary>
-        ''' <param name="x"></param>
-        ''' <returns></returns>
-        Public Function Anchors(x As IEnumerable(Of Anchor)) As Labeler
-            anc = x.ToArray
             Return Me
         End Function
 
@@ -428,16 +375,6 @@ Namespace d3js.Layout
         Public Function CoolingSchedule(x As CoolingSchedule) As Labeler
             definedCoolingSchedule = x
             Return Me
-        End Function
-
-        Public Iterator Function GetEnumerator() As IEnumerator(Of Label) Implements IEnumerable(Of Label).GetEnumerator
-            For Each label As Label In lab
-                Yield label
-            Next
-        End Function
-
-        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
-            Yield GetEnumerator()
         End Function
     End Class
 End Namespace

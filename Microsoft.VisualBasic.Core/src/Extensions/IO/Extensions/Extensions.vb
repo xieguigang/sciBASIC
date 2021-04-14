@@ -71,7 +71,7 @@ Namespace FileIO
                 data.Select(AddressOf Scripting.ToString)
             Dim parent$ = FileSystem.GetParentPath(saveTo)
 
-            Call parent.MkDIR
+            Call parent.MakeDir
 
             If encoding Is Nothing Then
                 encoding = Encoding.Default
@@ -114,7 +114,7 @@ Namespace FileIO
             If append Then
                 With path.ParentPath
                     If Not .DirectoryExists Then
-                        Call .MkDIR
+                        Call .MakeDir
                     End If
 
                     If path.FileExists Then

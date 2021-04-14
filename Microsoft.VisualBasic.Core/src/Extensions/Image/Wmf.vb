@@ -120,7 +120,7 @@ Namespace Imaging
             Me.bounds = bounds.Size.ToSize
 
             ' Make the Metafile, using the reference hDC.
-            save.ParentPath.MkDIR
+            save.ParentPath.MakeDir
             vectorMetafile = New Metafile(save, hdc, bounds, MetafileFrameUnit.Pixel)
             gSource.ReleaseHdc(hdc)
 

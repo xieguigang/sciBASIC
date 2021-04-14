@@ -105,7 +105,7 @@ Namespace Imaging
             If bmp Is Nothing Then Return False
 
             Try
-                Call location.ParentPath.MkDIR
+                Call location.ParentPath.MakeDir
                 Call saveMultipage(layers2Bitmaps(bmp), location, type)
                 Return True
             Catch ex As Exception

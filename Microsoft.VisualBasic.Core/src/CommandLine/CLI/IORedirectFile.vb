@@ -1,54 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::8c5adb252e240ecbef44e96b3b99810a, Microsoft.VisualBasic.Core\src\CommandLine\CLI\IORedirectFile.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class IORedirectFile
-    ' 
-    '         Properties: Bin, CLIArguments, redirectDevice, StandardOutput
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: CopyRedirect, Run, (+2 Overloads) Start, ToString, writeScript
-    ' 
-    '         Sub: __processExitHandle, (+2 Overloads) Dispose, Start
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class IORedirectFile
+' 
+'         Properties: Bin, CLIArguments, redirectDevice, StandardOutput
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: CopyRedirect, Run, (+2 Overloads) Start, ToString, writeScript
+' 
+'         Sub: __processExitHandle, (+2 Overloads) Dispose, Start
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Text
 Imports ValueTuple = System.Collections.Generic.KeyValuePair(Of String, String)
@@ -71,7 +70,7 @@ Namespace CommandLine
         ''' 重定向的临时文件
         ''' </summary>
         ''' <remarks>当使用.tmp拓展名的时候会由于APP框架里面的GC线程里面的自动临时文件清理而产生冲突，所以这里需要其他的文件拓展名来避免这个冲突</remarks>
-        Protected ReadOnly _TempRedirect As String = App.GetAppSysTempFile(".proc_IO_std.out", App.PID)
+        Protected ReadOnly _TempRedirect As String = TempFileSystem.GetAppSysTempFile(".proc_IO_std.out", App.PID)
 
         ''' <summary>
         ''' shell文件接口
@@ -176,7 +175,7 @@ Namespace CommandLine
 
             ' 系统可能不会自动创建文件夹，则需要在这里使用这个方法来手工创建，
             ' 避免出现无法找到文件的问题
-            Call _TempRedirect.ParentPath.MkDIR
+            Call _TempRedirect.ParentPath.MakeDir
             ' 在Unix平台上面这个文件不会被自动创建？？？
             Call "".SaveTo(_TempRedirect)
 
@@ -254,7 +253,7 @@ Namespace CommandLine
 
         Private Function writeScript() As String
             Dim ext$ = If(App.IsMicrosoftPlatform, ".bat", ".sh")
-            Dim path$ = App.GetAppSysTempFile(ext, App.PID)
+            Dim path$ = TempFileSystem.GetAppSysTempFile(ext, App.PID)
             Call shellScript.SaveTo(path, Encodings.UTF8WithoutBOM.CodePage)
             Return path
         End Function

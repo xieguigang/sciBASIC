@@ -54,6 +54,9 @@ Namespace d3js
         ''' A D3 plug-in for automatic label placement using simulated annealing that easily 
         ''' incorporates into existing D3 code, with syntax mirroring other D3 layouts.
         ''' </summary>
+        ''' <param name="w_len">
+        ''' penalty for length of leader line. positive value for penalty, zero for dont care and negative for encourage
+        ''' </param>
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

@@ -149,7 +149,7 @@ Namespace Imaging
             End If
 
             Try
-                Call path.ParentPath.MkDIR
+                Call path.ParentPath.MakeDir
 
                 If format = ImageFormats.Tiff Then
                     Return New TiffWriter(res).MultipageTiffSave(path)

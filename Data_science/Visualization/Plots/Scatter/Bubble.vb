@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::55aedb97d72e09b2e5dcd9f036bcc733, Data_science\Visualization\Plots\Scatter\Bubble.vb"
+﻿#Region "Microsoft.VisualBasic::cc7421a456c085651cfb25ec532968c2, Data_science\Visualization\Plots\Scatter\Bubble.vb"
 
     ' Author:
     ' 

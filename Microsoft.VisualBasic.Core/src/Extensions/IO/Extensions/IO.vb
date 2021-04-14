@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50274087c9039ad81db18cf42c2bfbe6, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\IO.vb"
+﻿#Region "Microsoft.VisualBasic::15f70579d73fecc25c3dda4eda0b5244, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\IO.vb"
 
     ' Author:
     ' 
@@ -171,7 +171,7 @@ Public Module IOExtensions
 
         With path.ParentPath
             If Not .DirectoryExists Then
-                Call .MkDIR()
+                Call .MakeDir()
             End If
         End With
 

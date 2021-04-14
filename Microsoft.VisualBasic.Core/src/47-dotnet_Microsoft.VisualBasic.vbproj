@@ -1588,6 +1588,7 @@
     <Compile Include="ApplicationServices\DynamicInterop\UnixLibraryLoader.vb" />
     <Compile Include="ApplicationServices\DynamicInterop\UnmanagedDll.vb" />
     <Compile Include="ApplicationServices\DynamicInterop\WindowsLibraryLoader.vb" />
+    <Compile Include="ApplicationServices\FileSystem\TempFileSystem.vb" />
     <Compile Include="ApplicationServices\Parallel\DuplexPipe.vb" />
     <Compile Include="ApplicationServices\Parallel\RequestStream.vb" />
     <Compile Include="ApplicationServices\Terminal\MarkdownRender\Theme.vb" />

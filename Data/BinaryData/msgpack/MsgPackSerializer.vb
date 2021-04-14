@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a77635180f3079abec23a7582a908af8, Data\BinaryData\msgpack\MsgPackSerializer.vb"
+﻿#Region "Microsoft.VisualBasic::5a3c36d68472bf285f0d4149f22d762a, Data\BinaryData\msgpack\MsgPackSerializer.vb"
 
     ' Author:
     ' 
@@ -131,9 +131,10 @@ Public Class MsgPackSerializer
     End Function
 
     Public Sub Serialize(o As Object, stream As Stream)
-        Using writer As BinaryWriter = New BinaryWriter(stream)
-            Serialize(o, writer)
-        End Using
+        Dim writer As New BinaryWriter(stream)
+
+        Call Serialize(o, writer)
+        Call writer.Flush()
     End Sub
 
     Public Function Serialize(o As Object) As Byte()

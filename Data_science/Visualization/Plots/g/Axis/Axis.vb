@@ -1,47 +1,47 @@
-﻿#Region "Microsoft.VisualBasic::80e1c5b96ef0c71ce9f59ec9720951a7, Data_science\Visualization\Plots\g\Axis\Axis.vb"
+﻿#Region "Microsoft.VisualBasic::a02a5399af8b579006ee2df5d6e574bc, Data_science\Visualization\Plots\g\Axis\Axis.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Module Axis
-' 
-'         Properties: delta
-' 
-'         Function: __plotLabel, (+2 Overloads) DrawLabel
-' 
-'         Sub: checkScaler, (+2 Overloads) DrawAxis, DrawString, DrawX, DrawY
-'              DrawYGrid
-' 
-' 
-' /********************************************************************************/
+    '     Module Axis
+    ' 
+    '         Properties: delta
+    ' 
+    '         Function: __plotLabel, (+2 Overloads) DrawLabel
+    ' 
+    '         Sub: checkScaler, (+2 Overloads) DrawAxis, DrawString, DrawX, DrawY
+    '              DrawYGrid
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

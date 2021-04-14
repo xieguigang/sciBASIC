@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::08084fe861a49c3a13ff352c10a88663, Data\BinaryData\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::38c3fe3aca8e9f1b94f85a303af1bfea, Data\BinaryData\test\Module1.vb"
 
     ' Author:
     ' 

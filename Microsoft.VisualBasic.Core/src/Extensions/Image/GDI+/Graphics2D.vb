@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb471125e07723d1959d68aaf3aca5dc, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Graphics2D.vb"
+﻿#Region "Microsoft.VisualBasic::ee912ec722ae4ad293eb84a45b405293, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Graphics2D.vb"
 
     ' Author:
     ' 
@@ -183,7 +183,7 @@ Namespace Imaging
         End Function
 
         Private Sub __save(path As String, format As ImageFormat)
-            Call path.ParentPath.MkDIR
+            Call path.ParentPath.MakeDir
             Call ImageResource.Save(path, format)
         End Sub
 

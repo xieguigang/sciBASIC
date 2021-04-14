@@ -67,7 +67,7 @@ Namespace ApplicationServices.Zip
             ' Creates the directory (if it doesn't exist) for the new path
             ' 2018-2-2 在原先的代码之中直接使用CreateDirectory，如果目标文件夹存在的话会报错
             ' 在这里使用安全一点的mkdir函数
-            Call destinationFilePath.MkDIR(throwEx:=False)
+            Call destinationFilePath.MakeDir(throwEx:=False)
 
             ' Determines what to do with the file based upon the
             ' method of overwriting chosen
@@ -242,7 +242,7 @@ Namespace ApplicationServices.Zip
                     If file.IsADirectoryEntry Then
                         Call Path _
                             .Combine(destinationDirectoryName, fullName) _
-                            .MkDIR
+                            .MakeDir
                     Else
                         Call file.ExtractToFileInternal(
                             destinationPath:=destinationDirectoryName,

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2afbf9ad2dd55862b2921eac19155a2b, Data_science\Mathematica\SignalProcessing\SignalProcessing\PeakFinding\SignalPeak.vb"
+﻿#Region "Microsoft.VisualBasic::a8572dd8373c3264254fd9c9c81c4dca, Data_science\Mathematica\SignalProcessing\SignalProcessing\PeakFinding\SignalPeak.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22817113f43af04039fb4db22e8a29ab, Data\BinaryData\msgpack\ObjectExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::e16ada1567a21f38c1fb84ec9baaf43e, Data\BinaryData\msgpack\ObjectExtensions.vb"
 
     ' Author:
     ' 

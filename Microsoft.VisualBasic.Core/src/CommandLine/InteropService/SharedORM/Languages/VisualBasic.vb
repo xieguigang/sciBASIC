@@ -73,9 +73,7 @@ Namespace CommandLine.InteropService.SharedORM
 
         Public Overrides Function GetSourceCode() As String
             Dim vb As New StringBuilder
-            Dim className$ = MyBase.exe _
-                .NormalizePathString(alphabetOnly:=True) _
-                .Replace(" ", "_")
+            Dim className$ = normAsVisualBasicName(MyBase.exe)
             Dim rel$ = PathExtensions.RelativePath(App.Type.Assembly.Location.GetFullPath)
             Dim info$ = App.Type.NamespaceEntry.Description
             Dim appName$ = KeywordProcessor.AutoEscapeVBKeyword(className)

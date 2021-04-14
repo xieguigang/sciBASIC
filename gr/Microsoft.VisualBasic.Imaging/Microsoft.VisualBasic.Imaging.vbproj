@@ -728,6 +728,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="d3js\labeler\DataLabeler.vb" />
+    <Compile Include="d3js\labeler\fdLabeler\Forcedirected.vb" />
     <Compile Include="d3js\labeler\Anchor.vb" />
     <Compile Include="d3js\labeler\Label.vb" />
     <Compile Include="d3js\labeler\Labeler.vb" />

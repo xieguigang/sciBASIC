@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ef9bf6be7bc8c9d1bf9ae1edbf68727, Data_science\Mathematica\Math\DataFittings\Linear\Weighted\WeightedFit.vb"
+﻿#Region "Microsoft.VisualBasic::31371f21356593dbbc0a50763879d2b4, Data_science\Mathematica\Math\DataFittings\Linear\Weighted\WeightedFit.vb"
 
     ' Author:
     ' 
