@@ -947,11 +947,16 @@ Public Module StringHelpers
         If Not TrimTrailingEmptyStrings OrElse splitArray.Length <= 1 Then
             Return splitArray
         Else
-            Return splitArray _
-                .Where(Function(s)
-                           Return Not String.IsNullOrEmpty(s)
-                       End Function) _
-                .ToArray
+            If splitArray.Length > 1 Then
+                For i = splitArray.Length To 0 + 1 Step -1
+                    If splitArray(i - 1).Length > 0 Then
+                        If i < splitArray.Length Then Array.Resize(splitArray, i)
+                        Exit For
+                    End If
+                Next
+            End If
+
+            Return splitArray
         End If
     End Function
 
@@ -1272,5 +1277,30 @@ Public Module StringHelpers
         Dim val% = InStrRev(s, token)
 
         Return lastIndex = val
+    End Function
+
+    ''' <summary>
+    ''' This method replaces the Java String.substring method when 'start' is a
+    '''	method call or calculated value to ensure that 'start' is obtained just once.
+    ''' </summary>
+    ''' <param name="self"></param>
+    ''' <param name="start"></param>
+    ''' <param name="[end]"></param>
+    ''' <returns></returns>
+    <Extension()>
+    Friend Function SubstringSpecial(self As String, start As Integer, [end] As Integer) As String
+        Return self.Substring(start, [end] - start)
+    End Function
+
+    ''' <summary>
+    ''' This method is used to replace calls to the 2-arg Java String.startsWith method.
+    ''' </summary>
+    ''' <param name="self"></param>
+    ''' <param name="prefix"></param>
+    ''' <param name="toffset"></param>
+    ''' <returns></returns>
+    <Extension()>
+    Friend Function StartsWith(self As String, prefix As String, toffset As Integer) As Boolean
+        Return self.IndexOf(prefix, toffset, StringComparison.Ordinal) = toffset
     End Function
 End Module
