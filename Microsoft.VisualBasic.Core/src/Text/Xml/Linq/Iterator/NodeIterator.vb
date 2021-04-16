@@ -81,5 +81,12 @@ Namespace Text.Xml.Linq
         Public Function IterateArrayNodes(file As StreamReader, tag$, Optional filter As Func(Of String, Boolean) = Nothing) As IEnumerable(Of String)
             Return New NodeIteratorImpl(tag).PopulateData(file, filter)
         End Function
+
+        Public Function CreateBlockReader(tag$, Optional filter As Func(Of String, Boolean) = Nothing, Optional name As String = "n/a") As ReadBlocks
+            Return Function(lines) New NodeIteratorImpl(tag).PopulateData(lines, name, filter)
+        End Function
     End Module
+
+    Public Delegate Function ReadBlocks(lines As IEnumerable(Of String)) As IEnumerable(Of String)
+
 End Namespace

@@ -140,5 +140,9 @@ Namespace d3js.Layout
                 Return New Rectangle(.Location.ToPoint, .Size.ToSize)
             End With
         End Operator
+
+        Public Shared Widening Operator CType(pt As PointF) As Anchor
+            Return New Anchor With {.x = pt.X, .y = pt.Y}
+        End Operator
     End Class
 End Namespace
