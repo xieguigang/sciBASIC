@@ -107,6 +107,11 @@ Namespace Imaging
             Call Me.New(context.size, context.color.TranslateColor)
         End Sub
 
+        Sub New(canvas As Graphics, size As Size)
+            Me.Graphics = canvas
+            Me.Size = size
+        End Sub
+
         Sub New(base As Image)
             innerImage = base
             Size = base.Size
@@ -118,7 +123,11 @@ Namespace Imaging
         ''' Can be serialize as a XML file node.
         ''' </summary>
         Public Structure Context
+
             Dim size As Size
+            ''' <summary>
+            ''' the background color value
+            ''' </summary>
             Dim color$
 
             <MethodImpl(MethodImplOptions.AggressiveInlining)>

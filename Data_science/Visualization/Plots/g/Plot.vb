@@ -58,6 +58,9 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Graphic
 
+    ''' <summary>
+    ''' the chartting plot framework in sciBASIC 
+    ''' </summary>
     Public MustInherit Class Plot
 
         Protected ReadOnly theme As Theme

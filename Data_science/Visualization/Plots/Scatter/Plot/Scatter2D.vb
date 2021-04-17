@@ -61,6 +61,16 @@ Imports Microsoft.VisualBasic.Math.Statistics.Linq
 
 Namespace Plots
 
+    ''' <summary>
+    ''' A scatter plot (also called a scatterplot, scatter graph, scatter chart, 
+    ''' scattergram, or scatter diagram)[3] is a type of plot or mathematical 
+    ''' diagram using Cartesian coordinates to display values for typically two 
+    ''' variables for a set of data. If the points are coded (color/shape/size), 
+    ''' one additional variable can be displayed. The data are displayed as a 
+    ''' collection of points, each having the value of one variable determining 
+    ''' the position on the horizontal axis and the value of the other variable 
+    ''' determining the position on the vertical axis.[4]
+    ''' </summary>
     Public Class Scatter2D : Inherits Plot
 
         ReadOnly array As SerialData()

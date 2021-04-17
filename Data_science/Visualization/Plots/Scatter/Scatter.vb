@@ -70,8 +70,6 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Public Module Scatter
 
-
-
     <Extension>
     Public Function CreateAxisTicks(array As SerialData(), Optional preferPositive As Boolean = False, Optional scaleX# = 1.2, Optional scaleY# = 1.2) As (x As Double(), y As Double())
         Dim ptX#() = array _
@@ -566,10 +564,13 @@ Public Module Scatter
             .lineType = lineType,
             .pointSize = ptSize,
             .width = lineWidth,
-            .pts = points.Select(
-                Function(pt) New PointData With {
-                    .pt = pt
-            }).ToArray,
+            .pts = points _
+                .Select(Function(pt)
+                            Return New PointData With {
+                                .pt = pt
+                            }
+                        End Function) _
+                .ToArray,
             .title = title
         }
     End Function
