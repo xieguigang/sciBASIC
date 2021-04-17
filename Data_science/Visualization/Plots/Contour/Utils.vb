@@ -200,6 +200,61 @@ Namespace Contour
         End Function
 
         ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="matrix">[x => [y, z]]</param>
+        ''' <param name="colorMap$"></param>
+        ''' <param name="mapLevels%"></param>
+        ''' <param name="bg$"></param>
+        ''' <param name="size$"></param>
+        ''' <param name="padding$"></param>
+        ''' <param name="unit%"></param>
+        ''' <param name="legendTitle$"></param>
+        ''' <param name="legendFont$"></param>
+        ''' <param name="tickFont$"></param>
+        ''' <param name="xlabel$"></param>
+        ''' <param name="ylabel$"></param>
+        ''' <param name="minZ#"></param>
+        ''' <param name="maxZ#"></param>
+        ''' <returns></returns>
+        Public Function CreatePlot(matrix As IEnumerable(Of DataSet),
+                                  Optional colorMap$ = "Spectral:c10",
+                                  Optional mapLevels% = 25,
+                                  Optional bg$ = "white",
+                                  Optional size$ = "3000,2500",
+                                  Optional padding$ = "padding: 100 400 100 400;",
+                                  Optional unit% = 5,
+                                  Optional legendTitle$ = "Scatter Heatmap",
+                                  Optional legendFont$ = CSSFont.Win10NormalLarge,
+                                  Optional tickFont$ = CSSFont.Win7Normal,
+                                  Optional xlabel$ = "X",
+                                  Optional ylabel$ = "Y",
+                                  Optional minZ# = Double.MinValue,
+                                  Optional maxZ# = Double.MaxValue) As ContourPlot
+
+            Dim margin As Padding = padding
+            Dim theme As New Theme With {
+                .colorSet = colorMap,
+                .background = bg,
+                .legendLabelCSS = legendFont,
+                .axisTickCSS = tickFont,
+                .padding = padding
+            }
+
+            Return New ContourPlot(theme) With {
+                .offset = New Point(-300, 0),
+                .legendTitle = legendTitle,
+                .mapLevels = mapLevels,
+                .matrix = New MatrixEvaluate(matrix, 1),
+                .xlabel = xlabel,
+                .ylabel = ylabel,
+                .minZ = minZ,
+                .maxZ = maxZ,
+                .unit = unit
+            }
+        End Function
+
+        ''' <summary>
         ''' 从现有的矩阵数据之中绘制等高线图
         ''' </summary>
         ''' <param name="matrix"></param>
@@ -231,26 +286,22 @@ Namespace Contour
                              Optional minZ# = Double.MinValue,
                              Optional maxZ# = Double.MaxValue) As GraphicsData
 
-            Dim margin As Padding = padding
-            Dim theme As New Theme With {
-                .colorSet = colorMap,
-                .background = bg,
-                .legendLabelCSS = legendFont,
-                .axisTickCSS = tickFont,
-                .padding = padding
-            }
-
-            Return New ContourPlot(theme) With {
-                .offset = New Point(-300, 0),
-                .legendTitle = legendTitle,
-                .mapLevels = mapLevels,
-                .matrix = New MatrixEvaluate(matrix, 1),
-                .xlabel = xlabel,
-                .ylabel = ylabel,
-                .minZ = minZ,
-                .maxZ = maxZ,
-                .unit = unit
-           }.Plot(size)
+            Return CreatePlot(
+                matrix:=matrix,
+                colorMap:=colorMap,
+                mapLevels:=mapLevels,
+                bg:=bg,
+                size:=size,
+                padding:=padding,
+                unit:=unit,
+                legendTitle:=legendTitle,
+                legendFont:=legendFont,
+                tickFont:=tickFont,
+                xlabel:=xlabel,
+                ylabel:=ylabel,
+                minZ:=minZ,
+                maxZ:=maxZ
+            ).Plot(size)
         End Function
 
         ''' <summary>
