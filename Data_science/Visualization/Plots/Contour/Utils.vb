@@ -43,22 +43,15 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D
 Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Scripting.MathExpression
 Imports Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
-Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports stdNum = System.Math
 
 Namespace Contour
 
@@ -88,7 +81,6 @@ Namespace Contour
             End With
         End Function
 
-
         ''' <summary>
         ''' 
         ''' </summary>
@@ -109,17 +101,17 @@ Namespace Contour
         ''' <returns></returns>
         <Extension>
         Public Function Plot(exp$, xrange As DoubleRange, yrange As DoubleRange,
-                         Optional colorMap$ = "Spectral:c10",
-                         Optional mapLevels% = 25,
-                         Optional bg$ = "white",
-                         Optional size$ = "3000,2700",
-                         Optional padding$ = "padding: 100 400 100 400;",
-                         Optional unit% = 5,
-                         Optional legendTitle$ = "",
-                         Optional legendFont$ = CSSFont.Win7Large,
-                         Optional xsteps! = Single.NaN,
-                         Optional ysteps! = Single.NaN,
-                         Optional ByRef matrix As List(Of DataSet) = Nothing) As GraphicsData
+                             Optional colorMap$ = "Spectral:c10",
+                             Optional mapLevels% = 25,
+                             Optional bg$ = "white",
+                             Optional size$ = "3000,2700",
+                             Optional padding$ = "padding: 100 400 100 400;",
+                             Optional unit% = 5,
+                             Optional legendTitle$ = "",
+                             Optional legendFont$ = CSSFont.Win7Large,
+                             Optional xsteps! = Single.NaN,
+                             Optional ysteps! = Single.NaN,
+                             Optional ByRef matrix As List(Of DataSet) = Nothing) As GraphicsData
 
             Dim fun As Func(Of Double, Double, Double) = Compile(exp)
 
@@ -178,7 +170,13 @@ Namespace Contour
                              Optional scale# = 1.0#,
                              Optional tickFont$ = CSSFont.Win7Normal) As GraphicsData
 
-            Dim theme As New Theme With {.padding = padding, .axisTickCSS = tickFont, .legendLabelCSS = legendFont, .colorSet = colorMap, .background = bg}
+            Dim theme As New Theme With {
+                .padding = padding,
+                .axisTickCSS = tickFont,
+                .legendLabelCSS = legendFont,
+                .colorSet = colorMap,
+                .background = bg
+            }
             Dim plotInternal As New ContourPlot(theme) With {
                 .offset = New Point(-300, 0),
                 .xrange = xrange,
@@ -219,19 +217,19 @@ Namespace Contour
         ''' <returns></returns>
         <Extension>
         Public Function Plot(matrix As IEnumerable(Of DataSet),
-                         Optional colorMap$ = "Spectral:c10",
-                         Optional mapLevels% = 25,
-                         Optional bg$ = "white",
-                         Optional size$ = "3000,2500",
-                         Optional padding$ = "padding: 100 400 100 400;",
-                         Optional unit% = 5,
-                         Optional legendTitle$ = "Scatter Heatmap",
-                         Optional legendFont$ = CSSFont.Win10NormalLarge,
-                         Optional tickFont$ = CSSFont.Win7Normal,
-                         Optional xlabel$ = "X",
-                         Optional ylabel$ = "Y",
-                         Optional minZ# = Double.MinValue,
-                         Optional maxZ# = Double.MaxValue) As GraphicsData
+                             Optional colorMap$ = "Spectral:c10",
+                             Optional mapLevels% = 25,
+                             Optional bg$ = "white",
+                             Optional size$ = "3000,2500",
+                             Optional padding$ = "padding: 100 400 100 400;",
+                             Optional unit% = 5,
+                             Optional legendTitle$ = "Scatter Heatmap",
+                             Optional legendFont$ = CSSFont.Win10NormalLarge,
+                             Optional tickFont$ = CSSFont.Win7Normal,
+                             Optional xlabel$ = "X",
+                             Optional ylabel$ = "Y",
+                             Optional minZ# = Double.MinValue,
+                             Optional maxZ# = Double.MaxValue) As GraphicsData
 
             Dim margin As Padding = padding
             Dim theme As New Theme With {
@@ -270,14 +268,13 @@ Namespace Contour
         ''' <returns></returns>
         <Extension>
         Friend Function __getData(fun As EvaluatePoints,
-                               size As Size,
-                               xrange As DoubleRange,
-                               yrange As DoubleRange,
-                               ByRef xsteps!,
-                               ByRef ysteps!,
-                               parallel As Boolean,
-                               ByRef matrix As List(Of DataSet), unit%) As (X#, y#, z#)()
-
+                                  size As Size,
+                                  xrange As DoubleRange,
+                                  yrange As DoubleRange,
+                                  ByRef xsteps!,
+                                  ByRef ysteps!,
+                                  parallel As Boolean,
+                                  ByRef matrix As List(Of DataSet), unit%) As (X#, y#, z#)()
 
             xsteps = xsteps Or (xrange.Length / size.Width).AsDefault(Function(n) Single.IsNaN(CSng(n)))
             ysteps = ysteps Or (yrange.Length / size.Height).AsDefault(Function(n) Single.IsNaN(CSng(n)))
