@@ -120,7 +120,7 @@ Namespace Graphic.Axis
                             Optional gridFill$ = "rgb(245,245,245)",
                             Optional gridX$ = Stroke.AxisGridStroke,
                             Optional gridY$ = Stroke.AxisGridStroke,
-                            Optional htmlLabel As Boolean = True,
+                            Optional htmlLabel As Boolean = False,
                             Optional XtickFormat$ = "F2",
                             Optional YtickFormat$ = "F2",
                             Optional tickFontStyle$ = CSSFont.Win10NormalLarger)

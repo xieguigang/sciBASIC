@@ -182,7 +182,7 @@ Namespace Contour
                 .Y = margin.Top + (plotHeight - .Height) / 2
             }
 
-            Call g.DrawAxis(canvas, scaler, False, xlabel:=xlabel, ylabel:=ylabel)
+            Call g.DrawAxis(canvas, scaler, False, xlabel:=xlabel, ylabel:=ylabel, htmlLabel:=False)
 
             Dim us% = unit * scale
 
@@ -197,7 +197,6 @@ Namespace Contour
                 }
 
                 Call g.FillRectangle(c, fill)
-                Call g.DrawRectangle(New Pen(c), fill.Left, fill.Top, fill.Width, fill.Height)
             Next
 
             ' Draw legends
