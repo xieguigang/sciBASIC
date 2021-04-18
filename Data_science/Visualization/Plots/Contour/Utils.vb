@@ -205,7 +205,6 @@ Namespace Contour
         ''' <param name="colorMap$"></param>
         ''' <param name="mapLevels%"></param>
         ''' <param name="bg$"></param>
-        ''' <param name="size$"></param>
         ''' <param name="padding$"></param>
         ''' <param name="unit%"></param>
         ''' <param name="legendTitle$"></param>
@@ -245,7 +244,7 @@ Namespace Contour
             Return New ContourPlot(theme) With {
                 .legendTitle = legendTitle,
                 .mapLevels = mapLevels,
-                .matrix = New MatrixEvaluate(matrixData, 1),
+                .matrix = New MatrixEvaluate(matrixData, unit),
                 .xlabel = xlabel,
                 .ylabel = ylabel,
                 .minZ = minZ,
@@ -338,18 +337,14 @@ Namespace Contour
             ' x: a -> b
             ' 每一行数据都是y在发生变化
             Dim data As (X#, y#, Z#)()() = DataProvider.Evaluate(
-                AddressOf fun.Evaluate, xrange, yrange,
-                xsteps, ysteps,
-                parallel, matrix).ToArray
-
-            If data.Length > size.Width + 10 Then
-                Dim stepDelta = data.Length / size.Width
-                Dim splt = data.Split(stepDelta)
-
-            Else ' 数据不足
-
-
-            End If
+                f:=AddressOf fun.Evaluate,
+                x:=xrange,
+                y:=yrange,
+                xsteps:=xsteps,
+                ysteps:=ysteps,
+                parallel:=parallel,
+                matrix:=matrix
+            ).ToArray
 
             Return data.ToVector
         End Function

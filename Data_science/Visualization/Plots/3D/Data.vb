@@ -269,9 +269,11 @@ Namespace Plot3D
                     matrix += New DataSet With {
                         .ID = row(Scan0).x,
                         .Properties = row _
-                        .ToDictionary(
-                            Function(pt) CStr(pt.y),
-                            Function(pt) pt.z)
+                            .ToDictionary(
+                                Function(pt) CStr(pt.y),
+                                Function(pt)
+                                    Return pt.z
+                                End Function)
                     }
                 End If
 
