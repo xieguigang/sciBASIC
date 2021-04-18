@@ -220,7 +220,6 @@ Namespace Contour
                                   Optional colorMap$ = "Spectral:c10",
                                   Optional mapLevels% = 25,
                                   Optional bg$ = "white",
-                                  Optional size$ = "3000,2500",
                                   Optional padding$ = "padding: 100 400 100 400;",
                                   Optional unit% = 5,
                                   Optional legendTitle$ = "Scatter Heatmap",
@@ -239,16 +238,23 @@ Namespace Contour
                 .axisTickCSS = tickFont,
                 .padding = padding
             }
+            Dim matrixData As DataSet() = matrix.ToArray
+            Dim xrange As DoubleRange = matrixData.Select(Function(d) Val(d.ID)).ToArray
+            Dim yrange As DoubleRange = matrixData.PropertyNames.Select(Function(a) Val(a)).ToArray
 
             Return New ContourPlot(theme) With {
                 .legendTitle = legendTitle,
                 .mapLevels = mapLevels,
-                .matrix = New MatrixEvaluate(matrix, 1),
+                .matrix = New MatrixEvaluate(matrixData, 1),
                 .xlabel = xlabel,
                 .ylabel = ylabel,
                 .minZ = minZ,
                 .maxZ = maxZ,
-                .unit = unit
+                .unit = unit,
+                .xrange = xrange,
+                .yrange = yrange,
+                .xsteps = xrange.Length / 1000,
+                .ysteps = yrange.Length / 1000
             }
         End Function
 
@@ -289,7 +295,6 @@ Namespace Contour
                 colorMap:=colorMap,
                 mapLevels:=mapLevels,
                 bg:=bg,
-                size:=size,
                 padding:=padding,
                 unit:=unit,
                 legendTitle:=legendTitle,

@@ -211,11 +211,9 @@ Namespace Plot3D
                                                         xsteps!, ysteps!,
                                                         parallel As Boolean) As IEnumerable(Of List(Of (x#, y#, z As Tout)))
 
-            Dim tick As Action(Of Double) =
-                __progressProvider(x.Length / xsteps, y.Length, ysteps, x)
+            Dim tick As Action(Of Double) = __progressProvider(x.Length / xsteps, y.Length, ysteps, x)
 
             For xi# = x.Min To x.Max Step xsteps!
-
                 If parallel Then
                     Dim dy As New List(Of Double)
                     Dim x0# = xi
