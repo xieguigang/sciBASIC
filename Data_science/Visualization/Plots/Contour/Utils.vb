@@ -154,7 +154,7 @@ Namespace Contour
                              Optional mapLevels% = 25,
                              Optional bg$ = "white",
                              Optional size$ = "3600,2700",
-                             Optional padding$ = "padding: 100px 1000px 250px 250px;",
+                             Optional padding$ = "padding: 100px 900px 250px 300px;",
                              Optional unit% = 5,
                              Optional legendTitle$ = "Contour Heatmap",
                              Optional legendFont$ = CSSFont.Win7LittleLarge,
