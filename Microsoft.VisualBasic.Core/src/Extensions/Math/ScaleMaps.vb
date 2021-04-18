@@ -1,49 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::f70b2f950e9d317eb03a9e0edf43429e, Microsoft.VisualBasic.Core\src\Extensions\Math\ScaleMaps.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module ScaleMaps
-    ' 
-    '         Function: (+4 Overloads) GenerateMapping, (+3 Overloads) Log2Ranks, LogLevels, MapHelper, Scale
-    '                   TrimRanges
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module ScaleMaps
+' 
+'         Function: (+4 Overloads) GenerateMapping, (+3 Overloads) Log2Ranks, LogLevels, MapHelper, Scale
+'                   TrimRanges
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
@@ -127,28 +128,30 @@ Namespace Math
         ''' 当offset的值为0的时候，则为[0, <paramref name="Level"></paramref>-1]，
         ''' 当然这个参数也可以使其他的值)
         ''' </param>
-        <ExportAPI("Ranks.Mapping")>
-        <Extension> Public Function GenerateMapping(data As IEnumerable(Of Double), Optional Level As Integer = 10, Optional offset As Integer = 1) As Integer()
+        <Extension>
+        Public Function GenerateMapping(data As IEnumerable(Of Double), Optional Level As Integer = 10, Optional offset As Integer = 1) As Integer()
             Dim array As Double() = data.ToArray
+            Dim range As DoubleRange
 
             If array.Length = 0 Then
                 Return {}
+            Else
+                range = array.Range
             End If
 
-            Dim MinValue As Double = array.Min
-            Dim MaxValue As Double = array.Max
-            Dim d As Double = MaxValue - MinValue
-
-            If d = 0R Then ' 所有的值都是一样的，则都是同等级的
-                Return 1.Repeats(array.Length)
+            If range.Length = 0.0 Then
+                ' 所有的值都是一样的，则都是同等级的
+                Return Level.Repeats(times:=array.Length)
             End If
 
             Dim chunkBuf As Integer() = New Integer(array.Length - 1) {}
-            Dim i As i32 = 0
+            Dim x As Double
+            Dim levelRange As DoubleRange = New Double() {offset, Level}
 
-            For Each x As Double In array
-                Dim lv As Integer = Fix(Level * (x - MinValue) / d)
-                chunkBuf(++i) = lv + offset
+            For i As Integer = 0 To array.Length - 1
+                x = array(i)
+                x = range.ScaleMapping(x, levelRange)
+                chunkBuf(i) = CInt(x)
             Next
 
             Return chunkBuf
@@ -160,6 +163,12 @@ Namespace Math
             Return logvalues.GenerateMapping(level)
         End Function
 
+        ''' <summary>
+        ''' apply of the log transform of the data and then run linear scale
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="Level"></param>
+        ''' <returns></returns>
         <ExportAPI("Ranks.Log2")>
         <Extension> Public Function Log2Ranks(data As IEnumerable(Of Double), Optional Level As Integer = 100) As Integer()
             Dim log2Value = data.Select(Function(x) stdNum.Log(x, 2)).ToArray
