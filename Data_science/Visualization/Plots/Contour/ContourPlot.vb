@@ -182,7 +182,13 @@ Namespace Contour
                 .Y = margin.Top + (plotHeight - .Height) / 2
             }
 
-            Call g.DrawAxis(canvas, scaler, False, xlabel:=xlabel, ylabel:=ylabel, htmlLabel:=False)
+            Call g.DrawAxis(canvas, scaler,
+                showGrid:=False,
+                xlabel:=xlabel,
+                ylabel:=ylabel,
+                htmlLabel:=False,
+                tickFontStyle:=theme.axisTickCSS
+            )
 
             Dim us% = unit * scale
 
@@ -210,7 +216,7 @@ Namespace Contour
                 .ToArray
             Dim rangeTicks#() = realData.Range.CreateAxisTicks
             Dim legendFont As Font = CSSFont.TryParse(theme.legendLabelCSS)
-            Dim tickFont As Font = CSSFont.TryParse(theme.axisTickCSS)
+            Dim tickFont As Font = CSSFont.TryParse(theme.legendTickCSS)
 
             Call g.ColorMapLegend(legendLayout, colorDatas, rangeTicks, legendFont, legendTitle, tickFont, New Pen(Color.Black, 2), NameOf(Color.Gray))
         End Sub

@@ -86,6 +86,13 @@ Namespace Graphic.Canvas
         ''' </summary>
         ''' <returns></returns>
         Public Property legendTitleCSS As String = CSSFont.Win7LargerBold
+
+        ''' <summary>
+        ''' 这个是为绘制colorMap的图例的标尺准备的
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property legendTickCSS As String = CSSFont.Win7Normal
+
         ''' <summary>
         ''' 图例标签字体样式
         ''' </summary>
