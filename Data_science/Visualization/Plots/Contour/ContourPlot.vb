@@ -75,7 +75,6 @@ Namespace Contour
     ''' </summary>
     Public Class ContourPlot : Inherits Plot
 
-        Public offset As Point
         Public matrix As EvaluatePoints
         Public xrange As DoubleRange, yrange As DoubleRange
         Public xsteps!, ysteps!
@@ -183,12 +182,7 @@ Namespace Contour
                 .Y = margin.Top + (plotHeight - .Height) / 2
             }
 
-            Call g.DrawAxis(canvas, scaler, False, offset, xlabel:=xlabel, ylabel:=ylabel)
-
-            offset = New Point With {
-                .X = offset.X,
-                .Y = offset.Y - unit / 2
-            }
+            Call g.DrawAxis(canvas, scaler, False, xlabel:=xlabel, ylabel:=ylabel)
 
             Dim us% = unit * scale
 
@@ -196,8 +190,8 @@ Namespace Contour
                 Dim p As (X#, y#, Z#) = data(i)
                 Dim c As SolidBrush = getColors(i)
                 Dim fill As New RectangleF With {
-                    .X = x(p.X) + offset.X,
-                    .Y = y(p.y) + offset.Y,
+                    .X = x(p.X),
+                    .Y = y(p.y),
                     .Width = us,
                     .Height = us
                 }
