@@ -169,7 +169,7 @@ Namespace Drawing2D.Colors
                                   tickAxisStroke As Pen,
                                   Optional unmapColor$ = Nothing,
                                   Optional ruleOffset! = 10,
-                                  Optional roundDigit% = 2,
+                                  Optional format$ = "F2",
                                   Optional legendOffsetLeft! = -99999)
 
             Dim titleSize As SizeF = g.MeasureString(title, titleFont)
@@ -250,10 +250,10 @@ Namespace Drawing2D.Colors
 
             x += ruleOffset + 5
             point = New PointF(x, y - tickFont.Height / 2)
-            g.DrawString(ticks.Max.ToString("F" & roundDigit), tickFont, Brushes.Black, point)
+            g.DrawString(ticks.Max.ToString(format), tickFont, Brushes.Black, point)
 
             point = New PointF(x, y + legendHeight - tickFont.Height / 2)
-            g.DrawString(ticks.Min.ToString("F" & roundDigit), tickFont, Brushes.Black, point)
+            g.DrawString(ticks.Min.ToString(format), tickFont, Brushes.Black, point)
 
             ticks = ticks _
                 .Skip(1) _
@@ -261,7 +261,7 @@ Namespace Drawing2D.Colors
                 .OrderByDescending(Function(n) n) _
                 .ToArray
 
-            Dim delta = legendHeight / (ticks.Length + 1)
+            Dim delta As Single = legendHeight / (ticks.Length + 1)
             Dim tickStr As String
 
             y += delta
@@ -270,8 +270,7 @@ Namespace Drawing2D.Colors
 
             ' 画出剩余的小标尺
             For Each tick As Double In ticks
-
-                tickStr = tick.ToString($"F{roundDigit}")
+                tickStr = tick.ToString(format)
 
                 If tick >= 0 Then
                     tickStr = " " & tickStr

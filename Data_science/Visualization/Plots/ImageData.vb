@@ -90,7 +90,7 @@ Public Module ImageDataExtensions
 
         Return Contour.Plot(
             color, xrange, yrange,
-            xsteps:=steps, ysteps:=steps, unit:=1, scale:=3,
+            xsteps:=steps, ysteps:=steps, unit:=1,
             colorMap:="Jet",
             legendTitle:="GrayScale Heatmap")
     End Function

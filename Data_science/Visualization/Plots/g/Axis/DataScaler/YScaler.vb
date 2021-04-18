@@ -46,6 +46,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.d3js.scale
+Imports stdNum = System.Math
 
 Namespace Graphic.Axis
 
@@ -92,6 +93,18 @@ Namespace Graphic.Axis
             Return y.Select(AddressOf TranslateY)
         End Function
 
+        Public Function TranslateHeight(y1 As Double, y2 As Double) As Double
+            y1 = TranslateY(y1)
+            y2 = TranslateY(y2)
+
+            Return stdNum.Max(y1, y2) - stdNum.Min(y1, y2)
+        End Function
+
+        ''' <summary>
+        ''' 从原始数据计算出绘图的实际高度
+        ''' </summary>
+        ''' <param name="y"></param>
+        ''' <returns></returns>
         Public Function TranslateHeight(y As Double) As Double
             Return region.Bottom - Me.Y(y)
         End Function

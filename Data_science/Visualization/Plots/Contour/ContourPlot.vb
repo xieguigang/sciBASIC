@@ -85,7 +85,6 @@ Namespace Contour
         Public unit%
         Public logBase#
         Public minZ, maxZ As Double
-        Public scale# = 1
 
         Public Sub New(theme As Theme)
             MyBase.New(theme)
@@ -190,7 +189,10 @@ Namespace Contour
                 tickFontStyle:=theme.axisTickCSS
             )
 
-            Dim us% = unit * scale
+            Dim us As New Size With {
+                .Width = scaler.TranslateWidth(0, xsteps),
+                .Height = scaler.TranslateHeight(0, ysteps)
+            }
 
             For i As Integer = 0 To data.Length - 1
                 Dim p As (X#, y#, Z#) = data(i)
@@ -198,8 +200,8 @@ Namespace Contour
                 Dim fill As New RectangleF With {
                     .X = x(p.X),
                     .Y = y(p.y),
-                    .Width = us,
-                    .Height = us
+                    .Width = us.Width,
+                    .Height = us.Height
                 }
 
                 Call g.FillRectangle(c, fill)
@@ -218,7 +220,17 @@ Namespace Contour
             Dim legendFont As Font = CSSFont.TryParse(theme.legendLabelCSS)
             Dim tickFont As Font = CSSFont.TryParse(theme.legendTickCSS)
 
-            Call g.ColorMapLegend(legendLayout, colorDatas, rangeTicks, legendFont, legendTitle, tickFont, New Pen(Color.Black, 2), NameOf(Color.Gray))
+            Call g.ColorMapLegend(
+                layout:=legendLayout,
+                designer:=colorDatas,
+                ticks:=rangeTicks,
+                titleFont:=legendFont,
+                title:=legendTitle,
+                tickFont:=tickFont,
+                tickAxisStroke:=New Pen(Color.Black, 2),
+                unmapColor:=NameOf(Color.Gray),
+                format:=theme.legendTickFormat
+            )
         End Sub
     End Class
 End Namespace

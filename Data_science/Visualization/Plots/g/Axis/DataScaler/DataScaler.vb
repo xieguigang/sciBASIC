@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::09ee6fab9a9a2d43b9d7a99b1c30df89, Data_science\Visualization\Plots\g\Axis\DataScaler\DataScaler.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class DataScaler
-    ' 
-    '         Properties: AxisTicks, X
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: (+3 Overloads) Translate, TranslateX
-    ' 
-    '     Module DataScalerExtensions
-    ' 
-    '         Function: TupleScaler
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class DataScaler
+' 
+'         Properties: AxisTicks, X
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: (+3 Overloads) Translate, TranslateX
+' 
+'     Module DataScalerExtensions
+' 
+'         Function: TupleScaler
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -52,6 +52,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.d3js.scale
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports stdNum = System.Math
 
 Namespace Graphic.Axis
 
@@ -110,6 +111,13 @@ Namespace Graphic.Axis
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function TranslateX(x#) As Double
             Return Me.X(x)
+        End Function
+
+        Public Function TranslateWidth(x1 As Double, x2 As Double) As Double
+            x1 = TranslateX(x1)
+            x2 = TranslateX(x2)
+
+            Return stdNum.Max(x1, x2) - stdNum.Min(x1, x2)
         End Function
     End Class
 
