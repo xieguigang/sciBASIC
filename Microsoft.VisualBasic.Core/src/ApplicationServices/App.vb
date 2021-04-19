@@ -1,61 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::371a293e12579e8226b9d57121e50e00, Microsoft.VisualBasic.Core\src\ApplicationServices\App.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module App
-    ' 
-    '     Properties: AppSystemTemp, AssemblyName, BufferSize, Command, CommandLine
-    '                 CPUCoreNumbers, CurrentDirectory, CurrentProcessTemp, Desktop, DoNothing
-    '                 ExceptionLogFile, ExecutablePath, GetLastError, Github, HOME
-    '                 Info, InputFile, IsConsoleApp, IsMicrosoftPlatform, LocalData
-    '                 LocalDataTemp, LogErrDIR, NanoTime, NextTempName, OutFile
-    '                 PID, Platform, PreviousDirectory, Process, ProductName
-    '                 ProductProgramData, ProductSharedDIR, ProductSharedTemp, Running, RunningInGitBash
-    '                 RunTimeDirectory, StartTime, StartupDirectory, StdErr, StdInput
-    '                 StdOut, SysTemp, UnixTimeStamp, UserHOME, Version
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: __listFiles, (+2 Overloads) Argument, checkIsMicrosoftPlatform, CLICode, (+2 Overloads) ElapsedMilliseconds
-    '               Exit, finalizeCLI, FormatTime, (+2 Overloads) GetAppLocalData, GetAppVariables
-    '               GetFile, GetNextUniqueName, GetProductSharedDIR, GetProductSharedTemp, GetTempFile
-    '               GetVariable, (+3 Overloads) LogException, NullDevice, (+11 Overloads) RunCLI, RunCLIInternal
-    '               SelfFolk, Shell, tempCode, TemporaryEnvironment, TraceBugs
-    ' 
-    '     Sub: [Stop], __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory
-    '          Free, JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println
-    '          SetBufferSize, StartGC, StopGC
-    ' 
-    ' /********************************************************************************/
+' Module App
+' 
+'     Properties: AppSystemTemp, AssemblyName, BufferSize, Command, CommandLine
+'                 CPUCoreNumbers, CurrentDirectory, CurrentProcessTemp, Desktop, DoNothing
+'                 ExceptionLogFile, ExecutablePath, GetLastError, Github, HOME
+'                 Info, InputFile, IsConsoleApp, IsMicrosoftPlatform, LocalData
+'                 LocalDataTemp, LogErrDIR, NanoTime, NextTempName, OutFile
+'                 PID, Platform, PreviousDirectory, Process, ProductName
+'                 ProductProgramData, ProductSharedDIR, ProductSharedTemp, Running, RunningInGitBash
+'                 RunTimeDirectory, StartTime, StartupDirectory, StdErr, StdInput
+'                 StdOut, SysTemp, UnixTimeStamp, UserHOME, Version
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: __listFiles, (+2 Overloads) Argument, checkIsMicrosoftPlatform, CLICode, (+2 Overloads) ElapsedMilliseconds
+'               Exit, finalizeCLI, FormatTime, (+2 Overloads) GetAppLocalData, GetAppVariables
+'               GetFile, GetNextUniqueName, GetProductSharedDIR, GetProductSharedTemp, GetTempFile
+'               GetVariable, (+3 Overloads) LogException, NullDevice, (+11 Overloads) RunCLI, RunCLIInternal
+'               SelfFolk, Shell, tempCode, TemporaryEnvironment, TraceBugs
+' 
+'     Sub: [Stop], __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory
+'          Free, JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println
+'          SetBufferSize, StartGC, StopGC
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -1008,7 +1008,7 @@ Public Module App
     <ExportAPI("RunCLI")>
     <Extension>
     Public Function RunCLI(Interpreter As Type, args$, <CallerMemberName> Optional caller$ = Nothing) As Integer
-        Return Interpreter.RunCLIInternal(Parsers.TryParse(args), caller, Nothing, Nothing, Nothing)
+        Return Interpreter.RunCLIInternal(Parsers.TryParse(args), caller, Nothing, Nothing, Nothing, Nothing)
     End Function
 
     ''' <summary>
@@ -1021,7 +1021,7 @@ Public Module App
     '''
     <ExportAPI("RunCLI")>
     <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLineArgs, <CallerMemberName> Optional caller$ = Nothing) As Integer
-        Return Interpreter.RunCLIInternal(args, caller, Nothing, Nothing, Nothing)
+        Return Interpreter.RunCLIInternal(args, caller, Nothing, Nothing, Nothing, Nothing)
     End Function
 
     ''' <summary>
@@ -1035,7 +1035,7 @@ Public Module App
     <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLineArgs, executeEmpty As ExecuteEmptyCLI,
                                        <CallerMemberName>
                                        Optional caller$ = Nothing) As Integer
-        Return Interpreter.RunCLIInternal(args, caller, executeEmpty, Nothing, Nothing)
+        Return Interpreter.RunCLIInternal(args, caller, executeEmpty, Nothing, Nothing, Nothing)
     End Function
 
     ''' <summary>
@@ -1049,7 +1049,7 @@ Public Module App
     <Extension> Public Function RunCLI(Interpreter As Type, args$, executeEmpty As ExecuteEmptyCLI,
                                        <CallerMemberName>
                                        Optional caller$ = Nothing) As Integer
-        Return Interpreter.RunCLIInternal(Parsers.TryParse(args), caller, executeEmpty, Nothing, Nothing)
+        Return Interpreter.RunCLIInternal(Parsers.TryParse(args), caller, executeEmpty, Nothing, Nothing, Nothing)
     End Function
 
     ''' <summary>
@@ -1071,7 +1071,7 @@ Public Module App
     <Extension> Public Function RunCLI(Interpreter As Type, args$, executeEmpty As ExecuteEmptyCLI, executeNotFound As ExecuteNotFound,
                                        <CallerMemberName>
                                        Optional caller$ = Nothing) As Integer
-        Return Interpreter.RunCLIInternal(Parsers.TryParse(args), caller, executeEmpty, executeNotFound, Nothing)
+        Return Interpreter.RunCLIInternal(Parsers.TryParse(args), caller, executeEmpty, executeNotFound, Nothing, Nothing)
     End Function
 
     ''' <summary>
@@ -1096,7 +1096,34 @@ Public Module App
                                        executeNotFound As ExecuteNotFound,
                                        <CallerMemberName>
                                        Optional caller$ = Nothing) As Integer
-        Return Interpreter.RunCLIInternal(args, caller, executeEmpty, executeNotFound, executeFile)
+        Return Interpreter.RunCLIInternal(args, caller, executeEmpty, executeNotFound, executeFile, Nothing)
+    End Function
+
+    ''' <summary>
+    ''' Running the string as a cli command line.(请注意，在调试模式之下，命令行解释器会在运行完命令之后暂停，而Release模式之下则不会。
+    ''' 假若在调试模式之下发现程序有很长一段时间处于cpu占用为零的静止状态，则很有可能已经运行完命令并且等待回车退出)
+    ''' </summary>
+    ''' <param name="args">
+    ''' The command line arguments value, which its value can be gets from the <see cref="Command()"/> function.
+    ''' </param>
+    ''' <param name="executeNotFound">
+    ''' ```vbnet
+    ''' Public Delegate Function ExecuteNotFound(args As <see cref="CommandLineArgs"/>) As <see cref="Integer"/>
+    ''' ```
+    ''' </param>
+    ''' <returns>Returns the function execute result to the operating system.</returns>
+    '''
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <ExportAPI("RunCLI")>
+    <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLineArgs,
+                                       executeEmpty As ExecuteEmptyCLI,
+                                       executeFile As ExecuteFile,
+                                       executeNotFound As ExecuteNotFound,
+                                       executeQuery As ExecuteQuery,
+                                       <CallerMemberName>
+                                       Optional caller$ = Nothing) As Integer
+
+        Return Interpreter.RunCLIInternal(args, caller, executeEmpty, executeNotFound, executeFile, executeQuery)
     End Function
 
     ''' <summary>
@@ -1118,14 +1145,15 @@ Public Module App
     <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLineArgs, executeEmpty As ExecuteEmptyCLI, executeNotFound As ExecuteNotFound,
                                        <CallerMemberName>
                                        Optional caller$ = Nothing) As Integer
-        Return Interpreter.RunCLIInternal(args, caller, executeEmpty, executeNotFound, Nothing)
+        Return Interpreter.RunCLIInternal(args, caller, executeEmpty, executeNotFound, Nothing, Nothing)
     End Function
 
     <Extension>
     Private Function RunCLIInternal(App As Type, args As CommandLineArgs, caller$,
                                     executeEmpty As ExecuteEmptyCLI,
                                     executeNotFound As ExecuteNotFound,
-                                    executeFile As ExecuteFile) As Integer
+                                    executeFile As ExecuteFile,
+                                    executeQuery As ExecuteQuery) As Integer
 #If DEBUG Then
         Call args.__DEBUG_ECHO
 #End If
@@ -1139,7 +1167,8 @@ Public Module App
             Dim program As New Interpreter(App, caller:=caller) With {
                 .ExecuteEmptyCli = executeEmpty,
                 .ExecuteNotFound = executeNotFound,
-                .ExecuteFile = executeFile
+                .ExecuteFile = executeFile,
+                .ExecuteQuery = executeQuery
             }
 
             Return finalizeCLI(program.Execute(args))
@@ -1155,7 +1184,7 @@ Public Module App
     '''
     <ExportAPI("RunCLI")>
     <Extension> Public Function RunCLI(Interpreter As Type, args$, executeFile As ExecuteFile, <CallerMemberName> Optional caller$ = Nothing) As Integer
-        Return Interpreter.RunCLIInternal(Parsers.TryParse(args), caller, Nothing, Nothing, executeFile)
+        Return Interpreter.RunCLIInternal(Parsers.TryParse(args), caller, Nothing, Nothing, executeFile, Nothing)
     End Function
 
     ''' <summary>
@@ -1172,7 +1201,7 @@ Public Module App
     ''' </param>
     <ExportAPI("RunCLI")>
     <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLineArgs, executeFile As ExecuteFile, <CallerMemberName> Optional caller$ = Nothing) As Integer
-        Return Interpreter.RunCLIInternal(args, caller, Nothing, Nothing, executeFile)
+        Return Interpreter.RunCLIInternal(args, caller, Nothing, Nothing, executeFile, Nothing)
     End Function
 
     ''' <summary>
@@ -1200,7 +1229,7 @@ Public Module App
     <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLineArgs, executeFile As ExecuteFile, executeEmpty As ExecuteEmptyCLI,
                                        <CallerMemberName>
                                        Optional caller$ = Nothing) As Integer
-        Return Interpreter.RunCLIInternal(args, caller, executeEmpty, Nothing, executeFile)
+        Return Interpreter.RunCLIInternal(args, caller, executeEmpty, Nothing, executeFile, Nothing)
     End Function
 
     ''' <summary>

@@ -68,7 +68,7 @@ Imports stdNum = System.Math
 ''' + 宽度为对应的百分位上的数据点的数量
 ''' + 长度为最小值与最大值之间的差值
 ''' </summary>
-Public Module VolinPlot
+Public Module ViolinPlot
 
     ''' <summary>
     ''' 
@@ -100,7 +100,7 @@ Public Module VolinPlot
                                Return New NamedCollection(Of Double)(label, .Vector(label))
                            End Function) _
                    .DoCall(Function(data)
-                               Return VolinPlot.Plot(
+                               Return ViolinPlot.Plot(
                                    dataset:=data,
                                    size:=size,
                                    margin:=margin,

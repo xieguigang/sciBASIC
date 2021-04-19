@@ -48,7 +48,13 @@ Imports Microsoft.VisualBasic.Language.UnixBash
 
 Namespace CommandLine.ManView
 
+    <HideModuleName>
     Module CommandHelpExtensions
+
+        <Extension>
+        Public Function HasCommandName(app As Interpreter, commandName As String) As Boolean
+            Return app.apiTable.ContainsKey(commandName.ToLower)
+        End Function
 
         <Extension>
         Public Function PrintCommandHelp(app As Interpreter, commandName$) As Integer

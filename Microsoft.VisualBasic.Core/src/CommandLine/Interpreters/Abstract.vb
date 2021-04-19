@@ -71,4 +71,11 @@ Namespace CommandLine
     ''' <returns></returns>
     Public Delegate Function ExecuteNotFound(args As CommandLine) As Integer
 
+    ''' <summary>
+    ''' Run query in syntax like: ? xxx
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
+    Public Delegate Function ExecuteQuery(args As CommandLine) As Integer
+
 End Namespace

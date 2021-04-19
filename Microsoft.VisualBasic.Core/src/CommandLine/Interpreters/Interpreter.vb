@@ -107,6 +107,7 @@ Namespace CommandLine
         ''' <returns></returns>
         Public Property ExecuteEmptyCli As ExecuteEmptyCLI
         Public Property ExecuteNotFound As ExecuteNotFound
+        Public Property ExecuteQuery As ExecuteQuery
 #End Region
 
         ''' <summary>
@@ -197,6 +198,8 @@ Namespace CommandLine
                 Case "?", "??", "--help"
                     If help_argvs.IsNullOrEmpty Then
                         Return Help("")
+                    ElseIf (Not HasCommandName(help_argvs.First)) AndAlso Not ExecuteQuery Is Nothing Then
+                        Return ExecuteQuery(cli)
                     Else
                         Return Help(help_argvs.First)
                     End If
