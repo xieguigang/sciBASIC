@@ -103,6 +103,11 @@ Public Module WebServiceUtils
         Return url.IndexOfAny({ASCII.LF, ASCII.CR}) = -1 AndAlso url.InStrAny(DirectCast(Protocols, String())) = 1
     End Function
 
+    ''' <summary>
+    ''' is a web location?
+    ''' </summary>
+    ''' <param name="str"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function IsURLPattern(str As String) As Boolean
         Return str.isURL OrElse str.IsPattern(URLPattern)

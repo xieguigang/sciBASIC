@@ -45,7 +45,8 @@ Imports r = System.Text.RegularExpressions.Regex
 
 Namespace Scripting.SymbolBuilder.VBLanguage
 
-    <HideModuleName> Public Module Extensions
+    <HideModuleName>
+    Public Module Extensions
 
         ''' <summary>
         ''' 这个拓展函数将字典之中的字符串主键处理为符合VB的对象命名规则的字符串
@@ -70,10 +71,16 @@ Namespace Scripting.SymbolBuilder.VBLanguage
             Return key.NormalizePathString(alphabetOnly:=True).Replace(" ", "_")
         End Function
 
+        ''' <summary>
+        ''' the given string is a valid VB identifier symbol?
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function IsValidVBSymbolName(name As String) As Boolean
-            Return r.Match(name, Patterns.Identifer, RegexICSng).Value = name
+            Static symbolPattern As New r(Patterns.Identifer, RegexICSng)
+            Return symbolPattern.Match(name).Value = name
         End Function
     End Module
 End Namespace

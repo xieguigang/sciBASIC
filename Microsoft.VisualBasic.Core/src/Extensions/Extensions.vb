@@ -363,7 +363,8 @@ Public Module Extensions
     End Function
 
     <ExportAPI("Date.ToNormalizedPathString")>
-    <Extension> Public Function ToNormalizedPathString(dat As Date) As String
+    <Extension>
+    Public Function ToNormalizedPathString(dat As Date) As String
         Dim yy = dat.Year
         Dim mm As String = dat.Month.FormatZero
         Dim dd As String = dat.Day.FormatZero
@@ -381,7 +382,10 @@ Public Module Extensions
     ''' <param name="tokens"></param>
     ''' <param name="delimiter"></param>
     ''' <returns></returns>
-    <Extension> Public Function JoinBy(tokens As IEnumerable(Of String), delimiter$) As String
+    ''' 
+    <DebuggerStepThrough>
+    <Extension>
+    Public Function JoinBy(tokens As IEnumerable(Of String), delimiter$) As String
         If tokens Is Nothing Then
             Return ""
         End If

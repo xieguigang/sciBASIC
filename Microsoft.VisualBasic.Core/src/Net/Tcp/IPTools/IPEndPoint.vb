@@ -172,9 +172,12 @@ Namespace Net
             Return addr.IsPattern(RegexIPAddress)
         End Function
 
+#If netcore5 = 1 Or NET_48 = 1 Then
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(endpoint As (ip$, port%)) As IPEndPoint
             Return New IPEndPoint(endpoint.ip, endpoint.port)
         End Operator
+#End If
     End Class
 End Namespace

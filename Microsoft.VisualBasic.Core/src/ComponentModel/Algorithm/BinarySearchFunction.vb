@@ -45,6 +45,8 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace ComponentModel.Algorithm
 
+#If netcore5 = 1 Or NET_48 = 1 Then
+
     Public Class BinarySearchFunction(Of K, T)
 
         ReadOnly sequence As (index As Integer, key As K, T)()
@@ -122,4 +124,5 @@ Namespace ComponentModel.Algorithm
             End If
         End Function
     End Class
+#End If
 End Namespace
