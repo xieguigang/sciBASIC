@@ -940,9 +940,26 @@ Public Module StringHelpers
 
         If source.StringEmpty Then
             Return {}
+        Else
+            Return source.StringSplit(New Regex(pattern, opt), TrimTrailingEmptyStrings)
+        End If
+    End Function
+
+    ''' <summary>
+    ''' This method is used to replace most calls to the Java <see cref="[String].Split"/> method.
+    ''' </summary>
+    ''' <param name="source"></param>
+    ''' <param name="pattern"><see cref="Regex"/> patterns</param>
+    ''' <param name="trimTrailingEmptyStrings"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    <Extension>
+    Public Function StringSplit(source$, pattern As Regex, Optional TrimTrailingEmptyStrings As Boolean = False) As String()
+        If source.StringEmpty Then
+            Return {}
         End If
 
-        Dim splitArray$() = Regex.Split(source, pattern, options:=opt)
+        Dim splitArray$() = pattern.Split(source)
 
         If Not TrimTrailingEmptyStrings OrElse splitArray.Length <= 1 Then
             Return splitArray

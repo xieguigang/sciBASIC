@@ -1,0 +1,273 @@
+﻿Imports System
+Imports System.IO
+Imports System.Linq
+Imports System.Threading
+
+Namespace PdfReader
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <remarks>
+    ''' https://github.com/ComponentFactory/PdfReader
+    ''' </remarks>
+    Public Class PdfDocument
+        Inherits PdfObject
+
+        Private _Version As PdfReader.PdfVersion, _IndirectObjects As PdfReader.PdfIndirectObjects, _DecryptHandler As PdfReader.PdfDecrypt
+
+        Private Class BackgroundArgs
+            Public Property Parser As Parser
+            Public Property Ids As List(Of Integer)
+            Public Property Index As Integer
+            Public Property Count As Integer
+        End Class
+
+        Private Shared ReadOnly BACKGROUND_TRIGGER As Integer = 5000
+        Private Shared ReadOnly NUM_BACKGROUND_ITEMS As Integer = 50
+        Private _open As Boolean
+        Private _stream As Stream
+        Private _reader As StreamReader
+        Private _parser As Parser
+        Private _refCatalog As PdfObjectReference
+        Private _refInfo As PdfObjectReference
+        Private _pdfCatalog As PdfCatalog
+        Private _pdfInfo As PdfInfo
+        Private _backgroundCount As Integer
+        Private _backgroundEvent As ManualResetEvent
+
+        Public Sub New()
+            MyBase.New(Nothing)
+            Version = New PdfVersion(Me, 0, 0)
+            IndirectObjects = New PdfIndirectObjects(Me)
+            DecryptHandler = New PdfDecryptNone(Me)
+        End Sub
+
+        Public Overrides Sub Visit(ByVal visitor As IPdfObjectVisitor)
+            visitor.Visit(Me)
+        End Sub
+
+        Public Property Version As PdfVersion
+            Get
+                Return _Version
+            End Get
+            Private Set(ByVal value As PdfVersion)
+                _Version = value
+            End Set
+        End Property
+
+        Public Property IndirectObjects As PdfIndirectObjects
+            Get
+                Return _IndirectObjects
+            End Get
+            Private Set(ByVal value As PdfIndirectObjects)
+                _IndirectObjects = value
+            End Set
+        End Property
+
+        Public Property DecryptHandler As PdfDecrypt
+            Get
+                Return _DecryptHandler
+            End Get
+            Private Set(ByVal value As PdfDecrypt)
+                _DecryptHandler = value
+            End Set
+        End Property
+
+        Public Sub Load(ByVal filename As String, ByVal Optional immediate As Boolean = False)
+            If _open Then Throw New ApplicationException("Document already has a stream open.")
+
+            If immediate Then
+                ' Faster to read all of the file contents at once and then parse, rather than read progressively during parsing
+                Dim bytes = File.ReadAllBytes(filename)
+                Load(New MemoryStream(bytes), immediate, bytes)
+            Else
+                _reader = New StreamReader(filename)
+                Load(_reader.BaseStream, immediate)
+            End If
+        End Sub
+
+        Public Sub Load(ByVal stream As Stream, ByVal Optional immediate As Boolean = False, ByVal Optional bytes As Byte() = Nothing)
+            If _open Then Throw New ApplicationException("Document already has a stream open.")
+            _stream = stream
+            _parser = New Parser(_stream)
+            AddHandler _parser.ResolveReference, AddressOf Parser_ResolveReference
+
+            ' PDF file should have a well known marker at top of file
+            Dim versionMajor As Integer = Nothing, versionMinor As Integer = Nothing
+            _parser.ParseHeader(versionMajor, versionMinor)
+            Version = New PdfVersion(Me, versionMajor, versionMinor)
+
+            ' Find stream position of the last cross-reference table
+            Dim xRefPosition As Long = _parser.ParseXRefOffset()
+            Dim lastHeader = True
+
+            Do
+                ' Get the aggregated set of entries from all the cross-reference table sections
+                Dim xrefs = _parser.ParseXRef(xRefPosition)
+
+                ' Should always be positioned at the trailer after parsing cross-table references
+                Dim trailer As PdfDictionary = New PdfDictionary(Me, _parser.ParseTrailer())
+                Dim size = trailer.MandatoryValue(Of PdfInteger)("Size")
+
+                For Each xref In xrefs
+                    ' Ignore unused entries and entries smaller than the defined size from the trailer dictionary
+                    If xref.Used AndAlso xref.Id < size.Value Then IndirectObjects.AddXRef(xref)
+                Next
+
+                If lastHeader Then
+                    ' Replace the default decryption handler with one from the document settings
+                    DecryptHandler = PdfDecrypt.CreateDecrypt(Me, trailer)
+
+                    ' We only care about the latest defined catalog and information dictionary
+                    _refCatalog = trailer.MandatoryValue(Of PdfObjectReference)("Root")
+                    _refInfo = trailer.OptionalValue(Of PdfObjectReference)("Info")
+                End If
+
+                ' If there is a previous cross-reference table, then we want to process that as well
+                Dim prev = trailer.OptionalValue(Of PdfInteger)("Prev")
+
+                If prev IsNot Nothing Then
+                    xRefPosition = prev.Value
+                Else
+                    xRefPosition = 0
+                End If
+
+                lastHeader = False
+            Loop While xRefPosition > 0
+
+            _open = True
+
+            ' Must load all objects immediately so the stream can then be closed
+            If immediate Then
+                ' Is there enough work to justify using multiple threads
+                If bytes IsNot Nothing AndAlso IndirectObjects.Count > BACKGROUND_TRIGGER Then
+                    ' Setup the synchronization event so we wait until all work is completed
+                    _backgroundCount = NUM_BACKGROUND_ITEMS
+                    _backgroundEvent = New ManualResetEvent(False)
+                    Dim ids As List(Of Integer) = IndirectObjects.Ids.ToList()
+                    Dim idCount = ids.Count
+                    Dim batchSize As Integer = idCount / NUM_BACKGROUND_ITEMS
+                    Dim i = 0, index = 0
+
+                    While i < NUM_BACKGROUND_ITEMS
+                        ' Create a parser per unit of work, so they can work in parallel
+                        Dim memoryStream As MemoryStream = New MemoryStream(bytes)
+                        Dim parser As Parser = New Parser(memoryStream)
+
+                        ' Make sure the last batch includes all the remaining Ids
+                        Call ThreadPool.QueueUserWorkItem(New WaitCallback(AddressOf BackgroundResolveReference), New BackgroundArgs() With {
+                            .Parser = parser,
+                            .Ids = ids,
+                            .Index = index,
+                            .Count = If(i = NUM_BACKGROUND_ITEMS - 1, idCount - index, batchSize)
+                        })
+                        i += 1
+                        index += batchSize
+                    End While
+
+                    _backgroundEvent.WaitOne()
+                    _backgroundEvent.Dispose()
+                    _backgroundEvent = Nothing
+                Else
+                    IndirectObjects.ResolveAllReferences(Me)
+                End If
+
+                Close()
+            End If
+        End Sub
+
+        Public Sub Close()
+            If _open Then
+                If _reader IsNot Nothing Then
+                    _reader.Dispose()
+                    _reader = Nothing
+                End If
+
+                If _stream IsNot Nothing Then
+                    _stream.Dispose()
+                    _stream = Nothing
+                End If
+
+                If _parser IsNot Nothing Then
+                    _parser.Dispose()
+                    _parser = Nothing
+                End If
+
+                _open = False
+            End If
+        End Sub
+
+        Public ReadOnly Property Catalog As PdfCatalog
+            Get
+
+                If _pdfCatalog Is Nothing AndAlso _refCatalog IsNot Nothing Then
+                    Dim dictionary = IndirectObjects.MandatoryValue(Of PdfDictionary)(_refCatalog)
+                    _pdfCatalog = New PdfCatalog(dictionary.Parent, TryCast(dictionary.ParseObject, ParseDictionary))
+                End If
+
+                Return _pdfCatalog
+            End Get
+        End Property
+
+        Public ReadOnly Property Info As PdfInfo
+            Get
+
+                If _pdfInfo Is Nothing AndAlso _refInfo IsNot Nothing Then
+                    Dim dictionary = IndirectObjects.MandatoryValue(Of PdfDictionary)(_refInfo)
+                    _pdfInfo = New PdfInfo(dictionary.Parent, TryCast(dictionary.ParseObject, ParseDictionary))
+                End If
+
+                Return _pdfInfo
+            End Get
+        End Property
+
+        Public Function ResolveReference(ByVal reference As PdfObjectReference) As PdfObject
+            Return ResolveReference(reference.Id, reference.Gen)
+        End Function
+
+        Public Function ResolveReference(ByVal id As Integer, ByVal gen As Integer) As PdfObject
+            Return ResolveReference(IndirectObjects(id, gen))
+        End Function
+
+        Public Function ResolveReference(ByVal indirect As PdfIndirectObject) As PdfObject
+            Return ResolveReference(_parser, indirect)
+        End Function
+
+        Public Function ResolveReference(ByVal parser As Parser, ByVal indirect As PdfIndirectObject) As PdfObject
+            If indirect IsNot Nothing Then
+                If indirect.Child Is Nothing Then
+                    Dim parseIndirectObject = parser.ParseIndirectObject(indirect.Offset)
+                    indirect.Child = indirect.WrapObject(parseIndirectObject.Object)
+                End If
+
+                Return indirect.Child
+            End If
+
+            Return Nothing
+        End Function
+
+        Private Sub Parser_ResolveReference(ByVal sender As Object, ByVal e As ParseResolveEventArgs)
+            e.Object = ResolveReference(e.Id, e.Gen).ParseObject
+        End Sub
+
+        Private Sub BackgroundResolveReference(ByVal state As Object)
+            Dim args = CType(state, BackgroundArgs)
+
+            Try
+                Dim i = 0, index = args.Index
+
+                While i < args.Count
+                    Dim id = args.Ids(index)
+                    Dim gens = IndirectObjects(id)
+                    gens.ResolveAllReferences(args.Parser, Me)
+                    i += 1
+                    index += 1
+                End While
+
+            Finally
+                If Interlocked.Decrement(_backgroundCount) = 0 Then _backgroundEvent.Set()
+            End Try
+        End Sub
+    End Class
+End Namespace

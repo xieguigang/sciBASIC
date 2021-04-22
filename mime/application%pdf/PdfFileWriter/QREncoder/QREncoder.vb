@@ -412,7 +412,7 @@ Public Class QREncoder
     ''' Encode one data segment into QRCode boolean matrix
     ''' </summary>
     ''' <param name="SingleDataSeg">Data segment byte array</param>
-    ''' <returns>QR Code boolean matrix</returns>
+    ''' <remarks>QR Code boolean matrix</remarks>
     Public Sub Encode(ByVal SingleDataSeg As Byte())
         ' test data segments array
         If SingleDataSeg Is Nothing OrElse SingleDataSeg.Length = 0 Then Throw New ArgumentNullException("Single data segment argument is null or empty")
@@ -426,7 +426,7 @@ Public Class QREncoder
     ''' Encode data segments array into QRCode boolean matrix
     ''' </summary>
     ''' <param name="DataSegArray">Data array of byte arrays</param>
-    ''' <returns>QR Code boolean matrix</returns>
+    ''' <remarks>QR Code boolean matrix</remarks>
     Public Sub Encode(ByVal DataSegArray As Byte()())
         ' test data segments array
         If DataSegArray Is Nothing OrElse DataSegArray.Length = 0 Then Throw New ArgumentNullException("Data segments argument is null or empty")

@@ -191,7 +191,11 @@ Namespace Language
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Function GetUnderlyingType() As Type
-            Return GetType(T)
+            If _Value Is Nothing Then
+                Return GetType(T)
+            Else
+                Return _Value.GetType()
+            End If
         End Function
 
         ''' <summary>

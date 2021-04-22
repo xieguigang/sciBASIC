@@ -4,12 +4,12 @@ Imports System.Runtime.InteropServices
 ' General Information about an assembly is controlled through the following 
 ' set of attributes. Change these attribute values to modify the information
 ' associated with an assembly.
-<Assembly: AssemblyTitle("PdfFileWriter")>
-<Assembly: AssemblyDescription("PDF File Writer C# Class Library")>
+<Assembly: AssemblyTitle("Pdf File Toolkit")>
+<Assembly: AssemblyDescription("Pdf File Toolkit")>
 <Assembly: AssemblyConfiguration("")>
-<Assembly: AssemblyCompany("Uzi Granot")>
-<Assembly: AssemblyProduct("PdfFileWriter Version 1.25.0")>
-<Assembly: AssemblyCopyright("Copyright © 2013-2019 Uzi Granot. All rights reserved.")>
+<Assembly: AssemblyCompany("")>
+<Assembly: AssemblyProduct("Pdf File Toolkit")>
+<Assembly: AssemblyCopyright("")>
 <Assembly: AssemblyTrademark("")>
 <Assembly: AssemblyCulture("")>
 

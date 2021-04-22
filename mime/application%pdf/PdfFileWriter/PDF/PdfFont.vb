@@ -108,11 +108,9 @@ Imports System.Runtime.InteropServices
 Imports System.Linq
 Imports stdNum = System.Math
 
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 ''' <summary>
 ''' PDF font descriptor flags enumeration
 ''' </summary>
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 Public Enum PdfFontFlags
     ''' <summary>
     ''' None
@@ -165,7 +163,6 @@ Public Enum PdfFontFlags
     ForceBold = 1 << 18
 End Enum
 
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 ''' <summary>
 ''' Kerning adjustment class
 ''' </summary>
@@ -174,7 +171,6 @@ End Enum
 ''' The adjustment is for a font height of one point.
 ''' Mainly used for font kerning.
 ''' </remarks>
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 Public Class KerningAdjust
     ''' <summary>
     ''' Gets or sets Text
@@ -201,7 +197,6 @@ Public Class KerningAdjust
     End Sub
 End Class
 
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 ''' <summary>
 ''' PDF font class
 ''' </summary>
@@ -213,7 +208,6 @@ End Class
 ''' <a href="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#FontResources">For example of defining font resources see 3.2. Font Resources</a>
 ''' </para>
 ''' </remarks>
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 Public Class PdfFont
     Inherits PdfObject
     Implements IDisposable, IComparable(Of PdfFont)
@@ -257,7 +251,6 @@ Public Class PdfFont
     Friend DesignFontWeight As Integer
     Friend DesignHeight As Integer
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     ''' <summary>
     ''' PDF Font resource constructor
     ''' </summary>
@@ -268,8 +261,6 @@ Public Class PdfFont
     ''' <returns>PdfFont resource</returns>
     ''' <remarks>The returned result is either a new PdfFont or an
     ''' existing one with the same properties.</remarks>
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-
     Public Shared Function CreatePdfFont(ByVal Document As PdfDocument, ByVal FontFamilyName As String, ByVal FontStyle As FontStyle, ByVal Optional EmbeddedFont As Boolean = True) As PdfFont     ' PDF document main object
         ' font family name
         ' font style (Regular, Bold, Italic or Bold | Italic
@@ -476,24 +467,20 @@ Public Class PdfFont
         Return FontDesignToUserUnits(FontSize, PdfLineSpacing)
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     ''' <summary>
     ''' Font ascent in user units
     ''' </summary>
     ''' <param name="FontSize">Font size</param>
     ''' <returns>Font ascent</returns>
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     Public Function Ascent(ByVal FontSize As Double) As Double
         Return FontDesignToUserUnits(FontSize, PdfAscent)
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     ''' <summary>
     ''' Font ascent in user units
     ''' </summary>
     ''' <param name="FontSize">Font size</param>
     ''' <returns>Font ascent plus half of internal leading.</returns>
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     Public Function AscentPlusLeading(ByVal FontSize As Double) As Double
         Return FontDesignToUserUnits(FontSize, PdfAscent + (PdfLeading + 1) / 2)
     End Function
