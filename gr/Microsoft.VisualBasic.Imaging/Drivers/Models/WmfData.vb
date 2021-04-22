@@ -1,45 +1,45 @@
-﻿#Region "Microsoft.VisualBasic::9833499dfe86910fddf3ac784fd49967, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\WmfData.vb"
+﻿#Region "Microsoft.VisualBasic::2ec0d483653f2d06ad91719e27e9f8e6, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\WmfData.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class WmfData
-' 
-'         Properties: Driver
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: GetDataURI, (+2 Overloads) Save, wmfTmp
-' 
-' 
-' /********************************************************************************/
+    '     Class WmfData
+    ' 
+    '         Properties: Driver
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetDataURI, (+2 Overloads) Save, wmfTmp
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

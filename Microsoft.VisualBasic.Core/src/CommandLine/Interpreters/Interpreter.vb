@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4327113a0a03ce7a296ff60ed3b857d3, Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\Interpreter.vb"
+﻿#Region "Microsoft.VisualBasic::b26540f344ecc5650ef5013695ca69ef, Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\Interpreter.vb"
 
     ' Author:
     ' 
@@ -34,8 +34,8 @@
     '     Class Interpreter
     ' 
     '         Properties: APIList, APINameList, Count, ExecuteEmptyCli, ExecuteFile
-    '                     ExecuteNotFound, Info, IsReadOnly, ListCommandInfo, Stack
-    '                     Type
+    '                     ExecuteNotFound, ExecuteQuery, Info, IsReadOnly, ListCommandInfo
+    '                     Stack, Type
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

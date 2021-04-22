@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8feafe9d8fa3fdc3881a5ccb3948e0b6, Microsoft.VisualBasic.Core\src\Text\Xml\Linq\Iterator\NodeIterator.vb"
+﻿#Region "Microsoft.VisualBasic::782686d8aab9014878ffe863400e4aa4, Microsoft.VisualBasic.Core\src\Text\Xml\Linq\Iterator\NodeIterator.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,10 @@
 
     '     Module NodeIterator
     ' 
-    '         Function: GetArrayTemplate, (+2 Overloads) IterateArrayNodes
+    '         Function: CreateBlockReader, GetArrayTemplate, (+2 Overloads) IterateArrayNodes
+    ' 
+    '     Delegate Function
+    ' 
     ' 
     ' 
     ' /********************************************************************************/

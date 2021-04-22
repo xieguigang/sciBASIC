@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::545f89161f2f4ce87dc9fd549829dd16, Microsoft.VisualBasic.Core\src\Scripting\TokenIcer\ParserCommon.vb"
+﻿#Region "Microsoft.VisualBasic::143f9bcf1f88b605c1c3a5e20145a857, Microsoft.VisualBasic.Core\src\Scripting\TokenIcer\ParserCommon.vb"
 
     ' Author:
     ' 

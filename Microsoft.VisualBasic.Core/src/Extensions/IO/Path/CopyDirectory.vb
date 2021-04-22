@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0006d63c9a255ccf18ca5813854f53ec, Microsoft.VisualBasic.Core\src\Extensions\IO\Path\CopyDirectory.vb"
+﻿#Region "Microsoft.VisualBasic::d70c87eadd8ba46f2cfaf84ae00f53d6, Microsoft.VisualBasic.Core\src\Extensions\IO\Path\CopyDirectory.vb"
 
     ' Author:
     ' 

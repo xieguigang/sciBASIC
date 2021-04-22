@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ab9d9fc38a7984d3704413ecb4369dd, Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\View\CommandHelp.vb"
+﻿#Region "Microsoft.VisualBasic::45f2345daa33dd6572b9e0b68af236f0, Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\View\CommandHelp.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module CommandHelpExtensions
     ' 
-    '         Function: PrintCommandHelp
+    '         Function: HasCommandName, PrintCommandHelp
     ' 
     '         Sub: listingCommands
     ' 

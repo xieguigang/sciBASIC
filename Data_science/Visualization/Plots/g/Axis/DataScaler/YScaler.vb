@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43b6a446698214e52edf31aa62bb56d2, Data_science\Visualization\Plots\g\Axis\DataScaler\YScaler.vb"
+﻿#Region "Microsoft.VisualBasic::8e394ae54ca77a26461c087a30c254b5, Data_science\Visualization\Plots\g\Axis\DataScaler\YScaler.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: region, Y
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: TranslateHeight, (+2 Overloads) TranslateY
+    '         Function: (+2 Overloads) TranslateHeight, (+2 Overloads) TranslateY
     ' 
     ' 
     ' /********************************************************************************/

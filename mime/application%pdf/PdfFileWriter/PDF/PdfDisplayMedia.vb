@@ -1,103 +1,103 @@
-﻿#Region "Microsoft.VisualBasic::9ccd6a15041d4eb9c6c38ab8582e121f, mime\application%pdf\PdfFileWriter\PDF\PdfDisplayMedia.vb"
+﻿#Region "Microsoft.VisualBasic::9070cbf6a86fc2c6194cd5bcdb538746, mime\application%pdf\PdfFileWriter\PDF\PdfDisplayMedia.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Enum TempFilePermission
-' 
-'         TEMPACCESS, TEMPALWAYS, TEMPEXTRACT, TEMPNEVER
-' 
-'  
-' 
-' 
-' 
-'     Enum MediaWindow
-' 
-'         Annotation, Floating, FullScreen, Hidden
-' 
-'  
-' 
-' 
-' 
-'     Enum WindowPosition
-' 
-'         Center, CenterLeft, CenterRight, LowerCenter, LowerLeft
-'         LowerRight, UpperCenter, UpperLeft, UpperRight
-' 
-'  
-' 
-' 
-' 
-'     Enum WindowTitleBar
-' 
-'         NoTitleBar, TitleBar, TitleBarWithCloseButton
-' 
-'  
-' 
-' 
-' 
-'     Enum WindowResize
-' 
-'         KeepAspectRatio, NoAspectRatio, NoResize
-' 
-'  
-' 
-' 
-' 
-'     Enum MediaOperation
-' 
-'         [Resume], [Stop], Pause, Play, PlayAfterPause
-' 
-'  
-' 
-' 
-' 
-'     Enum ScaleMediaCode
-' 
-'         FillAnotationRect, KeepAspectRatioShowAll, KeepAspectRatioSlice, NoScaleSlice, NoScaleWithScroll
-'         PlayerDefault
-' 
-'  
-' 
-' 
-' 
-'     Class PdfDisplayMedia
-' 
-'         Properties: MediaFile
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Sub: DisplayControls, InitialMediaOperation, MediaTempFilePermission, RepeatCount, ScaleMedia
-'              SetMediaWindow
-' 
-' /********************************************************************************/
+    ' Enum TempFilePermission
+    ' 
+    '     TEMPACCESS, TEMPALWAYS, TEMPEXTRACT, TEMPNEVER
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Enum MediaWindow
+    ' 
+    '     Annotation, Floating, FullScreen, Hidden
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Enum WindowPosition
+    ' 
+    '     Center, CenterLeft, CenterRight, LowerCenter, LowerLeft
+    '     LowerRight, UpperCenter, UpperLeft, UpperRight
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Enum WindowTitleBar
+    ' 
+    '     NoTitleBar, TitleBar, TitleBarWithCloseButton
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Enum WindowResize
+    ' 
+    '     KeepAspectRatio, NoAspectRatio, NoResize
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Enum MediaOperation
+    ' 
+    '     [Resume], [Stop], Pause, Play, PlayAfterPause
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Enum ScaleMediaCode
+    ' 
+    '     FillAnotationRect, KeepAspectRatioShowAll, KeepAspectRatioSlice, NoScaleSlice, NoScaleWithScroll
+    '     PlayerDefault
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Class PdfDisplayMedia
+    ' 
+    '     Properties: MediaFile
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Sub: DisplayControls, InitialMediaOperation, MediaTempFilePermission, RepeatCount, ScaleMedia
+    '          SetMediaWindow
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

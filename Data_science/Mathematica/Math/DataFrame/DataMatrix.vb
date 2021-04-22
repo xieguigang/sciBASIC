@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8bae0f00923bbe9eec8e8d79d1f6c52b, Data_science\Mathematica\Math\DataFrame\DataMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::d3836e423a3ede0e90187f83ac0b186a, Data_science\Mathematica\Math\DataFrame\DataMatrix.vb"
 
     ' Author:
     ' 

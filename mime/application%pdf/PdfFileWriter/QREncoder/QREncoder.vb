@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ca1eecad92d9f16e3dd89df9f7c00df, mime\application%pdf\PdfFileWriter\QREncoder\QREncoder.vb"
+﻿#Region "Microsoft.VisualBasic::a05ff6f213d52dedc8de9b485497edc1, mime\application%pdf\PdfFileWriter\QREncoder\QREncoder.vb"
 
     ' Author:
     ' 

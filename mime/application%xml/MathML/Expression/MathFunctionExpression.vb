@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a361c961c3099eb5756fbc9e8f547067, mime\application%xml\MathML\Expression\MathFunctionExpression.vb"
+﻿#Region "Microsoft.VisualBasic::a92e639703ea4a4ae4f1b00f40ddb78d, mime\application%xml\MathML\Expression\MathFunctionExpression.vb"
 
     ' Author:
     ' 

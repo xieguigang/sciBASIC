@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b9fb37eba5125c456a123660f10fe02, Data_science\Visualization\Plots\Contour\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::1bbb76f784b0e3059b9b4e52c90cd5fb, Data_science\Visualization\Plots\Contour\Utils.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Utils
     ' 
-    '         Function: __getData, Compile, (+3 Overloads) Plot
+    '         Function: __getData, Compile, CreatePlot, (+3 Overloads) Plot
     ' 
     ' 
     ' /********************************************************************************/

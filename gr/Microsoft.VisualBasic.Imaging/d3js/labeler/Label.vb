@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c67068f428c84def4cb63a766f27b05f, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Label.vb"
+﻿#Region "Microsoft.VisualBasic::3033d9e0410bc55b8dd124c1c890cad6, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Label.vb"
 
     ' Author:
     ' 

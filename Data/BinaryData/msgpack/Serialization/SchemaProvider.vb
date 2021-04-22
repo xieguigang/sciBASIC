@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5fe3b99b105e8849a8ed9dba7c1095f, Data\BinaryData\msgpack\Serialization\SchemaProvider.vb"
+﻿#Region "Microsoft.VisualBasic::a952b0569dd164aaa4438e0c924225cb, Data\BinaryData\msgpack\Serialization\SchemaProvider.vb"
 
     ' Author:
     ' 

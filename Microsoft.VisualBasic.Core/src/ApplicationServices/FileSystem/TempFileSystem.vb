@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04e27ac4e96189c32d5c5dadd72b5bda, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\TempFileSystem.vb"
+﻿#Region "Microsoft.VisualBasic::b909b540252635d1a7b179838160e385, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\TempFileSystem.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.IO
 Imports Microsoft.VisualBasic.Linq

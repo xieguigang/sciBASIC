@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6b54fc2e2e36d178be35e5af509347c, gr\Microsoft.VisualBasic.Imaging\d3js\ModuleAPI.vb"
+﻿#Region "Microsoft.VisualBasic::7fd0f2df07b321f76cf02f49e9fa4b38, gr\Microsoft.VisualBasic.Imaging\d3js\ModuleAPI.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module ModuleAPI
     ' 
-    '         Function: GetLabelAnchors, Label, labeler
+    '         Function: forcedirectedLabeler, GetLabelAnchors, Label, labeler
     ' 
     ' 
     ' /********************************************************************************/

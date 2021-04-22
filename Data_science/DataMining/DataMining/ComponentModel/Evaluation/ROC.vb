@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::024a0477bac05ba8a8044b94bf7e9408, Data_science\DataMining\DataMining\ComponentModel\Evaluation\ROC.vb"
+﻿#Region "Microsoft.VisualBasic::f002cf715004743765469dc5c4ab5f41, Data_science\DataMining\DataMining\ComponentModel\Evaluation\ROC.vb"
 
     ' Author:
     ' 

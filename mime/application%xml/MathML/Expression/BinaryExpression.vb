@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a18de1c87369711c3fae212aa35d9404, mime\application%xml\MathML\Expression\BinaryExpression.vb"
+﻿#Region "Microsoft.VisualBasic::6d4799c36d68864681e102bf49b045c8, mime\application%xml\MathML\Expression\BinaryExpression.vb"
 
     ' Author:
     ' 

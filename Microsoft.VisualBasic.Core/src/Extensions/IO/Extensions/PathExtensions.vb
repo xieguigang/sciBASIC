@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3efaa760fef179b1663aaebd366bdc45, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\PathExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::acc7b0307a639e3fb2d5338819f44492, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\PathExtensions.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '               (+2 Overloads) RelativePath, SafeCopyTo, SplitPath, TheFile, ToDIR_URL
     '               ToFileURL, TrimDIR, TrimSuffix, UnixPath
     ' 
-    '     Sub: MkDIR
+    '     Sub: MakeDir
     ' 
     ' /********************************************************************************/
 

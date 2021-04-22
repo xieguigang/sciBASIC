@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::00e484d11fc042883a77f27927528959, mime\application%pdf\PdfFileWriter\DrawWPFPath.vb"
+﻿#Region "Microsoft.VisualBasic::17fe975436a0c33229024a3f96b26c7c, mime\application%pdf\PdfFileWriter\DrawWPFPath.vb"
 
     ' Author:
     ' 

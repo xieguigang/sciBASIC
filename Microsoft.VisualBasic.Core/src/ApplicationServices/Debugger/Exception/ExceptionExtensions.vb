@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb4aedd5f46522a1f2bd7ea55d0452e0, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\ExceptionExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::575a21c47e9c5c1fe0f6fa46933415e6, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\ExceptionExtensions.vb"
 
     ' Author:
     ' 

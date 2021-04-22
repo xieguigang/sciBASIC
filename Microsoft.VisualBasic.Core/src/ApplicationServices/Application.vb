@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::28544ac5fbd6d1e37f11f82ec7127631, Microsoft.VisualBasic.Core\src\ApplicationServices\Application.vb"
+﻿#Region "Microsoft.VisualBasic::e10b3145213fb0eb2d8f282f2834d0f7, Microsoft.VisualBasic.Core\src\ApplicationServices\Application.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,8 @@
     '     Class Application
     ' 
     '         Properties: ExecutablePath, ProductName, ProductVersion, StartupPath
+    ' 
+    '         Sub: DoEvents
     ' 
     ' 
     ' /********************************************************************************/

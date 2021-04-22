@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ffd8b47616cacd362e010e0f4e90d562, Data_science\Visualization\Plots\VolinPlot.vb"
+﻿#Region "Microsoft.VisualBasic::2146e9873875aa4b5085f91ce76c6fea, Data_science\Visualization\Plots\ViolinPlot.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@
 
     ' Summaries:
 
-    ' Module VolinPlot
+    ' Module ViolinPlot
     ' 
     '     Function: (+2 Overloads) Plot
     ' 

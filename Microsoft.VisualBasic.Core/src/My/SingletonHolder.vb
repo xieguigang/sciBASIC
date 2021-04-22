@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f556ec6fb81b1e5a0da7712bfb72902, Microsoft.VisualBasic.Core\src\My\SingletonHolder.vb"
+﻿#Region "Microsoft.VisualBasic::10375cbace45f2956453893b51f96c1f, Microsoft.VisualBasic.Core\src\My\SingletonHolder.vb"
 
     ' Author:
     ' 

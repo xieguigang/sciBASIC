@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d02f400a0714fc731d578493c59aca9, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Anchor.vb"
+﻿#Region "Microsoft.VisualBasic::f48f496404007bf374422bdce0e7e607, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Anchor.vb"
 
     ' Author:
     ' 
@@ -36,6 +36,7 @@
     '         Properties: r, x, y
     ' 
     '         Constructor: (+6 Overloads) Sub New
+    '         Function: ToString
     ' 
     ' 
     ' /********************************************************************************/
