@@ -39,7 +39,7 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
-    <DefineConstants>FRAMEWORD_CORE=1,NET_48=TRUE</DefineConstants>
+    <DefineConstants>FRAMEWORD_CORE=1,NET_48=1</DefineConstants>
     <WarningsAsErrors>
     </WarningsAsErrors>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
@@ -1626,6 +1626,9 @@
     <Compile Include="ComponentModel\File\IOWorkModes.vb" />
     <Compile Include="ComponentModel\File\XmlAssembly\DigitalSignature.vb" />
     <Compile Include="ComponentModel\File\XmlAssembly\XmlStyleProcessor.vb" />
+    <Compile Include="ComponentModel\Ranges\RangeModel\IRange.vb" />
+    <Compile Include="ComponentModel\Ranges\RangeModel\RangeTagValue.vb" />
+    <Compile Include="ComponentModel\Ranges\Selector\OrderSelector.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\BinaryHeap.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\ChangesWatcher.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\JoinElement.vb" />
@@ -1677,13 +1680,11 @@
     <Compile Include="CommandLine\InteropService\InCompatible.vb" />
     <Compile Include="CommandLine\Interpreters\View\CommandHelp.vb" />
     <Compile Include="CommandLine\Reflection\RunDll.vb" />
-	
-	<Compile Include="ComponentModel\Ranges\Unit\ByteSize.vb"/>
-<Compile Include="ComponentModel\Ranges\Unit\Convertor.vb"/>
-<Compile Include="ComponentModel\Ranges\Unit\Unit.vb"/>
-<Compile Include="ComponentModel\Ranges\Unit\UnitConvertorExtensions.vb"/>
-<Compile Include="ComponentModel\Ranges\Unit\UnitTag.vb"/>
-	
+    <Compile Include="ComponentModel\Ranges\Unit\ByteSize.vb" />
+    <Compile Include="ComponentModel\Ranges\Unit\Convertor.vb" />
+    <Compile Include="ComponentModel\Ranges\Unit\Unit.vb" />
+    <Compile Include="ComponentModel\Ranges\Unit\UnitConvertorExtensions.vb" />
+    <Compile Include="ComponentModel\Ranges\Unit\UnitTag.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\BinaryTree.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLTree\AVLTree.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\RBTree\Iterator.vb" />
@@ -1704,7 +1705,6 @@
     <Compile Include="ComponentModel\Ranges\Selector\IntTag.vb" />
     <Compile Include="ComponentModel\Ranges\Selector\SelectorExtensions.vb" />
     <Compile Include="ComponentModel\Ranges\Selector\NumericTagged.vb" />
-    <Compile Include="ComponentModel\Ranges\Unit.vb" />
     <Compile Include="ComponentModel\Settings\Inf\IOProvider.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue\PairingHeap.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue\PriorityQueue.vb" />
