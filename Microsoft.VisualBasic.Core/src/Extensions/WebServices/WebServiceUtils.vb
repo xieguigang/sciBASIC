@@ -441,7 +441,10 @@ Public Module WebServiceUtils
     ''' webRequest.UserAgent = "YourAppName"
     ''' Otherwise it will give The server committed a protocol violation. Section=ResponseStatusLine Error.
     ''' </param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' this function returns a stream object that produced by
+    ''' <see cref="HttpWebResponse.GetResponseStream()"/>
+    ''' </returns>
     <Extension>
     Public Function GetRequestRaw(url As String,
                                   Optional https As Boolean = False,
@@ -491,11 +494,17 @@ Public Module WebServiceUtils
     ''' <returns></returns>
     Public Function PostRequest(url As String, ParamArray params As String()()) As WebResponseResult
         Dim post As KeyValuePair(Of String, String)()
+
         If params Is Nothing Then
             post = Nothing
         Else
-            post = params.Select(Function(value) New KeyValuePair(Of String, String)(value(0), value(1))).ToArray
+            post = params _
+                .Select(Function(value)
+                            Return New KeyValuePair(Of String, String)(value(0), value(1))
+                        End Function) _
+                .ToArray
         End If
+
         Return PostRequest(url, post)
     End Function
 

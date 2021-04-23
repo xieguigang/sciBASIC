@@ -740,6 +740,11 @@
     <Compile Include="d3js\scale\linear.vb" />
     <Compile Include="d3js\scale\Extensions.vb" />
     <Compile Include="d3js\scale\ordinal.vb" />
+    <None Include="Drawing2D\Math2D\MarchingSquares\README.md" />
+    <Compile Include="Drawing2D\Math2D\MarchingSquares\MapMatrix.vb" />
+    <Compile Include="Drawing2D\Math2D\MarchingSquares\IntMeasureData.vb" />
+    <Compile Include="Drawing2D\Math2D\MarchingSquares\MeasureData.vb" />
+    <Compile Include="Drawing2D\Math2D\MarchingSquares\MarchingSquares.vb" />
     <Compile Include="Drawing2D\Render2D\RenderShape.vb" />
     <Compile Include="Drawing2D\Render2D\RenderContext.vb" />
     <Compile Include="Drawing2D\Colors\Palette.vb" />

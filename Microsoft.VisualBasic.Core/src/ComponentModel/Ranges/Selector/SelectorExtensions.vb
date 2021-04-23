@@ -44,6 +44,7 @@ Imports System.Runtime.CompilerServices
 
 Namespace ComponentModel.Ranges
 
+    <HideModuleName>
     Public Module SelectorExtensions
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

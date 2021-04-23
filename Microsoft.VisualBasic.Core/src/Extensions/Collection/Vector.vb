@@ -64,6 +64,27 @@ Imports Microsoft.VisualBasic.My.JavaScript.Linq
 <HideModuleName>
 Public Module VectorExtensions
 
+    ''' <summary>
+    ''' Does all boolean test result is TRUE?
+    ''' </summary>
+    ''' <param name="flags"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function All(flags As IEnumerable(Of Boolean)) As Boolean
+        Dim i As Integer = 0
+        Dim n As Integer = 0
+
+        For Each b In flags
+            If b Then
+                i += 1
+            End If
+
+            n += 1
+        Next
+
+        Return i = n
+    End Function
+
     <Extension>
     Public Function PadLeft(Of T)(seq As T(), item As T, width As Integer) As T()
         If seq.Length >= width Then

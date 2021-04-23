@@ -107,7 +107,31 @@ Namespace ApplicationServices.Zip
         ''' <returns></returns>
         <Extension>
         Public Function IsSourceFolderZip(zip$, Optional ByRef folder$ = Nothing) As Boolean
-            Using archive As ZipArchive = ZipFile.OpenRead(zip)
+            Using file As FileStream = zip.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                Return file.IsSourceFolderZip(folder)
+            End Using
+        End Function
+
+        ''' <summary>
+        ''' 判断目标zip文件是否是直接将文件夹进行压缩的
+        ''' 如果是直接将文件夹压缩的，那么肯定会在每一个entry的起始存在一个共同的文件夹名
+        ''' 例如：
+        ''' 
+        ''' ```
+        ''' 95-1.D/
+        ''' 95-1.D/AcqData/
+        ''' 95-1.D/AcqData/Contents.xml
+        ''' 95-1.D/AcqData/Devices.xml
+        ''' ```
+        ''' </summary>
+        ''' <param name="zip"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function IsSourceFolderZip(zip As Stream,
+                                          Optional ByRef folder$ = Nothing,
+                                          Optional reset As Boolean = False) As Boolean
+
+            Using archive As ZipArchive = New ZipArchive(zip, ZipArchiveMode.Read)
                 Dim fileNames = archive.Entries _
                     .Where(Function(e) Not e.IsADirectoryEntry) _
                     .Select(Function(file) file.FullName) _
@@ -127,6 +151,10 @@ Namespace ApplicationServices.Zip
                     folder = rootDir
                 Else
                     folder = Nothing
+                End If
+
+                If reset Then
+                    Call zip.Seek(Scan0, SeekOrigin.Begin)
                 End If
 
                 Return Not folder Is Nothing

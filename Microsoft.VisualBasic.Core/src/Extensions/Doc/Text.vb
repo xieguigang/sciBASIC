@@ -195,7 +195,17 @@ Public Module TextDoc
     ''' <returns>不存在的文件会返回空集合</returns>
     <Extension>
     Public Iterator Function IterateAllLines(path$, Optional encoding As Encodings = Encodings.Default) As IEnumerable(Of String)
-        If Not path.FileExists Then
+        If path.IsURLPattern Then
+            For Each line As String In path.GET.LineTokens
+                Yield line
+            Next
+        ElseIf Not path.FileExists Then
+            If path.Contains(ASCII.CR) OrElse path.Contains(ASCII.LF) OrElse path.Length > 60 Then
+                path = Mid(path, 1, 63) & "..."
+            End If
+
+            Call $"the given path ({path}) is not exists on your file system!".Warning
+
             Return
         End If
 
