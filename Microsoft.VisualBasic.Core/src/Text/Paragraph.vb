@@ -67,8 +67,8 @@ Namespace Text
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="text$"></param>
-        ''' <param name="len%"></param>
+        ''' <param name="text">一大段文本</param>
+        ''' <param name="len">每一行文本的最大字符串数量长度</param>
         ''' <returns></returns>
         ''' <remarks>
         ''' 假若长度分割落在单词内，则添加一个连接符，假如是空格或者标点符号，则不处理
@@ -77,21 +77,20 @@ Namespace Text
             Dim lines$() = text.LineTokens
 
             For Each i As SeqValue(Of String) In lines.SeqIterator
-                Dim line$ = +i
+                Dim line$ = i.value
                 Dim s As New Value(Of String)
                 Dim left% = Scan0 + 1
 
                 Do While (s = Mid$(line$, left, len)).Length = len
                     If s.Value.Length = 0 Then
-                        Exit Do ' 已经结束了
+                        ' 已经结束了
+                        Exit Do
                     Else
                         left += len
                     End If
 
-                    Dim nextLine$ = Mid(line, left, len) _
-                        .Replace(ASCII.TAB, " "c)
-                    Dim part As NamedValue(Of String) =
-                        nextLine.GetTagValue
+                    Dim nextLine$ = Mid(line, left, len).Replace(ASCII.TAB, " "c)
+                    Dim part As NamedValue(Of String) = nextLine.GetTagValue
 
                     If String.IsNullOrEmpty(nextLine) Then
                         Exit Do

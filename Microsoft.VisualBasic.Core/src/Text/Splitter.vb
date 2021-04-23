@@ -179,16 +179,18 @@ Namespace Text
                     End If
                 Next
             End If
-            Dim LastToken As String = ""
-            'If there is still data & have not been added
+
+            ' If there is still data & have not been added
             If iStart < expression.Length Then
-                LastToken = expression.Substring(iStart, expression.Length - iStart)
-                If LastToken = delimiter Then
+                Dim lastToken = expression.Substring(iStart, expression.Length - iStart)
+
+                If lastToken = delimiter Then
                     tokens.Add(Nothing)
                 Else
-                    tokens.Add(LastToken)
+                    tokens.Add(lastToken)
                 End If
-                'If there is no elements in the tokens array , then pass the whole string as the one element
+                ' If there is no elements in the tokens array,
+                ' then pass the whole string as the one element
             ElseIf tokens.Count = 0 Then
                 tokens.Add(expression)
             End If
