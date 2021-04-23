@@ -31,6 +31,9 @@
             Me.Y = y
             Me.Z = z
         End Sub
-    End Structure
 
+        Public Overrides Function ToString() As String
+            Return $"[{X}, {Y}] {Z}"
+        End Function
+    End Structure
 End Namespace
