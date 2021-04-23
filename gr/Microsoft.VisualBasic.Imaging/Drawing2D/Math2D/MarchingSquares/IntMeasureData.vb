@@ -24,6 +24,10 @@
 
             Z = md.Z
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"[{X}, {Y}] {Z}"
+        End Function
     End Structure
 
 End Namespace

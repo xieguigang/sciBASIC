@@ -11,7 +11,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
         Dim y_num% = 100
         Dim w#, h#
 
-        Dim HeightDots()
+        Dim HeightDots() As MeasureData
         Dim min#
         Dim max#
 
