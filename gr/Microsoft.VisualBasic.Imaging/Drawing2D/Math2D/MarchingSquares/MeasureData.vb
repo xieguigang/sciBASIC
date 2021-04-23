@@ -26,7 +26,7 @@
         ''' <param name="x">坐标x</param>
         ''' <param name="y">坐标y</param>
         ''' <param name="z">高度</param>
-        Public Sub New(ByVal x As Single, ByVal y As Single, ByVal z As Double)
+        Public Sub New(x As Single, y As Single, z As Double)
             Me.X = x
             Me.Y = y
             Me.Z = z

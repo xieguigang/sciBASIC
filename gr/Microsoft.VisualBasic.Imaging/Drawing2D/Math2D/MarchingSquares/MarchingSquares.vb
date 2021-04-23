@@ -18,7 +18,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' </summary>
         ''' <param name="threshold">阈值</param>
         ''' <returns>图形数据</returns>
-        Public Function CreateMapData(ByVal threshold As Single) As List(Of List(Of PointF))
+        Public Function CreateMapData(threshold As Single) As List(Of List(Of PointF))
             Dim binary_data = New Byte(x_num - 1, y_num - 1) {}
 
             For i As Integer = 0 To x_num - 1
@@ -128,39 +128,39 @@ Namespace Drawing2D.Math2D.MarchingSquares
             Return shapes
         End Function
 
-        Private Sub AddLeft(ByVal list As List(Of PointF), ByVal x As Integer, ByVal y As Integer, ByVal threshold As Single)
+        Private Sub AddLeft(list As List(Of PointF), x As Integer, y As Integer, threshold As Single)
             list.Add(New PointF((x - 1) * grid_w, (y - 1 + V(data(x - 1, y - 1), data(x - 1, y), threshold)) * grid_h))
         End Sub
 
-        Private Sub AddRight(ByVal list As List(Of PointF), ByVal x As Integer, ByVal y As Integer, ByVal threshold As Single)
+        Private Sub AddRight(list As List(Of PointF), x As Integer, y As Integer, threshold As Single)
             list.Add(New PointF(x * grid_w, (y - 1 + V(data(x, y - 1), data(x, y), threshold)) * grid_h))
         End Sub
 
-        Private Sub AddTop(ByVal list As List(Of PointF), ByVal x As Integer, ByVal y As Integer, ByVal threshold As Single)
+        Private Sub AddTop(list As List(Of PointF), x As Integer, y As Integer, threshold As Single)
             list.Add(New PointF((x - 1 + V(data(x - 1, y - 1), data(x, y - 1), threshold)) * grid_w, (y - 1) * grid_h))
         End Sub
 
-        Private Sub AddBottom(ByVal list As List(Of PointF), ByVal x As Integer, ByVal y As Integer, ByVal threshold As Single)
+        Private Sub AddBottom(list As List(Of PointF), x As Integer, y As Integer, threshold As Single)
             list.Add(New PointF((x - 1 + V(data(x - 1, y), data(x, y), threshold)) * grid_w, y * grid_h))
         End Sub
 
-        Private Sub AddLeftTop(ByVal list As List(Of PointF), ByVal x As Integer, ByVal y As Integer)
+        Private Sub AddLeftTop(list As List(Of PointF), x As Integer, y As Integer)
             list.Add(New PointF((x - 1) * grid_w, (y - 1) * grid_h))
         End Sub
 
-        Private Sub AddRightTop(ByVal list As List(Of PointF), ByVal x As Integer, ByVal y As Integer)
+        Private Sub AddRightTop(list As List(Of PointF), x As Integer, y As Integer)
             list.Add(New PointF(x * grid_w, (y - 1) * grid_h))
         End Sub
 
-        Private Sub AddLeftBottom(ByVal list As List(Of PointF), ByVal x As Integer, ByVal y As Integer)
+        Private Sub AddLeftBottom(list As List(Of PointF), x As Integer, y As Integer)
             list.Add(New PointF((x - 1) * grid_w, y * grid_h))
         End Sub
 
-        Private Sub AddRightBottom(ByVal list As List(Of PointF), ByVal x As Integer, ByVal y As Integer)
+        Private Sub AddRightBottom(list As List(Of PointF), x As Integer, y As Integer)
             list.Add(New PointF(x * grid_w, y * grid_h))
         End Sub
 
-        Private Function V(ByVal min As Single, ByVal max As Single, ByVal threshold As Single) As Single
+        Private Function V(min As Single, max As Single, threshold As Single) As Single
             Return (threshold - min) / (max - min)
         End Function
     End Class
