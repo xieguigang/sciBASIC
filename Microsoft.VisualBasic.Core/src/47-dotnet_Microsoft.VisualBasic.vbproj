@@ -1677,6 +1677,13 @@
     <Compile Include="CommandLine\InteropService\InCompatible.vb" />
     <Compile Include="CommandLine\Interpreters\View\CommandHelp.vb" />
     <Compile Include="CommandLine\Reflection\RunDll.vb" />
+	
+	<Compile Include="ComponentModel\Ranges\Unit\ByteSize.vb"/>
+<Compile Include="ComponentModel\Ranges\Unit\Convertor.vb"/>
+<Compile Include="ComponentModel\Ranges\Unit\Unit.vb"/>
+<Compile Include="ComponentModel\Ranges\Unit\UnitConvertorExtensions.vb"/>
+<Compile Include="ComponentModel\Ranges\Unit\UnitTag.vb"/>
+	
     <Compile Include="ComponentModel\Algorithm\BinaryTree\BinaryTree.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLTree\AVLTree.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\RBTree\Iterator.vb" />
