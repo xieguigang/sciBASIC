@@ -221,6 +221,14 @@ Namespace My.JavaScript
             Next
         End Sub
 
+        Sub New(obj As Dictionary(Of String, Object))
+            Call Me.New
+
+            For Each item As KeyValuePair(Of String, Object) In obj
+                Me(item.Key) = item.Value
+            Next
+        End Sub
+
         Public Sub Delete(name As String)
             members.Remove(name)
         End Sub
