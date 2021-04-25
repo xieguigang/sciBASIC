@@ -209,7 +209,7 @@ Namespace Imaging.LayoutModel
             Me.Height = height
         End Sub
 
-#If NET_48 Or netcore5 = 1 Then
+#If NET_48 = 1 Or netcore5 = 1 Then
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New(layout As (x#, y#, w#, h#))
@@ -274,7 +274,7 @@ Namespace Imaging.LayoutModel
             Me.Height = h
         End Sub
 
-#If NET_48 Or netcore5 = 1 Then
+#If NET_48 = 1 Or netcore5 = 1 Then
 
         ''' <summary>
         ''' Adds the given rectangle to this rectangle. Union two rectangle.

@@ -94,7 +94,7 @@ Namespace Math
                                                getSample As Func(Of T, Double),
                                           Optional Level As Integer = 10) As Dictionary(Of String, Integer)
 
-#If NET_48 Or netcore5 = 1 Then
+#If NET_48 = 1 Or netcore5 = 1 Then
 
             Dim samples As Double() = data.Select(getSample).ToArray
             Dim levels As Integer() = samples.GenerateMapping(Level)

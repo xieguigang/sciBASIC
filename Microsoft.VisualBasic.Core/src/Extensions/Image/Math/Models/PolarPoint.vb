@@ -66,7 +66,7 @@ Namespace Imaging.Math2D
             Me.Radius = radius
         End Sub
 
-#If NET_48 Or netcore5 = 1 Then
+#If NET_48 = 1 Or netcore5 = 1 Then
 
         ''' <summary>
         ''' 与这个极坐标点等价的笛卡尔直角坐标系上面的坐标点
@@ -96,7 +96,7 @@ Namespace Imaging.Math2D
             Return $"({Radius}, {Angle}°)"
         End Function
 
-#If NET_48 Or netcore5 = 1 Then
+#If NET_48 = 1 Or netcore5 = 1 Then
 
         Public Shared Widening Operator CType(polar As (radius#, angle!)) As PolarPoint
             Return New PolarPoint With {

@@ -266,7 +266,7 @@ Namespace Language.Vectorization
             End Set
         End Property
 
-#If NET_48 Or netcore5 = 1 Then
+#If NET_48 = 1 Or netcore5 = 1 Then
         Default Public Overloads Property Item(range As (start%, ends%)) As List(Of T)
             Get
                 Return New List(Of T)(Me.Skip(range.start).Take(count:=range.ends - range.start))

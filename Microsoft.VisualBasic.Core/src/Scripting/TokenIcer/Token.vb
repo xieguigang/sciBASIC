@@ -103,8 +103,14 @@ Namespace Scripting.TokenIcer
             Return $"[{name}] {text}"
         End Function
 
-#If NET_48 Or netcore5 = 1 Then
+#If NET_48 = 1 Or netcore5 = 1 Then
 
+        ''' <summary>
+        ''' token is target token type andalso token text is one of any in the given text items 
+        ''' </summary>
+        ''' <param name="token"></param>
+        ''' <param name="element"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator =(token As CodeToken(Of Tokens), element As (Tokens, String())) As Boolean
             Return token.name.Equals(element.Item1) AndAlso (element.Item2.IndexOf(token.text) > -1)

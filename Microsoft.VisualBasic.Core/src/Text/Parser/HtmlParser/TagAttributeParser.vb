@@ -169,7 +169,7 @@ Namespace Text.Parser.HtmlParser
             Return img.attr("src")
         End Function
 
-#If NET_48 Or netcore5 = 1 Then
+#If NET_48 = 1 Or netcore5 = 1 Then
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
