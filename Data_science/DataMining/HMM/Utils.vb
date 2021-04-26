@@ -1,7 +1,7 @@
 Public Class Utils
     Function findSequence(sequence As Array, states)
         Return sequence.reduce(Function(all, curr)
-                                   Return all.push(states.findIndex(x >= x.state = curr))
+                                   Return all.push(states.findIndex(Function(x) x.state = curr))
                                    Return all
                                End Function, {})
     End Function
@@ -212,7 +212,7 @@ Public Class Utils
             .forwardAlgorithm = Function(obSequence)
                                     Dim forward = forwardFactory(HMM, obSequence)
                                     Dim initAlphas = forward.initForward()
-                                    Dim allAlphas = forward.recForward(initAlphas, 1, [initAlphas])
+                                    Dim allAlphas = forward.recForward(initAlphas, 1, {initAlphas})
                                     Return New With {.alphas = allAlphas, .alphaF = forward.termForward(allAlphas)}
                                 End Function
         }
