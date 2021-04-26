@@ -58,6 +58,12 @@ Namespace My.JavaScript
             Throw New NotImplementedException
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function findIndex(Of T)(array As T(), predicate As Predicate(Of T)) As Integer
+            Return System.Array.FindIndex(array, predicate)
+        End Function
+
         ''' <summary>
         ''' 
         ''' </summary>
