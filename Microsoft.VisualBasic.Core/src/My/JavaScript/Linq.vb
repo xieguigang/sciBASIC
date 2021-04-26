@@ -98,6 +98,42 @@ Namespace My.JavaScript
         ''' <summary>
         ''' 
         ''' </summary>
+        ''' <typeparam name="V">序列进行降维之后的结果类型</typeparam>
+        ''' <param name="seq"></param>
+        ''' <param name="produce"></param>
+        ''' <param name="init"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function reduce(Of V)(seq As Array, produce As Func(Of V, Object, Integer, V), Optional init As V = Nothing) As V
+            Dim i As i32 = Scan0
+
+            For Each x As Object In seq
+                init = produce(init, x, ++i)
+            Next
+
+            Return init
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <typeparam name="V">序列进行降维之后的结果类型</typeparam>
+        ''' <param name="seq"></param>
+        ''' <param name="produce"></param>
+        ''' <param name="init"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function reduce(Of V)(seq As Array, produce As Func(Of V, Object, V), Optional init As V = Nothing) As V
+            For Each x As Object In seq
+                init = produce(init, x)
+            Next
+
+            Return init
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
         ''' <typeparam name="T">序列的类型</typeparam>
         ''' <typeparam name="V">序列进行降维之后的结果类型</typeparam>
         ''' <param name="seq"></param>

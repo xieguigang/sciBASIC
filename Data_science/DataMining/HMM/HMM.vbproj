@@ -89,6 +89,7 @@
     <Compile Include="Algorithm\HMMAlgorithm\Bayes.vb" />
     <Compile Include="Algorithm\HMMAlgorithm\Backward.vb" />
     <Compile Include="Algorithm\HMMAlgorithm\BaumWelch.vb" />
+    <Compile Include="Chain.vb" />
     <Compile Include="HMM.vb" />
     <Compile Include="MarkovChain.vb" />
     <Compile Include="Algorithm\HMMAlgorithm\Viterbi.vb" />

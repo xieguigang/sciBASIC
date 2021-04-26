@@ -6,7 +6,7 @@ Public Class Backward : Inherits HMMAlgorithm
         Call MyBase.New(HMM)
     End Sub
 
-    Public Function backwardAlgorithm(obSequence) As Beta
+    Public Function backwardAlgorithm(obSequence As Chain) As Beta
         Dim backward As New backwardFactory(HMM, obSequence)
         Dim initBetas = HMM.states.map(Function(s) 1.0)
         Dim allBetas = backward.recBackward(initBetas, obSequence.length - 1, New List(Of Double()) From {initBetas})

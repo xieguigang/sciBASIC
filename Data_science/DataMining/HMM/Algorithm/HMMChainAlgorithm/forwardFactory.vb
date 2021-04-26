@@ -2,7 +2,7 @@
 
 Public Class forwardFactory : Inherits HMMChainAlgorithm
 
-    Sub New(HMM As HMM, obSequence As Object())
+    Sub New(HMM As HMM, obSequence As Chain)
         Call MyBase.New(HMM, obSequence)
     End Sub
 
@@ -16,7 +16,7 @@ Public Class forwardFactory : Inherits HMMChainAlgorithm
 
     Public Function recForward(prevTrellis As Double(), j As Integer, alphas As List(Of List(Of Double))) As List(Of List(Of Double))
         Dim obIndex = j
-        If (obIndex = obSequence.Length) Then
+        If (obIndex = obSequence.length) Then
             Return alphas
         End If
         Dim nextTrellis As New List(Of Double)
@@ -29,7 +29,7 @@ Public Class forwardFactory : Inherits HMMChainAlgorithm
                                     Dim emiss = HMM.emissionMatrix(HMM.observables.IndexOf(obSequence(obIndex)))(si)
                                     trellisArr.Add(prob * trans * emiss)
                                 End Sub)
-            nextTrellis.Add(trellisArr.reduce(Function(tot, curr) tot + curr))
+            nextTrellis.Add(trellisArr.reduce(Function(tot, curr) tot + curr, 0.0))
         Next
         alphas.Add(nextTrellis)
         Return recForward(nextTrellis.ToArray, obIndex + 1, alphas)

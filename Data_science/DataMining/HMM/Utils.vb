@@ -4,11 +4,12 @@ Imports Microsoft.VisualBasic.My.JavaScript
 Public Module Utils
 
     <Extension>
-    Public Function findSequence(sequence As IEnumerable(Of Object), states As statesObject()) As IEnumerable(Of Integer)
-        Return sequence.reduce(Function(all, curr)
-                                   all.Add(states.findIndex(Function(x) x.state = curr))
-                                   Return all
-                               End Function, New List(Of Integer))
+    Public Function findSequence(sequence As Chain, states As statesObject()) As IEnumerable(Of Integer)
+        Return sequence.obSequence _
+            .reduce(Function(all, curr)
+                        all.Add(states.findIndex(Function(x) sequence.equalsTo(x.state, curr)))
+                        Return all
+                    End Function, New List(Of Integer))
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

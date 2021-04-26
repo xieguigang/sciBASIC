@@ -4,7 +4,7 @@
         Call MyBase.New(HMM)
     End Sub
 
-    Public Function forwardAlgorithm(obSequence) As Alpha
+    Public Function forwardAlgorithm(obSequence As Chain) As Alpha
         Dim forward As New forwardFactory(HMM, obSequence)
         Dim initAlphas = forward.initForward()
         Dim allAlphas = forward.recForward(initAlphas.ToArray, 1, New List(Of List(Of Double)) From {initAlphas})

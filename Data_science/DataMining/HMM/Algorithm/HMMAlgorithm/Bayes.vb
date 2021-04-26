@@ -11,10 +11,11 @@ Public Class Bayes : Inherits HMMAlgorithm
         Dim obIndex As Integer = HMM.observables.indexOf(ob)
         Dim emissionProb = HMM.emissionMatrix(obIndex)(hStateIndex)
         Dim initHState = HMM.initialProb(hStateIndex)
-        Dim obProb = HMM.emissionMatrix(obIndex).reduce(Function(total, em, i)
-                                                            total += (em * HMM.initialProb(i))
-                                                            Return total
-                                                        End Function, 0.0)
+        Dim obProb = HMM.emissionMatrix(obIndex) _
+            .reduce(Function(total As Double, em As Double, i As Integer)
+                        total += (em * HMM.initialProb(i))
+                        Return total
+                    End Function, 0.0)
         Dim bayesResult = (emissionProb * initHState) / obProb
 
         Return bayesResult

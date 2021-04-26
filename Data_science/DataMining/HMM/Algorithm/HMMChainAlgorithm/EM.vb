@@ -5,7 +5,7 @@ Public Class EM : Inherits HMMChainAlgorithm
     Dim forwardObj As Alpha
     Dim backwardBetas As Double()()
 
-    Sub New(HMM As HMM, forwardObj As Alpha, backwardBetas As Double()(), obSequence As Object())
+    Sub New(HMM As HMM, forwardObj As Alpha, backwardBetas As Double()(), obSequence As Chain)
         Call MyBase.New(HMM, obSequence)
 
         Me.forwardObj = forwardObj
@@ -53,13 +53,14 @@ Public Class EM : Inherits HMMChainAlgorithm
 
     Public Function gammaTimesInStateWithOb(stateI As Integer, obIndex As Integer) As Double
         Dim obsK = HMM.observables(obIndex)
-        Dim stepsWithOb = obSequence.reduce(Function(tot, curr, i)
-                                                If (curr = obsK) Then
-                                                    tot.Add(i)
-                                                End If
+        Dim stepsWithOb = obSequence.obSequence _
+            .reduce(Function(tot, curr, i)
+                        If (curr = obsK) Then
+                            tot.Add(i)
+                        End If
 
-                                                Return tot
-                                            End Function, New List(Of Integer))
+                        Return tot
+                    End Function, New List(Of Integer))
         Dim gammas As New List(Of Double)
 
         stepsWithOb.ForEach(Sub([step])

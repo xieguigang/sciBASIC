@@ -144,7 +144,6 @@ Namespace LinearAlgebra.Matrix
         ''' </param>
         ''' <param name="n">   Number of colums.
         ''' </param>
-
         Public Sub New(m As Integer, n As Integer)
             Me.m = m
             Me.n = n
@@ -164,7 +163,6 @@ Namespace LinearAlgebra.Matrix
         ''' </param>
         ''' <param name="s">   Fill the matrix with this scalar value.
         ''' </param>
-
         Public Sub New(m As Integer, n As Integer, s As Double)
             Me.m = m
             Me.n = n
@@ -222,7 +220,6 @@ Namespace LinearAlgebra.Matrix
         ''' </param>
         ''' <param name="n">   Number of colums.
         ''' </param>
-
         Public Sub New(A As Double()(), m As Integer, n As Integer)
             Me.buffer = A
             Me.m = m
@@ -234,14 +231,13 @@ Namespace LinearAlgebra.Matrix
         ''' </param>
         ''' <param name="m">   Number of rows.
         ''' </param>
-        ''' <exception cref="System.ArgumentException">   Array length must be a multiple of m.
+        ''' <exception cref="ArgumentException">   Array length must be a multiple of m.
         ''' </exception>
-
         Public Sub New(vals As Double(), m As Integer)
             Me.m = m
             n = (If(m <> 0, vals.Length \ m, 0))
             If m * n <> vals.Length Then
-                Throw New System.ArgumentException("Array length must be a multiple of m.")
+                Throw New ArgumentException("Array length must be a multiple of m.")
             End If
             Dim A = New Double(m - 1)() {}
             For i As Integer = 0 To m - 1
@@ -256,7 +252,6 @@ Namespace LinearAlgebra.Matrix
             buffer = A
         End Sub
 #End Region
-
 
 #Region "Public Properties"
 
@@ -1314,7 +1309,7 @@ Namespace LinearAlgebra.Matrix
         End Sub
 
         ''' <summary>Clone the GeneralMatrix object.</summary>
-        Public Function Clone() As System.Object Implements ICloneable.Clone
+        Public Function Clone() As Object Implements ICloneable.Clone
             Return Me.Copy()
         End Function
 

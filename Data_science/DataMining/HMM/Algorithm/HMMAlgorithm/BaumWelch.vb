@@ -6,7 +6,7 @@ Public Class BaumWelch : Inherits HMMAlgorithm
         Call MyBase.New(HMM)
     End Sub
 
-    Public Function baumWelchAlgorithm(obSequence()) As HMM
+    Public Function baumWelchAlgorithm(obSequence As Chain) As HMM
         Dim forwardObj = New Forward(HMM).forwardAlgorithm(obSequence)
         Dim backwardBetas = New Backward(HMM).backwardAlgorithm(obSequence).betas.Reverse().ToArray
         Dim EMSteps = New EM(HMM, forwardObj, backwardBetas, obSequence)
