@@ -1,11 +1,23 @@
 ﻿Public Class Forward : Inherits HMMAlgorithm
-    Sub New(HMM)
+
+    Sub New(HMM As HMM)
         Call MyBase.New(HMM)
     End Sub
-    Public Function forwardAlgorithm(obSequence)
+
+    Public Function forwardAlgorithm(obSequence) As Alpha
         Dim forward As New forwardFactory(HMM, obSequence)
         Dim initAlphas = forward.initForward()
-        Dim allAlphas = forward.recForward(initAlphas, 1, {initAlphas})
-        Return New With {.alphas = allAlphas, .alphaF = forward.termForward(allAlphas)}
+        Dim allAlphas = forward.recForward(initAlphas.ToArray, 1, New List(Of List(Of Double)) From {initAlphas})
+
+        Return New Alpha With {
+            .alphas = allAlphas,
+            .alphaF = forward.termForward(allAlphas)
+        }
     End Function
+End Class
+
+Public Class Alpha
+
+    Public Property alphaF As Double
+    Public Property alphas As List(Of List(Of Double))
 End Class

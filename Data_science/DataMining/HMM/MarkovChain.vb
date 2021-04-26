@@ -1,9 +1,9 @@
 ﻿Public Class MarkovChain
 
-    Dim states
-    Dim transMatrix
-    Dim initialProb
-    Dim prob As calculateProb
+    Friend ReadOnly states
+    Friend ReadOnly transMatrix
+    Friend ReadOnly initialProb
+    Friend ReadOnly prob As calculateProb
 
     Sub New(states, init)
         Me.states = states.map(Function(s) s.state)

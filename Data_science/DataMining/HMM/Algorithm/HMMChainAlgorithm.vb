@@ -1,8 +1,8 @@
 ﻿Public MustInherit Class HMMChainAlgorithm : Inherits HMMAlgorithm
 
-    Protected obSequence
+    Protected obSequence()
 
-    Sub New(HMM, obSequence)
+    Sub New(HMM As HMM, obSequence As Object())
         Call MyBase.New(HMM)
 
         Me.obSequence = obSequence

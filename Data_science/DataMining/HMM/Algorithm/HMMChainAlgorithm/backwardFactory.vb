@@ -1,32 +1,37 @@
-﻿Public Class backwardFactory : Inherits HMMChainAlgorithm
+﻿Imports Microsoft.VisualBasic.My.JavaScript
 
-    Sub New(HMM, obSequence)
+Public Class backwardFactory : Inherits HMMChainAlgorithm
+
+    Sub New(HMM As HMM, obSequence As Object())
         Call MyBase.New(HMM, obSequence)
     End Sub
 
-    Public Function recBackward(prevBetas, i, betas)
-        Dim obIndex = i
-        If (obIndex = 0) Then Return betas
-        Dim nextTrellis = {}
-        For s = 0 To HMM.states.length - 1
-            Dim trellisArr = {}
-            prevBetas.forEach(Sub(prob, i)
-                                  Dim trans = HMM.transMatrix(s)(i)
-                                  Dim emiss = HMM.emissionMatrix(HMM.observables.indexOf(obSequence(obIndex)))(i)
-                                  trellisArr.push(prob * trans * emiss)
+    Public Function recBackward(prevBetas As Double(), j As Integer, betas As List(Of Double())) As Double()()
+        Dim obIndex = j
+        If (obIndex = 0) Then Return betas.ToArray
+        Dim nextTrellis As New List(Of Double)
+        For s As Integer = 0 To HMM.states.Length - 1
+            Dim trellisArr As New List(Of Double)
+            Dim si As Integer = s
+
+            prevBetas.ForEach(Sub(prob, i)
+                                  Dim trans = HMM.transMatrix(si)(i)
+                                  Dim emiss = HMM.emissionMatrix(HMM.observables.IndexOf(obSequence(obIndex)))(i)
+                                  trellisArr.Add(prob * trans * emiss)
                               End Sub)
-            nextTrellis.push(trellisArr.reduce(Function(tot, curr) tot + curr))
+            nextTrellis.Add(trellisArr.reduce(Function(tot, curr) tot + curr))
         Next
-        betas.push(nextTrellis)
-        Return recBackward(nextTrellis, obIndex - 1, betas)
+        betas.Add(nextTrellis.ToArray)
+        Return recBackward(nextTrellis.ToArray, obIndex - 1, betas)
     End Function
-    Public Function termBackward(betas)
-        Dim finalBetas = betas(betas.length - 1).reduce(Function(tot, curr, i)
-                                                            Dim obIndex = HMM.observables.indexOf(obSequence(0))
+
+    Public Function termBackward(betas As Double()()) As Double
+        Dim finalBetas = betas(betas.Length - 1).reduce(Function(tot, curr, i)
+                                                            Dim obIndex = HMM.observables.IndexOf(obSequence(0))
                                                             Dim obEmission = HMM.emissionMatrix(obIndex)
-                                                            tot.push(curr * HMM.initialProb(i) * obEmission(i))
+                                                            tot.Add(curr * HMM.initialProb(i) * obEmission(i))
                                                             Return tot
-                                                        End Function, {})
-        Return finalBetas.reduce(Function(tot, Val) tot + Val)
+                                                        End Function, New List(Of Double))
+        Return finalBetas.reduce(Function(tot, Val) tot + Val, 0.0)
     End Function
 End Class

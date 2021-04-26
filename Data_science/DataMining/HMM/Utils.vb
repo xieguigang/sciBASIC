@@ -4,9 +4,9 @@ Imports Microsoft.VisualBasic.My.JavaScript
 Public Module Utils
 
     <Extension>
-    Public Function findSequence(Of T)(sequence As IEnumerable(Of T), states As T()) As IEnumerable(Of Integer)
+    Public Function findSequence(sequence As IEnumerable(Of Object), states As statesObject()) As IEnumerable(Of Integer)
         Return sequence.reduce(Function(all, curr)
-                                   Return all.Add(states.findIndex(Function(x) x.state = curr))
+                                   all.Add(states.findIndex(Function(x) x.state = curr))
                                    Return all
                                End Function, New List(Of Integer))
     End Function
