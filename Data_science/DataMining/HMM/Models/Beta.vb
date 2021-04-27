@@ -1,5 +1,8 @@
 ﻿Namespace Models
 
+    ''' <summary>
+    ''' beta and beta matrix
+    ''' </summary>
     Public Class Beta
 
         Public Property betas As Double()()
