@@ -1,10 +1,3 @@
-[![npm package](https://nodei.co/npm/mary-markov.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/request/)
-
-[![npm version](https://img.shields.io/npm/v/mary-markov.svg?style=for-the-badge)](https://www.npmjs.com/package/mary-markov) [![](https://img.shields.io/npm/dt/mary-markov.svg?style=for-the-badge)](https://www.npmjs.com/package/mary-markov) ![](https://img.shields.io/bundlephobia/min/mary-markov.svg?style=for-the-badge)  [![](https://img.shields.io/github/followers/Mary62442.svg?label=Follow&style=for-the-badge)](https://github.com/Mary62442/)
-
-[![DeepScan grade](https://deepscan.io/api/teams/3675/projects/5403/branches/41450/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=3675&pid=5403&bid=41450)
-
-
 # mary-markov
 
 ## An npm package to calculate probabilities from Markov Chains and Hidden Markov Models

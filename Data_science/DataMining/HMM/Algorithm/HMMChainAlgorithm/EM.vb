@@ -1,73 +1,78 @@
-﻿Imports Microsoft.VisualBasic.My.JavaScript
+﻿Imports Microsoft.VisualBasic.DataMining.HiddenMarkovChain.Models
+Imports Microsoft.VisualBasic.My.JavaScript
 
-Public Class EM : Inherits HMMChainAlgorithm
+Namespace Algorithm.HMMChainAlgorithm
 
-    Dim forwardObj As Alpha
-    Dim backwardBetas As Double()()
+    Public Class EM : Inherits HMMChainAlgorithm
 
-    Sub New(HMM As HMM, forwardObj As Alpha, backwardBetas As Double()(), obSequence As Chain)
-        Call MyBase.New(HMM, obSequence)
+        Dim forwardObj As Alpha
+        Dim backwardBetas As Double()()
 
-        Me.forwardObj = forwardObj
-        Me.backwardBetas = backwardBetas
-    End Sub
+        Sub New(HMM As HMM, forwardObj As Alpha, backwardBetas As Double()(), obSequence As Chain)
+            Call MyBase.New(HMM, obSequence)
 
-    Public Function initialGamma(stateI As Integer) As Double
-        Return gamma(forwardObj.alphas(0)(stateI), backwardBetas(0)(stateI), forwardObj.alphaF)
-    End Function
+            Me.forwardObj = forwardObj
+            Me.backwardBetas = backwardBetas
+        End Sub
 
-    Public Function gammaTimesInState(stateI As Integer) As Double
-        Dim gammas As New List(Of Double)
+        Public Function initialGamma(stateI As Integer) As Double
+            Return gamma(forwardObj.alphas(0)(stateI), backwardBetas(0)(stateI), forwardObj.alphaF)
+        End Function
 
-        For t = 0 To obSequence.Length - 1
-            gammas.Add(gamma(forwardObj.alphas(t)(stateI), backwardBetas(t)(stateI), forwardObj.alphaF))
-        Next
+        Public Function gammaTimesInState(stateI As Integer) As Double
+            Dim gammas As New List(Of Double)
 
-        Return gammas.reduce(Function(tot, curr) tot + curr, 0.0)
-    End Function
+            For t = 0 To obSequence.length - 1
+                gammas.Add(gamma(forwardObj.alphas(t)(stateI), backwardBetas(t)(stateI), forwardObj.alphaF))
+            Next
 
-    Public Function gammaTransFromState(stateI As Integer) As Double
-        Dim gammas As New List(Of Double)
+            Return gammas.reduce(Function(tot, curr) tot + curr, 0.0)
+        End Function
 
-        For t = 0 To obSequence.Length - 2
-            gammas.Add(gamma(forwardObj.alphas(t)(stateI), backwardBetas(t)(stateI), forwardObj.alphaF))
-        Next
+        Public Function gammaTransFromState(stateI As Integer) As Double
+            Dim gammas As New List(Of Double)
 
-        Return gammas.reduce(Function(tot, curr) tot + curr, 0.0)
-    End Function
+            For t = 0 To obSequence.length - 2
+                gammas.Add(gamma(forwardObj.alphas(t)(stateI), backwardBetas(t)(stateI), forwardObj.alphaF))
+            Next
 
-    Public Function xiTransFromTo(stateI As Integer, stateJ As Integer) As Double
-        Dim xis As New List(Of Double)
+            Return gammas.reduce(Function(tot, curr) tot + curr, 0.0)
+        End Function
 
-        For t = 0 To obSequence.Length - 2
-            Dim alpha = forwardObj.alphas(t)(stateI)
-            Dim trans = HMM.transMatrix(stateI)(stateJ)
-            Dim emiss = HMM.emissionMatrix(HMM.observables.IndexOf(obSequence(t + 1)))(stateJ)
-            Dim beta = backwardBetas(t + 1)(stateJ)
+        Public Function xiTransFromTo(stateI As Integer, stateJ As Integer) As Double
+            Dim xis As New List(Of Double)
 
-            xis.Add(xi(alpha, trans, emiss, beta, forwardObj.alphaF))
-        Next
+            For t = 0 To obSequence.length - 2
+                Dim alpha = forwardObj.alphas(t)(stateI)
+                Dim trans = HMM.transMatrix(stateI)(stateJ)
+                Dim emiss = HMM.emissionMatrix(HMM.observables.IndexOf(obSequence(t + 1)))(stateJ)
+                Dim beta = backwardBetas(t + 1)(stateJ)
 
-        Return xis.reduce(Function(tot, curr) tot + curr, 0.0)
-    End Function
+                xis.Add(xi(alpha, trans, emiss, beta, forwardObj.alphaF))
+            Next
 
-    Public Function gammaTimesInStateWithOb(stateI As Integer, obIndex As Integer) As Double
-        Dim obsK = HMM.observables(obIndex)
-        Dim stepsWithOb = obSequence.obSequence _
-            .reduce(Function(tot, curr, i)
-                        If (curr = obsK) Then
-                            tot.Add(i)
-                        End If
+            Return xis.reduce(Function(tot, curr) tot + curr, 0.0)
+        End Function
 
-                        Return tot
-                    End Function, New List(Of Integer))
-        Dim gammas As New List(Of Double)
+        Public Function gammaTimesInStateWithOb(stateI As Integer, obIndex As Integer) As Double
+            Dim obsK = HMM.observables(obIndex)
+            Dim stepsWithOb = obSequence.obSequence _
+                .reduce(Function(tot, curr, i)
+                            If (curr = obsK) Then
+                                tot.Add(i)
+                            End If
 
-        stepsWithOb.ForEach(Sub([step])
-                                gammas.Add(gamma(forwardObj.alphas([step])(stateI), backwardBetas([step])(stateI), forwardObj.alphaF))
-                            End Sub)
+                            Return tot
+                        End Function, New List(Of Integer))
+            Dim gammas As New List(Of Double)
 
-        Return gammas.reduce(Function(tot, curr) tot + curr, 0.0)
-    End Function
+            Call stepsWithOb _
+                .ForEach(Sub([step])
+                             gammas.Add(gamma(forwardObj.alphas([step])(stateI), backwardBetas([step])(stateI), forwardObj.alphaF))
+                         End Sub)
 
-End Class
+            Return gammas.reduce(Function(tot, curr) tot + curr, 0.0)
+        End Function
+
+    End Class
+End Namespace

@@ -1,23 +1,23 @@
-﻿Public Class Forward : Inherits HMMAlgorithm
+﻿Imports Microsoft.VisualBasic.DataMining.HiddenMarkovChain.Algorithm.HMMChainAlgorithm
+Imports Microsoft.VisualBasic.DataMining.HiddenMarkovChain.Models
 
-    Sub New(HMM As HMM)
-        Call MyBase.New(HMM)
-    End Sub
+Namespace Algorithm.HMMAlgorithm
 
-    Public Function forwardAlgorithm(obSequence As Chain) As Alpha
-        Dim forward As New forwardFactory(HMM, obSequence)
-        Dim initAlphas = forward.initForward()
-        Dim allAlphas = forward.recForward(initAlphas.ToArray, 1, New List(Of List(Of Double)) From {initAlphas})
+    Public Class Forward : Inherits HMMAlgorithmBase
 
-        Return New Alpha With {
-            .alphas = allAlphas,
-            .alphaF = forward.termForward(allAlphas)
-        }
-    End Function
-End Class
+        Sub New(HMM As HMM)
+            Call MyBase.New(HMM)
+        End Sub
 
-Public Class Alpha
+        Public Function forwardAlgorithm(obSequence As Chain) As Alpha
+            Dim forward As New forwardFactory(HMM, obSequence)
+            Dim initAlphas = forward.initForward()
+            Dim allAlphas = forward.recForward(initAlphas.ToArray, 1, New List(Of List(Of Double)) From {initAlphas})
 
-    Public Property alphaF As Double
-    Public Property alphas As List(Of List(Of Double))
-End Class
+            Return New Alpha With {
+                .alphas = allAlphas,
+                .alphaF = forward.termForward(allAlphas)
+            }
+        End Function
+    End Class
+End Namespace

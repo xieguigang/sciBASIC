@@ -98,6 +98,27 @@ Namespace My.JavaScript
         ''' <summary>
         ''' 
         ''' </summary>
+        ''' <typeparam name="T">序列的类型</typeparam>
+        ''' <typeparam name="V">序列进行降维之后的结果类型</typeparam>
+        ''' <param name="seq"></param>
+        ''' <param name="produce"></param>
+        ''' <param name="init"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function reduce(Of T, V)(seq As IEnumerable(Of T), produce As Func(Of V, T, Integer, T(), V), Optional init As V = Nothing) As V
+            Dim i As i32 = Scan0
+            Dim rawArray As T() = seq.ToArray
+
+            For Each x As T In seq
+                init = produce(init, x, ++i, rawArray)
+            Next
+
+            Return init
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
         ''' <typeparam name="V">序列进行降维之后的结果类型</typeparam>
         ''' <param name="seq"></param>
         ''' <param name="produce"></param>

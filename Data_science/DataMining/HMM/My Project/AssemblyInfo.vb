@@ -8,8 +8,8 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("HMM")>
-<Assembly: AssemblyDescription("")>
+<Assembly: AssemblyTitle("A package to calculate probabilities from Markov Chains and Hidden Markov Models")>
+<Assembly: AssemblyDescription("A package to calculate probabilities from Markov Chains and Hidden Markov Models")>
 <Assembly: AssemblyCompany("")>
 <Assembly: AssemblyProduct("HMM")>
 <Assembly: AssemblyCopyright("Copyright ©  2021")>

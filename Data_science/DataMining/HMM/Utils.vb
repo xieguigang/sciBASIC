@@ -1,10 +1,11 @@
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.DataMining.HiddenMarkovChain.Models
 Imports Microsoft.VisualBasic.My.JavaScript
 
-Public Module Utils
+Module Utils
 
     <Extension>
-    Public Function findSequence(sequence As Chain, states As statesObject()) As IEnumerable(Of Integer)
+    Public Function findSequence(sequence As Chain, states As StatesObject()) As IEnumerable(Of Integer)
         Return sequence.obSequence _
             .reduce(Function(all, curr)
                         all.Add(states.findIndex(Function(x) sequence.equalsTo(x.state, curr)))
