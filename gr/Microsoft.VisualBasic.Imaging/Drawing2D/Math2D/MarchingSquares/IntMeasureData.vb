@@ -3,11 +3,11 @@
     ''' <summary>
     ''' 这个是对实际数据做映射为绘图数据之后的结果
     ''' </summary>
-    Friend Structure IntMeasureData
+    Public Structure IntMeasureData
 
         Public X As Integer
         Public Y As Integer
-        Public Z As Single
+        Public Z As Double
 
         Public Sub New(md As MeasureData, x_num As Integer, y_num As Integer)
             X = CInt(md.X * x_num)

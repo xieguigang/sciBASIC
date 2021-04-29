@@ -642,6 +642,7 @@
     <Compile Include="BarPlot\RectangleStyles.vb" />
     <Compile Include="BarPlot\StackedBarPlot.vb" />
     <Compile Include="BarPlot\StyledBarplot.vb" />
+    <Compile Include="Contour\MatrixEvaluate.vb" />
     <Compile Include="Contour\EvaluatePoints.vb" />
     <Compile Include="Contour\Utils.vb" />
     <Compile Include="csv\Extensions.vb" />

@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.Language
 Imports stdNum = System.Math
 
 Namespace Drawing2D.Math2D.MarchingSquares
@@ -21,11 +22,20 @@ Namespace Drawing2D.Math2D.MarchingSquares
         Friend w#, h#
 #End Region
 
+        ''' <summary>
+        ''' 实际的测量结果数据，一般为一个稀疏矩阵
+        ''' </summary>
         ReadOnly dots() As MeasureData
 
         Friend min#
         Friend max#
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="raw">现实世界中的原始测量结果数据</param>
+        ''' <param name="size">画布的大小</param>
+        ''' <param name="gridSize">网格的大小</param>
         Sub New(raw As IEnumerable(Of MeasureData), size As SizeF, gridSize As SizeF)
             dots = raw.ToArray
             w = size.Width
@@ -33,6 +43,35 @@ Namespace Drawing2D.Math2D.MarchingSquares
             grid_w = gridSize.Width
             grid_h = gridSize.Height
         End Sub
+
+        ''' <summary>
+        ''' 返回一个稠密状态的结果矩阵
+        ''' </summary>
+        ''' <returns>
+        ''' 以行扫描的方式返回结果
+        ''' </returns>
+        Public Iterator Function GetMatrixInterpolation() As IEnumerable(Of IntMeasureData())
+            Dim x, y As Double
+            Dim dx As Double = grid_w
+            Dim dy As Double = grid_h
+            Dim scan As New List(Of IntMeasureData)
+
+            For i As Integer = 0 To x_num - 1
+                For j As Integer = 0 To y_num - 1
+                    scan += New IntMeasureData With {
+                        .X = x,
+                        .Y = y,
+                        .Z = data(i, j)
+                    }
+                    y += dy
+                Next
+
+                y = 0
+                x = x + dx
+
+                Yield scan.PopAll
+            Next
+        End Function
 
         ''' <summary>
         ''' 数据插值

@@ -8,6 +8,8 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
+#if netcore5=0 then
+
 <Assembly: AssemblyTitle("A package to calculate probabilities from Markov Chains and Hidden Markov Models")>
 <Assembly: AssemblyDescription("A package to calculate probabilities from Markov Chains and Hidden Markov Models")>
 <Assembly: AssemblyCompany("")>
@@ -33,3 +35,4 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
+#end if

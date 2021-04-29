@@ -246,7 +246,7 @@ Namespace Contour
             Return New ContourPlot(theme) With {
                 .legendTitle = legendTitle,
                 .mapLevels = mapLevels,
-                .matrix = New MatrixEvaluate(matrixData, unit),
+                .matrix = New MatrixEvaluate(matrixData, New SizeF(unit, unit)),
                 .xlabel = xlabel,
                 .ylabel = ylabel,
                 .minZ = minZ,
