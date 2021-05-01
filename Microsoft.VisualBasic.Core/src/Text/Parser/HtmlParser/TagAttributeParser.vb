@@ -177,6 +177,11 @@ Namespace Text.Parser.HtmlParser
             Return img.attrs.GetByKey("src", True).Value
         End Function
 
+        ''' <summary>
+        ''' parse a image tag
+        ''' </summary>
+        ''' <param name="html$"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function img(html$) As (tag$, attrs As NamedValue(Of String)())
             Return ("img", r.Match(html, imgHtmlTagPattern, RegexICSng).Value.TagAttributes.ToArray)
