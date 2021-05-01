@@ -169,6 +169,11 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property StdOut As [Default](Of TextWriter)
+
+    ''' <summary>
+    ''' <see cref="Console.OpenStandardInput"/>
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property StdInput As [Default](Of TextReader) = New StreamReader(Console.OpenStandardInput)
 
     ''' <summary>
@@ -1223,6 +1228,9 @@ Public Module App
     ''' 假若在调试模式之下发现程序有很长一段时间处于cpu占用为零的静止状态，则很有可能已经运行完命令并且等待回车退出)
     ''' </summary>
     ''' <param name="args">The command line arguments value, which its value can be gets from the <see cref="Command()"/> function.</param>
+    ''' <param name="executeEmpty">
+    ''' this function pointer accepts no parameter.
+    ''' </param>
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
     <ExportAPI("RunCLI")>

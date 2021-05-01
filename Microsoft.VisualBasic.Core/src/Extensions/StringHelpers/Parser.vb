@@ -74,7 +74,8 @@ Public Module PrimitiveParser
     ''' <remarks>
     ''' 这个表达式并不用于<see cref="IsNumeric"/>, 但是其他的模块的代码可能会需要这个通用的表达式来做一些判断
     ''' </remarks>
-    Public Const NumericPattern$ = "[-]?\d*(\.\d+)?([eE][-]?\d*)?"
+    Public Const NumericPattern$ = SimpleNumberPattern & "([eE][+-]?\d*)?"
+    Public Const SimpleNumberPattern$ = "[-]?\d*(\.\d+)?"
 
 #Region "text token pattern assert"
     ' 2019-04-17 正则表达式的执行效率过低
@@ -92,9 +93,22 @@ Public Module PrimitiveParser
     End Function
 
     ''' <summary>
+    ''' 这个函数相较于<see cref="IsNumeric(String, Boolean)"/>，仅仅做简单的数值格式判断
+    ''' </summary>
+    ''' <returns></returns>
+    ''' 
+    <Extension>
+    Public Function IsSimpleNumber(num As String) As Boolean
+        Return num.IsPattern(SimpleNumberPattern)
+    End Function
+
+    ''' <summary>
     ''' Is this token value string is a number?
     ''' </summary>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' 这个函数会判断科学计数法等格式
+    ''' </remarks>
     <Extension>
     Public Function IsNumeric(num As String, Optional includesNaNFactor As Boolean = False) As Boolean
         Dim dotCheck As Boolean = False
