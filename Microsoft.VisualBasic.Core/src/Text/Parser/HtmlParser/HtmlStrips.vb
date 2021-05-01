@@ -51,6 +51,7 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports r = System.Text.RegularExpressions.Regex
 
@@ -293,11 +294,33 @@ Namespace Text.Parser.HtmlParser
         ''' <param name="html$"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function HtmlLines(html$) As String()
+        Public Function HtmlLines(html$, Optional alsoNewLine As Boolean = True) As String()
             If html.StringEmpty Then
                 Return {}
             Else
-                Return r.Split(html, LineFeed, RegexICSng)
+                Dim splitOut As String() = r.Split(html, LineFeed, RegexICSng)
+
+                splitOut = splitOut _
+                    .Where(Function(line)
+                               Return Not line.Trim.IsPattern(LineFeed)
+                           End Function) _
+                    .ToArray
+
+                If alsoNewLine Then
+                    Return splitOut _
+                        .Select(Function(line)
+                                    Return line _
+                                        .Trim(ASCII.CR, ASCII.LF, ASCII.TAB, " "c) _
+                                        .LineTokens
+                                End Function) _
+                        .IteratesALL _
+                        .Where(Function(str)
+                                   Return Not str.StringEmpty
+                               End Function) _
+                        .ToArray
+                Else
+                    Return splitOut
+                End If
             End If
         End Function
 
