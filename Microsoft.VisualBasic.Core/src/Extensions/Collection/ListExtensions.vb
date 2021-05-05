@@ -260,7 +260,10 @@ Public Module ListExtensions
     ''' <param name="source">
     ''' The collection whose elements are copied to the new list.
     ''' </param>
-    <Extension> Public Function AsList(Of T)(source As IEnumerable(Of T)) As List(Of T)
+    ''' 
+    <DebuggerStepThrough>
+    <Extension>
+    Public Function AsList(Of T)(source As IEnumerable(Of T)) As List(Of T)
         ' 如果source集合是空值的话，不会抛错
         Return New List(Of T)(source)
     End Function

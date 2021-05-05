@@ -1,79 +1,80 @@
 ﻿#Region "Microsoft.VisualBasic::da95ee99a60e21d9671e1700c65d59bc, Microsoft.VisualBasic.Core\src\My\JavaScript\JavaScriptObject.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Interface IJavaScriptObjectAccessor
-    ' 
-    '         Properties: Accessor
-    ' 
-    '     Class Descriptor
-    ' 
-    '         Properties: configurable, enumerable, value, writable
-    ' 
-    '     Enum MemberAccessorResult
-    ' 
-    '         ClassMemberProperty, ExtensionProperty, Undefined
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Class JavaScriptValue
-    ' 
-    '         Properties: Accessor, IsConstant, Literal
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: GetValue, ToString
-    ' 
-    '         Sub: SetValue
-    ' 
-    '     Class JavaScriptObject
-    ' 
-    '         Properties: length, this
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: GetDescription, GetEnumerator, GetGenericJson, GetMemberValue, GetNames
-    '                   IEnumerable_GetEnumerator, IEnumerable_GetEnumerator1, ToString
-    ' 
-    '         Sub: Delete
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Interface IJavaScriptObjectAccessor
+' 
+'         Properties: Accessor
+' 
+'     Class Descriptor
+' 
+'         Properties: configurable, enumerable, value, writable
+' 
+'     Enum MemberAccessorResult
+' 
+'         ClassMemberProperty, ExtensionProperty, Undefined
+' 
+'  
+' 
+' 
+' 
+'     Class JavaScriptValue
+' 
+'         Properties: Accessor, IsConstant, Literal
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: GetValue, ToString
+' 
+'         Sub: SetValue
+' 
+'     Class JavaScriptObject
+' 
+'         Properties: length, this
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: GetDescription, GetEnumerator, GetGenericJson, GetMemberValue, GetNames
+'                   IEnumerable_GetEnumerator, IEnumerable_GetEnumerator1, ToString
+' 
+'         Sub: Delete
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
@@ -229,8 +230,21 @@ Namespace My.JavaScript
             Next
         End Sub
 
+        Public Shared Function Join(left As JavaScriptObject, right As JavaScriptObject) As JavaScriptObject
+            Dim leftObj As Dictionary(Of String, Object) = left.GetGenericJson
+
+            For Each item As NamedValue(Of Object) In DirectCast(right, IEnumerable(Of NamedValue(Of Object)))
+                If Not leftObj.ContainsKey(item.Name) Then
+                    leftObj.Add(item.Name, item.Value)
+                End If
+            Next
+
+            Return New JavaScriptObject(leftObj)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Delete(name As String)
-            members.Remove(name)
+            Call members.Remove(name)
         End Sub
 
         Public Function GetMemberValue(memberName As String, ByRef access As MemberAccessorResult) As Object
@@ -270,6 +284,7 @@ Namespace My.JavaScript
             Return desc
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetNames() As String()
             Return members.Keys.ToArray
         End Function
@@ -302,6 +317,11 @@ Namespace My.JavaScript
             Next
         End Function
 
+        ''' <summary>
+        ''' populate all members data
+        ''' </summary>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetGenericJson() As Dictionary(Of String, Object)
             Return members.ToDictionary(Function(a) a.Key, Function(a) a.Value.GetValue)
         End Function
