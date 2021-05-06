@@ -1799,7 +1799,7 @@
     <Compile Include="ComponentModel\Algorithm\DynamicProgramming\DynamicProgramming.vb" />
     <Compile Include="ComponentModel\Algorithm\base\SlideWindow\Extensions.vb" />
     <Compile Include="ComponentModel\Algorithm\DynamicProgramming\SCS.vb" />
-    <Compile Include="ComponentModel\Count.vb" />
+    <Compile Include="ComponentModel\Counter.vb" />
     <Compile Include="Data\Abstract.vb" />
     <Compile Include="ComponentModel\DataSource\Repository\QueryCache.vb" />
     <Compile Include="ComponentModel\DataStructures\Enumerable\NamedValueList.vb" />
