@@ -1,47 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::7b7ba577203b5613fc618bfc317c6155, www\Microsoft.VisualBasic.NETProtocol\TcpRequest\TcpRequest.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class TcpRequest
-    ' 
-    '         Constructor: (+5 Overloads) Sub New
-    ' 
-    '         Function: getSocket, LocalConnection, OperationTimeOut, (+6 Overloads) SendMessage, ToString
-    ' 
-    '         Sub: ConnectCallback, (+2 Overloads) Dispose, doSend, Receive, ReceiveCallback
-    '              RequestToStream
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class TcpRequest
+' 
+'         Constructor: (+5 Overloads) Sub New
+' 
+'         Function: getSocket, LocalConnection, OperationTimeOut, (+6 Overloads) SendMessage, ToString
+' 
+'         Sub: ConnectCallback, (+2 Overloads) Dispose, doSend, Receive, ReceiveCallback
+'              RequestToStream
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -53,7 +53,7 @@ Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Net.HTTP
 Imports Microsoft.VisualBasic.Parallel
 Imports IPEndPoint = Microsoft.VisualBasic.Net.IPEndPoint
 Imports TcpEndPoint = System.Net.IPEndPoint
@@ -140,12 +140,12 @@ Namespace Tcp
             remoteHost = hostName
 
             If String.Equals(remoteHost, "localhost", StringComparison.OrdinalIgnoreCase) Then
-                remoteHost = LocalIPAddress
+                remoteHost = "127.0.0.1" ' LocalIPAddress
             End If
 
-            port = remotePort
+            Me.port = remotePort
             Me.exceptionHandler = exceptionHandler Or defaultHandler
-            remoteEP = New TcpEndPoint(System.Net.IPAddress.Parse(remoteHost), port)
+            Me.remoteEP = New TcpEndPoint(System.Net.IPAddress.Parse(remoteHost), port)
         End Sub
 
         ''' <summary>

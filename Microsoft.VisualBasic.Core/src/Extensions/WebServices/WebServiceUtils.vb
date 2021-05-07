@@ -844,7 +844,9 @@ RE0:
     ''' </summary>
     ''' <value></value>
     ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' becareful, this property may produce IPV6 address if avaiable
+    ''' </remarks>
     Public ReadOnly Property LocalIPAddress As String
         Get
 #Disable Warning

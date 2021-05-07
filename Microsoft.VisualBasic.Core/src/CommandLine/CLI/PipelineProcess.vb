@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::41cb77c0f3483d645bf2eb933326c683, Microsoft.VisualBasic.Core\src\CommandLine\CLI\PipelineProcess.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module PipelineProcess
-    ' 
-    '         Function: (+2 Overloads) [Call], CallDotNetCorePipeline, CreatePipeline, ExecSub, FindProc
-    '                   (+2 Overloads) GetProc
-    ' 
-    '         Sub: ExecSub
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module PipelineProcess
+' 
+'         Function: (+2 Overloads) [Call], CallDotNetCorePipeline, CreatePipeline, ExecSub, FindProc
+'                   (+2 Overloads) GetProc
+' 
+'         Sub: ExecSub
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -201,9 +201,24 @@ Namespace CommandLine
         ''' <param name="args">CLI arguments</param>
         ''' <returns></returns>
         <Extension>
-        Public Function [Call](app As String, args As String, Optional [in] As String = "") As String
+        Public Function [Call](app As String, args As String,
+                               Optional [in] As String = "",
+                               Optional debug As Boolean = False) As String
+
             Dim stdout As New List(Of String)
-            Call ExecSub(app, args, AddressOf stdout.Add, [in])
+            Dim readLine As Action(Of String)
+
+            If debug Then
+                readLine = Sub(line)
+                               Call stdout.Add(line)
+                               Call Console.WriteLine(line)
+                           End Sub
+            Else
+                readLine = AddressOf stdout.Add
+            End If
+
+            Call ExecSub(app, args, readLine, [in])
+
             Return stdout.JoinBy(vbCrLf)
         End Function
 
@@ -220,16 +235,17 @@ Namespace CommandLine
         Public Function [Call](app As ConsoleApp,
                                Optional args As String = "",
                                Optional [in] As String = "",
-                               Optional dotnet As Boolean = False) As String
+                               Optional dotnet As Boolean = False,
+                               Optional debug As Boolean = False) As String
 
             If dotnet Then
                 Dim dll As String = app.Path.TrimSuffix & ".dll"
                 Dim cli As String = $"{dll.CLIPath} {args}"
 
                 ' run on UNIX .net 5 
-                Return [Call]("dotnet", cli, [in])
+                Return [Call]("dotnet", cli, [in], debug:=debug)
             Else
-                Return [Call](app.Path, args, [in])
+                Return [Call](app.Path, args, [in], debug:=debug)
             End If
         End Function
     End Module
