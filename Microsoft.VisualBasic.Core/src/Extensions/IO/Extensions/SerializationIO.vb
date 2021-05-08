@@ -93,6 +93,10 @@ Public Module SerializationIO
     ''' <returns></returns>
     <Extension>
     Public Function SolveListStream(path$, Optional encoding As Encoding = Nothing) As IEnumerable(Of String)
+        If Not path.FileExists Then
+            Return {}
+        End If
+
         Select Case path.ExtensionSuffix.ToLower
             Case "", "txt"
                 Return path.IterateAllLines
