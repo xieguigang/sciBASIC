@@ -94,7 +94,11 @@ Namespace IO
         ''' <param name="rawString">A raw string line which read from the Csv text file.</param>
         Sub New(rawString$, Optional tsv As Boolean = False)
             Try
-                buffer = Tokenizer.CharsParser(rawString, delimiter:=","c Or ASCII.TAB.When(tsv)).AsList
+                If rawString.StringEmpty Then
+                    buffer = New List(Of String)
+                Else
+                    buffer = Tokenizer.CharsParser(rawString, delimiter:=","c Or ASCII.TAB.When(tsv)).AsList
+                End If
             Catch ex As Exception
                 Throw New Exception(rawString, ex)
             End Try
