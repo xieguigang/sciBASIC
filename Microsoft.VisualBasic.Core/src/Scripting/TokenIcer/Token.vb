@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::14978bd6a2852d2ccad34f906404418a, Microsoft.VisualBasic.Core\src\Scripting\TokenIcer\Token.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class CodeToken
-    ' 
-    '         Properties: isNumeric, name, span, text
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: ToString
-    '         Operators: (+2 Overloads) <>, (+2 Overloads) =
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class CodeToken
+' 
+'         Properties: isNumeric, name, span, text
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Function: ToString
+'         Operators: (+2 Overloads) <>, (+2 Overloads) =
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -73,6 +73,16 @@ Namespace Scripting.TokenIcer
         ''' <returns></returns>
         <XmlAttribute>
         Public Property text As String Implements Value(Of String).IValueOf.Value
+
+        Public ReadOnly Property length As Integer
+            Get
+                If text Is Nothing Then
+                    Return 0
+                Else
+                    Return text.Length
+                End If
+            End Get
+        End Property
 
         ''' <summary>
         ''' Returns a Boolean value indicating whether an expression can be evaluated as
