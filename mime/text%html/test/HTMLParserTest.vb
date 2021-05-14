@@ -51,8 +51,8 @@ Module HTMLParserTest
          </div>).ToString
 
     Sub Main()
-        Dim tokens = New TokenIcer(testHTML).GetTokens.ToArray
-
+        ' Dim tokens = New TokenIcer(testHTML).GetTokens.ToArray
+        Dim doc = HtmlParser.ParseTree(testHTML)
 
 
         ' Dim content = TextAPI.TryParse(testHTML).ToArray

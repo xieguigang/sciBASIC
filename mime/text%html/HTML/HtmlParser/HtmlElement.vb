@@ -187,6 +187,10 @@ Namespace HTML
             Call attrs.Add(attr.Name, attr)
         End Sub
 
+        Public Sub Add(name As String, value As String)
+            Call attrs.Add(name, New ValueAttribute With {.Name = name, .Value = value})
+        End Sub
+
         Public Sub Add(Node As InnerPlantText)
             Call elementNodes.Add(Node)
         End Sub
@@ -222,6 +226,13 @@ Namespace HTML
     Public Class InnerPlantText
 
         Public Overridable Property InnerText As String
+
+        Sub New()
+        End Sub
+
+        Sub New(text As String)
+            InnerText = text
+        End Sub
 
         Public Overrides Function ToString() As String
             Return InnerText

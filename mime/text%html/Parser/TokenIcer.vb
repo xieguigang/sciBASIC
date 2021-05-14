@@ -1,5 +1,4 @@
-﻿Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Text
+﻿Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Parser
 
 Public Class TokenIcer
