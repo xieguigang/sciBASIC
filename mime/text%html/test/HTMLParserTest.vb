@@ -50,9 +50,15 @@ Module HTMLParserTest
             2<sup>333333</sup> + X<sub>i</sub> = <span style="font-size: 36;">6666666</span>
          </div>).ToString
 
+    ReadOnly simpleTagTest$ = (<div>
+                                   <div>A</div>
+                                   <div>B</div>
+                               </div>).ToString
+
+
     Sub Main()
         ' Dim tokens = New TokenIcer(testHTML).GetTokens.ToArray
-        Dim doc = HtmlParser.ParseTree(testHTML)
+        Dim doc = HtmlParser.ParseTree(simpleTagTest)
 
 
         ' Dim content = TextAPI.TryParse(testHTML).ToArray

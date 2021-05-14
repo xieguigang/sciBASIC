@@ -7,7 +7,7 @@ Public Class HtmlParser
     Public Shared Function ParseTree(document As String) As HtmlElement
         Dim tokens = New TokenIcer(document).GetTokens.ToArray
         Dim i As Pointer(Of Token) = tokens
-        Dim html As New HtmlElement
+        Dim html As New HtmlElement With {.Name = "~"}
 
         Call WalkElement(i, html)
 
@@ -18,11 +18,26 @@ Public Class HtmlParser
 LOOP_NEXT:
         Dim a As Value(Of Token) = ++i
 
+        If Not a.HasValue Then
+            Return
+        End If
+
         Select Case CType(a, Token).name
             Case HtmlTokens.openTag
                 ' add new element tag
                 ' <tag
-                Dim newTag As New HtmlElement With {.Name = (++i).text}
+                Dim tagName As String = (++i).text
+
+                If tagName = "/" Then
+                    ' </tag>
+                    If i.Current.text = parent.Name Then
+                        i.MoveNext()
+                        i.MoveNext()
+                        Return
+                    End If
+                End If
+
+                Dim newTag As New HtmlElement With {.Name = tagName}
 
                 Do While (a = ++i).name <> HtmlTokens.closeTag
                     ' name=value
@@ -37,6 +52,7 @@ LOOP_NEXT:
                 parent.Add(newTag)
 
                 WalkElement(i, newTag)
+                GoTo LOOP_NEXT
             Case HtmlTokens.splash
                 If i.Current.name = HtmlTokens.closeTag Then
                     ' <../>
