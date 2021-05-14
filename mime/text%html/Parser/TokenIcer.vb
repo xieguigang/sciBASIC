@@ -14,12 +14,18 @@ Public Class TokenIcer
     Public Iterator Function GetTokens() As IEnumerable(Of Token)
         Do While text
             For Each t As Token In WalkChar(++text)
-                Yield t
+                If Not t Is Nothing Then
+                    Yield t
+                End If
             Next
         Loop
 
         If buf > 0 Then
-            Yield MeasureToken(New String(buf.PopAllChars))
+            Dim t As Token = MeasureToken(New String(buf.PopAllChars))
+
+            If Not t Is Nothing Then
+                Yield t
+            End If
         End If
     End Function
 
@@ -38,6 +44,8 @@ Public Class TokenIcer
                 Yield MeasureToken(New String(buf.PopAllChars))
             End If
 
+            escape.tagOpen = True
+
             Yield New Token(HtmlTokens.openTag, c)
         ElseIf c = "/"c Then
             If buf > 0 Then
@@ -50,6 +58,8 @@ Public Class TokenIcer
                 Yield MeasureToken(New String(buf.PopAllChars))
             End If
 
+            escape.tagOpen = False
+
             Yield New Token(HtmlTokens.closeTag, c)
         ElseIf c = """"c OrElse c = "'"c Then
             If buf > 0 Then
@@ -58,7 +68,7 @@ Public Class TokenIcer
 
             escape.string = True
             escape.quote = c
-        ElseIf c = " "c OrElse c = ASCII.TAB Then
+        ElseIf escape.tagOpen AndAlso (c = " "c OrElse c = ASCII.TAB) Then
             If buf > 0 Then
                 Yield MeasureToken(New String(buf.PopAllChars))
             End If
@@ -76,6 +86,10 @@ Public Class TokenIcer
     Private Function MeasureToken(text As String) As Token
         If text = "=" Then
             Return New Token(HtmlTokens.equalsSymbol, "=")
+        ElseIf text = vbCr OrElse text = vbLf OrElse text = vbCrLf Then
+            Return Nothing
+        ElseIf text.Trim(" "c, ASCII.CR, Ascii.LF) = "" Then
+            Return Nothing
         Else
             Return New Token(HtmlTokens.text, text)
         End If
@@ -87,5 +101,6 @@ Friend Class Escaping
 
     Public [string] As Boolean
     Public quote As Char
+    Public tagOpen As Boolean
 
 End Class
