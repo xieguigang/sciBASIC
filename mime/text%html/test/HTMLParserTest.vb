@@ -73,7 +73,15 @@ this is text
 </p>
 "
 
+    Sub realHtmlParseTest()
+        Dim document = HtmlParser.ParseTree("https://gcmodeller.org/".GET)
+
+        Pause()
+    End Sub
+
     Sub Main()
+        Call realHtmlParseTest()
+
         Dim real = HtmlParser.ParseTree(realHtmlTest)
         Dim newline = HtmlParser.ParseTree(simpleTag2)
         Dim simple = HtmlParser.ParseTree(simpleTagTest)
