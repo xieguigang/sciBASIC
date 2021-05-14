@@ -85,6 +85,11 @@ Namespace netCDF
             End If
         End Sub
 
+        ''' <summary>
+        ''' write name string
+        ''' </summary>
+        ''' <param name="output"></param>
+        ''' <param name="name"></param>
         <Extension>
         Public Sub writeName(output As BinaryDataWriter, name$)
             Call output.Write(name, BinaryStringFormat.UInt32LengthPrefix)
