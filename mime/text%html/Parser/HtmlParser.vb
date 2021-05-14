@@ -1,12 +1,24 @@
-﻿Imports Microsoft.VisualBasic.Emit.Marshal
+﻿Imports System.Text
+Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
+Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 
 Public Class HtmlParser
 
+    Private Shared Function GetHtmlTokens(document As String) As Token()
+        Dim tokens As Token()
+
+        document = document.Replace("<!DOCTYPE html>", "")
+        tokens = New TokenIcer(New StringBuilder(document).RemovesHtmlComments) _
+            .GetTokens _
+            .ToArray
+
+        Return tokens
+    End Function
+
     Public Shared Function ParseTree(document As String) As HtmlElement
-        Dim tokens = New TokenIcer(document).GetTokens.ToArray
-        Dim i As Pointer(Of Token) = tokens
+        Dim i As Pointer(Of Token) = GetHtmlTokens(document)
         Dim html As New HtmlElement With {.Name = "!DOCTYPE html"}
         Dim tagStack As New Stack(Of HtmlElement)
         Dim a As New Value(Of Token)
