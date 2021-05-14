@@ -60,6 +60,9 @@ Module HTMLParserTest
     ReadOnly simpleTag2$ = (<br/>).ToString
 
     ReadOnly realHtmlTest$ = "
+<!DOCTYPE html>
+<!--[if IE 9]><html class='lt-ie10' lang='en'><![endif]-->
+
 <img src='/path/folder/aaa.gif' width='100%'>
 <br>
 <hr>
