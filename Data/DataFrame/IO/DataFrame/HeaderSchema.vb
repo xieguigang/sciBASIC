@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d7bef8f26346fcf7d51c91655aa4266, Data\DataFrame\IO\DataFrame\HeaderSchema.vb"
+﻿#Region "Microsoft.VisualBasic::e7e860d24dde996ecca0d9317368a9e8, Data\DataFrame\IO\DataFrame\HeaderSchema.vb"
 
     ' Author:
     ' 
@@ -49,6 +49,7 @@
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
@@ -76,7 +77,7 @@ Namespace IO
             Get
                 Return SchemaOridinal _
                     .OrderBy(Function(p) p.Value) _
-                    .Keys _
+                    .Select(Function(p) p.Key) _
                     .ToArray
             End Get
         End Property
@@ -92,7 +93,7 @@ Namespace IO
             End If
 
             If i >= SchemaOridinal.Count Then
-                Throw New IndexOutOfRangeException(i)
+                Throw New IndexOutOfRangeException(i.ToString)
             Else
                 Return SchemaOridinal _
                     .First(Function(name) name.Value = i) _

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f9165e5978e0b96abf74b81bd3a277c, Data\DataFrame\DATA\Union.vb"
+﻿#Region "Microsoft.VisualBasic::af1c9ec9cca65e898487df45eafc43aa, Data\DataFrame\DATA\Union.vb"
 
     ' Author:
     ' 
@@ -64,8 +64,8 @@ Namespace DATA
                 .Properties = New Dictionary(Of String, Double)(dataset.Properties)
             }
 
-            Static numericFields = CbindProvider(Of T) _
-                .schema _
+            Static numericFields As KeyValuePair(Of String, PropertyInfo)() =
+                CbindProvider(Of T).schema _
                 .Where(Function(f)
                            Return f.Value.PropertyType.IsNumericType
                        End Function) _

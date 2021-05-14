@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d5cc16ad5564e05de8dbf9761783f7e, Data_science\MachineLearning\MachineLearning\test\simpleANNtest.vb"
+﻿#Region "Microsoft.VisualBasic::2d78fc7c6c1447ee99f2effe8df0a5eb, Data_science\MachineLearning\MachineLearning\test\simpleANNtest.vb"
 
     ' Author:
     ' 
@@ -48,56 +48,56 @@ Module simpleANNtest
 
     Sub Main()
         Dim samples As New List(Of Sample)
-        Dim id As VBInteger = 1
+        Dim id As i32 = 1
 
-        samples += New Sample With {.ID = ++id, .status = {0, 0, 0, 0, 0, 1}, .target = {1, 1, 1, 1, 1}}
-        samples += New Sample With {.ID = ++id, .status = {0, 0, 0, 0, 0, 1}, .target = {1, 1, 1, 1, 1}}
-        samples += New Sample With {.ID = ++id, .status = {0, 0, 0, 0, 0, 1}, .target = {1, 1, 1, 1, 1}}
-        samples += New Sample With {.ID = ++id, .status = {0, 0, 0, 0, 0, 1}, .target = {1, 1, 1, 1, 1}}
-        samples += New Sample With {.ID = ++id, .status = {0, 0, 0, 0, 0, 1}, .target = {1, 1, 1, 1, 1}}
-        samples += New Sample With {.ID = ++id, .status = {0, 0, 0, 0, 1, 1}, .target = {1, 1, 1, 1, 1}}
-        samples += New Sample With {.ID = ++id, .status = {0, 0, 0, 0, 1, 1}, .target = {1, 1, 1, 1, 1}}
-        samples += New Sample With {.ID = ++id, .status = {0, 0, 0, 0, 1, 1}, .target = {1, 1, 1, 1, 1}}
-        samples += New Sample With {.ID = ++id, .status = {0, 0, 0, 0, 0, 1}, .target = {1, 1, 1, 1, 1}}
-        samples += New Sample With {.ID = ++id, .status = {0, 0, 0, 0, 0, 1}, .target = {1, 1, 1, 1, 1}}
-        samples += New Sample With {.ID = ++id, .status = {0, 0, 0, 0, 0, 1}, .target = {1, 1, 1, 1, 1}}
-        samples += New Sample With {.ID = ++id, .status = {0, 0, 0, 0, 0, 1}, .target = {1, 1, 1, 1, 1}}
-        samples += New Sample With {.ID = ++id, .status = {0, 0, 0, 0, 0, 1}, .target = {1, 1, 1, 1, 1}}
-        samples += New Sample With {.ID = ++id, .status = {0, 0, 0, 0, 0, 1}, .target = {1, 1, 1, 1, 1}}
-        samples += New Sample With {.ID = ++id, .status = {0, 0, 0, 0, 0, 1}, .target = {1, 1, 1, 1, 1}}
-        samples += New Sample With {.ID = ++id, .status = {0, 0, 0, 0, 0, 1}, .target = {1, 1, 1, 1, 1}}
+        samples += New Sample({0, 0, 0, 0, 0, 1}) With {.ID = ++id, .target = {1, 1, 1, 1, 1}}
+        samples += New Sample({0, 0, 0, 0, 0, 1}) With {.ID = ++id, .target = {1, 1, 1, 1, 1}}
+        samples += New Sample({0, 0, 0, 0, 0, 1}) With {.ID = ++id, .target = {1, 1, 1, 1, 1}}
+        samples += New Sample({0, 0, 0, 0, 0, 1}) With {.ID = ++id, .target = {1, 1, 1, 1, 1}}
+        samples += New Sample({0, 0, 0, 0, 0, 1}) With {.ID = ++id, .target = {1, 1, 1, 1, 1}}
+        samples += New Sample({0, 0, 0, 0, 0, 1}) With {.ID = ++id, .target = {1, 1, 1, 1, 1}}
+        samples += New Sample({0, 0, 0, 0, 0, 1}) With {.ID = ++id, .target = {1, 1, 1, 1, 1}}
+        samples += New Sample({0, 0, 0, 0, 0, 1}) With {.ID = ++id, .target = {1, 1, 1, 1, 1}}
+        samples += New Sample({0, 0, 0, 0, 0, 1}) With {.ID = ++id, .target = {1, 1, 1, 1, 1}}
+        samples += New Sample({0, 0, 0, 0, 0, 1}) With {.ID = ++id, .target = {1, 1, 1, 1, 1}}
+        samples += New Sample({0, 0, 0, 0, 0, 1}) With {.ID = ++id, .target = {1, 1, 1, 1, 1}}
+        samples += New Sample({0, 0, 0, 0, 0, 1}) With {.ID = ++id, .target = {1, 1, 1, 1, 1}}
+        samples += New Sample({0, 0, 0, 0, 0, 1}) With {.ID = ++id, .target = {1, 1, 1, 1, 1}}
+        samples += New Sample({0, 0, 0, 0, 0, 1}) With {.ID = ++id, .target = {1, 1, 1, 1, 1}}
+        samples += New Sample({0, 0, 0, 0, 0, 1}) With {.ID = ++id, .target = {1, 1, 1, 1, 1}}
+        samples += New Sample({0, 0, 0, 0, 0, 1}) With {.ID = ++id, .target = {1, 1, 1, 1, 1}}
 
-        samples += New Sample With {.ID = ++id, .status = {0, 1, 0, 0, 0, 0}, .target = {1, 0, 0, 0, 0}}
-        samples += New Sample With {.ID = ++id, .status = {0, 0, 0, 0, 0, 0.6}, .target = {1, 0, 0, 0, 0}}
-        samples += New Sample With {.ID = ++id, .status = {0, 0, 0, 0, 0, 0}, .target = {1, 0, 0, 0, 0}}
-        samples += New Sample With {.ID = ++id, .status = {0, 0, 0, 1, 0, 0}, .target = {1, 0, 0, 0, 0}}
-        samples += New Sample With {.ID = ++id, .status = {0, 0, 0, 0, 0, 0}, .target = {1, 0, 0, 0, 0}}
-        samples += New Sample With {.ID = ++id, .status = {0, 0, 0, 0, 0, 0}, .target = {1, 0, 0, 0, 0}}
-        samples += New Sample With {.ID = ++id, .status = {0, 0, 0, 0, 0, 0}, .target = {1, 0, 0, 0, 0}}
-        samples += New Sample With {.ID = ++id, .status = {0, 0, 0, 0, 0, 0}, .target = {1, 0, 0, 0, 0}}
-        samples += New Sample With {.ID = ++id, .status = {0, 0, 1, 0, 0, 0}, .target = {1, 0, 0, 0, 0}}
-        samples += New Sample With {.ID = ++id, .status = {0, 0, 0, 0, 0, 0}, .target = {1, 0, 0, 0, 0}}
-        samples += New Sample With {.ID = ++id, .status = {0, 0, 0, 0, 0, 0}, .target = {1, 0, 0, 0, 0}}
-        samples += New Sample With {.ID = ++id, .status = {0, 0, 0, 0, 0, 0}, .target = {1, 0, 0, 0, 0}}
-        samples += New Sample With {.ID = ++id, .status = {0, 0, 1, 0, 0, 0}, .target = {1, 0, 0, 0, 0}}
-        samples += New Sample With {.ID = ++id, .status = {0, 1, 0, 0, 0, 0}, .target = {1, 0, 0, 0, 0}}
-        samples += New Sample With {.ID = ++id, .status = {0, 0, 0, 0, 0, 0}, .target = {1, 0, 0, 0.1, 0.61}}
+        samples += New Sample({0, 1, 0, 0, 0, 0}) With {.ID = ++id, .target = {1, 0, 0, 0, 0}}
+        samples += New Sample({0, 0, 0, 0, 0, 0.6}) With {.ID = ++id, .target = {1, 0, 0, 0, 0}}
+        samples += New Sample({0, 0, 0, 0, 0, 0}) With {.ID = ++id, .target = {1, 0, 0, 0, 0}}
+        samples += New Sample({0, 0, 0, 1, 0, 0}) With {.ID = ++id, .target = {1, 0, 0, 0, 0}}
+        samples += New Sample({0, 0, 0, 0, 0, 0}) With {.ID = ++id, .target = {1, 0, 0, 0, 0}}
+        samples += New Sample({0, 0, 0, 0, 0, 0}) With {.ID = ++id, .target = {1, 0, 0, 0, 0}}
+        samples += New Sample({0, 0, 0, 0, 0, 0}) With {.ID = ++id, .target = {1, 0, 0, 0, 0}}
+        samples += New Sample({0, 0, 0, 0, 0, 0}) With {.ID = ++id, .target = {1, 0, 0, 0, 0}}
+        samples += New Sample({0, 0, 1, 0, 0, 0}) With {.ID = ++id, .target = {1, 0, 0, 0, 0}}
+        samples += New Sample({0, 0, 0, 0, 0, 0}) With {.ID = ++id, .target = {1, 0, 0, 0, 0}}
+        samples += New Sample({0, 0, 0, 0, 0, 0}) With {.ID = ++id, .target = {1, 0, 0, 0, 0}}
+        samples += New Sample({0, 0, 0, 0, 0, 0}) With {.ID = ++id, .target = {1, 0, 0, 0, 0}}
+        samples += New Sample({0, 0, 1, 0, 0, 0}) With {.ID = ++id, .target = {1, 0, 0, 0, 0}}
+        samples += New Sample({0, 1, 0, 0, 0, 0}) With {.ID = ++id, .target = {1, 0, 0, 0, 0}}
+        samples += New Sample({0, 1, 0, 0, 0, 0}) With {.ID = ++id, .target = {1, 0, 0, 0.1, 0.61}}
 
-        samples += New Sample With {.ID = ++id, .status = {0, 1, 0, 0, 0, 0}, .target = {1, 0, 0, 0, 0.68}}
-        samples += New Sample With {.ID = ++id, .status = {0, 1, 0, 0, 0, 0.6}, .target = {1, 0, 0, 0, 1}}
-        samples += New Sample With {.ID = ++id, .status = {0, 1, 0, 0, 0, 0}, .target = {1, 0, 0, 0, 1}}
-        samples += New Sample With {.ID = ++id, .status = {0, 1, 0, 1, 0, 0}, .target = {1, 0, 0, 0, 1}}
-        samples += New Sample With {.ID = ++id, .status = {0, 1, 0, 0, 0, 0}, .target = {1, 0, 0, 0, 1}}
-        samples += New Sample With {.ID = ++id, .status = {0, 1, 0, 0, 0, 0}, .target = {1, 0, 0, 0, 0.96}}
-        samples += New Sample With {.ID = ++id, .status = {0, 1, 0, 0, 0, 0}, .target = {1, 0, 0, 0, 0.87}}
-        samples += New Sample With {.ID = ++id, .status = {0, 1, 0, 0, 0, 0}, .target = {1, 0, 0, 0, 0.99}}
-        samples += New Sample With {.ID = ++id, .status = {0, 1, 1, 0, 0, 0}, .target = {1, 0, 0, 0, 0.87}}
-        samples += New Sample With {.ID = ++id, .status = {0, 1, 0, 0, 0, 0}, .target = {1, 0, 0, 0, 1}}
-        samples += New Sample With {.ID = ++id, .status = {0, 1, 0, 0, 0, 0}, .target = {1, 0, 0, 0, 1}}
-        samples += New Sample With {.ID = ++id, .status = {0, 1, 0, 0, 0, 0}, .target = {1, 0, 0, 0, 1}}
-        samples += New Sample With {.ID = ++id, .status = {0, 1, 1, 0, 0, 0}, .target = {1, 0, 0, 0, 0.88}}
-        samples += New Sample With {.ID = ++id, .status = {0, 1, 0, 0, 0, 0}, .target = {1, 0, 0, 0, 0.9}}
-        samples += New Sample With {.ID = ++id, .status = {0, 1, 0, 0, 0, 0}, .target = {1, 0, 0, 0.1, 1}}
+        samples += New Sample({0, 1, 0, 0, 0, 0}) With {.ID = ++id, .target = {1, 0, 0, 0, 0.68}}
+        samples += New Sample({0, 1, 0, 0, 0, 0.6}) With {.ID = ++id, .target = {1, 0, 0, 0, 1}}
+        samples += New Sample({0, 1, 0, 0, 0, 0}) With {.ID = ++id, .target = {1, 0, 0, 0, 1}}
+        samples += New Sample({0, 1, 0, 1, 0, 0}) With {.ID = ++id, .target = {1, 0, 0, 0, 1}}
+        samples += New Sample({0, 1, 0, 0, 0, 0}) With {.ID = ++id, .target = {1, 0, 0, 0, 1}}
+        samples += New Sample({0, 1, 0, 0, 0, 0}) With {.ID = ++id, .target = {1, 0, 0, 0, 0.96}}
+        samples += New Sample({0, 1, 0, 0, 0, 0}) With {.ID = ++id, .target = {1, 0, 0, 0, 0.87}}
+        samples += New Sample({0, 1, 0, 0, 0, 0}) With {.ID = ++id, .target = {1, 0, 0, 0, 0.99}}
+        samples += New Sample({0, 1, 1, 0, 0, 0}) With {.ID = ++id, .target = {1, 0, 0, 0, 0.87}}
+        samples += New Sample({0, 1, 0, 0, 0, 0}) With {.ID = ++id, .target = {1, 0, 0, 0, 1}}
+        samples += New Sample({0, 1, 0, 0, 0, 0}) With {.ID = ++id, .target = {1, 0, 0, 0, 1}}
+        samples += New Sample({0, 1, 0, 0, 0, 0}) With {.ID = ++id, .target = {1, 0, 0, 0, 1}}
+        samples += New Sample({0, 1, 1, 0, 0, 0}) With {.ID = ++id, .target = {1, 0, 0, 0, 0.88}}
+        samples += New Sample({0, 1, 0, 0, 0, 0}) With {.ID = ++id, .target = {1, 0, 0, 0, 0.9}}
+        samples += New Sample({0, 1, 0, 0, 0, 0}) With {.ID = ++id, .target = {1, 0, 0, 0.1, 1}}
 
         Call New SampleList With {.items = samples}.CreateDataSet.GetXml.SaveTo("D:\GCModeller\src\runtime\sciBASIC#\Data_science\MachineLearning\MachineLearning\NeuralNetwork\Demo_data.Xml")
 

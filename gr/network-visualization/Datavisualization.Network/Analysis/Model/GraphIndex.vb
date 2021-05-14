@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::185ce468897ba2d52952a425de5aba80, gr\network-visualization\Datavisualization.Network\Analysis\Model\GraphIndex.vb"
+﻿#Region "Microsoft.VisualBasic::5d053db75be3ad31bd7967315457f08c, gr\network-visualization\Datavisualization.Network\Analysis\Model\GraphIndex.vb"
 
     ' Author:
     ' 
@@ -87,6 +87,9 @@ Namespace Analysis.Model
             If _nodeSet.ContainsKey(node.Key) Then
                 Call _nodeSet.Remove(node.Key)
             End If
+            If _adjacencySet.ContainsKey(node.Key) Then
+                Call _adjacencySet.Remove(node.Key)
+            End If
         End Sub
 
         ''' <summary>
@@ -94,12 +97,14 @@ Namespace Analysis.Model
         ''' </summary>
         ''' <param name="edge"></param>
         Public Sub RemoveEdge(edge As Edge)
-            Dim u_adjacencySet As AdjacencySet(Of Edge) = _adjacencySet(edge.source)
+            If _adjacencySet.ContainsKey(edge.source) Then
+                Dim u_adjacencySet As AdjacencySet(Of Edge) = _adjacencySet(edge.source)
 
-            Call u_adjacencySet.Remove(edge.target)
+                Call u_adjacencySet.Remove(edge.target)
 
-            If u_adjacencySet.Count = 0 Then
-                Call _adjacencySet.Remove(edge.source)
+                If u_adjacencySet.Count = 0 Then
+                    Call _adjacencySet.Remove(edge.source)
+                End If
             End If
         End Sub
 

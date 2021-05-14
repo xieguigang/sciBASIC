@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::069eabbe19552685eaf5f3fdf2d440cb, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Point3D.vb"
+﻿#Region "Microsoft.VisualBasic::af051cf3aa4606a0cbc1fe3cea3856ef, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Point3D.vb"
 
     ' Author:
     ' 
@@ -97,9 +97,9 @@ Namespace Drawing3D
             Call Me.New(p.X, p.Y)
         End Sub
 
-        <XmlAttribute("x")> Public Property X As Single Implements PointF3D.X
-        <XmlAttribute("y")> Public Property Y As Single Implements PointF3D.Y
-        <XmlAttribute("z")> Public Property Z As Single Implements PointF3D.Z
+        <XmlAttribute("x")> Public Property X As Double Implements PointF3D.X
+        <XmlAttribute("y")> Public Property Y As Double Implements PointF3D.Y
+        <XmlAttribute("z")> Public Property Z As Double Implements PointF3D.Z
 
         Public Overrides Function ToString() As String
             Return Me.GetJson

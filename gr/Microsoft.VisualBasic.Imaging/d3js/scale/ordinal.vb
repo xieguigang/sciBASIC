@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c10d8cc48b2242fc3ff407a29db2a56, gr\Microsoft.VisualBasic.Imaging\d3js\scale\ordinal.vb"
+﻿#Region "Microsoft.VisualBasic::34346061ba8aab23046a4d9dfbeb7451, gr\Microsoft.VisualBasic.Imaging\d3js\scale\ordinal.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,9 @@
 
     '     Class OrdinalScale
     ' 
-    '         Function: (+3 Overloads) domain
+    '         Properties: domainSize, Zero
+    ' 
+    '         Function: (+3 Overloads) domain, getTerms, range
     ' 
     ' 
     ' /********************************************************************************/
@@ -56,8 +58,19 @@ Namespace d3js.scale
     ''' </summary>
     Public Class OrdinalScale : Inherits IScale(Of OrdinalScale)
 
-        Dim factors As Factor(Of String)()
+        ' Dim factors As Factor(Of String)()
         Dim index As Index(Of String)
+        Dim positions As Double()
+
+        ''' <summary>
+        ''' count of the term factors
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides ReadOnly Property domainSize As Double
+            Get
+                Return index.Count
+            End Get
+        End Property
 
         Default Public Overrides ReadOnly Property Value(x As Double) As Double
             Get
@@ -65,26 +78,49 @@ Namespace d3js.scale
             End Get
         End Property
 
+        Public Overrides ReadOnly Property Zero As Double
+            Get
+                Return _range.Min
+            End Get
+        End Property
+
         Default Public Overrides ReadOnly Property Value(term As String) As Double
             Get
-                If Not index.NotExists(term) Then
-                    Return factors(index(term)).Value
-                Else
-                    For Each factor In factors.SeqIterator
-                        With factor.value
-                            If term < .FactorValue Then
-                                If factor.i = 0 Then
-                                    Return .Value
-                                End If
-                                Return (factors(factor.i - 1).Value + .Value) / 2
-                            End If
-                        End With
-                    Next
+                If positions.IsNullOrEmpty Then
+                    positions = _range.Enumerate(index.Count + 1)
+                End If
 
-                    Return factors.Last.Value
+                If Not index.NotExists(term) Then
+                    Dim i As Integer = index(term) + 1
+                    Dim val As Double = positions(i)
+
+                    Return val
+                Else
+                    'For Each factor In factors.SeqIterator
+                    '    With factor.value
+                    '        If term < .FactorValue Then
+                    '            If factor.i = 0 Then
+                    '                Return .Value
+                    '            End If
+                    '            Return (factors(factor.i - 1).Value + .Value) / 2
+                    '        End If
+                    '    End With
+                    'Next
+
+                    'Return factors.Last.Value
+                    Throw New NotImplementedException
                 End If
             End Get
         End Property
+
+        Public Overrides Function range(Optional values As IEnumerable(Of Double) = Nothing) As OrdinalScale
+            _range = values.Range
+            Return Me
+        End Function
+
+        Public Function getTerms() As Index(Of String)
+            Return index
+        End Function
 
         Public Overrides Function domain(values As IEnumerable(Of Double)) As OrdinalScale
             Return domain(values.ToStringArray)
@@ -109,10 +145,12 @@ Namespace d3js.scale
         ''' <param name="values"></param>
         ''' <returns></returns>
         Public Overrides Function domain(values As IEnumerable(Of String)) As OrdinalScale
-            factors = values.factors
-            index = factors _
-                .Select(Function(x) x.FactorValue) _
-                .Indexing
+            ' factors = values.factors
+            'index = factors _
+            '    .Select(Function(x) x.FactorValue) _
+            '    .Indexing
+            index = values.Indexing
+
             Return Me
         End Function
 

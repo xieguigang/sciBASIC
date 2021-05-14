@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f65e07d905f9ad8dc32216c803651ced, Data_science\Graph\Model\Abstract\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::ca39f35f764f36c20d7caf7b3bddc192, Data_science\Graph\Model\Abstract\Edge.vb"
 
     ' Author:
     ' 
@@ -77,7 +77,7 @@ Public Class Edge(Of Vertex As V) : Implements INamedValue
     Public Overridable Property ID As String Implements IKeyedEntity(Of String).Key
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return VertexEdge.EdgeKey(U.ID, V.ID)
+            Return VertexEdge.EdgeKey(U, V)
         End Get
         Set(value As String)
             ' DO Nothing

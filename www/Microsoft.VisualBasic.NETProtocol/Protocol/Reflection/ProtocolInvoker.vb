@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d3d726b4a72946c71b4ab9856360ca31, www\Microsoft.VisualBasic.NETProtocol\Protocol\Reflection\ProtocolInvoker.vb"
+﻿#Region "Microsoft.VisualBasic::e4bd160524862dd796958d9f322cd656, www\Microsoft.VisualBasic.NETProtocol\Protocol\Reflection\ProtocolInvoker.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,6 @@
 Imports System.Reflection
 Imports Microsoft.VisualBasic.Net.HTTP
 Imports Microsoft.VisualBasic.Parallel
-Imports Microsoft.VisualBasic.Win32
 
 Namespace Protocols.Reflection
 
@@ -61,33 +60,20 @@ Namespace Protocols.Reflection
             Me.method = method
         End Sub
 
-        Public Function InvokeProtocol0(request As RequestStream, remoteDevice As System.Net.IPEndPoint) As RequestStream
-            Dim value = method.Invoke(obj, Nothing)
-            Dim data = DirectCast(value, RequestStream)
-            Return data
+        Public Function InvokeProtocol0(request As RequestStream, remoteDevice As System.Net.IPEndPoint) As BufferPipe
+            Return method.Invoke(obj, Nothing)
         End Function
 
-        Public Function InvokeProtocol1(request As RequestStream, remoteDevice As System.Net.IPEndPoint) As RequestStream
-            Dim value = method.Invoke(obj, {request})
-            Dim data = DirectCast(value, RequestStream)
-            Return data
+        Public Function InvokeProtocol1(request As RequestStream, remoteDevice As System.Net.IPEndPoint) As BufferPipe
+            Return method.Invoke(obj, {request})
         End Function
 
-        Public Function InvokeProtocol2(request As RequestStream, remoteDevice As System.Net.IPEndPoint) As RequestStream
+        Public Function InvokeProtocol2(request As RequestStream, remoteDevice As System.Net.IPEndPoint) As BufferPipe
             Try
-                Dim value = method.Invoke(obj, {request, remoteDevice})
-                Dim data = DirectCast(value, RequestStream)
-
-                Return data
+                Return method.Invoke(obj, {request, remoteDevice})
             Catch ex As Exception
-                ex = New Exception(method.FullName, ex)
-
-                If WindowsServices.Initialized Then
-                    Call ServicesLogs.LogException(ex)
-                Else
-                    Call App.LogException(ex)
-                End If
-                Return NetResponse.RFC_UNKNOWN_ERROR
+                Call App.LogException(New Exception(method.FullName, ex))
+                Return New DataPipe(NetResponse.RFC_UNKNOWN_ERROR)
             End Try
         End Function
 

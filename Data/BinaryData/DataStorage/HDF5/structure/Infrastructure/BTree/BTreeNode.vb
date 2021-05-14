@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2db80eda894e2815aaa081434cf111ae, Data\BinaryData\DataStorage\HDF5\structure\Infrastructure\BTree\BTreeNode.vb"
+﻿#Region "Microsoft.VisualBasic::8edf1e4ab19ebbbee95444e553a4a367, Data\BinaryData\DataStorage\HDF5\structure\Infrastructure\BTree\BTreeNode.vb"
 
     ' Author:
     ' 
@@ -57,6 +57,7 @@
 
 Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO.HDF5.device
 Imports Microsoft.VisualBasic.Language
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader

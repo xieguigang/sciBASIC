@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::def2342e4f6d4865f9947315797e1032, Data_science\Graph\Model\Tree\AbstractTree.vb"
+﻿#Region "Microsoft.VisualBasic::3b603fc134be04e6e07505e2510a1e23, Data_science\Graph\Model\Tree\AbstractTree.vb"
 
     ' Author:
     ' 
@@ -43,9 +43,14 @@
 
 #End Region
 
+#If netcore5 = 0 Then
+Imports System.Web.Script.Serialization
+#Else
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+#End If
+
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.Serialization
-Imports System.Web.Script.Serialization
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Linq
 
@@ -107,9 +112,9 @@ Public Class AbstractTree(Of T As AbstractTree(Of T, K), K) : Inherits Vertex
     Public ReadOnly Property QualifyName As String
         Get
             If Not Parent Is Nothing Then
-                Return Parent.QualifyName & qualDeli & Label
+                Return Parent.QualifyName & qualDeli & label
             Else
-                Return Label
+                Return label
             End If
         End Get
     End Property

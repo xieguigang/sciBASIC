@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d8e959913bef3e8c6055a4ddca84977c, Data_science\Mathematica\Math\DataFittings\Linear\FeatureProjection.vb"
+﻿#Region "Microsoft.VisualBasic::4727dd3905c17d0657064742b099e5c0, Data_science\Mathematica\Math\DataFittings\Linear\FeatureProjection.vb"
 
     ' Author:
     ' 
@@ -62,7 +62,7 @@ Public Module FeatureProjection
     <Extension>
     Public Function Project(points As (x As Double(), y As Double()), dimension%) As Vector
         Dim fit = LeastSquares.PolyFit(points.x, points.y, poly_n:=dimension)
-        Dim projection As Vector = fit.Polynomial.Factors
+        Dim projection As Vector = DirectCast(fit.Polynomial, Polynomial).Factors
 
         Return projection
     End Function

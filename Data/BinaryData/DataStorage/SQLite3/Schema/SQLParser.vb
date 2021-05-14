@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b2cac6996827b8bb935cd424ff07cbd, Data\BinaryData\DataStorage\SQLite3\Schema\SQLParser.vb"
+﻿#Region "Microsoft.VisualBasic::57177822ea8b681402e8e9f22b770c50, Data\BinaryData\DataStorage\SQLite3\Schema\SQLParser.vb"
 
     ' Author:
     ' 
@@ -53,6 +53,10 @@
     ' /********************************************************************************/
 
 #End Region
+
+#If netcore5 = 1 Then
+Imports System.Data
+#End If
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language

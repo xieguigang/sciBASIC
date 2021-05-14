@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dce4dbd3336a35ce0b6fa3c00c5962c7, Data_science\Mathematica\Math\DataFrame\Correlation\Distance.vb"
+﻿#Region "Microsoft.VisualBasic::baeb867286d04fb35fffb25d0c74d956, Data_science\Mathematica\Math\DataFrame\Correlation\Distance.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module Distance
     ' 
-    '     Function: Euclidean
+    '     Function: Correlation, Euclidean, Similarity
     ' 
     ' /********************************************************************************/
 
@@ -42,11 +42,47 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Public Module Distance
 
+    ''' <summary>
+    ''' 使用欧式距离构建出一个距离矩阵
+    ''' </summary>
+    ''' <typeparam name="DataSet"></typeparam>
+    ''' <param name="data"></param>
+    ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Euclidean(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet)) As DistanceMatrix
-        Return data.MatrixBuilder(AddressOf EuclideanDistance, True)
+        Return data.MatrixBuilder(AddressOf EuclideanDistance, type:=DataType.Distance)
+    End Function
+
+    <Extension>
+    Public Function Correlation(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet), Optional spearman As Boolean = False) As CorrelationMatrix
+        Dim cor As Func(Of Double(), Double(), (Double, Double))
+
+        If spearman Then
+            cor = Function(x, y)
+                      Return (Correlations.Spearman(x, y), 0)
+                  End Function
+        Else
+            cor = AddressOf Builder.corTuple
+        End If
+
+        Return data.MatrixBuilder(cor, type:=DataType.Correlation)
+    End Function
+
+    ''' <summary>
+    ''' cos similarity
+    ''' </summary>
+    ''' <typeparam name="DataSet"></typeparam>
+    ''' <param name="data"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Similarity(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet)) As DistanceMatrix
+        Return data.MatrixBuilder(Function(x, y) SSM(New Vector(x), New Vector(y)), type:=DataType.Similarity)
     End Function
 End Module

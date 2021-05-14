@@ -1,0 +1,45 @@
+﻿<Window x:Class="SVMDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SVM Demo" Height="600" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Label Content="Class" Margin="10,0,0,0"/>
+            <ComboBox x:Name="classCB" SelectedIndex="0" Foreground="Red" SelectionChanged="classCB_SelectionChanged" FontSize="16">
+                <ComboBoxItem x:Name="redCBI" Content="●" Foreground="Red" HorizontalContentAlignment="Center" FontSize="16"/>
+                <ComboBoxItem x:Name="greenCBI" Content="●" Foreground="Green" HorizontalContentAlignment="Center" FontSize="16"/>
+                <ComboBoxItem x:Name="blueCBI" Content="●" Foreground="Blue" HorizontalContentAlignment="Center" FontSize="16"/>
+                <ComboBoxItem x:Name="magentaCBI" Content="●" Foreground="Magenta" HorizontalContentAlignment="Center" FontSize="16"/>
+                <ComboBoxItem x:Name="yellowCBI" Content="●" Foreground="Purple" HorizontalContentAlignment="Center" FontSize="16"/>
+                <ComboBoxItem x:Name="cyanCBI" Content="●" Foreground="Cyan" HorizontalContentAlignment="Center" FontSize="16"/>
+            </ComboBox>
+            <Label Content="Placement" Margin="16,0,0,0"/>
+            <ComboBox x:Name="placementCB" SelectedIndex="0">
+                <ComboBoxItem x:Name="singleCBI" Content="Single"/>
+                <ComboBoxItem x:Name="clusterCBI" Content="Cluster"/>
+            </ComboBox>
+            <Label Content="SVM Type" Margin="20,0,0,0"/>
+            <ComboBox x:Name="svmTypeCB" SelectedIndex="0" >
+                <ComboBoxItem x:Name="csvcCBI" Content="C-SVC"/>
+                <ComboBoxItem x:Name="nusvcCBI" Content="nu-SVC"/>
+            </ComboBox>
+            <Label Content="Kernel Type" Margin="16,0,0,0"/>
+            <ComboBox x:Name="kernelTypeCB" SelectedIndex="2">
+                <ComboBoxItem x:Name="linearCBI" Content="Linear"/>
+                <ComboBoxItem x:Name="polyCBI" Content="Polynomial"/>
+                <ComboBoxItem x:Name="rbfCBI" Content="Radial Basis Function"/>
+                <ComboBoxItem x:Name="sigmoidCBI" Content="Sigmoid"/>
+            </ComboBox>
+            <Button x:Name="classifyB" Content="Classify" Width="75" Margin="16,0,0,0" Click="classifyB_Click"/>
+            <Button x:Name="clearB" Content="Clear" Width="75" Margin="16,0,0,0" Click="clearB_Click"/>
+        </StackPanel>
+        <Canvas x:Name="plot" Grid.Row="1" MouseLeftButtonDown="plot_MouseLeftButtonDown" Background="White" MouseRightButtonDown="plot_MouseRightButtonDown">            
+        </Canvas>
+        <ProgressBar x:Name="classifyPB" Height="16" Grid.Row="2"/>
+    </Grid>
+</Window>

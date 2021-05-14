@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0a5c14b2e39118368c428445fd86a09, gr\network-visualization\Datavisualization.Network\Graph\Model\data\NodeData.vb"
+﻿#Region "Microsoft.VisualBasic::166002e7e1b1f5a6d92a72828b9c4014, gr\network-visualization\Datavisualization.Network\Graph\Model\data\NodeData.vb"
 
     ' Author:
     ' 
@@ -44,11 +44,15 @@
 
 #End Region
 
-Imports System.Drawing
+#If netcore5 = 0 Then
 Imports System.Web.Script.Serialization
+#Else
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+#End If
+
+Imports System.Drawing
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Serialization
 
 Namespace Graph
 
@@ -78,7 +82,7 @@ Namespace Graph
         ''' Mass weight
         ''' </summary>
         ''' <returns></returns>
-        Public Property mass As Single
+        Public Property mass As Double
 
         ''' <summary>
         ''' For 2d layout <see cref="FDGVector2"/> / 3d layout <see cref="FDGVector3"/>
@@ -95,7 +99,6 @@ Namespace Graph
         <ScriptIgnore>
         Public Property color As Brush
 
-        <DumpNode>
         Public Property weights As Double()
 
         ''' <summary>
@@ -104,7 +107,6 @@ Namespace Graph
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <DumpNode>
         Public Property neighbours As Integer()
 
         Public Property betweennessCentrality As Double
@@ -131,8 +133,20 @@ Namespace Graph
             Me.weights = copy.weights.SafeQuery.ToArray
         End Sub
 
-        Public Function Clone() As NodeData
-            Return DirectCast(Me.MemberwiseClone, NodeData)
+        Public Overridable Function Clone() As NodeData
+            Return New NodeData With {
+                .label = label,
+                .betweennessCentrality = betweennessCentrality,
+                .color = color,
+                .force = force,
+                .initialPostion = New FDGVector3(initialPostion),
+                .mass = mass,
+                .neighbours = neighbours.SafeQuery.ToArray,
+                .origID = origID,
+                .Properties = New Dictionary(Of String, String)(Properties),
+                .size = size.SafeQuery.ToArray,
+                .weights = weights.SafeQuery.ToArray
+            }
         End Function
 
         Public Overrides Function ToString() As String

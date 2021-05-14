@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::24689a5f426a13cfcc5c14fafd488e64, gr\network-visualization\Visualizer\CanvasScaler.vb"
+﻿#Region "Microsoft.VisualBasic::e795e0327d2f449f9e908c37ba300aee, gr\network-visualization\Visualizer\CanvasScaler.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module CanvasScaler
     ' 
-    '     Function: (+2 Overloads) AutoScaler, CalculateNodePositions, CentralOffsets
+    '     Function: CalculateNodePositions, CentralOffsets
     ' 
     ' /********************************************************************************/
 
@@ -43,7 +43,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
@@ -132,39 +132,21 @@ Public Module CanvasScaler
                                   .Y = n.data.initialPostion.y
                               }
                           End Function)
-
-        ' 1. 首先计算出边界
-        Dim boundary As RectangleF = points.Values.GetBounds
-        ' 2. 计算出缩放的因子大小
-        Dim factor As SizeF = boundary.AutoScaler(frameSize, padding)
         ' 3. 执行缩放
         Dim keys As String() = points.Keys.ToArray
-        Dim scalePoints As PointF() = keys _
-            .Select(Function(id) points(id)) _
-            .Enlarge((CDbl(factor.Width), CDbl(factor.Height)))
+        Dim polygon As PointF() = keys _
+            .Select(Function(i) points(i)) _
+            .ToArray _
+            .ScalePoints(
+                frameSize:=frameSize,
+                padding:=padding,
+                scaleFactor:=scaleFactor,
+                centraOffset:=centraOffset
+            )
 
-        With keys
-            For i As Integer = 0 To .Count - 1
-                points(.GetValue(i)) = scalePoints(i)
-            Next
-        End With
-
-        ' 4. 计算出中心点平移的偏移值
-        Dim plotSize As New Size With {
-            .Width = frameSize.Width - padding.Horizontal,
-            .Height = frameSize.Height - padding.Vertical
-        }
-        Dim offset As PointF = scalePoints _
-            .CentralOffset(plotSize) _
-            .OffSet2D(New PointF(padding.Left, padding.Top))
-
-        ' 5. 执行中心点平移
-        Call keys.DoEach(Sub(id)
-                             points(id) = points(id).OffSet2D(offset)
-                         End Sub)
-
-        scaleFactor = factor
-        centraOffset = offset
+        For i As Integer = 0 To keys.Length - 1
+            points(keys(i)) = polygon(i)
+        Next
 
         ' 6. 完成节点的位置计算操作
         '    返回节点位置结果
@@ -177,31 +159,10 @@ Public Module CanvasScaler
     ''' <param name="nodes"></param>
     ''' <param name="size"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function CentralOffsets(nodes As Dictionary(Of Node, PointF), size As SizeF) As PointF
         Return nodes.Values.CentralOffset(size)
-    End Function
-
-    <Extension>
-    Public Function AutoScaler(boundary As RectangleF, frameSize As SizeF, padding As Padding) As SizeF
-        With boundary
-            Dim w = frameSize.Width / (.Width + padding.Horizontal)
-            Dim h = frameSize.Height / (.Height + padding.Vertical)
-
-            Return New SizeF(w, h)
-        End With
-    End Function
-
-    <Extension>
-    Public Function AutoScaler(shape As IEnumerable(Of PointF), frameSize As SizeF, padding As Padding) As SizeF
-        With shape.GetBounds
-            Dim width = frameSize.Width - padding.Horizontal
-            Dim height = frameSize.Height - padding.Vertical
-
-            Return New SizeF(
-                width:=width / .Width,
-                height:=height / .Height
-            )
-        End With
     End Function
 End Module

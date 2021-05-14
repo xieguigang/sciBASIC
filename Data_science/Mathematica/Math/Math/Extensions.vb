@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f677199db0ebb949312f8f7b07d6aea1, Data_science\Mathematica\Math\Math\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::5695e5ea0eb2ad5e0b1890dc13a28284, Data_science\Mathematica\Math\Math\Extensions.vb"
 
     ' Author:
     ' 
@@ -54,6 +54,9 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports stdNum = System.Math
 
+' i++
+' Math.Min(Threading.Interlocked.Increment(i), i - 1)
+
 ''' <summary>
 ''' 向量以及统计函数拓展
 ''' </summary>
@@ -104,7 +107,13 @@ Imports stdNum = System.Math
         If q.All(Function(a) a = 0.0R) OrElse s.All(Function(a) a = 0.0R) Then
             Return 0
         Else
-            Return (q * s).Sum / stdNum.Sqrt((q ^ 2).Sum * (s ^ 2).Sum)
+            Dim score As Double = (q * s).Sum / stdNum.Sqrt((q ^ 2).Sum * (s ^ 2).Sum)
+
+            If score.IsNaNImaginary Then
+                Return 0
+            Else
+                Return score
+            End If
         End If
     End Function
 

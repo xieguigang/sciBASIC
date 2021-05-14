@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07b439292b764a7dbe9c56b9a9a92fde, www\Microsoft.VisualBasic.NETProtocol\Persistent\Protocols\Protocol.vb"
+﻿#Region "Microsoft.VisualBasic::3595d61e1ef35e1de1b66b466ead6cd6, www\Microsoft.VisualBasic.NETProtocol\Persistent\Protocols\Protocol.vb"
 
     ' Author:
     ' 
@@ -71,7 +71,7 @@ Namespace Tcp.Persistent.Application.Protocols
             Broadcast
         End Enum
 
-        Public ReadOnly Property EntryPoint As Long = New Protocol(GetType(Protocols)).EntryPoint
+        Public ReadOnly Property EntryPoint As Long = New ProtocolAttribute(GetType(Protocols)).EntryPoint
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function SendChannelHashCode(hash As Integer) As RequestStream

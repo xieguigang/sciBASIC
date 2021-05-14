@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd8b6e02fa66d031c3e4a5049b727a56, mime\application%xml\XmlGeneric\Xmlparser.vb"
+﻿#Region "Microsoft.VisualBasic::c9bd62b7ae0f06f258aaa0b24eb3b0d6, mime\application%xml\XmlGeneric\Xmlparser.vb"
 
     ' Author:
     ' 
@@ -44,6 +44,11 @@ Imports System.Xml
 
 Public Module XmlParser
 
+    ''' <summary>
+    ''' parse the xml document text
+    ''' </summary>
+    ''' <param name="xml">the xml dcument text</param>
+    ''' <returns></returns>
     Public Function ParseXml(xml As String) As XmlElement
         Dim doc As XDocument = XDocument.Load(New StringReader(xml))
         Dim root As XElement = doc.Root
@@ -72,9 +77,9 @@ Public Module XmlParser
                 If child.NodeType = XmlNodeType.Text Then
                     childs.Add(New XmlElement With {.text = child.ToString})
                 ElseIf child.NodeType = XmlNodeType.Element Then
-                    childs.Add(ParseXml(child))
+                    childs.Add(ParseXml(root:=CType(child, XElement)))
                 Else
-                    Throw New NotImplementedException(child.NodeType)
+                    Throw New NotImplementedException(child.NodeType.ToString)
                 End If
             Next
 

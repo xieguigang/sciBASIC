@@ -7,7 +7,7 @@ Imports System.Runtime.InteropServices
 ' 与程序集关联的信息。
 
 '查看程序集特性的值
-
+#If netcore5 = 0 Then
 <Assembly: AssemblyTitle("Binary data storage provider base on netCDF/HDF5")>
 <Assembly: AssemblyDescription("Binary data storage provider base on netCDF/HDF5")>
 <Assembly: AssemblyCompany("sciBASIC.NET")>
@@ -33,3 +33,4 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.50.*")>
 <Assembly: AssemblyFileVersion("2.1.*")>
+#end if

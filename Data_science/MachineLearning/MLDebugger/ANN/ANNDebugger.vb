@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::398d8b0e76a273e6e1513cad519aac01, Data_science\MachineLearning\MLDebugger\ANN\ANNDebugger.vb"
+﻿#Region "Microsoft.VisualBasic::8d70f0cb203c19c7c6b523d90471e118, Data_science\MachineLearning\MLDebugger\ANN\ANNDebugger.vb"
 
     ' Author:
     ' 
@@ -46,13 +46,15 @@
 
 Imports System.IO
 Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Data.IO.netCDF
+Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Accelerator.GAExtensions
+Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.DarwinismHybrid
 Imports StoreModel = Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure.NeuralNetwork
 
 Public Class ANNDebugger
@@ -76,11 +78,11 @@ Public Class ANNDebugger
     Dim snapShotTemp$
 
     Sub New(model As NeuralNetwork.Network)
-        frameTemp = App.GetAppSysTempFile(".bin", App.PID)
-        errorTemp = App.GetAppSysTempFile(".bin", App.PID)
-        timesTemp = App.GetAppSysTempFile(".bin", App.PID)
-        biasTemp = App.GetAppSysTempFile(".bin", App.PID)
-        snapShotTemp = App.GetAppSysTempFile(".Xml", App.PID)
+        frameTemp = TempFileSystem.GetAppSysTempFile(".bin", App.PID)
+        errorTemp = TempFileSystem.GetAppSysTempFile(".bin", App.PID)
+        timesTemp = TempFileSystem.GetAppSysTempFile(".bin", App.PID)
+        biasTemp = TempFileSystem.GetAppSysTempFile(".bin", App.PID)
+        snapShotTemp = TempFileSystem.GetAppSysTempFile(".Xml", App.PID)
 
         networkFrames = New BinaryDataWriter(frameTemp.Open(doClear:=True))
         errorFrames = New BinaryDataWriter(errorTemp.Open(doClear:=True))
@@ -198,7 +200,7 @@ Public Class ANNDebugger
         Call writeUnixtime(debugger)
 
         For Each active In network.Activations
-            Call debugger.AddVariable("active=" & active.Key, active.Value.ToString, {GetType(String).FullName})
+            Call debugger.AddVariable("active=" & active.Key, CType(active.Value.ToString, chars), {GetType(String).FullName})
         Next
 
         Using reader As BinaryDataReader = biasTemp.OpenBinaryReader
@@ -241,7 +243,7 @@ Public Class ANNDebugger
                       End Function
 
         Call reader.Seek(offsetDouble * i, SeekOrigin.Begin)
-        Call debugger.AddVariable(name, popBias().ToArray, {GetType(Double).FullName}, attrs)
+        Call debugger.AddVariable(name, CType(popBias().ToArray, doubles), {GetType(Double).FullName}, attrs)
     End Sub
 
     Private Sub writeWeight(debugger As CDFWriter, reader As BinaryDataReader, name$, i As Integer, attrs As Components.attribute())
@@ -256,7 +258,7 @@ Public Class ANNDebugger
                          End Function
 
         Call reader.Seek(offsetDouble * i, SeekOrigin.Begin)
-        Call debugger.AddVariable(name, popWeights().ToArray, {GetType(Double).FullName}, attrs)
+        Call debugger.AddVariable(name, CType(popWeights().ToArray, doubles), {GetType(Double).FullName}, attrs)
     End Sub
 
     Private Sub writeUnixtime(debugger As CDFWriter)
@@ -264,7 +266,7 @@ Public Class ANNDebugger
             .ReadAsDoubleVector _
             .ToArray
 
-            Call debugger.AddVariable("unixtimestamp", .ByRef, {GetType(Long).FullName})
+            Call debugger.AddVariable("unixtimestamp", CType(.ByRef, doubles), {GetType(Long).FullName})
         End With
     End Sub
 
@@ -277,7 +279,7 @@ Public Class ANNDebugger
                           Next
                       End Function
 
-        Call debugger.AddVariable("iterations", indexer().ToArray, {"index_number"})
+        Call debugger.AddVariable("iterations", CType(indexer().ToArray, integers), {"index_number"})
     End Sub
 
     Private Sub writeErrors(debugger As CDFWriter)
@@ -285,7 +287,7 @@ Public Class ANNDebugger
             .ReadAsDoubleVector _
             .ToArray
 
-            Call debugger.AddVariable("fitness", .ByRef, {GetType(Double).FullName})
+            Call debugger.AddVariable("fitness", CType(.ByRef, doubles), {GetType(Double).FullName})
         End With
     End Sub
 End Class

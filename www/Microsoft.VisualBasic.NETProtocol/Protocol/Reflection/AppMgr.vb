@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eab279ebe1b41b16f0dcad5f8f0455b4, www\Microsoft.VisualBasic.NETProtocol\Protocol\Reflection\AppMgr.vb"
+﻿#Region "Microsoft.VisualBasic::d315b51b60f30e97e1c3adba55c65e27, www\Microsoft.VisualBasic.NETProtocol\Protocol\Reflection\AppMgr.vb"
 
     ' Author:
     ' 
@@ -98,9 +98,9 @@ Namespace Protocols.Reflection
             Return Register(DirectCast(App, Object), [overrides])
         End Function
 
-        Public Overrides Function HandleRequest(request As RequestStream, remoteDevcie As TcpEndPoint) As RequestStream
+        Public Overrides Function HandleRequest(request As RequestStream, remoteDevcie As TcpEndPoint) As BufferPipe
             If Not ProtocolApps.ContainsKey(request.ProtocolCategory) Then
-                Return NetResponse.RFC_NOT_FOUND
+                Return New DataPipe(NetResponse.RFC_NOT_FOUND)
             End If
 
             Dim protocol As ProtocolHandler = ProtocolApps(request.ProtocolCategory)

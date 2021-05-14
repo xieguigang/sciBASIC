@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef070a739531b1013afcf61ecdc2ee35, gr\network-visualization\Visualizer\NetworkVisualizer.vb"
+﻿#Region "Microsoft.VisualBasic::783de79d969a5486311c04117419425e, gr\network-visualization\Visualizer\NetworkVisualizer.vb"
 
     ' Author:
     ' 
@@ -157,6 +157,7 @@ Public Module NetworkVisualizer
                               Optional labelColorAsNodeColor As Boolean = False,
                               Optional nodeStroke$ = WhiteStroke,
                               Optional minLinkWidth! = 2,
+                              Optional linkWidth As Func(Of Edge, Single) = Nothing,
                               Optional nodeRadius As [Variant](Of Func(Of Node, Single), Single) = Nothing,
                               Optional fontSize As [Variant](Of Func(Of Node, Single), Single) = Nothing,
                               Optional labelFontBase$ = CSSFont.Win7Normal,
@@ -251,6 +252,8 @@ Public Module NetworkVisualizer
             getNodeLabel = Function(node)
                                Return node.GetDisplayText
                            End Function
+        ElseIf getNodeLabel Is Nothing Then
+            getNodeLabel = Function(v) Nothing
         End If
 
         defaultColor = If(defaultColor.StringEmpty, "skyblue", defaultColor)
@@ -286,6 +289,10 @@ Public Module NetworkVisualizer
         Dim drawPoints = net.vertex.ToArray Or connectedNodes.When(hideDisconnectedNode)
         Dim labels As New List(Of LayoutLabel)
 
+        If linkWidth Is Nothing Then
+            linkWidth = Function(edge) CSng(5 * edge.weight * 2) Or minLinkWidthValue
+        End If
+
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
 
@@ -307,7 +314,7 @@ Public Module NetworkVisualizer
                 ' 首先在这里绘制出网络的框架：将所有的边绘制出来
                 labels += g.drawEdges(
                     net,
-                    minLinkWidthValue,
+                    linkWidth,
                     edgeDashTypes,
                     scalePos,
                     throwEx,
@@ -639,7 +646,6 @@ Public Module NetworkVisualizer
     ''' </summary>
     ''' <param name="g"></param>
     ''' <param name="net"></param>
-    ''' <param name="minLinkWidthValue"></param>
     ''' <param name="edgeDashTypes"></param>
     ''' <param name="scalePos"></param>
     ''' <param name="throwEx"></param>
@@ -650,7 +656,7 @@ Public Module NetworkVisualizer
     ''' <returns></returns>
     <Extension>
     Private Iterator Function drawEdges(g As IGraphics, net As NetworkGraph,
-                                        minLinkWidthValue As [Default](Of Single),
+                                        linkWidth As Func(Of Edge, Single),
                                         edgeDashTypes As Dictionary(Of String, DashStyle),
                                         scalePos As Dictionary(Of String, PointF),
                                         throwEx As Boolean,
@@ -662,7 +668,7 @@ Public Module NetworkVisualizer
         For Each edge As Edge In net.graphEdges
             Dim n As Node = edge.U
             Dim otherNode As Node = edge.V
-            Dim w! = CSng(5 * edge.weight * 2) Or minLinkWidthValue
+            Dim w! = linkWidth(edge)
             Dim lineColor As Pen
 
             If edge.data.color Is Nothing Then

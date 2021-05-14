@@ -1,6 +1,6 @@
 ## Framework core runtime of sciBASIC
 
-![](./Resources/logo.png)
+![](logo.png)
 
 This core runtime consists of three parts:
 

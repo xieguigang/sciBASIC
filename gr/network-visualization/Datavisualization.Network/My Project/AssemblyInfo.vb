@@ -7,7 +7,7 @@ Imports System.Runtime.InteropServices
 ' 与程序集关联的信息。
 
 ' 查看程序集特性的值
-
+#If netcore5 = 0 Then
 <Assembly: AssemblyTitle("This module provides some important network operation algorithms")> 
 <Assembly: AssemblyDescription("This module provides some important network operation algorithms")>
 <Assembly: AssemblyCompany("GPL3")>
@@ -33,3 +33,4 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("2.0.3.546")> 
 <Assembly: AssemblyFileVersion("1.4.0.0")> 
+#end if

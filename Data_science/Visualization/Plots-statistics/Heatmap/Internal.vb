@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82d9eb7c427e5c2094dfe5d347b6665d, Data_science\Visualization\Plots-statistics\Heatmap\Internal.vb"
+﻿#Region "Microsoft.VisualBasic::75ff9a01fe48c052b4448b8eed3c53aa, Data_science\Visualization\Plots-statistics\Heatmap\Internal.vb"
 
     ' Author:
     ' 
@@ -45,11 +45,12 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering
-Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.DendrogramVisualize
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
@@ -232,17 +233,7 @@ Namespace Heatmap
 
             Dim configDendrogramCanvas =
                 Function(cluster As Cluster, [class] As Dictionary(Of String, String))
-                    Return New DendrogramPanel With {
-                        .LineColor = Color.Black,
-                        .ScaleValueDecimals = 0,
-                        .ScaleValueInterval = 1,
-                        .Model = cluster,
-                        .ShowScale = False,
-                        .ShowDistanceValues = False,
-                        .ShowLeafLabel = False,
-                        .LinkDotRadius = 0,
-                        .ClassTable = [class]
-                    }
+                    Return New DendrogramPanelV2(cluster, New Theme)
                 End Function
             Dim DATArange As DoubleRange = array _
                 .Select(Function(x) x.Properties.Values) _

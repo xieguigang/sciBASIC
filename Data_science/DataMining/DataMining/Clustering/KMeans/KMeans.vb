@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::778f0cfb84dfb3fc3fbd64d9b0c5b9c6, Data_science\DataMining\DataMining\Clustering\KMeans\KMeans.vb"
+﻿#Region "Microsoft.VisualBasic::3816fb79787180b8115d5062c06f782e, Data_science\DataMining\DataMining\Clustering\KMeans\KMeans.vb"
 
     ' Author:
     ' 
@@ -161,6 +161,11 @@ Namespace KMeans
         ''' <param name="parallel">
         ''' 默认是使用并行化的计算代码以通过牺牲内存空间的代价来获取高性能的计算，非并行化的代码比较适合低内存的设备上面运行
         ''' </param>
+        ''' <remarks>
+        ''' if the <paramref name="clusterCount"/> parameter value is greater than the
+        ''' element count of the <paramref name="source"/> collection, then this api 
+        ''' function will throw an exception
+        ''' </remarks>
         <Extension>
         Public Function ClusterDataSet(Of T As EntityBase(Of Double))(source As IEnumerable(Of T),
                                                                       clusterCount%,
@@ -176,7 +181,6 @@ Namespace KMeans
             Dim cluster As KMeansCluster(Of T) = Nothing
             Dim clusters As New ClusterCollection(Of T)
             Dim clusterNumbers As New List(Of Integer)
-            Dim Random As New Random
 
             If clusterCount >= rowCount Then
                 Dim msg$ = $"[cluster.count:={clusterCount}] >= [source.length:={rowCount}], this will caused a dead loop!"
@@ -188,7 +192,7 @@ Namespace KMeans
             End If
 
             While clusterNumbers.Count < clusterCount
-                clusterNumber = Random.[Next](0, rowCount - 1)
+                clusterNumber = randf.seeds.[Next](0, rowCount - 1)
 
                 If Not clusterNumbers.Contains(clusterNumber) Then
                     cluster = New KMeansCluster(Of T)
@@ -285,7 +289,7 @@ Namespace KMeans
                             Continue For
                         End If
 
-                        Call x._innerList(i).SwapWith(y._innerList(j))
+                        Call x._innerList(i).Swap(y._innerList(j))
                     Next
                 End If
             Next

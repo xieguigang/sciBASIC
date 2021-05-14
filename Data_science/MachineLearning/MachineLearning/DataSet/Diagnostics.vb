@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe545483483dffeabf6d8b8c51e5bfe9, Data_science\MachineLearning\MachineLearning\DataSet\Diagnostics.vb"
+﻿#Region "Microsoft.VisualBasic::d4dcf81493730d4b76e02a700234ffd7, Data_science\MachineLearning\MachineLearning\DataSet\Diagnostics.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Diagnostics
     ' 
-    '         Function: CheckDataSet
+    '         Function: CheckDataSet, ProjectData
     ' 
     ' 
     ' /********************************************************************************/
@@ -45,6 +45,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Distributions
 
 Namespace StoreProcedure
 
@@ -88,6 +89,19 @@ Namespace StoreProcedure
                     }
                 End If
             Next
+        End Function
+
+        <Extension>
+        Friend Function ProjectData(matrix As Double()(), index As Integer, estimateQuantile As Boolean) As SampleDistribution
+            ' 遍历每一列的数据,将每一列的数据都执行归一化
+            Dim [property] As Double() = matrix _
+                .Select(Function(sample)
+                            Return sample(index)
+                        End Function) _
+                .ToArray
+            Dim dist As New SampleDistribution([property], estimateQuantile)
+
+            Return dist
         End Function
     End Module
 End Namespace

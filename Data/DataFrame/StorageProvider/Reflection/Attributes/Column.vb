@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b572c63e75994ed10026ae9c50cb45df, Data\DataFrame\StorageProvider\Reflection\Attributes\Column.vb"
+﻿#Region "Microsoft.VisualBasic::2dcefbd38e18e7e5fe55f539b812e0a6, Data\DataFrame\StorageProvider\Reflection\Attributes\Column.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,9 @@
 
 #End Region
 
+#If netcore5 = 0 Then
 Imports System.Data.Linq.Mapping
+#End If
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Scripting.Runtime
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc74e03f54d89983b3a14779c6b41fa5, gr\network-visualization\Datavisualization.Network\NetworkAPI.vb"
+﻿#Region "Microsoft.VisualBasic::cd52ce0218595d4738cab4d8259c5a19, gr\network-visualization\Datavisualization.Network\NetworkAPI.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module NetworkAPI
     ' 
-    '     Function: EndPoints
+    '     Function: EndPoints, RemoveDuplicated
     ' 
     ' /********************************************************************************/
 
@@ -41,11 +41,50 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
+Imports Microsoft.VisualBasic.Linq
 
 Public Module NetworkAPI
 
     <Extension>
     Public Function EndPoints(network As Graph.NetworkGraph) As (input As Graph.Node(), output As Graph.Node())
         Return New NetworkGraph(Of Graph.Node, Graph.Edge)(network.vertex, network.graphEdges).EndPoints
+    End Function
+
+    ''' <summary>
+    ''' 移除的重复的边
+    ''' </summary>
+    ''' <remarks></remarks>
+    ''' <param name="directed">是否忽略方向？</param>
+    ''' <param name="ignoreTypes">是否忽略边的类型？</param>
+    <Extension>
+    Public Function RemoveDuplicated(g As Graph.NetworkGraph, Optional directed As Boolean = True, Optional ignoreTypes As Boolean = False) As Graph.NetworkGraph
+        Dim graph As New Graph.NetworkGraph()
+        Dim uid = Function(edge As Graph.Edge) As String
+                      If directed Then
+                          Return edge.GetDirectedGuid(ignoreTypes)
+                      Else
+                          Return edge.GetNullDirectedGuid(ignoreTypes)
+                      End If
+                  End Function
+
+        For Each node As Graph.Node In g.vertex
+            Call graph.AddNode(node.Clone)
+        Next
+
+        For Each edge As Graph.Edge In g.graphEdges _
+            .GroupBy(uid) _
+            .Select(Function(eg) eg.First)
+
+            Call New Graph.Edge With {
+                .U = graph.GetElementByID(edge.U.label),
+                .V = graph.GetElementByID(edge.V.label),
+                .isDirected = edge.isDirected,
+                .weight = edge.weight,
+                .data = edge.data
+            }.DoCall(AddressOf graph.AddEdge)
+        Next
+
+        Return graph
     End Function
 End Module

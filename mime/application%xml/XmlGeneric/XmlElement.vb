@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58ae6372c475a9c0b6c594f154ec2bf5, mime\application%xml\XmlGeneric\XmlElement.vb"
+﻿#Region "Microsoft.VisualBasic::220fb2fc26c4801f852da9f89216fe3e, mime\application%xml\XmlGeneric\XmlElement.vb"
 
     ' Author:
     ' 
@@ -44,10 +44,19 @@
 
 Public Class XmlElement
 
+    ''' <summary>
+    ''' the xml tag name
+    ''' </summary>
+    ''' <returns></returns>
     Public Property name As String
     Public Property [namespace] As String
     Public Property attributes As Dictionary(Of String, String)
     Public Property elements As XmlElement()
+
+    ''' <summary>
+    ''' the content value of the current xml node
+    ''' </summary>
+    ''' <returns></returns>
     Public Property text As String
 
     Public ReadOnly Property id As String
@@ -75,6 +84,11 @@ Public Class XmlElement
         Return $"{[namespace]}::{name}"
     End Function
 
+    ''' <summary>
+    ''' parse the xml document text
+    ''' </summary>
+    ''' <param name="xmlText">the xml dcument text</param>
+    ''' <returns></returns>
     Public Shared Function ParseXmlText(xmlText As String) As XmlElement
         Return XmlParser.ParseXml(xmlText)
     End Function

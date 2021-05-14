@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5edf9acba440d4bd079aada56b8ee60, Data_science\Visualization\Plots\ImageData.vb"
+﻿#Region "Microsoft.VisualBasic::e2e505496c5ab922b4b1a984886c7bda, Data_science\Visualization\Plots\ImageData.vb"
 
     ' Author:
     ' 
@@ -90,7 +90,7 @@ Public Module ImageDataExtensions
 
         Return Contour.Plot(
             color, xrange, yrange,
-            xsteps:=steps, ysteps:=steps, unit:=1, scale:=3,
+            xsteps:=steps, ysteps:=steps, unit:=1,
             colorMap:="Jet",
             legendTitle:="GrayScale Heatmap")
     End Function

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e7994be166a8d6b42e7ba851f6da4e1, vs_solutions\dev\VisualStudio\CodeSign\VBCodeSignature.vb"
+﻿#Region "Microsoft.VisualBasic::4682d4cbcf5aefe9ccea4f2b111c2499, vs_solutions\dev\VisualStudio\CodeSign\VBCodeSignature.vb"
 
     ' Author:
     ' 
@@ -42,6 +42,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Language

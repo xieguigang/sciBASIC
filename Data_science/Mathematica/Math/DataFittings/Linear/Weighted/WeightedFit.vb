@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac0f2e7cf158c383cee530b8b6ad546b, Data_science\Mathematica\Math\DataFittings\Linear\Weighted\WeightedFit.vb"
+﻿#Region "Microsoft.VisualBasic::9ef9bf6be7bc8c9d1bf9ae1edbf68727, Data_science\Mathematica\Math\DataFittings\Linear\Weighted\WeightedFit.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '     Properties: CoefficientsStandardError, CorrelationCoefficient, ErrorTest, FisherF, Polynomial
     '                 Residuals, StandardDeviation, VarianceMatrix
     ' 
-    '     Function: ToString
+    '     Function: IFitted_GetY, ToString
     ' 
     ' /********************************************************************************/
 
@@ -54,7 +54,7 @@ Public Class WeightedFit : Implements IFitted
     ''' FReg: Fisher F statistic for regression
     ''' </summary>
     ''' <returns></returns>
-    Public Property FisherF() As Double
+    Public Property FisherF As Double
 
     ''' <summary>
     ''' RYSQ: Multiple correlation coefficient (R2，相关系数)
@@ -66,19 +66,19 @@ Public Class WeightedFit : Implements IFitted
     ''' SDV: Standard deviation of errors
     ''' </summary>
     ''' <returns></returns>
-    Public Property StandardDeviation() As Double
+    Public Property StandardDeviation As Double
 
     ''' <summary>
     ''' DY: Residual values of Y
     ''' </summary>
     ''' <returns></returns>
-    Public Property Residuals() As Double()
+    Public Property Residuals As Double()
 
     ''' <summary>
     ''' SEC: Std Error of coefficients
     ''' </summary>
     ''' <returns></returns>
-    Public Property CoefficientsStandardError() As Double()
+    Public Property CoefficientsStandardError As Double()
 
     ''' <summary>
     ''' V: Least squares and var/covar matrix
@@ -86,22 +86,31 @@ Public Class WeightedFit : Implements IFitted
     ''' <returns></returns>
     Public Property VarianceMatrix() As Double(,)
 
-    Default Public ReadOnly Property GetY(x As Double) As Double Implements IFitted.GetY
+    Default Public ReadOnly Property GetY(x As Double) As Double
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return Polynomial(x)
+            Return DirectCast(Polynomial, Polynomial)(x)
         End Get
     End Property
 
-    Public Property Polynomial As Polynomial Implements IFitted.Polynomial
+    ''' <summary>
+    ''' 一元多项式的数据模型
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property Polynomial As Formula Implements IFitted.Polynomial
 
     ''' <summary>
     ''' Ycalc: Calculated values of Y.(根据所拟合的公式所计算出来的预测值)
     ''' </summary>
     ''' <returns></returns>
-    Public Property ErrorTest As TestPoint() Implements IFitted.ErrorTest
+    Public Property ErrorTest As IFitError() Implements IFitted.ErrorTest
 
     Public Overrides Function ToString() As String
         Return $"{Polynomial.ToString("G6")}, R2={CorrelationCoefficient.ToString("F4")}"
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Private Function IFitted_GetY(ParamArray x() As Double) As Double Implements IFitted.GetY
+        Return Polynomial.Evaluate(x)
     End Function
 End Class

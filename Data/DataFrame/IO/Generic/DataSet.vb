@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0b7471b6bfd2f461bd6933821da80c8, Data\DataFrame\IO\Generic\DataSet.vb"
+﻿#Region "Microsoft.VisualBasic::a7c0e148ee88dd8b7dd40ddb3f543a37, Data\DataFrame\IO\Generic\DataSet.vb"
 
     ' Author:
     ' 
@@ -77,7 +77,7 @@ Namespace IO
         End Property
 
         ''' <summary>
-        ''' 
+        ''' equivalent to <see cref="Properties"/>.Values.ToArray
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks>

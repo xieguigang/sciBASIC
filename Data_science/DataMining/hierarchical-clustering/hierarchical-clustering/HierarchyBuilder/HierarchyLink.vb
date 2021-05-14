@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1b86850bb9df63d20abd953c1db924a, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\HierarchyLink.vb"
+﻿#Region "Microsoft.VisualBasic::5ee29fb5759c35da6ddb646ec1a6f0c8, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\HierarchyLink.vb"
 
     ' Author:
     ' 
@@ -92,7 +92,10 @@ Namespace Hierarchy
         ''' <summary>
         ''' Compute some kind of unique ID for a given cluster pair. </summary>
         ''' <returns> The ID </returns>
-        <Extension> Public Function hashCodePair(link As HierarchyTreeNode) As String
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function hashCodePair(link As HierarchyTreeNode) As String
             Return hashCodePair(link.Left(), link.Right())
         End Function
 
@@ -101,9 +104,9 @@ Namespace Hierarchy
             Dim rName = rCluster.Name
 
             If lName.CompareTo(rName) < 0 Then
-                Return lName & "~~~" & rName ' getlCluster().hashCode() + 31 * (getrCluster().hashCode());
+                Return lName & "~~~" & rName
             Else
-                Return rName & "~~~" & lName ' return getrCluster().hashCode() + 31 * (getlCluster().hashCode());
+                Return rName & "~~~" & lName
             End If
         End Function
     End Module

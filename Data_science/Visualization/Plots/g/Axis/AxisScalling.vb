@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::134cd52205dd3812882d5597c82cd142, Data_science\Visualization\Plots\g\Axis\AxisScalling.vb"
+﻿#Region "Microsoft.VisualBasic::f3d86333d2beea01228a65d5940b83cf, Data_science\Visualization\Plots\g\Axis\AxisScalling.vb"
 
     ' Author:
     ' 
@@ -60,14 +60,32 @@ Namespace Graphic.Axis
             Return data.Range.CreateAxisTicks(ticks, decimalDigits)
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="range"></param>
+        ''' <param name="ticks%"></param>
+        ''' <param name="decimalDigits">
+        ''' if the value range its max value is a very small positive number, 
+        ''' then you should set this parameter to -1!
+        ''' </param>
+        ''' <param name="w_steps#"></param>
+        ''' <param name="w_min#"></param>
+        ''' <param name="w_max#"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function CreateAxisTicks(range As DoubleRange, Optional ticks% = 10, Optional decimalDigits% = 2) As Double()
+        Public Function CreateAxisTicks(range As DoubleRange,
+                                        Optional ticks% = 10,
+                                        Optional decimalDigits% = 2,
+                                        Optional w_steps# = 0.8,
+                                        Optional w_min# = 0.1,
+                                        Optional w_max# = 0.1) As Double()
             With range
                 If .Min.IsNaNImaginary AndAlso .Max.IsNaNImaginary Then
                     Return {0, 1}
                 Else
-                    Return AxisScalling.CreateAxisTicks(.Min, .Max, ticks, decimalDigits)
+                    Return AxisScalling.CreateAxisTicks(.Min, .Max, ticks, decimalDigits, w_steps, w_max, w_min)
                 End If
             End With
         End Function
@@ -91,7 +109,12 @@ Namespace Graphic.Axis
         ''' <param name="decimalDigits%"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function CreateAxisTicks(min#, max#, Optional ticks% = 10, Optional decimalDigits% = 2) As Double()
+        Public Function CreateAxisTicks(min#, max#,
+                                        Optional ticks% = 10,
+                                        Optional decimalDigits% = 2,
+                                        Optional w_steps As Double = 0.95,
+                                        Optional w_max As Double = 0.025,
+                                        Optional w_min As Double = 0.025) As Double()
 
             ' First, get the minimum and maximum of the series, toggle the zero_flag variable 
             ' if 0 Is between Then the min And max, And Get the range Of the data.
@@ -209,8 +232,8 @@ Namespace Graphic.Axis
             dMin = dMin / dMin.Max
             dMax = dMax / dMax.Max
 
-            Dim scores As Vector = dSteps * 0.8 + dMin * 0.1 + dMax * 0.1
-            Dim tickArray#() = candidateArray(Which.Max(scores))
+            Dim scores As Vector = dSteps * w_steps + dMin * w_min + dMax * w_max
+            Dim tickArray#() = candidateArray(which.Max(scores))
 
             ' 2018-2-1
             ' 如果数值是 1E-10 这样子的小数的话，在这里直接使用Round或导致返回的ticks全部都是零的bugs

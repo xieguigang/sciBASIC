@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21b9b51d5d48f125373ce6cd24bdbc60, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Formats\IntegralLoader.vb"
+﻿#Region "Microsoft.VisualBasic::54ceb5d9256233c07eff3bedd6006826, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Formats\IntegralLoader.vb"
 
     ' Author:
     ' 
@@ -99,10 +99,10 @@ Namespace NeuralNetwork.StoreProcedure
         End Class
 
         <Extension>
-        Private Function createNeuronBuckets(model As StoreProcedure.NeuralNetwork, activations As LayerActives) As neuronLoader
+        Private Function createNeuronBuckets(model As StoreProcedure.NeuralNetwork, activations As LayerActives, mute As Boolean) As neuronLoader
             Dim neuronDataTable = model.neurons.ToDictionary(Function(n) n.id)
 
-            Call "Start to create neuron nodes...".__DEBUG_ECHO
+            Call "Start to create neuron nodes...".__DEBUG_ECHO(mute:=mute)
 
             Dim inputLayer As Dictionary(Of String, Neuron) = model.inputlayer _
                 .createNeurons(activations.input, neuronDataTable) _
@@ -131,7 +131,7 @@ Namespace NeuralNetwork.StoreProcedure
                 .outputLayer = outputLayer', .neuronBucket = neurons
             }
 
-            Call "Job done!".__INFO_ECHO
+            Call "Job done!".__INFO_ECHO(silent:=mute)
 
             Return loader
         End Function
@@ -168,16 +168,16 @@ Namespace NeuralNetwork.StoreProcedure
         ''' 这个加载器函数主要是针对小文件使用的
         ''' </remarks>
         <Extension>
-        Public Function LoadModel(model As StoreProcedure.NeuralNetwork) As Network
+        Public Function LoadModel(model As StoreProcedure.NeuralNetwork, Optional mute As Boolean = False) As Network
             Dim activations As LayerActives = LayerActives.FromXmlModel(
                 functions:=New Dictionary(Of String, ActiveFunction) From {
                     {"input", model.inputlayer.activation},
                     {"output", model.outputlayer.activation},
                     {"hiddens", model.hiddenlayers.activation}
                 })
-            Dim neurons As neuronLoader = model.createNeuronBuckets(activations)
+            Dim neurons As neuronLoader = model.createNeuronBuckets(activations, mute)
 
-            Call "Create neuron synapse links in parallel...".__DEBUG_ECHO
+            Call "Create neuron synapse links in parallel...".__DEBUG_ECHO(mute:=mute)
 
             ' The size of edge links between the neuron nodes in ANN network is huge
             ' parallel can make this process fast
@@ -189,7 +189,7 @@ Namespace NeuralNetwork.StoreProcedure
                 .Select(Function(edge) edge.addLink(neurons)) _
                 .ToArray
 
-            Call "Job done!".__INFO_ECHO
+            Call "Job done!".__INFO_ECHO(silent:=mute)
 
             Return New Network(activations) With {
                 .LearnRate = model.learnRate,

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3938d2cdc7763dc84f723f2ccef82e04, Data_science\MachineLearning\MLDebugger\DataSetExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::d78439964c9dee886517ca87740b7d40, Data_science\MachineLearning\MLDebugger\DataSetExtensions.vb"
 
     ' Author:
     ' 
@@ -94,12 +94,15 @@ Public Module DataSetExtensions
             Call outputs _
                 .SeqIterator _
                 .DoEach(Sub(name)
+                            Dim target As Double() = sample.target
+                            Dim val As Double = target(name)
+
                             ' output element name can not be duplicated with
                             ' the input name
                             If markOutput Then
-                                Call data.Add($"[{name.value}]", sample.target(name))
+                                Call data.Add($"[{name.value}]", val)
                             Else
-                                Call data.Add(name.value, sample.target(name))
+                                Call data.Add(name.value, val)
                             End If
                         End Sub)
 

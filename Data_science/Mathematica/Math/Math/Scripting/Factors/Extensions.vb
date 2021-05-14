@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a49dc545e5e58623d65056c7a7aafee9, Data_science\Mathematica\Math\Math\Scripting\Factors\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::81b3f215d912b8c9efdd501fd062166b, Data_science\Mathematica\Math\Math\Scripting\Factors\Extensions.vb"
 
     ' Author:
     ' 
@@ -88,7 +88,9 @@ Namespace Scripting
                 vector.index = value _
                     .SeqIterator _
                     .ToDictionary(Function(key) key.value,
-                                  Function(index) index.i)
+                                  Function(index)
+                                      Return index.i
+                                  End Function)
             End Set
         End Property
     End Module

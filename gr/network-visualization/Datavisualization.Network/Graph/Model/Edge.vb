@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ace8adb5f7072e27eda5db1369aab763, gr\network-visualization\Datavisualization.Network\Graph\Model\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::a916c7fc878614dc64e653a940c235df, gr\network-visualization\Datavisualization.Network\Graph\Model\Edge.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,8 @@
     '                     m_target, weight
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: Clone, (+2 Overloads) Equals, GetHashCode, Iterate2Nodes, ToString
+    '         Function: Clone, (+2 Overloads) Equals, GetHashCode, Iterate2Nodes, Other
+    '                   ToString
     '         Operators: <>, =
     ' 
     ' 
@@ -167,6 +168,14 @@ Namespace Graph
         Sub New()
             Call Me.New(Nothing, Nothing, Nothing, Nothing)
         End Sub
+
+        Public Function Other(current As Node) As Node
+            If U Is current Then
+                Return V
+            Else
+                Return U
+            End If
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String

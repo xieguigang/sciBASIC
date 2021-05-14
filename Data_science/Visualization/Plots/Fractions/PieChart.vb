@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cca7f67a5ce7e1c264b2acee0f56e224, Data_science\Visualization\Plots\Fractions\PieChart.vb"
+﻿#Region "Microsoft.VisualBasic::60effb26260203001950c5a99f821640, Data_science\Visualization\Plots\Fractions\PieChart.vb"
 
     ' Author:
     ' 
@@ -48,6 +48,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors.OfficeAccent
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
@@ -222,14 +223,14 @@ Namespace Fractions
                     If legendAlt Then
                         Dim maxL = g.MeasureString(data.MaxLengthString(Function(x) x.Name), font).Width
                         Dim left = layoutRect.Right + margin.Left
-                        Dim legends As New List(Of Legend)
+                        Dim legends As New List(Of LegendObject)
                         Dim d = font.Size
                         Dim height! = (d + g.MeasureString("1", font).Height) * data.Count
                         ' Excel之中的饼图的示例样式位置为默认右居中的
                         Dim top = (gSize.Height - height) / 2 - margin.Top
 
                         For Each x As FractionData In data
-                            legends += New Legend With {
+                            legends += New LegendObject With {
                                 .color = x.Color.RGBExpression,
                                 .style = LegendStyles.Square,
                                 .title = x.Name,

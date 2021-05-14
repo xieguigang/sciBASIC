@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::663448477e335b82a8ba508c3452e1f7, Data_science\Mathematica\Math\Math\Scripting\Factors\NamedVectorFactory.vb"
+﻿#Region "Microsoft.VisualBasic::17641d6e6576234db8533a6274c72866, Data_science\Mathematica\Math\Math\Scripting\Factors\NamedVectorFactory.vb"
 
     ' Author:
     ' 
@@ -87,7 +87,9 @@ Namespace Scripting
         Public Function Translate(vector As Vector) As Dictionary(Of String, Double)
             Return factors.ToDictionary(
                 Function(factor) factor.FactorValue,
-                Function(i) vector(CInt(i.Value)))
+                Function(i)
+                    Return vector(CInt(i.Value))
+                End Function)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3644ead52f7fed7006544637c703b072, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\SparseVector.vb"
+﻿#Region "Microsoft.VisualBasic::8ee6bcf25ddc0a349cb6fe8935983ff2, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\SparseVector.vb"
 
     ' Author:
     ' 
@@ -136,10 +136,10 @@ Namespace LinearAlgebra
 
         Default Public Overrides Property Item(booleans As IEnumerable(Of Boolean)) As Vector(Of Double)
             Get
-                Return New Vector(Of Double)(Linq.Which.IsTrue(booleans).Select(Function(index) Me(index)))
+                Return New Vector(Of Double)(Linq.which.IsTrue(booleans).Select(Function(index) Me(index)))
             End Get
             Set(value As Vector(Of Double))
-                For Each index As SeqValue(Of Integer) In Linq.Which.IsTrue(booleans).SeqIterator
+                For Each index As SeqValue(Of Integer) In Linq.which.IsTrue(booleans).SeqIterator
                     Call SetValue(index.value, value(index))
                 Next
             End Set

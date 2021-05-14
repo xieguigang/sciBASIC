@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac40807beddf7858779e56947d59d87d, www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\Academic\ProfileResult.vb"
+﻿#Region "Microsoft.VisualBasic::c26eb2f049763576926aa5a969e626fd, www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\Academic\ProfileResult.vb"
 
     ' Author:
     ' 
@@ -41,6 +41,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text

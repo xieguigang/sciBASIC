@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65518df4dd4602a9ff30c8236478d121, gr\network-visualization\Datavisualization.Network\Analysis\Similarity\GraphTopology.vb"
+﻿#Region "Microsoft.VisualBasic::e4a2d0d22fe12d290a9aae3bb2fa45eb, gr\network-visualization\Datavisualization.Network\Analysis\Similarity\GraphTopology.vb"
 
     ' Author:
     ' 
@@ -48,7 +48,6 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdNum = System.Math
 
 Namespace Analysis.SimilarityImpl
 

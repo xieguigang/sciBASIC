@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09f634232d913e53b3b20d5eb1df193d, gr\network-visualization\Datavisualization.Network\Layouts\Orthogonal\Algorithm.vb"
+﻿#Region "Microsoft.VisualBasic::b419f71fbc372c10ee4954c4892f31bd, gr\network-visualization\Datavisualization.Network\Layouts\Orthogonal\Algorithm.vb"
 
     ' Author:
     ' 
@@ -45,6 +45,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports stdNum = System.Math

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea9aa5faf30c9d8cdc68c2af949a51f2, Data_science\Visualization\Plots\g\Scaling.vb"
+﻿#Region "Microsoft.VisualBasic::50a11c14c627bd89aec86f36f560f720, Data_science\Visualization\Plots\g\Scaling.vb"
 
     ' Author:
     ' 
@@ -47,6 +47,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
 Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot.Data
 Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot.Histogram
+Imports Microsoft.VisualBasic.Data.ChartPlots.Contour
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Linq
 
@@ -106,13 +107,13 @@ Namespace Graphic
         Sub New(data As (Double, Double)())
             dx = ScalingTuple(data, Function(p) p.X, False, xmin)
             dy = ScalingTuple(data, Function(p) p.y, False, ymin)
-            type = GetType(Contour)
+            type = GetType(ContourPlot)
         End Sub
 
         Sub New(data As (X#, y#, z#)())
             dx = ScalingTuple(data, Function(p) p.X, False, xmin)
             dy = ScalingTuple(data, Function(p) p.y, False, ymin)
-            type = GetType(Contour)
+            type = GetType(ContourPlot)
         End Sub
 
         ''' <summary>

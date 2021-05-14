@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8639b08d08e7cc13f0c2bb565242a377, Data_science\Mathematica\Math\DataFittings\Linear\FitResult.vb"
+﻿#Region "Microsoft.VisualBasic::6d42548a2570bfa2c18e954ec8a0f03f, Data_science\Mathematica\Math\DataFittings\Linear\FitResult.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,11 @@
 
     ' Class FitResult
     ' 
-    '     Properties: ErrorTest, FactorSize, Intercept, IsPolyFit, Polynomial
-    '                 R_square, RMSE, Slope, SSE, SSR
+    '     Properties: AdjustR_square, ErrorTest, FactorSize, Intercept, IsPolyFit
+    '                 Polynomial, R_square, RMSE, Slope, SSE
+    '                 SSR
     ' 
-    '     Function: ToString
+    '     Function: IFitted_GetY, ToString
     ' 
     ' /********************************************************************************/
 
@@ -63,9 +64,10 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Public Class FitResult : Implements IFitted
 
     ''' <summary>
-    ''' 拟合后的方程系数，根据阶次获取拟合方程的系数，如getFactor(2),就是获取``y = a0 + a1*x + a2*x^2 + ... + apoly_n*x^poly_n``中a2的值
+    ''' 拟合后的方程系数，根据阶次获取拟合方程的系数，
+    ''' 如getFactor(2)，就是获取``y = a0 + a1*x + a2*x^2 + ... + apoly_n*x^poly_n``中a2的值
     ''' </summary>
-    Public Property Polynomial As Polynomial Implements IFitted.Polynomial
+    Public Property Polynomial As Formula Implements IFitted.Polynomial
     ''' <summary>
     ''' 回归平方和
     ''' </summary>
@@ -81,24 +83,24 @@ Public Class FitResult : Implements IFitted
     ''' <summary>
     ''' 保存拟合后的y值，在拟合时可设置为不保存节省内存
     ''' </summary>
-    Public Property ErrorTest As TestPoint() Implements IFitted.ErrorTest
+    Public Property ErrorTest As IFitError() Implements IFitted.ErrorTest
 
     ''' <summary>
     ''' 根据x获取拟合方程的y值
     ''' </summary>
     ''' <param name="x"></param>
     ''' <returns></returns>
-    Default Public ReadOnly Property GetY(x As Double) As Double Implements IFitted.GetY
+    Default Public ReadOnly Property GetY(x As Double) As Double
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return Polynomial(x)
+            Return DirectCast(Polynomial, Polynomial).F(x)
         End Get
     End Property
 
     Public ReadOnly Property IsPolyFit As Boolean
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return Polynomial.Factors.Length > 2
+            Return Not DirectCast(Polynomial, Polynomial).IsLinear
         End Get
     End Property
 
@@ -109,7 +111,7 @@ Public Class FitResult : Implements IFitted
     Public ReadOnly Property Slope() As Double
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return Polynomial.Factors(1)
+            Return DirectCast(Polynomial, Polynomial).Factors(1)
         End Get
     End Property
 
@@ -120,7 +122,7 @@ Public Class FitResult : Implements IFitted
     Public ReadOnly Property Intercept() As Double
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return Polynomial.Factors(0)
+            Return DirectCast(Polynomial, Polynomial).Factors(0)
         End Get
     End Property
 
@@ -136,13 +138,30 @@ Public Class FitResult : Implements IFitted
     End Property
 
     ''' <summary>
+    ''' 调整R方（Adjusted R-Square）
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' Adjusted R-Squared 抵消样本数量对 R-Squared 的影响，做到了真正的 0~1，越大越好。
+    ''' </remarks>
+    Public ReadOnly Property AdjustR_square As Double
+        Get
+            ' n 是样本数量，p 是特征数量。
+            Dim n As Integer = ErrorTest.Length
+            Dim p As Integer = FactorSize - 1
+
+            Return 1 - (1 - R_square) * (n - 1) / (n - p - 1)
+        End Get
+    End Property
+
+    ''' <summary>
     ''' 获取拟合方程系数的个数
     ''' </summary>
     ''' <returns>拟合方程系数的个数</returns>
     Public ReadOnly Property FactorSize As Integer
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return Polynomial.Factors.Length
+            Return DirectCast(Polynomial, Polynomial).Factors.Length
         End Get
     End Property
 
@@ -154,5 +173,9 @@ Public Class FitResult : Implements IFitted
     ''' <returns></returns>
     Public Overrides Function ToString() As String
         Return $"{Polynomial} @ R2={R_square.ToString("F4")}"
+    End Function
+
+    Private Function IFitted_GetY(ParamArray x() As Double) As Double Implements IFitted.GetY
+        Return Polynomial.Evaluate(x)
     End Function
 End Class

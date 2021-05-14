@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41217b8f69c2d501c649a7825b10f729, Data_science\DataMining\DataMining\ComponentModel\Discretizer\NormalRangeDiscretizer.vb"
+﻿#Region "Microsoft.VisualBasic::0741548dda86622d3f128c462cd395e1, Data_science\DataMining\DataMining\ComponentModel\Discretizer\NormalRangeDiscretizer.vb"
 
     ' Author:
     ' 
@@ -44,6 +44,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Distributions
 
 Namespace ComponentModel.Discretion
@@ -73,7 +74,7 @@ Namespace ComponentModel.Discretion
                 min = .Min
                 max = .Max
                 mean = .Average
-                std = .StdError
+                std = .SD
             End With
 
             ranges = doCreateRanges()

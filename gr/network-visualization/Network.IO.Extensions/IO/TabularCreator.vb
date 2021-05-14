@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a39d78b3876143aafd18cd5b0894be9f, gr\network-visualization\Network.IO.Extensions\IO\TabularCreator.vb"
+﻿#Region "Microsoft.VisualBasic::e73263c1391f44789fc8f4a54caa2607, gr\network-visualization\Network.IO.Extensions\IO\TabularCreator.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module TabularCreator
     ' 
-    '         Function: createNodesTable, Tabular
+    '         Function: createNodesTable, (+3 Overloads) Tabular
     ' 
     ' 
     ' /********************************************************************************/
@@ -55,12 +55,58 @@ Namespace FileStream
         ''' 将<see cref="NetworkGraph"/>保存到csv文件之中
         ''' </summary>
         ''' <param name="g"></param>
+        ''' <param name="propertyNames">
+        ''' The data property names of nodes and edges.
+        ''' </param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Tabular(g As NetworkGraph,
+                                Optional propertyNames$() = Nothing,
+                                Optional is2D As Boolean = True,
+                                Optional creators As String() = Nothing,
+                                Optional title$ = Nothing,
+                                Optional description$ = Nothing,
+                                Optional keywords$() = Nothing,
+                                Optional links$() = Nothing,
+                                Optional meta As Dictionary(Of String, String) = Nothing) As NetworkTables
+
+            Dim data As New MetaData With {
+                .create_time = Now,
+                .creators = creators,
+                .description = description,
+                .keywords = keywords,
+                .links = links,
+                .title = title,
+                .additionals = meta
+            }
+
+            Return g.Tabular(propertyNames, is2D, data)
+        End Function
+
+        ''' <summary>
+        ''' 将<see cref="NetworkGraph"/>保存到csv文件之中
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Tabular(g As NetworkGraph) As NetworkTables
+            Return g.Tabular(meta:=New MetaData)
+        End Function
+
+        ''' <summary>
+        ''' 将<see cref="NetworkGraph"/>保存到csv文件之中
+        ''' </summary>
+        ''' <param name="g"></param>
         ''' <param name="properties">
         ''' The data property names of nodes and edges.
         ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Function Tabular(g As NetworkGraph, Optional properties$() = Nothing, Optional is2D As Boolean = True) As NetworkTables
+        Public Function Tabular(g As NetworkGraph,
+                                Optional properties$() = Nothing,
+                                Optional is2D As Boolean = True,
+                                Optional meta As MetaData = Nothing) As NetworkTables
+
             Dim nodes As Node() = g.createNodesTable(properties, is2D).ToArray
             Dim edges As New List(Of NetworkEdge)
 
@@ -87,7 +133,8 @@ Namespace FileStream
 
             Return New NetworkTables With {
                 .edges = edges,
-                .nodes = nodes
+                .nodes = nodes,
+                .meta = If(meta, New MetaData)
             }
         End Function
 
@@ -128,7 +175,10 @@ Namespace FileStream
                     names.REFLECTION_ID_MAPPING_DEGREE,
                     names.REFLECTION_ID_MAPPING_DEGREE_IN,
                     names.REFLECTION_ID_MAPPING_DEGREE_OUT,
-                    names.REFLECTION_ID_MAPPING_BETWEENESS_CENTRALITY
+                    names.REFLECTION_ID_MAPPING_RELATIVE_DEGREE_CENTRALITY,
+                    names.REFLECTION_ID_MAPPING_RELATIVE_OUTDEGREE_CENTRALITY,
+                    names.REFLECTION_ID_MAPPING_BETWEENESS_CENTRALITY,
+                    names.REFLECTION_ID_MAPPING_RELATIVE_BETWEENESS_CENTRALITY
                 }.Where(Function(p) n.data.HasProperty(p))
 
                     data(key) = n.data(key)

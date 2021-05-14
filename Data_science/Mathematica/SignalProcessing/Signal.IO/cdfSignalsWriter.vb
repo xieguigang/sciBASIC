@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb74c599568e445c0125e186129dac48, Data_science\Mathematica\SignalProcessing\Signal.IO\cdfSignalsWriter.vb"
+﻿#Region "Microsoft.VisualBasic::de20b66bcfabe041ba0a28f7a1dca9d3, Data_science\Mathematica\SignalProcessing\Signal.IO\cdfSignalsWriter.vb"
 
     ' Author:
     ' 
@@ -59,11 +59,11 @@ Public Module cdfSignalsWriter
         Dim signals As Integer = file.getAttribute("signals")
         Dim metaNames = file.getAttribute("metadata").ToString.LoadJSON(Of String())
         Dim description = file.getAttribute("description").ToString
-        Dim x As New Vector(Of Double)(file.getDataVariable("measure_buffer").numerics)
-        Dim y As New Vector(Of Double)(file.getDataVariable("signal_buffer").numerics)
+        Dim x As New Vector(Of Double)(DirectCast(file.getDataVariable("measure_buffer"), doubles).Array)
+        Dim y As New Vector(Of Double)(DirectCast(file.getDataVariable("signal_buffer"), doubles).Array)
         Dim chunk_size = file.getDataVariable("chunk_size")
-        Dim signal_guid = file.getDataVariable("signal_guid").chars.LoadJSON(Of String())
-        Dim measure_unit = file.getDataVariable("measure_unit").chars.LoadJSON(Of String())
+        Dim signal_guid = DirectCast(file.getDataVariable("signal_guid"), chars).LoadJSON(Of String())
+        Dim measure_unit = DirectCast(file.getDataVariable("measure_unit"), chars).LoadJSON(Of String())
         Dim index As New List(Of (start%, ends%))
         Dim buffer_size = 0
         Dim meta As Array() = metaNames _
@@ -74,7 +74,7 @@ Public Module cdfSignalsWriter
                         Dim retriveVal As Array
 
                         If info.FindAttribute("type").value = "json" Then
-                            retriveVal = data.chars.LoadJSON(Of String())
+                            retriveVal = DirectCast(data, chars).LoadJSON(Of String())
                         Else
                             retriveVal = DirectCast(data.genericValue, IEnumerable).ToArray(Of Object)
                         End If
@@ -83,7 +83,7 @@ Public Module cdfSignalsWriter
                     End Function) _
             .ToArray
 
-        For Each size In chunk_size.integers
+        For Each size In DirectCast(chunk_size, integers)
             index.Add((buffer_size, buffer_size + size - 1))
             buffer_size = buffer_size + size
         Next
@@ -127,7 +127,6 @@ Public Module cdfSignalsWriter
         ' in R script code when the signal data count is large
 
         Using cdffile As New CDFWriter(file)
-            Call cdffile.Dimensions(Dimension.Double, Dimension.Float, Dimension.Integer, Dimension.Long, Dimension.Text(fixedChars:=1024))
             Call cdffile.GlobalAttributes(New attribute With {.name = "time", .type = CDFDataTypes.CHAR, .value = Now.ToString})
             Call cdffile.GlobalAttributes(New attribute With {.name = "filename", .type = CDFDataTypes.CHAR, .value = file.FileName})
             Call cdffile.GlobalAttributes(New attribute With {.name = "github", .type = CDFDataTypes.CHAR, .value = LICENSE.githubURL})
@@ -147,10 +146,10 @@ Public Module cdfSignalsWriter
 
             Call cdffile.GlobalAttributes(New attribute With {.name = "signals", .type = CDFDataTypes.INT, .value = package.Length})
 
-            For Each attr As NamedValue(Of CDFData) In package.createAttributes(enableCDFExtension)
+            For Each attr As NamedValue(Of ICDFDataVector) In package.createAttributes(enableCDFExtension)
                 dataDimension = New Dimension With {
                     .name = "attribute_data: " & attr.Name,
-                    .size = attr.Value.Length
+                    .size = attr.Value.length
                 }
                 annotation = New attribute With {
                     .name = "type",
@@ -165,8 +164,8 @@ Public Module cdfSignalsWriter
             Call cdffile.GlobalAttributes(New attribute With {.name = "metadata", .type = CDFDataTypes.CHAR, .value = attrNames.AsEnumerable.GetJson})
 
             Dim bufferOffset As Long = Scan0
-            Dim signal_guid As New CDFData With {.chars = signals.Select(Function(sig) sig.reference).GetJson}
-            Dim units As New CDFData With {.chars = signals.Select(Function(sig) sig.measureUnit).GetJson}
+            Dim signal_guid As ICDFDataVector = CType(signals.Select(Function(sig) sig.reference).GetJson, chars)
+            Dim units As ICDFDataVector = CType(signals.Select(Function(sig) sig.measureUnit).GetJson, chars)
 
             For Each signal As GeneralSignal In signals
                 measures.AddRange(signal.Measures)
@@ -179,20 +178,20 @@ Public Module cdfSignalsWriter
 
             dataDimension = New Dimension With {.name = "data_chunks", .size = measures.Count}
 
-            Call cdffile.AddVariable("measure_buffer", New CDFData With {.numerics = measures.ToArray}, dataDimension)
-            Call cdffile.AddVariable("signal_buffer", New CDFData With {.numerics = signalDatas.ToArray}, dataDimension)
+            Call cdffile.AddVariable("measure_buffer", CType(measures.ToArray, doubles), dataDimension)
+            Call cdffile.AddVariable("signal_buffer", CType(signalDatas.ToArray, doubles), dataDimension)
 
             dataDimension = New Dimension With {.name = "signals", .size = chunksize.Count}
-            cdffile.AddVariable("chunk_size", New CDFData With {.integers = chunksize.ToArray}, dataDimension)
+            cdffile.AddVariable("chunk_size", CType(chunksize.ToArray, integers), dataDimension)
 
             If enableCDFExtension Then
-                Call cdffile.AddVariable("buffer_offset", New CDFData With {.longs = offsets.ToArray}, dataDimension)
+                Call cdffile.AddVariable("buffer_offset", CType(offsets.ToArray, longs), dataDimension)
             End If
 
-            dataDimension = New Dimension With {.name = "guid_json_chars", .size = signal_guid.chars.Length}
+            dataDimension = New Dimension With {.name = "guid_json_chars", .size = signal_guid.length}
             cdffile.AddVariable("signal_guid", signal_guid, dataDimension)
 
-            dataDimension = New Dimension With {.name = "measure_unit_json_chars", .size = units.chars.Length}
+            dataDimension = New Dimension With {.name = "measure_unit_json_chars", .size = units.length}
             cdffile.AddVariable("measure_unit", units, dataDimension)
         End Using
 
@@ -200,12 +199,12 @@ Public Module cdfSignalsWriter
     End Function
 
     <Extension>
-    Private Iterator Function createAttributes(package As GeneralSignal(), enableCDFExtension As Boolean) As IEnumerable(Of NamedValue(Of CDFData))
+    Private Iterator Function createAttributes(package As GeneralSignal(), enableCDFExtension As Boolean) As IEnumerable(Of NamedValue(Of ICDFDataVector))
         Dim allNames As String() = package.Select(Function(sig) sig.meta.Keys).IteratesALL.Distinct.ToArray
 
         For Each name As String In allNames
             Dim values As New List(Of String)
-            Dim data As CDFData
+            Dim data As ICDFDataVector
             Dim type As String
 
             For Each signal As GeneralSignal In package
@@ -216,38 +215,38 @@ Public Module cdfSignalsWriter
                 Dim longs = values.Select(AddressOf Long.Parse).ToArray
 
                 If longs.All(Function(b) b <= 255 AndAlso b >= -255) Then
-                    data = New CDFData With {.byteStream = longs.Select(Function(l) CByte(l)).ToBase64String}
+                    data = CType(longs.Select(Function(l) CByte(l)).ToArray, bytes)
                     type = "base64"
                 ElseIf longs.All(Function(s) s <= Short.MaxValue AndAlso s >= Short.MinValue) Then
-                    data = New CDFData With {.tiny_int = longs.Select(Function(l) CShort(l)).ToArray}
+                    data = CType(longs.Select(Function(l) CShort(l)).ToArray, shorts)
                     type = "int16"
                 ElseIf longs.All(Function(i) i <= Integer.MaxValue AndAlso i >= Integer.MinValue) Then
-                    data = New CDFData With {.integers = longs.Select(Function(l) CInt(l)).ToArray}
+                    data = CType(longs.Select(Function(l) CInt(l)).ToArray, integers)
                     type = "i32"
                 ElseIf enableCDFExtension Then
-                    data = New CDFData With {.longs = longs}
+                    data = CType(longs, longs)
                     type = "i64"
                 Else
                     Throw New InvalidProgramException($"{GetType(Long).FullName} is not supports when option '{NameOf(enableCDFExtension)}' is not enable!")
                 End If
 
             ElseIf values.AsParallel.Select(Function(s) s Is Nothing OrElse s = "" OrElse s.IsNumeric).All(Function(t) t = True) Then
-                data = New CDFData With {.numerics = values.Select(AddressOf ParseDouble).ToArray}
+                data = CType(values.Select(AddressOf ParseDouble).ToArray, doubles)
                 type = "f64"
             ElseIf values.AsParallel.Select(Function(s) s Is Nothing OrElse s = "" OrElse s.IsPattern("((true)|(false))", RegexICSng)).All(Function(t) t = True) Then
                 If enableCDFExtension Then
-                    data = New CDFData With {.flags = values.Select(AddressOf ParseBoolean).ToArray}
+                    data = CType(values.Select(AddressOf ParseBoolean).ToArray, flags)
                     type = "flags"
                 Else
-                    data = New CDFData With {.tiny_int = values.Select(AddressOf ParseBoolean).Select(Function(f) CShort(If(f, 1, 0))).ToArray}
+                    data = CType(values.Select(AddressOf ParseBoolean).Select(Function(f) CShort(If(f, 1, 0))).ToArray, shorts)
                     type = "i16"
                 End If
             Else
-                data = New CDFData With {.chars = values.AsEnumerable.GetJson}
+                data = CType(values.AsEnumerable.GetJson, chars)
                 type = "json"
             End If
 
-            Yield New NamedValue(Of CDFData) With {
+            Yield New NamedValue(Of ICDFDataVector) With {
                 .Name = name,
                 .Value = data,
                 .Description = type

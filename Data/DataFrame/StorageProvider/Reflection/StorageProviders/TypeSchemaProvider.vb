@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0f62a09d0699a2f94c0d1c3d84b26ac, Data\DataFrame\StorageProvider\Reflection\StorageProviders\TypeSchemaProvider.vb"
+﻿#Region "Microsoft.VisualBasic::3dbd96d1345fd2dcf11d051e2312b222, Data\DataFrame\StorageProvider\Reflection\StorageProviders\TypeSchemaProvider.vb"
 
     ' Author:
     ' 
@@ -134,21 +134,20 @@ Namespace StorageProvider.Reflection
                     [Property],
                     [alias]:=attr.Name,
                     forcePrimitive:=False,
-                    ColumnMaps:=attr)
-
+                    ColumnMaps:=attr
+                )
             End If
 
+#If netcore5 = 0 Then
             ' 请注意，由于这个属性之间有继承关系，这一最基本的类型会放在最后以防止出现重复
-
-            attrs = [Property].GetCustomAttributes(
-                attributeType:=GetType(System.Data.Linq.Mapping.ColumnAttribute),
-                inherit:=True)
+            attrs = [Property].GetCustomAttributes(attributeType:=GetType(System.Data.Linq.Mapping.ColumnAttribute), inherit:=True)
 
             If Not attrs.IsNullOrEmpty Then
                 ' 也可能是别名属性
                 Dim attr = DirectCast(attrs(Scan0), System.Data.Linq.Mapping.ColumnAttribute)
                 Return __generateMask([Property], [alias]:=attr.Name, forcePrimitive:=forcePrimitive)
             End If
+#End If
 
             If Not Explicit Then
                 Return __generateMask([Property], "", forcePrimitive)

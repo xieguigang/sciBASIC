@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a9196b958a38cc76530fc94499a197e, Data_science\Mathematica\Math\DataFrame\Impute.vb"
+﻿#Region "Microsoft.VisualBasic::aa181a1105c8fc75980e14faff0b87ad, Data_science\Mathematica\Math\DataFrame\Impute.vb"
 
     ' Author:
     ' 
@@ -33,15 +33,6 @@
 
     ' Module Impute
     ' 
-    ' 
-    '     Enum InferMethods
-    ' 
-    '         Average, Min
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
     '     Function: inferByAverage, inferByMin, SimulateMissingValues, SimulateMissingValuesByProtein, SimulateMissingValuesBySample
     ' 
     ' /********************************************************************************/
@@ -55,14 +46,6 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Public Module Impute
-
-    ''' <summary>
-    ''' 缺失值的模拟推断方法
-    ''' </summary>
-    Public Enum InferMethods
-        Average
-        Min
-    End Enum
 
     <Extension>
     Public Function SimulateMissingValues(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(rawMatrix As IEnumerable(Of DataSet), Optional byRow As Boolean = True, Optional infer As InferMethods = InferMethods.Average) As IEnumerable(Of DataSet)

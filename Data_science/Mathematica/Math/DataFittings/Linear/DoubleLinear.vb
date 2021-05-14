@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce6347253ac98fc763ef11e0f0f9830b, Data_science\Mathematica\Math\DataFittings\Linear\DoubleLinear.vb"
+﻿#Region "Microsoft.VisualBasic::abdb422db13a685d8583cf302c1be332, Data_science\Mathematica\Math\DataFittings\Linear\DoubleLinear.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     ' 
     ' Module DoubleLinear
     ' 
-    '     Function: AutoPointDeletion, GetInputPoints
+    '     Function: AutoPointDeletion, doFilterInternal, GetInputPoints
     ' 
     ' 
     ' 
@@ -58,8 +58,38 @@ Public Module DoubleLinear
     <Extension>
     Public Function GetInputPoints(bestfit As IFitted) As PointF()
         Return bestfit.ErrorTest _
-            .Select(Function(p) New PointF(p.X, p.Y)) _
+            .Select(Function(p) New PointF(DirectCast(p, TestPoint).X, p.Y)) _
             .ToArray
+    End Function
+
+    <Extension>
+    Private Function doFilterInternal(pointVec As PointF(), ByRef removed As List(Of PointF), removesZeroY As Boolean) As PointF()
+        Dim filter As PointF()
+
+        If removed Is Nothing Then
+            removed = New List(Of PointF)
+        End If
+
+        ' removes NaN, non-real
+        filter = pointVec _
+            .Where(Function(p)
+                       Return p.X.IsNaNImaginary OrElse p.Y.IsNaNImaginary
+                   End Function) _
+            .ToArray
+        removed.AddRange(filter)
+        pointVec = pointVec _
+            .Where(Function(p)
+                       Return Not (p.X.IsNaNImaginary OrElse p.Y.IsNaNImaginary)
+                   End Function) _
+            .ToArray
+
+        If removesZeroY Then
+            filter = pointVec.Where(Function(p) Not p.Y > 0).ToArray
+            removed.AddRange(filter)
+            pointVec = pointVec.Where(Function(p) p.Y >= 0).ToArray
+        End If
+
+        Return pointVec
     End Function
 
     ''' <summary>
@@ -84,11 +114,11 @@ Public Module DoubleLinear
                                       Optional keepsLowestPoint As Boolean = False,
                                       Optional removesZeroY As Boolean = False) As IFitted
 
-        Dim pointVec As PointF() = points.OrderBy(Function(p) p.X).ToArray
+        Dim pointVec As PointF() = points _
+            .OrderBy(Function(p) p.X) _
+            .ToArray _
+            .doFilterInternal(removed, removesZeroY)
 
-        If removesZeroY Then
-            removed.AddRange(pointVec.Where(Function(p) Not p.Y > 0))
-        End If
         If max < 0 Then
             ' auto
             max = pointVec.Length / 2 - 1

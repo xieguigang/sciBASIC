@@ -1,24 +1,2 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<sst xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" count="20" uniqueCount="7">
-  <si>
-    <t>T!@#$%^&amp;</t>
-  </si>
-  <si>
-    <t>GGGGGGGGGGGGGGGGGGG</t>
-  </si>
-  <si>
-    <t>A</t>
-  </si>
-  <si>
-    <t>T</t>
-  </si>
-  <si>
-    <t>G</t>
-  </si>
-  <si>
-    <t>C</t>
-  </si>
-  <si>
-    <t>AAAAAAAAAAAAAAAAAA</t>
-  </si>
-</sst>
+<sst xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" count="21" uniqueCount="8"><si><t>T!@#$%^&amp;</t></si><si><t>GGGGGGGGGGGGGGGGGGG</t></si><si><t>A</t></si><si><t>T</t></si><si><t>G</t></si><si><t>C</t></si><si><t>AAAAAAAAAAAAAAAAAA</t></si><si><t>X</t><phoneticPr fontId="4" type="noConversion"/></si></sst>

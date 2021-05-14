@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4475dc0d6389807e70de0d334adbe8c3, www\Microsoft.VisualBasic.NETProtocol\TcpServicesSocket.vb"
+﻿#Region "Microsoft.VisualBasic::63d4a5bb1d5323d45c5576be90d763e7, www\Microsoft.VisualBasic.NETProtocol\TcpServicesSocket.vb"
 
     ' Author:
     ' 
@@ -40,20 +40,22 @@
     '         Function: BeginListen, IsServerInternalException, LoopbackEndPoint, (+2 Overloads) Run, ToString
     ' 
     '         Sub: AcceptCallback, (+2 Overloads) Dispose, ForceCloseHandle, HandleRequest, ReadCallback
-    '              (+2 Overloads) Send, SendCallback, startSocket, WaitForStart
+    '              Send, startSocket, WaitForStart
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Net
 Imports System.Net.Sockets
+#If DEBUG Then
 Imports System.Reflection
+#End If
 Imports System.Runtime.CompilerServices
-Imports System.Text
 Imports System.Threading
-Imports Microsoft.VisualBasic.ApplicationServices.Debugging.ExceptionExtensions
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
@@ -79,6 +81,7 @@ Namespace Tcp
         Dim _threadEndAccept As Boolean = True
         Dim _exceptionHandle As ExceptionHandler
         Dim _servicesSocket As Socket
+        Dim _maxAccepts As Integer = 4
 
 #End Region
 
@@ -97,6 +100,7 @@ Namespace Tcp
         ''' </summary>
         ''' <remarks></remarks>
         Public Property ResponseHandler As DataRequestHandler Implements IServicesSocket.ResponseHandler
+        Public ReadOnly Property Running As Boolean = False Implements IServicesSocket.IsRunning
 
         Public ReadOnly Property IsShutdown As Boolean Implements IServicesSocket.IsShutdown
             Get
@@ -179,6 +183,7 @@ Namespace Tcp
         ''' <remarks></remarks>
         Public Function Run(localEndPoint As TcpEndPoint) As Integer Implements IServicesSocket.Run
             Dim callback As AsyncCallback
+            Dim exitCode As Integer
 
             Call startSocket(localEndPoint)
 
@@ -187,6 +192,12 @@ Namespace Tcp
                     _threadEndAccept = False
 
                     callback = New AsyncCallback(AddressOf AcceptCallback)
+
+                    If _servicesSocket Is Nothing Then
+                        Call Console.WriteLine("socket initialize failured!")
+                        exitCode = -1
+                        Exit While
+                    End If
 
                     Try
                         ' Free 之后可能会出现空引用错误，则忽略掉这个错误，退出线程
@@ -201,20 +212,24 @@ Namespace Tcp
 
             _Running = False
 
-            Return 0
+            Return exitCode
         End Function
 
+        ''' <summary>
+        ''' Create a TCP/IP socket.
+        ''' </summary>
+        ''' <param name="localEndPoint"></param>
         Private Sub startSocket(localEndPoint As TcpEndPoint)
             _LocalPort = localEndPoint.Port
-            ' Create a TCP/IP socket.
             _servicesSocket = New Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)
-            ' Bind the socket to the local endpoint and listen for incoming connections.
 
             Try
+                ' Bind the socket to the local endpoint and listen
+                ' for incoming connections.
                 Call _servicesSocket.Bind(localEndPoint)
-                Call _servicesSocket.ReceiveBufferSize.SetValue(4096000)
-                Call _servicesSocket.SendBufferSize.SetValue(4096000)
-                Call _servicesSocket.Listen(backlog:=1000)
+                Call _servicesSocket.ReceiveBufferSize.SetValue(4096 * 1024 * 10)
+                Call _servicesSocket.SendBufferSize.SetValue(4096 * 1024 * 10)
+                Call _servicesSocket.Listen(backlog:=128)
             Catch ex As Exception
                 Dim exMessage As String =
                     "Exception on try initialize the socket connection local_EndPoint=" & localEndPoint.ToString &
@@ -232,8 +247,6 @@ Namespace Tcp
             _threadEndAccept = True
             _Running = True
         End Sub
-
-        Public ReadOnly Property Running As Boolean = False Implements IServicesSocket.IsRunning
 
         Public Sub WaitForStart()
             Do While Running = False
@@ -255,22 +268,24 @@ Namespace Tcp
             End Try
 
             ' Create the state object for the async receive.
-            Dim state As StateObject = New StateObject With {
-                .workSocket = handler
+            Dim state As New StateObject With {
+                .workSocket = handler,
+                .received = New MemoryStream
             }
 
             Try
                 Call handler.BeginReceive(state.readBuffer, 0, StateObject.BufferSize, 0, New AsyncCallback(AddressOf ReadCallback), state)
             Catch ex As Exception
                 ' 远程强制关闭主机连接，则放弃这一条数据请求的线程
-                Call ForceCloseHandle(handler.RemoteEndPoint)
+                Call ForceCloseHandle(handler.RemoteEndPoint, ex)
             End Try
 
             _threadEndAccept = True
         End Sub
 
-        Private Sub ForceCloseHandle(RemoteEndPoint As EndPoint)
+        Private Sub ForceCloseHandle(RemoteEndPoint As EndPoint, ex As Exception)
             Call $"Connection was force closed by {RemoteEndPoint.ToString}, services thread abort!".__DEBUG_ECHO
+            Call ex.PrintException
         End Sub
 
         Private Sub ReadCallback(ar As IAsyncResult)
@@ -279,25 +294,26 @@ Namespace Tcp
             Dim state As StateObject = DirectCast(ar.AsyncState, StateObject)
             Dim handler As Socket = state.workSocket
             ' Read data from the client socket.
-            Dim bytesRead As Integer
+            Dim bytesRead As Integer = 0
+            Dim closed As Boolean = False
 
             Try
                 ' 在这里可能发生远程客户端主机强制断开连接，由于已经被断开了，
                 ' 客户端已经放弃了这一次数据请求，所有在这里将这个请求线程放弃
                 bytesRead = handler.EndReceive(ar)
             Catch ex As Exception
-                Call ForceCloseHandle(handler.RemoteEndPoint)
-                Return
+                ForceCloseHandle(handler.RemoteEndPoint, ex)
+                closed = True
             End Try
 
             ' 有新的数据
             If bytesRead > 0 Then
 
                 ' There  might be more data, so store the data received so far.
-                state.received.AddRange(state.readBuffer.Takes(bytesRead))
+                state.received.Write(state.readBuffer.Takes(bytesRead).ToArray, Scan0, bytesRead)
                 ' Check for end-of-file tag. If it is not there, read
                 ' more data.
-                state.readBuffer = state.received.ToArray
+                state.readBuffer = DirectCast(state.received, MemoryStream).ToArray
 
                 ' 得到的是原始的请求数据
                 Dim requestData As New RequestStream(state.readBuffer)
@@ -309,10 +325,15 @@ Namespace Tcp
                         ' Not all data received. Get more.
                         Call handler.BeginReceive(state.readBuffer, 0, StateObject.BufferSize, 0, New AsyncCallback(AddressOf ReadCallback), state)
                     Catch ex As Exception
-                        Call ForceCloseHandle(handler.RemoteEndPoint)
-                        Return
+                        Call ForceCloseHandle(handler.RemoteEndPoint, ex)
                     End Try
                 End If
+            ElseIf closed Then
+                ' 得到的是原始的请求数据
+                Dim data As Byte() = DirectCast(state.received, MemoryStream).ToArray
+                Dim requestData As New RequestStream(data)
+
+                Call HandleRequest(handler, requestData)
             End If
         End Sub
 
@@ -329,18 +350,20 @@ Namespace Tcp
             Dim remoteEP = DirectCast(handler.RemoteEndPoint, TcpEndPoint)
 
             Try
+                Dim result As BufferPipe
+
                 If requestData.IsPing Then
-                    requestData = NetResponse.RFC_OK
+                    result = New DataPipe(NetResponse.RFC_OK)
                 Else
-                    requestData = Me.ResponseHandler()(requestData, remoteEP)
+                    result = Me.ResponseHandler()(requestData, remoteEP)
                 End If
 
-                Call Send(handler, requestData)
+                Call Send(handler, result)
             Catch ex As Exception
                 Call _exceptionHandle(ex)
                 ' 错误可能是内部处理请求的时候出错了，则将SERVER_INTERNAL_EXCEPTION结果返回给客户端
                 Try
-                    Call Send(handler, NetResponse.RFC_INTERNAL_SERVER_ERROR)
+                    Call Send(handler, New DataPipe(NetResponse.RFC_INTERNAL_SERVER_ERROR))
                 Catch ex2 As Exception
                     ' 这里处理的是可能是强制断开连接的错误
                     Call _exceptionHandle(ex2)
@@ -354,29 +377,22 @@ Namespace Tcp
         ''' <param name="handler"></param>
         ''' <param name="data"></param>
         ''' <remarks></remarks>
-        Private Sub Send(handler As Socket, data As String)
+        Private Sub Send(handler As Socket, data As BufferPipe)
             ' Convert the string data to byte data using ASCII encoding.
-            Dim byteData As Byte() = Encoding.UTF8.GetBytes(data)
-            byteData = New RequestStream(0, 0, byteData).Serialize
-            ' Begin sending the data to the remote device.
-            Call handler.BeginSend(byteData, 0, byteData.Length, 0, New AsyncCallback(AddressOf SendCallback), handler)
-        End Sub
+            For Each byteData As Byte() In data.GetBlocks
+                Call handler.Send(byteData)
+            Next
 
-        Private Sub Send(handler As Socket, data As RequestStream)
-            ' Convert the string data to byte data using ASCII encoding.
-            Dim byteData As Byte() = data.Serialize
-            ' Begin sending the data to the remote device.
-            Call handler.BeginSend(byteData, 0, byteData.Length, 0, New AsyncCallback(AddressOf SendCallback), handler)
-        End Sub
-
-        Private Sub SendCallback(ar As IAsyncResult)
-            ' Retrieve the socket from the state object.
-            Dim handler As Socket = DirectCast(ar.AsyncState, Socket)
             ' Complete sending the data to the remote device.
-            Dim bytesSent As Integer = handler.EndSend(ar)
-
             Call handler.Shutdown(SocketShutdown.Both)
             Call handler.Close()
+
+            ' release data
+            If TypeOf data Is DataPipe Then
+                Call DirectCast(data, DataPipe).Dispose()
+            ElseIf TypeOf data Is StreamPipe Then
+                Call DirectCast(data, StreamPipe).Dispose()
+            End If
         End Sub
 
         ''' <summary>
@@ -408,6 +424,9 @@ Namespace Tcp
 
                     Call _servicesSocket.Dispose()
                     Call _servicesSocket.Free()
+
+                    _Running = False
+
                     ' TODO: dispose managed state (managed objects).
                 End If
 

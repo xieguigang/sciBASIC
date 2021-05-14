@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8466ce68e7d0106deacf6f7b06018791, Data_science\Visualization\Plots\BarPlot\Data\csv.vb"
+﻿#Region "Microsoft.VisualBasic::406f4b866d5a7c09e6797b6edfff68f0, Data_science\Visualization\Plots\BarPlot\Data\csv.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module BarDataTableExtensions
     ' 
-    '         Function: (+4 Overloads) LoadBarData, LoadBarDataExcel
+    '         Function: (+4 Overloads) LoadBarData
     ' 
     ' 
     ' /********************************************************************************/
@@ -48,7 +48,6 @@ Imports Microsoft.VisualBasic.Data.csv.Excel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors.OfficeColorThemes
 Imports Microsoft.VisualBasic.Linq
 
 Namespace BarPlot.Data
@@ -65,25 +64,27 @@ Namespace BarPlot.Data
     ''' ...
     ''' ```
     ''' </summary>
+    ''' 
+    <HideModuleName>
     Public Module BarDataTableExtensions
 
-        ''' <summary>
-        ''' Loading bar plot data table from specific excel sheet.
-        ''' </summary>
-        ''' <param name="xlsx$">
-        ''' (*.xlsx) required of excel format version at least office 2010
-        ''' </param>
-        ''' <param name="sheet$">
-        ''' The table sheet name in the excel file.
-        ''' </param>
-        ''' <param name="theme$"></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function LoadBarDataExcel(xlsx$, sheet$, Optional theme$ = "PRGn:c6") As BarDataGroup
-            Dim csv As DataFrame = xlsx.ReadXlsx(sheet)
-            Dim model As BarDataGroup = csv.LoadBarData(Designer.GetColors(theme))
-            Return model
-        End Function
+        '''' <summary>
+        '''' Loading bar plot data table from specific excel sheet.
+        '''' </summary>
+        '''' <param name="xlsx$">
+        '''' (*.xlsx) required of excel format version at least office 2010
+        '''' </param>
+        '''' <param name="sheet$">
+        '''' The table sheet name in the excel file.
+        '''' </param>
+        '''' <param name="theme$"></param>
+        '''' <returns></returns>
+        '<Extension>
+        'Public Function LoadBarDataExcel(xlsx$, sheet$, Optional theme$ = "PRGn:c6") As BarDataGroup
+        '    Dim csv As DataFrame = xlsx.ReadXlsx(sheet)
+        '    Dim model As BarDataGroup = csv.LoadBarData(Designer.GetColors(theme))
+        '    Return model
+        'End Function
 
         <Extension>
         Public Function LoadBarData(csv$, Optional theme$ = NameOf(Office2016)) As BarDataGroup
@@ -106,25 +107,34 @@ Namespace BarPlot.Data
         Public Function LoadBarData(csv As DataFrame, colors As Color()) As BarDataGroup
             Dim header As RowObject = csv.Headers
             Dim names$() = header.Skip(1).ToArray
-            Dim clData As Color() = If(
-                colors.IsNullOrEmpty,
-                Designer.FromSchema(NameOf(Office2016), names.Length),
-                colors)
+            Dim clData As Color()
+
+            If colors.IsNullOrEmpty Then
+                clData = Designer.FromSchema(NameOf(Office2016), names.Length)
+            Else
+                clData = colors
+            End If
 
             Return New BarDataGroup With {
                 .Serials = names _
                     .SeqIterator _
-                    .Select(Function(x) New NamedValue(Of Color) With {
-                        .Name = x.value,
-                        .Value = clData(x.i)
-                    }),
+                    .Select(Function(x)
+                                Return New NamedValue(Of Color) With {
+                                    .Name = x.value,
+                                    .Value = clData(x.i)
+                                }
+                            End Function) _
+                    .ToArray,
                 .Samples = csv.Rows _
-                    .Select(Function(x) New BarDataSample With {
-                        .Tag = x.First,
-                        .data = x _
-                            .Skip(1) _
-                            .Select(AddressOf Val)
-                    })
+                    .Select(Function(x)
+                                Return New BarDataSample With {
+                                    .tag = x.First,
+                                    .data = x _
+                                        .Skip(1) _
+                                        .Select(AddressOf Val)
+                                }
+                            End Function) _
+                    .ToArray
             }
         End Function
     End Module

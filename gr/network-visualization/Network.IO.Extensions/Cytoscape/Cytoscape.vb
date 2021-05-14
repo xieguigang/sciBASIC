@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e60ae80da7108da7f766c3804529d1f5, gr\network-visualization\Network.IO.Extensions\Cytoscape\Cytoscape.vb"
+﻿#Region "Microsoft.VisualBasic::8bc1533efdec82e5390bade52dbf78d3, gr\network-visualization\Network.IO.Extensions\Cytoscape\Cytoscape.vb"
 
     ' Author:
     ' 
@@ -51,7 +51,12 @@
 
 #End Region
 
+#If netcore5 = 0 Then
 Imports System.Data.Linq.Mapping
+#Else
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+#End If
+
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON

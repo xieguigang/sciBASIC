@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::259916add95847b428f447c83000ce8a, Data_science\Mathematica\Math\Math\Algebra\LP\LPP.vb"
+﻿#Region "Microsoft.VisualBasic::7bbc0986bf76b0bd83085ecba9c3e2b2, Data_science\Mathematica\Math\Math\Algebra\LP\LPP.vb"
 
     ' Author:
     ' 
@@ -49,6 +49,7 @@
 
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports stdNum = System.Math
 
 Namespace LinearAlgebra.LinearProgramming

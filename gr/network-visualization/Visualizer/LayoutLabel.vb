@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2483186c2e8bfe31bb31c89212c631a7, gr\network-visualization\Visualizer\LayoutLabel.vb"
+﻿#Region "Microsoft.VisualBasic::d461c950031ddc627241a7d14fb4d77e, gr\network-visualization\Visualizer\LayoutLabel.vb"
 
     ' Author:
     ' 
@@ -48,6 +48,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Math2D
 
 Friend Class LayoutLabel
+
     Public label As Label
     Public anchor As Anchor
     Public style As Font
@@ -69,6 +70,6 @@ Friend Class LayoutLabel
     End Function
 
     Public Overrides Function ToString() As String
-        Return label.text
+        Return $"{label.text} @ {shapeRectangle.ToString}"
     End Function
 End Class

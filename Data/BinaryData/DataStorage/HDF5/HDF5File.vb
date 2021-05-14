@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da46a65ba2a332d61500fd7ae2a23bee, Data\BinaryData\DataStorage\HDF5\HDF5File.vb"
+﻿#Region "Microsoft.VisualBasic::0cd0ef2cf9c7af6caffa5939574eb9a9, Data\BinaryData\DataStorage\HDF5\HDF5File.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: attributes, fileName, superblock
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '         Function: attributeTable, GetCacheObject, ToString
     ' 
@@ -46,7 +46,9 @@
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO.HDF5.device
 Imports Microsoft.VisualBasic.Data.IO.HDF5.struct
 Imports Microsoft.VisualBasic.Data.IO.HDF5.struct.messages
@@ -132,6 +134,18 @@ Namespace HDF5
             Me.reader = New BinaryFileReader(fileName)
             Me.fileName = fileName.GetFullPath
             Me.superblock = New Superblock(Me, address:=Scan0)
+
+            Call parseHeader()
+        End Sub
+
+        Sub New(buffer As Stream)
+            Me.reader = New BinaryFileReader(buffer)
+            Me.fileName = buffer.ToString
+            Me.superblock = New Superblock(Me, address:=Scan0)
+
+            If TypeOf buffer Is FileStream Then
+                Me.fileName = DirectCast(buffer, FileStream).Name
+            End If
 
             Call parseHeader()
         End Sub

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6b5bf1c4cc5665ad1fe225c00cc069c, Data\DataFrame\DATA\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::4b54223797069fcda9f5d87b49b7fea5, Data\DataFrame\DATA\Extensions.vb"
 
     ' Author:
     ' 
@@ -50,7 +50,7 @@ Namespace DATA
     Public Module Extensions
 
         Public Sub ProjectLargeDataFrame(targetFile$, columns As IEnumerable(Of String), output As TextWriter)
-            Dim headers As Index(Of String) = Tokenizer.CharsParser(targetFile.ReadFirstLine)
+            Dim headers As Index(Of String) = Tokenizer.CharsParser(targetFile.ReadFirstLine).Indexing
             Dim index As Integer() = headers.GetOrdinal(columns)
             Dim row As RowObject
 
@@ -58,7 +58,7 @@ Namespace DATA
             output.WriteLine(row.AsLine)
 
             For Each line As String In targetFile.IterateAllLines.Skip(1)
-                row = Tokenizer.CharsParser(line)
+                row = New RowObject(Tokenizer.CharsParser(line))
                 row = row.Takes(index)
                 output.WriteLine(row.AsLine)
             Next

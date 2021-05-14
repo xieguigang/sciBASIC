@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36b7e786753595c526de5b805bed71b2, Data_science\Graph\Analysis\Dijkstra\Route.vb"
+﻿#Region "Microsoft.VisualBasic::e594b8b64c5b14f252096dea7cf45b15, Data_science\Graph\Analysis\Dijkstra\Route.vb"
 
     ' Author:
     ' 
@@ -62,9 +62,9 @@ Namespace Analysis.Dijkstra
         ReadOnly route As List(Of Connection)
         ReadOnly vertex As New HashList(Of Vertex)
 
-        Public ReadOnly Property Connections() As Connection()
+        Public ReadOnly Property Connections() As IEnumerable(Of Connection)
             Get
-                Return route.ToArray
+                Return route.AsEnumerable
             End Get
         End Property
 

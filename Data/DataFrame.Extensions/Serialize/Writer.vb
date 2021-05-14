@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1c3d0f017475edbc8c4cf08ec9679439, Data\DataFrame.Extensions\Serialize\Writer.vb"
+﻿#Region "Microsoft.VisualBasic::872b4a56f1e3f3b7899fbf3287e91187, Data\DataFrame.Extensions\Serialize\Writer.vb"
 
     ' Author:
     ' 
@@ -67,8 +67,10 @@ Public Class Writer : Implements IDisposable
     ''' <param name="encoding">Text document encoding of the csv file.</param>
     Sub New(cls As [Class], DIR As String, encoding As Encodings)
         Dim path As String = DIR & $"/{cls.Stack.Replace("::", "/")}.Csv"
-        Call path.ParentPath.MkDIR
-        Dim fs As New FileStream(path, FileMode.OpenOrCreate)
+        Dim fs As FileStream
+
+        path.ParentPath.MakeDir
+        fs = New FileStream(path, FileMode.OpenOrCreate)
 
         __class = cls
         __file = New StreamWriter(fs, encoding.CodePage)
@@ -77,8 +79,7 @@ Public Class Writer : Implements IDisposable
 
         For Each field As Field In cls.Fields.Values
             If Not field.InnerClass Is Nothing Then
-                field.InnerClass.__writer =
-                    New Writer(field.InnerClass, DIR, encoding)
+                field.InnerClass.__writer = New Writer(field.InnerClass, DIR, encoding)
             End If
 
             Call row.Add(field.Name)

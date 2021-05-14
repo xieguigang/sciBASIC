@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a8e857bb5eb62ca19e81c54f400a3785, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\DistanceMap.vb"
+﻿#Region "Microsoft.VisualBasic::4c18b9ce8f18730eb01804ee15fb80a6, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\DistanceMap.vb"
 
     ' Author:
     ' 
@@ -48,6 +48,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 
 Namespace Hierarchy
@@ -112,15 +113,16 @@ Namespace Hierarchy
 
         Public Function ToList() As IList(Of HierarchyTreeNode)
             Dim l As New List(Of HierarchyTreeNode)
+
             For Each clusterPair As HierarchyLink In data
                 l.Add(clusterPair.Tree)
             Next
+
             Return l
         End Function
 
         Public Function FindByCodePair(c1 As Cluster, c2 As Cluster) As HierarchyTreeNode
-            Dim inCode As String = hashCodePair(c1, c2)
-            Return linkTable(inCode).Tree
+            Return linkTable(hashCodePair(c1, c2)).Tree
         End Function
 
         Public Function RemoveFirst() As HierarchyTreeNode

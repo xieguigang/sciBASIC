@@ -1,6 +1,6 @@
 # sciBASIC#: Microsoft VisualBasic for Scientific Computing
 
-![(๑•̀ㅂ•́)و✧](./etc/badge.png)
+![(๑•̀ㅂ•́)و✧](etc/badge.png)
 ![](https://cdn.rawgit.com/LunaGao/BlessYourCodeTag/master/tags/alpaca.svg)
 [![Github All Releases](https://img.shields.io/github/downloads/xieguigang/sciBASIC/total.svg?maxAge=2592000?style=flat-square)]()
 [![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/)
@@ -11,7 +11,7 @@
 
 <hr>
 
-[![sciBASIC# logo](./Microsoft.VisualBasic.Core/Resources/logo.png)](./vs_solutions/logo/Program.vb)
+[![sciBASIC# logo](Microsoft.VisualBasic.Core/logo.png)](./vs_solutions/logo/Program.vb)
 
 > Read the project documents: [http://sciBASIC.NET/](http://sciBASIC.NET)
 
@@ -144,7 +144,7 @@ PageRank analysis on the text paragraph for find out the keyword, here is the pa
 ![](./Data/TextRank/visualize.png)
 
 ## Image fast binarization using VisualBasic image extension API
-[``Sub Binarization(ByRef curBitmap As Bitmap, Optional style As BinarizationStyles = BinarizationStyles.Binary)``](./Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/Bitmap/hcBitmap.vb)
+[``Sub Binarization(ByRef curBitmap As Bitmap, Optional style As BinarizationStyles = BinarizationStyles.Binary)``](./Microsoft.VisualBasic.Core/src/Extensions/Image/Bitmap/hcBitmap.vb)
 
 ```vbnet
 Imports Microsoft.VisualBasic.Imaging

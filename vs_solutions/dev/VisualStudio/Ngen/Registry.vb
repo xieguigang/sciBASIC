@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e068fa9b5b8d0430764201a611025b2e, vs_solutions\dev\VisualStudio\Ngen\Registry.vb"
+﻿#Region "Microsoft.VisualBasic::798648205ca3a3474306bad9ebb8f2a5, vs_solutions\dev\VisualStudio\Ngen\Registry.vb"
 
     ' Author:
     ' 
@@ -35,6 +35,7 @@
     ' 
     '     Function: RegisterCOMDll, RegisterExtensions, WriteToRegistry
     ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region
@@ -44,6 +45,9 @@ Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.Win32
+
+#If netcore5 = 0 Then
+
 
 Public Module RegistryUtils
 
@@ -124,3 +128,5 @@ Public Module RegistryUtils
         Return bAns
     End Function
 End Module
+
+#End If

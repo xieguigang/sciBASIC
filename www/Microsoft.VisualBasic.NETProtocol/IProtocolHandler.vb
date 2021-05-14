@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::516a4e8c2460894de24fb8907d7a3a3c, www\Microsoft.VisualBasic.NETProtocol\IProtocolHandler.vb"
+﻿#Region "Microsoft.VisualBasic::7075546f0babe2fabc26932b629beb88, www\Microsoft.VisualBasic.NETProtocol\IProtocolHandler.vb"
 
     ' Author:
     ' 
@@ -67,12 +67,13 @@ Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Parallel
 
 ''' <summary>
-''' Object for handles the request <see cref="Protocol"/>.
+''' Object for handles the request <see cref="ProtocolAttribute"/>.
 ''' </summary>
 Public MustInherit Class IProtocolHandler
 
     MustOverride ReadOnly Property ProtocolEntry As Long
-    MustOverride Function HandleRequest(request As RequestStream, remoteDevcie As System.Net.IPEndPoint) As RequestStream
+    MustOverride Function HandleRequest(request As RequestStream, remoteDevcie As System.Net.IPEndPoint) As BufferPipe
+
 End Class
 
 #Region "Delegate Abstract Interface"

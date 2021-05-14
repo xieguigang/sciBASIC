@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dddbd731a4d85881944d31a88c3434e8, Data_science\MachineLearning\MachineLearning\IterationReporter.vb"
+﻿#Region "Microsoft.VisualBasic::7d78e953e4129f7114cf9feaa4859cb4, Data_science\MachineLearning\MachineLearning\IterationReporter.vb"
 
     ' Author:
     ' 
@@ -60,6 +60,7 @@ Public MustInherit Class IterationReporter(Of T As Model)
 
     Public Delegate Sub DoReport(iteration%, error#, model As T)
 
+    <DebuggerStepThrough>
     Public Function AttachReporter(reporter As DoReport) As IterationReporter(Of T)
         Me.reporter = reporter
         Return Me

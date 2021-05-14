@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c9c128b001b9c38ee4db74116a07cb9, Data_science\Mathematica\SignalProcessing\wav\wav\SubChunk\SubChunk.vb"
+﻿#Region "Microsoft.VisualBasic::25a8120d1da32dd2773bb29d953a95ce, Data_science\Mathematica\SignalProcessing\wav\wav\SubChunk\SubChunk.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,6 @@
     ' /********************************************************************************/
 
 #End Region
-
-Imports System.IO
-Imports Microsoft.VisualBasic.Data.IO
 
 Public MustInherit Class SubChunk
 

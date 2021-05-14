@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb05f61290798a74b91dfa9c835b3ca9, www\Microsoft.VisualBasic.NETProtocol\Pipeline\PipeStream.vb"
+﻿#Region "Microsoft.VisualBasic::fcef67d082278c0a628092039df11539, www\Microsoft.VisualBasic.NETProtocol\Pipeline\PipeStream.vb"
 
     ' Author:
     ' 
@@ -36,13 +36,17 @@
     '         Properties: hashTable
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetValue, Serialize
+    ' 
+    '         Function: GetValue
+    ' 
+    '         Sub: Serialize
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports Microsoft.VisualBasic.Serialization
 
 Namespace MMFProtocol.Pipeline
@@ -58,9 +62,9 @@ Namespace MMFProtocol.Pipeline
 
         End Sub
 
-        Public Overrides Function Serialize() As Byte()
-            Throw New NotImplementedException
-        End Function
+        Public Overrides Sub Serialize(buffer As Stream)
+            Throw New NotImplementedException()
+        End Sub
 
         Public Shared Function GetValue(raw As Byte(), name As String) As PipeBuffer
             Dim i As Long = Scan0

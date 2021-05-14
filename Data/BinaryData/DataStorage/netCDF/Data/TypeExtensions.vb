@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c75dafdd2046ac5bfbba0492280c1fd4, Data\BinaryData\DataStorage\netCDF\Data\TypeExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::2155f48b237c7bf6bb9dee622983e720, Data\BinaryData\DataStorage\netCDF\Data\TypeExtensions.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     '     Module TypeExtensions
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetCDFTypeCode, num2str, sizeof, str2num
+    '         Function: GetCDFTypeCode, num2str, sizeof, str2num, ToType
     ' 
     ' 
     ' /********************************************************************************/
@@ -42,6 +42,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace netCDF
 
@@ -118,6 +119,25 @@ Namespace netCDF
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function str2num(type As String) As CDFDataTypes
             Return enumParser.TryGetValue(LCase(type), [default]:=CDFDataTypes.undefined)
+        End Function
+
+        <Extension>
+        Public Function ToType(type As CDFDataTypes) As Type
+            Select Case type
+                Case CDFDataTypes.BYTE : Return GetType(Byte)
+                Case CDFDataTypes.CHAR : Return GetType(Char)
+                Case CDFDataTypes.BOOLEAN
+                    ' 20210212 bytes flags for maps boolean
+                    Return GetType(Boolean)
+                Case CDFDataTypes.DOUBLE : Return GetType(Double)
+                Case CDFDataTypes.FLOAT : Return GetType(Single)
+                Case CDFDataTypes.INT : Return GetType(Integer)
+                Case CDFDataTypes.LONG : Return GetType(Long)
+                Case CDFDataTypes.SHORT : Return GetType(Short)
+                Case Else
+                    ' istanbul ignore next
+                    Return Utils.notNetcdf(True, $"non valid type {type}")
+            End Select
         End Function
     End Module
 End Namespace

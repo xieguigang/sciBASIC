@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b49e9b86bd42020c163758950923f56, mime\application%json\Javascript\JsonValue.vb"
+﻿#Region "Microsoft.VisualBasic::6e01dcf43fa5242a329106024ee37908, mime\application%json\Javascript\JsonValue.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: BSONValue, value
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: BuildJsonString, GetStripString, Literal, ToString
+    '         Function: GetStripString, Literal, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -72,13 +72,21 @@ Namespace Javascript
         End Sub
 
         Public Function Literal(typeOfT As Type) As Object
+            Dim str As String = GetStripString()
+
             Select Case typeOfT
                 Case GetType(String)
-                    Return GetStripString()
+                    Return str
                 Case GetType(Date)
-                    Return Casting.CastDate(GetStripString)
+                    Return Casting.CastDate(str)
+                Case GetType(Boolean)
+                    Return str.ParseBoolean
                 Case Else
-                    Return Scripting.CTypeDynamic(GetStripString, typeOfT)
+                    If typeOfT.IsEnum Then
+                        Return [Enum].Parse(typeOfT, str)
+                    Else
+                        Return Scripting.CTypeDynamic(str, typeOfT)
+                    End If
             End Select
         End Function
 
@@ -92,16 +100,6 @@ Namespace Javascript
                 .GetString
             s = JsonParser.StripString(s)
             Return s
-        End Function
-
-        Public Overrides Function BuildJsonString() As String
-            If value Is Nothing Then
-                Return "null"
-            ElseIf value.GetType Is BSONValue Then
-                Return DirectCast(value, BSONValue).ToString
-            Else
-                Return Scripting.ToString(value, "null")
-            End If
         End Function
 
         Public Overrides Function ToString() As String

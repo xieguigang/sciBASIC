@@ -7,7 +7,7 @@ Imports System.Runtime.InteropServices
 ' associated with an assembly.
 
 ' Review the values of the assembly attributes
-
+#If netcore5 = 0 Then
 <Assembly: AssemblyTitle("VisualBasic ODEs dynamics system solver system")>
 <Assembly: AssemblyDescription("The type of mathematics that deals with rates of change, for example in the slope of a curve or the speed of a falling object")>
 <Assembly: AssemblyCompany("")> 
@@ -33,3 +33,4 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")> 
 <Assembly: AssemblyFileVersion("1.0.0.0")> 
+#end if

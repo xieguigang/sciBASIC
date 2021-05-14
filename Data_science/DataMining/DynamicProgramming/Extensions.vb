@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c0946e47aaace3e949e6a982af0e90b, Data_science\DataMining\DynamicProgramming\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::f2189b00bc555b193f0464393a7ea948, Data_science\DataMining\DynamicProgramming\Extensions.vb"
 
     ' Author:
     ' 
@@ -42,6 +42,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.DynamicProgramming.NeedlemanWunsch
 
+<HideModuleName>
 Public Module Extensions
 
     ''' <summary>
@@ -53,8 +54,8 @@ Public Module Extensions
     <Extension>
     Public Iterator Function PopulateAlignments(Of T)(nw As Workspace(Of T)) As IEnumerable(Of GlobalAlign(Of T))
         For i As Integer = 0 To nw.NumberOfAlignments - 1
-            Yield New GlobalAlign(Of T) With {
-                .Score = nw.Score,
+            Yield New GlobalAlign(Of T)(nw.m_toChar) With {
+                .score = nw.Score,
                 .query = nw.getAligned1(i),
                 .subject = nw.getAligned2(i)
             }

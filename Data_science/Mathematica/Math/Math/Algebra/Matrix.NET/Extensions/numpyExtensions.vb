@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::596acacf3814702ed98d4f5066c86926, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Extensions\numpyExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::b3304f087d232b224603136591e899a2, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Extensions\numpyExtensions.vb"
 
     ' Author:
     ' 
@@ -133,7 +133,7 @@ Namespace LinearAlgebra.Matrix
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Std(matrix As IEnumerable(Of Vector), Optional axis% = -1) As Vector
-            Return matrix.Apply(Function(x) x.StdError, axis:=axis, aggregate:=AddressOf NumericsVector.AsVector)
+            Return matrix.Apply(Function(x) x.SD, axis:=axis, aggregate:=AddressOf NumericsVector.AsVector)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

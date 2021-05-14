@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c167bcad59a4af4fdc04d46f4221ec52, Data_science\Visualization\Plots-statistics\ScatterExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::5029fd70ebf38c5381bd2ac6ae317fcc, Data_science\Visualization\Plots-statistics\ScatterExtensions.vb"
 
     ' Author:
     ' 
@@ -87,7 +87,7 @@ Public Module ScatterExtensions
             In odes.SeqIterator
             Let left = New Value(Of Double)(range.Min)
             Select New HistProfile With {
-                .legend = New Legend With {
+                .legend = New LegendObject With {
                     .color = serials(out.i).Value.RGBExpression,
                     .fontstyle = CSSFont.Win10Normal,
                     .style = LegendStyles.Rectangle,

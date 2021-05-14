@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e740d9e38c8b6ba3461447283839d3e2, Data\DataFrame\DATA\MySQL.vb"
+﻿#Region "Microsoft.VisualBasic::56479ba0ea3136d11d7fcc87fceb0fab, Data\DataFrame\DATA\MySQL.vb"
 
     ' Author:
     ' 
@@ -195,7 +195,7 @@ Namespace DATA
             Dim values As IEnumerable(Of String)
 
             For Each block As String In blocks
-                values = IO _
+                values = IO.Tokenizer _
                     .CharsParser(block,, ASCII.Mark) _
                     .ToArray
 
@@ -214,7 +214,7 @@ Namespace DATA
         <Extension>
         Public Function SQLValues(insertSQL$) As String()
             Dim values$ = Regex.Split(insertSQL, "\)\s*VALUES\s*\(", RegexICSng).Last
-            Dim t$() = IO _
+            Dim t$() = IO.Tokenizer _
                 .CharsParser(values, quot:=ASCII.Mark) _
                 .Select(Function(s) s.GetStackValue("'", "'")) _
                 .ToArray
@@ -234,7 +234,7 @@ Namespace DATA
                 .StringSplit("\s*VALUES\s*\(") _
                 .First _
                 .GetStackValue("(", ")")
-            Dim names$() = IO _
+            Dim names$() = IO.Tokenizer _
                 .CharsParser(fields) _
                 .Select(Function(s) s.GetStackValue("`", "`")) _
                 .ToArray

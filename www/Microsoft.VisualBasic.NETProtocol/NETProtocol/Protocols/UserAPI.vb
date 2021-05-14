@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba8d949111c6ea520542ed9f8a0eae54, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\Protocols\UserAPI.vb"
+﻿#Region "Microsoft.VisualBasic::cc10132a86b72e00e05e5fbc2dd6f31b, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\Protocols\UserAPI.vb"
 
     ' Author:
     ' 
@@ -71,7 +71,7 @@ Namespace NETProtocol.Protocols
             GetData
         End Enum
 
-        Public ReadOnly Property ProtocolEntry As Long = New Protocol(GetType(Protocols)).EntryPoint
+        Public ReadOnly Property ProtocolEntry As Long = New ProtocolAttribute(GetType(Protocols)).EntryPoint
 
         ''' <summary>
         ''' 在服务器端调用得到用户的唯一标识符

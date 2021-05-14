@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::742272efca11ec37983f3099174e17fa, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Surface.vb"
+﻿#Region "Microsoft.VisualBasic::f924cd05c4f31d65a2e294fe0bcc1175, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Surface.vb"
 
     ' Author:
     ' 
@@ -78,19 +78,19 @@ Namespace Drawing3D
         End Sub
 
         Public Sub Draw(ByRef canvas As Graphics, camera As Camera) Implements I3DModel.Draw
-            Dim path = New Point(vertices.Length - 1) {}
+            Dim path = New PointF(vertices.Length - 1) {}
             Dim polygon As New GraphicsPath
 
             For Each pt As SeqValue(Of Point3D) In camera.Project(vertices).SeqIterator
                 path(pt.i) = pt.value.PointXY(camera.screen)
             Next
 
-            Dim a As Point = path(0)
-            Dim b As Point
+            Dim a As PointF = path(0)
+            Dim b As PointF
 
             For i As Integer = 1 To path.Length - 1
                 b = path(i)
-                Call polygon.AddLine(a, b)
+                polygon.AddLine(a, b)
                 a = b
             Next
 

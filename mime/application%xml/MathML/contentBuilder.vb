@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a62ddd15da25ccfe96b96cd2643b4707, mime\application%xml\MathML\contentBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::f39b88b16123d8fbbe6a9505c2d87a73, mime\application%xml\MathML\contentBuilder.vb"
 
     ' Author:
     ' 
@@ -151,7 +151,7 @@ Namespace MathML
                 If apply.elements.Length = 2 Then
                     If apply.elements(Scan0).name = "minus" Then
                         apply.elements = {apply.elements(Scan0)} _
-                            .Join({New XmlElement With {.name = "cn", .text = 0}}) _
+                            .Join({New XmlElement With {.name = "cn", .text = "0"}}) _
                             .Join(apply.elements.Skip(1)) _
                             .ToArray
                     Else

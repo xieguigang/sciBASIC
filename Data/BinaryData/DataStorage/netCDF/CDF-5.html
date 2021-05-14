@@ -1,0 +1,539 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0061)http://cucis.ece.northwestern.edu/projects/PnetCDF/CDF-5.html -->
+<html><!-- 
+Copyright (C) 2003 Northwertern University and Argonne National
+Laboratory.
+
+Portions of this software were developed by the Unidata Program at the
+University Corporation for Atmospheric Research.
+
+Access and use of this software shall impose the following obligations and
+understandings on the user. The user is granted the right, without any fee or
+cost, to use, copy, modify, alter, enhance and distribute this software, and
+any derivative works thereof, and its supporting documentation for any purpose
+whatsoever, provided that this entire notice appears in all copies of the
+software, derivative works and supporting documentation.  Further, Northwestern
+University and Argonne National Laboratory request that the user credit
+Northwestern University and Argonne National Laboratory in any publications
+that result from the use of this software or in any product that includes this
+software.  The names Northwestern University and Argonne National Laboratory,
+however, may not be used in any advertising or publicity to endorse or promote
+any products or commercial entity unless specific written permission is
+obtained from Northwestern University and Argonne National Laboratory. The user
+also understands that Northwestern University and Argonne National Laboratory
+are not obligated to provide the user with any support, consulting, training or
+assistance of any kind with regard to the use, operation and performance of
+this software nor to provide the user with any updates, revisions, new versions
+or "bug fixes."
+
+THIS SOFTWARE IS PROVIDED BY NORTHWESTERN UNIVERSITY AND ARGONNE NATIONAL
+LABORATORY "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL NORTHWESTERN UNIVERSITY
+AND ARGONNE NATIONAL LABORATORY BE LIABLE FOR ANY SPECIAL, INDIRECT OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE ACCESS, USE OR PERFORMANCE OF
+THIS SOFTWARE.
+ --><!-- Created by GNU Texinfo 6.5, http://www.gnu.org/software/texinfo/ --><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>CDF-5 file format specification (PnetCDF C Interface Guide)</title>
+
+<meta name="description" content="CDF-5 file format specification (PnetCDF C Interface Guide)">
+<meta name="keywords" content="CDF-5 file format specification (PnetCDF C Interface Guide)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<link href="http://cucis.ece.northwestern.edu/projects/PnetCDF/index.html#Top" rel="start" title="Top">
+<link href="http://cucis.ece.northwestern.edu/projects/PnetCDF/Combined-Index.html#Combined-Index" rel="index" title="Combined Index">
+<link href="http://cucis.ece.northwestern.edu/projects/PnetCDF/index.html#Top" rel="up" title="Top">
+<link href="http://cucis.ece.northwestern.edu/projects/PnetCDF/CDF_002d2-file-format-specification.html#CDF_002d2-file-format-specification" rel="prev" title="CDF-2 file format specification">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+blockquote.smallindentedblock {margin-right: 0em; font-size: smaller}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+<script async="" src="./CDF-5 file format specification (PnetCDF C Interface Guide)_files/analytics.js.download"></script><script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-45938012-1', 'auto');
+  ga('create', 'UA-45937491-1', 'auto', {'name': 'pnetcdfTracker'});
+  ga('create', 'UA-46002884-1', 'auto', {'name': 'parallelnetcdfTracker'});
+
+  ga('send', 'pageview');
+  ga('pnetcdfTracker.send', 'pageview');
+  ga('parallelnetcdfTracker.send', 'pageview');
+</script>
+</head>
+
+<body lang="en">
+<a name="CDF_002d5-file-format-specification"></a>
+<div class="header">
+<p>
+Previous: <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/CDF_002d2-file-format-specification.html#CDF_002d2-file-format-specification" accesskey="p" rel="prev">CDF-2 file format specification</a>, Up: <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<a name="CDF_002d5-file-format-specification-1"></a>
+<h2 class="appendix">Appendix G CDF-5 file format specification</h2>
+<a name="index-Format_002c-CDF_002d5"></a>
+<a name="index-CDF_002d5-format-specification"></a>
+
+The specification of CDF classic file format (referred as CDF-1) is shown in  black font.<br>
+The new features added in <span style="color:red">CDF-2</span> specification are colored in <span style="color:red">red.</span> CDF-2 backward supports all specification of CDF-1.<br>
+The new features added in <span style="color:blue">CDF-5</span> specification are colored in <span style="color:blue">blue.</span> CDF-5 backward supports all specification of CDF-2.<br>
+
+(Note that "\x" used in this specification indicates the next two characters represent hexadecimal digits. Two hexadecimal digits, each of them 4 bits, make a byte.)
+<hr>
+
+<tt>
+<table>
+<tbody><tr><td>netcdf_file</td><td>=</td><td>header data</td><td></td></tr>
+<tr><td>header</td><td>=</td><td>magic numrecs dim_list gatt_list var_list</td><td></td></tr>
+<tr><td>magic</td><td>=</td><td>'C' 'D' 'F' VERSION</td><td></td></tr>
+<tr><td>VERSION</td><td>=</td><td>\x01 |</td><td>//classic format (CDF-1)</td></tr>
+<tr style="color:red"><td></td><td></td><td>\x02 |</td><td>//64-bit offset format (CDF-2)</td></tr>
+<tr style="color:blue"><td></td><td></td><td>\x05</td><td>//64-bit data format (CDF-5)</td></tr>
+<tr><td>numrecs</td><td>=</td><td>NON_NEG | STREAMING</td><td>//length of record dimension</td></tr>
+<tr><td>dim_list</td><td>=</td><td>ABSENT | NC_DIMENSION nelems [dim ...]</td><td></td></tr>
+<tr><td>gatt_list</td><td>=</td><td>att_list</td><td>//global attributes</td><td></td></tr>
+<tr><td>att_list</td><td>=</td><td>ABSENT | NC_ATTRIBUTE nelems [attr ...]</td><td></td></tr>
+<tr><td>var_list</td><td>=</td><td>ABSENT | NC_VARIABLE nelems [var ...]</td><td></td></tr>
+<tr><td>ABSENT</td><td>=</td><td>ZERO ZERO |</td><td>//list is not present (CDF-1 and <span style="color:red">CDF-2</span>)</td></tr>
+<tr><td></td><td></td><td>ZERO <span style="color:blue">ZERO64</span></td><td>//list is not present (<span style="color:blue">CDF-5</span>)</td></tr>
+<tr><td>ZERO</td><td>=</td><td>\x00 \x00 \x00 \x00</td><td>//32-bit zero</td></tr>
+<tr style="color:blue"><td>ZERO64</td><td>=</td><td>\x00 \x00 \x00 \x00 \x00 \x00 \x00 \x00</td><td>//64-bit zero (CDF-5)</td></tr>
+<tr><td>NC_DIMENSION</td><td>=</td><td>\x00 \x00 \x00 \x0A</td><td>//tag for list of dimensions</td></tr>
+<tr><td>NC_VARIABLE</td><td>=</td><td>\x00 \x00 \x00 \x0B</td><td>//tag for list of variables</td></tr>
+<tr><td>NC_ATTRIBUTE</td><td>=</td><td>\x00 \x00 \x00 \x0C</td><td>//tag for list of attributes</td></tr>
+<tr><td>nelems</td><td>=</td><td>NON_NEG</td><td>//number of elements in following sequence</td></tr>
+<tr><td>dim</td><td>=</td><td>name dim_length</td><td></td></tr>
+<tr><td>name</td><td>=</td><td>nelems namestring</td><td></td></tr>
+<tr><td></td><td></td><td></td><td>//Names a dimension, variable, or attribute.</td></tr>
+<tr><td></td><td></td><td></td><td>//Names should match the regular expression</td></tr>
+<tr><td></td><td></td><td></td><td style="white-space:nowrap;">//([a-zA-Z0-9_]|{MUTF8})([^\x00-\x1F/\x7F-\xFF]|{MUTF8})*</td></tr>
+<tr><td></td><td></td><td></td><td>//For other constraints, see <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/CDF-5.html#NOTENAMES5">"Note on names"</a> below.</td></tr>
+<tr><td>namestring</td><td>=</td><td>ID1 [IDN ...] padding</td><td></td></tr>
+<tr><td>ID1</td><td>=</td><td>alphanumeric | '_'</td><td></td></tr>
+<tr><td>IDN</td><td>=</td><td>alphanumeric | special1 | special2</td><td></td></tr>
+<tr><td>alphanumeric</td><td>=</td><td>lowercase | uppercase | numeric | MUTF8</td><td></td></tr>
+<tr><td>lowercase</td><td>=</td><td style="white-space:nowrap;">'a'|'b'|'c'|'d'|'e'|'f'|'g'|'h'|'i'|'j'|'k'|'l'|'m'|</td><td></td></tr>
+<tr><td></td><td></td><td>'n'|'o'|'p'|'q'|'r'|'s'|'t'|'u'|'v'|'w'|'x'|'y'|'z'</td><td></td></tr>
+<tr><td>uppercase</td><td>=</td><td>'A'|'B'|'C'|'D'|'E'|'F'|'G'|'H'|'I'|'J'|'K'|'L'|'M'|</td><td></td></tr>
+<tr><td></td><td></td><td>'N'|'O'|'P'|'Q'|'R'|'S'|'T'|'U'|'V'|'W'|'X'|'Y'|'Z'</td><td></td></tr>
+<tr><td>numeric</td><td>=</td><td>'0'|'1'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9'</td><td></td></tr>
+<tr><td>special1</td><td>=</td><td>'_'|'.'|'|''+'|'-'</td><td>//special1 chars have traditionally been</td></tr>
+<tr><td></td><td></td><td></td><td>//permitted in CDF-1.</td></tr>
+<tr><td>special2</td><td>=</td><td>' ' | '!' | '"' | '#'&nbsp; | '$' | '%' | '&amp;' | '\'' |</td><td>//special2 chars are recently permitted in</td></tr>
+<tr><td></td><td></td><td>'(' | ')' | '*' | ','&nbsp; | ':' | ';' | '&lt;' | '=' &nbsp;|</td><td>//names (and require escaping in CDL).</td></tr>
+<tr><td></td><td></td><td>'&gt;' | '?' | '[' | '\\' | ']' | '^' | '`' | '{' &nbsp;|</td><td>//Note: '/' is not permitted.</td></tr>
+<tr><td></td><td></td><td>'|' | '}' | '~'</td><td></td></tr>
+<tr><td>MUTF8</td><td>=</td><td style="white-space:nowrap;">&lt;multibyte UTF-8 encoded&gt;</td><td>//NFC-normalized Unicode character</td></tr>
+<tr><td>dim_length</td><td>=</td><td>NON_NEG</td><td>//If zero, this is the record dimension.</td></tr>
+<tr><td></td><td></td><td></td><td>//There can be at most one record dimension.</td></tr>
+<tr><td>attr</td><td>=</td><td>name nc_type nelems [values ...]</td><td></td></tr>
+<tr><td>nc_type</td><td>=</td><td>NC_BYTE &nbsp;&nbsp;|</td><td></td></tr>
+<tr><td></td><td></td><td>NC_CHAR &nbsp;&nbsp;|</td><td></td></tr>
+<tr><td></td><td></td><td>NC_SHORT &nbsp;|</td><td></td></tr>
+<tr><td></td><td></td><td>NC_INT &nbsp;&nbsp;&nbsp;|</td><td></td></tr>
+<tr><td></td><td></td><td>NC_FLOAT &nbsp;|</td><td></td></tr>
+<tr><td></td><td></td><td>NC_DOUBLE |</td><td></td></tr>
+<tr><td></td><td></td><td style="color:blue">NC_UBYTE &nbsp;|</td><td></td></tr>
+<tr><td></td><td></td><td style="color:blue">NC_USHORT |</td><td></td></tr>
+<tr><td></td><td></td><td style="color:blue">NC_UINT &nbsp;&nbsp;|</td><td></td></tr>
+<tr><td></td><td></td><td style="color:blue">NC_INT64 &nbsp;|</td><td></td></tr>
+<tr><td></td><td></td><td style="color:blue">NC_UINT64</td><td></td></tr>
+<tr><td>var</td><td>=</td><td style="white-space:nowrap;">name nelems [dimid ...] vatt_list nc_type vsize begin</td><td></td></tr>
+<tr><td></td><td></td><td></td><td>//nelems is the dimensionality (rank) of the variable</td></tr>
+<tr><td></td><td></td><td></td><td>//0 for scalar, 1 for vector, 2 for matrix, ...</td></tr>
+<tr><td>dimid</td><td>=</td><td>NON_NEG</td><td>//Dimension ID (index into dim_list) for variable</td></tr>
+<tr><td></td><td></td><td></td><td>//shape. We say this is a "record variable" if and only</td></tr>
+<tr><td></td><td></td><td></td><td>//if the first dimension is the record dimension.</td></tr>
+<tr><td>vatt_list</td><td>=</td><td>att_list</td><td>//Variable-specific attributes</td></tr>
+<tr><td>vsize</td><td>=</td><td>NON_NEG</td><td>//Variable size. If not a record variable, the amount</td></tr>
+<tr><td></td><td></td><td></td><td>//of space in bytes allocated to the variable's data.</td></tr>
+<tr><td></td><td></td><td></td><td>//For record variables, it is the amount of space per</td></tr>
+<tr><td></td><td></td><td></td><td>//record. See <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/CDF-5.html#NOTEVSIZE5">"Note on vsize"</a>, below.</td></tr>
+<tr><td>begin</td><td>=</td><td>OFFSET</td><td>//Variable start location. The offset in bytes (seek</td></tr>
+<tr><td></td><td></td><td></td><td>//index) in the file of the beginning of data for this.</td></tr>
+<tr><td></td><td></td><td></td><td>//variable.</td></tr>
+<tr><td>data</td><td>=</td><td>non_recs recs</td><td></td></tr>
+<tr><td>non_recs</td><td>=</td><td>[vardata ...]</td><td>//The data for all non-record variables, stored</td></tr>
+<tr><td></td><td></td><td></td><td>//contiguously for each variable, in the same order the</td></tr>
+<tr><td></td><td></td><td></td><td>//variables occur in the header.</td></tr>
+<tr><td>vardata</td><td>=</td><td>[values ...]</td><td>//All data for a non-record variable, as a block of</td></tr>
+<tr><td></td><td></td><td></td><td>//values of the same type as the variable, in row-major</td></tr>
+<tr><td></td><td></td><td></td><td>//order (last dimension varying fastest).</td></tr>
+<tr><td>recs</td><td>=</td><td>[record ...]</td><td>//The data for all record variables are stored</td></tr>
+<tr><td></td><td></td><td></td><td>//interleaved at the end of the file.</td></tr>
+<tr><td>record</td><td>=</td><td>[varslab ...]</td><td>//Each record consists of the n-th slab from each</td></tr>
+<tr><td></td><td></td><td></td><td>//record variable, for example x[n,...], y[n,...],</td></tr>
+<tr><td></td><td></td><td></td><td>//z[n,...] where the first index is the record number,</td></tr>
+<tr><td></td><td></td><td></td><td>//which is the unlimited dimension index.</td></tr>
+<tr><td>varslab</td><td>=</td><td>[values ...]</td><td>//One record of data for a variable, a block of values</td></tr>
+<tr><td></td><td></td><td></td><td>//all of the same type as the variable in row-major</td></tr>
+<tr><td></td><td></td><td></td><td>//order (last index varying fastest).</td></tr>
+<tr><td>values</td><td>=</td><td>bytes | chars | shorts | ints | floats | doubles |</td><td></td></tr>
+<tr><td></td><td></td><td style="color:blue">ubytes | ushorts | uints | int64s | uint64s</td><td></td></tr>
+<tr><td>string</td><td>=</td><td>nelems [chars]</td><td></td></tr>
+<tr><td>bytes</td><td>=</td><td>[BYTE ...] padding</td><td></td></tr>
+<tr><td>chars</td><td>=</td><td>[CHAR ...] padding</td><td></td></tr>
+<tr><td>shorts</td><td>=</td><td>[SHORT ...] padding</td><td></td></tr>
+<tr><td>ints</td><td>=</td><td>[INT ...]</td><td></td></tr>
+<tr><td>floats</td><td>=</td><td>[FLOAT ...]</td><td></td></tr>
+<tr><td>doubles</td><td>=</td><td>[DOUBLE ...]</td><td></td></tr>
+<tr style="color:blue"><td>ubytes</td><td>=</td><td>[UBYTE ...] padding</td><td></td></tr>
+<tr style="color:blue"><td>ushorts</td><td>=</td><td>[USHORT ...] padding</td><td></td></tr>
+<tr style="color:blue"><td>uints</td><td>=</td><td>[UINT ...]</td><td></td></tr>
+<tr style="color:blue"><td>int64s</td><td>=</td><td>[INT64 ...]</td><td></td></tr>
+<tr style="color:blue"><td>uint64s</td><td>=</td><td>[UINT64 ...]</td><td></td></tr>
+<tr><td>padding</td><td>=</td><td>&lt;0, 1, 2, or 3 bytes to next 4-byte boundary&gt;</td><td></td></tr>
+<tr><td></td><td></td><td></td><td>//Header padding uses null (\x00) bytes. In data, padding</td></tr>
+<tr><td></td><td></td><td></td><td>//uses variable's fill value. See <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/CDF-5.html#NOTEPADDING5">"Note on padding"</a> below</td></tr>
+<tr><td></td><td></td><td></td><td>//for a special case.</td></tr>
+<tr><td>NON_NEG</td><td>=</td><td>&lt;non-negative INT&gt; |</td><td>//for CDF-1 and CDF-2 formats</td></tr>
+<tr style="color:blue"><td></td><td></td><td>&lt;non-negative INT64&gt;</td><td>//for 64-bit data format (CDF-5)</td></tr>
+<tr><td>STREAMING</td><td>=</td><td>\xFF \xFF \xFF \xFF |</td><td>//for CDF-1 and CDF-2 formats</td></tr>
+<tr style="color:blue"><td></td><td></td><td>\xFF \xFF \xFF \xFF \xFF \xFF \xFF \xFF</td><td>//for CDF-5 format</td></tr>
+<tr><td></td><td></td><td></td><td>//Indicates indeterminate record count, allows streaming</td></tr>
+<tr><td></td><td></td><td></td><td>//data</td></tr>
+<tr><td>OFFSET</td><td>=</td><td>&lt;non-negative INT&gt; |</td><td>//for classic format (CDF-1)</td></tr>
+<tr style="color:red"><td></td><td></td><td>&lt;non-negative INT64&gt;</td><td>//for CDF-2 and <span style="color:blue">CDF-5</span> formats</td></tr>
+<tr><td>BYTE</td><td>=</td><td>&lt;8-bit byte&gt;</td><td>//See <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/CDF-5.html#NOTEBYTE5">"Note on byte data"</a> below.</td></tr>
+<tr><td>CHAR</td><td>=</td><td>&lt;8-bit byte&gt;</td><td>//See <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/CDF-5.html#NOTECHAR5">"Note on char data"</a> below.</td></tr>
+<tr><td>SHORT</td><td>=</td><td style="white-space:nowrap;">&lt;16-bit signed integer, Bigendian, two's complement&gt;</td><td></td></tr>
+<tr><td>INT</td><td>=</td><td style="white-space:nowrap;">&lt;32-bit signed integer, Bigendian, two's complement&gt;</td><td></td></tr>
+<tr><td>FLOAT</td><td>=</td><td style="white-space:nowrap;">&lt;32-bit IEEE single-precision float, Bigendian&gt;</td><td></td></tr>
+<tr><td>DOUBLE</td><td>=</td><td>&lt;64-bit IEEE double-precision float, Bigendian&gt;</td><td></td></tr>
+<tr style="color:blue"><td>UBYTE</td><td>=</td><td style="white-space:nowrap;">&lt;8-bit unsigned byte&gt;</td><td></td></tr>
+<tr style="color:blue"><td>USHORT</td><td>=</td><td style="white-space:nowrap;">&lt;16-bit unsigned integer, Bigendian, two's complement&gt;</td><td></td></tr>
+<tr style="color:blue"><td>UINT</td><td>=</td><td style="white-space:nowrap;">&lt;32-bit unsigned integer, Bigendian, two's complement&gt;</td><td></td></tr>
+<tr style="color:red"><td>INT64</td><td>=</td><td style="white-space:nowrap;">&lt;64-bit signed integer, Bigendian, two's complement&gt;</td><td></td></tr>
+<tr style="color:blue"><td>UINT64</td><td>=</td><td style="white-space:nowrap;">&lt;64-bit unsigned integer, Bigendian, two's complement&gt;</td><td></td></tr>
+
+<tr><td></td><td></td><td></td><td>//following type tags are 32-bit integers</td></tr>
+<tr><td>NC_BYTE</td><td>=</td><td>\x00 \x00 \x00 \x01</td><td>//8-bit signed integers</td></tr>
+<tr><td>NC_CHAR</td><td>=</td><td>\x00 \x00 \x00 \x02</td><td>//text characters</td></tr>
+<tr><td>NC_SHORT</td><td>=</td><td>\x00 \x00 \x00 \x03</td><td>//16-bit signed integers</td></tr>
+<tr><td>NC_INT</td><td>=</td><td>\x00 \x00 \x00 \x04</td><td>//32-bit signed integers</td></tr>
+<tr><td>NC_FLOAT</td><td>=</td><td>\x00 \x00 \x00 \x05</td><td>//IEEE single precision floats</td></tr>
+<tr><td>NC_DOUBLE</td><td>=</td><td>\x00 \x00 \x00 \x06</td><td>//IEEE double precision floats</td></tr>
+<tr style="color:blue"><td>NC_UBYTE</td><td>=</td><td>\x00 \x00 \x00 \x07</td><td>//unsigned 1 byte integer</td></tr>
+<tr style="color:blue"><td>NC_USHORT</td><td>=</td><td>\x00 \x00 \x00 \x08</td><td>//unsigned 2-byte integer</td></tr>
+<tr style="color:blue"><td>NC_UINT</td><td>=</td><td>\x00 \x00 \x00 \x09</td><td>//unsigned 4-byte integer</td></tr>
+<tr style="color:blue"><td>NC_INT64</td><td>=</td><td>\x00 \x00 \x00 \x0A</td><td>//signed 8-byte integer</td></tr>
+<tr style="color:blue"><td>NC_UINT64</td><td>=</td><td>\x00 \x00 \x00 \x0B</td><td>//unsigned 8-byte integer</td></tr>
+
+<tr><td></td><td></td><td></td><td>//Default fill values for each type, may be overridden by</td></tr>
+<tr><td></td><td></td><td></td><td>//variable attribute named `_FillValue'. See</td></tr>
+<tr><td></td><td></td><td></td><td>//<a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/CDF-5.html#NOTEFILL5">"Note on fill values"</a> below.</td></tr>
+<tr><td>FILL_CHAR</td><td>=</td><td>\x00</td><td>//((char)0) null byte</td></tr>
+<tr><td>FILL_BYTE</td><td>=</td><td>\x81</td><td>//(signed char) -127</td></tr>
+<tr><td>FILL_SHORT</td><td>=</td><td>\x80 \x01</td><td>//(short) -32767</td></tr>
+<tr><td>FILL_INT</td><td>=</td><td>\x80 \x00 \x00 \x01</td><td>//(int) -2147483647</td></tr>
+<tr><td>FILL_FLOAT</td><td>=</td><td>\x7C \xF0 \x00 \x00</td><td>//(float) 9.9692099683868690e+36</td></tr>
+<tr><td>FILL_DOUBLE</td><td>=</td><td>\x47 \x9E \x00 \x00 \x00 \x00 \x00 \x00</td><td>//(double)9.9692099683868690e+36</td></tr>
+<tr style="color:blue"><td>FILL_UBYTE</td><td>=</td><td>\xFF</td><td>//(255)</td></tr>
+<tr style="color:blue"><td>FILL_USHORT</td><td>=</td><td>\xFF \xFF</td><td>//(65535)</td></tr>
+<tr style="color:blue"><td>FILL_UINT</td><td>=</td><td>\xFF \xFF \xFF \xFF</td><td>//(4294967295U)</td></tr>
+<tr style="color:blue"><td>FILL_INT64</td><td>=</td><td>\x80 \x00 \x00 \x00 \x00 \x00 \x00 \x02</td><td>//((long long)-9223372036854775806LL)</td></tr>
+<tr style="color:blue"><td>FILL_UINT64</td><td>=</td><td>\xFF \xFF \xFF \xFF \xFF \xFF \xFF \xFE</td><td>//((unsigned long long)18446744073709551614ULL)</td></tr>
+</tbody></table>
+</tt>
+<hr>
+
+<a name="Notes"></a>
+<h3 class="heading">Notes</h3>
+
+<p><strong>Note on vsize</strong>:<a name="NOTEVSIZE5"></a>This number is the product of the dimension lengths
+(omitting the record dimension) and the number of bytes per value
+(determined from the type), increased to the next multiple of 4, for
+each variable.  If a record variable, this is the amount of space per
+record (except that, for backward compatibility, it always includes
+padding to the next multiple of 4 bytes, even in the exceptional case
+noted below under "Note on padding").  The netCDF "record size" is
+calculated as the sum of the <code>vsize</code>’s of all the record variables.
+</p>
+<p>The <strong>vsize</strong> field is actually redundant, because its value may be
+computed from other information in the header. The 32-bit <strong>vsize</strong> field
+is not large enough to contain the size of variables that require more
+than 2^32 - 4 bytes, so 2^32 - 1 is used in the <strong>vsize</strong> field for such
+variables.
+</p>
+<p><strong>Note on names</strong>:<a name="NOTENAMES5"></a>CDF-1 enforces a more restricted set of characters in
+creating new names, but permits reading names containing arbitrary
+bytes.  This specification extends the permitted characters in names
+to include multi-byte UTF-8 encoded Unicode and additional printing
+characters from the US-ASCII alphabet. The first character of a name
+must be alphanumeric, a multi-byte UTF-8 character, or ’_’
+(reserved for special names with meaning to implementations,
+such as the "_FillValue" attribute).  Subsequent characters may also
+include printing special characters, except for ’/’ which is not
+allowed in names.  Names that have trailing space characters are also
+not permitted.
+</p>
+<p>Implementations of all CDF formats must
+ensure that names are normalized according to Unicode NFC
+normalization rules during encoding as UTF-8 for storing in the file
+header.  This is necessary to ensure that gratuitous differences in
+the representation of Unicode names do not cause anomalies in
+comparing files and querying data objects by name.
+</p>
+<p><strong>Note on streaming data</strong>:<a name="NOTESTREAMING5"></a>The largest possible record count, 2^32
+- 1, is reserved to indicate an indeterminate number of records. 
+This means that the number of records in the file must be determined
+by other means, such as reading them or computing the current number
+of records from the file length and other information in the header. 
+It also means that the numrecs field in the header will not be updated
+as records are added to the file.  [This feature is not yet
+implemented].
+</p>
+<p><strong>Note on padding</strong>:<a name="NOTEPADDING5"></a>In the special case when there is only one record
+variable and it is of type character, byte, or short, no padding is
+used between record slabs, so records after the first record do not
+necessarily start on four-byte boundaries.  However, as noted above
+under "Note on <strong>vsize</strong>, the <strong>vsize</strong> field is computed to
+include padding to the next multiple of 4 bytes.  In this case,
+readers should ignore <strong>vsize</strong> and assume no padding.  Writers
+should store <strong>vsize</strong> as if padding were included.
+</p>
+<p><strong>Note on byte data</strong>:<a name="NOTEBYTE5"></a>It is possible to interpret byte data as either
+signed (-128 to 127) or unsigned (0 to 255). When reading byte data
+through an interface that converts it into another numeric type, the
+default interpretation is signed.  There are various attribute
+conventions for specifying whether bytes represent signed or unsigned
+data, but no standard convention has been established.  The variable
+attribute "_Unsigned" is reserved for this purpose in future
+implementations.
+</p>
+<p><strong>Note on char data</strong>:<a name="NOTECHAR5"></a>Although the characters used in netCDF names must
+be encoded as UTF-8, character data may use other encodings. The variable
+attribute "_Encoding" is reserved for this purpose in future implementations.
+</p>
+<p><strong>Note on fill values</strong>:<a name="NOTEFILL5"></a> Because data variables may be created before
+their values are written, and because values need not be written
+sequentially in a netCDF file, default "fill values" are defined for
+each type, for initializing data values before they are explicitly
+written.  This makes it possible to detect reading values that were
+never written.  The variable attribute "_FillValue", if present,
+overrides the default fill value for a variable. If _FillValue is
+defined then it should be scalar and of the same type as the variable.
+</p>
+<p>Fill values are not required, however, because netCDF libraries have
+traditionally supported a "no fill" mode when writing, omitting the
+initialization of variable values with fill values. This makes the
+creation of large files faster, but also eliminates the possibility of
+detecting the inadvertent reading of values that haven’t been written.
+</p>
+<a name="Notes-on-Computing-File-Offsets-2"></a>
+<h3 class="heading">Notes on Computing File Offsets</h3>
+
+<p>The offset (position within the file) of a specified data value in a
+CDF-1, CDF-2, or CDF-5 file is determined by
+the variable start location (the offset in the <code>begin</code> field), the
+external type of the variable (the <code>nc_type</code> field), and the
+dimension indices (one for each of the variable’s dimensions) of the
+value desired.
+</p>
+<p>The external size in bytes of one data value for each possible
+netCDF type, denoted <code>extsize</code> below, is:
+</p>
+<table>
+<tbody><tr><td width="1%"><code>NC_BYTE</code></td><td width="10%">1</td></tr>
+<tr><td width="1%"><code>NC_CHAR</code></td><td width="10%">1</td></tr>
+<tr><td width="1%"><code>NC_SHORT</code></td><td width="10%">2</td></tr>
+<tr><td width="1%"><code>NC_INT</code></td><td width="10%">4</td></tr>
+<tr><td width="1%"><code>NC_FLOAT</code></td><td width="10%">4</td></tr>
+<tr><td width="1%"><code>NC_DOUBLE</code></td><td width="10%">8</td></tr>
+<tr><td width="1%"><code>NC_UBYTE</code></td><td width="10%">1</td></tr>
+<tr><td width="1%"><code>NC_USHORT</code></td><td width="10%">2</td></tr>
+<tr><td width="1%"><code>NC_UINT</code></td><td width="10%">4</td></tr>
+<tr><td width="1%"><code>NC_INT64</code></td><td width="10%">8</td></tr>
+<tr><td width="1%"><code>NC_UINT64</code></td><td width="10%">8</td></tr>
+</tbody></table>
+
+<p>The record size, denoted by <code>recsize</code> below, is the sum of the <code>vsize</code>
+fields of record variables (variables that use the unlimited
+dimension), using the actual value determined by dimension sizes and
+variable type in case the <code>vsize</code> field is too small for the variable
+size.
+</p>
+<p>To compute the offset of a value relative to the beginning of a
+variable, it is helpful to precompute a “product vector” from the
+dimension lengths.  Form the products of the dimension lengths for the
+variable from right to left, skipping the leftmost (record) dimension
+for record variables, and storing the results as the product vector
+for each variable.
+</p>
+<p>For example:
+</p><div class="example">
+<pre class="example">Non-record variable:
+
+        dimension lengths:      [  5  3  2 7]
+        product vector:         [210 42 14 7]
+
+Record variable:
+
+        dimension lengths:      [0  2  9 4]
+        product vector:         [0 72 36 4]
+</pre></div>
+<p>At this point, the leftmost product, when rounded up to the next
+multiple of 4, is the variable size, <code>vsize</code>, in the grammar above. For
+example, in the non-record variable above, the value of the <code>vsize</code>
+field is 212 (210 rounded up to a multiple of 4). For the record
+variable, the value of <code>vsize</code> is just 72, since this is already a
+multiple of 4.
+</p>
+<p>Let coord be the array of coordinates (dimension indices, zero-based)
+of the desired data value.  Then the offset of the value from the
+beginning of the file is just the file offset of the first data value
+of the desired variable (its <code>begin</code> field) added to the inner product
+of the coord and product vectors times the size, in bytes, of each
+datum for the variable. Finally, if the variable is a record variable,
+the product of the record number, ’coord[0]’, and the record size,
+<code>recsize</code>, is added to yield the final offset value.
+</p>
+<p>A special case: Where there is exactly one record variable, we drop
+the requirement that each record be four-byte aligned, so in this case
+there is no record padding.
+</p>
+<a name="Examples-5"></a>
+<h3 class="heading">Examples</h3>
+
+<p>By using the grammar above, we can derive the smallest valid netCDF
+file, having no dimensions, no variables, no attributes, and hence, no
+data. A CDL representation of the empty netCDF file is
+</p><div class="example">
+<pre class="example">netcdf empty { }
+</pre></div>
+<p>This empty netCDF file has 32 bytes if it is in CDF-1 or CDF-2 format.
+If the file is in CDF-5 formatm the size is 48 bytes.
+For CDF-1 and CDF-2 format, the file begins with the four-byte
+“magic number” that identifies it as a netCDF version 1 file:
+‘<samp>C</samp>’, ‘<samp>D</samp>’, ‘<samp>F</samp>’, ‘<samp>\x01</samp>’. Following are seven 32-bit
+integer zeros representing the number of records, an empty list of
+dimensions, an empty list of global attributes, and an empty list of
+variables.
+The layout is similar for CDF-5, but the NON_NEG and ZERO64 integers are 64-bits.
+</p>
+<p>Let’s use an example file named tiny.nc created from a CDL file shown below.
+</p><div class="example">
+<pre class="example">% cat tiny.cdl
+netcdf tiny {
+dimensions:
+        dim = 5;
+variables:
+        short vx(dim);
+data:
+        vx = 3, 1, 4, 1, 5 ;
+}
+</pre></div>
+
+To create a netCDF binary file in <span style="color:blue">CDF-5</span> format, one can use command:
+<div class="example">
+<pre class="example">% ncgen -v 5 -b tiny.cdl
+</pre></div>
+Similarly, the command to create a <span style="color:red">CDF-2</span> file is
+<div class="example">
+<pre class="example">% ncgen -v 2 -b tiny.cdl
+</pre></div>
+
+<p>Below is an (edited) dump of tiny.nc produced using the Unix command
+</p><div class="example">
+<pre class="example">% od -c tiny.nc
+</pre></div>
+Each 16-byte portion of the file is displayed with 2 lines. The first
+line displays the bytes as characters. The second line (added by human)
+presents the interpretation of the bytes in terms of CDF format specification
+components and values. The dump corresponds to a 140-byte netCDF file in
+<span style="color:blue">CDF-5</span> format.
+
+<div class="example">
+<pre class="example">0000000    C   D   F 005  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \n
+          [ magic number] [    numrecs = 0 records      ] [NC_DIMENSION ]
+0000020   \0  \0  \0  \0  \0  \0  \0 001  \0  \0  \0  \0  \0  \0  \0 003
+          [     nelems = 1 dimension    ] [  dimension name has 3 chars  ]
+0000040    d   i   m  \0  \0  \0  \0  \0  \0  \0  \0 005  \0  \0  \0  \0
+          [ name="dim"  ] [       dim_length = 5        ] [ 0 global att-
+0000060   \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \v  \0  \0  \0  \0
+          ribute (ABSENT = ZERO ZERO64) ] [ NC_VARIABLE ] [  nelems =
+0000100   \0  \0  \0 001  \0  \0  \0  \0  \0  \0  \0 002   v   x  \0  \0
+           1 variable   ] [ variable name has 2 chars   ] [ name = "vx" ]
+0000120   \0  \0  \0  \0  \0  \0  \0 001  \0  \0  \0  \0  \0  \0  \0  \0
+          [ variable has 1 dimension    ] [  first dimension has ID 0   ]
+0000140   \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0 003
+          [ var has 0 attributes (ABSENT = ZERO ZERO64) ] [type=NC_SHORT]
+0000160   \0  \0  \0  \0  \0  \0  \0  \f  \0  \0  \0  \0  \0  \0  \0 200
+          [  var size, vsize = 12 bytes ] [var's file offset begin = 128]
+0000200   \0 003  \0 001  \0 004  \0 001  \0 005 200 001                
+          [    3] [    1] [    4] [    1] [    5][padding]
+0000214
+</pre></div>
+
+Below is the dump corresponds to a 96-byte <span style="color:red">CDF-2</span> file generated from the same CDL file, tiny.cdl.
+<div class="example">
+<pre class="example">0000000    C   D   F 002  \0  \0  \0  \0  \0  \0  \0  \n  \0  \0  \0 001
+          [ magic number] [ numrecs = 0 ] [NC_DIMENSION ] [ 1 dimension ]
+0000020   \0  \0  \0 003   d   i   m  \0  \0  \0  \0 005  \0  \0  \0  \0
+          [  3 chars    ] [ name="dim"  ] [dim_length=5 ] [ 0 global atts
+0000040   \0  \0  \0  \0  \0  \0  \0  \v  \0  \0  \0 001  \0  \0  \0 002
+          (ABSENT)      ] [ NC_VARIABLE ] [  1 variable ] [   2 chars   ]
+0000060    v   x  \0  \0  \0  \0  \0 001  \0  \0  \0  \0  \0  \0  \0  \0
+          [ name = "vx" ] [ 1 dimension ] [ 1st dim ID 0] [ 0 attributes
+0000100   \0  \0  \0  \0  \0  \0  \0 003  \0  \0  \0  \f  \0  \0  \0  \0
+           (ABSENT)     ] [type=NC_SHORT] [vsize=12bytes] [ var's file offset
+0000120   \0  \0  \0   T  \0 003  \0 001  \0 004  \0 001  \0 005 200 001
+           begin = 84   ] [    3] [    1] [    4] [    1] [    5][padding]
+0000140
+</pre></div>
+
+<p>Note that if the netCDF files were generated by utility "ncmpigen" instead
+of "ncgen", the file size and the value of variable’s begin will be different.
+This is because PnetCDF uses a default minimum file header size of 512 bytes.
+Thus the last three lines of the dump will become:
+</p><div class="example">
+<pre class="example">0000120   \0  \0 002  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0
+          begin = 512   ] [    skip ....
+0000140   \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0
+*
+0001000   \0 003  \0 001  \0 004  \0 001  \0 005
+         ][    3] [    1] [    4] [    1] [    5]
+0001012
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Previous: <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/CDF_002d2-file-format-specification.html#CDF_002d2-file-format-specification" accesskey="p" rel="prev">CDF-2 file format specification</a>, Up: <a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/index.html#Top" accesskey="u" rel="up">Top</a> &nbsp; [<a href="http://cucis.ece.northwestern.edu/projects/PnetCDF/Combined-Index.html#Combined-Index" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+
+
+</body></html>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b88d8fd49edbeb7c30f415a61478df08, www\Microsoft.VisualBasic.NETProtocol\Protocol\Streams\VarArray.vb"
+﻿#Region "Microsoft.VisualBasic::2f96d1b8fe455bcc689650341a8cbf4c, www\Microsoft.VisualBasic.NETProtocol\Protocol\Streams\VarArray.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,14 @@
     '     Class VarArray
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: Serialize
+    '         Sub: Serialize
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.BinaryDumping
@@ -61,7 +62,7 @@ Namespace Protocols.Streams.Array
         Sub New(raw As Byte(), serilize As IGetBuffer(Of T), load As IGetObject(Of T))
             Call Me.New(serilize, load)
 
-            Dim lb As Byte() = New Byte(Int64 - 1) {}
+            Dim lb As Byte() = New Byte(INT64 - 1) {}
             Dim buf As Byte()
             Dim i As New Pointer
             Dim list As New List(Of T)
@@ -70,7 +71,7 @@ Namespace Protocols.Streams.Array
 
             Do While raw.Length > i
 
-                Call Buffer.ConstrainedCopy(raw, i << Int64, lb, Scan0, Int64)
+                Call Buffer.ConstrainedCopy(raw, i << INT64, lb, Scan0, INT64)
 
                 l = BitConverter.ToInt64(lb, Scan0)
                 buf = New Byte(l - 1) {}
@@ -88,9 +89,7 @@ Namespace Protocols.Streams.Array
         ''' Long + T + Long + T
         ''' 其中Long是一个8字节长度的数组，用来指示T的长度
         ''' </summary>
-        ''' <returns></returns>
-        Public Overrides Function Serialize() As Byte()
-            Dim list As New List(Of Byte)
+        Public Overrides Sub Serialize(buffer As Stream)
             Dim LQuery = From index As SeqValue(Of T)
                          In Values.SeqIterator.AsParallel
                          Select buf = New SeqValue(Of Byte()) With {
@@ -104,11 +103,14 @@ Namespace Protocols.Streams.Array
                 Dim l As Long = byts.Length
                 Dim lb As Byte() = BitConverter.GetBytes(l)
 
-                Call list.AddRange(lb)
-                Call list.AddRange(byts)
+                Call buffer.Write(lb, Scan0, lb.Length)
+                Call buffer.Write(byts, Scan0, byts.Length)
+
+                Erase byts
+                Erase lb
             Next
 
-            Return list.ToArray
-        End Function
+            Call buffer.Flush()
+        End Sub
     End Class
 End Namespace

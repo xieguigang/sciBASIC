@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9dd09ff7c4fe69a7980dfb80d6e4a4c6, Data_science\Mathematica\Math\DataFittings\Linear\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::6bd5f75a96a0f005c8c188ad10f01441, Data_science\Mathematica\Math\DataFittings\Linear\Extensions.vb"
 
     ' Author:
     ' 
@@ -58,7 +58,7 @@ Public Module Extensions
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function X(fit As IFitted) As Vector
-        Return fit.ErrorTest.Select(Function(point) point.X).AsVector
+        Return fit.ErrorTest.Select(Function(point) DirectCast(point, TestPoint).X).AsVector
     End Function
 
     ''' <summary>

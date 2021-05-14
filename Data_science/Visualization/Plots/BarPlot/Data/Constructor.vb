@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0414a982082ce4afca7e18b55ab6b7c3, Data_science\Visualization\Plots\BarPlot\Data\Constructor.vb"
+﻿#Region "Microsoft.VisualBasic::ce9dff6e75345b85ffc5d27e07848ca1, Data_science\Visualization\Plots\BarPlot\Data\Constructor.vb"
 
     ' Author:
     ' 
@@ -42,6 +42,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language

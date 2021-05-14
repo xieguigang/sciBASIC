@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c615581be58adaa5b5ec634cec6438f, www\Microsoft.VisualBasic.NETProtocol\Protocol\Streams\ArrayBase.vb"
+﻿#Region "Microsoft.VisualBasic::eeeb243955f56dd50e1cb9e76b776bc0, www\Microsoft.VisualBasic.NETProtocol\Protocol\Streams\ArrayBase.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,17 @@
     '     Class ValueArray
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString
+    ' 
+    '         Function: getBuffer, ToString
+    ' 
+    '         Sub: Serialize
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -81,7 +85,16 @@ Namespace Protocols.Streams.Array
             End If
         End Sub
 
-        Public NotOverridable Overrides Function Serialize() As Byte()
+        Public Overrides Sub Serialize(buffer As Stream)
+            Dim data As Byte() = getBuffer()
+
+            Call buffer.Write(data, Scan0, data.Length)
+            Call buffer.Flush()
+
+            Erase data
+        End Sub
+
+        Private Function getBuffer() As Byte()
             Dim bufferArray As Byte() = New Byte(Values.Length * _bufWidth - 1) {}
             Dim p As i32 = 0
 

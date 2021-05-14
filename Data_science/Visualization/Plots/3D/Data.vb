@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0033921bc7f87378912ae9eca8d6b07e, Data_science\Visualization\Plots\3D\Data.vb"
+﻿#Region "Microsoft.VisualBasic::27fb6702891675b93446219a3c649d16, Data_science\Visualization\Plots\3D\Data.vb"
 
     ' Author:
     ' 
@@ -211,11 +211,9 @@ Namespace Plot3D
                                                         xsteps!, ysteps!,
                                                         parallel As Boolean) As IEnumerable(Of List(Of (x#, y#, z As Tout)))
 
-            Dim tick As Action(Of Double) =
-                __progressProvider(x.Length / xsteps, y.Length, ysteps, x)
+            Dim tick As Action(Of Double) = __progressProvider(x.Length / xsteps, y.Length, ysteps, x)
 
             For xi# = x.Min To x.Max Step xsteps!
-
                 If parallel Then
                     Dim dy As New List(Of Double)
                     Dim x0# = xi
@@ -271,9 +269,11 @@ Namespace Plot3D
                     matrix += New DataSet With {
                         .ID = row(Scan0).x,
                         .Properties = row _
-                        .ToDictionary(
-                            Function(pt) CStr(pt.y),
-                            Function(pt) pt.z)
+                            .ToDictionary(
+                                Function(pt) CStr(pt.y),
+                                Function(pt)
+                                    Return pt.z
+                                End Function)
                     }
                 End If
 

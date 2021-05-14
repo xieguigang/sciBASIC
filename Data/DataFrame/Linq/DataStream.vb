@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66f86094400c5bd2d0a44ebabd4df249, Data\DataFrame\Linq\DataStream.vb"
+﻿#Region "Microsoft.VisualBasic::d637421d8c78737dcc3fba085da76056, Data\DataFrame\Linq\DataStream.vb"
 
     ' Author:
     ' 
@@ -192,11 +192,17 @@ Namespace IO.Linq
         ''' </summary>
         ReadOnly _title As RowObject
         ReadOnly _file As StreamReader
+        ReadOnly _schema As Dictionary(Of String, Integer)
 
         ''' <summary>
         ''' The columns and their index order
         ''' </summary>
         Public ReadOnly Property SchemaOridinal As Dictionary(Of String, Integer) Implements ISchema.SchemaOridinal
+            Get
+                Return _schema
+            End Get
+        End Property
+
         Public ReadOnly Property FileName As String
 
         Sub New()
@@ -229,8 +235,8 @@ Namespace IO.Linq
         Public Function GetOrdinal(Name As String) As Integer Implements ISchema.GetOrdinal
             Name = Name.ToLower
 
-            If _SchemaOridinal.ContainsKey(Name) Then
-                Return _SchemaOridinal(Name)
+            If _schema.ContainsKey(Name) Then
+                Return _schema(Name)
             Else
                 Return -1
             End If
@@ -272,7 +278,7 @@ Namespace IO.Linq
                 Dim row As RowObject = RowObject.TryParse(line)
                 Dim obj As Object = Activator.CreateInstance(type)
 
-                obj = RowBuilder.FillData(row, obj)
+                obj = RowBuilder.FillData(row, obj, "")
 
                 Call invoke(DirectCast(obj, T))
             Next
@@ -310,7 +316,7 @@ Namespace IO.Linq
                     From row As RowObject
                     In LQuery.AsParallel
                     Let obj As Object = Activator.CreateInstance(type)
-                    Let data = RowBuilder.FillData(row, obj)
+                    Let data = RowBuilder.FillData(row, obj, "")
                     Select DirectCast(data, T)
 
                 Call Time(AddressOf New __taskHelper(Of T)(values, invoke).RunTask)
@@ -366,7 +372,7 @@ Namespace IO.Linq
                 In If(parallel, DirectCast(BufferProvider.AsParallel, IEnumerable(Of String)), DirectCast(BufferProvider(), IEnumerable(Of String)))
                 Let row As RowObject = RowObject.TryParse(line)
                 Let obj As Object = Activator.CreateInstance(type)
-                Let data As Object = RowBuilder.FillData(row, obj)
+                Let data As Object = RowBuilder.FillData(row, obj, "")
                 Select DirectCast(data, T)
 
             For Each obj As T In LQuery
@@ -398,9 +404,6 @@ Namespace IO.Linq
             If Not Me.disposedValue Then
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
-                    __innerBuffer = Nothing
-                    __innerStream = Nothing
-
                     Call FlushMemory()
                 End If
 

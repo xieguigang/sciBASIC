@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::329df20f9b5782b01d99415778cffeca, mime\application%json\BSON\Encoder.vb"
+﻿#Region "Microsoft.VisualBasic::e095b2781c36f2bb7504e96e8921b727, mime\application%json\BSON\Encoder.vb"
 
     ' Author:
     ' 
@@ -44,6 +44,7 @@
 
 Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports stdNum = System.Math
 
@@ -51,7 +52,11 @@ Namespace BSON
 
     Public Class Encoder
 
-        Private Sub encodeElement(ms As MemoryStream, name As String, v As JsonElement)
+        Private Sub encodeElement(ms As Stream, name As String, v As JsonElement)
+            If v Is Nothing Then
+                Return
+            End If
+
             Select Case v.GetType
                 Case GetType(JsonObject)
                     ms.WriteByte(&H3)
@@ -117,9 +122,9 @@ Namespace BSON
             bw.Write(CByte(0))
         End Sub
 
-        Private Sub encodeArray(ms As MemoryStream, lst As JsonArray)
+        Public Sub encodeArray(ms As Stream, lst As JsonArray)
+            Dim obj As New JsonObject()
 
-            Dim obj = New JsonObject()
             For i As Integer = 0 To lst.Count - 1
                 obj.Add(Convert.ToString(i), lst(i))
             Next
@@ -127,20 +132,20 @@ Namespace BSON
             encodeDocument(ms, obj)
         End Sub
 
-        Private Sub encodeBinary(ms As MemoryStream, buf As Byte())
+        Private Sub encodeBinary(ms As Stream, buf As Byte())
             Dim aBuf As Byte() = BitConverter.GetBytes(buf.Length)
             ms.Write(aBuf, 0, aBuf.Length)
             ms.WriteByte(0)
             ms.Write(buf, 0, buf.Length)
         End Sub
 
-        Private Sub encodeCString(ms As MemoryStream, v As String)
+        Private Sub encodeCString(ms As Stream, v As String)
             Dim buf As Byte() = New UTF8Encoding().GetBytes(v)
             ms.Write(buf, 0, buf.Length)
             ms.WriteByte(0)
         End Sub
 
-        Private Sub encodeString(ms As MemoryStream, v As String)
+        Private Sub encodeString(ms As Stream, v As String)
             Dim strBuf As Byte() = New UTF8Encoding().GetBytes(v)
             Dim buf As Byte() = BitConverter.GetBytes(strBuf.Length + 1)
 
@@ -149,25 +154,27 @@ Namespace BSON
             ms.WriteByte(0)
         End Sub
 
-        Private Sub encodeDouble(ms As MemoryStream, v As Double)
+        Private Sub encodeDouble(ms As Stream, v As Double)
             Dim buf As Byte() = BitConverter.GetBytes(v)
             ms.Write(buf, 0, buf.Length)
         End Sub
 
-        Private Sub encodeBool(ms As MemoryStream, v As Boolean)
+        Private Sub encodeBool(ms As Stream, v As Boolean)
             Dim buf As Byte() = BitConverter.GetBytes(v)
             ms.Write(buf, 0, buf.Length)
         End Sub
 
-        Private Sub encodeInt32(ms As MemoryStream, v As Int32)
+        Private Sub encodeInt32(ms As Stream, v As Int32)
             Dim buf As Byte() = BitConverter.GetBytes(v)
             ms.Write(buf, 0, buf.Length)
         End Sub
-        Private Sub encodeInt64(ms As MemoryStream, v As Int64)
+
+        Private Sub encodeInt64(ms As Stream, v As Int64)
             Dim buf As Byte() = BitConverter.GetBytes(v)
             ms.Write(buf, 0, buf.Length)
         End Sub
-        Private Sub encodeUTCDateTime(ms As MemoryStream, dt As DateTime)
+
+        Private Sub encodeUTCDateTime(ms As Stream, dt As DateTime)
             Dim span As TimeSpan
             If dt.Kind = DateTimeKind.Local Then
                 span = (dt - New DateTime(1970, 1, 1, 0, 0, 0,
