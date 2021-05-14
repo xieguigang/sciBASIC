@@ -48,16 +48,20 @@ Module HTMLParserTest
         (<div style='font-style: normal; font-size: 14; font-family: Microsoft YaHei;' attr2="99999999 + dd">
              <span style="color:red;">Hello</span><span style="color:blue;">world!</span> 
             2<sup>333333</sup> + X<sub>i</sub> = <span style="font-size: 36;">6666666</span>
+             <br/>
+             <img src="aaa.png"/>
+             <font></font>
          </div>).ToString
 
     ReadOnly simpleTagTest$ = (<div>
-                                   <div>A</div>
-                                   <div>B</div>
+                                   <span>A</span>
+                                   <span>B</span>
                                </div>).ToString
-
+    ReadOnly simpleTag2$ = (<br/>).ToString
 
     Sub Main()
         ' Dim tokens = New TokenIcer(testHTML).GetTokens.ToArray
+        Dim newline = HtmlParser.ParseTree(simpleTag2)
         Dim simple = HtmlParser.ParseTree(simpleTagTest)
         Dim doc2 = HtmlParser.ParseTree(testHTML)
 

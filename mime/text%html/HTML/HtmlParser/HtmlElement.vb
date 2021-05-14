@@ -216,7 +216,11 @@ Namespace HTML
         End Function
 
         Public Overrides Function ToString() As String
-            Return Name
+            If attrs.Count = 0 Then
+                Return $"<{Name}>...</{Name}>"
+            Else
+                Return $"<{Name} {attrs.Values.JoinBy(" ")}>...</{Name}>"
+            End If
         End Function
     End Class
 
