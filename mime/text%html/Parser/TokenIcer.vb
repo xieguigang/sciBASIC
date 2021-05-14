@@ -12,12 +12,10 @@ Public Class TokenIcer
     End Sub
 
     Public Iterator Function GetTokens() As IEnumerable(Of Token)
-        Dim token As New Value(Of Token)
-
         Do While text
-            If Not token = WalkChar(++text) Is Nothing Then
-                Yield CType(token, Token)
-            End If
+            For Each t As Token In WalkChar(++text)
+                Yield t
+            Next
         Loop
 
         If buf > 0 Then
@@ -25,12 +23,52 @@ Public Class TokenIcer
         End If
     End Function
 
-    Private Function WalkChar(c As Char) As Token
+    Private Iterator Function WalkChar(c As Char) As IEnumerable(Of Token)
+        If escape.string Then
+            If c = escape.quote Then
+                Yield New Token(HtmlTokens.text, buf.PopAllChars)
 
+                escape.string = False
+                escape.quote = Nothing
+            Else
+                buf += c
+            End If
+        ElseIf c = "<"c Then
+            If buf > 0 Then
+                Yield MeasureToken(New String(buf.PopAllChars))
+            End If
+
+            Yield New Token(HtmlTokens.openTag, c)
+        ElseIf c = "/"c Then
+            If buf > 0 Then
+                Yield MeasureToken(New String(buf.PopAllChars))
+            End If
+
+            Yield New Token(HtmlTokens.splash, c)
+        ElseIf c = ">"c Then
+            If buf > 0 Then
+                Yield MeasureToken(New String(buf.PopAllChars))
+            End If
+
+            Yield New Token(HtmlTokens.closeTag, c)
+        ElseIf c = """"c OrElse c = "'"c Then
+            If buf > 0 Then
+                Yield MeasureToken(New String(buf.PopAllChars))
+            End If
+
+            escape.string = True
+            escape.quote = c
+        Else
+            buf += c
+        End If
     End Function
 
     Private Function MeasureToken(text As String) As Token
-
+        If text = "=" Then
+            Return New Token(HtmlTokens.equalsSymbol, "=")
+        Else
+            Return New Token(HtmlTokens.text, text)
+        End If
     End Function
 
 End Class
