@@ -1,5 +1,6 @@
 ﻿Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Text
 Imports DevAssemblyInfo = Microsoft.VisualBasic.ApplicationServices.Development.AssemblyInfo
@@ -54,13 +55,13 @@ Public Module AssemblyInfoExtensions
 
         For Each reader As PropertyInfo In GetType(DevAssemblyInfo).GetProperties(PublicProperty)
             With reader
-                If .GetIndexParameters.IsNullOrEmpty Then
+                If attributes.ContainsKey(.Name) AndAlso .GetIndexParameters.IsNullOrEmpty Then
                     If .PropertyType Is GetType(String) Then
                         Call .SetValue(info, attributes(.Name).Value)
                     ElseIf .PropertyType Is GetType(Boolean) Then
                         Call .SetValue(info, attributes(.Name).Value.ParseBoolean)
                     Else
-                        Throw New NotImplementedException(.PropertyType.ToString)
+                        Throw New NotImplementedException($"Dim { .Name} As { .PropertyType.ToString} = {attributes(.Name).Value}")
                     End If
                 End If
             End With

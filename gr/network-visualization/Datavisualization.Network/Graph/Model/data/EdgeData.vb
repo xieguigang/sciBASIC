@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e806ebc1fcd2e284ed465b34ec0027c1, gr\network-visualization\Datavisualization.Network\Graph\Model\data\EdgeData.vb"
+﻿#Region "Microsoft.VisualBasic::d82932e674746521c5078cb2b794f4c9, gr\network-visualization\Datavisualization.Network\Graph\Model\data\EdgeData.vb"
 
     ' Author:
     ' 
@@ -45,6 +45,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.EdgeBundling
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Graph
@@ -55,7 +56,7 @@ Namespace Graph
         ''' 这个属性值一般是由两个节点之间的坐标位置所计算出来的欧几里得距离
         ''' </summary>
         ''' <returns></returns>
-        Public Property length As Single
+        Public Property length As Double
         Public Property bends As XYMetaHandle()
         Public Property color As SolidBrush
 
@@ -80,7 +81,13 @@ Namespace Graph
         End Function
 
         Public Function Clone() As EdgeData
-            Return DirectCast(Me.MemberwiseClone, EdgeData)
+            Return New EdgeData With {
+                .label = label,
+                .bends = bends.SafeQuery.Select(Function(a) New XYMetaHandle(a)).ToArray,
+                .color = color,
+                .length = length,
+                .Properties = New Dictionary(Of String, String)(Properties)
+            }
         End Function
     End Class
 End Namespace

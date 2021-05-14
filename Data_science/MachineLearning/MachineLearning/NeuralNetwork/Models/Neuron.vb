@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::128816ac567c01bf3bc1df27ca2bafaa, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Models\Neuron.vb"
+﻿#Region "Microsoft.VisualBasic::ac7f81f6655aae662003cd97114eb313, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Models\Neuron.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: Bias, BiasDelta, Gradient, Guid, InputSynapses
     '                     isDroppedOut, OutputSynapses, Value
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: CalculateError, (+2 Overloads) CalculateGradient, CalculateValue, InputSynapsesValueSum, ToString
     '                   UpdateWeights
     ' 
@@ -118,6 +118,20 @@ Namespace NeuralNetwork
             Else
                 Guid = GetHashCode().ToHexString
             End If
+        End Sub
+
+        ''' <summary>
+        ''' 创建的神经链接是空的
+        ''' </summary>
+        ''' <param name="active"><see cref="Sigmoid"/> as default</param>
+        Friend Sub New(weight As Func(Of Double), active As IActivationFunction, id As String)
+            InputSynapses = New List(Of Synapse)
+            OutputSynapses = New List(Of Synapse)
+            Bias = weight()
+            Value = weight()
+            BiasDelta = weight()
+            activation = active
+            Guid = id
         End Sub
 
         ''' <summary>

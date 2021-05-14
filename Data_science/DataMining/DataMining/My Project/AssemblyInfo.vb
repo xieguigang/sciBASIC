@@ -7,7 +7,7 @@ Imports System.Runtime.InteropServices
 ' 与程序集关联的信息。
 
 ' 查看程序集特性的值
-
+#if netcore5=0 then
 <Assembly: AssemblyTitle("Microsoft.VisualBasic.DataVisualization.DataMining.Framework")> 
 <Assembly: AssemblyDescription("Microsoft.VisualBasic.DataVisualization.DataMining.Framework")> 
 <Assembly: AssemblyCompany("LANS Workstation")> 
@@ -33,3 +33,4 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.2.0.0")> 
 <Assembly: AssemblyFileVersion("2.0.34.0")> 
+#end if

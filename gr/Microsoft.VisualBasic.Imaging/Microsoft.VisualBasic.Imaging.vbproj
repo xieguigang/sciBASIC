@@ -124,6 +124,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x86'">
     <DefineTrace>true</DefineTrace>
@@ -318,6 +319,8 @@
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -330,6 +333,8 @@
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|x86'">
     <DefineTrace>true</DefineTrace>
@@ -340,6 +345,8 @@
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep_UNIX_x64|AnyCPU'">
     <DefineTrace>true</DefineTrace>
@@ -350,18 +357,22 @@
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep_UNIX_x64|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\Biodeep_UNIX_x64\</OutputPath>
+    <OutputPath>..\..\..\..\..\..\biodeep\biodeepdb_v3\Rscript\R\</OutputPath>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep_UNIX_x64|x86'">
     <DefineTrace>true</DefineTrace>
@@ -372,6 +383,8 @@
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEMO|AnyCPU'">
     <DefineTrace>true</DefineTrace>
@@ -382,6 +395,8 @@
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEMO|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -393,6 +408,8 @@
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEMO|x86'">
     <DefineTrace>true</DefineTrace>
@@ -403,6 +420,8 @@
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|AnyCPU'">
     <DefineTrace>true</DefineTrace>
@@ -413,17 +432,21 @@
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\Rsharp_app_release\</OutputPath>
+    <OutputPath>..\..\..\..\R-sharp\App\</OutputPath>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|x86'">
     <DefineTrace>true</DefineTrace>
@@ -434,6 +457,8 @@
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biostack|AnyCPU'">
     <DefineTrace>true</DefineTrace>
@@ -444,6 +469,8 @@
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biostack|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -455,6 +482,8 @@
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biostack|x86'">
     <DefineTrace>true</DefineTrace>
@@ -465,6 +494,8 @@
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|AnyCPU'">
     <DefineTrace>true</DefineTrace>
@@ -475,6 +506,8 @@
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -486,6 +519,8 @@
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|x86'">
     <DefineTrace>true</DefineTrace>
@@ -496,6 +531,8 @@
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|AnyCPU'">
     <DefineTrace>true</DefineTrace>
@@ -506,6 +543,8 @@
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -517,10 +556,175 @@
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\BioDeep_database\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit_UnixDocker|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\mzkit_UnixDocker\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit_UnixDocker|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\mzkit_UnixDocker\</OutputPath>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit_UnixDocker|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\mzkit_UnixDocker\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'LipidSearch|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\LipidSearch\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'LipidSearch|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\LipidSearch\</OutputPath>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'LipidSearch|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\LipidSearch\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'MetaCardio|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\MetaCardio\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'MetaCardio|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\MetaCardio\</OutputPath>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'MetaCardio|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\MetaCardio\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RsharpDev|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\RsharpDev\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RsharpDev|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\RsharpDev\</OutputPath>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RsharpDev|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\RsharpDev\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'vcellkit|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\vcellkit\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'vcellkit|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\vcellkit\</OutputPath>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'vcellkit|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\vcellkit\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -555,6 +759,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="d3js\labeler\DataLabeler.vb" />
+    <Compile Include="d3js\labeler\fdLabeler\Forcedirected.vb" />
     <Compile Include="d3js\labeler\Anchor.vb" />
     <Compile Include="d3js\labeler\Label.vb" />
     <Compile Include="d3js\labeler\Labeler.vb" />
@@ -565,14 +771,20 @@
     <Compile Include="d3js\scale\linear.vb" />
     <Compile Include="d3js\scale\Extensions.vb" />
     <Compile Include="d3js\scale\ordinal.vb" />
+    <None Include="Drawing2D\Math2D\MarchingSquares\README.md" />
+    <Compile Include="Drawing2D\Math2D\MarchingSquares\MapMatrix.vb" />
+    <Compile Include="Drawing2D\Math2D\MarchingSquares\IntMeasureData.vb" />
+    <Compile Include="Drawing2D\Math2D\MarchingSquares\MeasureData.vb" />
+    <Compile Include="Drawing2D\Math2D\MarchingSquares\MarchingSquares.vb" />
+    <Compile Include="Drawing2D\Render2D\RenderShape.vb" />
+    <Compile Include="Drawing2D\Render2D\RenderContext.vb" />
+    <Compile Include="Drawing2D\Colors\Palette.vb" />
+    <Compile Include="Drawing2D\Colors\Office\ObjectAccent.vb" />
+    <Compile Include="Drawing2D\Colors\Office\Xml.vb" />
+    <Compile Include="Drawing2D\Math2D\CanvasScaler.vb" />
+    <Compile Include="Drawing2D\Polar\PolarGraphics2D.vb" />
     <Compile Include="Drawing2D\PrinterDimension.vb" />
     <Compile Include="Drawing2D\Shadow.vb" />
-    <Compile Include="Drawing2D\Colors\ColorPalette.Designer.vb">
-      <DependentUpon>ColorPalette.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Drawing2D\Colors\ColorPalette.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Drawing2D\Colors\Expression.vb" />
     <Compile Include="Drawing2D\Colors\DesignerTerms.vb" />
     <Compile Include="Drawing2D\Math2D\Math2DHelper.vb" />
@@ -585,9 +797,9 @@
     <Compile Include="Drawing2D\Math2D\ConvexHull\JarvisMatch.vb" />
     <Compile Include="Drawing2D\Math2D\HullPolygonDraw.vb" />
     <Compile Include="Drawing2D\Math2D\Spline.vb" />
-    <Compile Include="Drawing2D\Path2D.vb" />
+    <Compile Include="Drawing2D\Render2D\Path2D.vb" />
     <Compile Include="Drawing2D\Colors\ColorIndex.vb" />
-    <Compile Include="Drawing2D\Colors\OfficeColorThemes.vb" />
+    <Compile Include="Drawing2D\Colors\Office\OfficeColorThemes.vb" />
     <Compile Include="Drawing2D\Colors\ColorBrewer.vb" />
     <Compile Include="Drawing2D\Colors\Designer.vb" />
     <Compile Include="Drawing2D\Colors\Legend.vb" />
@@ -613,14 +825,9 @@
     <Compile Include="Drawing2D\Shapes\Line.vb" />
     <Compile Include="Drawing2D\Shapes\Shape.vb" />
     <Compile Include="Drawing3D\Camera.vb" />
+    <Compile Include="Drawing3D\Light.vb" />
     <Compile Include="Drawing3D\Model2D.vb" />
     <Compile Include="Drawing3D\Isometric.vb" />
-    <Compile Include="Drawing3D\Device\AutoRotation.vb" />
-    <Compile Include="Drawing3D\Device\IDevice.vb" />
-    <Compile Include="Drawing3D\Device\Debugger.vb" />
-    <Compile Include="Drawing3D\Device\Mouse.vb" />
-    <Compile Include="Drawing3D\Device\Light.vb" />
-    <Compile Include="Drawing3D\Device\Worker.vb" />
     <Compile Include="Drawing3D\Models\Extensions.vb" />
     <Compile Include="Drawing3D\Models\Paths\Circle.vb" />
     <Compile Include="Drawing3D\Models\Paths\Rectangle.vb" />
@@ -629,20 +836,19 @@
     <Compile Include="Drawing3D\Math3D\Transformation.vb" />
     <Compile Include="Drawing3D\Math3D\Vector.vb" />
     <Compile Include="Drawing3D\Models\Path3D.vb" />
+    <Compile Include="Drawing3D\Models\Shapes\Line.vb" />
     <Compile Include="Drawing3D\Models\Shapes\Cylinder.vb" />
     <Compile Include="Drawing3D\Models\Shapes\Knot.vb" />
     <Compile Include="Drawing3D\Models\Shapes\Octahedron.vb" />
     <Compile Include="Drawing3D\Models\Shapes\Prism.vb" />
     <Compile Include="Drawing3D\Models\Shapes\Pyramid.vb" />
     <Compile Include="Drawing3D\Models\Shapes\Stairs.vb" />
+    <Compile Include="Drawing3D\DrawGraphics.vb" />
     <Compile Include="Drawing3D\Painter.vb" />
     <Compile Include="Drawing3D\Models\I3DModel.vb" />
     <Compile Include="Drawing3D\Models\Line.vb" />
     <Compile Include="Drawing3D\Surface.vb" />
     <Compile Include="Drawing3D\Models\Cube.vb" />
-    <Compile Include="Drawing3D\Device\GDIDevice.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Drawing3D\Point3D.vb" />
     <Compile Include="Drawing3D\Math3D\Projection.vb" />
     <Compile Include="Drawing3D\Math3D\Matrix.vb" />
@@ -677,9 +883,14 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="PostScript\GraphicsPS.vb" />
+    <Compile Include="SVG\CSS\CSSStyles.vb" />
+    <Compile Include="SVG\CSS\Filter\Elements.vb" />
+    <Compile Include="SVG\CSS\Gradients\radialGradient.vb" />
+    <Compile Include="SVG\CSS\Gradients\linearGradient.vb" />
+    <Compile Include="SVG\CSS\Gradients\Stop.vb" />
     <Compile Include="SVG\CSS\Marker.vb" />
-    <Compile Include="SVG\CSS\Filter.vb" />
-    <Compile Include="SVG\CSS\Gradients.vb" />
+    <Compile Include="SVG\CSS\Filter\Filter.vb" />
+    <Compile Include="SVG\CSS\Gradients\Gradients.vb" />
     <Compile Include="SVG\CSS\ObjectStyle.vb" />
     <Compile Include="SVG\ModelBuilder.vb" />
     <Compile Include="SVG\SVGDataLayers.vb" />
@@ -696,12 +907,6 @@
     <Compile Include="TextureResourceLoader.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Drawing2D\Colors\ColorPalette.resx">
-      <DependentUpon>ColorPalette.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Drawing3D\Device\GDIDevice.resx">
-      <DependentUpon>GDIDevice.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
@@ -728,7 +933,7 @@
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>math-core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
+    <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>

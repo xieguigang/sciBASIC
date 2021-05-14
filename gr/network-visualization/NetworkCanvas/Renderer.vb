@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5c0378645901d2c47c3e7ecc2631eb6, gr\network-visualization\NetworkCanvas\Renderer.vb"
+﻿#Region "Microsoft.VisualBasic::ad2850dc63050f1bb7df4b84a32a652d, gr\network-visualization\NetworkCanvas\Renderer.vb"
 
     ' Author:
     ' 
@@ -47,7 +47,8 @@
 
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce.Interfaces
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports stdNum = System.Math
@@ -203,7 +204,7 @@ Public Class Renderer : Inherits AbstractRenderer
             Dim pt As New Point(CInt(pos.X - r / 2), CInt(pos.Y - r / 2))
             Dim rect As New Rectangle(pt, New Size(CInt(r), CInt(r)))
 
-            Call canvas.FillPie(n.Data.Color, rect, 0, 360)
+            Call canvas.FillPie(n.data.color, rect, 0, 360)
 
             If ShowLabels Then
                 Dim center As Point = rect.Centre

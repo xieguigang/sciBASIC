@@ -51,7 +51,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\..\..\..\..\..\GCModeller\bin\</OutputPath>
+    <OutputPath>..\..\..\..\..\..\GCModeller\bin\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.ChartPlots.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
@@ -105,6 +105,10 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>true</Optimize>
+    <DefineTrace>true</DefineTrace>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -157,7 +161,7 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|x64'">
-    <OutputPath>..\..\..\..\..\..\..\GCModeller\bin\</OutputPath>
+    <OutputPath>..\..\..\..\..\..\GCModeller\bin\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.ChartPlots.xml</DocumentationFile>
     <WarningsAsErrors>
     </WarningsAsErrors>
@@ -226,7 +230,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\..\..\..\..\..\GCModeller\bin\</OutputPath>
+    <OutputPath>..\..\..\..\..\..\GCModeller\bin\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.ChartPlots.xml</DocumentationFile>
     <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -330,7 +334,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep_UNIX_x64|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\Biodeep_UNIX_x64\</OutputPath>
+    <OutputPath>..\..\..\..\..\..\..\biodeep\biodeepdb_v3\Rscript\R\</OutputPath>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Data.ChartPlots.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -472,6 +476,130 @@
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit_UnixDocker|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\mzkit_UnixDocker\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.ChartPlots.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit_UnixDocker|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\mzkit_UnixDocker\</OutputPath>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Data.ChartPlots.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit_UnixDocker|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\mzkit_UnixDocker\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.ChartPlots.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'LipidSearch|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\LipidSearch\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.ChartPlots.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'LipidSearch|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\LipidSearch\</OutputPath>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Data.ChartPlots.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'LipidSearch|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\LipidSearch\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.ChartPlots.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'MetaCardio|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\MetaCardio\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.ChartPlots.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'MetaCardio|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\MetaCardio\</OutputPath>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Data.ChartPlots.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'MetaCardio|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\MetaCardio\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.ChartPlots.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RsharpDev|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\RsharpDev\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.ChartPlots.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RsharpDev|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\RsharpDev\</OutputPath>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Data.ChartPlots.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RsharpDev|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\RsharpDev\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.ChartPlots.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -499,17 +627,8 @@
     <Compile Include="3D\Device\RenderEngine.vb" />
     <Compile Include="3D\g\Axis.vb" />
     <Compile Include="3D\g\Grid.vb" />
+    <Compile Include="3D\Plot\Scatter3D.vb" />
     <Compile Include="3D\Serial3D.vb" />
-    <Compile Include="3D\Device\Canvas.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="3D\Device\FormDevice.Designer.vb">
-      <DependentUpon>FormDevice.vb</DependentUpon>
-    </Compile>
-    <Compile Include="3D\Device\FormDevice.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="3D\Device\Display.vb" />
     <Compile Include="3D\PieChart3D.vb" />
     <Compile Include="3D\ScatterHeatmap.vb" />
     <Compile Include="3D\Scatter.vb" />
@@ -523,6 +642,9 @@
     <Compile Include="BarPlot\RectangleStyles.vb" />
     <Compile Include="BarPlot\StackedBarPlot.vb" />
     <Compile Include="BarPlot\StyledBarplot.vb" />
+    <Compile Include="Contour\MatrixEvaluate.vb" />
+    <Compile Include="Contour\EvaluatePoints.vb" />
+    <Compile Include="Contour\Utils.vb" />
     <Compile Include="csv\Extensions.vb" />
     <Compile Include="Fractions\LabelStyles.vb" />
     <Compile Include="Fractions\RadarChart.vb" />
@@ -539,8 +661,11 @@
     <Compile Include="g\Theme\Layout.vb" />
     <Compile Include="g\Theme\FontStyle.vb" />
     <Compile Include="g\Theme\Theme.vb" />
+    <Compile Include="Scatter\Data\SerialData.vb" />
     <Compile Include="Scatter\LinePlot.vb" />
-    <Compile Include="VolinPlot.vb" />
+    <Compile Include="Scatter\Plot\LinePlot2D.vb" />
+    <Compile Include="Scatter\Plot\Scatter2D.vb" />
+    <Compile Include="ViolinPlot.vb" />
     <Compile Include="Scatter\Bubble.vb" />
     <Compile Include="BarPlot\Data\csv.vb" />
     <Compile Include="Fractions\TreeMap.vb" />
@@ -554,19 +679,19 @@
     <Compile Include="g\Mapper.vb" />
     <Compile Include="g\ProfileGroup.vb" />
     <Compile Include="g\Legends\LegendPlot.vb" />
-    <Compile Include="g\Legends\Legend.vb" />
+    <Compile Include="g\Legends\LegendObject.vb" />
     <Compile Include="csv\SerialData.vb" />
     <Compile Include="g\Legends\LegendStyles.vb" />
     <Compile Include="BarPlot\Data\BarDataGroup.vb" />
-    <Compile Include="Contour.vb" />
+    <Compile Include="Contour\ContourPlot.vb" />
     <Compile Include="BarPlot\Histogram\Histogram.vb" />
     <Compile Include="ImageData.vb" />
     <Compile Include="Fractions\PieChart.vb" />
     <Compile Include="PlotTypes.vb" />
     <Compile Include="BarPlot\BarPlot.vb" />
-    <Compile Include="Scatter\Annotation.vb" />
+    <Compile Include="Scatter\Data\Annotation.vb" />
     <Compile Include="Scatter\ManhattanStatics.vb" />
-    <Compile Include="Scatter\Data.vb" />
+    <Compile Include="Scatter\Data\PointData.vb" />
     <Compile Include="Scatter\Heatmap.vb" />
     <Compile Include="Scatter\Scatter.vb" />
     <Compile Include="g\Scaling.vb" />
@@ -588,12 +713,6 @@
     <Compile Include="VennPlot.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="3D\Device\Canvas.resx">
-      <DependentUpon>Canvas.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="3D\Device\FormDevice.resx">
-      <DependentUpon>FormDevice.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -621,7 +740,7 @@
       <Project>{85e71b4b-9276-4ec8-aadc-c849205f1ea8}</Project>
       <Name>Microsoft.VisualBasic.Imaging</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>

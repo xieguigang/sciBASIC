@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::431ddd79b2af84876a5522f108fb6c60, Data\DataFrame\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::91736a80e657ef482c36db9168fd54d7, Data\DataFrame\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: (+4 Overloads) AsDataSource, AsLinq, (+3 Overloads) DataFrame, GetLocusMapName, IsEmptyTable
+    '     Function: (+4 Overloads) AsDataSource, AsLinq, (+4 Overloads) DataFrame, GetLocusMapName, IsEmptyTable
     '               (+3 Overloads) LoadCsv, LoadDataFrame, LoadDblVector, LoadStream, LoadTsv
     '               SaveDataSet, (+2 Overloads) SaveTable, (+7 Overloads) SaveTo, TabExport, ToCsvDoc
     ' 
@@ -65,9 +65,9 @@ Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting
-Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 Imports File_csv = Microsoft.VisualBasic.Data.csv.IO.File
 
@@ -76,9 +76,6 @@ Imports File_csv = Microsoft.VisualBasic.Data.csv.IO.File
 ''' </summary>
 ''' <remarks></remarks>
 '''
-<Package("IO_Device.Csv.Extensions",
-        Description:="The shortcuts operation for the common csv document operations.",
-        Publisher:="xie.guigang@gmail.com")>
 <HideModuleName>
 Public Module Extensions
 
@@ -99,7 +96,7 @@ Public Module Extensions
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function LoadTsv(Of T As Class)(path As DefaultString, Optional encoding As Encoding = Nothing) As T()
+    Public Function LoadTsv(Of T As Class)(path As DefaultString, Optional encoding As Encoding = Nothing) As IEnumerable(Of T)
         Return path.DefaultValue.LoadTsv(Of T)(encoding)
     End Function
 
@@ -223,7 +220,7 @@ Public Module Extensions
 
         Dim doc As File = Reflector.Save(source, False)
         Dim lines As RowObject() = If(noTitle, doc.Skip(1).ToArray, doc.ToArray)
-        Dim slines As String() = lines.Select(Function(x) x.AsLine(vbTab)).ToArray
+        Dim slines As String() = lines.Select(Function(x) x.AsLine(ASCII.TAB)).ToArray
         Dim sdoc As String = String.Join(vbCrLf, slines)
         Return sdoc.SaveTo(saveTo, encoding.CodePage)
     End Function
@@ -292,13 +289,18 @@ Public Module Extensions
     End Function
 
     <Extension>
+    Public Function DataFrame(Of T)(source As IEnumerable(Of T)) As EntityObject()
+        Return IO.DataFrame.CreateObject(source.ToCsvDoc).AsDataSource(Of EntityObject)(False).ToArray
+    End Function
+
+    <Extension>
     Public Function SaveTable(table As IEnumerable(Of KeyValuePair(Of String, Double)), path$, Optional encoding As Encoding = Nothing) As Boolean
         Dim csv As New File_csv
 
         csv += {"ID", "value"}
         csv += table _
-            .Select(Function(map)
-                        Return New RowObject(New String() {map.Key, map.Value})
+            .Select(Function(map As KeyValuePair(Of String, Double))
+                        Return New RowObject(New String() {map.Key, map.Value.ToString})
                     End Function)
 
         Return csv.Save(path, encoding)
@@ -315,7 +317,6 @@ Public Module Extensions
     ''' If this <see cref="Type"/> information provider is nothing, then the function will peeks of the first sevral element for the type information.
     ''' </param>
     ''' <returns></returns>
-    <ExportAPI("Write.Csv")>
     <Extension>
     Public Function SaveTable(data As IEnumerable, path$,
                               Optional encoding As Encoding = Nothing,
@@ -418,20 +419,20 @@ Public Module Extensions
     ''' Convert the csv data file to a type specific collection.(将目标Csv文件转换为特定类型的集合数据)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="df"></param>
+    ''' <param name="dataframe"></param>
     ''' <param name="explicit"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function AsDataSource(Of T As Class)(df As DataFrame,
+    <Extension> Public Function AsDataSource(Of T As Class)(dataframe As DataFrame,
                                                             Optional explicit As Boolean = False,
                                                             Optional maps As Dictionary(Of String, String) = Nothing,
                                                             Optional silent As Boolean = False) As IEnumerable(Of T)
-        With df
+        With dataframe
             If Not maps Is Nothing Then
                 Call .ChangeMapping(maps)
             End If
 
-            Return Reflector.Convert(Of T)(.ByRef, explicit, silent:=silent)
+            Return .DoCall(Function(table) Reflector.Convert(Of T)(table, explicit, silent:=silent))
         End With
     End Function
 
@@ -529,11 +530,19 @@ Public Module Extensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
     ''' <param name="explicit">
-    ''' 列名称隐式解析，即不强制要求属性上面有<see cref="ColumnAttribute"/>标记，默认是，否则只解析出带有<see cref="ColumnAttribute"/>自定义属性标记的属性作为csv的列的数据源
+    ''' 列名称隐式解析，即不强制要求属性上面有<see cref="ColumnAttribute"/>标记，默认是，
+    ''' 否则只解析出带有<see cref="ColumnAttribute"/>自定义属性标记的属性作为csv的列的
+    ''' 数据源
     ''' </param>
     ''' <returns></returns>
-    <Extension> Public Function LoadStream(Of T As Class)(source As IEnumerable(Of String), Optional explicit As Boolean = True, Optional trimBlanks As Boolean = False) As IEnumerable(Of T)
-        Return New File(FileLoader.Load(source.ToArray, trimBlanks)).AsDataSource(Of T)(Not explicit)
+    <Extension> Public Function LoadStream(Of T As Class)(source As IEnumerable(Of String),
+                                                          Optional explicit As Boolean = True,
+                                                          Optional trimBlanks As Boolean = False,
+                                                          Optional isTsv As Boolean = False) As IEnumerable(Of T)
+
+        Return FileLoader.Load(source.ToArray, trimBlanks, isTsv:=isTsv) _
+            .DoCall(Function(rs) New File(rs)) _
+            .AsDataSource(Of T)(Not explicit)
     End Function
 
     ''' <summary>
@@ -585,7 +594,7 @@ Public Module Extensions
         Dim csv As IEnumerable(Of RowObject) = Reflector.GetsRowData(
             source:=objSeq,
             type:=GetType(T),
-            Explicit:=strict,
+            strict:=strict,
             maps:=maps,
             parallel:=Not nonParallel,
             metaBlank:=metaBlank,

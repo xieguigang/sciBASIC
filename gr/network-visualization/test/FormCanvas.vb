@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aeafa186de157f45d231ac42113d73bc, gr\network-visualization\test\FormCanvas.vb"
+﻿#Region "Microsoft.VisualBasic::cb13fe52e3d5431420790b5c48d4d372, gr\network-visualization\test\FormCanvas.vb"
 
     ' Author:
     ' 
@@ -45,6 +45,7 @@ Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.Data.visualize.Network.Canvas
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Cytoscape
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce
 
 Public Class FormCanvas
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::984a84e4365c66125b0a0d9240d87fd8, Data\BinaryData\DataStorage\netCDF\CDFWriter.vb"
+﻿#Region "Microsoft.VisualBasic::ce9090cc91c3ab05117a6b792a1df638, Data\BinaryData\DataStorage\netCDF\CDFWriter.vb"
 
     ' Author:
     ' 
@@ -33,12 +33,13 @@
 
     '     Class CDFWriter
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '         Function: CalcOffsets, Dimensions, getDimension, getDimensionList, getVariableHeaderBuffer
     '                   GlobalAttributes
     ' 
-    '         Sub: (+3 Overloads) AddVariable, (+2 Overloads) Dispose, Save, writeAttributes
+    '         Sub: (+3 Overloads) AddVariable, AddVector, (+2 Overloads) Dispose, Flush, Save
+    '              writeAttributes
     ' 
     ' 
     ' /********************************************************************************/
@@ -47,6 +48,7 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -199,14 +201,21 @@ Namespace netCDF
 
 #End Region
 
-        Dim output As BinaryDataWriter
-        Dim globalAttrs As New List(Of attribute)
-        Dim dimensionList As Dictionary(Of String, SeqValue(Of Dimension))
-        Dim variables As List(Of variable)
-        Dim recordDimensionLength As UInteger
+        ReadOnly output As BinaryDataWriter
+        ReadOnly globalAttrs As New List(Of attribute)
 
+        Dim variables As New List(Of variable)
+        Dim dimensionList As New Dictionary(Of String, SeqValue(Of Dimension))
+        Dim recordDimensionLength As UInteger
+        Dim init0 As Long
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(path As String, Optional encoding As Encodings = Encodings.UTF8)
-            output = New BinaryDataWriter(path.Open, encoding) With {
+            Call Me.New(path.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False), encoding)
+        End Sub
+
+        Sub New(file As Stream, Optional encoding As Encodings = Encodings.UTF8)
+            output = New BinaryDataWriter(file, encoding) With {
                 .ByteOrder = ByteOrder.BigEndian,
                 .RerouteInt32ToUnsigned = True
             }
@@ -215,6 +224,8 @@ Namespace netCDF
             Call output.Write(netCDFReader.Magic, BinaryStringFormat.NoPrefixOrTermination)
             ' classic format, version = 1
             Call output.Write(CByte(1))
+
+            init0 = file.Position
         End Sub
 
         ''' <summary>
@@ -245,7 +256,8 @@ Namespace netCDF
         ''' <summary>
         ''' 会需要在这个函数之中进行offset的计算操作
         ''' </summary>
-        Private Sub Save()
+        Public Sub Save()
+            Call output.Seek(init0, SeekOrigin.Begin)
 
             Call output.Write(recordDimensionLength)
             ' -------------------------dimensionsList----------------------------
@@ -291,6 +303,10 @@ Namespace netCDF
                 ' 接着就是写入数据块了
                 Call output.Write(buffer)
             End Using
+        End Sub
+
+        Public Sub Flush()
+            Call output.Flush()
         End Sub
 
         ''' <summary>
@@ -342,7 +358,7 @@ Namespace netCDF
             ' 才会将offset的位置移动到数据区域的起始位置
             Dim current As UInteger = output.Position + buffers.Sum(Function(v) v.Length)
             Dim chunk As Byte()
-            Dim handle$ = App.GetAppSysTempFile(".dat", App.PID)
+            Dim handle$ = TempFileSystem.GetAppSysTempFile(".dat", App.PID)
 
             ' 2019-1-21 当写入一个超大的CDF文件的时候
             ' 字节数量会超过Array的最大元素数量上限
@@ -402,6 +418,12 @@ Namespace netCDF
                     Case CDFDataTypes.LONG
                         Call output.Write(1)
                         Call output.Write(Long.Parse(attr.value))
+                    Case CDFDataTypes.BOOLEAN
+
+                        ' 20210212 using byte flag for boolean?
+                        Call output.Write(1)
+                        Call output.Write(CByte(If(attr.value.ParseBoolean, 1, 0)))
+
                     Case Else
                         Throw New NotImplementedException(attr.type.Description)
                 End Select
@@ -424,11 +446,11 @@ Namespace netCDF
         ''' 这个列表必须要是<see cref="CDFWriter.Dimensions(Dimension())"/>之中的
         ''' </param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub AddVariable(name$, data As CDFData, dims As [Variant](Of String(), String), Optional attrs As [Variant](Of attribute, attribute()) = Nothing)
+        Public Sub AddVariable(name$, data As ICDFDataVector, dims As [Variant](Of String(), String), Optional attrs As [Variant](Of attribute, attribute()) = Nothing)
             variables += New variable With {
                 .name = name,
                 .type = data.cdfDataType,
-                .size = data.Length * sizeof(.type),
+                .size = data.length * sizeof(.type),
                 .value = data,
                 .attributes = attrs.TryCastArray,
                 .dimensions = getDimensionList(dims)
@@ -450,7 +472,11 @@ Namespace netCDF
                 .ToArray
         End Function
 
-        Public Sub AddVariable(name$, data As CDFData, [dim] As Dimension, Optional attrs As attribute() = Nothing)
+        Public Overloads Sub AddVector(name$, vec As IEnumerable(Of Double), [dim] As Dimension, Optional attrs As attribute() = Nothing)
+            Call AddVariable(name, CType(vec.ToArray, doubles), [dim], attrs)
+        End Sub
+
+        Public Sub AddVariable(name$, data As ICDFDataVector, [dim] As Dimension, Optional attrs As attribute() = Nothing)
             Call AddVariable(name, data, {[dim]}, attrs)
         End Sub
 
@@ -462,7 +488,7 @@ Namespace netCDF
         ''' <param name="data"></param>
         ''' <param name="dims"></param>
         ''' <param name="attrs"></param>
-        Public Sub AddVariable(name$, data As CDFData, dims As Dimension(), Optional attrs As attribute() = Nothing)
+        Public Sub AddVariable(name$, data As ICDFDataVector, dims As Dimension(), Optional attrs As attribute() = Nothing)
             Dim dimNames As New List(Of String)
 
             For Each d As Dimension In dims

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d94f6aeb0a175f42efc33547e37d1c3c, www\Microsoft.VisualBasic.NETProtocol\Pipeline\API.vb"
+﻿#Region "Microsoft.VisualBasic::297d5eb7cdac3a5525ad20a7976b5344, www\Microsoft.VisualBasic.NETProtocol\Pipeline\API.vb"
 
     ' Author:
     ' 
@@ -70,7 +70,7 @@ Namespace MMFProtocol.Pipeline
         End Enum
 
         Public ReadOnly Property Protocol As Long =
-            New Protocol(GetType(API.Protocols)).EntryPoint
+            New ProtocolAttribute(GetType(API.Protocols)).EntryPoint
 
         Public Function Delete(var As String, Optional port As Integer = API.PeplinePort) As Boolean
             Dim invoke As New TcpRequest("127.0.0.1", port)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c76e81bfb9e03a58bbb5f16f79a0b7c5, gr\network-visualization\NetworkCanvas\Canvas3D\Renderer3D.vb"
+﻿#Region "Microsoft.VisualBasic::a2948e76735855011ef3ad8e5fd0812e, gr\network-visualization\NetworkCanvas\Canvas3D\Renderer3D.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,8 @@
 
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce.Interfaces
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Imaging.Math2D
@@ -76,17 +77,19 @@ Public Class Renderer3D : Inherits Renderer
 
     Protected Overrides Sub drawEdge(iEdge As Edge, iPosition1 As AbstractVector, iPosition2 As AbstractVector)
         Dim rect As Rectangle = regionProvider()
-        Dim pos1 As Point = New Point3D(iPosition1.x, iPosition1.y, iPosition1.z) _
+        Dim pos1 As PointF = New Point3D(iPosition1.x, iPosition1.y, iPosition1.z) _
             .RotateX(rotate) _
             .RotateY(rotate) _
             .RotateZ(rotate) _
-            .Project(rect.Width, rect.Height, 256, ViewDistance).PointXY
+            .Project(rect.Width, rect.Height, 256, ViewDistance) _
+            .PointXY
         '   pos1 = GraphToScreen(pos1, rect)
-        Dim pos2 As Point = New Point3D(iPosition2.x, iPosition2.y, iPosition2.z) _
+        Dim pos2 As PointF = New Point3D(iPosition2.x, iPosition2.y, iPosition2.z) _
             .RotateX(rotate) _
             .RotateY(rotate) _
             .RotateZ(rotate) _
-            .Project(rect.Width, rect.Height, 256, ViewDistance).PointXY
+            .Project(rect.Width, rect.Height, 256, ViewDistance) _
+            .PointXY
         '   pos2 = GraphToScreen(pos2, rect)
         Dim canvas As Graphics = graphicsProvider()
 
@@ -99,7 +102,8 @@ Public Class Renderer3D : Inherits Renderer
                 pos1.X,
                 pos1.Y,
                 pos2.X,
-                pos2.Y)
+                pos2.Y
+            )
         End SyncLock
     End Sub
 
@@ -111,7 +115,7 @@ Public Class Renderer3D : Inherits Renderer
         End If
 
         Dim client As Rectangle = regionProvider()
-        Dim pos As Point = New Point3D(iPosition.x, iPosition.y, iPosition.z) _
+        Dim pos As PointF = New Point3D(iPosition.x, iPosition.y, iPosition.z) _
             .RotateX(rotate) _
             .RotateY(rotate) _
             .RotateZ(rotate) _
@@ -126,7 +130,7 @@ Public Class Renderer3D : Inherits Renderer
             Dim rect As New RectangleF(pt, New SizeF(r, r))
 
             Call canvas.FillPie(
-                n.Data.Color,
+                n.data.color,
                 rect.X, rect.Y, rect.Width, rect.Height,
                 0!, 360.0!)
 

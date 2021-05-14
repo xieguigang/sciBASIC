@@ -24,7 +24,7 @@
     <WarningsAsErrors>
     </WarningsAsErrors>
     <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Rsharp_app_release|AnyCPU' ">
@@ -38,7 +38,7 @@
     <WarningsAsErrors>
     </WarningsAsErrors>
     <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
@@ -53,10 +53,29 @@
     <WarningsAsErrors>
     </WarningsAsErrors>
     <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Rsharp_app_release|x64' ">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>false</Optimize>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+    <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Publish|x64' ">
     <OutputPath>bin\x64\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -68,10 +87,11 @@
     <WarningsAsErrors>
     </WarningsAsErrors>
     <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DefineTrace>true</DefineTrace>
   </PropertyGroup>
   <PropertyGroup>
     <OptionStrict>Off</OptionStrict>
@@ -91,11 +111,13 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
     <Optimize>true</Optimize>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|x64'">
     <OutputPath>bin\x64\Biodeep\</OutputPath>
@@ -104,12 +126,14 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
     <Optimize>true</Optimize>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|AnyCPU'">
     <OutputPath>bin\GCModeller%28Release_X64%29\</OutputPath>
@@ -117,11 +141,13 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
     <Optimize>true</Optimize>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|x64'">
     <OutputPath>bin\x64\GCModeller%28Release_X64%29\</OutputPath>
@@ -130,12 +156,14 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
     <Optimize>true</Optimize>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -143,11 +171,13 @@
     <DefineConstants>DEBUG,TRACE</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Rsharp_app_release|x86' ">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -155,11 +185,13 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
     <Optimize>true</Optimize>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|x86'">
     <OutputPath>bin\x86\Biodeep\</OutputPath>
@@ -167,11 +199,13 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
     <Optimize>true</Optimize>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|x86'">
     <OutputPath>bin\x86\GCModeller%28Release_X64%29\</OutputPath>
@@ -179,11 +213,13 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
     <Optimize>true</Optimize>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|AnyCPU'">
     <OutputPath>bin\GCModeller%28UNIX-Release_X64%29\</OutputPath>
@@ -191,11 +227,13 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
     <Optimize>true</Optimize>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|x64'">
     <OutputPath>bin\x64\GCModeller%28UNIX-Release_X64%29\</OutputPath>
@@ -204,12 +242,14 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
     <Optimize>true</Optimize>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|x86'">
     <OutputPath>bin\x86\GCModeller%28UNIX-Release_X64%29\</OutputPath>
@@ -217,23 +257,29 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
     <Optimize>true</Optimize>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|AnyCPU'">
     <OutputPath>bin\mzkit\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
-    <Optimize>true</Optimize>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Optimize>false</Optimize>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|x64'">
     <OutputPath>..\..\..\..\..\..\..\..\mzkit\dist\bin\</OutputPath>
@@ -242,7 +288,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
     <Optimize>false</Optimize>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -250,6 +296,8 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|x86'">
     <OutputPath>bin\x86\mzkit\</OutputPath>
@@ -257,11 +305,13 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
     <Optimize>true</Optimize>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|AnyCPU'">
     <OutputPath>bin\BioDeep_database\</OutputPath>
@@ -269,11 +319,13 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
     <Optimize>true</Optimize>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|x64'">
     <OutputPath>bin\x64\BioDeep_database\</OutputPath>
@@ -282,7 +334,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
     <Optimize>false</Optimize>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -290,6 +342,8 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|x86'">
     <OutputPath>bin\x86\BioDeep_database\</OutputPath>
@@ -297,7 +351,254 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
     <Optimize>true</Optimize>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'PlantMAT|AnyCPU'">
+    <OutputPath>bin\PlantMAT\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'PlantMAT|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\PlantMAT\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'PlantMAT|x86'">
+    <OutputPath>bin\x86\PlantMAT\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep_UNIX_x64|AnyCPU'">
+    <OutputPath>bin\Biodeep_UNIX_x64\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep_UNIX_x64|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Biodeep_UNIX_x64\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep_UNIX_x64|x86'">
+    <OutputPath>bin\x86\Biodeep_UNIX_x64\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x86'">
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Voyager1|AnyCPU'">
+    <OutputPath>bin\Voyager1\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Voyager1|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\..\..\..\..\..\..\..\voyager-1\Apps\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Voyager1|x86'">
+    <OutputPath>bin\x86\Voyager1\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit_UnixDocker|AnyCPU'">
+    <OutputPath>bin\mzkit_UnixDocker\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit_UnixDocker|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\mzkit_UnixDocker\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit_UnixDocker|x86'">
+    <OutputPath>bin\x86\mzkit_UnixDocker\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'LipidSearch|AnyCPU'">
+    <OutputPath>bin\LipidSearch\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'LipidSearch|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\LipidSearch\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'LipidSearch|x86'">
+    <OutputPath>bin\x86\LipidSearch\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'MetaCardio|AnyCPU'">
+    <OutputPath>bin\MetaCardio\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'MetaCardio|x64'">
+    <OutputPath>bin\x64\MetaCardio\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'MetaCardio|x86'">
+    <OutputPath>bin\x86\MetaCardio\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>Microsoft.VisualBasic.Math.SignalProcessing.xml</DocumentationFile>
+    <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -312,7 +613,6 @@
     <Import Include="System.Linq.Expressions" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -325,9 +625,12 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cluster\SignalClustering.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="ColorSpectrum.vb" />
     <Compile Include="GeneralSignal.vb" />
+    <Compile Include="Alignment.vb" />
+    <Compile Include="Resampler.vb" />
     <Compile Include="PeakFinding\Algorithm.vb" />
     <Compile Include="PeakFinding\Doppler.vb" />
     <Compile Include="PeakFinding\SignalPeak.vb" />
@@ -361,7 +664,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
+    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>

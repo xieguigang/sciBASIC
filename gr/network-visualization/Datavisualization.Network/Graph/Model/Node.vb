@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f793f3aecf60bf74954d52696547467, gr\network-visualization\Datavisualization.Network\Graph\Model\Node.vb"
+﻿#Region "Microsoft.VisualBasic::e900dfb0754013fd1c2e45d960279d1f, gr\network-visualization\Datavisualization.Network\Graph\Model\Node.vb"
 
     ' Author:
     ' 
@@ -108,6 +108,10 @@ Namespace Graph
         Public Property adjacencies As AdjacencySet(Of Edge)
         Public Property directedVertex As DirectedVertex
 
+        ''' <summary>
+        ''' 这个节点是被钉住的？在进行布局计算的时候，钉住的节点将不会更新位置
+        ''' </summary>
+        ''' <returns></returns>
         Public Property pinned As Boolean
         Public Property visited As Boolean
 
@@ -133,6 +137,10 @@ Namespace Graph
             Return label.GetHashCode()
         End Function
 
+        ''' <summary>
+        ''' 枚举出所有的与当前节点直接相邻接的节点列表
+        ''' </summary>
+        ''' <returns></returns>
         Public Iterator Function EnumerateAdjacencies() As IEnumerable(Of Node)
             For Each edge As Edge In adjacencies.EnumerateAllEdges
                 If edge.U Is Me Then
@@ -207,7 +215,7 @@ Namespace Graph
                 .degree = degree,
                 .pinned = pinned,
                 .visited = visited,
-                .adjacencies = adjacencies.Clone,
+                .adjacencies = If(adjacencies Is Nothing, New AdjacencySet(Of Edge)(), adjacencies.Clone),
                 .directedVertex = New DirectedVertex(label),
                 .data = New NodeData With {
                     .color = data.color,

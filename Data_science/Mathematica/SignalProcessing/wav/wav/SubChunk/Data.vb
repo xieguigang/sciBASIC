@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31c7f97b66510e2e447684754acc60fc, Data_science\Mathematica\SignalProcessing\wav\wav\SubChunk\Data.vb"
+﻿#Region "Microsoft.VisualBasic::fb1963a9c33857e7c4c82114f725bb4c, Data_science\Mathematica\SignalProcessing\wav\wav\SubChunk\Data.vb"
 
     ' Author:
     ' 
@@ -35,11 +35,19 @@
     ' 
     '     Properties: data
     ' 
-    '     Function: loadData, ParseData
+    '     Function: GenericEnumerator, GetEnumerator, loadData, LoadSamples, ParseData
     ' 
-    ' Structure Sample
+    ' Class SampleDataChunk
     ' 
-    '     Function: Parse16Bit, Parse8Bit, ToString
+    ' 
+    ' 
+    ' Class LazyDataChunk
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: CalculateOffset, LoadSamples, MeasureChunkSize, MoveToDataChunk
+    ' 
+    '     Sub: Close
     ' 
     ' /********************************************************************************/
 
@@ -47,13 +55,15 @@
 
 Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Public Class DataSubChunk : Inherits SubChunk
+Public Class DataSubChunk : Inherits SampleDataChunk
+    Implements Enumeration(Of Sample)
 
     Public Property data As Sample()
 
-    Default Public ReadOnly Property channel(position As Integer) As Short()
+    Default Public ReadOnly Property channel(position As Integer) As Single()
         Get
             Return data _
                 .Select(Function(sample) sample.channels(position)) _
@@ -61,12 +71,14 @@ Public Class DataSubChunk : Inherits SubChunk
         End Get
     End Property
 
-    Public Shared Function ParseData(wav As BinaryDataReader, format As FMTSubChunk) As DataSubChunk
-        Do While wav.ReadString(4) <> "data"
-            wav.Seek(-3, SeekOrigin.Current)
-        Loop
+    Public Overrides Function LoadSamples(start As Integer, length As Integer, Optional scan0% = 0) As IEnumerable(Of Sample)
+        Dim [sub] As Sample() = New Sample(length - 1) {}
+        Call Array.ConstrainedCopy(data, start, [sub], scan0, length)
+        Return [sub]
+    End Function
 
-        Call wav.Seek(-4, SeekOrigin.Current)
+    Friend Shared Function ParseData(wav As BinaryDataReader, format As FMTSubChunk) As DataSubChunk
+        Call LazyDataChunk.MoveToDataChunk(wav)
 
         Return New DataSubChunk With {
             .chunkID = wav.ReadString(4),
@@ -84,38 +96,101 @@ Public Class DataSubChunk : Inherits SubChunk
                 Return Sample.Parse8Bit(wav, format.channels)
             Case 16
                 Return Sample.Parse16Bit(wav, format.channels)
+            Case 32
+                Return Sample.Parse32Bit(wav, format.channels)
             Case Else
                 Throw New NotImplementedException(format.GetJson)
         End Select
     End Function
+
+    Public Iterator Function GenericEnumerator() As IEnumerator(Of Sample) Implements Enumeration(Of Sample).GenericEnumerator
+        For Each sample In data
+            Yield sample
+        Next
+    End Function
+
+    Public Iterator Function GetEnumerator() As IEnumerator Implements Enumeration(Of Sample).GetEnumerator
+        Yield GetEnumerator()
+    End Function
 End Class
 
-Public Structure Sample
+Public MustInherit Class SampleDataChunk : Inherits SubChunk
 
-    ''' <summary>
-    ''' 一个sample之中是由好几个声道的数据构成的
-    ''' </summary>
-    ''' <remarks>
-    ''' 在这里使用Short来兼容8bit和16bit的数据
-    ''' </remarks>
-    Dim channels As Short()
+    Public MustOverride Iterator Function LoadSamples(start As Integer, length As Integer, Optional scan0% = 0) As IEnumerable(Of Sample)
 
-    Public Overrides Function ToString() As String
-        Return channels.GetJson
+End Class
+
+Public Class LazyDataChunk : Inherits SampleDataChunk
+
+    ReadOnly wav As BinaryDataReader
+    ReadOnly position As Long
+    ReadOnly format As FMTSubChunk
+
+    Sub New(wav As BinaryDataReader, format As FMTSubChunk)
+        Me.wav = wav
+        Me.format = format
+        Me.position = MoveToDataChunk(wav).Position
+    End Sub
+
+    Public Sub Close()
+        Call wav.Dispose()
+    End Sub
+
+    Public Overrides Iterator Function LoadSamples(start As Integer, length As Integer, Optional scan0% = 0) As IEnumerable(Of Sample)
+        ' little endian
+        wav.ByteOrder = ByteOrder.LittleEndian
+        wav.Position = CalculateOffset(start, scan0)
+
+        For i As Integer = 0 To length - 1
+            Select Case format.BitsPerSample
+                Case 32
+                    Yield Sample.Parse32BitSample(wav, format.channels)
+                Case Else
+                    Throw New NotImplementedException(format.ToString)
+            End Select
+        Next
     End Function
 
-    Public Shared Iterator Function Parse16Bit(wav As BinaryDataReader, channels As Integer) As IEnumerable(Of Sample)
-        Dim sampleSize = channels * 2
+    Public Function MeasureChunkSize(length As Integer) As Long
+        Dim bytes As Integer
 
-        Do While Not wav.EndOfStream AndAlso (wav.Position + sampleSize <= wav.Length)
-            Yield New Sample With {
-                .channels = wav.ReadInt16s(channels)
-            }
+        Select Case format.BitsPerSample
+            Case 32
+                bytes = format.channels * 4
+            Case 16
+                bytes = format.channels * 2
+            Case 8
+                bytes = format.channels * 1
+            Case Else
+                Throw New NotImplementedException(format.ToString)
+        End Select
+
+        Return bytes * length
+    End Function
+
+    Public Function CalculateOffset(start As Integer, Optional scan0% = 0) As Long
+        Dim sampleSize As Integer
+
+        Select Case format.BitsPerSample
+            Case 8 : sampleSize = format.channels * 1
+            Case 16 : sampleSize = format.channels * 2
+            Case 32 : sampleSize = format.channels * 4
+            Case Else
+                Throw New BadImageFormatException(format.GetJson)
+        End Select
+
+        Dim offset As Long = start * sampleSize
+
+        Return (position + scan0) + offset
+    End Function
+
+    Public Shared Function MoveToDataChunk(wav As BinaryDataReader) As BinaryDataReader
+        Do While wav.ReadString(4) <> "data"
+            wav.Seek(-3, SeekOrigin.Current)
         Loop
-    End Function
 
-    Public Shared Iterator Function Parse8Bit(wav As BinaryDataReader, channels As Integer) As IEnumerable(Of Sample)
-        Throw New NotImplementedException
-    End Function
+        Call wav.Seek(-4, SeekOrigin.Current)
 
-End Structure
+        Return wav
+    End Function
+End Class

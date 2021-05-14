@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae8d33eac66924a0c14c1484d03c32e6, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Isometric.vb"
+﻿#Region "Microsoft.VisualBasic::44f3498ebf109f53e3e8753839c42588, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Isometric.vb"
 
     ' Author:
     ' 
@@ -81,8 +81,7 @@ Namespace Drawing3D
                 ({Me.scale * stdNum.Cos(Me.angle), Me.scale * stdNum.Sin(Me.angle)}),
                 ({Me.scale * stdNum.Cos(stdNum.PI - Me.angle), Me.scale * stdNum.Sin(stdNum.PI - Me.angle)})
             }
-            Dim lightPosition As New Point3D(2, -1, 3)
-            Me.lightAngle = lightPosition.Normalize()
+            Me.lightAngle = New Point3D(2, -1, 3).Normalize()
             Me.colorDifference = 0.2
             Me.lightColor = Color.FromArgb(255, 255, 255)
         End Sub
@@ -149,8 +148,9 @@ Namespace Drawing3D
 
                 model.TransformedPoints = New Point3D(model.path.Points.Count - 1) {}
 
+                ' Todo: test if .reset is not needed and rewind is enough
                 If Not model.DrawPath Is Nothing Then
-                    model.DrawPath.Rewind() 'Todo: test if .reset is not needed and rewind is enough
+                    model.DrawPath.Rewind()
                 End If
 
                 Dim i As Integer = 0
@@ -258,16 +258,17 @@ Namespace Drawing3D
             End With
 
             For Each model2D As Model2D In models
-                '            this.ctx.globalAlpha = color.a;
-                '            this.ctx.fillStyle = this.ctx.strokeStyle = color.toHex();
-                '            this.ctx.stroke();
-                '            this.ctx.fill();
-                '            this.ctx.restore();
-                With model2D
-                    Call canvas.FillPath(.Paint, .DrawPath.Path)
-                    ' 对于线条而言，直接使用DrawPath来进行绘制
-                    Call canvas.DrawPath(New Pen(.Paint), .DrawPath.Path)
-                End With
+                If model2D.isDot Then
+                    Throw New NotImplementedException
+                ElseIf model2D.isLine Then
+                    canvas.DrawLine(New Pen(model2D.baseColor), model2D.TransformedPoints(0).PointXY(canvas.Size), model2D.TransformedPoints(1).PointXY(canvas.Size))
+                Else
+                    With model2D
+                        Call canvas.FillPath(.Paint, .DrawPath.Path)
+                        ' 对于线条而言，直接使用DrawPath来进行绘制
+                        Call canvas.DrawPath(New Pen(.Paint), .DrawPath.Path)
+                    End With
+                End If
             Next
         End Sub
 

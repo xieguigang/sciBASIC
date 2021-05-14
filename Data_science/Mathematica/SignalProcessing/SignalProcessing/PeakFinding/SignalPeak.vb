@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54c2e31ba41305770897dd95e7e5fb75, Data_science\Mathematica\SignalProcessing\SignalProcessing\PeakFinding\SignalPeak.vb"
+﻿#Region "Microsoft.VisualBasic::2afbf9ad2dd55862b2921eac19155a2b, Data_science\Mathematica\SignalProcessing\SignalProcessing\PeakFinding\SignalPeak.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,8 @@
 
     '     Structure SignalPeak
     ' 
-    '         Properties: rtmax, rtmin, snratio
+    '         Properties: isEmpty, rt, rtmax, rtmin, signalMax
+    '                     snratio
     ' 
     '         Function: Subset, ToString
     ' 
@@ -43,19 +44,35 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language.Default
 
 Namespace PeakFinding
 
-    Public Structure SignalPeak
+    Public Structure SignalPeak : Implements IsEmpty
 
         Dim region As ITimeSignal()
         Dim integration As Double
         Dim baseline As Double
 
+        Public ReadOnly Property isEmpty As Boolean Implements IsEmpty.IsEmpty
+            Get
+                Return region.IsNullOrEmpty AndAlso integration = 0 AndAlso baseline = 0
+            End Get
+        End Property
+
         Default Public ReadOnly Property tick(index As Integer) As ITimeSignal
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return region(index)
+            End Get
+        End Property
+
+        Public ReadOnly Property rt As Double
+            Get
+                Return region _
+                    .OrderByDescending(Function(a) a.intensity) _
+                    .FirstOrDefault _
+                    .time
             End Get
         End Property
 
@@ -68,6 +85,15 @@ Namespace PeakFinding
         Public ReadOnly Property rtmax As Double
             Get
                 Return region.Last.time
+            End Get
+        End Property
+
+        Public ReadOnly Property signalMax As Double
+            Get
+                Return Aggregate tick As ITimeSignal
+                       In region
+                       Let data As Double = tick.intensity
+                       Into Max(data)
             End Get
         End Property
 

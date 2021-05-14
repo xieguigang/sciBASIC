@@ -99,11 +99,13 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\..\..\smartnucl_integrative\biodeepDB\METLINApp\App\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.Visualizer.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|x86'">
     <DefineTrace>true</DefineTrace>
@@ -228,6 +230,7 @@
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x86'">
     <DefineTrace>true</DefineTrace>
@@ -314,11 +317,13 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\mzkit\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.Visualizer.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|x86'">
     <DefineTrace>true</DefineTrace>
@@ -392,6 +397,68 @@
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit_UnixDocker|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\mzkit_UnixDocker\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.Visualizer.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit_UnixDocker|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\mzkit_UnixDocker\</OutputPath>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.Visualizer.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit_UnixDocker|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\mzkit_UnixDocker\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.Visualizer.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'LipidSearch|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\LipidSearch\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.Visualizer.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'LipidSearch|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\LipidSearch\</OutputPath>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.Visualizer.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'LipidSearch|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\LipidSearch\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.Visualizer.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -414,6 +481,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MingleRender\BundleNode.vb" />
+    <Compile Include="MingleRender\RenderHelpers.vb" />
+    <Compile Include="MingleRender\PosItem.vb" />
+    <Compile Include="MingleRender\RenderOptions.vb" />
+    <Compile Include="MingleRender\MingleRender.vb" />
     <Compile Include="LayoutLabel.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="Canvas.vb" />
@@ -475,7 +547,7 @@
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>math-core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>

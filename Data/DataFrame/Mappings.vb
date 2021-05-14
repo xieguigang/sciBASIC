@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::190c6d1cf06c1da7e65a8b0756444458, Data\DataFrame\Mappings.vb"
+﻿#Region "Microsoft.VisualBasic::4f3beff9b1935ec5c39357aaa0c1b439, Data\DataFrame\Mappings.vb"
 
     ' Author:
     ' 
@@ -58,7 +58,7 @@ Public Class MappingsHelper
     ''' <param name="types"></param>
     ''' <returns>这个匹配函数是安全的函数, 如果一个结果都没有被匹配上,则这个函数会返回<see cref="System.Void"/>类型</returns>
     Public Shared Function [Typeof](file$, ParamArray types As Type()) As Type
-        Dim headers As RowObject = Tokenizer.CharsParser(file.ReadFirstLine)
+        Dim headers As New RowObject(Tokenizer.CharsParser(file.ReadFirstLine))
         Dim match As Type = StreamIO.TypeOf(headers, types)
 
         If match Is Nothing Then

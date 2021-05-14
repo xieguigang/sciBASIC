@@ -1,0 +1,150 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Microsoft.VisualBasic.Data.visualize.Network</RootNamespace>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>Microsoft.VisualBasic.Data.visualize.Network</AssemblyName>
+    <Platforms>AnyCPU;x64</Platforms>
+    <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;NPSearch</Configurations>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineConstants>netcore5=1</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineConstants>netcore5=1</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.xml</DocumentationFile>
+    <OutputPath>bin\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.xml</DocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineConstants>netcore5=1</DefineConstants>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
+    <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.xml</DocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineConstants>netcore5=1</DefineConstants>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NPSearch|AnyCPU'">
+    <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.xml</DocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineConstants>netcore5=1</DefineConstants>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|AnyCPU'">
+    <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.xml</DocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineConstants>netcore5=1</DefineConstants>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|AnyCPU'">
+    <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.xml</DocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineConstants>netcore5=1</DefineConstants>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
+    <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.xml</DocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+    <OutputPath>D:\GCModeller\src\R-sharp\App\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NPSearch|x64'">
+    <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.xml</DocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+    <OutputPath>D:\GCModeller\src\R-sharp\App\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|x64'">
+    <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.xml</DocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+    <OutputPath>D:\mzkit\Rscript\Library\mzkit_app\assembly\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|x64'">
+    <DocumentationFile>Microsoft.VisualBasic.Data.visualize.Network.xml</DocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Layouts\OrganicLayout\**" />
+    <Compile Remove="test\**" />
+    <EmbeddedResource Remove="Layouts\OrganicLayout\**" />
+    <EmbeddedResource Remove="test\**" />
+    <None Remove="Layouts\OrganicLayout\**" />
+    <None Remove="test\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Graph\mxGraphModel.vb" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Data_science\Graph\graph-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\physics\physics-netcore5.vbproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Import Include="System.Data" />
+  </ItemGroup>
+
+</Project>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e52c79dfa7bc7117e472532a95359ab, Data_science\Mathematica\Math\Math\Scripting\Factors\NamedVector.vb"
+﻿#Region "Microsoft.VisualBasic::3fd3d9ff7f99ed4146d03523b018a6f5, Data_science\Mathematica\Math\Math\Scripting\Factors\NamedVector.vb"
 
     ' Author:
     ' 
@@ -51,8 +51,16 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Scripting
 
+    ''' <summary>
+    ''' 提供字符串映射到具体的数值
+    ''' </summary>
     Public Class NamedVector : Inherits FactorVector(Of Double)
 
+        ''' <summary>
+        ''' 添加一个映射
+        ''' </summary>
+        ''' <param name="factor$"></param>
+        ''' <param name="value#"></param>
         Public Sub Add(factor$, value#)
             If buffer Is Nothing Then
                 buffer = {}

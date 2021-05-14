@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a312545447d8bf372d830480bd473fa, Data\BinaryData\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::08084fe861a49c3a13ff352c10a88663, Data\BinaryData\test\Module1.vb"
 
     ' Author:
     ' 
@@ -90,15 +90,15 @@ Module Module1
 
         Using writer As New StringWriter(path)
 
-            Dim write = writer.CreateWriter(Of int)
+            Dim write = writer.CreateWriter(Of i32)
 
-            p1 = write(New int(-9876))
-            p2 = write(New int(88888888))
+            p1 = write(New i32(-9876))
+            p2 = write(New i32(88888888))
 
         End Using
 
         Dim reader As New StringReader(path)
-        Dim read = reader.CreateReader(Of int)
+        Dim read = reader.CreateReader(Of i32)
 
         Console.WriteLine(read(0))
         Console.WriteLine(read(p1))

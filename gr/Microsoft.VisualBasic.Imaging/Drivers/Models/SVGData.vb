@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f90216d245d768e0384feb9265b1290, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\SVGData.vb"
+﻿#Region "Microsoft.VisualBasic::42a5d0a570ee13da8bed704709d0736c, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\SVGData.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: Driver, SVG, title, XmlComment
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: GetDataURI, Render, (+2 Overloads) Save
+    '         Function: GetDataURI, GetSVGXml, Render, (+2 Overloads) Save
     ' 
     ' 
     ' /********************************************************************************/
@@ -46,6 +46,7 @@
 Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.Imaging.SVG
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Net.Http
@@ -103,6 +104,15 @@ Namespace Driver
                 Call data.Seek(Scan0, SeekOrigin.Begin)
 
                 Return New DataURI(data, content_type)
+            End Using
+        End Function
+
+        Public Function GetSVGXml() As String
+            Using buffer As New MemoryStream
+                Call Save(out:=buffer)
+                Call buffer.Flush()
+
+                Return Encoding.UTF8.GetString(buffer.ToArray)
             End Using
         End Function
 

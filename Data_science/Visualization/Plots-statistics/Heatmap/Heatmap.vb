@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7440d14f47a8777009cf2758a7c0b126, Data_science\Visualization\Plots-statistics\Heatmap\Heatmap.vb"
+﻿#Region "Microsoft.VisualBasic::abaff3142260491f26a01b14a21a0fd4, Data_science\Visualization\Plots-statistics\Heatmap\Heatmap.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.DendrogramVisualize
+Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors

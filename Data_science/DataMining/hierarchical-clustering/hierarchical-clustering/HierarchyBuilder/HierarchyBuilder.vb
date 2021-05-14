@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f7665102698526e5269de898c7f7e67, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\HierarchyBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::49c90882251105fbd278d497807c7179, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\HierarchyBuilder.vb"
 
     ' Author:
     ' 
@@ -63,6 +63,8 @@
 ' limitations under the License.
 ' *****************************************************************************
 '
+
+Imports System.Runtime.CompilerServices
 
 Namespace Hierarchy
 
@@ -147,11 +149,11 @@ Namespace Hierarchy
             Dim oldClusterL As Cluster = minDistLink.Left()
             Dim oldClusterR As Cluster = minDistLink.Right()
             Dim newCluster As Cluster = minDistLink.Agglomerate(Nothing)
+            Dim distanceValues As New List(Of Distance)
 
             For Each iClust As Cluster In Clusters
                 Dim link1 As HierarchyTreeNode = findByClusters(iClust, oldClusterL)
                 Dim link2 As HierarchyTreeNode = findByClusters(iClust, oldClusterR)
-                Dim distanceValues As New List(Of Distance)
 
                 If link1 IsNot Nothing Then
                     Dim distVal As Double = link1.LinkageDistance
@@ -175,6 +177,7 @@ Namespace Hierarchy
                         .Distance
                 }
 
+                Call distanceValues.Clear()
                 Call Distances.Add(newLinkage, direct:=True)
             Next
 
@@ -182,6 +185,7 @@ Namespace Hierarchy
             Call Clusters.Add(newCluster)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function findByClusters(c1 As Cluster, c2 As Cluster) As HierarchyTreeNode
             Return Distances.FindByCodePair(c1, c2)
         End Function

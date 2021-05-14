@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ccd42e5871c6d70ae5ad67d3505e5ab, Data_science\Visualization\Plots\Scatter\LinePlot.vb"
+﻿#Region "Microsoft.VisualBasic::d04fe8a9ef18e2a5acd81bb32c461013, Data_science\Visualization\Plots\Scatter\LinePlot.vb"
 
     ' Author:
     ' 
@@ -31,27 +31,34 @@
 
     ' Summaries:
 
-    ' Class LinePlot
+    ' Module LinePlot
     ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: PlotInternal
+    '     Sub: drawErrorLine
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 
-Public Class LinePlot : Inherits Plot
+Public Module LinePlot
 
-    Public Sub New(theme As Theme)
-        MyBase.New(theme)
+    <Extension>
+    Friend Sub drawErrorLine(canvas As IGraphics, scaler As DataScaler, pt As PointF, value#, width!, color As SolidBrush)
+        Dim p0 As New PointF With {
+            .X = pt.X,
+            .Y = scaler.TranslateY(value)
+        }
+
+        ' 下面分别绘制竖线误差线以及横线
+        Call canvas.DrawLine(New Pen(color), pt, p0)
+        Call canvas.DrawLine(New Pen(color), CSng(p0.X - width), p0.Y, CSng(p0.X + width), p0.Y)
     End Sub
 
-    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
-        Throw New NotImplementedException()
-    End Sub
-End Class
+End Module

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6266f3fc18d8b2bcd466b8be6213b335, Data_science\Graph\Analysis\GraphAnalysis.vb"
+﻿#Region "Microsoft.VisualBasic::358e8c1d57e8d5c708000758cecc1995, Data_science\Graph\Analysis\GraphAnalysis.vb"
 
     ' Author:
     ' 
@@ -76,20 +76,19 @@ Namespace Analysis
         <Extension>
         Public Function BetweennessCentrality(graph As DijkstraRouter) As Dictionary(Of String, Integer)
             Dim hits As New Dictionary(Of String, Counter)
-            Dim routes As Route（) = graph.points _
-                .AsParallel _
-                .Select(Function(node)
-                            Return graph.CalculateMinCost(node).Values
-                        End Function) _
-                .IteratesALL _
-                .ToArray
 
             For Each node As Vertex In graph.points
                 hits.Add(node.label, 0)
             Next
 
-            For Each route As Route In routes
-                For Each point In route.Connections
+            For Each route As Route In graph.points _
+                .AsParallel _
+                .Select(Function(node)
+                            Return graph.CalculateMinCost(node).Values
+                        End Function) _
+                .IteratesALL
+
+                For Each point As VertexEdge In route.Connections
                     Call hits(point.U.label).Hit()
                     Call hits(point.V.label).Hit()
                 Next

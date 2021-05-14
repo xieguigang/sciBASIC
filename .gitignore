@@ -2,6 +2,8 @@
 ## Eclipse
 #################
 
+node_modules
+
 *.pydevproject
 .project
 .metadata
@@ -195,6 +197,8 @@ $RECYCLE.BIN/
 # Mac crap
 .DS_Store
 
+.vs
+
 
 #############
 ## Python
@@ -271,3 +275,5 @@ storage.ide-wal
 /Data_science/Mathematica/CUDA/test/App
 /Data_science/Mathematica/CUDA/App
 /CLI_tools/MLkit/Apps
+*.dll
+*.dll

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5ba3724d0de6d347751c270ef39322e, Data_science\Visualization\Plots\g\Axis\Axis.vb"
+﻿#Region "Microsoft.VisualBasic::ae05e362a3dceb1e835fcca67aab5abc, Data_science\Visualization\Plots\g\Axis\Axis.vb"
 
     ' Author:
     ' 
@@ -49,6 +49,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Imaging.d3js.scale
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Language
@@ -56,6 +57,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
+Imports stdNum = System.Math
 
 Namespace Graphic.Axis
 
@@ -79,6 +81,7 @@ Namespace Graphic.Axis
 
                 ' 不清楚旋转之后会不会对字符串的大小产生影响，所以measureString放在旋转之后
                 Dim textSize As SizeF = g.MeasureString(text, font)
+
                 Call g.DrawString(text, font, brush, -(textSize.Width / 2), -(textSize.Height / 2))
                 Call g.ResetTransform()
             End With
@@ -115,8 +118,9 @@ Namespace Graphic.Axis
                             Optional labelFont$ = CSSFont.Win7Large,
                             Optional axisStroke$ = Stroke.AxisStroke,
                             Optional gridFill$ = "rgb(245,245,245)",
-                            Optional gridColor$ = "white",
-                            Optional htmlLabel As Boolean = True,
+                            Optional gridX$ = Stroke.AxisGridStroke,
+                            Optional gridY$ = Stroke.AxisGridStroke,
+                            Optional htmlLabel As Boolean = False,
                             Optional XtickFormat$ = "F2",
                             Optional YtickFormat$ = "F2",
                             Optional tickFontStyle$ = CSSFont.Win10NormalLarger)
@@ -133,14 +137,15 @@ Namespace Graphic.Axis
                     XtickFormat:=XtickFormat,
                     YtickFormat:=YtickFormat,
                     tickFontStyle:=tickFontStyle,
-                    gridColor:=gridColor
+                    gridX:=gridX,
+                    gridY:=gridY
                 )
             End With
         End Sub
 
         <Extension>
         Private Sub checkScaler(scaler As DataScaler)
-            If scaler.X.valueDomain.Length = 0.0 Then
+            If scaler.X.domainSize = 0.0 Then
                 Throw New InvalidProgramException("the x axis range length is ZERO!")
             ElseIf scaler.Y.valueDomain.Length = 0.0 Then
                 Throw New InvalidProgramException("the y axis range length is ZERO!")
@@ -157,6 +162,7 @@ Namespace Graphic.Axis
         ''' <param name="showGrid">Show axis grid on the plot region?</param>
         ''' <param name="xlayout">修改y属性</param>
         ''' <param name="ylayout">修改x属性</param>
+        ''' <param name="gridX">空值表示不进行绘制</param>
         <Extension>
         Public Sub DrawAxis(ByRef g As IGraphics,
                             scaler As DataScaler,
@@ -169,7 +175,8 @@ Namespace Graphic.Axis
                             Optional xlayout As XAxisLayoutStyles = XAxisLayoutStyles.Bottom,
                             Optional ylayout As YAxisLayoutStyles = YAxisLayoutStyles.Left,
                             Optional gridFill$ = "rgb(245,245,245)",
-                            Optional gridColor$ = "white",
+                            Optional gridX$ = Stroke.AxisGridStroke,
+                            Optional gridY$ = Stroke.AxisGridStroke,
                             Optional axisStroke$ = Stroke.AxisStroke,
                             Optional tickFontStyle$ = CSSFont.Win7Normal,
                             Optional htmlLabel As Boolean = True,
@@ -179,28 +186,41 @@ Namespace Graphic.Axis
             ' 填充网格要先于坐标轴的绘制操作进行，否则会将坐标轴给覆盖掉
             Dim rect As Rectangle = scaler.region
             Dim tickFont As Font = CSSFont.TryParse(tickFontStyle)
-            Dim gridPenX As New Pen(gridColor.TranslateColor, 2) With {
-                .DashStyle = Drawing2D.DashStyle.Dash
-            }
-            Dim gridPenY As New Pen(gridColor.TranslateColor, 2) With {
-                .DashStyle = Drawing2D.DashStyle.Dot
-            }
+            Dim gridPenX As Pen = Stroke.TryParse(gridX)
+            Dim gridPenY As Pen = Stroke.TryParse(gridY)
 
             Call scaler.checkScaler
             Call g.FillRectangle(gridFill.GetBrush, rect)
 
             If showGrid AndAlso Not scaler.AxisTicks.X.IsNullOrEmpty Then
-                For Each tick In scaler.AxisTicks.X
-                    Dim x = scaler.X(tick) + offset.X
-                    Dim top As New Point(x, rect.Top)
-                    Dim bottom As New Point(x, rect.Bottom)
+                Dim ticks As Double()
 
-                    ' 绘制x网格线
-                    Call g.DrawLine(gridPenX, top, bottom)
-                Next
+                If TypeOf scaler.X Is OrdinalScale Then
+                    ticks = DirectCast(scaler.X, OrdinalScale) _
+                        .getTerms _
+                        .Objects _
+                        .Select(Function(label) scaler.X(label)) _
+                        .ToArray
+                Else
+                    ticks = scaler.AxisTicks.X _
+                        .Select(Function(xi) scaler.X(xi)) _
+                        .ToArray
+                End If
+
+                ' nothing for not drawing
+                If Not gridPenX Is Nothing Then
+                    For Each tick As Double In ticks
+                        Dim x As Single = tick + offset.X
+                        Dim top As New PointF(x, rect.Top)
+                        Dim bottom As New PointF(x, rect.Bottom)
+
+                        ' 绘制x网格线
+                        Call g.DrawLine(gridPenX, top, bottom)
+                    Next
+                End If
             End If
 
-            If showGrid AndAlso Not scaler.AxisTicks.Y.IsNullOrEmpty Then
+            If showGrid AndAlso (Not scaler.AxisTicks.Y.IsNullOrEmpty) AndAlso Not gridPenY Is Nothing Then
                 For Each tick In scaler.AxisTicks.Y
                     Dim y = scaler.TranslateY(tick) + offset.Y
                     Dim left As New Point(rect.Left, y)
@@ -213,12 +233,6 @@ Namespace Graphic.Axis
 
             Dim pen As Pen = Stroke.TryParse(axisStroke).GDIObject
 
-            'If htmlLabel Then
-            '    Call "Axis Labeling using HTML render is enable.".__INFO_ECHO
-            'Else
-            '    Call "Axis Labeling using HTML render was disabled!".__INFO_ECHO
-            'End If
-
             If xlayout <> XAxisLayoutStyles.None Then
                 Call g.DrawX(pen, xlabel, scaler, xlayout, scaler.Y(0), offset,
                              labelFontStyle,
@@ -229,7 +243,7 @@ Namespace Graphic.Axis
             End If
             If ylayout <> YAxisLayoutStyles.None Then
                 Call g.DrawY(pen, ylabel,
-                             scaler, scaler.X(0), scaler.AxisTicks.Y,
+                             scaler, scaler.X.Zero, scaler.AxisTicks.Y,
                              ylayout, offset,
                              labelFontStyle,
                              tickFont,
@@ -405,7 +419,7 @@ Namespace Graphic.Axis
                 Return TextRender.DrawHtmlText(label, css)
             Catch ex As Exception
                 If throwEx Then
-                    Throw ex
+                    Throw
                 Else
                     Call App.LogException(ex)
                     Return New Bitmap(1, 1)
@@ -505,11 +519,26 @@ Namespace Graphic.Axis
             Call g.DrawLine(pen, ZERO, right)   ' X轴
 
             If Not noTicks AndAlso Not scaler.AxisTicks.X.IsNullOrEmpty Then
-                For Each tick# In scaler.AxisTicks.X
-                    Dim x As Single = scaler.X(tick) + offset.X
-                    Dim axisX As New PointF(x, ZERO.Y)
+                ' 绘制坐标轴标签
+                Dim ticks As (x#, label$)()
 
-                    Dim labelText = (tick).ToString(tickFormat)
+                If TypeOf scaler.X Is LinearScale Then
+                    ticks = scaler.AxisTicks.X _
+                        .Select(Function(tick)
+                                    Return (scaler.X(tick), (tick).ToString(tickFormat))
+                                End Function) _
+                        .ToArray
+                Else
+                    ticks = DirectCast(scaler.X, OrdinalScale) _
+                        .getTerms _
+                        .Select(Function(tick) (scaler.X(tick.value), tick.value)) _
+                        .ToArray
+                End If
+
+                For Each tick As (X#, label$) In ticks
+                    Dim x As Single = tick.X + offset.X
+                    Dim axisX As New PointF(x, ZERO.Y)
+                    Dim labelText = tick.label
                     Dim sz As SizeF = g.MeasureString(labelText, tickFont)
 
                     Call g.DrawLine(pen, axisX, New PointF(x, ZERO.Y + d!))
@@ -529,9 +558,11 @@ Namespace Graphic.Axis
                 Else
                     Dim font As Font = CSSFont.TryParse(labelFont).GDIObject
                     Dim fSize As SizeF = g.MeasureString(label, font)
+                    Dim y1 As Double = scaler.region.Bottom + tickFont.Height + d * 5
+                    Dim y2 As Double = scaler.region.Bottom + ((g.Size.Height - scaler.region.Bottom) - fSize.Height) / 2
                     Dim point As New PointF With {
                         .X = (size.Width - fSize.Width) / 2 + scaler.region.Left,
-                        .Y = scaler.region.Top + size.Height + tickFont.Height + d * 4
+                        .Y = stdNum.Max(y1, y2)
                     }
 
                     ' Call $"[X:={label}] {point.ToString}".__INFO_ECHO

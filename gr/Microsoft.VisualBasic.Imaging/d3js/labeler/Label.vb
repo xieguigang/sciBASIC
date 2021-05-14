@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c67068f428c84def4cb63a766f27b05f, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Label.vb"
+﻿#Region "Microsoft.VisualBasic::3033d9e0410bc55b8dd124c1c890cad6, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Label.vb"
 
     ' Author:
     ' 
@@ -110,7 +110,7 @@ Namespace d3js.Layout
         ''' <remarks>
         ''' 20200618 实际上这个标签文本与实际的标签没有很多关联，也可以为一个用于获取图片对象的主键
         ''' </remarks>
-        Public Property text As String
+        Public Property text As String = Me.GetHashCode
 
         ''' <summary>
         ''' 在计算位置的时候，这个标签将不会被随机模拟事件选中
@@ -146,7 +146,7 @@ Namespace d3js.Layout
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"{text}@({X.ToString("F2")},{Y.ToString("F2")})"
+            Return $"[{X.ToString("F2")},{Y.ToString("F2")}] [{If(pinned, "pinned", "**unpin")}] {text}"
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bcba883a2b0b35079918f5057e881117, Data_science\Mathematica\Math\Math\Algebra\PCA\PCA.vb"
+﻿#Region "Microsoft.VisualBasic::b4b73db614bbd51da469afba9e5e3096, Data_science\Mathematica\Math\Math\Algebra\PCA\PCA.vb"
 
     ' Author:
     ' 
@@ -225,7 +225,7 @@ Namespace LinearAlgebra.Prcomp
                     .ToArray
 
                 means = columns.Select(Function(c) c.Average).AsVector
-                stdevs = columns.Select(Function(c) c.StdError).AsVector
+                stdevs = columns.Select(Function(c) c.SD).AsVector
                 dataset = dataset _
                     .Select(Function(r)
                                 ' 在这里每一行数据减去每一列的平均值

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca4155b102858fe0f93f81caa984232f, Data_science\Visualization\Plots-statistics\RegressionPlot.vb"
+﻿#Region "Microsoft.VisualBasic::cf252ace7171d80a49200cb0cfc416eb, Data_science\Visualization\Plots-statistics\RegressionPlot.vb"
 
     ' Author:
     ' 
@@ -47,7 +47,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Bootstrapping
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
+Imports Microsoft.VisualBasic.Data.Bootstrapping.Multivariate
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
@@ -59,6 +59,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports stdNum = System.Math
@@ -116,7 +117,8 @@ Public Module RegressionPlot
                          Optional yAxisTickFormat$ = "F2",
                          Optional factorFormat$ = "G4",
                          Optional showErrorBand As Boolean = True,
-                         Optional labelerIterations% = 1000) As GraphicsData
+                         Optional labelerIterations% = 1000,
+                         Optional gridFill$ = NameOf(Color.LightGray)) As GraphicsData
 
         Dim xTicks#() = fit.X.AsEnumerable _
             .Range(scale:=1.125) _
@@ -125,6 +127,10 @@ Public Module RegressionPlot
             .Range(scale:=1.125) _
             .CreateAxisTicks(decimalDigits:=yAxisTickFormat.Match("\d+"))
 
+        If TypeOf fit Is MLRFit Then
+            Throw New InvalidProgramException($"MLR model is not compatible with this plot function!")
+        End If
+
         Dim pointBrush As Brush = pointBrushStyle.GetBrush
         Dim regressionPen As Pen = Stroke.TryParse(regressionLineStyle).GDIObject
         Dim predictedPointBorder As Pen = Stroke.TryParse(predictPointStroke).GDIObject
@@ -132,6 +138,7 @@ Public Module RegressionPlot
         Dim errorFitPointBrush As Brush = errorFitPointStyle.GetBrush
         Dim pointLabelFont As Font = CSSFont.TryParse(pointLabelFontCSS)
         Dim labelAnchorPen As Pen = Stroke.TryParse(labelAnchorLineStroke).GDIObject
+        Dim polynomial = DirectCast(fit.Polynomial, Polynomial)
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim rect = region.PlotRegion
@@ -155,7 +162,8 @@ Public Module RegressionPlot
                     xlabel:=xLabel, ylabel:=yLabel,
                     htmlLabel:=False,
                     XtickFormat:=xAxisTickFormat,
-                    YtickFormat:=yAxisTickFormat
+                    YtickFormat:=yAxisTickFormat,
+                    gridFill:=gridFill
                 )
 
                 ' scatter plot
@@ -170,10 +178,10 @@ Public Module RegressionPlot
                     )
                 Next
 
-                If Not fit.Polynomial.IsLinear Then
+                If Not DirectCast(fit.Polynomial, Polynomial).IsLinear Then
                     For Each t In xTicks.SlideWindows(2)
-                        Dim A As New PointF With {.X = t(0), .Y = fit(.X)}
-                        Dim B As New PointF With {.X = t(1), .Y = fit(.X)}
+                        Dim A As New PointF With {.X = t(0), .Y = polynomial(.X)}
+                        Dim B As New PointF With {.X = t(1), .Y = polynomial(.X)}
 
                         A = scaler.Translate(A)
                         B = scaler.Translate(B)
@@ -182,8 +190,8 @@ Public Module RegressionPlot
                     Next
                 Else
                     ' regression line
-                    Dim A As New PointF With {.X = fit.X.Min, .Y = fit(.X)}
-                    Dim B As New PointF With {.X = fit.X.Max, .Y = fit(.X)}
+                    Dim A As New PointF With {.X = fit.X.Min, .Y = polynomial(.X)}
+                    Dim B As New PointF With {.X = fit.X.Max, .Y = polynomial(.X)}
 
                     A = scaler.Translate(A)
                     B = scaler.Translate(B)
@@ -223,7 +231,7 @@ Public Module RegressionPlot
                         Dim A As New PointF(point.X, point.Yfit)
                         Dim B As New PointF With {
                             .X = point.X + dx,
-                            .Y = fit(.X)
+                            .Y = polynomial(.X)
                         }
 
                         line = New Line(A, B).ParallelShift(stdNum.Abs(point.Err))
@@ -300,7 +308,7 @@ Public Module RegressionPlot
         For Each ptX As NamedValue(Of Double) In predictedX
             Dim pt As New PointF With {
                 .X = ptX.Value,
-                .Y = fit(.X)
+                .Y = fit.GetY(.X)
             }
 
             If Not (pt.X.IsNaNImaginary OrElse pt.Y.IsNaNImaginary) Then
@@ -364,14 +372,14 @@ Public Module RegressionPlot
 
         Call g.DrawHtmlString(R2, legendLabelFont, Color.Black, pt)
 
-        Dim legends As Legend() = {
-            New Legend With {.color = "blue", .fontstyle = legendLabelFontCSS, .style = LegendStyles.Circle, .title = "Predicts"},
-            New Legend With {.color = "red", .fontstyle = legendLabelFontCSS, .style = LegendStyles.Circle, .title = "Standard Reference"},
-            New Legend With {.color = "black", .fontstyle = legendLabelFontCSS, .style = LegendStyles.SolidLine, .title = "Linear"}
+        Dim legends As LegendObject() = {
+            New LegendObject With {.color = "blue", .fontstyle = legendLabelFontCSS, .style = LegendStyles.Circle, .title = "Predicts"},
+            New LegendObject With {.color = "red", .fontstyle = legendLabelFontCSS, .style = LegendStyles.Circle, .title = "Standard Reference"},
+            New LegendObject With {.color = "black", .fontstyle = legendLabelFontCSS, .style = LegendStyles.SolidLine, .title = "Linear"}
         }
 
         If hasPredictedSamples Then
-            legends.Add(New Legend With {.color = "green", .fontstyle = legendLabelFontCSS, .style = LegendStyles.Circle, .title = "Samples"})
+            legends.Add(New LegendObject With {.color = "green", .fontstyle = legendLabelFontCSS, .style = LegendStyles.Circle, .title = "Samples"})
         End If
 
         Dim border As Stroke = Stroke.ScatterLineStroke

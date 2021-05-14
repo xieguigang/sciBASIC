@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae0c079b0bd3e5efc1144f9db2ce3906, gr\Microsoft.VisualBasic.Imaging\SVG\GraphicsSVG.vb"
+﻿#Region "Microsoft.VisualBasic::440396246b24b8be7f0f366a6738506e, gr\Microsoft.VisualBasic.Imaging\SVG\GraphicsSVG.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,10 @@
 
     '     Class GraphicsSVG
     ' 
-    '         Properties: Clip, ClipBounds, CompositingMode, CompositingQuality, DpiX
-    '                     DpiY, GetLastLayer, InterpolationMode, IsClipEmpty, IsVisibleClipEmpty
-    '                     PageScale, PageUnit, PixelOffsetMode, RenderingOrigin, Size
-    '                     SmoothingMode, TextContrast, TextRenderingHint, Transform, VisibleClipBounds
+    '         Properties: CompositingMode, CompositingQuality, DpiX, DpiY, GetLastLayer
+    '                     InterpolationMode, IsClipEmpty, IsVisibleClipEmpty, PageScale, PageUnit
+    '                     PixelOffsetMode, RenderingOrigin, Size, SmoothingMode, TextContrast
+    '                     TextRenderingHint
     ' 
     '         Constructor: (+3 Overloads) Sub New
     ' 
@@ -49,10 +49,9 @@
     '              DrawImageUnscaledAndClipped, (+4 Overloads) DrawLine, (+2 Overloads) DrawLines, DrawPath, (+4 Overloads) DrawPie
     '              (+2 Overloads) DrawPolygon, (+6 Overloads) DrawRectangle, (+2 Overloads) DrawRectangles, (+6 Overloads) DrawString, EndContainer
     '              (+36 Overloads) EnumerateMetafile, (+2 Overloads) ExcludeClip, (+6 Overloads) FillClosedCurve, (+4 Overloads) FillEllipse, FillPath
-    '              (+3 Overloads) FillPie, (+4 Overloads) FillPolygon, (+4 Overloads) FillRectangle, (+2 Overloads) FillRectangles, FillRegion
-    '              (+2 Overloads) Flush, (+3 Overloads) IntersectClip, (+2 Overloads) MultiplyTransform, ReleaseHdc, ReleaseHdcInternal
-    '              ResetClip, ResetTransform, Restore, (+2 Overloads) RotateTransform, (+2 Overloads) ScaleTransform
-    '              (+9 Overloads) SetClip, (+2 Overloads) TransformPoints, (+2 Overloads) TranslateClip, (+2 Overloads) TranslateTransform
+    '              (+3 Overloads) FillPie, (+4 Overloads) FillPolygon, (+4 Overloads) FillRectangle, FillRegion, (+2 Overloads) Flush
+    '              (+3 Overloads) IntersectClip, (+2 Overloads) MultiplyTransform, ResetClip, ResetTransform, (+2 Overloads) RotateTransform
+    '              (+2 Overloads) ScaleTransform, (+9 Overloads) SetClip, (+2 Overloads) TransformPoints, (+2 Overloads) TranslateClip, (+2 Overloads) TranslateTransform
     ' 
     ' 
     ' /********************************************************************************/
@@ -113,39 +112,6 @@ Namespace SVG
             Me.New(New Size(width, height))
         End Sub
 
-        Public Overrides Property Clip As Region
-            Get
-                Throw New NotImplementedException()
-            End Get
-            Set(value As Region)
-                Throw New NotImplementedException()
-            End Set
-        End Property
-
-        Public Overrides ReadOnly Property ClipBounds As RectangleF
-            Get
-                Throw New NotImplementedException()
-            End Get
-        End Property
-
-        Public Overrides Property CompositingMode As CompositingMode
-            Get
-                Throw New NotImplementedException()
-            End Get
-            Set(value As CompositingMode)
-                Throw New NotImplementedException()
-            End Set
-        End Property
-
-        Public Overrides Property CompositingQuality As CompositingQuality
-            Get
-                Throw New NotImplementedException()
-            End Get
-            Set(value As CompositingQuality)
-                Throw New NotImplementedException()
-            End Set
-        End Property
-
         Public Overrides ReadOnly Property DpiX As Single
             Get
                 Return 1
@@ -163,6 +129,24 @@ Namespace SVG
                 Throw New NotImplementedException()
             End Get
             Set(value As InterpolationMode)
+                Throw New NotImplementedException()
+            End Set
+        End Property
+
+        Public Overrides Property CompositingQuality As CompositingQuality
+            Get
+                Throw New NotImplementedException()
+            End Get
+            Set(value As CompositingQuality)
+                Throw New NotImplementedException()
+            End Set
+        End Property
+
+        Public Overrides Property CompositingMode As CompositingMode
+            Get
+                Throw New NotImplementedException()
+            End Get
+            Set(value As CompositingMode)
                 Throw New NotImplementedException()
             End Set
         End Property
@@ -240,24 +224,6 @@ Namespace SVG
             Set(value As TextRenderingHint)
                 Throw New NotImplementedException()
             End Set
-        End Property
-
-        Public Overrides Property Transform As Matrix
-            Get
-                Throw New NotImplementedException()
-            End Get
-            Set(value As Matrix)
-                Throw New NotImplementedException()
-            End Set
-        End Property
-
-        Public Overrides ReadOnly Property VisibleClipBounds As RectangleF
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return New RectangleF With {
-                    .Size = Size.SizeF
-                }
-            End Get
         End Property
 
         Public Overrides ReadOnly Property Size As Size
@@ -1056,18 +1022,6 @@ Namespace SVG
             Call __svgData.Add(rect)
         End Sub
 
-        Public Overrides Sub FillRectangles(brush As Brush, rects() As RectangleF)
-            For Each rect In rects
-                Call FillRectangle(brush, rect)
-            Next
-        End Sub
-
-        Public Overrides Sub FillRectangles(brush As Brush, rects() As Rectangle)
-            For Each rect In rects
-                Call FillRectangle(brush, rect)
-            Next
-        End Sub
-
         Public Overrides Sub FillRegion(brush As Brush, region As Region)
             Throw New NotImplementedException()
         End Sub
@@ -1101,23 +1055,11 @@ Namespace SVG
             Throw New NotImplementedException()
         End Sub
 
-        Public Overrides Sub ReleaseHdc(hdc As IntPtr)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub ReleaseHdcInternal(hdc As IntPtr)
-            Throw New NotImplementedException()
-        End Sub
-
         Public Overrides Sub ResetClip()
             Throw New NotImplementedException()
         End Sub
 
         Public Overrides Sub ResetTransform()
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub Restore(gstate As GraphicsState)
             Throw New NotImplementedException()
         End Sub
 

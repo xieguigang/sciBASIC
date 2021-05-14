@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0842b37aea8595c7331f1932da3e0a44, Data_science\Graph\Model\Abstract\General.vb"
+﻿#Region "Microsoft.VisualBasic::cbea04a9a7debf0f487187f198e2a692, Data_science\Graph\Model\Abstract\General.vb"
 
     ' Author:
     ' 
@@ -49,8 +49,8 @@ Imports TV = Microsoft.VisualBasic.Data.GraphTheory.Vertex
 Public Class VertexEdge : Inherits Edge(Of TV)
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Shared Function EdgeKey(U%, V%) As String
-        Return $"{U}-{V}"
+    Public Shared Function EdgeKey(U As TV, V As TV) As String
+        Return $"[{U.ID}]{U.label} -> [{V.ID}]{V.label}"
     End Function
 End Class
 

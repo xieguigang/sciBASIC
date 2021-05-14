@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6544d8a058e5b468246005cb84dca6cc, Data\DataFrame\Extensions\DocumentExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::712111467c00118ab7d611755a0cf7c4, Data\DataFrame\Extensions\DocumentExtensions.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,10 @@
 
     ' Module DocumentExtensions
     ' 
-    '     Function: Apply, CreateTable, DirectAppends, GetColumnObjects, GetColumnValues
-    '               GetLastRow, JoinColumns, LoadCsv, LoadData, LoadDictionary
-    '               LoadMappings, LoadTable, (+2 Overloads) LoadTsv, ParseDoc, (+2 Overloads) SaveAsDataFrame
-    '               SaveTsv, TsvLine
+    '     Function: Apply, CreateTable, DirectAppends, Distinct, GetColumnObjects
+    '               GetColumnValues, GetLastRow, JoinColumns, LoadCsv, LoadData
+    '               LoadDictionary, LoadMappings, LoadTable, (+2 Overloads) LoadTsv, Normalization
+    '               ParseDoc, (+2 Overloads) SaveAsDataFrame, SaveTsv, TsvLine
     '     Class GenericTable
     ' 
     '         Properties: data
@@ -61,11 +61,41 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
+Imports Table = Microsoft.VisualBasic.Data.csv.IO.File
 
 ''' <summary>
 ''' The csv document extensions API
 ''' </summary>
 Public Module DocumentExtensions
+
+    ''' <summary>
+    ''' 将一些奇怪的符号去除
+    ''' </summary>
+    ''' <param name="path"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Function Normalization(path As String, replaceAs As String) As Table
+        Dim Text As String = FileIO.FileSystem.ReadAllText(path)
+        Dim Data As String() = Strings.Split(Text, vbCrLf)
+
+        Data = (From strLine As String In Data Select strLine.Replace(vbLf, replaceAs)).ToArray
+
+        Return Table.__LINQ_LOAD(Data)
+    End Function
+
+    ''' <summary>
+    ''' 去除Csv文件之中的重复记录
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="orderBy">当为本参数指定一个非负数值的时候，程序会按照指定的列值进行排序</param>
+    ''' <param name="asc">当进行排序操作的时候，是否按照升序进行排序，否则按照降序排序</param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function Distinct(file As String, Optional orderBy As Integer = -1, Optional asc As Boolean = True) As Table
+        Return Table.Distinct(Table.Load(file), orderBy, asc)
+    End Function
 
     ''' <summary>
     ''' 将列数据合并为一个csv文件对象

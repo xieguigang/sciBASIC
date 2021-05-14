@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d71f6016968eed82da90472840e7a2a, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\DoCall.vb"
+﻿#Region "Microsoft.VisualBasic::2be909ef2f2b250086f753b22bff18ab, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\DoCall.vb"
 
     ' Author:
     ' 
@@ -52,7 +52,7 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
-Imports ArgumentAttribute = Microsoft.VisualBasic.CommandLine.Reflection.Argument
+Imports ArgumentAttribute = Microsoft.VisualBasic.CommandLine.Reflection.ArgumentAttribute
 
 Namespace LinearAlgebra
 

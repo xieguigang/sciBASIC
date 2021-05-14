@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0086af2b61ca063f1f06136769c62a3d, Data_science\Mathematica\Math\DataFrame\Correlation\Builder.vb"
+﻿#Region "Microsoft.VisualBasic::24d161ac9d27d305305dfad96dc62db2, Data_science\Mathematica\Math\DataFrame\Correlation\Builder.vb"
 
     ' Author:
     ' 
@@ -33,13 +33,14 @@
 
     ' Module Builder
     ' 
-    '     Function: FromTabular, MatrixBuilder
+    '     Function: Correlation, corTuple, (+3 Overloads) MatrixBuilder
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
@@ -47,86 +48,103 @@ Imports Microsoft.VisualBasic.Linq
 
 Public Module Builder
 
+    ''' <summary>
+    ''' 一个通用的距离矩阵创建函数
+    ''' </summary>
+    ''' <typeparam name="DataSet"></typeparam>
+    ''' <param name="data"></param>
+    ''' <param name="eval"></param>
+    ''' <param name="type"></param>
+    ''' <returns></returns>
     <Extension>
-    Public Function MatrixBuilder(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet), eval As Func(Of Double(), Double(), Double), isDistance As Boolean) As DistanceMatrix
-        Dim allData = data.ToArray
-        Dim names = allData.PropertyNames
+    Public Function MatrixBuilder(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet), eval As Func(Of Double(), Double(), Double), type As DataType) As DistanceMatrix
+        Return data.MatrixBuilder(Function(x, y) (eval(x, y), 0), type)
+    End Function
+
+    Friend Function corTuple(x As Double(), y As Double()) As (cor#, pvalue#)
+        Dim pvalue As Double
+        Dim corVal = Correlations.GetPearson(x, y, prob:=pvalue)
+
+        Return (corVal, pvalue)
+    End Function
+
+    <Extension>
+    Public Function Correlation(Of DataSet As INamedValue)(data As Enumeration(Of DataSet), eval As Func(Of DataSet, Double())) As CorrelationMatrix
+        Return data _
+            .AsEnumerable _
+            .ToArray _
+            .MatrixBuilder(
+                vector:=eval,
+                eval:=AddressOf corTuple,
+                type:=DataType.Correlation
+            )
+    End Function
+
+    ''' <summary>
+    ''' 一个通用的距离矩阵创建函数
+    ''' </summary>
+    ''' <typeparam name="DataSet"></typeparam>
+    ''' <param name="data"></param>
+    ''' <param name="eval"></param>
+    ''' <param name="type"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function MatrixBuilder(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet), eval As Func(Of Double(), Double(), (Double, Double)), type As DataType) As DataMatrix
+        Dim allData As DataSet() = data.ToArray
+        Dim names As String() = allData.PropertyNames
+        Dim vector As Func(Of DataSet, Double()) =
+            Function(d)
+                Return d.Properties.Takes(names).ToArray
+            End Function
+
+        Return allData.MatrixBuilder(vector, eval, type)
+    End Function
+
+    ''' <summary>
+    ''' 一个通用的距离矩阵创建函数
+    ''' </summary>
+    ''' <typeparam name="DataSet"></typeparam>
+    ''' <param name="eval"></param>
+    ''' <param name="type"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function MatrixBuilder(Of DataSet As INamedValue)(allData As DataSet(), vector As Func(Of DataSet, Double()), eval As Func(Of Double(), Double(), (Double, Double)), type As DataType) As DataMatrix
         Dim keys As String() = allData.Keys
-        Dim matrix As Double()() = allData _
+        Dim evalData = allData _
             .SeqIterator _
             .AsParallel _
             .Select(Function(d)
                         Dim vec As New List(Of Double)
-                        Dim sample = d.value.Properties
-                        Dim x As Double() = sample.Takes(names).ToArray
+                        Dim vec2 As New List(Of Double)
+                        Dim x As Double() = vector(d)
                         Dim y As Double()
 
                         For Each row As DataSet In allData
-                            y = names.Select(Function(key) row(key)).ToArray
-                            vec += eval(x, y)
+                            y = vector(row)
+                            vec += eval(x, y).Item1
+                            vec2 += eval(x, y).Item2
                         Next
 
-                        Return (d.i, vec.ToArray)
+                        Return (d.i, vec.ToArray, vec2.ToArray)
                     End Function) _
             .OrderBy(Function(d) d.i) _
+            .ToArray
+        Dim matrix As Double()() = evalData _
             .Select(Function(d) d.Item2) _
             .ToArray
 
-        Return New DistanceMatrix(keys.Indexing, matrix, isDistance)
-    End Function
-
-    <Extension>
-    Public Function FromTabular(Of DataSet As {INamedValue, DynamicPropertyBase(Of String)})(data As IEnumerable(Of DataSet),
-                                                                                             Optional item1$ = "A",
-                                                                                             Optional item2$ = "B",
-                                                                                             Optional correlation$ = "correlation",
-                                                                                             Optional isDistance As Boolean = False) As DistanceMatrix
-        Dim allData As DataSet() = data.ToArray
-        Dim names As New List(Of String)
-        Dim hash As New Dictionary(Of String, Dictionary(Of String, Double))
-        Dim a, b As String
-        Dim c As Double
-
-        For Each row As DataSet In allData
-            a = row.Properties(item1)
-            b = row.Properties(item2)
-            c = row.Properties(correlation)
-
-            Call names.Add(a)
-            Call names.Add(b)
-
-            If Not hash.ContainsKey(a) Then
-                Call hash.Add(a, New Dictionary(Of String, Double))
-            End If
-            If Not hash.ContainsKey(b) Then
-                Call hash.Add(b, New Dictionary(Of String, Double))
-            End If
-            If Not hash(a).ContainsKey(b) Then
-                Call hash(a).Add(b, c)
-            End If
-            If Not hash(b).ContainsKey(a) Then
-                Call hash(b).Add(a, c)
-            End If
-        Next
-
-        With names.Distinct.Indexing
-            Return .DoCall(Function(index)
-                               Dim matrix As Double()() = index.Objects _
-                                  .Select(Function(name)
-                                              Return index.Objects _
-                                                  .Select(Function(name2)
-                                                              If hash(name).ContainsKey(name2) Then
-                                                                  Return hash(name)(name2)
-                                                              Else
-                                                                  Return 0
-                                                              End If
-                                                          End Function) _
-                                                  .ToArray
-                                          End Function) _
-                                  .ToArray
-
-                               Return New DistanceMatrix(index, matrix, isDistance)
-                           End Function)
-        End With
+        If type = DataType.Correlation Then
+            Return New CorrelationMatrix(
+                names:=keys.Indexing,
+                matrix:=matrix,
+                pvalue:=evalData.Select(Function(d) d.Item3).ToArray
+            )
+        Else
+            Return New DistanceMatrix(
+                names:=keys.Indexing,
+                matrix:=matrix,
+                isDistance:=(type = DataType.Distance)
+            )
+        End If
     End Function
 End Module

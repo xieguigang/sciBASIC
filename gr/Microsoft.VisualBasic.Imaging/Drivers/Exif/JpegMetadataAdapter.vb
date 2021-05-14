@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::775956e51119ba72a5f30588a8ec4556, gr\Microsoft.VisualBasic.Imaging\Drivers\Exif\JpegMetadataAdapter.vb"
+﻿#Region "Microsoft.VisualBasic::a07d5bf90e33773db4dfd97fd079ffd8, gr\Microsoft.VisualBasic.Imaging\Drivers\Exif\JpegMetadataAdapter.vb"
 
     ' Author:
     ' 
@@ -46,6 +46,8 @@
     ' /********************************************************************************/
 
 #End Region
+
+#If netcore5=0
 
 Imports System.Collections.ObjectModel
 Imports System.IO
@@ -209,3 +211,4 @@ Namespace Driver
         End Sub
     End Class
 End Namespace
+#end if

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db758888eb34aecebf8fe9315cf1ed60, mime\application%json\BSON\Decoder.vb"
+﻿#Region "Microsoft.VisualBasic::a520325553223a1352da89bbf7b8b4f7, mime\application%json\BSON\Decoder.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class Decoder
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '         Function: decodeArray, decodeCString, decodeDocument, decodeElement, decodeString
     ' 
@@ -53,12 +53,14 @@ Namespace BSON
 
     Public Class Decoder : Implements IDisposable
 
-        ReadOnly raw As MemoryStream
         ReadOnly reader As BinaryReader
 
-        Friend Sub New(buf As Byte())
-            raw = New MemoryStream(buf)
-            reader = New BinaryReader(raw)
+        Sub New(buf As Byte())
+            Call Me.New(New MemoryStream(buf))
+        End Sub
+
+        Sub New(raw As Stream)
+            Me.reader = New BinaryReader(raw)
         End Sub
 
         Public Function decodeDocument() As JsonObject
@@ -77,7 +79,6 @@ Namespace BSON
             ' zero
             Return obj
         End Function
-
 
         Private Function decodeArray() As JsonArray
             Dim obj As JsonObject = decodeDocument()
@@ -104,13 +105,15 @@ Namespace BSON
         ''' </summary>
         ''' <returns></returns>
         Private Function decodeCString() As String
-            Dim ms = New MemoryStream()
+            Dim ms As New MemoryStream()
 
             While True
-                Dim buf As Byte = CByte(reader.ReadByte())
+                Dim buf As Byte = reader.ReadByte()
+
                 If buf = 0 Then
                     Exit While
                 End If
+
                 ms.WriteByte(buf)
             End While
 
@@ -183,7 +186,6 @@ Namespace BSON
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
                     Call reader.Dispose()
-                    Call raw.Dispose()
                 End If
 
                 ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.

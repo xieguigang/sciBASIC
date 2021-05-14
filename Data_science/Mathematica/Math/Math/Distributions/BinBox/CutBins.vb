@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9a663d1ff6d25e02ddcfd4fca491d64, Data_science\Mathematica\Math\Math\Distributions\BinBox\CutBins.vb"
+﻿#Region "Microsoft.VisualBasic::d68c6535f36c61428cadd377b2c9c35d, Data_science\Mathematica\Math\Math\Distributions\BinBox\CutBins.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module CutBins
     ' 
-    '         Function: EqualFrequencyBins, (+3 Overloads) FixedWidthBins
+    '         Function: EqualFrequencyBins, (+4 Overloads) FixedWidthBins
     ' 
     ' 
     ' /********************************************************************************/
@@ -50,6 +50,20 @@ Namespace Distributions.BinBox
     ''' 进行数据分箱操作
     ''' </summary>
     Public Module CutBins
+
+        ''' <summary>
+        ''' ### 数据等宽分箱
+        ''' 
+        ''' 将变量的取值范围分为<paramref name="k"/>个等宽的区间，每个区间当作一个分箱。
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 宽度是自动计算的
+        ''' </remarks>
+        Public Function FixedWidthBins(data As IEnumerable(Of Double), k%) As IEnumerable(Of SampleDistribution)
+            Return FixedWidthBins(data, k, Function(x) x).Select(Function(bin) New SampleDistribution(bin.Raw))
+        End Function
 
         ''' <summary>
         ''' ### 数据等宽分箱

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a771a68b6b7a9c599249e4676f5e593c, mime\text%html\HTML\CSS\Padding.vb"
+﻿#Region "Microsoft.VisualBasic::2aa8cf3e7c2d279f4bfc6a5e93f0cb52, mime\text%html\HTML\CSS\Padding.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     '                     Right, Top, Vertical
     ' 
     '         Constructor: (+5 Overloads) Sub New
-    '         Function: Equals, GetCanvasRegion, ToString, TryParse
+    '         Function: Equals, GetCanvasRegion, Offset2D, ToString, TryParse
     '         Operators: -, +, <>, =
     ' 
     ' 
@@ -48,21 +48,76 @@
 Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace HTML.CSS
 
     ''' <summary>
-    ''' Represents padding or margin information associated with a gdi element. (padding: top, right, bottom, left)
+    ''' Represents padding or margin information associated with a gdi element. 
+    ''' (padding: top, right, bottom, left)
     ''' </summary>
-    <TypeConverter(GetType(PaddingConverter))> Public Structure Padding
+    Public Structure Padding
+
+        ''' <summary>
+        ''' Gets the combined padding for the right and left edges.
+        ''' </summary>
+        ''' <returns></returns>
+        <Browsable(False)>
+        Public ReadOnly Property Horizontal As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Left + Right
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Gets or sets the padding value for the top edge.
+        ''' </summary>
+        ''' <returns>The padding, in pixels, for the top edge.</returns>
+        <RefreshProperties(RefreshProperties.All)>
+        Public Property Top As Integer
+
+        ''' <summary>
+        ''' Gets or sets the padding value for the right edge.
+        ''' </summary>
+        ''' <returns>The padding, in pixels, for the right edge.</returns>
+        <RefreshProperties(RefreshProperties.All)>
+        Public Property Right As Integer
+
+        ''' <summary>
+        ''' Gets or sets the padding value for the left edge.
+        ''' </summary>
+        ''' <returns>The padding, in pixels, for the left edge.</returns>
+        <RefreshProperties(RefreshProperties.All)>
+        Public Property Left As Integer
+
+        ''' <summary>
+        ''' Gets or sets the padding value for the bottom edge.
+        ''' </summary>
+        ''' <returns>The padding, in pixels, for the bottom edge.</returns>
+        <RefreshProperties(RefreshProperties.All)>
+        Public Property Bottom As Integer
+
+        ''' <summary>
+        ''' Gets the combined padding for the top and bottom edges.
+        ''' </summary>
+        ''' <returns></returns>
+        <Browsable(False)>
+        Public ReadOnly Property Vertical As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Top + Bottom
+            End Get
+        End Property
 
         Public ReadOnly Property IsEmpty As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Top = 0 AndAlso Bottom = 0 AndAlso Left = 0 AndAlso Right = 0
+                Return Top = 0 AndAlso
+                    Bottom = 0 AndAlso
+                    Left = 0 AndAlso
+                    Right = 0
             End Get
         End Property
 
@@ -114,68 +169,24 @@ Namespace HTML.CSS
             Left = layoutVector(3)
         End Sub
 
-        Public Function GetCanvasRegion(size As Drawing.Size) As Rectangle
+        Public Function GetCanvasRegion(size As Size) As Rectangle
             Dim location As New Point(Left, Top)
             Dim width = size.Width - Horizontal
             Dim height = size.Height - Vertical
 
-            Return New Rectangle(location, New Drawing.Size(width, height))
+            Return New Rectangle(location, New Size(width, height))
         End Function
 
-        ''' <summary>
-        ''' Gets the combined padding for the right and left edges.
-        ''' </summary>
-        ''' <returns></returns>
-        <Browsable(False)> Public ReadOnly Property Horizontal As Integer
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return Left + Right
-            End Get
-        End Property
-
-        '
-        ' Summary:
-        '     Gets or sets the padding value for the top edge.
-        '
-        ' Returns:
-        '     The padding, in pixels, for the top edge.
-        <RefreshProperties(RefreshProperties.All)>
-        Public Property Top As Integer
-        '
-        ' Summary:
-        '     Gets or sets the padding value for the right edge.
-        '
-        ' Returns:
-        '     The padding, in pixels, for the right edge.
-        <RefreshProperties(RefreshProperties.All)>
-        Public Property Right As Integer
-        '
-        ' Summary:
-        '     Gets or sets the padding value for the left edge.
-        '
-        ' Returns:
-        '     The padding, in pixels, for the left edge.
-        <RefreshProperties(RefreshProperties.All)>
-        Public Property Left As Integer
-        '
-        ' Summary:
-        '     Gets or sets the padding value for the bottom edge.
-        '
-        ' Returns:
-        '     The padding, in pixels, for the bottom edge.
-        <RefreshProperties(RefreshProperties.All)>
-        Public Property Bottom As Integer
-
-        ''' <summary>
-        ''' Gets the combined padding for the top and bottom edges.
-        ''' </summary>
-        ''' <returns></returns>
-        <Browsable(False)> Public ReadOnly Property Vertical As Integer
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return Top + Bottom
-            End Get
-        End Property
+        <DebuggerStepThrough>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Offset2D(dx As Double, dy As Double) As Padding
+            Return New Padding With {
+                .Left = Left + dx,
+                .Right = Right - dx,
+                .Top = Top + dy,
+                .Bottom = Bottom - dy
+            }
+        End Function
 
         ''' <summary>
         ''' padding: top, right, bottom, left
@@ -201,6 +212,8 @@ Namespace HTML.CSS
         ''' </summary>
         ''' <param name="padding"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(padding As Padding) As String
             Return padding.ToString
         End Operator
@@ -210,7 +223,9 @@ Namespace HTML.CSS
         ''' </summary>
         ''' <param name="css$"></param>
         ''' <returns></returns>
-        Public Shared Widening Operator CType(css$) As Padding
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(css As String) As Padding
             Return Padding.TryParse(css)
         End Operator
 
@@ -235,17 +250,12 @@ Namespace HTML.CSS
             End If
         End Function
 
-        '
-        ' Summary:
-        '     Determines whether the value of the specified object is equivalent to the current
-        '     System.Windows.Forms.Padding.
-        '
-        ' Parameters:
-        '   other:
-        '     The object to compare to the current System.Windows.Forms.Padding.
-        '
-        ' Returns:
-        '     true if the System.Windows.Forms.Padding objects are equivalent; otherwise, false.
+        ''' <summary>
+        ''' Determines whether the value of the specified object is equivalent to the current
+        ''' System.Windows.Forms.Padding.
+        ''' </summary>
+        ''' <param name="other">The object to compare to the current System.Windows.Forms.Padding.</param>
+        ''' <returns>true if the System.Windows.Forms.Padding objects are equivalent; otherwise, false.</returns>
         Public Overrides Function Equals(other As Object) As Boolean
             If other Is Nothing Then
                 Return False
@@ -258,20 +268,13 @@ Namespace HTML.CSS
             End If
         End Function
 
-        '
-        ' Summary:
-        '     Performs vector addition on the two specified System.Windows.Forms.Padding objects,
-        '     resulting in a new System.Windows.Forms.Padding.
-        '
-        ' Parameters:
-        '   p1:
-        '     The first System.Windows.Forms.Padding to add.
-        '
-        '   p2:
-        '     The second System.Windows.Forms.Padding to add.
-        '
-        ' Returns:
-        '     A new System.Windows.Forms.Padding that results from adding p1 and p2.
+        ''' <summary>
+        ''' Performs vector addition on the two specified System.Windows.Forms.Padding objects,
+        ''' resulting in a new System.Windows.Forms.Padding.
+        ''' </summary>
+        ''' <param name="p1">The first System.Windows.Forms.Padding to add.</param>
+        ''' <param name="p2">The second System.Windows.Forms.Padding to add.</param>
+        ''' <returns>A new System.Windows.Forms.Padding that results from adding p1 and p2.</returns>
         Public Shared Operator +(p1 As Padding, p2 As Padding) As Padding
             Dim a = p1.LayoutVector
             Dim b = p2.LayoutVector
@@ -283,20 +286,14 @@ Namespace HTML.CSS
 
             Return New Padding(layoutVector:=out)
         End Operator
-        '
-        ' Summary:
-        '     Performs vector subtraction on the two specified System.Windows.Forms.Padding
-        '     objects, resulting in a new System.Windows.Forms.Padding.
-        '
-        ' Parameters:
-        '   p1:
-        '     The System.Windows.Forms.Padding to subtract from (the minuend).
-        '
-        '   p2:
-        '     The System.Windows.Forms.Padding to subtract from (the subtrahend).
-        '
-        ' Returns:
-        '     The System.Windows.Forms.Padding result of subtracting p2 from p1.
+
+        ''' <summary>
+        ''' Performs vector subtraction on the two specified System.Windows.Forms.Padding
+        ''' objects, resulting in a new System.Windows.Forms.Padding.
+        ''' </summary>
+        ''' <param name="p1">The System.Windows.Forms.Padding to subtract from (the minuend).</param>
+        ''' <param name="p2">The System.Windows.Forms.Padding to subtract from (the subtrahend).</param>
+        ''' <returns>The System.Windows.Forms.Padding result of subtracting p2 from p1.</returns>
         Public Shared Operator -(p1 As Padding, p2 As Padding) As Padding
             Dim a = p1.LayoutVector
             Dim b = p2.LayoutVector
@@ -309,36 +306,23 @@ Namespace HTML.CSS
             Return New Padding(layoutVector:=out)
         End Operator
 
-        '
-        ' Summary:
-        '     Tests whether two specified System.Windows.Forms.Padding objects are equivalent.
-        '
-        ' Parameters:
-        '   p1:
-        '     A System.Windows.Forms.Padding to test.
-        '
-        '   p2:
-        '     A System.Windows.Forms.Padding to test.
-        '
-        ' Returns:
-        '     true if the two System.Windows.Forms.Padding objects are equal; otherwise, false.
+        ''' <summary>
+        ''' Tests whether two specified System.Windows.Forms.Padding objects are equivalent.
+        ''' </summary>
+        ''' <param name="p1">A System.Windows.Forms.Padding to test.</param>
+        ''' <param name="p2">A System.Windows.Forms.Padding to test.</param>
+        ''' <returns>true if the two System.Windows.Forms.Padding objects are equal; otherwise, false.</returns>
         Public Shared Operator =(p1 As Padding, p2 As Padding) As Boolean
             Return p1.LayoutVector.SequenceEqual(p2.LayoutVector)
         End Operator
-        '
-        ' Summary:
-        '     Tests whether two specified System.Windows.Forms.Padding objects are not equivalent.
-        '
-        ' Parameters:
-        '   p1:
-        '     A System.Windows.Forms.Padding to test.
-        '
-        '   p2:
-        '     A System.Windows.Forms.Padding to test.
-        '
-        ' Returns:
-        '     true if the two System.Windows.Forms.Padding objects are different; otherwise,
-        '     false.
+
+        ''' <summary>
+        ''' Tests whether two specified System.Windows.Forms.Padding objects are not equivalent.
+        ''' </summary>
+        ''' <param name="p1">A System.Windows.Forms.Padding to test.</param>
+        ''' <param name="p2">A System.Windows.Forms.Padding to test.</param>
+        ''' <returns>true if the two System.Windows.Forms.Padding objects are different; otherwise,
+        ''' false.</returns>
         Public Shared Operator <>(p1 As Padding, p2 As Padding) As Boolean
             Return Not (p1 = p2)
         End Operator

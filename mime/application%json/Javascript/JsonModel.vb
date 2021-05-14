@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb52542363397242d84e616a3b2e291d, mime\application%json\Javascript\JsonModel.vb"
+﻿#Region "Microsoft.VisualBasic::9181e8afa491fce795988254b89aae9d, mime\application%json\Javascript\JsonModel.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class JsonModel
     ' 
-    ' 
+    '         Sub: DisposeObjects
     ' 
     ' 
     ' /********************************************************************************/
@@ -66,6 +66,15 @@ Namespace Javascript
             End Set
         End Property
 #End Region
+
+        Protected Shared Sub DisposeObjects(obj As JsonElement)
+            If TypeOf obj Is JsonObject Then
+                Call DirectCast(obj, JsonObject).Dispose()
+            ElseIf TypeOf obj Is JsonArray Then
+                Call DirectCast(obj, JsonArray).list.DoEach(AddressOf DisposeObjects)
+                Call DirectCast(obj, JsonArray).list.Clear()
+            End If
+        End Sub
 
     End Class
 End Namespace

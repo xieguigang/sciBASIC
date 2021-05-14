@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85d7bf3c4ea70a5bb34e3f851d99deeb, gr\network-visualization\Network.IO.Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::decd68a23e8432690347a647562b1801, gr\network-visualization\Network.IO.Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -85,10 +85,7 @@ Public Module Extensions
     ''' <param name="directed">是否忽略方向？</param>
     ''' <param name="ignoreTypes">是否忽略边的类型？</param>
     <Extension>
-    Public Function RemoveDuplicated(Of T As NetworkEdge)(
-                                                    edges As IEnumerable(Of T),
-                                                    Optional directed As Boolean = True,
-                                                    Optional ignoreTypes As Boolean = False) As T()
+    Public Function RemoveDuplicated(Of T As NetworkEdge)(edges As IEnumerable(Of T), Optional directed As Boolean = True, Optional ignoreTypes As Boolean = False) As T()
         Dim uid = Function(edge As T) As String
                       If directed Then
                           Return edge.GetDirectedGuid(ignoreTypes)

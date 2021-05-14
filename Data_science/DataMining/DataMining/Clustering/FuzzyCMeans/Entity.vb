@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5dfd4a93630853186c09260e549e2f2c, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\Entity.vb"
+﻿#Region "Microsoft.VisualBasic::140159388cfb232e28bb0b2783a151fc, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\Entity.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class FuzzyCMeansEntity
     ' 
-    '         Properties: MarkClusterCenter, Memberships, ProbablyMembership
+    '         Properties: MarkClusterCenter, memberships, probablyMembership
     ' 
     '         Function: ToString
     ' 
@@ -55,24 +55,24 @@ Namespace FuzzyCMeans
         ''' ``Key``键名和数组的下标一样是从0开始的
         ''' </summary>
         ''' <returns></returns>
-        Public Property Memberships As Dictionary(Of Integer, Double)
+        Public Property memberships As Dictionary(Of Integer, Double)
         Public Property MarkClusterCenter As Color
 
         ''' <summary>
-        ''' Max probably of <see cref="Memberships"/> its key value.
+        ''' Max probably of <see cref="memberships"/> its key value.
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property ProbablyMembership As Integer
+        Public ReadOnly Property probablyMembership As Integer
             Get
-                Return Memberships _
+                Return memberships _
                     .Keys _
-                    .Select(Function(i) Memberships(i)) _
+                    .Select(Function(i) memberships(i)) _
                     .MaxIndex
             End Get
         End Property
 
         Public Overrides Function ToString() As String
-            Return $"{uid} --> {Memberships.GetJson}"
+            Return $"{uid} --> {memberships.GetJson}"
         End Function
     End Class
 End Namespace

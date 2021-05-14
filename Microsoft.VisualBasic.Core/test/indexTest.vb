@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be910c7052ce588d26e7084892359f54, Microsoft.VisualBasic.Core\test\indexTest.vb"
+﻿#Region "Microsoft.VisualBasic::1971450e48038a381377a4f976fa00da, Microsoft.VisualBasic.Core\test\indexTest.vb"
 
     ' Author:
     ' 
@@ -33,17 +33,20 @@
 
     ' Module indexTest
     ' 
-    '     Sub: Main
+    '     Sub: Main, stringTest
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Data.Trinity
 
 Module indexTest
 
     Sub Main()
+        Call stringTest()
+
         Dim index As New WordSimilarityIndex(Of String)
 
         For Each item As String In 5000.SeqRandom.Select(Function(l) RandomASCIIString(20, True))
@@ -53,6 +56,39 @@ Module indexTest
         Next
 
         Dim result = index.FindMatches("Aaaaaaaaaaaaaaaaaaaa").ToArray
+
+        Pause()
+    End Sub
+
+    Sub stringTest()
+        Dim key As String = "abc"
+        Dim keyRegexp As New Regex("[a][b][c]", RegexOptions.Singleline Or RegexOptions.Compiled)
+        Dim target As String = "sdfm,sdfjklsdfsabcklfs"
+        Dim loops As Integer = 100000000
+
+        Call BENCHMARK(Sub()
+                           For i As Integer = 0 To loops
+                               If target.Contains(key) Then
+
+                               End If
+                           Next
+                       End Sub)
+
+        Call BENCHMARK(Sub()
+                           For i As Integer = 0 To loops
+                               If target.IndexOf(key) > -1 Then
+
+                               End If
+                           Next
+                       End Sub)
+
+        Call BENCHMARK(Sub()
+                           For i As Integer = 0 To loops
+                               If keyRegexp.Match(key).Success Then
+
+                               End If
+                           Next
+                       End Sub)
 
         Pause()
     End Sub

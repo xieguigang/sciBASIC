@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d1f20edf0b7c1eb08f5f2fe33692bbb, Data\Trinity\Html\Html2Article.vb"
+﻿#Region "Microsoft.VisualBasic::04b108d7554f7c64e427c7d428a8a0f4, Data\Trinity\Html\Html2Article.vb"
 
     ' Author:
     ' 
@@ -44,11 +44,10 @@
 #End Region
 
 ' Author: StanZhai 翟士丹（mail@zhaishidan.cn）. All rights reserved. See License.md in the project root for license information.
-Imports System.IO
-Imports System.Linq
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports System.Web
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 ''' <summary>
 ''' 解析Html页面的文章正文内容,基于文本密度的HTML正文提取类

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9b182cdf7610a862e74bdcd0038fb93, Data_science\Mathematica\Math\Math\Distributions\Sample.vb"
+﻿#Region "Microsoft.VisualBasic::6168dd87b03416581210c4096bf716e0, Data_science\Mathematica\Math\Math\Distributions\Sample.vb"
 
     ' Author:
     ' 
@@ -62,6 +62,11 @@ Namespace Distributions
         <XmlAttribute> Public Property max As Double
         <XmlAttribute> Public Property average As Double
         <XmlAttribute> Public Property stdErr As Double
+
+        ''' <summary>
+        ''' length of the raw data vector
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property size As Integer
 
         ''' <summary>
@@ -100,13 +105,21 @@ Namespace Distributions
         End Sub
 
         Sub New(v As Double(), Optional estimateQuantile As Boolean = True)
-            min = v.Min
-            max = v.Max
-            average = v.Average
-            stdErr = v.StdError
-            size = v.Length
+            If v.Length = 0 Then
+                min = Double.NaN
+                max = Double.NaN
+                average = Double.NaN
+                stdErr = Double.NaN
+                size = 0
+            Else
+                min = v.Min
+                max = v.Max
+                average = v.Average
+                stdErr = v.SD
+                size = v.Length
+            End If
 
-            If estimateQuantile Then
+            If estimateQuantile AndAlso v.Length > 0 Then
                 With v.GKQuantile
                     quantile = {
                         .Query(0),

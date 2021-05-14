@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6401c0d3d2525cf4e1b5871f754bbdb4, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
+﻿#Region "Microsoft.VisualBasic::fc2ab00755941c5c79cb92cab8357530, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
 
     ' Author:
     ' 
@@ -50,8 +50,10 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors.OfficeAccent
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Interpolation
@@ -133,6 +135,8 @@ Namespace Drawing2D.Colors
         ''' <see cref="Designer.GetColors(String)"/> schema name for color profile: <see cref="ClusterColour"/>.
         ''' </summary>
         Friend Const Clusters$ = NameOf(Clusters)
+
+        ReadOnly BlackGreenRed As Color() = {Color.Black, Color.Green, Color.Red}
 
         ''' <summary>
         ''' From TSF launcher on Android
@@ -336,6 +340,10 @@ Namespace Drawing2D.Colors
                 Return True
             End If
 
+            Static dotnetColorNames As Index(Of String) = GDIColors.AllDotNetColorNames _
+                .Select(AddressOf Strings.LCase) _
+                .Indexing
+
             If Not exp.IsPattern(DesignerExpression.FunctionPattern) AndAlso InStr(exp, ",") > 0 Then
                 If exp.IsPattern(rgbPattern) Then
                     ' 单个rgb表达式的情况，肯定不是颜色列表
@@ -343,6 +351,9 @@ Namespace Drawing2D.Colors
                 Else
                     Return True
                 End If
+            ElseIf Strings.LCase(exp) Like dotnetColorNames Then
+                ' is a single color name
+                Return True
             Else
                 Return False
             End If
@@ -422,6 +433,8 @@ Namespace Drawing2D.Colors
                 Return Category31
             ElseIf term.TextEquals(Designer.Clusters) Then
                 Return ClusterColour
+            ElseIf term.TextEquals(NameOf(BlackGreenRed)) Then
+                Return BlackGreenRed
             End If
 
             ' d3.js colors
@@ -538,6 +551,16 @@ Namespace Drawing2D.Colors
         <Extension>
         Public Function CubicSpline(colors As IEnumerable(Of Color), Optional n% = 256, Optional alpha% = 255) As Color()
             Dim source As Color() = colors.ToArray
+
+            If source.Length = 1 Then
+                Call $"multiple color value is required, but you just provides one color, color seqeucne will just contains one single color: {source(Scan0).ToString}".Warning
+
+                Return source(Scan0) _
+                    .Alpha(alpha) _
+                    .Replicate(n) _
+                    .ToArray
+            End If
+
             Dim x As New CubicSplineVector(source.Select(Function(c) CSng(c.R)))
             Dim y As New CubicSplineVector(source.Select(Function(c) CSng(c.G)))
             Dim z As New CubicSplineVector(source.Select(Function(c) CSng(c.B)))

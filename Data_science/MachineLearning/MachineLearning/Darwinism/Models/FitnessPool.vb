@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a393bdc7f46c949c21e76545eb8664f, Data_science\MachineLearning\MachineLearning\Darwinism\Models\FitnessPool.vb"
+﻿#Region "Microsoft.VisualBasic::8450d02c5fe4c4f80f81a9880e0f8dc0, Data_science\MachineLearning\MachineLearning\Darwinism\Models\FitnessPool.vb"
 
     ' Author:
     ' 
@@ -103,13 +103,15 @@ Namespace Darwinism.Models
         ''' <param name="[in]"></param>
         ''' <returns></returns>
         Public Function Fitness([in] As Individual, parallel As Boolean) As Double Implements Fitness(Of Individual).Calculate
-            SyncLock evaluateFitness
-                If Not evaluateFitness.Cacheable Then
-                    Return evaluateFitness.Calculate([in], parallel)
-                Else
-                    Return getOrCacheOfFitness([in], parallel)
-                End If
-            End SyncLock
+            ' 20200827
+            ' the synlock will stop the parallel computing in GA engine
+            'SyncLock evaluateFitness
+            If Not evaluateFitness.Cacheable Then
+                Return evaluateFitness.Calculate([in], parallel)
+            Else
+                Return getOrCacheOfFitness([in], parallel)
+            End If
+            'End SyncLock
         End Function
 
         Private Function getOrCacheOfFitness([in] As Individual, parallel As Boolean) As Double

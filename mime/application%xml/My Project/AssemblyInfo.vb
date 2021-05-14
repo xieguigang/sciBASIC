@@ -7,12 +7,12 @@ Imports System.Runtime.InteropServices
 ' associated with an assembly.
 
 ' Review the values of the assembly attributes
-
+#If netcore5 = 0 Then
 <Assembly: AssemblyTitle("application_xml")>
 <Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("Microsoft")>
+<Assembly: AssemblyCompany("sciBASIC.NET")>
 <Assembly: AssemblyProduct("application_xml")>
-<Assembly: AssemblyCopyright("Copyright © Microsoft 2018")>
+<Assembly: AssemblyCopyright("Copyright © xie.guigang@live.com 2018")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
@@ -33,3 +33,4 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
+#end if

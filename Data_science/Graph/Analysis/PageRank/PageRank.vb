@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::307b6472415da60e9604e99a28ca2048, Data_science\Graph\Analysis\PageRank\PageRank.vb"
+﻿#Region "Microsoft.VisualBasic::4371a6d5bcf83146a00c22b0c7bfa73b, Data_science\Graph\Analysis\PageRank\PageRank.vb"
 
     ' Author:
     ' 
@@ -178,7 +178,7 @@ Namespace Analysis.PageRank
 
                 For i As Integer = 0 To checkSteps - 1
                     ' swap arrays
-                    Call iOld.SwapWith(iNew)
+                    Call iOld.Swap(iNew)
 
                     ' an element in the 1 x I vector. 
                     ' all elements are identical.

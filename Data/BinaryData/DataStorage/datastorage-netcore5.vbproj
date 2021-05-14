@@ -1,0 +1,87 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Microsoft.VisualBasic.Data.IO</RootNamespace>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>Microsoft.VisualBasic.Data.Storage</AssemblyName>
+    <Platforms>AnyCPU;x64</Platforms>
+    <Configurations>Debug;Release;Rsharp_app_release;mzkit</Configurations>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|AnyCPU'">
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+    <DefineTrace>true</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|x64'">
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>D:\mzkit\Rscript\Library\mzkit_app\assembly\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="test\**" />
+    <EmbeddedResource Remove="test\**" />
+    <None Remove="test\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Resources.Extensions" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\BinaryData\binarydata-netcore5.vbproj" />
+  </ItemGroup>
+
+</Project>

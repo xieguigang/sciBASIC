@@ -7,7 +7,7 @@ Imports System.Runtime.InteropServices
 ' associated with an assembly.
 
 ' Review the values of the assembly attributes
-
+#If netcore5 = 0 Then
 <Assembly: AssemblyTitle("Network graph data render engine")>
 <Assembly: AssemblyDescription("Network graph data render engine")>
 <Assembly: AssemblyCompany("GPL3")>
@@ -33,3 +33,4 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("4.1230.*")> 
 <Assembly: AssemblyFileVersion("3.110.*")> 
+#end if

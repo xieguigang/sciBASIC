@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::716a388be5fa23a1244c22140dc5f95e, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Anchor.vb"
+﻿#Region "Microsoft.VisualBasic::f48f496404007bf374422bdce0e7e607, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Anchor.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,8 @@
     ' 
     '         Properties: r, x, y
     ' 
-    '         Constructor: (+5 Overloads) Sub New
+    '         Constructor: (+6 Overloads) Sub New
+    '         Function: ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -47,6 +48,12 @@ Imports stdNum = System.Math
 
 Namespace d3js.Layout
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <remarks>
+    ''' anchor point can be created via <see cref="GetLabelAnchors"/> function
+    ''' </remarks>
     Public Class Anchor
 
         ''' <summary>
@@ -66,6 +73,13 @@ Namespace d3js.Layout
         Public Property r As Double
 
         Sub New()
+        End Sub
+
+        Sub New(location As PointF, r#)
+            Me.r = r
+
+            x = location.X
+            y = location.Y
         End Sub
 
         Sub New(location As Point, r#)
@@ -97,15 +111,19 @@ Namespace d3js.Layout
             y = circle.Top + r
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return $"[{x}, {y}]"
+        End Function
+
         Public Shared Widening Operator CType(anchor As Anchor) As Point
             With anchor
-                Return New Point(.x, .y)
+                Return New Point(CInt(.x), CInt(.y))
             End With
         End Operator
 
         Public Shared Widening Operator CType(anchor As Anchor) As PointF
             With anchor
-                Return New PointF(.x, .y)
+                Return New PointF(CInt(.x), CInt(.y))
             End With
         End Operator
 
@@ -114,7 +132,7 @@ Namespace d3js.Layout
 
             Return New RectangleF With {
                 .Location = anchor,
-                .Size = New SizeF(r, r)
+                .Size = New SizeF(CSng(r), CSng(r))
             }
         End Operator
 
@@ -122,6 +140,10 @@ Namespace d3js.Layout
             With CType(anchor, RectangleF)
                 Return New Rectangle(.Location.ToPoint, .Size.ToSize)
             End With
+        End Operator
+
+        Public Shared Widening Operator CType(pt As PointF) As Anchor
+            Return New Anchor With {.x = pt.X, .y = pt.Y}
         End Operator
     End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::086715cd984616529dc63a93278600b8, www\Microsoft.VisualBasic.NETProtocol\Persistent\Socket\WorkSocket.vb"
+﻿#Region "Microsoft.VisualBasic::5489bad5d7e1a506ed7d57fe9928511b, www\Microsoft.VisualBasic.NETProtocol\Persistent\Socket\WorkSocket.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
 
 Imports System.Net.Sockets
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ApplicationServices.Debugging.ExceptionExtensions
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.Parallel
 
 Namespace Tcp.Persistent.Socket

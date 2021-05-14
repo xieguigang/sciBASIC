@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0bb9cc9bddbe082216ff46b4f2d34f71, Data_science\Visualization\Plots\g\Axis\DataScaler\DataScaler.vb"
+﻿#Region "Microsoft.VisualBasic::290f9a8e55d27345f17ad1d3a7ead5dd, Data_science\Visualization\Plots\g\Axis\DataScaler\DataScaler.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: AxisTicks, X
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: (+2 Overloads) Translate, TranslateX
+    '         Function: (+3 Overloads) Translate, TranslateWidth, TranslateX
     ' 
     '     Module DataScalerExtensions
     ' 
@@ -52,6 +52,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.d3js.scale
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports stdNum = System.Math
 
 Namespace Graphic.Axis
 
@@ -60,7 +61,11 @@ Namespace Graphic.Axis
     ''' </summary>
     Public Class DataScaler : Inherits YScaler
 
-        Public Property X As LinearScale
+        ''' <summary>
+        ''' X坐标轴主要是为了兼容数值类型的连续映射以及标签类型的坐标值的离散映射
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property X As Scaler
         Public Property AxisTicks As (X As Vector, Y As Vector)
 
         ''' <summary>
@@ -71,12 +76,31 @@ Namespace Graphic.Axis
             Call MyBase.New(reversed:=rev)
         End Sub
 
+        ''' <summary>
+        ''' translate the realworld data into the view model world point 2D 
+        ''' </summary>
+        ''' <param name="x#"></param>
+        ''' <param name="y#"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Translate(x#, y#) As PointF
             Return New PointF With {
                 .X = TranslateX(x),
                 .Y = TranslateY(y)
             }
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Translate(point As PointData) As PointF
+            Dim x As Single
+
+            If TypeOf Me.X Is OrdinalScale Then
+                x = DirectCast(Me.X, OrdinalScale)(point.axisLabel)
+            Else
+                x = DirectCast(Me.X, LinearScale)(point.pt.X)
+            End If
+
+            Return New PointF(x, TranslateY(point.pt.Y))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -87,6 +111,13 @@ Namespace Graphic.Axis
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function TranslateX(x#) As Double
             Return Me.X(x)
+        End Function
+
+        Public Function TranslateWidth(x1 As Double, x2 As Double) As Double
+            x1 = TranslateX(x1)
+            x2 = TranslateX(x2)
+
+            Return stdNum.Max(x1, x2) - stdNum.Min(x1, x2)
         End Function
     End Class
 

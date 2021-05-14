@@ -7,7 +7,7 @@ Imports System.Runtime.InteropServices
 ' 与程序集关联的信息。
 
 '查看程序集特性的值
-
+#If netcore5 = 0 Then
 <Assembly: AssemblyTitle("Network.IO.Extensions")>
 <Assembly: AssemblyDescription("")>
 <Assembly: AssemblyCompany("Microsoft")>
@@ -33,3 +33,4 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
+#end if

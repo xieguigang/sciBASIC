@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2df0c4644e088d562de648277b3f42e8, Data_science\Visualization\Plots\Scatter\Bubble.vb"
+﻿#Region "Microsoft.VisualBasic::55aedb97d72e09b2e5dcd9f036bcc733, Data_science\Visualization\Plots\Scatter\Bubble.vb"
 
     ' Author:
     ' 
@@ -110,7 +110,8 @@ Public Class Bubble : Inherits Plot
                                           Optional positiveRangeY As Boolean = False,
                                           Optional legendTitleFontCSS$ = CSSFont.PlotSubTitle,
                                           Optional legendAnchor As PointF = Nothing,
-                                          Optional ylayout As YAxisLayoutStyles = YAxisLayoutStyles.Left) As GraphicsData
+                                          Optional ylayout As YAxisLayoutStyles = YAxisLayoutStyles.Left,
+                                          Optional gridFill$ = "rgb(250,250,250)") As GraphicsData
 
         Dim theme As New Theme With {
             .background = bg,
@@ -123,7 +124,8 @@ Public Class Bubble : Inherits Plot
             .drawLegend = legend,
             .legendLayout = New Absolute(legendAnchor),
             .legendBoxStroke = legendBorder?.ToString,
-            .axisLabelCSS = axisLabelFontCSS
+            .axisLabelCSS = axisLabelFontCSS,
+            .gridFill = gridFill
         }
 
         Return New Bubble(theme) With {
@@ -193,7 +195,8 @@ Public Class Bubble : Inherits Plot
             ylabel:=ylabel,
             labelFont:=theme.axisLabelCSS,
             htmlLabel:=False,
-            ylayout:=theme.yAxisLayout
+            ylayout:=theme.yAxisLayout,
+            gridFill:=theme.gridFill
         )
 
         Dim bubblePen As Pen = Nothing
@@ -318,7 +321,7 @@ Public Class Bubble : Inherits Plot
             topLeft = New Point With {.X = px, .Y = py}
         End If
 
-        Dim legends = LinqAPI.Exec(Of Legend) <=
+        Dim legends = LinqAPI.Exec(Of LegendObject) <=
  _
             From serial As SerialData
             In data
@@ -326,7 +329,7 @@ Public Class Bubble : Inherits Plot
                 strokeColorAsMainColor,
                 Stroke.TryParse(serial.pts(serial.pts.Length \ 2).stroke).fill,
                 serial.color.RGBExpression)
-            Select New Legend With {
+            Select New LegendObject With {
                 .color = color,
                 .fontstyle = theme.axisLabelCSS,
                 .style = LegendStyles.Circle,

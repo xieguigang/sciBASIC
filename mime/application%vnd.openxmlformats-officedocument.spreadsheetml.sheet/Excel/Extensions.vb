@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35913ebc6dc8a455025f99a3c1d73c30, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::4577efca81e76eb481331d3c0482fbdb, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Extensions.vb"
 
     ' Author:
     ' 
@@ -42,6 +42,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
@@ -54,7 +55,7 @@ Public Module Extensions
     ''' ``Sheet1`` is the default sheet name in excel file.
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property Sheet1 As [Default](Of  String)
+    Public ReadOnly Property Sheet1 As [Default](Of String)
         Get
             Return NameOf(Sheet1)
         End Get
@@ -65,7 +66,7 @@ Public Module Extensions
     ''' </summary>
     ''' <returns></returns>
     Public Function CreateNew() As Xlsx
-        With App.GetAppSysTempFile(".xlsx", App.PID)
+        With TempFileSystem.GetAppSysTempFile(".xlsx", App.PID)
             Call My.Resources._New.FlushStream(.ByRef)
             Return File.Open(path:= .ByRef)
         End With

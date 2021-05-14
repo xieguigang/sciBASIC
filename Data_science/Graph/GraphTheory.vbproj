@@ -59,11 +59,13 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\GCModeller\bin\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|AnyCPU'">
     <DefineTrace>true</DefineTrace>
@@ -163,11 +165,13 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\..\smartnucl_integrative\biodeepDB\METLINApp\App\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|x86'">
     <DefineTrace>true</DefineTrace>
@@ -253,13 +257,15 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep_UNIX_x64|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\Biodeep_UNIX_x64\</OutputPath>
+    <OutputPath>..\..\..\..\..\..\biodeep\biodeepdb_v3\Rscript\R\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep_UNIX_x64|x86'">
     <DefineTrace>true</DefineTrace>
@@ -290,6 +296,7 @@
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x86'">
     <DefineTrace>true</DefineTrace>
@@ -493,6 +500,130 @@
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit_UnixDocker|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\mzkit_UnixDocker\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit_UnixDocker|x64'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\mzkit_UnixDocker\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
+    <Optimize>false</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit_UnixDocker|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\mzkit_UnixDocker\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'LipidSearch|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\LipidSearch\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'LipidSearch|x64'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\LipidSearch\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'LipidSearch|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\LipidSearch\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'MetaCardio|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\MetaCardio\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'MetaCardio|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\MetaCardio\</OutputPath>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'MetaCardio|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\MetaCardio\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'vcellkit|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\vcellkit\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'vcellkit|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\vcellkit\</OutputPath>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'vcellkit|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\vcellkit\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -530,14 +661,17 @@
     <Compile Include="Model\Abstract\General.vb" />
     <Compile Include="Model\GridNetwork\GridCell.vb" />
     <Compile Include="Model\Tree\AbstractTree.vb" />
+    <Compile Include="Model\Tree\KdTree\KdNodeHeapItem.vb" />
+    <Compile Include="Model\Tree\KdTree\KdNodeAccessor.vb" />
     <Compile Include="Model\Tree\KdTree\KdTree.vb" />
-    <Compile Include="Model\Tree\KdTree\Node.vb" />
+    <Compile Include="Model\Tree\KdTree\KdTreeNode.vb" />
     <Compile Include="Model\Tree\TermTree.vb" />
     <Compile Include="Model\Tree\Trie.vb" />
     <Compile Include="Model\Abstract\Edge.vb" />
     <Compile Include="Model\GridNetwork\Grid.vb" />
     <Compile Include="Model\TimeSerialsGraph.vb" />
     <Compile Include="NamespaceDoc.vb" />
+    <Compile Include="Network\SubNetworkComponents.vb" />
     <Compile Include="Network\Extensions.vb" />
     <Compile Include="Network\NetworkGraph.vb" />
     <Compile Include="Network\Node.vb" />
@@ -586,7 +720,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
+    <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>

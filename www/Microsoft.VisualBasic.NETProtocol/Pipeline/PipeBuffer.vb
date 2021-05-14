@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::283006fc1d16654b72838072719396ab, www\Microsoft.VisualBasic.NETProtocol\Pipeline\PipeBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::1099a51d6575fa2c550ad6b6d495b516, www\Microsoft.VisualBasic.NETProtocol\Pipeline\PipeBuffer.vb"
 
     ' Author:
     ' 
@@ -36,13 +36,17 @@
     '         Properties: byteData, Name
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: Serialize
+    ' 
+    '         Function: getBuffer
+    ' 
+    '         Sub: Serialize
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Text
@@ -68,7 +72,16 @@ Namespace MMFProtocol.Pipeline
             Call Array.ConstrainedCopy(raw, p, byteData, Scan0, byteData.Length)
         End Sub
 
-        Public Overrides Function Serialize() As Byte()
+        Public Overrides Sub Serialize(buffer As Stream)
+            Dim data As Byte() = getBuffer()
+
+            Call buffer.Write(data, Scan0, data.Length)
+            Call buffer.Flush()
+
+            Erase data
+        End Sub
+
+        Private Function getBuffer() As Byte()
             Dim nameBuf As Byte() = UTF8WithoutBOM.GetBytes(Name)
             Dim buffer As Byte() = New Byte(INT32 + nameBuf.Length + byteData.Length - 1) {}
             Dim nameLen As Byte() = BitConverter.GetBytes(nameBuf.Length)

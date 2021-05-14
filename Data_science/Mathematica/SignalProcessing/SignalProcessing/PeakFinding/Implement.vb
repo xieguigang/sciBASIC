@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec241b465a1617cc8e5eff1d7c745aaf, Data_science\Mathematica\SignalProcessing\SignalProcessing\PeakFinding\Implement.vb"
+﻿#Region "Microsoft.VisualBasic::be7a7595eeb47f6531bd5c61388357e0, Data_science\Mathematica\SignalProcessing\SignalProcessing\PeakFinding\Implement.vb"
 
     ' Author:
     ' 
@@ -110,7 +110,7 @@ Namespace PeakFinding
             Dim halfPeakWidth As Double = peakwidth.Length / 2
 
             For Each region In regions
-                rt = region(Which.Max(region.region.Select(Function(a) a.intensity))).time
+                rt = region(which.Max(region.region.Select(Function(a) a.intensity))).time
                 rtmin = region.rtmin
                 rtmax = region.rtmax
                 dt = rtmax - rtmin

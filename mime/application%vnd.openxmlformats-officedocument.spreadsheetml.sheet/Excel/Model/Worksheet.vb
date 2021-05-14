@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36975a55f07fe9f8cc4665c5e280806b, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\Worksheet.vb"
+﻿#Region "Microsoft.VisualBasic::30eee2eeff14868750b1140a95ff893f, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\Worksheet.vb"
 
     ' Author:
     ' 
@@ -36,13 +36,14 @@
     '         Properties: (+2 Overloads) Column, Row
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString
+    '         Function: GetColumnIndex, ToString
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XML.xl
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XML.xl.worksheets
@@ -113,6 +114,14 @@ Namespace Model
 
         Public Overrides Function ToString() As String
             Return name
+        End Function
+
+        Public Shared Iterator Function GetColumnIndex() As IEnumerable(Of String)
+            Dim index As New Uid(0, Uid.AlphabetUCase)
+
+            Do While True
+                Yield ++index
+            Loop
         End Function
     End Class
 End Namespace

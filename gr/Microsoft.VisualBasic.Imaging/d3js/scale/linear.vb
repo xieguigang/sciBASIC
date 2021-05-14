@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90c053d5ee6a6c593bef2a41e7fe1b69, gr\Microsoft.VisualBasic.Imaging\d3js\scale\linear.vb"
+﻿#Region "Microsoft.VisualBasic::04037871fd5a4b5e53b137553932e582, gr\Microsoft.VisualBasic.Imaging\d3js\scale\linear.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class LinearScale
     ' 
-    '         Properties: valueDomain
+    '         Properties: domainSize, valueDomain, Zero
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: (+4 Overloads) domain, ToString
@@ -54,17 +54,33 @@ Namespace d3js.scale
     Public Class LinearScale : Inherits IScale(Of LinearScale)
 
         ''' <summary>
-        ''' 作图的时候的数据区间
+        ''' 作图的时候的用户数据区间
         ''' </summary>
         Dim _domain As DoubleRange
 
         ''' <summary>
-        ''' 作图的时候的数据区间
+        ''' 作图的时候的用户数据区间
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property valueDomain As DoubleRange
             Get
                 Return _domain
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' <see cref="DoubleRange.Length"/> value of <see cref="valueDomain"/>
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides ReadOnly Property domainSize As Double
+            Get
+                Return _domain.Length
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property Zero As Double
+            Get
+                Return Me(0.0)
             End Get
         End Property
 

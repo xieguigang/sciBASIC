@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76b40d07bfda163b9382428a00aac8d5, gr\network-visualization\Datavisualization.Network\Graph\Model\Graph.vb"
+﻿#Region "Microsoft.VisualBasic::8bbb7b828ab69db753ed229c9346e023, gr\network-visualization\Datavisualization.Network\Graph\Model\Graph.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,13 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: (+3 Overloads) AddEdge, AddNode, Clone, ComputeIfNotExists, Copy
-    '                   (+2 Overloads) CreateEdge, createEdgeInternal, (+2 Overloads) CreateNode, GetConnectedVertex, GetEdge
-    '                   (+2 Overloads) GetEdges, (+2 Overloads) GetElementByID, ToString
+    '         Function: (+3 Overloads) AddEdge, AddNode, (+2 Overloads) Clone, ComputeIfNotExists, Copy
+    '                   (+2 Overloads) CreateEdge, createEdgeInternal, (+2 Overloads) CreateNode, GetConnectedGraph, GetConnectedVertex
+    '                   GetEdge, (+2 Overloads) GetEdges, (+2 Overloads) GetElementByID, ToString
     ' 
     '         Sub: AddGraphListener, Clear, (+2 Overloads) CreateEdges, (+2 Overloads) CreateNodes, DetachNode
     '              FilterEdges, FilterNodes, Merge, notify, RemoveEdge
-    '              RemoveNode
+    '              (+2 Overloads) RemoveNode
     ' 
     ' 
     ' /********************************************************************************/
@@ -93,7 +93,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis.Model
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce.Interfaces
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
@@ -135,7 +135,7 @@ Namespace Graph
             Call Me.New({}, {})
         End Sub
 
-        Sub New(nodes As IEnumerable(Of Node), edges As IEnumerable(Of Edge))
+        Sub New(nodes As IEnumerable(Of Node), edges As IEnumerable(Of Edge), Optional ignoresBrokenLinks As Boolean = False)
             Call MyBase.New({}, {})
 
             _eventListeners = New List(Of IGraphEventListener)
@@ -146,7 +146,11 @@ Namespace Graph
             Next
 
             For Each edge As Edge In edges
-                Call AddEdge(edge)
+                If ignoresBrokenLinks AndAlso edge.U Is Nothing OrElse edge.V Is Nothing Then
+                    Call $"[{edge}] link is broken!".Warning
+                Else
+                    Call AddEdge(edge)
+                End If
             Next
 
             For Each node As Node In vertex
@@ -176,13 +180,17 @@ Namespace Graph
         ''' <returns></returns>
         Public Function AddNode(node As Node) As Node
             If Not vertices.ContainsKey(node.label) Then
-                vertices.Add(node)
+                ' 20201223 ID必须要在哈希表添加之前进行赋值
+                ' 编号必须从零开始
                 node.ID = buffer.GetAvailablePos
-                buffer += node
+
+                buffer.Add(node)
+                vertices.Add(node)
             End If
 
             _index(node.label) = node
             _index(node.label).directedVertex = New DirectedVertex(node.label)
+            _index(node.label).adjacencies = _index.CreateNodeAdjacencySet(node)
 
             Call notify()
 
@@ -356,7 +364,7 @@ Namespace Graph
         ''' <param name="target"></param>
         ''' <param name="data"></param>
         ''' <returns></returns>
-        Public Overloads Function CreateEdge(source As String, target As String, Optional data As EdgeData = Nothing) As Edge
+        Public Overloads Function CreateEdge(source As String, target As String, Optional weight# = 0, Optional data As EdgeData = Nothing) As Edge
             If Not vertices.ContainsKey(source) Then
                 Return Nothing
             End If
@@ -371,7 +379,7 @@ Namespace Graph
                 data = New EdgeData
             End If
 
-            Return createEdgeInternal(u, v, data, 0)
+            Return createEdgeInternal(u, v, data, weight)
         End Function
 
         Public Overloads Function GetConnectedVertex(label As String) As Node()
@@ -411,6 +419,20 @@ Namespace Graph
             Return _index.GetEdges(iNode.label)
         End Function
 
+        Public Sub RemoveNode(labelId As String)
+            Call RemoveNode(GetElementByID(labelId))
+        End Sub
+
+        ''' <summary>
+        ''' 应该使用这个方法来安全的删除节点
+        ''' </summary>
+        ''' <remarks>
+        ''' 这个函数会移除:
+        ''' 
+        ''' 1. 目标节点从内部索引中删除
+        ''' 2. 删除与之相关的边连接
+        ''' </remarks>
+        ''' <param name="node"></param>
         Public Sub RemoveNode(node As Node)
             Call _index.Delete(node)
             Call vertices.Remove(node)
@@ -422,14 +444,13 @@ Namespace Graph
         ''' </summary>
         ''' <param name="iNode"></param>
         Public Sub DetachNode(iNode As Node)
-            Call graphEdges _
-                .ToArray _
-                .DoEach(Sub(e As Edge)
-                            If e.U.label = iNode.label OrElse e.V.label = iNode.label Then
-                                Call RemoveEdge(e)
-                            End If
-                        End Sub)
-            notify()
+            For Each e As Edge In graphEdges.ToArray
+                If e.U.label = iNode.label OrElse e.V.label = iNode.label Then
+                    Call RemoveEdge(e)
+                End If
+            Next
+
+            Call notify()
         End Sub
 
         ''' <summary>
@@ -534,36 +555,30 @@ Namespace Graph
         ''' 因为克隆之后的操作可能会涉及对边或者节点对象的修改操作
         ''' </remarks>
         Private Function Clone() As Object Implements ICloneable.Clone
-            Dim vertices As New Dictionary(Of Node)
-            Dim edges As New List(Of Edge)
+            Return Clone(vertex)
+        End Function
+
+        Private Function Clone(vertex As IEnumerable(Of Node)) As Object
+            Dim g As New NetworkGraph
+
+            For Each v In vertex
+                g.CreateNode(v.label, v.data.Clone)
+            Next
 
             For Each edge As Edge In graphEdges
-                Dim U = ComputeIfNotExists(vertices, edge.U)
-                Dim V = ComputeIfNotExists(vertices, edge.V)
-
-                edges += New Edge With {
-                    .data = New EdgeData(edge.data),
-                    .U = U,
-                    .V = V,
-                    .ID = edge.ID,
-                    .isDirected = edge.isDirected,
-                    .weight = edge.weight
-                }
+                g.CreateEdge(
+                    u:=g.GetElementByID(edge.U.label),
+                    v:=g.GetElementByID(edge.V.label),
+                    weight:=edge.weight,
+                    data:=edge.data.Clone
+                )
             Next
 
-            ' 可能存在有孤立的节点
-            ' 这个也需要添加加进来
-            For Each node As Node In Me.vertex
-                Call ComputeIfNotExists(vertices, node)
-            Next
+            Return g
+        End Function
 
-            Dim copy As New NetworkGraph(vertices.Values, edges)
-
-            For Each node In copy.vertex
-
-            Next
-
-            Return copy
+        Public Function GetConnectedGraph() As NetworkGraph
+            Return Clone(connectedNodes)
         End Function
 
         ''' <summary>

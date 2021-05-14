@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2557ed6e864d08d936fc865c1343761e, Data\DataFrame\DATA\Excel\ExcelReader.vb"
+﻿#Region "Microsoft.VisualBasic::50b09665d6a081cc29af0212550dd93d, Data\DataFrame\DATA\Excel\ExcelReader.vb"
 
     ' Author:
     ' 
@@ -45,6 +45,8 @@ Imports System.Collections.Generic
 Imports System.Data
 Imports System.Data.OleDb
 Imports System.Text
+
+#If netcore5 = 0 Then
 
 Namespace Excel
 
@@ -150,3 +152,5 @@ Namespace Excel
         End Function
     End Class
 End Namespace
+
+#End If

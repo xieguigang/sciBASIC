@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d944a811da25fe0c5327825d1745ae9, Data_science\DataMining\DataMining\AprioriRules\Algorithm\Entities\Rule.vb"
+﻿#Region "Microsoft.VisualBasic::457c8f15652d9796a05732c15b0881e3, Data_science\DataMining\DataMining\AprioriRules\Algorithm\Entities\Rule.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,11 @@
 
 #End Region
 
+#If netcore5 = 0 Then
 Imports System.Data.Linq.Mapping
+#Else
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+#End If
 Imports Microsoft.VisualBasic.DataMining.AprioriRules.Impl
 Imports stdNum = System.Math
 

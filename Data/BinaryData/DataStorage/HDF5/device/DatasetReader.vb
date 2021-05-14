@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f9e9d89555c5eec8285144741ab62de, Data\BinaryData\DataStorage\HDF5\device\DatasetReader.vb"
+﻿#Region "Microsoft.VisualBasic::a30a6320e4d915f80b92e56c646d3b69, Data\BinaryData\DataStorage\HDF5\device\DatasetReader.vb"
 
     ' Author:
     ' 
@@ -45,6 +45,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO.HDF5.struct
 Imports Microsoft.VisualBasic.Data.IO.HDF5.struct.messages
 Imports Microsoft.VisualBasic.Data.IO.HDF5.type

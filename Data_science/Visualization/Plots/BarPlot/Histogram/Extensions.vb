@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d483779ffb9e360653fd14ef16a4226, Data_science\Visualization\Plots\BarPlot\Histogram\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::08a58d2c383534e54a8070f5f32e0baa, Data_science\Visualization\Plots\BarPlot\Histogram\Extensions.vb"
 
     ' Author:
     ' 
@@ -59,7 +59,7 @@ Namespace BarPlot.Histogram
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function NewModel(hist As IEnumerable(Of DataBinBox(Of Double)), step!, legend As Legend) As HistProfile
+        Public Function NewModel(hist As IEnumerable(Of DataBinBox(Of Double)), step!, legend As LegendObject) As HistProfile
             Dim data As DataBinBox(Of Double)() = hist.ToArray
             Dim min As Double
             Dim boxes As New List(Of HistogramData)

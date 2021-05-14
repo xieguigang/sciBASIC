@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b64531eddd35634c6cb2cd276c3e539, Data_science\Mathematica\SignalProcessing\SignalProcessing\GeneralSignal.vb"
+﻿#Region "Microsoft.VisualBasic::9c9b8a659c88d7d40ec26d46f5221950, Data_science\Mathematica\SignalProcessing\SignalProcessing\GeneralSignal.vb"
 
     ' Author:
     ' 
@@ -37,12 +37,6 @@
     '                 reference, Strength
     ' 
     '     Function: GetText, GetTimeSignals, PopulatePoints, ToString
-    ' 
-    ' Class Resampler
-    ' 
-    '     Properties: enumerateMeasures
-    ' 
-    '     Function: CreateSampler, GetIntensity, getPosition
     ' 
     ' /********************************************************************************/
 
@@ -94,8 +88,8 @@ Public Class GeneralSignal : Implements INamedValue
     ''' <returns></returns>
     Default Public ReadOnly Property GetByRange(min#, max#) As GeneralSignal
         Get
-            Dim i As Integer = Which(Measures.Select(Function(a) a >= min)).FirstOrDefault
-            Dim j As Integer = Which(Measures.Select(Function(a) a >= max)).FirstOrDefault
+            Dim i As Integer = which(Measures.Select(Function(a) a >= min)).FirstOrDefault
+            Dim j As Integer = which(Measures.Select(Function(a) a >= max)).FirstOrDefault
 
             If i = 0 AndAlso j = 0 Then
                 i = 0
@@ -155,59 +149,5 @@ Public Class GeneralSignal : Implements INamedValue
                 .intensity = _Strength(i)
             }
         Next
-    End Function
-End Class
-
-''' <summary>
-''' data signal resampler for continuous signals
-''' </summary>
-Public Class Resampler
-
-    Dim raw As GeneralSignal
-    Dim x As Double()
-    Dim y As Double()
-
-    Public ReadOnly Property enumerateMeasures As Double()
-        Get
-            Return x.ToArray
-        End Get
-    End Property
-
-    Public Function GetIntensity(x As Double) As Double
-        Dim i As Integer = getPosition(x)
-
-        If Me.x(i) = x OrElse i = Me.x.Length - 1 Then
-            Return Me.y(i)
-        Else
-            Dim x1 = Me.x(i)
-            Dim x2 = Me.x(i + 1)
-            Dim y1 = Me.y(i)
-            Dim y2 = Me.y(i + 1)
-            Dim scale As Double = (x - x1) / (x2 - x1)
-            Dim dy As Double = (y2 - y1) * scale
-
-            Return y1 + dy
-        End If
-    End Function
-
-    Private Function getPosition(x As Double) As Integer
-        For i As Integer = 0 To Me.x.Length - 1
-            If Me.x(i) >= x Then
-                Return i
-            End If
-        Next
-
-        Return Me.x.Length
-    End Function
-
-    Public Shared Function CreateSampler(raw As GeneralSignal) As Resampler
-        Dim x = raw.Measures.SeqIterator.OrderBy(Function(xi) xi.value).ToArray
-        Dim y = raw.Strength
-
-        Return New Resampler With {
-            .raw = raw,
-            .x = x.Select(Function(xi) xi.value).ToArray,
-            .y = x.Select(Function(xi) y(xi.i)).ToArray
-        }
     End Function
 End Class

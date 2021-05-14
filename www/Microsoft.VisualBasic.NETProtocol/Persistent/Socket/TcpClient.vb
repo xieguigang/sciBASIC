@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d3f66d73d2cddd81fcd833e50f359b41, www\Microsoft.VisualBasic.NETProtocol\Persistent\Socket\TcpClient.vb"
+﻿#Region "Microsoft.VisualBasic::b9d1d6e75ce6f2e87f7805f516701162, www\Microsoft.VisualBasic.NETProtocol\Persistent\Socket\TcpClient.vb"
 
     ' Author:
     ' 
@@ -53,12 +53,12 @@
 
 #End Region
 
+Imports System.IO
 Imports System.Net.Sockets
 Imports System.Reflection
 Imports System.Text
 Imports System.Threading
-Imports System.Windows.Forms
-Imports Microsoft.VisualBasic.ApplicationServices.Debugging.ExceptionExtensions
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Tcp.Persistent.Application.Protocols
@@ -148,7 +148,7 @@ Namespace Tcp.Persistent.Socket
         ''' 远程主机强制关闭连接之后触发这个动作
         ''' </summary>
         ''' <returns></returns>
-        Public Property RemoteServerShutdown As MethodInvoker
+        Public Property RemoteServerShutdown As Action
         ''' <summary>
         ''' 将从服务器来的推送消息的处理过程赋值在这个属性之中
         ''' </summary>
@@ -182,7 +182,8 @@ Namespace Tcp.Persistent.Socket
             _EndReceive = True
 
             Dim state As New StateObject With {
-                .workSocket = client
+                .workSocket = client,
+                .received = New MemoryStream
             }
 
             Do While Not Me.disposedValue
@@ -356,19 +357,20 @@ Namespace Tcp.Persistent.Socket
 
             If bytesBuffer.IsNullOrEmpty Then Return
 
-            Call state.received.AddRange(bytesBuffer)
+            Call state.received.Write(bytesBuffer, Scan0, bytesBuffer.Length)
 
-            Dim TempBuffer = state.received.ToArray
+            Dim TempBuffer = DirectCast(state.received, MemoryStream).ToArray
             Dim request = New RequestStream(TempBuffer)
 
             If Not request.FullRead Then Return
 
-            Call state.received.Clear()
+            Call DirectCast(state.received, MemoryStream).Dispose()
+            state.received = New MemoryStream
 
             If TempBuffer.Length > request.TotalBytes Then
                 TempBuffer = TempBuffer.Skip(request.TotalBytes).ToArray
                 ' 含有剩余的剪裁后的数据
-                Call state.received.AddRange(TempBuffer)
+                Call state.received.Write(TempBuffer, Scan0, TempBuffer.Length)
             End If
 
             Try

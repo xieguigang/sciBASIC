@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::603403e9357f489dec2420f36d151112, Data\BinaryData\DataStorage\netCDF\Data\DataReader.vb"
+﻿#Region "Microsoft.VisualBasic::6b93371543b560b28aae27dbdfbb9932, Data\BinaryData\DataStorage\netCDF\Data\DataReader.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module DataReader
     ' 
-    '         Function: nonRecord, record
+    '         Function: CreateArray, nonRecord, record
     ' 
     ' 
     ' /********************************************************************************/
@@ -41,6 +41,7 @@
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 
 Namespace netCDF
@@ -51,6 +52,22 @@ Namespace netCDF
     ''' </summary>
     Module DataReader
 
+        <Extension>
+        Private Function CreateArray(x As variable, size As Integer) As Array
+            Select Case x.type
+                Case CDFDataTypes.BOOLEAN : Return New Boolean(size - 1) {}
+                Case CDFDataTypes.BYTE : Return New Byte(size - 1) {}
+                Case CDFDataTypes.CHAR : Return New Char(size - 1) {}
+                Case CDFDataTypes.DOUBLE : Return New Double(size - 1) {}
+                Case CDFDataTypes.FLOAT : Return New Single(size - 1) {}
+                Case CDFDataTypes.INT : Return New Integer(size - 1) {}
+                Case CDFDataTypes.LONG : Return New Long(size - 1) {}
+                Case CDFDataTypes.SHORT : Return New Short(size - 1) {}
+                Case Else
+                    Throw New InvalidDataException("invalid data type!")
+            End Select
+        End Function
+
         ''' <summary>
         ''' Read data for the given non-record variable
         ''' </summary>
@@ -60,16 +77,16 @@ Namespace netCDF
         ''' <remarks>
         ''' 非记录类型则是一个数组
         ''' </remarks>
-        Public Function nonRecord(buffer As BinaryDataReader, variable As variable) As Object()
+        Public Function nonRecord(buffer As BinaryDataReader, variable As variable) As Array
             ' size of the data
-            Dim size = variable.size / sizeof(variable.type)
+            Dim size As Integer = variable.size / sizeof(variable.type)
             ' iterates over the data
-            Dim data As Object() = New Object(size - 1) {}
+            Dim data As Array = buffer.readVector(size, variable.type) ' variable.CreateArray(size)
 
             ' 读取的结果是一个T()数组
-            For i As Integer = 0 To size - 1
-                data(i) = Utils.readType(buffer, variable.type, 1)
-            Next
+            ' For i As Integer = 0 To size - 1
+            ' data(i) = Utils.readType(buffer, variable.type, 1)
+            ' Next
 
             Return data
         End Function
@@ -84,26 +101,27 @@ Namespace netCDF
         ''' <remarks>
         ''' 记录类型的数据可能是一个矩阵类型
         ''' </remarks>
-        Public Function record(buffer As BinaryDataReader, variable As variable, recordDimension As recordDimension) As Object()
+        Public Function record(buffer As BinaryDataReader, variable As variable, recordDimension As recordDimension) As Array
             Dim width% = If(variable.size, variable.size / sizeof(variable.type), 1)
             ' size of the data
             ' TODO streaming data
-            Dim size = recordDimension.length
+            Dim size As Integer = recordDimension.length
             ' iterates over the data
-            Dim data As Object() = New Object(size - 1) {}
-            Dim [step] = recordDimension.recordStep
+            Dim data As Array = Array.CreateInstance(variable.type.ToType, size)
+            Dim [step] As Integer = recordDimension.recordStep
+            Dim reader As Func(Of Object) = buffer.GetReader(variable.type)
+            Dim base As Stream = buffer.BaseStream
 
             ' 读取的结果可能是一个T()()矩阵或者T()数组
             For i As Integer = 0 To size - 1
-                Dim currentOffset& = buffer.Position
-                Dim nextOffset = currentOffset + [step]
+                Dim nextOffset As Long = buffer.Position + [step]
 
-                If buffer.EndOfStream Then
-                    data(i) = Nothing
-                Else
-                    data(i) = Utils.readType(buffer, variable.type, width)
-                    buffer.Seek(nextOffset, SeekOrigin.Begin)
-                End If
+                ' If buffer.EndOfStream Then
+                ' data(i) = Nothing
+                ' Else
+                data(i) = reader()  ' Utils.readType(buffer, variable.type, width)
+                base.Seek(nextOffset, SeekOrigin.Begin)
+                ' End If
             Next
 
             Return data

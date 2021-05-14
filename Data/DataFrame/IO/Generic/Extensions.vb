@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4d9bffec2befe6cd929f92f6dbfbde5, Data\DataFrame\IO\Generic\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::2e9d917bd76ead24c91e506eb526bdb8, Data\DataFrame\IO\Generic\Extensions.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Function: asCharacter, AsCharacter, AsDataSet, CreateObject, DataFrame
     '                   EuclideanDistance, GroupBy, NamedMatrix, NamedValues, Project
-    '                   (+2 Overloads) PropertyNames, Transpose, Values, (+2 Overloads) Vector
+    '                   (+2 Overloads) PropertyNames, (+2 Overloads) Transpose, Values, (+2 Overloads) Vector
     ' 
     ' 
     ' /********************************************************************************/
@@ -44,6 +44,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
@@ -98,7 +99,33 @@ Namespace IO
                                 .ID = key,
                                 .Properties = list _
                                     .ToDictionary(Function(x) x.ID,
-                                                  Function(x) x(key))
+                                                  Function(x)
+                                                      Return x(key)
+                                                  End Function)
+                            }
+                        End Function) _
+                .ToArray
+        End Function
+
+        ''' <summary>
+        ''' 矩阵转置：将矩阵的行列进行颠倒
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Transpose(source As IEnumerable(Of EntityObject)) As EntityObject()
+            Dim list As EntityObject() = source.ToArray
+            Dim allKeys = list.PropertyNames
+
+            Return allKeys _
+                .Select(Function(key)
+                            Return New EntityObject With {
+                                .ID = key,
+                                .Properties = list _
+                                    .ToDictionary(Function(x) x.ID,
+                                                  Function(x)
+                                                      Return x(key)
+                                                  End Function)
                             }
                         End Function) _
                 .ToArray
@@ -165,6 +192,7 @@ Namespace IO
         <Extension>
         Public Function PropertyNames(Of T)(list As IEnumerable(Of DynamicPropertyBase(Of T))) As String()
             Return list _
+                .Where(Function(a) Not a Is Nothing) _
                 .Select(Function(o) o.EnumerateKeys(False)) _
                 .IteratesALL _
                 .Distinct _

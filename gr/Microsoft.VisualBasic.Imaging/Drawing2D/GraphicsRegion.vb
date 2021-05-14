@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0389ec2991e8f737044cd546f000b0bd, gr\Microsoft.VisualBasic.Imaging\Drawing2D\GraphicsRegion.vb"
+﻿#Region "Microsoft.VisualBasic::5fe8d7305876eaa1416b60cc50b0c808, gr\Microsoft.VisualBasic.Imaging\Drawing2D\GraphicsRegion.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,8 @@
     '                     XRange, YRange
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: scaler, TopCentra, ToString, XScaler, YScaler
+    '         Function: Offset2D, scaler, TopCentra, ToString, XScaler
+    '                   YScaler
     ' 
     ' 
     ' /********************************************************************************/
@@ -60,11 +61,13 @@ Namespace Drawing2D
         ''' <summary>
         ''' 整张画布的大小
         ''' </summary>
-        Public Size As Size
+        Dim Size As Size
         ''' <summary>
         ''' 画布的边留白
         ''' </summary>
-        Public Padding As Padding
+        Dim Padding As Padding
+
+#Region "property based on the two fields value"
 
         ''' <summary>
         ''' 绘图区域的底部Y坐标值
@@ -149,12 +152,15 @@ Namespace Drawing2D
                 End With
             End Get
         End Property
+#End Region
 
+        <DebuggerStepThrough>
         Sub New(size As Size, padding As Padding)
             Me.Size = size
             Me.Padding = padding
         End Sub
 
+        <DebuggerStepThrough>
         Sub New(padding As Padding, size As Size)
             Me.Size = size
             Me.Padding = padding
@@ -184,6 +190,14 @@ Namespace Drawing2D
             Return Function(x)
                        Return range.ScaleMapping(x, plotRange)
                    End Function
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Offset2D(dx As Double, dy As Double) As GraphicsRegion
+            Return New GraphicsRegion With {
+                .Size = Size,
+                .Padding = Padding.Offset2D(dx, dy)
+            }
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

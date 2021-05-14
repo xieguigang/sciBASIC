@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7394f11904d66528596709fa99dadfa8, gr\network-visualization\NetworkCanvas\AVI.vb"
+﻿#Region "Microsoft.VisualBasic::436da6e2d3cb6b200b900648eabc4346, gr\network-visualization\NetworkCanvas\AVI.vb"
 
     ' Author:
     ' 
@@ -42,8 +42,8 @@
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce.Interfaces
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.AVIMedia
 Imports Microsoft.VisualBasic.Language

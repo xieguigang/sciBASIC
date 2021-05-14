@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::94b7b8c44f02d405ff53e1cab693bcdf, Data_science\Visualization\test\timeRangesTest.vb"
+﻿#Region "Microsoft.VisualBasic::d612ad350469193ee0585b35d0ff50e0, Data_science\Visualization\test\timeRangesTest.vb"
 
     ' Author:
     ' 
@@ -47,7 +47,7 @@ Module timeRangesTest
 
     Sub Main()
         Dim avg = DataSet.LoadDataSet("D:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Plot\data\history.average.csv", encoding:=TextEncodings.UTF8)
-        Dim range = DataSet.LoadDataSet("D:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Plot\data\history.range.csv", encoding:=TextEncodings.UTF8).ToDictionary
+        Dim range = DataSet.LoadDataSet("D:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Plot\data\history.range.csv", encoding:=TextEncodings.UTF8).ToDictionary(distinct:=True)
         Dim data = avg _
             .Select(Function(d)
                         Dim r As DataSet = range(d.ID)

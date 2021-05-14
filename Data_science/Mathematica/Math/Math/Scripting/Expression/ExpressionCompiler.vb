@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::925df266b3a72422b31082356182a58b, Data_science\Mathematica\Math\Math\Scripting\Expression\ExpressionCompiler.vb"
+﻿#Region "Microsoft.VisualBasic::639f7377931baa4aaa6fcf3c309403a1, Data_science\Mathematica\Math\Math\Scripting\Expression\ExpressionCompiler.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,13 @@
 
     ' Summaries:
 
+    '     Delegate Function
+    ' 
+    ' 
     '     Module ExpressionCompiler
     ' 
     '         Function: CreateExpression, CreateLambda
+    ' 
     ' 
     ' 
     ' /********************************************************************************/
@@ -47,6 +51,13 @@ Imports Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl
 Imports ScriptExpression = Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl.Expression
 
 Namespace Scripting.MathExpression
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="eval">evaluate the variable as numeric value.</param>
+    ''' <returns></returns>
+    Public Delegate Function DynamicInvoke(eval As Func(Of String, Double)) As Double
 
     Public Module ExpressionCompiler
 

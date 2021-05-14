@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4dd2f6ae77a58e2303a1638052a74771, Data\BinaryData\DataStorage\netCDF\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::5cd0d33687a3052a1ee763e80b5a0233, Data\BinaryData\DataStorage\netCDF\Utils.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,8 @@
 
     '     Module Utils
     ' 
-    '         Function: notNetcdf, readName, readNumber, readType
+    '         Function: GetReader, notNetcdf, readName, readNumber, readType
+    '                   readVector
     ' 
     '         Sub: padding, writeName, writePadding
     ' 
@@ -103,7 +104,8 @@ Namespace netCDF
         ''' buffer - Buffer for the file data
         ''' </param>
         ''' <returns>Name</returns>
-        <Extension> Public Function readName(buffer As BinaryDataReader) As String
+        <Extension>
+        Public Function readName(buffer As BinaryDataReader) As String
             ' Read name
             Dim nameLength = buffer.ReadUInt32()
             Dim name() = buffer.ReadChars(nameLength)
@@ -124,18 +126,64 @@ Namespace netCDF
         ''' <param name="size%">size - Size of the element to read</param>
         ''' <param name="bufferReader">bufferReader - Function to read next value</param>
         ''' <returns>{Array&lt;number>|number}</returns>
-        Public Function readNumber(size%, bufferReader As Func(Of Object)) As Object
+        Public Function readNumber(Of T)(size%, bufferReader As Func(Of T)) As Object
             If (size <> 1) Then
-                Dim numbers As New List(Of Object)
+                Dim numbers As T() = New T(size - 1) {}
 
                 For i As Integer = 0 To size - 1
-                    numbers.Add(bufferReader())
+                    numbers(i) = bufferReader()
                 Next
 
                 Return numbers
             Else
                 Return bufferReader()
             End If
+        End Function
+
+        <Extension>
+        Public Function readVector(buffer As BinaryDataReader, size As Integer, type As CDFDataTypes) As Array
+            If buffer.EndOfStream Then
+                Call $"Binary reader ""{buffer.ToString}"" offset out of boundary!".Warning
+                ' 已经出现越界了
+                Return Nothing
+            End If
+
+            Select Case type
+                Case CDFDataTypes.BYTE : Return buffer.ReadBytes(size)
+                Case CDFDataTypes.CHAR : Return buffer.ReadChars(size)
+                Case CDFDataTypes.BOOLEAN
+                    ' 20210212 bytes flags for maps boolean
+                    Return buffer.ReadBytes(size) _
+                        .Select(Function(b) b <> 0) _
+                        .ToArray
+                Case CDFDataTypes.DOUBLE : Return buffer.ReadDoubles(size)
+                Case CDFDataTypes.FLOAT : Return buffer.ReadSingles(size)
+                Case CDFDataTypes.INT : Return buffer.ReadInt32s(size)
+                Case CDFDataTypes.LONG : Return buffer.ReadInt64s(size)
+                Case CDFDataTypes.SHORT : Return buffer.ReadInt16s(size)
+                Case Else
+                    ' istanbul ignore next
+                    Return Utils.notNetcdf(True, $"non valid type {type}")
+            End Select
+        End Function
+
+        <Extension>
+        Public Function GetReader(buffer As BinaryDataReader, type As CDFDataTypes) As Func(Of Object)
+            Select Case type
+                Case CDFDataTypes.BYTE : Return Function() buffer.ReadByte
+                Case CDFDataTypes.CHAR : Return Function() buffer.ReadChar
+                Case CDFDataTypes.BOOLEAN
+                    ' 20210212 bytes flags for maps boolean
+                    Return Function() buffer.ReadByte <> 0
+                Case CDFDataTypes.DOUBLE : Return Function() buffer.ReadDouble
+                Case CDFDataTypes.FLOAT : Return Function() buffer.ReadSingle
+                Case CDFDataTypes.INT : Return Function() buffer.ReadInt32
+                Case CDFDataTypes.LONG : Return Function() buffer.ReadInt64
+                Case CDFDataTypes.SHORT : Return Function() buffer.ReadInt16
+                Case Else
+                    ' istanbul ignore next
+                    Return Utils.notNetcdf(True, $"non valid type {type}")
+            End Select
         End Function
 
         ''' <summary>
@@ -171,6 +219,12 @@ Namespace netCDF
                     Return readNumber(size, AddressOf buffer.ReadDouble)
                 Case CDFDataTypes.LONG
                     Return readNumber(size, AddressOf buffer.ReadInt64)
+                Case CDFDataTypes.BOOLEAN
+
+                    ' 20210212 bytes flags for maps boolean
+                    Return buffer.ReadBytes(size) _
+                        .Select(Function(b) b <> 0) _
+                        .ToArray
 
                 Case Else
                     ' istanbul ignore next

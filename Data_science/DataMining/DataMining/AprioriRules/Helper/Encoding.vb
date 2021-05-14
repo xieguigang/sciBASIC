@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::765ff2c9d3054af61c3c7acd8128699c, Data_science\DataMining\DataMining\AprioriRules\Helper\Encoding.vb"
+﻿#Region "Microsoft.VisualBasic::327a5d3ae11977a081a1dd5e2be4efb6, Data_science\DataMining\DataMining\AprioriRules\Helper\Encoding.vb"
 
     ' Author:
     ' 
@@ -55,6 +55,8 @@ Namespace AprioriRules
     ''' </summary>
     ''' <remarks></remarks>
     Public Class Encoding
+
+        ' 一个事务是有多个关联的对象组成的，在这里一个事务就是一个字符串，一个字符就是事务里面有关联信息的对象
 
         Public ReadOnly Property CodeMappings As IReadOnlyDictionary(Of Char, String)
         Public ReadOnly Property AllItems As String()

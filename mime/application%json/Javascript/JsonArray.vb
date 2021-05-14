@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3cd67b9fa63af7a24739f1a9b0f5a232, mime\application%json\Javascript\JsonArray.vb"
+﻿#Region "Microsoft.VisualBasic::9df52e4fb6c05318e1b455c14911c061, mime\application%json\Javascript\JsonArray.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,9 @@
     ' 
     '         Properties: Length
     ' 
-    '         Function: BuildJsonString, ContainsElement, GetEnumerator, IEnumerable_GetEnumerator, ToString
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: ContainsElement, GetEnumerator, IEnumerable_GetEnumerator, ToString
     ' 
     '         Sub: Add, Insert, Remove
     ' 
@@ -44,7 +46,6 @@
 
 #End Region
 
-Imports System.Text
 Imports Microsoft.VisualBasic.Linq
 
 Namespace Javascript
@@ -52,13 +53,20 @@ Namespace Javascript
     Public Class JsonArray : Inherits JsonModel
         Implements IEnumerable(Of JsonElement)
 
-        Dim list As New List(Of JsonElement)
+        Friend ReadOnly list As New List(Of JsonElement)
 
         Public ReadOnly Property Length As Integer
             Get
                 Return list.Count
             End Get
         End Property
+
+        Public Sub New()
+        End Sub
+
+        Sub New(objs As IEnumerable(Of JsonElement))
+            list = objs.SafeQuery.ToList
+        End Sub
 
         Public Sub Add(element As JsonElement)
             Call list.Add(element)
@@ -92,19 +100,6 @@ Namespace Javascript
 
         Public Overrides Function ToString() As String
             Return "JsonArray: {count: " & list.Count & "}"
-        End Function
-
-        Public Overrides Function BuildJsonString() As String
-            Dim a As New StringBuilder
-            Dim array$() = list _
-                .Select(Function(x) x.BuildJsonString) _
-                .ToArray
-
-            a.AppendLine("[")
-            a.AppendLine(array.JoinBy(", "))
-            a.AppendLine("]")
-
-            Return a.ToString
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of JsonElement) Implements IEnumerable(Of JsonElement).GetEnumerator

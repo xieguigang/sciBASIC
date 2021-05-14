@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5956ac270dafb4552b55add38583aeaa, Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
+﻿#Region "Microsoft.VisualBasic::7d22fda0ea292b674acca5d2fdc3cf7a, Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
 
     ' Author:
     ' 
@@ -33,17 +33,18 @@
 
     ' Class BinaryDataReader
     ' 
-    '     Properties: ByteOrder, Encoding, EndOfStream, Length, Position
+    '     Properties: BufferView, ByteOrder, Encoding, EndOfStream, Length
+    '                 Position
     ' 
     '     Constructor: (+5 Overloads) Sub New
     ' 
-    '     Function: DecimalFromBytes, ReadByteLengthPrefixString, ReadDateTime, ReadDecimal, ReadDecimals
-    '               ReadDouble, ReadDoubles, ReadDwordLengthPrefixString, ReadDwordLenString, ReadInt16
-    '               ReadInt16s, ReadInt32, ReadInt32s, ReadInt64, ReadInt64s
-    '               ReadMultiple, ReadSBytes, ReadSingle, ReadSingles, (+5 Overloads) ReadString
-    '               ReadUInt16, ReadUInt16s, ReadUInt32, ReadUInt32s, ReadUInt64
-    '               ReadUInt64s, ReadWordLengthPrefixString, ReadZeroTerminatedString, (+2 Overloads) Seek, (+3 Overloads) TemporarySeek
-    '               ToString
+    '     Function: DecimalFromBytes, getDebugView, ReadByteLengthPrefixString, ReadDateTime, ReadDecimal
+    '               ReadDecimals, ReadDouble, ReadDoubles, ReadDwordLengthPrefixString, ReadDwordLenString
+    '               ReadInt16, ReadInt16s, ReadInt32, ReadInt32s, ReadInt64
+    '               ReadInt64s, ReadMultiple, ReadSBytes, ReadSingle, ReadSingles
+    '               (+5 Overloads) ReadString, ReadUInt16, ReadUInt16s, ReadUInt32, ReadUInt32s
+    '               ReadUInt64, ReadUInt64s, ReadWordLengthPrefixString, ReadZeroTerminatedString, (+2 Overloads) Seek
+    '               (+3 Overloads) TemporarySeek, ToString
     ' 
     '     Sub: Align, Mark, Reset, TemporarySeek
     ' 
@@ -66,6 +67,16 @@ Public Class BinaryDataReader
     Dim _byteOrder As ByteOrder
     Dim _needsReversion As Boolean
     Dim _markedPos As Long
+
+    ''' <summary>
+    ''' [debug view]以ascii显示当前位置的附近16个字节的内容
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property BufferView As String
+        Get
+            Return getDebugView(128)
+        End Get
+    End Property
 
     ''' <summary>
     ''' Initializes a new instance of the <see cref="BinaryDataReader"/> class based on the specified stream and
@@ -175,6 +186,44 @@ Public Class BinaryDataReader
             Return BaseStream.Position >= BaseStream.Length
         End Get
     End Property
+
+    Private Function getDebugView(bufSize As Integer) As String
+        Using TemporarySeek()
+            Dim start As Long
+            Dim nsize As Integer
+
+            If Position < bufSize \ 2 Then
+                start = 0
+            Else
+                start = Position - (bufSize \ 2)
+            End If
+
+            If start + bufSize > Length Then
+                nsize = Length - start
+            Else
+                nsize = bufSize
+            End If
+
+            Dim chars As New List(Of Char)
+            Dim c As Char
+
+            For Each b As Byte In ReadBytes(nsize)
+                If ASCII.IsNonPrinting(b) Then
+                    c = "*"c
+                Else
+                    c = Chr(b)
+                End If
+
+                If c = vbNullChar Then
+                    c = "*"
+                End If
+
+                chars.Add(c)
+            Next
+
+            Return chars.CharString
+        End Using
+    End Function
 
     ''' <summary>
     ''' Mark current stream buffer position
@@ -692,6 +741,6 @@ Public Class BinaryDataReader
 #End Region
 
     Public Overrides Function ToString() As String
-        Return $"[{Position}/{Length}] {Encoding.ToString}"
+        Return $"[{Position}/{Length}] {Encoding.ToString} [debug_buffer: {getDebugView(32)}]"
     End Function
 End Class

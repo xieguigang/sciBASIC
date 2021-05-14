@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6570ee0818aeee57aded826accc2b3e5, mime\application%json\Javascript\JsonObject.vb"
+﻿#Region "Microsoft.VisualBasic::b42e318a14b082684f220ddf4cd297ac, mime\application%json\Javascript\JsonObject.vb"
 
     ' Author:
     ' 
@@ -33,20 +33,22 @@
 
     '     Class JsonObject
     ' 
-    '         Function: BuildJsonString, ContainsElement, ContainsKey, CreateObject, GetEnumerator
-    '                   IEnumerable_GetEnumerator, Remove, ToString
+    '         Properties: isArray
     ' 
-    '         Sub: (+2 Overloads) Add
+    '         Function: ContainsElement, ContainsKey, (+2 Overloads) CreateObject, GetEnumerator, IEnumerable_GetEnumerator
+    '                   Remove, Score, ToJsonArray, ToString
+    ' 
+    '         Sub: (+2 Overloads) Add, (+2 Overloads) Dispose, WriteBuffer
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Text
+Imports System.IO
+Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Linq
 
 Namespace Javascript
 
@@ -54,9 +56,12 @@ Namespace Javascript
     ''' Dictionary/Array equivalent in javascript
     ''' </summary>
     Public Class JsonObject : Inherits JsonModel
+        Implements IDisposable
         Implements IEnumerable(Of NamedValue(Of JsonElement))
 
         ReadOnly array As New Dictionary(Of String, JsonElement)
+
+        Private disposedValue As Boolean
 
 #Region "Indexer"
 
@@ -83,12 +88,26 @@ Namespace Javascript
         End Property
 #End Region
 
+        Public ReadOnly Property isArray As Boolean
+            Get
+                Return array.Keys.All(Function(i) i.IsPattern("\d+"))
+            End Get
+        End Property
+
         Public Sub Add(key As String, element As JsonElement)
             Call array.Add(key, element)
         End Sub
 
         Public Sub Add(key$, value As Object)
             Call array.Add(key, New JsonValue(value))
+        End Sub
+
+        ''' <summary>
+        ''' write bson buffer
+        ''' </summary>
+        ''' <param name="buffer"></param>
+        Public Sub WriteBuffer(buffer As FileStream)
+            Call BSON.WriteBuffer(Me, buffer)
         End Sub
 
         Public Function Remove(key As String) As Boolean
@@ -103,31 +122,50 @@ Namespace Javascript
             Return array.ContainsValue(element)
         End Function
 
+        Public Function Score(schema As Type) As Integer
+            Dim hits As Integer
+
+            For Each [property] As PropertyInfo In schema.GetProperties(PublicProperty)
+                If array.ContainsKey([property].Name) Then
+                    hits += 1
+                End If
+            Next
+
+            Return hits
+        End Function
+
+        Public Function ToJsonArray() As JsonArray
+            Dim list As New JsonArray
+
+            For Each item As JsonElement In array.Values
+                Call list.Add(item)
+            Next
+
+            Return list
+        End Function
+
         ''' <summary>
         ''' 反序列化为目标类型的对象实例
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
-        Public Function CreateObject(Of T As Class)() As T
-            Return Me.createObject(schema:=GetType(T))
+        Public Function CreateObject(Of T)() As T
+            Return CreateObject(type:=GetType(T))
+        End Function
+
+        Public Function CreateObject(type As Type) As Object
+            If type.IsArray AndAlso Me.isArray Then
+                Dim itemType As Type = type.GetElementType
+                Dim graph As ObjectSchema = ObjectSchema.GetSchema(itemType)
+
+                Return ToJsonArray.createArray(graph, itemType)
+            Else
+                Return Me.createObject(parent:=Nothing, schema:=type)
+            End If
         End Function
 
         Public Overrides Function ToString() As String
             Return "JsonObject::[" & array.Keys.JoinBy(", ") & "]"
-        End Function
-
-        Public Overrides Function BuildJsonString() As String
-            Dim a As New StringBuilder
-            Dim array$() = Me _
-                .array _
-                .Select(Function(kp) $"""{kp.Key}"": {kp.Value.BuildJsonString}") _
-                .ToArray
-
-            Call a.AppendLine("{")
-            Call a.AppendLine(array.JoinBy("," & vbLf))
-            Call a.AppendLine("}")
-
-            Return a.ToString
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of NamedValue(Of JsonElement)) Implements IEnumerable(Of NamedValue(Of JsonElement)).GetEnumerator
@@ -142,5 +180,35 @@ Namespace Javascript
         Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
             Yield GetEnumerator()
         End Function
+
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                If disposing Then
+                    ' TODO: 释放托管状态(托管对象)
+                    For Each value As JsonElement In array.Values
+                        Call JsonModel.DisposeObjects(value)
+                    Next
+
+                    Call array.Clear()
+                End If
+
+                ' TODO: 释放未托管的资源(未托管的对象)并替代终结器
+                ' TODO: 将大型字段设置为 null
+                disposedValue = True
+            End If
+        End Sub
+
+        ' ' TODO: 仅当“Dispose(disposing As Boolean)”拥有用于释放未托管资源的代码时才替代终结器
+        ' Protected Overrides Sub Finalize()
+        '     ' 不要更改此代码。请将清理代码放入“Dispose(disposing As Boolean)”方法中
+        '     Dispose(disposing:=False)
+        '     MyBase.Finalize()
+        ' End Sub
+
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' 不要更改此代码。请将清理代码放入“Dispose(disposing As Boolean)”方法中
+            Dispose(disposing:=True)
+            GC.SuppressFinalize(Me)
+        End Sub
     End Class
 End Namespace

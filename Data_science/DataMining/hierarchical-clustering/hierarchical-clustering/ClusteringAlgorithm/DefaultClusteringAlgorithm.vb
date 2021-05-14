@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::79c92ec6ba4417c3eb41fba09e0d9e15, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm\DefaultClusteringAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::70003e87abf3f1c42bdc9eba12a0bbc8, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm\DefaultClusteringAlgorithm.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,8 @@
 
     ' Class DefaultClusteringAlgorithm
     ' 
+    '     Properties: debug
+    ' 
     '     Function: (+2 Overloads) createClusters, createLinkages, performClustering, performFlatClustering, performWeightedClustering
     ' 
     '     Sub: checkArguments
@@ -43,6 +45,7 @@
 
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.Hierarchy
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
 '
@@ -62,8 +65,9 @@ Imports Microsoft.VisualBasic.Linq
 ' limitations under the License.
 ' *****************************************************************************
 
-Public Class DefaultClusteringAlgorithm
-    Implements ClusteringAlgorithm
+Public Class DefaultClusteringAlgorithm : Implements ClusteringAlgorithm
+
+    Public Property debug As Boolean = False
 
     Public Function performClustering(distances As Double()(), clusterNames$(), linkageStrategy As LinkageStrategy) As Cluster Implements ClusteringAlgorithm.performClustering
 
@@ -75,9 +79,14 @@ Public Class DefaultClusteringAlgorithm
 
         ' Process 
         Dim builder As New HierarchyBuilder(clusters, linkages)
+        Dim i As i32 = 1
 
         Do While Not builder.TreeComplete
             builder.Agglomerate(linkageStrategy)
+
+            If debug Then
+                Call Console.WriteLine($"[iteration_{++i}] {builder.Clusters.Count}...")
+            End If
         Loop
 
         Return builder.RootCluster

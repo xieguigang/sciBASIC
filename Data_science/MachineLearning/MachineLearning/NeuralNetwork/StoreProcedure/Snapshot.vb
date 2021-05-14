@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e5f35754a0573f03231f3e2c0ad7125, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Snapshot.vb"
+﻿#Region "Microsoft.VisualBasic::85b2681947cdac12d47410f37e78b477, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Snapshot.vb"
 
     ' Author:
     ' 
@@ -71,7 +71,7 @@ Namespace NeuralNetwork.StoreProcedure
 
         Sub New(model As Network)
             source = model
-            snapshot = CreateSnapshot.TakeSnapshot(model, 0)
+            snapshot = CreateSnapshot.TakeSnapshot(model, {})
             neuronLinks = createNeuronUpdateMaps(source, snapshot).ToArray
             synapseLinks = createSynapseUpdateMaps(source, snapshot).ToArray
         End Sub
@@ -146,7 +146,7 @@ Namespace NeuralNetwork.StoreProcedure
         ''' The calculation errors of current snapshot.
         ''' </param>
         ''' <returns></returns>
-        Public Function UpdateSnapshot([error] As Double) As Snapshot
+        Public Function UpdateSnapshot([error] As Double()) As Snapshot
             Dim toNode As NeuronNode
             Dim fromNode As Neuron
 

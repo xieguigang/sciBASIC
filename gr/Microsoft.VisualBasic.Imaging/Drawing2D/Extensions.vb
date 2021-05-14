@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ddda5eb863fa01d3549b70893089093, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::792ff8d6706ab708eca69b871618ad73, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Extensions.vb"
 
     ' Author:
     ' 
@@ -78,7 +78,7 @@ Namespace Drawing2D
             Next
         End Sub
 
-        Public ReadOnly BlackBrush As [Default](Of  Brush) = Brushes.Black
+        Public ReadOnly BlackBrush As [Default](Of Brush) = Brushes.Black
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
@@ -112,9 +112,7 @@ Namespace Drawing2D
 
         Private Function GetTextAnchor(left!, right!, width!, height!, top!, bottom!, anchor As PointF) As Point
             Dim points As Point() = {
-                New Point(left + width / 2, top),        ' top
-                New Point(left, top),                    ' top_left
-                New Point(left + width, top),            ' top_right
+                New Point(left + width / 2, top),        ' top                'New Point(left, top),                    ' top_left                'New Point(left + width, top),            ' top_right
                 New Point(left + width / 3, top),        ' top 1/3
                 New Point(left + width / 3 * 2, top),    ' top 2/3
                 New Point(left + width / 4, top),        ' top 1/4
@@ -124,9 +122,7 @@ Namespace Drawing2D
                 New Point(left + width / 5 * 3, top),    ' top 3/5
                 New Point(left + width / 5 * 4, top),    ' top 4/5
  _
-                New Point(left + width / 2, bottom),     ' bottom,
-                New Point(left, bottom),                 ' bottom_left,
-                New Point(left + width, bottom),         ' bottom_right,
+                New Point(left + width / 2, bottom),     ' bottom,                'New Point(left, bottom),                 ' bottom_left,                'New Point(left + width, bottom),         ' bottom_right,
                 New Point(left + width / 3, bottom),     ' bottom 1/3,
                 New Point(left + width / 3 * 2, bottom), ' bottom 2/3,
                 New Point(left + width / 4, bottom),     ' bottom 1/4,
@@ -141,7 +137,7 @@ Namespace Drawing2D
             }
             Dim d#() = points.Distance(anchor.ToPoint)
 
-            Return points(Which.Min(d))
+            Return points(which.Min(d))
         End Function
 
         ''' <summary>
@@ -161,7 +157,7 @@ Namespace Drawing2D
         <Extension>
         Public Function Enlarge(size As SizeF, fold#) As SizeF
             With size
-                Return New SizeF(.Width * fold, .Height * fold)
+                Return New SizeF(CSng(.Width * fold), CSng(.Height * fold))
             End With
         End Function
 
@@ -200,9 +196,10 @@ Namespace Drawing2D
         ''' 将一个多边形放大指定的倍数<paramref name="scale"/>
         ''' </summary>
         ''' <param name="shape">矢量图形的点集合</param>
-        ''' <param name="scale#"></param>
+        ''' <param name="scale"></param>
         ''' <returns></returns>
-        <Extension> Public Function Enlarge(shape As IEnumerable(Of PointF), scale As (width#, height#)) As PointF()
+        <Extension>
+        Public Function Enlarge(shape As IEnumerable(Of PointF), scale As (width#, height#)) As PointF()
             Dim shapeVector = shape.ToArray
             Dim center = shapeVector.Centre
             Dim x As New Vector(shapeVector.Select(Function(pt) pt.X))

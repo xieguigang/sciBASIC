@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1bf005724b66dab1f77de93dfa2faffb, gr\network-visualization\Datavisualization.Network\Layouts\forceNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::18d7bdef7734c50a9f21c791c1527dfe, gr\network-visualization\Datavisualization.Network\Layouts\forceNetwork.vb"
 
     ' Author:
     ' 
@@ -44,6 +44,8 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
@@ -59,9 +61,20 @@ Namespace Layouts
         ''' <param name="showProgress"></param>
         <ExportAPI("Layout.ForceDirected")>
         <Extension>
-        Public Function doForceLayout(ByRef net As NetworkGraph, parameters As ForceDirectedArgs, Optional showProgress As Boolean = False) As NetworkGraph
+        Public Function doForceLayout(ByRef net As NetworkGraph, parameters As ForceDirectedArgs,
+                                      Optional showProgress As Boolean = False,
+                                      Optional progressCallback As Action(Of String) = Nothing,
+                                      Optional cancel As Value(Of Boolean) = Nothing) As NetworkGraph
             With parameters
-                Return net.doForceLayout(.Stiffness, .Repulsion, .Damping, .Iterations, showProgress:=showProgress)
+                Return net.doForceLayout(
+                    Stiffness:= .Stiffness,
+                    Repulsion:= .Repulsion,
+                    Damping:= .Damping,
+                    iterations:= .Iterations,
+                    showProgress:=showProgress,
+                    progressCallback:=progressCallback,
+                    cancel:=cancel
+                )
             End With
         End Function
 
@@ -116,22 +129,33 @@ Namespace Layouts
                                       Optional Damping# = 0.83,
                                       Optional iterations% = 1000,
                                       Optional showProgress As Boolean = False,
-                                      Optional clearScreen As Boolean = False) As NetworkGraph
+                                      Optional clearScreen As Boolean = False,
+                                      Optional progressCallback As Action(Of String) = Nothing,
+                                      Optional cancel As Value(Of Boolean) = Nothing) As NetworkGraph
 
             Dim physicsEngine As New ForceDirected2D(net, Stiffness, Repulsion, Damping)
             Dim tick As Action(Of Integer)
             Dim progress As ProgressBar = Nothing
-
-            If showProgress Then
-                Dim ticking As ProgressProvider
-                Dim ETA$
-                Dim details$
-                Dim args$ = New ForceDirectedArgs With {
+            Dim args$ = New ForceDirectedArgs With {
                     .Damping = Damping,
                     .Iterations = iterations,
                     .Repulsion = Repulsion,
                     .Stiffness = Stiffness
                 }.GetJson
+
+            If cancel Is Nothing Then
+                cancel = New Value(Of Boolean)(False)
+            End If
+            If progressCallback Is Nothing Then
+                progressCallback = Sub()
+
+                                   End Sub
+            End If
+
+            If showProgress Then
+                Dim ticking As ProgressProvider
+                Dim ETA$
+                Dim details$
 
                 progress = New ProgressBar("Do Force Directed Layout...", 1, CLS:=clearScreen)
                 ticking = New ProgressProvider(progress, iterations)
@@ -139,13 +163,20 @@ Namespace Layouts
                            ETA = "ETA=" & ticking.ETA().FormatTime
                            details = args & $" ({i}/{iterations}) " & ETA
                            progress.SetProgress(ticking.StepProgress, details)
+                           progressCallback(details)
                        End Sub
             Else
                 tick = Sub(i%)
+                           Dim details = args & $" [{i}/{iterations}]"
+                           progressCallback(details)
                        End Sub
             End If
 
             For i As Integer = 0 To iterations
+                If True = cancel.Value Then
+                    Exit For
+                End If
+
                 Call physicsEngine.Calculate(0.05F)
                 Call tick(i)
             Next

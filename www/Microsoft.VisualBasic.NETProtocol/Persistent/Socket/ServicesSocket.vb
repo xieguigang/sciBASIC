@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f90417c3ffe5266d91a764ec1865bfe, www\Microsoft.VisualBasic.NETProtocol\Persistent\Socket\ServicesSocket.vb"
+﻿#Region "Microsoft.VisualBasic::4ab8299998078471f08da3aaa9a66160, www\Microsoft.VisualBasic.NETProtocol\Persistent\Socket\ServicesSocket.vb"
 
     ' Author:
     ' 
@@ -56,7 +56,7 @@
 Imports System.Net.Sockets
 Imports System.Runtime.CompilerServices
 Imports System.Threading
-Imports Microsoft.VisualBasic.ApplicationServices.Debugging.ExceptionExtensions
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Net.Tcp.Persistent.Application.Protocols
 Imports TcpEndPoint = System.Net.IPEndPoint

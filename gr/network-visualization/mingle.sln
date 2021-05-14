@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30803.129
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "mingle", "mingle\mingle.njsproj", "{514FEBC6-0007-4247-AFA7-88CD951AB5EC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{514FEBC6-0007-4247-AFA7-88CD951AB5EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{514FEBC6-0007-4247-AFA7-88CD951AB5EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{514FEBC6-0007-4247-AFA7-88CD951AB5EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{514FEBC6-0007-4247-AFA7-88CD951AB5EC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F7C3E6CB-C9BB-4299-978B-640C7C09E51C}
+	EndGlobalSection
+EndGlobal
