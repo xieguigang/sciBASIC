@@ -769,6 +769,8 @@
     </Compile>
     <Compile Include="HTML\Xml\Meta.vb" />
     <Compile Include="Markups\StreamWriter\Markdown.vb" />
+    <Compile Include="Parser\TokenIcer.vb" />
+    <Compile Include="Parser\Token.vb" />
     <Compile Include="Parser\HtmlTokens.vb" />
   </ItemGroup>
   <ItemGroup>
