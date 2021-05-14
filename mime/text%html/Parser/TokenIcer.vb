@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Parser
 
 Public Class TokenIcer
@@ -58,6 +59,16 @@ Public Class TokenIcer
 
             escape.string = True
             escape.quote = c
+        ElseIf c = " "c OrElse c = ASCII.TAB Then
+            If buf > 0 Then
+                Yield MeasureToken(New String(buf.PopAllChars))
+            End If
+        ElseIf c = "="c Then
+            If buf > 0 Then
+                Yield MeasureToken(New String(buf.PopAllChars))
+            End If
+
+            Yield New Token(HtmlTokens.equalsSymbol, "=")
         Else
             buf += c
         End If
