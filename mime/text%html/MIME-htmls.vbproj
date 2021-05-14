@@ -769,6 +769,7 @@
     </Compile>
     <Compile Include="HTML\Xml\Meta.vb" />
     <Compile Include="Markups\StreamWriter\Markdown.vb" />
+    <Compile Include="Parser\HtmlTokens.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
