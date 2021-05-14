@@ -47,7 +47,9 @@ Public Class HtmlParser
                         tagStack.Peek.Add(newTag)
 
                         If Not tagClosed Then
-                            tagStack.Push(newTag)
+                            If Not (newTag.Name = "img" OrElse newTag.Name = "br" OrElse newTag.Name = "hr") Then
+                                tagStack.Push(newTag)
+                            End If
                         End If
                     End If
                 Case Else

@@ -62,14 +62,16 @@ Module HTMLParserTest
     ReadOnly realHtmlTest$ = "
 <img src='/path/folder/aaa.gif' width='100%'>
 <br>
+<hr>
 <br />
-<p>
+<hr/>
+<p style='color: red;'>
 this is text
 </p>
 "
 
     Sub Main()
-        ' Dim tokens = New TokenIcer(testHTML).GetTokens.ToArray
+        Dim real = HtmlParser.ParseTree(realHtmlTest)
         Dim newline = HtmlParser.ParseTree(simpleTag2)
         Dim simple = HtmlParser.ParseTree(simpleTagTest)
         Dim doc2 = HtmlParser.ParseTree(testHTML)
