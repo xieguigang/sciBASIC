@@ -36,6 +36,8 @@ Call Console.WriteLine(json)
 
 ## Demo
 
+Given a such html document text:
+
 ```html
 <library>
 <!-- Great book. -->
@@ -63,7 +65,7 @@ Call Console.WriteLine(json)
 </library>
 ```
 
-Faced with such a text structure, we naturally think of extracting the following data structure from the text :
+Then faced with such a text structure, we naturally think of extracting the following data structure from the text :
 
 ```json
 {
@@ -87,24 +89,36 @@ Faced with such a text structure, we naturally think of extracting the following
 
 This is perfect, when you know the data structure you want to extract, you have actually succeeded 80%, the above is the data structure we want, we call it DDL (Data Definition Language) for the time being. let's see how GraphQuery does it:
 
-```json
+```bash
 # https://www.codeproject.com/Articles/1264613/GraphQuery-Powerful-Text-Query-Language-3
 
 graphquery
 {
-    bookID  css("book")|attr("id")
-    title css("title")
-    isbn xpath("//isbn")
-    quote css("quote")
-    language css("title")|attr("lang")
+    # parser function pipeline can be 
+    # in different line,
+    # this will let you write graphquery
+    # code in a more graceful style when
+    # you needs a lot of pipeline function
+    # for parse value data.
+    bookID    css("book") 
+            | attr("id")
+
+    title     css("title")
+    isbn      xpath("//isbn")
+    quote     css("quote")
+    language  css("title") | attr("lang")
+
+    # another sub query in current graph query
     author css("author") {
         name css("name")
         born css("born")
         dead css("dead")
     }
+
+    # this is a array of type character
     character xpath("//character") [{
-        name css("name")
-        born css("born")
+        name          css("name")
+        born          css("born")
         qualification xpath("qualification")
     }]
 }
