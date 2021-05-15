@@ -372,6 +372,7 @@
     </Compile>
     <Compile Include="WebAPI\Contributions.vb" />
     <Compile Include="WebAPI\Extensions.vb" />
+    <Compile Include="WebAPI\GraphQuery.vb" />
     <Compile Include="WebAPI\Repositories.vb" />
     <Compile Include="WebAPI\Users.vb" />
   </ItemGroup>
