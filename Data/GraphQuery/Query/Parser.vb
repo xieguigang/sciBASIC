@@ -30,7 +30,22 @@ Public Class Parser
 
     Private Function XPathQuery(document As HtmlElement, isArray As Boolean) As InnerPlantText
         Dim xpath As XPath = XPathParser.Parse(parameters(Scan0))
-        Dim query As HtmlElement = New XPathQuery(xpath).Query(document)
+        Dim engine As New XPathQuery(xpath)
+        Dim query As InnerPlantText
+
+        If isArray Then
+            query = New HtmlElement With {
+                .TagName = parameters(Scan0),
+                .HtmlElements = engine _
+                    .QueryAll(document) _
+                    .Select(Function(n)
+                                Return DirectCast(DirectCast(n, HtmlElement), InnerPlantText)
+                            End Function) _
+                    .ToArray
+            }
+        Else
+            query = engine.QuerySingle(document)
+        End If
 
         Return query
     End Function

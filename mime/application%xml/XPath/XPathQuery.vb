@@ -8,7 +8,11 @@ Public Class XPathQuery
         Me.xpath = xpath
     End Sub
 
-    Public Function Query(document As XmlDocumentTree) As XmlDocumentTree
+    Public Function QuerySingle(document As IXmlDocumentTree) As IXmlNode
+        Return xpath.Query(document).FirstOrDefault
+    End Function
 
+    Public Function QueryAll(document As IXmlDocumentTree) As IXmlNode()
+        Return xpath.Query(document)
     End Function
 End Class

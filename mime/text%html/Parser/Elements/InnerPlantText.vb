@@ -1,9 +1,11 @@
-﻿Namespace HTML
+﻿Imports Microsoft.VisualBasic.Text.Xml
+
+Namespace HTML
 
     ''' <summary>
     ''' Plant text inner the html.(HTML文档内的纯文本对象)
     ''' </summary>
-    Public Class InnerPlantText
+    Public Class InnerPlantText : Implements IXmlNode
 
         Public Overridable Property InnerText As String
 
@@ -30,7 +32,7 @@
             End Get
         End Property
 
-        Public Overridable Function GetPlantText() As String
+        Public Overridable Function GetPlantText() As String Implements IXmlNode.GetInnerText
             Return InnerText
         End Function
     End Class
