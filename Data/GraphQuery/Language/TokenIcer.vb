@@ -14,11 +14,12 @@ Namespace Language
 
         Protected Overrides Function walkChar(c As Char) As Token
             If escape.string Then
-                If c <> """"c Then
+                If c <> escape.quot Then
                     buffer += c
                     Return Nothing
                 Else
                     escape.string = False
+                    escape.quot = Nothing
                     Return New Token(Tokens.text, buffer.PopAllChars)
                 End If
             ElseIf escape.comment Then
@@ -43,9 +44,10 @@ Namespace Language
                         Dim t = popOutToken()
                         buffer += ASCII.LF
                         Return t
-                    Case """"c
+                    Case """"c, "'"c
                         Dim t As Token = popOutToken()
                         escape.string = True
+                        escape.quot = c
                         Return t
                     Case "#"c
                         Dim t As Token = popOutToken()
