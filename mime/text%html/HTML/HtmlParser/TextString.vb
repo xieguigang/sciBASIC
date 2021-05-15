@@ -437,11 +437,7 @@ Namespace HTML
                 Call buffer.SkipWhiteSpace
 
                 value = buffer.popAttrValue.CharString
-
-                tag(name) = New ValueAttribute With {
-                    .Name = name,
-                    .Value = value
-                }
+                tag(name) = New ValueAttribute(name, value)
             Loop
 
             Return tag

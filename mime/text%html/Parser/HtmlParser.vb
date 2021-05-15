@@ -1,10 +1,13 @@
 ﻿Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 
 Public Class HtmlParser
+
+    Shared ReadOnly tagsBreakStack As Index(Of String) = {"meta", "link", "img", "br", "hr"}
 
     Private Shared Function GetHtmlTokens(document As String) As Token()
         Dim tokens As Token()
@@ -59,7 +62,7 @@ Public Class HtmlParser
                         tagStack.Peek.Add(newTag)
 
                         If Not tagClosed Then
-                            If Not (newTag.Name = "img" OrElse newTag.Name = "br" OrElse newTag.Name = "hr") Then
+                            If Not Strings.LCase(newTag.Name) Like tagsBreakStack Then
                                 tagStack.Push(newTag)
                             End If
                         End If

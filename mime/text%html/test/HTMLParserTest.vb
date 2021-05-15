@@ -74,7 +74,7 @@ this is text
 "
 
     Sub realHtmlParseTest()
-        Dim document = HtmlParser.ParseTree("https://gcmodeller.org/".GET)
+        Dim document = HtmlParser.ParseTree("E:\repo\xDoc\Yilia\runtime\sciBASIC#\mime\text%html\Test\test.html".GET)
 
         Pause()
     End Sub

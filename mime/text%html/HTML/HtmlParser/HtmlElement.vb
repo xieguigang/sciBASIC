@@ -76,30 +76,38 @@ Namespace HTML
     Public Structure ValueAttribute : Implements INamedValue, IsEmpty
 
         Public Property Name As String Implements INamedValue.Key
-        Public Property Value As String
+        Public Property Values As List(Of String)
 
         Public ReadOnly Property IsEmpty As Boolean Implements IsEmpty.IsEmpty
             Get
-                Return Name.StringEmpty AndAlso Value.StringEmpty
+                Return Name.StringEmpty AndAlso Values.IsNullOrEmpty
+            End Get
+        End Property
+
+        Public ReadOnly Property Value As String
+            Get
+                Return Values.FirstOrDefault
             End Get
         End Property
 
         Sub New(strText As String)
             Dim ep As Integer = InStr(strText, "=")
             Name = Mid(strText, 1, ep - 1)
-            Value = Mid(strText, ep + 1)
+            Dim Value = Mid(strText, ep + 1)
             If Value.First = """"c AndAlso Value.Last = """"c Then
                 Value = Mid(Value, 2, Len(Value) - 2)
             End If
+
+            Values = New List(Of String) From {Value}
         End Sub
 
         Sub New(name As String, value As String)
             Me.Name = name
-            Me.Value = value
+            Me.Values = New List(Of String) From {value}
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"{Name}=""{Value}"""
+            Return $"{Name}={Values.Select(Function(v) $"""{v}""").JoinBy(", ")}"
         End Function
     End Structure
 
@@ -172,23 +180,27 @@ Namespace HTML
         Dim elementNodes As New List(Of InnerPlantText)
 
         Public Overrides Function GetPlantText() As String
-            Dim sbr As New StringBuilder(Me.InnerText)
+            Dim sb As New StringBuilder(Me.InnerText)
 
             If Not Me.HtmlElements Is Nothing Then
                 For Each node In HtmlElements
-                    Call sbr.Append(node.GetPlantText)
+                    Call sb.Append(node.GetPlantText)
                 Next
             End If
 
-            Return sbr.ToString
+            Return sb.ToString
         End Function
 
         Public Sub Add(attr As ValueAttribute)
-            Call attrs.Add(attr.Name, attr)
+            If attrs.ContainsKey(attr.Name) Then
+                Call attrs(attr.Name).Values.AddRange(attr.Values)
+            Else
+                Call attrs.Add(attr.Name, attr)
+            End If
         End Sub
 
         Public Sub Add(name As String, value As String)
-            Call attrs.Add(name, New ValueAttribute With {.Name = name, .Value = value})
+            Call attrs.Add(name, New ValueAttribute With {.Name = name, .Values = New List(Of String) From {value}})
         End Sub
 
         Public Sub Add(Node As InnerPlantText)
@@ -197,8 +209,7 @@ Namespace HTML
 
         Public ReadOnly Property OnlyInnerText As Boolean
             Get
-                Return elementNodes.Count = 1 AndAlso
-                elementNodes(Scan0).IsPlantText
+                Return elementNodes.Count = 1 AndAlso elementNodes(Scan0).IsPlantText
             End Get
         End Property
 
