@@ -61,7 +61,7 @@ Public Class TokenIcer
             escape.tagOpen = False
 
             Yield New Token(HtmlTokens.closeTag, c)
-        ElseIf c = """"c OrElse c = "'"c Then
+        ElseIf escape.tagOpen AndAlso (c = """"c OrElse c = "'"c) Then
             If buf > 0 Then
                 Yield MeasureToken(New String(buf.PopAllChars))
             End If

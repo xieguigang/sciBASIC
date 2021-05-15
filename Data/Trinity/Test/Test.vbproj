@@ -121,6 +121,14 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\mime\application%25json\application.json.vbproj">
+      <Project>{32228818-26F1-44DF-8D40-347136C743CD}</Project>
+      <Name>application.json</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\mime\text%25html\MIME-htmls.vbproj">
+      <Project>{2DD4BE80-DDC3-4767-94A7-10F1C3395716}</Project>
+      <Name>MIME-htmls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\DataFrame.Extensions\DataFramework.Extensions.vbproj">
       <Project>{344bf0cf-107f-45d2-9074-9865d8f86506}</Project>
       <Name>DataFramework.Extensions</Name>
