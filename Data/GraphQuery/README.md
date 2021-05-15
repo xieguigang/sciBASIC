@@ -154,3 +154,46 @@ As you can see, the syntax of GraphQuery adds some strings wrapped in ` to the D
 ```
 
 Wow, it's wonderful. Just like what we want.
+
+Here is another example of parse a simple array content:
+
+```vbnet
+Imports Microsoft.VisualBasic.Data.GraphQuery
+Imports Microsoft.VisualBasic.Data.GraphQuery.Language
+Imports Microsoft.VisualBasic.MIME.application.json
+Imports Microsoft.VisualBasic.MIME.application.json.Javascript
+Imports Microsoft.VisualBasic.MIME.Markup.HTML
+
+Dim document = 
+    <html>
+
+        <body>
+            <a href="01.html">Page 1</a>
+            <a href="02.html">Page 2</a>
+            <a href="03.html">Page 3</a>
+        </body>
+
+    </html>
+
+Dim query As Query = QueryParser.GetQuery("
+    
+    graphquery { 
+    
+        anchor css('a') [ 
+            text() 
+        ] 
+    }
+
+")
+
+Dim data As JsonElement = New Engine().Execute(document, query)
+Dim json As String = data.BuildJsonString(indent:=True)
+
+Call Console.WriteLine(json)
+```
+
+Run the vb file, the output is as follows :
+
+```json
+{"anchor":["Page 1","Page 2","Page 3"]}
+```
