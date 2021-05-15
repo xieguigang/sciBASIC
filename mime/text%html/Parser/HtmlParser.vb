@@ -8,7 +8,7 @@ Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 
 Public Class HtmlParser
 
-    Shared ReadOnly tagsBreakStack As Index(Of String) = {"meta", "link", "img", "br", "hr", "input"}
+    Shared ReadOnly tagsBreakStack As Index(Of String) = {"meta", "link", "img", "br", "hr", "input", "source"}
 
     Private Shared Function GetHtmlTokens(document As String) As Token()
         Dim tokens As Token()
