@@ -3,11 +3,11 @@ imports ["Html", "http", "graphquery"] from "webKit";
 const demo_url = "E:\GCModeller\src\runtime\sciBASIC#\www\data\github\test.html";
 const query = graphquery::parseQuery('
 
-	followers css(".position-relative") [
+	followers css("div") | css(".application-main") | css(".gutter-condensed ") | css(".position-relative") [
 	{
-		user css("div") [{
+		user css("div") | css(".width-full") [{
 			
-			username css(".d-inline-block") | attr("href")
+			text()
 			
 		}]
 	}]
@@ -24,4 +24,4 @@ const document = readText(demo_url);
 
 print("data query result from the html document text:");
 cat("\n");
-str(graphquery::query(Html::parse(document), query));
+print(graphquery::query(Html::parse(document), query));
