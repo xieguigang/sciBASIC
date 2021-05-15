@@ -2,7 +2,7 @@
 
 graphquery
 {
-    bookID css("book")|attr("id")
+    bookID  css("book")|attr("id")
     title css("title")
     isbn xpath("//isbn")
     quote css("quote")

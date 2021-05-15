@@ -77,7 +77,8 @@ Namespace Language
                 Case "}", "]", ")" : Return New Token(Tokens.close, text)
                 Case "|" : Return New Token(Tokens.pipeline, text)
                 Case ASCII.LF
-                    Return New Token(Tokens.terminator, ";")
+                    ' Return New Token(Tokens.terminator, ";")
+                    Return Nothing
                 Case Else
                     Return New Token(Tokens.symbol, text)
             End Select
