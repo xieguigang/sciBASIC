@@ -2,6 +2,7 @@
 
 Imports Microsoft.VisualBasic.Data.GraphQuery
 Imports Microsoft.VisualBasic.Data.GraphQuery.Language
+Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
 
@@ -15,6 +16,8 @@ Module graphQueryTest
         Dim engine As New Engine
         Dim doc As HtmlDocument = HtmlDocument.LoadDocument("E:\GCModeller\src\runtime\sciBASIC#\Data\data\query.html")
         Dim data As JsonElement = engine.Execute(doc, query)
+
+        Call Console.WriteLine(data.BuildJsonString(New JSONSerializerOptions With {.indent = True}))
 
         Pause()
 
