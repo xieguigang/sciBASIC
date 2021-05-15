@@ -42,7 +42,7 @@ Module graphQueryTest
         ")
 
         Dim data As JsonElement = New Engine().Execute(document, query)
-        Dim json As String = data.BuildJsonString()
+        Dim json As String = data.BuildJsonString(indent:=True)
 
         Call Console.WriteLine(json)
 
