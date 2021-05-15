@@ -64,6 +64,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Language\TokenIcer.vb" />
+    <Compile Include="Language\Token.vb" />
+    <Compile Include="Language\Tokens.vb" />
+    <Compile Include="QueryParser.vb" />
     <Compile Include="Query.vb" />
     <Compile Include="Engine.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
