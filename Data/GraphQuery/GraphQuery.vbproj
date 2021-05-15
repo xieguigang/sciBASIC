@@ -64,6 +64,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Language\Escaping.vb" />
     <Compile Include="Language\TokenIcer.vb" />
     <Compile Include="Language\Token.vb" />
     <Compile Include="Language\Tokens.vb" />
