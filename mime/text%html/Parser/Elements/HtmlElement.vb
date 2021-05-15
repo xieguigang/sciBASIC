@@ -156,7 +156,13 @@ Namespace HTML
 
         Public ReadOnly Property [class] As String()
             Get
-                Return Trim(attrs.TryGetValue("class").Value).Split
+                Dim names As String = Trim(attrs.TryGetValue("class").Value)
+
+                If names = "" Then
+                    Return Nothing
+                Else
+                    Return names.Split
+                End If
             End Get
         End Property
 
@@ -180,29 +186,31 @@ Namespace HTML
         Public Sub Add(node As InnerPlantText)
             Call elementNodes.Add(node)
 
-            If TypeOf node Is HtmlElement Then
-                Dim element As HtmlElement = DirectCast(node, HtmlElement)
-                Dim id As String = LCase(element.id)
+            If Not TypeOf node Is HtmlElement Then
+                Return
+            End If
 
-                If (Not id.StringEmpty) AndAlso (Not idIndex.ContainsKey(id)) Then
-                    idIndex.Add(id, element)
-                End If
+            Dim element As HtmlElement = DirectCast(node, HtmlElement)
+            Dim id As String = LCase(element.id)
 
-                Dim name As String = element.name
+            If (Not id.StringEmpty) AndAlso (Not idIndex.ContainsKey(id)) Then
+                idIndex.Add(id, element)
+            End If
 
-                If Not name.StringEmpty Then
-                    Call Add(nameIndex, name, element)
-                End If
+            Dim name As String = element.name
 
-                Call Add(tagIndex, LCase(element.TagName), element)
+            If Not name.StringEmpty Then
+                Call Add(nameIndex, name, element)
+            End If
 
-                Dim classNames As String() = element.class
+            Call Add(tagIndex, LCase(element.TagName), element)
 
-                If Not classNames.IsNullOrEmpty Then
-                    For Each className As String In classNames
-                        Call Add(classIndex, className, element)
-                    Next
-                End If
+            Dim classNames As String() = element.class
+
+            If Not classNames.IsNullOrEmpty Then
+                For Each className As String In classNames
+                    Call Add(classIndex, className, element)
+                Next
             End If
         End Sub
 
