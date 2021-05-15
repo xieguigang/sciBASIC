@@ -6,6 +6,10 @@ Public Class Parser
     Public Property parameters As String()
     Public Property pipeNext As Parser
 
+    Public Function Parse(document As InnerPlantText, env As Engine) As InnerPlantText
+        Throw New NotImplementedException
+    End Function
+
     Public Overrides Function ToString() As String
         Dim thisText As String = $"{func}({parameters.JoinBy(", ")})"
 

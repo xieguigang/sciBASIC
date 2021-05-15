@@ -1,4 +1,5 @@
 ﻿Imports System.Text
+
 ''' <summary>
 ''' the object model of a query
 ''' </summary>
