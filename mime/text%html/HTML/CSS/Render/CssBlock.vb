@@ -77,7 +77,7 @@ Namespace HTML.CSS.Render
             _BlockSource = blockSource
 
             'Extract property assignments
-            Dim matches As MatchCollection = HTMLParser.Match(HTMLParser.CssProperties, blockSource)
+            Dim matches As MatchCollection = MIME.Markup.HTML.Render.Parser.Match(MIME.Markup.HTML.Render.Parser.CssProperties, blockSource)
 
             'Scan matches
             For Each match As Match In matches

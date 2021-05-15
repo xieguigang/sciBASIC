@@ -880,13 +880,14 @@
     <Compile Include="HTML\Render\HtmlTag.vb" />
     <Compile Include="HTML\Render\InitialContainer.vb" />
     <Compile Include="HTML\Render\Parser.vb" />
-    <Compile Include="HTML\HtmlParser\DocParserAPI.vb" />
-    <Compile Include="HTML\HtmlParser\TextString.vb" />
+    <Compile Include="Parser\TextString.vb" />
     <Compile Include="HTML\Head\Meta.vb" />
     <Compile Include="HTML\Image.vb" />
     <Compile Include="HTML\HTML.vb" />
-    <Compile Include="HTML\HtmlParser\HtmlDocument.vb" />
-    <Compile Include="HTML\HtmlParser\HtmlElement.vb" />
+    <Compile Include="Parser\Elements\InnerPlantText.vb" />
+    <Compile Include="Parser\Elements\ValueAttribute.vb" />
+    <Compile Include="Parser\HtmlDocument.vb" />
+    <Compile Include="Parser\Elements\HtmlElement.vb" />
     <Compile Include="HTML\Writer\HtmlWriter.vb" />
     <Compile Include="HTML\Xml\Node.vb" />
     <Compile Include="MarkDown\Articles.vb" />
@@ -926,6 +927,10 @@
     </Compile>
     <Compile Include="HTML\Xml\Meta.vb" />
     <Compile Include="Markups\StreamWriter\Markdown.vb" />
+    <Compile Include="Parser\HtmlParser.vb" />
+    <Compile Include="Parser\TokenIcer.vb" />
+    <Compile Include="Parser\Token.vb" />
+    <Compile Include="Parser\HtmlTokens.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
