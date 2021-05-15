@@ -18,7 +18,7 @@ Public Class Parser
             Case "xpath"
                 value = XPathQuery(document, isArray)
             Case Else
-                Throw New NotImplementedException(func)
+                value = env.Execute(document, func, parameters, isArray)
         End Select
 
         If Not pipeNext Is Nothing Then

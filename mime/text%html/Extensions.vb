@@ -54,6 +54,9 @@ Public Module Extensions
 
     <Extension>
     Public Function CreateDocument(xml As XElement) As HtmlDocument
+        Dim html As String = xml.ToString
+        Dim document As HtmlDocument = HtmlDocument.LoadDocument(html)
 
+        Return document
     End Function
 End Module
