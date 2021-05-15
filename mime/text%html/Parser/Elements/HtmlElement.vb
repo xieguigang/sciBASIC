@@ -69,6 +69,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Text.Xml
 
 Namespace HTML
 
@@ -76,6 +77,7 @@ Namespace HTML
     ''' 一个标签所标记的元素以及内部文本
     ''' </summary>
     Public Class HtmlElement : Inherits InnerPlantText
+        Implements XmlDocumentTree
 
         ''' <summary>
         ''' 标签名

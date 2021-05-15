@@ -1893,6 +1893,7 @@
     <Compile Include="Text\Patterns\NamespaceDoc.vb" />
     <Compile Include="Text\Patterns\Validator\isIP.vb" />
     <Compile Include="Text\Patterns\Validator\Validator.vb" />
+    <Compile Include="Text\Xml\XmlDocumentTree.vb" />
     <Compile Include="Text\Xml\Linq\Iterator\NodeIteratorImpl.vb" />
     <Compile Include="Text\Xml\Linq\NamespaceIgnorantXmlTextReader.vb" />
     <Compile Include="Text\Xml\Models\Sequence.vb" />

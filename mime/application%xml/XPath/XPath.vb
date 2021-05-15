@@ -12,7 +12,7 @@ Public MustInherit Class XPath
     Public Property expression As String
 
     Public Shared Function Parse(expression As String) As XPath
-
+        Return XPathParser.Parse(expression)
     End Function
 
 End Class

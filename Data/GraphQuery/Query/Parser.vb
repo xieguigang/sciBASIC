@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.MIME.Markup.HTML
+﻿Imports Microsoft.VisualBasic.MIME.application.xml
+Imports Microsoft.VisualBasic.MIME.Markup.HTML
 
 Public Class Parser
 
@@ -28,7 +29,10 @@ Public Class Parser
     End Function
 
     Private Function XPathQuery(document As HtmlElement, isArray As Boolean) As InnerPlantText
+        Dim xpath As XPath = XPathParser.Parse(parameters(Scan0))
+        Dim query As HtmlElement = New XPathQuery(xpath).Query(document)
 
+        Return query
     End Function
 
     Private Function CssQuery(document As HtmlElement, isArray As Boolean) As InnerPlantText

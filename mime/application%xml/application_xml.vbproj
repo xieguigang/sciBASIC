@@ -529,7 +529,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="XPath\Query.vb" />
+    <Compile Include="XPath\XPathParser.vb" />
+    <Compile Include="XPath\XPathQuery.vb" />
     <Compile Include="XPath\XPath.vb" />
     <Compile Include="XmlGeneric\XmlParser.vb" />
     <Compile Include="XmlGeneric\XmlElement.vb" />
