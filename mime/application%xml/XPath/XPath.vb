@@ -10,6 +10,7 @@
 Public MustInherit Class XPath
 
     Public Property expression As String
+    Public Property selectNext As XPath
 
     Public Shared Function Parse(expression As String) As XPath
         Return XPathParser.Parse(expression)
