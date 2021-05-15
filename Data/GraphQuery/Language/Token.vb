@@ -1,12 +1,15 @@
 ﻿Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
-Public Class Token : Inherits CodeToken(Of Tokens)
+Namespace Language
 
-    Sub New(type As Tokens, text As String)
-        Call MyBase.New(type, text)
-    End Sub
+    Public Class Token : Inherits CodeToken(Of Tokens)
 
-    Sub New(type As Tokens, chars As IEnumerable(Of Char))
-        Call MyBase.New(type, chars.CharString)
-    End Sub
-End Class
+        Sub New(type As Tokens, text As String)
+            Call MyBase.New(type, text)
+        End Sub
+
+        Sub New(type As Tokens, chars As IEnumerable(Of Char))
+            Call MyBase.New(type, chars.CharString)
+        End Sub
+    End Class
+End Namespace

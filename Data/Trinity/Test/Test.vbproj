@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2770C688-9A61-4914-B997-A5825AED7BF8}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Test.Module1</StartupObject>
+    <StartupObject>Test.graphQueryTest</StartupObject>
     <RootNamespace>Test</RootNamespace>
     <AssemblyName>Test</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -128,6 +128,10 @@
     <ProjectReference Include="..\..\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
       <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
       <Name>47_dotnet_ms-vb_data.framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GraphQuery\GraphQuery.vbproj">
+      <Project>{f81bdcfe-0b16-4f69-a161-52d7d5575c38}</Project>
+      <Name>GraphQuery</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\SearchEngine\SearchEngine\SearchEngine.vbproj">
       <Project>{8afbc715-5eb6-4eaf-a967-d29a5667709f}</Project>

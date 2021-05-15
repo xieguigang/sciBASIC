@@ -51,7 +51,7 @@ Namespace Text.Parser
     Public MustInherit Class SyntaxTokenlizer(Of T As IComparable, SyntaxToken As CodeToken(Of T))
 
         Protected ReadOnly text As CharPtr
-        Protected buffer As CharBuffer
+        Protected buffer As New CharBuffer
 
         Protected ReadOnly Property lastSplashEscape As Boolean
             Get

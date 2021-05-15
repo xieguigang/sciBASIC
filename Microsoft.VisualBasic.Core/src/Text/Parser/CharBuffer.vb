@@ -117,6 +117,10 @@ Namespace Text.Parser
             Return buffer.PopAll
         End Function
 
+        ''' <summary>
+        ''' text
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
             Return buffer.CharString
         End Function
