@@ -10,7 +10,7 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML
 ''' </summary>
 Public Class Engine
 
-    ReadOnly funcs As Dictionary(Of String, ParserFunction)
+    ReadOnly funcs As New Dictionary(Of String, ParserFunction)
 
     Sub New()
         Call addPackage(GetType(BaseInvoke))
