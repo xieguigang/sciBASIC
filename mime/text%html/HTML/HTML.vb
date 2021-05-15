@@ -69,38 +69,6 @@ Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Namespace HTML.DDM
 
-    Public Class HTML
-
-        Public Property Head As HtmlHead
-        Public Property Body As HtmlElement
-
-        Public Property Language As String = "zh-cn"
-
-        Sub New(Document As HtmlDocument)
-
-        End Sub
-
-        Sub New()
-        End Sub
-
-        Public Function ToArray() As HtmlDocument
-            Dim array As New List(Of InnerPlantText)
-            Call array.Add(Head)
-            Call array.Add(Body)
-
-            Return New HtmlDocument With {
-            .Tags = {New HtmlElement With {
-                .HtmlElements = array.ToArray,
-                .Name = "html"}
-            }
-        }
-        End Function
-
-        Public Overrides Function ToString() As String
-            Return StreamWriter.ToString(ToArray)
-        End Function
-    End Class
-
     Public Class HtmlHead : Inherits HtmlElement
 
         Public Property CSS As CSS

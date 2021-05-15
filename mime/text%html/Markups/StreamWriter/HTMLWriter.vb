@@ -67,7 +67,7 @@ Namespace StreamWriter
         Public Function ToString(doc As HtmlDocument) As String
             Dim sbr As New StringBuilder(1024)
 
-            For Each node In doc.Tags
+            For Each node In doc.HtmlElements
                 Call sbr.Append(node.__generateDocNode(""))
             Next
 
@@ -80,7 +80,7 @@ Namespace StreamWriter
             End If
 
             Dim sbr As StringBuilder = New StringBuilder(1024)
-            Dim nodeElement = DirectCast(node, HtmlElement)
+            Dim nodeElement = DirectCast(node, HTML.HtmlElement)
 
             If nodeElement.IsBr Then
                 Return "<br />"
@@ -117,7 +117,7 @@ Namespace StreamWriter
             Return sbr.ToString
         End Function
 
-        <Extension> Public Function IsBr(node As HtmlElement) As Boolean
+        <Extension> Public Function IsBr(node As HTML.HtmlElement) As Boolean
             Return String.Equals(node.Name, "br") AndAlso
             node.Attributes.IsNullOrEmpty AndAlso
             node.HtmlElements.IsNullOrEmpty
