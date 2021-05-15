@@ -266,6 +266,8 @@ Public Module TextDoc
 
             ' is text content, not path
             Return handle
+        ElseIf handle.IsURLPattern Then
+            Return handle.GET
         ElseIf handle.Count(":"c) > 1 Then
             ' json?
             Return handle

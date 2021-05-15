@@ -188,10 +188,6 @@ Namespace HTML
             End Get
         End Property
 
-        Public Shared Function SingleNodeParser(value As String) As HtmlElement
-            Return DirectCast(TextParse(value), HtmlElement)
-        End Function
-
         Public Overrides Function ToString() As String
             If attrs.Count = 0 Then
                 Return $"<{Name}>...</{Name}>"
@@ -200,44 +196,4 @@ Namespace HTML
             End If
         End Function
     End Class
-
-
-    Public Module SpecialHtmlElements
-
-        Public Const HTML_DOCTYPE As String = "<!DOCTYPE HTML>"
-
-        Public Function IsBrChangeLine(str As String) As Boolean
-            Return Regex.Match(str, "<br \s*/>").Success
-        End Function
-
-        Public ReadOnly Property Title As HtmlElement
-            Get
-                Return New HtmlElement With {.Name = "title"}
-            End Get
-        End Property
-
-        Public ReadOnly Property DocumentType As HtmlElement
-            Get
-                Return New HtmlElement With {.Name = HTML_DOCTYPE}
-            End Get
-        End Property
-
-        Public ReadOnly Property Html As HtmlElement
-            Get
-                Return New HtmlElement With {.Name = "html"}
-            End Get
-        End Property
-
-        Public ReadOnly Property Br As HtmlElement
-            Get
-                Return New HtmlElement With {.Name = "br"}
-            End Get
-        End Property
-
-        Public ReadOnly Property Head As HtmlElement
-            Get
-                Return New HtmlElement With {.Name = "head"}
-            End Get
-        End Property
-    End Module
 End Namespace

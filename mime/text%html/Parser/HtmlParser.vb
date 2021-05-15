@@ -21,9 +21,9 @@ Public Class HtmlParser
         Return tokens
     End Function
 
-    Public Shared Function ParseTree(document As String) As HtmlElement
+    Public Shared Function ParseTree(document As String) As HtmlDocument
         Dim i As Pointer(Of Token) = GetHtmlTokens(document)
-        Dim html As New HtmlElement With {.Name = "!DOCTYPE html"}
+        Dim html As New HtmlDocument With {.Name = "!DOCTYPE html"}
         Dim tagStack As New Stack(Of HtmlElement)
         Dim a As New Value(Of Token)
 

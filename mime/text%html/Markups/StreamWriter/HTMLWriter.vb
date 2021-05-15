@@ -67,7 +67,7 @@ Namespace StreamWriter
         Public Function ToString(doc As HtmlDocument) As String
             Dim sbr As New StringBuilder(1024)
 
-            For Each node In doc.Tags
+            For Each node In doc.HtmlElements
                 Call sbr.Append(node.__generateDocNode(""))
             Next
 
