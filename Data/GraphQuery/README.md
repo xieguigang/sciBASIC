@@ -89,7 +89,7 @@ Then faced with such a text structure, we naturally think of extracting the foll
 
 This is perfect, when you know the data structure you want to extract, you have actually succeeded 80%, the above is the data structure we want, we call it DDL (Data Definition Language) for the time being. let's see how GraphQuery does it:
 
-```json
+```bash
 # https://www.codeproject.com/Articles/1264613/GraphQuery-Powerful-Text-Query-Language-3
 
 graphquery
