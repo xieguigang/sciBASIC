@@ -1,10 +1,15 @@
 ﻿Imports Microsoft.VisualBasic.MIME.application.json.Javascript
+Imports Microsoft.VisualBasic.MIME.Markup
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
 
 ''' <summary>
 ''' the engine of run graph query
 ''' </summary>
 Public Class Engine
+
+    Public Function Execute(document As XElement, query As Query) As JsonElement
+        Return Execute(document.CreateDocument, query)
+    End Function
 
     Public Function Execute(document As HtmlElement, query As Query) As JsonElement
         If Not query.members.IsNullOrEmpty Then

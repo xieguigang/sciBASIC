@@ -76,6 +76,11 @@ Public Module JSONSerializer
     End Function
 
     <Extension>
+    Public Function BuildJsonString(json As JsonElement, Optional indent As Boolean = False) As String
+        Return json.BuildJsonString(New JSONSerializerOptions With {.indent = indent})
+    End Function
+
+    <Extension>
     Public Function BuildJsonString(json As JsonElement, opts As JSONSerializerOptions) As String
         If json Is Nothing Then
             Return "null"
