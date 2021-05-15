@@ -80,7 +80,7 @@ Namespace Language
                     ' Return New Token(Tokens.terminator, ";")
                     Return Nothing
                 Case Else
-                    Return New Token(Tokens.symbol, text)
+                    Return New Token(Tokens.symbol, text.Trim(ASCII.LF, ASCII.CR))
             End Select
         End Function
     End Class

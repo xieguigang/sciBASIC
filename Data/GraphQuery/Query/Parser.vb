@@ -7,7 +7,13 @@ Public Class Parser
     Public Property pipeNext As Parser
 
     Public Overrides Function ToString() As String
-        Return $"{func}({parameters.JoinBy(", ")})"
+        Dim thisText As String = $"{func}({parameters.JoinBy(", ")})"
+
+        If Not pipeNext Is Nothing Then
+            Return $"{thisText} -> {pipeNext}"
+        Else
+            Return thisText
+        End If
     End Function
 
 End Class
