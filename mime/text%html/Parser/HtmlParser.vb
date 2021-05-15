@@ -37,7 +37,7 @@ Public Class HtmlParser
                     If name = "/" Then
                         name = (++i).text
 
-                        If name = tagStack.Peek.Name Then
+                        If name = tagStack.Peek.TagName Then
                             tagStack.Pop()
                         End If
 
@@ -64,7 +64,7 @@ Public Class HtmlParser
                         tagStack.Peek.Add(newTag)
 
                         If Not tagClosed Then
-                            If Not Strings.LCase(newTag.Name) Like tagsBreakStack Then
+                            If Not Strings.LCase(newTag.TagName) Like tagsBreakStack Then
                                 tagStack.Push(newTag)
                             End If
                         End If

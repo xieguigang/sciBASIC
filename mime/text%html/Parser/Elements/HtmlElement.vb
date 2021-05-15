@@ -247,7 +247,7 @@ Namespace HTML
         Public Overrides ReadOnly Property IsEmpty As Boolean
             Get
                 Return MyBase.IsEmpty AndAlso
-                    String.IsNullOrEmpty(name) AndAlso
+                    String.IsNullOrEmpty(TagName) AndAlso
                     Attributes.IsNullOrEmpty AndAlso
                     HtmlElements.IsNullOrEmpty
             End Get
