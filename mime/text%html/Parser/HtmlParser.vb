@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
+Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 
 Public Class HtmlParser
@@ -31,7 +32,7 @@ Public Class HtmlParser
         Do While i
             Select Case (a = ++i).name
                 Case HtmlTokens.openTag
-                    Dim name As String = (++i).text
+                    Dim name As String = Strings.Trim((++i).text).Trim(ASCII.CR, ASCII.LF)
 
                     If name = "/" Then
                         name = (++i).text
