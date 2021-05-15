@@ -135,13 +135,73 @@ Call {
 
 ## Microsoft VisualBasic Trinity Natural Language Processor
 
-###### TextRank
+### TextRank
 
 PageRank analysis on the text paragraph for find out the keyword, here is the pagerank result of the this example paragraph:
 
 > "the important pagerank. show on pagerank. have significance pagerank. implements pagerank algorithm. textrank base on pagerank."
 
 ![](./Data/TextRank/visualize.png)
+
+### GraphQuery
+
+GraphQuery is a query language and execution engine tied to any backend service. It is back-end language independent.
+
+```vbnet
+Imports Microsoft.VisualBasic.Data.GraphQuery
+Imports Microsoft.VisualBasic.Data.GraphQuery.Language
+Imports Microsoft.VisualBasic.MIME.application.json
+Imports Microsoft.VisualBasic.MIME.application.json.Javascript
+Imports Microsoft.VisualBasic.MIME.Markup.HTML
+
+' define your graph query at here
+Dim queryText As String = "..."
+Dim query As Query = QueryParser.GetQuery(queryText)
+Dim engine As New Engine
+' http get of the html document text from web server or local filesystem
+Dim url As String = "..."
+Dim doc As HtmlDocument = HtmlDocument.LoadDocument(url)
+Dim data As JsonElement = engine.Execute(doc, query)
+' debug view of the graph query result
+Dim json As String = data.BuildJsonString(New JSONSerializerOptions With {.indent = True})
+
+Call Console.WriteLine(json)
+```
+
+Read more about the graphquery language: [GraphQuery](https://github.com/xieguigang/sciBASIC/tree/master/Data/GraphQuery)
+
+```bash
+graphquery
+{
+    # parser function pipeline can be 
+    # in different line,
+    # this will let you write graphquery
+    # code in a more graceful style when
+    # you needs a lot of pipeline function
+    # for parse value data.
+    bookID    css("book") 
+            | attr("id")
+
+    title     css("title")
+    isbn      xpath("//isbn")
+    quote     css("quote")
+    language  css("title") | attr("lang")
+
+    # another sub query in current graph query
+    author css("author") {
+        name css("name")
+        born css("born")
+        dead css("dead")
+    }
+
+    # this is a array of type character
+    character xpath("//character") [{
+        name          css("name")
+        born          css("born")
+        qualification xpath("qualification")
+    }]
+}
+```
 
 ## Image fast binarization using VisualBasic image extension API
 [``Sub Binarization(ByRef curBitmap As Bitmap, Optional style As BinarizationStyles = BinarizationStyles.Binary)``](./Microsoft.VisualBasic.Core/src/Extensions/Image/Bitmap/hcBitmap.vb)
