@@ -36,6 +36,8 @@ Call Console.WriteLine(json)
 
 ## Demo
 
+Given a such html document text:
+
 ```html
 <library>
 <!-- Great book. -->
@@ -63,7 +65,7 @@ Call Console.WriteLine(json)
 </library>
 ```
 
-Faced with such a text structure, we naturally think of extracting the following data structure from the text :
+Then faced with such a text structure, we naturally think of extracting the following data structure from the text :
 
 ```json
 {
