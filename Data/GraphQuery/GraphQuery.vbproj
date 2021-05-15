@@ -69,7 +69,7 @@
     <Compile Include="Language\Token.vb" />
     <Compile Include="Language\Tokens.vb" />
     <Compile Include="QueryParser.vb" />
-    <Compile Include="Query\Parse.vb" />
+    <Compile Include="Query\Parser.vb" />
     <Compile Include="Query\Query.vb" />
     <Compile Include="Engine.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

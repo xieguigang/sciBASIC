@@ -1,6 +1,7 @@
 ﻿Namespace Language
 
     Public Enum Tokens
+        NA
         symbol
         open
         close
@@ -16,6 +17,7 @@
         ''' #
         ''' </summary>
         comment
+        comma
         terminator
     End Enum
 End Namespace
