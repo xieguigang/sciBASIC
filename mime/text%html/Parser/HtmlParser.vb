@@ -23,7 +23,7 @@ Public Class HtmlParser
 
     Public Shared Function ParseTree(document As String) As HtmlDocument
         Dim i As Pointer(Of Token) = GetHtmlTokens(document)
-        Dim html As New HtmlDocument With {.Name = "!DOCTYPE html"}
+        Dim html As New HtmlDocument With {.TagName = "!DOCTYPE html"}
         Dim tagStack As New Stack(Of HtmlElement)
         Dim a As New Value(Of Token)
 
@@ -43,7 +43,7 @@ Public Class HtmlParser
 
                         i.MoveNext()
                     Else
-                        Dim newTag As New HtmlElement With {.Name = name}
+                        Dim newTag As New HtmlElement With {.TagName = name}
                         Dim tagClosed As Boolean = False
 
                         Do While (a = ++i).name <> HtmlTokens.closeTag

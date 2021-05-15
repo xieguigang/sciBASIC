@@ -6,7 +6,7 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML
 ''' </summary>
 Public Class Engine
 
-    Public Function Execute(document As HtmlDocument, query As Query) As JsonElement
+    Public Function Execute(document As HtmlElement, query As Query) As JsonElement
 
     End Function
 End Class
