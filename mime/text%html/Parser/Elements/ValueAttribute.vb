@@ -16,7 +16,7 @@ Namespace HTML
 
         Public ReadOnly Property Value As String
             Get
-                Return Values.FirstOrDefault
+                Return Values?.FirstOrDefault
             End Get
         End Property
 

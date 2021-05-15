@@ -420,7 +420,7 @@ Namespace HTML
         Private Function __nextTag(buffer As Pointer(Of Char)) As HtmlElement
             Dim name, value As String
             Dim tag As New HtmlElement With {
-                .Name = buffer.popTagName.CharString
+                .TagName = buffer.popTagName.CharString
             }
 
             Do While Not buffer.EndRead

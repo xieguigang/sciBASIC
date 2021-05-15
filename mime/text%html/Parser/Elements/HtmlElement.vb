@@ -160,10 +160,10 @@ Namespace HTML
             End Get
         End Property
 
-        Dim tagIndex As Dictionary(Of String, List(Of HtmlElement))
-        Dim classIndex As Dictionary(Of String, List(Of HtmlElement))
-        Dim nameIndex As Dictionary(Of String, List(Of HtmlElement))
-        Dim idIndex As Dictionary(Of String, HtmlElement)
+        Dim tagIndex As New Dictionary(Of String, List(Of HtmlElement))
+        Dim classIndex As New Dictionary(Of String, List(Of HtmlElement))
+        Dim nameIndex As New Dictionary(Of String, List(Of HtmlElement))
+        Dim idIndex As New Dictionary(Of String, HtmlElement)
 
         Public Overrides Function GetPlantText() As String
             Dim sb As New StringBuilder(Me.InnerText)
@@ -190,8 +190,28 @@ Namespace HTML
 
                 Dim name As String = element.name
 
+                If Not name.StringEmpty Then
+                    Call Add(nameIndex, name, element)
+                End If
 
+                Call Add(tagIndex, LCase(element.TagName), element)
+
+                Dim classNames As String() = element.class
+
+                If Not classNames.IsNullOrEmpty Then
+                    For Each className As String In classNames
+                        Call Add(classIndex, className, element)
+                    Next
+                End If
             End If
+        End Sub
+
+        Private Sub Add(hashlist As Dictionary(Of String, List(Of HtmlElement)), key As String, element As HtmlElement)
+            If Not hashlist.ContainsKey(key) Then
+                Call hashlist.Add(key, New List(Of HtmlElement))
+            End If
+
+            Call hashlist(key).Add(element)
         End Sub
 
         Public Sub Add(attr As ValueAttribute)
