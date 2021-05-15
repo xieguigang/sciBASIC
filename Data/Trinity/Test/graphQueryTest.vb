@@ -10,6 +10,8 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Module graphQueryTest
 
     Sub Main()
+        Call simpleArrayTest()
+
         Call SimpleTest()
 
         ' Dim queryTokens = New TokenIcer("E:\GCModeller\src\runtime\sciBASIC#\Data\data\query.ql".ReadAllText).GetTokens.ToArray
@@ -38,6 +40,37 @@ Module graphQueryTest
                 title  text() | trim() 
                 url    attr('href') 
             }]
+
+        ")
+
+        Dim data As JsonElement = New Engine().Execute(document, query)
+        Dim json As String = data.BuildJsonString(indent:=True)
+
+        Call Console.WriteLine(json)
+
+        Pause()
+    End Sub
+
+    Sub simpleArrayTest()
+
+        Dim document = <html>
+
+                           <body>
+                               <a href="01.html">Page 1</a>
+                               <a href="02.html">Page 2</a>
+                               <a href="03.html">Page 3</a>
+                           </body>
+
+                       </html>
+
+        Dim query As Query = QueryParser.GetQuery("
+            
+            graphquery { 
+            
+                anchor css('a') [ 
+                    content text() 
+                ] 
+            }
 
         ")
 
