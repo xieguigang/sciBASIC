@@ -68,7 +68,7 @@ Module graphQueryTest
             graphquery { 
             
                 anchor css('a') [ 
-                    content text() 
+                    text() 
                 ] 
             }
 

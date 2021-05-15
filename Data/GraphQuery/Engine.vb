@@ -94,9 +94,17 @@ Public Class Engine
     Private Function QueryObjectArray(document As HtmlElement, query As Query) As JsonArray
         Dim array As New JsonArray
 
-        For Each item In document.HtmlElements
-            array.Add(QueryObject(item, query))
-        Next
+        If query.members.Length = 1 AndAlso query.members(Scan0).name = "@array" Then
+            query = query.members(Scan0)
+
+            For Each item In document.HtmlElements
+                array.Add(Execute(item, query))
+            Next
+        Else
+            For Each item In document.HtmlElements
+                array.Add(QueryObject(item, query))
+            Next
+        End If
 
         Return array
     End Function

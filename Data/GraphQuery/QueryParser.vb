@@ -49,6 +49,17 @@ Public Class QueryParser
                 Case Tokens.NA
                     If pipeNext Then
                         query.parser.pipeNext = CType(t, QueryToken).func
+                    ElseIf query.isArray Then
+                        If query.members.IsNullOrEmpty Then
+                            query.members = {
+                                New Query With {
+                                    .parser = CType(t, QueryToken).func,
+                                    .name = "@array"
+                                }
+                            }
+                        Else
+                            Throw New SyntaxErrorException
+                        End If
                     Else
                         query.parser = CType(t, QueryToken).func
                     End If
