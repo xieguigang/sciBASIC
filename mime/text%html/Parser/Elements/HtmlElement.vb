@@ -73,44 +73,6 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 
 Namespace HTML
 
-    Public Structure ValueAttribute : Implements INamedValue, IsEmpty
-
-        Public Property Name As String Implements INamedValue.Key
-        Public Property Values As List(Of String)
-
-        Public ReadOnly Property IsEmpty As Boolean Implements IsEmpty.IsEmpty
-            Get
-                Return Name.StringEmpty AndAlso Values.IsNullOrEmpty
-            End Get
-        End Property
-
-        Public ReadOnly Property Value As String
-            Get
-                Return Values.FirstOrDefault
-            End Get
-        End Property
-
-        Sub New(strText As String)
-            Dim ep As Integer = InStr(strText, "=")
-            Name = Mid(strText, 1, ep - 1)
-            Dim Value = Mid(strText, ep + 1)
-            If Value.First = """"c AndAlso Value.Last = """"c Then
-                Value = Mid(Value, 2, Len(Value) - 2)
-            End If
-
-            Values = New List(Of String) From {Value}
-        End Sub
-
-        Sub New(name As String, value As String)
-            Me.Name = name
-            Me.Values = New List(Of String) From {value}
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return $"{Name}={Values.Select(Function(v) $"""{v}""").JoinBy(", ")}"
-        End Function
-    End Structure
-
     ''' <summary>
     ''' 一个标签所标记的元素以及内部文本
     ''' </summary>
@@ -239,40 +201,6 @@ Namespace HTML
         End Function
     End Class
 
-    ''' <summary>
-    ''' Plant text inner the html.(HTML文档内的纯文本对象)
-    ''' </summary>
-    Public Class InnerPlantText
-
-        Public Overridable Property InnerText As String
-
-        Sub New()
-        End Sub
-
-        Sub New(text As String)
-            InnerText = text
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return InnerText
-        End Function
-
-        Public Overridable ReadOnly Property IsEmpty As Boolean
-            Get
-                Return String.IsNullOrEmpty(InnerText)
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property IsPlantText As Boolean
-            Get
-                Return True
-            End Get
-        End Property
-
-        Public Overridable Function GetPlantText() As String
-            Return InnerText
-        End Function
-    End Class
 
     Public Module SpecialHtmlElements
 
