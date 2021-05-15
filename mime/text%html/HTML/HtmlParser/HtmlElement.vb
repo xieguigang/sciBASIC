@@ -200,7 +200,11 @@ Namespace HTML
         End Sub
 
         Public Sub Add(name As String, value As String)
-            Call attrs.Add(name, New ValueAttribute With {.Name = name, .Values = New List(Of String) From {value}})
+            If attrs.ContainsKey(name) Then
+                Call attrs(name).Values.Add(value)
+            Else
+                Call attrs.Add(name, New ValueAttribute With {.Name = name, .Values = New List(Of String) From {value}})
+            End If
         End Sub
 
         Public Sub Add(Node As InnerPlantText)
