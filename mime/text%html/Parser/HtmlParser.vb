@@ -8,7 +8,7 @@ Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 
 Public Class HtmlParser
 
-    Shared ReadOnly tagsBreakStack As Index(Of String) = {"meta", "link", "img", "br", "hr"}
+    Shared ReadOnly tagsBreakStack As Index(Of String) = {"meta", "link", "img", "br", "hr", "input"}
 
     Private Shared Function GetHtmlTokens(document As String) As Token()
         Dim tokens As Token()
@@ -39,8 +39,9 @@ Public Class HtmlParser
 
                         If name = tagStack.Peek.Name Then
                             tagStack.Pop()
-                            i.MoveNext()
                         End If
+
+                        i.MoveNext()
                     Else
                         Dim newTag As New HtmlElement With {.Name = name}
                         Dim tagClosed As Boolean = False
