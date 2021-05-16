@@ -174,15 +174,19 @@ Namespace HTML
         Dim idIndex As New Dictionary(Of String, HtmlElement)
 
         Public Overrides Function GetPlantText() As String
-            Dim sb As New StringBuilder(Me.InnerText)
+            If Me.TagName.TextEquals("br") Then
+                Return vbCrLf
+            Else
+                Dim sb As New StringBuilder(Me.InnerText)
 
-            If Not Me.HtmlElements Is Nothing Then
-                For Each node In HtmlElements
-                    Call sb.Append(node.GetPlantText)
-                Next
+                If Not Me.HtmlElements Is Nothing Then
+                    For Each node In HtmlElements
+                        Call sb.Append(node.GetPlantText)
+                    Next
+                End If
+
+                Return sb.ToString
             End If
-
-            Return sb.ToString
         End Function
 
         Public Sub Add(node As InnerPlantText)
