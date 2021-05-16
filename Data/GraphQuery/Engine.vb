@@ -97,7 +97,14 @@ Public Class Engine
         If query.members.Length = 1 AndAlso query.members(Scan0).name = "@array" Then
             query = query.members(Scan0)
 
-            For Each item In document.HtmlElements
+            For Each item As InnerPlantText In document.HtmlElements
+                If item.GetType Is GetType(InnerPlantText) Then
+                    item = New HtmlElement With {
+                        .InnerText = item.GetPlantText,
+                        .TagName = "na"
+                    }
+                End If
+
                 array.Add(Execute(item, query))
             Next
         Else
