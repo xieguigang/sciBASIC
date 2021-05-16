@@ -60,6 +60,8 @@ Public Class QueryParser
                         Else
                             Throw New SyntaxErrorException
                         End If
+                    ElseIf Not query.parser Is Nothing Then
+                        Throw New SyntaxErrorException
                     Else
                         query.parser = CType(t, QueryToken).func
                     End If

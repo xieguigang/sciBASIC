@@ -72,9 +72,19 @@ Namespace TextParser
             End If
         End Function
 
+        ''' <summary>
+        ''' Take the nth element in the current node collection
+        ''' </summary>
+        ''' <param name="document"></param>
+        ''' <param name="parameters"></param>
+        ''' <param name="isArray"></param>
+        ''' <returns></returns>
         <ExportAPI("eq")>
         Public Function eq(document As InnerPlantText, parameters As String(), isArray As Boolean) As InnerPlantText
+            Dim n As Integer = Integer.Parse(parameters(Scan0))
+            Dim nItem As InnerPlantText = DirectCast(document, HtmlElement).HtmlElements(n)
 
+            Return nItem
         End Function
     End Module
 End Namespace

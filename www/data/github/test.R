@@ -6,14 +6,16 @@ const query = graphquery::parseQuery('
 	followers   css("div") 
 	          | css(".application-main") 
 			  | css(".position-relative")
-			  | eq(9) [
+			  | eq(9) 
 	{
-		user css("div") | css(".width-full") [{
+	    overview text()
+		#user [{
 			
-			text()
+		#	username css(".d-inline-block") | attr("href")
+		#	avatar css("img") | attr("src") 
 			
-		}]
-	}]
+		#}]
+	}
 	
 ');
 
