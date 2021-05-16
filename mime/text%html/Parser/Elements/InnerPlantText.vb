@@ -33,7 +33,7 @@ Namespace HTML
         End Property
 
         Public Overridable Function GetPlantText() As String Implements IXmlNode.GetInnerText
-            Return InnerText
+            Return InnerText.UnescapeHTML
         End Function
     End Class
 

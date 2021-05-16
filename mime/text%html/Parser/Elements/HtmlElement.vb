@@ -177,7 +177,7 @@ Namespace HTML
             If Me.TagName.TextEquals("br") Then
                 Return vbCrLf
             Else
-                Dim sb As New StringBuilder(Me.InnerText)
+                Dim sb As New StringBuilder(Me.InnerText.UnescapeHTML)
 
                 If Not Me.HtmlElements Is Nothing Then
                     For Each node In HtmlElements

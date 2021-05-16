@@ -174,10 +174,15 @@ Namespace Text.Xml
         ''' </summary>
         ''' <param name="html"></param>
         ''' <returns></returns>
-        <Extension> Public Function UnescapeHTML(html As String) As String
+        <Extension>
+        Public Function UnescapeHTML(html As String) As String
+            If html Is Nothing Then
+                Return ""
+            End If
+
             Using writer As New StringWriter()
                 ' Decode the encoded string.
-                HttpUtility.HtmlDecode(html, writer)
+                HttpUtility.HtmlDecode(html.Replace("&nbsp;", " "), writer)
                 Return writer.ToString()
             End Using
         End Function
