@@ -71,5 +71,10 @@ Namespace TextParser
                 }
             End If
         End Function
+
+        <ExportAPI("eq")>
+        Public Function eq(document As InnerPlantText, parameters As String(), isArray As Boolean) As InnerPlantText
+
+        End Function
     End Module
 End Namespace

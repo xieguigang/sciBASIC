@@ -3,7 +3,10 @@ imports ["Html", "http", "graphquery"] from "webKit";
 const demo_url = "E:\GCModeller\src\runtime\sciBASIC#\www\data\github\test.html";
 const query = graphquery::parseQuery('
 
-	followers css("div") | css(".application-main") | css(".gutter-condensed ") | css(".position-relative") [
+	followers   css("div") 
+	          | css(".application-main") 
+			  | css(".position-relative")
+			  | eq(9) [
 	{
 		user css("div") | css(".width-full") [{
 			

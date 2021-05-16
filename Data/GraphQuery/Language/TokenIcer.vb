@@ -56,7 +56,7 @@ Namespace Language
                     Case Else
                         Dim t As Token = Nothing
 
-                        If buffer = 1 AndAlso buffer.ToString = "|" Then
+                        If buffer = 1 AndAlso (buffer = "|" OrElse buffer = "(") Then
                             t = popOutToken()
                         End If
 
