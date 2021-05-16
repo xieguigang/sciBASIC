@@ -34,7 +34,7 @@ Namespace Language
                 End If
             Else
                 Select Case c
-                    Case "{"c, "("c, "["c, "}"c, "]"c, ")"c, "|"c
+                    Case "{"c, "("c, "["c, "}"c, "]"c, ")"c, "|"c, ","c
                         Dim t As Token = popOutToken()
                         buffer += c
                         Return t
@@ -56,7 +56,7 @@ Namespace Language
                     Case Else
                         Dim t As Token = Nothing
 
-                        If buffer = 1 AndAlso (buffer = "|" OrElse buffer = "(") Then
+                        If buffer = 1 AndAlso (buffer Like {"|", "(", ","}) Then
                             t = popOutToken()
                         End If
 
@@ -78,6 +78,7 @@ Namespace Language
                 Case "{", "[", "(" : Return New Token(Tokens.open, text)
                 Case "}", "]", ")" : Return New Token(Tokens.close, text)
                 Case "|" : Return New Token(Tokens.pipeline, text)
+                Case "," : Return New Token(Tokens.comma, ",")
                 Case ASCII.LF
                     ' Return New Token(Tokens.terminator, ";")
                     Return Nothing

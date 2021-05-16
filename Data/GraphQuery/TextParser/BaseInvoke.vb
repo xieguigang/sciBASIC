@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.Text
 
@@ -51,25 +52,42 @@ Namespace TextParser
         ''' <returns></returns>
         <ExportAPI("trim")>
         Public Function trim(document As InnerPlantText, parameters As String(), isArray As Boolean) As InnerPlantText
+            Dim pipe = trim(parameters)
+
             If isArray Then
                 Dim array As New HtmlElement With {.TagName = "trim"}
 
                 If TypeOf document Is HtmlElement Then
                     For Each element In DirectCast(document, HtmlElement).HtmlElements
-                        array.Add(New InnerPlantText With {.InnerText = Strings.Trim(element.GetPlantText).Trim(" "c, ASCII.TAB, ASCII.CR, ASCII.LF)})
+                        array.Add(pipe(element))
                     Next
                 Else
-                    array.Add(New InnerPlantText With {.InnerText = Strings.Trim(document.GetPlantText).Trim(" "c, ASCII.TAB, ASCII.CR, ASCII.LF)})
+                    array.Add(pipe(document))
                 End If
 
                 Return array
             Else
-                Return New InnerPlantText With {
-                    .InnerText = Strings _
-                        .Trim(document.GetPlantText) _
-                        .Trim(" "c, ASCII.TAB, ASCII.CR, ASCII.LF)
-                }
+                Return pipe(document)
             End If
+        End Function
+
+        Private Function trim(parameters As String()) As Func(Of InnerPlantText, InnerPlantText)
+            Dim chars As Char()
+
+            If parameters.IsNullOrEmpty Then
+                chars = {" "c, ASCII.TAB, ASCII.CR, ASCII.LF}
+            Else
+                chars = parameters.JoinBy("").ReplaceMetaChars.ToArray
+            End If
+
+            Return Function(i)
+                       Dim text As String = i.GetPlantText
+
+                       text = Strings.Trim(text)
+                       text = text.Trim(chars)
+
+                       Return New InnerPlantText With {.InnerText = text}
+                   End Function
         End Function
 
         ''' <summary>

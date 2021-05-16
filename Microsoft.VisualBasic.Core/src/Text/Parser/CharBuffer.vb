@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::84b66bc41f30126d86759c6a93923a3d, Microsoft.VisualBasic.Core\src\Text\Parser\CharBuffer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class CharBuffer
-    ' 
-    '         Properties: isInteger, Last, Size
-    ' 
-    '         Function: Add, GetLastOrDefault, Pop, PopAllChars, ToString
-    ' 
-    '         Sub: Clear
-    ' 
-    '         Operators: *, (+3 Overloads) +, <, (+2 Overloads) <>, (+2 Overloads) =
-    '                    >
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class CharBuffer
+' 
+'         Properties: isInteger, Last, Size
+' 
+'         Function: Add, GetLastOrDefault, Pop, PopAllChars, ToString
+' 
+'         Sub: Clear
+' 
+'         Operators: *, (+3 Overloads) +, <, (+2 Overloads) <>, (+2 Overloads) =
+'                    >
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -202,6 +202,18 @@ Namespace Text.Parser
 
         Public Shared Operator <(buf As CharBuffer, size As Integer) As Boolean
             Return buf.buffer.Count < size
+        End Operator
+
+        Public Shared Operator Like(buf As CharBuffer, any As String()) As Boolean
+            Dim str As String = buf.ToString
+
+            For Each right As String In any
+                If str = right Then
+                    Return True
+                End If
+            Next
+
+            Return False
         End Operator
     End Class
 End Namespace
