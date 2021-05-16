@@ -48,7 +48,7 @@ Public Class QueryParser
                     pipeNext = False
                 Case Tokens.NA
                     If pipeNext Then
-                        query.parser.pipeNext = CType(t, QueryToken).func
+                        query.parser &= CType(t, QueryToken).func
                     ElseIf query.isArray Then
                         If query.members.IsNullOrEmpty Then
                             query.members = {

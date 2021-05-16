@@ -113,4 +113,16 @@ Public Class Parser
         End If
     End Function
 
+    Public Shared Operator &(left As Parser, [next] As Parser) As Parser
+        If left.pipeNext Is Nothing Then
+            left.pipeNext = [next]
+        Else
+#Disable Warning BC42004 ' Expression recursively calls the containing Operator
+            left.pipeNext = left.pipeNext & [next]
+#Enable Warning BC42004 ' Expression recursively calls the containing Operator
+        End If
+
+        Return left
+    End Operator
+
 End Class
