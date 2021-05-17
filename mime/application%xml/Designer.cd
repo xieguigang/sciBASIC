@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.CodeGenerator" Collapsed="true">
+    <Position X="18.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CodeGenerator.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.XmlElement" Collapsed="true">
+    <Position X="20" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAEAAAAAAhAEAAAAAAAAAAAEEABIAAAAAAAAAgA=</HashCode>
+      <FileName>XmlGeneric\XmlElement.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.XPath" Collapsed="true">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAgAAAAAAAAAAAAAAAAAAAAABAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>XPath\XPath.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.SelectByNodeName" Collapsed="true">
+    <Position X="7.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>XPath\XPath.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.RootPathSelector" Collapsed="true">
+    <Position X="10" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>XPath\XPath.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.CurrentNodes" Collapsed="true">
+    <Position X="12.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>XPath\XPath.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.CurrentNode" Collapsed="true">
+    <Position X="1" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>XPath\XPath.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.ParentNode" Collapsed="true">
+    <Position X="3.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>XPath\XPath.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.SelectAttributes" Collapsed="true">
+    <Position X="5.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>XPath\XPath.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.XPathParser" Collapsed="true">
+    <Position X="21.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>XPath\XPathParser.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.XPathQuery" Collapsed="true">
+    <Position X="14.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAEAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>XPath\XPathQuery.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.MathML.BinaryExpression" Collapsed="true">
+    <Position X="0.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAACAAAIAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>MathML\Expression\BinaryExpression.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.MathML.MathExpression" Collapsed="true">
+    <Position X="3" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MathML\Expression\BinaryExpression.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.MathML.LambdaExpression" Collapsed="true">
+    <Position X="18.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAEAAAAAAAAAAAAAAAAAAAAAACAAQA=</HashCode>
+      <FileName>MathML\Expression\LambdaExpression.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.MathML.MathFunctionExpression" Collapsed="true">
+    <Position X="3" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAEAAAAAAAAAACAAAA=</HashCode>
+      <FileName>MathML\Expression\MathFunctionExpression.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.MathML.SymbolExpression" Collapsed="true">
+    <Position X="5.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAAAAg=</HashCode>
+      <FileName>MathML\Expression\SymbolExpression.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.MathML.Apply" Collapsed="true">
+    <Position X="3.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAgAAAAAAAEAAAAAACAAAgEAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MathML\XML\Apply.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.MathML.maction" Collapsed="true">
+    <Position X="20" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgAAAAAAAEAAAAAAAAAAAQAgA=</HashCode>
+      <FileName>MathML\XML\maction.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.MathML.Math" Collapsed="true">
+    <Position X="21.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MathML\XML\Math.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.MathML.mathOperator" Collapsed="true">
+    <Position X="14.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MathML\XML\Math.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.MathML.constant" Collapsed="true">
+    <Position X="20" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAABACAAAAAAAAAAAAA=</HashCode>
+      <FileName>MathML\XML\Math.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.MathML.lambda" Collapsed="true">
+    <Position X="16.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>MathML\XML\Math.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.MathML.symbols" Collapsed="true">
+    <Position X="3.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MathML\XML\Math.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.My.MySettings" Collapsed="true">
+    <Position X="16.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.xsd.NamespaceDoc" Collapsed="true">
+    <Position X="18.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>xsd\NamespaceDoc.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.xsd.restriction" Collapsed="true">
+    <Position X="20" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AADAAAAAAAAAAAAAAEAAAAAAAAIAEAAAAAAAAAGAAAA=</HashCode>
+      <FileName>xsd\XML.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.xsd.simpleType" Collapsed="true">
+    <Position X="18.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>xsd\XML.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.xsd.restrictionValue" Collapsed="true">
+    <Position X="21.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>xsd\XML.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.xsd.include" Collapsed="true">
+    <Position X="14.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>xsd\XML.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.xsd.complexType" Collapsed="true">
+    <Position X="0.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAAEAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>xsd\XML.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.xsd.extension" Collapsed="true">
+    <Position X="0.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>xsd\XML.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.xsd.attribute" Collapsed="true">
+    <Position X="16.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAIAFAAAABAAAAAAAAAA=</HashCode>
+      <FileName>xsd\XML.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.xsd.sequence" Collapsed="true">
+    <Position X="16.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAIAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>xsd\XML.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.xsd.element" Collapsed="true">
+    <Position X="21.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEEAAAAAAAgAAAAEAAAAAAAAAKAFAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>xsd\XML.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.xsd.annotation" Collapsed="true">
+    <Position X="14.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>xsd\XML.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.xml.xsd.schema" Collapsed="true">
+    <Position X="14.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>xsd\XML.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="Microsoft.VisualBasic.MIME.application.xml.elementTypes" Collapsed="true">
+    <Position X="16.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAIAAQAAIAAAIQAAAA=</HashCode>
+      <FileName>xsd\elementTypes.vb</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Microsoft.VisualBasic.MIME.application.xml.MathML.actiontypes" Collapsed="true">
+    <Position X="14.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAQAAAAACA=</HashCode>
+      <FileName>MathML\actiontypes.vb</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Microsoft.VisualBasic.MIME.application.xml.MathML.mathOperators" Collapsed="true">
+    <Position X="18.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAEAAAAAAgEAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MathML\mathOperators.vb</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Module Name="Microsoft.VisualBasic.MIME.application.xml.XmlParser" Collapsed="true">
+    <Position X="21.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>XmlGeneric\XmlParser.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.MIME.application.xml.Extensions" Collapsed="true">
+    <Position X="16.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>xsd\Extensions.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.MIME.application.xml.MathML.ContentBuilder" Collapsed="true">
+    <Position X="14.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAACAAAAAECAAQAEAAAAAAAEAAoAAgAAAAAAA=</HashCode>
+      <FileName>MathML\ContentBuilder.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.MIME.application.xml.My.Resources.Resources" Collapsed="true">
+    <Position X="20" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.MIME.application.xml.My.MySettingsProperty" Collapsed="true">
+    <Position X="18.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Module>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
