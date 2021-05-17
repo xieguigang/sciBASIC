@@ -113,46 +113,23 @@ Public Class QueryParser
 
     Private Shared Function GetParser(buf As Token()) As Parser
         Dim name As Token = buf(Scan0)
-        Dim args = buf.Skip(2).Take(buf.Length - 3).Split(Function(t) t.name = Tokens.comma).ToArray
+        Dim args = buf _
+            .Skip(2) _
+            .Take(buf.Length - 3) _
+            .Split(Function(t) t.name = Tokens.comma) _
+            .ToArray
+        Dim parameters = args.Select(Function(a) a(Scan0).text).ToArray
 
-        Return New Parser With {
-            .func = name.text,
-            .parameters = args.Select(Function(a) a(Scan0).text).ToArray
-        }
+        Select Case name.text
+            Case "css"
+                Return New CSSSelector(name.text, parameters)
+            Case "attr"
+                Return New AttributeSelector(name.text, parameters)
+            Case "xpath"
+                Return New XPathSelector(name.text, parameters)
+            Case Else
+                Return New FunctionParser(name.text, parameters)
+        End Select
     End Function
 End Class
 
-Public Class QueryToken
-
-    Public Property token As Token
-    Public Property func As Parser
-
-    Public ReadOnly Property name As Tokens
-        Get
-            If token Is Nothing Then
-                Return Tokens.NA
-            Else
-                Return token.name
-            End If
-        End Get
-    End Property
-
-    Public ReadOnly Property text As String
-        Get
-            If token Is Nothing Then
-                Return ""
-            Else
-                Return token.text
-            End If
-        End Get
-    End Property
-
-    Public Overrides Function ToString() As String
-        If token Is Nothing Then
-            Return func.ToString
-        Else
-            Return token.text
-        End If
-    End Function
-
-End Class

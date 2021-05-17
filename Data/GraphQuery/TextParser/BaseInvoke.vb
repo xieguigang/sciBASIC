@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.CommandLine.Reflection
+﻿Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.Text
@@ -103,6 +104,33 @@ Namespace TextParser
             Dim nItem As InnerPlantText = DirectCast(document, HtmlElement).HtmlElements(n)
 
             Return nItem
+        End Function
+
+        ''' <summary>
+        ''' removes of the text string that matched the pattern of given regexp list
+        ''' </summary>
+        ''' <param name="document"></param>
+        ''' <param name="parameters"></param>
+        ''' <param name="isArray"></param>
+        ''' <returns></returns>
+        <ExportAPI("filter")>
+        Public Function filter(document As InnerPlantText, parameters As String(), isArray As Boolean) As InnerPlantText
+            Dim patterns As Regex() = parameters _
+                .Select(Function(p) New Regex(p)) _
+                .ToArray
+
+        End Function
+
+        ''' <summary>
+        ''' match the string with given regexp pattern
+        ''' </summary>
+        ''' <param name="document"></param>
+        ''' <param name="parameters"></param>
+        ''' <param name="isArray"></param>
+        ''' <returns></returns>
+        <ExportAPI("match")>
+        Public Function match(document As InnerPlantText, parameters As String(), isArray As Boolean) As InnerPlantText
+
         End Function
     End Module
 End Namespace

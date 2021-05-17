@@ -104,12 +104,17 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Language\QueryToken.vb" />
     <Compile Include="Language\Escaping.vb" />
     <Compile Include="Language\TokenIcer.vb" />
     <Compile Include="Language\Token.vb" />
     <Compile Include="Language\Tokens.vb" />
     <Compile Include="QueryParser.vb" />
-    <Compile Include="Query\Parser.vb" />
+    <Compile Include="Query\Parser\AttributeSelector.vb" />
+    <Compile Include="Query\Parser\FunctionParser.vb" />
+    <Compile Include="Query\Parser\XPathSelector.vb" />
+    <Compile Include="Query\Parser\CSSSelector.vb" />
+    <Compile Include="Query\Parser\Parser.vb" />
     <Compile Include="Query\Query.vb" />
     <Compile Include="Engine.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
