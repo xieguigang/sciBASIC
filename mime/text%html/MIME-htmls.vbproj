@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2DD4BE80-DDC3-4767-94A7-10F1C3395716}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Microsoft.VisualBasic.MIME.Markup</RootNamespace>
-    <AssemblyName>Microsoft.VisualBasic.MIME.Markup</AssemblyName>
+    <RootNamespace>Microsoft.VisualBasic.MIME.Html</RootNamespace>
+    <AssemblyName>Microsoft.VisualBasic.MIME.Html</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -19,7 +19,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\GCModeller\bin\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <WarningsAsErrors>
     </WarningsAsErrors>
@@ -30,7 +30,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <WarningsAsErrors>
@@ -57,7 +57,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\GCModeller\bin\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -68,7 +68,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\.vs\installer\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
@@ -84,7 +84,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\GCModeller\bin\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -95,7 +95,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>Release\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -107,7 +107,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>Full</DebugType>
@@ -121,7 +121,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
@@ -135,7 +135,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -147,7 +147,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>./bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -159,7 +159,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>./bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -171,7 +171,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>./bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -182,14 +182,14 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Surveillance-of-infectious-diseases|AnyCPU' ">
     <OutputPath>./bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <WarningsAsErrors>
     </WarningsAsErrors>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Surveillance-of-infectious-diseases|x64' ">
     <OutputPath>./bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <PlatformTarget>x64</PlatformTarget>
     <WarningsAsErrors>
     </WarningsAsErrors>
@@ -197,7 +197,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Surveillance-of-infectious-diseases|x86' ">
     <OutputPath>./bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <WarningsAsErrors>
     </WarningsAsErrors>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -205,7 +205,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>./bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -219,7 +219,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\..\smartnucl_integrative\biodeepDB\METLINApp\App\</OutputPath>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
@@ -231,7 +231,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\..\plot\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -243,7 +243,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>./bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -257,7 +257,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\GCModeller\bin\</OutputPath>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
@@ -269,7 +269,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>./bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -281,7 +281,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mysqli_X64_release|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>./bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -295,7 +295,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\mysqli\Reflector\bin\x64\mysqli_X64_release\</OutputPath>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
@@ -307,7 +307,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mysqli_X64_release|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>./bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -319,7 +319,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>./bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -333,7 +333,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\.vs\installer\</OutputPath>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
@@ -345,7 +345,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>./bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -357,7 +357,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>./bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -371,7 +371,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\GCModeller\bin\</OutputPath>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
@@ -383,7 +383,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>./bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -395,7 +395,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep_UNIX_x64|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Biodeep_UNIX_x64\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -409,7 +409,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\..\biodeep\biodeepdb_v3\Rscript\R\</OutputPath>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
@@ -421,7 +421,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep_UNIX_x64|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Biodeep_UNIX_x64\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -433,7 +433,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Yilia-Release_x64|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Yilia-Release_x64\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -447,7 +447,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Yilia-Release_x64\</OutputPath>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
@@ -459,7 +459,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Yilia-Release_x64|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Yilia-Release_x64\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -471,7 +471,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEMO|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\DEMO\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -485,7 +485,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\DEMO\</OutputPath>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
@@ -497,7 +497,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEMO|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\DEMO\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -509,7 +509,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Rsharp_app_release\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -523,7 +523,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Rsharp_app_release\</OutputPath>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
@@ -535,7 +535,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rsharp_app_release|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Rsharp_app_release\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -547,7 +547,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biostack|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Biostack\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -561,7 +561,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Biostack\</OutputPath>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
@@ -573,7 +573,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biostack|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Biostack\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -585,7 +585,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\mzkit\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -599,7 +599,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\mzkit\</OutputPath>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
@@ -611,7 +611,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\mzkit\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -623,7 +623,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\BioDeep_database\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -637,7 +637,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\BioDeep_database\</OutputPath>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
@@ -649,7 +649,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'BioDeep_database|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\BioDeep_database\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -661,7 +661,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit_UnixDocker|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\mzkit_UnixDocker\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -673,7 +673,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\mzkit_UnixDocker\</OutputPath>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -682,7 +682,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit_UnixDocker|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\mzkit_UnixDocker\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -692,7 +692,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'LipidSearch|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\LipidSearch\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -704,7 +704,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\LipidSearch\</OutputPath>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -713,7 +713,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'LipidSearch|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\LipidSearch\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -723,7 +723,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'MetaCardio|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\MetaCardio\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -735,7 +735,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\MetaCardio\</OutputPath>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -744,7 +744,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'MetaCardio|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\MetaCardio\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -754,7 +754,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RsharpDev|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\RsharpDev\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -766,7 +766,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\RsharpDev\</OutputPath>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -775,7 +775,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'RsharpDev|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\RsharpDev\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -785,7 +785,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'vcellkit|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\vcellkit\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -797,7 +797,7 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\vcellkit\</OutputPath>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -806,7 +806,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'vcellkit|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\vcellkit\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.MIME.Markup.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.MIME.Html.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -840,80 +840,65 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HTML\HtmlCompress.vb" />
-    <Compile Include="HTML\CSS\CSSEnvirnment.vb" />
-    <Compile Include="HTML\CSS\CSSLayer.vb" />
-    <Compile Include="HTML\CSS\Extensions.vb" />
-    <Compile Include="HTML\CSS\Parser\UrlEvaluator.vb" />
-    <Compile Include="HTML\CSS\Parser\Selector.vb" />
-    <Compile Include="HTML\CSS\Parser\Enums\CssProperty.vb" />
-    <Compile Include="HTML\CSS\Size.vb" />
-    <Compile Include="HTML\CSS\Parser\Enums\Enums.vb" />
-    <Compile Include="HTML\CSS\Fill.vb" />
-    <Compile Include="HTML\CSS\ICSSValue.vb" />
-    <Compile Include="HTML\CSS\Parser\Parser.vb" />
-    <Compile Include="HTML\CSS\Parser\File.vb" />
-    <Compile Include="HTML\CSS\Stroke.vb" />
-    <Compile Include="HTML\CSS\FontStyle.vb" />
-    <Compile Include="HTML\CSS\Padding.vb" />
-    <Compile Include="HTML\CSS\Render\CssAnonymousBlockBox.vb" />
-    <Compile Include="HTML\CSS\Render\CssAnonymousBox.vb" />
-    <Compile Include="HTML\CSS\Render\CssBlock.vb" />
-    <Compile Include="HTML\CSS\Render\CssBox.vb" />
-    <Compile Include="HTML\CSS\Render\CssBoxWord.vb" />
-    <Compile Include="HTML\CSS\Render\CssBoxWordSplitter.vb" />
-    <Compile Include="HTML\CSS\Render\CssConstants.vb" />
-    <Compile Include="HTML\CSS\Render\CssDefaults.vb" />
-    <Compile Include="HTML\CSS\Render\CssDrawingHelper.vb" />
-    <Compile Include="HTML\CSS\Render\CssLayoutEngine.vb" />
-    <Compile Include="HTML\CSS\Render\CssLength.vb" />
-    <Compile Include="HTML\CSS\Render\CssLineBox.vb" />
-    <Compile Include="HTML\CSS\Render\CssPropertyAttribute.vb" />
-    <Compile Include="HTML\CSS\Render\CssPropertyInheritedAttribute.vb" />
-    <Compile Include="HTML\CSS\Render\CssRectangle.vb" />
-    <Compile Include="HTML\CSS\Render\CssTable.vb" />
-    <Compile Include="HTML\CSS\Render\CssValue.vb" />
-    <Compile Include="HTML\jQuery\jQuery.vb" />
-    <Compile Include="HTML\jQuery\Extensions.vb" />
-    <Compile Include="HTML\Render\HtmlConstants.vb" />
-    <Compile Include="HTML\Render\HtmlRenderer.vb" />
-    <Compile Include="HTML\Render\HtmlTag.vb" />
-    <Compile Include="HTML\Render\InitialContainer.vb" />
-    <Compile Include="HTML\Render\Parser.vb" />
-    <Compile Include="Parser\TextString.vb" />
-    <Compile Include="HTML\Head\Meta.vb" />
-    <Compile Include="HTML\Image.vb" />
-    <Compile Include="HTML\HTML.vb" />
-    <Compile Include="Parser\Elements\InnerPlantText.vb" />
-    <Compile Include="Parser\Elements\ValueAttribute.vb" />
-    <Compile Include="Parser\HtmlDocument.vb" />
-    <Compile Include="Parser\Elements\HtmlElement.vb" />
-    <Compile Include="HTML\Writer\HtmlWriter.vb" />
-    <Compile Include="HTML\Xml\Node.vb" />
-    <Compile Include="MarkDown\Articles.vb" />
-    <Compile Include="MarkDown\IExtensionInterface.vb" />
-    <Compile Include="MarkDown\LinkToTitle.vb" />
-    <Compile Include="MarkDown\Markdown.vb" />
-    <Compile Include="MarkDown\MarkdownOptions.vb" />
-    <Compile Include="MarkDown\FormatHelper.vb" />
-    <Compile Include="MarkDown\DocumentHelper.vb" />
-    <Compile Include="MarkDown\TOC.vb" />
-    <Compile Include="Markups\StreamWriter\HTMLWriter.vb" />
-    <Compile Include="HTML\Extensions.vb" />
-    <Compile Include="HTML\DocFormatter.vb" />
-    <Compile Include="MarkDown\Block.vb" />
-    <Compile Include="MarkDown\HTMLGenerator.vb" />
-    <Compile Include="MarkDown\MarkdownParser.vb" />
-    <Compile Include="MarkDown\Paragraph.vb" />
-    <Compile Include="MarkDown\Span\LinksParser.vb" />
-    <Compile Include="Markups\Blocks.vb" />
-    <Compile Include="Markups\Paragraph.vb" />
-    <Compile Include="Markups\Markup.vb" />
+    <Compile Include="Document\Elements\BuildHtml.vb" />
+    <Compile Include="Document\HtmlCompress.vb" />
+    <Compile Include="CSS\CSSEnvirnment.vb" />
+    <Compile Include="CSS\CSSLayer.vb" />
+    <Compile Include="CSS\Extensions.vb" />
+    <Compile Include="Parser\CSS\UrlEvaluator.vb" />
+    <Compile Include="Parser\CSS\Selector.vb" />
+    <Compile Include="Parser\CSS\Enums\CssProperty.vb" />
+    <Compile Include="CSS\Size.vb" />
+    <Compile Include="Parser\CSS\Enums\Enums.vb" />
+    <Compile Include="CSS\Fill.vb" />
+    <Compile Include="CSS\ICSSValue.vb" />
+    <Compile Include="Parser\CSS\Parser.vb" />
+    <Compile Include="Parser\CSS\File.vb" />
+    <Compile Include="CSS\Stroke.vb" />
+    <Compile Include="CSS\FontStyle.vb" />
+    <Compile Include="CSS\Padding.vb" />
+    <Compile Include="Render\CSS\CssAnonymousBlockBox.vb" />
+    <Compile Include="Render\CSS\CssAnonymousBox.vb" />
+    <Compile Include="Render\CSS\CssBlock.vb" />
+    <Compile Include="Render\CSS\CssBox.vb" />
+    <Compile Include="Render\CSS\CssBoxWord.vb" />
+    <Compile Include="Render\CSS\CssBoxWordSplitter.vb" />
+    <Compile Include="Render\CSS\CssConstants.vb" />
+    <Compile Include="Render\CSS\CssDefaults.vb" />
+    <Compile Include="Render\CSS\CssDrawingHelper.vb" />
+    <Compile Include="Render\CSS\CssLayoutEngine.vb" />
+    <Compile Include="Render\CSS\CssLength.vb" />
+    <Compile Include="Render\CSS\CssLineBox.vb" />
+    <Compile Include="Render\CSS\CssPropertyAttribute.vb" />
+    <Compile Include="Render\CSS\CssPropertyInheritedAttribute.vb" />
+    <Compile Include="Render\CSS\CssRectangle.vb" />
+    <Compile Include="Render\CSS\CssTable.vb" />
+    <Compile Include="Render\CSS\CssValue.vb" />
+    <Compile Include="jQuery\jQuery.vb" />
+    <Compile Include="jQuery\Extensions.vb" />
+    <Compile Include="Parser\Escaping.vb" />
+    <Compile Include="Render\HtmlConstants.vb" />
+    <Compile Include="Render\HtmlRenderer.vb" />
+    <Compile Include="Render\HtmlTag.vb" />
+    <Compile Include="Render\InitialContainer.vb" />
+    <Compile Include="Render\Parser.vb" />
+    <Compile Include="Render\TextString.vb" />
+    <Compile Include="Document\Head\Meta.vb" />
+    <Compile Include="Document\Elements\Image.vb" />
+    <Compile Include="Document\Elements\HTML.vb" />
+    <Compile Include="Document\Elements\InnerPlantText.vb" />
+    <Compile Include="Document\Elements\ValueAttribute.vb" />
+    <Compile Include="Document\HtmlDocument.vb" />
+    <Compile Include="Document\Elements\HtmlElement.vb" />
+    <Compile Include="Xml\Node.vb" />
+    <Compile Include="Document\Extensions.vb" />
+    <Compile Include="DocumentFormatter.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -925,8 +910,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="HTML\Xml\Meta.vb" />
-    <Compile Include="Markups\StreamWriter\Markdown.vb" />
+    <Compile Include="Xml\Meta.vb" />
     <Compile Include="Parser\HtmlParser.vb" />
     <Compile Include="Parser\TokenIcer.vb" />
     <Compile Include="Parser\Token.vb" />
@@ -941,7 +925,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="MarkDown\LICENSE" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

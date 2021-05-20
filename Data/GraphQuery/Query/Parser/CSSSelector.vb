@@ -1,4 +1,4 @@
-﻿Imports Microsoft.VisualBasic.MIME.Markup.HTML
+﻿Imports Microsoft.VisualBasic.MIME.Html.Document
 
 Public Class CSSSelector : Inherits Parser
 
@@ -9,6 +9,10 @@ Public Class CSSSelector : Inherits Parser
     Protected Overrides Function ParseImpl(document As InnerPlantText, isArray As Boolean, env As Engine) As InnerPlantText
         Dim query As String = parameters(Scan0)
         Dim n As String = parameters.ElementAtOrDefault(1)
+
+        If document.GetType Is GetType(InnerPlantText) Then
+            Return New InnerPlantText
+        End If
 
         If query.First = "#"c Then
             ' get element by id
@@ -23,7 +27,7 @@ Public Class CSSSelector : Inherits Parser
                     .HtmlElements = list
                 }
             Else
-                Return list(CInt(Val(n)))
+                Return GetElementByIndex(list, CInt(Val(n)))
             End If
         Else
             Dim list As HtmlElement() = DirectCast(document, HtmlElement).getElementsByTagName(query)
@@ -35,7 +39,7 @@ Public Class CSSSelector : Inherits Parser
                     .HtmlElements = list
                 }
             Else
-                Return list(CInt(Val(n)))
+                Return GetElementByIndex(list, CInt(Val(n)))
             End If
         End If
     End Function

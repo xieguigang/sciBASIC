@@ -44,7 +44,7 @@
 
 Imports System.Drawing
 Imports System.Math
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports stdNum = System.Math
 
 Namespace Drawing2D.Shapes

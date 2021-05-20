@@ -70,7 +70,8 @@ Namespace Graph
         ''' </summary>
         ''' <param name="property$"></param>
         ''' <returns></returns>
-        <Extension> Public Function SelectNodeValue(property$, Optional ByRef type As Type = Nothing) As Func(Of Node, Object)
+        <Extension>
+        Public Function SelectNodeValue(property$, Optional ByRef type As Type = Nothing) As Func(Of Node, Object)
             Return [property].GenericSelector(Of NodeData, Node)(type)
         End Function
 

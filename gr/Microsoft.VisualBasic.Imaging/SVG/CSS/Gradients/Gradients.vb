@@ -41,7 +41,7 @@
 #End Region
 
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.XmlMeta
+Imports Microsoft.VisualBasic.MIME.Html.XmlMeta
 
 Namespace SVG.CSS
 

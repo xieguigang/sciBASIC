@@ -2,8 +2,8 @@
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.GraphQuery.TextParser
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
-Imports Microsoft.VisualBasic.MIME.Markup
-Imports Microsoft.VisualBasic.MIME.Markup.HTML
+Imports Microsoft.VisualBasic.MIME.Html
+Imports Microsoft.VisualBasic.MIME.Html.Document
 
 ''' <summary>
 ''' the engine of run graph query
@@ -47,7 +47,7 @@ Public Class Engine
     Public Function Execute(document As HtmlElement, query As Query) As JsonElement
         If Not query.members.IsNullOrEmpty Then
             ' object
-            Dim subDocument As HtmlElement
+            Dim subDocument As InnerPlantText
             Dim obj As JsonElement
 
             If query.parser Is Nothing Then
@@ -56,7 +56,9 @@ Public Class Engine
                 subDocument = query.parser.Parse(document, query.isArray, Me)
             End If
 
-            If query.isArray Then
+            If subDocument.GetType Is GetType(InnerPlantText) Then
+                obj = New JsonObject
+            ElseIf query.isArray Then
                 obj = QueryObjectArray(subDocument, query)
             Else
                 obj = QueryObject(subDocument, query)

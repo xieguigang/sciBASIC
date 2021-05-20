@@ -48,8 +48,8 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Language.Default
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
-Imports sys = System.Math
+Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports stdNum = System.Math
 
 Namespace Drawing2D.Text.ASCIIArt
 
@@ -123,7 +123,7 @@ Namespace Drawing2D.Text.ASCIIArt
                         Dim closestchar As WeightedChar =
                             characters _
                             .Where(Function(t)
-                                       Return sys.Abs(t.Weight - targetvalue) = characters.Min(Function(e) sys.Abs(e.Weight - targetvalue))
+                                       Return stdNum.Abs(t.Weight - targetvalue) = characters.Min(Function(e) stdNum.Abs(e.Weight - targetvalue))
                                    End Function) _
                             .FirstOrDefault()
 
@@ -135,7 +135,7 @@ Namespace Drawing2D.Text.ASCIIArt
             End Using
         End Sub
 
-        ReadOnly defaultFont As [Default](Of  Font) = SystemFonts.DefaultFont
+        ReadOnly defaultFont As [Default](Of Font) = SystemFonts.DefaultFont
 
         ''' <summary>
         ''' 将字符转换为图像
@@ -161,8 +161,8 @@ Namespace Drawing2D.Text.ASCIIArt
             End If
 
             ' Create a new image of the right size
-            Dim w% = CInt(sys.Truncate(WidthAndHeight.Width))
-            Dim h% = CInt(sys.Truncate(WidthAndHeight.Height))
+            Dim w% = CInt(stdNum.Truncate(WidthAndHeight.Width))
+            Dim h% = CInt(stdNum.Truncate(WidthAndHeight.Height))
             Dim img As New Bitmap(w, h)
 
             ' Get a graphics object

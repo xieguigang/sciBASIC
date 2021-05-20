@@ -15,7 +15,7 @@ Imports Microsoft.VisualBasic.Data.GraphQuery
 Imports Microsoft.VisualBasic.Data.GraphQuery.Language
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
-Imports Microsoft.VisualBasic.MIME.Markup.HTML
+Imports Microsoft.VisualBasic.MIME.HTML
 
 ' define your graph query at here
 Dim queryText As String = "..."
@@ -162,7 +162,7 @@ Imports Microsoft.VisualBasic.Data.GraphQuery
 Imports Microsoft.VisualBasic.Data.GraphQuery.Language
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
-Imports Microsoft.VisualBasic.MIME.Markup.HTML
+Imports Microsoft.VisualBasic.MIME.HTML
 
 Dim document = 
     <html>

@@ -1,4 +1,4 @@
-﻿Imports Microsoft.VisualBasic.MIME.Markup.HTML
+﻿Imports Microsoft.VisualBasic.MIME.Html.Document
 
 Public Class FunctionParser : Inherits Parser
 

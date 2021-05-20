@@ -43,7 +43,7 @@
 
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
-Imports htmlNode = Microsoft.VisualBasic.MIME.Markup.HTML.XmlMeta.Node
+Imports htmlNode = Microsoft.VisualBasic.MIME.Html.XmlMeta.Node
 
 Namespace SVG.CSS
 

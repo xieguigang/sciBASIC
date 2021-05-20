@@ -137,6 +137,9 @@ Namespace ComponentModel.Collection
             End Set
         End Property
 
+        ''' <summary>
+        ''' create a new empty <see cref="SortedDictionary(Of String, V)"/> 
+        ''' </summary>
         <DebuggerStepThrough>
         Sub New()
             Call MyBase.New

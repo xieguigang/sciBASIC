@@ -58,7 +58,12 @@ Namespace Graph
         ''' <returns></returns>
         Public Property length As Double
         Public Property bends As XYMetaHandle()
-        Public Property color As SolidBrush
+
+        ''' <summary>
+        ''' [color, width, dash]
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property style As Pen
 
         Public Sub New()
             MyBase.New()
@@ -81,10 +86,19 @@ Namespace Graph
         End Function
 
         Public Function Clone() As EdgeData
+            Dim bendList As XYMetaHandle() = bends _
+                .SafeQuery _
+                .Select(Function(a)
+                            Return New XYMetaHandle(a)
+                        End Function) _
+                .ToArray
+
             Return New EdgeData With {
                 .label = label,
-                .bends = bends.SafeQuery.Select(Function(a) New XYMetaHandle(a)).ToArray,
-                .color = color,
+                .bends = bendList,
+                .style = New Pen(style.Color, style.Width) With {
+                    .DashStyle = style.DashStyle
+                },
                 .length = length,
                 .Properties = New Dictionary(Of String, String)(Properties)
             }

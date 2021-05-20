@@ -39,8 +39,7 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.MIME.Markup
-Imports Microsoft.VisualBasic.MIME.Markup.HTML
+Imports Microsoft.VisualBasic.MIME.Html.Language
 
 Module HTMLParserTest
 

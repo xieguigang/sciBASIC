@@ -244,7 +244,7 @@ Namespace Graph
                     .length = data.length,
                     .Properties = New Dictionary(Of String, String)(data.Properties),
                     .bends = data.bends.SafeQuery.ToArray,
-                    .color = data.color
+                    .style = data.style
                 }
             }
         End Function

@@ -72,7 +72,7 @@
 'Imports Microsoft.VisualBasic.Imaging.Drawing2D
 'Imports Microsoft.VisualBasic.Imaging.Driver
 'Imports Microsoft.VisualBasic.Linq
-'Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+'Imports Microsoft.VisualBasic.MIME.HTML.CSS
 
 'Public Module ManhattanStatics
 

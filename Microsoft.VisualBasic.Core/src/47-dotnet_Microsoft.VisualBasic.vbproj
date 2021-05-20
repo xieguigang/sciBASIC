@@ -1684,6 +1684,7 @@
     <Compile Include="Extensions\Collection\Linq\Enumerator.vb" />
     <Compile Include="Extensions\Image\Bitmap\SaveGdiBitmap.vb" />
     <Compile Include="Extensions\Image\ImageFormats.vb" />
+    <Compile Include="Extensions\Image\IStyleSelector.vb" />
     <Compile Include="Extensions\Image\Math\Intersections.vb" />
     <Compile Include="Extensions\Image\Math\QuadrantRegions.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\SampleObservation.vb" />

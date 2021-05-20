@@ -1,5 +1,4 @@
-﻿Imports Microsoft.VisualBasic.MIME.application.xml
-Imports Microsoft.VisualBasic.MIME.Markup.HTML
+﻿Imports Microsoft.VisualBasic.MIME.Html.Document
 
 Public MustInherit Class Parser
 
@@ -26,6 +25,14 @@ Public MustInherit Class Parser
     End Function
 
     Protected MustOverride Function ParseImpl(document As InnerPlantText, isArray As Boolean, env As Engine) As InnerPlantText
+
+    Protected Shared Function GetElementByIndex(list As InnerPlantText(), i As Integer) As InnerPlantText
+        If i >= list.Count Then
+            Return New InnerPlantText With {.InnerText = ""}
+        Else
+            Return list(i)
+        End If
+    End Function
 
     Public Overrides Function ToString() As String
         Dim thisText As String = $"{func}({parameters.JoinBy(", ")})"

@@ -44,7 +44,7 @@
 #End Region
 
 Imports System.Drawing
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Namespace Drawing2D.Shapes
 

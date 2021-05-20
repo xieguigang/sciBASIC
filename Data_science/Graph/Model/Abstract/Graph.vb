@@ -103,7 +103,10 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
     ''' 获取得到这个图中的所有的节点的边的集合，请注意，这个只读属性是一个枚举集合，
     ''' 所以为了减少性能上的损失，不可以过多的使用下标来访问集合元素
     ''' </summary>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' 因为在这里使用了一个<see cref="SortedDictionary(Of String, V)"/>来进行
+    ''' 存储，所以这个属性所返回的网络边连接的顺序与添加的时候的顺序会不一致
+    ''' </returns>
     Public ReadOnly Property graphEdges As IEnumerable(Of Edge)
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get

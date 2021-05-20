@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::6c76f69f945508f55b2deda8e0a83b23, gr\Microsoft.VisualBasic.Imaging\Drivers\CSS\RuntimeInvoker.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module RuntimeInvoker
-    ' 
-    '         Function: CSSTemplate, LoadDriver, ParseFieldNames, (+2 Overloads) RunPlot, ScanValue
-    ' 
-    '         Sub: AppendFields
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module RuntimeInvoker
+' 
+'         Function: CSSTemplate, LoadDriver, ParseFieldNames, (+2 Overloads) RunPlot, ScanValue
+' 
+'         Sub: AppendFields
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -48,8 +48,8 @@ Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS.Parser
+Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Language.CSS
 
 Namespace Driver.CSS
 
@@ -220,7 +220,7 @@ Namespace Driver.CSS
             ' 因为args是必须参数，所以要首先进行赋值遍历
             For Each arg As ParameterInfo In parameters
                 If values.ContainsKey(arg.Name) Then
-                    arguments += values(arg.Name).value
+                    arguments += values(arg.Name).Value
                 Else
                     arguments += arg.ScanValue(values, CSS)
                 End If
@@ -233,7 +233,7 @@ Namespace Driver.CSS
         Private Function ScanValue(arg As ParameterInfo, values As Dictionary(Of ArgumentReference), CSS As CSSFile) As Object
             With values.Keys.Where(Function(s) s.TextEquals(arg.Name)).FirstOrDefault
                 If Not .StringEmpty Then
-                    Return values(.ByRef).value
+                    Return values(.ByRef).Value
                 End If
             End With
 

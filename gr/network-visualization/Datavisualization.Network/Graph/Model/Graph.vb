@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::8bbb7b828ab69db753ed229c9346e023, gr\network-visualization\Datavisualization.Network\Graph\Model\Graph.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class NetworkGraph
-    ' 
-    '         Properties: connectedNodes
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: (+3 Overloads) AddEdge, AddNode, (+2 Overloads) Clone, ComputeIfNotExists, Copy
-    '                   (+2 Overloads) CreateEdge, createEdgeInternal, (+2 Overloads) CreateNode, GetConnectedGraph, GetConnectedVertex
-    '                   GetEdge, (+2 Overloads) GetEdges, (+2 Overloads) GetElementByID, ToString
-    ' 
-    '         Sub: AddGraphListener, Clear, (+2 Overloads) CreateEdges, (+2 Overloads) CreateNodes, DetachNode
-    '              FilterEdges, FilterNodes, Merge, notify, RemoveEdge
-    '              (+2 Overloads) RemoveNode
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class NetworkGraph
+' 
+'         Properties: connectedNodes
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: (+3 Overloads) AddEdge, AddNode, (+2 Overloads) Clone, ComputeIfNotExists, Copy
+'                   (+2 Overloads) CreateEdge, createEdgeInternal, (+2 Overloads) CreateNode, GetConnectedGraph, GetConnectedVertex
+'                   GetEdge, (+2 Overloads) GetEdges, (+2 Overloads) GetElementByID, ToString
+' 
+'         Sub: AddGraphListener, Clear, (+2 Overloads) CreateEdges, (+2 Overloads) CreateNodes, DetachNode
+'              FilterEdges, FilterNodes, Merge, notify, RemoveEdge
+'              (+2 Overloads) RemoveNode
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -93,7 +93,9 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis.Model
+Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce.Interfaces
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
@@ -104,6 +106,7 @@ Namespace Graph
     ''' </summary>
     Public Class NetworkGraph : Inherits NetworkGraph(Of Node, Edge)
         Implements ICloneable
+        Implements IStyleSelector(Of Node)
 
         ''' <summary>
         ''' Returns the set of all Nodes that have emanating Edges.
@@ -224,6 +227,29 @@ Namespace Graph
             End If
         End Function
 
+#Region "css selector supports"
+
+        Private Function StyleSelectorGetElementById(id As String) As Node Implements IStyleSelector(Of Node).GetElementById
+            Return GetElementByID(id, dataLabel:=False)
+        End Function
+
+        Public Function GetElementsByClassName(classname As String) As Node() Implements IStyleSelector(Of Node).GetElementsByClassName
+            Return vertex _
+                .Where(Function(node)
+                           Return classname = node.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)
+                       End Function) _
+                .ToArray
+        End Function
+
+        Public Function GetElementsByName(name As String) As Node() Implements IStyleSelector(Of Node).GetElementsByName
+            Return vertex _
+                .Where(Function(node)
+                           Return name = node.data.label
+                       End Function) _
+                .ToArray
+        End Function
+#End Region
+
         Public Overrides Function AddEdge(u As String, v As String, Optional weight As Double = 0) As NetworkGraph(Of Node, Edge)
             Call New EdgeData With {
                 .bends = {},
@@ -232,7 +258,7 @@ Namespace Graph
                          ' 在利用这个函数创建edge的时候，
                          ' 会将创建出来的新edge添加进入当前的这个图对象之中
                          ' 所以不需要再次调用addedge方法了
-                         Return CreateEdge(GetElementByID(u), GetElementByID(v), weight, data)
+                         Return CreateEdge(GetElementById(u), GetElementById(v), weight, data)
                      End Function)
 
             Return Me
@@ -383,7 +409,7 @@ Namespace Graph
         End Function
 
         Public Overloads Function GetConnectedVertex(label As String) As Node()
-            Dim node As Node = GetElementByID(label)
+            Dim node As Node = GetElementById(label)
             Dim edges As Edge() = GetEdges(node).ToArray
             Dim connectedNodes As Node() = edges _
                 .Select(Function(e) {e.U, e.V}) _
@@ -420,7 +446,7 @@ Namespace Graph
         End Function
 
         Public Sub RemoveNode(labelId As String)
-            Call RemoveNode(GetElementByID(labelId))
+            Call RemoveNode(GetElementById(labelId))
         End Sub
 
         ''' <summary>
@@ -567,8 +593,8 @@ Namespace Graph
 
             For Each edge As Edge In graphEdges
                 g.CreateEdge(
-                    u:=g.GetElementByID(edge.U.label),
-                    v:=g.GetElementByID(edge.V.label),
+                    u:=g.GetElementById(edge.U.label),
+                    v:=g.GetElementById(edge.V.label),
                     weight:=edge.weight,
                     data:=edge.data.Clone
                 )
