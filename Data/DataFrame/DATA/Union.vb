@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff32f7664d037565a71bc6ad616df51e, Data\DataFrame\DATA\Union.vb"
+﻿#Region "Microsoft.VisualBasic::af1c9ec9cca65e898487df45eafc43aa, Data\DataFrame\DATA\Union.vb"
 
     ' Author:
     ' 
@@ -47,6 +47,10 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 
 Namespace DATA
 
+    ''' <summary>
+    ''' An abstract union operation data model
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Public NotInheritable Class CbindProvider(Of T)
 
         Shared ReadOnly schema As Dictionary(Of String, PropertyInfo) = DataFramework.Schema(Of T)(PropertyAccess.Readable, True, True)
@@ -60,8 +64,8 @@ Namespace DATA
                 .Properties = New Dictionary(Of String, Double)(dataset.Properties)
             }
 
-            Static numericFields = CbindProvider(Of T) _
-                .schema _
+            Static numericFields As KeyValuePair(Of String, PropertyInfo)() =
+                CbindProvider(Of T).schema _
                 .Where(Function(f)
                            Return f.Value.PropertyType.IsNumericType
                        End Function) _

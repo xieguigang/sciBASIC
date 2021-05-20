@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e80df5bda440828fddaf9976facfec1, Data\SearchEngine\Index\Repository\DumpView.vb"
+﻿#Region "Microsoft.VisualBasic::74eb77378d4d7474f994b7cf74435e76, Data\SearchEngine\Index\Repository\DumpView.vb"
 
     ' Author:
     ' 
@@ -48,7 +48,7 @@ Public Module TrieDump
     ReadOnly DataPadLength As Integer = Long.MinValue.ToString.Length
 
     Public Sub ShowCharacters()
-        Dim i As VBInteger = 1
+        Dim i As i32 = 1
 
         For c As Integer = Asc(" "c) To Asc("~"c)
             Call Console.WriteLine($" {Chr(c)} {++i}")

@@ -1,0 +1,1 @@
+GPU accelerated computing ``rust`` code module for sciBASIC.NET

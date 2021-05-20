@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da657d575f48c1de6684880bc0cea92b, gr\Microsoft.VisualBasic.Imaging\Drivers\CSS\RuntimeInvoker.vb"
+﻿#Region "Microsoft.VisualBasic::6c76f69f945508f55b2deda8e0a83b23, gr\Microsoft.VisualBasic.Imaging\Drivers\CSS\RuntimeInvoker.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module RuntimeInvoker
     ' 
-    '         Function: __fields, CSSTemplate, LoadDriver, (+2 Overloads) RunPlot, ScanValue
+    '         Function: CSSTemplate, LoadDriver, ParseFieldNames, (+2 Overloads) RunPlot, ScanValue
     ' 
     '         Sub: AppendFields
     ' 
@@ -83,7 +83,7 @@ Namespace Driver.CSS
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Private Function __fields(type As Type) As String()
+        Private Function ParseFieldNames(type As Type) As String()
             Return type _
                 .Schema(PropertyAccess.ReadWrite, nonIndex:=True) _
                 .Values _
@@ -94,11 +94,11 @@ Namespace Driver.CSS
         End Function
 
         ReadOnly types As New Dictionary(Of Types, String()) From {
-            {CSS.Types.Brush, GetType(Fill).__fields},
-            {CSS.Types.Font, GetType(CSSFont).__fields},
-            {CSS.Types.Padding, GetType(Padding).__fields},
-            {CSS.Types.Size, GetType(CSSsize).__fields},
-            {CSS.Types.Stroke, GetType(Stroke).__fields}
+            {CSS.Types.Brush, GetType(Fill).ParseFieldNames},
+            {CSS.Types.Font, GetType(CSSFont).ParseFieldNames},
+            {CSS.Types.Padding, GetType(Padding).ParseFieldNames},
+            {CSS.Types.Size, GetType(CSSsize).ParseFieldNames},
+            {CSS.Types.Stroke, GetType(Stroke).ParseFieldNames}
         }
 
         Const Indent$ = vbTab

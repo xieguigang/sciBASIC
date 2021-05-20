@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0dee35150c4d9712b77546db26ed0980, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\GNW.vb"
+﻿#Region "Microsoft.VisualBasic::3fe5a2ec4d4e77ef97a6a5a09b63dba0, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\GNW.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,7 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace NeedlemanWunsch
 
@@ -59,18 +59,19 @@ Namespace NeedlemanWunsch
         Dim matrix%()() = Nothing
         Dim tracebackMatrix%()() = Nothing
 
-        ReadOnly __empty As T
+        ReadOnly symbol As GenericSymbol(Of T)
 
-        Sub New(q As IEnumerable(Of T), s As IEnumerable(Of T), equals As IEquals(Of T), empty As T, toChar As Func(Of T, Char))
-            Call Me.New(equals, empty, toChar)
+        Sub New(q As IEnumerable(Of T), s As IEnumerable(Of T), score As ScoreMatrix(Of T), symbol As GenericSymbol(Of T))
+            Call Me.New(score, symbol)
 
             Sequence1 = q.ToArray
             Sequence2 = s.ToArray
         End Sub
 
-        Sub New(match As IEquals(Of T), empty As T, toChar As Func(Of T, Char))
-            Call MyBase.New(match, toChar)
-            __empty = empty
+        Sub New(score As ScoreMatrix(Of T), symbol As GenericSymbol(Of T))
+            Call MyBase.New(score, symbol.m_viewChar)
+
+            Me.symbol = symbol
         End Sub
 
         ''' <summary>
@@ -106,7 +107,7 @@ Namespace NeedlemanWunsch
                     Me.AddAligned1(aligned1)
                     Me.AddAligned2(aligned2)
                 Case 1 ' upper cell
-                    s1.Push(__empty)
+                    s1.Push(symbol.getEmpty)
                     s2.Push(Me.Sequence2(i - 2))
                     Me.traceback(s1, s2, i - 1, j)
                 Case 2 ' upperLeft cell
@@ -114,23 +115,23 @@ Namespace NeedlemanWunsch
                     s2.Push(Me.Sequence2(i - 2))
                     Me.traceback(s1, s2, i - 1, j - 1)
                 Case 3 ' upper + upperLeft cell
-                    s1.Push(__empty)
+                    s1.Push(symbol.getEmpty)
                     s2.Push(Me.Sequence2(i - 2))
                     Me.traceback(s1, s2, i - 1, j)
                 Case 4 'left cell
                     s1.Push(Me.Sequence1(j - 2))
-                    s2.Push(__empty)
+                    s2.Push(symbol.getEmpty)
                     Me.traceback(s1, s2, i, j - 1)
                 Case 5 ' left + upper cell
                     s1.Push(Me.Sequence1(j - 2))
-                    s2.Push(__empty)
+                    s2.Push(symbol.getEmpty)
                     Me.traceback(s1, s2, i, j - 1)
                 Case 6 ' left + upperLeft cell
                     s1.Push(Me.Sequence1(j - 2))
-                    s2.Push(__empty)
+                    s2.Push(symbol.getEmpty)
                     Me.traceback(s1, s2, i, j - 1)
                 Case 7 ' all 3 cells
-                    s1.Push(__empty)
+                    s1.Push(symbol.getEmpty)
                     s2.Push(Me.Sequence2(i - 2))
                     Me.traceback(s1, s2, i - 1, j)
             End Select
@@ -170,12 +171,12 @@ Namespace NeedlemanWunsch
 
             ' fill the first row and first column of matrix and tracebackMatrix
             For i As Integer = 0 To rows - 1
-                matrix(i)(0) = -i * Me.GapPenalty
+                matrix(i)(0) = -i * scoreMatrix.GapPenalty
                 tracebackMatrix(i)(0) = 1 ' see explanation below
             Next
 
             For j As Integer = 0 To columns - 1
-                matrix(0)(j) = -j * Me.GapPenalty
+                matrix(0)(j) = -j * scoreMatrix.GapPenalty
                 tracebackMatrix(0)(j) = 4 ' see explanation below
             Next
 
@@ -184,9 +185,9 @@ Namespace NeedlemanWunsch
             ' Fill matrix and traceback matrix
             For i As Integer = 1 To rows - 1
                 For j As Integer = 1 To columns - 1
-                    Dim a As Integer = matrix(i - 1)(j - 1) + Me.isMatch(seq1(j - 1), seq2(i - 1))
-                    Dim b As Integer = matrix(i)(j - 1) - Me.GapPenalty
-                    Dim c As Integer = matrix(i - 1)(j) - Me.GapPenalty
+                    Dim a As Integer = matrix(i - 1)(j - 1) + scoreMatrix.getMatchScore(seq1(j - 1), seq2(i - 1))
+                    Dim b As Integer = matrix(i)(j - 1) - scoreMatrix.GapPenalty
+                    Dim c As Integer = matrix(i - 1)(j) - scoreMatrix.GapPenalty
                     Dim max As Integer = Math.Max(a, b, c)
 
                     ' fill cell of the scoring matrix

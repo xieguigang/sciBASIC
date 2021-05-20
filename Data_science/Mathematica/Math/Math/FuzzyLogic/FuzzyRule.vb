@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34831fcdf901eedf089622dbec955882, Data_science\Mathematica\Math\Math\FuzzyLogic\FuzzyRule.vb"
+﻿#Region "Microsoft.VisualBasic::b135755897ef31db37599934a29caf3e, Data_science\Mathematica\Math\Math\FuzzyLogic\FuzzyRule.vb"
 
     ' Author:
     ' 
@@ -64,9 +64,7 @@
 #End Region
 
 Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Math.Scripting.Logical
-Imports Microsoft.VisualBasic.Scripting.TokenIcer
+Imports Microsoft.VisualBasic.Math.Logical.FuzzyLogic.Models
 
 Namespace Logical.FuzzyLogic
 
@@ -77,9 +75,9 @@ Namespace Logical.FuzzyLogic
 
 #Region "Private Properties"
 
-        Dim m_text As String = [String].Empty
-        Dim m_conditions As Token(Of Tokens)()
-        Dim m_conclusion As Token(Of Tokens)()
+        Dim m_text As String = String.Empty
+        Dim m_conditions As LogicalToken()
+        Dim m_conclusion As LogicalToken()
 
 #End Region
 
@@ -158,8 +156,8 @@ Namespace Logical.FuzzyLogic
             End Get
             Set(value As String)
                 m_text = Validate(value)
-                m_conditions = TokenIcer.TryParse(Me.Conditions)
-                m_conclusion = TokenIcer.TryParse(Regex.Split(value, " THEN ", RegexOptions.IgnoreCase).Last)
+                m_conditions = Models.TryParse(Me.Conditions)
+                m_conclusion = Models.TryParse(Regex.Split(value, " THEN ", RegexOptions.IgnoreCase).Last)
             End Set
         End Property
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6aa8d1d715d73b034a11b8250bdf235b, vs_solutions\dev\VisualStudio\vbproj\Project.vb"
+﻿#Region "Microsoft.VisualBasic::441494b5751eef7ad7bfc4c3b623ac3e, vs_solutions\dev\VisualStudio\vbproj\Project.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     '     Class Project
     ' 
-    '         Properties: [Imports], DefaultTargets, FilePath, ItemGroups, PropertyGroups
-    '                     Targets, ToolsVersion
+    '         Properties: [Imports], DefaultTargets, FilePath, ItemGroups, MimeType
+    '                     PropertyGroups, Targets, ToolsVersion
     ' 
     '         Function: GetProfile, (+2 Overloads) Save, ToString
     ' 
@@ -48,6 +48,7 @@ Imports System.Text
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
@@ -73,6 +74,12 @@ Namespace vbproj
         Public Property ItemGroups As ItemGroup()
         <XmlElement("Target")>
         Public Property Targets As Target()
+
+        Public ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
+            Get
+                Throw New NotImplementedException()
+            End Get
+        End Property
 
         ''' <summary>
         ''' 读取<see cref="AssemblyInfo"/>文件的时候会需要使用到这个属性

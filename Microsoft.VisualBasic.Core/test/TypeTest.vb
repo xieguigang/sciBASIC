@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75917d1f7b9e3ef81aad687b788cae2e, Microsoft.VisualBasic.Core\test\TypeTest.vb"
+﻿#Region "Microsoft.VisualBasic::309722185e7a73cc8dc96f3491126449, Microsoft.VisualBasic.Core\test\TypeTest.vb"
 
     ' Author:
     ' 
@@ -31,23 +31,50 @@
 
     ' Summaries:
 
+    ' Enum FlagCombos
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
     ' Module TypeTest
     ' 
     '     Function: CharArray
     ' 
-    '     Sub: Main, patternMatch, test
+    '     Sub: descriptionTest, Main, patternMatch, test
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.ComponentModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 
+Public Enum FlagCombos
+
+    A = 2
+    B = 4
+    <Description("The last one")> C = 8
+
+End Enum
+
 Module TypeTest
 
-    Sub Main()
+    Sub descriptionTest()
 
+        Call Console.WriteLine(FlagCombos.A.Description)
+        Call Console.WriteLine(FlagCombos.B.Description)
+        Call Console.WriteLine(FlagCombos.C.Description)
+
+        Call Console.WriteLine((FlagCombos.A Or FlagCombos.B Or FlagCombos.C).Description)
+
+        Pause()
+    End Sub
+
+    Sub Main()
+        Call descriptionTest()
         Call patternMatch()
 
 

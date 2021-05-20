@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58309957174e69b7821a47cfa5e1faca, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\docProps\core.xml.vb"
+﻿#Region "Microsoft.VisualBasic::2d49332076fd5277e12362444dd4a2b9, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\docProps\core.xml.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,8 @@
 
     '     Class core
     ' 
-    '         Properties: created, creator, lastModifiedBy, modified
+    '         Properties: category, contentStatus, created, creator, description
+    '                     keywords, lastModifiedBy, modified, subject, title
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: filePath, toXml
@@ -70,12 +71,30 @@ Namespace XML.docProps
 
         <XmlElement(ElementName:=NameOf(creator), [Namespace]:=OpenXML.dc)>
         Public Property creator As String
+
         <XmlElement(ElementName:=NameOf(lastModifiedBy), [Namespace]:=OpenXML.cp)>
         Public Property lastModifiedBy As String
+
         <XmlElement(NameOf(created), [Namespace]:=OpenXML.dcterms)>
         Public Property created As W3CDTF
+
         <XmlElement(NameOf(modified), [Namespace]:=OpenXML.dcterms)>
         Public Property modified As W3CDTF
+
+        Public Property title As String
+        Public Property subject As String
+        
+        <XmlElement([Namespace]:=OpenXML.cp)>
+        Public Property keywords As String
+
+        <XmlElement([Namespace]:=OpenXML.dc)>
+        Public Property description As String
+
+        <XmlElement([Namespace]:=OpenXML.cp)>
+        Public Property category As String
+
+        <XmlElement([Namespace]:=OpenXML.cp)>
+        Public Property contentStatus As String
 
         Protected Overrides Function filePath() As String
             Return "docProps/core.xml"

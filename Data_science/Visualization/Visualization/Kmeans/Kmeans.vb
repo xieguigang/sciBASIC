@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba4a113b476afe81d3799c651643487f, Data_science\Visualization\Visualization\Kmeans\Kmeans.vb"
+﻿#Region "Microsoft.VisualBasic::b1fc20cfde2d391602c11adc298690d5, Data_science\Visualization\Visualization\Kmeans\Kmeans.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module KmeansExtensions
     ' 
-    '         Function: ClusterGroups, labelSelector, Scatter2D, (+2 Overloads) Scatter3D
+    '         Function: ClusterGroups, dimensionQuantile, labelSelector, Scatter2D, (+2 Overloads) Scatter3D
     ' 
     ' 
     ' /********************************************************************************/
@@ -49,7 +49,6 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.DataMining
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
@@ -60,6 +59,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports stdNum = System.Math
 
 Namespace KMeans
 
@@ -94,13 +94,13 @@ Namespace KMeans
                                   Optional size$ = "1600,1600",
                                   Optional padding$ = g.DefaultUltraLargePadding,
                                   Optional bg$ = "white",
-                                  Optional schema$ = Designer.Clusters,
+                                  Optional schema$ = DesignerTerms.ClusterCategory10,
                                   Optional pointSize! = 10) As GraphicsData
 
             Dim clusters = clusterData.ClusterGroups
             Dim clusterColors = Designer.GetColors(schema)
             Dim serials As New List(Of SerialData)
-            Dim labX$ = catagory.X.Name, labY$ = catagory.Y.Name
+            Dim labX$ = catagory.X.name, labY$ = catagory.Y.name
 
             For Each cluster In clusters.SeqIterator
                 Dim color As Color = clusterColors(cluster)
@@ -109,8 +109,8 @@ Namespace KMeans
                 For Each member As EntityClusterModel In (+cluster).Value
                     points += New PointData With {
                         .pt = New PointF With {
-                            .X = member(catagory.X.Value).Average,
-                            .Y = member(catagory.Y.Value).Average
+                            .X = member(catagory.X.value).Average,
+                            .Y = member(catagory.Y.value).Average
                         }
                     }
                 Next
@@ -119,8 +119,8 @@ Namespace KMeans
                     .title = (+cluster).Key,
                     .color = color,
                     .pts = points,
-                    .Shape = LegendStyles.Triangle,
-                    .PointSize = pointSize
+                    .shape = LegendStyles.Triangle,
+                    .pointSize = pointSize
                 }
             Next
 
@@ -139,9 +139,9 @@ Namespace KMeans
         ''' <param name="catagory">
         ''' How to read the data and construct the <see cref="Serial3D"/> model group
         ''' </param>
-        ''' <param name="size$"></param>
-        ''' <param name="bg$"></param>
-        ''' <param name="padding$"></param>
+        ''' <param name="size"></param>
+        ''' <param name="bg"></param>
+        ''' <param name="padding"></param>
         ''' <param name="clusterN">Expected kmeans cluster resulted number, default is 6 cluster</param>
         ''' <returns></returns>
         <Extension>
@@ -152,7 +152,7 @@ Namespace KMeans
                                   Optional bg$ = "white",
                                   Optional padding$ = g.DefaultPadding,
                                   Optional clusterN% = 10,
-                                  Optional schema$ = Designer.Clusters,
+                                  Optional schema$ = DesignerTerms.ClusterCategory10,
                                   Optional shapes As LegendStyles = LegendStyles.Circle Or LegendStyles.Square Or LegendStyles.Triangle,
                                   Optional pointSize! = 20,
                                   Optional boxStroke$ = Stroke.StrongHighlightStroke,
@@ -206,13 +206,17 @@ Namespace KMeans
                                   Optional size$ = "1200,1000",
                                   Optional bg$ = "white",
                                   Optional padding$ = g.DefaultPadding,
-                                  Optional schema$ = Designer.Clusters,
+                                  Optional schema$ = DesignerTerms.ClusterCategory10,
                                   Optional shapes As LegendStyles = LegendStyles.Circle Or LegendStyles.Square Or LegendStyles.Triangle,
                                   Optional pointSize! = 20,
                                   Optional boxStroke$ = Stroke.StrongHighlightStroke,
                                   Optional axisStroke$ = Stroke.AxisStroke,
                                   Optional arrowFactor$ = "2,2",
-                                  Optional labelsQuantile# = -1) As GraphicsData
+                                  Optional labelsQuantile# = -1,
+                                  Optional showLegend As Boolean = True,
+                                  Optional showHull As Boolean = True,
+                                  Optional hullAlpha As Integer = 150,
+                                  Optional hullBspline As Single = 2) As GraphicsData
 
             Dim clusters As Dictionary(Of String, EntityClusterModel()) = clusterData.ClusterGroups
 
@@ -222,7 +226,8 @@ Namespace KMeans
             Dim serials As New List(Of Serial3D)
             Dim shapeList As LegendStyles() = GetAllEnumFlags(Of LegendStyles)(shapes)
             Dim keys$() = catagory.Keys.ToArray
-            Dim labX$ = keys(0), labY$ = keys(1), labZ$ = keys(2)
+            Dim dimensionLabels As String() = catagory.Select(Function(a) a.Value.name).ToArray
+            Dim labX$ = dimensionLabels(0), labY$ = dimensionLabels(1), labZ$ = dimensionLabels(2)
 
             For Each cluster In clusters.SeqIterator
                 Dim color As Color = clusterColors(cluster)
@@ -231,7 +236,7 @@ Namespace KMeans
                 For Each member As EntityClusterModel In (+cluster).Value
                     With keys _
                         .Select(Function(cat)
-                                    Return member(catagory(cat).Value).Average
+                                    Return member(catagory(cat).value).Average
                                 End Function) _
                         .ToArray
 
@@ -263,25 +268,41 @@ Namespace KMeans
                 boxStroke:=boxStroke,
                 axisStroke:=axisStroke,
                 labX:=labX, labY:=labY, labZ:=labZ,
-                arrowFactor:=arrowFactor
+                arrowFactor:=arrowFactor,
+                showLegend:=showLegend,
+                showHull:=showHull,
+                hullAlpha:=hullAlpha,
+                hullBspline:=hullBspline
             )
         End Function
 
         <Extension>
-        Private Function labelSelector(serials As IEnumerable(Of Serial3D), labelsQuantile#) As List(Of Serial3D)
-            Dim q As QuantileEstimationGK = serials _
+        Private Function dimensionQuantile(serials As IEnumerable(Of Serial3D), [dim] As Func(Of Point3D, Double)) As QuantileEstimationGK
+            Return serials _
                 .Select(Function(s)
-                            Return s.Points.Select(Function(p) {CDbl(p.Value.X), CDbl(p.Value.Y), CDbl(p.Value.Z)}.Average)
+                            Return s.Points _
+                                .Select(Function(p)
+                                            Return stdNum.Abs([dim](p.Value))
+                                        End Function)
                         End Function) _
                 .IteratesALL _
                 .GKQuantile
-            Dim quantile# = q.Query(labelsQuantile)
+        End Function
+
+        <Extension>
+        Private Function labelSelector(serials As IEnumerable(Of Serial3D), labelsQuantile#) As List(Of Serial3D)
+            Dim qX# = serials.dimensionQuantile(Function(p) p.X).Query(labelsQuantile)
+            Dim qY# = serials.dimensionQuantile(Function(p) p.Y).Query(labelsQuantile)
+            Dim qZ# = serials.dimensionQuantile(Function(p) p.Z).Query(labelsQuantile)
 
             serials = serials _
                 .Select(Function(s)
                             s.Points = s.Points _
                                 .Select(Function(p)
-                                            If {p.Value.X, p.Value.Y, p.Value.Z}.Average >= quantile Then
+                                            If stdNum.Abs(p.Value.X) >= qX OrElse
+                                               stdNum.Abs(p.Value.Y) >= qY OrElse
+                                               stdNum.Abs(p.Value.Z) >= qZ Then
+
                                                 Return p
                                             Else
                                                 Return New NamedValue(Of Point3D) With {

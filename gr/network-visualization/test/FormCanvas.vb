@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b6b93f3b7cfbd61a165c21e2bcce8385, gr\network-visualization\test\FormCanvas.vb"
+﻿#Region "Microsoft.VisualBasic::cb13fe52e3d5431420790b5c48d4d372, gr\network-visualization\test\FormCanvas.vb"
 
     ' Author:
     ' 
@@ -43,8 +43,9 @@
 Imports System.Drawing
 Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.Data.visualize.Network.Canvas
-Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
+Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Cytoscape
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce
 
 Public Class FormCanvas
 
@@ -55,7 +56,7 @@ Public Class FormCanvas
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Call Me.Controls.Add(canvas)
 
-        canvas.Graph(True) = CytoscapeExportAsGraph(
+        canvas.Graph(True) = CytoscapeTableLoader.CytoscapeExportAsGraph(
             App.HOME & "\Resources\xcb-main-Edges.csv",
             App.HOME & "\Resources\xcb-main-Nodes.csv")
 

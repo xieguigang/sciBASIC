@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb8bb1c84e0a4977f09c2bb21a9d28c0, Data_science\Mathematica\Math\Math\Distributions\Gamma.vb"
+﻿#Region "Microsoft.VisualBasic::ef232de001f4d07d12b206313d8623ca, Data_science\Mathematica\Math\Math\Distributions\Gamma.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module MathGamma
     ' 
-    '         Function: gamma, lngamma
+    '         Function: (+2 Overloads) gamma, lngamm, lngamma
     ' 
     ' 
     ' /********************************************************************************/
@@ -41,7 +41,8 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports sys = System.Math
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports stdNum = System.Math
 
 Namespace Distributions
 
@@ -85,11 +86,37 @@ Namespace Distributions
         }
 
         ''' <summary>
+        ''' Reference: "Lanczos, C. 'A precision approximation
+        ''' of the gamma function', J. SIAM Numer. Anal., B, 1, 86-96, 1964."
+        ''' Translation of  Alan Miller's FORTRAN-implementation
+        ''' See http://lib.stat.cmu.edu/apstat/245
+        ''' </summary>
+        ''' <param name="Z"></param>
+        ''' <returns></returns>
+        Public Function lngamm(Z As Double) As Double
+            Dim x As Double = 0.0
+
+            x += 0.00000016594701874084621 / (Z + 7.0)
+            x += 0.0000099349371139307475 / (Z + 6.0)
+            x -= 0.1385710331296526 / (Z + 5.0)
+            x += 12.50734324009056 / (Z + 4.0)
+            x -= 176.61502914983859 / (Z + 3.0)
+            x += 771.32342877576741 / (Z + 2.0)
+            x -= 1259.1392167222889 / (Z + 1.0)
+            x += 676.52036812188351 / (Z)
+            x += 0.99999999999951827
+
+            Return stdNum.Log(x) - 5.5810614667953278 - Z + (Z - 0.5) * stdNum.Log(Z + 6.5)
+        End Function
+
+        ''' <summary>
         ''' Spouge approximation (suitable for large arguments)
         ''' </summary>
         ''' <param name="z"></param>
         ''' <returns></returns>
-        ''' 
+        ''' <remarks>
+        ''' http://lib.stat.cmu.edu/apstat/245
+        ''' </remarks>
         <Extension>
         Public Function lngamma(z As Double) As Double
             If (z < 0) Then Return 0
@@ -101,7 +128,9 @@ Namespace Distributions
             Next
 
             Dim t As Double = z + g_ln + 0.5
-            Return 0.5 * sys.Log(2 * sys.PI) + (z + 0.5) * sys.Log(t) - t + sys.Log(x) - sys.Log(z)
+            Dim lngm = 0.5 * stdNum.Log(2 * stdNum.PI) + (z + 0.5) * stdNum.Log(t) - t + stdNum.Log(x) - stdNum.Log(z)
+
+            Return lngm
         End Function
 
         ''' <summary>
@@ -122,10 +151,15 @@ Namespace Distributions
         ''' 0.8935153492876909
         ''' ```
         ''' </remarks>
-        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Γ(x As Double) As Double
             Return x.gamma
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function gamma(a As Vector) As Vector
+            Return New Vector(From x As Double In a Select gamma(x))
         End Function
 
         ''' <summary>
@@ -137,9 +171,9 @@ Namespace Distributions
         <Extension>
         Public Function gamma(z As Double) As Double
             If (z < 0.5) Then
-                Return sys.PI / (sys.Sin(Math.PI * z) * gamma(1 - z))
+                Return stdNum.PI / (stdNum.Sin(stdNum.PI * z) * gamma(1 - z))
             ElseIf (z > 100) Then
-                Return sys.Exp(lngamma(z))
+                Return stdNum.Exp(lngamma(z))
             Else
                 Dim x As Double = p(0)
 
@@ -150,7 +184,8 @@ Namespace Distributions
                 Next
 
                 Dim t As Double = z + g + 0.5
-                Return sys.Sqrt(2 * sys.PI) * sys.Pow(t, z + 0.5) * sys.Exp(-t) * x
+
+                Return stdNum.Sqrt(2 * stdNum.PI) * stdNum.Pow(t, z + 0.5) * stdNum.Exp(-t) * x
             End If
         End Function
     End Module

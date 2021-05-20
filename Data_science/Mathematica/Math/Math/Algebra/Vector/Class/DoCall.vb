@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c69e6e0f1acf36bb04b2b3cbb252d26, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\DoCall.vb"
+﻿#Region "Microsoft.VisualBasic::2be909ef2f2b250086f753b22bff18ab, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\DoCall.vb"
 
     ' Author:
     ' 
@@ -52,7 +52,7 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
-Imports ArgumentAttribute = Microsoft.VisualBasic.CommandLine.Reflection.Argument
+Imports ArgumentAttribute = Microsoft.VisualBasic.CommandLine.Reflection.ArgumentAttribute
 
 Namespace LinearAlgebra
 
@@ -150,7 +150,7 @@ Namespace LinearAlgebra
 
             Dim value As Object
             Dim type As Type
-            Dim i As VBInteger
+            Dim i As i32
 
             Public ReadOnly Property Length As Integer
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0753ce517641a783fd52822737b17ff, Data_science\Visualization\Visualization\Kmeans\KMeansNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::635463b36f93a129c080a6f851f3c9c3, Data_science\Visualization\Visualization\Kmeans\KMeansNetwork.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
-Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Extensions
+Imports Microsoft.VisualBasic.Data.visualize.Network
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
@@ -133,10 +133,10 @@ Namespace KMeans
             Next
 
             Return New NetworkTables With {
-                .Edges = edges _
-                .RemoveSelfLoop _
-                .RemoveDuplicated(False, False), ' 相似度是无方向的
-                .Nodes = nodes
+                .edges = edges _
+                    .RemoveSelfLoop _
+                    .RemoveDuplicated(False, False), ' 相似度是无方向的
+                .nodes = nodes
             }
         End Function
     End Module

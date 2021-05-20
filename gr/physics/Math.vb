@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3dceb0b33987992ae66986a358c933d, gr\physics\Math.vb"
+﻿#Region "Microsoft.VisualBasic::c275b262f31e05eb63a41a2159d5414a, gr\physics\Math.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' Math provider for <see cref="Force"/>
@@ -64,9 +64,9 @@ Public Module Math
     ''' <returns></returns>
     <Extension>
     Public Function Decomposition2D(F As Force) As Vector
-        Dim v = F.Strength
-        Dim a = F.Angle
-        Return New Vector({v * sys.Cos(a), v * Sin(a)})
+        Dim v = F.strength
+        Dim a = F.angle
+        Return New Vector({v * stdNum.Cos(a), v * Sin(a)})
     End Function
 
     <Extension>
@@ -81,21 +81,21 @@ Public Module Math
     ''' <param name="f2"></param>
     ''' <returns></returns>
     Public Function ParallelogramLaw(f1 As Force, f2 As Force) As Force
-        If f1 = 0 Then
+        If f1 = 0.0 Then
             Return f2
-        ElseIf f2 = 0 Then
+        ElseIf f2 = 0.0 Then
             Return f1
-        ElseIf f1 = 0 AndAlso f2 = 0 Then
+        ElseIf f1 = 0.0 AndAlso f2 = 0.0 Then
             Return New Force
         Else
         End If
 
-        Dim alpha = f1.Angle - f2.Angle
-        Dim F = Sqrt(f1 ^ 2 + f2 ^ 2 + 2 * f1 * f2 * sys.Cos(alpha))
+        Dim alpha = f1.angle - f2.angle
+        Dim F = Sqrt(f1 ^ 2 + f2 ^ 2 + 2 * f1 * f2 * stdNum.Cos(alpha))
 
         If F = 0R Then
             ' F 为零的之后，只有二者方向相反
-            alpha = Min(f2.Angle, f1.Angle)
+            alpha = Min(f2.angle, f1.angle)
         Else
             Dim sina = Sin(alpha) * f1 / F
 
@@ -103,23 +103,23 @@ Public Module Math
                 ' 要么二者相反，要么二者同向
                 If F > f1 AndAlso F > f2 Then
                     ' 二者同向相加才会出现都大于的情况
-                    alpha = Min(f1.Angle, f2.Angle)
+                    alpha = Min(f1.angle, f2.angle)
                 Else
                     ' 反向，取力最大的方向
                     If f1 > f2 Then
-                        alpha = f1.Angle
+                        alpha = f1.angle
                     Else
-                        alpha = f2.Angle
+                        alpha = f2.angle
                     End If
                 End If
             Else
-                alpha = Sinh(sina) + f2.Angle
+                alpha = Sinh(sina) + f2.angle
             End If
         End If
 
         Return New Force With {
-            .Strength = F,
-            .Angle = alpha,
+            .strength = F,
+            .angle = alpha,
             .source = NameOf(ParallelogramLaw)
         }
     End Function
@@ -134,7 +134,7 @@ Public Module Math
         Dim result As New Force
 
         ' 力从小到大升序排序，可以保证最后力的方向永远是偏向于大力所指向的方向
-        For Each n As Force In F.OrderBy(Function(i) i.Strength)
+        For Each n As Force In F.OrderBy(Function(i) i.strength)
             result = result + n
         Next
 
@@ -152,8 +152,8 @@ Public Module Math
         Dim alpha = PI + 1 / 2 * PI
 
         Return New Force With {
-            .Strength = f,
-            .Angle = alpha,
+            .strength = f,
+            .angle = alpha,
             .source = NameOf(Gravity)
         }
     End Function
@@ -174,6 +174,8 @@ Public Module Math
     ''' <param name="r#"></param>
     ''' <param name="k#"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function CoulombsLaw(q1#, q2#, r#, Optional k# = 9000000000.0) As Double
         Return k * q1 * q2 / r ^ 2
     End Function
@@ -201,6 +203,8 @@ Public Module Math
     ''' <param name="a"></param>
     ''' <param name="b"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Cos(a As Vector, b As Vector) As Double
         Return a.DotProduct(b) / (a.SumMagnitude * b.SumMagnitude)
     End Function
@@ -227,8 +231,8 @@ Public Module Math
         End If
 
         Return New Force With {
-            .Strength = strength,
-            .Angle = alpha,
+            .strength = strength,
+            .angle = alpha,
             .source = NameOf(RepulsiveForce)
         }
     End Function

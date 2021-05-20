@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6f1b667d6b87dde5ea86e0f308aa6b5, Data_science\Visualization\Plots\BarPlot\Histogram\DataModel.vb"
+﻿#Region "Microsoft.VisualBasic::fe531378bf78eb40977bea9a403e17a4, Data_science\Visualization\Plots\BarPlot\Histogram\DataModel.vb"
 
     ' Author:
     ' 
@@ -48,7 +48,7 @@
     '         Properties: SerialData
     ' 
     '         Constructor: (+3 Overloads) Sub New
-    '         Function: GetLine
+    '         Function: GetLine, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -66,7 +66,6 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace BarPlot.Histogram
@@ -158,10 +157,13 @@ Namespace BarPlot.Histogram
         Sub New(data As IEnumerable(Of HistProfile))
             Samples = data
             Serials = data _
-                .Select(Function(x) New NamedValue(Of Color) With {
-                    .Name = x.legend.title,
-                    .Value = x.legend.color.ToColor
-                })
+                .Select(Function(x)
+                            Return New NamedValue(Of Color) With {
+                                .Name = x.legend.title,
+                                .Value = x.legend.color.ToColor
+                            }
+                        End Function) _
+                .ToArray
         End Sub
     End Class
 
@@ -173,7 +175,7 @@ Namespace BarPlot.Histogram
         ''' <summary>
         ''' The legend plot definition
         ''' </summary>
-        Public legend As Legend
+        Public legend As LegendObject
         Public data As HistogramData()
 
         Public ReadOnly Property SerialData As NamedValue(Of Color)
@@ -185,15 +187,10 @@ Namespace BarPlot.Histogram
             End Get
         End Property
 
-        Public Function GetLine(color As Color, width!, ptSize!, Optional type As DashStyle = DashStyle.Solid) As SerialData
-            Return New SerialData With {
-                .color = color,
-                .width = width,
-                .lineType = type,
-                .PointSize = ptSize,
-                .pts = data.Select(Function(x) x.LinePoint)
-            }
-        End Function
+        Sub New(legend As LegendObject, data As HistogramData())
+            Me.legend = legend
+            Me.data = data
+        End Sub
 
         ''' <summary>
         ''' 仅仅在这里初始化了<see cref="data"/>
@@ -229,25 +226,21 @@ Namespace BarPlot.Histogram
                 }
         End Sub
 
-        ''' <summary>
-        ''' Tag值为直方图的高，value值为直方图的平均值连线
-        ''' </summary>
-        ''' <param name="hist"></param>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Sub New(hist As IEnumerable(Of DataBinBox(Of Double)), step!)
-            data = hist _
-                .Select(Function(range)
-                            Dim data As Double() = range.Raw
+        Public Overrides Function ToString() As String
+            Return legend.ToString
+        End Function
 
-                            Return New HistogramData With {
-                                .x1 = data.Min,
-                                .x2 = .x1 + step!,
-                                .y = data.Length,
-                                .pointY = data.Average
-                            }
-                        End Function) _
-                .ToArray
-        End Sub
+        Public Function GetLine(color As Color, width!, ptSize!, Optional type As DashStyle = DashStyle.Solid) As SerialData
+            Return New SerialData With {
+                .color = color,
+                .width = width,
+                .lineType = type,
+                .pointSize = ptSize,
+                .pts = data _
+                    .Select(Function(x) x.LinePoint) _
+                    .ToArray
+            }
+        End Function
+
     End Structure
 End Namespace

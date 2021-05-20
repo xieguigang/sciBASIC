@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9127888ecabdeee599f582565878195d, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Legend.vb"
+﻿#Region "Microsoft.VisualBasic::5952b1caad680705efc36109cce81ecc, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Legend.vb"
 
     ' Author:
     ' 
@@ -77,8 +77,11 @@ Namespace Drawing2D.Colors
                                        Optional titleFont As Font = Nothing,
                                        Optional labelFont As Font = Nothing,
                                        Optional legendWidth! = -1) As GraphicsData
-            Dim br As SolidBrush() =
-                designer.Select(Function(c) New SolidBrush(c)).ToArray
+
+            Dim br As SolidBrush() = designer _
+                .Select(Function(c) New SolidBrush(c)) _
+                .ToArray
+
             Return br.ColorMapLegend(
                 title,
                 min, max,
@@ -86,12 +89,13 @@ Namespace Drawing2D.Colors
                 haveUnmapped,
                 lsize, padding,
                 titleFont, labelFont,
-                legendWidth)
+                legendWidth
+            )
         End Function
 
         Public Const DefaultPadding$ = "padding:50px 50px 100px 50px;"
 
-        ReadOnly defaultLegendSize As [Default](Of  Size) = New Size(800, 1024)
+        ReadOnly defaultLegendSize As [Default](Of Size) = New Size(800, 1024)
 
         ''' <summary>
         ''' 竖直的颜色图例，输出的图例的大小默认为：``{800, 1024}``
@@ -153,7 +157,9 @@ Namespace Drawing2D.Colors
         ''' </summary>
         ''' <param name="g"></param>
         ''' <param name="layout">legend的大小和位置</param>
-        ''' 
+        ''' <param name="unmapColor">
+        ''' 当这个参数为空值的时候，将不会绘制未映射颜色示例
+        ''' </param>
         <Extension>
         Public Sub ColorMapLegend(ByRef g As IGraphics, layout As Rectangle,
                                   designer As SolidBrush(),
@@ -163,20 +169,24 @@ Namespace Drawing2D.Colors
                                   tickAxisStroke As Pen,
                                   Optional unmapColor$ = Nothing,
                                   Optional ruleOffset! = 10,
-                                  Optional roundDigit% = 2)
+                                  Optional format$ = "F2",
+                                  Optional legendOffsetLeft! = -99999)
 
             Dim titleSize As SizeF = g.MeasureString(title, titleFont)
-            Dim legendOffsetLeft!, legendOffsetTop!
+            Dim legendOffsetTop!
             Dim legendWidth! = layout.Width / 3 ' 颜色谱的宽度为layout的 1/3
             Dim legendHeight!
             Dim d!
+            Dim offsetAuto As Boolean = legendOffsetLeft < 0
 
             ' 首先计算出layout
             legendOffsetTop = titleSize.Height * 2 + 5
 
-            ' 下面的三个元素在宽度上面各自占1/3
-            ' 空白 | legend | 标尺
-            legendOffsetLeft = legendWidth
+            If offsetAuto Then
+                ' 下面的三个元素在宽度上面各自占1/3
+                ' 空白 | legend | 标尺
+                legendOffsetLeft = legendWidth
+            End If
 
             If unmapColor.StringEmpty Then
                 ' 没有unmap的颜色，则颜色谱的高度占据剩下的所有高度
@@ -193,7 +203,7 @@ Namespace Drawing2D.Colors
             Dim rect As RectangleF
 
             ' 绘制标题
-            x = layout.Left + legendOffsetLeft + (legendWidth - titleSize.Width) / 2
+            x = layout.Left + legendOffsetLeft - titleSize.Width / title.Length
             y = layout.Top
             point = New PointF(x, y)
 
@@ -240,10 +250,10 @@ Namespace Drawing2D.Colors
 
             x += ruleOffset + 5
             point = New PointF(x, y - tickFont.Height / 2)
-            g.DrawString(ticks.Max.ToString("F" & roundDigit), tickFont, Brushes.Black, point)
+            g.DrawString(ticks.Max.ToString(format), tickFont, Brushes.Black, point)
 
             point = New PointF(x, y + legendHeight - tickFont.Height / 2)
-            g.DrawString(ticks.Min.ToString("F" & roundDigit), tickFont, Brushes.Black, point)
+            g.DrawString(ticks.Min.ToString(format), tickFont, Brushes.Black, point)
 
             ticks = ticks _
                 .Skip(1) _
@@ -251,21 +261,27 @@ Namespace Drawing2D.Colors
                 .OrderByDescending(Function(n) n) _
                 .ToArray
 
-            Dim delta = legendHeight / (ticks.Length + 1)
+            Dim delta As Single = legendHeight / (ticks.Length + 1)
+            Dim tickStr As String
 
             y += delta
             x -= ruleOffset
             tickFont = New Font(tickFont.FontFamily, tickFont.Size * 2.5 / 3)
 
             ' 画出剩余的小标尺
-            For Each tick In ticks
+            For Each tick As Double In ticks
+                tickStr = tick.ToString(format)
+
+                If tick >= 0 Then
+                    tickStr = " " & tickStr
+                End If
 
                 point = New PointF With {
                     .X = x + 2,
                     .Y = y - tickFont.Height / 2
                 }
                 g.DrawLine(Pens.Black, x, y, x - 5, y)
-                g.DrawString(tick.ToString($"F{roundDigit}"), tickFont, Brushes.Gray, point)
+                g.DrawString(tickStr, tickFont, Brushes.Gray, point)
 
                 y += delta
             Next
@@ -310,7 +326,7 @@ Namespace Drawing2D.Colors
                                          Optional AxisStroke$ = Stroke.AxisStroke,
                                          Optional scientificNotation As Boolean = False)
 
-            Dim font As Font = CSSFont.TryParse(labelFontCSS)
+            Dim font As Font = CSSFont.TryParse(labelFontCSS).GDIObject
             Dim l = designer.Length
             Dim dx = region.Width / l
             Dim h = region.Height * (2 / 3)

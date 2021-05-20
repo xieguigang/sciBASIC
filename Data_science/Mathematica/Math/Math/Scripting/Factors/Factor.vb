@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bafe1b916b2181cb9bca634d2782c5cd, Data_science\Mathematica\Math\Math\Scripting\Factors\Factor.vb"
+﻿#Region "Microsoft.VisualBasic::3a06610e244232c20869558c8b6e9ab1, Data_science\Mathematica\Math\Math\Scripting\Factors\Factor.vb"
 
     ' Author:
     ' 
@@ -58,7 +58,7 @@ Namespace Scripting
     ''' R language like string factor
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Class Factor(Of T As IComparable(Of T)) : Inherits VBDouble
+    Public Class Factor(Of T As IComparable(Of T)) : Inherits f64
         Implements Value(Of T).IValueOf
 
         Public Property FactorValue As T Implements Value(Of T).IValueOf.Value

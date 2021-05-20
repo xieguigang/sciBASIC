@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a43770d9064e068fe5bbd75ad8c8011, Data\DataFrame\IO\Generic\DataSet.vb"
+﻿#Region "Microsoft.VisualBasic::a7c0e148ee88dd8b7dd40ddb3f543a37, Data\DataFrame\IO\Generic\DataSet.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,7 @@
     '         Properties: ID, MyHashCode, Vector
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: __getID, Append, Copy, (+2 Overloads) LoadDataSet, SubSet
-    '                   ToString
+    '         Function: Append, Copy, (+2 Overloads) LoadDataSet, SubSet, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -60,6 +59,14 @@ Namespace IO
     Public Class DataSet : Inherits DynamicPropertyBase(Of Double)
         Implements INamedValue
 
+        ''' <summary>
+        ''' 当前的这条数据记录在整个数据集之中的唯一标记符
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 20191031
+        ''' 重写这个属性会造成<see cref="FileFormat.SolveDataSetIDMapping(String, String, Boolean?, Encoding)"/>失效
+        ''' </remarks>
         Public Overridable Property ID As String Implements INamedValue.Key
 
         Protected Overrides ReadOnly Property MyHashCode As Integer
@@ -70,7 +77,7 @@ Namespace IO
         End Property
 
         ''' <summary>
-        ''' 
+        ''' equivalent to <see cref="Properties"/>.Values.ToArray
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks>
@@ -94,6 +101,12 @@ Namespace IO
 
         Shared ReadOnly replace As New [Default](Of Func(Of Double, Double, Double))(Function(previous, now) now)
 
+        ''' <summary>
+        ''' 将一系列数据添加进入当前的数据集对象实例之中
+        ''' </summary>
+        ''' <param name="data">数据系列</param>
+        ''' <param name="duplicated"></param>
+        ''' <returns></returns>
         Public Function Append(data As [Property](Of Double), Optional duplicated As Func(Of Double, Double, Double) = Nothing) As DataSet
             duplicated = duplicated Or DataSet.replace
 
@@ -139,11 +152,19 @@ Namespace IO
                 .ID = ID,
                 .Properties = labels _
                     .ToDictionary(Function(x) x,
-                                  Function(x) Me(x))
+                                  Function(x)
+                                      Return Me(x)
+                                  End Function)
             }
         End Function
 
         ''' <summary>
+        ''' The dataset for this table loader should be in format like:
+        ''' 
+        ''' + First column should be a string value column for indicate the dataset row uniquely.
+        ''' + If the first column is not the rows' unique id, then <paramref name="uidMap"/> parameter should be provided for specific the which column is your datasets' uid column
+        ''' + Then all of the other column will be treated as the numeric property data
+        ''' 
         ''' <paramref name="uidMap"/>一般情况下会自动进行判断，不需要具体的设置
         ''' </summary>
         ''' <param name="path"></param>
@@ -159,27 +180,43 @@ Namespace IO
                                            Optional uidMap$ = Nothing,
                                            Optional fieldNameMaps As Dictionary(Of String, String) = Nothing,
                                            Optional tsv As Boolean = False,
-                                           Optional encoding As Encoding = Nothing) As IEnumerable(Of DataSet)
-            Return EntityObject.LoadDataSet(path, uidMap, fieldNameMaps, tsv, encoding).AsDataSet
+                                           Optional encoding As Encoding = Nothing,
+                                           Optional silent As Boolean = False) As IEnumerable(Of DataSet)
+
+            Return EntityObject.LoadDataSet(
+                path:=path,
+                uidMap:=uidMap,
+                fieldNameMaps:=fieldNameMaps,
+                tsv:=tsv,
+                encoding:=encoding,
+                silent:=silent
+            ).AsDataSet
         End Function
 
+        ''' <summary>
+        ''' 这个函数可以处理csv以及tsv数据格式
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="path$"></param>
+        ''' <param name="uidMap$"></param>
+        ''' <param name="encoding"></param>
+        ''' <returns></returns>
         Public Shared Function LoadDataSet(Of T As DataSet)(path$,
                                                             Optional uidMap$ = Nothing,
-                                                            Optional encoding As Encoding = Nothing) As IEnumerable(Of T)
+                                                            Optional encoding As Encoding = Nothing,
+                                                            Optional isTsv As Boolean = False) As IEnumerable(Of T)
 
-            Dim mapFrom$ = uidMap Or New [Default](Of  String) With {
-                .lazy = New Func(Of String)(Function() __getID(path)).AsLazy
-            }
-            Return path.LoadCsv(Of T)(
-                explicit:=False,
-                maps:={{mapFrom, NameOf(DataSet.ID)}},
-                encoding:=encoding
-            )
-        End Function
+            Dim mapFrom$ = FileFormat.SolveDataSetIDMapping(path, uidMap, isTsv, encoding)
 
-        Private Shared Function __getID(path$) As String
-            Dim first As New RowObject(path.ReadFirstLine)
-            Return first.First
+            If isTsv Then
+                Return path.LoadTsv(Of T)(encoding, {{mapFrom, NameOf(DataSet.ID)}})
+            Else
+                Return path.LoadCsv(Of T)(
+                    explicit:=False,
+                    maps:={{mapFrom, NameOf(DataSet.ID)}},
+                    encoding:=encoding
+                )
+            End If
         End Function
     End Class
 End Namespace

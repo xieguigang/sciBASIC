@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::403bcee3697abaf8f195c7cffed3c549, mime\text%html\HTML\CSS\Parser\UrlEvaluator.vb"
+﻿#Region "Microsoft.VisualBasic::a974a8a3f5ab4066c2e6df566e13758a, mime\text%html\HTML\CSS\Parser\UrlEvaluator.vb"
 
     ' Author:
     ' 
@@ -41,6 +41,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net.Http
@@ -77,7 +78,7 @@ Namespace HTML.CSS.Parser
             Else
                 If uri.IsURLPattern Then
                     ' 是网络文件
-                    With App.GetAppSysTempFile
+                    With TempFileSystem.GetAppSysTempFile
                         uri.DownloadFile(.ByRef)
                         Return .LoadImage
                     End With

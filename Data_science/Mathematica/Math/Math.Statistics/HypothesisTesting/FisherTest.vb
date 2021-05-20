@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a719d9e80c3b2b6f76be7af791da28f1, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\FisherTest.vb"
+﻿#Region "Microsoft.VisualBasic::1a6c0bcd9fcda91e60779de861630c48, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\FisherTest.vb"
 
     ' Author:
     ' 
@@ -33,13 +33,17 @@
 
     ' Module FisherTest
     ' 
-    '     Function: FactorialDivide, FisherPvalue, product
+    '     Function: FactorialDivide, FisherPvalue, product, ProductALL
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Math.Numerics
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' ### Fisher's exact test
@@ -70,6 +74,8 @@ Public Module FisherTest
     ''' |**Non-Studying**|   c   |    d    |   c + d   |
     ''' |*Column Total*  | a + c |  b + d  | a+b+c+d=n |
     ''' 
+    ''' 这个函数通过下面的阶乘计算来计算FisherTest的pvalue值
+    ''' 
     ''' ```
     ''' p = ((a+b)!(c+d)!(a+c)!(b+d)!)/(a!b!c!d!n!)
     ''' ```
@@ -90,8 +96,8 @@ Public Module FisherTest
                  FactorialSequence(c) +
                  FactorialSequence(d) +
                  FactorialSequence(N)
-        Dim p = FisherTest.FactorialDivide(sX, sY)
-        Return p
+
+        Return FisherTest.FactorialDivide(sX, sY)
     End Function
 
     ''' <summary>
@@ -102,30 +108,49 @@ Public Module FisherTest
     ''' <param name="Y"></param>
     ''' <returns></returns>
     Private Function FactorialDivide(X As List(Of Integer), Y As List(Of Integer)) As Double
-        Dim gx = X.GroupBy(Function(n) n).ToDictionary(Function(n) n.Key, Function(n) n.Count)
-        Dim gy = Y.GroupBy(Function(n) n).ToDictionary(Function(n) n.Key, Function(n) n.Count)
+        Dim gx = X.GroupBy(Function(n) n).ToDictionary(Function(n) CStr(n.Key), Function(n) n.Count)
+        Dim gy = Y.GroupBy(Function(n) n).ToDictionary(Function(n) CStr(n.Key), Function(n) n.Count)
 
         ' 将相同的因子在分子和分母之间约掉
-        Dim dx As New List(Of KeyValuePair(Of Integer, Integer))
+        Dim dx As New List(Of KeyValuePair(Of String, Integer))
+        Dim min%
 
         For Each factor In gx
             If gy.ContainsKey(factor.Key) Then
                 ' 取最少的
-                Dim min = VBMath.Min(factor.Value, gy(factor.Key))
-                dx.Add(New KeyValuePair(Of Integer, Integer)(factor.Key, factor.Value - min))
+                min = stdNum.Min(factor.Value, gy(factor.Key))
+                dx.Add(factor.Key, factor.Value - min)
                 gy(factor.Key) -= min
+            Else
+                dx.Add(factor)
             End If
         Next
 
         Dim px = dx.ToDictionary.product
         Dim py = gy.product
+        Dim p As BigDecimal = px / py
+        Dim pvalue As Double = p.ToString
 
-        Return px / py
+        Return pvalue
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Private Function product(x As Dictionary(Of Integer, Integer)) As Double
-        Return x.Select(Function(n) n.Key ^ n.Value).ProductALL
+    Private Function product(x As IEnumerable(Of KeyValuePair(Of String, Integer))) As BigDecimal
+        Return x _
+            .Where(Function(n) n.Value <> 0) _
+            .Select(Function(n) New BigDecimal(Integer.Parse(n.Key) ^ n.Value)) _
+            .ProductALL
+    End Function
+
+    <Extension>
+    Private Function ProductALL(bints As IEnumerable(Of BigDecimal)) As BigDecimal
+        Dim product As New BigDecimal(1)
+
+        For Each x As BigDecimal In bints
+            product *= x
+        Next
+
+        Return product
     End Function
 End Module

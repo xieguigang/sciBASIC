@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68de761b1a44c645c72163c684bf0fc5, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\FontMetrics.vb"
+﻿#Region "Microsoft.VisualBasic::4dea4af6a5a5d8555a093cb2561629fc, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\FontMetrics.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     ' 
     '     Module Extensions
     ' 
-    '         Function: FontMetrics
+    '         Function: (+3 Overloads) FontMetrics
     ' 
     ' 
     ' /********************************************************************************/
@@ -49,6 +49,8 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.SVG
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace Drawing2D.Text
@@ -69,7 +71,9 @@ Namespace Drawing2D.Text
 
         Sub New(font As Font, g As Graphics)
             Me.Font = font
+
             Height = g.MeasureString("1", font).Height
+            Graphics = g
         End Sub
 
         Sub New(font As CSSFont, g As Graphics)
@@ -82,12 +86,12 @@ Namespace Drawing2D.Text
         ''' <param name="s"></param>
         ''' <param name="g"></param>
         ''' <returns></returns>
-        Public Function GetStringBounds(s As String, g As Graphics) As RectangleF
-            Return New RectangleF(New Point, g.MeasureString(s, Font))
+        Public Shared Function GetStringBounds(s As String, font As Font, g As Graphics) As RectangleF
+            Return New RectangleF(New Point, g.MeasureString(s, font))
         End Function
 
         Public Function GetStringBounds(s As String) As RectangleF
-            Return GetStringBounds(s, Graphics)
+            Return GetStringBounds(s, Font, Graphics)
         End Function
 
         Public Shared Narrowing Operator CType(f As FontMetrics) As Font
@@ -97,9 +101,29 @@ Namespace Drawing2D.Text
 
     Public Module Extensions
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function FontMetrics(g As Graphics2D) As FontMetrics
             Return New FontMetrics(g.Font, g.Graphics)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function FontMetrics(g As GraphicsSVG, font As Font) As FontMetrics
+            Return New FontMetrics(font, g.internalGraphicsHelper)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function FontMetrics(g As IGraphics, font As Font) As FontMetrics
+            Select Case g.GetType
+                Case GetType(Graphics2D)
+                    Return New FontMetrics(font, DirectCast(g, Graphics2D).Graphics)
+                Case GetType(GraphicsSVG)
+                    Return DirectCast(g, GraphicsSVG).FontMetrics(font)
+                Case Else
+                    Throw New InvalidCastException(g.GetType.FullName)
+            End Select
         End Function
     End Module
 End Namespace

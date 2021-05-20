@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63b83040d6ed4a7b35ec347b0248d972, Data\DataFrame\DATA\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::9cb52eef12222618ddfc34ef63606cca, Data\DataFrame\DATA\DataFrame.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,10 @@
 
     '     Class DataFrame
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: [As], Append, GetEnumerator, IEnumerable_GetEnumerator, Load
-    '                   SaveTable, ToString
+    '         Function: [As], Append, Cbind, GetEnumerator, IEnumerable_GetEnumerator
+    '                   Load, SaveTable, ToString
     ' 
     '         Sub: TagFieldName
     ' 
@@ -94,12 +94,32 @@ Namespace DATA
             entityList = list.ToDictionary(replaceOnDuplicate:=doUnique)
         End Sub
 
+        Sub New()
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub TagFieldName(tag$, fieldName$)
             Call MappingsHelper _
                 .TagFieldName(entityList.Values, tag, fieldName) _
                 .ToArray
         End Sub
+
+        Public Function Cbind(data As EntityObject, Optional transpose As Boolean = False) As DataFrame
+            If Not transpose Then
+                Return Me + {data}
+            Else
+                Return Me + data.Properties _
+                    .Select(Function(r)
+                                Return New EntityObject With {
+                                    .ID = r.Key,
+                                    .Properties = New Dictionary(Of String, String) From {
+                                        {data.ID, r.Value}
+                                    }
+                                }
+                            End Function) _
+                    .ToArray
+            End If
+        End Function
 
         ''' <summary>
         ''' Convert row object as target .NET object

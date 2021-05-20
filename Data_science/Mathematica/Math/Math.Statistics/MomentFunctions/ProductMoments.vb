@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16d34404bd9206109b1b5082211699ba, Data_science\Mathematica\Math\Math.Statistics\MomentFunctions\ProductMoments.vb"
+﻿#Region "Microsoft.VisualBasic::2ee7f8ed5f4d818ea7071fb14d915976, Data_science\Mathematica\Math\Math.Statistics\MomentFunctions\ProductMoments.vb"
 
     ' Author:
     ' 
@@ -46,6 +46,7 @@
 
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports stdNum = System.Math
 
 '
 ' * To change this license header, choose License Headers in Project Properties.
@@ -59,6 +60,15 @@ Namespace MomentFunctions
     ''' @author Will_and_Sara
     ''' </summary>
     Public Class ProductMoments
+
+        Public ReadOnly Property Median As Double
+        Public ReadOnly Property Skew As Double
+        Public ReadOnly Property Kurtosis As Double
+        Public ReadOnly Property Min As Double
+        Public ReadOnly Property Max As Double
+        Public ReadOnly Property Mean As Double
+        Public ReadOnly Property StandardDeviation As Double
+        Public ReadOnly Property SampleSize As Integer
 
         Public Sub New(data As Double())
             Dim count = data.Length
@@ -74,34 +84,18 @@ Namespace MomentFunctions
             Dim ksums As Double = 0
 
             For i As Integer = 0 To data.Length - 1
-                skewsums += Math.Pow((data(i) - _Mean), 3)
-                ksums += Math.Pow(((data(i) - _Mean) / _StandardDeviation), 4)
+                skewsums += stdNum.Pow((data(i) - _Mean), 3)
+                ksums += stdNum.Pow(((data(i) - _Mean) / _StandardDeviation), 4)
             Next
 
-            'just alittle more math...
+            'just alittle more stdNum...
             ksums *= (count * (count + 1)) \ ((count - 1) * (count - 2) * (count - 3))
-            _Skew = (count * skewsums) / ((count - 1) * (count - 2) * Math.Pow(_StandardDeviation, 3))
-            _Kurtosis = ksums - ((3 * (Math.Pow(count - 1, 2))) / ((count - 2) * (count - 3)))
+            _Skew = (count * skewsums) / ((count - 1) * (count - 2) * stdNum.Pow(_StandardDeviation, 3))
+            _Kurtosis = ksums - ((3 * (stdNum.Pow(count - 1, 2))) / ((count - 2) * (count - 3)))
 
             'figure out an efficent algorithm for median...
             Median = data.Median
         End Sub
-
-        Public ReadOnly Property Median As Double
-
-        Public ReadOnly Property Skew() As Double
-
-        Public ReadOnly Property Kurtosis() As Double
-
-        Public ReadOnly Property Min() As Double
-
-        Public ReadOnly Property Max() As Double
-
-        Public ReadOnly Property Mean() As Double
-
-        Public ReadOnly Property StandardDeviation() As Double
-
-        Public ReadOnly Property SampleSize() As Integer
 
         Public Overrides Function ToString() As String
             Return GetJson

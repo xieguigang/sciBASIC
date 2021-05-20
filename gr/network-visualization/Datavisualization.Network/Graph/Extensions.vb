@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed079fb1f5beb4d02aad9a2d3fbaf16a, gr\network-visualization\Datavisualization.Network\Graph\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::80a7474dcc33720a8dd2c34c82ec3227, gr\network-visualization\Datavisualization.Network\Graph\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: GetNeighbours, NodesID, RemoveDuplicated, RemoveSelfLoop
+    '         Function: GetNeighbours, NodesID
     ' 
     '         Sub: ApplyAnalysis
     ' 
@@ -44,13 +44,14 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
+Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
 Namespace Graph
 
-    Public Module Extensions
+    <HideModuleName> Public Module Extensions
 
         ''' <summary>
         ''' Get all of the connected nodes ID from the edges data
@@ -67,62 +68,33 @@ Namespace Graph
                 .ToArray
         End Function
 
+        ''' <summary>
+        ''' 生成诸如degree之类的信息
+        ''' </summary>
+        ''' <param name="net"></param>
         <Extension>
         Public Sub ApplyAnalysis(ByRef net As NetworkGraph)
-
-            For Each node In net.nodes
-                node.Data.Neighbours = net.GetNeighbours(node.Label).ToArray
+            For Each node In net.vertex
+                node.data.neighbours = net.GetNeighbours(node.Label).ToArray
+                node.data(NamesOf.REFLECTION_ID_MAPPING_DEGREE) = node.data.neighborhoods
             Next
         End Sub
 
+        ''' <summary>
+        ''' 枚举出和当前的给定编号的节点所连接的节点的索引编号
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="node"></param>
+        ''' <returns></returns>
         <Extension>
-        Public Iterator Function GetNeighbours(net As NetworkGraph, node As String) As IEnumerable(Of Integer)
-            For Each edge As Edge In net.edges
+        Public Iterator Function GetNeighbours(g As NetworkGraph, node As String) As IEnumerable(Of Integer)
+            For Each edge As Edge In g.graphEdges
                 Dim connected As String = edge.GetConnectedNode(node)
+
                 If Not String.IsNullOrEmpty(connected) Then
-                    Yield CInt(connected)
+                    Yield g.GetElementByID(connected).ID
                 End If
             Next
-        End Function
-
-        ''' <summary>
-        ''' 移除的重复的边
-        ''' </summary>
-        ''' <remarks></remarks>
-        ''' <param name="directed">是否忽略方向？</param>
-        ''' <param name="ignoreTypes">是否忽略边的类型？</param>
-        <Extension> Public Function RemoveDuplicated(Of T As NetworkEdge)(
-                                                    edges As IEnumerable(Of T),
-                                                    Optional directed As Boolean = True,
-                                                    Optional ignoreTypes As Boolean = False) As T()
-            Dim uid = Function(edge As T) As String
-                          If directed Then
-                              Return edge.GetDirectedGuid(ignoreTypes)
-                          Else
-                              Return edge.GetNullDirectedGuid(ignoreTypes)
-                          End If
-                      End Function
-            Dim LQuery = edges _
-                .GroupBy(uid) _
-                .Select(Function(g) g.First) _
-                .ToArray
-
-            Return LQuery
-        End Function
-
-        ''' <summary>
-        ''' 移除自身与自身的边
-        ''' </summary>
-        ''' <remarks></remarks>
-        <Extension> Public Function RemoveSelfLoop(Of T As NetworkEdge)(edges As IEnumerable(Of T)) As T()
-            Dim LQuery = LinqAPI.Exec(Of T) <=
- _
-                From x As T
-                In edges
-                Where Not x.SelfLoop
-                Select x
-
-            Return LQuery
         End Function
     End Module
 End Namespace

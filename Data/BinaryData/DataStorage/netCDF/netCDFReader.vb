@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32c718a2bfae582b0e7c1cf2087fed93, Data\BinaryData\DataStorage\netCDF\netCDFReader.vb"
+﻿#Region "Microsoft.VisualBasic::df7f33bdc530a2326a7444c7c4443ac0, Data\BinaryData\DataStorage\netCDF\netCDFReader.vb"
 
     ' Author:
     ' 
@@ -35,17 +35,21 @@
     ' 
     '         Properties: dimensions, globalAttributes, recordDimension, variables, version
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     ' 
-    '         Function: attributeExists, dataVariableExists, (+2 Overloads) getDataVariable, getDataVariableAsString, Open
-    '                   ToString
+    '         Function: attributeExists, dataVariableExists, (+2 Overloads) getDataVariable, getDataVariableAsString, getDataVariableEntry
+    '                   Open, ToString
     ' 
-    '         Sub: Print
+    '         Sub: (+2 Overloads) Dispose, Print
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
+
+#If netcore5 = 1 Then
+Imports System.Data
+#End If
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
@@ -53,17 +57,19 @@ Imports System.Text
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
 Namespace netCDF
 
     ''' <summary>
-    ''' 
+    ''' The dotCDF file of a CDF contains magic numbers and numerous internal records are used to organize information
+    ''' about the contents Of the CDF (For both Single-file And multi-file CDFs).
     ''' </summary>
     ''' <remarks>
     ''' https://github.com/cheminfo-js/netcdfjs
     ''' </remarks>
-    Public Class netCDFReader
+    Public Class netCDFReader : Implements IDisposable
 
         Dim buffer As BinaryDataReader
         Dim header As Header
@@ -135,7 +141,7 @@ Namespace netCDF
         End Property
 
         ''' <summary>
-        ''' Returns the value of an attribute
+        ''' Returns the value of an global attribute
         ''' </summary>
         ''' <param name="attributeName">attributeName</param>
         ''' <returns>Value of the attributeName Or undefined</returns>
@@ -145,7 +151,7 @@ Namespace netCDF
                     If .IsNothing Then
                         Return Nothing
                     Else
-                        Return .value
+                        Return .getObjectValue
                     End If
                 End With
             End Get
@@ -183,9 +189,20 @@ Namespace netCDF
             Me.globalAttributeTable = header _
                 .globalAttributes _
                 .ToDictionary(Function(att) att.name)
+
+            Dim conflictsId As String() = header.checkVariableIdConflicts.ToArray
+
+            If conflictsId.Length > 0 Then
+                Throw New DuplicateNameException(conflictsId.GetJson)
+            End If
+
             Me.variableTable = header _
                 .variables _
                 .ToDictionary(Function(var) var.name)
+        End Sub
+
+        Sub New(file As Stream, Optional encoding As Encodings = Encodings.UTF8)
+            Call Me.New(New BinaryDataReader(file, encoding))
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -213,8 +230,8 @@ Namespace netCDF
         ''' Retrieves the data for a given variable
         ''' </summary>
         ''' <returns>List with the variable values</returns>
-        Public Function getDataVariable(variable As variable) As CDFData
-            Dim values As Object()
+        Public Function getDataVariable(variable As variable) As ICDFDataVector
+            Dim values As Array
 
             ' go to the offset position
             Call buffer.Seek(variable.offset, SeekOrigin.Begin)
@@ -227,7 +244,7 @@ Namespace netCDF
                 values = DataReader.nonRecord(buffer, variable)
             End If
 
-            Return (values, variable.type)
+            Return VectorHelper.FromAny(values, variable.type)
         End Function
 
         ''' <summary>
@@ -235,13 +252,17 @@ Namespace netCDF
         ''' </summary>
         ''' <param name="variableName">Name of the variable to search Or variable object</param>
         ''' <returns>List with the variable values</returns>
-        Public Function getDataVariable(variableName As String) As CDFData
+        Public Function getDataVariable(variableName As String) As ICDFDataVector
             ' search the variable
             Dim variable As variable = variableTable.TryGetValue(variableName)
             ' throws if variable Not found
             Utils.notNetcdf(variable Is Nothing, $"variable Not found: {variableName}")
 
             Return getDataVariable(variable)
+        End Function
+
+        Public Function getDataVariableEntry(variableName As String) As variable
+            Return variableTable.TryGetValue(variableName)
         End Function
 
         ''' <summary>
@@ -284,5 +305,38 @@ Namespace netCDF
         Public Sub Print()
             Call Me.toString(New StreamWriter(Console.OpenStandardOutput))
         End Sub
+
+#Region "IDisposable Support"
+        Private disposedValue As Boolean ' 要检测冗余调用
+
+        ' IDisposable
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                If disposing Then
+                    ' TODO: 释放托管状态(托管对象)。
+                    Call buffer.Dispose()
+                End If
+
+                ' TODO: 释放未托管资源(未托管对象)并在以下内容中替代 Finalize()。
+                ' TODO: 将大型字段设置为 null。
+            End If
+            disposedValue = True
+        End Sub
+
+        ' TODO: 仅当以上 Dispose(disposing As Boolean)拥有用于释放未托管资源的代码时才替代 Finalize()。
+        'Protected Overrides Sub Finalize()
+        '    ' 请勿更改此代码。将清理代码放入以上 Dispose(disposing As Boolean)中。
+        '    Dispose(False)
+        '    MyBase.Finalize()
+        'End Sub
+
+        ' Visual Basic 添加此代码以正确实现可释放模式。
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' 请勿更改此代码。将清理代码放入以上 Dispose(disposing As Boolean)中。
+            Dispose(True)
+            ' TODO: 如果在以上内容中替代了 Finalize()，则取消注释以下行。
+            ' GC.SuppressFinalize(Me)
+        End Sub
+#End Region
     End Class
 End Namespace

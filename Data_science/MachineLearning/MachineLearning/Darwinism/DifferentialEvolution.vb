@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e7a9f79163a411b18e8dcecf17b148e, Data_science\MachineLearning\MachineLearning\Darwinism\DifferentialEvolution.vb"
+﻿#Region "Microsoft.VisualBasic::2e4655c16e3372225d723ca27812cefc, Data_science\MachineLearning\MachineLearning\Darwinism\DifferentialEvolution.vb"
 
     ' Author:
     ' 
@@ -39,10 +39,10 @@
     ' 
     '     Module DifferentialEvolution
     ' 
-    '         Function: RMS
+    ' 
     '         Delegate Function
     ' 
-    '             Function: __subPopulationEvolute, Evolution, GetPopulation
+    '             Function: Evolution, GetPopulation, subPopulationEvolute
     ' 
     ' 
     ' 
@@ -53,11 +53,14 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 Imports Microsoft.VisualBasic.Math
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+Imports stdNum = System.Math
 
 Namespace Darwinism
 
@@ -92,44 +95,25 @@ Namespace Darwinism
     ''' </summary>
     Public Module DifferentialEvolution
 
-        Public Function RMS(a#(), b#()) As Double
-            Dim sum#
-            Dim n% = a.Length
-
-            For i As Integer = 0 To n - 1
-                sum += (a(i) - b(i)) ^ 2
-            Next
-
-            Return Math.Sqrt(sum)
-        End Function
-
         Public Delegate Function [New](Of Individual As IIndividual)(seed As Random) As Individual
+
+        ReadOnly randfSeed As New [Default](Of IRandomSeeds)(Function() randf.seeds)
 
         ''' <summary>
         ''' Initialize population with individuals that have been initialized with uniform random noise
         ''' uniform noise means random value inside your search space
         ''' </summary>
-        ''' <param name="__new"></param>
-        ''' <param name="PopulationSize%"></param>
+        ''' <param name="newIndividual"></param>
+        ''' <param name="popSize%"></param>
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function GetPopulation(Of Individual As IIndividual)(
-                                              __new As [New](Of Individual),
-                                              Optional PopulationSize% = 20,
-                                              Optional randomGenerator As IRandomSeeds = Nothing) As List(Of Individual)
-
-            Dim population As New List(Of Individual)
-            Dim rand As Random = If(
-                randomGenerator Is Nothing,
-                New Random,
-                randomGenerator())
-
-            For i As Integer = 0 To PopulationSize - 1
-                population += __new(seed:=rand)
-            Next
-
-            Return population
+        Public Iterator Function GetPopulation(Of Individual As IIndividual)(newIndividual As [New](Of Individual), Optional popSize% = 20, Optional randf As IRandomSeeds = Nothing) As IEnumerable(Of Individual)
+            With (randf Or randfSeed)()
+                For i As Integer = 0 To popSize - 1
+                    Yield .DoCall(Function(seed) newIndividual(seed))
+                Next
+            End With
         End Function
 
         Const MaxIteratesReach$ = "Max iterates number was reached, Darwinism.DE fitting loop exit..."
@@ -158,21 +142,20 @@ Namespace Darwinism
                                          Optional PopulationSize% = 20,
                                          Optional iteratePrints As Action(Of outPrint) = Nothing,
                                          Optional parallel As Boolean = False,
-                                         Optional randomGenerator As IRandomSeeds = Nothing) As Individual
+                                         Optional seed As IRandomSeeds = Nothing) As Individual
 
             ' linked list that has our population inside
-
             Dim bestFit# = Integer.MaxValue
-            Dim fitnessFunction As Func(Of Individual, Double) = AddressOf New FitnessPool(Of Individual)(target, capacity:=PopulationSize * 100).Fitness
-            Dim i As VBInteger = Scan0
+            Dim fitnessFunction As Func(Of Individual, Boolean, Double) = AddressOf New FitnessPool(Of Individual)(
+                cacl:=target,
+                capacity:=PopulationSize * 100,
+                toString:=Function(id) id.ToString
+            ).Fitness
 
-            If randomGenerator Is Nothing Then
-                randomGenerator = Function() New Random
-            End If
-
-            Dim random As Random = randomGenerator()
+            Dim i As i32 = Scan0
+            Dim random As Random = (seed Or randfSeed)()
             Dim population As Individual() = [new] _
-                .GetPopulation(PopulationSize, randomGenerator) _
+                .GetPopulation(PopulationSize, seed) _
                 .ToArray
 
             ' main loop of evolution.
@@ -187,7 +170,7 @@ Namespace Darwinism
  _
                         From subPop As Individual()
                         In subPopulates.AsParallel
-                        Select subPop.__subPopulationEvolute(
+                        Select subPop.subPopulationEvolute(
                             bestFit:=bestFit,
                             CR:=CR,
                             F:=F,
@@ -195,7 +178,8 @@ Namespace Darwinism
                             iteratePrints:=iteratePrints,
                             iterates:=i,
                             N:=N,
-                            randomGenerator:=randomGenerator)
+                            random:=random
+                        )
 
                     bestFit = LQuery.Min(Function(x) x.Tag)
                     population = LQuery _
@@ -215,7 +199,7 @@ Namespace Darwinism
 
                 Do While (++i < maxIterations)
                     Dim iter As DoubleTagged(Of Individual()) =
-                        population.__subPopulationEvolute(
+                        population.subPopulationEvolute(
                         F:=F,
                         bestFit:=bestFit,
                         CR:=CR,
@@ -223,7 +207,8 @@ Namespace Darwinism
                         iteratePrints:=iteratePrints,
                         iterates:=i,
                         N:=N,
-                        randomGenerator:=randomGenerator)
+                        random:=random
+                    )
 
                     bestFit = iter.Tag
 
@@ -238,10 +223,14 @@ Namespace Darwinism
 
             ' find best candidate solution
             Dim bestFitness As Individual = [new](random)
+            Dim candidate As Individual
+
             i = 0
+
             Do While (++i < PopulationSize)
-                Dim candidate As Individual = population(i.Value - 1)
-                If (fitnessFunction(bestFitness) > fitnessFunction(candidate)) Then
+                candidate = population(i.Value - 1)
+
+                If (fitnessFunction(bestFitness, True) > fitnessFunction(candidate, True)) Then
                     bestFitness = candidate
                 End If
             Loop
@@ -264,33 +253,32 @@ Namespace Darwinism
         ''' <param name="fitnessFunction"></param>
         ''' <returns></returns>
         <Extension>
-        Private Function __subPopulationEvolute(Of Individual As IIndividual)(
+        Private Function subPopulationEvolute(Of Individual As IIndividual)(
                                                    population As Individual(),
                                                    F#, N%, CR#,
                                                    bestFit#,
                                                    iterates%,
                                                 iteratePrints As Action(Of outPrint),
-                                              fitnessFunction As Func(Of Individual, Double),
-                                              randomGenerator As IRandomSeeds) As DoubleTagged(Of Individual())
-            Dim random As Random = randomGenerator()
+                                              fitnessFunction As Func(Of Individual, Boolean, Double),
+                                              random As Random) As DoubleTagged(Of Individual())
             Dim populationSize% = population.Length
 
             For i As Integer = 0 To populationSize - 1
                 ' calculate New candidate solution
 
                 ' pick random point from population
-                Dim x = Math.Floor(random.NextDouble * (populationSize - 1))
+                Dim x = stdNum.Floor(random.NextDouble * (populationSize - 1))
                 Dim a, b, c As Integer
 
                 ' pick three different random points from population
                 Do While (a = x)
-                    a = Math.Floor(random.NextDouble * (populationSize - 1))
+                    a = stdNum.Floor(random.NextDouble * (populationSize - 1))
                 Loop
                 Do While (b = x OrElse b = a)
-                    b = Math.Floor(random.NextDouble * (populationSize - 1))
+                    b = stdNum.Floor(random.NextDouble * (populationSize - 1))
                 Loop
                 Do While (c = x OrElse c = a OrElse c = b)
-                    c = Math.Floor(random.NextDouble * (populationSize - 1))
+                    c = stdNum.Floor(random.NextDouble * (populationSize - 1))
                 Loop
 
                 ' Pick a random index [0-Dimensionality]
@@ -313,7 +301,7 @@ Namespace Darwinism
                     ' 所以需要在这里添加一个随机数来解决这个问题
                     ' 假设数量级很大的话，这里是否需要通过log10来取指数进行突变？
                     'Dim raw = individual1.Yield(R)
-                    'Dim mutate# = Math.Log10(Math.Abs(raw)) + F * (Math.Log10(Math.Abs(individual2.Yield(R))) - Math.Log10(Math.Abs(individual3.Yield(R))))
+                    'Dim mutate# = stdNum.Log10(Math.Abs(raw)) + F * (Math.Log10(Math.Abs(individual2.Yield(R))) - stdNum.Log10(Math.Abs(individual3.Yield(R))))
                     'mutate = raw + If(random.NextBoolean, 1, -1) * 10 ^ mutate
                     Dim mutate# = individual1.Yield(R) + F * (individual2.Yield(R) - individual3.Yield(R))
                     mutate *= random.NextDouble
@@ -322,8 +310,8 @@ Namespace Darwinism
                 ' else isn't needed because we cloned original to candidate
 
                 ' see if Is better than original, if so replace
-                Dim originalFitness# = fitnessFunction(original)
-                Dim candidateFitness# = fitnessFunction(candidate)
+                Dim originalFitness# = fitnessFunction(original, True)
+                Dim candidateFitness# = fitnessFunction(candidate, True)
 
                 If (originalFitness > candidateFitness) Then
                     population(x) = candidate

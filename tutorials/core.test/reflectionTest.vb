@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ca4432abb56f696770dff685f902005, tutorials\core.test\reflectionTest.vb"
+﻿#Region "Microsoft.VisualBasic::29e621c2f7755e88fcd68e59145237cd, tutorials\core.test\reflectionTest.vb"
 
     ' Author:
     ' 
@@ -174,8 +174,8 @@ Public Structure ColorTheme
         End Get
     End Property
 
-    Public Shared ReadOnly Property DefaultTheme As New DefaultValue(Of ColorTheme) With {
-            .LazyValue = New Lazy(Of ColorTheme)(Function() [Default]()),
+    Public Shared ReadOnly Property DefaultTheme As New [Default](Of ColorTheme) With {
+            .lazy = New Lazy(Of ColorTheme)(Function() [Default]()),
             .assert = Function(t)
                           Return DirectCast(t, ColorTheme).IsEmpty
                       End Function

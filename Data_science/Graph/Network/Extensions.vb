@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::485ccf787f25a9e479fc40bb9e21e3cc, Data_science\Graph\Network\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::9378ca65aab6c76ab728b24a157149f3, Data_science\Graph\Network\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: ComputeDegreeData, EndPoints, IteratesSubNetworks
+    '         Function: (+2 Overloads) ComputeDegreeData, EndPoints, IteratesSubNetworks
     ' 
     ' 
     ' /********************************************************************************/
@@ -41,11 +41,15 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 
 Namespace Network
 
-    Public Module Extensions
+    ''' <summary>
+    ''' Graph network api module extensions
+    ''' </summary>
+    <HideModuleName> Public Module Extensions
 
         ''' <summary>
         ''' 查找出网络模型之中可能的网络端点
@@ -54,7 +58,7 @@ Namespace Network
         ''' <returns></returns>
         <Extension>
         Public Function EndPoints(Of Node As {New, Network.Node}, Edge As {New, Network.Edge(Of Node)})(network As NetworkGraph(Of Node, Edge)) As (input As Node(), output As Node())
-            Dim inputs As New List(Of Node)(network.Vertex)
+            Dim inputs As New List(Of Node)(network.vertex)
             Dim output As New List(Of Node)(inputs)
             Dim removes = Sub(ByRef list As List(Of Node), getNode As Func(Of Edge, Node))
                               For Each link As Edge In network
@@ -66,10 +70,17 @@ Namespace Network
                               Next
                           End Sub
 
-            Call removes(inputs, Function(e) e.V)  ' 如果是target(output)就removes掉
-            Call removes(output, Function(e) e.U)  ' 如果是source(inputs)就removes掉
+            ' 对于一个网络端点而言
+            ' 对于输入端,则该节点在网络中找不到任何一个指向该输入端的链接
+            ' 所以, 如果是target(output)就removes掉, 列表中剩余的节点就都是输入端了
+            Call removes(inputs, Function(e) e.V)
 
-            Return (inputs, output)
+            ' 对于一个网络端点而言
+            ' 对于输出端,则该节点在网络中找不到任何一个从该节点指出的链接
+            ' 所以, 如果是source(inputs)就removes掉, 列表中的剩余节点就都是输出端了
+            Call removes(output, Function(e) e.U)  ' 
+
+            Return (inputs.ToArray, output.ToArray)
         End Function
 
         ''' <summary>
@@ -78,52 +89,23 @@ Namespace Network
         ''' <param name="network"></param>
         ''' <returns></returns>
         <Extension>
-        Public Iterator Function IteratesSubNetworks(Of Node As {New, Network.Node}, U As {New, Network.Edge(Of Node)})(network As NetworkGraph(Of Node, U)) As IEnumerable(Of NetworkGraph(Of Node, U))
-            Dim popEdge = Function(n As Node) As U
-                              Return network _
-                                  .Where(Function(e) e.U Is n OrElse e.V Is n) _
-                                  .FirstOrDefault
-                          End Function
-            Dim edges = network.edges.Values.AsList
+        Public Function IteratesSubNetworks(Of Node As {New, Network.Node},
+                                               U As {New, Edge(Of Node)},
+                                               Graph As {New, NetworkGraph(Of Node, U)}
+                                            )(network As NetworkGraph(Of Node, U), Optional singleNodeAsGraph As Boolean = False) As Graph()
 
-            Do While edges > 0
-                Dim subnetwork As New NetworkGraph(Of Node, U)
-                Dim edge As U = edges.First
-                Dim list As New List(Of Node)
-
-                Call list.Add(edge.U)
-                Call list.Add(edge.V)
-
-                Do While list > 0
-                    subnetwork.AddVertex(edge.U)
-                    subnetwork.AddVertex(edge.V)
-                    subnetwork.AddEdge(edge.U, edge.V)
-                    edges.Remove(edge)
-
-                    If -1 = list.IndexOf(edge.U) Then
-                        Call list.Add(edge.U)
-                    End If
-                    If -1 = list.IndexOf(edge.V) Then
-                        Call list.Add(edge.V)
-                    End If
-
-                    edge = Nothing
-
-                    Do While edge Is Nothing AndAlso list > 0
-                        edge = popEdge(list.First)
-
-                        If edge Is Nothing Then
-                            ' 当前的这个节点已经没有相连的边了，移除这个节点
-                            Call list.RemoveAt(Scan0)
-                        End If
-                    Loop
-                Loop
-
-                Yield subnetwork
-            Loop
+            Return New SubNetworkComponents(Of Node, U, Graph)(network, singleNodeAsGraph).ToArray
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ComputeDegreeData(Of T As {New, Network.Node}, Edge As {New, Network.Edge(Of T)})(edges As IEnumerable(Of Edge)) As ([in] As Dictionary(Of String, Integer), out As Dictionary(Of String, Integer))
+            Return ComputeDegreeData(edges, Function(l) l.U.label, Function(l) l.V.label)
+        End Function
+
+        Public Function ComputeDegreeData(Of Edge)(edges As IEnumerable(Of Edge),
+                                                   U As Func(Of Edge, String),
+                                                   V As Func(Of Edge, String)) As ([in] As Dictionary(Of String, Integer), out As Dictionary(Of String, Integer))
+
             Dim [in] As New Dictionary(Of String, Integer)
             Dim out As New Dictionary(Of String, Integer)
             Dim count = Sub(node$, ByRef table As Dictionary(Of String, Integer))
@@ -137,8 +119,8 @@ Namespace Network
             Dim countOut = Sub(node$) Call count(node, out)
 
             For Each link As Edge In edges
-                Call countIn(link.U.Label)
-                Call countOut(link.V.Label)
+                Call countIn(U(link))
+                Call countOut(V(link))
             Next
 
             Return ([in], out)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::232c451793142a4be5b98f2c51c8e671, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\layout.vb"
+﻿#Region "Microsoft.VisualBasic::23bc4497f6e668716c5e893a56b45db0, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\layout.vb"
 
     ' Author:
     ' 
@@ -52,6 +52,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.Data.GraphTheory.Analysis
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Language
 Imports any = System.Object

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::997433bc66cf12f4cb5b4f9306666cde, www\githubAPI\WebAPI\Users.vb"
+﻿#Region "Microsoft.VisualBasic::ca26e4f988f3279f585699c2d881cb82, www\githubAPI\WebAPI\Users.vb"
 
     ' Author:
     ' 
@@ -49,10 +49,11 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports System.Threading
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Text.HtmlParser
+Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 Imports Microsoft.VisualBasic.Webservices.Github.Class
 Imports r = System.Text.RegularExpressions.Regex
 
@@ -115,7 +116,7 @@ Namespace WebAPI
 
         Private Function ParserIterator(url$, username$, maxLimits%, count%) As User()
             Dim out As New List(Of User)
-            Dim i As int = 1
+            Dim i As i32 = 1
             Dim [get] As New Value(Of User())
 
             Do While Not ([get] = ParserInternal(username, ++i, url)).IsNullOrEmpty

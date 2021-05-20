@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc3de2c6bbb70d9a3900f4ecefd4ec3f, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Fitness.vb"
+﻿#Region "Microsoft.VisualBasic::689ad9517329f136e1073ed1557eca98, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Fitness.vb"
 
     ' Author:
     ' 
@@ -63,7 +63,9 @@ Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 Namespace Darwinism.GAF
 
     ''' <summary>
-    ''' 描述了如何从将目标染色体计算为fitness，从而能够量化突变带来的的优点
+    ''' A function wrapper for calculate genome fitness in current environment.
+    ''' 
+    ''' (描述了如何从将目标染色体计算为fitness，从而能够量化突变带来的的优点)
     ''' </summary>
     ''' <typeparam name="Chr">
     ''' 这个泛型类型应该是集成至<see cref="Chromosome(Of Chr)"/>,但是为了兼容``DifferentialEvolution``
@@ -93,6 +95,14 @@ Namespace Darwinism.GAF
         ''' 
         ''' (假若是并行模式的之下，还要求这个函数是线程安全的)
         ''' </summary>
-        Function Calculate(chromosome As Chr) As Double
+        ''' <param name="parallel">
+        ''' 在计算函数的内部是否是应该是并行的?
+        ''' 
+        ''' 应该遵循以下的准则:
+        ''' 
+        ''' 1. 如果外部调用这个计算函数是并行的,那么这个parallel参数应该设置为false
+        ''' 2. 如果是单线程的外部代码调用这个计算函数,那么这个parallel参数可以是true,即在函数的内部实现并行化
+        ''' </param>
+        Function Calculate(chromosome As Chr, parallel As Boolean) As Double
     End Interface
 End Namespace

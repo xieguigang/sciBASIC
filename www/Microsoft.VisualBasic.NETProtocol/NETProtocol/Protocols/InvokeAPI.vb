@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::168ef868b999421c2c627c72936fb305, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\Protocols\InvokeAPI.vb"
+﻿#Region "Microsoft.VisualBasic::3015149cae9ac915e4789b451fba14c8, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\Protocols\InvokeAPI.vb"
 
     ' Author:
     ' 
@@ -54,9 +54,9 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Net.Tcp
+Imports Microsoft.VisualBasic.Parallel
 
 Namespace NETProtocol.Protocols
 
@@ -72,7 +72,7 @@ Namespace NETProtocol.Protocols
             PushToUser
         End Enum
 
-        Public ReadOnly Property ProtocolEntry As Long = New Protocol(GetType(Protocols)).EntryPoint
+        Public ReadOnly Property ProtocolEntry As Long = New ProtocolAttribute(GetType(Protocols)).EntryPoint
 
         <Extension> Public Function PushData(data As Byte()) As RequestStream
             Return New RequestStream(ProtocolEntry, Protocols.PushToUser, data)

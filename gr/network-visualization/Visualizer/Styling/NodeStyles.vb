@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::748ccf4f1bb49013f3136484edea0d5b, gr\network-visualization\Visualizer\Styling\NodeStyles.vb"
+﻿#Region "Microsoft.VisualBasic::4a4d7a4b922bfb87ed9d0291d9f01bff, gr\network-visualization\Visualizer\Styling\NodeStyles.vb"
 
     ' Author:
     ' 
@@ -33,40 +33,52 @@
 
     '     Module NodeStyles
     ' 
-    '         Function: (+2 Overloads) DegreeAsSize
+    '         Function: (+2 Overloads) DegreeAsSize, NodeDegreeSize
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
-Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports names = Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic.NameOf
-Imports r = System.Text.RegularExpressions.Regex
+Imports Microsoft.VisualBasic.Language.Default
 
 Namespace Styling
 
     Public Module NodeStyles
 
-        <Extension> Public Function DegreeAsSize(nodes As IEnumerable(Of Node),
-                                                 getDegree As Func(Of Node, Double),
-                                                 sizeRange As DoubleRange) As Map(Of Node, Double)()
+        Public Function NodeDegreeSize(nodes As IEnumerable(Of Node), sizeRange As DoubleRange, Optional degree$ = NamesOf.REFLECTION_ID_MAPPING_DEGREE) As Func(Of Node, Single)
+            Dim maps = nodes.DegreeAsSize(sizeRange, degree)
+            Dim defaultSize As [Default](Of Double) = sizeRange.Min
+
+            Return Function(node As Node) As Single
+                       Return maps.FirstOrDefault(Function(map) map.Key Is node).Maps Or defaultSize
+                   End Function
+        End Function
+
+        ''' <summary>
+        ''' Map the node degree as size 
+        ''' </summary>
+        ''' <param name="nodes"></param>
+        ''' <param name="getDegree"></param>
+        ''' <param name="sizeRange"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function DegreeAsSize(nodes As IEnumerable(Of Node),
+                                     getDegree As Func(Of Node, Double),
+                                     sizeRange As DoubleRange) As Map(Of Node, Double)()
             Return nodes.RangeTransform(getDegree, sizeRange)
         End Function
 
         <Extension>
-        Public Function DegreeAsSize(nodes As IEnumerable(Of Node), sizeRange As DoubleRange, Optional degree$ = names.REFLECTION_ID_MAPPING_DEGREE) As Map(Of Node, Double)()
+        Public Function DegreeAsSize(nodes As IEnumerable(Of Node), sizeRange As DoubleRange, Optional degree$ = NamesOf.REFLECTION_ID_MAPPING_DEGREE) As Map(Of Node, Double)()
             Dim valDegree = Function(node As Node)
-                                Return node.Data(degree).ParseDouble
+                                Return node.data(degree).ParseDouble
                             End Function
             Return nodes.DegreeAsSize(
                 getDegree:=valDegree,

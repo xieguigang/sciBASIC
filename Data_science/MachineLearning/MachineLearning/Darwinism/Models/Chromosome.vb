@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d3752fefaa82cb3646c850dbaa04f85, Data_science\MachineLearning\MachineLearning\Darwinism\Models\Chromosome.vb"
+﻿#Region "Microsoft.VisualBasic::0d1750998cc4f929e18fe7da79cae4fd, Data_science\MachineLearning\MachineLearning\Darwinism\Models\Chromosome.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,8 @@
     ' Summaries:
 
     '     Interface Chromosome
+    ' 
+    '         Properties: MutationRate, UniqueHashKey
     ' 
     '         Function: Crossover, Mutate
     ' 
@@ -100,7 +102,14 @@ Namespace Darwinism.Models
     ''' free-form And evolving genetic representations.
     ''' </summary>
     ''' <typeparam name="Chr"></typeparam>
-    Public Interface Chromosome(Of Chr As Chromosome(Of Chr))
+    Public Interface Chromosome(Of Chr As {Class, Chromosome(Of Chr)})
+
+        ''' <summary>
+        ''' 突变的变异程度，这个值应该是位于(0, 1)闭区间内的
+        ''' </summary>
+        ''' <returns></returns>
+        Property MutationRate As Double
+        ReadOnly Property UniqueHashKey As String
 
         ''' <summary>
         ''' In genetic algorithms, crossover is a genetic operator used to vary the programming 

@@ -1,7 +1,2 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:dcmitype="http://purl.org/dc/dcmitype/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <dc:creator></dc:creator>
-  <cp:lastModifiedBy></cp:lastModifiedBy>
-  <dcterms:created xsi:type="dcterms:W3CDTF">2015-06-05T18:19:34Z</dcterms:created>
-  <dcterms:modified xsi:type="dcterms:W3CDTF">2018-01-07T06:45:24Z</dcterms:modified>
-</cp:coreProperties>
+<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:dcmitype="http://purl.org/dc/dcmitype/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><dc:title>test data table</dc:title><dc:subject>buzhidao</dc:subject><dc:creator></dc:creator><cp:keywords>AAAAAAACGG</cp:keywords><dc:description>beizhu</dc:description><cp:lastModifiedBy></cp:lastModifiedBy><dcterms:created xsi:type="dcterms:W3CDTF">2015-06-05T18:19:34Z</dcterms:created><dcterms:modified xsi:type="dcterms:W3CDTF">2021-03-30T02:59:06Z</dcterms:modified><cp:category>测试</cp:category><cp:contentStatus>hao</cp:contentStatus></cp:coreProperties>

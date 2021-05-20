@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f246f086dbffcf343515b1900325466, gr\Microsoft.VisualBasic.Imaging\SVG\XML\SVG.vb"
+﻿#Region "Microsoft.VisualBasic::113af15f2118b475350f1b343aa5abb7, gr\Microsoft.VisualBasic.Imaging\SVG\XML\SVG.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,9 @@
     ' 
     '         Properties: circles, defs, desc, enable_background, height
     '                     images, Layers, lines, overflow, path
-    '                     polygon, polyline, rect, space, styleCSS
-    '                     texts, title, transform, version, viewBox
-    '                     width, WriterComment
+    '                     polygon, polyline, preserveAspectRatio, rect, space
+    '                     styleCSS, texts, title, transform, version
+    '                     viewBox, width, WriterComment
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: AddLayer, GetSVGXml, (+2 Overloads) SaveAsXml, Size, TryLoad
@@ -54,6 +54,7 @@ Imports System.Xml
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Imaging.SVG.CSS
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.Text
 Imports htmlNode = Microsoft.VisualBasic.MIME.Markup.HTML.XmlMeta.Node
@@ -93,7 +94,12 @@ Namespace SVG.XML
         <XmlAttribute> Public Property width As String
         <XmlAttribute> Public Property height As String
         <XmlAttribute> Public Property version As String
+        ''' <summary>
+        ''' [offsetX offset Y width height]
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property viewBox As String()
+        <XmlAttribute> Public Property preserveAspectRatio As String = "xMaxYMax"
         <XmlAttribute> Public Property overflow As String
 
         <XmlAttribute("enable-background")>
@@ -138,7 +144,7 @@ Namespace SVG.XML
         Public Property WriterComment As XmlComment
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return XmlComment.CreateComment
+                Return (Me.GetType.DoCall(AddressOf XmlDataModel.GetTypeReferenceComment) & vbCrLf & vbCrLf & XmlComment).CreateComment
             End Get
             Set
             End Set
@@ -179,6 +185,7 @@ Namespace SVG.XML
         Public Function Size(sz As Size) As SVGXml
             width = sz.Width & "px"
             height = sz.Height & "px"
+            viewBox = {0, 0, sz.Width, sz.Height}
             Return Me
         End Function
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f78171b16b18b4e55437b84dd033d40d, Data_science\Visualization\Plots-statistics\ROCPlot.vb"
+﻿#Region "Microsoft.VisualBasic::9cab04adaafb7f59a32c6fd96a71058f, Data_science\Visualization\Plots-statistics\ROCPlot.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module ROCPlot
     ' 
-    '     Function: CreateSerial, Plot
+    '     Function: (+2 Overloads) CreateSerial, Plot
     ' 
     ' /********************************************************************************/
 
@@ -43,20 +43,29 @@ Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
-Imports Microsoft.VisualBasic.DataMining
+Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.DataMining.ComponentModel.Evaluation
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Math.Interpolation
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Module ROCPlot
 
     <Extension>
     Public Function CreateSerial(test As IEnumerable(Of Validation)) As SerialData
         Dim points As New List(Of PointData)
+        Dim testData As Validation() = test _
+            .Where(Function(p)
+                       Return Not p.Specificity.IsNaNImaginary AndAlso Not p.Sensibility.IsNaNImaginary
+                   End Function) _
+            .ToArray
+        Dim AUC As Double = Validation.AUC(testData)
 
         points += New PointData(0, 0)
-        points += test _
+        points += testData _
             .Select(Function(pct)
                         Dim x! = (100 - pct.Specificity) / 100
                         Dim y! = pct.Sensibility / 100
@@ -68,41 +77,95 @@ Public Module ROCPlot
         Return New SerialData With {
             .color = Color.Black,
             .lineType = DashStyle.Solid,
-            .PointSize = 5,
-            .Shape = LegendStyles.Triangle,
-            .pts = points.OrderBy(Function(p) p.pt.X).ToArray
+            .pointSize = 5,
+            .shape = LegendStyles.Triangle,
+            .pts = points _
+                .OrderBy(Function(p) p.pt.X) _
+                .ToArray,
+            .title = AUC
         }
     End Function
 
+    ''' <summary>
+    ''' This file should contains at least two fields: <see cref="Validation.Specificity"/> and <see cref="Validation.Sensibility"/>
+    ''' </summary>
+    ''' <param name="test"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function CreateSerial(test As IEnumerable(Of DataSet)) As SerialData
+        Dim data As DataSet() = test.ToArray
+        Dim specificity = data(Scan0).Properties.Keys.First(Function(key) key.TextEquals(NameOf(Validation.Specificity)))
+        Dim sensibility = data(Scan0).Properties.Keys.First(Function(key) key.TextEquals(NameOf(Validation.Sensibility)))
+
+        Return data _
+            .Select(Function(d)
+                        Return New Validation With {
+                            .Specificity = d(specificity),
+                            .Sensibility = d(sensibility),
+                            .Threshold = Val(d.ID)
+                        }
+                    End Function) _
+            .CreateSerial
+    End Function
+
+    ''' <summary>
+    ''' 这个函数所绘制出来的ROC曲线的AUC的值应该是在调用这个函数之前就完成计算,保存于 <see cref="SerialData.title"/> 之中了的
+    ''' </summary>
+    ''' <param name="roc"></param>
+    ''' <param name="size$"></param>
+    ''' <param name="margin$"></param>
+    ''' <param name="bg$"></param>
+    ''' <param name="lineWidth!"></param>
+    ''' <param name="fillAUC"></param>
+    ''' <param name="AUCfillColor$"></param>
+    ''' <param name="showReference"></param>
+    ''' <returns></returns>
     Public Function Plot(roc As SerialData,
                          Optional size$ = "2300,2100",
                          Optional margin$ = g.DefaultUltraLargePadding,
                          Optional bg$ = "white",
                          Optional lineWidth! = 10,
                          Optional fillAUC As Boolean = True,
-                         Optional AUCfillColor$ = "skyblue") As GraphicsData
+                         Optional AUCfillColor$ = "skyblue",
+                         Optional showReference As Boolean = False) As GraphicsData
 
         Dim reference As New SerialData With {
             .color = AUCfillColor.TranslateColor,
             .lineType = DashStyle.Dash,
-            .PointSize = 5,
+            .pointSize = 5,
             .width = lineWidth,
             .pts = {New PointData(0, 0), New PointData(1, 1)},
-            .Shape = LegendStyles.Circle
+            .shape = LegendStyles.Circle
         }
 
         roc.width = lineWidth
         roc.color = AUCfillColor.TranslateColor
+        roc.pts = roc.pts.OrderBy(Function(p) p.pt.Y).ToArray
+
+        Dim input As SerialData()
+
+        If showReference Then
+            input = {reference, roc}
+        Else
+            input = {roc}
+        End If
 
         Dim img = Scatter.Plot(
-            {roc, reference},
+            input,
             size:=size,
             padding:=margin,
             bg:=bg,
             interplot:=Splines.B_Spline,
             xaxis:="0,1", yaxis:="0,1",
             showLegend:=False,
-            fill:=fillAUC
+            fill:=fillAUC,
+            Xlabel:="1 - Specificity",
+            Ylabel:="Sensibility",
+            drawAxis:=True,
+            htmlLabel:=False,
+            title:=$"ROC (AUC={roc.title})",
+            labelFontStyle:=CSSFont.Win7VeryLarge,
+            tickFontStyle:=CSSFont.Win7Large
         )
 
         Return img

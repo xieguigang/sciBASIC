@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::224537f80bca1150a00490644172ed74, gr\Landscape\WPF\Canvas.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::a7b2ff8821b7ceed5e2583048ebacbb5, gr\Landscape\WPF\Canvas.xaml.vb"
 
     ' Author:
     ' 
@@ -48,6 +48,7 @@ Imports System.Windows.Media.Media3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Landscape.Vendor_3mf
 Imports Microsoft.VisualBasic.Language
 Imports Vertex = System.Windows.Media.Media3D.Point3D
+Imports stdNum = System.Math
 
 Public Class Canvas
 
@@ -108,25 +109,25 @@ Public Class Canvas
         Dim mouseAngle As Double = 0
 
         If dx <> 0 AndAlso dy <> 0 Then
-            mouseAngle = Math.Asin(Math.Abs(dy) / Math.Sqrt(Math.Pow(dx, 2) + Math.Pow(dy, 2)))
+            mouseAngle = stdNum.Asin(stdNum.Abs(dy) / stdNum.Sqrt(stdNum.Pow(dx, 2) + stdNum.Pow(dy, 2)))
 
             If dx < 0 AndAlso dy > 0 Then
-                mouseAngle += Math.PI / 2
+                mouseAngle += stdNum.PI / 2
             ElseIf dx < 0 AndAlso dy < 0 Then
-                mouseAngle += Math.PI
+                mouseAngle += stdNum.PI
             ElseIf dx > 0 AndAlso dy < 0 Then
-                mouseAngle += Math.PI * 1.5
+                mouseAngle += stdNum.PI * 1.5
             End If
         ElseIf dx = 0 AndAlso dy <> 0 Then
-            mouseAngle = If(Math.Sign(dy) > 0, Math.PI / 2, Math.PI * 1.5)
+            mouseAngle = If(stdNum.Sign(dy) > 0, stdNum.PI / 2, stdNum.PI * 1.5)
         ElseIf dx <> 0 AndAlso dy = 0 Then
-            mouseAngle = If(Math.Sign(dx) > 0, 0, Math.PI)
+            mouseAngle = If(stdNum.Sign(dx) > 0, 0, stdNum.PI)
         End If
 
-        Dim axisAngle As Double = mouseAngle + Math.PI / 2
-        Dim axis As New Vector3D(Math.Cos(axisAngle) * 4, Math.Sin(axisAngle) * 4, 0)
-        Dim rotation As Double = 0.01 * Math.Sqrt(Math.Pow(dx, 2) + Math.Pow(dy, 2))
-        Dim r As New QuaternionRotation3D(New Quaternion(axis, rotation * 180 / Math.PI))
+        Dim axisAngle As Double = mouseAngle + stdNum.PI / 2
+        Dim axis As New Vector3D(stdNum.Cos(axisAngle) * 4, stdNum.Sin(axisAngle) * 4, 0)
+        Dim rotation As Double = 0.01 * stdNum.Sqrt(stdNum.Pow(dx, 2) + stdNum.Pow(dy, 2))
+        Dim r As New QuaternionRotation3D(New Quaternion(axis, rotation * 180 / stdNum.PI))
 
         For Each geometry As GeometryModel3D In __geometry
             With TryCast(geometry.Transform, Transform3DGroup)

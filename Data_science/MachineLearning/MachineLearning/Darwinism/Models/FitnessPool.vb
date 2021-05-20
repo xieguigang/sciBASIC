@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a86f864c3b5086630c5a79f1ed043721, Data_science\MachineLearning\MachineLearning\Darwinism\Models\FitnessPool.vb"
+﻿#Region "Microsoft.VisualBasic::8450d02c5fe4c4f80f81a9880e0f8dc0, Data_science\MachineLearning\MachineLearning\Darwinism\Models\FitnessPool.vb"
 
     ' Author:
     ' 
@@ -33,11 +33,11 @@
 
     '     Class FitnessPool
     ' 
-    '         Properties: Cacheable
+    '         Properties: Cacheable, evaluateFitness
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: Fitness
+    '         Function: Fitness, getOrCacheOfFitness
     ' 
     '         Sub: Clear
     ' 
@@ -58,18 +58,22 @@ Namespace Darwinism.Models
     ''' <typeparam name="Individual"></typeparam>
     Public Class FitnessPool(Of Individual) : Implements Fitness(Of Individual)
 
+        ''' <summary>
+        ''' Get unique id of each genome
+        ''' </summary>
+        Protected Friend indivToString As Func(Of Individual, String)
+        Protected Friend maxCapacity%
         Protected Friend ReadOnly cache As New Dictionary(Of String, Double)
-        Protected caclFitness As Func(Of Individual, Double)
-        Protected indivToString As Func(Of Individual, String)
-        Protected maxCapacity%
 
-        Shared ReadOnly objToString As New [Default](Of  Func(Of Individual, String))(AddressOf Scripting.ToString)
+        Friend Shared ReadOnly defaultCacheSize As [Default](Of Integer) = 10000
 
         Public ReadOnly Property Cacheable As Boolean Implements Fitness(Of Individual).Cacheable
             Get
-                Return True
+                Return evaluateFitness.Cacheable
             End Get
         End Property
+
+        Public ReadOnly Property evaluateFitness As Fitness(Of Individual)
 
         ''' <summary>
         ''' 因为这个缓存对象是默认通过``ToString``方法来生成键名的，所以假设<paramref name="toString"/>参数是空值的话，则必须要重写
@@ -77,10 +81,17 @@ Namespace Darwinism.Models
         ''' </summary>
         ''' <param name="cacl">Expression for descript how to calculate the fitness.</param>
         ''' <param name="toString">Obj to dictionary key</param>
-        Sub New(cacl As Func(Of Individual, Double), capacity%, Optional toString As Func(Of Individual, String) = Nothing)
-            caclFitness = cacl
-            indivToString = toString Or objToString
-            maxCapacity = capacity
+        Sub New(cacl As Fitness(Of Individual), capacity%, toString As Func(Of Individual, String))
+            evaluateFitness = cacl
+            indivToString = toString
+            maxCapacity = capacity Or defaultCacheSize
+
+            If capacity <= 0 AndAlso cacl.Cacheable Then
+                Call $"Target environment marked as cacheable, but cache size is invalid...".Warning
+                Call $"Use default cache size for fitness: {defaultCacheSize.DefaultValue}".__INFO_ECHO
+            ElseIf cacl.Cacheable Then
+                Call $"Fitness was marked as cacheable with cache table size {capacity}".__INFO_ECHO
+            End If
         End Sub
 
         Sub New()
@@ -91,7 +102,19 @@ Namespace Darwinism.Models
         ''' </summary>
         ''' <param name="[in]"></param>
         ''' <returns></returns>
-        Public Function Fitness([in] As Individual) As Double Implements Fitness(Of Individual).Calculate
+        Public Function Fitness([in] As Individual, parallel As Boolean) As Double Implements Fitness(Of Individual).Calculate
+            ' 20200827
+            ' the synlock will stop the parallel computing in GA engine
+            'SyncLock evaluateFitness
+            If Not evaluateFitness.Cacheable Then
+                Return evaluateFitness.Calculate([in], parallel)
+            Else
+                Return getOrCacheOfFitness([in], parallel)
+            End If
+            'End SyncLock
+        End Function
+
+        Private Function getOrCacheOfFitness([in] As Individual, parallel As Boolean) As Double
             Dim key$ = indivToString([in])
             Dim fit As Double
 
@@ -99,7 +122,7 @@ Namespace Darwinism.Models
                 If cache.ContainsKey(key$) Then
                     fit = cache(key$)
                 Else
-                    fit = caclFitness([in])
+                    fit = evaluateFitness.Calculate([in], parallel)
                     cache.Add(key$, fit)
 
                     If cache.Count >= maxCapacity Then

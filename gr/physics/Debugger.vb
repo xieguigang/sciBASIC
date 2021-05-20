@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e8f8f702066ef4fb4bc2bf1bb4449b22, gr\physics\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::53be0e0688910726f8ba1fbef0059abc, gr\physics\Debugger.vb"
 
     ' Author:
     ' 
@@ -84,7 +84,7 @@ Public Module Debugger
                 Call draw(force, Brushes.SkyBlue)
             Next
 
-            '            绘制出合力
+            ' 绘制出合力
             Call draw(F.Sum, Brushes.Violet)
         End With
     End Sub

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::938c1221b2b40024076eca7303c01923, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\QRDecomposition.vb"
+﻿#Region "Microsoft.VisualBasic::d554a52ed94f0a4aef6873d1d6f746bc, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\QRDecomposition.vb"
 
     ' Author:
     ' 
@@ -48,7 +48,7 @@
 
 Imports System.Runtime.Serialization
 
-Namespace Matrix
+Namespace LinearAlgebra.Matrix
 
     ''' <summary>QR Decomposition.
     ''' For an m-by-n matrix A with m >= n, the QR decomposition is an m-by-n

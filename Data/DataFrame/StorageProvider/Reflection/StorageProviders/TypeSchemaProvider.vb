@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e98245da8f32902e2db52fc51c5f60cd, Data\DataFrame\StorageProvider\Reflection\StorageProviders\TypeSchemaProvider.vb"
+﻿#Region "Microsoft.VisualBasic::3dbd96d1345fd2dcf11d051e2312b222, Data\DataFrame\StorageProvider\Reflection\StorageProviders\TypeSchemaProvider.vb"
 
     ' Author:
     ' 
@@ -89,7 +89,9 @@ Namespace StorageProvider.Reflection
                  Select [Property], IAC) _
  _
                     .ToDictionary(Function(obj) obj.Property,
-                                  Function(obj) obj.IAC)
+                                  Function(obj)
+                                      Return obj.IAC
+                                  End Function)
             Return hash
         End Function
 
@@ -103,7 +105,8 @@ Namespace StorageProvider.Reflection
         Public Function GetInterfaces([Property] As PropertyInfo, Explicit As Boolean, Optional forcePrimitive As Boolean = True) As ComponentModels.StorageProvider
             Dim attrs As Object() = [Property].GetCustomAttributes(
                 attributeType:=GetType(CollectionAttribute),
-                inherit:=True)
+                inherit:=True
+            )
 
             If Not attrs.IsNullOrEmpty Then
                 Dim attr = DirectCast(attrs(Scan0), Reflection.CollectionAttribute)
@@ -120,25 +123,31 @@ Namespace StorageProvider.Reflection
 
             attrs = [Property].GetCustomAttributes(attributeType:=GetType(Reflection.ColumnAttribute), inherit:=True)
 
-            If Not attrs.IsNullOrEmpty Then  ' 查找列数据定义
-                Dim attr As ColumnAttribute = DirectCast(attrs(Scan0), Reflection.ColumnAttribute) ' 枚举和键值对可能会通过这个属性来取别名，所以这里还需要进行额外的处理
+            If Not attrs.IsNullOrEmpty Then
+                ' 查找列数据定义
+                ' 枚举和键值对可能会通过这个属性来取别名，所以这里还需要进行额外的处理
+                Dim attr As ColumnAttribute = DirectCast(attrs(Scan0), Reflection.ColumnAttribute)
 
+                ' 由于已经定义了Column类型自定义属性定义，所以Column里面可能是非基本类型，
+                ' 这里不再强制需要基本类型了
                 Return __generateMask(
                     [Property],
                     [alias]:=attr.Name,
                     forcePrimitive:=False,
-                    ColumnMaps:=attr)  ' 由于已经定义了Column类型自定义属性定义，所以Column里面可能是非基本类型，这里不再强制需要基本类型了
+                    ColumnMaps:=attr
+                )
+            End If
 
-            End If  ' 请注意，由于这个属性之间有继承关系，这一最基本的类型会放在最后以防止出现重复
-
-            attrs = [Property].GetCustomAttributes(
-                attributeType:=GetType(System.Data.Linq.Mapping.ColumnAttribute),
-                inherit:=True)
+#If netcore5 = 0 Then
+            ' 请注意，由于这个属性之间有继承关系，这一最基本的类型会放在最后以防止出现重复
+            attrs = [Property].GetCustomAttributes(attributeType:=GetType(System.Data.Linq.Mapping.ColumnAttribute), inherit:=True)
 
             If Not attrs.IsNullOrEmpty Then
-                Dim attr = DirectCast(attrs(Scan0), System.Data.Linq.Mapping.ColumnAttribute)  '也可能是别名属性
+                ' 也可能是别名属性
+                Dim attr = DirectCast(attrs(Scan0), System.Data.Linq.Mapping.ColumnAttribute)
                 Return __generateMask([Property], [alias]:=attr.Name, forcePrimitive:=forcePrimitive)
             End If
+#End If
 
             If Not Explicit Then
                 Return __generateMask([Property], "", forcePrimitive)

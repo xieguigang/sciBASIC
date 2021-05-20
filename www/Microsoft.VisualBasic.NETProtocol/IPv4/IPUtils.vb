@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fbf463ad48c432d82c73eeaed65e3eac, www\Microsoft.VisualBasic.NETProtocol\IPv4\IPUtils.vb"
+﻿#Region "Microsoft.VisualBasic::4ba72bc2b8ec6fbd1b54905d9cd2330e, www\Microsoft.VisualBasic.NETProtocol\IPv4\IPUtils.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic
 
 Public Module IPUtils
 

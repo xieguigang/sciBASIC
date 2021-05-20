@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1613dea322043b1502edf5c092802103, Data\DataFrame\StorageProvider\ComponntModels\RowWriter.vb"
+﻿#Region "Microsoft.VisualBasic::29bddad057f601259afa0138d77bab9d, Data\DataFrame\StorageProvider\ComponntModels\RowWriter.vb"
 
     ' Author:
     ' 
@@ -33,13 +33,13 @@
 
     '     Class RowWriter
     ' 
-    '         Properties: Columns, MetaRow, SchemaProvider
+    '         Properties: columns, metaRow, schemaProvider
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: GetRowNames, ToRow
     '         Delegate Function
     ' 
-    '             Properties: HaveMeta, IsMetaIndexed
+    '             Properties: hasMeta, isMetaIndexed
     ' 
     '             Function: __buildRowMeta, __buildRowNullMeta, __meta, CacheIndex, GetMetaTitles
     '                       ToString
@@ -51,41 +51,14 @@
 #End Region
 
 Option Strict Off
-#Region "Microsoft.VisualBasic::31175fbb7610f46cb46a5ad290952c37, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\RowWriter.vb"
-
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-#End Region
 
 Imports System.Reflection
-Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Linq.JoinExtensions
 
 Namespace StorageProvider.ComponentModels
 
@@ -94,53 +67,53 @@ Namespace StorageProvider.ComponentModels
     ''' </summary>
     Public Class RowWriter
 
-        Public ReadOnly Property Columns As StorageProvider()
-        Public ReadOnly Property SchemaProvider As SchemaProvider
-        Public ReadOnly Property MetaRow As MetaAttribute
+        Public ReadOnly Property columns As StorageProvider()
+        Public ReadOnly Property schemaProvider As SchemaProvider
+        Public ReadOnly Property metaRow As MetaAttribute
 
         ''' <summary>
         ''' 由于集合类型的数据会比较长，所以一般是将集合类型放在最后面
         ''' 故而这里只对单个的column类型做原始排序
         ''' </summary>
-        ''' <param name="SchemaProvider"></param>
+        ''' <param name="schemaProvider"></param>
         ''' <param name="metaBlank"></param>
-        Sub New(SchemaProvider As SchemaProvider, metaBlank As String, layoutOrder As Dictionary(Of String, Integer))
-            Me.SchemaProvider = SchemaProvider
-            Me.Columns =
-                SchemaProvider.Columns _
+        Sub New(schemaProvider As SchemaProvider, metaBlank As String, layoutOrder As Dictionary(Of String, Integer))
+            Me.schemaProvider = schemaProvider
+            Me.columns =
+                schemaProvider.Columns _
                     .ToList(Function(field)
                                 Return DirectCast(field, StorageProvider)
                             End Function) +
-                SchemaProvider.EnumColumns _
+                schemaProvider.EnumColumns _
                     .Select(Function(field)
                                 Return DirectCast(field, StorageProvider)
                             End Function) +
-                SchemaProvider.KeyValuePairColumns _
+                schemaProvider.KeyValuePairColumns _
                     .Select(Function(field)
                                 Return DirectCast(field, StorageProvider)
                             End Function) +
-                SchemaProvider.CollectionColumns _
+                schemaProvider.CollectionColumns _
                     .Select(Function(field)
                                 Return DirectCast(field, StorageProvider)
                             End Function).ToArray
-            Me.Columns = LinqAPI.Exec(Of StorageProvider) _
+            Me.columns = LinqAPI.Exec(Of StorageProvider) _
  _
                 () <= From field As StorageProvider
-                      In Me.Columns
+                      In Me.columns
                       Where Not field Is Nothing
                       Select field
 
-            Me.MetaRow = SchemaProvider.MetaAttributes
+            Me.metaRow = schemaProvider.MetaAttributes
             Me._metaBlank = metaBlank
-            Me.HaveMeta = Not MetaRow Is Nothing
+            Me.hasMeta = Not metaRow Is Nothing
 
-            If Me.MetaRow Is Nothing Then
+            If Me.metaRow Is Nothing Then
                 __buildRow = AddressOf __buildRowNullMeta
             Else
                 __buildRow = AddressOf __buildRowMeta
             End If
 
-            Dim properties$() = SchemaProvider _
+            Dim properties$() = schemaProvider _
                 .DeclaringType _
                 .GetProperties(BindingFlags.Public Or BindingFlags.Instance) _
                 .Where(Function(d) d.GetIndexParameters.IsNullOrEmpty) _
@@ -150,7 +123,7 @@ Namespace StorageProvider.ComponentModels
             Dim ordered As StorageProvider() = New StorageProvider(rawOrders.Count - 1) {}
 
             ' 只对column类型进行原始排序
-            With Columns _
+            With columns _
                 .Where(Function(c) c.ProviderId = ProviderIds.Column) _
                 .ToDictionary(Function(c) c.BindProperty.Name)
 
@@ -160,8 +133,8 @@ Namespace StorageProvider.ComponentModels
             End With
 
             ordered = ordered.Where(Function(c) Not c Is Nothing).ToArray
-            Columns = ordered.AsList +
-            Columns.Where(Function(c)
+            columns = ordered.AsList +
+            columns.Where(Function(c)
                               For Each rc In ordered
                                   If rc Is c Then
                                       ' 是前面经过重新排序的column，则不考虑了      
@@ -174,7 +147,7 @@ Namespace StorageProvider.ComponentModels
 
             If Not layoutOrder Is Nothing Then
                 ' 列的顺序需要通过layoutOrder进行重排序
-                Columns = Columns _
+                columns = columns _
                     .OrderBy(Function(c)
                                  Return If(layoutOrder.ContainsKey(c.Name), layoutOrder(c.Name), 1000)
                              End Function) _
@@ -184,11 +157,14 @@ Namespace StorageProvider.ComponentModels
 
         Public Function GetRowNames(Optional maps As Dictionary(Of String, String) = Nothing) As RowObject
             If maps Is Nothing Then
-                Return New RowObject(Columns.Select(Function(field) field.Name))
+                Return New RowObject(columns.Select(Function(field) field.Name))
             Else
                 Dim __get As Func(Of StorageProvider, String) =
-                    Function(x) If(maps.ContainsKey(x.Name), maps(x.Name), x.Name)
-                Return New RowObject(Columns.Select(__get))
+                    Function(x)
+                        Return If(maps.ContainsKey(x.Name), maps(x.Name), x.Name)
+                    End Function
+
+                Return New RowObject(columns.Select(__get))
             End If
         End Function
 
@@ -221,7 +197,7 @@ Namespace StorageProvider.ComponentModels
             Dim row = LinqAPI.MakeList(Of String) _
  _
             () <= From colum As StorageProvider
-                  In Columns
+                  In columns
                   Let value As Object = colum.BindProperty.GetValue(obj, Nothing)
                   Let strData As String = colum.ToString(value)
                   Select strData
@@ -231,15 +207,15 @@ Namespace StorageProvider.ComponentModels
 
         Friend __cachedIndex As String()
 
-        Public ReadOnly Property HaveMeta As Boolean
+        Public ReadOnly Property hasMeta As Boolean
 
         ''' <summary>
         ''' Has the meta field indexed?
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property IsMetaIndexed As Boolean
+        Public ReadOnly Property isMetaIndexed As Boolean
             Get
-                If Not HaveMeta Then
+                If Not hasMeta Then
                     Return True
                 Else
                     Return Not __cachedIndex Is Nothing
@@ -258,7 +234,7 @@ Namespace StorageProvider.ComponentModels
         ''' </param>
         ''' <returns></returns>
         Public Function CacheIndex(source As IEnumerable(Of Object), reorderKeys As Integer) As RowWriter
-            If MetaRow Is Nothing Then
+            If metaRow Is Nothing Then
                 Return Me
             End If
 
@@ -266,7 +242,7 @@ Namespace StorageProvider.ComponentModels
  _
                 () <= From obj As Object
                       In source.AsParallel
-                      Let x As Object = MetaRow.BindProperty.GetValue(obj, Nothing)
+                      Let x As Object = metaRow.BindProperty.GetValue(obj, Nothing)
                       Where Not x Is Nothing
                       Let hash As IDictionary = DirectCast(x, IDictionary)
                       Select hash  ' 获取每一个实体对象的字典属性的值
@@ -301,7 +277,7 @@ Namespace StorageProvider.ComponentModels
         ''' <returns></returns>
         Private Function __buildRowMeta(obj As Object) As RowObject
             Dim row As List(Of String) = (From colum As StorageProvider
-                                          In Columns
+                                          In columns
                                           Let value As Object = colum.BindProperty.GetValue(obj, Nothing)
                                           Let strData As String = colum.ToString(value)
                                           Select strData).AsList
@@ -312,7 +288,7 @@ Namespace StorageProvider.ComponentModels
 #End Region
 
         Public Function GetMetaTitles() As String()
-            If MetaRow Is Nothing OrElse MetaRow.BindProperty Is Nothing Then
+            If metaRow Is Nothing OrElse metaRow.BindProperty Is Nothing Then
                 Return New String() {}
             Else
                 Return __cachedIndex
@@ -320,8 +296,8 @@ Namespace StorageProvider.ComponentModels
         End Function
 
         Private Function __meta(obj As Object) As String()
-            Dim source As Object = ' 得到实体之中的字典类型的属性值
-                MetaRow.BindProperty.GetValue(obj, Nothing)
+            ' 得到实体之中的字典类型的属性值
+            Dim source As Object = metaRow.BindProperty.GetValue(obj, Nothing)
 
             If source Is Nothing Then
                 Return _metaBlank.Repeats(__cachedIndex.Length)

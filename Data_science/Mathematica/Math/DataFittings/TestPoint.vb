@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75f778e755b91dab0b2fcf45cb398236, Data_science\Mathematica\Math\DataFittings\TestPoint.vb"
+﻿#Region "Microsoft.VisualBasic::a7052003283ca54d5dd5fd15c508f219, Data_science\Mathematica\Math\DataFittings\TestPoint.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,10 @@
 
     ' Summaries:
 
+    ' Interface IFitError
+    ' 
+    '     Properties: Y, Yfit
+    ' 
     ' Structure TestPoint
     ' 
     '     Properties: Err, X, Y, Yfit
@@ -45,12 +49,19 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 
+Public Interface IFitError
+
+    Property Y As Double
+    Property Yfit As Double
+
+End Interface
+
 <XmlType("point", [Namespace]:="http://scibasic.net/math/Bootstrapping")>
-Public Structure TestPoint
+Public Structure TestPoint : Implements IFitError
 
     <XmlAttribute("x")> Public Property X As Double
-    <XmlAttribute("y")> Public Property Y As Double
-    <XmlAttribute("fx")> Public Property Yfit As Double
+    <XmlAttribute("y")> Public Property Y As Double Implements IFitError.Y
+    <XmlAttribute("fx")> Public Property Yfit As Double Implements IFitError.Yfit
 
     <XmlIgnore>
     Public ReadOnly Property Err As Double

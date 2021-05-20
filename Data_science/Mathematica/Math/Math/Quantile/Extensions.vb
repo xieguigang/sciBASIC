@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cbdbd1d5aaeafb139d67c68845b70b9b, Data_science\Mathematica\Math\Math\Quantile\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::d5e661546a8baad03991d59967f979ad, Data_science\Mathematica\Math\Math\Quantile\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: (+2 Overloads) GKQuantile, QuantileLevels, SelectByQuantile, Threshold
+    '         Function: debugView, (+2 Overloads) GKQuantile, QuantileLevels, SelectByQuantile, Threshold
     ' 
     '         Sub: Summary
     ' 
@@ -44,11 +44,12 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Quantile
 
@@ -58,6 +59,16 @@ Namespace Quantile
     Public Module Extensions
 
         Public Const epsilon As Double = 0.001
+
+        <Extension>
+        Friend Function debugView(q As QuantileQuery) As String
+            Return seq(0, 1, 0.25) _
+                .ToDictionary(Function(pct) (100 * pct).ToString("F2") & "%",
+                              Function(pct)
+                                  Return q.Query(pct).ToString("F2")
+                              End Function) _
+                .GetJson
+        End Function
 
         ''' <summary>
         ''' Example Usage:
@@ -150,15 +161,24 @@ Namespace Quantile
         ''' <returns></returns>
         <Extension>
         Public Function QuantileLevels(source As IEnumerable(Of Double),
-                                       Optional steps# = 0.005,
+                                       Optional steps# = 0.01,
                                        Optional epsilon# = Extensions.epsilon,
-                                       Optional compact_size% = 1000) As Double()
+                                       Optional compact_size% = 1000,
+                                       Optional fast As Boolean = False) As Double()
 
             Dim array#() = source.ToArray
-            Dim estimator As New QuantileEstimationGK(epsilon, compact_size, array)
-            Dim cuts As New List(Of Double)
-            Dim levels As New List(Of Double)  ' 需要返回的是这个相对应的quantile水平
+            Dim estimator As QuantileQuery
 
+            If fast Then
+                estimator = New FastRankQuantile(array)
+            Else
+                estimator = New QuantileEstimationGK(epsilon, compact_size, array)
+            End If
+
+            Dim cuts As New List(Of Double)
+            Dim levels As New List(Of Double)
+
+            ' 需要返回的是这个相对应的quantile水平
             For q As Double = 0 To 1 Step steps
                 cuts += estimator.Query(q)
                 levels += q
@@ -166,10 +186,21 @@ Namespace Quantile
 
             Dim index As New OrderSelector(Of Double)(cuts)
 
-            For i As Integer = 0 To array.Length - 1
-                ' 在这里将实际的数据转换为quantile水平
-                array(i) = levels(index.FirstGreaterThan(array(i)))
-            Next
+            If fast Then
+                array = array.SeqIterator.ToArray _
+                    .AsParallel _
+                    .Select(Function(xi)
+                                Return (levels(index.FirstGreaterThan(xi.value)), xi.i)
+                            End Function) _
+                    .OrderBy(Function(xi) xi.i) _
+                    .Select(Function(xi) xi.Item1) _
+                    .ToArray
+            Else
+                For i As Integer = 0 To array.Length - 1
+                    ' 在这里将实际的数据转换为quantile水平
+                    array(i) = levels(index.FirstGreaterThan(array(i)))
+                Next
+            End If
 
             Return array
         End Function
@@ -238,18 +269,33 @@ Namespace Quantile
         '    Next
         'End Sub
 
+        Const SummaryTemplate$ = "Estimated {0:F2}% quantile as {1} with {2} sample data (mean:={3}, std:={4})."
+
+        ''' <summary>
+        ''' 默认是输出到标准输出上的
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="dev"></param>
         <Extension>
         Public Sub Summary(data As IEnumerable(Of Double), Optional dev As TextWriter = Nothing)
-            Dim v#() = data.ToArray
+            Dim v As Vector = data.ToArray
             Dim q As QuantileEstimationGK = v.GKQuantile
 
             With dev Or App.StdOut
-                For Each quantile As Double In {0.25, 0.5, 0.75, 0.9, 0.95, 0.99, 1}
+                Call .WriteLine()
+                Call .WriteLine("# Data summary")
+                Call .WriteLine()
+                Call .WriteLine($"Total={v.Length}")
+
+                For Each quantile As Double In {0.1, 0.25, 0.5, 0.75, 0.9, 0.95, 0.99, 1}
                     Dim estimate# = q.Query(quantile)
-                    Dim out$ = String.Format("Estimated {0:F2}% quantile as {1}", quantile * 100, estimate)
+                    Dim lessthan = v(v <= estimate)
+                    Dim out$ = String.Format(SummaryTemplate, quantile * 100, estimate, lessthan.Length, lessthan.Average, lessthan.SD)
 
                     .WriteLine(out)
                 Next
+
+                Call .Flush()
             End With
         End Sub
     End Module

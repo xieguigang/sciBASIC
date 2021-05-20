@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::608fcef57ada7c2c5b1918257cd1c1cf, Data\BinaryData\BinaryData\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::967943e7896ddd320b1de080ee2ee575, Data\BinaryData\BinaryData\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,9 @@
     ' 
     ' Module Extensions
     ' 
-    '     Function: OpenBinaryReader, ReadAsDoubleVector, ReadAsInt64Vector, (+2 Overloads) VerifyMagicSignature
+    '     Function: OpenBinaryReader, ReadAsDoubleVector, ReadAsInt64Vector, (+3 Overloads) VerifyMagicSignature
+    ' 
+    '     Sub: WriteByte
     ' 
     ' /********************************************************************************/
 
@@ -45,9 +47,8 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports System.Text
-Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Text
 
 Public Interface IMagicBlock
 
@@ -60,6 +61,11 @@ Public Interface IMagicBlock
 End Interface
 
 <HideModuleName> Public Module Extensions
+
+    <Extension>
+    Public Function VerifyMagicSignature(block As IMagicBlock, buffer As BinaryDataReader) As Boolean
+        Return block.VerifyMagicSignature(buffer.ReadString(block.magic.Length))
+    End Function
 
     ''' <summary>
     ''' 使用整形数存储的验证数据
@@ -122,7 +128,8 @@ End Interface
     <Extension>
     Public Function OpenBinaryReader(path$, Optional encoding As Encodings = Encodings.ASCII, Optional buffered& = 1024 * 1024 * 10) As BinaryDataReader
         If FileIO.FileSystem.GetFileInfo(path).Length <= buffered Then
-            Dim byts As Byte() = FileIO.FileSystem.ReadAllBytes(path)   ' 文件数据将会被缓存
+            ' 文件数据将会被缓存
+            Dim byts As Byte() = FileIO.FileSystem.ReadAllBytes(path)
             Dim ms As New MemoryStream(byts)
 
             Return New BinaryDataReader(ms, encoding)
@@ -158,4 +165,9 @@ End Interface
             Loop
         End Using
     End Function
+
+    <Extension>
+    Public Sub WriteByte(stream As Stream, sbytes As SByte())
+        Call stream.Write(sbytes.CastByte, Scan0, sbytes.Length)
+    End Sub
 End Module

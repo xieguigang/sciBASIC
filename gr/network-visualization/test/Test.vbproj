@@ -6,12 +6,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1458A1A1-110C-4587-A763-BA88CB808671}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Test.expressionTest</StartupObject>
+    <StartupObject>Test.mingleTest</StartupObject>
     <RootNamespace>Test</RootNamespace>
     <AssemblyName>Test</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Console</MyType>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -67,13 +67,13 @@
     <OutputPath>./bin</OutputPath>
     <DocumentationFile>
     </DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>Full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
-    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
@@ -136,12 +136,17 @@
     <Compile Include="drawTest.vb" />
     <Compile Include="layoutTest.vb" />
     <Compile Include="expressionTest.vb" />
+    <Compile Include="cssFileTest.vb" />
+    <Compile Include="mingleTest.vb" />
+    <Compile Include="OrthogonalLayoutTest.vb" />
+    <Compile Include="testRenderAVI.vb" />
     <Compile Include="visualEffectsTest.vb" />
     <Compile Include="Test.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -191,13 +196,17 @@
       <Project>{E3367B88-5D0C-495A-8273-331656D4B5AA}</Project>
       <Name>Math-Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\mime\text%25html\MIME-htmls.vbproj">
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
       <Name>MIME-htmls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\avi\avi.vbproj">
+      <Project>{5D35E122-11C0-4B18-BE08-E658A3F20323}</Project>
+      <Name>avi</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Imaging\Microsoft.VisualBasic.Imaging.vbproj">
       <Project>{85E71B4B-9276-4EC8-AADC-C849205F1EA8}</Project>
@@ -210,6 +219,10 @@
     <ProjectReference Include="..\Datavisualization.Network\Network.GraphTheory.vbproj">
       <Project>{076315ee-b598-40dc-9280-c71cdf9b6a48}</Project>
       <Name>Network.GraphTheory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Network.IO.Extensions\Network.IO.Extensions.vbproj">
+      <Project>{78CB32E6-2904-41E7-ACCA-F1E2757BFA8E}</Project>
+      <Name>Network.IO.Extensions</Name>
     </ProjectReference>
     <ProjectReference Include="..\NetworkCanvas\NetworkCanvas.vbproj">
       <Project>{ef70bed6-8795-4523-a260-c1abed9405aa}</Project>

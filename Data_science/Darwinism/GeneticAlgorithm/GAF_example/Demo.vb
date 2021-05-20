@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6ba67915b4876235a449e8a63a23bac, Data_science\Darwinism\GeneticAlgorithm\GAF_example\Demo.vb"
+﻿#Region "Microsoft.VisualBasic::9c591217a593356b481506d2f083bf58, Data_science\Darwinism\GeneticAlgorithm\GAF_example\Demo.vb"
 
     ' Author:
     ' 
@@ -81,7 +81,7 @@ Public Class Demo
     Public Class MyVector : Implements Chromosome(Of MyVector), ICloneable
 
         Shared ReadOnly random As New Random()
-        ReadOnly _vector As Integer() = New Integer(4) {}
+        ReadOnly _vector As Double() = {50, 50, 50, 50, 50}
 
         ''' <summary>
         ''' Returns clone of current chromosome, which is mutated a bit
@@ -110,7 +110,7 @@ Public Class Demo
             Return clone__
         End Function
 
-        Public Overridable ReadOnly Property Vector As Integer()
+        Public Overridable ReadOnly Property Vector As Double()
             Get
                 Return Me._vector
             End Get
@@ -128,7 +128,7 @@ Public Class Demo
     Public Class MyVectorFitness
         Implements Fitness(Of MyVector)
 
-        ReadOnly target As Integer() = {10, 20, 30, 40, 50}
+        ReadOnly target As Double() = {10, 20, 30, 40, 50}
 
         Public ReadOnly Property Cacheable As Boolean Implements Fitness(Of MyVector).Cacheable
             Get

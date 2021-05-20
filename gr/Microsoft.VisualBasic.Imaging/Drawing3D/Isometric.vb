@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45003b2ac1cfdda3e3226266d44066ea, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Isometric.vb"
+﻿#Region "Microsoft.VisualBasic::44f3498ebf109f53e3e8753839c42588, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Isometric.vb"
 
     ' Author:
     ' 
@@ -52,7 +52,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Drawing3D
 
@@ -75,14 +75,13 @@ Namespace Drawing3D
         ReadOnly angle, scale As Double
 
         Public Sub New()
-            Me.angle = Math.PI / 6
+            Me.angle = stdNum.PI / 6
             Me.scale = 70
             Me.transformation = {
-                ({Me.scale * sys.Cos(Me.angle), Me.scale * sys.Sin(Me.angle)}),
-                ({Me.scale * sys.Cos(Math.PI - Me.angle), Me.scale * sys.Sin(Math.PI - Me.angle)})
+                ({Me.scale * stdNum.Cos(Me.angle), Me.scale * stdNum.Sin(Me.angle)}),
+                ({Me.scale * stdNum.Cos(stdNum.PI - Me.angle), Me.scale * stdNum.Sin(stdNum.PI - Me.angle)})
             }
-            Dim lightPosition As New Point3D(2, -1, 3)
-            Me.lightAngle = lightPosition.Normalize()
+            Me.lightAngle = New Point3D(2, -1, 3).Normalize()
             Me.colorDifference = 0.2
             Me.lightColor = Color.FromArgb(255, 255, 255)
         End Sub
@@ -149,8 +148,9 @@ Namespace Drawing3D
 
                 model.TransformedPoints = New Point3D(model.path.Points.Count - 1) {}
 
+                ' Todo: test if .reset is not needed and rewind is enough
                 If Not model.DrawPath Is Nothing Then
-                    model.DrawPath.Rewind() 'Todo: test if .reset is not needed and rewind is enough
+                    model.DrawPath.Rewind()
                 End If
 
                 Dim i As Integer = 0
@@ -258,16 +258,17 @@ Namespace Drawing3D
             End With
 
             For Each model2D As Model2D In models
-                '            this.ctx.globalAlpha = color.a;
-                '            this.ctx.fillStyle = this.ctx.strokeStyle = color.toHex();
-                '            this.ctx.stroke();
-                '            this.ctx.fill();
-                '            this.ctx.restore();
-                With model2D
-                    Call canvas.FillPath(.Paint, .DrawPath.Path)
-                    ' 对于线条而言，直接使用DrawPath来进行绘制
-                    Call canvas.DrawPath(New Pen(.Paint), .DrawPath.Path)
-                End With
+                If model2D.isDot Then
+                    Throw New NotImplementedException
+                ElseIf model2D.isLine Then
+                    canvas.DrawLine(New Pen(model2D.baseColor), model2D.TransformedPoints(0).PointXY(canvas.Size), model2D.TransformedPoints(1).PointXY(canvas.Size))
+                Else
+                    With model2D
+                        Call canvas.FillPath(.Paint, .DrawPath.Path)
+                        ' 对于线条而言，直接使用DrawPath来进行绘制
+                        Call canvas.DrawPath(New Pen(.Paint), .DrawPath.Path)
+                    End With
+                End If
             Next
         End Sub
 
@@ -357,7 +358,7 @@ Namespace Drawing3D
         ''' <returns></returns>
         Private Function IsPointInPoly(poly As IList(Of Point3D), x As Double, y As Double) As Boolean
             Dim c As Boolean = False
-            Dim i As VBInteger = -1
+            Dim i As i32 = -1
             Dim l As Integer = poly.Count
             Dim j As Integer = l - 1
 
@@ -377,7 +378,7 @@ Namespace Drawing3D
 
         Private Function IsPointInPoly(poly As Point3D(), x As Double, y As Double) As Boolean
             Dim c As Boolean = False
-            Dim i As VBInteger = -1
+            Dim i As i32 = -1
             Dim l As Integer = poly.Length
             Dim j As Integer = l - 1
 
@@ -415,17 +416,17 @@ Namespace Drawing3D
 
             For i = 0 To lengthA - 1
                 point = pointsA(i)
-                AminX = sys.Min(AminX, point.X)
-                AminY = sys.Min(AminY, point.Y)
-                AmaxX = sys.Max(AmaxX, point.X)
-                AmaxY = sys.Max(AmaxY, point.Y)
+                AminX = stdNum.Min(AminX, point.X)
+                AminY = stdNum.Min(AminY, point.Y)
+                AmaxX = stdNum.Max(AmaxX, point.X)
+                AmaxY = stdNum.Max(AmaxY, point.Y)
             Next
             For i = 0 To lengthB - 1
                 point = pointsB(i)
-                BminX = sys.Min(BminX, point.X)
-                BminY = sys.Min(BminY, point.Y)
-                BmaxX = sys.Max(BmaxX, point.X)
-                BmaxY = sys.Max(BmaxY, point.Y)
+                BminX = stdNum.Min(BminX, point.X)
+                BminY = stdNum.Min(BminY, point.Y)
+                BmaxX = stdNum.Max(BmaxX, point.X)
+                BmaxY = stdNum.Max(BmaxY, point.Y)
             Next
 
             If ((AminX <= BminX AndAlso BminX <= AmaxX) OrElse (BminX <= AminX AndAlso AminX <= BmaxX)) AndAlso ((AminY <= BminY AndAlso BminY <= AmaxY) OrElse (BminY <= AminY AndAlso AminY <= BmaxY)) Then

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b148e9c593da8068514cdd787c03573c, Data_science\Visualization\Plots-statistics\HistStackedBarplot.vb"
+﻿#Region "Microsoft.VisualBasic::88a66fb775c5073184519f9ab6cd2546, Data_science\Visualization\Plots-statistics\HistStackedBarplot.vb"
 
     ' Author:
     ' 
@@ -42,11 +42,13 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
+Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot.Data
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering
-Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.DendrogramVisualize
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
@@ -63,7 +65,7 @@ Public Module HistStackedBarplot
     <Extension>
     Private Function SampleDataSet(sample As BarDataSample, keys$()) As DataSet
         Return New DataSet With {
-            .ID = sample.Tag,
+            .ID = sample.tag,
             .Properties = keys _
                 .SeqIterator _
                 .ToDictionary(Function(key) key.value,
@@ -78,7 +80,7 @@ Public Module HistStackedBarplot
     ''' <param name="size$"></param>
     ''' <param name="margin$"></param>
     ''' <param name="treeWidth#">假若这个宽度值在[0-1]之之间，则认为是百分比，反之当这个宽度值超过了1，则认为是实际的像素值</param>
-    ''' <param name="sampleGroup"><see cref="DendrogramPanel.ClassTable"/></param>
+    ''' <param name="sampleGroup"><see cref="DendrogramPanelV2.classinfo"/></param>
     ''' <returns></returns>
     Public Function Plot(data As BarDataGroup,
                          Optional size$ = "2700,2100",
@@ -98,17 +100,7 @@ Public Module HistStackedBarplot
             .Select(Function(sample) sample.SampleDataSet(data.Serials.Keys)) _
             .ToArray
         Dim histCanvas = Function(cluster As Cluster)
-                             Return New DendrogramPanel With {
-                                 .LineColor = Color.Black,
-                                 .ScaleValueDecimals = 0,
-                                 .ScaleValueInterval = 1,
-                                 .Model = cluster,
-                                 .ShowScale = False,
-                                 .ShowDistanceValues = False,
-                                 .ShowLeafLabel = False,
-                                 .LinkDotRadius = 0,
-                                 .ClassTable = sampleGroup
-                             }
+                             Return New DendrogramPanelV2(cluster, New Theme)
                          End Function
 
         Dim plotInternal =

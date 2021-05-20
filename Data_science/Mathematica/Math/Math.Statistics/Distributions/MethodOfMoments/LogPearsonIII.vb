@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e36685a4a004eda261fb17955e044ed1, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\LogPearsonIII.vb"
+﻿#Region "Microsoft.VisualBasic::1d658848f4deea7889c359430a6f6422, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\LogPearsonIII.vb"
 
     ' Author:
     ' 
@@ -41,8 +41,7 @@
 
 #End Region
 
-Imports System
-Imports System.Collections.Generic
+Imports stdNum = System.Math
 
 '
 ' * To change this license header, choose License Headers in Project Properties.
@@ -78,7 +77,7 @@ Namespace Distributions.MethodOfMoments
         End Sub
         Public Sub New(data As Double())
             For i As Integer = 0 To data.Length - 1
-                data(i) = Math.Log10(data(i))
+                data(i) = stdNum.Log10(data(i))
             Next i
             Dim PM As New MomentFunctions.ProductMoments(data)
             _Mean = PM.Mean()
@@ -90,13 +89,13 @@ Namespace Distributions.MethodOfMoments
             If _Skew = 0 Then
                 Dim zeroSkewNorm As New Normal(_Mean, _StDev)
                 Dim logflow As Double = zeroSkewNorm.GetInvCDF(probability)
-                Return Math.Pow(10, logflow)
+                Return stdNum.Pow(10, logflow)
             Else
                 Dim sn As New Normal
                 Dim z As Double = sn.GetInvCDF(probability)
-                Dim k As Double = (2 / _Skew) * (Math.Pow((z - _Skew / 6.0) * _Skew / 6.0 + 1, 3) - 1)
+                Dim k As Double = (2 / _Skew) * (stdNum.Pow((z - _Skew / 6.0) * _Skew / 6.0 + 1, 3) - 1)
                 Dim logflow As Double = _Mean + (k * _StDev)
-                Return Math.Pow(10, logflow)
+                Return stdNum.Pow(10, logflow)
             End If
         End Function
         Public Overrides Function GetCDF(value As Double) As Double
@@ -112,18 +111,18 @@ Namespace Distributions.MethodOfMoments
             If _Skew = 0 Then
                 k = z1
             Else
-                k = (2 / _Skew) * (Math.Pow((z1 - _Skew / 6.0) * _Skew / 6.0 + 1, 3) - 1)
+                k = (2 / _Skew) * (stdNum.Pow((z1 - _Skew / 6.0) * _Skew / 6.0 + 1, 3) - 1)
             End If
             Dim z As Double = sn.GetInvCDF(alphaValue)
-            Dim zSquared As Double = Math.Pow(z, 2)
-            Dim kSquared As Double = Math.Pow(k, 2)
+            Dim zSquared As Double = stdNum.Pow(z, 2)
+            Dim kSquared As Double = stdNum.Pow(k, 2)
             Dim Avalue As Double = (1 - (zSquared) / 2 \ (PeriodOfRecord() - 1))
             Dim Bvalue As Double = (kSquared) - ((zSquared) / PeriodOfRecord())
-            Dim RootValue As Double = Math.Sqrt(kSquared - (Avalue * Bvalue))
+            Dim RootValue As Double = stdNum.Sqrt(kSquared - (Avalue * Bvalue))
             If alphaValue > 0.5 Then
-                Return Math.Pow(10, _Mean + _StDev * (k + RootValue) / Avalue)
+                Return stdNum.Pow(10, _Mean + _StDev * (k + RootValue) / Avalue)
             Else
-                Return Math.Pow(10, _Mean + _StDev * (k - RootValue) / Avalue)
+                Return stdNum.Pow(10, _Mean + _StDev * (k - RootValue) / Avalue)
             End If
         End Function
         Public Overrides Iterator Function Validate() As IEnumerable(Of Exception)

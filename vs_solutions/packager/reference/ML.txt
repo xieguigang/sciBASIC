@@ -1,0 +1,7 @@
+#=include(locate.txt)
+
+#/Microsoft.VisualBasic.Core/47-dotnet_Microsoft.VisualBasic.vbproj
+#/Data/DataFrame/47_dotnet_ms-vb_data.framework.vbproj
+#/Data_science/Mathematica/Math/Math/math-core.vbproj
+#/Data_science/DataMining/DataMining/DataMining.vbproj
+#/Data_science/MachineLearning/MachineLearning/MachineLearning.vbproj

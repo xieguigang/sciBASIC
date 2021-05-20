@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-16"?>
+<DataSet xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <!--
+     model:     Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure.DataSet
+     assembly:  Microsoft.VisualBasic.MachineLearning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+     md5:       62ff399c79f2a7a8d8befb400e7ae6d5
+     timestamp: Friday, July 12, 2019
+  -->
+  <sample size="31">
+    <sample id="1" target="1 1 1 1 1">
+      <status name="NULL" vector="0 0 0 0 0 1" />
+    </sample>
+    <sample id="2" target="1 1 1 1 1">
+      <status name="NULL" vector="0 0 0 0 0 1" />
+    </sample>
+    <sample id="3" target="1 1 1 1 1">
+      <status name="NULL" vector="0 0 0 0 0 1" />
+    </sample>
+    <sample id="4" target="1 1 1 1 1">
+      <status name="NULL" vector="0 0 0 0 0 1" />
+    </sample>
+    <sample id="5" target="1 1 1 1 1">
+      <status name="NULL" vector="0 0 0 0 0 1" />
+    </sample>
+    <sample id="6" target="1 1 1 1 1">
+      <status name="NULL" vector="0 0 0 0 1 1" />
+    </sample>
+    <sample id="7" target="1 1 1 1 1">
+      <status name="NULL" vector="0 0 0 0 1 1" />
+    </sample>
+    <sample id="8" target="1 1 1 1 1">
+      <status name="NULL" vector="0 0 0 0 1 1" />
+    </sample>
+    <sample id="9" target="1 1 1 1 1">
+      <status name="NULL" vector="0 0 0 0 0 1" />
+    </sample>
+    <sample id="10" target="1 1 1 1 1">
+      <status name="NULL" vector="0 0 0 0 0 1" />
+    </sample>
+    <sample id="11" target="1 1 1 1 1">
+      <status name="NULL" vector="0 0 0 0 0 1" />
+    </sample>
+    <sample id="12" target="1 1 1 1 1">
+      <status name="NULL" vector="0 0 0 0 0 1" />
+    </sample>
+    <sample id="13" target="1 1 1 1 1">
+      <status name="NULL" vector="0 0 0 0 0 1" />
+    </sample>
+    <sample id="14" target="1 1 1 1 1">
+      <status name="NULL" vector="0 0 0 0 0 1" />
+    </sample>
+    <sample id="15" target="1 1 1 1 1">
+      <status name="NULL" vector="0 0 0 0 0 1" />
+    </sample>
+    <sample id="16" target="1 1 1 1 1">
+      <status name="NULL" vector="0 0 0 0 0 1" />
+    </sample>
+    <sample id="17" target="1 0 0 0 0">
+      <status name="NULL" vector="0 1 0 0 0 0" />
+    </sample>
+    <sample id="18" target="1 0 0 0 0">
+      <status name="NULL" vector="0 0 0 0 0 0.6" />
+    </sample>
+    <sample id="19" target="1 0 0 0 0">
+      <status name="NULL" vector="0 0 0 0 0 0" />
+    </sample>
+    <sample id="20" target="1 0 0 0 0">
+      <status name="NULL" vector="0 0 0 1 0 0" />
+    </sample>
+    <sample id="21" target="1 0 0 0 0">
+      <status name="NULL" vector="0 0 0 0 0 0" />
+    </sample>
+    <sample id="22" target="1 0 0 0 0">
+      <status name="NULL" vector="0 0 0 0 0 0" />
+    </sample>
+    <sample id="23" target="1 0 0 0 0">
+      <status name="NULL" vector="0 0 0 0 0 0" />
+    </sample>
+    <sample id="24" target="1 0 0 0 0">
+      <status name="NULL" vector="0 0 0 0 0 0" />
+    </sample>
+    <sample id="25" target="1 0 0 0 0">
+      <status name="NULL" vector="0 0 1 0 0 0" />
+    </sample>
+    <sample id="26" target="1 0 0 0 0">
+      <status name="NULL" vector="0 0 0 0 0 0" />
+    </sample>
+    <sample id="27" target="1 0 0 0 0">
+      <status name="NULL" vector="0 0 0 0 0 0" />
+    </sample>
+    <sample id="28" target="1 0 0 0 0">
+      <status name="NULL" vector="0 0 0 0 0 0" />
+    </sample>
+    <sample id="29" target="1 0 0 0 0">
+      <status name="NULL" vector="0 0 1 0 0 0" />
+    </sample>
+    <sample id="30" target="1 0 0 0 0">
+      <status name="NULL" vector="0 1 0 0 0 0" />
+    </sample>
+    <sample id="31" target="1 0 0 0.1 0.61">
+      <status name="NULL" vector="0 0 0 0 0 0" />
+    </sample>
+  </sample>
+  <normalization>
+    <!--
+     model:     Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure.NormalizeMatrix
+     assembly:  Microsoft.VisualBasic.MachineLearning, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+     md5:       62ff399c79f2a7a8d8befb400e7ae6d5
+     timestamp: Friday, July 12, 2019
+  -->
+    <matrix min="0" max="0" average="0" stdErr="0" size="31" quantile="0 0 0 0 0" />
+    <matrix min="0" max="1" average="0.064516129032258063" stdErr="0.2456701001891583" size="31" quantile="0 0 0 0 1" />
+    <matrix min="0" max="1" average="0.064516129032258063" stdErr="0.24567010018915833" size="31" quantile="0 0 0 0 1" />
+    <matrix min="0" max="1" average="0.032258064516129031" stdErr="0.17668469596940847" size="31" quantile="0 0 0 0 1" />
+    <matrix min="0" max="1" average="0.0967741935483871" stdErr="0.29565004483586071" size="31" quantile="0 0 0 0 1" />
+    <matrix min="0" max="1" average="0.535483870967742" stdErr="0.49091644850959493" size="31" quantile="0 0 0.6 1 1" />
+    <names>
+      <string>input_0</string>
+      <string>input_1</string>
+      <string>input_2</string>
+      <string>input_3</string>
+      <string>input_4</string>
+      <string>input_5</string>
+    </names>
+  </normalization>
+  <output>
+    <string>output_0</string>
+    <string>output_1</string>
+    <string>output_2</string>
+    <string>output_3</string>
+    <string>output_4</string>
+  </output>
+</DataSet>

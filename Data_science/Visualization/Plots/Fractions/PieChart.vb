@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c9d1c491a257a46c50e62d78a5c2d54, Data_science\Visualization\Plots\Fractions\PieChart.vb"
+﻿#Region "Microsoft.VisualBasic::60effb26260203001950c5a99f821640, Data_science\Visualization\Plots\Fractions\PieChart.vb"
 
     ' Author:
     ' 
@@ -48,6 +48,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors.OfficeAccent
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
@@ -55,7 +56,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Fractions
 
@@ -91,19 +92,19 @@ Namespace Fractions
         ''' </remarks>
         <Extension>
         Public Function Plot(data As IEnumerable(Of FractionData),
-                         Optional size$ = "1600,1200",
-                         Optional padding$ = g.DefaultPadding,
-                         Optional bg$ = "white",
-                         Optional valueLabel As ValueLabels = ValueLabels.Percentage,
-                         Optional valueLabelStyle$ = CSSFont.Win7Bold,
-                         Optional legendAlt As Boolean = True,
-                         Optional legendFont$ = CSSFont.Win7LargeBold,
-                         Optional legendBorder As Stroke = Nothing,
-                         Optional minRadius As Single = -1,
-                         Optional reorder% = 0,
-                         Optional legendUnitSize$ = "60,50",
-                         Optional shadowDistance# = 80,
-                         Optional shadowAngle# = 35) As GraphicsData
+                             Optional size$ = "1600,1200",
+                             Optional padding$ = g.DefaultPadding,
+                             Optional bg$ = "white",
+                             Optional valueLabel As ValueLabels = ValueLabels.Percentage,
+                             Optional valueLabelStyle$ = CSSFont.Win7Bold,
+                             Optional legendAlt As Boolean = True,
+                             Optional legendFont$ = CSSFont.Win7LargeBold,
+                             Optional legendBorder As Stroke = Nothing,
+                             Optional minRadius As Single = -1,
+                             Optional reorder% = 0,
+                             Optional legendUnitSize$ = "60,50",
+                             Optional shadowDistance# = 80,
+                             Optional shadowAngle# = 35) As GraphicsData
 
             Dim margin As Padding = padding
             Dim font As Font = CSSFont.TryParse(legendFont)
@@ -119,128 +120,135 @@ Namespace Fractions
                 End If
             End If
 
-            Dim __plot =
-            Sub(ByRef g As IGraphics, region As GraphicsRegion)
-                Dim gSize = region.PlotRegion.Size
-                Dim r# = sys.Min(gSize.Width, gSize.Height - shadowDistance) / 2 ' 最大的半径值
-                Dim topLeft As New Point(margin.Left, margin.Top)
-                Dim valueLabelFont As Font = CSSFont.TryParse(valueLabelStyle)
-                Dim layoutRect As Rectangle
+            Dim plotInternal =
+                Sub(ByRef g As IGraphics, region As GraphicsRegion)
+                    Dim gSize = region.PlotRegion.Size
+                    Dim r# = stdNum.Min(gSize.Width, gSize.Height - shadowDistance) / 2 ' 最大的半径值
+                    Dim topLeft As New Point(margin.Left, margin.Top)
+                    Dim valueLabelFont As Font = CSSFont.TryParse(valueLabelStyle)
+                    Dim layoutRect As Rectangle
 
-                If minRadius <= 0 OrElse CDbl(minRadius) >= r Then  ' 半径固定不变的样式
+                    If minRadius <= 0 OrElse CDbl(minRadius) >= r Then  ' 半径固定不变的样式
 
-                    Dim start As New VBDouble
-                    Dim sweep As New VBDouble
-                    Dim alpha As Single, pt As PointF
-                    Dim labelSize As SizeF
-                    Dim label$
-                    Dim br As SolidBrush
-                    Dim centra As Point
+                        Dim start As New f64
+                        Dim sweep As New f64
+                        Dim alpha As Single, pt As PointF
+                        Dim labelSize As SizeF
+                        Dim label$
+                        Dim br As SolidBrush
+                        Dim centra As Point
 
-                    layoutRect = New Rectangle(topLeft, New Size(r * 2, r * 2))
-                    centra = layoutRect.Centre
+                        layoutRect = New Rectangle(topLeft, New Size(r * 2, r * 2))
+                        centra = layoutRect.Centre
 
-                    ' 首先需要进行阴影的绘制
-                    With topLeft.MovePoint(shadowDistance, shadowAngle)
-                        Dim circle As New GraphicsPath
+                        ' 首先需要进行阴影的绘制
+                        With topLeft.MovePoint(shadowDistance, shadowAngle)
+                            Dim circle As New GraphicsPath
 
-                        Call circle.AddEllipse(.X, .Y, CSng(r * 2), CSng(r * 2))
-                        Call circle.CloseAllFigures()
-                        Call g.DropdownShadows(polygon:=circle)
-                    End With
+                            Call circle.AddEllipse(.X, .Y, CSng(r * 2), CSng(r * 2))
+                            Call circle.CloseAllFigures()
+                            Call Shadow.DropdownShadows(g, polygon:=circle)
+                        End With
 
-                    ' 填充浅灰色底层
-                    Call g.FillPie(Brushes.LightGray, layoutRect, 0, 360)
+                        ' 填充浅灰色底层
+                        Call g.FillPie(Brushes.LightGray, layoutRect, 0, 360)
 
-                    For Each x As FractionData In data
-                        br = New SolidBrush(x.Color)
-                        Call g.FillPie(br, layoutRect,
-                                       CSng(start = ((+start) + (sweep = CSng(360 * x.Percentage)))) - CSng(sweep.Value),
-                                       CSng(sweep))
+                        For Each x As FractionData In data
+                            br = New SolidBrush(x.Color)
+                            Call g.FillPie(br, layoutRect,
+                                           CSng(start = ((+start) + (sweep = CSng(360 * x.Percentage)))) - CSng(sweep.Value),
+                                           CSng(sweep))
 
-                        alpha = (+start) - (+sweep / 2)
-                        pt = (r / 1.5, alpha).ToCartesianPoint()  ' 在这里r/1.5是因为这些百分比的值的标签需要显示在pie的内部
-                        pt = New PointF(pt.X + centra.X, pt.Y + centra.Y)
-                        label = x.GetValueLabel(valueLabel)
-                        labelSize = g.MeasureString(label, valueLabelFont)
-                        pt = New Point(pt.X - labelSize.Width / 2, pt.Y)
+                            alpha = (+start) - (+sweep / 2)
+                            ' 在这里r/1.5是因为这些百分比的值的标签需要显示在pie的内部
+                            pt = (r / 1.5, alpha).ToCartesianPoint()
+                            pt = New PointF(pt.X + centra.X, pt.Y + centra.Y)
+                            label = x.GetValueLabel(valueLabel)
+                            labelSize = g.MeasureString(label, valueLabelFont)
+                            pt = New Point(pt.X - labelSize.Width / 2, pt.Y)
 
-                        Call g.DrawString(label, valueLabelFont, Brushes.White, pt)
+                            Call g.DrawString(label, valueLabelFont, Brushes.White, pt)
 
-                        If Not legendAlt Then
+                            If Not legendAlt Then
 
-                            ' 标签文本信息跟随pie的值而变化的
-                            Dim layout As New PointF With {
-                                .X = (r * 1.15 * Math.Cos((start / 360) * (2 * Math.PI))) + centra.X,
-                                .Y = (r * 1.15 * Math.Sin((start / 360) * (2 * Math.PI))) + centra.Y
-                            }
+                                ' 标签文本信息跟随pie的值而变化的
+                                Dim layout As New PointF With {
+                                    .X = (r * 1.15 * stdNum.Cos((start / 360) * (2 * stdNum.PI))) + centra.X,
+                                    .Y = (r * 1.15 * stdNum.Sin((start / 360) * (2 * stdNum.PI))) + centra.Y
+                                }
 
-                            labelSize = g.MeasureString(x.Name, font)
+                                labelSize = g.MeasureString(x.Name, font)
 
-                            If layout.X < centra.X Then
-                                ' 在左边，则需要剪掉size的width
-                                layout = New PointF(layout.X - labelSize.Width, layout.Y)
+                                If layout.X < centra.X Then
+                                    ' 在左边，则需要剪掉size的width
+                                    layout = New PointF(layout.X - labelSize.Width, layout.Y)
+                                End If
+
+                                g.DrawString(x.Name, font, Brushes.Black, layout)
+
+                                ' 还需要绘制标签文本和pie的连接线
+                                With (r, alpha).ToCartesianPoint()
+                                    pt = New PointF(centra.X + .X, centra.Y + .Y)
+                                End With
+
+                                ' 绘制pt和layout之间的连接线
+                                g.DrawLine(Pens.Gray, pt, layout)
                             End If
-
-                            g.DrawString(x.Name, font, Brushes.Black, layout)
-
-                            ' 还需要绘制标签文本和pie的连接线
-                            With (r, alpha).ToCartesianPoint()
-                                pt = New PointF(centra.X + .X, centra.Y + .Y)
-                            End With
-
-                            ' 绘制pt和layout之间的连接线
-                            g.DrawLine(Pens.Gray, pt, layout)
-                        End If
-                    Next
-                Else  ' 半径也会有变化
-                    Dim a As New Value(Of Single)
-                    Dim sweep! = 360 / data.Count
-                    Dim maxp# = data.Max(Function(x) x.Percentage)
+                        Next
+                    Else  ' 半径也会有变化
+                        Dim a As New Value(Of Single)
+                        Dim sweep! = 360 / data.Count
+                        Dim maxp# = data.Max(Function(x) x.Percentage)
 #If DEBUG Then
-                         Dim list As New List(Of Rectangle)
+                             Dim list As New List(Of Rectangle)
 #End If
-                    For Each x As FractionData In data
-                        Dim r2# = minRadius + (r - minRadius) * (x.Percentage / maxp)
-                        Dim vTopleft As New Point(gSize.Width / 2 - r2, gSize.Height / 2 - r2)
-                        Dim rect As New Rectangle(vTopleft, New Size(r2 * 2, r2 * 2))
-                        Dim br As New SolidBrush(x.Color)
+                        For Each x As FractionData In data
+                            Dim r2# = minRadius + (r - minRadius) * (x.Percentage / maxp)
+                            Dim vTopleft As New Point(gSize.Width / 2 - r2, gSize.Height / 2 - r2)
+                            Dim rect As New Rectangle(vTopleft, New Size(r2 * 2, r2 * 2))
+                            Dim br As New SolidBrush(x.Color)
 
-                        Call g.FillPie(br, rect, (a = (a.Value + sweep)), sweep)
+                            Call g.FillPie(br, rect, (a = (a.Value + sweep)), sweep)
 #If DEBUG Then
-                             list += rect
+                                 list += rect
 #End If
-                    Next
+                        Next
 #If DEBUG Then
-                         For Each rect In list
-                             Call g.DrawRectangle(Pens.Red, rect)
-                         Next
+                             For Each rect In list
+                                 Call g.DrawRectangle(Pens.Red, rect)
+                             Next
 #End If
-                End If
+                    End If
 
-                If legendAlt Then
-                    Dim maxL = g.MeasureString(data.MaxLengthString(Function(x) x.Name), font).Width
-                    Dim left = layoutRect.Right + margin.Left
-                    Dim legends As New List(Of Legend)
-                    Dim d = font.Size
-                    Dim height! = (d + g.MeasureString("1", font).Height) * data.Count
-                    ' Excel之中的饼图的示例样式位置为默认右居中的
-                    Dim top = (gSize.Height - height) / 2 - margin.Top
+                    If legendAlt Then
+                        Dim maxL = g.MeasureString(data.MaxLengthString(Function(x) x.Name), font).Width
+                        Dim left = layoutRect.Right + margin.Left
+                        Dim legends As New List(Of LegendObject)
+                        Dim d = font.Size
+                        Dim height! = (d + g.MeasureString("1", font).Height) * data.Count
+                        ' Excel之中的饼图的示例样式位置为默认右居中的
+                        Dim top = (gSize.Height - height) / 2 - margin.Top
 
-                    For Each x As FractionData In data
-                        legends += New Legend With {
-                            .color = x.Color.RGBExpression,
-                            .style = LegendStyles.Square,
-                            .title = x.Name,
-                            .fontstyle = legendFont
-                        }
-                    Next
+                        For Each x As FractionData In data
+                            legends += New LegendObject With {
+                                .color = x.Color.RGBExpression,
+                                .style = LegendStyles.Square,
+                                .title = x.Name,
+                                .fontstyle = legendFont
+                            }
+                        Next
 
-                    Call g.DrawLegends(New Point(left, top), legends, legendUnitSize, d, legendBorder)
-                End If
-            End Sub
+                        Call g.DrawLegends(
+                            topLeft:=New Point(left, top),
+                            legends:=legends,
+                            gSize:=legendUnitSize,
+                            d:=d,
+                            shapeBorder:=legendBorder
+                        )
+                    End If
+                End Sub
 
-            Return g.GraphicsPlots(size.SizeParser, margin, bg, __plot)
+            Return g.GraphicsPlots(size.SizeParser, margin, bg, plotInternal)
         End Function
 
         ''' <summary>
@@ -260,7 +268,10 @@ Namespace Fractions
                         .Value = x.Value / all,
                         .Description = x.Value
                     }
-            Return s.FromPercentages(colors.FromNames(array.Length))
+
+            Return colors _
+                .FromNames(array.Length) _
+                .DoCall(AddressOf s.FromPercentages)
         End Function
 
         ''' <summary>
@@ -270,22 +281,22 @@ Namespace Fractions
         ''' <param name="schema"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function Fractions(data As IEnumerable(Of NamedValue(Of Integer)), Optional schema$ = NameOf(Office2016)) As FractionData()
+        Public Function Fractions(data As IEnumerable(Of NamedValue(Of Integer)), Optional schema$ = NameOf(OfficeColorThemes.Office2016)) As FractionData()
             Dim array As NamedValue(Of Integer)() = data.ToArray
             Dim all As Integer = array _
                 .Select(Function(x) x.Value) _
                 .Sum
-            Dim s = From x
-                    In array
-                    Select New NamedValue(Of Double) With {
-                        .Name = x.Name,
-                        .Value = x.Value / all,
-                        .Description = x.Value
-                    }
+            Dim sections = From x
+                           In array
+                           Select New NamedValue(Of Double) With {
+                               .Name = x.Name,
+                               .Value = x.Value / all,
+                               .Description = x.Value
+                           }
             Dim colors As Color() = Designer.FromSchema(
                 schema, array.Length
             )
-            Return s.FromPercentages(colors)
+            Return sections.FromPercentages(colors)
         End Function
 
         ''' <summary>
@@ -298,22 +309,29 @@ Namespace Fractions
         Public Function FromPercentages(data As IEnumerable(Of NamedValue(Of Double)), Optional colors As Color() = Nothing) As FractionData()
             Dim array = data.ToArray
             Dim out As FractionData() = New FractionData(array.Length - 1) {}
-            Dim c As Color() = If(
-                colors.IsNullOrEmpty,
-                Designer.FromSchema(NameOf(Office2016), array.Length),
-                colors
-            )
+            Dim c As Color()
+
+            If colors.IsNullOrEmpty Then
+                c = NameOf(OfficeColorThemes.Office2016) _
+                    .DoCall(Function(term)
+                                Return Designer.FromSchema(term, array.Length)
+                            End Function)
+            Else
+                c = colors
+            End If
+
+            Dim tag$, val#
 
             For i As Integer = 0 To array.Length - 1
                 With array(i)
-                    Dim tag = .Name
-                    Dim v# = .Value
+                    tag = .Name
+                    val# = .Value
 
                     out(i) = New FractionData With {
                         .Color = c(i),
                         .Name = tag,
-                        .Percentage = v#,
-                        .Value = Val(array(i).Description)
+                        .Percentage = val#,
+                        .Value = Conversion.Val(array(i).Description)
                     }
                 End With
             Next

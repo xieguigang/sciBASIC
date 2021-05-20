@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b03eb005761cec66c5ea9c7bdaed9b82, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\ImageData.vb"
+﻿#Region "Microsoft.VisualBasic::915f82e94e354156719f655e23acbac5, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\ImageData.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '         Constructor: (+3 Overloads) Sub New
     ' 
-    '         Function: (+2 Overloads) Save
+    '         Function: GetDataURI, (+3 Overloads) Save
     ' 
     '         Sub: Dispose
     ' 
@@ -47,8 +47,12 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Net.Http
 
 Namespace Driver
 
@@ -56,15 +60,16 @@ Namespace Driver
     ''' Get image value from <see cref="ImageData.Image"/>
     ''' </summary>
     Public Class ImageData : Inherits GraphicsData
+        Implements SaveGdiBitmap
 
         ''' <summary>
         ''' GDI+ image
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Image As Drawing.Image
+        Public ReadOnly Property Image As Image
 
-        Public Sub New(img As Object, size As Size)
-            MyBase.New(img, size)
+        Public Sub New(img As Object, size As Size, padding As Padding)
+            MyBase.New(img, size, padding)
 
             If img.GetType() Is GetType(Bitmap) Then
                 Image = CType(DirectCast(img, Bitmap), Drawing.Image)
@@ -73,12 +78,12 @@ Namespace Driver
             End If
         End Sub
 
-        Sub New(image As System.Drawing.Image)
-            Call Me.New(image, image.Size)
+        Sub New(image As Drawing.Image)
+            Call Me.New(image, image.Size, New Padding)
         End Sub
 
         Sub New(bitmap As Bitmap)
-            Call Me.New(bitmap, bitmap.Size)
+            Call Me.New(bitmap, bitmap.Size, New Padding)
         End Sub
 
         ''' <summary>
@@ -94,6 +99,10 @@ Namespace Driver
             End Get
         End Property
 
+        Public Overrides Function GetDataURI() As DataURI
+            Return New DataURI(Image)
+        End Function
+
         Const InvalidSuffix$ = "The gdi+ image file save path: {0} ending with *.svg file extension suffix!"
 
         ''' <summary>
@@ -106,6 +115,17 @@ Namespace Driver
                 Call String.Format(InvalidSuffix, path.ToFileURL).Warning
             End If
             Return Image.SaveAs(path, ImageData.DefaultFormat)
+        End Function
+
+        Public Overloads Function Save(stream As Stream, format As ImageFormat) As Boolean Implements SaveGdiBitmap.Save
+            Try
+                Call Image.Save(stream, format)
+            Catch ex As Exception
+                Call App.LogException(ex)
+                Return False
+            End Try
+
+            Return True
         End Function
 
         Public Overrides Function Save(out As Stream) As Boolean

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::556ba1608e5808ad66895519effb6209, Data_science\Mathematica\Math\DataFittings\Linear\FeatureProjection.vb"
+﻿#Region "Microsoft.VisualBasic::4727dd3905c17d0657064742b099e5c0, Data_science\Mathematica\Math\DataFittings\Linear\FeatureProjection.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module FeatureProjection
     ' 
-    '     Function: (+2 Overloads) Project
+    '     Function: (+3 Overloads) Project
     ' 
     ' /********************************************************************************/
 
@@ -55,18 +55,24 @@ Public Module FeatureProjection
     <Extension>
     Public Function Project(points As IEnumerable(Of PointF), dimension%) As Vector
         With points.ToArray
-            Dim fit = LeastSquares.PolyFit(.X, .Y, poly_n:=dimension)
-            Dim projection As Vector = fit.Polynomial.Factors
-
-            Return projection
+            Return (.X.ToArray, .Y.ToArray).Project(dimension)
         End With
+    End Function
+
+    <Extension>
+    Public Function Project(points As (x As Double(), y As Double()), dimension%) As Vector
+        Dim fit = LeastSquares.PolyFit(points.x, points.y, poly_n:=dimension)
+        Dim projection As Vector = DirectCast(fit.Polynomial, Polynomial).Factors
+
+        Return projection
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Project(vector As Vector, dimension%) As Vector
-        Return vector _
-            .Select(Function(d, i) New PointF(i, d)) _
-            .Project(dimension)
+        Dim x As Double() = vector.Sequence.Cast(Of Double).ToArray
+        Dim y As Double() = vector.ToArray
+
+        Return (x, y).Project(dimension)
     End Function
 End Module

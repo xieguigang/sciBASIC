@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b910fbd15974766295990484e7482147, Data_science\Mathematica\Math\Math\Distributions\Bootstraping.vb"
+﻿#Region "Microsoft.VisualBasic::5165b24104bf8c6294ce023aa4b02bd9, Data_science\Mathematica\Math\Math\Distributions\Bootstraping.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,7 @@
     '     Module Bootstraping
     ' 
     '         Function: Distributes, Hist, Sample, (+2 Overloads) Samples, Sampling
+    '                   TabulateBin, TabulateMode
     ' 
     ' 
     ' /********************************************************************************/
@@ -41,11 +42,13 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Distributions.BinBox
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Distributions
 
@@ -132,14 +135,14 @@ Namespace Distributions
             Dim array As DoubleTagged(Of Double)() = data _
                 .Select(Function(x)
                             Return New DoubleTagged(Of Double) With {
-                                .Tag = sys.Log(x, base),
+                                .Tag = stdNum.Log(x, base),
                                 .Value = x
                             }
                         End Function) _
                 .ToArray
             Dim min As Integer = CInt(array.Min(Function(x) x.Tag)) - 1
             Dim max As Integer = CInt(array.Max(Function(x) x.Tag)) + 1
-            Dim l As VBInteger = min, low As Integer = min
+            Dim l As i32 = min, low As Integer = min
             Dim out As New Dictionary(Of Integer, DoubleTagged(Of Integer))
 
             Do While ++l < max
@@ -183,11 +186,67 @@ Namespace Distributions
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Hist(data As Double(), Optional step! = 1) As IEnumerable(Of DataBinBox(Of Double))
-            Return CutBins.FixedWidthBins(Of Double)(
-                v:=data.OrderBy(Function(x) x).ToArray,
-                width:=[step],
-                eval:=Function(x) x
-            )
+            If data.Length = 0 Then
+                Return {}
+            Else
+                Return CutBins.FixedWidthBins(Of Double)(
+                    v:=data.OrderBy(Function(x) x).ToArray,
+                    width:=[step],
+                    eval:=Function(x) x,
+                    min:=data.Min,
+                    max:=data.Max
+                )
+            End If
+        End Function
+
+        <Extension>
+        Public Function TabulateMode(data As IEnumerable(Of Double)) As Double
+            Dim resample As Double() = data.TabulateBin
+
+            If resample.Length = 0 Then
+                Return Double.NaN
+            Else
+                Return resample.Average
+            End If
+        End Function
+
+        <Extension>
+        Public Function TabulateBin(data As IEnumerable(Of Double)) As Double()
+            With data.ToArray
+                If .Length = 0 Then
+                    Return {}
+                ElseIf .All(AddressOf IsNaNImaginary) Then
+                    Return {}
+                ElseIf .Min = .Max Then
+                    ' all equals to each other, no needs for calculation
+                    Return .ByRef
+                End If
+
+                Dim steps As Double = New DoubleRange(.Min, .Max).Length / 5
+
+                If steps < 0.000001 Then
+                    Return .ByRef
+                End If
+
+                Dim hist = .Hist([step]:=steps).ToArray
+                Dim maxN = which.Max(hist.Select(Function(bin) bin.Count))
+                Dim resample As Double()
+
+                If maxN = 0 Then
+                    resample = hist(Scan0).Raw.AsList + hist(1).Raw
+                ElseIf maxN = hist.Length - 1 Then
+                    resample =
+                        hist(hist.Length - 1).Raw.AsList +
+                        hist(hist.Length - 2).Raw
+                Else
+                    resample =
+                        hist(maxN - 1).Raw.AsList +
+                        hist(maxN).Raw +
+                        hist(maxN + 1).Raw
+                End If
+
+                Return resample
+            End With
         End Function
     End Module
 End Namespace

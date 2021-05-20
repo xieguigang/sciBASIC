@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1c807892e94cf5a85a1978080727ee91, Microsoft.VisualBasic.Core\test\numberParserTest.vb"
+﻿#Region "Microsoft.VisualBasic::2837da591b3a42593fa8b0826396567b, Microsoft.VisualBasic.Core\test\numberParserTest.vb"
 
     ' Author:
     ' 
@@ -53,7 +53,7 @@ Module numberParserTest
 
         Call Console.WriteLine(xx.ToString("G17"))
 
-        Dim x As VBDouble = Double.MaxValue
+        Dim x As f64 = Double.MaxValue
         Dim hex = x.Hex
 
         Call Console.WriteLine(hex)

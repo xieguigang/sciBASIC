@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0bfd88a629503931126bbe64dd416c02, mime\text%html\HTML\HTML.vb"
+﻿#Region "Microsoft.VisualBasic::fba4fd8423f1613ed15f314869cf87ff, mime\text%html\HTML\HTML.vb"
 
     ' Author:
     ' 
@@ -68,38 +68,6 @@ Imports Microsoft.VisualBasic.MIME.Markup.StreamWriter
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Namespace HTML.DDM
-
-    Public Class HTML
-
-        Public Property Head As HtmlHead
-        Public Property Body As HtmlElement
-
-        Public Property Language As String = "zh-cn"
-
-        Sub New(Document As HtmlDocument)
-
-        End Sub
-
-        Sub New()
-        End Sub
-
-        Public Function ToArray() As HtmlDocument
-            Dim array As New List(Of InnerPlantText)
-            Call array.Add(Head)
-            Call array.Add(Body)
-
-            Return New HtmlDocument With {
-            .Tags = {New HtmlElement With {
-                .HtmlElements = array.ToArray,
-                .Name = "html"}
-            }
-        }
-        End Function
-
-        Public Overrides Function ToString() As String
-            Return HTMLWriter.ToString(ToArray)
-        End Function
-    End Class
 
     Public Class HtmlHead : Inherits HtmlElement
 

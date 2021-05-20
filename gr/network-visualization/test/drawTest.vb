@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e7871b0e81604afaec1610632d7deed, gr\network-visualization\test\drawTest.vb"
+﻿#Region "Microsoft.VisualBasic::ee92784f50716526655e60a4fee5e812, gr\network-visualization\test\drawTest.vb"
 
     ' Author:
     ' 
@@ -41,10 +41,10 @@
 
 #End Region
 
-Imports System.Drawing
-Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Data.visualize.Network
+Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
+Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Cytoscape
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 
 Module drawTest
 
@@ -53,16 +53,16 @@ Module drawTest
         'Call DrawTest()
         'Call Pause()
 
-        Dim graph = CytoscapeExportAsGraph("C:\Users\xieguigang\Source\Repos\sciBASIC\gr\Datavisualization.Network\net_test\xcb-main-Edges.csv", "C:\Users\xieguigang\Source\Repos\sciBASIC\gr\Datavisualization.Network\net_test\xcb-main-Nodes.csv")
+        Dim graph = CytoscapeTableLoader.CytoscapeExportAsGraph("C:\Users\xieguigang\Source\Repos\sciBASIC\gr\Datavisualization.Network\net_test\xcb-main-Edges.csv", "C:\Users\xieguigang\Source\Repos\sciBASIC\gr\Datavisualization.Network\net_test\xcb-main-Nodes.csv")
         Call graph.doForceLayout(iterations:=100, showProgress:=True)
         Call graph.Tabular.Save("./")
-        Call graph.DrawImage("2000,2000", scale:=3.5).Save("./test.png")
+        Call graph.DrawImage("2000,2000").Save("./test.png")
         Call vbnet.Save(graph.Tabular, "./network.vbnet")
     End Sub
 
     Private Function DrawTest()
         Dim net = vbnet.Load("C:\Users\xieguigang\Source\Repos\sciBASIC\gr\Datavisualization.Network\ModelTest\ModelTest\bin\Debug\network.vbnet")
         Dim graph = net.CreateGraph
-        Call graph.DrawImage("2000,2000", scale:=3).Save("./test.png")
+        Call graph.DrawImage("2000,2000").Save("./test.png")
     End Function
 End Module

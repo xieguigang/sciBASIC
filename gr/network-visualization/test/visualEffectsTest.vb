@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8e13f7f7843dc3f2b586ca93dbcd5c2, gr\network-visualization\test\visualEffectsTest.vb"
+﻿#Region "Microsoft.VisualBasic::85b8293db6093a0d6e83562c56d3e3c2, gr\network-visualization\test\visualEffectsTest.vb"
 
     ' Author:
     ' 
@@ -67,6 +67,6 @@ Module visualEffectsTest
 
         Call g.doForceLayout
         Call g.ComputeNodeDegrees
-        Call g.DrawImage("2000,2000", scale:=3.5, radiusScale:=5, fontSizeFactor:=5).Save("./test.png")
+        Call g.DrawImage("2000,2000").Save("./test.png")
     End Sub
 End Module

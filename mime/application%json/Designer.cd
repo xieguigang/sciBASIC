@@ -1,79 +1,135 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
   <Class Name="Microsoft.VisualBasic.MIME.application.json.My.MySettings" Collapsed="true">
-    <Position X="15.25" Y="0.5" Width="1.5" />
+    <Position X="16.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
-  <Class Name="Microsoft.VisualBasic.MIME.application.json.Parser.JsonArray">
-    <Position X="0.5" Y="4.5" Width="3.75" />
-    <TypeIdentifier>
-      <HashCode>AAIAAkAAAAAAABAEAAAQBAAEAAAAAAAEAAAAAAAAAAI=</HashCode>
-      <FileName>Parser\JsonArray.vb</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="Microsoft.VisualBasic.MIME.application.json.Parser.JsonModel">
-    <Position X="3.5" Y="2.5" Width="2.75" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Parser\JsonElement.vb</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Microsoft.VisualBasic.MIME.application.json.Parser.JsonElement">
-    <Position X="5.25" Y="0.5" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAACAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
-      <FileName>Parser\JsonElement.vb</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Microsoft.VisualBasic.MIME.application.json.Parser.JsonObject">
-    <Position X="5" Y="4.5" Width="4.5" />
-    <TypeIdentifier>
-      <HashCode>AAIAAAAAAAAEABAEAAgQBAAEAAAAAAAEAAAAAAAAAAI=</HashCode>
-      <FileName>Parser\JsonObject.vb</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="Microsoft.VisualBasic.MIME.application.json.Parser.JsonParser" Collapsed="true">
-    <Position X="13.5" Y="0.5" Width="1.5" />
+  <Class Name="Microsoft.VisualBasic.MIME.application.json.JsonParser" Collapsed="true">
+    <Position X="14.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AACAQAAAAAAgIAAAABAAAAEQgAAIAQCAAAQAAAEAMUA=</HashCode>
       <FileName>Parser\JsonParser.vb</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Microsoft.VisualBasic.MIME.application.json.Parser.JsonValue">
-    <Position X="10.25" Y="2.5" Width="2.25" />
+  <Class Name="Microsoft.VisualBasic.MIME.application.json.BSON.BSONValue" Collapsed="true">
+    <Position X="14.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AACAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAgAAAAAAI=</HashCode>
-      <FileName>Parser\JsonValue.vb</FileName>
+      <FileName>BSON\BSONValue.vb</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.json.BSON.Decoder" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="16.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIACAAAAAAAAAAAAAgAACAAEQAAAAAAgAYAAA=</HashCode>
+      <FileName>BSON\Decoder.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.json.BSON.Encoder" Collapsed="true">
+    <Position X="18" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAQICAAAABCAQAAAAAAAggAAABAAAAAAACAA=</HashCode>
+      <FileName>BSON\Encoder.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.json.Javascript.JsonArray">
+    <Position X="9.5" Y="4.75" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAIAAkAAAAAAABAEAAAQBABEAAAAAAAEAAAAAAAAAAI=</HashCode>
+      <FileName>Javascript\JsonArray.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.json.Javascript.JsonElement">
+    <Position X="5.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Javascript\JsonElement.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.json.Javascript.JsonModel">
+    <Position X="7.25" Y="2.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Javascript\JsonModel.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.json.Javascript.JsonObject">
+    <Position X="4" Y="4.75" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAEABAEAAgQBAAEAAAAAgAEAAAAAAAAAAI=</HashCode>
+      <FileName>Javascript\JsonObject.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Microsoft.VisualBasic.MIME.application.json.Javascript.JsonValue">
+    <Position X="0.5" Y="2.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AASAAAAAAAAAAAAEAAAAAABAAAAAACAAAAAAAAAAAAI=</HashCode>
+      <FileName>Javascript\JsonValue.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="Microsoft.VisualBasic.MIME.application.json.BSON.ValueType" Collapsed="true">
+    <Position X="14.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAACCCAAAAAAAAAAoAAQAAACEAAAAEEAAAA=</HashCode>
+      <FileName>BSON\ValueType.vb</FileName>
+    </TypeIdentifier>
+  </Enum>
   <Module Name="Microsoft.VisualBasic.MIME.application.json.Extensions" Collapsed="true">
-    <Position X="15.25" Y="1.75" Width="1.5" />
+    <Position X="14.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAAAAAAABAAAAAgAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
       <FileName>Extensions.vb</FileName>
     </TypeIdentifier>
   </Module>
   <Module Name="Microsoft.VisualBasic.MIME.application.json.ExtendedDictionary" Collapsed="true">
-    <Position X="13.5" Y="1.75" Width="1.5" />
+    <Position X="18" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAAAAACAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
       <FileName>Serializer\ExtendedDictionary.vb</FileName>
     </TypeIdentifier>
   </Module>
   <Module Name="Microsoft.VisualBasic.MIME.application.json.My.Resources.Resources" Collapsed="true">
-    <Position X="15.25" Y="2.75" Width="1.5" />
+    <Position X="16.25" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
     </TypeIdentifier>
   </Module>
   <Module Name="Microsoft.VisualBasic.MIME.application.json.My.MySettingsProperty" Collapsed="true">
-    <Position X="13.5" Y="2.75" Width="1.5" />
+    <Position X="18" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.MIME.application.json.BSON.BSONFormat" Collapsed="true">
+    <Position X="14.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAgAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BSON\BSON.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.MIME.application.json.Deserializer" Collapsed="true">
+    <Position X="16.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAgIAAAAAAAAAAAA=</HashCode>
+      <FileName>Serializer\Deserializer.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.MIME.application.json.JSONSerializer" Collapsed="true">
+    <Position X="16.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAAAAAIgAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Serializer\JSONSerializer.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="Microsoft.VisualBasic.MIME.application.json.Javascript.NamespaceDoc" Collapsed="true">
+    <Position X="14.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Javascript\NamespaceDoc.vb</FileName>
     </TypeIdentifier>
   </Module>
   <Font Name="Microsoft YaHei UI" Size="9" />

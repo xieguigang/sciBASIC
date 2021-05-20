@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da740d880b88bb05280cc95e95a8fe72, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Label.vb"
+﻿#Region "Microsoft.VisualBasic::3033d9e0410bc55b8dd124c1c890cad6, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Label.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     '     Class Label
     ' 
-    '         Properties: height, location, Rectangle, text, width
-    '                     X, Y
+    '         Properties: height, location, pinned, rectangle, text
+    '                     width, X, Y
     ' 
     '         Constructor: (+3 Overloads) Sub New
     '         Function: ToString
@@ -57,10 +57,10 @@ Namespace d3js.Layout
         ''' <returns></returns>
         Public Property X As Double
             Get
-                Return Rectangle.X
+                Return rectangle.X
             End Get
             Set(value As Double)
-                _Rectangle = New RectangleF(value, Y, width, height)
+                _rectangle = New RectangleF(value, Y, width, height)
             End Set
         End Property
 
@@ -70,10 +70,10 @@ Namespace d3js.Layout
         ''' <returns></returns>
         Public Property Y As Double
             Get
-                Return Rectangle.Y
+                Return rectangle.Y
             End Get
             Set(value As Double)
-                _Rectangle = New RectangleF(X, value, width, height)
+                _rectangle = New RectangleF(X, value, width, height)
             End Set
         End Property
 
@@ -83,10 +83,10 @@ Namespace d3js.Layout
         ''' <returns></returns>
         Public Property width As Double
             Get
-                Return Rectangle.Width
+                Return rectangle.Width
             End Get
             Set(value As Double)
-                _Rectangle = New RectangleF(X, Y, value, height)
+                _rectangle = New RectangleF(X, Y, value, height)
             End Set
         End Property
 
@@ -96,10 +96,10 @@ Namespace d3js.Layout
         ''' <returns></returns>
         Public Property height As Double
             Get
-                Return Rectangle.Height
+                Return rectangle.Height
             End Get
             Set(value As Double)
-                _Rectangle = New RectangleF(X, Y, width, value)
+                _rectangle = New RectangleF(X, Y, width, value)
             End Set
         End Property
 
@@ -107,13 +107,23 @@ Namespace d3js.Layout
         ''' the label text.
         ''' </summary>
         ''' <returns></returns>
-        Public Property text As String
+        ''' <remarks>
+        ''' 20200618 实际上这个标签文本与实际的标签没有很多关联，也可以为一个用于获取图片对象的主键
+        ''' </remarks>
+        Public Property text As String = Me.GetHashCode
+
+        ''' <summary>
+        ''' 在计算位置的时候，这个标签将不会被随机模拟事件选中
+        ''' 即这个标签当这个属性为true的时候不会发生任何变化
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property pinned As Boolean
 
         ''' <summary>
         ''' 当前的这个文本标签对象所处的位置以及所占据的大小等数据
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Rectangle As RectangleF
+        Public ReadOnly Property rectangle As RectangleF
 
         Public ReadOnly Property location As PointF
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -127,7 +137,7 @@ Namespace d3js.Layout
 
         Sub New(label$, pos As PointF, size As SizeF)
             Me.text = label
-            Me.Rectangle = New RectangleF(pos, size)
+            Me.rectangle = New RectangleF(pos, size)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -136,7 +146,7 @@ Namespace d3js.Layout
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"{text}@({X.ToString("F2")},{Y.ToString("F2")})"
+            Return $"[{X.ToString("F2")},{Y.ToString("F2")}] [{If(pinned, "pinned", "**unpin")}] {text}"
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -145,6 +155,11 @@ Namespace d3js.Layout
                 .X = label.X,
                 .Y = label.Y
             }
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Narrowing Operator CType(label As Label) As String
+            Return label.text
         End Operator
     End Class
 End Namespace

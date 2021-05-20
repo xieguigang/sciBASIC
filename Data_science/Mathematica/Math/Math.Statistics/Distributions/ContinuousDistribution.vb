@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d5579c9fc12fc04f5b569afef34b659, Data_science\Mathematica\Math\Math.Statistics\Distributions\ContinuousDistribution.vb"
+﻿#Region "Microsoft.VisualBasic::bb1d8387a5397a4a0cf6dd668b2837c0, Data_science\Mathematica\Math\Math.Statistics\Distributions\ContinuousDistribution.vb"
 
     ' Author:
     ' 
@@ -226,71 +226,6 @@ Namespace Distributions
             Return hash
         End Function
 
-        'Public Shared Function ReadFromXML( ele As Element) As ContinuousDistribution
-        '		Dim Dist As ContinuousDistribution = Nothing
-        '		Dim c As Type
-        '          Try
-        '              Dim DistName As String = ele.TagName
-        '              If DistName.Equals("None") Then
-        '                  ' none is not supported.
-        '                  Throw New System.ArgumentException
-        '              ElseIf DistName.Contains(".") Then
-        '                  'do nothing, this is probably from Statistics.jar.
-        '              Else
-        '                  If DistName.Chars(0) = "L".ToCharArray()(0) AndAlso DistName.Chars(1) <> "o".ToCharArray()(0) Then 'is l but isnt lo, so LNormal (which is how Statistics differntiates Linear moments.
-        '                      DistName = "Distributions.LinearMoments." & DistName.Substring(1, DistName.Length - 1 - 1) 'remove the L.
-        '                  Else
-        '                      DistName = "Distributions.MethodOfMoments." & DistName
-        '                  End If
-        '              End If
-        '              c = Type.GetType(DistName)
-        '              Dist = CType(c.GetConstructor().newInstance(), ContinuousDistribution)
-        '              Dim flds As Field() = c.DeclaredFields
-        '              For Each f As Field In flds
-        '                  Select Case f.Type.Name
-        '                      Case "double"
-        '                          f.set(Dist, Convert.ToDouble(ele.getAttribute(f.Name)))
-        '                      Case "int"
-        '                          f.set(Dist, Convert.ToInt32(ele.getAttribute(f.Name)))
-        '                      Case Else
-        '                          'throw error?
-        '                  End Select
-        '              Next f
-        '              'JAVA TO VB CONVERTER TODO TASK: There is no equivalent in VB to Java 'multi-catch' syntax:
-        '          Catch ex As Exception 'ClassNotFoundException Or NoSuchMethodException Or SecurityException Or InstantiationException Or IllegalAccessException Or System.ArgumentException Or InvocationTargetException ex
-        '              '    java.util.logging.Logger.getLogger(GetType(ContinuousDistribution).Name).log(java.util.logging.Level.SEVERE, Nothing, ex)
-        '          End Try
-        '	Return Dist
-        'End Function
-        '		Public Overridable Function WriteToXML() As Element
-        '		   Dim flds As Field() = Me.GetType().DeclaredFields
-        '			Dim d As javax.xml.parsers.DocumentBuilderFactory = javax.xml.parsers.DocumentBuilderFactory.newInstance()
-        '			Dim Db As javax.xml.parsers.DocumentBuilder
-        '			Try
-        '				Db = d.newDocumentBuilder()
-        '				Dim doc As Document = Db.newDocument()
-        '				Dim ele As Element = doc.createElement(Me.GetType().Name)
-        '				For Each f As Field In flds
-        '				Try
-        '					Select Case f.Type.Name
-        '						Case "double"
-        '							ele.setAttribute(f.Name,Convert.ToString(f.getDouble(Me)))
-        '						Case "int"
-        '							ele.setAttribute(f.Name,Convert.ToString(f.getInt(Me)))
-        '						Case Else
-        '					End Select
-        ''JAVA TO VB CONVERTER TODO TASK: There is no equivalent in VB to Java 'multi-catch' syntax:
-        '					Catch System.ArgumentException Or IllegalAccessException ex
-        '						java.util.logging.Logger.getLogger(GetType(ContinuousDistribution).Name).log(java.util.logging.Level.SEVERE, Nothing, ex)
-        '					End Try
-        '				Next f
-        '				   Return ele
-        '			Catch ex As javax.xml.parsers.ParserConfigurationException
-        '				java.util.logging.Logger.getLogger(GetType(ContinuousDistribution).Name).log(java.util.logging.Level.SEVERE,Nothing, ex)
-        '			End Try
-        '			Return Nothing
-        '		End Function
-        ' </editor-fold>
         Public Overridable Function BootStrap() As Double()
             Dim result As Double() = New Double(_PeriodOfRecord - 1) {}
             Dim Random As New Random

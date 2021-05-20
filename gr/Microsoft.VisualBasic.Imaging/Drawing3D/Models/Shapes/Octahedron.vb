@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f61a2d513e29652188a886d4659906c, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\Octahedron.vb"
+﻿#Region "Microsoft.VisualBasic::b589642103f67a755070481953da0569, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\Octahedron.vb"
 
     ' Author:
     ' 
@@ -42,6 +42,7 @@
 
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports System.Math
+Imports stdNum = System.Math
 
 Namespace Drawing3D.Models.Isometric.Shapes
 
@@ -68,9 +69,9 @@ Namespace Drawing3D.Models.Isometric.Shapes
             }
 
             For i As Integer = 0 To 3
-                paths(count) = upperTriangle.RotateZ(center, i * Math.PI / 2.0)
+                paths(count) = upperTriangle.RotateZ(center, i * stdNum.PI / 2.0)
                 count += 1
-                paths(count) = lowerTriangle.RotateZ(center, i * Math.PI / 2.0)
+                paths(count) = lowerTriangle.RotateZ(center, i * stdNum.PI / 2.0)
                 count += 1
             Next
 

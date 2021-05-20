@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9169c2344b355bf02df8e214bb7045c4, Data\BinaryData\BinaryData\Stream\BinaryDataWriter.vb"
+﻿#Region "Microsoft.VisualBasic::6093adb9d3e359702292ab0f1bfd0bc4, Data\BinaryData\BinaryData\Stream\BinaryDataWriter.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '               (+2 Overloads) Write, WriteByteLengthPrefixString, WriteDwordLengthPrefixString, WriteNoPrefixOrTerminationString, WriteWordLengthPrefixString
     '               WriteZeroTerminatedString
     ' 
-    '     Sub: Align, (+20 Overloads) Write, WriteMultiple, WriteReversed
+    '     Sub: Align, Finalize, (+20 Overloads) Write, WriteMultiple, WriteReversed
     ' 
     ' /********************************************************************************/
 
@@ -621,4 +621,8 @@ Public Class BinaryDataWriter
         Buffer.BlockCopy(Decimal.GetBits(value), 0, bytes, 0, Marshal.SizeOf(GetType(Decimal)))
         Return bytes
     End Function
+
+    Protected Overrides Sub Finalize()
+        MyBase.Finalize()
+    End Sub
 End Class

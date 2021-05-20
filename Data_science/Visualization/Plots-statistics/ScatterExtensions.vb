@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92272057f9ad2ee08b1361c6cf35e259, Data_science\Visualization\Plots-statistics\ScatterExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::5029fd70ebf38c5381bd2ac6ae317fcc, Data_science\Visualization\Plots-statistics\ScatterExtensions.vb"
 
     ' Author:
     ' 
@@ -53,6 +53,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Calculus
+Imports Microsoft.VisualBasic.Math.Calculus.Dynamics.Data
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Module ScatterExtensions
@@ -86,7 +87,7 @@ Public Module ScatterExtensions
             In odes.SeqIterator
             Let left = New Value(Of Double)(range.Min)
             Select New HistProfile With {
-                .legend = New Legend With {
+                .legend = New LegendObject With {
                     .color = serials(out.i).Value.RGBExpression,
                     .fontstyle = CSSFont.Win10Normal,
                     .style = LegendStyles.Rectangle,
@@ -95,7 +96,7 @@ Public Module ScatterExtensions
                 .data = LinqAPI.Exec(Of HistogramData) <=
  _
                     From i As SeqValue(Of Double)
-                    In out.value.Y.Vector.SeqIterator
+                    In out.value.Y.vector.SeqIterator
                     Let x1 As Double = left
                     Let x2 As Double = (left = left.Value + delta)
                     Where Not i.value.IsNaNImaginary
@@ -132,12 +133,13 @@ Public Module ScatterExtensions
             .title = ode.ID,
             .color = color.ToColor,
             .lineType = dash,
-            .PointSize = ptSize,
+            .pointSize = ptSize,
             .width = width,
-            .pts = LinqAPI.Exec(Of PointData) <=
-                From x As SeqValue(Of Double)
-                In ode.X.ToArray.SeqIterator
-                Select New PointData(CSng(x.value), CSng(ode.Y.Vector(x.i)))
+            .pts = ode.GetPointsData _
+                .Select(Function(p)
+                            Return New PointData(p)
+                        End Function) _
+                .ToArray
         }
     End Function
 
@@ -174,7 +176,7 @@ Public Module ScatterExtensions
         Return Scatter.Plot(ode.FromODEs(, ptSize, width), size, padding, bg)
     End Function
 
-    ReadOnly defaultColorSequence As [Default](Of  Color()) = ChartColors
+    ReadOnly defaultColorSequence As [Default](Of Color()) = ChartColors
 
     ''' <summary>
     ''' Convert ODEs result as scatter plot serial model.
@@ -202,15 +204,15 @@ Public Module ScatterExtensions
                        .SeqIterator _
                        .Select(Function(i)
                                    Dim x! = CSng(i.value)
-                                   Dim yx! = CSng(y.value.Value(i))
+                                   Dim yx! = CSng(y.value.value(i))
                                    Return New PointData(x!, yx!)
                                End Function)
                   Let color As Color = c(y.i)
                   Select New SerialData With {
                        .color = color,
                        .lineType = DashStyle.Solid,
-                       .PointSize = ptSize,
-                       .title = y.value.Name,
+                       .pointSize = ptSize,
+                       .title = y.value.name,
                        .width = width,
                        .pts = pts
                    }

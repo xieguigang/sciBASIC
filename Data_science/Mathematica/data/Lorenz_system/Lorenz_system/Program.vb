@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::210c603894c2d6286800acfae1fed3d3, Data_science\Mathematica\data\Lorenz_system\Lorenz_system\Program.vb"
+﻿#Region "Microsoft.VisualBasic::4e76cfef3ea5708e0bb0d6d916303a2e, Data_science\Mathematica\data\Lorenz_system\Lorenz_system\Program.vb"
 
     ' Author:
     ' 
@@ -42,6 +42,7 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
@@ -82,7 +83,7 @@ Module Program
             .screen = New Size(2000, 2000),
             .ViewDistance = 50
         }
-        Dim result = ODEsOut.LoadFromDataFrame($"{App.HOME}/Lorenz_system.csv")
+        Dim result = LoadFromDataFrame($"{App.HOME}/Lorenz_system.csv")
         Dim vector As Point3D() = result.x _
             .Sequence _
             .Select(Function(i)
@@ -117,7 +118,7 @@ Module Program
             .screen = New Size(2000, 2000),
             .ViewDistance = 50
         }
-        Dim result = ODEsOut.LoadFromDataFrame($"{App.HOME}/Lorenz_system.csv")
+        Dim result = LoadFromDataFrame($"{App.HOME}/Lorenz_system.csv")
         Dim vector As Point3D() = result.x _
             .Sequence _
             .Select(Function(i)

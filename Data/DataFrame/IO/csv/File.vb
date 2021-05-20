@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f6bee26067bc406b6a757561e3b5bb0, Data\DataFrame\IO\csv\File.vb"
+﻿#Region "Microsoft.VisualBasic::d2d199b4e85a7f7ccd927d1bfb1db3c5, Data\DataFrame\IO\csv\File.vb"
 
     ' Author:
     ' 
@@ -37,25 +37,25 @@
     ' 
     '         Constructor: (+4 Overloads) Sub New
     ' 
-    '         Function: __createTableVector, AppendRange, FindAll, FindAtColumn, Generate
-    '                   GenerateDocument, GetAllStringTokens, GetByLine, InsertEmptyColumnBefore, Remove
-    '                   Save, (+2 Overloads) ToArray, TokenCounts, ToString, Transpose
-    '                   Trim
+    '         Function: __createTableVector, AppendLine, AppendLines, AppendRange, FindAll
+    '                   FindAtColumn, Generate, GenerateDocument, GetAllStringTokens, GetByLine
+    '                   InsertEmptyColumnBefore, Project, Remove, (+2 Overloads) Save, (+2 Overloads) ToArray
+    '                   TokenCounts, ToString, Transpose, Trim
     ' 
-    '         Sub: __setColumn, Append, (+3 Overloads) AppendLine, DeleteCell, RemoveRange
+    '         Sub: __setColumn, Append, (+2 Overloads) AppendLine, DeleteCell, RemoveRange
     ' 
     '         Operators: (+2 Overloads) +
     '         Delegate Function
     ' 
     '             Properties: IsReadOnly, RowNumbers
     ' 
-    '             Function: __LINQ_LOAD, AsMatrix, Contains, (+2 Overloads) Distinct, FastLoad
-    '                       GetEnumerator, GetEnumerator1, IndexOf, IsNullOrEmpty, Join
-    '                       (+2 Overloads) Load, loads, LoadTsv, Normalization, Parse
-    '                       ReadHeaderRow, Remove, RemoveSubRow, Save
+    '             Function: __LINQ_LOAD, AsMatrix, Contains, Distinct, GetEnumerator
+    '                       GetEnumerator1, IndexOf, IsNullOrEmpty, (+2 Overloads) Join, Load
+    '                       loads, (+2 Overloads) LoadTsv, Parse, ReadHeaderRow, Remove
+    '                       RemoveSubRow, Save
     ' 
     '             Sub: (+3 Overloads) Add, Clear, CopyTo, Insert, InsertAt
-    '                  RemoveAt
+    '                  RemoveAt, Save
     ' 
     '             Operators: <, <=, >, >=
     ' 
@@ -65,6 +65,7 @@
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -81,11 +82,13 @@ Imports Microsoft.VisualBasic.Text
 Namespace IO
 
     ''' <summary>
-    ''' A comma character seperate table file that can be read and write in the EXCEL.(一个能够被Excel程序所读取的表格文件)
+    ''' A comma character seperate table file that can be read and write in the EXCEL.
+    ''' (一个能够被Excel程序所读取的表格文件)
     ''' </summary>
     ''' <remarks></remarks>
     ''' 
-    <ActiveViews(File.ActiveViews)> Public Class File
+    <ActiveViews(File.ActiveViews)>
+    Public Class File
         Implements IEnumerable(Of RowObject)
         Implements IList(Of RowObject)
         Implements ISaveHandle
@@ -107,6 +110,10 @@ B21,B22,B23,...
             End Get
         End Property
 
+        ''' <summary>
+        ''' Get all rows in current table object
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Rows As RowObject()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -140,17 +147,19 @@ B21,B22,B23,...
         ''' Load document from path
         ''' </summary>
         ''' <param name="path"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(path As String,
                 Optional encoding As Encodings = Encodings.Default,
-                Optional trimBlanks As Boolean = False)
+                Optional trimBlanks As Boolean = False,
+                Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing)
 
-            FilePath = path
-            _innerTable = loads(path, encoding.CodePage, trimBlanks)
+            _innerTable = loads(path, encoding.CodePage, trimBlanks, skipWhile)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(source As IEnumerable(Of RowObject), path As String)
             Call Me.New(source)
-            FilePath = path
         End Sub
 
         ''' <summary>
@@ -261,7 +270,7 @@ B21,B22,B23,...
             Get
                 For Each row As RowObject In _innerTable
                     If InStr(row.First, prefix) = 1 Then
-                        Yield row.AsLine(" ")
+                        Yield row.AsLine(" "c)
                     End If
                 Next
             End Get
@@ -280,6 +289,18 @@ B21,B22,B23,...
             Return df
         End Function
 
+        ''' <summary>
+        ''' 按照列进行投影操作, 这个函数仅适用于小型数据
+        ''' </summary>
+        ''' <param name="fieldNames"></param>
+        ''' <returns></returns>
+        Public Function Project(fieldNames As IEnumerable(Of String)) As File
+            Dim columns = fieldNames.Select(Function(name) Me(name)).ToArray
+            Dim newTable = columns.JoinColumns
+
+            Return newTable
+        End Function
+
         Public ReadOnly Property EstimatedFileSize As Double
             Get
                 Dim LQuery = (From row As RowObject
@@ -292,18 +313,28 @@ B21,B22,B23,...
         End Property
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub AppendLine(Row As RowObject)
+        Public Function AppendLine(Row As RowObject) As File
             Call _innerTable.Add(Row)
-        End Sub
+            Return Me
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function AppendLines(rows As IEnumerable(Of RowObject)) As File
+            Call _innerTable.AddRange(rows)
+            Return Me
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub AppendLine(row As IEnumerable(Of String))
             Call _innerTable.Add(New RowObject(row))
         End Sub
 
+        ''' <summary>
+        ''' 添加一个空白行
+        ''' </summary>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub AppendLine()
-            Call _innerTable.Add(New String() {" "})
+            Call _innerTable.Add(New String() {""})
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -408,7 +439,7 @@ B21,B22,B23,...
         ''' </summary>
         ''' <returns></returns>
         Public Function Transpose() As File
-            Dim buf As String()() = Me.Columns.MatrixTranspose
+            Dim buf As String()() = Me.Columns.MatrixTranspose.ToArray
             Dim tableRows = LinqAPI.MakeList(Of RowObject) <=
                         From i As Integer
                         In buf.First.Sequence
@@ -597,6 +628,11 @@ B21,B22,B23,...
             Return StreamIO.SaveDataFrame(Me, path, Encoding)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Save(path$, encoding As Encodings, Optional tsv As Boolean = False, Optional silent As Boolean = True) As Boolean
+            Return StreamIO.SaveDataFrame(Me, path, encoding.CodePage, tsv:=tsv, silent:=silent)
+        End Function
+
         ''' <summary>
         ''' 这个方法是保存<see cref="Csv.DataFrame"></see>对象之中的数据所需要的
         ''' </summary>
@@ -626,7 +662,7 @@ B21,B22,B23,...
             'Dim LoadMethod As LoadMethod =
             '    [If](Of LoadMethod)(Lines.Length > 1024, AddressOf __PBS_LOAD, AddressOf __LINQ_LOAD)
             Dim sw As Stopwatch = Stopwatch.StartNew
-            Dim CSV As File = __LINQ_LOAD(data:=Lines)
+            Dim CSV As New File(__LINQ_LOAD(data:=Lines))
 
             Call $"Csv load {Lines.Length} lines data in {sw.ElapsedMilliseconds}ms...".__DEBUG_ECHO ' //{LoadMethod.ToString}".__DEBUG_ECHO
 
@@ -641,14 +677,11 @@ B21,B22,B23,...
         ''' <param name="data"></param>
         ''' <returns></returns>
         ''' <remarks>为了提高数据的加载效率，先使用LINQ预加载数据，之后使用Parallel LINQ进行数据的解析操作</remarks>
-        Private Shared Function __LINQ_LOAD(data As String()) As File
-            Dim LQuery = (From line As String
-                          In data.AsParallel
-                          Let row As RowObject = CType(line, RowObject)
-                          Select row).AsList
-            Return New File With {
-                ._innerTable = LQuery
-            }
+        Friend Shared Function __LINQ_LOAD(data As String()) As IEnumerable(Of RowObject)
+            Return From line As String
+                   In data.AsParallel
+                   Let row As RowObject = CType(line, RowObject)
+                   Select row
         End Function
 
         Public Overloads Shared Widening Operator CType(rows As RowObject()) As File
@@ -664,62 +697,35 @@ B21,B22,B23,...
         End Operator
 
         ''' <summary>
-        ''' If you are sure about your csv data document have no character such like " or, in a cell, then you can try using this fast load method to load your csv data.
-        ''' if not, please using the <see cref="load"></see> method to avoid of the data damages.
-        ''' (假若你确信你的数据文件之中仅含有数字之类的数据，则可以尝试使用本方法进行快速加载，假若文件之中每一个单元格还含有引起歧义的例如双引号或者逗号，则请不要使用本方法进行加载)
-        ''' </summary>
-        ''' <param name="path"></param>
-        ''' <param name="encoding"></param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Shared Function FastLoad(path As String, Optional parallel As Boolean = True, Optional encoding As Encoding = Nothing) As File
-            If encoding Is Nothing Then
-                encoding = Encoding.Default
-            End If
-
-            Dim sw = Stopwatch.StartNew
-            Dim lines As String() = path.MapNetFile.ReadAllLines(encoding)
-            Dim cData As New File
-
-            If parallel Then
-                Dim cache = (From x As SeqValue(Of String) In lines.SeqIterator Select x)
-                Dim Rows = (From line As SeqValue(Of String)
-                            In cache.AsParallel
-                            Let __innerList As List(Of String) = line.value.Split(","c).AsList
-                            Select i = line.i,
-                                data = New RowObject With {.buffer = __innerList}
-                            Order By i Ascending)
-                cData._innerTable = (From item In Rows Select item.data).AsList
-            Else
-                Dim Rows = (From strLine As String In lines
-                            Let InternalList As List(Of String) = strLine.Split(","c).AsList
-                            Select New RowObject With {.buffer = InternalList}).AsList
-                cData._innerTable = Rows
-            End If
-
-            Call $"CSV data ""{path.ToFileURL}"" load done!   {sw.ElapsedMilliseconds}ms.".__DEBUG_ECHO
-
-            Return cData
-        End Function
-
-        ''' <summary>
         ''' Load the csv data document from a given path.(从指定的文件路径之中加载一个CSV格式的数据文件)
         ''' </summary>
         ''' <param name="Path"></param>
         ''' <param name="encoding"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function Load(path$, Optional encoding As Encoding = Nothing, Optional trimBlanks As Boolean = False) As File
-            Dim buf As List(Of RowObject) = loads(path, encoding Or TextEncodings.DefaultEncoding, trimBlanks)
-            Dim csv As New File With {._innerTable = buf}
+        Public Shared Function Load(path$,
+                                    Optional encoding As Encoding = Nothing,
+                                    Optional trimBlanks As Boolean = False,
+                                    Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing) As File
+
+            Dim buf As List(Of RowObject) = loads(path, encoding Or TextEncodings.DefaultEncoding, trimBlanks, skipWhile)
+            Dim csv As New File With {
+                ._innerTable = buf
+            }
 
             Return csv
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function LoadTsv(path$, Optional encoding As Encodings = Encodings.UTF8) As File
-            Return DataImports.Imports(path, ASCII.TAB, encoding.CodePage)
+            Return csv.Imports(path, ASCII.TAB, encoding.CodePage)
         End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function LoadTsv(path$, Optional encoding As Encoding = Nothing) As File
+            Return csv.Imports(path, ASCII.TAB, encoding)
+        End Function
+
 
         Public Shared Function ReadHeaderRow(path$, Optional encoding As Encodings = Encodings.UTF8, Optional tsv As Boolean = False) As RowObject
             Dim firstLine$ = path.ReadFirstLine(encoding.CodePage)
@@ -727,7 +733,7 @@ B21,B22,B23,...
             If tsv Then
                 Return New RowObject(firstLine.Split(ASCII.TAB))
             Else
-                Return New RowObject(IO.CharsParser(firstLine))
+                Return New RowObject(IO.Tokenizer.CharsParser(firstLine))
             End If
         End Function
 
@@ -737,49 +743,22 @@ B21,B22,B23,...
         ''' <param name="path"></param>
         ''' <param name="encoding"></param>
         ''' <returns></returns>
-        Private Shared Function loads(path As String, encoding As Encoding, trimBlanks As Boolean) As List(Of RowObject)
-            Return Load(path.MapNetFile.ReadAllLines(encoding), trimBlanks)
-        End Function
-
-        ''' <summary>
-        ''' 排序操作在这里会不会大幅度的影响性能？
-        ''' </summary>
-        ''' <param name="buf"></param>
-        ''' <param name="trimBlanks">如果这个选项为真，则会移除所有全部都是逗号分隔符``,,,,,,,,,``的空白行</param>
-        ''' <returns></returns>
-        Public Shared Function Load(buf As String(), trimBlanks As Boolean) As List(Of RowObject)
-            Dim first As New RowObject(buf(Scan0))
-            Dim __test As Func(Of String, Boolean)
-
-            If trimBlanks Then
-                __test = Function(s) Not s.IsEmptyRow(","c)
-            Else
-                __test = Function(s) True
-            End If
-
-            Dim parallelLoad = Function() As IEnumerable(Of RowObject)
-                                   Dim loader = From s As SeqValue(Of String)
-                                                In buf.Skip(1).SeqIterator.AsParallel
-                                                Where __test(s.value)
-                                                Select row = New RowObject(s.value), i = s.i
-                                                Order By i Ascending
-
-                                   Return loader.Select(Function(r) r.row)
-                               End Function
-
-            Return first + parallelLoad().AsList
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Shared Function loads(path As String, encoding As Encoding, trimBlanks As Boolean, skipWhile As NamedValue(Of Func(Of String, Boolean))) As List(Of RowObject)
+            Return FileLoader.Load(path.MapNetFile.ReadAllLines(encoding), trimBlanks, skipWhile)
         End Function
 
         ''' <summary>
         ''' 对目标文本内容字符串进行解析，得到csv文件对象数据模型
         ''' </summary>
-        ''' <param name="content$"></param>
+        ''' <param name="content">这个参数是文本内容，而非是文件路径</param>
         ''' <param name="trimBlanks"></param>
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function Parse(content$, Optional trimBlanks As Boolean = True) As File
-            Return New File(Load(content.LineTokens, trimBlanks))
+        Public Shared Function Parse(content$, Optional trimBlanks As Boolean = True, Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing) As File
+            Return New File(FileLoader.Load(content.LineTokens, trimBlanks, skipWhile))
         End Function
 #End Region
 
@@ -808,29 +787,13 @@ B21,B22,B23,...
         End Function
 
         ''' <summary>
-        ''' 去除Csv文件之中的重复记录
+        ''' cbind a column
         ''' </summary>
-        ''' <param name="File"></param>
-        ''' <param name="OrderBy">当为本参数指定一个非负数值的时候，程序会按照指定的列值进行排序</param>
-        ''' <param name="Asc">当进行排序操作的时候，是否按照升序进行排序，否则按照降序排序</param>
+        ''' <param name="column">the column data</param>
         ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Shared Function Distinct(File As String, Optional OrderBy As Integer = -1, Optional Asc As Boolean = True) As File
-            Dim csv As File = Load(File)
-            Return Distinct(csv, OrderBy, Asc)
-        End Function
-
-        ''' <summary>
-        ''' 将一些奇怪的符号去除
-        ''' </summary>
-        ''' <param name="path"></param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Shared Function Normalization(path As String, replaceAs As String) As File
-            Dim Text As String = FileIO.FileSystem.ReadAllText(path)
-            Dim Data As String() = Strings.Split(Text, vbCrLf)
-            Data = (From strLine As String In Data Select strLine.Replace(vbLf, replaceAs)).ToArray
-            Return __LINQ_LOAD(Data)
+        Public Function Join(column As IEnumerable(Of String)) As File
+            Call __setColumn(column.ToArray, Headers.Count)
+            Return Me
         End Function
 
         ''' <summary>
@@ -906,7 +869,7 @@ B21,B22,B23,...
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Function IsNullOrEmpty(df As IEnumerable(Of RowObject)) As Boolean
-            Return df Is Nothing OrElse df.Count = 0
+            Return df Is Nothing OrElse Not df.Any
         End Function
 
         Public Shared Operator <=(df As File, type As Type) As Object()
@@ -1016,6 +979,14 @@ B21,B22,B23,...
         Public Function Save(path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
             Return Save(path, encoding.CodePage)
         End Function
+
+        Public Sub Save(output As StreamWriter, Optional isTsv As Boolean = False)
+            Dim delimiter As Char = ","c Or ASCII.TAB.When(isTsv)
+
+            For Each row As RowObject In Me
+                Call output.WriteLine(row.AsLine(delimiter))
+            Next
+        End Sub
 #End Region
     End Class
 End Namespace

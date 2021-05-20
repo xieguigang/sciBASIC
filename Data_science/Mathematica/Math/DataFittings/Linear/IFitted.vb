@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42bd38ccfe993e3987882d5222e28a6e, Data_science\Mathematica\Math\DataFittings\Linear\IFitted.vb"
+﻿#Region "Microsoft.VisualBasic::aaddfcffa892d4cc3545f5e58f86ef6a, Data_science\Mathematica\Math\DataFittings\Linear\IFitted.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,9 @@
 
     ' Interface IFitted
     ' 
-    '     Properties: CorrelationCoefficient, ErrorTest, GetY, Polynomial
+    '     Properties: ErrorTest, Polynomial, R2
+    ' 
+    '     Function: GetY
     ' 
     ' /********************************************************************************/
 
@@ -41,20 +43,32 @@
 
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
+''' <summary>
+''' a unify interface model of linear fitting result
+''' </summary>
 Public Interface IFitted
 
     ''' <summary>
-    ''' 相关系数
+    ''' 相关系数 R2
     ''' </summary>
     ''' <returns></returns>
-    ReadOnly Property CorrelationCoefficient As Double
-    ReadOnly Property Polynomial As Polynomial
-
-    Default ReadOnly Property GetY(x As Double) As Double
+    ReadOnly Property R2 As Double
+    ''' <summary>
+    ''' 线性模型的多项式
+    ''' </summary>
+    ''' <returns></returns>
+    ReadOnly Property Polynomial As Formula
 
     ''' <summary>
     ''' 保存拟合后的y值，在拟合时可设置为不保存节省内存
     ''' </summary>
-    Property ErrorTest As TestPoint()
+    Property ErrorTest As IFitError()
+
+    ''' <summary>
+    ''' f(x) or f(x1, x2, x3)
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <returns></returns>
+    Function GetY(ParamArray x As Double()) As Double
 
 End Interface

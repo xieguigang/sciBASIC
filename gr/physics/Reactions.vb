@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cbed10f9625ec05514e93c4e96fd3fc5, gr\physics\Reactions.vb"
+﻿#Region "Microsoft.VisualBasic::947251ea82f34688f58a535f74e72c73, gr\physics\Reactions.vb"
 
     ' Author:
     ' 
@@ -59,7 +59,7 @@ Public Module Reactions
 
         With RepulsiveForce(f, m1.Point, m2.Point)
             .source = NameOf(CoulombsLaw)
-            Return .ref
+            Return .ByRef
         End With
     End Function
 End Module

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22382a800f35b972c05efa2b710532d0, gr\physics\World.vb"
+﻿#Region "Microsoft.VisualBasic::c698f3ceca015d598a121270bd86cf11, gr\physics\World.vb"
 
     ' Author:
     ' 
@@ -145,6 +145,7 @@ Public Class World
 
                 With reaction.Value(a, b)
                     .source = reaction.Name
+
                     Call forces.Add(.ByRef)
                     Call forceSystem(b.ID).Add(- .ByRef)
                 End With
@@ -152,8 +153,10 @@ Public Class World
         Next
 
         For Each m As MassPoint In objects
-            m += forceSystem(m.ID).Sum  ' 力影响了物体的加速度
-            m.Displacement()    ' 加速度改变了物体现有的运动状态
+            ' 力影响了物体的加速度
+            m += forceSystem(m.ID).Sum
+            ' 加速度改变了物体现有的运动状态
+            m.Displacement()
         Next
     End Sub
 

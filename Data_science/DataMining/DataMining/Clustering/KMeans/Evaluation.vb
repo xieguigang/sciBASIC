@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e219610fd841a2b89df12c52db864f6, Data_science\DataMining\DataMining\Clustering\KMeans\Evaluation.vb"
+﻿#Region "Microsoft.VisualBasic::1ccf71e45508cbc9ee2080c72708807b, Data_science\DataMining\DataMining\Clustering\KMeans\Evaluation.vb"
 
     ' Author:
     ' 
@@ -40,6 +40,8 @@
 
 #End Region
 
+Imports stdNum = System.Math
+
 Namespace KMeans
 
     ''' <summary>
@@ -74,7 +76,7 @@ Namespace KMeans
             clusterInDist /= clusters.Length
             clusterOutDist /= clusters.Length
 
-            Dim maxDist As Double = Math.Max(clusterInDist, clusterOutDist)
+            Dim maxDist As Double = stdNum.Max(clusterInDist, clusterOutDist)
             Dim SI As Double = (clusterOutDist - clusterInDist) / maxDist
 
             Return SI

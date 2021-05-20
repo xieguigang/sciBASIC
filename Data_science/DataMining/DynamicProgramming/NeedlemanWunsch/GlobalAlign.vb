@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::98e14fe7dba60a0bb5d627eda38da328, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\GlobalAlign.vb"
+﻿#Region "Microsoft.VisualBasic::a2711ccf75b6d2a3b317de939a394bdf, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\GlobalAlign.vb"
 
     ' Author:
     ' 
@@ -31,11 +31,12 @@
 
     ' Summaries:
 
-    '     Structure GlobalAlign
+    '     Class GlobalAlign
     ' 
-    '         Properties: Length, PossibleSimilarity
+    '         Properties: Length, query, score, subject
     ' 
-    '         Function: (+2 Overloads) ToString
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Identities, (+2 Overloads) ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -43,15 +44,18 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text
 
 Namespace NeedlemanWunsch
 
-    Public Structure GlobalAlign(Of T)
+    Public Class GlobalAlign(Of T)
 
-        Dim Score#
-        Dim query As T()
-        Dim subject As T()
+        Public Property score As Double
+        Public Property query As T()
+        Public Property subject As T()
+
+        Private ReadOnly toChar As Func(Of T, Char)
 
         Public ReadOnly Property Length As Integer
             Get
@@ -63,11 +67,26 @@ Namespace NeedlemanWunsch
             End Get
         End Property
 
-        Public ReadOnly Property PossibleSimilarity As Double
-            Get
-                Return Score / Length
-            End Get
-        End Property
+        Sub New(toChar As Func(Of T, Char))
+            Me.toChar = toChar
+        End Sub
+
+        Public Function Identities(scoreMatrix As ScoreMatrix(Of T)) As Double
+            Dim vq As New List(Of Double)
+            Dim vs As New List(Of Double)
+
+            For i As Integer = 0 To Length - 1
+                Call vq.Add(1)
+
+                If scoreMatrix.m_equals(query(i), subject(i)) Then
+                    Call vs.Add(1)
+                Else
+                    Call vs.Add(0)
+                End If
+            Next
+
+            Return SSM(vq.AsVector, vs.AsVector)
+        End Function
 
         Public Overloads Function ToString(toChar As Func(Of T, Char)) As String
             Dim q As New List(Of Char)
@@ -94,7 +113,7 @@ Namespace NeedlemanWunsch
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return ToString(Function(x) x.ToString.First)
+            Return ToString(toChar)
         End Function
-    End Structure
+    End Class
 End Namespace

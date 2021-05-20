@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::02d5b60d5fa4a605e5857a41adc3f4ec, gr\network-visualization\Datavisualization.Network\Graph\GraphTree.vb"
+﻿#Region "Microsoft.VisualBasic::9dd628a6670c8ba59934c76ffca948d8, gr\network-visualization\Datavisualization.Network\Graph\GraphTree.vb"
 
     ' Author:
     ' 
@@ -124,7 +124,7 @@ Namespace Graph
         Private Shared Function IterateTrees(graph As NetworkGraph, ByRef travels As Dictionary(Of Node, GraphTreeNode)) As GraphTreeNode()
             Dim trees As New List(Of GraphTreeNode)
 
-            For Each node As Node In graph.nodes
+            For Each node As Node In graph.vertex
                 Dim root As New GraphTreeNode With {
                     .Node = node
                 }
@@ -150,7 +150,7 @@ Namespace Graph
                 Call treeTable.Add(current.Node, current)
             End If
 
-            For Each edge As Edge In graph.edges
+            For Each edge As Edge In graph.graphEdges
                 Dim [next] As GraphTreeNode = Nothing
 
                 With current
@@ -160,7 +160,7 @@ Namespace Graph
                         }
                         [next].Parents.Add(current)
                         .Childs.Add([next])
-                    ElseIf edge.v = .Node Then
+                    ElseIf edge.V = .Node Then
                         [next] = New GraphTreeNode With {
                             .Node = edge.U
                         }

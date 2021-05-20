@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b0a0286cf33e78b813a00e848ff2d1a, Data\DataFrame\IO\Generic\Table.vb"
+﻿#Region "Microsoft.VisualBasic::ddf2f9c4eacaf51fa9b7f26e5060f321, Data\DataFrame\IO\Generic\Table.vb"
 
     ' Author:
     ' 
@@ -35,12 +35,20 @@
     ' 
     ' 
     ' 
+    '     Module FileFormat
+    ' 
+    '         Function: ContainsIDField, GetIDList, IsTsvFile, readHeaders, SolveDataSetIDMapping
+    ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Text
 
 Namespace IO
 
@@ -49,4 +57,117 @@ Namespace IO
     ''' </summary>
     Public Class Table : Inherits DynamicPropertyBase(Of String)
     End Class
+
+    Public Module FileFormat
+
+        Public Function IsTsvFile(path As String) As Boolean
+            Dim headers = path.ReadFirstLine
+            Dim comma = headers.Count(","c)
+            Dim tab = headers.Count(ASCII.TAB)
+
+            Return tab > comma
+        End Function
+
+        Friend Function SolveDataSetIDMapping(file$, uidMap$, tsv As Boolean?, encoding As Encoding) As String
+            If tsv Is Nothing Then
+                tsv = IsTsvFile(path:=file)
+            End If
+
+            If uidMap.StringEmpty Then
+                If ContainsIDField(file, CBool(tsv), encoding, uidMap) Then
+                    uidMap = NameOf(EntityObject.ID)
+                Else
+                    ' 使用第一列作为ID
+                    ' 因为再函数之中已经通过ByRef返回来了，所以do nothing
+                End If
+            Else
+                ' 使用用户自定义的列作为ID
+                ' 在这里do nothing
+            End If
+
+            Return uidMap
+        End Function
+
+        ''' <summary>
+        ''' 获取数据集之中的被映射为ID列的值列表
+        ''' </summary>
+        ''' <param name="path$"></param>
+        ''' <param name="uidMap$"></param>
+        ''' <param name="tsv"></param>
+        ''' <param name="ignoreMapErrors"></param>
+        ''' <returns></returns>
+        Public Function GetIDList(path$,
+                                  Optional uidMap$ = Nothing,
+                                  Optional tsv As Boolean = False,
+                                  Optional ignoreMapErrors As Boolean = False,
+                                  Optional encoding As Encodings = Encodings.UTF8) As String()
+
+            Dim table As File = If(tsv, File.LoadTsv(path, encoding), File.Load(path, encoding.CodePage))
+            Dim getIDsDefault = Function()
+                                    Return table.Columns _
+                                        .First _
+                                        .Skip(1) _
+                                        .ToArray
+                                End Function
+
+            If uidMap.StringEmpty Then
+                ' 第一列的数据就是所需要的编号数据
+                Return getIDsDefault()
+            Else
+                With table.Headers.IndexOf(uidMap)
+                    If .ByRef = -1 AndAlso ignoreMapErrors Then
+                        Return getIDsDefault()
+                    Else
+                        ' 当不忽略错误的时候，不存在的uidMap其index位置会出现越界的错误直接在这里报错
+                        Return table.Columns(.ByRef) _
+                            .Skip(1) _
+                            .ToArray
+                    End If
+                End With
+            End If
+        End Function
+
+        ''' <summary>
+        ''' 使用这个函数来判断目标文件之中是否存在ID列
+        ''' （ID列可能不在第一列）
+        ''' </summary>
+        ''' <param name="path$"></param>
+        ''' <param name="tsv"></param>
+        ''' <param name="encoding"></param>
+        ''' <param name="FirstColumn">
+        ''' 函数总是会从这一个参数返回第一列的标题，如果不存在ID列的话可以用这一列来作为ID（可能会出现意想不到的错误）
+        ''' </param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function ContainsIDField(path$,
+                                        Optional tsv As Boolean = False,
+                                        Optional encoding As Encoding = Nothing,
+                                        Optional ByRef firstColumn$ = Nothing) As Boolean
+            Return readHeaders(
+                    path,
+                    tsv,
+                    encoding,
+                    firstColumn
+                ).Any(Function(s) s = NameOf(EntityObject.ID))
+        End Function
+
+        Friend Function readHeaders(path$, tsv As Boolean, encoding As Encoding, ByRef firstColumn$) As String()
+            Dim headers$()
+
+            ' 从文件的第一行数据之中得到列标题列表
+            ' 即表头字符串集合
+            If Not tsv Then
+                headers = New RowObject(path.ReadFirstLine(encoding)).ToArray
+            Else
+                headers = path _
+                    .ReadFirstLine(encoding) _
+                    .Split(ASCII.TAB)
+            End If
+
+            firstColumn = headers(Scan0)
+
+            Return headers
+        End Function
+    End Module
 End Namespace

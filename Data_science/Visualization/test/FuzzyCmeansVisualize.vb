@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17aa71e2ad9f6536fdd58cb0ff74ba57, Data_science\Visualization\test\FuzzyCmeansVisualize.vb"
+﻿#Region "Microsoft.VisualBasic::99f40fc14ef8b44c38be5b5fe595c1a9, Data_science\Visualization\test\FuzzyCmeansVisualize.vb"
 
     ' Author:
     ' 
@@ -45,6 +45,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
+Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.DataMining.FuzzyCMeans
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
@@ -61,11 +62,11 @@ Module FuzzyCMeansVisualize
     ''' <param name="n%"></param>
     ''' <param name="up%"></param>
     <Extension>
-    Private Sub AddPoints(ByRef raw As List(Of Entity), rnd As Random, n%, up%)
+    Private Sub AddPoints(ByRef raw As List(Of FuzzyCMeansEntity), rnd As Random, n%, up%)
         For i As Integer = 0 To n
-            raw += New Entity With {
+            raw += New FuzzyCMeansEntity With {
                 .uid = i,
-                .Properties = {
+                .entityVector = {
                     rnd.Next(0, up),
                     rnd.Next(0, up)
                 }
@@ -73,9 +74,9 @@ Module FuzzyCMeansVisualize
         Next
     End Sub
 
-	' 进行cmeans聚类
-    Private Function CMeans() As (raw As Entity(), n%, trace As Dictionary(Of Integer, List(Of Entity)))
-        Dim raw As New List(Of Entity)
+    ' 进行cmeans聚类
+    Private Function CMeans() As (raw As FuzzyCMeansEntity(), n%, trace As Dictionary(Of Integer, List(Of FuzzyCMeansEntity)))
+        Dim raw As New List(Of FuzzyCMeansEntity)
         Dim rnd As New Random(Now.Millisecond)
         Dim up% = 1500
 
@@ -86,22 +87,17 @@ Module FuzzyCMeansVisualize
         Next
 
         Dim n% = 10  ' required of 10 clusters
-        Dim trace As New Dictionary(Of Integer, List(Of Entity))
 
         ' invoke cmeans cluster and gets the centra points
-        Dim centras = raw.FuzzyCMeans(n, 2, trace:=trace)
+        Dim centras = raw.CMeans(n, 2)
 
 #Region "DEBUG INFO OUTPUTS"
-        For Each x In centras
-            Call $"centra {x.uid} =>  {x.Properties.GetJson}".PrintException
-        Next
-
         For Each x In raw
-            Call ($"{x.uid}: {x.Properties.GetJson} => " & x.Memberships.GetJson).__DEBUG_ECHO
+            Call ($"{x.uid}: {x.entityVector.GetJson} => " & x.memberships.GetJson).__DEBUG_ECHO
         Next
 #End Region
 
-        Return (raw, n, trace)
+        Return (raw, n, Nothing)
     End Function
 
     Private Sub CMeansVisualize()
@@ -113,8 +109,8 @@ Module FuzzyCMeansVisualize
     End Sub
 
     <Extension>
-    Private Sub Visualize(data As (raw As Entity(), n%, trace As Dictionary(Of Integer, List(Of Entity))))
-        Dim trace As Dictionary(Of Integer, List(Of Entity)) = data.trace
+    Private Sub Visualize(data As (raw As FuzzyCMeansEntity(), n%, trace As Dictionary(Of Integer, List(Of FuzzyCMeansEntity))))
+        Dim trace As Dictionary(Of Integer, List(Of FuzzyCMeansEntity)) = data.trace
 
         ' data plots visualize
         Dim plotData As New List(Of SerialData)
@@ -122,7 +118,7 @@ Module FuzzyCMeansVisualize
         Dim colors As Color() = Designer.GetColors("Paired:c10", data.n)
 
         ' generates serial data for each point in the raw inputs
-        For Each x As Entity In data.raw
+        For Each x As FuzzyCMeansEntity In data.raw
             Dim r = colors(x.ProbablyMembership).R
             Dim g = colors(x.ProbablyMembership).G
             Dim b = colors(x.ProbablyMembership).B
@@ -135,10 +131,10 @@ Module FuzzyCMeansVisualize
                 title:="Point " & x.uid)
         Next
 
-        Dim traceSerials As New List(Of List(Of Entity))
+        Dim traceSerials As New List(Of List(Of FuzzyCMeansEntity))
 
         For i As Integer = 0 To data.n - 1
-            traceSerials += New List(Of Entity)
+            traceSerials += New List(Of FuzzyCMeansEntity)
         Next
 
         For Each k In trace.Keys.OrderBy(Function(x) x)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9d66aaa8057895abdf73778c2a8553a, Data_science\Mathematica\SignalProcessing\SignalProcessing\Source\ArithmeticSignal.vb"
+﻿#Region "Microsoft.VisualBasic::7bccd0e3489dc2ef45453e4b326860f9, Data_science\Mathematica\SignalProcessing\SignalProcessing\Source\ArithmeticSignal.vb"
 
     ' Author:
     ' 
@@ -125,7 +125,7 @@ Namespace Source.Arithmetic
 
                 For i As Integer = 0 To Signal.BUFFER_SIZE - 1
                     samples(i) = CSByte(Signal.AMPLITUDE * calculate(audioPosA, SignalA.Phase, audioPosB, SignalB.Phase))
-                    ' 2 * Math.PI * freq / SAMPLE_RATE;
+                    ' 2 * stdNum.PI * freq / SAMPLE_RATE;
                     audioPosA += 100 * SignalA.Freq / Signal.SAMPLE_RATE
                     audioPosB += 100 * SignalB.Freq / Signal.SAMPLE_RATE
                 Next

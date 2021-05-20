@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9871e59e7da15684f3fd386b75c2996, Data\DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::038f9f53a04d77f610598964d102acbc, Data\DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Reflector
     ' 
-    '         Function: __save, Convert, CreateRowBuilder, ExportAsPropertyAttributes, GetDataFrameworkTypeSchema
+    '         Function: Convert, CreateRowBuilder, doSave, ExportAsPropertyAttributes, GetDataFrameworkTypeSchema
     '                   GetsRowData, Load, LoadDataToObject, Save
     ' 
     ' 
@@ -91,8 +91,10 @@ Namespace StorageProvider.Reflection
 
             Dim table As Dictionary(Of String, Type) = cols _
                 .Join(array) _
-                .ToDictionary(Function(x) x.Name,
-                              Function(x) x.Value)
+                .ToDictionary(Function(col) col.Name,
+                              Function(col)
+                                  Return col.Value
+                              End Function)
             Return table
         End Function
 #End If
@@ -115,32 +117,40 @@ Namespace StorageProvider.Reflection
         ''' <remarks></remarks>
         ''' 
         <Extension>
-        Public Function LoadDataToObject(csv As DataFrame, type As Type, Optional strict As Boolean = False) As IEnumerable(Of Object)
+        Public Function LoadDataToObject(csv As DataFrame, type As Type,
+                                         Optional strict As Boolean = False,
+                                         Optional metaBlank As String = "",
+                                         Optional parallel As Boolean = True,
+                                         Optional silent As Boolean = False) As IEnumerable(Of Object)
+
             Dim schema As TableSchema = TableSchema.CreateObjectInternal(type, strict).CopyWriteDataToObject
             Dim rowBuilder As New RowBuilder(schema)
-            Dim parallel As Boolean = True
 
 #If DEBUG Then
             parallel = False
 #End If
 
+            Dim sequence = csv._innerTable _
+                .SeqIterator _
+                .Populate(parallel)
             Dim buf = From line As SeqValue(Of RowObject)
-                      In csv._innerTable.SeqIterator.Populate(parallel)
-                      Select LineNumber = line.i,
-                          FilledObject = Activator.CreateInstance(type),
+                      In sequence
+                      Select lineNumber = line.i,
+                          filledObject = Activator.CreateInstance(type),
                           row = line.value
 
             Call rowBuilder.IndexOf(csv)
-            Call rowBuilder.SolveReadOnlyMetaConflicts()
+            Call rowBuilder.SolveReadOnlyMetaConflicts(silent)
 
+            ' 顺序需要一一对应，所以在最后这里进行了一下排序操作
             Dim LQuery = From item
                          In buf.Populate(parallel)
-                         Select item.LineNumber,
+                         Select item.lineNumber,
                              item.row,
-                             Data = rowBuilder.FillData(item.row, item.FilledObject)
-                         Order By LineNumber Ascending  ' 顺序需要一一对应，所以在最后这里进行了一下排序操作
+                             data = rowBuilder.FillData(item.row, item.filledObject, metaBlank)
+                         Order By lineNumber Ascending
 
-            Return LQuery.Select(Function(x) x.Data)
+            Return LQuery.Select(Function(x) x.data)
         End Function
 
         ''' <summary>
@@ -148,13 +158,17 @@ Namespace StorageProvider.Reflection
         ''' </summary>
         ''' <typeparam name="TClass"></typeparam>
         ''' <param name="df"></param>
-        ''' <param name="explicit"></param>
+        ''' <param name="strict"></param>
         ''' <returns></returns>
         ''' <remarks>在这里查找所有具有写属性的属性对象即可</remarks>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Convert(Of TClass As Class)(df As DataFrame, Optional explicit As Boolean = True) As IEnumerable(Of TClass)
-            Return df.LoadDataToObject(GetType(TClass), explicit).As(Of TClass)
+        Public Function Convert(Of TClass As Class)(df As DataFrame,
+                                                    Optional strict As Boolean = True,
+                                                    Optional metaBlank$ = "",
+                                                    Optional silent As Boolean = False) As IEnumerable(Of TClass)
+
+            Return df.LoadDataToObject(GetType(TClass), strict, metaBlank, silent:=silent).As(Of TClass)
         End Function
 
         ''' <summary>
@@ -173,7 +187,9 @@ Namespace StorageProvider.Reflection
                                             Optional encoding As Encoding = Nothing,
                                             Optional fast As Boolean = False,
                                             Optional maps As Dictionary(Of String, String) = Nothing,
-                                            Optional mute As Boolean = False) As IEnumerable(Of T)
+                                            Optional mute As Boolean = False,
+                                            Optional metaBlank As String = "",
+                                            Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing) As IEnumerable(Of T)
             If Not path.FileExists Then
                 ' 空文件
                 Call $"Csv file ""{path.ToFileURL}"" is empty!".Warning
@@ -183,7 +199,7 @@ Namespace StorageProvider.Reflection
             End If
 
             ' read csv data
-            Dim reader As DataFrame = IO.DataFrame.Load(path, encoding, fast)
+            Dim reader As DataFrame = IO.DataFrame.Load(path, encoding, fast, skipWhile)
             Dim buffer As IEnumerable(Of T)
 
             If Not maps Is Nothing Then
@@ -192,7 +208,7 @@ Namespace StorageProvider.Reflection
             End If
 
             Call $"Reflector load data into type {GetType(T).FullName}".__DEBUG_ECHO(mute:=mute)
-            buffer = Reflector.Convert(Of T)(reader, Explicit)
+            buffer = Reflector.Convert(Of T)(reader, Explicit, metaBlank, silent:=mute)
             Call "[Job Done!]".__DEBUG_ECHO(mute:=mute)
 
             Return buffer
@@ -202,20 +218,20 @@ Namespace StorageProvider.Reflection
         ''' Save the specifc type object collection into the csv data file.(将目标对象数据的集合转换为Csv文件已进行数据保存操作)
         ''' </summary>
         ''' <param name="source"></param>
-        ''' <param name="Explicit"></param>
+        ''' <param name="strict"></param>
         ''' <returns></returns>
         ''' <remarks>查找所有具备读属性的属性值</remarks>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Iterator Function GetsRowData(source As IEnumerable(Of Object), type As Type,
-                        Optional Explicit As Boolean = True,
+                        Optional strict As Boolean = True,
                         Optional maps As Dictionary(Of String, String) = Nothing,
                         Optional parallel As Boolean = True,
                         Optional metaBlank As String = "",
                         Optional reorderKeys As Integer = 0,
                         Optional layout As Dictionary(Of String, Integer) = Nothing) As IEnumerable(Of RowObject)
 
-            For Each row As RowObject In __save(source, type, Explicit, Nothing, metaBlank,
+            For Each row As RowObject In doSave(source, type, strict, Nothing, metaBlank,
                                                 maps:=maps,
                                                 parallel:=parallel,
                                                 reorderKeys:=reorderKeys,
@@ -227,12 +243,12 @@ Namespace StorageProvider.Reflection
         ''' <summary>
         ''' Save the specifc type object collection into the csv data file.(将目标对象数据的集合转换为Csv文件已进行数据保存操作)
         ''' </summary>
-        ''' <param name="___source"></param>
+        ''' <param name="objSource"></param>
         ''' <param name="strict"></param>
         ''' <param name="schemaOut">请注意，Key是Csv文件之中的标题，不是属性名称了</param>
         ''' <returns></returns>
         ''' <remarks>查找所有具备读属性的属性值</remarks>
-        Public Iterator Function __save(___source As IEnumerable,
+        Public Iterator Function doSave(objSource As IEnumerable,
                                           typeDef As Type,
                                          strict As Boolean,
                                         schemaOut As Dictionary(Of String, Type),
@@ -242,22 +258,26 @@ Namespace StorageProvider.Reflection
                                Optional reorderKeys As Integer = 0,
                                Optional layout As Dictionary(Of String, Integer) = Nothing) As IEnumerable(Of RowObject)
 
-            Dim source As Object() = ___source.ToVector  ' 结束迭代器，防止Linq表达式重新计算
+            ' 结束迭代器，防止Linq表达式重新计算
+            Dim source As Object() = objSource.ToVector
             Dim schema As TableSchema = TableSchema.CreateObjectInternal(typeDef, strict).CopyReadDataFromObject
             Dim rowWriter As RowWriter = New RowWriter(schema, metaBlank, layout) _
                 .CacheIndex(source, reorderKeys)
 
             schemaOut = rowWriter _
-                .Columns _
+                .columns _
                 .ToDictionary(Function(x) x.Name,
-                              Function(x) x.BindProperty.PropertyType)
+                              Function(x)
+                                  Return x.BindProperty.PropertyType
+                              End Function)
 
             Dim title As RowObject = rowWriter.GetRowNames(maps).Join(rowWriter.GetMetaTitles)
 
             Yield title
 
-            If Not rowWriter.MetaRow Is Nothing Then  ' 只读属性会和字典属性产生冲突
-                Dim valueType As Type = rowWriter.MetaRow _
+            If Not rowWriter.metaRow Is Nothing Then
+                ' 只读属性会和字典属性产生冲突
+                Dim valueType As Type = rowWriter.metaRow _
                                                  .Dictionary _
                                                  .GenericTypeArguments _
                                                  .Last
@@ -268,12 +288,13 @@ Namespace StorageProvider.Reflection
                         Call schemaOut.Add(key, valueType)
                     Next
                 Catch ex As Exception
-                    Dim msg = $"key:='{key}', keys:={schemaOut.Keys.GetJson}, metaKeys:={rowWriter.GetMetaTitles.GetJson}"
+                    Dim msg = $"key:='{key}', keys:={schemaOut.Keys.AsEnumerable.GetJson}, metaKeys:={rowWriter.GetMetaTitles.GetJson}"
                     ex = New Exception(msg, ex)
                     Throw ex
                 End Try
             End If
 
+            ' 为了保持对象之间的顺序的一致性，在这里不能够使用并行查询
             Dim LQuery As IEnumerable(Of RowObject) =
                 From row As Object
                 In source
@@ -281,7 +302,7 @@ Namespace StorageProvider.Reflection
                     row Is Nothing,
                     New RowObject,
                     rowWriter.ToRow(row))
-                Select createdRow  ' 为了保持对象之间的顺序的一致性，在这里不能够使用并行查询
+                Select createdRow
 
             If parallel Then
                 For Each row As RowObject In LQuery.AsParallel
@@ -314,13 +335,14 @@ Namespace StorageProvider.Reflection
                                    Optional ByRef schemaOut As Dictionary(Of String, Type) = Nothing,
                                    Optional reorderKeys As Integer = 0) As File
 
-            Return Reflector.__save(
+            Return Reflector.doSave(
                 source, GetType(T), strict,
                 schemaOut,
                 metaBlank,
                 maps,
                 parallel,
-                reorderKeys:=reorderKeys).DataFrame
+                reorderKeys:=reorderKeys
+            ).DataFrame
         End Function
 
         ''' <summary>
@@ -348,7 +370,9 @@ Namespace StorageProvider.Reflection
                             Select key = title(CInt(p)),
                                 value = rowL(CInt(p))) _
                                   .ToDictionary(Function(x) x.key,
-                                                Function(x) x.value)
+                                                Function(x)
+                                                    Return x.value
+                                                End Function)
             Return buf
         End Function
     End Module

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68f6de77d0cf309fe3fec35126311d56, gr\Microsoft.VisualBasic.Imaging\Drivers\Exif\JpegMetadataAdapter.vb"
+﻿#Region "Microsoft.VisualBasic::a07d5bf90e33773db4dfd97fd079ffd8, gr\Microsoft.VisualBasic.Imaging\Drivers\Exif\JpegMetadataAdapter.vb"
 
     ' Author:
     ' 
@@ -47,6 +47,8 @@
 
 #End Region
 
+#If netcore5=0
+
 Imports System.Collections.ObjectModel
 Imports System.IO
 Imports System.Threading
@@ -55,7 +57,7 @@ Imports System.Windows.Media.Imaging
 Namespace Driver
 
     ''' <summary>
-    ''' 
+    ''' # Exif
     ''' </summary>
     ''' <remarks>
     ''' https://github.com/mwijnands/JpegMetadata
@@ -89,7 +91,7 @@ Namespace Driver
         ''' <param name="filePath"></param>
         ''' <returns></returns>
         ''' <remarks>
-        ''' Png�ļ�֮��Ϊʲô�����԰�����exifԪ���ݣ�
+        ''' Png is not working for this exif tag data writer
         ''' </remarks>
         Private Function ReadMetadata(filePath As String) As JpegMetadata
             Using jpegStream = New FileStream(filePath, FileMode.Open, FileAccess.Read)
@@ -119,8 +121,8 @@ Namespace Driver
         End Function
 
         Private Function TryPadAndSave(filePath As String, metadata As JpegMetadata) As Boolean
-            Dim result = New JpegMetadataSaveResult(filePath, metadata)
-            Dim thread = New Thread(Sub() Call PadAndSave(result))
+            Dim result As New JpegMetadataSaveResult(filePath, metadata)
+            Dim thread As New Thread(Sub() Call PadAndSave(result))
 
             thread.SetApartmentState(ApartmentState.STA)
             thread.Start()
@@ -135,8 +137,8 @@ Namespace Driver
 
                 Using jpegStream = New FileStream(result.FilePath, FileMode.Open, FileAccess.Read)
                     Dim decoder = New JpegBitmapDecoder(jpegStream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.None)
-
                     Dim jpegFrame = decoder.Frames(0)
+
                     If jpegFrame Is Nothing Then
                         Return
                     End If
@@ -153,12 +155,12 @@ Namespace Driver
                 Try
                     File.Delete(tempFileName)
                     ' Not a problem if temporary file can't be deleted.
-                Catch generatedExceptionName As IOException
+                Catch ex As IOException
                 End Try
 
                 result.IsSuccess = True
                 ' Ignore exception on this thread and don't set IsSuccess property.
-            Catch generatedExceptionName As Exception
+            Catch ex As Exception
             End Try
         End Sub
 
@@ -179,14 +181,15 @@ Namespace Driver
             SetMetadata(metadataCopy, metadata)
 
             Dim newJpegFrame = BitmapFrame.Create(jpegFrame, jpegFrame.Thumbnail, metadataCopy, jpegFrame.ColorContexts)
-            Dim encoder = New JpegBitmapEncoder()
+            Dim encoder As New JpegBitmapEncoder()
 
             Call encoder.Frames.Add(newJpegFrame)
 
             Return encoder
         End Function
 
-        Private Function CreateMetadata(metadata As BitmapMetadata) As JpegMetadata
+        <DebuggerStepThrough>
+        Private Shared Function CreateMetadata(metadata As BitmapMetadata) As JpegMetadata
             Return New JpegMetadata() With {
                 .Title = metadata.Title Or EmptyString,
                 .Subject = metadata.Subject Or EmptyString,
@@ -197,7 +200,8 @@ Namespace Driver
             }
         End Function
 
-        Private Sub SetMetadata(destination As BitmapMetadata, source As JpegMetadata)
+        <DebuggerStepThrough>
+        Private Shared Sub SetMetadata(destination As BitmapMetadata, source As JpegMetadata)
             destination.Title = source.Title
             destination.Subject = source.Subject
             destination.Rating = source.Rating
@@ -207,3 +211,4 @@ Namespace Driver
         End Sub
     End Class
 End Namespace
+#end if

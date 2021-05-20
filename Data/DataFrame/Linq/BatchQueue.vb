@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47b9ddc16422402e668b3c93ab9e34bf, Data\DataFrame\Linq\BatchQueue.vb"
+﻿#Region "Microsoft.VisualBasic::f5b4a475bb4ebb9076ee8721b79eee35, Data\DataFrame\Linq\BatchQueue.vb"
 
     ' Author:
     ' 
@@ -133,7 +133,7 @@ Namespace IO.Linq
             Call $"All I/O queue job done!   {sw.ElapsedMilliseconds}ms...".__DEBUG_ECHO
 
             For Each data As NamedValue(Of String()) In IO
-                Dim buf As T() = data.Value.LoadStream(Of T)(False)
+                Dim buf As T() = data.Value.LoadStream(Of T)(False).ToArray
 
                 Yield New NamedValue(Of T())(data.Name, buf)
 

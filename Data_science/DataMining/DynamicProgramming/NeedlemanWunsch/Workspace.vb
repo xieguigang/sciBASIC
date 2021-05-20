@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f0b59fffa69b6fe8bbad9d98c9be89f5, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\Workspace.vb"
+﻿#Region "Microsoft.VisualBasic::9d334ce4017f1e12a7f845df84cf2f7c, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\Workspace.vb"
 
     ' Author:
     ' 
@@ -33,12 +33,11 @@
 
     '     Class Workspace
     ' 
-    '         Properties: GapPenalty, MatchScore, MismatchScore, NumberOfAlignments, Query
-    '                     Score, Subject
+    '         Properties: NumberOfAlignments, Query, Score, Subject
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: getAligned1, getAligned2, isMatch
+    '         Function: getAligned1, getAligned2
     ' 
     '         Sub: AddAligned1, AddAligned2
     ' 
@@ -48,7 +47,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming
 Imports Microsoft.VisualBasic.Linq
 
 Namespace NeedlemanWunsch
@@ -63,8 +61,7 @@ Namespace NeedlemanWunsch
         Dim aligned1 As New List(Of T())
         Dim aligned2 As New List(Of T())
 
-        Protected ReadOnly __toChar As Func(Of T, Char)
-        ReadOnly __equals As IEquals(Of T)
+        Protected Friend ReadOnly m_toChar As Func(Of T, Char)
 
         ''' <summary>
         ''' get numberOfAlignments </summary>
@@ -76,32 +73,17 @@ Namespace NeedlemanWunsch
             End Get
         End Property
 
-        ''' <summary>
-        ''' get gap open penalty </summary>
-        ''' <returns> gap open penalty </returns>
-        Public Property GapPenalty As Integer = 1
-
-        ''' <summary>
-        ''' get match score </summary>
-        ''' <returns> match score </returns>
-        Public Property MatchScore As Integer = 1
-
-        ''' <summary>
-        ''' get mismatch score </summary>
-        ''' <returns> mismatch score </returns>
-        Public Property MismatchScore As Integer = -1
-
         Public ReadOnly Property Query As String
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return New String(Sequence1.Select(Of Char)(__toChar).ToArray)
+                Return New String(Sequence1.Select(Of Char)(m_toChar).ToArray)
             End Get
         End Property
 
         Public ReadOnly Property Subject As String
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return New String(Sequence2.Select(Of Char)(__toChar).ToArray)
+                Return New String(Sequence2.Select(Of Char)(m_toChar).ToArray)
             End Get
         End Property
 
@@ -115,6 +97,18 @@ Namespace NeedlemanWunsch
         '''    return Math.max(a, Math.max(b, c)); </summary>
         ''' <return> sequence 2 </return>
         Protected Sequence2 As T()
+
+        Protected scoreMatrix As ScoreMatrix(Of T)
+
+        ''' <summary>
+        ''' get computed score </summary>
+        ''' <returns> score </returns>
+        Public Property Score As Integer
+
+        Sub New(score As ScoreMatrix(Of T), toChar As Func(Of T, Char))
+            m_toChar = toChar
+            scoreMatrix = score
+        End Sub
 
         ''' <summary>
         ''' get aligned version of sequence 1 </summary>
@@ -145,28 +139,5 @@ Namespace NeedlemanWunsch
         Protected Friend Sub AddAligned2(align As T())
             Me.aligned2.Add(align)
         End Sub
-
-        ''' <summary>
-        ''' get computed score </summary>
-        ''' <returns> score </returns>
-        Public Property Score As Integer
-
-        Sub New(match As IEquals(Of T), toChar As Func(Of T, Char))
-            __equals = match
-            __toChar = toChar
-        End Sub
-
-        ''' <summary>
-        ''' if char a is equal to char b
-        ''' return the match score
-        ''' else return mismatch score
-        ''' </summary>
-        Protected Function isMatch(a As T, b As T) As Integer
-            If __equals(a, b) Then
-                Return MatchScore
-            Else
-                Return MismatchScore
-            End If
-        End Function
     End Class
 End Namespace

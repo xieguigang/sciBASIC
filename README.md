@@ -1,6 +1,6 @@
 # sciBASIC#: Microsoft VisualBasic for Scientific Computing
 
-![(๑•̀ㅂ•́)و✧](./etc/badge.png)
+![(๑•̀ㅂ•́)و✧](etc/badge.png)
 ![](https://cdn.rawgit.com/LunaGao/BlessYourCodeTag/master/tags/alpaca.svg)
 [![Github All Releases](https://img.shields.io/github/downloads/xieguigang/sciBASIC/total.svg?maxAge=2592000?style=flat-square)]()
 [![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/)
@@ -11,7 +11,7 @@
 
 <hr>
 
-[![sciBASIC# logo](./Microsoft.VisualBasic.Core/Resources/logo.png)](./vs_solutions/logo/Program.vb)
+[![sciBASIC# logo](Microsoft.VisualBasic.Core/logo.png)](./vs_solutions/logo/Program.vb)
 
 > Read the project documents: [http://sciBASIC.NET/](http://sciBASIC.NET)
 
@@ -135,7 +135,7 @@ Call {
 
 ## Microsoft VisualBasic Trinity Natural Language Processor
 
-###### TextRank
+### TextRank
 
 PageRank analysis on the text paragraph for find out the keyword, here is the pagerank result of the this example paragraph:
 
@@ -143,8 +143,68 @@ PageRank analysis on the text paragraph for find out the keyword, here is the pa
 
 ![](./Data/TextRank/visualize.png)
 
+### GraphQuery
+
+GraphQuery is a query language and execution engine tied to any backend service. It is back-end language independent.
+
+```vbnet
+Imports Microsoft.VisualBasic.Data.GraphQuery
+Imports Microsoft.VisualBasic.Data.GraphQuery.Language
+Imports Microsoft.VisualBasic.MIME.application.json
+Imports Microsoft.VisualBasic.MIME.application.json.Javascript
+Imports Microsoft.VisualBasic.MIME.Markup.HTML
+
+' define your graph query at here
+Dim queryText As String = "..."
+Dim query As Query = QueryParser.GetQuery(queryText)
+Dim engine As New Engine
+' http get of the html document text from web server or local filesystem
+Dim url As String = "..."
+Dim doc As HtmlDocument = HtmlDocument.LoadDocument(url)
+Dim data As JsonElement = engine.Execute(doc, query)
+' debug view of the graph query result
+Dim json As String = data.BuildJsonString(New JSONSerializerOptions With {.indent = True})
+
+Call Console.WriteLine(json)
+```
+
+Read more about the graphquery language: [GraphQuery](https://github.com/xieguigang/sciBASIC/tree/master/Data/GraphQuery)
+
+```bash
+graphquery
+{
+    # parser function pipeline can be 
+    # in different line,
+    # this will let you write graphquery
+    # code in a more graceful style when
+    # you needs a lot of pipeline function
+    # for parse value data.
+    bookID    css("book") 
+            | attr("id")
+
+    title     css("title")
+    isbn      xpath("//isbn")
+    quote     css("quote")
+    language  css("title") | attr("lang")
+
+    # another sub query in current graph query
+    author css("author") {
+        name css("name")
+        born css("born")
+        dead css("dead")
+    }
+
+    # this is a array of type character
+    character xpath("//character") [{
+        name          css("name")
+        born          css("born")
+        qualification xpath("qualification")
+    }]
+}
+```
+
 ## Image fast binarization using VisualBasic image extension API
-[``Sub Binarization(ByRef curBitmap As Bitmap, Optional style As BinarizationStyles = BinarizationStyles.Binary)``](./Microsoft.VisualBasic.Architecture.Framework/Extensions/Image/Bitmap/hcBitmap.vb)
+[``Sub Binarization(ByRef curBitmap As Bitmap, Optional style As BinarizationStyles = BinarizationStyles.Binary)``](./Microsoft.VisualBasic.Core/src/Extensions/Image/Bitmap/hcBitmap.vb)
 
 ```vbnet
 Imports Microsoft.VisualBasic.Imaging
@@ -259,6 +319,8 @@ Call BarPlot.Plot(
 ```
 
 ![](./Data_science/Mathematica/images/FigurePlot-Reference-Unigenes.absolute.level1.png)
+
+![](./Data_science/Visualization/data/sample_groups.VolinPlot.png)
 
 ###### beta-PDF
 
@@ -401,4 +463,4 @@ BufferLength = BitConverter.ToInt64(bitChunk, Scan0)
 
 ![](./www/data/github/xieguigang_github-vcard.png)
 
-> ![](./etc/Copyleft.svg) Copyleft 2018, [I@xieguigang.me](mailto://I@xieguigang.me) (http://sciBASIC.NET/)
+> Copyleft 2018, [I@xieguigang.me](mailto://I@xieguigang.me) (http://sciBASIC.NET/)

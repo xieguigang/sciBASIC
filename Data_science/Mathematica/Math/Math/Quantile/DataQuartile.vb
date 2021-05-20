@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b37c5f81fa687df8f9702e894d7df27, Data_science\Mathematica\Math\Math\Quantile\DataQuartile.vb"
+﻿#Region "Microsoft.VisualBasic::67431db459db2fdea34833ad4ad8b43c, Data_science\Mathematica\Math\Math\Quantile\DataQuartile.vb"
 
     ' Author:
     ' 
@@ -33,17 +33,11 @@
 
     '     Structure DataQuartile
     ' 
-    '         Properties: IQR, Q1, Q2, Q3, range
+    '         Properties: IQR, ModelSamples, Q1, Q2, Q3
+    '                     range
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: Outlier
-    ' 
-    '     Enum QuartileLevels
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
+    '         Function: Outlier, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -55,31 +49,59 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 
 Namespace Quantile
 
+    ''' <summary>
+    ''' A data quartile model based on a given sample data input
+    ''' </summary>
     Public Structure DataQuartile
 
+        ''' <summary>
+        ''' 第一四分位数 (Q1)，又称“较小四分位数”，等于该样本中所有数值由小到大排列后第25%的数字。
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Q1 As Double
+        ''' <summary>
+        ''' 第二四分位数 (Q2)，又称“中位数”，等于该样本中所有数值由小到大排列后第50%的数字。
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Q2 As Double
+        ''' <summary>
+        ''' 第三四分位数 (Q3)，又称“较大四分位数”，等于该样本中所有数值由小到大排列后第75%的数字。
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Q3 As Double
+        ''' <summary>
+        ''' 第三四分位数与第一四分位数的差距又称四分位距（InterQuartile Range, IQR）。
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property IQR As Double
+        ''' <summary>
+        ''' 极值范围
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property range As DoubleRange
 
-        Public Sub New(Q1#, Q2#, Q3#, IQR#, range As DoubleRange)
+        ''' <summary>
+        ''' The raw sample data input for create current quartile model
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property ModelSamples As (normal As Double(), outlier As Double())
+
+        Friend Sub New(Q1#, Q2#, Q3#, IQR#, raw#())
             Me.Q1 = Q1
             Me.Q2 = Q2
             Me.Q3 = Q3
             Me.IQR = IQR
-            Me.range = range
+            Me.range = raw
+            Me.ModelSamples = Me.Outlier(raw)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Outlier(samples As IEnumerable(Of Double)) As (normal As Double(), outlier As Double())
             Return samples.AsVector.Outlier(Me)
         End Function
-    End Structure
 
-    Public Enum QuartileLevels As Integer
-        Q1 = 1
-        Q2 = 2
-        Q3 = 3
-    End Enum
+        Public Overrides Function ToString() As String
+            Return $"{range.ToString} -> |{Q1}, {Q2}, {Q3}|"
+        End Function
+    End Structure
 End Namespace

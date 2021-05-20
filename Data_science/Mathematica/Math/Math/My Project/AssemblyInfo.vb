@@ -8,6 +8,8 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
+#If netcore5 = 0 Then
+
 <Assembly: AssemblyTitle("sciBASIC# scientific computing handouts")>
 <Assembly: AssemblyDescription("sciBASIC# scientific computing handouts")>
 <Assembly: AssemblyCompany("123456789*8+9")>
@@ -31,5 +33,6 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.0.0.0")> 
-<Assembly: AssemblyFileVersion("1.0.0.0")> 
+<Assembly: AssemblyVersion("10.1.*")> 
+<Assembly: AssemblyFileVersion("1.102.*")> 
+#End If

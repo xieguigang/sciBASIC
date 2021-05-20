@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::239e68d5c6a913fb96a4e7ca42c09bb4, gr\Microsoft.VisualBasic.Imaging\SVG\ModelBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::0c58a658d0fe3491fb7e498c6ba4caca, gr\Microsoft.VisualBasic.Imaging\SVG\ModelBuilder.vb"
 
     ' Author:
     ' 
@@ -50,7 +50,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace SVG
 
@@ -63,10 +63,10 @@ Namespace SVG
             Dim endAngle! = startAngle + sweepAngle
             Dim rX = width / 2
             Dim rY = height / 2
-            Dim x1 = x + rX * sys.Cos(Math.PI * startAngle / 180)
-            Dim y1 = y + rY * sys.Sin(Math.PI * startAngle / 180)
-            Dim x2 = x + rX * sys.Cos(Math.PI * endAngle / 180)
-            Dim y2 = y + rY * sys.Sin(Math.PI * endAngle / 180)
+            Dim x1 = x + rX * stdNum.Cos(stdNum.PI * startAngle / 180)
+            Dim y1 = y + rY * stdNum.Sin(stdNum.PI * startAngle / 180)
+            Dim x2 = x + rX * stdNum.Cos(stdNum.PI * endAngle / 180)
+            Dim y2 = y + rY * stdNum.Sin(stdNum.PI * endAngle / 180)
             Dim d = $"M{x},{y}  L{x1},{y1}  A{rX},{rY} 0 0,1 {x2},{y2} z" ' 1 means clockwise
 
             Return New path With {
@@ -213,7 +213,7 @@ Namespace SVG
                     Call gdiPath.VerticalTo(parameters(0), relative:=True)
 
                 Case "C"c
-                    Dim i As VBInteger = 0
+                    Dim i As i32 = 0
 
                     Call gdiPath.CurveTo(
                         parameters(++i),
@@ -224,7 +224,7 @@ Namespace SVG
                         parameters(++i)
                     )
                 Case "c"c
-                    Dim i As VBInteger = 0
+                    Dim i As i32 = 0
 
                     Call gdiPath.CurveTo(
                         parameters(++i),
@@ -248,7 +248,7 @@ Namespace SVG
                     Call gdiPath.QuadraticBelzier(parameters(0), parameters(1), parameters(3), parameters(4), relative:=True)
 
                 Case "A"c
-                    Dim i As VBInteger = 0
+                    Dim i As i32 = 0
 
                     Call gdiPath.EllipticalArc(
                         parameters(++i),
@@ -260,7 +260,7 @@ Namespace SVG
                         parameters(++i)
                     )
                 Case "a"c
-                    Dim i As VBInteger = 0
+                    Dim i As i32 = 0
 
                     Call gdiPath.EllipticalArc(
                         parameters(++i),

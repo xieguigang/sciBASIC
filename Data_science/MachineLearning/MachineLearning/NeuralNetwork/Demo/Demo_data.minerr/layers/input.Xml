@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-16"?>
+<layer xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" size="6" id="input">
+  <activation name="Sigmoid">
+    <Arguments name="alpha">2</Arguments>
+  </activation>
+  <neuron>65</neuron>
+  <neuron>66</neuron>
+  <neuron>67</neuron>
+  <neuron>68</neuron>
+  <neuron>69</neuron>
+  <neuron>6A</neuron>
+</layer>

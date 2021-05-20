@@ -1,0 +1,143 @@
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <lambda>
+    <bvar>
+      <ci> A </ci>
+    </bvar>
+    <bvar>
+      <ci> Kb </ci>
+    </bvar>
+    <bvar>
+      <ci> Kii </ci>
+    </bvar>
+    <bvar>
+      <ci> kcat </ci>
+    </bvar>
+    <bvar>
+      <ci> E </ci>
+    </bvar>
+    <bvar>
+      <ci> I </ci>
+    </bvar>
+    <bvar>
+      <ci> B </ci>
+    </bvar>
+    <bvar>
+      <ci> Kib </ci>
+    </bvar>
+    <apply>
+      <times/>
+      <apply>
+        <divide/>
+        <apply>
+          <divide/>
+          <apply>
+            <times/>
+            <ci> E </ci>
+            <ci> kcat </ci>
+          </apply>
+          <apply>
+            <plus/>
+            <apply>
+              <plus/>
+              <cn type="integer"> 1 </cn>
+              <apply>
+                <divide/>
+                <ci> Kb </ci>
+                <ci> B </ci>
+              </apply>
+            </apply>
+            <apply>
+              <divide/>
+              <ci> B </ci>
+              <ci> Kib </ci>
+            </apply>
+          </apply>
+        </apply>
+        <apply>
+          <times/>
+          <cn type="integer"> 2 </cn>
+          <ci> E </ci>
+        </apply>
+      </apply>
+      <apply>
+        <plus/>
+        <apply>
+          <minus/>
+          <apply>
+            <minus/>
+            <ci> E </ci>
+            <ci> I </ci>
+          </apply>
+          <apply>
+            <times/>
+            <ci> Kii </ci>
+            <apply>
+              <plus/>
+              <apply>
+                <divide/>
+                <ci> Kb </ci>
+                <ci> B </ci>
+              </apply>
+              <cn type="integer"> 1 </cn>
+            </apply>
+          </apply>
+        </apply>
+        <apply>
+          <power/>
+          <apply>
+            <plus/>
+            <apply>
+              <power/>
+              <apply>
+                <minus/>
+                <apply>
+                  <minus/>
+                  <ci> E </ci>
+                  <ci> I </ci>
+                </apply>
+                <apply>
+                  <times/>
+                  <ci> Kii </ci>
+                  <apply>
+                    <plus/>
+                    <apply>
+                      <divide/>
+                      <ci> Kb </ci>
+                      <ci> B </ci>
+                    </apply>
+                    <cn type="integer"> 1 </cn>
+                  </apply>
+                </apply>
+              </apply>
+              <cn type="integer"> 2 </cn>
+            </apply>
+            <apply>
+              <times/>
+              <apply>
+                <times/>
+                <apply>
+                  <times/>
+                  <cn type="integer"> 4 </cn>
+                  <ci> E </ci>
+                </apply>
+                <ci> Kii </ci>
+              </apply>
+              <apply>
+                <plus/>
+                <apply>
+                  <divide/>
+                  <ci> Kb </ci>
+                  <ci> B </ci>
+                </apply>
+                <cn type="integer"> 1 </cn>
+              </apply>
+            </apply>
+          </apply>
+          <cn type="rational">
+            1 <sep/> 2
+          </cn>
+        </apply>
+      </apply>
+    </apply>
+  </lambda>
+</math>

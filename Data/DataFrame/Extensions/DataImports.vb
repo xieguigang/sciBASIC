@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dcc9fea4d15817726fd0cce71653bd4b, Data\DataFrame\Extensions\DataImports.vb"
+﻿#Region "Microsoft.VisualBasic::5219f93ae994a22f4d71499b8bc6d0e2, Data\DataFrame\Extensions\DataImports.vb"
 
     ' Author:
     ' 
@@ -58,7 +58,7 @@ Imports csvFile = Microsoft.VisualBasic.Data.csv.IO.File
 ''' <remarks></remarks>
 ''' 
 <Package("IO_Device.Csv.DataImports",
-                  Description:="Module provides the csv data imports operation of the csv document creates from a text file.(模块提供了从文本文档之中导入数据的方法)",
+                  Description:="Module provides the csv data imports operation of the csv document creates from a text file.",
                   Publisher:="xie.guigang@gmail.com")>
 Public Module DataImports
 
@@ -75,7 +75,6 @@ Public Module DataImports
     ''' <returns></returns>
     ''' <remarks></remarks>
     ''' 
-    <ExportAPI("--Imports", Info:="Imports the data in a well formatted text file using a specific delimiter, default delimiter is comma character.")>
     Public Function [Imports](<Parameter("txt.Path", "The file path for the data imports text file.")> txtPath$,
                               Optional delimiter$ = ",",
                               Optional encoding As Encoding = Nothing) As File
@@ -163,8 +162,7 @@ Public Module DataImports
     ''' <returns></returns>
     ''' <remarks></remarks>
     ''' 
-    <ExportAPI("Row.Parsing", Info:="Row parsing its column tokens")>
-    Public Function RowParsing(Line As String, SplitRegxExpression As String) As IO.RowObject
+    Public Function RowParsing(Line As String, SplitRegxExpression As String) As RowObject
         Dim columns$() = Regex.Split(Line, SplitRegxExpression)
 
         For i As Integer = 0 To columns.Length - 1
@@ -186,7 +184,6 @@ Public Module DataImports
     ''' <returns></returns>
     ''' <remarks></remarks>
     ''' 
-    <ExportAPI("Imports.FixLength", Info:="Imports the data in a well formatted text file using the fix length as the data separate method.")>
     Public Function FixLengthImports(txtPath$,
                                      <Parameter("Length", "The string length width of the data row.")>
                                      Optional length% = 10,
@@ -233,55 +230,8 @@ Public Module DataImports
     ''' 
     <ExportAPI("DataType.Match")>
     <Extension>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function SampleForType(column As IEnumerable(Of String)) As Type
-        Dim array$() = column.ToArray, n% = array.Length
-
-        If LinqAPI.IsEquals(Of Integer)(n) =
-            From s As String
-            In column
-            Let Dbl As Double = Val(s)
-            Let ss As String = Dbl.ToString
-            Where String.Equals(ss, s)
-            Select 1 Then
-
-            Return GetType(Double)
-        End If
-
-        If LinqAPI.IsEquals(Of Integer)(n) =
-            From s As String
-            In column
-            Let Int As Integer = CInt(Val(s))
-            Let ss As String = Int.ToString
-            Where String.Equals(ss, s)
-            Select 1 Then
-
-            Return GetType(Integer)
-        End If
-
-        If LinqAPI.IsEquals(Of Integer)(n) =
-            From s As String
-            In column
-            Let Bol As Boolean = Boolean.Parse(s)
-            Let ss As String = Bol.ToString
-            Where String.Equals(ss, s)
-            Select 1 Then
-
-            Return GetType(Boolean)
-        End If
-
-        If LinqAPI.IsEquals(Of Integer)() = From s As String
-                                            In column
-                                            Let Dat As Date = Date.Parse(s)
-                                            Where Dat.Year = 0 AndAlso
-                                                Dat.Month = 0 AndAlso
-                                                Dat.Day = 0 AndAlso
-                                                Dat.Hour = 0 AndAlso
-                                                Dat.Minute = 0 AndAlso
-                                                Dat.Second = 0
-                                            Select 1 Then
-            Return GetType(Date)
-        End If
-
-        Return GetType(String)
+        Return IO.DataImports.SampleForType(column.ToArray)
     End Function
 End Module

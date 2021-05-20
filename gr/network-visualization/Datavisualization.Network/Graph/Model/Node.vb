@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78d42255adf7839b2dc3cef2b0efbf6c, gr\network-visualization\Datavisualization.Network\Graph\Model\Node.vb"
+﻿#Region "Microsoft.VisualBasic::e900dfb0754013fd1c2e45d960279d1f, gr\network-visualization\Datavisualization.Network\Graph\Model\Node.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,11 @@
 
     '     Class Node
     ' 
-    '         Properties: Data, Pinned
+    '         Properties: adjacencies, data, directedVertex, pinned, visited
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: (+2 Overloads) Equals, GetHashCode, ToString
+    '         Function: adjacentTo, Clone, EnumerateAdjacencies, (+2 Overloads) Equals, GetHashCode
+    '                   ToString
     '         Operators: <>, =
     ' 
     ' 
@@ -84,6 +85,9 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis.Model
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace Graph
 
@@ -93,6 +97,23 @@ Namespace Graph
     Public Class Node : Inherits GraphTheory.Network.Node
         Implements INamedValue
         Implements IGraphValueContainer(Of NodeData)
+        Implements ICloneable(Of Node)
+
+        Public Property data As NodeData Implements IGraphValueContainer(Of NodeData).data
+
+        ''' <summary>
+        ''' Get all of the edge collection that connect to current node object
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property adjacencies As AdjacencySet(Of Edge)
+        Public Property directedVertex As DirectedVertex
+
+        ''' <summary>
+        ''' 这个节点是被钉住的？在进行布局计算的时候，钉住的节点将不会更新位置
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property pinned As Boolean
+        Public Property visited As Boolean
 
         ''' <summary>
         ''' 在这里是用的是unique id进行初始化，对于Display title则可以在<see cref="NodeData.label"/>属性上面设置
@@ -101,33 +122,53 @@ Namespace Graph
         ''' <param name="iData"></param>
         Public Sub New(iId As String, Optional iData As NodeData = Nothing)
             If iData IsNot Nothing Then
-                Data = iData.Clone
+                data = iData.Clone
             End If
 
-            Label = iId
-            Pinned = False
+            label = iId
+            pinned = False
         End Sub
 
         Sub New()
             Call Me.New(Nothing, Nothing)
         End Sub
 
-        Public Property Data As NodeData Implements IGraphValueContainer(Of NodeData).Data
-        Public Property Pinned As Boolean
-
         Public Overrides Function GetHashCode() As Integer
-            Return Label.GetHashCode()
+            Return label.GetHashCode()
+        End Function
+
+        ''' <summary>
+        ''' 枚举出所有的与当前节点直接相邻接的节点列表
+        ''' </summary>
+        ''' <returns></returns>
+        Public Iterator Function EnumerateAdjacencies() As IEnumerable(Of Node)
+            For Each edge As Edge In adjacencies.EnumerateAllEdges
+                If edge.U Is Me Then
+                    Yield edge.V
+                Else
+                    Yield edge.U
+                End If
+            Next
+        End Function
+
+        ''' <summary>
+        ''' Indicates if the node is adjacent to the node specified by id
+        ''' </summary>
+        ''' <param name="node"></param>
+        ''' <returns></returns>
+        Public Function adjacentTo(node As Node) As Boolean
+            Return node.label Like adjacencies
         End Function
 
         Public Overrides Function ToString() As String
-            If Not Data Is Nothing AndAlso Not Data.label.StringEmpty Then
-                Return $"{Label} ({Data.label})"
+            If Not data Is Nothing AndAlso Not data.label.StringEmpty Then
+                Return $"{label} ({data.label})"
             Else
-                Return Label
+                Return label
             End If
         End Function
 
-        Public Overrides Function Equals(obj As System.Object) As Boolean
+        Public Overrides Function Equals(obj As Object) As Boolean
             ' If parameter is null return false.
             If obj Is Nothing Then
                 Return False
@@ -144,7 +185,7 @@ Namespace Graph
                 Return False
             Else
                 ' Return true if the fields match:
-                Return (Label = p.Label)
+                Return (label = p.label)
             End If
         End Function
 
@@ -166,5 +207,29 @@ Namespace Graph
         Public Shared Operator <>(a As Node, b As Node) As Boolean
             Return Not (a = b)
         End Operator
+
+        Public Function Clone() As Node Implements ICloneable(Of Node).Clone
+            Return New Node With {
+                .ID = ID,
+                .label = label,
+                .degree = degree,
+                .pinned = pinned,
+                .visited = visited,
+                .adjacencies = If(adjacencies Is Nothing, New AdjacencySet(Of Edge)(), adjacencies.Clone),
+                .directedVertex = New DirectedVertex(label),
+                .data = New NodeData With {
+                    .color = data.color,
+                    .label = data.label,
+                    .force = data.force,
+                    .initialPostion = data.initialPostion,
+                    .mass = data.mass,
+                    .neighbours = data.neighbours,
+                    .origID = data.origID,
+                    .size = data.size.SafeQuery.ToArray,
+                    .weights = data.weights.SafeQuery.ToArray,
+                    .Properties = New Dictionary(Of String, String)(data.Properties)
+                }
+            }
+        End Function
     End Class
 End Namespace

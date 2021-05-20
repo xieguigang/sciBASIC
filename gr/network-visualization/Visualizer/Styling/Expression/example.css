@@ -1,14 +1,30 @@
-.node {
+/* Config global styles use node, edge and network tag */
 
+/* Global style config for nodes */
+node {
   fill: map(size, [RdYlBu:c12, 20]);
   size: size;
-  stroke: map(type, [Set1:c8, category])
-  label: name
-
+  stroke: map(type, [Set1:c8, category]);
+  label: name;
 }
 
-.edge {
+/* Global style config for edges */
+edge {
+   width: 2;
+}
 
-   
+/** 
+ * Apply styles on specific nodes and edges by class or id selector 
+ * The selector should have ``node`` or ``edge`` prefix
+*/
 
+
+/* Styling a specific set of nodes with class name property value is ``people`` */
+node.people {
+	/* use the png files in images directory as the render texture brush for this given set of nodes. */
+	fill: map(avatar, url(./images/), *.png)	
+}
+
+edge.friend {
+	color: map(time, recent=red, long-time-ago=blue);
 }

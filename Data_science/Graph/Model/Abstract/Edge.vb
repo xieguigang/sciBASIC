@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b393f69f7f67f4a5befb25444745221, Data_science\Graph\Model\Abstract\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::ca39f35f764f36c20d7caf7b3bddc192, Data_science\Graph\Model\Abstract\Edge.vb"
 
     ' Author:
     ' 
@@ -31,13 +31,9 @@
 
     ' Summaries:
 
-    ' Class VertexEdge
-    ' 
-    '     Function: EdgeKey
-    ' 
     ' Class Edge
     ' 
-    '     Properties: Key, U, V, Weight
+    '     Properties: ID, U, V, weight
     ' 
     '     Function: GetHashCode, ToString
     ' 
@@ -49,14 +45,6 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports V = Microsoft.VisualBasic.Data.GraphTheory.Vertex
-
-Public Class VertexEdge : Inherits Edge(Of V)
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Shared Function EdgeKey(U%, V%) As String
-        Return $"{U}-{V}"
-    End Function
-End Class
 
 ''' <summary>
 ''' Direction: ``<see cref="U"/> -> <see cref="V"/>``.
@@ -77,7 +65,7 @@ Public Class Edge(Of Vertex As V) : Implements INamedValue
     ''' </summary>
     ''' <returns></returns>
     Public Property V As Vertex
-    Public Property Weight As Double
+    Public Overridable Property weight As Double
 
     ''' <summary>
     ''' ReadOnly unique-ID
@@ -86,10 +74,10 @@ Public Class Edge(Of Vertex As V) : Implements INamedValue
     ''' <remarks>
     ''' 唯一标识符使用的是<see cref="V"/>的ID属性，而不是使用Label生成的
     ''' </remarks> 
-    Friend Property Key As String Implements IKeyedEntity(Of String).Key
+    Public Overridable Property ID As String Implements IKeyedEntity(Of String).Key
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return VertexEdge.EdgeKey(U.ID, V.ID)
+            Return VertexEdge.EdgeKey(U, V)
         End Get
         Set(value As String)
             ' DO Nothing
@@ -98,7 +86,7 @@ Public Class Edge(Of Vertex As V) : Implements INamedValue
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function GetHashCode() As Integer
-        Return Key.GetHashCode
+        Return ID.GetHashCode
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

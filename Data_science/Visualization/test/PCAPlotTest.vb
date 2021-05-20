@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::153dc519bb3c2bc7b4d406924ded6ee9, Data_science\Visualization\test\PCAPlotTest.vb"
+﻿#Region "Microsoft.VisualBasic::a011e1418d73fc8bf940112b6d5bb0d7, Data_science\Visualization\test\PCAPlotTest.vb"
 
     ' Author:
     ' 
@@ -42,12 +42,12 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics.PCA
-Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports Microsoft.VisualBasic.Math.Matrix
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Prcomp
 Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
-Imports Microsoft.VisualBasic.Data.csv.IO
 
 Module PCAPlotTest
 

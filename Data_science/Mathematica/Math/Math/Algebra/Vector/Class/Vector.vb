@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::afbe7a5576ae77967dee4d2f2ee66435, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::509d81320b78a26c1c036b207ce69cbf, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
 
     ' Author:
     ' 
@@ -36,11 +36,15 @@
     '         Properties: [Mod], Data, Inf, IsNumeric, NAN
     '                     Range, SumMagnitude, Unit, Zero
     ' 
-    '         Constructor: (+8 Overloads) Sub New
-    '         Function: Abs, CumSum, DotProduct, Ones, Order
-    '                   Product, rand, ScaleToRange, slice, SumMagnitudes
-    '                   (+2 Overloads) ToString
-    '         Operators: (+4 Overloads) -, (+5 Overloads) *, (+3 Overloads) /, (+2 Overloads) ^, (+4 Overloads) +
+    '         Constructor: (+12 Overloads) Sub New
+    ' 
+    '         Function: Abs, AsSparse, CumSum, DotProduct, Ones
+    '                   Order, Product, (+2 Overloads) rand, ScaleToRange, slice
+    '                   SumMagnitudes, (+2 Overloads) ToString
+    ' 
+    '         Sub: (+3 Overloads) CopyTo
+    ' 
+    '         Operators: (+4 Overloads) -, (+6 Overloads) *, (+3 Overloads) /, (+3 Overloads) ^, (+4 Overloads) +
     '                    <, (+3 Overloads) <=, (+2 Overloads) <>, (+2 Overloads) =, >
     '                    (+3 Overloads) >=, (+2 Overloads) Or, (+2 Overloads) Xor
     ' 
@@ -56,11 +60,12 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports sys = System.Math
 Imports numpy = Microsoft.VisualBasic.Language.Python
+Imports stdNum = System.Math
 
 Namespace LinearAlgebra
 
@@ -158,13 +163,25 @@ Namespace LinearAlgebra
         Public ReadOnly Property SumMagnitude As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return sys.Sqrt(Me.Mod)
+                Return stdNum.Sqrt(Me.Mod)
             End Get
         End Property
 
+        ''' <summary>
+        ''' normalize
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Unit As Vector
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
+                ' function $norm(a: Number[]) {
+                '    return Math.sqrt(a[0] * a[0] + a[1] * a[1]);
+                ' }
+
+                ' function $normalize(a: Number[]) {
+                '    var n = $norm(a);
+                '    return $mult(a, 1 / n);
+                ' }
                 Return Me / SumMagnitude
             End Get
         End Property
@@ -176,11 +193,11 @@ Namespace LinearAlgebra
         Public ReadOnly Property Range As DoubleRange
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return New DoubleRange(Me)
+                Return New DoubleRange(Me.AsEnumerable)
             End Get
         End Property
 
-        Private ReadOnly Property Data As Double() Implements IVector.Data
+        Protected Overridable ReadOnly Property Data As Double() Implements IVector.Data
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return buffer
@@ -204,6 +221,14 @@ Namespace LinearAlgebra
             Call Me.New(0R, m)
         End Sub
 
+        Sub New(f As Double)
+            Call Me.New({f})
+        End Sub
+
+        Sub New(f As Single)
+            Call Me.New({CDbl(f)})
+        End Sub
+
         ''' <summary>
         ''' 创建一个空的向量，包含有零个元素
         ''' </summary>
@@ -219,6 +244,10 @@ Namespace LinearAlgebra
             Call MyBase.New(data)
         End Sub
 
+        ''' <summary>
+        ''' Creates vector with a specific value sequence
+        ''' </summary>
+        ''' <param name="shorts"></param>
         Sub New(shorts As IEnumerable(Of Single))
             Call Me.New(shorts.Select(Function(x) CDbl(x)))
         End Sub
@@ -236,6 +265,10 @@ Namespace LinearAlgebra
             Me.New(VBMath.seq(from, [to], by))
         End Sub
 
+        ''' <summary>
+        ''' Creates vector with a specific value sequence
+        ''' </summary>
+        ''' <param name="integers"></param>
         Sub New(integers As IEnumerable(Of Integer))
             Me.New(integers.Select(Function(n) CDbl(n)))
         End Sub
@@ -253,6 +286,74 @@ Namespace LinearAlgebra
             Next
         End Sub
 
+        ''' <summary>
+        ''' Creates a vector from a specified array starting at a specified index position.
+        ''' </summary>
+        ''' <param name="values">
+        ''' The values to add to the vector, as an array of objects of type T. 
+        ''' The array must contain at least Count elements from the specified 
+        ''' index and only the first Count elements are used.
+        ''' </param>
+        ''' <param name="index">
+        ''' The starting index position from which to create the vector.
+        ''' </param>
+        Sub New(values As Single(), index As Integer)
+            Call Me.New(values.Skip(index).Select(Function(sng) CDbl(sng)))
+        End Sub
+
+        ''' <summary>
+        ''' Creates a vector from a specified array starting at a specified index position.
+        ''' </summary>
+        ''' <param name="values">
+        ''' The values to add to the vector, as an array of objects of type T. 
+        ''' The array must contain at least Count elements from the specified 
+        ''' index and only the first Count elements are used.
+        ''' </param>
+        ''' <param name="index">
+        ''' The starting index position from which to create the vector.
+        ''' </param>
+        Sub New(values As Double(), index As Integer, Optional count As Integer = 8)
+            Call Me.New(values.Skip(index).Take(count))
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function AsSparse() As SparseVector
+            Return New SparseVector(Me)
+        End Function
+
+        ''' <summary>
+        ''' Copies the vector instance to a specified destination array starting at a specified index position.
+        ''' </summary>
+        ''' <param name="destination">The array to receive a copy of the vector values.</param>
+        ''' <param name="startIndex">The starting index in destination at which to begin the copy operation.</param>
+        Public Sub CopyTo(ByRef destination As Double(), startIndex As Integer)
+            For id As Integer = 0 To buffer.Length - 1
+                destination(id + startIndex) = buffer(id)
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' Copies the vector instance to a specified destination array starting at a specified index position.
+        ''' </summary>
+        ''' <param name="destination">The array to receive a copy of the vector values.</param>
+        ''' <param name="startIndex">The starting index in destination at which to begin the copy operation.</param>
+        Public Sub CopyTo(destination As Integer(), startIndex As Integer)
+            For id As Integer = 0 To buffer.Length - 1
+                destination(id + startIndex) = buffer(id)
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' Copies the vector instance to a specified destination array starting at a specified index position.
+        ''' </summary>
+        ''' <param name="destination">The array to receive a copy of the vector values.</param>
+        ''' <param name="startIndex">The starting index in destination at which to begin the copy operation.</param>
+        Public Sub CopyTo(destination As Single(), startIndex As Integer)
+            For id As Integer = 0 To buffer.Length - 1
+                destination(id + startIndex) = buffer(id)
+            Next
+        End Sub
+
 #Region "Operators"
         ''' <summary>
         ''' 两个向量加法算符重载，分量分别相加
@@ -262,14 +363,21 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overloads Shared Operator +(v1 As Vector, v2 As Vector) As Vector
-            Dim N0 As Integer = v1.[Dim] ' 获取变量维数
-            Dim v3 As New Vector(N0)
+            If v1.Length = 1 Then
+                Return v1(Scan0) + v2
+            ElseIf v2.Length = 1 Then
+                Return v1 + v2(Scan0)
+            Else
+                ' 获取变量维数
+                Dim N0 As Integer = v1.[Dim]
+                Dim v3 As New Vector(N0)
 
-            For j As Integer = 0 To N0 - 1
-                v3(j) = v1(j) + v2(j)
-            Next
+                For j As Integer = 0 To N0 - 1
+                    v3(j) = v1(j) + v2(j)
+                Next
 
-            Return v3
+                Return v3
+            End If
         End Operator
 
         ''' <summary>
@@ -289,6 +397,26 @@ Namespace LinearAlgebra
             Return v3
         End Operator
 
+        Public Overloads Shared Operator *(data As IEnumerable(Of Double), x As Vector) As Vector
+            Dim N0 As Integer = x.[Dim]
+            Dim v3 As New Vector(N0)
+            Dim i As Integer = Scan0
+
+            ' 0 * Inf = NaN
+            ' 零乘上任意数应该都是零的?
+            For Each a As Double In data
+                If (a = 0R OrElse x(i) = 0R) Then
+                    v3(i) = 0
+                Else
+                    v3(i) = a * x(i)
+                End If
+
+                i += 1
+            Next
+
+            Return v3
+        End Operator
+
         ''' <summary>
         ''' 向量乘法算符重载，分量分别相乘，相当于MATLAB中的``.*``算符
         ''' </summary>
@@ -297,11 +425,18 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overloads Shared Operator *(v1 As Vector, v2#()) As Vector
-            Dim N0 As Integer = v1.[Dim]        '获取变量维数
+            Dim N0 As Integer = v1.[Dim]
             Dim v3 As New Vector(N0)
 
+            ' 0 * Inf = NaN
+            ' 零乘上任意数应该都是零的?
+
             For j As Integer = 0 To N0 - 1
-                v3(j) = v1(j) * v2(j)
+                If (v1(j) = 0R OrElse v2(j) = 0R) Then
+                    v3(j) = 0
+                Else
+                    v3(j) = v1(j) * v2(j)
+                End If
             Next
 
             Return v3
@@ -439,8 +574,9 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overloads Shared Operator +(a As Double, v1 As Vector) As Vector
-            '向量数加算符重载
-            Dim N0 As Integer = v1.[Dim]        '获取变量维数
+            ' 向量数加算符重载
+            ' 获取变量维数
+            Dim N0 As Integer = v1.[Dim]
             Dim v2 As New Vector(N0)
 
             For j = 0 To N0 - 1
@@ -476,12 +612,13 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overloads Shared Operator *(a As Double, v1 As Vector) As Vector
-            Dim N0 As Integer = v1.[Dim]        '获取变量维数
+            Dim N0 As Integer = v1.[Dim]
             Dim v2 As New Vector(N0)
 
             For j = 0 To N0 - 1
                 v2(j) = v1(j) * a
             Next
+
             Return v2
         End Operator
 
@@ -498,9 +635,9 @@ Namespace LinearAlgebra
             Dim M0 = v2.[Dim]
 
             If N0 <> M0 Then
+                ' 如果向量维数不匹配，给出告警信息
                 Throw New ArgumentException("Inner vector dimensions must agree！")
             End If
-            '如果向量维数不匹配，给出告警信息
 
             Dim sum As Double
 
@@ -517,17 +654,17 @@ Namespace LinearAlgebra
         ''' <param name="v2"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Operator Xor(v1 As Vector, v2 As Vector) As Matrix
+        Public Shared Operator Xor(v1 As Vector, v2 As Vector) As GeneralMatrix
             '获取变量维数
             Dim N0 = v1.[Dim]
             Dim M0 = v2.[Dim]
 
             If N0 <> M0 Then
+                ' 如果向量维数不匹配，给出告警信息
                 Throw New ArgumentException("Inner vector dimensions must agree！")
             End If
-            '如果向量维数不匹配，给出告警信息
 
-            Dim vvmat As New Matrix(N0, N0)
+            Dim vvmat As New GeneralMatrix(N0, N0)
 
             For i As Integer = 0 To N0 - 1
                 For j As Integer = 0 To N0 - 1
@@ -591,19 +728,37 @@ Namespace LinearAlgebra
         End Operator
 
         ''' <summary>
-        ''' Power: <see cref="Math.Pow(Double, Double)"/>
+        ''' Power: <see cref="stdNum.Pow(Double, Double)"/>
         ''' </summary>
         ''' <param name="v"></param>
         ''' <param name="n"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overloads Shared Operator ^(v As Vector, n As Integer) As Vector
+        Public Overloads Shared Operator ^(v As Vector, n As Double) As Vector
             Return New Vector(From d As Double In v Select d ^ n)
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator ^(n As Double, v As Vector) As Vector
             Return New Vector(From p As Double In v Select n ^ p)
+        End Operator
+
+        Public Overloads Shared Operator ^(x As Vector, p As Vector) As Vector
+            Dim N0 = x.[Dim]
+            Dim M0 = p.[Dim]
+
+            If N0 <> M0 Then
+                ' 如果向量维数不匹配，给出告警信息
+                Throw New ArgumentException("Inner vector dimensions must agree！")
+            End If
+
+            Dim v2 As New Vector(N0)
+
+            For j As Integer = 0 To N0 - 1
+                v2(j) = x(j) ^ p(j)
+            Next
+
+            Return v2
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -679,7 +834,7 @@ Namespace LinearAlgebra
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Narrowing Operator CType(v As Vector) As DoubleRange
-            Return New DoubleRange(v)
+            Return New DoubleRange(v.AsEnumerable)
         End Operator
 
         ''' <summary>
@@ -866,6 +1021,11 @@ Namespace LinearAlgebra
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function rand(size%) As Vector
             Return Extensions.rand(size)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function rand(min#, max#, size%) As Vector
+            Return Extensions.rand(size, {min, max})
         End Function
     End Class
 End Namespace

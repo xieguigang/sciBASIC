@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a4243e4879ffde9fa4fc24be8837266, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Path3D.vb"
+﻿#Region "Microsoft.VisualBasic::429f0909b137a8cd1e9ef42c85e2bf27, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Path3D.vb"
 
     ' Author:
     ' 
@@ -33,14 +33,12 @@
 
     '     Class Path3D
     ' 
-    '         Properties: Depth, Points
+    '         Properties: Depth, isDot3D, isLine3D, Points
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: CloserThan, CountCloserThan, Reverse, RotateX, RotateY
-    '                   RotateZ, (+3 Overloads) Scale, ToString, Translate, TranslatePoints
-    ' 
-    '         Sub: Push
+    '         Function: CloserThan, CountCloserThan, Push, Reverse, RotateX
+    '                   RotateY, RotateZ, (+3 Overloads) Scale, ToString, Translate
+    '                   TranslatePoints
     ' 
     ' 
     ' /********************************************************************************/
@@ -48,6 +46,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
+Imports Microsoft.VisualBasic.Imaging.Math2D
 
 Namespace Drawing3D.Models.Isometric
 
@@ -76,6 +75,18 @@ Namespace Drawing3D.Models.Isometric
             End Get
         End Property
 
+        Public ReadOnly Property isLine3D As Boolean
+            Get
+                Return Points.Count = 2
+            End Get
+        End Property
+
+        Public ReadOnly Property isDot3D As Boolean
+            Get
+                Return Points.Count = 1
+            End Get
+        End Property
+
         Public Sub New()
             Points = New List(Of Point3D)
         End Sub
@@ -89,9 +100,10 @@ Namespace Drawing3D.Models.Isometric
             Return $"depth={Depth}, [{pts.JoinBy(" ")}]"
         End Function
 
-        Public Sub Push(point As Point3D)
+        Public Function Push(point As Point3D) As Path3D
             Call Points.Add(point)
-        End Sub
+            Return Me
+        End Function
 
         ''' <summary>
         ''' Returns a new path with the points in reverse order
@@ -103,83 +115,97 @@ Namespace Drawing3D.Models.Isometric
         End Function
 
         Public Function Translate(dx As Double, dy As Double, dz As Double) As Path3D
-            Dim ___points As Point3D() = New Point3D(Me.Points.Count - 1) {}
-            Dim ___point As Point3D
+            Dim points As Point3D() = New Point3D(Me.Points.Count - 1) {}
+            Dim pt As Point3D
 
             For i As Integer = 0 To Me.Points.Count - 1
-                ___point = Me.Points(i)
-                ___points(i) = ___point.Translate(dx, dy, dz)
+                pt = Me.Points(i)
+                points(i) = pt.Translate(dx, dy, dz)
             Next
 
-            Return New Path3D(___points)
+            Return New Path3D(points)
         End Function
 
         Public Function RotateX(origin As Point3D, angle As Double) As Path3D
-            Dim ___points As Point3D() = New Point3D(Me.Points.Count - 1) {}
-            Dim ___point As Point3D
+            Dim points As Point3D() = New Point3D(Me.Points.Count - 1) {}
+            Dim pt As Point3D
+
             For i As Integer = 0 To Me.Points.Count - 1
-                ___point = Me.Points(i)
-                ___points(i) = ___point.RotateX(origin, angle)
-            Next i
-            Return New Path3D(___points)
+                pt = Me.Points(i)
+                points(i) = pt.RotateX(origin, angle)
+            Next
+
+            Return New Path3D(points)
         End Function
 
         Public Function RotateY(origin As Point3D, angle As Double) As Path3D
-            Dim ___points As Point3D() = New Point3D(Me.Points.Count - 1) {}
-            Dim ___point As Point3D
+            Dim points As Point3D() = New Point3D(Me.Points.Count - 1) {}
+            Dim pt As Point3D
+
             For i As Integer = 0 To Me.Points.Count - 1
-                ___point = Me.Points(i)
-                ___points(i) = ___point.RotateY(origin, angle)
-            Next i
-            Return New Path3D(___points)
+                pt = Me.Points(i)
+                points(i) = pt.RotateY(origin, angle)
+            Next
+
+            Return New Path3D(points)
         End Function
 
         Public Function RotateZ(origin As Point3D, angle As Double) As Path3D
-            Dim ___points As Point3D() = New Point3D(Me.Points.Count - 1) {}
-            Dim ___point As Point3D
+            Dim points As Point3D() = New Point3D(Me.Points.Count - 1) {}
+            Dim pt As Point3D
+
             For i As Integer = 0 To Me.Points.Count - 1
-                ___point = Me.Points(i)
-                ___points(i) = ___point.RotateZ(origin, angle)
-            Next i
-            Return New Path3D(___points)
+                pt = Me.Points(i)
+                points(i) = pt.RotateZ(origin, angle)
+            Next
+
+            Return New Path3D(points)
         End Function
 
         Public Function Scale(origin As Point3D, dx As Double, dy As Double, dz As Double) As Path3D
-            Dim ___points As Point3D() = New Point3D(Me.Points.Count - 1) {}
-            Dim ___point As Point3D
+            Dim points As Point3D() = New Point3D(Me.Points.Count - 1) {}
+            Dim pt As Point3D
+
             For i As Integer = 0 To Me.Points.Count - 1
-                ___point = Me.Points(i)
-                ___points(i) = ___point.Scale(origin, dx, dy, dz)
-            Next i
-            Return New Path3D(___points)
+                pt = Me.Points(i)
+                points(i) = pt.Scale(origin, dx, dy, dz)
+            Next
+
+            Return New Path3D(points)
         End Function
 
         Public Function Scale(origin As Point3D, dx As Double, dy As Double) As Path3D
-            Dim ___points As Point3D() = New Point3D(Me.Points.Count - 1) {}
-            Dim ___point As Point3D
+            Dim points As Point3D() = New Point3D(Me.Points.Count - 1) {}
+            Dim pt As Point3D
+
             For i As Integer = 0 To Me.Points.Count - 1
-                ___point = Me.Points(i)
-                ___points(i) = ___point.Scale(origin, dx, dy)
-            Next i
-            Return New Path3D(___points)
+                pt = Me.Points(i)
+                points(i) = pt.Scale(origin, dx, dy)
+            Next
+
+            Return New Path3D(points)
         End Function
 
         Public Function Scale(origin As Point3D, dx As Double) As Path3D
-            Dim ___points As Point3D() = New Point3D(Me.Points.Count - 1) {}
-            Dim ___point As Point3D
+            Dim points As Point3D() = New Point3D(Me.Points.Count - 1) {}
+            Dim pt As Point3D
+
             For i As Integer = 0 To Me.Points.Count - 1
-                ___point = Me.Points(i)
-                ___points(i) = ___point.Scale(origin, dx)
-            Next i
-            Return New Path3D(___points)
+                pt = Me.Points(i)
+                points(i) = pt.Scale(origin, dx)
+            Next
+
+            Return New Path3D(points)
         End Function
 
         Public Function TranslatePoints(dx As Double, dy As Double, dz As Double) As Path3D
-            Dim ___point As Point3D
+            Dim pt As Point3D
+
             For i As Integer = 0 To Me.Points.Count - 1
-                ___point = Me.Points(i)
-                Points(i) = ___point.Translate(dx, dy, dz)
-            Next i
+                pt = Me.Points(i)
+                Points(i) = pt.Translate(dx, dy, dz)
+            Next
+
             Return Me
         End Function
 
@@ -198,6 +224,10 @@ Namespace Drawing3D.Models.Isometric
         ''' <param name="observer"></param>
         ''' <returns></returns>
         Public Function CountCloserThan(pathA As Path3D, observer As Point3D) As Integer
+            If pathA.isLine3D Then
+                Return observer.ptLineDist(pathA.Points(0), pathA.Points(1))
+            End If
+
             Dim AB As Point3D = pathA.Points(0) - pathA.Points(1)
             Dim AC As Point3D = pathA.Points(0) - pathA.Points(2)
             Dim n As Point3D = VectorMath.CrossProduct(AB, AC)
@@ -208,14 +238,14 @@ Namespace Drawing3D.Models.Isometric
             ' Plane defined by pathA such as ax + by + zc = d
             ' Here d = nx*x + ny*y + nz*z = n.OA
             Dim d As Double = n.DotProduct(OA)
-            Dim observerPosition As Double = n.dotProduct(OU) - d
+            Dim observerPosition As Double = n.DotProduct(OU) - d
             Dim result As Integer = 0
             Dim result0 As Integer = 0
             Dim length As Integer = Me.Points.Count
 
             For i As Integer = 0 To length - 1
                 Dim OP As Point3D = Math3D.Transformation.ORIGIN - Me.Points(i)
-                Dim pPosition As Double = n.dotProduct(OP) - d
+                Dim pPosition As Double = n.DotProduct(OP) - d
 
                 ' careful with rounding approximations result += 1
                 If observerPosition * pPosition >= 0.000000001 Then

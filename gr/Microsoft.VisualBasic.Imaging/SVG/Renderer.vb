@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::190be3f62c10744e750cbba41543e644, gr\Microsoft.VisualBasic.Imaging\SVG\Renderer.vb"
+﻿#Region "Microsoft.VisualBasic::50341c7a1f1542ba3fcce4a7689d94e4, gr\Microsoft.VisualBasic.Imaging\SVG\Renderer.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Renderer
     ' 
-    '         Function: DrawImage, PopulateLayers
+    '         Function: DrawImage, PopulateLayers, SVGColorHelper
     ' 
     '         Sub: drawLayer
     ' 
@@ -42,6 +42,7 @@
 
 #End Region
 
+Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
@@ -55,13 +56,31 @@ Namespace SVG
     ''' </summary>
     Public Module Renderer
 
+        <Extension>
+        Public Function SVGColorHelper(br As Brush) As String
+            If br Is Nothing Then
+                ' 透明色
+                Return Nothing
+            ElseIf TypeOf br Is SolidBrush Then
+                Dim color As Color = DirectCast(br, SolidBrush).Color
+
+                If color.IsTransparent Then
+                    Return Nothing
+                Else
+                    Return color.ToHtmlColor
+                End If
+            Else
+                Throw New NotImplementedException
+            End If
+        End Function
+
         ''' <summary>
         ''' Rendering the SVG document as bitmap image.
         ''' </summary>
         ''' <param name="svg"></param>
         ''' <returns></returns>
         Public Function DrawImage(svg As SVGData) As Drawing.Image
-            Using g As Graphics2D = svg.Size.CreateGDIDevice
+            Using g As Graphics2D = svg.Layout.Size.CreateGDIDevice
                 With g
                     Call .Clear(svg.SVG.bg.GetBrush)
                     Call .drawLayer(svg)

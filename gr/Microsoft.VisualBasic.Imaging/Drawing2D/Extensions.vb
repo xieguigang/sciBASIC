@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29998fca55d30893d9820683ab81f4c4, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::792ff8d6706ab708eca69b871618ad73, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: (+3 Overloads) Enlarge, (+4 Overloads) GetTextAnchor, Move, (+2 Overloads) MoveTo, Rotate
+    '         Function: (+5 Overloads) Enlarge, (+4 Overloads) GetTextAnchor, Move, (+2 Overloads) MoveTo, Rotate
     ' 
     '         Sub: ShapeGlow
     '         Enum MoveTypes
@@ -61,10 +61,11 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Extensions
+Imports stdNum = System.Math
 
 Namespace Drawing2D
 
-    Public Module Extensions
+    <HideModuleName> Public Module Extensions
 
         <Extension>
         Public Sub ShapeGlow(ByRef g As IGraphics, path As GraphicsPath, glowColor As Color, Optional glowSize! = 10)
@@ -77,7 +78,7 @@ Namespace Drawing2D
             Next
         End Sub
 
-        Public ReadOnly BlackBrush As [Default](Of  Brush) = Brushes.Black
+        Public ReadOnly BlackBrush As [Default](Of Brush) = Brushes.Black
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
@@ -93,7 +94,7 @@ Namespace Drawing2D
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function GetTextAnchor(label As Label, anchor As PointF) As Point
-            Return label.Rectangle.GetTextAnchor(anchor)
+            Return label.rectangle.GetTextAnchor(anchor)
         End Function
 
         ''' <summary>
@@ -111,9 +112,7 @@ Namespace Drawing2D
 
         Private Function GetTextAnchor(left!, right!, width!, height!, top!, bottom!, anchor As PointF) As Point
             Dim points As Point() = {
-                New Point(left + width / 2, top),        ' top
-                New Point(left, top),                    ' top_left
-                New Point(left + width, top),            ' top_right
+                New Point(left + width / 2, top),        ' top                'New Point(left, top),                    ' top_left                'New Point(left + width, top),            ' top_right
                 New Point(left + width / 3, top),        ' top 1/3
                 New Point(left + width / 3 * 2, top),    ' top 2/3
                 New Point(left + width / 4, top),        ' top 1/4
@@ -123,9 +122,7 @@ Namespace Drawing2D
                 New Point(left + width / 5 * 3, top),    ' top 3/5
                 New Point(left + width / 5 * 4, top),    ' top 4/5
  _
-                New Point(left + width / 2, bottom),     ' bottom,
-                New Point(left, bottom),                 ' bottom_left,
-                New Point(left + width, bottom),         ' bottom_right,
+                New Point(left + width / 2, bottom),     ' bottom,                'New Point(left, bottom),                 ' bottom_left,                'New Point(left + width, bottom),         ' bottom_right,
                 New Point(left + width / 3, bottom),     ' bottom 1/3,
                 New Point(left + width / 3 * 2, bottom), ' bottom 2/3,
                 New Point(left + width / 4, bottom),     ' bottom 1/4,
@@ -140,7 +137,7 @@ Namespace Drawing2D
             }
             Dim d#() = points.Distance(anchor.ToPoint)
 
-            Return points(Which.Min(d))
+            Return points(which.Min(d))
         End Function
 
         ''' <summary>
@@ -160,7 +157,7 @@ Namespace Drawing2D
         <Extension>
         Public Function Enlarge(size As SizeF, fold#) As SizeF
             With size
-                Return New SizeF(.Width * fold, .Height * fold)
+                Return New SizeF(CSng(.Width * fold), CSng(.Height * fold))
             End With
         End Function
 
@@ -175,7 +172,34 @@ Namespace Drawing2D
         ''' <param name="shape">矢量图形的点集合</param>
         ''' <param name="scale#"></param>
         ''' <returns></returns>
-        <Extension> Public Function Enlarge(shape As IEnumerable(Of PointF), scale#) As PointF()
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Enlarge(shape As IEnumerable(Of PointF), scale#) As PointF()
+            Return Enlarge(shape, (scale, scale))
+        End Function
+
+        ''' <summary>
+        ''' 将一个多边形放大指定的倍数<paramref name="scale"/>
+        ''' </summary>
+        ''' <param name="shape">矢量图形的点集合</param>
+        ''' <param name="scale#"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Enlarge(shape As IEnumerable(Of PointF), scale As SizeF) As PointF()
+            Return Enlarge(shape, (scale.Width, scale.Height))
+        End Function
+
+        ''' <summary>
+        ''' 将一个多边形放大指定的倍数<paramref name="scale"/>
+        ''' </summary>
+        ''' <param name="shape">矢量图形的点集合</param>
+        ''' <param name="scale"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Enlarge(shape As IEnumerable(Of PointF), scale As (width#, height#)) As PointF()
             Dim shapeVector = shape.ToArray
             Dim center = shapeVector.Centre
             Dim x As New Vector(shapeVector.Select(Function(pt) pt.X))
@@ -183,10 +207,8 @@ Namespace Drawing2D
             Dim b = x - CDbl(center.X)
             Dim a = y - CDbl(center.Y)
             Dim c = Vector.Sqrt(b ^ 2 + a ^ 2)
-            Dim cs = c * scale
-            Dim dc = cs - c
-            Dim dx = (b / c) * dc
-            Dim dy = (a / c) * dc
+            Dim dx = (b / c) * (c * scale.width - c)
+            Dim dy = (a / c) * (c * scale.height - c)
 
             For i As Integer = 0 To c.Length - 1
                 ' 2018-3-6 如果有个点是位于shape的中心，那么在scale之后c值为零
@@ -219,8 +241,8 @@ Namespace Drawing2D
             Dim vector = shape.ToArray
             Dim x0 As New Vector(vector.Select(Function(pt) pt.X))
             Dim y0 As New Vector(vector.Select(Function(pt) pt.Y))
-            Dim x1 = x0 * Math.Cos(alpha) + y0 * Math.Sin(alpha)
-            Dim y1 = -x0 * Math.Sin(alpha) + y0 * Math.Cos(alpha)
+            Dim x1 = x0 * stdNum.Cos(alpha) + y0 * stdNum.Sin(alpha)
+            Dim y1 = -x0 * stdNum.Sin(alpha) + y0 * stdNum.Cos(alpha)
             Return (x1, y1).Point2D.ToArray
         End Function
 

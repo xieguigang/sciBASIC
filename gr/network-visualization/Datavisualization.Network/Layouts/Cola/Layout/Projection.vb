@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa2864f88625a3d60cdaba934bc9ff39, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\Projection.vb"
+﻿#Region "Microsoft.VisualBasic::60528a094a437ebe34d157b825a0173b, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\Projection.vb"
 
     ' Author:
     ' 
@@ -96,7 +96,7 @@ Namespace Layouts.Cola
                                  v.bounds = New Rectangle2D(v.x - w2, v.x + w2, v.y - h2, v.y + h2)
                              End Sub)
                 computeGroupBounds(rootGroup)
-                Dim i As VBInteger = nodes.Length
+                Dim i As i32 = nodes.Length
                 groups.DoEach(Sub(g)
                                   g.minVar = New IndexedVariable(++i, If(g.stiffness <> 0, g.stiffness, 0.01))
                                   variables(i) = g.minVar

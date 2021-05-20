@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::459b0ade95423c563bef525335e44089, Data_science\Mathematica\Math\DataFittings\Linear\Weighted\WeightedLinearRegression.vb"
+﻿#Region "Microsoft.VisualBasic::2b55fee552b79812914cf2039ae14373, Data_science\Mathematica\Math\DataFittings\Linear\Weighted\WeightedLinearRegression.vb"
 
     ' Author:
     ' 
@@ -41,6 +41,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' ## An Algorithm for Weighted Linear Regression
@@ -170,19 +171,19 @@ Public Module WeightedLinearRegression
             RSS = RSS + W(k) * DY(k) * DY(k)
         Next
         Dim SSQ As Double = RSS / NDF
-        Dim RYSQ = 1 - RSS / TSS
-        Dim FReg = 9999999
+        Dim RYSQ# = 1 - RSS / TSS
+        Dim FReg# = 9999999
         If RYSQ < 0.9999999 Then
             FReg = RYSQ / (1 - RYSQ) * NDF / (N - 1)
         End If
-        Dim SDV = Math.Sqrt(SSQ)
+        Dim SDV = stdNum.Sqrt(SSQ)
 
         ' Calculate var-covar matrix and std error of coefficients
         For i As Integer = 0 To N - 1
             For j As Integer = 0 To N - 1
                 V(i, j) = V(i, j) * SSQ
             Next
-            SEC(i) = Math.Sqrt(V(i, i))
+            SEC(i) = stdNum.Sqrt(V(i, i))
         Next
 
         Return New WeightedFit With {
@@ -194,6 +195,7 @@ Public Module WeightedLinearRegression
                                 .Yfit = Ycalc(i)
                             }
                         End Function) _
+                .Select(Function(p) DirectCast(p, IFitError)) _
                 .ToArray,
             .Polynomial = New Polynomial With {
                 .Factors = C
@@ -208,7 +210,7 @@ Public Module WeightedLinearRegression
     End Function
 
     Public Function SymmetricMatrixInvert(V As Double(,)) As Boolean
-        Dim N As Integer = CInt(Math.Truncate(Math.Sqrt(V.Length)))
+        Dim N As Integer = CInt(stdNum.Truncate(stdNum.Sqrt(V.Length)))
         Dim t As Double() = New Double(N - 1) {}
         Dim Q As Double() = New Double(N - 1) {}
         Dim R As Double() = New Double(N - 1) {}
@@ -223,7 +225,7 @@ Public Module WeightedLinearRegression
         For M = 0 To N - 1
             Dim Big As Double = 0
             For L = 0 To N - 1
-                AB = Math.Abs(V(L, L))
+                AB = stdNum.Abs(V(L, L))
                 If (AB > Big) AndAlso (R(L) <> 0) Then
                     Big = AB
                     K = L

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2254adf665c6b2fb6e8828c0f0d87d7, Data\BinaryData\BinaryData\BitSet.vb"
+﻿#Region "Microsoft.VisualBasic::5b72a20dba4f681b752abf8be400171d, Data\BinaryData\BinaryData\BitSet.vb"
 
     ' Author:
     ' 
@@ -61,6 +61,7 @@ Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' A replacement for BitArray.(BitSet in java)
@@ -89,7 +90,7 @@ Public Class BitSet
             If Value > Me._length Then
                 Extend(Value - Me._length)
             Else
-                Me._length = Math.Max(0, Value)
+                Me._length = stdNum.Max(0, Value)
             End If
         End Set
     End Property
@@ -232,7 +233,7 @@ Public Class BitSet
     End Sub
 
     Private Sub InitializeFrom(bits As ICollection(Of Boolean))
-        Dim index As VBInteger = 0
+        Dim index As i32 = 0
 
         Me._length = bits.Count
         Me.bits = New UInt32(RequiredSize(Me._length) - 1) {}
@@ -631,7 +632,7 @@ Public Class BitSet
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Operator >>(a As BitSet, shift As Integer) As BitSet
-        Return New BitSet(a.ToArray().Take(Math.Max(0, a.Count - shift)).ToArray())
+        Return New BitSet(a.ToArray().Take(stdNum.Max(0, a.Count - shift)).ToArray())
     End Operator
 
     Public Shared Operator =(a As BitSet, b As BitSet) As Boolean

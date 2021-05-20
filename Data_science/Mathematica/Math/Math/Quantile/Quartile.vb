@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::680e837f277a99dab6b3b35d38c75cda, Data_science\Mathematica\Math\Math\Quantile\Quartile.vb"
+﻿#Region "Microsoft.VisualBasic::8a892fc0c925cb172abe78a800d56823, Data_science\Mathematica\Math\Math\Quantile\Quartile.vb"
 
     ' Author:
     ' 
@@ -41,8 +41,8 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports stdNum = System.Math
 
 Namespace Quantile
 
@@ -77,12 +77,12 @@ Namespace Quantile
                 q = (n + 1) * {0.25, 0.5, 0.75}.AsVector
             End If
 
-            Dim q1 = vector(Math.Truncate(q(0)))
-            Dim q2 = vector.ElementAtOrDefault(Math.Truncate(q(1)), vector.Last)
-            Dim q3 = vector.ElementAtOrDefault(Math.Truncate(q(2)), vector.Last)
+            Dim q1 = vector(stdNum.Truncate(q(0)))
+            Dim q2 = vector.ElementAtOrDefault(stdNum.Truncate(q(1)), vector.Last)
+            Dim q3 = vector.ElementAtOrDefault(stdNum.Truncate(q(2)), vector.Last)
             Dim IQR = q3 - q1
 
-            Return New DataQuartile(q1, q2, q3, IQR, New DoubleRange(vector))
+            Return New DataQuartile(q1, q2, q3, IQR, vector)
         End Function
 
         ''' <summary>

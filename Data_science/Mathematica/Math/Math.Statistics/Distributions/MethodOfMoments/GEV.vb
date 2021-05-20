@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::abc8e216ea06dd6cbdc83b53189506ff, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\GEV.vb"
+﻿#Region "Microsoft.VisualBasic::a44ed6387d2d0ee2994a535ede7ec810, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\GEV.vb"
 
     ' Author:
     ' 
@@ -42,8 +42,7 @@
 
 #End Region
 
-Imports System
-Imports System.Collections.Generic
+Imports stdNum = System.Math
 
 '
 ' * To change this license header, choose License Headers in Project Properties.
@@ -91,27 +90,27 @@ Namespace Distributions.MethodOfMoments
         Public Overrides Function GetCDF(value As Double) As Double
             If _Xi > 0 AndAlso value <= _Mu - _Sigma / _Xi Then Return 0
             If _Xi < 0 AndAlso value >= _Mu - _Sigma / _Xi Then Return 1
-            Return Math.Exp(-T(value))
+            Return stdNum.Exp(-T(value))
         End Function
 
         Public Overrides Function GetPDF(value As Double) As Double
             If _Xi > 0 AndAlso value <= _Mu - _Sigma / _Xi Then Return 0
             If _Xi < 0 AndAlso value >= _Mu - _Sigma / _Xi Then Return 0
             Dim tx As Double = T(value)
-            Return (1 / _Sigma) * Math.Pow(tx, _Xi + 1) * Math.Exp(-tx)
+            Return (1 / _Sigma) * stdNum.Pow(tx, _Xi + 1) * stdNum.Exp(-tx)
         End Function
         Private Function T(x As Double) As Double
             If _Xi <> 0 Then
-                Return Math.Pow((1 + ((x - _Mu) / _Sigma) * _Xi), -1 / _Xi)
+                Return stdNum.Pow((1 + ((x - _Mu) / _Sigma) * _Xi), -1 / _Xi)
             Else
-                Return Math.Exp(-(x - _Mu) / _Sigma)
+                Return stdNum.Exp(-(x - _Mu) / _Sigma)
             End If
         End Function
         Private Function Tinv(probability As Double) As Double
             If _Xi <> 0 Then
-                Return _Mu - _Sigma * (Math.Pow(Math.Log(1 / probability), _Xi) - 1) / _Xi
+                Return _Mu - _Sigma * (stdNum.Pow(stdNum.Log(1 / probability), _Xi) - 1) / _Xi
             Else
-                Return _Mu - _Sigma * Math.Log(Math.Log(1 / probability))
+                Return _Mu - _Sigma * stdNum.Log(stdNum.Log(1 / probability))
             End If
         End Function
         Public Overrides Iterator Function Validate() As IEnumerable(Of Exception)

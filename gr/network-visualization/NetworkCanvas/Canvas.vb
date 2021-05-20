@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a3f6fb328b6ff3e360418f6dba7a8b5, gr\network-visualization\NetworkCanvas\Canvas.vb"
+﻿#Region "Microsoft.VisualBasic::97e4d6dc1231e966f57a687046f1e567, gr\network-visualization\NetworkCanvas\Canvas.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,8 @@
     '     Properties: AutoRotate, DynamicsRadius, FdgArgs, Graph, ShowLabel
     '                 ViewDistance
     ' 
-    '     Sub: [Stop], __invokePaint, __invokeSet, __physicsUpdates, Canvas_Disposed
-    '          Canvas_Load, Canvas_Paint, Run, SetFDGParams, SetRotate
+    '     Sub: [Stop], Canvas_Disposed, Canvas_Load, Canvas_Paint, doPaint
+    '          doPhysicsUpdates, Run, SetFDGParams, SetRotate, setupGraph
     '          WriteLayout
     ' 
     ' /********************************************************************************/
@@ -45,9 +45,10 @@
 #End Region
 
 Imports System.ComponentModel
+Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Interfaces
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce.Interfaces
 Imports Microsoft.VisualBasic.Parallel.Tasks
 
 ''' <summary>
@@ -63,18 +64,13 @@ Public Class Canvas
     Public Property Graph(Optional space3D As Boolean = False) As NetworkGraph
         Get
             If net Is Nothing Then
-                Call __invokeSet(New NetworkGraph, Me.space3D)
+                Call setupGraph(New NetworkGraph, Me.space3D)
             End If
 
             Return net
         End Get
         Set(value As NetworkGraph)
-            Me.space3D = space3D
-
-            __invokeSet(value, Me.space3D)
-#If DEBUG Then
-            ' Call value.GetJson(True).__DEBUG_ECHO
-#End If
+            Call setupGraph(value, space3D)
         End Set
     End Property
 
@@ -83,10 +79,11 @@ Public Class Canvas
     ''' </summary>
     Dim space3D As Boolean
 
-    Private Sub __invokeSet(g As NetworkGraph, space As Boolean)
+    Private Sub setupGraph(net As NetworkGraph, space As Boolean)
         Dim showLabel As Boolean = Me.ShowLabel
 
-        net = g
+        Me.net = net
+        Me.space3D = space3D
 
         If Not inputs Is Nothing Then
             Call inputs.Dispose()
@@ -95,14 +92,14 @@ Public Class Canvas
         End If
 
         If space Then
-            fdgPhysics = New ForceDirected3D(net, FdgArgs.Stiffness, FdgArgs.Repulsion, FdgArgs.Damping)
+            fdgPhysics = New ForceDirected3D(Me.net, FdgArgs.Stiffness, FdgArgs.Repulsion, FdgArgs.Damping)
             fdgRenderer = New Renderer3D(
                 Function() paper,
                 Function() New Rectangle(New Point, Size),
                 fdgPhysics, DynamicsRadius)
             inputs = New Input3D(Me)
         Else
-            fdgPhysics = New ForceDirected2D(net, FdgArgs.Stiffness, FdgArgs.Repulsion, FdgArgs.Damping)
+            fdgPhysics = New ForceDirected2D(Me.net, FdgArgs.Stiffness, FdgArgs.Repulsion, FdgArgs.Damping)
             fdgRenderer = New Renderer(
                 Function() paper,
                 Function() New Rectangle(New Point, Size),
@@ -144,8 +141,8 @@ Public Class Canvas
     ''' <summary>
     ''' The graphics updates thread.
     ''' </summary>
-    Protected Friend timer As New UpdateThread(30, AddressOf __invokePaint)
-    Protected Friend physicsEngine As New UpdateThread(30, AddressOf __physicsUpdates)
+    Protected Friend timer As New UpdateThread(30, AddressOf doPaint)
+    Protected Friend physicsEngine As New UpdateThread(30, AddressOf doPhysicsUpdates)
     ''' <summary>
     ''' The graphics rendering provider
     ''' </summary>
@@ -186,7 +183,7 @@ Public Class Canvas
         End Set
     End Property
 
-    Private Sub __invokePaint()
+    Private Sub doPaint()
         On Error Resume Next
 
         Call Me.Invoke(Sub() Call Invalidate())
@@ -198,7 +195,7 @@ Public Class Canvas
         End If
     End Sub
 
-    Private Sub __physicsUpdates()
+    Private Sub doPhysicsUpdates()
         SyncLock fdgRenderer
             If Not fdgRenderer Is Nothing Then
                 Call fdgRenderer.PhysicsEngine.Calculate(0.05F)
@@ -208,8 +205,8 @@ Public Class Canvas
 
     Private Sub Canvas_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
         paper = e.Graphics
-        paper.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
-        paper.SmoothingMode = Drawing2D.SmoothingMode.HighQuality
+        paper.CompositingQuality = CompositingQuality.HighQuality
+        paper.SmoothingMode = SmoothingMode.HighQuality
 
         Call fdgRenderer.Draw(0.05F, physicsUpdate:=False)
     End Sub
@@ -217,7 +214,9 @@ Public Class Canvas
     Dim inputs As InputDevice
 
     Private Sub Canvas_Load(sender As Object, e As EventArgs) Handles Me.Load
-        If Graph Is Nothing Then  ' 假若在load之间已经加载graph数据则在这里会清除掉先前的数据，所以需要判断一下
+        If Graph Is Nothing Then
+            ' 假若在load之前已经加载graph数据则在这里会清除掉先前的数据
+            ' 所以需要判断一下
             Graph = New NetworkGraph
         End If
 

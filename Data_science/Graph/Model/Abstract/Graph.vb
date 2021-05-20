@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2c1bc943e6c3d5ba74d3e3fdb4b61c9, Data_science\Graph\Model\Abstract\Graph.vb"
+﻿#Region "Microsoft.VisualBasic::27557ea3fb20ccfa42ca228fc5bec2ae, Data_science\Graph\Model\Abstract\Graph.vb"
 
     ' Author:
     ' 
@@ -33,14 +33,10 @@
 
     ' Class Graph
     ' 
-    '     Properties: Size, Vertex
+    '     Properties: graphEdges, size, vertex
     ' 
     '     Function: (+3 Overloads) AddEdge, AddEdges, (+2 Overloads) AddVertex, CreateEdge, (+3 Overloads) Delete
     '               ExistEdge, ExistVertex, GetConnectedVertex, GetEnumerator, IEnumerable_GetEnumerator
-    ' 
-    ' Class Graph
-    ' 
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -73,6 +69,10 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
     ''' + <see cref="buffer"/>使用<see cref="TV.ID"/>来建立指针的索引
     ''' </summary>
     Protected vertices As New Dictionary(Of V)
+
+    ''' <summary>
+    ''' Visit nodes directly by index number
+    ''' </summary>
     Protected Friend buffer As New HashList(Of V)
 #End Region
 
@@ -80,7 +80,7 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
     ''' ``[numof(vertex), numof(edges)]``
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property Size As (Vertex%, Edges%)
+    Public ReadOnly Property size As (vertex%, edges%)
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return (vertices.Count, edges.Count)
@@ -88,13 +88,26 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
     End Property
 
     ''' <summary>
-    ''' 这个图之中的所有的节点的集合
+    ''' 这个图之中的所有的节点的集合. 请注意，这个只读属性是一个枚举集合，
+    ''' 所以为了减少性能上的损失，不可以过多的使用下标来访问集合元素
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property Vertex As V()
+    Public ReadOnly Property vertex As IEnumerable(Of V)
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return buffer
+            Return vertices.Values
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' 获取得到这个图中的所有的节点的边的集合，请注意，这个只读属性是一个枚举集合，
+    ''' 所以为了减少性能上的损失，不可以过多的使用下标来访问集合元素
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property graphEdges As IEnumerable(Of Edge)
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return edges.Values
         End Get
     End Property
 
@@ -113,15 +126,24 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
 
     ''' <summary>
     ''' <see cref="TV.Label"/> should contains its index value before this method was called.
+    ''' (如果已经存在目标ID的节点，则无操作)
     ''' </summary>
     ''' <param name="u"></param>
     ''' <returns></returns>
     Public Function AddVertex(u As V) As G
-        vertices += u
-        buffer.Add(u)
+        If Not vertices.Have(u) Then
+            vertices += u
+            buffer.Add(u)
+        End If
+
         Return Me
     End Function
 
+    ''' <summary>
+    ''' 通过<see cref="TV.label"/>作为主键进行查询目标节点是否存在于当前的图对象之中
+    ''' </summary>
+    ''' <param name="name"><see cref="TV.label"/></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function ExistVertex(name$) As Boolean
         Return vertices.ContainsKey(name)
@@ -129,7 +151,7 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function ExistEdge(edge As Edge) As Boolean
-        Return edges.ContainsKey(edge.Key)
+        Return edges.ContainsKey(edge.ID)
     End Function
 
     ''' <summary>
@@ -156,7 +178,7 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
         edges += New Edge With {
             .U = u,
             .V = v,
-            .Weight = weight
+            .weight = weight
         }
         If Not vertices.ContainsKey(u.Label) Then
             vertices += u
@@ -197,7 +219,7 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
         edges += New Edge With {
             .U = buffer(i),
             .V = buffer(j),
-            .Weight = weight
+            .weight = weight
         }
 
         Return Me
@@ -227,7 +249,7 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
         Return New Edge With {
             .U = vertices(u),
             .V = vertices(v),
-            .Weight = weight
+            .weight = weight
         }
     End Function
 
@@ -272,13 +294,4 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
     Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
         Yield GetEnumerator()
     End Function
-End Class
-
-''' <summary>
-''' A graph ``G = (V, E)`` consists of a set V of vertices and a set E edges, that is, unordered
-''' pairs Of vertices. Unless explicitly stated otherwise, we assume that the graph Is simple,
-''' that Is, it has no multiple edges And no self-loops.
-''' </summary>
-Public Class Graph : Inherits Graph(Of TV, VertexEdge, Graph)
-
 End Class

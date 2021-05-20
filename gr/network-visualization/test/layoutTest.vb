@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d710e6044e5c25244c41d69228fd498a, gr\network-visualization\test\layoutTest.vb"
+﻿#Region "Microsoft.VisualBasic::9728a83c5c5a63bfb62f215976e9126a, gr\network-visualization\test\layoutTest.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     ' 
     '         Function: ToString
     ' 
-    '     Class node
+    '     Class node2
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
@@ -73,20 +73,20 @@ Public Module layoutTest
 
         Call Randomize()
 
-        Dim V As New List(Of node)
+        Dim V As New List(Of node2)
         Dim E As New List(Of edge)
 
-        V.Add(New node With {.ID = 1, .Point = {100, 100}})
-        V.Add(New node With {.ID = 2, .Point = {-100, -100}})
-        V.Add(New node With {.ID = 3, .Point = {100, -100}})
-        V.Add(New node With {.ID = 4})
-        V.Add(New node With {.ID = 5})
-        V.Add(New node With {.ID = 6})
-        V.Add(New node With {.ID = 7})
-        V.Add(New node With {.ID = 8})
-        V.Add(New node With {.ID = 9})
-        V.Add(New node With {.ID = 10})
-        V.Add(New node With {.ID = 11})
+        V.Add(New node2 With {.ID = 1, .Point = {100, 100}})
+        V.Add(New node2 With {.ID = 2, .Point = {-100, -100}})
+        V.Add(New node2 With {.ID = 3, .Point = {100, -100}})
+        V.Add(New node2 With {.ID = 4})
+        V.Add(New node2 With {.ID = 5})
+        V.Add(New node2 With {.ID = 6})
+        V.Add(New node2 With {.ID = 7})
+        V.Add(New node2 With {.ID = 8})
+        V.Add(New node2 With {.ID = 9})
+        V.Add(New node2 With {.ID = 10})
+        V.Add(New node2 With {.ID = 11})
 
         Dim add = Sub(a%, b%)
                       E.Add(New edge With {.u = V(a - 1), .v = V(b - 1)})
@@ -112,10 +112,10 @@ Public Module layoutTest
         Pause()
     End Sub
 
-    Public Sub SpringG(V As node(), E As edge())
+    Public Sub SpringG(V As node2(), E As edge())
         Dim force As New Dictionary(Of String, List(Of Force))
 
-        For Each X As node In V
+        For Each X As node2 In V
             force.Add(X.ID, New List(Of Force))
         Next
 
@@ -137,7 +137,7 @@ Public Module layoutTest
                     Dim cl = Math.CoulombsLaw(a, b)
 
 
-                    cl.Strength *= 50
+                    cl.strength *= 50
 
                     ' 斥力部分只需要添加一个就行了
                     ' 因为这两个嵌套的for循环会出现 a-b b-a 这两种刚好互补的情况
@@ -153,7 +153,7 @@ Public Module layoutTest
                 Dim d = a.Point - b.Point
                 Dim springF = spring(d.SumMagnitude)
                 Dim f = Math.AttractiveForce(springF, a.Point, b.Point)
-                f.Strength /= 15
+                f.strength /= 15
                 force(a.ID).Add(f)  ' 对一个是正向力，对另外一个节点就刚好反过来才会使正向力
                 force(b.ID).Add(-f)
             Next
@@ -195,7 +195,7 @@ Public Module layoutTest
 
                 For Each u In V
                     Dim F = force(u.ID).Sum
-                    F.Strength /= 10
+                    F.strength /= 10
 
                     u += F
                     u.Displacement()
@@ -232,14 +232,14 @@ Public Module layoutTest
     End Function
 
     Class edge
-        Public u, v As node
+        Public u, v As node2
 
         Public Overrides Function ToString() As String
             Return u.ID & ", " & v.ID
         End Function
     End Class
 
-    Public Class node : Inherits MassPoint
+    Public Class node2 : Inherits MassPoint
 
         Sub New()
             Point = New Vector(shorts:={Rnd() * 1000, Rnd() * 1000})

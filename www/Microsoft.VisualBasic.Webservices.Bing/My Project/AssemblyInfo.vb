@@ -8,12 +8,12 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("Microsoft Webservices Bing Search Provider for VisualBasic")> 
-<Assembly: AssemblyDescription("Microsoft Webservices Bing Search Provider for VisualBasic")> 
-<Assembly: AssemblyCompany("Microsoft")> 
-<Assembly: AssemblyProduct("cn.bing.com")> 
-<Assembly: AssemblyCopyright("Copyright © Microsoft 2014")>
-<Assembly: AssemblyTrademark("Microsoft VisualBasic")>
+<Assembly: AssemblyTitle("KnowledgeBase module based on Microsoft Bing Search Provider and DOI system")> 
+<Assembly: AssemblyDescription("KnowledgeBase module based on Microsoft Bing Search Provider and DOI system")> 
+<Assembly: AssemblyCompany("")> 
+<Assembly: AssemblyProduct("")> 
+<Assembly: AssemblyCopyright("Copyright © sciBASIC 2019")>
+<Assembly: AssemblyTrademark("sciBASIC.NET")>
 
 <Assembly: ComVisible(False)>
 

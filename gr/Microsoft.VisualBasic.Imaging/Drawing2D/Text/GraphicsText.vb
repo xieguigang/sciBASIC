@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71f0c7da75da7357f9320bfae023350a, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\GraphicsText.vb"
+﻿#Region "Microsoft.VisualBasic::0be4d04e72a1e68f972a893b204df551, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\GraphicsText.vb"
 
     ' Author:
     ' 
@@ -46,6 +46,7 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports Microsoft.VisualBasic.Language.Default
 
 Namespace Drawing2D.Text
 
@@ -55,7 +56,8 @@ Namespace Drawing2D.Text
     ''' <remarks>http://www.xuebuyuan.com/1613072.html</remarks>
     Public Class GraphicsText
 
-        Dim g As Graphics
+        ReadOnly g As Graphics
+        ReadOnly defaultFormat As New [Default](Of StringFormat)(Function() New StringFormat, isLazy:=False)
 
         Public Sub New(g As Graphics)
             Me.g = g
@@ -97,12 +99,8 @@ Namespace Drawing2D.Text
         ''' <param name="format">布局方式</param>
         ''' <param name="angle">角度</param>
         Public Sub DrawString(s$, font As Font, brush As Brush, point As PointF, angle!, Optional format As StringFormat = Nothing)
-            If format Is Nothing Then
-                format = New StringFormat
-            End If
-
             SyncLock g
-                Call DrawStringInternal(s, font, brush, point, format, angle)
+                Call DrawStringInternal(s, font, brush, point, format Or defaultFormat, angle)
             End SyncLock
         End Sub
 
@@ -162,8 +160,7 @@ Namespace Drawing2D.Text
                 End If
             Next
 
-            Dim result As New SizeF(right - left, bottom - top)
-            Return result
+            Return New SizeF(right - left, bottom - top)
         End Function
 
         Private Function GetRotatePoint(size As SizeF, layoutRectangle As RectangleF, format As StringFormat) As PointF
@@ -172,29 +169,21 @@ Namespace Drawing2D.Text
             Select Case format.Alignment
                 Case StringAlignment.Near
                     x = layoutRectangle.Left + size.Width / 2.0F
-
                 Case StringAlignment.Center
                     x = (layoutRectangle.Left + layoutRectangle.Right) / 2.0F
-
                 Case StringAlignment.Far
                     x = layoutRectangle.Right - size.Width / 2.0F
-
                 Case Else
-
             End Select
 
             Select Case format.LineAlignment
                 Case StringAlignment.Near
                     y = layoutRectangle.Top + size.Height / 2.0F
-
                 Case StringAlignment.Center
                     y = (layoutRectangle.Top + layoutRectangle.Bottom) / 2.0F
-
                 Case StringAlignment.Far
                     y = layoutRectangle.Bottom - size.Height / 2.0F
-
                 Case Else
-
             End Select
 
             Return New PointF(x, y)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38a10d3ed253e9bc1ec4971674a64c07, gr\physics\Force.vb"
+﻿#Region "Microsoft.VisualBasic::ff12c433a4da43a5deb6338e381a4ef2, gr\physics\Force.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Class Force
     ' 
-    '     Properties: Angle, source, Strength
+    '     Properties: angle, source, strength
     ' 
     '     Constructor: (+2 Overloads) Sub New
     ' 
@@ -61,51 +61,51 @@ Public Class Force
     ''' 力的大小
     ''' </summary>
     ''' <returns></returns>
-    Public Property Strength As Double
+    Public Property strength As Double
     ''' <summary>
     ''' 力的方向，与水平的夹角，使用弧度
     ''' </summary>
     ''' <returns></returns>
-    Public Property Angle As Double
+    Public Property angle As Double
     Public Property source As String
 
     Sub New()
     End Sub
 
     Sub New(F#, angle#, <CallerMemberName> Optional trace$ = Nothing)
-        Strength = F#
-        _Angle = angle
-        source = trace
+        Me.strength = F#
+        Me.angle = angle
+        Me.source = trace
     End Sub
 
     Public Sub void()
-        Strength = 0
-        Angle = 0
+        strength = 0
+        angle = 0
     End Sub
 
     Public Overrides Function ToString() As String
-        Dim d$ = Angle.ToDegrees.ToString("F2")
-        Return $"a={d}, {Strength.ToString("F2")}N [{source}]"
+        Dim d$ = angle.ToDegrees.ToString("F2")
+        Return $"a={d}, {strength.ToString("F2")}N [{source}]"
     End Function
 
     Public Shared Operator ^(f As Force, n As Double) As Double
-        Return f.Strength ^ n
+        Return f.strength ^ n
     End Operator
 
     Public Shared Operator *(x As Double, f As Force) As Double
-        Return x * f.Strength
+        Return x * f.strength
     End Operator
 
     Public Shared Operator *(x As Integer, f As Force) As Double
-        Return x * f.Strength
+        Return x * f.strength
     End Operator
 
     Public Shared Operator =(f As Force, strength#) As Boolean
-        Return f.Strength = strength
+        Return f.strength = strength
     End Operator
 
     Public Shared Operator =(f As Force, strength%) As Boolean
-        Return Abs(f.Strength - strength) <= 0.0001
+        Return Abs(f.strength - strength) <= 0.0001
     End Operator
 
     Public Shared Operator <>(f As Force, strength#) As Boolean
@@ -117,19 +117,19 @@ Public Class Force
     End Operator
 
     Public Shared Operator >(strength#, f As Force) As Boolean
-        Return strength > f.Strength
+        Return strength > f.strength
     End Operator
 
     Public Shared Operator <(strength#, f As Force) As Boolean
-        Return strength < f.Strength
+        Return strength < f.strength
     End Operator
 
     Public Shared Operator >(f1 As Force, f2 As Force) As Boolean
-        Return f1.Strength > f2.Strength
+        Return f1.strength > f2.strength
     End Operator
 
     Public Shared Operator <(f1 As Force, f2 As Force) As Boolean
-        Return f1.Strength < f2.Strength
+        Return f1.strength < f2.strength
     End Operator
 
     ''' <summary>
@@ -139,8 +139,8 @@ Public Class Force
     ''' <returns></returns>
     Public Shared Operator -(f As Force) As Force
         Return New Force With {
-            .Strength = f.Strength,
-            .Angle = f.Angle + PI,
+            .strength = f.strength,
+            .angle = f.angle + PI,
             .source = $"Reverse({f.source})"
         }
     End Operator

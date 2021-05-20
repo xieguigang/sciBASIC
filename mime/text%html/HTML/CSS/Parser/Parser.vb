@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e3a1455120a175a404ad84bc1c456ea, mime\text%html\HTML\CSS\Parser\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::6ebb31d127939fa936be34556a318589, mime\text%html\HTML\CSS\Parser\Parser.vb"
 
     ' Author:
     ' 
@@ -44,8 +44,8 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.Default
 Imports r = System.Text.RegularExpressions.Regex
 
 Namespace HTML.CSS.Parser
@@ -62,6 +62,12 @@ Namespace HTML.CSS.Parser
     ''' </remarks>
     Public Module CssParser
 
+        ''' <summary>
+        ''' 创建元素选择器表达式
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function BuildSelector(name$, type As CSSSelectorTypes) As String
             Select Case type
@@ -93,8 +99,8 @@ Namespace HTML.CSS.Parser
         ''' <returns></returns>
         Public Function GetTagWithCSS(CSS$, Optional selectorFilter$ = Nothing) As CSSFile
             Dim tagWithCSSList As New List(Of Selector)
-            Dim IndivisualTag As List(Of String) = IndivisualTags(CSS)
-            Dim filter As Assert(Of String)
+            Dim IndivisualTag As List(Of String) = IndivisualTags(CSS.SolveStream)
+            Dim filter As Predicate(Of String)
 
             If selectorFilter.StringEmpty Then
                 filter = Function() True

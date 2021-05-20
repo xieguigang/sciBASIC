@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a8c811978f9fe448d038f7545a375510, Data\DataFrame\IO\csv\StreamIO.vb"
+﻿#Region "Microsoft.VisualBasic::56378f327bcbeef9a21514905e71b245, Data\DataFrame\IO\csv\StreamIO.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module StreamIO
     ' 
-    '         Function: (+2 Overloads) [TypeOf], SaveDataFrame
+    '         Function: (+2 Overloads) [TypeOf], (+2 Overloads) SaveDataFrame
     ' 
     ' 
     ' /********************************************************************************/
@@ -71,11 +71,12 @@ Namespace IO
         ''' </summary>
         ''' <param name="header"></param>
         ''' <param name="types">A candidate type list</param>
-        ''' <returns></returns>
-        ''' 
+        ''' <returns>
+        ''' 一个也都没有匹配上, 则这个函数会返回空值
+        ''' </returns>
         <Extension>
         Public Function [TypeOf](header As RowObject, ParamArray types As Type()) As Type
-            Dim scores As New List(Of (Type, Integer))
+            Dim scores As New List(Of (Type, Integer, Integer))
             Dim headers As New Index(Of String)(header)
 
             For Each schema In types.Select(AddressOf SchemaProvider.CreateObjectInternal)
@@ -87,16 +88,21 @@ Namespace IO
                               Where headers.IndexOf(p) > -1
                               Into Sum(1)
 
-                scores += (schema.DeclaringType, matches)
+                scores += (schema.DeclaringType, matches, allNames.Length)
             Next
 
-            Dim desc = From score As (type As Type, score%)
+            Dim desc = From score As (type As Type, score%, allNames%)
                        In scores
-                       Select type = score.Item1, Value = score.Item2
+                       Select type = score.Item1, Value = score.Item2 / score.Item3
                        Order By Value Descending
-            Dim target As Type = desc.FirstOrDefault?.type
+            Dim topFirst = desc.FirstOrDefault
 
-            Return target
+            If topFirst.Value <= 0 Then
+                ' 零分表示一个属性都没有匹配上
+                Return Nothing
+            Else
+                Return topFirst.type
+            End If
         End Function
 
         Const NullLocationRef$ = "Sorry, the ``path`` reference to a null location!"
@@ -112,22 +118,38 @@ Namespace IO
         Public Function SaveDataFrame(csv As IEnumerable(Of RowObject),
                                       Optional path$ = "",
                                       Optional encoding As Encoding = Nothing,
-                                      Optional tsv As Boolean = False) As Boolean
-
-            Dim stopwatch As Stopwatch = Stopwatch.StartNew
-            Dim del$ = ","c Or ASCII.TAB.AsDefault(Function() tsv)
-
+                                      Optional tsv As Boolean = False,
+                                      Optional silent As Boolean = False) As Boolean
             If path.StringEmpty Then
                 Throw New NullReferenceException(NullLocationRef)
+            Else
+                Return csv.SaveDataFrame(path.Open(FileMode.OpenOrCreate, doClear:=True), encoding, tsv, silent)
             End If
+        End Function
 
-            Using out As StreamWriter = path.OpenWriter(encoding Or UTF8)
+        ''' <summary>
+        ''' Save this csv document into a specific <paramref name="file"/> stream
+        ''' </summary>
+        ''' <remarks>当目标保存路径不存在的时候，会自动创建文件夹</remarks>
+        <Extension>
+        Public Function SaveDataFrame(csv As IEnumerable(Of RowObject),
+                                      file As Stream,
+                                      Optional encoding As Encoding = Nothing,
+                                      Optional tsv As Boolean = False,
+                                      Optional silent As Boolean = False) As Boolean
+
+            Dim stopwatch As Stopwatch = Stopwatch.StartNew
+            Dim del As Char = ","c Or ASCII.TAB.AsDefault(Function() tsv)
+
+            Using out As New StreamWriter(file, encoding Or UTF8)
                 For Each line$ In csv.Select(Function(r) r.AsLine(del))
                     Call out.WriteLine(line)
                 Next
             End Using
 
-            Call $"Generate csv file document using time {stopwatch.ElapsedMilliseconds} ms.".__INFO_ECHO
+            If Not silent Then
+                Call $"Generate csv file document using time {stopwatch.ElapsedMilliseconds} ms.".__INFO_ECHO
+            End If
 
             Return True
         End Function

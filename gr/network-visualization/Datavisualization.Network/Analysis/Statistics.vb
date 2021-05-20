@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b64257dc60d51537a40699dcda33a4a3, gr\network-visualization\Datavisualization.Network\Analysis\Statistics.vb"
+﻿#Region "Microsoft.VisualBasic::45c2219496530e8e675231fb11c6e4de, gr\network-visualization\Datavisualization.Network\Analysis\Statistics.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Statistics
     ' 
-    '         Function: AnalysisDegrees, ComputeDegreeData, (+2 Overloads) ComputeNodeDegrees, GetDegrees, NodesGroupCount
+    '         Function: BetweennessCentrality, ComputeBetweennessCentrality, ComputeDegreeData, ComputeNodeDegrees, ConnectedDegrees
     '                   Sum
     ' 
     ' 
@@ -42,184 +42,126 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
+Imports Microsoft.VisualBasic.Data.GraphTheory.Analysis
+Imports Microsoft.VisualBasic.Data.GraphTheory.Analysis.Dijkstra
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
 Imports Microsoft.VisualBasic.Linq
-Imports names = Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic.NameOf
-Imports NetGraph = Microsoft.VisualBasic.Data.visualize.Network.FileStream.NetworkTables
+Imports GraphNetwork = Microsoft.VisualBasic.Data.GraphTheory.Network
+Imports names = Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic.NamesOf
+Imports Node = Microsoft.VisualBasic.Data.visualize.Network.Graph.Node
 
 Namespace Analysis
 
     Public Module Statistics
 
-        ''' <summary>
-        ''' 获取得到网络之中的每一个节点的Degree度
-        ''' </summary>
-        ''' <param name="net"></param>
-        ''' <returns></returns>
-        <Extension> Public Function GetDegrees(net As NetGraph) As Dictionary(Of String, Integer)
-            Dim degree As New Dictionary(Of String, Integer)
-            Dim counts = Sub(node$)
-                             If degree.ContainsKey(node) Then
-                                 degree(node) += 1
-                             Else
-                                 Call degree.Add(node, 1)
-                             End If
-                         End Sub
-
-            For Each edge As NetworkEdge In net.Edges
-                ' count只会统计edge链接的两个node，故而假若node是孤立的节点，
-                ' 则在这个for循环之中是没有被包含进入结果之中的
-                Call counts(node:=edge.FromNode)
-                Call counts(node:=edge.ToNode)
-            Next
-
-            For Each node In net.Nodes
-                ' 补齐这些孤立的节点
-                If Not degree.ContainsKey(node.ID) Then
-                    degree.Add(node.ID, 0)
-                End If
-            Next
-
-            Return degree
-        End Function
-
-        ''' <summary>
-        ''' 计算出每一个节点的``Degree``值，并且将结果写入节点的动态属性之中
-        ''' 这个函数之中包含有了节点的degree，并且还计算出了indegree和outdegree
-        ''' </summary>
-        ''' <param name="net"></param>
-        <Extension> Public Function AnalysisDegrees(net As NetGraph) As NetGraph
-            Call net.ComputeNodeDegrees
-            Return net
-        End Function
-
-        ''' <summary>
-        ''' 计算出每一个节点的``Degree``值，并且将结果写入节点的动态属性之中
-        ''' 这个函数之中包含有了节点的degree，并且还计算出了indegree和outdegree
-        ''' </summary>
-        ''' <param name="net"></param>
-        <Extension> Public Function ComputeNodeDegrees(ByRef net As NetGraph) As Dictionary(Of String, Integer)
-            Dim degrees As Dictionary(Of String, Integer) = net.GetDegrees
-            Dim d%
-
-            With net.Edges.ComputeDegreeData
-                ' 通过节点之间的边链接关系计算出indegre和outdegree
-                ' 如果边连接是没有方向的，则这个计算结果无意义
-                For Each node As FileStream.Node In net.Nodes
-                    'If Not degrees.ContainsKey(node.ID) Then
-                    '    Dim ex As New Exception("nodes: " & net.Nodes.Keys.GetJson)
-                    '    ex = New Exception("degrees: " & degrees.GetJson, ex)
-                    '    ex = New Exception("Current node was not found! => " & node.GetJson, ex)
-                    '    Throw ex
-                    'Else
-                    d = degrees(node.ID)
-                    Call node.Add(names.REFLECTION_ID_MAPPING_DEGREE, d)
-                    'End If
-
-                    If .in.ContainsKey(node.ID) Then
-                        d = .in(node.ID)
-                        node.Add(names.REFLECTION_ID_MAPPING_DEGREE_IN, d)
-                    End If
-                    If .out.ContainsKey(node.ID) Then
-                        d = .out(node.ID)
-                        node.Add(names.REFLECTION_ID_MAPPING_DEGREE_OUT, d)
-                    End If
-                Next
-            End With
-
-            Return degrees
-        End Function
-
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ComputeDegreeData(Of T As IInteraction)(edges As IEnumerable(Of T)) As ([in] As Dictionary(Of String, Integer), out As Dictionary(Of String, Integer))
-            Dim [in] As New Dictionary(Of String, Integer)
-            Dim out As New Dictionary(Of String, Integer)
-            Dim count = Sub(node$, ByRef table As Dictionary(Of String, Integer))
-                            If table.ContainsKey(node) Then
-                                table(node) += 1
-                            Else
-                                table.Add(node, 1)
-                            End If
-                        End Sub
-            Dim countIn = Sub(node$) Call count(node, [in])
-            Dim countOut = Sub(node$) Call count(node, out)
-
-            For Each edge As T In edges
-                Call countIn(edge.target)
-                Call countOut(edge.source)
-            Next
-
-            Return ([in], out)
+            Return GraphNetwork.ComputeDegreeData(edges, Function(l) l.source, Function(l) l.target)
         End Function
 
         <Extension>
         Public Function Sum(degrees As ([in] As Dictionary(Of String, Integer), out As Dictionary(Of String, Integer))) As Dictionary(Of String, Integer)
             Dim degreeValue As New Dictionary(Of String, Integer)(degrees.in)
 
-            For Each node In degrees.out
+            For Each node As KeyValuePair(Of String, Integer) In degrees.out
                 degreeValue(node.Key) += degreeValue(node.Key) + node.Value
             Next
 
             Return degreeValue
         End Function
 
-        ''' <summary>
-        ''' 这个函数计算网络的节点的degree，然后将degree数据写入节点的同时，通过字典返回给用户
-        ''' </summary>
-        ''' <param name="net"></param>
-        ''' <returns></returns>
         <Extension>
-        Public Function ComputeNodeDegrees(ByRef net As NetworkGraph) As Dictionary(Of String, Integer)
-            Dim connectNodes = net _
-                .edges _
-                .Select(Function(link) {link.U.Label, link.V.Label}) _
-                .IteratesALL _
-                .GroupBy(Function(id) id) _
-                .ToDictionary(Function(ID) ID.Key,
-                              Function(list) list.Count)
-            Dim d%
-
-            With net.edges.ComputeDegreeData
-                For Each node In net.nodes
-
-                    If Not connectNodes.ContainsKey(node.Label) Then
-                        ' 这个节点是孤立的节点，度为零
-                        node.Data.Add(names.REFLECTION_ID_MAPPING_DEGREE, 0)
-                        node.Data.Add(names.REFLECTION_ID_MAPPING_DEGREE_IN, 0)
-                        node.Data.Add(names.REFLECTION_ID_MAPPING_DEGREE_OUT, 0)
-
-                    Else
-                        d = connectNodes(node.Label)
-                        node.Data.Add(names.REFLECTION_ID_MAPPING_DEGREE, d)
-
-                        If .in.ContainsKey(node.Label) Then
-                            d = .in(node.Label)
-                            node.Data.Add(names.REFLECTION_ID_MAPPING_DEGREE_IN, d)
-                        End If
-                        If .out.ContainsKey(node.Label) Then
-                            d = .out(node.Label)
-                            node.Data.Add(names.REFLECTION_ID_MAPPING_DEGREE_OUT, d)
-                        End If
-                    End If
-                Next
-            End With
-
-            Return connectNodes
+        Public Function BetweennessCentrality(graph As NetworkGraph, Optional undirected As Boolean = False) As Dictionary(Of String, Integer)
+            Return DijkstraRouter.FromNetwork(graph, undirected).BetweennessCentrality
         End Function
 
         ''' <summary>
-        ''' 统计网络之中的每一种类型的节点的数量
+        ''' compute and write data of <see cref="names.REFLECTION_ID_MAPPING_BETWEENESS_CENTRALITY"/>, <see cref="names.REFLECTION_ID_MAPPING_RELATIVE_BETWEENESS_CENTRALITY"/>
         ''' </summary>
-        ''' <param name="net"></param>
+        ''' <param name="graph"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function NodesGroupCount(net As NetGraph) As Dictionary(Of String, Integer)
-            Return net.Nodes _
-                .GroupBy(Function(n) n.NodeType) _
-                .ToDictionary(Function(x) x.Key,
-                              Function(c) c.Count)
+        Public Function ComputeBetweennessCentrality(ByRef graph As NetworkGraph, Optional base% = 0) As Dictionary(Of String, Integer)
+            Dim data As Dictionary(Of String, Integer) = graph.BetweennessCentrality.ToDictionary(Function(a) a.Key, Function(a) a.Value + base)
+            ' convert to double for avoid the integer upbound overflow
+            ' when deal with the network graph in ultra large size
+            Dim sumAll As Double = data.Values.Select(Function(i) CDbl(i)).Sum
+
+            For Each node As Graph.Node In graph.vertex
+                node.data.betweennessCentrality = data(node.label)
+                node.data(names.REFLECTION_ID_MAPPING_BETWEENESS_CENTRALITY) = data(node.label)
+                node.data(names.REFLECTION_ID_MAPPING_RELATIVE_BETWEENESS_CENTRALITY) = data(node.label) / sumAll
+            Next
+
+            Return data
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <returns>``[<see cref="Node.label"/> => degree]``</returns>
+        <Extension>
+        Public Function ConnectedDegrees(g As NetworkGraph) As Dictionary(Of String, Integer)
+            Return g.graphEdges _
+                .Select(Function(link) {link.U.label, link.V.label}) _
+                .IteratesALL _
+                .GroupBy(Function(id) id) _
+                .ToDictionary(Function(ID) ID.Key,
+                              Function(list)
+                                  Return list.Count
+                              End Function)
+        End Function
+
+        ''' <summary>
+        ''' 这个函数计算网络的节点的degree，然后将degree数据写入节点的同时，通过字典返回给用户
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <returns>
+        ''' ``[<see cref="Node.label"/> => degree]``
+        ''' </returns>
+        <Extension>
+        Public Function ComputeNodeDegrees(ByRef g As NetworkGraph, Optional base% = 0) As Dictionary(Of String, Integer)
+            Dim connectNodes As Dictionary(Of String, Integer) = g.ConnectedDegrees
+            Dim d%
+            Dim dt As (Integer, Integer)
+            Dim degreeList = g.graphEdges.ComputeDegreeData
+            Dim sumAllOut As Double = degreeList.out.Values.Sum + base * g.vertex.Count
+            Dim sumAllDegree As Double = connectNodes.Values.Sum + base * g.vertex.Count
+
+            For Each node As Graph.Node In g.vertex
+                If Not connectNodes.ContainsKey(node.label) Then
+                    ' 这个节点是孤立的节点，度为零
+                    node.data.SetValue(names.REFLECTION_ID_MAPPING_DEGREE, base)
+                    node.data.SetValue(names.REFLECTION_ID_MAPPING_DEGREE_IN, base)
+                    node.data.SetValue(names.REFLECTION_ID_MAPPING_DEGREE_OUT, base)
+                    node.data.SetValue(names.REFLECTION_ID_MAPPING_RELATIVE_DEGREE_CENTRALITY, base / sumAllDegree)
+                    node.data.SetValue(names.REFLECTION_ID_MAPPING_RELATIVE_OUTDEGREE_CENTRALITY, base / sumAllOut)
+                Else
+                    d = connectNodes(node.label)
+                    dt = (0, 0)
+                    node.data.SetValue(names.REFLECTION_ID_MAPPING_DEGREE, d)
+                    node.data.SetValue(names.REFLECTION_ID_MAPPING_RELATIVE_DEGREE_CENTRALITY, d / sumAllDegree)
+
+                    If degreeList.in.ContainsKey(node.label) Then
+                        d = degreeList.in(node.label)
+                        node.data.SetValue(names.REFLECTION_ID_MAPPING_DEGREE_IN, d)
+                        dt = (d, 0)
+                    End If
+                    If degreeList.out.ContainsKey(node.label) Then
+                        d = degreeList.out(node.label)
+                        node.data.SetValue(names.REFLECTION_ID_MAPPING_DEGREE_OUT, d)
+                        node.data.SetValue(names.REFLECTION_ID_MAPPING_RELATIVE_OUTDEGREE_CENTRALITY, d / sumAllOut)
+                        dt = (dt.Item1, d)
+                    End If
+
+                    node.degree = dt
+                End If
+            Next
+
+            Return connectNodes
         End Function
     End Module
 End Namespace

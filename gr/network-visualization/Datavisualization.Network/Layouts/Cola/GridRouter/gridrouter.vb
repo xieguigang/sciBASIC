@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::40742c5d7ddf2ca88a3e6cf2512a9d6b, gr\network-visualization\Datavisualization.Network\Layouts\Cola\GridRouter\gridrouter.vb"
+﻿#Region "Microsoft.VisualBasic::83723fdb842462229921cea905e8ea9f, gr\network-visualization\Datavisualization.Network\Layouts\Cola\GridRouter\gridrouter.vb"
 
     ' Author:
     ' 
@@ -58,6 +58,7 @@
 Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming
 Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.Data.GraphTheory.Analysis
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.GridRouter
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Imaging.Math2D
@@ -66,6 +67,7 @@ Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.My.JavaScript
 Imports any = System.Object
 Imports number = System.Double
+Imports stdNum = System.Math
 
 Namespace Layouts.Cola
 
@@ -157,7 +159,7 @@ Namespace Layouts.Cola
 
             ' nodes ordered by their position in the group hierarchy
             Me.backToFront = Me.nodes.slice(0).ToArray
-            Me.backToFront.sort(Function(x, y) Me.getDepth(x) - Me.getDepth(y))
+            Me.backToFront.Sort(Function(x, y) Me.getDepth(x) - Me.getDepth(y))
 
             ' compute boundary rectangles for each group
             ' has to be done from front to back, i.e. inside groups to outside groups
@@ -229,13 +231,13 @@ Namespace Layouts.Cola
                                                 Me.verts.Add(p)
 
                                                 ' assign vertices to the nodes immediately under them
-                                                Dim i As Integer = Me.backToFront.length
+                                                Dim i As Integer = Me.backToFront.Length
                                                 While (System.Math.Max(Interlocked.Decrement(i), i + 1)) > 0
                                                     Dim node = Me.backToFront(i)
                                                     Dim r = node.rect
-                                                    Dim dx = Math.Abs(p.X - r.CenterX())
-                                                    Dim dy = Math.Abs(p.Y - r.CenterY())
-                                                    If dx < r.width() / 2 AndAlso dy < r.height() / 2 Then
+                                                    Dim dx = stdNum.Abs(p.X - r.CenterX())
+                                                    Dim dy = stdNum.Abs(p.Y - r.CenterY())
+                                                    If dx < r.Width() / 2 AndAlso dy < r.Height() / 2 Then
                                                         DirectCast(p, any).node = node
                                                         Exit While
                                                     End If
@@ -258,7 +260,7 @@ Namespace Layouts.Cola
                                                End Sub)
 
                               ' split lines into edges joining vertices
-                              Dim isHoriz = Math.Abs(l.Y1 - l.Y2) < 0.1
+                              Dim isHoriz = stdNum.Abs(l.Y1 - l.Y2) < 0.1
                               Dim delta = Function(a As Vert, b As Vert)
                                               Return If(isHoriz, b.X - a.X, b.Y - a.Y)
                                           End Function
@@ -273,7 +275,7 @@ Namespace Layouts.Cola
                                   Me.edges.Add(New Link3D With {
                 .source = u.id,
                 .target = v.id,
-                .length = Math.Abs(delta(u, v))
+                .length = stdNum.Abs(delta(u, v))
             })
                               Next
                           End Sub)
@@ -371,7 +373,7 @@ Namespace Layouts.Cola
                     s.edgeid = ei
                     s.i = si
                     Dim sdx = s(1)(x) - s(0)(x)
-                    If Math.Abs(sdx) < 0.1 Then
+                    If stdNum.Abs(sdx) < 0.1 Then
                         vsegments.Add(s)
                     End If
                 Next
@@ -383,7 +385,7 @@ Namespace Layouts.Cola
             Dim segmentset As vsegmentsets = Nothing
             For i As Integer = 0 To vsegments.Count - 1
                 Dim s As Segment = vsegments(i)
-                If segmentset Is Nothing OrElse Math.Abs(s(0)(x) - segmentset.pos) > 0.1 Then
+                If segmentset Is Nothing OrElse stdNum.Abs(s(0)(x) - segmentset.pos) > 0.1 Then
                     segmentset = New vsegmentsets With {
                     .pos = s(0)(x),
                     .segments = New List(Of Segment)
@@ -500,7 +502,7 @@ Namespace Layouts.Cola
                     events.Add(New [Event] With {
                      .type = 1,
                      .s = s,
-                     .pos = Math.Max(s(0)(y), s(1)(y))
+                     .pos = stdNum.Max(s(0)(y), s(1)(y))
                 })
                 Next
                 events.Sort(Function(a, b) a.pos - b.pos + a.type - b.type)
@@ -634,7 +636,7 @@ Namespace Layouts.Cola
         End Function
 
         Private Shared Function isStraight(a As Point2D, b As Point2D, c As Point2D) As Boolean
-            Return Math.Abs((b.X - a.X) * (c.Y - a.Y) - (b.Y - a.Y) * (c.X - a.X)) < 0.001
+            Return stdNum.Abs((b.X - a.X) * (c.Y - a.Y) - (b.Y - a.Y) * (c.X - a.X)) < 0.001
         End Function
 
         ' for an orthogonal path described by a sequence of points, create a list of segments
@@ -704,8 +706,8 @@ Namespace Layouts.Cola
                                   Dim a = Me.verts(u)
                                   Dim b = Me.verts(v)
                                   Dim c = Me.verts(w)
-                                  Dim dx = Math.Abs(c.X - a.X)
-                                  Dim dy = Math.Abs(c.Y - a.Y)
+                                  Dim dx = stdNum.Abs(c.X - a.X)
+                                  Dim dy = stdNum.Abs(c.Y - a.Y)
 
                                   ' don't count bends from internal node edges
                                   If a.node Is source AndAlso a.node Is b.node OrElse b.node Is target AndAlso b.node Is c.node Then
@@ -757,10 +759,10 @@ Namespace Layouts.Cola
                     Dim dx = x - li(0).X
                     Dim dy = y - li(0).Y
                     If i < route.Length - 1 Then
-                        If Math.Abs(dx) > 0 Then
-                            x -= dx / Math.Abs(dx) * cornerradius
+                        If stdNum.Abs(dx) > 0 Then
+                            x -= dx / stdNum.Abs(dx) * cornerradius
                         Else
-                            y -= dy / Math.Abs(dy) * cornerradius
+                            y -= dy / stdNum.Abs(dy) * cornerradius
                         End If
                         result.routepath += "L " & x & " "c & y & " "c
                         Dim l = route(i + 1)
@@ -774,26 +776,26 @@ Namespace Layouts.Cola
                         'console.log(cola.GridRouter.angleBetween2Lines(li, l))
                         Dim x2
                         Dim y2
-                        If Math.Abs(dx) > 0 Then
-                            x2 = x0 + dx / Math.Abs(dx) * cornerradius
+                        If stdNum.Abs(dx) > 0 Then
+                            x2 = x0 + dx / stdNum.Abs(dx) * cornerradius
                             y2 = y0
                         Else
                             x2 = x0
-                            y2 = y0 + dy / Math.Abs(dy) * cornerradius
+                            y2 = y0 + dy / stdNum.Abs(dy) * cornerradius
                         End If
-                        Dim cx = Math.Abs(x2 - x)
-                        Dim cy = Math.Abs(y2 - y)
+                        Dim cx = stdNum.Abs(x2 - x)
+                        Dim cy = stdNum.Abs(y2 - y)
                         result.routepath += "A " & Convert.ToString(cx) & " " & Convert.ToString(cy) & " 0 0 " & angle & " " & Convert.ToString(x2) & " " & Convert.ToString(y2) & " "
                     Else
                         Dim arrowtip = New any() {x, y}
                         Dim arrowcorner1
                         Dim arrowcorner2
-                        If Math.Abs(dx) > 0 Then
-                            x -= dx / Math.Abs(dx) * arrowheight
+                        If stdNum.Abs(dx) > 0 Then
+                            x -= dx / stdNum.Abs(dx) * arrowheight
                             arrowcorner1 = New number() {x, y + arrowwidth}
                             arrowcorner2 = New number() {x, y - arrowwidth}
                         Else
-                            y -= dy / Math.Abs(dy) * arrowheight
+                            y -= dy / stdNum.Abs(dy) * arrowheight
                             arrowcorner1 = New number() {x + arrowwidth, y}
                             arrowcorner2 = New number() {x - arrowwidth, y}
                         End If
@@ -812,12 +814,12 @@ Namespace Layouts.Cola
                 Dim arrowtip = New number() {x, y}
                 Dim arrowcorner1
                 Dim arrowcorner2
-                If Math.Abs(dx) > 0 Then
-                    x -= dx / Math.Abs(dx) * arrowheight
+                If stdNum.Abs(dx) > 0 Then
+                    x -= dx / stdNum.Abs(dx) * arrowheight
                     arrowcorner1 = New number() {x, y + arrowwidth}
                     arrowcorner2 = New number() {x, y - arrowwidth}
                 Else
-                    y -= dy / Math.Abs(dy) * arrowheight
+                    y -= dy / stdNum.Abs(dy) * arrowheight
                     arrowcorner1 = New number() {x + arrowwidth, y}
                     arrowcorner2 = New number() {x - arrowwidth, y}
                 End If

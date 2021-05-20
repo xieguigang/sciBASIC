@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5653abf1be43503a2fc63f52cf0aebec, Data_science\Mathematica\Math\Math\Distributions\pnorm.vb"
+﻿#Region "Microsoft.VisualBasic::a51aa2cfaa25b19b945a874db95b8591, Data_science\Mathematica\Math\Math\Distributions\pnorm.vb"
 
     ' Author:
     ' 
@@ -46,7 +46,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.SyntaxAPI.MathExtension
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Distributions
 
@@ -111,7 +111,7 @@ Namespace Distributions
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Logistic(L#, x#, x0#, k#) As Double
-            Return L / (1 + sys.E ^ (-k * (x - x0)))
+            Return L / (1 + stdNum.E ^ (-k * (x - x0)))
         End Function
 
         ''' <summary>
@@ -175,9 +175,9 @@ Namespace Distributions
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function StandardDistribution(x As Double) As Double
-            Dim answer As Double = 1 / ((sys.Sqrt(2 * sys.PI)))
-            Dim exp1 As Double = sys.Pow(x, 2) / 2
-            Dim exp As Double = sys.Pow(sys.E, -(exp1))
+            Dim answer As Double = 1 / ((stdNum.Sqrt(2 * stdNum.PI)))
+            Dim exp1 As Double = stdNum.Pow(x, 2) / 2
+            Dim exp As Double = stdNum.Pow(stdNum.E, -(exp1))
             answer = answer * exp
             Return answer
         End Function
@@ -209,7 +209,7 @@ Namespace Distributions
             End If
 
             If logP Then
-                Return Math.Log10(p)
+                Return stdNum.Log10(p)
             Else
                 Return p
             End If
@@ -260,20 +260,20 @@ Namespace Distributions
         ''' <param name="sd"></param>
         ''' <returns></returns>
         Public Function ProbabilityDensity(x#, m#, sd#) As Double
-            Dim answer As Double = 1 / (sd * (sys.Sqrt(2 * sys.PI)))
-            Dim exp As Double = sys.Pow((x - m), 2.0)
-            Dim expP2 As Double = 2 * sys.Pow(sd, 2.0)
-            Dim expP3 As Double = sys.Pow(sys.E, (-(exp / expP2)))
+            Dim answer As Double = 1 / (sd * (stdNum.Sqrt(2 * stdNum.PI)))
+            Dim exp As Double = (x - m) ^ 2
+            Dim expP2 As Double = 2 * (sd ^ 2)
+            Dim expP3 As Double = stdNum.E ^ (-(exp / expP2))
             answer = answer * expP3
             Return answer
         End Function
 
         <Extension>
         Public Function ProbabilityDensity(x As Vector, m#, sd#) As Vector
-            Dim answer As Double = 1 / (sd * (sys.Sqrt(2 * sys.PI)))
+            Dim answer As Double = 1 / (sd * (stdNum.Sqrt(2 * stdNum.PI)))
             Dim exp = (x - m) ^ 2.0
-            Dim expP2 As Double = 2 * sys.Pow(sd, 2.0)
-            Dim expP3 = sys.E ^ -(exp / expP2)
+            Dim expP2 As Double = 2 * stdNum.Pow(sd, 2.0)
+            Dim expP3 = stdNum.E ^ -(exp / expP2)
             Dim y As Vector = answer * expP3
 
             Return y

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::246a672c6f01481e94d1655b8f272c59, Data_science\Graph\Model\Abstract\Vertex.vb"
+﻿#Region "Microsoft.VisualBasic::8c6e2f9223c5c56c5b4fae9951579c5d, Data_science\Graph\Model\Abstract\Vertex.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Class Vertex
     ' 
-    '     Properties: ID, Label
+    '     Properties: ID, label
     ' 
     '     Function: ToString
     ' 
@@ -43,6 +43,7 @@
 
 #End Region
 
+Imports System.Runtime.Serialization
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
@@ -51,6 +52,8 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 ''' <summary>
 ''' 图之中的节点
 ''' </summary>
+''' 
+<DataContract>
 Public Class Vertex : Implements INamedValue
     Implements IAddressOf
 
@@ -58,18 +61,18 @@ Public Class Vertex : Implements INamedValue
     ''' The unique id of this node
     ''' </summary>
     ''' <returns></returns>
-    <XmlAttribute> Public Property Label As String Implements IKeyedEntity(Of String).Key
+    <XmlAttribute> Public Property label As String Implements IKeyedEntity(Of String).Key
     ''' <summary>
     ''' Array index.(使用数字表示的唯一标识符)
     ''' </summary>
     ''' <returns></returns>
     <XmlAttribute> Public Property ID As Integer Implements IAddress(Of Integer).Address
 
-    Public Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
+    Private Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
         ID = address
     End Sub
 
     Public Overrides Function ToString() As String
-        Return $"({ID}) {Label}"
+        Return $"({ID}) {label}"
     End Function
 End Class

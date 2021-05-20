@@ -1,0 +1,2557 @@
+commit fe46e21a96f8d5c4fd11454673014eedf1a875c6
+Author: この中二病に爆焔を！ <xie.guigang@gcmodeller.org>
+Date:   Wed May 20 08:39:02 2020 +0800
+
+    config project profiles
+
+commit 0dd367d90c1f32959c5262512054d165f31acd34
+Author: この中二病に爆焔を！ <xie.guigang@gcmodeller.org>
+Date:   Thu May 14 12:58:54 2020 +0800
+
+    config projects for release
+
+commit c6e45c76355126c870fbe9bbd634a916786d8bbb
+Author: この中二病に爆焔を！ <xie.guigang@gcmodeller.org>
+Date:   Fri May 8 16:57:52 2020 +0800
+
+    fix interface model reference errors
+
+commit 5c1899fd55cd5e620a709cd26c223fe78542d91a
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Thu May 7 19:20:06 2020 +0800
+
+    Update GCModeller.sln
+
+commit 5480526c94750b94e5a6cdb518560579710d0f0b
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon May 4 00:41:55 2020 +0800
+
+    config projects
+
+commit e072d23ca416e86184ec3d04ef290f71725c0f80
+Author: この中二病に爆焔を！ <xie.guigang@gcmodeller.org>
+Date:   Tue Apr 28 14:07:05 2020 +0800
+
+    config projects for running on linux platform
+
+commit 0f82b1ed9cf199b256644b65b54d259d4491b606
+Author: この中二病に爆焔を！ <xie.guigang@gcmodeller.org>
+Date:   Tue Apr 28 12:33:44 2020 +0800
+
+    Update GCModeller.sln
+
+commit a91cc9df40209b9b671ba6cb43312f96869bafbf
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Wed Apr 22 14:49:16 2020 +0800
+
+    config projects
+
+commit bbe305056b6230fdbcd586fe67bf10bbcd1390a0
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sun Apr 5 00:13:37 2020 +0800
+
+    config of the R# api for S-system simulator
+
+commit babdb04b9be7bc73666dbddf0f6b9f050866ccc8
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sat Apr 4 21:07:22 2020 +0800
+
+    config of the projects
+
+commit 2fd90a2edcd5ca2c9f9f053d3585795b53e4d70e
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sat Apr 4 20:34:04 2020 +0800
+
+    CompilerServices
+
+commit b10f9cbadb40122b6dbaa44c12a2e8ba1b98042d
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Fri Apr 3 14:04:08 2020 +0800
+
+    config projects
+
+commit 6de45713029f85024712dfb6bad8b2cbc2e3fbb1
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Fri Apr 3 14:02:04 2020 +0800
+
+    config for projects
+
+commit 503c05025b015c1dde02e7950e6215b72576b762
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Mar 30 20:08:17 2020 +0800
+
+    update framework version to 4.8
+
+commit 73d08760be9a9b57b6e7f32ea8a83ee1b4d16a93
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sun Mar 29 16:45:34 2020 +0800
+
+    removes invalid code modules
+
+commit b3eb9e727178f0f656c9c11eef425ac262ac8cd3
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sat Mar 28 12:09:00 2020 +0800
+
+    improvements of the color render model
+
+commit c9cbc5d798092792e92312407098fc449adde143
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Fri Mar 20 23:43:10 2020 +0800
+
+    update kegg enzyme database
+
+commit 818201a5f2919ac3f948276ad8aa5fd412e6dd04
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Fri Mar 20 22:17:28 2020 +0800
+
+    config solution
+
+commit 86e6c233599c1b228c023d8caf4fc5c8f0951548
+Author: この中二病に爆焔を！ <xie.guigang@gcmodeller.org>
+Date:   Fri Mar 20 19:59:19 2020 +0800
+
+    do code comments
+
+commit 3cbd8a004cb87f1b5b83075c1bb6145cf051178c
+Author: この中二病に爆焔を！ <xie.guigang@gcmodeller.org>
+Date:   Fri Mar 20 19:54:49 2020 +0800
+
+    removes un-used projects
+
+commit e1b0d9451c9f4a1829a60b53a9ddf170f93f945c
+Author: この中二病に爆焔を！ <xie.guigang@gcmodeller.org>
+Date:   Fri Mar 20 19:36:29 2020 +0800
+
+    docuRESTfulWeb of sabio-rk database
+
+commit bd7350afb718e0b1ddf98dc2085004bdb78808f5
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Fri Mar 20 13:47:41 2020 +0800
+
+    config projects
+
+commit 7b295ac81466bf3bb96252c86449c1ace4900daf
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Thu Mar 19 09:19:37 2020 +0800
+
+    add dev notes about the framework runtime configuration
+
+commit 83e7aa74575b8fa07f1fa9a4b5891c825297a4b9
+Merge: 65327c5f7e 64d848532b
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Wed Mar 18 20:57:01 2020 +0800
+
+    Merge branch 'master' of https://github.com/xieguigang/GCModeller
+
+commit 89ba29825d89c5b949b1c0e281885139d09deefe
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Wed Mar 18 20:49:04 2020 +0800
+
+    kegg pathway map report render
+
+commit 21bdd220a8f7be8b8821939b311b105c8a14510d
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Mar 16 11:28:22 2020 +0800
+
+    Update GCModeller.sln
+
+commit e28593ea37059306dafac46e278d8038fe0a13eb
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Mar 16 11:24:06 2020 +0800
+
+    update database
+
+commit 0ea7faddd6f9b5267f6657054d0c3300f011d5b5
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sat Mar 7 09:22:25 2020 +0800
+
+    fix for task parallel
+
+commit e057ad12870181da04efa3d060d4770216a03c77
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Fri Mar 6 19:28:25 2020 +0800
+
+    fix project reference
+
+commit d654198c5b70765ac2a4e5cd6ed11f36e88c269d
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Fri Mar 6 18:08:37 2020 +0800
+
+    GCModeller configurations
+
+commit 28c716a00c86cd5e8836b97dd24ac1c7f6db1168
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Fri Feb 28 23:34:51 2020 +0800
+
+    fix plot bugs
+
+commit 8f214b03d7dfb2b0546df223400be040a64bcb42
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Fri Feb 28 22:33:42 2020 +0800
+
+    config for run plot test
+
+commit 400b82d502b4bbb31282f9919bae50c676bb82c1
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Fri Feb 28 10:12:42 2020 +0800
+
+    OmicsScatter2D
+
+commit 6f64c1c76a8bff2772dc69e49bfabf0d57214dd7
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Feb 24 03:14:53 2020 +0800
+
+    proteomics_toolkit labelfree sample data normalization
+
+commit 8d6312836f738a1c7356f5043e0092a4e91cdecf
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sun Feb 16 18:02:44 2020 +0800
+
+    config projects
+
+commit 827eb326435c7bdd7e607fda09ab0fb35128f257
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Feb 10 22:26:14 2020 +0800
+
+    Update GCModeller.sln
+
+commit 889c9333f50cc35c962ad847559aa2a53c570edb
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sun Jan 19 14:08:22 2020 +0800
+
+    add api exports
+
+commit 5da2ed72921b16f81b8e0adf154a0e54ea597f38
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sun Jan 19 10:27:13 2020 +0800
+
+    cytoscape xgmml toolkit
+
+commit b47e57913afe7ee3ad2836319133b814ba0c2a68
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Wed Jan 15 11:34:24 2020 +0800
+
+    metagenomics toolkit
+
+commit 14f3f224b79807fdee263b9a1c757cc1b9db63dd
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Wed Jan 15 11:28:27 2020 +0800
+
+    metagenomics_kit
+
+commit 95f73336cc9fa60f46f894569c65130bc0de347c
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Jan 13 10:54:23 2020 +0800
+
+    fix report module reference errors
+
+commit 7c43b0f86cd3f66119d5d028e5523cc89f99f167
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Jan 13 10:52:20 2020 +0800
+
+     removes invalid project dependency
+
+commit 4c0d3ebb01c0a736c191c828b3a2bb7910e6607f
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sun Jan 12 19:00:55 2020 +0800
+
+    removes alglibnet reference
+
+commit ac87bfb8d2dfe8794ee993255df7e6615e0eacb9
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Tue Dec 31 11:05:15 2019 +0800
+
+    config solution projects
+
+commit 5aa372d420eb83d65168da101e3245d087eea4d3
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Wed Dec 25 15:35:15 2019 +0800
+
+    config projects
+
+commit 3b79835af60419236462dc5d7288d7f3464ca85e
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Tue Dec 24 09:42:00 2019 +0800
+
+    add R# source file into project files
+
+commit d52e8a4250820ef0b816317aff7b533ec8cba7f9
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Tue Dec 24 09:38:14 2019 +0800
+
+    config project output location
+
+commit 9c9f5a4b3e7a749e63f4ac10ba9048e8dcf56045
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Tue Dec 17 19:18:31 2019 +0800
+
+    config projects
+
+commit 2d60a5587c5bf59a3c035711c6d8a75223577afc
+Merge: a0fac0cb69 949864caf8
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Tue Dec 17 19:15:21 2019 +0800
+
+    Merge branch 'master' of https://github.com/xieguigang/GCModeller
+
+commit a827ede722aa4048b9f6a1136692b9213e6bac2d
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Tue Dec 17 19:09:37 2019 +0800
+
+    visual kit
+
+commit 00d4feda2976fde939c41c38c606aff118330bc3
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Tue Dec 17 13:41:14 2019 +0800
+
+    update configs for R# apps
+
+commit 9c385de8ec03a5f5891540d02ffc4fad089429ba
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sat Dec 14 12:53:28 2019 +0800
+
+    config projects
+
+commit 25b5c70bde31dcd918a2b25fe5f1b6ba2b9c3bf6
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sat Dec 14 12:39:50 2019 +0800
+
+    circos kit
+
+commit c965f49359ad347c01f7d035deba3cfdb6af20c2
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Tue Dec 10 09:06:48 2019 +0800
+
+    add R.web library
+
+commit cd9c3998d0352e95cf2686618646b976c40135c7
+Author: 关倩倩 <amethyst.asuka@gcmodeller.org>
+Date:   Sun Dec 8 16:31:26 2019 +0800
+
+    config projects
+
+commit 3422722d6c8c9b9889b62ba842f9114663d7e0eb
+Author: 关倩倩 <amethyst.asuka@gcmodeller.org>
+Date:   Sun Dec 8 14:05:18 2019 +0800
+
+    config project compile output location
+
+commit c11c1e47c50a085dadcfa8d0c65cbdd73f8de4fe
+Author: 关倩倩 <amethyst.asuka@gcmodeller.org>
+Date:   Sun Dec 8 14:03:58 2019 +0800
+
+    Go kit and GSEA analysis
+
+commit 41863b3064cd78b4778dcbb99a38722807cadf57
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Fri Dec 6 17:39:19 2019 +0800
+
+    fix project reference errors
+
+commit 3713d9f90325c6e1c87ed90bc32a2037f0ba6b1f
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Fri Dec 6 08:53:58 2019 +0800
+
+    config projects
+
+commit d657a7fb23363303ca3ffeff809d0720124e408f
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Thu Dec 5 20:43:41 2019 +0800
+
+    config projects
+
+commit c533d5fa188cab62cf27093e1ce95fd09626f827
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Thu Dec 5 20:37:18 2019 +0800
+
+    config projects
+
+commit 067aaf450994c60b775f43c825bd705e226f1c6b
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Dec 2 20:26:47 2019 +0800
+
+    kegg database toolkit
+
+commit bee36cf34681e74ff4ae15422894edf96b8c59b9
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sat Nov 30 19:57:38 2019 +0800
+
+    sequence logo helper
+
+commit 7d605b64538192228f98479c26bb3c8c4c8992f7
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Thu Nov 28 13:11:39 2019 +0800
+
+    config projects
+
+commit e6a1bd22dfb97d62466fbff68783866ceb003709
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Thu Nov 28 13:10:35 2019 +0800
+
+    GCModeller cli for R# scripting
+
+commit 6ad99069ec00c7366ec71c9e5eb4d005ed40feb9
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Thu Nov 28 11:30:11 2019 +0800
+
+    config file format kit
+
+commit f38b5dbcdea87e121f745034d88dd3e438d25595
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Thu Nov 28 11:28:49 2019 +0800
+
+    fileformat kit
+
+commit 885adb24d3518e0bac3b162a652eb84e938004da
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Wed Nov 27 20:43:29 2019 +0800
+
+    config projects
+
+commit ba18cfc5ee7fd61ae8a36e124895773d65db692c
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Wed Nov 27 20:28:55 2019 +0800
+
+    gseakit
+
+commit 523515fa5135675c701720504f3304d7f68362d0
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sun Nov 24 20:25:47 2019 +0800
+
+    sequence toolkit plugin for R# language
+
+commit 9ef1ce7df2daed4961baabacfa5a174ef2efb62d
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sat Nov 23 00:37:03 2019 +0800
+
+    Update GCModeller.sln
+
+commit 60a18f5ebeb03e56de74d20860ec2c2cbe49defa
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sat Nov 23 00:35:52 2019 +0800
+
+    Update GCModeller.sln
+
+commit 1c0e21e55bc4d51659f755667adcd7fff9cbec4f
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Nov 18 20:18:49 2019 +0800
+
+    config projects
+
+commit 16eb06f3c36e13d9272a11c8b771909b62b90b5f
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Nov 18 20:17:15 2019 +0800
+
+    removes scripting module reference
+
+commit ee9c6acd635a7ee9f17563bc272efa8fe25ce55d
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Nov 18 20:11:58 2019 +0800
+
+    removes obsolete scripting module
+
+commit cb08415e260e7d86219e44cf7ed0bfbdd3b9dc65
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Nov 18 20:07:05 2019 +0800
+
+    vcell kit
+
+commit 39e183d8c3003dc5d59a3172071705634eb6f602
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Nov 18 16:26:49 2019 +0800
+
+    config projects
+
+commit 9589fb5894a93399de41d3489f10b601d6de7a42
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Wed Nov 13 20:59:33 2019 +0800
+
+    edit assembly info of the gcc model compiler
+
+commit 30272d3e83e7836263a1713aec812f39503eaf57
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Wed Nov 6 20:29:16 2019 +0800
+
+    config project profiles
+
+commit 31b48ae9f92fe6d828bf6696d2033cbf6ccd3478
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Wed Nov 6 14:59:48 2019 +0800
+
+    Update GCModeller.sln
+    
+    add extension project
+
+commit 230207758051137051d7bcb491a206886a358fee
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Oct 28 15:27:51 2019 +0800
+
+    code style improvements of the tiff writer
+
+commit 683a04047101f6fca760aa0030a56f4d6c752e83
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Oct 28 14:06:40 2019 +0800
+
+    config projects
+
+commit 51e14f3a33c33b05e43f0cb75832bba8b5213fcc
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Fri Oct 25 23:40:54 2019 +0800
+
+    sequence logo drawer
+
+commit 5dcfc8f08ed468ef966cda9d36633c97d8592cc2
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Fri Oct 25 16:28:39 2019 +0800
+
+    config projects
+
+commit 006a5572743a5c3a328681ce916c32469a2130d1
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Thu Oct 24 20:24:01 2019 +0800
+
+    config projects
+
+commit 1e2ebf4f4f44fb88b0df1d0f87eef3c0eb5b27a6
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sat Oct 12 22:47:28 2019 +0800
+
+    fix object reference errors
+
+commit a8ff386153578420b7ac76e09b6e328e8cc0bb97
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sat Sep 21 22:20:28 2019 +0800
+
+    config projects
+
+commit dc2c254f42924ffef263b53983b3de212f7c7031
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Fri Sep 6 19:04:41 2019 +0800
+
+    Go term annotation based on the Pfam/InterPro analysis.
+
+commit 393576eb7f18fdb88d16f8ddf82b105093626ab9
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Tue Sep 3 09:37:50 2019 +0800
+
+    Create background model for KEGG pathway enrichment based on the kegg metabolites, used for LC-MS metabolism data analysis.
+
+commit 37f1392db7ab0184f40faf5a1697c5fbf8ede37f
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Thu Aug 29 12:01:28 2019 +0800
+
+    KnowledgeBase module based on Microsoft Bing Search Provider and DOI system
+
+commit f8c7b644c1baf01dcd961727be2ced1e09b2a072
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Thu Aug 29 11:18:05 2019 +0800
+
+    config projects
+
+commit 77969a0c84559ed2a5b50386e2f5ec8d4672fc8b
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Thu Aug 29 10:56:16 2019 +0800
+
+    config project profiles
+
+commit d99c0cdeeb54f92695a32e251a54ad179d7255a1
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Wed Aug 28 13:35:55 2019 +0800
+
+    config solution
+
+commit 6ec1567f6bced34db548fa79eeb0e5f84d6116fb
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Wed Aug 28 09:27:01 2019 +0800
+
+    config project profiles
+
+commit 3d02faea1d853cefc0b587a5060dd34598ab0a3c
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sun Aug 11 22:40:33 2019 +0800
+
+    fix for project referenxce
+
+commit 92c768fb055745f3172e1e3b9ce1420f7f87077e
+Author: 关倩倩 <amethyst.asuka@gcmodeller.org>
+Date:   Sat Aug 10 15:19:23 2019 +0800
+
+    convert result table
+
+commit 859d1754f1ab44d4369eef20699539a025ee4578
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Fri Aug 2 09:04:28 2019 +0800
+
+    config project
+
+commit 40a08b9bcb99a5ae0276fbd8ef2a3e60e044501f
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Wed Jul 31 14:37:03 2019 +0800
+
+    add services router model
+
+commit d3a1d13fb405ef16146d6e3fa5c3d8ff04c90d2a
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sun Jul 21 12:27:23 2019 +0800
+
+    fix project reference errors
+
+commit 8a221a4053adf2e9a95d8cadcbfab1ce76f5045e
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Thu Jul 18 17:45:56 2019 +0800
+
+    test success
+
+commit 1a57fed319bc77eaba989dfcfe50f12e3625133f
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Thu Jul 18 15:20:44 2019 +0800
+
+    config project profiles
+
+commit eabe8041713772f453df5d8f093f0f52210cc433
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Wed Jul 17 22:20:06 2019 +0800
+
+    fix for missing project module
+
+commit b83adc44b07830ec34fe36173f79cbade74cab6d
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Tue Jul 2 19:16:09 2019 +0800
+
+    config solutions
+
+commit 0f15a520e041aa01eee52d71fffbb6b2f69377a5
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Wed Jun 19 22:51:40 2019 +0800
+
+    fix type reference errors
+
+commit c2dff8387d533696426de84ff21f15485b3abfc4
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sat Jun 15 16:43:38 2019 +0800
+
+    config project profiles
+
+commit 83fce2c8342c86bf62a4512961aaf96113ae5250
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Tue Jun 11 19:46:33 2019 +0800
+
+    get xref id list
+
+commit 7a3f5d46ad572904ff1dd4eabaa67687c6d05f6d
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Tue Jun 11 19:25:39 2019 +0800
+
+    fix object reference errors
+
+commit 9377c016b8806cf2e8edfd6dbfad561e227f432e
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Jun 10 09:34:46 2019 +0800
+
+    config project  profiles
+
+commit a678bbaf6aa42eea6f02d6b5e768b4b68c403f19
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Thu Jun 6 15:16:11 2019 +0800
+
+    fix missing project reference
+
+commit 8fc6493e764f3752bcd6f54d97284ca24ace4dae
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Tue Jun 4 14:26:32 2019 +0800
+
+    apply sample data impute of the missing values
+
+commit 689063bd38a58a2c1bf7b3c9b6bf08c0e964549f
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Tue Jun 4 14:10:48 2019 +0800
+
+    add sample data impute helper
+
+commit 3a0c0e2449bd9e850c08cfda4692d5a13b0ff4f2
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon May 27 15:01:27 2019 +0800
+
+    removes BIOM module reference from RNA-seq cli tool module
+
+commit 9731354f9e74a27b507f25339e783c9dc6525b8d
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Wed May 22 17:53:26 2019 +0800
+
+    config projects
+
+commit 8ba981395e83d81556090663248a0198c78a1f75
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Wed May 22 17:50:51 2019 +0800
+
+    fix project reference
+
+commit d06e0850642f037d1433569ed74a6bac42b8a007
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Wed Apr 24 10:58:40 2019 +0800
+
+    config project profiles
+
+commit 226cebe64df8de589d19a33a19a4dc0b7a622ce8
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Thu Apr 4 02:18:20 2019 +0800
+
+    fix project reference errors
+
+commit b19e5f8b115eb0afcfa798edcce5916f854d7108
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Sun Mar 10 20:16:24 2019 +0800
+
+    improvements of the label free t-test sample data pre-processing api
+
+commit 762608b5047fed389b8edfbfd5f6ade1a70a216c
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Fri Mar 1 11:17:09 2019 +0800
+
+    add project config profiles
+
+commit cfb7e1df8c1fab2e152f757f17202f2726e497f2
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Tue Jan 29 09:53:48 2019 +0800
+
+    fix reference errors
+
+commit c0941d6451a4e5404f7232019a38678ad18386b1
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Thu Jan 24 13:12:31 2019 +0800
+
+    fix project reference errors
+
+commit 97f989c9fbda11883def30685e76a00dbf472211
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Tue Jan 8 13:40:27 2019 +0800
+
+    config projects
+
+commit f715b3b050026218917606aa7a6c1c5732d34a1a
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Sun Dec 23 21:46:01 2018 +0800
+
+    fix project reference errors
+
+commit 707d993cd87eccb4f1a3adb4faa783757f636865
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Tue Dec 18 12:33:01 2018 +0800
+
+    merge modules
+
+commit 3f84f3419de5d263beda3b0d160e0a4c11b1b53b
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Fri Nov 30 23:10:04 2018 +0800
+
+    parallel cli
+
+commit 96116e821c60637dd2dff6b6088256689f24aa32
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Nov 26 16:53:52 2018 +0800
+
+    code style improvements
+
+commit 69736d99678e8f3ec0ed0bda574b3afca4005240
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Sat Nov 24 19:18:16 2018 +0800
+
+    config projects
+
+commit aadb6308d347dfceeb3aba80c0f0f3e08a8139ec
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sat Nov 24 17:41:13 2018 +0800
+
+    config projects refrence errors
+
+commit e41bc7cf7d43f2dd3b47136e98ad3be365bca270
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sat Nov 24 17:32:58 2018 +0800
+
+    config projects
+
+commit a30b68906e6b7e7fc8560743aea92d9e8be875e7
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Sun Nov 18 12:52:37 2018 +0800
+
+    edit FBA assembly
+
+commit 6b0a7aedd5b2b163f454e50f7741f65f862c8232
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Tue Nov 13 16:28:04 2018 +0800
+
+    draw 3d polygon
+
+commit 190d4816ed13a482c8e52012a8d8b9458f22915c
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Sun Nov 11 20:12:08 2018 +0800
+
+    config project profiles
+
+commit 884d09e439a9ad3d24d602ddf80000c8ea3105d3
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Sun Nov 11 19:54:00 2018 +0800
+
+    add unix64 profile
+
+commit 4b0ff4a35c4e43904a3acd212a4e634a5f2daddd
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Sun Nov 11 11:19:35 2018 +0800
+
+    export pathways network
+
+commit baa8205048596f51bb447d1d11dd1b44eaaf48dc
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Thu Nov 8 20:45:38 2018 +0800
+
+    config projects
+
+commit e7c4c9c5df8118688e06e12a74eb192fab22b648
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Thu Nov 8 20:43:26 2018 +0800
+
+    using netCDF for store simulation result data?
+
+commit 5bb93fe7ed7a765574bb49f40ee4ae757afd9bc0
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Fri Nov 2 22:26:03 2018 +0800
+
+    using new internal cli api for sequence download
+
+commit 1da3fefb1e9894b0f41d3be757209a178e752398
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Sat Oct 27 15:34:03 2018 +0800
+
+    config projects
+
+commit 9607f2cb822b901af4e64efceb405026ae30afb7
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Sat Oct 27 15:31:23 2018 +0800
+
+    config project reference errors
+
+commit 8b0bb4291561e53e3780d3839c47f6277c3335c1
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Fri Oct 26 20:59:29 2018 +0800
+
+    using new compiler api
+
+commit 7a75d9ed5cadad84ef4fe005559e730e360f8a65
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Sat Oct 20 20:46:41 2018 +0800
+
+    update cli app
+
+commit a2fb6c35e9da613260e85478ad1b6f287909ccff
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Sat Oct 20 15:03:04 2018 +0800
+
+    config projects
+
+commit 05865271d5fcef697bc0da6156ac912f979e061b
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Fri Oct 19 23:03:29 2018 +0800
+
+    fix method reference
+
+commit 787f3ded5d4a2e476eccad102191bdf56419dae2
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Wed Oct 17 16:46:22 2018 +0800
+
+    config project profiles
+
+commit 0737999f52ca8629a0d43027863536bf95f0ef07
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Thu Oct 11 09:50:23 2018 +0800
+
+    config projects reference
+
+commit 0b63bc8fc90fd610e28030f5601387730bcb2c22
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Oct 8 10:04:24 2018 +0800
+
+    config projects
+
+commit b3a30b1d316734add85c75e0de7a8a95e34aea4f
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Sun Oct 7 15:12:37 2018 +0800
+
+    using compiler to decouple foundation module with engine modules
+
+commit c3c68acf7d55dccbe318d922f6b82e4983db821d
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Fri Oct 5 22:27:49 2018 +0800
+
+    code style improvements
+
+commit 26cd2d8556538445ea137d34b8b4d302c2beba9f
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Wed Oct 3 19:35:47 2018 +0800
+
+    config projects
+
+commit 16c1f2dfa6179861553e11b70b3b22e1b03f51a1
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Wed Oct 3 16:27:27 2018 +0800
+
+    tabluar model store in a xlsx file?
+
+commit 0ddb03147847c829bab122d9555dce360530105d
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Fri Aug 3 11:09:13 2018 +0800
+
+    config project profiles
+
+commit cf8873e7d8ce5e6dc87a3f970fab95321908d488
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Fri Aug 3 10:45:07 2018 +0800
+
+    config solution file
+
+commit 2edafcc0b86c29b7274b228d251312c1cd1bb296
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Fri Jul 27 14:49:35 2018 +0800
+
+    tools improvements
+
+commit 7f75bc01f2940d8f5ec38eaaea4d29c0dc55ac16
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Thu Jul 19 10:30:17 2018 +0800
+
+    config projects
+
+commit 2ec870c9d26f9811a1b8b2195c2c9845569698c2
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Tue Jul 3 19:26:35 2018 +0800
+
+    config solution files
+
+commit dc00321d4945eaf896673a9b5cba3efbe6ea089d
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Mon Jun 18 16:59:25 2018 +0800
+
+    config solution
+
+commit 99679233473ff43b2973eb918a9b7f6545574442
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Sun Jun 3 22:04:59 2018 +0800
+
+    code style improvements
+
+commit 833d024cb78fdeea68e6b88b8435764091da22c1
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Sun Jun 3 19:16:34 2018 +0800
+
+    config project
+
+commit 5ec145dffd04054906e61033d2efd9b2675466c9
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Wed May 30 21:17:23 2018 +0800
+
+    build cluster models
+
+commit 44210565b1471d43f36e0a3ba4a9e163ccb08437
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Mon May 28 18:40:47 2018 +0800
+
+    config x86 profiles
+
+commit 2af859109455c597134d846db2156e9be1543dce
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon May 28 16:48:37 2018 +0800
+
+    x86 config
+
+commit ff06d619ebae38e27b91cbf45fa435340350056f
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Wed May 23 13:23:05 2018 +0800
+
+    config project profiles
+
+commit 76c588b4e29c683df605ad7398525bc12f760b5d
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Thu May 3 04:13:29 2018 +0800
+
+    config project
+
+commit fe0f0a64475b4b489ef5fcea8ec22e521fd54ebf
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Sat Apr 14 02:32:28 2018 +0800
+
+    fix interface reference errors
+
+commit d5e699f42eff534dd2b8a03cbb0946ac565c59f1
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Wed Mar 28 21:44:49 2018 +0800
+
+    fix object reference errors
+
+commit 228d061466e3ee55ea7b084d94341ccb5dba5af1
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Sat Mar 24 22:16:37 2018 +0800
+
+    config projects
+
+commit 4325808dc55988feb4a8d77f368df4bbe2359b20
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Fri Mar 16 22:46:27 2018 +0800
+
+    fix project missing reference
+
+commit dea2433a43a7eb48a5862c1dd464eb388092bdb9
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Fri Mar 2 16:41:50 2018 +0800
+
+    nPC
+
+commit c7a51b47ef1eb571c9b899796e06bfdecede4fb8
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Fri Mar 2 16:28:47 2018 +0800
+
+    top nPC  in PCA
+
+commit cb35421d1b9c01ae03584a6e6970a1e1ad5f822b
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Tue Feb 27 03:15:07 2018 +0800
+
+    update for R.NET runtime
+
+commit 53017aff1b268fe2849fe1a90e82b47fcace137e
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Thu Feb 15 00:39:06 2018 +0800
+
+    config projects
+
+commit fa0a0c5ce529a707eb7ac275c6900dccd2aff7c3
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Thu Feb 15 00:32:46 2018 +0800
+
+    fix reference errors
+
+commit 4adf0d4240aaa9efcd9a20dbd8dd95fa095e3e03
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Thu Feb 15 00:23:17 2018 +0800
+
+    fix missing projects
+
+commit 39213fc0eabeae5647e08bf29d2f515b9ee770a3
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Mon Feb 12 17:58:12 2018 +0800
+
+    config projects
+
+commit bd92c65f8bf7f8c018b62160680b1f90e00bc8f9
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Sat Feb 10 22:31:39 2018 +0800
+
+    fix a null reference error
+
+commit 9a5ab2c085c6d6190c3d2e8282fbc249d1edd707
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Thu Jan 18 17:22:01 2018 +0800
+
+    config projects
+
+commit 4f575b0ca8ddd5616bdbd13f77f599b6a6d21a91
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Fri Jan 12 13:04:11 2018 +0800
+
+    config project output for debug
+
+commit 1a411d592e38e92c1b260c4492f0437fb0c6d16f
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Wed Jan 10 21:25:28 2018 +0800
+
+    config for the project reference
+
+commit da2aeb76c863ce70578f444e42f40ff9d0f4f7b4
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Tue Jan 9 21:15:31 2018 +0800
+
+    fix for the refernece error
+
+commit a3b1d6b5168b5645a14e5a33f8960b1e40b4cfa8
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Tue Jan 9 21:11:15 2018 +0800
+
+    configs for the shared imports
+
+commit 6d227fdf334fdebf459a57a14b7333d239678b4b
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Tue Jan 9 21:06:22 2018 +0800
+
+    config for the solutions
+
+commit f3d442eec5b6d75a435bd3031380396c96aef648
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Tue Jan 9 21:03:54 2018 +0800
+
+    fix for the project reference error
+
+commit 255f5fa9c78a693ea0baf9949622a43738598281
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Sat Jan 6 02:17:47 2018 +0800
+
+    add parser batch task api
+
+commit b98a3b6a3cfbffcb39002053d9f400d63fd03a3c
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Tue Jan 2 01:01:10 2018 +0800
+
+    config projects
+
+commit a83dffdab4e2e072a6ccc024e755d65d1f9716be
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Sun Dec 31 03:26:36 2017 +0800
+
+    fix type reference error
+
+commit fc25bb6c9688a785c6da60a392f92bf16cbb3647
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Tue Dec 26 18:23:02 2017 +0800
+
+    config projects
+
+commit 516af48b14494469a07cbf19ebd9520f262d6b6c
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sun Dec 24 23:08:59 2017 +0800
+
+    add sequence header parser
+
+commit 779e4953b74b139fe0a9833d7dcd9a75f8cce82a
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sun Dec 24 03:49:08 2017 +0800
+
+    renames project
+
+commit 966ab869c9d0f73836122efa6d0a6baa4201171c
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sat Dec 23 01:38:17 2017 +0800
+
+    config projects
+
+commit 47138640d74cb8156ccaba17941a3e657d6c2690
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Thu Dec 21 13:21:45 2017 +0800
+
+    fix project reference
+
+commit 186960f17b2a891d5ee575b323246bb5475e7381
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Thu Dec 21 11:25:36 2017 +0800
+
+    rename project
+
+commit 7c858955f488e89af700158786d6e78a4b0de868
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Tue Dec 19 17:12:51 2017 +0800
+
+    add CLI description
+
+commit 78816897f5a15b2538ec64b4528059776bfb8b71
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sun Dec 17 07:02:21 2017 +0800
+
+    config projects
+
+commit fc57ada600ac328f67908c394abba852b51c3d5e
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sun Dec 17 02:25:28 2017 +0800
+
+    add kEGG reaction model repository cli tools
+
+commit e29e6cedd856afa904b29dca522c263771a1a130
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sun Dec 17 01:38:41 2017 +0800
+
+    fix a function missing reference error
+
+commit ce5ce7ea166804a80f75ddaebcaae4cd708b0a03
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sat Dec 16 01:35:02 2017 +0800
+
+    fix projectce errors for the network visualize module
+
+commit 374db753aa4f3bc09c4061bdbfb3e9f53ef4a3df
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Dec 11 20:51:09 2017 +0800
+
+    fix a possible type casting problem
+
+commit 7d2ab6739bbfc4ef1431c99248b086cd3e5104a3
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Dec 11 20:47:24 2017 +0800
+
+    add cli interface for gast OTU taxonomy assign method
+
+commit 1ba1f6b35cf8320f93a4d67df77b45ae8ef0e525
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sun Dec 10 14:20:35 2017 +0800
+
+    fix for possible empty line error
+
+commit e4df187f884f28de6c14da2539a252269a0ec4a9
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sun Dec 10 04:27:48 2017 +0800
+
+    = GCModeller(UNIX-Release_X64)
+
+commit ce802f01fc1a619bea52db1614fed962ff623154
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sun Dec 10 04:24:06 2017 +0800
+
+    fix for batch config errors
+
+commit 015804940d43a48475f9d12e52d63b04dc45fe9d
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sun Dec 10 04:21:16 2017 +0800
+
+    config projects
+
+commit c2cb34c00d4d3b47b59f5234abfe4261b4b61fb8
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sun Dec 10 04:12:31 2017 +0800
+
+    config projects
+
+commit e4db54edce0796e6ca28bbe08240508718394afe
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sat Dec 9 00:03:18 2017 +0800
+
+    config projects
+
+commit 6f9974b68c459656eca0ddf60e043ca50e557036
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Fri Dec 8 16:13:14 2017 +0800
+
+    microbiome network
+
+commit e963a4dc4ceb77adf8d73adad42d05aeac090aee
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Fri Dec 8 15:33:22 2017 +0800
+
+    fix object reference error
+
+commit 76694a069cfc9cec7ad0deb2180437537f4762b5
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Thu Dec 7 13:12:18 2017 +0800
+
+    add reference sequence provider
+
+commit b12587fc466784aac4ce58ebf17b319466ce0609
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Thu Dec 7 11:28:20 2017 +0800
+
+    config projects
+
+commit 6aa0fc67d09c16e4a26654f580a8ea86a0a7383f
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Wed Dec 6 15:59:20 2017 +0800
+
+    improvements on the sam stream object
+
+commit 8484d6aded3b7123762c59a090b74568406dca23
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Tue Dec 5 17:45:44 2017 +0800
+
+    ARDB
+
+commit 90584d79556f48ea8faf511816a84fa23c27fea0
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Dec 4 16:45:04 2017 +0800
+
+    update cli interface source code
+
+commit a7e7854cbd5913e8563f9a7c304ef006d0d542fd
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Dec 4 16:35:33 2017 +0800
+
+    using cli shared projects
+
+commit 6c949c6920a9d2a420d4d5cc6d49487935c4ea30
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Dec 4 15:47:16 2017 +0800
+
+    fix commandline get boolean value bugs
+
+commit d0bd695043c0c43eb37983c345fb7098b13b3ae3
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Fri Dec 1 15:36:05 2017 +0800
+
+    handle HMP 16s sequence data downloads
+
+commit 5b5ed51fe8038f5bbccb9481d8e39060df497b67
+Merge: 4d62a49194 21e6c3bcd8
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Tue Nov 28 18:17:05 2017 +0800
+
+    fix code merge conflicts
+
+commit 6156ee933d33eddb7e8729adc07728b3148efdae
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Tue Nov 28 13:51:35 2017 +0800
+
+    add xml code comments
+
+commit 5f4f55d52046b7d879f08345f97aa1146ea2f775
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Nov 27 22:09:12 2017 +0800
+
+    unique query
+
+commit d35fc625f64ba2893a8cfa69e81b325d1423eb9e
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Tue Nov 21 21:41:03 2017 +0800
+
+    config projects
+
+commit 79424058fb2dbe06d9829fd72a7482a1af699244
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Nov 20 17:41:43 2017 +0800
+
+    fix object reference error
+
+commit 3151ad6f72266f6a73f23801b5bb646855160514
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sun Nov 19 20:00:06 2017 +0800
+
+    config project
+
+commit d27b78319226cd238bb0ec4ef5eb7d727c62bcf3
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Fri Nov 17 14:12:30 2017 +0800
+
+    config project
+
+commit b17744270a8f82c5f1f284afab850baf12fa2644
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sun Nov 12 18:18:03 2017 +0800
+
+    config projects
+
+commit fed6f10de15c089b4629c4044c1e9d46e480c01e
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Nov 6 22:00:08 2017 +0800
+
+    config projects
+
+commit cd6d1522ace7d27cdf214485a3b8b48919506640
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Nov 6 21:50:45 2017 +0800
+
+    config project fopr test
+
+commit 7c96a921ba41a16f8ff90332dc6bdee81f18c7f5
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Nov 6 20:56:37 2017 +0800
+
+    config projects
+
+commit ccf90bfc0e77e14c670a52771def5dff2e20dae5
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sat Nov 4 14:18:10 2017 +0800
+
+    config project
+
+commit 2e80323813ac786c271079748f4076598b91fce2
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Fri Nov 3 14:54:28 2017 +0800
+
+    save KEGG reference pathway map data to rda
+
+commit 8569937a2b50da1e10be5fcc0ee0cd87b73e29d7
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Wed Oct 25 21:19:07 2017 +0800
+
+    project renames
+
+commit c8ae4229b51086aa461f741d13aa891044df9a89
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Oct 23 16:03:42 2017 +0800
+
+    object renames
+
+commit 2bf88678b7f1ac2165002520481e33ff4df9d2fd
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Oct 23 15:51:44 2017 +0800
+
+    config solution file
+
+commit 10819261c2979c88913ec0fce914cc28a530f4d6
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sat Oct 21 14:01:14 2017 +0800
+
+    fix project reference error
+
+commit e518086cc603e93024f9aae4be8766e9f9a854be
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Wed Oct 18 18:26:59 2017 +0800
+
+    fix project reference error
+
+commit a9d89f4b9fe194444e1390ef9f564187c1cc9e90
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sun Oct 1 21:58:45 2017 +0800
+
+    ???? still exists the layout bug??
+
+commit bccb6418255352f5a37cb06a58df7777a76e80a2
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Thu Sep 28 09:26:25 2017 +0800
+
+    add new kmeans visualzie interface
+
+commit 4fb0d6d494fd8e1f0095f4fcdc70c375adac1408
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Tue Sep 19 21:31:09 2017 +0800
+
+    fix reference error
+
+commit f9ced02dab506a2c24c52b95d3c369cdb1664588
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Fri Sep 15 17:19:30 2017 +0800
+
+    config project
+
+commit e030d5d5bfd5a1ea74466f8099b89c8a83c80da2
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Fri Sep 15 11:32:40 2017 +0800
+
+    config project
+
+commit d460c3c0b2730995180d7162831c2eaa17504694
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Thu Sep 14 21:17:23 2017 +0800
+
+    search for compound SSR
+
+commit 117eba39b5a67f4b11db9f322608c1012c982882
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Thu Sep 14 18:13:56 2017 +0800
+
+    config project
+
+commit 6660a4dada0586e3528dc8856fbb2445df865d79
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Wed Sep 13 16:17:49 2017 +0800
+
+    fix Inf result, which will caused the R server crashed
+
+commit fa005fea913d9584acba32cdcd246bac8065e10c
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Wed Sep 13 09:52:52 2017 +0800
+
+    config projects
+
+commit 5f6b75e69ba819e38f948843791f33c43446ba39
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Tue Sep 12 10:43:11 2017 +0800
+
+    update submdoule ref
+
+commit af00610e8613a490d64719b60d1324b5d1a9c4f2
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Sep 11 16:51:18 2017 +0800
+
+    config project
+
+commit 62b6ff21b23c1219d4666715b12b7d70f1c41db6
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Sep 11 16:46:02 2017 +0800
+
+    add uniref cluster maps to organism helper
+
+commit 2c7de88f5226aabd1ce7a8c570187df90a9096f0
+Author: 谢桂纲 <xie.guigang@gmail.com>
+Date:   Mon Sep 11 07:42:12 2017 +0800
+
+    update commandline interface
+
+commit ed6f79c7b54eb6cccbcef83b2619a76aa998e9f7
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sun Sep 10 06:54:10 2017 +0800
+
+    config project
+
+commit 0d597d66aa038821156cd40b228b1f5f22fa0cef
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sun Sep 10 05:45:04 2017 +0800
+
+    read annotation data from database
+
+commit 4daf04ef5a02d837587266aedd0ce3e10e262a89
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sun Sep 10 05:28:56 2017 +0800
+
+    config project
+
+commit 30703bb51888a6a8e488aa11b99ede24369eccba
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sun Sep 10 05:22:07 2017 +0800
+
+    experiment designer???
+
+commit dcacd1d3094fdd55fa1836fc2a1303b75c61a08c
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sun Sep 10 04:09:00 2017 +0800
+
+    fix for the mysqli data extensions
+
+commit 5dc093abeca18b8a9f6b1bbc59049b2962f946f9
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sun Sep 10 03:45:56 2017 +0800
+
+    config project
+
+commit db2a8fe34a7932596a1fb8d9031a4ef8a31d384e
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Sun Sep 3 12:39:08 2017 +0800
+
+    add cli tools for uniprot xml database imports
+
+commit fe97ca4ea757eb8cf01f1c8d302814315b8b4819
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Fri Sep 1 21:55:32 2017 +0800
+
+    improvements on the mysqli API
+
+commit cb0ba0702f71ff117934bc8d3535ee9010bc916e
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Fri Sep 1 10:19:40 2017 +0800
+
+    update project configs
+
+commit 66a61e61d59f212ee7704662fa33fcef997a2ff3
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Aug 28 01:17:05 2017 +0800
+
+    removes project reference
+
+commit e904945cb66abc1309e68ac9e2e8cf0e302cd582
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Aug 28 01:14:19 2017 +0800
+
+    fix shared project
+
+commit 04b9ddd2eea0806a1e3258eaea352c1e4a1e5882
+Author: xieguigang <xie.guigang@gcmodeller.org>
+Date:   Mon Aug 28 00:49:45 2017 +0800
+
+    removes newton.json reference
+
+commit 68c2514541bdc5ac039150a529b726ebc4e20830
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Sat Jul 22 15:58:50 2017 +0800
+
+    fix project refernece errors
+
+commit 89960548f23f39a97390f8f5a0317740a64dfbca
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Wed Jul 12 14:48:29 2017 +0800
+
+    split as stand along KEGG network model
+
+commit d59cf24bef98ca7a8479967099e46649d9e9a93a
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Sun Jul 9 06:51:20 2017 +0800
+
+    update project references
+
+commit c1e19b3d5a66830f922534408eaf5772b3500f79
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Fri Jul 7 17:05:34 2017 +0800
+
+    update plot color schema
+
+commit 6f98a59a3578005e1c4ba747d91dc4c97ff1b469
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Sat Jul 1 18:57:15 2017 +0800
+
+    object renames
+
+commit efe388f049178af4400a7970214f7dcc5e2e45f9
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sun Jun 4 19:52:43 2017 +0800
+
+    fix project path
+
+commit f7de9bf381ea1b485a92f73e1689a68dfc8143b9
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Jun 3 14:01:35 2017 +0800
+
+    cli tool
+
+commit f008c137f044b722d756547978f955d91c7997d3
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Jun 3 12:59:12 2017 +0800
+
+    add a metagenome analysis tool
+
+commit 353084a1aca31237c539c9c74876c131cded8137
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Tue May 30 11:24:32 2017 +0800
+
+    build all project failes????
+
+commit 30f0929a14463efd2e14ca99940356dc7c7cb3ca
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Mon May 29 15:17:09 2017 +0800
+
+    removes the sqlite refenreces
+
+commit 516eaf68e1635c73d4889d2b91c3d3b6101f0cb4
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Mon May 29 13:07:46 2017 +0800
+
+    temporary removes sqlite project
+
+commit 67257808412ec157222a62e9fb3b6e3d123fb0f5
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Mon May 29 12:50:12 2017 +0800
+
+    fix mysqli project referneces
+
+commit e285c71a8a5d4c7b82e72164d3d02af5e3d26a07
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Fri May 12 12:39:15 2017 +0800
+
+    build script
+
+commit 26d3f327721d3ba06d17b3978f1f852db858d9fa
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Thu May 11 12:43:34 2017 +0800
+
+    config project reference
+
+commit d6a3fdef8052debbecde1fd8a4a0f7e54a856a02
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sun May 7 12:18:09 2017 +0800
+
+    fix null errors
+
+commit 2c35fe6b7f613d187d6270e19bbef8e657d6e491
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Fri Apr 28 18:02:04 2017 +0800
+
+    fix project reference errrors
+
+commit 719c4e8d286e7743022cb6a0345f8192cbf0ee1a
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Fri Apr 21 15:36:48 2017 +0800
+
+    fix reference errors
+
+commit 5e5a9422ac3c272aa16bac742d61fb6f916fde8c
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Mon Apr 17 19:17:16 2017 +0800
+
+    fix project and namespace reference errors
+
+commit f240ca0e3a682484668c5e7023014b77f9ded815
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Mon Apr 10 09:44:03 2017 +0800
+
+    fix extensions function reference errors
+
+commit ba50f0e320f54b1f2accb3620a46cf1216f65583
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sun Apr 9 16:43:47 2017 +0800
+
+    code comments
+
+commit 48bd764b8c98ea39e6c862209b507aec155b9211
+Author: 谢桂纲 <xie.guigang@gcmodeller.org>
+Date:   Wed Mar 22 14:01:17 2017 +0800
+
+    data model API improvements
+
+commit afaa2056a4d7b52beba991c30718295b00dc1a54
+Author: 谢桂纲 <xie.guigang@live.com>
+Date:   Tue Mar 7 18:03:07 2017 +0800
+
+    ZERO return packages???
+
+commit 49e1d44977d64fdc2fc021c2d5ee802f282c6a44
+Author: 谢桂纲 <xie.guigang@live.com>
+Date:   Mon Mar 6 15:15:59 2017 +0800
+
+    fix reference error
+
+commit df628357f4316bedf62f45fb810384ce2cb5d2f2
+Author: 谢桂纲 <xie.guigang@live.com>
+Date:   Mon Mar 6 15:03:57 2017 +0800
+
+    move kegg mysql code
+
+commit 700195c7c815a41ce0383f3d768d77c7bbadb9af
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Feb 24 17:42:40 2017 +0800
+
+    distance matrix kmeans
+
+commit 068faaf92ca3e3f3e8585cae7265fb82494e2aed
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Feb 24 16:26:57 2017 +0800
+
+    cluster matrix provider
+
+commit a1b945c7a53ceba650585249a516732d49f6e709
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Feb 17 00:36:18 2017 +0800
+
+    improvements on the R dataframe system
+
+commit 5b0da3cb87bdf79ee05d0a6b3d39f575018d7fe8
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Mon Feb 13 00:23:29 2017 +0800
+
+    config for nuget publish
+
+commit 9d9d9f87480b48433ba1f9f22bc3f0e14b49f91a
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sun Feb 12 23:25:02 2017 +0800
+
+    write config file template
+
+commit a16bcde4241b893e4b7afbb261b995989b24d7a4
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sun Feb 12 16:37:34 2017 +0800
+
+    map draw cli tool
+
+commit 4ce01b20cfc28b3159ad2bd3952c1c856df9a87b
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Wed Feb 8 18:58:51 2017 +0800
+
+    chromsome map data extensions
+
+commit 2d5512dabb28304cbbfa77a31f4aaed7c6741549
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Wed Feb 8 18:22:06 2017 +0800
+
+    fix reference
+
+commit ad53cb23cc15ef937b6d6a7d6ab6ade5c00cef98
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Wed Feb 8 18:17:55 2017 +0800
+
+    split visualization module
+
+commit a37548bf05833b221d32d7b4dc669c0029aa7ac7
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Mon Feb 6 14:49:26 2017 +0800
+
+    fix uniprot xml data reader error
+
+commit cf1a5a831963be244d09279f024b5dfece2478ba
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sun Feb 5 10:09:39 2017 +0800
+
+    split go mysql data into a new project
+
+commit 6d0b16ab478eded7128ee0398db4dd78f40ecefa
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Feb 3 18:06:19 2017 +0800
+
+    go enrichment plot CLI
+
+commit a510c87e1704a42d2fe81107e9a32c1f83e3740e
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Feb 3 17:31:02 2017 +0800
+
+    HTS?
+
+commit 385de28f4d43e868d0b8caf69c41cb4972eba5a1
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Tue Jan 24 10:23:31 2017 +0800
+
+    improvements on the catalog profiling plots and fix project references
+
+commit 477a49216cc8cb3151662ad7115d1d6688a0edde
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Jan 21 01:23:27 2017 +0800
+
+    string network append node attributes
+
+commit 9a7b0106bb010054bc326a623e11355d1eeadb2c
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Jan 20 17:11:35 2017 +0800
+
+    program rename
+
+commit 8e9a4fe2f3e3e490b2159acd7999dba339a3ddea
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Thu Jan 19 02:33:54 2017 +0800
+
+    fix reference conflicts
+
+commit a69f07d0caf1e82e9910a546dee7ed1940b015d7
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Thu Jan 19 02:31:32 2017 +0800
+
+    split string-db modules
+
+commit af040365b03f45c06a6e130e1d5088247628ef62
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Tue Jan 17 20:58:37 2017 +0800
+
+    fix borken references
+
+commit 38ef3ea7faafb8c99119659a67c54346ba784884
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sun Jan 15 04:51:50 2017 +0800
+
+    not sure for the heatmap
+    
+    plot improvements not as expected
+
+commit ecb3d8dcf63ec1152880dd387fc4caa0ad35105e
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sun Jan 15 03:14:23 2017 +0800
+
+    DAVID result parser
+
+commit 4e8b534766662fca2628f9c2909cb5ab23557a39
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sun Jan 15 01:25:09 2017 +0800
+
+    export mast sites fasta from meme suite resulkt
+
+commit b3d25cfdfd2169b1ca5e4c613fd6bed58e47d63d
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Jan 14 13:23:41 2017 +0800
+
+    plotting of the go profiling result
+
+commit 664a7681dd4b10716c2754c5b5c461625b3e1c0e
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Jan 13 13:36:08 2017 +0800
+
+    fix possible cutsequence api bug
+
+commit d8d6d70f6a35ec1550d61fa01ca6d121b24e856d
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Wed Jan 11 18:17:41 2017 +0800
+
+    log2 designer
+
+commit a6d25417b35ea77f4e83f0cc39ec3011eb12a5d9
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Wed Jan 11 17:28:15 2017 +0800
+
+    uniprot data download api test success
+
+commit 618eba195df90d3ba0862d9cb13906c741801169
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Tue Jan 10 00:50:04 2017 +0800
+
+    fix repository interface implements
+
+commit 6bd8f6904f042d3ff6e07d9b73905db24bc66a4b
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Mon Jan 9 15:30:06 2017 +0800
+
+    Proteomics.
+
+commit 5dbbf8a07282672bb9b0093215756cd8b5880c14
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sun Jan 8 17:07:18 2017 +0800
+
+    cli api of kegg reactions downlaods
+
+commit f6b64c980e3fcb1d7723a0255fcf0c6a0bba023d
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Jan 7 17:50:12 2017 +0800
+
+    KEGG KO catalog cli interface
+
+commit 754819ca150f5582f0eaed1614db2e0fb95628e6
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Jan 7 16:22:48 2017 +0800
+
+    noit sure for the annotation pipline
+
+commit 04dfaf62394c868acc05433d0511b9deaa85e84e
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Wed Dec 7 04:29:55 2016 +0800
+
+    fix object name conflicts errors
+
+commit 288064bcf9a21b7b4e17c9a262c0d1106bcc25c2
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sun Nov 20 18:20:29 2016 +0800
+
+    fix type reference error
+
+commit 5df41a1e9a922621ef5ab1518b5ce919fda4ee70
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Mon Nov 14 20:41:39 2016 +0800
+
+    Imports SMRUCC.genomics.Metagenomics
+
+commit 3d74d0e0cfaff7896f2a4496039b748753bfd2ea
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Nov 12 20:31:37 2016 +0800
+
+    fix project references
+
+commit 6c389ccb3ddc5600ff40eea346cfa7f3e87be69d
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Nov 12 03:53:19 2016 +0800
+
+    batch search
+
+commit 04b86b0cee103df229673d43f5008a25177a660e
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Nov 12 03:01:37 2016 +0800
+
+    fix csv save errors
+
+commit 67d8b410738cedb88c7098f78295478278ba9616
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Wed Nov 9 16:17:35 2016 +0800
+
+    preparing compile the manual docs
+
+commit 394b7b6d34f80bab49b9a16787a218a18a014473
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Nov 5 09:40:02 2016 +0800
+
+    configs output
+
+commit e72679acc3593535a1040ebf8f1909256f3345bc
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Nov 5 09:12:27 2016 +0800
+
+    fix annotation tools
+
+commit fdbe447a6f5bee689941565d7806a4f5ca3f382f
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Nov 5 08:25:34 2016 +0800
+
+    fix runtime references
+
+commit 3492bb23a35b5c87922df6f7c0c5143bfdbcbc34
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Tue Oct 25 14:16:12 2016 +0800
+
+    Genetic Algorithm bootstrapping protocols
+
+commit 3a0fe17c919840e42d8df60cc594f96d33432418
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Oct 22 14:08:27 2016 +0800
+
+    config projects for nuget publish
+
+commit a8c5077a682a6f57333eff6546edfec0c860e35b
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Wed Oct 19 12:23:01 2016 +0800
+
+    CLI grouping tools improvements
+
+commit 873c6998b6d209b70b7e9faa52eb83993161d7f5
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Mon Oct 17 05:51:40 2016 +0800
+
+    fix sqlite project error
+
+commit acc6f4dd6d1685c1e2b3d1bdc87f346c0ee4f176
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Wed Oct 12 21:45:03 2016 +0800
+
+    add search engine documents
+
+commit 6350feba7b3fe5744956cf6379223b675f63183e
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sun Oct 9 19:10:49 2016 +0800
+
+    config projects
+
+commit 517cc30de379db29a541a0dfffdaab870e526771
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Wed Oct 5 21:42:08 2016 +0800
+
+    fix reference errors
+
+commit 6d8ee9625d5d1fb8b97688f6297e4844bad84f31
+Merge: 0a6890ab89 bc318b16cf
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sun Oct 2 18:28:02 2016 +0800
+
+    Merge branch 'master' of https://github.com/xieguigang/GCModeller.git
+
+commit 0a6890ab89bce41a62b0f8c1d883f9f34fd125d1
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sun Oct 2 18:27:37 2016 +0800
+
+    not sure
+
+commit a47ac1601604d952cdbb4f57ca13e12088358a34
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Oct 1 18:07:12 2016 +0800
+
+    improvements on the localblast parallel task code
+
+commit 356616cc3d2341f4a2ac868def15dc6eee4c519d
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sun Sep 25 11:15:15 2016 +0800
+
+    project configs
+
+commit ecb87e220ad18c9c6c9af725bc7a7f0fe1a829f2
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Wed Sep 21 20:22:51 2016 +0800
+
+    visualbasic runtime library updates
+
+commit 726dbc53c2b57db7527662078d232487871e0613
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Wed Sep 21 15:53:39 2016 +0800
+
+    reconfig library references
+
+commit fb75c4a3f0edd110579c4fce6f29bd62af06bda7
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Wed Sep 21 11:04:42 2016 +0800
+
+    runtime api file structure reorganized
+
+commit bffa76f83fec1518580611892844736a61586d19
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Mon Sep 19 21:48:45 2016 +0800
+
+    not sure for this bugs fix or not?????
+
+commit 0ab45db0c715b197b5a70f6dc8b8d00264b6afa5
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sun Sep 18 18:58:12 2016 +0800
+
+    odes bootstraping estimate parametes
+
+commit a98930b7a98b35c2008053f8211aeca139cd49f3
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sun Sep 18 13:46:28 2016 +0800
+
+    css font for chart plot
+
+commit cb5e8985d6a37e9c7d65e3df165ba8c2c2b73763
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Tue Sep 13 22:28:33 2016 +0800
+
+    math plot system api improvements
+
+commit 627875c4d38954511ed135119df0dbec86edf9f1
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sun Sep 11 19:05:02 2016 +0800
+
+    fix implicit type convert
+
+commit a529bee82c1659e6691981abec2219722ed858d9
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sun Sep 11 00:17:03 2016 +0800
+
+    math api updates
+
+commit e2ac54be9d499a2314b6b1c97bbe437c487becaa
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Wed Sep 7 22:44:29 2016 +0800
+
+    fix a go term property data type error
+
+commit d55632423c84bbdf90d5da3808c1c591ec0fc194
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Tue Sep 6 13:13:16 2016 +0800
+
+    fix project references
+
+commit 564e94699f4e9c9d6d5d48e771f854d74dfd83bf
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Tue Sep 6 13:06:56 2016 +0800
+
+    psidev
+
+commit 0f98ee0df330a8db9c665378087ffefbd3d7b41c
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Tue Sep 6 13:03:46 2016 +0800
+
+    OBO_Foundry
+
+commit ad39e422aadfc1e4991cb9fb17b42edf3cd5e084
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Mon Sep 5 16:42:46 2016 +0800
+
+    go term tools docs update
+
+commit f20cea17be1de6b54e737adfe4b6df0cc2a89d00
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Wed Aug 31 13:17:27 2016 +0800
+
+    update runtime api
+
+commit 90509571d0d81811a9fe9e9827850ece5811f59e
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Aug 12 08:19:54 2016 +0800
+
+    psi dev tools
+
+commit fb6bddd17286042e3a362cb5e76ba0e26ca77550
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Thu Aug 11 07:15:09 2016 +0800
+
+    updates R api reference code
+
+commit 2cb2b72e5d6ecfe38374b7bfc667e6a5650e6472
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Aug 6 16:02:51 2016 +0800
+
+    runtime api updates
+
+commit 0677f79f4203960923e9409029d04f09c48df36b
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Tue Aug 2 18:05:14 2016 +0800
+
+    calculation for the classify of bac strain
+
+commit 40743e100c8bd911f891b1eb60984b9f8cafd1be
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Tue Aug 2 04:58:22 2016 +0800
+
+    improvements on the runtime API
+
+commit 15c9e9dc311b1e04f78f60803037a90a2068bc0b
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Wed Jul 27 20:03:42 2016 +0800
+
+    add http library for workbench
+
+commit c915bdd08eb55395b4f6989bd0d0845090f45af3
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Wed Jul 27 19:38:14 2016 +0800
+
+    update docs library
+
+commit 912dfac8381fba9a8b30c4e22df7e8c69e9fadb8
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Wed Jul 27 18:04:59 2016 +0800
+
+    configs
+
+commit bc368d5c83d3ebb9755950aa03d53dd68aff9e48
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Mon Jul 25 00:14:58 2016 +0800
+
+    reconstruct for the BIOM project
+
+commit 1d26d7097b4fae021055b58aa426a453d6d84800
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Jul 23 03:28:27 2016 +0800
+
+    fix the namespace reconstruct errors
+
+commit ad7a166bf57cd1ee7de6c5c60b5aa642f758594f
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Jul 22 02:29:09 2016 +0800
+
+    fix some bugs on the basys exports
+
+commit e41051231df7f666671f24881834332e65790fb8
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Jul 22 00:19:50 2016 +0800
+
+    add new Metagenome tools from https://github.com/lsncibb/microbiomeGWAS
+
+commit ed0ee13f55f852bd65e96a3d22fd6695b4a1a7c2
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Thu Jul 21 15:50:45 2016 +0800
+
+    reconstruct of the annotation system, start to build the basys system adapter
+
+commit 063aefaabb9514124deeaf45cf41d73ad0b29f39
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Thu Jul 21 15:26:35 2016 +0800
+
+    reconstruct of the annotation tools
+
+commit f0a19cbbca53c23ca55257db0b8edc23d6ed38d3
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Wed Jul 20 20:31:42 2016 +0800
+
+    fix a console event thread bugs
+
+commit bfc11b2a8e2bd85b8c4e2e7b629b227afeac1c7f
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Mon Jul 18 22:16:14 2016 +0800
+
+    configs for rebuild
+
+commit fd474faa35bdc352435194b11b937e4b720f6f0b
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Mon Jul 18 02:53:45 2016 +0800
+
+    add a app
+
+commit a4b53fffe073892b2e48a64c78f5668842babe29
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Mon Jul 18 02:20:41 2016 +0800
+
+    config projects
+
+commit ef459d074cdc00f4a3d502b0ad5c8c1f802a0510
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sun Jul 17 19:29:32 2016 +0800
+
+    edit assembly info
+
+commit 1edb83876af4e87d8ad609326fdfb44dccbb76e1
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sun Jul 17 19:05:12 2016 +0800
+
+    /Build_gi2taxi /in <gi2taxi.dmp> [/out <out.dat>]
+
+commit e13f219e0c43280a13c754978c046719449ffac5
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sun Jul 17 18:51:27 2016 +0800
+
+    add ncbi cli tools
+
+commit f12f88762a76e5c45b319822415dcd7a7cd6a967
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Tue Jul 12 10:33:35 2016 +0800
+
+    try fix a out of memory error on mono max osx environment
+
+commit 5974c33857c684d9f72d9a28306fec9d9206467b
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Thu Jul 7 18:56:43 2016 +0800
+
+    fix cli documents
+
+commit a36666b5d2bc6250effb02829784b900707cc45f
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Thu Jul 7 18:44:03 2016 +0800
+
+    fix cytoscape cli tools
+
+commit 3e7e3123c850a3925d31921db4bb53e0931d6cde
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Thu Jul 7 18:23:15 2016 +0800
+
+    fix a cli tools code
+
+commit 7d680d332529941f183fccb5f170d3ffb2dcac2c
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Thu Jul 7 17:31:42 2016 +0800
+
+    configs for the sdk docs and code signed
+
+commit 0bc955dace2d3c8114fb11d549b6a1c81d8cf346
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Thu Jul 7 01:23:08 2016 +0800
+
+    CompleteLinkageClustering from runtime code
+
+commit 2d1c0e1d657226902213c02ba1d5f83cfce47af3
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Wed Jul 6 16:13:29 2016 +0800
+
+    3-mer vector API
+
+commit 25addfde3deccc83b301ce77eb6f677b72f5d10a
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Tue Jul 5 19:39:08 2016 +0800
+
+    install packages
+
+commit f971d759adf895a3f1d40ad2b4fadd5932c2eec5
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sun Jul 3 01:00:24 2016 +0800
+
+    backups
+
+commit c3890081d46ac95b663613b024d8ec33fdd22e98
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Jul 2 13:24:54 2016 +0800
+
+    all reconstructed error fixed!!  bingo!
+
+commit 45e253e3a85ab4cd6771f3ce89e22ae882e2789a
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Jul 2 13:04:40 2016 +0800
+
+    fix rql
+
+commit 5cfd7d135832ac02f91d17c223f4fd9226b63887
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Jul 2 12:48:50 2016 +0800
+
+    fix CellPhenotype
+
+commit 1244b94c236aa5bd928c6240ed829ac24cb7e66a
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Jul 2 12:25:17 2016 +0800
+
+    not sure for the namespace reference
+
+commit 74908b92860823f4d5a0ed278f1a40fa37107ffd
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Jul 2 12:17:29 2016 +0800
+
+    fix sgRNAcas
+
+commit 50c3db7b059609468fa8d99979418fc94cbe57fd
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Jul 2 12:15:49 2016 +0800
+
+    fix meme tools
+
+commit 60ed8308ed7fc67316e756a7b830ff8c6694c15a
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Jul 2 12:05:22 2016 +0800
+
+    fix web services api
+
+commit 23eac7aff5e373c4c4718bc71d981453440d6420
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Jul 2 11:46:40 2016 +0800
+
+    fix kegg tools
+
+commit 6baac2d79fb529c8e1274a66e15f8511671a92f5
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Jul 2 11:45:02 2016 +0800
+
+    fix gcc tools
+
+commit 7301836eefdc0e9572f2ee83cc2cbe28a9ceacbb
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Jul 2 11:36:14 2016 +0800
+
+    fix xfam tools
+
+commit c6d5f816e4f701b1853a11fc89ffe9e3a20b1bbb
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Jul 2 11:25:41 2016 +0800
+
+    fix localblast tools
+
+commit b5bc26812dcd36d1c4cc4e0810afa0ad44eb8110
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Jul 2 11:13:17 2016 +0800
+
+    fix regprecise tools
+
+commit e8346160fe9d36e0ddef0cb459c6e4573692fcbd
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Jul 2 11:04:00 2016 +0800
+
+    fix tssar project
+
+commit 8d92c267586574206d018179165af56ad0c6aca9
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Jul 2 11:00:23 2016 +0800
+
+    fix smart tools
+
+commit 621ce85b87828fa71c8f1f7619843d8c44de98f2
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Jul 2 10:47:10 2016 +0800
+
+    fix fba tools
+
+commit 9c10529e102bc07af413f4034a51ae32f0ab3227
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Jul 2 10:33:42 2016 +0800
+
+    fix spiderman
+
+commit 38efd9ccc5f852d369e848deab77da7caceac977
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Jul 2 10:30:18 2016 +0800
+
+    fix virtual footprint tools
+
+commit 8251b12b184de848140dd603f29a141694960283
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Jul 2 10:07:54 2016 +0800
+
+    fix annotation tools
+
+commit b0a5863775d7a12acb229a91fc3200f0a806c6e5
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Jul 2 09:55:45 2016 +0800
+
+    fix model repository
+
+commit 1706b296104161e76fa21a10a14a401d3cea0be0
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Sat Jul 2 09:50:59 2016 +0800
+
+    fix tss tools
+
+commit 5f5537cd274904e69e75e5d07f5edbb31bcc33fa
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Jul 1 22:43:17 2016 +0800
+
+    visual studio crashed
+
+commit 20b6705aa3bf960b35025362bed810146354c811
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Jul 1 22:28:57 2016 +0800
+
+    fix fba engine
+
+commit 47d9b95c654a24b776bb6091f3d8617dabbbb281
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Jul 1 22:18:59 2016 +0800
+
+    try fix FBA
+
+commit 97a3ea8cd06e05127546d59e86ac9a1ac4b1fa57
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Jul 1 21:56:45 2016 +0800
+
+    fix visualize tools
+
+commit 2fb86e50ef28a6f7d2fda2d20e480e5c54bbf1ef
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Jul 1 21:09:59 2016 +0800
+
+    fix meme and crispr
+
+commit b9649410aa6458ee24e53be89acf4810f0d3651c
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Jul 1 20:44:12 2016 +0800
+
+    fix engine
+
+commit 3ad6f9c699e2dbabfe831f369263dd94823d022e
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Jul 1 20:07:02 2016 +0800
+
+    fix model compiler
+
+commit 5c15b8b246f262134f10fb834de1a3fe58e9fbdb
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Jul 1 19:00:34 2016 +0800
+
+    fix carmen
+
+commit ccee15fef20bec6d5d5fdcd68b67043d75c14f59
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Jul 1 18:52:28 2016 +0800
+
+    fix rna-seq rtools
+
+commit caa2632d49f03bc1109177a49b553901fca6f124
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Jul 1 18:46:55 2016 +0800
+
+    something missed
+
+commit 6ac37df29b04b69e6fcafa983870d82fb7b9f018
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Jul 1 18:23:58 2016 +0800
+
+    fix regulon database
+
+commit a79bc193c1cec62237cd1143d97161dd677cd96c
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Jul 1 17:01:21 2016 +0800
+
+    fix sequence tools
+
+commit 94cdd620f841347b7ad3fd08f4b9fc6ec2dbce1e
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Jul 1 16:24:07 2016 +0800
+
+    fix bow
+
+commit 94cd5bd2320a1125063bffbaf8b64fb1fad59c7f
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Jul 1 15:33:08 2016 +0800
+
+    fix sqlite errors
+
+commit f4e6c5d18cbb8c458ee355b9addbf563a34f9be9
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Jul 1 15:28:32 2016 +0800
+
+    not sure what's the problems is?
+
+commit cbc307f885d8fb3a005777e580dc2952e06c6695
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Jul 1 15:15:56 2016 +0800
+
+    fix localblast library errors
+
+commit 5164e3bc05186319a0067ef0498da27831850ad6
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Jul 1 14:43:19 2016 +0800
+
+    core module compile success
+
+commit f1fbb04aa2089342fe9c7c6f0137bce76ec56265
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Jul 1 13:40:44 2016 +0800
+
+    xfam
+
+commit 15b5dfdd217e20b936068d1633bef802427eff91
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Jul 1 13:24:55 2016 +0800
+
+    edit assembly info
+
+commit 0ff7acb64e5ff23e92c1a3a10b8d87ce4c967a39
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Jul 1 12:37:08 2016 +0800
+
+    add projects
+
+commit 663ed0e630aae5c33535c50c4361ac403db46a90
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Jul 1 12:22:43 2016 +0800
+
+    add projects
+
+commit 84645093e8c8e585bb7f318e03b86b32fb25406d
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Jul 1 11:45:47 2016 +0800
+
+    removes the shared projects
+
+commit 9f9cc37699f06f836d2d81d190a0ac8246ca6a4c
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Jul 1 11:14:14 2016 +0800
+
+    configs
+
+commit deba52f42f57d42e221c450f7d23465fe5515442
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Jul 1 10:41:51 2016 +0800
+
+    add projects
+
+commit 4aa57158154e15494816a2d8f36d767a271811cc
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Jul 1 10:32:22 2016 +0800
+
+    add projects
+
+commit 47f68ef5d022d0d563e9e999967f65438bff0b87
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Fri Jul 1 10:28:34 2016 +0800
+
+    directory renames
+
+commit 4f530c4a48cd680e5bd8db7a435767690c6bcf61
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Thu Jun 30 23:04:08 2016 +0800
+
+    config pojects
+
+commit a65efb1b1c140a471d1deb197436fc325169f5c1
+Author: xieguigang <xie.guigang@gmail.com>
+Date:   Thu Jun 30 20:39:33 2016 +0800
+
+    workflow pipeline services???

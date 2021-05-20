@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4770488b55f5c11ac5c63e16bd3b1be4, Data_science\DataMining\DataMining\DecisionTree\Algorithm.vb"
+﻿#Region "Microsoft.VisualBasic::9e11f43fcc9bb43099e6c0fa00c951c4, Data_science\DataMining\DataMining\DecisionTree\Algorithm.vb"
 
     ' Author:
     ' 
@@ -43,6 +43,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.DecisionTree.Data
+Imports stdNum = System.Math
 
 Namespace DecisionTree
 
@@ -150,7 +151,22 @@ Namespace DecisionTree
                 End If
             Next
 
-            Return New TreeNode(attributes(highestInformationGainIndex).name, highestInformationGainIndex, attributes(highestInformationGainIndex), edge)
+            If highestInformationGainIndex = -1 Then
+                Return New TreeNode(isleaf:=True, name:=data.headers(Scan0), edge:=edge) With {
+                    .attributes = New Attributes With {
+                        .differentAttributeNames = {},
+                        .informationGain = highestInformationGain,
+                        .name = ""
+                    }
+                }
+            Else
+                Return New TreeNode(
+                    name:=attributes(highestInformationGainIndex).name,
+                    tableIndex:=highestInformationGainIndex,
+                    attributes:=attributes(highestInformationGainIndex),
+                    edge:=edge
+                )
+            End If
         End Function
 
         Private Function GetGainForAllAttributes(data As DataTable, colIndex As Integer, entropyOfDataset As Double) As Double
@@ -167,7 +183,7 @@ Namespace DecisionTree
                 If firstDivision = 0.0 OrElse secondDivision = 0.0 Then
                     stepsForCalculation.Add(0.0)
                 Else
-                    stepsForCalculation.Add(-firstDivision * Math.Log(firstDivision, 2) - secondDivision * Math.Log(secondDivision, 2))
+                    stepsForCalculation.Add(-firstDivision * stdNum.Log(firstDivision, 2) - secondDivision * stdNum.Log(secondDivision, 2))
                 End If
             Next
 
@@ -182,7 +198,7 @@ Namespace DecisionTree
             Dim amountForDifferentValue = data.GetAmountOfEdgesAndTotalPositivResults(data.columns - 1)
             Dim stepsForCalculation = amountForDifferentValue _
                 .[Select](Function(item) item(0, 0) / CDbl(totalRows)) _
-                .[Select](Function(division) -division * Math.Log(division, 2)) _
+                .[Select](Function(division) -division * stdNum.Log(division, 2)) _
                 .ToList()
 
             Return stepsForCalculation.Sum()

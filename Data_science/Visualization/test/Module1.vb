@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b4925344c1edc5b8af856e490440707e, Data_science\Visualization\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::3c2732ffdcc6ba8f4faf123fdb3b6832, Data_science\Visualization\test\Module1.vb"
 
     ' Author:
     ' 
@@ -43,6 +43,7 @@ Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data
+Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot.Data
 Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics
 Imports Microsoft.VisualBasic.Data.csv
@@ -162,7 +163,7 @@ Module Module1
                           legendTitle:="Spearman correlations",
                           rowLabelfontStyle:=CSSFont.Win10Normal).Save("C:\Users\xieguigang\Desktop\ttttttt.png")
         Pause()
-        Dim data = csv.LoadBarData(
+        Dim data = LoadBarData(
     "G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\Fruit_consumption.csv",
     {
         "rgb(124,181,236)",

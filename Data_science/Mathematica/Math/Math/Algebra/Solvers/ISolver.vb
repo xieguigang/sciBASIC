@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b69dd2ee9a686a0a2bc79fa8cdb8e3b6, Data_science\Mathematica\Math\Math\Algebra\Solvers\ISolver.vb"
+﻿#Region "Microsoft.VisualBasic::c98a7e023a873122bae56ad986681136, Data_science\Mathematica\Math\Math\Algebra\Solvers\ISolver.vb"
 
     ' Author:
     ' 
@@ -39,6 +39,8 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+
 Namespace LinearAlgebra.Solvers
 
     ''' <summary>
@@ -48,6 +50,6 @@ Namespace LinearAlgebra.Solvers
     ''' <param name="b"></param>
     ''' <returns>x</returns>
     ''' <remarks></remarks>
-    Public Delegate Function Solve(A As Matrix, b As Vector) As Vector
+    Public Delegate Function Solve(A As GeneralMatrix, b As Vector) As Vector
 
 End Namespace

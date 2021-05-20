@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0bcd4df69a14dd231fe70f4e6361e9bf, Data\DataFrame\Linq\DataStream.vb"
+﻿#Region "Microsoft.VisualBasic::d637421d8c78737dcc3fba085da76056, Data\DataFrame\Linq\DataStream.vb"
 
     ' Author:
     ' 
@@ -36,10 +36,8 @@
     ' 
     '     Class SchemaReader
     ' 
-    '         Properties: headers, SchemaOridinal
-    ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: GetOrdinal, ToString
+    '         Function: ToString
     ' 
     '     Module DataLinqStream
     ' 
@@ -47,7 +45,7 @@
     ' 
     '     Class DataStream
     ' 
-    '         Properties: SchemaOridinal
+    '         Properties: FileName, SchemaOridinal
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
@@ -67,6 +65,8 @@
 
 #End Region
 
+Imports System.IO
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
@@ -86,30 +86,19 @@ Namespace IO.Linq
     ''' <returns></returns>
     Public Delegate Function GetOrdinal(column As String) As Integer
 
-    Public Class SchemaReader : Implements ISchema
-
-        Public ReadOnly Property SchemaOridinal As Dictionary(Of String, Integer) Implements ISchema.SchemaOridinal
-        Public ReadOnly Property headers As IReadOnlyCollection(Of String)
+    Public Class SchemaReader : Inherits HeaderSchema
+        Implements ISchema
 
         Sub New(fileName$, Optional encoding As Encoding = Nothing, Optional tsv As Boolean = False)
             Call Me.New(RowObject.TryParse(fileName.ReadFirstLine(encoding), tsv))
         End Sub
 
         Sub New(firstLineHeaders As RowObject)
-            headers = firstLineHeaders.ToArray
-            SchemaOridinal = headers _
-                .SeqIterator _
-                .ToDictionary(Function(x) x.value.ToLower,
-                              Function(x) x.i)
+            Call MyBase.New(firstLineHeaders)
         End Sub
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetOrdinal(name As String) As Integer Implements ISchema.GetOrdinal
-            Return _SchemaOridinal.TryGetValue(name.ToLower, [default]:=-1)
-        End Function
-
         Public Overrides Function ToString() As String
-            Return $"[{headers.JoinBy(", ")}]"
+            Return $"[{Headers.JoinBy(", ")}]"
         End Function
     End Class
 
@@ -120,9 +109,18 @@ Namespace IO.Linq
         ''' </summary>
         ''' <param name="fileName$"></param>
         ''' <param name="encoding"></param>
+        ''' <param name="maps">
+        ''' Change filed name mapping by:
+        ''' 
+        ''' ``Csv.Field -> <see cref="PropertyInfo.Name"/>``
+        ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Function OpenHandle(fileName$, Optional encoding As Encoding = Nothing, Optional tsv As Boolean = False) As (schema As SchemaReader, table As IEnumerable(Of RowObject))
+        Public Function OpenHandle(fileName$,
+                                   Optional encoding As Encoding = Nothing,
+                                   Optional tsv As Boolean = False,
+                                   Optional maps As Dictionary(Of String, String) = Nothing) As (schema As SchemaReader, table As IEnumerable(Of RowObject))
+
             Dim schema As New SchemaReader(fileName, encoding, tsv)
             Dim source As IEnumerable(Of RowObject) = fileName _
                 .IterateAllLines _
@@ -130,11 +128,16 @@ Namespace IO.Linq
                 .Select(Function(line)
                             Return New RowObject(line, tsv)
                         End Function)
+
+            If Not maps.IsNullOrEmpty Then
+                Call schema.ChangeMapping(maps)
+            End If
+
             Return (schema, source)
         End Function
 
         <Extension>
-        Public Function CastObject(Of T As Class)(schema As SchemaReader) As Func(Of RowObject, T)
+        Public Function CastObject(Of T As Class)(schema As SchemaReader, Optional silent As Boolean = False) As Func(Of RowObject, T)
             Dim provider As SchemaProvider = SchemaProvider _
                 .CreateObject(Of T)(strict:=False) _
                 .CopyWriteDataToObject
@@ -142,11 +145,11 @@ Namespace IO.Linq
             Dim type As Type = GetType(T)
 
             Call rowBuilder.IndexOf(schema)
-            Call rowBuilder.SolveReadOnlyMetaConflicts()
+            Call rowBuilder.SolveReadOnlyMetaConflicts(silent)
 
             Return Function(row As RowObject) As T
                        Dim obj As Object = Activator.CreateInstance(type)
-                       Dim data As Object = rowBuilder.FillData(row, obj)
+                       Dim data As Object = rowBuilder.FillData(row, obj, "")
 
                        Return DirectCast(data, T)
                    End Function
@@ -180,7 +183,7 @@ Namespace IO.Linq
     ''' <summary>
     ''' Buffered large text dataset Table reader
     ''' </summary>
-    Public Class DataStream : Inherits BufferedStream
+    Public Class DataStream
         Implements ISchema
         Implements IDisposable
 
@@ -188,11 +191,19 @@ Namespace IO.Linq
         ''' The title row, which is the mapping source of the class property name.
         ''' </summary>
         ReadOnly _title As RowObject
+        ReadOnly _file As StreamReader
+        ReadOnly _schema As Dictionary(Of String, Integer)
 
         ''' <summary>
         ''' The columns and their index order
         ''' </summary>
         Public ReadOnly Property SchemaOridinal As Dictionary(Of String, Integer) Implements ISchema.SchemaOridinal
+            Get
+                Return _schema
+            End Get
+        End Property
+
+        Public ReadOnly Property FileName As String
 
         Sub New()
             _schema = New Dictionary(Of String, Integer)
@@ -200,18 +211,23 @@ Namespace IO.Linq
         End Sub
 
         Sub New(file$, Optional encoding As Encoding = Nothing, Optional bufSize% = 64 * 1024 * 1024)
-            Call MyBase.New(file, encoding, bufSize)
-
             Dim first As String = file.ReadFirstLine
 
             _title = RowObject.TryParse(first)
-            _schema = _title.Select(
-                Function(colName, idx) New With {
-                    .colName = colName,
-                    .ordinal = idx}) _
-                    .ToDictionary(Function(x) x.colName.ToLower,
-                                  Function(x) x.ordinal)
-            Me.FileName = file
+            _schema = _title _
+                .Select(Function(colName, idx)
+                            Return New With {
+                                .colName = colName,
+                                .ordinal = idx
+                            }
+                        End Function) _
+                .ToDictionary(Function(x) x.colName.ToLower,
+                              Function(x)
+                                  Return x.ordinal
+                              End Function)
+
+            Me._FileName = file
+            Me._file = file.OpenReader(encoding)
 
             Call $"{file.ToFileURL} handle opened...".__DEBUG_ECHO
         End Sub
@@ -219,8 +235,8 @@ Namespace IO.Linq
         Public Function GetOrdinal(Name As String) As Integer Implements ISchema.GetOrdinal
             Name = Name.ToLower
 
-            If _SchemaOridinal.ContainsKey(Name) Then
-                Return _SchemaOridinal(Name)
+            If _schema.ContainsKey(Name) Then
+                Return _schema(Name)
             Else
                 Return -1
             End If
@@ -236,16 +252,13 @@ Namespace IO.Linq
         ''' 这个函数主要是为了处理第一行数据
         ''' 因为在构造函数部分已经读取了第一行来解析schema，所以在这里需要对第一个数据块做一些额外的处理
         ''' </remarks>
-        Public Overrides Function BufferProvider() As String()
-            Dim buffer As String() = MyBase.BufferProvider()
+        Private Iterator Function BufferProvider() As IEnumerable(Of String)
+            Call _file.BaseStream.Seek(Scan0, SeekOrigin.Begin)
+            Call _file.ReadLine()
 
-            If __firstBlock Then
-                __firstBlock = False
-                buffer = buffer.Skip(1).ToArray
-            Else         '  不是第一个数据块，则不需要额外处理，直接返回
-            End If
-
-            Return buffer
+            Do While Not Me._file.EndOfStream
+                Yield Me._file.ReadLine
+            Loop
         End Function
 
         ''' <summary>
@@ -253,33 +266,22 @@ Namespace IO.Linq
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="invoke"></param>
-        Public Sub ForEach(Of T As Class)(invoke As Action(Of T))
-            Dim schema As SchemaProvider =
-                SchemaProvider.CreateObject(Of T)(False).CopyWriteDataToObject
+        Public Sub ForEach(Of T As Class)(invoke As Action(Of T), Optional silent As Boolean = False)
+            Dim schema As SchemaProvider = SchemaProvider.CreateObject(Of T)(False).CopyWriteDataToObject
             Dim RowBuilder As New RowBuilder(schema)
             Dim type As Type = GetType(T)
 
             Call RowBuilder.IndexOf(Me)
-            Call RowBuilder.SolveReadOnlyMetaConflicts()
+            Call RowBuilder.SolveReadOnlyMetaConflicts(silent)
 
-            Do While True
-                Dim buffer As String() = BufferProvider()
+            For Each line As String In BufferProvider()
+                Dim row As RowObject = RowObject.TryParse(line)
+                Dim obj As Object = Activator.CreateInstance(type)
 
-                For Each line As String In buffer
-                    Dim row As RowObject = RowObject.TryParse(line)
-                    Dim obj As Object = Activator.CreateInstance(type)
+                obj = RowBuilder.FillData(row, obj, "")
 
-                    obj = RowBuilder.FillData(row, obj)
-
-                    Call invoke(DirectCast(obj, T))
-                Next
-
-                If EndRead Then
-                    Exit Do
-                Else
-                    Call EchoLine("Process next block....")
-                End If
-            Loop
+                Call invoke(DirectCast(obj, T))
+            Next
         End Sub
 
         ''' <summary>
@@ -291,45 +293,35 @@ Namespace IO.Linq
         ''' <remarks>
         ''' 2016.06.19  代码已经经过测试，没有数据遗漏的bug，请放心使用
         ''' </remarks>
-        Public Sub ForEachBlock(Of T As Class)(invoke As Action(Of T()), Optional blockSize As Integer = 10240 * 5)
-            Dim schema As SchemaProvider =
-                SchemaProvider.CreateObject(Of T)(False).CopyWriteDataToObject ' 生成schema映射模型
+        Public Sub ForEachBlock(Of T As Class)(invoke As Action(Of T()), Optional blockSize As Integer = 10240 * 5, Optional silent As Boolean = False)
+            ' 生成schema映射模型
+            Dim schema As SchemaProvider = SchemaProvider.CreateObject(Of T)(False).CopyWriteDataToObject
             Dim RowBuilder As New RowBuilder(schema)
             Dim type As Type = GetType(T)
 
             Call RowBuilder.IndexOf(Me)
-            Call RowBuilder.SolveReadOnlyMetaConflicts()
+            Call RowBuilder.SolveReadOnlyMetaConflicts(silent)
 
-            Do While True
-                Dim chunks As IEnumerable(Of String()) =
-                    TaskPartitions.SplitIterator(BufferProvider(), blockSize)
+            Dim chunks As IEnumerable(Of String()) = TaskPartitions.SplitIterator(BufferProvider(), blockSize)
 
-                For Each block As String() In chunks
-                    Dim LQuery As RowObject() =
-                        LinqAPI.Exec(Of RowObject) <=
+            For Each block As String() In chunks
+                Dim LQuery As RowObject() = LinqAPI.Exec(Of RowObject) _
  _
-                            From line As String
-                            In block.AsParallel
-                            Select RowObject.TryParse(line)
+                    () <= From line As String
+                          In block.AsParallel
+                          Select RowObject.TryParse(line)
 
-                    Dim values As T() = LinqAPI.Exec(Of T) <=
+                Dim values As T() = LinqAPI.Exec(Of T) <=
  _
-                        From row As RowObject
-                        In LQuery.AsParallel
-                        Let obj As Object = Activator.CreateInstance(type)
-                        Let data = RowBuilder.FillData(row, obj)
-                        Select DirectCast(data, T)
+                    From row As RowObject
+                    In LQuery.AsParallel
+                    Let obj As Object = Activator.CreateInstance(type)
+                    Let data = RowBuilder.FillData(row, obj, "")
+                    Select DirectCast(data, T)
 
-                    Call Time(AddressOf New __taskHelper(Of T)(values, invoke).RunTask)
-                    Call cat(".")
-                Next
-
-                If EndRead Then
-                    Exit Do
-                Else
-                    Call "Process next block....".__INFO_ECHO
-                End If
-            Loop
+                Call Time(AddressOf New __taskHelper(Of T)(values, invoke).RunTask)
+                Call cat(".")
+            Next
         End Sub
 
         ''' <summary>
@@ -364,7 +356,7 @@ Namespace IO.Linq
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
-        Public Iterator Function AsLinq(Of T As Class)(Optional parallel As Boolean = False) As IEnumerable(Of T)
+        Public Iterator Function AsLinq(Of T As Class)(Optional parallel As Boolean = False, Optional silent As Boolean = False) As IEnumerable(Of T)
             Dim schema As SchemaProvider = SchemaProvider _
                 .CreateObject(Of T)(False) _
                 .CopyWriteDataToObject
@@ -372,24 +364,20 @@ Namespace IO.Linq
             Dim type As Type = GetType(T)
 
             Call RowBuilder.IndexOf(Me)
-            Call RowBuilder.SolveReadOnlyMetaConflicts()
+            Call RowBuilder.SolveReadOnlyMetaConflicts(silent)
 
-            Do While Not EndRead
+            Dim LQuery As IEnumerable(Of T) =
+ _
+                From line As String
+                In If(parallel, DirectCast(BufferProvider.AsParallel, IEnumerable(Of String)), DirectCast(BufferProvider(), IEnumerable(Of String)))
+                Let row As RowObject = RowObject.TryParse(line)
+                Let obj As Object = Activator.CreateInstance(type)
+                Let data As Object = RowBuilder.FillData(row, obj, "")
+                Select DirectCast(data, T)
 
-                Dim LQuery As IEnumerable(Of T) =
-                    From line As String
-                    In If(parallel,
-                        DirectCast(BufferProvider.AsParallel, IEnumerable(Of String)),
-                        DirectCast(BufferProvider(), IEnumerable(Of String)))
-                    Let row As RowObject = RowObject.TryParse(line)
-                    Let obj As Object = Activator.CreateInstance(type)
-                    Let data As Object = RowBuilder.FillData(row, obj)
-                    Select DirectCast(data, T)
-
-                For Each x As T In LQuery
-                    Yield x
-                Next
-            Loop
+            For Each obj As T In LQuery
+                Yield obj
+            Next
 
             Call Reset()
         End Function
@@ -416,9 +404,6 @@ Namespace IO.Linq
             If Not Me.disposedValue Then
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
-                    __innerBuffer = Nothing
-                    __innerStream = Nothing
-
                     Call FlushMemory()
                 End If
 

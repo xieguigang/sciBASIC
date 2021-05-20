@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb0d24e05fb77908921628c60b20d565, Data\BinaryData\DataStorage\HDF5\structure\Infrastructure\BTree\BTreeNode.vb"
+﻿#Region "Microsoft.VisualBasic::8edf1e4ab19ebbbee95444e553a4a367, Data\BinaryData\DataStorage\HDF5\structure\Infrastructure\BTree\BTreeNode.vb"
 
     ' Author:
     ' 
@@ -57,6 +57,7 @@
 
 Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO.HDF5.device
 Imports Microsoft.VisualBasic.Language
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
@@ -102,7 +103,7 @@ Namespace HDF5.struct
         ''' <summary>
         ''' track iteration; LOOK this seems fishy - why not an iterator ??
         ''' </summary>
-        Dim currentEntry As VBInteger
+        Dim currentEntry As i32
 
         ''' <summary>
         ''' The ASCII character string “TREE” is used to indicate the beginning of a B-tree node. 

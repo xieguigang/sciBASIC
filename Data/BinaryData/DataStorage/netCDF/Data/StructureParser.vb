@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7aafd242a2240fa02d83212c4e5fd9c1, Data\BinaryData\DataStorage\netCDF\Data\StructureParser.vb"
+﻿#Region "Microsoft.VisualBasic::4bb35695fa8f004fa107a6c69d05e7f2, Data\BinaryData\DataStorage\netCDF\Data\StructureParser.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module StructureParser
     ' 
-    '         Function: attributesList, dimensionsList, variablesList
+    '         Function: attributesList, dimensionsList, readVariableInternal, variablesList
     ' 
     ' 
     ' /********************************************************************************/
@@ -144,16 +144,20 @@ Namespace netCDF
                 ' Read type
                 Dim type As CDFDataTypes = buffer.ReadUInt32()
 
-                Utils.notNetcdf(((type < 1) Or (type > 6)), $"non valid type {type}")
+                Call Utils.notNetcdf(type < 1, $"non valid type {type}")
 
                 ' Read attribute
-                Dim size = buffer.ReadUInt32()
-                Dim val = TypeExtensions.readType(buffer, type, size)
+                Dim size As Integer = buffer.ReadUInt32()
+                Dim val As Object = Utils.readType(buffer, type, size)
 
                 ' Apply padding
                 Call Utils.padding(buffer)
 
-                Yield New Attribute With {
+                If TypeOf val Is Boolean() Then
+                    val = val(Scan0)
+                End If
+
+                Yield New attribute With {
                     .name = name,
                     .type = type,
                     .value = val
@@ -183,7 +187,7 @@ Namespace netCDF
         <Extension>
         Friend Function variablesList(buffer As BinaryDataReader, recordId%?, version As Byte) As (variables As variable(), recordStep%)
             Dim varList = buffer.ReadUInt32()
-            Dim recordStep = 0
+            Dim recordStep As Integer = 0
 
             If (varList = ZERO) Then
                 Utils.notNetcdf((buffer.ReadUInt32() <> ZERO), "wrong empty tag for list of variables")
@@ -197,56 +201,71 @@ Namespace netCDF
             Dim variables As New List(Of variable)
 
             For v As Integer = 0 To variableSize - 1
-                ' Read name
-                Dim name = Utils.readName(buffer)
-                ' Read dimensionality of the variable
-                Dim dimensionality = buffer.ReadUInt32()
-                ' Index into the list of dimensions
-                Dim dimensionsIds = New Integer(dimensionality - 1) {}
-
-                For [dim] As Integer = 0 To dimensionality - 1
-                    dimensionsIds([dim]) = buffer.ReadUInt32()
-                Next
-
-                ' Read variables size
-                Dim attributes = attributesList(buffer).ToArray
-                ' Read type
-                Dim type As CDFDataTypes = buffer.ReadUInt32()
-
-                Utils.notNetcdf(((type < 1) AndAlso (type > 6)), $"non valid type {type}")
-
-                ' Read variable size
-                ' The 32-bit varSize field Is Not large enough to contain the size of variables that require
-                ' more than 2^32 - 4 bytes, so 2^32 - 1 Is used in the varSize field for such variables.
-                Dim varSize = buffer.ReadUInt32()
-                ' Read offset
-                Dim offset = buffer.ReadUInt32()
-
-                If (version = 2) Then
-                    Utils.notNetcdf((offset > 0), "offsets larger than 4GB not supported")
-                    offset = buffer.ReadUInt32()
-                End If
-
-                Dim record As Boolean = False
-
-                ' Count amount of record variables
-                If ((recordId IsNot Nothing) AndAlso (dimensionsIds(0) = recordId)) Then
-                    recordStep += varSize
-                    record = True
-                End If
-
-                variables += New variable With {
-                    .name = name,
-                    .dimensions = dimensionsIds,
-                    .attributes = attributes,
-                    .type = type,
-                    .size = varSize,
-                    .offset = offset,
-                    .record = record
-                }
+                variables += buffer.readVariableInternal(recordId, version, recordStep)
             Next
 
             Return (variables:=variables, recordStep:=recordStep)
+        End Function
+
+        ''' <summary>
+        ''' var = name nelems [dimid ...] vatt_list nc_type vsize begin	
+        ''' </summary>
+        ''' <param name="buffer"></param>
+        ''' <param name="recordId%"></param>
+        ''' <param name="version"></param>
+        ''' <param name="recordStep%"></param>
+        ''' <returns></returns>
+        <Extension>
+        Private Function readVariableInternal(buffer As BinaryDataReader, recordId%?, version As Byte, ByRef recordStep%) As variable
+            ' Read name
+            Dim name = Utils.readName(buffer)
+            ' Read dimensionality of the variable
+            Dim dimensionality = buffer.ReadUInt32()
+            ' Index into the list of dimensions
+            Dim dimensionsIds = New Integer(dimensionality - 1) {}
+
+            For [dim] As Integer = 0 To dimensionality - 1
+                dimensionsIds([dim]) = buffer.ReadUInt32()
+            Next
+
+            ' Read variables size
+            Dim attributes = attributesList(buffer).ToArray
+            ' Read type
+            Dim type As CDFDataTypes = buffer.ReadUInt32()
+
+            Utils.notNetcdf(((type < 1) AndAlso (type > 6)), $"non valid type {type}")
+
+            ' Read variable size
+            ' The 32-bit varSize field Is Not large enough to contain the size of variables that require
+            ' more than 2^32 - 4 bytes, so 2^32 - 1 Is used in the varSize field for such variables.
+            Dim varSize = buffer.ReadUInt32()
+            ' Read offset
+            Dim offset = buffer.ReadUInt32()
+
+            If (version = 2) Then
+                Utils.notNetcdf((offset > 0), "offsets larger than 4GB not supported")
+                offset = buffer.ReadUInt32()
+            End If
+
+            Dim record As Boolean = False
+
+            ' Count amount of record variables
+            If ((recordId IsNot Nothing) AndAlso (dimensionsIds(0) = recordId)) Then
+                ' For record variables, it is the amount of space per
+                ' record.
+                recordStep += varSize
+                record = True
+            End If
+
+            Return New variable With {
+                .name = name,
+                .dimensions = dimensionsIds,
+                .attributes = attributes,
+                .type = type,
+                .size = varSize,
+                .offset = offset,
+                .record = record
+            }
         End Function
     End Module
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::06ab6252af80d8c2aed113f67b712ba3, Data_science\Graph\Model\Tree\AbstractTree.vb"
+﻿#Region "Microsoft.VisualBasic::3b603fc134be04e6e07505e2510a1e23, Data_science\Graph\Model\Tree\AbstractTree.vb"
 
     ' Author:
     ' 
@@ -36,16 +36,25 @@
     '     Properties: Childs, Count, IsLeaf, IsRoot, Parent
     '                 QualifyName
     ' 
-    '     Constructor: (+1 Overloads) Sub New
+    '     Constructor: (+2 Overloads) Sub New
     '     Function: (+2 Overloads) CountLeafs, EnumerateChilds, ToString
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+#If netcore5 = 0 Then
+Imports System.Web.Script.Serialization
+#Else
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+#End If
+
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.Serialization
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Linq
 
+<DataContract>
 Public Class AbstractTree(Of T As AbstractTree(Of T, K), K) : Inherits Vertex
 
     ''' <summary>
@@ -53,6 +62,16 @@ Public Class AbstractTree(Of T As AbstractTree(Of T, K), K) : Inherits Vertex
     ''' </summary>
     ''' <returns></returns>
     Public Property Childs As Dictionary(Of K, T)
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' 在序列化之中会需要忽略掉这个属性，否则会产生无限递归
+    ''' </remarks>
+    <XmlIgnore>
+    <ScriptIgnore>
     Public Property Parent As T
 
     Dim qualDeli$ = "."
@@ -93,9 +112,9 @@ Public Class AbstractTree(Of T As AbstractTree(Of T, K), K) : Inherits Vertex
     Public ReadOnly Property QualifyName As String
         Get
             If Not Parent Is Nothing Then
-                Return Parent.QualifyName & qualDeli & Label
+                Return Parent.QualifyName & qualDeli & label
             Else
-                Return Label
+                Return label
             End If
         End Get
     End Property
@@ -114,6 +133,10 @@ Public Class AbstractTree(Of T As AbstractTree(Of T, K), K) : Inherits Vertex
 
     Sub New(Optional qualDeli$ = ".")
         Me.qualDeli = qualDeli
+    End Sub
+
+    Sub New()
+        Call Me.New(".")
     End Sub
 
     ''' <summary>

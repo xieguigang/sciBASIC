@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4557456d67b1fc93c88d1274cf8fb985, mime\text%html\MarkDown\LinkToTitle.vb"
+﻿#Region "Microsoft.VisualBasic::0e9599849987412fdda603eb7170c9bb, mime\text%html\MarkDown\LinkToTitle.vb"
 
     ' Author:
     ' 
@@ -51,13 +51,10 @@
 ' 
 
 
-Imports System.Collections
-Imports System.Collections.Generic
 Imports System.Net
 Imports System.Text
 Imports System.Text.RegularExpressions
-Imports System.Web.Script.Serialization
-
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace MarkDown
 
@@ -167,8 +164,7 @@ Namespace MarkDown
         ''' </summary>
         ''' <param name="res"></param>
         Private Sub ParseApiResponse(res As String)
-            Dim serializer As New JavaScriptSerializer()
-            Dim json = serializer.Deserialize(Of Dictionary(Of String, Object))(res)
+            Dim json = res.LoadJSON(Of Dictionary(Of String, Object))
 
             For Each item As Dictionary(Of String, Object) In DirectCast(json("items"), ArrayList)
                 For i As Integer = 0 To _maxLinks - 1

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1fca50aa7a275fa3a27cc7440f38879e, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\T-test\Ttest.vb"
+﻿#Region "Microsoft.VisualBasic::076d18482231d90c4b0c11633370efef, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\T-test\Ttest.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module t
     ' 
-    '         Function: __welch2df, __welch2t, Pvalue, (+2 Overloads) Tcdf, (+2 Overloads) Test
+    '         Function: Pvalue, (+2 Overloads) Tcdf, (+2 Overloads) Test, welch2df, welch2t
     ' 
     ' 
     ' /********************************************************************************/
@@ -41,8 +41,9 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports Microsoft.VisualBasic.Math.Statistics.MomentFunctions
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
+Imports Microsoft.VisualBasic.Math.Statistics.MomentFunctions
+Imports stdNum = System.Math
 
 Namespace Hypothesis
 
@@ -70,11 +71,12 @@ Namespace Hypothesis
             Return New TtestResult With {
                 .alpha = alpha,
                 .DegreeFreedom = sample.SampleSize - 1,
-                .StdErr = Math.Sqrt(x.Variance / sample.SampleSize),
+                .StdErr = stdNum.Sqrt(sample.Variance / sample.SampleSize),
                 .TestValue = (sample.Mean - mu) / .StdErr,
                 .Pvalue = Pvalue(.TestValue, .DegreeFreedom, alternative),
                 .Mean = sample.Mean,
-                .Alternative = alternative
+                .alternative = alternative,
+                .x = sample.ToArray
             }
         End Function
 
@@ -101,34 +103,49 @@ Namespace Hypothesis
             Dim va#() = a.ToArray, vb = b.ToArray
             Dim left As New BasicProductMoments(a)
             Dim right As New BasicProductMoments(b)
-            Dim v# = If(varequal,
-                left.SampleSize + right.SampleSize - 2,
-                __welch2df(va.Variance, vb.Variance, left.SampleSize, right.SampleSize))
+            Dim v#
+
+            If varEqual Then
+                v = left.SampleSize + right.SampleSize - 2
+            Else
+                v = welch2df(va.Variance, vb.Variance, left.SampleSize, right.SampleSize)
+            End If
+
             Dim commonVariance# = ((left.SampleSize - 1) * va.Variance + (right.SampleSize - 1) * vb.Variance) / v
+            Dim testVal#
+            Dim stdErr# = stdNum.Sqrt(commonVariance * (1 / left.SampleSize + 1 / right.SampleSize))
+
+            If varEqual Then
+                testVal = ((left.Mean - right.Mean) - mu) / stdErr
+            Else
+                testVal = welch2t(left.Mean, right.Mean, va.Variance, vb.Variance, left.SampleSize, right.SampleSize)
+            End If
+
+            Dim pvalue# = t.Pvalue(testVal, v, alternative)
 
             Return New TwoSampleResult With {
                 .alpha = alpha,
                 .DegreeFreedom = v,
                 .Mean = left.Mean - right.Mean,
-                .StdErr = Math.Sqrt(commonVariance * (1 / left.SampleSize + 1 / right.SampleSize)),
-                .TestValue = If(varEqual,
-                    (.Mean - mu) / .StdErr,
-                    __welch2t(left.Mean, right.Mean, va.Variance, vb.Variance, left.SampleSize, right.SampleSize)),
-                .Pvalue = Pvalue(.TestValue, v, alternative),
-                .Alternative = alternative,
+                .StdErr = stdErr,
+                .TestValue = testVal,
+                .Pvalue = pvalue,
+                .alternative = alternative,
                 .MeanX = left.Mean,
-                .MeanY = right.Mean
+                .MeanY = right.Mean,
+                .x = va,
+                .y = vb
             }
         End Function
 
-        Private Function __welch2t(m1#, m2#, s1#, s2#, N1#, N2#) As Double
+        Private Function welch2t(m1#, m2#, s1#, s2#, N1#, N2#) As Double
             Dim a = m1 - m2
-            Dim b = Math.Sqrt((s1 ^ 2) / N1 + (s2 ^ 2) / N2)
+            Dim b = stdNum.Sqrt((s1 ^ 2) / N1 + (s2 ^ 2) / N2)
             Dim t = a / b
             Return t
         End Function
 
-        Private Function __welch2df(s1#, s2#, N1#, N2#) As Double
+        Private Function welch2df(s1#, s2#, N1#, N2#) As Double
             Dim v1 = N1 - 1
             Dim v2 = N2 - 1
             Dim a = (s1 ^ 2 / N1 + s2 ^ 2 / N2) ^ 2
@@ -150,7 +167,7 @@ Namespace Hypothesis
                 Case Hypothesis.Less
                     Return Tcdf(t, v)
                 Case Else
-                    Return 2 * (1 - Tcdf(Math.Abs(t), v))
+                    Return 2 * (1 - Tcdf(stdNum.Abs(t), v))
             End Select
         End Function
 

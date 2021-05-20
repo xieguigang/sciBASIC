@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::02c1a8fa6bf9d02b4740215c98f586c8, Data_science\Mathematica\SignalProcessing\wav\wav\SubChunk.vb"
+﻿#Region "Microsoft.VisualBasic::25a8120d1da32dd2773bb29d953a95ce, Data_science\Mathematica\SignalProcessing\wav\wav\SubChunk\SubChunk.vb"
 
     ' Author:
     ' 
@@ -33,25 +33,11 @@
 
     ' Class SubChunk
     ' 
-    '     Properties: ChunkID, ChunkSize
-    ' 
-    ' Class FMTSubChunk
-    ' 
-    '     Properties: audioFormat, BitsPerSample, BlockAlign, ByteRate, Channels
-    '                 SampleRate
-    ' 
-    ' Class DataSubChunk
-    ' 
-    '     Properties: Data
-    ' 
-    '     Function: loadData, ParseData
+    '     Properties: chunkID, chunkSize
     ' 
     ' /********************************************************************************/
 
 #End Region
-
-Imports System.IO
-Imports Microsoft.VisualBasic.Data.IO
 
 Public MustInherit Class SubChunk
 

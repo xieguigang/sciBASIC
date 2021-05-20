@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb4445a629d4fc8f17cc50bc44248a3a, Data_science\Visualization\Plots\BarPlot\BarPlot2.vb"
+﻿#Region "Microsoft.VisualBasic::39b857dd98b563e3d11920623945a77a, Data_science\Visualization\Plots\BarPlot\BarPlot2.vb"
 
     ' Author:
     ' 
@@ -42,8 +42,8 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot.Data
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
@@ -132,11 +132,11 @@ Namespace BarPlot
                     Next
 
                     If showLegend Then
-                        Dim legends As Legend() = LinqAPI.Exec(Of Legend) <=
+                        Dim legends As LegendObject() = LinqAPI.Exec(Of LegendObject) <=
  _
                         From x As NamedValue(Of Color)
                         In data.Serials
-                        Select New Legend With {
+                        Select New LegendObject With {
                             .color = x.Value.RGBExpression,
                             .fontstyle = CSSFont.GetFontStyle(
                                 FontFace.MicrosoftYaHei,
@@ -150,11 +150,11 @@ Namespace BarPlot
                             legendPos = New Point(CInt(size.Width * 0.8), margin.Top)
                         End If
 
-                        Call g.DrawLegends(legendPos, legends,,, legendBorder)
+                        Call g.DrawLegends(legendPos, legends,,, shapeBorder:=legendBorder)
                     End If
                 End Sub
 
-            Return GraphicsPlots(size, margin, bg, plotInternal)
+            Return g.GraphicsPlots(size, margin, bg, plotInternal)
         End Function
     End Module
 End Namespace

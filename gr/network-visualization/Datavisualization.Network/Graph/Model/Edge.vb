@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eab47dc0b9a749175d8c28e7842215b8, gr\network-visualization\Datavisualization.Network\Graph\Model\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::a916c7fc878614dc64e653a940c235df, gr\network-visualization\Datavisualization.Network\Graph\Model\Edge.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,12 @@
 
     '     Class Edge
     ' 
-    '         Properties: __source, __target, Data, Directed, ID
+    '         Properties: data, ID, isDirected, m_interationtype, m_source
+    '                     m_target, weight
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: (+2 Overloads) Equals, GetHashCode, Iterate2Nodes, ToString
+    '         Function: Clone, (+2 Overloads) Equals, GetHashCode, Iterate2Nodes, Other
+    '                   ToString
     '         Operators: <>, =
     ' 
     ' 
@@ -83,20 +85,83 @@
 '
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace Graph
 
     Public Class Edge : Inherits GraphTheory.Network.Edge(Of Node)
         Implements IInteraction
+        Implements INetworkEdge
         Implements IGraphValueContainer(Of EdgeData)
+        Implements ICloneable(Of Edge)
 
-        Public Sub New(iId As String, iSource As Node, iTarget As Node, iData As EdgeData)
-            ID = iId
-            U = iSource
-            V = iTarget
-            Data = If(iData, New EdgeData())
-            Directed = False
+        Dim uniqueID As String = Nothing
+
+        ''' <summary>
+        ''' 如果什么也不赋值，则默认自动根据node编号来生成唯一id
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides Property ID As String
+            Get
+                If uniqueID.StringEmpty Then
+                    Return MyBase.ID
+                Else
+                    Return uniqueID
+                End If
+            End Get
+            Set(value As String)
+                uniqueID = value
+            End Set
+        End Property
+
+        Public Property data As EdgeData Implements Selector.IGraphValueContainer(Of EdgeData).data
+        Public Property isDirected As Boolean
+
+#Region "Implements IInteraction"
+
+        Private Property m_source As String Implements IInteraction.source
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return U.label
+            End Get
+            Set(value As String)
+                Throw New NotImplementedException()
+            End Set
+        End Property
+
+        Private Property m_target As String Implements IInteraction.target
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return V.label
+            End Get
+            Set(value As String)
+                Throw New NotImplementedException()
+            End Set
+        End Property
+
+        Private Property m_interationtype As String Implements INetworkEdge.Interaction
+            Get
+                Return data(NamesOf.REFLECTION_ID_MAPPING_INTERACTION_TYPE)
+            End Get
+            Set(value As String)
+                data(NamesOf.REFLECTION_ID_MAPPING_INTERACTION_TYPE) = value
+            End Set
+        End Property
+
+        Public Overrides Property weight As Double Implements INetworkEdge.value
+
+#End Region
+
+        Public Sub New(id As String, source As Node, target As Node, Optional data As EdgeData = Nothing)
+            Me.ID = id
+            Me.data = If(data, New EdgeData())
+
+            U = source
+            V = target
+            isDirected = False
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -104,34 +169,18 @@ Namespace Graph
             Call Me.New(Nothing, Nothing, Nothing, Nothing)
         End Sub
 
-        Public Property ID() As String
-        Public Property Data() As EdgeData Implements Selector.IGraphValueContainer(Of EdgeData).Data
-        Public Property Directed() As Boolean
+        Public Function Other(current As Node) As Node
+            If U Is current Then
+                Return V
+            Else
+                Return U
+            End If
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return ID
         End Function
-
-        Private Property __source As String Implements IInteraction.source
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return U.Label
-            End Get
-            Set(value As String)
-                Throw New NotImplementedException()
-            End Set
-        End Property
-
-        Private Property __target As String Implements IInteraction.target
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return V.Label
-            End Get
-            Set(value As String)
-                Throw New NotImplementedException()
-            End Set
-        End Property
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetHashCode() As Integer
@@ -181,6 +230,23 @@ Namespace Graph
         Public Iterator Function Iterate2Nodes() As IEnumerable(Of Node)
             Yield U
             Yield V
+        End Function
+
+        Public Function Clone() As Edge Implements ICloneable(Of Edge).Clone
+            Return New Edge With {
+                .ID = ID,
+                .isDirected = isDirected,
+                .U = U,
+                .V = V,
+                .weight = weight,
+                .data = New EdgeData With {
+                    .label = data.label,
+                    .length = data.length,
+                    .Properties = New Dictionary(Of String, String)(data.Properties),
+                    .bends = data.bends.SafeQuery.ToArray,
+                    .color = data.color
+                }
+            }
         End Function
     End Class
 End Namespace

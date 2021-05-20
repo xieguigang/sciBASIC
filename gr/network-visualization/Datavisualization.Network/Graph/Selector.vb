@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5ba5532ccc589af03a1e7669766b51a, gr\network-visualization\Datavisualization.Network\Graph\Selector.vb"
+﻿#Region "Microsoft.VisualBasic::17453a7bb03cd53c554513941562f463, gr\network-visualization\Datavisualization.Network\Graph\Selector.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Function: GenericSelector, SelectEdgeValue, SelectNodeValue
     '         Interface IGraphValueContainer
     ' 
-    '             Properties: Data
+    '             Properties: data
     ' 
     ' 
     ' 
@@ -57,8 +57,12 @@ Namespace Graph
     ''' </summary>
     Public Module Selector
 
+        ''' <summary>
+        ''' An class object that contains <see cref="GraphData"/>
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
         Public Interface IGraphValueContainer(Of T As GraphData)
-            Property Data As T
+            Property data As T
         End Interface
 
         ''' <summary>
@@ -91,14 +95,16 @@ Namespace Graph
             ElseIf dataValues.ContainsKey([property]) Then
                 reader = dataValues([property])
                 type = reader.PropertyType
-                Return Function(model) reader.GetValue(model.Data)
+                Return Function(model) reader.GetValue(model.data)
             Else
                 type = GetType(String)
-                Return Function(model) model.Data([property])
+                Return Function(model) model.data([property])
             End If
         End Function
 
-        <Extension> Public Function SelectEdgeValue(property$, Optional ByRef type As Type = Nothing) As Func(Of Edge, Object)
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function SelectEdgeValue(property$, Optional ByRef type As Type = Nothing) As Func(Of Edge, Object)
             Return [property].GenericSelector(Of EdgeData, Edge)(type)
         End Function
     End Module

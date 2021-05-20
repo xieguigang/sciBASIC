@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::96d0563dd33c69aa852ab8a86dbc6822, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout3D\layout3d.vb"
+﻿#Region "Microsoft.VisualBasic::80b00269897cf25bfc9c4af956777825, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout3D\layout3d.vb"
 
     ' Author:
     ' 
@@ -42,10 +42,13 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.Data.GraphTheory.Analysis
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.GridRouter
 Imports any = System.Object
 Imports number = System.Double
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace Layouts.Cola
 
@@ -69,7 +72,7 @@ Namespace Layouts.Cola
             nodes.ForEach(Sub(v, i)
                               For Each [dim] As String In Layout3D.dims
                                   If v([dim]) = 0 Then
-                                      v([dim]) = Math.Seeds.NextDouble
+                                      v([dim]) = randf.seeds.NextDouble
                                   End If
                               Next
                               Me.result(0)(i) = v.x

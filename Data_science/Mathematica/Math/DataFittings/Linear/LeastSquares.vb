@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e09cc0c2fc1227c9e6ec7e58fae43993, Data_science\Mathematica\Math\DataFittings\Linear\LeastSquares.vb"
+﻿#Region "Microsoft.VisualBasic::2fdbc8c7512a818299cded8f96ebd5a3, Data_science\Mathematica\Math\DataFittings\Linear\LeastSquares.vb"
 
     ' Author:
     ' 
@@ -44,6 +44,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports stdNum = System.Math
 
 ' 尘中远，于2014.03.20
 ' 主页：http://blog.csdn.net/czyt1988/article/details/21743595
@@ -163,7 +164,7 @@ Public Module LeastSquares
             Next
         Next
 
-        Call gaussSolve(poly_n + 1, ata, result.Polynomial.Factors, sumxy)
+        Call gaussSolve(poly_n + 1, ata, DirectCast(result.Polynomial, Polynomial).Factors, sumxy)
         ' 计算拟合后的数据并计算误差
         Call calcError(x, y, length, result)
 
@@ -202,8 +203,10 @@ Public Module LeastSquares
             }
         Next
 
-        result.RMSE = Math.Sqrt(result.SSE / CDbl(length))
-        result.ErrorTest = err
+        result.RMSE = stdNum.Sqrt(result.SSE / CDbl(length))
+        result.ErrorTest = err _
+            .Select(Function(e) DirectCast(e, IFitError)) _
+            .ToArray
     End Sub
 
     Private Sub gaussSolve(n%, ByRef A As List(Of Double), ByRef x#(), ByRef b As List(Of Double))
@@ -214,12 +217,12 @@ Public Module LeastSquares
         Dim max As Double
 
         For k = 0 To n - 2
-            max = Math.Abs(A(k * n + k))
+            max = stdNum.Abs(A(k * n + k))
             ' find maxmum
             r = k
             For i = k + 1 To n - 2
-                If max < Math.Abs(A(i * n + i)) Then
-                    max = Math.Abs(A(i * n + i))
+                If max < stdNum.Abs(A(i * n + i)) Then
+                    max = stdNum.Abs(A(i * n + i))
                     r = i
                 End If
             Next

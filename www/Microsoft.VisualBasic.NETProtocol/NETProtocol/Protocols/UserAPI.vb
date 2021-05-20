@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1b484722aa851bd456e5249ecc18985, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\Protocols\UserAPI.vb"
+﻿#Region "Microsoft.VisualBasic::cc10132a86b72e00e05e5fbc2dd6f31b, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\Protocols\UserAPI.vb"
 
     ' Author:
     ' 
@@ -51,9 +51,9 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Net.Tcp
+Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Serialization
 
 Namespace NETProtocol.Protocols
@@ -71,7 +71,7 @@ Namespace NETProtocol.Protocols
             GetData
         End Enum
 
-        Public ReadOnly Property ProtocolEntry As Long = New Protocol(GetType(Protocols)).EntryPoint
+        Public ReadOnly Property ProtocolEntry As Long = New ProtocolAttribute(GetType(Protocols)).EntryPoint
 
         ''' <summary>
         ''' 在服务器端调用得到用户的唯一标识符
@@ -88,7 +88,7 @@ Namespace NETProtocol.Protocols
             Dim req = RequestStream.CreateProtocol(ProtocolEntry, Protocols.InitUser, uid)
             Dim rep = New TcpRequest(remote).SendMessage(req)
             Dim args = rep.LoadObject(AddressOf JSON.LoadJSON(Of InitPOSTBack))
-            args.Portal.IPAddress = remote.IPAddress ' 服务器端偷懒了
+            args.Portal.ipAddress = remote.ipAddress ' 服务器端偷懒了
             Return args
         End Function
     End Module

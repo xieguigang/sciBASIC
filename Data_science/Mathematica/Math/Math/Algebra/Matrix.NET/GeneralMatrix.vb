@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8cac490ce7e3b0bea66f2eb4ae1c1b39, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\GeneralMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::51a19fa76bbfb4c8efad8771285dae6e, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\GeneralMatrix.vb"
 
     ' Author:
     ' 
@@ -38,18 +38,20 @@
     ' 
     '         Constructor: (+6 Overloads) Sub New
     ' 
-    '         Function: Add, AddEquals, ArrayLeftDivide, ArrayLeftDivideEquals, ArrayMultiply
-    '                   ArrayMultiplyEquals, ArrayRightDivide, ArrayRightDivideEquals, chol, Clone
-    '                   Condition, Copy, Create, Determinant, Eigen
-    '                   (+4 Overloads) GetMatrix, Identity, Inverse, LUD, (+3 Overloads) Multiply
-    '                   MultiplyEquals, Norm1, Norm2, NormF, NormInf
-    '                   QRD, Rank, RowVectors, Solve, SolveTranspose
+    '         Function: Abs, Add, AddEquals, ArrayLeftDivide, ArrayLeftDivideEquals
+    '                   ArrayMultiply, ArrayMultiplyEquals, ArrayRightDivide, ArrayRightDivideEquals, chol
+    '                   Clone, Condition, Copy, Create, Determinant
+    '                   Eigen, (+4 Overloads) GetMatrix, Identity, Inverse, Log
+    '                   LUD, (+3 Overloads) Multiply, MultiplyEquals, Norm1, Norm2
+    '                   NormF, NormInf, Number, Power, QRD
+    '                   Rank, RowApply, RowVectors, Solve, SolveTranspose
     '                   (+2 Overloads) Subtract, SubtractEquals, SVD, ToString, Trace
     '                   Transpose
     ' 
-    '         Sub: CheckMatrixDimensions, (+2 Overloads) Dispose, Finalize, ISerializable_GetObjectData, (+4 Overloads) SetMatrix
+    '         Sub: CheckMatrixDimensions, (+2 Overloads) Dispose, Finalize, ISerializable_GetObjectData, Resize
+    '              (+4 Overloads) SetMatrix
     ' 
-    '         Operators: (+3 Overloads) -, (+3 Overloads) *, +
+    '         Operators: (+4 Overloads) -, (+3 Overloads) *, ^, +
     ' 
     ' 
     ' /********************************************************************************/
@@ -58,12 +60,14 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports stdNum = System.Math
 
-Namespace Matrix
+Namespace LinearAlgebra.Matrix
 
     ''' <summary>
     ''' ### .NET GeneralMatrix class.
@@ -140,7 +144,6 @@ Namespace Matrix
         ''' </param>
         ''' <param name="n">   Number of colums.
         ''' </param>
-
         Public Sub New(m As Integer, n As Integer)
             Me.m = m
             Me.n = n
@@ -160,7 +163,6 @@ Namespace Matrix
         ''' </param>
         ''' <param name="s">   Fill the matrix with this scalar value.
         ''' </param>
-
         Public Sub New(m As Integer, n As Integer, s As Double)
             Me.m = m
             Me.n = n
@@ -179,21 +181,30 @@ Namespace Matrix
         End Sub
 
         ''' <summary>Construct a matrix from a 2-D array.</summary>
-        ''' <param name="A">   Two-dimensional array of doubles.
+        ''' <param name="A">Two-dimensional array of doubles.
         ''' </param>
-        ''' <exception cref="System.ArgumentException">   All rows must have the same length
+        ''' <param name="t">
+        ''' the given raw data parameter <paramref name="A"/> is in columns
+        ''' required transpose of the matrix.
+        ''' </param>
+        ''' <exception cref="ArgumentException">All rows must have the same length
         ''' </exception>
         ''' <seealso cref="Create">
         ''' </seealso>
+        Public Sub New(A As Double()(), Optional t As Boolean = False)
+            If t Then
+                A = A.MatrixTranspose.ToArray
+            End If
 
-        Public Sub New(A As Double()())
             m = A.Length
             n = A(0).Length
+
             For i As Integer = 0 To m - 1
                 If A(i).Length <> n Then
                     Throw New ArgumentException("All rows must have the same length.")
                 End If
             Next
+
             Me.buffer = A
         End Sub
 
@@ -209,7 +220,6 @@ Namespace Matrix
         ''' </param>
         ''' <param name="n">   Number of colums.
         ''' </param>
-
         Public Sub New(A As Double()(), m As Integer, n As Integer)
             Me.buffer = A
             Me.m = m
@@ -221,14 +231,13 @@ Namespace Matrix
         ''' </param>
         ''' <param name="m">   Number of rows.
         ''' </param>
-        ''' <exception cref="System.ArgumentException">   Array length must be a multiple of m.
+        ''' <exception cref="ArgumentException">   Array length must be a multiple of m.
         ''' </exception>
-
         Public Sub New(vals As Double(), m As Integer)
             Me.m = m
             n = (If(m <> 0, vals.Length \ m, 0))
             If m * n <> vals.Length Then
-                Throw New System.ArgumentException("Array length must be a multiple of m.")
+                Throw New ArgumentException("Array length must be a multiple of m.")
             End If
             Dim A = New Double(m - 1)() {}
             For i As Integer = 0 To m - 1
@@ -243,7 +252,6 @@ Namespace Matrix
             buffer = A
         End Sub
 #End Region
-
 
 #Region "Public Properties"
 
@@ -329,6 +337,17 @@ Namespace Matrix
 
 #Region "Public Methods"
 
+        ''' <summary>
+        ''' 获取仅包含有一个元素的矩阵对象
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function Number() As GeneralMatrix
+            Return New GeneralMatrix(0, 0)
+        End Function
+
         ''' <summary>Construct a matrix from a copy of a 2-D array.</summary>
         ''' <param name="A">   Two-dimensional array of doubles.
         ''' </param>
@@ -351,9 +370,23 @@ Namespace Matrix
             Return X
         End Function
 
-        ''' <summary>Make a deep copy of a matrix</summary>
+        Public Function Abs() As GeneralMatrix
+            Dim X As New GeneralMatrix(m, n)
+            Dim C As Double()() = X.Array
 
-        Public Overridable Function Copy() As GeneralMatrix
+            For i As Integer = 0 To m - 1
+                For j As Integer = 0 To n - 1
+                    C(i)(j) = stdNum.Abs(buffer(i)(j))
+                Next
+            Next
+
+            Return X
+        End Function
+
+        ''' <summary>
+        ''' Make a deep copy of a matrix
+        ''' </summary>
+        Public Overridable Overloads Function Copy() As GeneralMatrix
             Dim X As New GeneralMatrix(m, n)
             Dim C As Double()() = X.Array
             For i As Integer = 0 To m - 1
@@ -569,8 +602,8 @@ Namespace Matrix
                         buffer(r(i))(j) = X(i, j - j0)
                     Next
                 Next
-            Catch e As System.IndexOutOfRangeException
-                Throw New System.IndexOutOfRangeException("Submatrix indices", e)
+            Catch e As IndexOutOfRangeException
+                Throw New IndexOutOfRangeException("Submatrix indices", e)
             End Try
         End Sub
 
@@ -622,9 +655,9 @@ Namespace Matrix
             For j As Integer = 0 To n - 1
                 Dim s As Double = 0
                 For i As Integer = 0 To m - 1
-                    s += System.Math.Abs(buffer(i)(j))
+                    s += stdNum.Abs(buffer(i)(j))
                 Next
-                f = System.Math.Max(f, s)
+                f = stdNum.Max(f, s)
             Next
             Return f
         End Function
@@ -643,12 +676,15 @@ Namespace Matrix
 
         Public Overridable Function NormInf() As Double
             Dim f As Double = 0
+
             For i As Integer = 0 To m - 1
                 Dim s As Double = 0
+
                 For j As Integer = 0 To n - 1
-                    s += System.Math.Abs(buffer(i)(j))
+                    s += stdNum.Abs(buffer(i)(j))
                 Next
-                f = System.Math.Max(f, s)
+
+                f = stdNum.Max(f, s)
             Next
             Return f
         End Function
@@ -736,9 +772,10 @@ Namespace Matrix
         End Function
 
         ''' <summary>C = A - B</summary>
-        ''' <param name="B">   another matrix
+        ''' <param name="B">a numeric value
         ''' </param>
-        ''' <returns>     A - B
+        ''' <returns>     
+        ''' A - B
         ''' </returns>
         Public Overridable Function Subtract(B As Double) As GeneralMatrix
             Dim X As New GeneralMatrix(m, n)
@@ -747,6 +784,37 @@ Namespace Matrix
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
                     C(i)(j) = buffer(i)(j) - B
+                Next
+            Next
+
+            Return X
+        End Function
+
+        ''' <summary>C = x ^ y</summary>
+        ''' <param name="y">power
+        ''' </param>
+        ''' <returns>x ^ y
+        ''' </returns>
+        Public Overridable Function Power(y As Double) As GeneralMatrix
+            Dim X As New GeneralMatrix(m, n)
+            Dim C As Double()() = X.Array
+
+            For i As Integer = 0 To m - 1
+                For j As Integer = 0 To n - 1
+                    C(i)(j) = buffer(i)(j) ^ y
+                Next
+            Next
+
+            Return X
+        End Function
+
+        Public Overridable Function Log(Optional newBase As Double = stdNum.E) As GeneralMatrix
+            Dim X As New GeneralMatrix(m, n)
+            Dim C As Double()() = X.Array
+
+            For i As Integer = 0 To m - 1
+                For j As Integer = 0 To n - 1
+                    C(i)(j) = stdNum.Log(buffer(i)(j), newBase)
                 Next
             Next
 
@@ -974,6 +1042,23 @@ Namespace Matrix
 
         Public Shared Operator -(m1 As GeneralMatrix, x As Double) As GeneralMatrix
             Return m1.Subtract(x)
+        End Operator
+
+        Public Shared Operator ^(m1 As GeneralMatrix, y As Double) As GeneralMatrix
+            Return m1.Power(y)
+        End Operator
+
+        Public Shared Operator -(x As Double, m As GeneralMatrix) As GeneralMatrix
+            Dim Xmat As New GeneralMatrix(m.RowDimension, m.ColumnDimension)
+            Dim C As Double()() = Xmat.Array
+
+            For i As Integer = 0 To m.RowDimension - 1
+                For j As Integer = 0 To m.ColumnDimension - 1
+                    C(i)(j) = x - m.buffer(i)(j)
+                Next
+            Next
+
+            Return Xmat
         End Operator
 
         ''' <summary>
@@ -1206,8 +1291,25 @@ Namespace Matrix
         End Sub
 #End Region
 
+        ''' <summary>
+        ''' 调整矩阵的大小，并保留原有的数据
+        ''' </summary>
+        ''' <param name="m"></param>
+        ''' <param name="n"></param>
+        ''' <remarks></remarks>
+        Public Sub Resize(m As Integer, n As Integer)
+            Me.m = m
+            Me.n = n
+
+            ReDim Preserve buffer(n - 1)
+
+            For i As Integer = 0 To buffer.Length - 1
+                ReDim Preserve buffer(i)(m - 1)
+            Next
+        End Sub
+
         ''' <summary>Clone the GeneralMatrix object.</summary>
-        Public Function Clone() As System.Object Implements ICloneable.Clone
+        Public Function Clone() As Object Implements ICloneable.Clone
             Return Me.Copy()
         End Function
 
@@ -1230,6 +1332,14 @@ Namespace Matrix
         Public Shared Widening Operator CType(data#()()) As GeneralMatrix
             Return New GeneralMatrix(data)
         End Operator
+
+        Public Iterator Function RowApply(Of T)(apply As Func(Of Double(), Integer, T)) As IEnumerable(Of T)
+            Dim i As i32 = Scan0
+
+            For Each row As Double() In buffer
+                Yield apply(row, ++i)
+            Next
+        End Function
 
         Public Iterator Function RowVectors() As IEnumerable(Of Vector)
             For Each row As Double() In buffer

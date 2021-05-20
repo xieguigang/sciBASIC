@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1abdf6951f06d4b1eec8c1ba7f52190d, Data_science\Visualization\Plots\BarPlot\BarPlot.vb"
+﻿#Region "Microsoft.VisualBasic::ab6123a0daec321c2be355c2e3c29aa8, Data_science\Visualization\Plots\BarPlot\BarPlot.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Function: FromData, Plot, Rectangle
     ' 
-    '         Sub: __plot1
+    '         Sub: plotImpl
     ' 
     ' 
     ' /********************************************************************************/
@@ -45,6 +45,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot.Data
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
@@ -54,13 +55,14 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports stdNum = System.Math
 
 Namespace BarPlot
 
     ''' <summary>
     ''' 这个不像<see cref="Histogram"/>用于描述若干组连续的数据，这个是将数据按照标签分组来表述出来的
     ''' </summary>
-    Public Module BarPlotAPI
+    <HideModuleName> Public Module BarPlotAPI
 
         ''' <summary>
         ''' Bar data plot
@@ -94,7 +96,7 @@ Namespace BarPlot
             Return GraphicsPlots(
                 size, margin,
                 bg,
-                Sub(ByRef g, grect) Call __plot1(
+                Sub(ByRef g, grect) Call plotImpl(
                     g, grect,
                     data,
                     bg,
@@ -115,23 +117,27 @@ Namespace BarPlot
         ''' <param name="showLegend"></param>
         ''' <param name="legendPos"></param>
         ''' <param name="legendBorder"></param>
-        Private Sub __plot1(ByRef g As IGraphics, grect As GraphicsRegion,
-                            data As BarDataGroup,
-                            bg$,
-                            showGrid As Boolean,
-                            stacked As Boolean,
-                            stackReorder As Boolean,
-                            showLegend As Boolean,
-                            legendPos As Point,
-                            legendBorder As Stroke,
-                            legendFont As Font)
+        Private Sub plotImpl(ByRef g As IGraphics, grect As GraphicsRegion,
+                             data As BarDataGroup,
+                             bg$,
+                             showGrid As Boolean,
+                             stacked As Boolean,
+                             stackReorder As Boolean,
+                             showLegend As Boolean,
+                             legendPos As Point,
+                             legendBorder As Stroke,
+                             legendFont As Font)
 
             Dim scaler As New Scaling(data, stacked, False)
             Dim mapper As New Mapper(scaler)
-            Dim n As Integer = If(
-                stacked,
-                data.Samples.Length,
-                data.Samples.Sum(Function(x) x.data.Length) - 1)
+            Dim n As Integer
+
+            If stacked Then
+                n = data.Samples.Length
+            Else
+                n = data.Samples.Sum(Function(x) x.data.Length) - 1
+            End If
+
             Dim dxStep As Double = (grect.Size.Width - grect.Padding.Horizontal - 2 * grect.Padding.Horizontal) / n
             Dim interval As Double = grect.Padding.Horizontal / n
             Dim left As Single = grect.Padding.Left
@@ -218,10 +224,10 @@ Namespace BarPlot
 
                 ' 得到斜边的长度
                 Dim sz = g.MeasureString((+key), font)
-                Dim dx! = sz.Width * Math.Cos(angle)
-                Dim dy! = sz.Width * Math.Sin(angle)
+                Dim dx! = sz.Width * stdNum.Cos(angle)
+                Dim dy! = sz.Width * stdNum.Sin(angle)
 
-                Call g.DrawString(+key, font, Brushes.Black, left - dx, bottom, angle)
+                Call g.DrawString(key, font, Brushes.Black, left - dx, bottom, angle)
             Next
 
             If showLegend Then
@@ -230,11 +236,11 @@ Namespace BarPlot
                 End If
 
                 Dim cssStyle As String = CSSFont.GetFontStyle(legendFont)
-                Dim legends As Legend() = LinqAPI.Exec(Of Legend) <=
+                Dim legends As LegendObject() = LinqAPI.Exec(Of LegendObject) <=
  _
                 From x As NamedValue(Of Color)
                 In data.Serials
-                Select New Legend With {
+                Select New LegendObject With {
                     .color = x.Value.RGBExpression,
                     .fontstyle = cssStyle,
                     .style = LegendStyles.Circle,
@@ -255,7 +261,7 @@ Namespace BarPlot
                     legendPos = New Point(X, Y)
                 End If
 
-                Call g.DrawLegends(legendPos, legends,,, legendBorder)
+                Call g.DrawLegends(legendPos, legends,,, shapeBorder:=legendBorder)
             End If
         End Sub
 

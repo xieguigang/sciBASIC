@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db11fec413c5d14f0dbc43e2bf06c906, Data\BinaryData\BinaryData\ByteBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::f342e4f4bdd4ac823facf92797b76b80, Data\BinaryData\BinaryData\ByteBuffer.vb"
 
     ' Author:
     ' 
@@ -31,14 +31,6 @@
 
     ' Summaries:
 
-    ' Enum Mode
-    ' 
-    '     Read, Write
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
     ' Class ByteBuffer
     ' 
     '     Constructor: (+2 Overloads) Sub New
@@ -75,18 +67,11 @@
 
 
 Imports System.IO
-
-''' <summary>
-''' 'Mode' is only used to determine whether to return data length or capacity from the 'limit' method:
-''' </summary>
-Public Enum Mode
-    Read
-    Write
-End Enum
+Imports Microsoft.VisualBasic.ComponentModel
 
 Public Class ByteBuffer
 
-    Dim mode As Mode
+    Dim mode As IOWorkModes
     Dim stream As MemoryStream
     Dim reader As BinaryReader
     Dim writer As BinaryWriter
@@ -115,7 +100,7 @@ Public Class ByteBuffer
     Public Shared Function allocate(capacity As Integer) As ByteBuffer
         Dim buffer As New ByteBuffer()
         buffer.stream.Capacity = capacity
-        buffer.mode = Mode.Write
+        buffer.mode = IOWorkModes.Write
         Return buffer
     End Function
 
@@ -129,20 +114,20 @@ Public Class ByteBuffer
     End Function
 
     Public Function flip() As ByteBuffer
-        mode = Mode.Read
+        mode = IOWorkModes.Read
         stream.SetLength(stream.Position)
         stream.Position = 0
         Return Me
     End Function
 
     Public Function clear() As ByteBuffer
-        mode = Mode.Write
+        mode = IOWorkModes.Write
         stream.Position = 0
         Return Me
     End Function
 
     Public Function compact() As ByteBuffer
-        mode = Mode.Write
+        mode = IOWorkModes.Write
         Dim newStream As New System.IO.MemoryStream(stream.Capacity)
         stream.CopyTo(newStream)
         stream = newStream
@@ -155,7 +140,7 @@ Public Class ByteBuffer
     End Function
 
     Public Function limit() As Long
-        If mode = Mode.Write Then
+        If mode = IOWorkModes.Write Then
             Return stream.Capacity
         Else
             Return stream.Length

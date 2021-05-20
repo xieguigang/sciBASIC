@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ebfe6127ba2455c9f12d1bb442c6f4d8, Data\DataFrame\Linq\WriteStream.vb"
+﻿#Region "Microsoft.VisualBasic::e52ac046a95127330dd84c69af065b15, Data\DataFrame\Linq\WriteStream.vb"
 
     ' Author:
     ' 
@@ -60,6 +60,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Text
 
 Namespace IO.Linq
 
@@ -97,7 +98,7 @@ Namespace IO.Linq
         ''' <returns></returns>
         Public ReadOnly Property IsMetaIndexed As Boolean
             Get
-                Return rowWriter.IsMetaIndexed
+                Return rowWriter.isMetaIndexed
             End Get
         End Property
 
@@ -105,21 +106,22 @@ Namespace IO.Linq
         ''' 
         ''' </summary>
         ''' <param name="path"></param>
-        ''' <param name="explicit">Schema parsing of the object strictly?</param>
+        ''' <param name="strict">Schema parsing of the object strictly?</param>
         ''' <param name="metaKeys">预设的标题头部</param>
         ''' <param name="tsv">
         ''' Save the data frame in tsv format? By default is false means saved in csv format.
         ''' </param>
         Sub New(path As String,
-                Optional explicit As Boolean = False,
+                Optional strict As Boolean = False,
                 Optional metaBlank$ = "",
                 Optional metaKeys$() = Nothing,
                 Optional maps As Dictionary(Of String, String) = Nothing,
                 Optional layout As Dictionary(Of String, Integer) = Nothing,
-                Optional tsv As Boolean = False)
+                Optional tsv As Boolean = False,
+                Optional encoding As Encodings = Encodings.UTF8WithoutBOM)
 
-            Call Me.New(path.OpenWriter,
-                        explicit:=explicit,
+            Call Me.New(path.OpenWriter(encoding),
+                        strict:=strict,
                         metaBlank:=metaBlank,
                         metaKeys:=metaKeys,
                         maps:=maps,
@@ -132,7 +134,7 @@ Namespace IO.Linq
         End Sub
 
         Sub New(write As StreamWriter,
-                Optional explicit As Boolean = False,
+                Optional strict As Boolean = False,
                 Optional metaBlank$ = "",
                 Optional metaKeys$() = Nothing,
                 Optional maps As Dictionary(Of String, String) = Nothing,
@@ -142,7 +144,7 @@ Namespace IO.Linq
             Dim typeDef As Type = GetType(T)
             Dim Schema As SchemaProvider =
                 SchemaProvider _
-                .CreateObjectInternal(typeDef, explicit) _
+                .CreateObjectInternal(typeDef, strict) _
                 .CopyReadDataFromObject
 
             _fileIO = write
@@ -157,6 +159,7 @@ Namespace IO.Linq
             End If
 
             Call _fileIO.WriteLine(populateLine(title))
+            Call _fileIO.Flush()
         End Sub
 
         Public Overrides Function ToString() As String
@@ -222,13 +225,16 @@ Namespace IO.Linq
             Return Flush(DirectCast(any, T))
         End Function
 
+        ''' <summary>
+        ''' The base stream flush method is called automatically at dispose process
+        ''' </summary>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Flush()
             Call _fileIO.Flush()
         End Sub
 
         ''' <summary>
-        ''' 这个是配合<see cref="DataStream.ForEachBlock(Of T)(Action(Of T()), Integer)"/>方法使用的
+        ''' 这个是配合<see cref="DataStream.ForEachBlock"/>方法使用的
         ''' </summary>
         ''' <typeparam name="Tsrc"></typeparam>
         ''' <param name="[ctype]"></param>
@@ -241,7 +247,7 @@ Namespace IO.Linq
         End Function
 
         ''' <summary>
-        ''' 这个是配合<see cref="DataStream.ForEach(Of T)(Action(Of T))"/>方法使用的
+        ''' 这个是配合<see cref="DataStream.ForEach"/>方法使用的
         ''' </summary>
         ''' <typeparam name="Tsrc"></typeparam>
         ''' <param name="_ctype"></param>

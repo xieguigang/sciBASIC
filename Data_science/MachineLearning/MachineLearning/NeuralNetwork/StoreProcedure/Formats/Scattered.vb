@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a8c91c0ad8ef5c53b5d3524bda27932, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Formats\Scattered.vb"
+﻿#Region "Microsoft.VisualBasic::10af903a607ffd01a4869d244b39c72a, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Formats\Scattered.vb"
 
     ' Author:
     ' 
@@ -67,45 +67,61 @@ Namespace NeuralNetwork.StoreProcedure
         ''' 模型文件所存储的文件夹的路径
         ''' </param>
         ''' <returns>
-        ''' 返回来的完整的结果可以通过<see cref="IntegralLoader.LoadModel(NeuralNetwork)"/>
+        ''' 返回来的完整的结果可以通过<see cref="IntegralLoader.LoadModel(NeuralNetwork,Boolean)"/>
         ''' 函数将数据模型来加载为计算模型
         ''' </returns>
-        Public Function ScatteredLoader(store As String) As StoreProcedure.NeuralNetwork
+        Public Function ScatteredLoader(store As String, Optional mute As Boolean = False) As StoreProcedure.NeuralNetwork
             Dim main = $"{store}/{mainPart}".LoadXml(Of StoreProcedure.NeuralNetwork)
+            Dim previousMuteConfig As Boolean = VBDebugger.Mute
+
+            VBDebugger.Mute = mute
+
+            Call "Load network parts...".__DEBUG_ECHO
 
             main.inputlayer = $"{store}/{inputLayer}".LoadXml(Of NeuronLayer)
             main.hiddenlayers = $"{store}/{hiddenLayer}".LoadXml(Of StoreProcedure.HiddenLayer)
             main.outputlayer = $"{store}/{outputLayer}".LoadXml(Of NeuronLayer)
+
+            Call "Load neuron nodes...".__DEBUG_ECHO
 
             ' 因为下面的数据较大，所以需要使用流的方式进行读取
             ' 节点数据比较小
             ' 可以一次性完全加载
             main.neurons = $"{store}/{nodes}".ReadAllLines _
                 .Skip(1) _
+                .AsParallel _
                 .Select(Function(line) line.Split(","c).parseNode) _
                 .ToArray
+
+            Call "Load neuron synapse edges...".__DEBUG_ECHO
+
             main.connections = $"{store}/{edges}".parseEdges.ToArray
+
+            Call "Load neuron network model success!".__INFO_ECHO
+
+            VBDebugger.Mute = previousMuteConfig
 
             Return main
         End Function
 
         <Extension>
-        Private Iterator Function parseEdges(dataframe As String) As IEnumerable(Of Synapse)
-            Dim tokens$()
-            Dim edge As Synapse
-
+        Private Function parseEdges(dataframe As String) As IEnumerable(Of Synapse)
             Using csv As StreamReader = dataframe.OpenReader
-                For Each line As String In csv.IteratesStream.Skip(1)
-                    tokens = line.Split(","c)
-                    edge = New Synapse With {
-                        .[in] = tokens(Scan0),
-                        .out = tokens(1),
-                        .w = Val(tokens(2)),
-                        .delta = Val(tokens(3))
-                    }
+                Return csv.IteratesStream _
+                    .Skip(1) _
+                    .AsParallel _
+                    .Select(Function(line)
+                                Dim tokens = line.Split(","c)
+                                Dim edge As New Synapse With {
+                                    .[in] = tokens(Scan0),
+                                    .out = tokens(1),
+                                    .w = Val(tokens(2)),
+                                    .delta = Val(tokens(3))
+                                }
 
-                    Yield edge
-                Next
+                                Return edge
+                            End Function) _
+                    .ToArray
             End Using
         End Function
 

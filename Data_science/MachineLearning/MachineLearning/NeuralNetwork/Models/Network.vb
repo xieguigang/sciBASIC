@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c67f952cca794a5abbf5275b13aa33e7, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Models\Network.vb"
+﻿#Region "Microsoft.VisualBasic::b1cf1cc3111083b672567a9c48ff322d, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Models\Network.vb"
 
     ' Author:
     ' 
@@ -34,9 +34,9 @@
     '     Class Network
     ' 
     '         Properties: Activations, HiddenLayer, InputLayer, LearnRate, LearnRateDecay
-    '                     Momentum, OutputLayer
+    '                     Momentum, OutputLayer, Truncate
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     ' 
     '         Function: Compute, ForwardPropagate, ToString
     ' 
@@ -58,13 +58,14 @@ Namespace NeuralNetwork
     ''' <summary>
     ''' 人工神经网络计算用的对象模型
     ''' 
-    ''' https://github.com/trentsartain/Neural-Network
+    ''' > https://github.com/trentsartain/Neural-Network
     ''' </summary>
     Public Class Network : Inherits Model
 
 #Region "-- Properties --"
         Public Property LearnRate As Double
         Public Property Momentum As Double
+        Public Property Truncate As Double = -1
 
         ''' <summary>
         ''' 通过这个属性可以枚举出所有的输入层的神经元节点
@@ -115,8 +116,13 @@ Namespace NeuralNetwork
         ''' </summary>
         ''' <param name="activations"></param>
         Friend Sub New(activations As LayerActives)
-            Me.Activations = activations.GetXmlModels
             Me.LearnRateDecay = 0.00000001
+            Me.Activations = activations.GetXmlModels
+        End Sub
+
+        Friend Sub New(activations As IReadOnlyDictionary(Of String, ActiveFunction))
+            Me.LearnRateDecay = 0.00000001
+            Me.Activations = activations
         End Sub
 
         ''' <summary>
@@ -133,19 +139,22 @@ Namespace NeuralNetwork
         Public Sub New(inputSize%, hiddenSize%(), outputSize%,
                        Optional learnRate# = 0.1,
                        Optional momentum# = 0.9,
-                       Optional active As LayerActives = Nothing)
+                       Optional active As LayerActives = Nothing,
+                       Optional weightInit As Func(Of Double) = Nothing)
 
             Dim activations As LayerActives = active Or LayerActives.GetDefaultConfig
-            Dim guid As VBInteger = 100
+            Dim guid As i32 = 100
+
+            weightInit = weightInit Or Helpers.randomWeight
 
             Me.LearnRate = learnRate
             Me.Momentum = momentum
             Me.Activations = activations.GetXmlModels
             Me.LearnRateDecay = 0.00000001
 
-            InputLayer = New Layer(inputSize, activations.input, guid:=guid)
-            HiddenLayer = New HiddenLayers(InputLayer, hiddenSize, activations.hiddens, guid)
-            OutputLayer = New Layer(outputSize, activations.output, input:=HiddenLayer.Output, guid:=guid)
+            InputLayer = New Layer(inputSize, activations.input, weightInit, guid:=guid)
+            HiddenLayer = New HiddenLayers(InputLayer, hiddenSize, weightInit, activations.hiddens, guid)
+            OutputLayer = New Layer(outputSize, activations.output, weightInit, input:=HiddenLayer.Output, guid:=guid)
         End Sub
 
         Public Overrides Function ToString() As String
@@ -180,12 +189,14 @@ Namespace NeuralNetwork
         ''' <summary>
         ''' 这个函数会返回<see cref="OutputLayer"/>
         ''' </summary>
-        ''' <param name="inputs"></param>
+        ''' <param name="inputs">
+        ''' 神经网路的输入层的输入数据,应该都是被归一化为[0,1]或者[-1,1]这两个区间内了的
+        ''' </param>
         ''' <returns></returns>
         Public Function ForwardPropagate(inputs As Double(), parallel As Boolean) As Layer
             Call InputLayer.Input(data:=inputs)
-            Call HiddenLayer.ForwardPropagate(parallel)
-            Call OutputLayer.CalculateValue()
+            Call HiddenLayer.ForwardPropagate(parallel, Truncate)
+            Call OutputLayer.CalculateValue(truncate:=Truncate)
 
             Return OutputLayer
         End Function
@@ -194,12 +205,15 @@ Namespace NeuralNetwork
         ''' 反向传播
         ''' </summary>
         ''' <param name="targets"></param>
-        Public Sub BackPropagate(targets As Double(), truncate As Double, parallel As Boolean)
+        ''' <remarks>
+        ''' 在反向传播之后,网络只会修改节点之间的突触边链接的权重值以及节点
+        ''' 的<see cref="Neuron.Gradient"/>值,没有修改节点的<see cref="Neuron.Value"/>值.
+        ''' </remarks>
+        Public Sub BackPropagate(targets As Double(), parallel As Boolean)
             LearnRate = LearnRate * remains
-            Momentum = 1 - LearnRate
 
-            Call OutputLayer.CalculateGradient(targets, truncate)
-            Call HiddenLayer.BackPropagate(LearnRate, Momentum, truncate, parallel)
+            Call OutputLayer.CalculateGradient(targets, Truncate)
+            Call HiddenLayer.BackPropagate(LearnRate, Momentum, Truncate, parallel)
             Call OutputLayer.UpdateWeights(LearnRate, Momentum, parallel)
         End Sub
 

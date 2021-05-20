@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42d4c19d929cedb7cfe37a8abc7e2d49, Data_science\Mathematica\Math\Math\Algebra\LP\OptimizationType.vb"
+﻿#Region "Microsoft.VisualBasic::ff145209d5fb7f23f5d4d58cac265084, Data_science\Mathematica\Math\Math\Algebra\LP\OptimizationType.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,7 @@
 
 Imports System.ComponentModel
 
-Namespace Algebra.LinearProgramming
+Namespace LinearAlgebra.LinearProgramming
 
     Public Enum OptimizationType
 

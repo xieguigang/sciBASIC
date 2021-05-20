@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c73638b7a44cc7aed515bf67a202a34, Data_science\Visualization\Plots\g\Canvas.vb"
+﻿#Region "Microsoft.VisualBasic::2571aa791eccacb8cb8d2adc6b7f65d3, Data_science\Visualization\Plots\g\Canvas.vb"
 
     ' Author:
     ' 
@@ -44,6 +44,8 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Imaging
+
 Namespace Graphic.Canvas
 
     Public Module Resolution2K
@@ -53,8 +55,14 @@ Namespace Graphic.Canvas
         Public Const PaddingWithRightLegend$ = "padding:300px 600px 300px 200px;"
         Public Const PaddingWithTopTitleAndRightLegend$ = "padding:400px 600px 300px 200px;"
         Public Const PaddingWithTopTitleAndBottomLegend$ = "padding:400px 150px 600px 200px;"
+        Public Const PaddingWithTopTitle$ = "padding:400px 150px 300px 300px;"
 
         Public Const PaddingWithRightLegendAndBottomTitle$ = "padding:100px 400px 300px 200px;"
+
+        Public Const PlotTitle$ = "font-style: strong; font-size: 64; font-family: " & FontFace.BookmanOldStyle & ";"
+        Public Const PlotSubTitle$ = "font-style: normal; font-size: 48; font-family: " & FontFace.BookmanOldStyle & ";"
+        Public Const PlotSmallTitle$ = "font-style: normal; font-size: 36; font-family: " & FontFace.BookmanOldStyle & ";"
+        Public Const PlotLabelNormal$ = "font-style: normal; font-size: 28; font-family: " & FontFace.BookmanOldStyle & ";"
 
     End Module
 

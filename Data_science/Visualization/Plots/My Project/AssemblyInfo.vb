@@ -1,19 +1,19 @@
 ﻿Imports System
 Imports System.Reflection
 Imports System.Runtime.InteropServices
-
+#if netcore5=0 then
 ' General Information about an assembly is controlled through the following 
 ' set of attributes. Change these attribute values to modify the information
 ' associated with an assembly.
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("Chart Plots System")>
-<Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("")> 
-<Assembly: AssemblyProduct("Plots")> 
-<Assembly: AssemblyCopyright("Copyright ©  2016")> 
-<Assembly: AssemblyTrademark("")> 
+<Assembly: AssemblyTitle("Chart Plot System from sciBASIC.NET")>
+<Assembly: AssemblyDescription("Chart Plot System from sciBASIC.NET")>
+<Assembly: AssemblyCompany("sciBASIC.NET")>
+<Assembly: AssemblyProduct("mlkit")>
+<Assembly: AssemblyCopyright("Copyright © I@xieguigang.me 2019")>
+<Assembly: AssemblyTrademark("sciBASIC.NET")>
 
 <Assembly: ComVisible(False)>
 
@@ -31,5 +31,6 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.0.0.0")> 
-<Assembly: AssemblyFileVersion("1.0.0.0")> 
+<Assembly: AssemblyVersion("1.23.*")> 
+<Assembly: AssemblyFileVersion("1.33.*")> 
+#end if

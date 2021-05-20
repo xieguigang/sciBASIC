@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0b3003e0eb205fbc55e799df30d6278, gr\Microsoft.VisualBasic.Imaging\Drivers\Drivers.vb"
+﻿#Region "Microsoft.VisualBasic::d4d759d167f18d665c89626094af8c28, gr\Microsoft.VisualBasic.Imaging\Drivers\Drivers.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Enum Drivers
     ' 
-    '         [Default], GDI, SVG
+    '         [Default], GDI, PS, SVG, WMF
     ' 
     '  
     ' 
@@ -44,6 +44,7 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Imaging.PostScript
 Imports Microsoft.VisualBasic.Imaging.SVG
 
 Namespace Driver
@@ -65,5 +66,13 @@ Namespace Driver
         ''' <see cref="GraphicsSVG"/>
         ''' </summary>
         SVG
+        ''' <summary>
+        ''' <see cref="GraphicsPS"/>
+        ''' </summary>
+        PS
+        ''' <summary>
+        ''' Windows meta file: <see cref="Imaging.Wmf"/>
+        ''' </summary>
+        WMF
     End Enum
 End Namespace

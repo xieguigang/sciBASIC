@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e34d910a455d60469b242e8ed27e6a66, Data\BinaryData\DataStorage\HDF5\device\BinaryFileReader.vb"
+﻿#Region "Microsoft.VisualBasic::31f36bd5119b9e4c596b4a7f964ce94d, Data\BinaryData\DataStorage\HDF5\device\BinaryFileReader.vb"
 
     ' Author:
     ' 
@@ -35,11 +35,11 @@
     ' 
     '         Properties: offset
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     ' 
-    '         Function: readByte, ToString
+    '         Function: readByte, StopIfMissingFile, ToString
     ' 
-    '         Sub: _BinaryFileReader, close, setPosition
+    '         Sub: close, setPosition
     ' 
     ' 
     ' /********************************************************************************/
@@ -52,7 +52,7 @@ Namespace HDF5.device
 
     Public Class BinaryFileReader : Inherits BinaryReader
 
-        Dim randomaccessfile As FileStream
+        Dim randomaccessfile As Stream
 
         Public Overrides Property offset() As Long
             Get
@@ -71,15 +71,37 @@ Namespace HDF5.device
         End Property
 
         Public Sub New(filepath As String)
+            Call Me.New(StopIfMissingFile(filepath))
+        End Sub
+
+        Private Shared Function StopIfMissingFile(filepath As String) As FileInfo
             If filepath.StringEmpty Then
                 Throw New ArgumentException("filepath must not be null or empty!")
+            ElseIf filepath.FileLength <= 0 Then
+                Throw New FileLoadException("file missing or zero length!")
             End If
 
-            _BinaryFileReader(New FileInfo(filepath))
+            Return New FileInfo(filepath)
+        End Function
+
+        Sub New(buffer As Stream)
+            Me.offset = 0
+            Me.m_littleEndian = True
+            Me.m_maxOffset = 0
+            Me.randomaccessfile = buffer
+            Me.filesize = buffer.Length
         End Sub
 
         Public Sub New(file As FileInfo)
-            _BinaryFileReader(file)
+            If file Is Nothing Then
+                Throw New ArgumentException("file must not be null")
+            End If
+
+            Me.offset = 0
+            Me.m_littleEndian = True
+            Me.m_maxOffset = 0
+            Me.filesize = file.Length
+            Me.randomaccessfile = New FileStream(file.FullName, FileMode.Open, FileAccess.Read, FileShare.Read)
         End Sub
 
         Private Sub setPosition(value As Long)
@@ -97,22 +119,12 @@ Namespace HDF5.device
             Me.randomaccessfile.Seek(value, SeekOrigin.Begin)
         End Sub
 
-        Private Sub _BinaryFileReader(file As FileInfo)
-            If file Is Nothing Then
-                Throw New ArgumentException("file must not be null")
-            End If
-
-            Me.offset = 0
-            Me.filesize = file.Length
-            Me.m_littleEndian = True
-            Me.m_maxOffset = 0
-            Me.randomaccessfile = New FileStream(file.FullName, FileMode.Open, FileAccess.Read, FileShare.Read)
-        End Sub
-
         Public Overrides Function readByte() As Byte
             If Me.offset >= Me.filesize Then
-                Throw New IOException("file offset reached to end of file")
+                ' Throw New IOException("file offset reached to end of file")
+                Return Nothing
             End If
+
             Dim b As Byte = CByte(Me.randomaccessfile.ReadByte())
 
             MyBase.offset += 1
@@ -125,7 +137,11 @@ Namespace HDF5.device
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"{MyBase.ToString()}  #{randomaccessfile.Name.FileName}"
+            If TypeOf randomaccessfile Is FileStream Then
+                Return $"{MyBase.ToString()}  #{DirectCast(randomaccessfile, FileStream).Name.FileName}"
+            Else
+                Return $"{MyBase.ToString()}  #{randomaccessfile.ToString}"
+            End If
         End Function
 
         Public Overrides Sub close()

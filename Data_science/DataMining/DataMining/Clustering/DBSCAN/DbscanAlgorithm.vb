@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6017807189950dc76db910bd15f48825, Data_science\DataMining\DataMining\Clustering\DBSCAN\DbscanAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::bf1eb00ddc581674928d35393cd1e3e8, Data_science\DataMining\DataMining\Clustering\DBSCAN\DbscanAlgorithm.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,10 @@
     '     Class DbscanAlgorithm
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Sub: ComputeClusterDbscan, ExpandCluster, RegionQuery
+    ' 
+    '         Function: ComputeClusterDBSCAN, RegionQuery
+    ' 
+    '         Sub: ExpandCluster
     ' 
     ' 
     ' /********************************************************************************/
@@ -42,8 +45,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports System.Runtime.InteropServices
-Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace DBSCAN
 
@@ -56,16 +58,21 @@ Namespace DBSCAN
     ''' 
     ''' > https://github.com/yusufuzun/dbscan
     ''' </remarks>
-    Public Class DbscanAlgorithm(Of T As DatasetItemBase)
+    Public Class DbscanAlgorithm(Of T)
 
         ReadOnly _metricFunc As Func(Of T, T, Double)
+        ReadOnly _full As Boolean
 
         ''' <summary>
         ''' Takes metric function to compute distances between dataset items T
         ''' </summary>
         ''' <param name="metricFunc"></param>
-        Public Sub New(metricFunc As Func(Of T, T, Double))
+        ''' <param name="full">
+        ''' A logical option for indicates that evaluate all neighbor points or not for test and create cluster members
+        ''' </param>
+        Public Sub New(metricFunc As Func(Of T, T, Double), Optional full As Boolean = True)
             _metricFunc = metricFunc
+            _full = full
         End Sub
 
         ''' <summary>
@@ -74,10 +81,17 @@ Namespace DBSCAN
         ''' <param name="allPoints">Dataset</param>
         ''' <param name="epsilon">Desired region ball radius</param>
         ''' <param name="minPts">Minimum number of points to be in a region</param>
-        ''' <param name="clusters">returns sets of clusters, renew the parameter</param>
-        Public Sub ComputeClusterDbscan(allPoints As T(), epsilon As Double, minPts As Integer, <Out> ByRef clusters As HashSet(Of T()))
-            Dim allPointsDbscan As DbscanPoint(Of T)() = allPoints.[Select](Function(x) New DbscanPoint(Of T)(x)).ToArray()
+        ''' <returns>sets of clusters, renew the parameter</returns>
+        Public Function ComputeClusterDBSCAN(allPoints As T(),
+                                             epsilon As Double,
+                                             minPts As Integer,
+                                             Optional ByRef isseed As Integer() = Nothing) As NamedCollection(Of T)()
+
+            Dim allPointsDbscan As DbscanPoint(Of T)() = allPoints _
+                .Select(Function(x) New DbscanPoint(Of T)(x)) _
+                .ToArray()
             Dim clusterId As Integer = 0
+            Dim seeds As New List(Of Integer)
 
             For i As Integer = 0 To allPointsDbscan.Length - 1
                 Dim p As DbscanPoint(Of T) = allPointsDbscan(i)
@@ -88,28 +102,32 @@ Namespace DBSCAN
                     p.IsVisited = True
                 End If
 
-                Dim neighborPts As DbscanPoint(Of T)() = Nothing
-
-                Call RegionQuery(allPointsDbscan, p.ClusterPoint, epsilon, neighborPts)
+                Dim neighborPts As DbscanPoint(Of T)() = RegionQuery(allPointsDbscan, p.ClusterPoint, epsilon)
 
                 If neighborPts.Length < minPts Then
                     p.ClusterId = ClusterIDs.Noise
                 Else
                     clusterId += 1
                     ExpandCluster(allPointsDbscan, p, neighborPts, clusterId, epsilon, minPts)
+                    seeds.Add(i)
                 End If
             Next
 
             With allPointsDbscan _
                 .Where(Function(x) x.ClusterId > 0) _
-                .GroupBy(Function(x) x.ClusterId) _
-                .[Select](Function(x)
-                              Return x.[Select](Function(y) y.ClusterPoint).ToArray()
-                          End Function)
+                .GroupBy(Function(x) x.ClusterId)
 
-                clusters = New HashSet(Of T())(.ByRef)
+                isseed = seeds.ToArray
+
+                Return .Select(Function(x)
+                                   Return New NamedCollection(Of T) With {
+                                       .name = x.Key,
+                                       .value = x.[Select](Function(y) y.ClusterPoint).ToArray()
+                                   }
+                               End Function) _
+                       .ToArray
             End With
-        End Sub
+        End Function
 
         ''' <summary>
         ''' 
@@ -127,15 +145,16 @@ Namespace DBSCAN
                                   epsilon As Double,
                                   minPts As Integer)
 
+            Dim neighborPts2 As DbscanPoint(Of T)() = Nothing
+
             point.ClusterId = clusterId
 
             For i As Integer = 0 To neighborPts.Length - 1
                 Dim pn As DbscanPoint(Of T) = neighborPts(i)
 
-                If Not pn.IsVisited Then
-                    Dim neighborPts2 As DbscanPoint(Of T)() = Nothing
+                If _full OrElse Not pn.IsVisited Then
                     pn.IsVisited = True
-                    RegionQuery(allPoints, pn.ClusterPoint, epsilon, neighborPts2)
+                    neighborPts2 = RegionQuery(allPoints, pn.ClusterPoint, epsilon)
 
                     If neighborPts2.Length >= minPts Then
                         neighborPts = neighborPts.Union(neighborPts2).ToArray()
@@ -154,13 +173,13 @@ Namespace DBSCAN
         ''' <param name="allPoints">Dataset</param>
         ''' <param name="point">centered point to be searched neighbors</param>
         ''' <param name="epsilon">radius of center point</param>
-        ''' <param name="neighborPts">result neighbors</param>
+        ''' <returns>result neighbors</returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Sub RegionQuery(allPoints As DbscanPoint(Of T)(), point As T, epsilon As Double, ByRef neighborPts As DbscanPoint(Of T)())
-            neighborPts = allPoints _
+        Private Function RegionQuery(allPoints As DbscanPoint(Of T)(), point As T, epsilon As Double) As DbscanPoint(Of T)()
+            Return allPoints _
                 .Where(Function(x) _metricFunc(point, x.ClusterPoint) <= epsilon) _
                 .ToArray()
-        End Sub
+        End Function
     End Class
 End Namespace

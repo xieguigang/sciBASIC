@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a35d5949fb85f500ec92a190463a44f1, mime\application%json\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::5223993073b5bccf35a611da8958d7ca, mime\application%json\Extensions.vb"
 
     ' Author:
     ' 
@@ -41,9 +41,9 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.MIME.application.json.Parser
+Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 
-Public Module Extensions
+<HideModuleName> Public Module Extensions
 
     ''' <summary>
     ''' Parse json string
@@ -62,6 +62,11 @@ Public Module Extensions
         Return New JsonParser().Open(JsonFile)
     End Function
 
+    ''' <summary>
+    ''' try cast of the json element object as json literal value
+    ''' </summary>
+    ''' <param name="obj"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function AsString(obj As JsonElement) As String

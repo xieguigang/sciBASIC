@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad9b72ffee7ed40a9357ff7730f237fe, Data_science\Mathematica\Math\Math\Algebra\Vector\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::f20c155f940398170a55ade863140469, Data_science\Mathematica\Math\Math\Algebra\Vector\Extensions.vb"
 
     ' Author:
     ' 
@@ -48,9 +48,11 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace LinearAlgebra
 
+    <HideModuleName>
     Public Module Extensions
 
         ''' <summary>
@@ -80,7 +82,9 @@ Namespace LinearAlgebra
 
         <Extension> Public Function Top(vector As Vector, n%) As BooleanVector
             Dim desc = vector.OrderByDescending(Function(x) x).Take(n).AsList
-            Return New BooleanVector(vector.Select(Function(x) desc.IndexOf(x) > -1))
+            Dim bools As New BooleanVector(vector.Select(Function(x) desc.IndexOf(x) > -1))
+
+            Return bools
         End Function
 
         ''' <summary>
@@ -95,7 +99,6 @@ Namespace LinearAlgebra
         End Function
 
         ReadOnly normalRange As New [Default](Of DoubleRange)({0, 1})
-        ReadOnly random As New Random
 
         ''' <summary>
         ''' 默认返回目标长度的``[0-1]``之间的随机数向量
@@ -105,16 +108,16 @@ Namespace LinearAlgebra
         Public Function rand(size%, Optional range As DoubleRange = Nothing) As Vector
             Dim list As Double() = New Double(size - 1) {}
 
-            SyncLock random
+            SyncLock seeds
                 If range Is Nothing Then
                     For i As Integer = 0 To size - 1
-                        list(i) = random.NextDouble
+                        list(i) = seeds.NextDouble
                     Next
                 Else
                     Dim d = range.Length
 
                     For i As Integer = 0 To size - 1
-                        list(i) = random.NextDouble * d + range.Min
+                        list(i) = seeds.NextDouble * d + range.Min
                     Next
                 End If
             End SyncLock
@@ -130,8 +133,11 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         <Extension>
         Public Function rand(range As DoubleRange, size%) As Vector
-            Dim v#() = rand(size).RangeTransform([to]:=range)
-            Return New Vector(v)
+            Return rand(size) _
+                .RangeTransform([to]:=range) _
+                .DoCall(Function(v)
+                            Return New Vector(v)
+                        End Function)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

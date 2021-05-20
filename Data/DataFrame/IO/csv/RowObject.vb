@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60e1f955859548ef9cce7e06bb91e2f2, Data\DataFrame\IO\csv\RowObject.vb"
+﻿#Region "Microsoft.VisualBasic::b226fb07b5740db55e5ad6053e260830, Data\DataFrame\IO\csv\RowObject.vb"
 
     ' Author:
     ' 
@@ -33,15 +33,13 @@
 
     '     Class RowObject
     ' 
-    '         Properties: AsLine, DirectGet, IsNullOrEmpty, IsReadOnly, NumbersOfColumn
-    '                     Width
+    '         Properties: AsLine, DirectGet, IsReadOnly, NumbersOfColumn, Width
     ' 
     '         Constructor: (+4 Overloads) Sub New
     ' 
-    '         Function: __mask, AddRange, AppendItem, (+2 Overloads) Contains, CreateObject
-    '                   Distinct, GetALLNonEmptys, GetColumn, GetEnumerator, GetEnumerator1
-    '                   IndexOf, InsertAt, LocateKeyWord, Remove, (+2 Overloads) Takes
-    '                   ToString, TryParse
+    '         Function: AddRange, AppendItem, (+2 Overloads) Contains, CreateObject, GetALLNonEmptys
+    '                   GetColumn, GetEnumerator, GetEnumerator1, IndexOf, InsertAt
+    '                   LocateKeyWord, Remove, (+2 Overloads) Takes, ToString, TryParse
     ' 
     '         Sub: Add, Clear, CopyTo, Insert, RemoveAt
     '              Trim
@@ -96,10 +94,13 @@ Namespace IO
         ''' <param name="rawString">A raw string line which read from the Csv text file.</param>
         Sub New(rawString$, Optional tsv As Boolean = False)
             Try
-                buffer = Tokenizer.CharsParser(rawString, delimiter:=","c Or ASCII.TAB.When(tsv))
+                If rawString.StringEmpty Then
+                    buffer = New List(Of String)
+                Else
+                    buffer = Tokenizer.CharsParser(rawString, delimiter:=","c Or ASCII.TAB.When(tsv)).AsList
+                End If
             Catch ex As Exception
-                ex = New Exception(rawString)
-                Throw ex
+                Throw New Exception(rawString, ex)
             End Try
         End Sub
 
@@ -138,10 +139,13 @@ Namespace IO
                 If Index < buffer.Count Then
                     buffer(Index) = value
                 Else
-                    Dim d As Integer = Index - buffer.Count  '当前行的数目少于指定的索引号的时候，进行填充
+                    Dim d As Integer = Index - buffer.Count
+
+                    '当前行的数目少于指定的索引号的时候，进行填充
                     For i As Integer = 0 To d - 1
                         buffer.Add("")
                     Next
+
                     Call buffer.Add(value)
                 End If
             End Set
@@ -181,29 +185,6 @@ Namespace IO
         End Function
 
         ''' <summary>
-        ''' is this row object contains any data?
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public ReadOnly Property IsNullOrEmpty As Boolean
-            Get
-                If buffer.Count = 0 Then
-                    Return True
-                End If
-
-                Dim LQuery = LinqAPI.DefaultFirst(Of Integer) <=
- _
-                    From colum As String
-                    In buffer
-                    Where Len(Strings.Trim(colum)) > 0
-                    Select 100 '
-
-                Return Not LQuery > 50
-            End Get
-        End Property
-
-        ''' <summary>
         ''' insert the data into a spercific column  
         ''' </summary>
         ''' <param name="value"></param>
@@ -233,7 +214,8 @@ Namespace IO
         End Function
 
         ''' <summary>
-        ''' Takes the data in the specific number of columns, if columns is not exists in this row object, then a part of returned data will be the empty string. 
+        ''' Takes the data in the specific number of columns, if columns is not exists in this row object, 
+        ''' then a part of returned data will be the empty string. 
         ''' </summary>
         ''' <param name="Count"></param>
         ''' <returns></returns>
@@ -255,7 +237,8 @@ Namespace IO
         End Function
 
         ''' <summary>
-        ''' Takes the data in the specific column index collection, if the column is not exists in the row object, then a part of the returned data will be the empty string.
+        ''' Takes the data in the specific column index collection, if the column is not exists in the row object, 
+        ''' then a part of the returned data will be the empty string.
         ''' </summary>
         ''' <param name="Cols"></param>
         ''' <param name="retNullable">(当不存在数据的时候是否返回空字符串，默认返回空字符串)</param>
@@ -263,7 +246,7 @@ Namespace IO
         ''' <remarks></remarks>
         Public Function Takes(Cols As Integer(), Optional retNullable As Boolean = True) As String()
             Dim Items As String() = New String(Cols.Count - 1) {}
-            For i As Integer = 0 To Cols.Count - 1
+            For i As Integer = 0 To Cols.Length - 1
                 If retNullable Then
                     Items(i) = Me.Column(Cols(i))
                 Else
@@ -299,26 +282,23 @@ Namespace IO
         ''' <summary>
         ''' 查询某一个关键词在本行中的哪一个单元格，返回-1表示没有查询到本关键词
         ''' </summary>
-        ''' <param name="KeyWord"></param>
+        ''' <param name="KeyWord">进行查找的目标单元格文本的一部分字符串</param>
+        ''' <param name="CaseSensitive">是否是大小写不敏感的</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function LocateKeyWord(KeyWord As String, Optional CaseSensitive As Boolean = True) As Integer
-            Dim compare As CompareMethod = If(
-                CaseSensitive,
-                CompareMethod.Binary,
-                CompareMethod.Text)
-            Dim LQuery = LinqAPI.DefaultFirst(Of String) <=
- _
-                From str As String
-                In buffer.AsParallel
-                Where InStr(str, KeyWord, compare) > 0
-                Select str
+            Dim compare As CompareMethod = CompareMethod.Text Or CompareMethod.Binary.When(CaseSensitive)
+            Dim i As Integer = 0
 
-            If Not String.IsNullOrEmpty(LQuery) Then
-                Return buffer.IndexOf(LQuery)
-            Else
-                Return -1
-            End If
+            For Each cell As String In buffer
+                If InStr(cell, KeyWord, compare) > 0 Then
+                    Return i
+                Else
+                    i += 1
+                End If
+            Next
+
+            Return -1
         End Function
 
         ''' <summary>
@@ -328,30 +308,17 @@ Namespace IO
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property AsLine(Optional delimiter$ = ",") As String
+        Public ReadOnly Property AsLine(Optional delimiter As Char = ","c) As String
             Get
-                Dim array$() = buffer.Select(AddressOf __mask).ToArray
+                Dim array$() = buffer _
+                    .Select(Function(cell)
+                                Return cell.doDelimiterMask(delimiter)
+                            End Function) _
+                    .ToArray
                 Dim line As String = String.Join(delimiter, array)
                 Return line
             End Get
         End Property
-
-        Private Shared Function __mask(s As String) As String
-            If String.IsNullOrEmpty(s) Then
-                Return ""
-            Else
-                s = s.Replace("""", """""")
-            End If
-
-            If s.IndexOf(","c) > -1 OrElse
-                s.IndexOf(ASCII.LF) > -1 OrElse ' 双引号可以转义换行
-                s.IndexOf(ASCII.CR) > -1 Then
-
-                Return $"""{s}"""
-            Else
-                Return s
-            End If
-        End Function
 
         Public Sub Trim(lefts%)
             buffer = New List(Of String)(buffer.Take(lefts))
@@ -378,8 +345,7 @@ Namespace IO
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Widening Operator CType(Line As String) As RowObject
-            Dim row As List(Of String) = Tokenizer.CharsParser(Line)
-            Return New RowObject(row)
+            Return New RowObject(Tokenizer.CharsParser(Line))
         End Operator
 
         Public Shared Function TryParse(line As String, Optional tsv As Boolean = False) As RowObject
@@ -402,23 +368,6 @@ Namespace IO
             Return New RowObject With {
                 .buffer = tokens.AsList
             }
-        End Function
-
-        ''' <summary>
-        ''' 去除行集合中的重复的数据行
-        ''' </summary>
-        ''' <param name="rowList"></param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Shared Iterator Function Distinct(rowList As IEnumerable(Of RowObject)) As IEnumerable(Of RowObject)
-            Dim source As IEnumerable(Of String) = From row In rowList
-                                                   Let rowLine As String = CType(row, String)
-                                                   Select rowLine
-                                                   Distinct
-                                                   Order By rowLine Ascending
-            For Each line As String In source
-                Yield New RowObject(line)
-            Next
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of String) Implements IEnumerable(Of String).GetEnumerator
@@ -509,8 +458,17 @@ Namespace IO
             Return buffer.Remove(item)
         End Function
 
+        ''' <summary>
+        ''' 查找目标在行之中的索引号，也就是列的编号
+        ''' </summary>
+        ''' <param name="item">如果字符串是空的话或者查找失败，则返回-1</param>
+        ''' <returns></returns>
         Public Function IndexOf(item As String) As Integer Implements IList(Of String).IndexOf
-            Return buffer.IndexOf(item)
+            If item.StringEmpty Then
+                Return -1
+            Else
+                Return buffer.IndexOf(item)
+            End If
         End Function
 
         ''' <summary>

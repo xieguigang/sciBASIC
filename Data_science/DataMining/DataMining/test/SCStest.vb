@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e468f022c330b402399f94e654bda8d, Data_science\DataMining\DataMining\test\SCStest.vb"
+﻿#Region "Microsoft.VisualBasic::77ecf295ebc94a7fed2f7840bc48e56e, Data_science\DataMining\DataMining\test\SCStest.vb"
 
     ' Author:
     ' 
@@ -54,14 +54,14 @@ Module SCStest
         Dim SCS = ShortestCommonSuperString(path.ReadAllLines.AsList)
 
         Using txt As StreamWriter = "G:\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\data\SCS\output.txt".OpenWriter
-            Call path.ReadAllLines.TableView(SCS, txt)
+            Call path.ReadAllLines.TableView(SCS(Scan0), txt)
         End Using
 
         path$ = "G:\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\data\SCS\input2.txt"
         SCS = ShortestCommonSuperString(path.ReadAllLines.AsList)
 
         Using txt As StreamWriter = "G:\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\data\SCS\output2.txt".OpenWriter
-            Call path.ReadAllLines.TableView(SCS, txt)
+            Call path.ReadAllLines.TableView(SCS(Scan0), txt)
         End Using
 
         Pause()
@@ -76,7 +76,7 @@ Module SCStest
         Dim SCS = ShortestCommonSuperString(lines.AsList)
 
         Using txt As StreamWriter = "G:\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\data\SCS\SAM_output.txt".OpenWriter
-            Call lines.TableView(SCS, txt)
+            Call lines.TableView(SCS(Scan0), txt)
         End Using
 
         'Dim assembly = "G:\GCModeller\src\runtime\sciBASIC#\Data_science\DataMining\data\SCS\SAM_output.txt".ReadAllLines

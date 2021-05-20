@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af53c1a22c581bd47d2412c64e1d20d8, mime\application%rdf+xml\DataTypes.vb"
+﻿#Region "Microsoft.VisualBasic::87501519ab89b0ea4ac8f6f922922c80, mime\application%rdf+xml\DataTypes.vb"
 
     ' Author:
     ' 
@@ -85,10 +85,9 @@ Public Module DataTypes
         Return __types(type)
     End Function
 
-    ReadOnly __types As Dictionary(Of Type, String) =
-        New Dictionary(Of Type, String) From {
-            {GetType(String), dtString},
-            {GetType(Integer), dtInteger},
-            {GetType(Double), dtDouble}
+    ReadOnly __types As New Dictionary(Of Type, String) From {
+        {GetType(String), dtString},
+        {GetType(Integer), dtInteger},
+        {GetType(Double), dtDouble}
     }
 End Module

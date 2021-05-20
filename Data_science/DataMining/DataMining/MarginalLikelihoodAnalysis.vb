@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3bdfa3d3aa242687e01c8f22f3c4d01, Data_science\DataMining\DataMining\MarginalLikelihoodAnalysis.vb"
+﻿#Region "Microsoft.VisualBasic::fa0e334cf7209274cc80aaf4bd3ac325, Data_science\DataMining\DataMining\MarginalLikelihoodAnalysis.vb"
 
     ' Author:
     ' 
@@ -46,6 +46,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Language.Java
+Imports stdNum = System.Math
 
 '
 ' * MarginalLikelihoodAnalysis.java
@@ -80,7 +81,7 @@ Imports Microsoft.VisualBasic.Language.Java
 ''' </summary>
 Public Class MarginalLikelihoodAnalysis
 
-    ReadOnly sample As IList(Of Double)
+    ReadOnly sample As List(Of Double)
 
     ''' <summary>
     ''' "harmonic" for harmonic mean, 
@@ -95,7 +96,26 @@ Public Class MarginalLikelihoodAnalysis
     Dim _logMarginalLikelihood As Double
     Dim _bootstrappedSE As Double
 
-    Public Overridable Property Burnin As Integer
+    Public Property Burnin As Integer
+    Public ReadOnly Property LogMarginalLikelihood As Double
+        Get
+            If Not marginalLikelihoodCalculated Then
+                calculate()
+            End If
+
+            Return _logMarginalLikelihood
+        End Get
+    End Property
+
+    Public ReadOnly Property BootstrappedSE As Double
+        Get
+            If Not marginalLikelihoodCalculated Then
+                calculate()
+            End If
+
+            Return _bootstrappedSE
+        End Get
+    End Property
 
     ''' <summary>
     ''' Constructor
@@ -104,14 +124,14 @@ Public Class MarginalLikelihoodAnalysis
     ''' <param name="burnin">          used for 'toString' display purposes only </param>
     ''' <param name="analysisType"> </param>
     ''' <param name="bootstrapLength"> a value of zero will turn off bootstrapping </param>
-    Public Sub New(sample As IList(Of Double), burnin As Integer, analysisType As String, bootstrapLength As Integer)
+    Public Sub New(sample As List(Of Double), burnin As Integer, analysisType As String, bootstrapLength As Integer)
         Me.sample = sample
         Me.Burnin = burnin
         Me.analysisType = analysisType
         Me.bootstrapLength = bootstrapLength
     End Sub
 
-    Public Overridable Function calculateLogMarginalLikelihood(sample As IList(Of Double)) As Double
+    Public Function calculateLogMarginalLikelihood(sample As List(Of Double)) As Double
         If analysisType.Equals("aicm") Then
             Return logMarginalLikelihoodAICM(sample)
         ElseIf analysisType.Equals("smoothed") Then
@@ -128,15 +148,15 @@ Public Class MarginalLikelihoodAnalysis
     ''' </summary>
     ''' <param name="v"> a posterior sample of logLikelihoods </param>
     ''' <returns> the log marginal likelihood </returns>
-    Public Overridable Function logMarginalLikelihoodArithmetic(v As IList(Of Double?)) As Double
+    Public Function logMarginalLikelihoodArithmetic(v As List(Of Double)) As Double
         Dim size As Integer = v.Count
         Dim sum As Double = LogTricks.logZero
 
         For i As Integer = 0 To size - 1
             sum = LogTricks.logSum(sum, v(i))
-        Next i
+        Next
 
-        Return sum - Math.Log(size)
+        Return sum - stdNum.Log(size)
     End Function
 
     ''' <summary>
@@ -144,21 +164,21 @@ Public Class MarginalLikelihoodAnalysis
     ''' </summary>
     ''' <param name="v"> a posterior sample of logLikelihoods </param>
     ''' <returns> the log marginal likelihood </returns>
-    Public Overridable Function logMarginalLikelihoodHarmonic(v As IList(Of Double)) As Double
+    Public Function logMarginalLikelihoodHarmonic(v As List(Of Double)) As Double
         Dim sum As Double = 0
         Dim size As Integer = v.Count
 
         For i As Integer = 0 To size - 1
             sum += v(i)
-        Next i
+        Next
 
         Dim denominator As Double = LogTricks.logZero
 
         For i As Integer = 0 To size - 1
             denominator = LogTricks.logSum(denominator, sum - v(i))
-        Next i
+        Next
 
-        Return sum - denominator + Math.Log(size)
+        Return sum - denominator + stdNum.Log(size)
     End Function
 
     ''' <summary>
@@ -167,52 +187,57 @@ Public Class MarginalLikelihoodAnalysis
     ''' <param name="v"> a posterior sample of logLikelihoods </param>
     ''' <returns> the AICM (lower values are better) </returns>
 
-    Public Overridable Function logMarginalLikelihoodAICM(v As IList(Of Double)) As Double
+    Public Function logMarginalLikelihoodAICM(v As List(Of Double)) As Double
 
         Dim sum As Double = 0
         Dim size As Integer = v.Count
+
         For i As Integer = 0 To size - 1
             sum += v(i)
-        Next i
+        Next
 
         Dim mean As Double = sum / CDbl(size)
-
         Dim var As Double = 0
+
         For i As Integer = 0 To size - 1
             var += (v(i) - mean) * (v(i) - mean)
-        Next i
+        Next
+
         var /= CDbl(size) - 1
 
         Return 2 * var - 2 * mean
-
     End Function
 
-    Public Overridable Sub calculate()
+    Public Sub calculate()
         _logMarginalLikelihood = calculateLogMarginalLikelihood(sample)
 
         If bootstrapLength > 1 Then
             Dim sampleLength As Integer = sample.Count
-            Dim bsSample As IList(Of Double) = New List(Of Double?)
+            Dim bsSample As New List(Of Double)
             Dim bootstrappedLogML As Double() = New Double(bootstrapLength) {}
             Dim sum As Double = 0
 
             For i As Integer = 0 To bootstrapLength - 1
                 Dim indices As Integer() = MathUtils.sampleIndicesWithReplacement(sampleLength)
+
                 For k As Integer = 0 To sampleLength - 1
                     bsSample.Insert(k, sample(indices(k)))
                 Next k
+
                 bootstrappedLogML(i) = calculateLogMarginalLikelihood(bsSample)
                 sum += bootstrappedLogML(i)
-            Next i
+            Next
+
             sum /= bootstrapLength
+
             Dim bootstrappedAverage As Double = sum
             ' Summarize bootstrappedLogML
             Dim var As Double = 0
             For i As Integer = 0 To bootstrapLength - 1
                 var += (bootstrappedLogML(i) - bootstrappedAverage) * (bootstrappedLogML(i) - bootstrappedAverage)
-            Next i
+            Next
             var /= (bootstrapLength - 1.0)
-            _bootstrappedSE = Math.Sqrt(var)
+            _bootstrappedSE = stdNum.Sqrt(var)
         End If
 
         marginalLikelihoodCalculated = True
@@ -225,42 +250,29 @@ Public Class MarginalLikelihoodAnalysis
     ''' <param name="delta"> proportion of pseudo-samples from the prior </param>
     ''' <param name="Pdata"> current estimate of the log marginal likelihood </param>
     ''' <returns> the log marginal likelihood </returns>
-    Public Overridable Function logMarginalLikelihoodSmoothed(v As IList(Of Double), delta As Double, Pdata As Double) As Double
+    Public Function logMarginalLikelihoodSmoothed(v As IList(Of Double), delta As Double, Pdata As Double) As Double
 
-        Dim logDelta As Double = Math.Log(delta)
-        Dim logInvDelta As Double = Math.Log(1.0 - delta)
+        Dim logDelta As Double = stdNum.Log(delta)
+        Dim logInvDelta As Double = stdNum.Log(1.0 - delta)
         Dim n As Integer = v.Count
-        Dim logN As Double = Math.Log(n)
+        Dim logN As Double = stdNum.Log(n)
 
         Dim offset As Double = logInvDelta - Pdata
 
         Dim bottom As Double = logN + logDelta - logInvDelta
         Dim top As Double = bottom + Pdata
+        Dim weight As Double
 
         For i As Integer = 0 To n - 1
-            Dim weight As Double = -LogTricks.logSum(logDelta, offset + v(i))
+            weight = -LogTricks.logSum(logDelta, offset + v(i))
             top = LogTricks.logSum(top, weight + v(i))
             bottom = LogTricks.logSum(bottom, weight)
-        Next i
+        Next
 
         Return top - bottom
     End Function
 
-    Public Overridable ReadOnly Property LogMarginalLikelihood As Double
-        Get
-            If Not marginalLikelihoodCalculated Then calculate()
-            Return _logMarginalLikelihood
-        End Get
-    End Property
-
-    Public Overridable ReadOnly Property BootstrappedSE As Double
-        Get
-            If Not marginalLikelihoodCalculated Then calculate()
-            Return _bootstrappedSE
-        End Get
-    End Property
-
-    Public Overridable Function logMarginalLikelihoodSmoothed(v As IList(Of Double?)) As Double
+    Public Function logMarginalLikelihoodSmoothed(v As IList(Of Double?)) As Double
 
         Const delta As Double = 0.01 ' todo make class adjustable by accessor/setter
 
@@ -272,7 +284,7 @@ Public Class MarginalLikelihoodAnalysis
 
         Const tolerance As Double = 0.001 ' todo make class adjustable by accessor/setter
 
-        Do While Math.Abs(deltaP) > tolerance
+        Do While stdNum.Abs(deltaP) > tolerance
             Dim g1 As Double = logMarginalLikelihoodSmoothed(v, delta, Pdata) - Pdata
             Dim Pdata2 As Double = Pdata + g1
             dx = g1 * 10.0
@@ -285,10 +297,10 @@ Public Class MarginalLikelihoodAnalysis
                 Dim g3 As Double = logMarginalLikelihoodSmoothed(v, delta, Pdata3) - Pdata3
 
                 ' Try to do a Newton's method step
-                If Math.Abs(g3) <= Math.Abs(g2) AndAlso ((g3 > 0) OrElse (Math.Abs(dgdx) > 0.01)) Then
+                If stdNum.Abs(g3) <= stdNum.Abs(g2) AndAlso ((g3 > 0) OrElse (stdNum.Abs(dgdx) > 0.01)) Then
                     deltaP = Pdata3 - Pdata
                     Pdata = Pdata3 ' otherwise try to go 10 times as far as one step
-                ElseIf Math.Abs(g2) <= Math.Abs(g1) Then
+                ElseIf stdNum.Abs(g2) <= stdNum.Abs(g1) Then
                     Pdata2 += g2
                     deltaP = Pdata2 - Pdata
                     Pdata = Pdata2 ' otherwise go just one step

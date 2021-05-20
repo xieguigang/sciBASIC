@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cbd4c957db9e1539c078b0e70bc13f5f, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Helper\FitnessHelper.vb"
+﻿#Region "Microsoft.VisualBasic::746555118d843158fb19c88c6103ad71, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Helper\FitnessHelper.vb"
 
     ' Author:
     ' 
@@ -33,12 +33,14 @@
 
     '     Module FitnessHelper
     ' 
-    '         Function: (+2 Overloads) Calculate
+    '         Function: AverageError, (+2 Overloads) Calculate
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
+
+Imports System.Runtime.CompilerServices
 
 Namespace Darwinism.GAF.Helper
 
@@ -70,6 +72,38 @@ Namespace Darwinism.GAF.Helper
             Next
 
             Return delta
+        End Function
+
+        ''' <summary>
+        ''' 使用平均值来计算fitness
+        ''' </summary>
+        ''' <param name="errors"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 因为假设使用<see cref="Double.MaxValue"/>来替代Infinity的计算结果
+        ''' 则刚开始的时候，可能比较多的样本都是Inf的结果，此时将无法正常的用系统
+        ''' 的平均数函数来计算误差，所以会需要使用到这个函数来完成整体误差的计算
+        ''' </remarks>
+        <Extension>
+        Public Function AverageError(errors As IEnumerable(Of Double)) As Double
+            Dim rawErrs = errors.ToArray
+            Dim errVector As Double() = rawErrs _
+                .Select(Function(e)
+                            If Not e.IsNaNImaginary AndAlso
+                                e <> Double.MaxValue AndAlso
+                                e <> Double.MinValue Then
+                                Return e
+                            Else
+                                ' 前面在这里使用的是Long.Max
+                                ' 因为Long.Max最多只有 10 ^ 18
+                                ' 所以可能会造成一个最优解的假象
+                                ' 如果目标函数产生的实际值很大的话
+                                Return 10 ^ 200
+                            End If
+                        End Function) _
+                .ToArray
+
+            Return errVector.Average
         End Function
     End Module
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56757ae54c7ac3597bd9bec18615bef5, gr\network-visualization\Datavisualization.Network\test\subnetworkTest.vb"
+﻿#Region "Microsoft.VisualBasic::ee9976bb0048d3f7e7bc264670ea1c51, gr\network-visualization\Datavisualization.Network\test\subnetworkTest.vb"
 
     ' Author:
     ' 
@@ -39,13 +39,16 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Data.GraphTheory.Network
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+
 Module subnetworkTest
 
     Sub Main()
-        'Dim g = ExampleNetwork()
+        Dim g = ExampleNetwork()
 
-        'Dim subNetworks = g.IteratesSubNetworks.ToArray
+        Dim subNetworks = g.IteratesSubNetworks(Of NetworkGraph).ToArray
 
-        'Pause()
+        Pause()
     End Sub
 End Module

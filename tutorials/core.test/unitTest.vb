@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::582aa8308621545cc9a989afc86a8c49, tutorials\core.test\unitTest.vb"
+﻿#Region "Microsoft.VisualBasic::b85dac381fcfc20cac61b03ac478292c, tutorials\core.test\unitTest.vb"
 
     ' Author:
     ' 
@@ -47,12 +47,12 @@ Module unitTest
         Dim KB As New UnitValue(Of ByteSize)(128 * 1024 * 1024, ByteSize.KB)
 
         Call KB.__DEBUG_ECHO
-        Call KB.Scale(ByteSize.GB).__DEBUG_ECHO
-        Call KB.Scale(ByteSize.B).__DEBUG_ECHO
-        Call KB.Scale(ByteSize.MB).__DEBUG_ECHO
-        Call KB.Scale(ByteSize.TB).__DEBUG_ECHO
-        Call KB.Scale(ByteSize.KB).__DEBUG_ECHO
-        Call KB.Scale(ByteSize.TB).Scale(ByteSize.MB).__DEBUG_ECHO
+        Call KB.ScaleTo(ByteSize.GB).__DEBUG_ECHO
+        Call KB.ScaleTo(ByteSize.B).__DEBUG_ECHO
+        Call KB.ScaleTo(ByteSize.MB).__DEBUG_ECHO
+        Call KB.ScaleTo(ByteSize.TB).__DEBUG_ECHO
+        Call KB.ScaleTo(ByteSize.KB).__DEBUG_ECHO
+        Call KB.ScaleTo(ByteSize.TB).ScaleTo(ByteSize.MB).__DEBUG_ECHO
 
         Pause()
     End Sub

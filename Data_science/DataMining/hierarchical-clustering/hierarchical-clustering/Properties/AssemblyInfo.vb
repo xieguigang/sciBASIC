@@ -7,7 +7,7 @@ Imports System.Runtime.InteropServices
 '
 ' change them to the information which is associated with the assembly
 ' you compile.
-
+#if netcore5=0 then 
 <Assembly: AssemblyTitle("HierarchicalClustering and Visualization")>
 <Assembly: AssemblyDescription("HierarchicalClustering and Visualization")>
 <assembly: AssemblyConfiguration("")>
@@ -29,3 +29,4 @@ Imports System.Runtime.InteropServices
 ' numbers with the '*' character (the default):
 
 <assembly: AssemblyVersion("1.0.*")>
+#end if

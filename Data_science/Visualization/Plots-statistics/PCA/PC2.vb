@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb651306d8f2bd99bfaaf17fcb351ab7, Data_science\Visualization\Plots-statistics\PCA\PC2.vb"
+﻿#Region "Microsoft.VisualBasic::41a4c92a92a7273c45a7efed654a2dbd, Data_science\Visualization\Plots-statistics\PCA\PC2.vb"
 
     ' Author:
     ' 
@@ -50,10 +50,10 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports Microsoft.VisualBasic.Math.Matrix
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports PCA_analysis = Microsoft.VisualBasic.Math.LinearAlgebra.PCA
+Imports PCA_analysis = Microsoft.VisualBasic.Math.LinearAlgebra.Prcomp.PCA
 
 Namespace PCA
 
@@ -131,7 +131,7 @@ Namespace PCA
                     .ToArray
                 Dim s As New SerialData With {
                     .color = Color.Black,
-                    .PointSize = 5,
+                    .pointSize = 5,
                     .title = "Cluster #" & (group.i + 1),
                     .pts = points
                 }
@@ -142,7 +142,7 @@ Namespace PCA
             Dim dx = x.Max - x.Min
             Dim xaxis = $"({x.Min - dx / 5},{x.Max + dx / 5}),n=10"
 
-            Return Bubble.Plot(serials, size.SizeParser, xAxis:=xaxis, strokeColorAsMainColor:=True)
+            Return Bubble.Plot(serials, size, xAxis:=xaxis, strokeColorAsMainColor:=True)
         End Function
     End Module
 End Namespace

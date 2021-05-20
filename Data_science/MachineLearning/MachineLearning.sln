@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29009.5
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.705
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{314EF408-0B83-4396-A201-847E5DC7AC53}"
 EndProject
@@ -13,7 +13,7 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "math-core", "..\Mathematica
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "test", "MachineLearning\test\test.vbproj", "{3E1122C1-25C9-47E0-8697-004D353C75FD}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47-dotnet_Microsoft.VisualBasic", "..\..\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47-dotnet_Microsoft.VisualBasic", "..\..\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj"", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47_dotnet_ms-vb_data.framework", "..\..\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj", "{7283C179-F852-4EAD-8D8F-B82EF2CBD7DB}"
 EndProject
@@ -171,8 +171,8 @@ Global
 		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Publish|x86.Build.0 = Release|Any CPU
 		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Release|x64.ActiveCfg = Release|Any CPU
-		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Release|x64.Build.0 = Release|Any CPU
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Release|x64.ActiveCfg = Release|x64
+		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Release|x64.Build.0 = Release|x64
 		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Release|x86.ActiveCfg = Release|Any CPU
 		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Release|x86.Build.0 = Release|Any CPU
 		{A43EC013-2B55-4D25-B9F1-96BD5FB1E577}.Release2|Any CPU.ActiveCfg = Release|Any CPU
@@ -333,8 +333,8 @@ Global
 		{3E1122C1-25C9-47E0-8697-004D353C75FD}.Biodeep_UNIX_x64|x86.Build.0 = Release|Any CPU
 		{3E1122C1-25C9-47E0-8697-004D353C75FD}.Biodeep|Any CPU.ActiveCfg = Release|Any CPU
 		{3E1122C1-25C9-47E0-8697-004D353C75FD}.Biodeep|Any CPU.Build.0 = Release|Any CPU
-		{3E1122C1-25C9-47E0-8697-004D353C75FD}.Biodeep|x64.ActiveCfg = Release|Any CPU
-		{3E1122C1-25C9-47E0-8697-004D353C75FD}.Biodeep|x64.Build.0 = Release|Any CPU
+		{3E1122C1-25C9-47E0-8697-004D353C75FD}.Biodeep|x64.ActiveCfg = Release|x64
+		{3E1122C1-25C9-47E0-8697-004D353C75FD}.Biodeep|x64.Build.0 = Release|x64
 		{3E1122C1-25C9-47E0-8697-004D353C75FD}.Biodeep|x86.ActiveCfg = Release|Any CPU
 		{3E1122C1-25C9-47E0-8697-004D353C75FD}.Biodeep|x86.Build.0 = Release|Any CPU
 		{3E1122C1-25C9-47E0-8697-004D353C75FD}.Biostack|Any CPU.ActiveCfg = Release|Any CPU
@@ -411,8 +411,8 @@ Global
 		{3E1122C1-25C9-47E0-8697-004D353C75FD}.Publish|x86.Build.0 = Release|Any CPU
 		{3E1122C1-25C9-47E0-8697-004D353C75FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E1122C1-25C9-47E0-8697-004D353C75FD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3E1122C1-25C9-47E0-8697-004D353C75FD}.Release|x64.ActiveCfg = Release|Any CPU
-		{3E1122C1-25C9-47E0-8697-004D353C75FD}.Release|x64.Build.0 = Release|Any CPU
+		{3E1122C1-25C9-47E0-8697-004D353C75FD}.Release|x64.ActiveCfg = Release|x64
+		{3E1122C1-25C9-47E0-8697-004D353C75FD}.Release|x64.Build.0 = Release|x64
 		{3E1122C1-25C9-47E0-8697-004D353C75FD}.Release|x86.ActiveCfg = Release|Any CPU
 		{3E1122C1-25C9-47E0-8697-004D353C75FD}.Release|x86.Build.0 = Release|Any CPU
 		{3E1122C1-25C9-47E0-8697-004D353C75FD}.Release2|Any CPU.ActiveCfg = Release|Any CPU

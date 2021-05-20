@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27cec8e0d2a29a87840eac5dd1ff3937, gr\Microsoft.VisualBasic.Imaging\SVG\GraphicsSVG.vb"
+﻿#Region "Microsoft.VisualBasic::440396246b24b8be7f0f366a6738506e, gr\Microsoft.VisualBasic.Imaging\SVG\GraphicsSVG.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,10 @@
 
     '     Class GraphicsSVG
     ' 
-    '         Properties: Clip, ClipBounds, CompositingMode, CompositingQuality, DpiX
-    '                     DpiY, InterpolationMode, IsClipEmpty, IsVisibleClipEmpty, PageScale
-    '                     PageUnit, PixelOffsetMode, RenderingOrigin, Size, SmoothingMode
-    '                     TextContrast, TextRenderingHint, Transform, VisibleClipBounds
+    '         Properties: CompositingMode, CompositingQuality, DpiX, DpiY, GetLastLayer
+    '                     InterpolationMode, IsClipEmpty, IsVisibleClipEmpty, PageScale, PageUnit
+    '                     PixelOffsetMode, RenderingOrigin, Size, SmoothingMode, TextContrast
+    '                     TextRenderingHint
     ' 
     '         Constructor: (+3 Overloads) Sub New
     ' 
@@ -47,12 +47,11 @@
     '              (+3 Overloads) DrawBezier, (+2 Overloads) DrawBeziers, DrawCircle, (+4 Overloads) DrawClosedCurve, (+7 Overloads) DrawCurve
     '              (+4 Overloads) DrawEllipse, (+2 Overloads) DrawIcon, DrawIconUnstretched, (+30 Overloads) DrawImage, (+4 Overloads) DrawImageUnscaled
     '              DrawImageUnscaledAndClipped, (+4 Overloads) DrawLine, (+2 Overloads) DrawLines, DrawPath, (+4 Overloads) DrawPie
-    '              (+2 Overloads) DrawPolygon, (+5 Overloads) DrawRectangle, (+2 Overloads) DrawRectangles, (+6 Overloads) DrawString, EndContainer
+    '              (+2 Overloads) DrawPolygon, (+6 Overloads) DrawRectangle, (+2 Overloads) DrawRectangles, (+6 Overloads) DrawString, EndContainer
     '              (+36 Overloads) EnumerateMetafile, (+2 Overloads) ExcludeClip, (+6 Overloads) FillClosedCurve, (+4 Overloads) FillEllipse, FillPath
-    '              (+3 Overloads) FillPie, (+4 Overloads) FillPolygon, (+4 Overloads) FillRectangle, (+2 Overloads) FillRectangles, FillRegion
-    '              (+2 Overloads) Flush, (+3 Overloads) IntersectClip, (+2 Overloads) MultiplyTransform, ReleaseHdc, ReleaseHdcInternal
-    '              ResetClip, ResetTransform, Restore, (+2 Overloads) RotateTransform, (+2 Overloads) ScaleTransform
-    '              (+9 Overloads) SetClip, (+2 Overloads) TransformPoints, (+2 Overloads) TranslateClip, (+2 Overloads) TranslateTransform
+    '              (+3 Overloads) FillPie, (+4 Overloads) FillPolygon, (+4 Overloads) FillRectangle, FillRegion, (+2 Overloads) Flush
+    '              (+3 Overloads) IntersectClip, (+2 Overloads) MultiplyTransform, ResetClip, ResetTransform, (+2 Overloads) RotateTransform
+    '              (+2 Overloads) ScaleTransform, (+9 Overloads) SetClip, (+2 Overloads) TransformPoints, (+2 Overloads) TranslateClip, (+2 Overloads) TranslateTransform
     ' 
     ' 
     ' /********************************************************************************/
@@ -68,6 +67,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Net.Http
 
 Namespace SVG
 
@@ -79,8 +79,24 @@ Namespace SVG
         ''' <summary>
         ''' 主要是需要进行字体的大小计算所需要使用的一个内部gdi+对象
         ''' </summary>
-        ReadOnly __graphics As Graphics = Graphics.FromImage(New Bitmap(100, 100))
+        Friend ReadOnly internalGraphicsHelper As Graphics = Graphics.FromImage(New Bitmap(10, 10))
+
+        ''' <summary>
+        ''' SVG图型的数据结构以及渲染是树形的，但是利用程序代码进行SVG数据的生成却是线性的
+        ''' 这样子会导致产生的SVG图形错位
+        ''' 所以在这里需要使用多层结构来将线性的绘图操作模拟为SVG的树形结构
+        ''' </summary>
         Friend ReadOnly __svgData As SVGDataLayers
+
+        ''' <summary>
+        ''' Get the last graphic layer
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property GetLastLayer As g
+            Get
+                Return __svgData.GetLastLayer
+            End Get
+        End Property
 
         Public Sub New(size As Size)
             __svgData = New SVGDataLayers With {
@@ -95,39 +111,6 @@ Namespace SVG
         Public Sub New(width%, height%)
             Me.New(New Size(width, height))
         End Sub
-
-        Public Overrides Property Clip As Region
-            Get
-                Throw New NotImplementedException()
-            End Get
-            Set(value As Region)
-                Throw New NotImplementedException()
-            End Set
-        End Property
-
-        Public Overrides ReadOnly Property ClipBounds As RectangleF
-            Get
-                Throw New NotImplementedException()
-            End Get
-        End Property
-
-        Public Overrides Property CompositingMode As CompositingMode
-            Get
-                Throw New NotImplementedException()
-            End Get
-            Set(value As CompositingMode)
-                Throw New NotImplementedException()
-            End Set
-        End Property
-
-        Public Overrides Property CompositingQuality As CompositingQuality
-            Get
-                Throw New NotImplementedException()
-            End Get
-            Set(value As CompositingQuality)
-                Throw New NotImplementedException()
-            End Set
-        End Property
 
         Public Overrides ReadOnly Property DpiX As Single
             Get
@@ -146,6 +129,24 @@ Namespace SVG
                 Throw New NotImplementedException()
             End Get
             Set(value As InterpolationMode)
+                Throw New NotImplementedException()
+            End Set
+        End Property
+
+        Public Overrides Property CompositingQuality As CompositingQuality
+            Get
+                Throw New NotImplementedException()
+            End Get
+            Set(value As CompositingQuality)
+                Throw New NotImplementedException()
+            End Set
+        End Property
+
+        Public Overrides Property CompositingMode As CompositingMode
+            Get
+                Throw New NotImplementedException()
+            End Get
+            Set(value As CompositingMode)
                 Throw New NotImplementedException()
             End Set
         End Property
@@ -225,24 +226,6 @@ Namespace SVG
             End Set
         End Property
 
-        Public Overrides Property Transform As Matrix
-            Get
-                Throw New NotImplementedException()
-            End Get
-            Set(value As Matrix)
-                Throw New NotImplementedException()
-            End Set
-        End Property
-
-        Public Overrides ReadOnly Property VisibleClipBounds As RectangleF
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return New RectangleF With {
-                    .Size = Size.SizeF
-                }
-            End Get
-        End Property
-
         Public Overrides ReadOnly Property Size As Size
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -251,7 +234,9 @@ Namespace SVG
         End Property
 
         Public Overrides Sub AddMetafileComment(data() As Byte)
-            Throw New NotImplementedException()
+            Dim meta As String = data.ToBase64String
+
+            Throw New NotImplementedException(meta)
         End Sub
 
         ''' <summary>
@@ -260,14 +245,13 @@ Namespace SVG
         ''' <param name="color"></param>
         Public Overrides Sub Clear(color As Color)
             __svgData.bg$ = color.ToHtmlColor
-
-            ' reset
-            __svgData.layers *= 0
-            __svgData.zlayer = 0
+            __svgData.Clear()
         End Sub
 
+#Region "NotSupportedException"
+
         Public Overrides Sub CopyFromScreen(upperLeftSource As Point, upperLeftDestination As Point, blockRegionSize As Size)
-            Throw New NotImplementedException()
+            Throw New NotSupportedException
         End Sub
 
         Public Overrides Sub CopyFromScreen(upperLeftSource As Point, upperLeftDestination As Point, blockRegionSize As Size, copyPixelOperation As CopyPixelOperation)
@@ -282,6 +266,163 @@ Namespace SVG
             Throw New NotImplementedException()
         End Sub
 
+        Public Overrides Sub EndContainer(container As GraphicsContainer)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, callback As Graphics.EnumerateMetafileProc)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, callback As Graphics.EnumerateMetafileProc)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, callback As Graphics.EnumerateMetafileProc)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, callback As Graphics.EnumerateMetafileProc)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, callback As Graphics.EnumerateMetafileProc)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, callback As Graphics.EnumerateMetafileProc)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, srcRect As Rectangle, unit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, srcRect As RectangleF, unit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, srcRect As RectangleF, unit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, srcRect As Rectangle, unit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, srcRect As RectangleF, unit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, srcRect As Rectangle, unit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub ExcludeClip(rect As Rectangle)
+            Throw New NotImplementedException()
+        End Sub
+
+        Public Overrides Sub ExcludeClip(region As Region)
+            Throw New NotImplementedException()
+        End Sub
+
+#End Region
 
 #Region "Add svg shape element"
 
@@ -311,8 +452,8 @@ Namespace SVG
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Add(polygon As polygon) As Integer
-            Return __svgData.Add(polygon)
+        Public Function Add(polygon As polygon, Optional layerComment$ = Nothing) As Integer
+            Return __svgData.Add(polygon, layerComment)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -462,34 +603,30 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub DrawImageUnscaled(image As Drawing.Image, rect As Rectangle)
-            Dim img As New ImageData(image, image.Size)
+            Dim img As New ImageData(image, image.Size, New Padding)
             Call Me.DrawImageUnscaled(img, rect)
         End Sub
 
         Public Overrides Sub DrawImageUnscaled(image As Drawing.Image, point As Point)
-            Dim img As New ImageData(image, image.Size)
+            Dim img As New ImageData(image, image.Size, New Padding)
             Call Me.DrawImageUnscaled(img, point)
         End Sub
 
         Public Overrides Sub DrawImageUnscaled(image As Drawing.Image, x As Integer, y As Integer)
-            Dim img As New ImageData(image, image.Size)
+            Dim img As New ImageData(image, image.Size, New Padding)
             Call Me.DrawImageUnscaled(img, x, y)
         End Sub
 
         Public Overrides Sub DrawImageUnscaled(image As Drawing.Image, x As Integer, y As Integer, width As Integer, height As Integer)
-            Dim img As New ImageData(image, image.Size)
+            Dim img As New ImageData(image, image.Size, New Padding)
             Call Me.DrawImageUnscaled(img, x, y, width, height)
         End Sub
 
         Public Overrides Sub DrawImageUnscaledAndClipped(image As Drawing.Image, rect As Rectangle)
-            Dim img As New ImageData(image, image.Size)
+            Dim img As New ImageData(image, image.Size, New Padding)
             Call Me.DrawImageUnscaledAndClipped(img, rect)
         End Sub
 #End Region
-
-        Public Overrides Sub Dispose()
-            Throw New NotImplementedException()
-        End Sub
 
 #Region "矢量图绘制方法"
 
@@ -664,9 +801,10 @@ Namespace SVG
 
         Public Overrides Sub DrawPolygon(pen As Pen, points() As PointF)
             Dim polygon As New polygon(points) With {
-                .style = New Stroke(pen).CSSValue
+                .style = New Stroke(pen).CSSValue,
+                .XmlCommentValue = ""
             }
-            Call __svgData.Add(polygon)
+            Call __svgData.Add(polygon, $"DrawPolygon({polygon.style}, points({points.Length}))")
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -685,6 +823,13 @@ Namespace SVG
             Dim rectangle As New rect(rect) With {
                 .style = {New Stroke(pen).CSSValue, $"fill: {fill.ToHtmlColor}"}.JoinBy("; ")
             }
+            Call __svgData.Add(rectangle)
+        End Sub
+
+        Public Overloads Sub DrawRectangle(pen As Pen, rect As RectangleF, fill As Color)
+            Dim rectangle As New rect(rect) With {
+              .style = {New Stroke(pen).CSSValue, $"fill: {fill.ToHtmlColor}"}.JoinBy("; ")
+          }
             Call __svgData.Add(rectangle)
         End Sub
 
@@ -755,164 +900,6 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, x As Single, y As Single, format As StringFormat)
-            Throw New NotImplementedException()
-        End Sub
-
-#End Region
-
-        Public Overrides Sub EndContainer(container As GraphicsContainer)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, callback As Graphics.EnumerateMetafileProc)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, callback As Graphics.EnumerateMetafileProc)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, callback As Graphics.EnumerateMetafileProc)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, callback As Graphics.EnumerateMetafileProc)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, callback As Graphics.EnumerateMetafileProc)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, callback As Graphics.EnumerateMetafileProc)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, srcRect As Rectangle, unit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, srcRect As RectangleF, unit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, srcRect As RectangleF, unit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, srcRect As Rectangle, unit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, srcRect As RectangleF, unit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, srcRect As Rectangle, unit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub ExcludeClip(rect As Rectangle)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub ExcludeClip(region As Region)
             Throw New NotImplementedException()
         End Sub
 
@@ -993,9 +980,10 @@ Namespace SVG
 
         Public Overrides Sub FillPolygon(brush As Brush, points() As PointF)
             Dim polygon As New polygon(points) With {
-                .fill = DirectCast(brush, SolidBrush).Color.ToHtmlColor
+                .fill = brush.SVGColorHelper,
+                .XmlCommentValue = ""
             }
-            Call __svgData.Add(polygon)
+            Call __svgData.Add(polygon, $"FillPolygon({polygon.fill}, points({points.Length}))")
         End Sub
 
         Public Overrides Sub FillPolygon(brush As Brush, points() As Point, fillMode As FillMode)
@@ -1034,28 +1022,17 @@ Namespace SVG
             Call __svgData.Add(rect)
         End Sub
 
-        Public Overrides Sub FillRectangles(brush As Brush, rects() As RectangleF)
-            For Each rect In rects
-                Call FillRectangle(brush, rect)
-            Next
-        End Sub
-
-        Public Overrides Sub FillRectangles(brush As Brush, rects() As Rectangle)
-            For Each rect In rects
-                Call FillRectangle(brush, rect)
-            Next
-        End Sub
-
         Public Overrides Sub FillRegion(brush As Brush, region As Region)
             Throw New NotImplementedException()
         End Sub
+#End Region
 
         Public Overrides Sub Flush()
-            Throw New NotImplementedException()
+
         End Sub
 
         Public Overrides Sub Flush(intention As FlushIntention)
-            Throw New NotImplementedException()
+
         End Sub
 
         Public Overrides Sub IntersectClip(region As Region)
@@ -1078,23 +1055,11 @@ Namespace SVG
             Throw New NotImplementedException()
         End Sub
 
-        Public Overrides Sub ReleaseHdc(hdc As IntPtr)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub ReleaseHdcInternal(hdc As IntPtr)
-            Throw New NotImplementedException()
-        End Sub
-
         Public Overrides Sub ResetClip()
             Throw New NotImplementedException()
         End Sub
 
         Public Overrides Sub ResetTransform()
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub Restore(gstate As GraphicsState)
             Throw New NotImplementedException()
         End Sub
 
@@ -1228,7 +1193,7 @@ Namespace SVG
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function MeasureCharacterRanges(text As String, font As Font, layoutRect As RectangleF, stringFormat As StringFormat) As Region()
-            Return __graphics.MeasureCharacterRanges(text, font, layoutRect, stringFormat)
+            Return internalGraphicsHelper.MeasureCharacterRanges(text, font, layoutRect, stringFormat)
         End Function
 
         Private Shared Function svgFontScale(font As Font) As Font
@@ -1237,37 +1202,37 @@ Namespace SVG
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function MeasureString(text As String, font As Font) As SizeF
-            Return __graphics.MeasureString(text, svgFontScale(font))
+            Return internalGraphicsHelper.MeasureString(text, svgFontScale(font))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function MeasureString(text As String, font As Font, width As Integer) As SizeF
-            Return __graphics.MeasureString(text, svgFontScale(font), width)
+            Return internalGraphicsHelper.MeasureString(text, svgFontScale(font), width)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF) As SizeF
-            Return __graphics.MeasureString(text, svgFontScale(font), layoutArea)
+            Return internalGraphicsHelper.MeasureString(text, svgFontScale(font), layoutArea)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function MeasureString(text As String, font As Font, width As Integer, format As StringFormat) As SizeF
-            Return __graphics.MeasureString(text, svgFontScale(font), width, format)
+            Return internalGraphicsHelper.MeasureString(text, svgFontScale(font), width, format)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function MeasureString(text As String, font As Font, origin As PointF, stringFormat As StringFormat) As SizeF
-            Return __graphics.MeasureString(text, svgFontScale(font), origin, stringFormat)
+            Return internalGraphicsHelper.MeasureString(text, svgFontScale(font), origin, stringFormat)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat) As SizeF
-            Return __graphics.MeasureString(text, svgFontScale(font), layoutArea, stringFormat)
+            Return internalGraphicsHelper.MeasureString(text, svgFontScale(font), layoutArea, stringFormat)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat, ByRef charactersFitted As Integer, ByRef linesFilled As Integer) As SizeF
-            Return __graphics.MeasureString(text, svgFontScale(font), layoutArea, stringFormat, charactersFitted, linesFilled)
+            Return internalGraphicsHelper.MeasureString(text, svgFontScale(font), layoutArea, stringFormat, charactersFitted, linesFilled)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -1285,6 +1250,9 @@ Namespace SVG
                 .style = .stroke
             }
             Call __svgData.Add(circle)
+        End Sub
+
+        Public Overrides Sub Dispose()
         End Sub
     End Class
 End Namespace

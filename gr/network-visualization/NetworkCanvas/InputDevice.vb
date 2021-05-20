@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::28f82a53403b422ae84815b0547e60a3, gr\network-visualization\NetworkCanvas\InputDevice.vb"
+﻿#Region "Microsoft.VisualBasic::ea751a82dfc794fe9cad8fff6de817d0, gr\network-visualization\NetworkCanvas\InputDevice.vb"
 
     ' Author:
     ' 
@@ -64,7 +64,7 @@ Public Class InputDevice : Implements IDisposable
                     Canvas.fdgRenderer.ScreenToGraph(
                     New Point(e.Location.X, e.Location.Y))
 
-            dragNode.Pinned = True
+            dragNode.pinned = True
             Canvas.fdgPhysics.GetPoint(dragNode).position = vec
         Else
             dragNode = __getNode(e.Location)
@@ -74,11 +74,10 @@ Public Class InputDevice : Implements IDisposable
     Protected dragNode As Node
 
     Protected Overridable Function __getNode(p As Point) As Node
-        For Each node As Node In Canvas.Graph.nodes
-            Dim r As Single = node.Data.radius
+        For Each node As Node In Canvas.Graph.vertex
+            Dim r As Single = node.data.size(0)
             Dim v As FDGVector2 = TryCast(Canvas.fdgPhysics.GetPoint(node).position, FDGVector2)
-            Dim npt As Point =
-                Renderer.GraphToScreen(v, Canvas.fdgRenderer.ClientRegion)
+            Dim npt As Point = Renderer.GraphToScreen(v, Canvas.fdgRenderer.ClientRegion)
             Dim pt As New Point(CInt(npt.X - r / 2), CInt(npt.Y - r / 2))
             Dim rect As New Rectangle(pt, New Size(CInt(r), CInt(r)))
 
@@ -100,7 +99,7 @@ Public Class InputDevice : Implements IDisposable
     Protected Overridable Sub Canvas_MouseUp(sender As Object, e As MouseEventArgs) Handles Canvas.MouseUp
         drag = False
         If dragNode IsNot Nothing Then
-            dragNode.Pinned = False
+            dragNode.pinned = False
             dragNode = Nothing
         End If
     End Sub

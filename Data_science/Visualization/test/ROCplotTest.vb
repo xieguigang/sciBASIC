@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c69f7289e2d0dd95768872279f411e93, Data_science\Visualization\test\ROCplotTest.vb"
+﻿#Region "Microsoft.VisualBasic::f4a71acfc7f56578fd34c4a1b4ebf9b8, Data_science\Visualization\test\ROCplotTest.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
 
 Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics
 Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.DataMining
+Imports Microsoft.VisualBasic.DataMining.ComponentModel.Evaluation
 
 Module ROCplotTest
 

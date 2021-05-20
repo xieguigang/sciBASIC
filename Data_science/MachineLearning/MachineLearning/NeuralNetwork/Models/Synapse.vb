@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7efc15487e47e9eeda6a0f83c8021db, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Models\Synapse.vb"
+﻿#Region "Microsoft.VisualBasic::1344b57f7b4b883e336325e1d122a50e, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Models\Synapse.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,10 @@
 
     '     Class Synapse
     ' 
-    '         Properties: InputNeuron, OutputNeuron, Weight, WeightDelta
+    '         Properties: Gradient, InputNeuron, OutputNeuron, Value, Weight
+    '                     WeightDelta
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: ToString
     ' 
     ' 
@@ -64,13 +65,54 @@ Namespace NeuralNetwork
         Public Property WeightDelta As Double
 #End Region
 
-        Public Sub New(inputNeuron As Neuron, outputNeuron As Neuron)
-            Me.InputNeuron = inputNeuron
-            Me.OutputNeuron = outputNeuron
+        ''' <summary>
+        ''' ``a.Weight * a.InputNeuron.Value``
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Value As Double
+            Get
+                ' 在这里为了防止出现 0 * Inf = NaN 的情况出现
+                If Weight = 0R OrElse InputNeuron.Value = 0 Then
+                    Return 0
+                Else
+                    Return Weight * InputNeuron.Value
+                End If
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' ``a.OutputNeuron.Gradient * a.Weight``
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Gradient As Double
+            Get
+                If OutputNeuron.Gradient = 0R OrElse Weight = 0R Then
+                    Return 0
+                Else
+                    Return OutputNeuron.Gradient * Weight
+                End If
+            End Get
+        End Property
+
+        Friend Sub New()
+        End Sub
+
+        Public Sub New(inputNeuron As Neuron, outputNeuron As Neuron, weight As Func(Of Double))
+            Call Me.New(inputNeuron, outputNeuron)
 
             ' 权重初始
-            Weight = Helpers.GetRandom()
-            WeightDelta = Helpers.GetRandom
+            Me.Weight = weight()
+            Me.WeightDelta = weight()
+        End Sub
+
+        ''' <summary>
+        ''' Create from xml model
+        ''' </summary>
+        ''' <param name="inputNeuron"></param>
+        ''' <param name="outputNeuron"></param>
+        Sub New(inputNeuron As Neuron, outputNeuron As Neuron)
+            Me.InputNeuron = inputNeuron
+            Me.OutputNeuron = outputNeuron
         End Sub
 
         Public Overrides Function ToString() As String

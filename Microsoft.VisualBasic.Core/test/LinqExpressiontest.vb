@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d6a8f0f55931ecbf1429ae5e5c62da9, Microsoft.VisualBasic.Core\test\LinqExpressiontest.vb"
+﻿#Region "Microsoft.VisualBasic::1cd618d84602bb5e02f7e78ba29bf818, Microsoft.VisualBasic.Core\test\LinqExpressiontest.vb"
 
     ' Author:
     ' 
@@ -48,4 +48,3 @@ Module LinqExpressiontest
         Pause()
     End Sub
 End Module
-

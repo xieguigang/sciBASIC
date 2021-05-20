@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd3423602f49b87c7ddacac3a9b385f4, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Pentacle.vb"
+﻿#Region "Microsoft.VisualBasic::170402705d9530da817ed9da56bc7edc, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Pentacle.vb"
 
     ' Author:
     ' 
@@ -45,6 +45,7 @@
 Imports System.Drawing
 Imports System.Math
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports stdNum = System.Math
 
 Namespace Drawing2D.Shapes
 
@@ -53,7 +54,7 @@ Namespace Drawing2D.Shapes
     ''' </summary>
     Public Class Pentacle
 
-        Public Shared Sub Draw(ByRef g As IGraphics, topLeft As Point, size As SizeF, Optional br As Brush = Nothing, Optional border As Stroke = Nothing)
+        Public Shared Sub Draw(ByRef g As IGraphics, topLeft As PointF, size As SizeF, Optional br As Brush = Nothing, Optional border As Stroke = Nothing)
             Dim pts As Point() = PathData(topLeft, size)
 
             If br Is Nothing Then
@@ -67,7 +68,7 @@ Namespace Drawing2D.Shapes
             End If
         End Sub
 
-        Public Shared Function PathData(topleft As Point, size As SizeF) As Point()
+        Public Shared Function PathData(topleft As PointF, size As SizeF) As Point()
             Dim pts(9) As Point
             Dim center As New Point(topleft.X + size.Width / 2, topleft.Y + size.Height / 2)
             Dim radius As Integer = Min(size.Width, size.Height) / 2
@@ -75,7 +76,7 @@ Namespace Drawing2D.Shapes
             pts(0) = New Point(center.X, center.Y - radius)
             pts(1) = RotateTheta(pts(0), center, 36.0)
 
-            Dim len As Single = radius * Sin((18.0 * Math.PI / 180.0)) / Sin((126.0 * Math.PI / 180.0))
+            Dim len As Single = radius * Sin((18.0 * stdNum.PI / 180.0)) / Sin((126.0 * stdNum.PI / 180.0))
 
             pts(1).X = CInt(center.X + len * (pts(1).X - center.X) / radius)
             pts(1).Y = CInt(center.Y + len * (pts(1).Y - center.Y) / radius)
@@ -96,8 +97,8 @@ Namespace Drawing2D.Shapes
         ''' <param name="theta"></param>
         ''' <returns></returns>
         Public Shared Function RotateTheta(pt As Point, center As Point, theta As Single) As Point
-            Dim x As Integer = CInt(center.X + (pt.X - center.X) * Cos((theta * Math.PI / 180)) - (pt.Y - center.Y) * Sin((theta * Math.PI / 180)))
-            Dim y As Integer = CInt(center.Y + (pt.X - center.X) * Sin((theta * Math.PI / 180)) + (pt.Y - center.Y) * Cos((theta * Math.PI / 180)))
+            Dim x As Integer = CInt(center.X + (pt.X - center.X) * Cos((theta * stdNum.PI / 180)) - (pt.Y - center.Y) * Sin((theta * stdNum.PI / 180)))
+            Dim y As Integer = CInt(center.Y + (pt.X - center.X) * Sin((theta * stdNum.PI / 180)) + (pt.Y - center.Y) * Cos((theta * stdNum.PI / 180)))
 
             Return New Point(x, y)
         End Function

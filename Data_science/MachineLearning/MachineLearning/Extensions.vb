@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bd8d8f8267e3104286ab6b9402a16cf8, Data_science\MachineLearning\MachineLearning\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::218108c165c9e0fcd0f2ba888d7856f0, Data_science\MachineLearning\MachineLearning\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,18 +33,23 @@
 
     ' Module Extensions
     ' 
-    '     Function: Delta
+    '     Function: Delta, ToDataMatrix
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
+Imports stdNum = System.Math
 
-Public Module Extensions
+<HideModuleName> Public Module Extensions
 
     ''' <summary>
-    ''' Small delta for GA mutations
+    ''' Generate small delta for GA mutations
     ''' </summary>
     ''' <param name="x#"></param>
     ''' <param name="d#"></param>
@@ -55,8 +60,42 @@ Public Module Extensions
     ''' </remarks>
     <Extension>
     Public Function Delta(x#, Optional d# = 1 / 10) As Double
-        Dim p10 = Fix(Math.Log10(x))
+        Dim p10 = Fix(stdNum.Log10(x))
         Dim small = (10 ^ (p10 + 1)) * d
         Return small
+    End Function
+
+    ''' <summary>
+    ''' Convert samples data to dataset matrix
+    ''' </summary>
+    ''' <typeparam name="T">The type of the target output dataset.</typeparam>
+    ''' <param name="samples"></param>
+    ''' <param name="names">The property names of the sample data vector.</param>
+    ''' <param name="outputNames">The property names of the output vector for each sample</param>
+    ''' <returns>
+    ''' data layout of the populated matrix row:
+    ''' 
+    ''' ```
+    ''' ID|names|outputNames
+    ''' ```
+    ''' </returns>
+    <Extension>
+    Public Function ToDataMatrix(Of T As {New, DynamicPropertyBase(Of Double), INamedValue})(samples As IEnumerable(Of Sample), names$(), outputNames$()) As IEnumerable(Of T)
+        Dim nameIndex = names.SeqIterator.ToArray
+        Dim outsIndex = outputNames.SeqIterator.ToArray
+
+        Return samples _
+            .Select(Function(sample)
+                        Dim row As New T
+                        Dim vector As Double() = sample.vector
+
+                        row.Key = sample.ID
+                        row.Properties = New Dictionary(Of String, Double)
+
+                        Call nameIndex.DoEach(Sub(i) Call row.Add(i.value, vector(i)))
+                        Call outsIndex.DoEach(Sub(i) Call row.Add(i.value, sample.target(i)))
+
+                        Return row
+                    End Function)
     End Function
 End Module

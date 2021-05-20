@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c1787e82d350a4c7d21feea6f82e1ec6, Data_science\DataMining\DataMining\Clustering\KMeans\EntityModels\csv.vb"
+﻿#Region "Microsoft.VisualBasic::fd626e3256b9aa7860927c680938632f, Data_science\DataMining\DataMining\Clustering\KMeans\EntityModels\csv.vb"
 
     ' Author:
     ' 
@@ -48,7 +48,9 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Namespace KMeans
 
     ''' <summary>
-    ''' 存储在Csv文件里面的数据模型，近似等价于<see cref="DataSet"/>，只不过多带了一个用来描述cluster的<see cref="Cluster"/>属性标签
+    ''' 存储在Csv文件里面的数据模型，近似等价于csv DataSet对象，
+    ''' 只不过多带了一个用来描述cluster的<see cref="Cluster"/>
+    ''' 属性标签
     ''' </summary>
     Public Class EntityClusterModel : Inherits DynamicPropertyBase(Of Double)
         Implements INamedValue
@@ -78,11 +80,22 @@ Namespace KMeans
             Return ID
         End Function
 
-        Public Function ToModel() As ClusterEntity
-            Return New ClusterEntity With {
-                .uid = ID,
-                .entityVector = Properties.Values.ToArray
-            }
+        Public Function ToModel(Optional projection As String() = Nothing) As ClusterEntity
+            If projection.IsNullOrEmpty Then
+                Return New ClusterEntity With {
+                    .uid = ID,
+                    .entityVector = Properties.Values.ToArray
+                }
+            Else
+                Return New ClusterEntity With {
+                    .uid = ID,
+                    .entityVector = projection _
+                        .Select(Function(key)
+                                    Return Properties.TryGetValue(key)
+                                End Function) _
+                        .ToArray
+                }
+            End If
         End Function
 
         Public Shared Iterator Function FromModel(data As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))) As IEnumerable(Of EntityClusterModel)

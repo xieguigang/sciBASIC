@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7266ce3871ad9fe4e04707c22bd9b294, vs_solutions\dev\VisualStudio\sln\Solution.vb"
+﻿#Region "Microsoft.VisualBasic::0110500a1a13881ab3099e5d683e5f1d, vs_solutions\dev\VisualStudio\sln\Solution.vb"
 
     ' Author:
     ' 
@@ -88,6 +88,3 @@ Namespace sln
         Public Property TreePath As String
     End Class
 End Namespace
-
-
-

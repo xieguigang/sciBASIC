@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45ac9a33c947aee64ce856d2139c6b56, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Anchor.vb"
+﻿#Region "Microsoft.VisualBasic::f48f496404007bf374422bdce0e7e607, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Anchor.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,8 @@
     ' 
     '         Properties: r, x, y
     ' 
-    '         Constructor: (+3 Overloads) Sub New
+    '         Constructor: (+6 Overloads) Sub New
+    '         Function: ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -43,10 +44,16 @@
 #End Region
 
 Imports System.Drawing
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace d3js.Layout
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <remarks>
+    ''' anchor point can be created via <see cref="GetLabelAnchors"/> function
+    ''' </remarks>
     Public Class Anchor
 
         ''' <summary>
@@ -68,6 +75,13 @@ Namespace d3js.Layout
         Sub New()
         End Sub
 
+        Sub New(location As PointF, r#)
+            Me.r = r
+
+            x = location.X
+            y = location.Y
+        End Sub
+
         Sub New(location As Point, r#)
             Me.r = r
 
@@ -75,25 +89,41 @@ Namespace d3js.Layout
             y = location.Y
         End Sub
 
+        Sub New(x#, y#, r#)
+            Me.r = r
+            Me.x = x
+            Me.y = y
+        End Sub
+
         ''' <summary>
         ''' 目标节点的绘图模型
         ''' </summary>
         ''' <param name="circle">假设anchor是一个圆，画圆的时候是依据矩形框来建模的</param>
         Sub New(circle As Rectangle)
-            r = sys.Min(circle.Width, circle.Height) / 2
+            r = stdNum.Min(circle.Width, circle.Height) / 2
             x = circle.Left + r
             y = circle.Top + r
         End Sub
 
+        Sub New(circle As RectangleF)
+            r = stdNum.Min(circle.Width, circle.Height) / 2
+            x = circle.Left + r
+            y = circle.Top + r
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"[{x}, {y}]"
+        End Function
+
         Public Shared Widening Operator CType(anchor As Anchor) As Point
             With anchor
-                Return New Point(.x, .y)
+                Return New Point(CInt(.x), CInt(.y))
             End With
         End Operator
 
         Public Shared Widening Operator CType(anchor As Anchor) As PointF
             With anchor
-                Return New PointF(.x, .y)
+                Return New PointF(CInt(.x), CInt(.y))
             End With
         End Operator
 
@@ -102,7 +132,7 @@ Namespace d3js.Layout
 
             Return New RectangleF With {
                 .Location = anchor,
-                .Size = New SizeF(r, r)
+                .Size = New SizeF(CSng(r), CSng(r))
             }
         End Operator
 
@@ -110,6 +140,10 @@ Namespace d3js.Layout
             With CType(anchor, RectangleF)
                 Return New Rectangle(.Location.ToPoint, .Size.ToSize)
             End With
+        End Operator
+
+        Public Shared Widening Operator CType(pt As PointF) As Anchor
+            Return New Anchor With {.x = pt.X, .y = pt.Y}
         End Operator
     End Class
 End Namespace

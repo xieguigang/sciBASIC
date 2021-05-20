@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca539908d8120dd57ce48a1264b542f1, Data\SearchEngine\SearchEngine\Evaluation\Evaluator.vb"
+﻿#Region "Microsoft.VisualBasic::fb940cabe15e5bbbad8359175d857d2e, Data\SearchEngine\SearchEngine\Evaluation\Evaluator.vb"
 
     ' Author:
     ' 
@@ -42,9 +42,9 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming.Levenshtein
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
-Imports Microsoft.VisualBasic.Text.Levenshtein
 
 ''' <summary>
 ''' 进行字符串计算的具体过程

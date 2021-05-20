@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9e7c7bc7f7f17b4c4d86ad506b46772, Data_science\Visualization\test\heatmapPlot.vb"
+﻿#Region "Microsoft.VisualBasic::0f00d4ad549bfa827f28b557684bf269, Data_science\Visualization\test\heatmapPlot.vb"
 
     ' Author:
     ' 
@@ -33,21 +33,43 @@
 
     ' Module heatmapPlot
     ' 
-    '     Sub: Main
+    '     Sub: Main, plotCorrelation2
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
-Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics.Heatmap
+Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Math.DataFrame
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Module heatmapPlot
 
+    Sub plotCorrelation2()
+        Dim data = DataSet.LoadDataSet("D:\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\data\sample_groups.csv")
+        Dim d = data.Correlation
+        Dim theme As New Theme With {
+            .padding = g.DefaultPadding,
+            .tagCSS = CSSFont.PlotLabelNormal,
+            .gridStrokeX = Stroke.AxisGridStroke,
+            .axisTickCSS = CSSFont.PlotLabelNormal,
+            .axisStroke = Stroke.AxisGridStroke,
+            .background = "white",
+            .colorSet = "RdBu:c8"
+        }
+        Dim heatmap As New CorrelationHeatmap(New CorrelationData(d), theme)
+
+        Call heatmap.Plot("3600,3600").Save("D:\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\data\sample_groups_correlation.png")
+
+        Pause()
+    End Sub
+
     Sub Main()
+
+        Call plotCorrelation2()
 
         Dim path = "G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\images\dendrogram\heatmap.Test.csv"
         Dim data = DataSet.LoadDataSet(path)

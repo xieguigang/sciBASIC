@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a6f2f7b2f712da8128b0fb08d5847db, Data\DataFrame\IO\Generic\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::2e9d917bd76ead24c91e506eb526bdb8, Data\DataFrame\IO\Generic\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,8 +34,8 @@
     '     Module Extensions
     ' 
     '         Function: asCharacter, AsCharacter, AsDataSet, CreateObject, DataFrame
-    '                   EuclideanDistance, GroupBy, NamedMatrix, Project, (+2 Overloads) PropertyNames
-    '                   Transpose, Values, (+2 Overloads) Vector
+    '                   EuclideanDistance, GroupBy, NamedMatrix, NamedValues, Project
+    '                   (+2 Overloads) PropertyNames, (+2 Overloads) Transpose, Values, (+2 Overloads) Vector
     ' 
     ' 
     ' /********************************************************************************/
@@ -44,18 +44,22 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Expressions
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports stdNum = System.Math
 
 Namespace IO
 
     ''' <summary>
     ''' Data extension for <see cref="DataSet"/> and <see cref="EntityObject"/>
     ''' </summary>
+    ''' 
+    <HideModuleName>
     Public Module Extensions
 
         <Extension>
@@ -70,7 +74,13 @@ Namespace IO
                      Let y = b(key)
                      Into Sum((x - y) ^ 2) '
 
-            Return Math.Sqrt(d)
+            Return stdNum.Sqrt(d)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function NamedValues(matrix As IEnumerable(Of DataSet), propertyName$) As Dictionary(Of String, Double)
+            Return matrix.ToDictionary(Function(d) d.ID, Function(d) d(propertyName))
         End Function
 
         ''' <summary>
@@ -89,7 +99,33 @@ Namespace IO
                                 .ID = key,
                                 .Properties = list _
                                     .ToDictionary(Function(x) x.ID,
-                                                  Function(x) x(key))
+                                                  Function(x)
+                                                      Return x(key)
+                                                  End Function)
+                            }
+                        End Function) _
+                .ToArray
+        End Function
+
+        ''' <summary>
+        ''' 矩阵转置：将矩阵的行列进行颠倒
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Transpose(source As IEnumerable(Of EntityObject)) As EntityObject()
+            Dim list As EntityObject() = source.ToArray
+            Dim allKeys = list.PropertyNames
+
+            Return allKeys _
+                .Select(Function(key)
+                            Return New EntityObject With {
+                                .ID = key,
+                                .Properties = list _
+                                    .ToDictionary(Function(x) x.ID,
+                                                  Function(x)
+                                                      Return x(key)
+                                                  End Function)
                             }
                         End Function) _
                 .ToArray
@@ -156,6 +192,7 @@ Namespace IO
         <Extension>
         Public Function PropertyNames(Of T)(list As IEnumerable(Of DynamicPropertyBase(Of T))) As String()
             Return list _
+                .Where(Function(a) Not a Is Nothing) _
                 .Select(Function(o) o.EnumerateKeys(False)) _
                 .IteratesALL _
                 .Distinct _
@@ -170,6 +207,7 @@ Namespace IO
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
+        <DebuggerStepThrough>
         Public Function Vector(datasets As IEnumerable(Of DataSet), property$) As Double()
             Return datasets _
                 .Select(Function(x) x([property])) _
@@ -249,8 +287,9 @@ Namespace IO
             Dim props As Dictionary(Of String, String) = data _
                 .GroupBy(Function(p) p.Property) _
                 .ToDictionary(Function(k) k.Key,
-                              Function(v) v.Select(
-                              Function(s) s.Value).JoinBy("; "))
+                              Function(v)
+                                  Return v.Select(Function(s) s.Value).JoinBy("; ")
+                              End Function)
 
             Return New EntityObject With {
                 .ID = g.Key,

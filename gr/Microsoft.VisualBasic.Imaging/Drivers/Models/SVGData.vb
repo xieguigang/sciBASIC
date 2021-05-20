@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4696912d331b43a220afb822f7e68a45, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\SVGData.vb"
+﻿#Region "Microsoft.VisualBasic::42a5d0a570ee13da8bed704709d0736c, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\SVGData.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,10 @@
 
     '     Class SVGData
     ' 
-    '         Properties: Driver, SVG, XmlComment
+    '         Properties: Driver, SVG, title, XmlComment
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: Render, (+2 Overloads) Save
+    '         Function: GetDataURI, GetSVGXml, Render, (+2 Overloads) Save
     ' 
     ' 
     ' /********************************************************************************/
@@ -46,13 +46,19 @@
 Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.Imaging.SVG
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Net.Http
 
 Namespace Driver
 
+    ''' <summary>
+    ''' SVG graphic data
+    ''' </summary>
     Public Class SVGData : Inherits GraphicsData
 
-        Friend ReadOnly Property SVG As SVGDataLayers
+        Public ReadOnly Property SVG As SVGDataLayers
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return engine.__svgData
@@ -67,13 +73,14 @@ Namespace Driver
         ''' <param name="img"></param>
         ''' <param name="size"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub New(img As Object, size As Size)
-            MyBase.New(img, size)
+        Public Sub New(img As Object, size As Size, padding As Padding)
+            Call MyBase.New(img, size, padding)
+
             Me.engine = DirectCast(img, GraphicsSVG)
         End Sub
 
-        Sub New(canvas As GraphicsSVG)
-            Call Me.New(canvas, canvas.Size)
+        Sub New(canvas As GraphicsSVG, padding As Padding)
+            Call Me.New(canvas, canvas.Size, padding)
         End Sub
 
         Public Overrides ReadOnly Property Driver As Drivers
@@ -84,8 +91,30 @@ Namespace Driver
         End Property
 
         Public Property XmlComment As String
+        Public Property title As String
 
         Const InvalidSuffix$ = "The SVG image file save path: {0} not ending with *.svg file extension suffix!"
+
+        Public Overrides Function GetDataURI() As DataURI
+            Dim layoutSize = Layout.Size
+            Dim sz$ = $"{layoutSize.Width},{layoutSize.Height}"
+
+            Using data As New MemoryStream
+                Call engine.WriteSVG(data, sz, XmlComment, title:=title)
+                Call data.Seek(Scan0, SeekOrigin.Begin)
+
+                Return New DataURI(data, content_type)
+            End Using
+        End Function
+
+        Public Function GetSVGXml() As String
+            Using buffer As New MemoryStream
+                Call Save(out:=buffer)
+                Call buffer.Flush()
+
+                Return Encoding.UTF8.GetString(buffer.ToArray)
+            End Using
+        End Function
 
         ''' <summary>
         ''' Save the image as svg file.
@@ -97,16 +126,16 @@ Namespace Driver
                 Call String.Format(InvalidSuffix, path.ToFileURL).Warning
             End If
 
-            With Size
+            With Layout.Size
                 Dim sz$ = $"{ .Width},{ .Height}"
-                Return engine.WriteSVG(path, sz, XmlComment)
+                Return engine.WriteSVG(path, sz, XmlComment, title:=title)
             End With
         End Function
 
         Public Overrides Function Save(out As Stream) As Boolean
-            With Size
+            With Layout.Size
                 Dim sz$ = $"{ .Width},{ .Height}"
-                Return engine.WriteSVG(out, size:=sz, comments:=XmlComment)
+                Return engine.WriteSVG(out, size:=sz, comments:=XmlComment, title:=title)
             End With
         End Function
 

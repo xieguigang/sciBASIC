@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59724d2f50b2f2d53bb491b7f4fca4bb, Data_science\Visualization\Plots-statistics\Heatmap\PlotExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::2425cb6f1864422b5be05fb7c8bc8106, Data_science\Visualization\Plots-statistics\Heatmap\PlotExtensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module PlotExtensions
     ' 
-    '         Function: CorrelatesNormalized, KmeansReorder, LoadDataSet
+    '         Function: KmeansReorder, LoadDataSet
     ' 
     ' 
     ' /********************************************************************************/
@@ -49,50 +49,12 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.Correlations.Correlations
+Imports Microsoft.VisualBasic.Math.DataFrame
 
 Namespace Heatmap
 
+    <HideModuleName>
     Public Module PlotExtensions
-
-        ''' <summary>
-        ''' 相比于<see cref="LoadDataSet(String, String, Boolean, Correlations.ICorrelation)"/>函数，这个函数处理的是没有经过归一化处理的原始数据
-        ''' </summary>
-        ''' <param name="data"></param>
-        ''' <param name="correlation">假若这个参数为空，则默认使用<see cref="Correlations.GetPearson(Double(), Double())"/></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Iterator Function CorrelatesNormalized(
-                                    data As IEnumerable(Of DataSet),
-                    Optional correlation As ICorrelation = Nothing) As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))
-
-            Dim dataset As DataSet() = data.ToArray
-            Dim keys$() = dataset(Scan0) _
-                .Properties _
-                .Keys _
-                .ToArray
-
-            correlation = correlation Or PearsonDefault
-
-            For Each x As DataSet In dataset
-                Dim out As New Dictionary(Of String, Double)
-                Dim array#() = keys _
-                    .Select(Of Double)(x) _
-                    .ToArray
-
-                For Each y As DataSet In dataset
-                    out(y.ID) = correlation(
-                        X:=array,
-                        Y:=keys _
-                            .Select(Of Double)(y) _
-                            .ToArray)
-                Next
-
-                Yield New NamedValue(Of Dictionary(Of String, Double)) With {
-                    .Name = x.ID,
-                    .Value = out
-                }
-            Next
-        End Function
 
         ''' <summary>
         ''' (这个函数是直接加在已经计算好了的相关度数据).假若使用这个直接加载数据来进行heatmap的绘制，

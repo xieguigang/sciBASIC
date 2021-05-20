@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a20668ac5e02315936d83eaf1abc2d5a, Data_science\Mathematica\Math\Randomizer\Randomizer.vb"
+﻿#Region "Microsoft.VisualBasic::c6c72f312d8a957be241defab0dff01e, Data_science\Mathematica\Math\Randomizer\Randomizer.vb"
 
     ' Author:
     ' 
@@ -35,8 +35,8 @@
     ' 
     '     Constructor: (+2 Overloads) Sub New
     ' 
-    '     Function: (+3 Overloads) [Next], __getRandom, __getRandoms, GetRandomInts, GetRandomNormalDeviates
-    '               GetRandomPercentages, NextDouble, Sample
+    '     Function: (+3 Overloads) [Next], getRandom, GetRandomInts, GetRandomNormalDeviates, GetRandomPercentages
+    '               getRandoms, NextDouble, Sample
     ' 
     '     Sub: NextBytes
     ' 
@@ -44,6 +44,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Language
@@ -109,6 +110,8 @@ Public Class Randomizer : Inherits Random
 
     ReadOnly _deviates As LoopArray(Of Double())
     ReadOnly _digits As LoopArray(Of Integer())
+    ReadOnly rand As New Random(Now.Millisecond)
+
     ''' <summary>
     ''' <see cref="_digits"/> max integer
     ''' </summary>
@@ -137,8 +140,9 @@ Public Class Randomizer : Inherits Random
     ''' </summary>
     Const DigitsRowLength% = 10
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetRandomInts(n As Integer) As Integer()
-        Return __getRandoms(n, _digits)
+        Return getRandoms(n, _digits)
     End Function
 
     ''' <summary>
@@ -146,12 +150,10 @@ Public Class Randomizer : Inherits Random
     ''' </summary>
     ''' <returns>A 32-bit signed integer that is greater than or equal to 0 and less than System.Int32.MaxValue.</returns>
     Public Overrides Function [Next]() As Integer
-        Return __getRandom(_digits)
+        Return getRandom(_digits)
     End Function
 
-    Dim rand As New Random(Now.Millisecond)
-
-    Private Function __getRandom(Of T)(array As LoopArray(Of T())) As T
+    Private Function getRandom(Of T)(array As LoopArray(Of T())) As T
         Dim d As Integer = rand.NextBoolean
         Dim out As New List(Of T)
         Dim maxRange As Integer = (rand.NextDouble * 100) + 1
@@ -164,7 +166,7 @@ Public Class Randomizer : Inherits Random
         Return array.GET(delta)(c)
     End Function
 
-    Private Function __getRandoms(Of T)(n%, array As LoopArray(Of T())) As T()
+    Private Function getRandoms(Of T)(n%, array As LoopArray(Of T())) As T()
         Dim rand As New Random(n * Now.Millisecond)
         Dim d As Integer = rand.NextBoolean
         Dim out As New List(Of T)
@@ -202,7 +204,7 @@ Public Class Randomizer : Inherits Random
     ''' <returns>A double-precision floating point number that is greater than or equal to 0.0,
     ''' and less than 1.0.</returns>
     Public Overrides Function NextDouble() As Double
-        Return (__getRandom(_digits) - min) / len
+        Return (getRandom(_digits) - min) / len
     End Function
 
     ''' <summary>
@@ -259,7 +261,7 @@ Public Class Randomizer : Inherits Random
     ''' <param name="n"></param>
     ''' <returns></returns>
     Public Function GetRandomNormalDeviates(n As Integer) As Double()
-        Return __getRandoms(n, _deviates)
+        Return getRandoms(n, _deviates)
     End Function
 
     ''' <summary>
@@ -267,6 +269,6 @@ Public Class Randomizer : Inherits Random
     ''' </summary>
     ''' <returns></returns>
     Public Overloads Function Sample() As Double
-        Return __getRandom(_deviates)
+        Return getRandom(_deviates)
     End Function
 End Class

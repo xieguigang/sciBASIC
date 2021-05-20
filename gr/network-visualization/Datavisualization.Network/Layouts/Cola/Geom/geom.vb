@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a26cd4b880d9d52b0b0fee3b2b845bf0, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Geom\geom.vb"
+﻿#Region "Microsoft.VisualBasic::70b6e4d9bf30b4cf8057eff6df9b9df0, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Geom\geom.vb"
 
     ' Author:
     ' 
@@ -57,6 +57,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.My.JavaScript
+Imports stdNum = System.Math
 
 Namespace Layouts.Cola
 
@@ -100,7 +101,7 @@ Namespace Layouts.Cola
         Private Sub clockwiseRadialSweep(p As Point2D, pList As Point2D(), force As Action(Of Point2D))
             Call pList.AsEnumerable _
                 .Sort(Function(a, b)
-                          Return Math.Atan2(a.Y - p.Y, a.X - p.X) - Math.Atan2(b.Y - p.Y, b.X - p.X)
+                          Return stdNum.Atan2(a.Y - p.Y, a.X - p.X) - stdNum.Atan2(b.Y - p.Y, b.X - p.X)
                       End Function) _
                 .DoEach(force)
         End Sub
@@ -175,7 +176,7 @@ Namespace Layouts.Cola
                     End If
                 End If
 
-                c = Math.Floor((a + b) \ 2)
+                c = stdNum.Floor((a + b) \ 2)
                 ' midpoint of [a,b], and 0<c<n
                 dnC = below(P, V(c + 1), V(c))
                 If dnC AndAlso Not above(P, V(c - 1), V(c)) Then
@@ -260,7 +261,7 @@ Namespace Layouts.Cola
                     End If
                 End If
 
-                c = Math.Floor((a + b) \ 2)
+                c = stdNum.Floor((a + b) \ 2)
                 ' midpoint of [a,b], and 0<c<n
                 dnC = below(P, V(c + 1), V(c))
                 If above(P, V(c - 1), V(c)) AndAlso Not dnC Then

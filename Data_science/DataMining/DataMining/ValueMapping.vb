@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87cb2cb076b299972d41edf9d0f22cac, Data_science\DataMining\DataMining\ValueMapping.vb"
+﻿#Region "Microsoft.VisualBasic::15cfcf1029c042c0477ffb2ecc8cd008, Data_science\DataMining\DataMining\ValueMapping.vb"
 
     ' Author:
     ' 
@@ -33,11 +33,14 @@
 
     ' Module ValueMapping
     ' 
-    '     Function: ModalNumber
+    '     Function: Discretization, ModalNumber
     ' 
     ' /********************************************************************************/
 
 #End Region
+
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.DataMining.ComponentModel.Discretion
 
 Public Module ValueMapping
 
@@ -63,5 +66,17 @@ Public Module ValueMapping
         End If
 
         Return Mdn
+    End Function
+
+    ''' <summary>
+    ''' 执行连续数值类型的数据的离散化操作，这个操作常用于决策树的构建
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Discretization(data As IEnumerable(Of Double), levels As Integer) As Discretizer
+        Return New Discretizer(data, levels)
     End Function
 End Module

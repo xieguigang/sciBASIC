@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4849a805b581d350f1799be145cf449, Data\OCR\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::c99f394c67211c1be6ae0eff0094d23e, Data\OCR\Extensions.vb"
 
     ' Author:
     ' 
@@ -50,7 +50,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Public Module Extensions
 
-    Friend ReadOnly blank As DefaultValue(Of Color) = Color.White
+    Friend ReadOnly blank As [Default](Of Color) = Color.White
 
     ''' <summary>
     ''' 

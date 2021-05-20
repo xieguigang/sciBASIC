@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d6da79b639cd3111267fb5fd95b5005, Data\BinaryData\DataStorage\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::90047379c4788082f0d12f5454c90286, Data\BinaryData\DataStorage\test\Module1.vb"
 
     ' Author:
     ' 
@@ -40,6 +40,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Data.IO.netCDF
+Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.Text
 
 Module Module1
@@ -67,7 +68,7 @@ Module Module1
 
             Call writer.GlobalAttributes(file.globalAttributes).Dimensions(file.dimensions)
 
-            Dim dataPackage As Components.CDFData
+            Dim dataPackage As ICDFDataVector
 
             For Each var In file.variables
                 If var.name = "mass_values" Then

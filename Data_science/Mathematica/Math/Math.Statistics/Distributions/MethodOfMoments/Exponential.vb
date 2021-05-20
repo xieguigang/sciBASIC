@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::06a093e1b402d57e6b9d1dc365f80d7a, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Exponential.vb"
+﻿#Region "Microsoft.VisualBasic::a7259a7b2c71d301c2ac968176e4962b, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Exponential.vb"
 
     ' Author:
     ' 
@@ -41,8 +41,7 @@
 
 #End Region
 
-Imports System
-Imports System.Collections.Generic
+Imports stdNum = System.Math
 
 '
 ' * To change this license header, choose License Headers in Project Properties.
@@ -73,16 +72,16 @@ Namespace Distributions.MethodOfMoments
             PeriodOfRecord = (BPM.SampleSize())
         End Sub
         Public Overrides Function GetInvCDF(probability As Double) As Double
-            Return Math.Log(probability) / _Lambda
+            Return stdNum.Log(probability) / _Lambda
         End Function
         Public Overrides Function GetCDF(value As Double) As Double
-            Return 1 - Math.Exp(-_Lambda * value)
+            Return 1 - stdNum.Exp(-_Lambda * value)
         End Function
         Public Overrides Function GetPDF(value As Double) As Double
             If value < 0 Then
                 Return 0
             Else
-                Return _Lambda * Math.Exp(-_Lambda * value)
+                Return _Lambda * stdNum.Exp(-_Lambda * value)
             End If
         End Function
         Public Overrides Iterator Function Validate() As IEnumerable(Of Exception)

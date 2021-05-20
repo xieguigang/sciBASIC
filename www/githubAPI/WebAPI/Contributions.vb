@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5c1f767348c6c2e5278a432f87c6c64, www\githubAPI\WebAPI\Contributions.vb"
+﻿#Region "Microsoft.VisualBasic::f201c14115fdd9cdbddacbbc36eb5c1e, www\githubAPI\WebAPI\Contributions.vb"
 
     ' Author:
     ' 
@@ -53,11 +53,13 @@ Namespace WebAPI
         ''' <param name="userName$"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function GetUserContributions(userName$) As Dictionary(Of Date, Integer)
+        Public Function GetUserContributions(userName$, Optional year$ = Nothing) As Dictionary(Of Date, Integer)
             Dim url$ = $"https://github.com/users/{userName}/contributions"
             Dim svg$ = url.GET
             Dim xml As New XmlDocument
+
             Call xml.LoadXml("<?xml version=""1.0"" encoding=""utf-8""?>" & vbCrLf & svg)
+
             Dim g As XmlNodeList = xml _
                 .SelectSingleNode("svg") _
                 .SelectSingleNode("g") _
@@ -70,6 +72,7 @@ Namespace WebAPI
                 For Each day As XmlNode In days
                     Dim date$ = day.Attributes.GetNamedItem("data-date").InnerText
                     Dim count = day.Attributes.GetNamedItem("data-count").InnerText
+
                     contributions(DateTime.Parse([date])) = CInt(count)
                 Next
             Next
