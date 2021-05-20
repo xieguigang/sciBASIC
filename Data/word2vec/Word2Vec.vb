@@ -49,23 +49,23 @@ Namespace NlpVec
         Public Class Factory
 
 
-            Friend vectorSize_Renamed As Integer = 200
+            Friend vectorSize As Integer = 200
             Friend windowSize As Integer = 5
 
-            Friend freqThresold_Renamed As Integer = 5
+            Friend freqThresold As Integer = 5
             Friend trainMethod As Method = Method.Skip_Gram
 
 
-            Friend sample_Renamed As Double = 0.001
+            Friend sample As Double = 0.001
             '        private int negativeSample = 0;
 
 
-            Friend alpha_Renamed As Double = 0.025, alphaThreshold As Double = 0.0001
+            Friend alpha As Double = 0.025, alphaThreshold As Double = 0.0001
 
-            Friend numOfThread_Renamed As Integer = 1
+            Friend numOfThread As Integer = 1
 
             Public Function setVectorSize(size As Integer) As Factory
-                vectorSize_Renamed = size
+                vectorSize = size
                 Return Me
             End Function
 
@@ -75,7 +75,7 @@ Namespace NlpVec
             End Function
 
             Public Function setFreqThresold(thresold As Integer) As Factory
-                freqThresold_Renamed = thresold
+                freqThresold = thresold
                 Return Me
             End Function
 
@@ -85,7 +85,7 @@ Namespace NlpVec
             End Function
 
             Public Function setSample(rate As Double) As Factory
-                sample_Renamed = rate
+                sample = rate
                 Return Me
             End Function
 
@@ -95,7 +95,7 @@ Namespace NlpVec
             '        }
 
             Public Function setAlpha(alpha As Double) As Factory
-                alpha_Renamed = alpha
+                Me.alpha = alpha
                 Return Me
             End Function
 
@@ -105,7 +105,7 @@ Namespace NlpVec
             End Function
 
             Public Function setNumOfThread(numOfThread As Integer) As Factory
-                numOfThread_Renamed = numOfThread
+                Me.numOfThread = numOfThread
                 Return Me
             End Function
 
@@ -115,16 +115,16 @@ Namespace NlpVec
         End Class
 
         Private Sub New(factory As Factory)
-            vectorSize = factory.vectorSize_Renamed
+            vectorSize = factory.vectorSize
             windowSize = factory.windowSize
-            freqThresold = factory.freqThresold_Renamed
+            freqThresold = factory.freqThresold
             trainMethod = factory.trainMethod
-            sample = factory.sample_Renamed
+            sample = factory.sample
             '        negativeSample = factory.negativeSample;
-            alpha = factory.alpha_Renamed
+            alpha = factory.alpha
             initialAlpha = alpha
             alphaThresold = factory.alphaThreshold
-            numOfThread = factory.numOfThread_Renamed
+            numOfThread = factory.numOfThread
             totalWordCount = 0
             expTable = New Double(999) {}
             computeExp()

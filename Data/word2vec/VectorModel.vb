@@ -11,41 +11,18 @@ Namespace NlpVec
     ''' </summary>
     Public Class VectorModel
 
-        Private wordMap_Renamed As IDictionary(Of String, Single()) = New Dictionary(Of String, Single())()
-        Private vectorSize_Renamed As Integer = 200 '特征数
-        Private topNSize_Renamed As Integer = 40
-
-        Public Property wordMap As IDictionary(Of String, Single())
-            Get
-                Return wordMap_Renamed
-            End Get
-            Set(value As IDictionary(Of String, Single()))
-                wordMap_Renamed = value
-            End Set
-        End Property
-
+        Public Property wordMap As New Dictionary(Of String, Single())
 
         ''' <summary>
         ''' 获取最相似词的数量 </summary>
         ''' <returns> 最相似词的数量 </returns>
-        Public Property topNSize As Integer
-            Get
-                Return topNSize_Renamed
-            End Get
-            Set(value As Integer)
-                topNSize_Renamed = value
-            End Set
-        End Property
+        Public Property topNSize As Integer = 40
 
-        Public Property vectorSize As Integer
-            Get
-                Return vectorSize_Renamed
-            End Get
-            Set(value As Integer)
-                vectorSize_Renamed = value
-            End Set
-        End Property
-
+        ''' <summary>
+        ''' 特征数
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property vectorSize As Integer = 200
 
         ''' <summary>
         ''' 私有构造函数 </summary>
@@ -60,8 +37,8 @@ Namespace NlpVec
                 Throw New ArgumentException("词向量长度（layerSize）应大于0")
             End If
 
-            wordMap_Renamed = wordMap
-            vectorSize_Renamed = vectorSize
+            Me.wordMap = wordMap
+            Me.vectorSize = vectorSize
         End Sub
 
 
@@ -134,10 +111,10 @@ Namespace NlpVec
 
             Try
                 dataOutputStream = New BinaryWriter(file)
-                dataOutputStream.Write(wordMap_Renamed.Count)
-                dataOutputStream.Write(vectorSize_Renamed)
+                dataOutputStream.Write(wordMap.Count)
+                dataOutputStream.Write(vectorSize)
 
-                For Each element In wordMap_Renamed.SetOfKeyValuePairs()
+                For Each element In wordMap.SetOfKeyValuePairs()
                     dataOutputStream.Write(element.Key)
 
                     For Each d In element.Value
@@ -168,13 +145,13 @@ Namespace NlpVec
         ''' <param name="queryWord"> 词 </param>
         ''' <returns> 相近词集，若模型不包含词word，则返回空集 </returns>
         Public Function similar(queryWord As String) As IEnumerable(Of WordScore)
-            Dim center = wordMap_Renamed.GetValueOrNull(queryWord)
+            Dim center = wordMap.GetValueOrNull(queryWord)
 
             If center Is Nothing Then
                 Return {}
             End If
 
-            Dim resultSize = If(wordMap_Renamed.Count < topNSize_Renamed, wordMap_Renamed.Count, topNSize_Renamed + 1)
+            Dim resultSize = If(wordMap.Count < topNSize, wordMap.Count, topNSize + 1)
             Dim result As SortedSet(Of WordScore) = New SortedSet(Of WordScore)()
 
             For i = 0 To resultSize - 1
@@ -183,7 +160,7 @@ Namespace NlpVec
 
             Dim minDist = -Single.MaxValue
 
-            For Each entry In wordMap_Renamed.SetOfKeyValuePairs()
+            For Each entry In wordMap.SetOfKeyValuePairs()
                 Dim vector = entry.Value
                 Dim dist As Single = 0
 
@@ -202,11 +179,11 @@ Namespace NlpVec
         End Function
 
         Public Function similar(center As Single()) As IEnumerable(Of WordScore)
-            If center Is Nothing OrElse center.Length <> vectorSize_Renamed Then
+            If center Is Nothing OrElse center.Length <> vectorSize Then
                 Return {}
             End If
 
-            Dim resultSize = If(wordMap_Renamed.Count < topNSize_Renamed, wordMap_Renamed.Count, topNSize_Renamed)
+            Dim resultSize = If(wordMap.Count < topNSize, wordMap.Count, topNSize)
             Dim result As SortedSet(Of WordScore) = New SortedSet(Of WordScore)()
 
             For i = 0 To resultSize - 1
@@ -215,7 +192,7 @@ Namespace NlpVec
 
             Dim minDist = -Single.MaxValue
 
-            For Each entry In wordMap_Renamed.SetOfKeyValuePairs()
+            For Each entry In wordMap.SetOfKeyValuePairs()
                 Dim vector = entry.Value
                 Dim dist As Single = 0
 
@@ -241,21 +218,21 @@ Namespace NlpVec
         ''' <param name="word2"> 词 </param>
         ''' <returns> 与结果最相近的前topNSize个词 </returns>
         Public Function analogy(word0 As String, word1 As String, word2 As String) As SortedSet(Of WordScore)
-            Dim wv0 = wordMap_Renamed.GetValueOrNull(word0)
-            Dim wv1 = wordMap_Renamed.GetValueOrNull(word1)
-            Dim wv2 = wordMap_Renamed.GetValueOrNull(word2)
+            Dim wv0 = wordMap.GetValueOrNull(word0)
+            Dim wv1 = wordMap.GetValueOrNull(word1)
+            Dim wv2 = wordMap.GetValueOrNull(word2)
 
             If wv1 Is Nothing OrElse wv2 Is Nothing OrElse wv0 Is Nothing Then
                 Return Nothing
             End If
 
-            Dim center = New Single(vectorSize_Renamed - 1) {}
+            Dim center = New Single(vectorSize - 1) {}
 
-            For i = 0 To vectorSize_Renamed - 1
+            For i = 0 To vectorSize - 1
                 center(i) = wv1(i) - wv0(i) + wv2(i)
             Next
 
-            Dim resultSize = If(wordMap_Renamed.Count < topNSize_Renamed, wordMap_Renamed.Count, topNSize_Renamed)
+            Dim resultSize = If(wordMap.Count < topNSize, wordMap.Count, topNSize)
             Dim result As SortedSet(Of WordScore) = New SortedSet(Of WordScore)()
 
             For i = 0 To resultSize - 1
@@ -265,7 +242,7 @@ Namespace NlpVec
             Dim name As String
             Dim minDist = -Single.MaxValue
 
-            For Each entry In wordMap_Renamed.SetOfKeyValuePairs()
+            For Each entry In wordMap.SetOfKeyValuePairs()
                 name = entry.Key
 
                 If name.Equals(word1) OrElse name.Equals(word2) Then
@@ -289,7 +266,7 @@ Namespace NlpVec
         End Function
 
         Public Function getWordVector(word As String) As Single()
-            Return wordMap_Renamed.GetValueOrNull(word)
+            Return wordMap.GetValueOrNull(word)
         End Function
 
         Public Class WordScore
