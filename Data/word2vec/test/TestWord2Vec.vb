@@ -10,7 +10,7 @@ Namespace test
     ''' </summary>
     Public Class TestWord2Vec
         Public Shared Sub readByJava(ByVal textFilePath As String, ByVal modelFilePath As String)
-            Dim wv As Word2Vec = (New Word2Vec.Factory()).setMethod(Word2Vec.Method.Skip_Gram).setNumOfThread(1).build()
+            Dim wv As Word2Vec = (New Word2Vec.Factory()).setMethod(TrainMethod.Skip_Gram).setNumOfThread(1).build()
 
             Try
 

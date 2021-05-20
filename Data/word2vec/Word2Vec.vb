@@ -1,12 +1,10 @@
 ﻿Imports System.IO
 Imports Microsoft.VisualBasic.ApplicationServices
-Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.NLP.Word2Vec.utils
 Imports stdNum = System.Math
 
 Namespace NlpVec
-
 
     ''' <summary>
     ''' Created by fangy on 13-12-19.
@@ -14,31 +12,26 @@ Namespace NlpVec
     ''' </summary>
     Public Class Word2Vec
 
-        Private windowSize As Integer '文字窗口大小
+        Friend windowSize As Integer '文字窗口大小
         Private vectorSize As Integer '词向量的元素个数
 
-        Public Enum Method
-            CBow
-            Skip_Gram
-        End Enum
-
-        Private trainMethod As Method ' 神经网络学习方法
-        Private sample As Double
+        Friend trainMethod As TrainMethod ' 神经网络学习方法
+        Friend sample As Double
         '    private int negativeSample;
-        Private alpha As Double ' 学习率，并行时由线程更新
+        Friend alpha As Double ' 学习率，并行时由线程更新
         Private alphaThresold As Double
-        Private initialAlpha As Double ' 初始学习率
+        Friend initialAlpha As Double ' 初始学习率
         Private freqThresold As Integer = 5
-        Private ReadOnly alphaLock As SByte() = New SByte(-1) {} ' alpha同步锁
+        Friend ReadOnly alphaLock As SByte() = New SByte(-1) {} ' alpha同步锁
         Private ReadOnly treeLock As SByte() = New SByte(-1) {} ' alpha同步锁
         Private ReadOnly vecLock As SByte() = New SByte(-1) {} ' alpha同步锁
         Private expTable As Double()
         Private Const EXP_TABLE_SIZE As Integer = 1000
         Private Const MAX_EXP As Integer = 6
-        Private neuronMap As IDictionary(Of String, WordNeuron)
+        Friend neuronMap As IDictionary(Of String, WordNeuron)
         '    private List<Word> words;
-        Private totalWordCount As Integer ' 语料中的总词数
-        Private currentWordCount As Integer ' 当前已阅的词数，并行时由线程更新
+        Friend totalWordCount As Integer ' 语料中的总词数
+        Friend currentWordCount As Integer ' 当前已阅的词数，并行时由线程更新
         Private numOfThread As Integer ' 线程个数
 
         ' 单词或短语计数器
@@ -53,7 +46,7 @@ Namespace NlpVec
             Friend windowSize As Integer = 5
 
             Friend freqThresold As Integer = 5
-            Friend trainMethod As Method = Method.Skip_Gram
+            Friend trainMethod As TrainMethod = TrainMethod.Skip_Gram
 
 
             Friend sample As Double = 0.001
@@ -79,7 +72,7 @@ Namespace NlpVec
                 Return Me
             End Function
 
-            Public Function setMethod(method As Method) As Factory
+            Public Function setMethod(method As TrainMethod) As Factory
                 trainMethod = method
                 Return Me
             End Function
@@ -251,7 +244,7 @@ Namespace NlpVec
             Call trainer.run()
         End Sub
 
-        Private Sub skipGram(index As Integer, sentence As IList(Of WordNeuron), b As Integer, alpha As Double)
+        Friend Sub skipGram(index As Integer, sentence As IList(Of WordNeuron), b As Integer, alpha As Double)
             Dim word = sentence(index)
             Dim a As Integer, c = 0
 
@@ -313,7 +306,7 @@ Namespace NlpVec
             '        }
         End Sub
 
-        Private Sub cbowGram(index As Integer, sentence As IList(Of WordNeuron), b As Integer, alpha As Double)
+        Friend Sub cbowGram(index As Integer, sentence As IList(Of WordNeuron), b As Integer, alpha As Double)
             Dim word = sentence(index)
             Dim a As Integer, c = 0
             Dim neu1e = New Double(vectorSize - 1) {} '误差项
@@ -401,109 +394,7 @@ Namespace NlpVec
             Next
         End Sub
 
-        Private nextRandom As Long = 5
-
-        Public Class Trainer : Implements ITaskDriver
-
-            Private ReadOnly outerInstance As Word2Vec
-            Friend corpusQueue As Queue(Of LinkedList(Of String))
-            Friend corpusToBeTrained As LinkedList(Of String)
-            Friend trainingWordCount As Integer
-            Friend tempAlpha As Double
-
-            Public Sub New(outerInstance As Word2Vec, corpus As LinkedList(Of String))
-                Me.outerInstance = outerInstance
-                corpusToBeTrained = corpus
-                trainingWordCount = 0
-            End Sub
-
-            Public Sub New(outerInstance As Word2Vec, corpusQueue As Queue(Of LinkedList(Of String)))
-                Me.outerInstance = outerInstance
-                Me.corpusQueue = corpusQueue
-            End Sub
-
-            Friend Sub computeAlpha()
-                SyncLock outerInstance.alphaLock
-                    outerInstance.currentWordCount += trainingWordCount
-                    outerInstance.alpha = outerInstance.initialAlpha * (1 - outerInstance.currentWordCount / (outerInstance.totalWordCount + 1))
-
-                    If outerInstance.alpha < outerInstance.initialAlpha * 0.0001 Then
-                        outerInstance.alpha = outerInstance.initialAlpha * 0.0001
-                    End If
-                    '                logger.info("alpha:" + tempAlpha + "\tProgress: "
-                    '                        + (int) (currentWordCount / (double) (totalWordCount + 1) * 100) + "%");
-                    Console.WriteLine("alpha:" & tempAlpha & vbTab & "Progress: " & outerInstance.currentWordCount / (outerInstance.totalWordCount + 1) * 100 & "%" & vbTab)
-                End SyncLock
-            End Sub
-
-            Friend Sub training()
-                '            long nextRandom = 5;
-                For Each line In corpusToBeTrained
-                    Dim sentence As IList(Of WordNeuron) = New List(Of WordNeuron)()
-                    Dim tokenizer As Tokenizer = New Tokenizer(line, " ")
-                    trainingWordCount += tokenizer.size()
-
-                    While tokenizer.hasMoreTokens()
-                        Dim token As String = tokenizer.nextToken()
-                        Dim entry = outerInstance.neuronMap.GetValueOrNull(token)
-
-                        If entry Is Nothing Then
-                            Continue While
-                        End If
-                        ' The subsampling randomly discards frequent words while keeping the ranking same
-                        If outerInstance.sample > 0 Then
-                            Dim ran = (stdNum.Sqrt(entry.frequency / (outerInstance.sample * outerInstance.totalWordCount)) + 1) * (outerInstance.sample * outerInstance.totalWordCount) / entry.frequency
-                            outerInstance.nextRandom = outerInstance.nextRandom * 25214903917L + 11
-
-                            If ran < (outerInstance.nextRandom And &HFFFF) / 65536 Then
-                                Continue While
-                            End If
-
-                            sentence.Add(entry)
-                        End If
-                    End While
-
-                    For index = 0 To sentence.Count - 1
-                        outerInstance.nextRandom = outerInstance.nextRandom * 25214903917L + 11
-
-                        Select Case outerInstance.trainMethod
-                            Case Method.CBow
-                                outerInstance.cbowGram(index, sentence, CInt(outerInstance.nextRandom) Mod outerInstance.windowSize, tempAlpha)
-                            Case Method.Skip_Gram
-                                outerInstance.skipGram(index, sentence, CInt(outerInstance.nextRandom) Mod outerInstance.windowSize, tempAlpha)
-                        End Select
-                    Next
-                Next
-            End Sub
-
-            Public Function run() As Integer Implements ITaskDriver.Run
-                Dim hasCorpusToBeTrained = True
-
-                Try
-
-                    While hasCorpusToBeTrained
-                        '                    System.out.println("get a corpus");
-                        corpusToBeTrained = corpusQueue.Dequeue
-                        '                    System.out.println("队列长度:" + corpusQueue.size());
-                        If Nothing IsNot corpusToBeTrained Then
-                            tempAlpha = outerInstance.alpha
-                            trainingWordCount = 0
-                            training()
-                            computeAlpha() '更新alpha
-                        Else
-                            ' 超过2s还没获得数据，认为主线程已经停止投放语料，即将停止训练。
-                            hasCorpusToBeTrained = False
-                        End If
-                    End While
-
-                Catch ie As Exception
-                    Console.WriteLine(ie.ToString())
-                    Console.Write(ie.StackTrace)
-                End Try
-
-                Return 0
-            End Function
-        End Class
+        Friend nextRandom As Long = 5
 
         ''' <summary>
         ''' 保存训练得到的模型 </summary>
