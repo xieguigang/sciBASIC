@@ -10,7 +10,7 @@ Namespace test
     ''' </summary>
     Public Class TestWord2Vec
         Public Shared Sub readByJava(ByVal textFilePath As String, ByVal modelFilePath As String)
-            Dim wv As Word2Vec = (New Word2Vec.Factory()).setMethod(TrainMethod.Skip_Gram).setNumOfThread(1).build()
+            Dim wv As Word2Vec = (New Word2VecFactory()).setMethod(TrainMethod.Skip_Gram).setNumOfThread(1).build()
 
             Try
 
@@ -37,7 +37,7 @@ Namespace test
 
         Public Shared Sub testVector(ByVal modelFilePath As String)
             Dim vm = VectorModel.loadFromFile(modelFilePath)
-            Dim result1 As ISet(Of VectorModel.WordScore) = New SortedSet(Of VectorModel.WordScore)
+            Dim result1 As ISet(Of WordScore) = New SortedSet(Of WordScore)
             result1 = vm.similar("亲")
 
             For Each we In result1

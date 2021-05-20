@@ -64,8 +64,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TrainMethod.vb" />
-    <Compile Include="Trainer.vb" />
+    <Compile Include="trainer\WordScore.vb" />
+    <Compile Include="Word2VecFactory.vb" />
+    <Compile Include="trainer\TrainMethod.vb" />
+    <Compile Include="trainer\Trainer.vb" />
     <Compile Include="HuffmanNeuron.vb" />
     <Compile Include="VectorModel.vb" />
     <Compile Include="Word2Vec.vb" />

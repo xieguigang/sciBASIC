@@ -10,6 +10,9 @@ Namespace NlpVec
     ''' Created by fangy on 13-12-19.
     ''' Word2Vec 算法实现
     ''' </summary>
+    ''' <remarks>
+    ''' https://github.com/siegfang/word2vec
+    ''' </remarks>
     Public Class Word2Vec
 
         Friend windowSize As Integer '文字窗口大小
@@ -39,75 +42,7 @@ Namespace NlpVec
         Private tempCorpus As String
         Private tempCorpusWriter As StreamWriter
 
-        Public Class Factory
-
-
-            Friend vectorSize As Integer = 200
-            Friend windowSize As Integer = 5
-
-            Friend freqThresold As Integer = 5
-            Friend trainMethod As TrainMethod = TrainMethod.Skip_Gram
-
-
-            Friend sample As Double = 0.001
-            '        private int negativeSample = 0;
-
-
-            Friend alpha As Double = 0.025, alphaThreshold As Double = 0.0001
-
-            Friend numOfThread As Integer = 1
-
-            Public Function setVectorSize(size As Integer) As Factory
-                vectorSize = size
-                Return Me
-            End Function
-
-            Public Function setWindow(size As Integer) As Factory
-                windowSize = size
-                Return Me
-            End Function
-
-            Public Function setFreqThresold(thresold As Integer) As Factory
-                freqThresold = thresold
-                Return Me
-            End Function
-
-            Public Function setMethod(method As TrainMethod) As Factory
-                trainMethod = method
-                Return Me
-            End Function
-
-            Public Function setSample(rate As Double) As Factory
-                sample = rate
-                Return Me
-            End Function
-
-            '        public Factory setNegativeSample(int sample){
-            '            negativeSample = sample;
-            '            return this;
-            '        }
-
-            Public Function setAlpha(alpha As Double) As Factory
-                Me.alpha = alpha
-                Return Me
-            End Function
-
-            Public Function setAlphaThresold(alpha As Double) As Factory
-                alphaThreshold = alpha
-                Return Me
-            End Function
-
-            Public Function setNumOfThread(numOfThread As Integer) As Factory
-                Me.numOfThread = numOfThread
-                Return Me
-            End Function
-
-            Public Function build() As Word2Vec
-                Return New Word2Vec(Me)
-            End Function
-        End Class
-
-        Private Sub New(factory As Factory)
+        Friend Sub New(factory As Word2VecFactory)
             vectorSize = factory.vectorSize
             windowSize = factory.windowSize
             freqThresold = factory.freqThresold
