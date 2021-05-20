@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports stdNum = System.Math
 
 Namespace NlpVec

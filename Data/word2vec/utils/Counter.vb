@@ -1,6 +1,5 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.Text
+﻿Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace utils
 
@@ -95,7 +94,7 @@ Namespace utils
         ''' <summary>
         ''' 输出已构建好的哈希计数表 </summary>
         ''' <returns> 哈希表 </returns>
-        Public Function keySet() As ISet(Of tT)
+        Public Function keySet() As IEnumerable(Of tT)
             Return hm.Keys
         End Function
 
