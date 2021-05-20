@@ -8,7 +8,7 @@ Namespace utils
     Public Interface HuffmanNode
         Inherits IComparable(Of HuffmanNode)
 
-        WriteOnly Property code As Integer
+        Sub SetCode(value As Integer)
         Property frequency As Integer
         Property parent As HuffmanNode
         Function merge(sibling As HuffmanNode) As HuffmanNode

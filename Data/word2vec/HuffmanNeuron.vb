@@ -8,25 +8,15 @@ Namespace NlpVec
     Public Class HuffmanNeuron
         Implements HuffmanNode
 
-        Protected Friend frequency_Renamed As Integer = 0
         Protected Friend parentNeuron As HuffmanNode
-        Protected Friend code_Renamed As Integer = 0
+        Protected Friend code As Integer = 0
         Protected Friend vector As Double()
 
-        Public WriteOnly Property code As Integer Implements HuffmanNode.code
-            Set(value As Integer)
-                code_Renamed = value
-            End Set
-        End Property
+        Public Sub SetCode(value As Integer) Implements HuffmanNode.SetCode
+            code = value
+        End Sub
 
         Public Property frequency As Integer Implements HuffmanNode.frequency
-            Set(value As Integer)
-                frequency_Renamed = value
-            End Set
-            Get
-                Return frequency_Renamed
-            End Get
-        End Property
 
         Public Property parent As HuffmanNode Implements HuffmanNode.parent
             Set(value As HuffmanNode)
@@ -38,16 +28,16 @@ Namespace NlpVec
         End Property
 
         Public Function merge(right As HuffmanNode) As HuffmanNode Implements HuffmanNode.merge
-            Dim parent As HuffmanNode = New HuffmanNeuron(frequency_Renamed + right.frequency, vector.Length)
+            Dim parent As HuffmanNode = New HuffmanNeuron(frequency + right.frequency, vector.Length)
             parentNeuron = parent
-            code_Renamed = 0
+            SetCode(0)
             right.parent = parent
-            right.code = 1
+            right.SetCode(1)
             Return parent
         End Function
 
         Public Function compareTo(hn As HuffmanNode) As Integer Implements IComparable(Of HuffmanNode).CompareTo
-            If frequency_Renamed > hn.frequency Then
+            If frequency > hn.frequency Then
                 Return 1
             Else
                 Return -1
@@ -55,7 +45,7 @@ Namespace NlpVec
         End Function
 
         Public Sub New(freq As Integer, vectorSize As Integer)
-            frequency_Renamed = freq
+            frequency = freq
             vector = New Double(vectorSize - 1) {}
             parentNeuron = Nothing
         End Sub

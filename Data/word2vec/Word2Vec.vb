@@ -289,7 +289,7 @@ Namespace NlpVec
                     End If
                     ' 'g' is the gradient multiplied by the learning rate
                     Dim outNext = CType(pathNeurons(neuronIndex + 1), HuffmanNeuron)
-                    Dim g = (1 - outNext.code_Renamed - f) * alpha
+                    Dim g = (1 - outNext.code - f) * alpha
 
                     For c = 0 To vectorSize - 1
                         neu1e(c) += g * out.vector(c)
@@ -364,7 +364,7 @@ Namespace NlpVec
                 End If
                 ' 'g' is the gradient multiplied by the learning rate
                 Dim outNext = CType(pathNeurons(neuronIndex + 1), HuffmanNeuron)
-                Dim g = (1 - outNext.code_Renamed - f) * alpha
+                Dim g = (1 - outNext.code - f) * alpha
                 '
                 For c = 0 To vectorSize - 1
                     neu1e(c) += g * out.vector(c)
