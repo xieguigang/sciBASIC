@@ -1,8 +1,6 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports Tokenizer = org.nlp.util.Tokenizer
-Imports VectorModel = org.nlp.vec.VectorModel
-Imports Word2Vec = org.nlp.vec.Word2Vec
+﻿Imports System.IO
+Imports Microsoft.VisualBasic.Data.NLP.Word2Vec.NlpVec
+Imports Microsoft.VisualBasic.Data.NLP.Word2Vec.utils
 
 Namespace test
 
@@ -34,12 +32,12 @@ Namespace test
             End Try
 
             wv.training()
-            wv.saveModel(New File(modelFilePath))
+            wv.saveModel(New FileStream(modelFilePath, FileMode.OpenOrCreate))
         End Sub
 
         Public Shared Sub testVector(ByVal modelFilePath As String)
             Dim vm = VectorModel.loadFromFile(modelFilePath)
-            Dim result1 As ISet(Of VectorModel.WordScore) = Collections.emptySet()
+            Dim result1 As ISet(Of VectorModel.WordScore) = New SortedSet(Of VectorModel.WordScore)
             result1 = vm.similar("亲")
 
             For Each we In result1

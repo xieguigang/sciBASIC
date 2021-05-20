@@ -23,7 +23,7 @@ Namespace utils
         ''' <param name="text"> 文本 </param>
         ''' <param name="delim"> 分割符 </param>
         Public Sub New(text As String, delim As String)
-            tokens = text.Split(delim, True).AsList
+            tokens = text.StringSplit(delim, True).AsList
             tokenIter = tokens.GetEnumerator()
         End Sub
 
@@ -38,14 +38,14 @@ Namespace utils
         ''' 遍历记号时，查询是否还有记号未遍历 </summary>
         ''' <returns> 若还有记号未遍历，则返回true，否则返回false。 </returns>
         Public Function hasMoreTokens() As Boolean
-            Return tokenIter.hasNext()
+            Return tokenIter.MoveNext
         End Function
 
         ''' <summary>
         ''' 遍历记号时获得下一个之前未遍历的记号 </summary>
         ''' <returns> 记号 </returns>
         Public Function nextToken() As String
-            Return tokenIter.[next]()
+            Return tokenIter.Current
         End Function
 
         ''' <summary>

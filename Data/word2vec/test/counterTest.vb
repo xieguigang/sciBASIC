@@ -10,7 +10,7 @@ Module counterTest
             counter.add(strKey)
         Next
 
-        For Each strKey As String In counter.Keys
+        For Each strKey As String In counter.keySet
             Console.WriteLine(strKey & " : " & counter.get(strKey))
         Next
 

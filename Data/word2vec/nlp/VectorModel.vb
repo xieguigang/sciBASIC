@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports stdNum = System.Math
 
 Namespace NlpVec
 
@@ -95,7 +96,7 @@ Namespace NlpVec
                         value(j) = vector
                     Next
 
-                    len = Math.Sqrt(len)
+                    len = stdNum.Sqrt(len)
 
                     For j = 0 To layerSizeLoaded - 1
                         value(j) /= CSng(len)
@@ -112,7 +113,7 @@ Namespace NlpVec
                 Try
 
                     If dis IsNot Nothing Then
-                        dis.close()
+                        dis.Close()
                     End If
 
                 Catch ioe As Exception
@@ -151,7 +152,7 @@ Namespace NlpVec
                 Try
 
                     If dataOutputStream IsNot Nothing Then
-                        dataOutputStream.close()
+                        dataOutputStream.Close()
                     End If
 
                 Catch ioe As Exception
@@ -165,11 +166,11 @@ Namespace NlpVec
         ''' 获取与词word最相近topNSize个词 </summary>
         ''' <param name="queryWord"> 词 </param>
         ''' <returns> 相近词集，若模型不包含词word，则返回空集 </returns>
-        Public Function similar(queryWord As String) As ISet(Of WordScore)
+        Public Function similar(queryWord As String) As IEnumerable(Of WordScore)
             Dim center = wordMap_Renamed.GetValueOrNull(queryWord)
 
             If center Is Nothing Then
-                Return New [Set](Of WordScore)
+                Return {}
             End If
 
             Dim resultSize = If(wordMap_Renamed.Count < topNSize_Renamed, wordMap_Renamed.Count, topNSize_Renamed + 1)
@@ -191,17 +192,17 @@ Namespace NlpVec
 
                 If dist > minDist Then
                     result.Add(New WordScore(Me, entry.Key, dist))
-                    minDist = result.pollLast().score
+                    minDist = result.PollLast().score
                 End If
             Next
 
-            result.pollFirst()
+            result.PollFirst()
             Return result
         End Function
 
-        Public Function similar(center As Single()) As ISet(Of WordScore)
+        Public Function similar(center As Single()) As IEnumerable(Of WordScore)
             If center Is Nothing OrElse center.Length <> vectorSize_Renamed Then
-                Return [Set](Of WordScore)()
+                Return {}
             End If
 
             Dim resultSize = If(wordMap_Renamed.Count < topNSize_Renamed, wordMap_Renamed.Count, topNSize_Renamed)
@@ -223,7 +224,7 @@ Namespace NlpVec
 
                 If dist > minDist Then
                     result.Add(New WordScore(Me, entry.Key, dist))
-                    minDist = result.pollLast().score
+                    minDist = result.PollLast().score
                 End If
             Next
             '        result.pollFirst();
@@ -279,7 +280,7 @@ Namespace NlpVec
 
                 If dist > minDist Then
                     result.Add(New WordScore(Me, entry.Key, dist))
-                    minDist = result.pollLast().score
+                    minDist = result.PollLast().score
                 End If
             Next
 

@@ -133,4 +133,18 @@ Public Module SetsExtension
         Return New StringSet(strings)
     End Function
 #End Region
+
+    <Extension>
+    Public Function PollLast(Of T)([set] As SortedSet(Of T)) As T
+        Dim last = [set].Last
+        [set].Remove(last)
+        Return last
+    End Function
+
+    <Extension>
+    Public Function PollFirst(Of T)([set] As SortedSet(Of T)) As T
+        Dim first = [set].First
+        [set].Remove(first)
+        Return first
+    End Function
 End Module

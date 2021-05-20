@@ -88,7 +88,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="StringHelperClass.vb" />
     <Compile Include="utils\Tokenizer.vb" />
   </ItemGroup>
   <ItemGroup>

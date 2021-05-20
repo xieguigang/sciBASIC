@@ -1,5 +1,8 @@
 ﻿Imports System.IO
+Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Data.NLP.Word2Vec.utils
+Imports stdNum = System.Math
 
 Namespace NlpVec
 
@@ -9,7 +12,7 @@ Namespace NlpVec
     ''' Word2Vec 算法实现
     ''' </summary>
     Public Class Word2Vec
-        Private logger As Logger = logger.getLogger("Word2Vec")
+
         Private windowSize As Integer '文字窗口大小
         Private vectorSize As Integer '词向量的元素个数
 
@@ -132,7 +135,7 @@ Namespace NlpVec
         ''' </summary>
         Private Sub computeExp()
             For i = 0 To EXP_TABLE_SIZE - 1
-                expTable(i) = Math.Exp((i / EXP_TABLE_SIZE * 2 - 1) * MAX_EXP)
+                expTable(i) = stdNum.Exp((i / EXP_TABLE_SIZE * 2 - 1) * MAX_EXP)
                 expTable(i) = expTable(i) / (expTable(i) + 1)
             Next
         End Sub
@@ -158,14 +161,14 @@ Namespace NlpVec
                     Dim tempDir As String = App.GetTempFile
 
                     If Not tempDir.DirectoryExists Then
-                        Dim tempCreated As Boolean = tempDir.MkDIR
+                        Dim tempCreated As Boolean = tempDir.MakeDir
 
                         If Not tempCreated Then
-                            logger.severe("unable to create temp file in " & tempDir.GetDirectoryFullPath)
+                            Call ("unable to create temp file in " & tempDir.GetDirectoryFullPath).Warning
                         End If
                     End If
 
-                    tempCorpus = App.GetAppSysTempFile(".txt", App.PID, "tempCorpus")
+                    tempCorpus = TempFileSystem.GetAppSysTempFile(".txt", App.PID, "tempCorpus")
                     tempCorpusWriter = New StreamWriter(tempCorpus)
                 End If
 
@@ -197,7 +200,7 @@ Namespace NlpVec
                 neuronMap(wordText) = New WordNeuron(wordText, wordCounter.get(wordText), vectorSize)
             Next
 
-            logger.info("read " & neuronMap.Count & " word totally.")
+            Call ("read " & neuronMap.Count & " word totally.").__INFO_ECHO
             '        System.out.println("共读取了 " + neuronMap.size() + " 个词。");
 
         End Sub
@@ -212,65 +215,39 @@ Namespace NlpVec
             ' 重新遍历语料
             totalWordCount = currentWordCount
             currentWordCount = 0
-            ' 处理线程池定义
-            Dim threadPool As ExecutorService = Executors.newFixedThreadPool(numOfThread)
-            Dim li As LineIterator = Nothing
+            tempCorpusWriter.Close()
 
-            Try
-                Dim corpusQueue As BlockingQueue(Of LinkedList(Of String)) = New ArrayBlockingQueue(Of LinkedList(Of String))(numOfThread)
-                Dim futures As LinkedList(Of Future) = New LinkedList(Of Future)() '每个线程的返回结果，用于等待线程
+            Dim corpus As LinkedList(Of String) = New LinkedList(Of String)() '若干文本组成的语料
+            Dim trainBlockSize = 500 '语料中句子个数
+            Dim trainer As New Trainer(Me, corpus)
 
-                For thi = 0 To numOfThread - 1
-                    '                threadPool.execute(new Trainer(corpusQueue));
-                    futures.AddLast(threadPool.submit(New Trainer(Me, corpusQueue)))
-                Next
+            For Each li As String In tempCorpus.LineIterators
+                'Dim corpusQueue As BlockingQueue(Of LinkedList(Of String)) = New ArrayBlockingQueue(Of LinkedList(Of String))(numOfThread)
+                'Dim futures As LinkedList(Of Future) = New LinkedList(Of Future)() '每个线程的返回结果，用于等待线程
 
-                tempCorpusWriter.Close()
-                li = New LineIterator(New StreamReader(tempCorpus))
-                Dim corpus As LinkedList(Of String) = New LinkedList(Of String)() '若干文本组成的语料
-                Dim trainBlockSize = 500 '语料中句子个数
+                'For thi = 0 To numOfThread - 1
+                '    '                threadPool.execute(new Trainer(corpusQueue));
+                '    futures.AddLast(threadPool.submit(New Trainer(Me, corpusQueue)))
+                'Next
 
-                While li.MoveNext()
-                    corpus.AddLast(li.nextLine())
+                corpus.AddLast(li)
 
-                    If corpus.Count = trainBlockSize Then
-                        '放进任务队列，供线程处理
-                        '                    futures.add(threadPool.submit(new Trainer(corpus)));
+                If corpus.Count = trainBlockSize Then
+                    '放进任务队列，供线程处理
+                    '                    futures.add(threadPool.submit(new Trainer(corpus)));
 
-                        corpusQueue.put(corpus)
-                        '                    System.out.println("put a corpus");
+                    ' corpusQueue.put(corpus)
+                    '                    System.out.println("put a corpus");
 
-                        corpus = New LinkedList(Of String)()
-                    End If
-                End While
-                '            futures.add(threadPool.submit(new Trainer(corpus)));
-                corpusQueue.put(corpus)
-                logger.info("the task queue has been allocated completely, " & "please wait the thread pool (" & numOfThread & ") to process...")
-
-                ' 等待线程处理完语料
-                For Each future As Future In futures
-                    future.[get]()
-                Next
-
-                threadPool.shutdown() ' 关闭线程池
-            Catch e As IOException
-                Console.WriteLine(e.ToString())
-                Console.Write(e.StackTrace)
-            Catch e As Exception
-                Console.WriteLine(e.ToString())
-                Console.Write(e.StackTrace)
-            Catch e As Exception
-                Console.WriteLine(e.ToString())
-                Console.Write(e.StackTrace)
-            Finally
-                LineIterator.closeQuietly(li)
-
-                If Not tempCorpus.DeleteFile Then
-                    logger.severe("unable to delete temp file in " & tempCorpus.GetFullPath)
                 End If
+            Next
 
-                tempCorpus = Nothing
-            End Try
+            '            futures.add(threadPool.submit(new Trainer(corpus)));
+
+            Call ("the task queue has been allocated completely, " & "please wait the thread pool (" & numOfThread & ") to process...").__INFO_ECHO
+
+            ' 等待线程处理完语料
+            Call trainer.run()
         End Sub
 
         Private Sub skipGram(index As Integer, sentence As IList(Of WordNeuron), b As Integer, alpha As Double)
@@ -425,11 +402,10 @@ Namespace NlpVec
 
         Private nextRandom As Long = 5
 
-        Public Class Trainer
-            Inherits ThreadStart
+        Public Class Trainer : Implements ITaskDriver
 
             Private ReadOnly outerInstance As Word2Vec
-            Friend corpusQueue As BlockingQueue(Of LinkedList(Of String))
+            Friend corpusQueue As Queue(Of LinkedList(Of String))
             Friend corpusToBeTrained As LinkedList(Of String)
             Friend trainingWordCount As Integer
             Friend tempAlpha As Double
@@ -440,7 +416,7 @@ Namespace NlpVec
                 trainingWordCount = 0
             End Sub
 
-            Public Sub New(outerInstance As Word2Vec, corpusQueue As BlockingQueue(Of LinkedList(Of String)))
+            Public Sub New(outerInstance As Word2Vec, corpusQueue As Queue(Of LinkedList(Of String)))
                 Me.outerInstance = outerInstance
                 Me.corpusQueue = corpusQueue
             End Sub
@@ -475,7 +451,7 @@ Namespace NlpVec
                         End If
                         ' The subsampling randomly discards frequent words while keeping the ranking same
                         If outerInstance.sample > 0 Then
-                            Dim ran = (Math.Sqrt(entry.frequency / (outerInstance.sample * outerInstance.totalWordCount)) + 1) * (outerInstance.sample * outerInstance.totalWordCount) / entry.frequency
+                            Dim ran = (stdNum.Sqrt(entry.frequency / (outerInstance.sample * outerInstance.totalWordCount)) + 1) * (outerInstance.sample * outerInstance.totalWordCount) / entry.frequency
                             outerInstance.nextRandom = outerInstance.nextRandom * 25214903917L + 11
 
                             If ran < (outerInstance.nextRandom And &HFFFF) / 65536 Then
@@ -499,14 +475,14 @@ Namespace NlpVec
                 Next
             End Sub
 
-            Public Sub run()
+            Public Function run() As Integer Implements ITaskDriver.Run
                 Dim hasCorpusToBeTrained = True
 
                 Try
 
                     While hasCorpusToBeTrained
                         '                    System.out.println("get a corpus");
-                        corpusToBeTrained = corpusQueue.poll(2, TimeUnit.SECONDS)
+                        corpusToBeTrained = corpusQueue.Dequeue
                         '                    System.out.println("队列长度:" + corpusQueue.size());
                         If Nothing IsNot corpusToBeTrained Then
                             tempAlpha = outerInstance.alpha
@@ -523,7 +499,9 @@ Namespace NlpVec
                     Console.WriteLine(ie.ToString())
                     Console.Write(ie.StackTrace)
                 End Try
-            End Sub
+
+                Return 0
+            End Function
         End Class
 
         ''' <summary>
@@ -545,7 +523,7 @@ Namespace NlpVec
                     Next
                 Next
 
-                logger.info("saving model successfully in " & file.Name)
+                Call ("saving model successfully in " & file.Name).__INFO_ECHO
             Catch e As IOException
                 Console.WriteLine(e.ToString())
                 Console.Write(e.StackTrace)
@@ -582,7 +560,7 @@ Namespace NlpVec
                     vector(vi) = CSng(vectorNorm(vi))
                 Next
 
-                vectorLength = Math.Sqrt(vectorLength)
+                vectorLength = stdNum.Sqrt(vectorLength)
 
                 For vi = 0 To vector.Length - 1
                     vector(vi) /= CSng(vectorLength)
