@@ -49,11 +49,8 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports Microsoft.VisualBasic.ApplicationServices.Terminal.STDIO__
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
-Imports Microsoft.VisualBasic.Text
 
 Namespace ApplicationServices.Debugging.Logging
 
@@ -138,14 +135,14 @@ Namespace ApplicationServices.Debugging.Logging
         ''' <param name="[Object]"></param>
         ''' <param name="type"></param>
         Public Sub WriteLine(Msg As String, <CallerMemberName> Optional [Object] As String = Nothing, Optional type As MSG_TYPES = MSG_TYPES.INF)
-            Dim LogEntry As New LogEntry With {
+            Dim log As New LogEntry With {
                 .message = Msg,
                 .[object] = [Object],
                 .time = Now,
                 .level = type
             }
 
-            buffer.WriteLine(LogEntry.ToString)
+            buffer.WriteLine(log.ToString)
             counts += 1
         End Sub
 
