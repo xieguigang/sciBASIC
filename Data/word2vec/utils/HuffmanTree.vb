@@ -11,7 +11,7 @@ Namespace utils
         '    private TreeSet<HuffmanNode> tree = new TreeSet<HuffmanNode>();
 
         Public Shared Sub make(Of T1 As HuffmanNode)(nodes As ICollection(Of T1))
-            Dim tree As SortedSet(Of HuffmanNode) = New SortedSet(Of HuffmanNode)(nodes)
+            Dim tree As New SortedSet(Of HuffmanNode)(nodes)
 
             While tree.Count > 1
                 Dim left As HuffmanNode = tree.pollFirst()

@@ -37,7 +37,9 @@ Namespace NlpVec
         End Function
 
         Public Function compareTo(hn As HuffmanNode) As Integer Implements IComparable(Of HuffmanNode).CompareTo
-            If frequency > hn.frequency Then
+            If frequency = hn.frequency Then
+                Return 0
+            ElseIf frequency > hn.frequency Then
                 Return 1
             Else
                 Return -1

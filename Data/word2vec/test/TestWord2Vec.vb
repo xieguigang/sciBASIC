@@ -18,8 +18,8 @@ Namespace test
                     Dim lineCount = 0
                     Dim line As String = br.ReadLine()
 
-                    While Not ReferenceEquals(line, Nothing)
-                        wv.readTokens(New Tokenizer(line, " "))
+                    While Not line Is Nothing
+                        wv.readTokens(New Tokenizer(line, vbTab))
                         '                System.out.println(line);
                         lineCount += 1
                         line = br.ReadLine()
@@ -46,8 +46,8 @@ Namespace test
         End Sub
 
         Public Shared Sub Main(ByVal args As String())
-            Dim textFilePath = "D:/data/corpus.dat"
-            Dim modelFilePath = "D:/data/corpus.nn"
+            Dim textFilePath = "C:\Users\Administrator\Downloads\swresult_withoutnature.txt"
+            Dim modelFilePath = "C:\Users\Administrator\Downloads\swresult_withoutnature.vec"
             readByJava(textFilePath, modelFilePath)
             testVector(modelFilePath)
         End Sub

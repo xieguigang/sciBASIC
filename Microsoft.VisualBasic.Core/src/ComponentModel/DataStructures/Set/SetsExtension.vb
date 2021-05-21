@@ -147,4 +147,5 @@ Public Module SetsExtension
         [set].Remove(first)
         Return first
     End Function
+
 End Module

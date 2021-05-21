@@ -25,15 +25,11 @@ Namespace utils
         ''' <param name="t"> 元素 </param>
         ''' <param name="n"> 计数 </param>
         Public Sub add(t As tT, n As Integer)
-            Dim newCount As New Counter(n)
-            Dim oldCount As Counter
-
-            hm(t) = newCount
-            oldCount = newCount
-
-            If oldCount IsNot Nothing Then
-                newCount.Value = (oldCount.Value + n)
+            If Not hm.ContainsKey(t) Then
+                hm.Add(t, New Counter(0))
             End If
+
+            hm(t).Add(n)
         End Sub
 
         ''' <summary>
