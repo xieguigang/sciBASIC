@@ -37,8 +37,7 @@ Namespace test
 
         Public Shared Sub testVector(ByVal modelFilePath As String)
             Dim vm = VectorModel.loadFromFile(modelFilePath)
-            Dim result1 As ISet(Of WordScore) = New SortedSet(Of WordScore)
-            result1 = vm.similar("亲")
+            Dim result1 As New SortedSet(Of WordScore)(vm.similar("亲"))
 
             For Each we In result1
                 Console.WriteLine(we.name & " :" & vbTab & we.score)

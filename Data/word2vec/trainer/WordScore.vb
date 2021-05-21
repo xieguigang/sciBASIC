@@ -20,7 +20,9 @@ Namespace NlpVec
         End Function
 
         Public Function CompareTo(o As WordScore) As Integer Implements IComparable(Of WordScore).CompareTo
-            If score < o.score Then
+            If score = o.score Then
+                Return 0
+            ElseIf score < o.score Then
                 Return 1
             Else
                 Return -1

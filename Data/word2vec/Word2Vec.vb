@@ -1,7 +1,9 @@
 ﻿Imports System.IO
+Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.NLP.Word2Vec.utils
+Imports Microsoft.VisualBasic.Text
 Imports stdNum = System.Math
 
 Namespace NlpVec
@@ -98,7 +100,7 @@ Namespace NlpVec
                     End If
 
                     tempCorpus = TempFileSystem.GetAppSysTempFile(".txt", App.PID, "tempCorpus")
-                    tempCorpusWriter = New StreamWriter(tempCorpus)
+                    tempCorpusWriter = New StreamWriter(tempCorpus.Open, Encoding.UTF8)
                 End If
 
                 tempCorpusWriter.Write(tokenizer.ToString(" "))
@@ -150,7 +152,7 @@ Namespace NlpVec
             Dim trainBlockSize = 500 '语料中句子个数
             Dim trainer As New Trainer(Me, corpus)
 
-            For Each li As String In tempCorpus.LineIterators
+            For Each li As String In tempCorpus.LineIterators(Encodings.UTF8)
                 'Dim corpusQueue As BlockingQueue(Of LinkedList(Of String)) = New ArrayBlockingQueue(Of LinkedList(Of String))(numOfThread)
                 'Dim futures As LinkedList(Of Future) = New LinkedList(Of Future)() '每个线程的返回结果，用于等待线程
 

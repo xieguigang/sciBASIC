@@ -16,6 +16,8 @@ Namespace NlpVec
             Me.outerInstance = outerInstance
             corpusToBeTrained = corpus
             trainingWordCount = 0
+            corpusQueue = New Queue(Of LinkedList(Of String))
+            corpusQueue.Enqueue(corpus)
         End Sub
 
         Public Sub New(outerInstance As Word2Vec, corpusQueue As Queue(Of LinkedList(Of String)))

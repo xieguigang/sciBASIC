@@ -108,9 +108,9 @@ Public Module TextDoc
     ''' </param>
     ''' <returns></returns>
     <Extension>
-    Public Function LineIterators(handle$) As IEnumerable(Of String)
+    Public Function LineIterators(handle$, Optional encoding As Encodings = Encodings.Default) As IEnumerable(Of String)
         If handle.FileExists Then
-            Return handle.IterateAllLines
+            Return handle.IterateAllLines(encoding)
         Else
             Return handle.LineTokens
         End If
