@@ -22,7 +22,7 @@ Namespace utils
         End Sub
 
         Public Shared Function getPath(leafNode As HuffmanNode) As IList(Of HuffmanNode)
-            Dim nodes As IList(Of HuffmanNode) = New List(Of HuffmanNode)()
+            Dim nodes As New List(Of HuffmanNode)()
             Dim hn = leafNode
 
             While hn IsNot Nothing
@@ -31,6 +31,7 @@ Namespace utils
             End While
 
             nodes.Reverse()
+
             Return nodes
         End Function
     End Class

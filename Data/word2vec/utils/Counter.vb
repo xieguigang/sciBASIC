@@ -1,4 +1,5 @@
 ﻿Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace utils
@@ -8,51 +9,30 @@ Namespace utils
     ''' 最初代码来自Ansj的tree-split包中的love.cq.util;
     ''' @author fangy </summary>
     Public Class Counter(Of tT)
-        Private hm As Dictionary(Of tT, CountInteger) = Nothing
+
+        Dim hm As Dictionary(Of tT, Counter) = Nothing
 
         Public Sub New()
-            hm = New Dictionary(Of tT, CountInteger)()
+            hm = New Dictionary(Of tT, Counter)()
         End Sub
 
         Public Sub New(initialCapacity As Integer)
-            hm = New Dictionary(Of tT, CountInteger)(initialCapacity)
+            hm = New Dictionary(Of tT, Counter)(initialCapacity)
         End Sub
-
-        Public Class CountInteger
-            Private ReadOnly outerInstance As Counter(Of tT)
-            Friend count As Integer
-
-            Public Sub New(outerInstance As Counter(Of tT), initCount As Integer)
-                Me.outerInstance = outerInstance
-                count = initCount
-            End Sub
-
-            Public Sub [set](num As Integer)
-                count = num
-            End Sub
-
-            Public Function value() As Integer
-                Return count
-            End Function
-
-            Public Overrides Function ToString() As String
-                Return "Count: " & count.ToString()
-            End Function
-        End Class
 
         ''' <summary>
         ''' 增加一个元素，并增加其计数 </summary>
         ''' <param name="t"> 元素 </param>
         ''' <param name="n"> 计数 </param>
         Public Sub add(t As tT, n As Integer)
-            Dim newCount As CountInteger = New CountInteger(Me, n)
-            Dim oldCount As CountInteger
+            Dim newCount As New Counter(n)
+            Dim oldCount As Counter
 
             hm(t) = newCount
             oldCount = newCount
 
             If oldCount IsNot Nothing Then
-                newCount.set(oldCount.value() + n)
+                newCount.Value = (oldCount.Value + n)
             End If
         End Sub
 
@@ -73,7 +53,7 @@ Namespace utils
             If count Is Nothing Then
                 Return 0
             Else
-                Return count.value()
+                Return count.Value()
             End If
         End Function
 
@@ -102,9 +82,9 @@ Namespace utils
         ''' 将计数器转换为字符串 </summary>
         ''' <returns> 字符串 </returns>
         Public Overrides Function ToString() As String
-            Dim iterator As IEnumerator(Of KeyValuePair(Of tT, CountInteger)) = SetOfKeyValuePairs(Of tT, Counter(Of tT).CountInteger)(hm).GetEnumerator()
+            Dim iterator As IEnumerator(Of KeyValuePair(Of tT, Counter)) = SetOfKeyValuePairs(Of tT, Counter)(hm).GetEnumerator()
             Dim sb As StringBuilder = New StringBuilder()
-            Dim [next] As KeyValuePair(Of tT, CountInteger) = Nothing
+            Dim [next] As KeyValuePair(Of tT, Counter) = Nothing
 
             While iterator.MoveNext()
                 [next] = iterator.Current
