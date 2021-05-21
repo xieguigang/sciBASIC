@@ -7,12 +7,10 @@ Namespace NlpVec
     Public Class WordScore
         Implements IComparable(Of WordScore)
 
-        Private ReadOnly outerInstance As VectorModel
         Public name As String
         Public score As Single
 
-        Public Sub New(outerInstance As VectorModel, name As String, score As Single)
-            Me.outerInstance = outerInstance
+        Public Sub New(name As String, score As Single)
             Me.name = name
             Me.score = score
         End Sub

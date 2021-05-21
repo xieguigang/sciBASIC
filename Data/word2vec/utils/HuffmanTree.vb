@@ -1,6 +1,4 @@
-﻿Imports System.Collections.Generic
-
-Namespace utils
+﻿Namespace utils
 
     ''' <summary>
     ''' Created by fangy on 13-12-17.
@@ -14,8 +12,8 @@ Namespace utils
             Dim tree As New SortedSet(Of HuffmanNode)(nodes)
 
             While tree.Count > 1
-                Dim left As HuffmanNode = tree.pollFirst()
-                Dim right As HuffmanNode = tree.pollFirst()
+                Dim left As HuffmanNode = tree.PollFirst()
+                Dim right As HuffmanNode = tree.PollFirst()
                 Dim parent = left.merge(right)
                 tree.Add(parent)
             End While

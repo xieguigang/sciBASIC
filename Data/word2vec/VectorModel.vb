@@ -155,7 +155,7 @@ Namespace NlpVec
             Dim result As SortedSet(Of WordScore) = New SortedSet(Of WordScore)()
 
             For i = 0 To resultSize - 1
-                result.Add(New WordScore(Me, "^_^", -Single.MaxValue))
+                result.Add(New WordScore("^_^", -Single.MaxValue))
             Next
 
             Dim minDist = -Single.MaxValue
@@ -169,7 +169,7 @@ Namespace NlpVec
                 Next
 
                 If dist > minDist Then
-                    result.Add(New WordScore(Me, entry.Key, dist))
+                    result.Add(New WordScore(entry.Key, dist))
                     minDist = result.PollLast().score
                 End If
             Next
@@ -187,7 +187,7 @@ Namespace NlpVec
             Dim result As SortedSet(Of WordScore) = New SortedSet(Of WordScore)()
 
             For i = 0 To resultSize - 1
-                result.Add(New WordScore(Me, "^_^", -Single.MaxValue))
+                result.Add(New WordScore("^_^", -Single.MaxValue))
             Next
 
             Dim minDist = -Single.MaxValue
@@ -201,7 +201,7 @@ Namespace NlpVec
                 Next
 
                 If dist > minDist Then
-                    result.Add(New WordScore(Me, entry.Key, dist))
+                    result.Add(New WordScore(entry.Key, dist))
                     minDist = result.PollLast().score
                 End If
             Next
@@ -236,7 +236,7 @@ Namespace NlpVec
             Dim result As SortedSet(Of WordScore) = New SortedSet(Of WordScore)()
 
             For i = 0 To resultSize - 1
-                result.Add(New WordScore(Me, "^_^", -Single.MaxValue))
+                result.Add(New WordScore("^_^", -Single.MaxValue))
             Next
 
             Dim name As String
@@ -257,7 +257,7 @@ Namespace NlpVec
                 Next
 
                 If dist > minDist Then
-                    result.Add(New WordScore(Me, entry.Key, dist))
+                    result.Add(New WordScore(entry.Key, dist))
                     minDist = result.PollLast().score
                 End If
             Next

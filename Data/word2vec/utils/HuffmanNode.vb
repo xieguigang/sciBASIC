@@ -1,6 +1,4 @@
-﻿Imports System
-
-Namespace utils
+﻿Namespace utils
     ''' <summary>
     ''' Created by fangy on 13-12-17.
     ''' 哈夫曼树结点接口
