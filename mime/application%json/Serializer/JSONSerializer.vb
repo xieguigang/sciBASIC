@@ -1,50 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::fbf68d1251b4723bdcfea4e5618d263c, mime\application%json\Serializer\JSONSerializer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module JSONSerializer
-    ' 
-    '     Function: (+2 Overloads) BuildJsonString, GetJson, jsonArrayString, jsonObjectString, jsonValueString
-    ' 
-    ' /********************************************************************************/
+' Module JSONSerializer
+' 
+'     Function: (+2 Overloads) BuildJsonString, GetJson, jsonArrayString, jsonObjectString, jsonValueString
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json.BSON
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.ValueTypes
+Imports any = Microsoft.VisualBasic.Scripting
 
 Public Module JSONSerializer
 
@@ -95,6 +99,12 @@ Public Module JSONSerializer
         End Select
     End Function
 
+    ''' <summary>
+    ''' "..."
+    ''' </summary>
+    ''' <param name="obj"></param>
+    ''' <param name="opt"></param>
+    ''' <returns></returns>
     <Extension>
     Private Function jsonValueString(obj As JsonValue, opt As JSONSerializerOptions) As String
         Dim value As Object = obj.value
@@ -102,17 +112,31 @@ Public Module JSONSerializer
         If value Is Nothing Then
             Return "null"
         ElseIf value.GetType Is obj.BSONValue Then
-            Return DirectCast(value, BSONValue).ToString
+            value = DirectCast(value, BSONValue).GetObjectValue
+        End If
+
+        If TypeOf value Is Date AndAlso opt.unixTimestamp Then
+            Return DirectCast(value, Date).UnixTimeStamp
+        ElseIf TypeOf value Is String Then
+            Return JsonContract.GetObjectJson(GetType(String), value)
+        ElseIf TypeOf value Is Boolean Then
+            Return value.ToString.ToLower
         Else
-            Return BSONValue.FromValue(value).ToString
+            Return any.ToString(value)
         End If
     End Function
 
+    ''' <summary>
+    ''' {...}
+    ''' </summary>
+    ''' <param name="obj"></param>
+    ''' <param name="opt"></param>
+    ''' <returns></returns>
     <Extension>
     Private Function jsonObjectString(obj As JsonObject, opt As JSONSerializerOptions) As String
         Dim members As New List(Of String)
 
-        For Each member In obj
+        For Each member As NamedValue(Of JsonElement) In obj
             members.Add($"""{member.Name}"": {member.Value.BuildJsonString(opt)}")
         Next
 
@@ -125,11 +149,17 @@ Public Module JSONSerializer
         End If
     End Function
 
+    ''' <summary>
+    ''' [...]
+    ''' </summary>
+    ''' <param name="arr"></param>
+    ''' <param name="opt"></param>
+    ''' <returns></returns>
     <Extension>
     Private Function jsonArrayString(arr As JsonArray, opt As JSONSerializerOptions) As String
         Dim a As New StringBuilder
         Dim array$() = arr _
-            .Select(Function(x) x.BuildJsonString(opt)) _
+            .Select(Function(item) item.BuildJsonString(opt)) _
             .ToArray
 
         If opt.indent Then

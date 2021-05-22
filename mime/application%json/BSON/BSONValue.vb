@@ -263,6 +263,29 @@ Namespace BSON
             _int64 = v
         End Sub
 
+        Public Function GetObjectValue() As Object
+            Select Case valueType
+                Case ValueType.Binary
+                    Return binaryValue.ToBase64String
+                Case ValueType.Boolean
+                    Return boolValue
+                Case ValueType.Double
+                    Return doubleValue
+                Case ValueType.Int32
+                    Return int32Value
+                Case ValueType.Int64
+                    Return int64Value
+                Case ValueType.None
+                    Return "null"
+                Case ValueType.String
+                    Return stringValue
+                Case ValueType.UTCDateTime
+                    Return dateTimeValue
+                Case Else
+                    Throw New Exception(valueType.Description)
+            End Select
+        End Function
+
         Public Overrides Function ToString() As String
             Select Case valueType
                 Case ValueType.Binary
@@ -314,7 +337,7 @@ Namespace BSON
         End Function
 
         Public Shared Operator =(a As BSONValue, b As Object) As Boolean
-            Return System.[Object].ReferenceEquals(a, b)
+            Return Object.ReferenceEquals(a, b)
         End Operator
 
         Public Shared Operator <>(a As BSONValue, b As Object) As Boolean
