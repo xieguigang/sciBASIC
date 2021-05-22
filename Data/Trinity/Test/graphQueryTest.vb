@@ -6,6 +6,8 @@ Imports Microsoft.VisualBasic.MIME.Html.Document
 Module graphQueryTest
 
     Sub Main()
+        Call complextest()
+
         Call simpleArrayTest()
 
         Call SimpleTest()
@@ -14,6 +16,18 @@ Module graphQueryTest
 
         Pause()
 
+    End Sub
+
+    Sub complextest()
+        Dim queryText As String = "E:\GCModeller\src\repository\graphquery\kegg\kegg_table.graphquery".ReadAllText
+        Dim query As Query = QueryParser.GetQuery(queryText)
+        Dim engine As New Engine
+        Dim doc As HtmlDocument = HtmlDocument.LoadDocument("E:\GCModeller\src\repository\graphquery\kegg\gene.html")
+        Dim data As JsonElement = engine.Execute(doc, query)
+
+        Call Console.WriteLine(data.BuildJsonString(New JSONSerializerOptions With {.indent = True}))
+
+        Pause()
     End Sub
 
     Sub BookTest()
