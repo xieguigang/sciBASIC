@@ -1,43 +1,43 @@
 ﻿#Region "Microsoft.VisualBasic::24bda64e35dfe8f359204df91db45b94, Data\GraphQuery\TextParser\BaseInvoke.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module BaseInvoke
-    ' 
-    '         Function: eq, filter, getText, html, match
-    '                   regexp, regexpParseText, text, (+2 Overloads) trim
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module BaseInvoke
+' 
+'         Function: eq, filter, getText, html, match
+'                   regexp, regexpParseText, text, (+2 Overloads) trim
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -149,6 +149,28 @@ Namespace TextParser
         <ExportAPI("match")>
         Public Function match(document As InnerPlantText, parameters As String(), isArray As Boolean) As InnerPlantText
 
+        End Function
+
+        <ExportAPI("replace")>
+        Public Function replace(document As InnerPlantText, parameters As String(), isArray As Boolean) As InnerPlantText
+            Dim pattern As String = parameters(Scan0)
+            Dim replaceAs As String = parameters(1)
+            Dim r As New Regex(pattern)
+
+            Return ParserFunction.ParseDocument(document, regexpReplace(r, replaceAs), isArray)
+        End Function
+
+        Private Function regexpReplace(r As Regex, replaceAs As String) As IParserPipeline
+            Return Function(i)
+                       Dim text As String = i.GetPlantText
+                       Dim list As String() = r.Matches(text).ToArray
+
+                       For Each str As String In list
+                           text = text.Replace(str, replaceAs)
+                       Next
+
+                       Return New InnerPlantText With {.InnerText = text}
+                   End Function
         End Function
 
         ''' <summary>

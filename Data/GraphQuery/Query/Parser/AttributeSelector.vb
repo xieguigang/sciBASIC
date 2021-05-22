@@ -59,6 +59,8 @@ Public Class AttributeSelector : Inherits Parser
                             End Function) _
                     .ToArray
             }
+        ElseIf document.GetType Is GetType(InnerPlantText) Then
+            Return document
         Else
             Return New InnerPlantText With {
                 .InnerText = DirectCast(document, HtmlElement)(parameters(Scan0)).Value

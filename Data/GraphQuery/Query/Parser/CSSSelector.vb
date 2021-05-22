@@ -52,6 +52,9 @@ Public Class CSSSelector : Inherits Parser
         Dim query As String = parameters(Scan0)
         Dim n As String = parameters.ElementAtOrDefault(1)
 
+        If TypeOf document Is HtmlDocument Then
+            document = DirectCast(document, HtmlDocument).HtmlElements(Scan0)
+        End If
         If document.GetType Is GetType(InnerPlantText) Then
             Return New InnerPlantText
         End If
