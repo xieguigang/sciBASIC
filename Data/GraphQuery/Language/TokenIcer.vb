@@ -99,7 +99,7 @@ Namespace Language
                     Case Else
                         Dim t As Token = Nothing
 
-                        If buffer = 1 AndAlso (buffer Like {"|", "(", ","}) Then
+                        If buffer = 1 AndAlso (buffer Like {"|", "(", ",", "["}) Then
                             t = popOutToken()
                         End If
 

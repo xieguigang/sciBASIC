@@ -73,6 +73,11 @@ Public Class CSSSelector : Inherits Parser
                         .GetDirectChilds(list) _
                         .ToArray
                 }
+            ElseIf isArray AndAlso n = "*" Then
+                Return New HtmlElement With {
+                    .TagName = query,
+                    .HtmlElements = list
+                }
             Else
                 Return GetElementByIndex(list, CInt(Val(n)))
             End If
@@ -86,6 +91,11 @@ Public Class CSSSelector : Inherits Parser
                     .HtmlElements = DirectCast(document, HtmlElement) _
                         .GetDirectChilds(list) _
                         .ToArray
+                }
+            ElseIf isArray AndAlso n = "*" Then
+                Return New HtmlElement With {
+                    .TagName = query,
+                    .HtmlElements = list
                 }
             Else
                 Return GetElementByIndex(list, CInt(Val(n)))

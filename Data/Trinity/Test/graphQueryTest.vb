@@ -51,6 +51,7 @@ Imports Microsoft.VisualBasic.MIME.Html.Document
 Module graphQueryTest
 
     Sub Main()
+        Call simpleParserTest()
         Call complextest()
 
         Call simpleArrayTest()
@@ -60,6 +61,12 @@ Module graphQueryTest
         Call BookTest()
 
         Pause()
+
+    End Sub
+
+    Sub simpleParserTest()
+
+        Call QueryParser.GetQuery("reaction css('a', '*') [text()]")
 
     End Sub
 
