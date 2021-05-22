@@ -231,6 +231,7 @@ Namespace SecurityString
             ElseIf size < 1024 * 1024 * 5 Then
                 ' small files
                 Dim bufs As Byte() = File.ReadAllBytes(PathUri)
+
                 Return GetMd5Hash(bufs)
             Else
                 ' large files
@@ -238,7 +239,11 @@ Namespace SecurityString
                     Dim sha As New SHA256Managed()
                     Dim checksum = sha.ComputeHash(stream)
 
-                    Return BitConverter.ToString(checksum).Replace("-", String.Empty)
+                    Return BitConverter _
+                        .ToString(checksum) _
+                        .Replace("-", String.Empty) _
+                        .ToLower _
+                        .Substring(0, 32)
                 End Using
             End If
         End Function
