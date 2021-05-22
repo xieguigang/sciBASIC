@@ -43,8 +43,9 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 
-Namespace HTML
+Namespace Document
 
+    <HideModuleName>
     Public Module Extensions
 
         ''' <summary>
