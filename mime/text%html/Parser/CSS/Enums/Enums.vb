@@ -1,61 +1,61 @@
-﻿#Region "Microsoft.VisualBasic::93086ba6b58837b06bf5d8e2fa48cd51, mime\text%html\HTML\CSS\Parser\Enums\Enums.vb"
+﻿#Region "Microsoft.VisualBasic::d3104f06108de8e179a7bd1fbcaf3818, mime\text%html\Parser\CSS\Enums\Enums.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Enum CSSSelectorTypes
-' 
-'         [class], id, tag
-' 
-'  
-' 
-' 
-' 
-'     Enum HtmlTags
-' 
-'         [option], [select], a, audio, body
-'         button, div, em, footer, form
-'         h1, h2, h3, h4, h5
-'         h6, heder, hr, iframe, img
-'         input, li, nav, ol, p
-'         pre, span, svg, table, tbody
-'         textarea, th, thead, tr, ul
-'         video
-' 
-'  
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    '     Enum CSSSelectorTypes
+    ' 
+    '         [class], id, tag
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum HtmlTags
+    ' 
+    '         [option], [select], a, audio, body
+    '         button, div, em, footer, form
+    '         h1, h2, h3, h4, h5
+    '         h6, heder, hr, iframe, img
+    '         input, li, nav, ol, p
+    '         pre, span, svg, table, tbody
+    '         textarea, th, thead, tr, ul
+    '         video
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

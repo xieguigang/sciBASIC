@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d133fe0382c51c436a9d0b44bef8ddf, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::3ae36ec2aa42bbd93e30a9f714816037, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\Parser.vb"
 
     ' Author:
     ' 
@@ -34,8 +34,8 @@
     ' Module PrimitiveParser
     ' 
     '     Function: Eval, IsBooleanFactor, IsInteger, isNaN, IsNumeric
-    '               (+2 Overloads) ParseBoolean, ParseDate, ParseDouble, ParseInteger, ParseLong
-    '               ParseSingle, ParseTimeSpan
+    '               IsSimpleNumber, (+2 Overloads) ParseBoolean, ParseDate, ParseDouble, ParseInteger
+    '               ParseLong, ParseSingle, ParseTimeSpan
     ' 
     ' /********************************************************************************/
 

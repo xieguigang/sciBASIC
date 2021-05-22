@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2d5c1568780c72c1872306658c794d1, gr\Microsoft.VisualBasic.Imaging\SVG\CSS\Marker.vb"
+﻿#Region "Microsoft.VisualBasic::060520bc9a42d1cd608326aec3cb2a6f, gr\Microsoft.VisualBasic.Imaging\SVG\CSS\Marker.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::acc7b0307a639e3fb2d5338819f44492, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\PathExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::6d805e7c11bb8649b629d7a2c7b90c6b, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\PathExtensions.vb"
 
     ' Author:
     ' 
@@ -36,12 +36,10 @@
     '     Function: BaseName, ChangeSuffix, DeleteFile, DIR, DirectoryExists
     '               DirectoryName, EnumerateFiles, (+2 Overloads) ExtensionSuffix, FileCopy, FileExists
     '               FileLength, FileMove, FileName, FileOpened, GetDirectoryFullPath
-    '               GetFullPath, ListDirectory, ListFiles, Long2Short, (+2 Overloads) NormalizePathString
-    '               ParentDirName, ParentPath, PathCombine, PathIllegal, ReadDirectory
-    '               (+2 Overloads) RelativePath, SafeCopyTo, SplitPath, TheFile, ToDIR_URL
-    '               ToFileURL, TrimDIR, TrimSuffix, UnixPath
-    ' 
-    '     Sub: MakeDir
+    '               GetFullPath, ListDirectory, ListFiles, Long2Short, MakeDir
+    '               (+2 Overloads) NormalizePathString, ParentDirName, ParentPath, PathCombine, PathIllegal
+    '               ReadDirectory, (+2 Overloads) RelativePath, SafeCopyTo, SplitPath, TheFile
+    '               ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix, UnixPath
     ' 
     ' /********************************************************************************/
 

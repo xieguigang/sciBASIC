@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4669d3f6b37325ad6e91207ea10da89, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Set\SetsExtension.vb"
+﻿#Region "Microsoft.VisualBasic::3871fbac9fc98d8c282a3eef3e5d300b, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Set\SetsExtension.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,8 @@
 
     ' Module SetsExtension
     ' 
-    '     Function: (+2 Overloads) AsSet, Except, Intersection, (+3 Overloads) ToArray, Union
+    '     Function: (+2 Overloads) AsSet, Except, Intersection, PollFirst, PollLast
+    '               (+3 Overloads) ToArray, Union
     ' 
     ' /********************************************************************************/
 

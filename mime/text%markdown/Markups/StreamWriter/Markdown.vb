@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e04e39afecfcf1c6acb938e90fa302f, mime\text%html\Markups\StreamWriter\Markdown.vb"
+﻿#Region "Microsoft.VisualBasic::1e04e39afecfcf1c6acb938e90fa302f, mime\text%markdown\Markups\StreamWriter\Markdown.vb"
 
     ' Author:
     ' 

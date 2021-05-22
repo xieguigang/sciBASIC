@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd7bbae847fc128b58752e38199dd71e, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\CanvasScaler.vb"
+﻿#Region "Microsoft.VisualBasic::275d5b3ab3b07e670350bb397e76d0ec, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\CanvasScaler.vb"
 
     ' Author:
     ' 

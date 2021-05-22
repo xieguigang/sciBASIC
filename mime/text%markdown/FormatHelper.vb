@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::730586a5793de5d855938bc547231bb5, mime\text%html\MarkDown\FormatHelper.vb"
+﻿#Region "Microsoft.VisualBasic::3bf7fefc7fc4153069a0e2a3c9126923, mime\text%markdown\FormatHelper.vb"
 
     ' Author:
     ' 
@@ -31,11 +31,10 @@
 
     ' Summaries:
 
-    '     Module FormatHelper
+    ' Module FormatHelper
     ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: AttributeEncode, AttributeSafeUrl, GetHashKey, handleTrailingParens, Outdent
-    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: AttributeEncode, AttributeSafeUrl, GetHashKey, handleTrailingParens, Outdent
     ' 
     ' /********************************************************************************/
 

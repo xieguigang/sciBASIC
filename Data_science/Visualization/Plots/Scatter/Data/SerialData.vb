@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::683f1c931f9c8de5a08320d3a88a354b, Data_science\Visualization\Plots\Scatter\Data\SerialData.vb"
+﻿#Region "Microsoft.VisualBasic::ff9a49025fc73db5d6cb73acd1bf561d, Data_science\Visualization\Plots\Scatter\Data\SerialData.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5804ddfdf67d5e406973a89df2ab782b, gr\Microsoft.VisualBasic.Imaging\SVG\CSS\CSSStyles.vb"
+﻿#Region "Microsoft.VisualBasic::cd9924e6d5889c158ac05aa709f829ff, gr\Microsoft.VisualBasic.Imaging\SVG\CSS\CSSStyles.vb"
 
     ' Author:
     ' 

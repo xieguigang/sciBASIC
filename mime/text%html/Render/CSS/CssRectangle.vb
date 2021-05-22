@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d672a5eba1e49c71f50a09c4f92225f9, mime\text%html\HTML\CSS\Render\CssRectangle.vb"
+﻿#Region "Microsoft.VisualBasic::53a2cab73731d25e6cfa01e9a741b402, mime\text%html\Render\CSS\CssRectangle.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fba4fd8423f1613ed15f314869cf87ff, mime\text%html\HTML\HTML.vb"
+﻿#Region "Microsoft.VisualBasic::83854afc22dafbcc06414da639169786, mime\text%html\Document\Elements\HTML.vb"
 
     ' Author:
     ' 
@@ -31,13 +31,6 @@
 
     ' Summaries:
 
-    '     Class HTML
-    ' 
-    '         Properties: Body, Head, Language
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: ToArray, ToString
-    ' 
     '     Class HtmlHead
     ' 
     '         Properties: CSS, Title

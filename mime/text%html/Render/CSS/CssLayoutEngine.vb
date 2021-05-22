@@ -1,48 +1,48 @@
-﻿#Region "Microsoft.VisualBasic::c072b441f42c7b0b592d00299008c8e2, mime\text%html\HTML\CSS\Render\CssLayoutEngine.vb"
+﻿#Region "Microsoft.VisualBasic::a0f30889f24336a09f59e37a73e3d83a, mime\text%html\Render\CSS\CssLayoutEngine.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class CssLayoutEngine
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: GetAscent, GetDescent, GetLineSpacing, WhiteSpace
-' 
-'         Sub: ApplyAlignment, ApplyCellVerticalAlignment, ApplyCenterAlignment, ApplyJustifyAlignment, ApplyLeftAlignment
-'              ApplyRightAlignment, ApplyRightToLeft, ApplyVerticalAlignment, BubbleRectangles, CreateLineBoxes
-'              FlowBox
-' 
-' 
-' /********************************************************************************/
+    '     Class CssLayoutEngine
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: GetAscent, GetDescent, GetLineSpacing, WhiteSpace
+    ' 
+    '         Sub: ApplyAlignment, ApplyCellVerticalAlignment, ApplyCenterAlignment, ApplyJustifyAlignment, ApplyLeftAlignment
+    '              ApplyRightAlignment, ApplyRightToLeft, ApplyVerticalAlignment, BubbleRectangles, CreateLineBoxes
+    '              FlowBox
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

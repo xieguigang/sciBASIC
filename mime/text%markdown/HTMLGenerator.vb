@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6649073129a2a36d43cdb9e9a35c731, mime\text%html\MarkDown\HTMLGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::a5841be0ff1b644dd41b5ba5b7b490aa, mime\text%markdown\HTMLGenerator.vb"
 
     ' Author:
     ' 
@@ -31,10 +31,9 @@
 
     ' Summaries:
 
-    '     Module HTMLGenerator
+    ' Module HTMLGenerator
     ' 
-    '         Function: ToHTML
-    ' 
+    '     Function: Markdown2HTML
     ' 
     ' /********************************************************************************/
 

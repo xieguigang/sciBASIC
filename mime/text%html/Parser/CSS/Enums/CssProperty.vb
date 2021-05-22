@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d2efb6824360d6e6816646366321d15, mime\text%html\HTML\CSS\Parser\Enums\CssProperty.vb"
+﻿#Region "Microsoft.VisualBasic::815c1eae0e3c2d87ed7e4a09a430bcb6, mime\text%html\Parser\CSS\Enums\CssProperty.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::defc83fb1c89b646148bbf0cb18892d7, gr\Microsoft.VisualBasic.Imaging\SVG\CSS\Gradients\Gradients.vb"
+﻿#Region "Microsoft.VisualBasic::9817c3fb4555a1c97f020a36b5ca4243, gr\Microsoft.VisualBasic.Imaging\SVG\CSS\Gradients\Gradients.vb"
 
     ' Author:
     ' 

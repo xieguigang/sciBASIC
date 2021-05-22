@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4a414544b8729e8a3b18bb58419dace, mime\application%pdf\PdfReader\Document\PdfName.vb"
+﻿#Region "Microsoft.VisualBasic::215066ce1116f4629532da9597f9cdcf, mime\application%pdf\PdfReader\Document\PdfName.vb"
 
     ' Author:
     ' 
@@ -46,7 +46,6 @@
 
 #End Region
 
-
 Namespace PdfReader
 
     Public Class PdfName : Inherits PdfObject
@@ -82,4 +81,3 @@ Namespace PdfReader
         End Property
     End Class
 End Namespace
-

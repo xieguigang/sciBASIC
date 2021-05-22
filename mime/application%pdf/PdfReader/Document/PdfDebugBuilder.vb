@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d6792db0bf3dad7a5061e07f5af8ce49, mime\application%pdf\PdfReader\Document\PdfDebugBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::1d9d98d865f68908ed7970cbc274fe2a, mime\application%pdf\PdfReader\Document\PdfDebugBuilder.vb"
 
     ' Author:
     ' 
@@ -436,4 +436,3 @@ Namespace PdfReader
         End Sub
     End Class
 End Namespace
-

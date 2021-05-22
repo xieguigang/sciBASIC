@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5bb52eb8d8253d4ddc6eef6fa6607030, Data_science\Visualization\Plots-statistics\SampleView.vb"
+﻿#Region "Microsoft.VisualBasic::f0473840fc5ad295910f61039799b9f1, Data_science\Visualization\Plots-statistics\SampleView.vb"
 
     ' Author:
     ' 

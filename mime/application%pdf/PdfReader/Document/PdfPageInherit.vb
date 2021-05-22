@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a0c55c1f0b1c2dcc3c5273ba14994c8, mime\application%pdf\PdfReader\Document\PdfPageInherit.vb"
+﻿#Region "Microsoft.VisualBasic::35e2b2119ee124417a2f364d0f0ec255, mime\application%pdf\PdfReader\Document\PdfPageInherit.vb"
 
     ' Author:
     ' 
@@ -105,4 +105,3 @@ Namespace PdfReader
         End Function
     End Class
 End Namespace
-

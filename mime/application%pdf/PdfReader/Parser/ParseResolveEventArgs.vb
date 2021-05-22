@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3f27c06211328486198ba9d615d5830, mime\application%pdf\PdfReader\Parser\ParseResolveEventArgs.vb"
+﻿#Region "Microsoft.VisualBasic::d6d0428b014ad0a70e63a7da167e9a10, mime\application%pdf\PdfReader\Parser\ParseResolveEventArgs.vb"
 
     ' Author:
     ' 
@@ -51,4 +51,3 @@ Namespace PdfReader
         Public Property [Object] As ParseObjectBase
     End Class
 End Namespace
-

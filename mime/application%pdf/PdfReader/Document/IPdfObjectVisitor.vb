@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61bf1ed67d5a304c4fa76d806eedffba, mime\application%pdf\PdfReader\Document\IPdfObjectVisitor.vb"
+﻿#Region "Microsoft.VisualBasic::1581034924d1885ad6edf64052591203, mime\application%pdf\PdfReader\Document\IPdfObjectVisitor.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,6 @@
 
 #End Region
 
-
 Namespace PdfReader
     Public Interface IPdfObjectVisitor
         Sub Visit(ByVal array As PdfArray)
@@ -71,4 +70,3 @@ Namespace PdfReader
         Sub Visit(ByVal version As PdfVersion)
     End Interface
 End Namespace
-

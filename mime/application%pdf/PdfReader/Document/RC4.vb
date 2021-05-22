@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a71fe351d152071e34d7ddbfceaf70f2, mime\application%pdf\PdfReader\Document\RC4.vb"
+﻿#Region "Microsoft.VisualBasic::f376fdb7146b54933db3a03dd333c87b, mime\application%pdf\PdfReader\Document\RC4.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,6 @@
 
 #End Region
 
-
 Namespace PdfReader
     Public Module RC4
         Public Function Transform(ByVal key As Byte(), ByVal data As Byte()) As Byte()
@@ -85,4 +84,3 @@ Namespace PdfReader
         End Sub
     End Module
 End Namespace
-

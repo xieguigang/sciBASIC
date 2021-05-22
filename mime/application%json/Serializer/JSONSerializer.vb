@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9faeb7c9edf9050ffa75af1c2571f39, mime\application%json\Serializer\JSONSerializer.vb"
+﻿#Region "Microsoft.VisualBasic::fbf68d1251b4723bdcfea4e5618d263c, mime\application%json\Serializer\JSONSerializer.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module JSONSerializer
     ' 
-    '     Function: BuildJsonString, GetJson, jsonArrayString, jsonObjectString, jsonValueString
+    '     Function: (+2 Overloads) BuildJsonString, GetJson, jsonArrayString, jsonObjectString, jsonValueString
     ' 
     ' /********************************************************************************/
 

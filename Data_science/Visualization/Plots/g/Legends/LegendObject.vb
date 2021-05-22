@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04f5499fbd770927cf864ce1c2c62f55, Data_science\Visualization\Plots\g\Legends\LegendObject.vb"
+﻿#Region "Microsoft.VisualBasic::87ace331040b22c520d7f43062f1a875, Data_science\Visualization\Plots\g\Legends\LegendObject.vb"
 
     ' Author:
     ' 

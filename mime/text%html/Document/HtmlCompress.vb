@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3134ba60c99e516a3b9fb27a7633545, mime\text%html\HTML\HtmlCompress.vb"
+﻿#Region "Microsoft.VisualBasic::a3134ba60c99e516a3b9fb27a7633545, mime\text%html\Document\HtmlCompress.vb"
 
     ' Author:
     ' 

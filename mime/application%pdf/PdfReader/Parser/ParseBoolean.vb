@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::604da7e41fbde191bdf2210f4f7def41, mime\application%pdf\PdfReader\Parser\ParseBoolean.vb"
+﻿#Region "Microsoft.VisualBasic::c7f5c10956c8c208fd7676eee91a1ac8, mime\application%pdf\PdfReader\Parser\ParseBoolean.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,6 @@
 
 #End Region
 
-
 Namespace PdfReader
     Public Class ParseBoolean
         Inherits ParseObjectBase
@@ -63,4 +62,3 @@ Namespace PdfReader
         End Property
     End Class
 End Namespace
-

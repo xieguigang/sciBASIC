@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e29c929dbfbd2169572b406b503398f, Microsoft.VisualBasic.Core\src\Extensions\Math\NumberGroups.vb"
+﻿#Region "Microsoft.VisualBasic::73731bb54f71dff46e7b697ce9efc4a6, Microsoft.VisualBasic.Core\src\Extensions\Math\NumberGroups.vb"
 
     ' Author:
     ' 

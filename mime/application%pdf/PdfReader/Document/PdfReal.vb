@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8b087d84eaff714a628a3ac469716720, mime\application%pdf\PdfReader\Document\PdfReal.vb"
+﻿#Region "Microsoft.VisualBasic::90212940cdc7a80d9788d45d4c52751c, mime\application%pdf\PdfReader\Document\PdfReal.vb"
 
     ' Author:
     ' 
@@ -46,7 +46,6 @@
 
 #End Region
 
-
 Namespace PdfReader
     Public Class PdfReal
         Inherits PdfObject
@@ -80,4 +79,3 @@ Namespace PdfReader
         End Operator
     End Class
 End Namespace
-

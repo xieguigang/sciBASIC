@@ -1,65 +1,65 @@
-﻿#Region "Microsoft.VisualBasic::7198ae6f70bd1c6b353198bf905ab13f, gr\Microsoft.VisualBasic.Imaging\Drivers\CSS\Driver.vb"
+﻿#Region "Microsoft.VisualBasic::cd33f604e0637dd1eea818bd53b6364b, gr\Microsoft.VisualBasic.Imaging\Drivers\CSS\Driver.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class Driver
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'     Class CSSSelector
-' 
-'         Properties: IsGlobal, Type
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: ToString
-' 
-'     Class GlobalCSSSelector
-' 
-'         Properties: IsGlobal
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: ToString
-' 
-'     Enum Types
-' 
-'         [Integer], Brush, Float, Font, Padding
-'         Size, Stroke
-' 
-'  
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    '     Class Driver
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Class CSSSelector
+    ' 
+    '         Properties: IsGlobal, Type
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    '     Class GlobalCSSSelector
+    ' 
+    '         Properties: IsGlobal
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    '     Enum Types
+    ' 
+    '         [Integer], Brush, Float, Font, Padding
+    '         Size, Stroke
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

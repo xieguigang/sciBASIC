@@ -1,48 +1,48 @@
-﻿#Region "Microsoft.VisualBasic::1fa33f630de66a4d6a5b288bf95a8003, mime\text%html\HTML\Render\HtmlTag.vb"
+﻿#Region "Microsoft.VisualBasic::70fbf99bdc4044e68253c5ff0d105655, mime\text%html\Render\HtmlTag.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class HtmlTag
-' 
-'         Properties: Attributes, IsClosing, IsSingle, TagName
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'         Function: HasAttribute, ToString, TranslateLength
-' 
-'         Sub: ApplyTableBorder, ApplyTablePadding, TranslateAttributes
-' 
-' 
-' /********************************************************************************/
+    '     Class HtmlTag
+    ' 
+    '         Properties: Attributes, IsClosing, IsSingle, TagName
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: HasAttribute, ToString, TranslateLength
+    ' 
+    '         Sub: ApplyTableBorder, ApplyTablePadding, TranslateAttributes
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

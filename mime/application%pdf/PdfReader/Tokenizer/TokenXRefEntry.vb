@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9af5c243668c0e8e9ba3daceaf9faeb2, mime\application%pdf\PdfReader\Tokenizer\TokenXRefEntry.vb"
+﻿#Region "Microsoft.VisualBasic::e84e52e3262464a500a9bd0da9e985d8, mime\application%pdf\PdfReader\Tokenizer\TokenXRefEntry.vb"
 
     ' Author:
     ' 
@@ -92,4 +92,3 @@ Namespace PdfReader
         End Property
     End Class
 End Namespace
-

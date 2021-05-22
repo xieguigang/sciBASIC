@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2ed88fd29811bebbc0919c5417f3922, mime\text%html\HTML\Render\HtmlRenderer.vb"
+﻿#Region "Microsoft.VisualBasic::f80e5c18e99409da9aec5e65285fb96f, mime\text%html\Render\HtmlRenderer.vb"
 
     ' Author:
     ' 
