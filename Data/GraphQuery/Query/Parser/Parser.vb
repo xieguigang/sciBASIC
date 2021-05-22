@@ -59,7 +59,8 @@ Public MustInherit Class Parser
     End Sub
 
     Public Function Parse(document As InnerPlantText, isArray As Boolean, env As Engine) As InnerPlantText
-        Dim value As InnerPlantText = ParseImpl(document, isArray, env)
+        Dim arrayMode As Boolean = isArray AndAlso pipeNext Is Nothing
+        Dim value As InnerPlantText = ParseImpl(document, arrayMode, env)
 
         If Not pipeNext Is Nothing Then
             value = pipeNext.Parse(value, isArray, env)
