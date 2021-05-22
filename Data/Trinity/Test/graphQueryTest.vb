@@ -1,11 +1,7 @@
-﻿
-
-Imports System.IO
-Imports Microsoft.VisualBasic.Data.GraphQuery
-Imports Microsoft.VisualBasic.Data.GraphQuery.Language
+﻿Imports Microsoft.VisualBasic.Data.GraphQuery
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
-Imports Microsoft.VisualBasic.MIME.Markup.HTML
+Imports Microsoft.VisualBasic.MIME.Html.Document
 
 Module graphQueryTest
 
