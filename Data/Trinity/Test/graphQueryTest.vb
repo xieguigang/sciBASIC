@@ -10,6 +10,13 @@ Module graphQueryTest
 
         Call SimpleTest()
 
+        Call BookTest()
+
+        Pause()
+
+    End Sub
+
+    Sub BookTest()
         ' Dim queryTokens = New TokenIcer("E:\GCModeller\src\runtime\sciBASIC#\Data\data\query.ql".ReadAllText).GetTokens.ToArray
         Dim queryText As String = "E:\GCModeller\src\runtime\sciBASIC#\Data\data\query.ql".ReadAllText
         Dim query As Query = QueryParser.GetQuery(queryText)
@@ -18,9 +25,6 @@ Module graphQueryTest
         Dim data As JsonElement = engine.Execute(doc, query)
 
         Call Console.WriteLine(data.BuildJsonString(New JSONSerializerOptions With {.indent = True}))
-
-        Pause()
-
     End Sub
 
     Sub SimpleTest()
@@ -44,7 +48,7 @@ Module graphQueryTest
 
         Call Console.WriteLine(json)
 
-        Pause()
+        '  Pause()
     End Sub
 
     Sub simpleArrayTest()
@@ -75,7 +79,7 @@ Module graphQueryTest
 
         Call Console.WriteLine(json)
 
-        Pause()
+        '  Pause()
     End Sub
 
 End Module
