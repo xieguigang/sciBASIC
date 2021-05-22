@@ -124,6 +124,23 @@ Namespace TextParser
             Return nItem
         End Function
 
+        <ExportAPI("split")>
+        Public Function split(document As InnerPlantText, parameters As String(), isArray As Boolean) As InnerPlantText
+            Dim chars As Char() = parameters(Scan0).ReplaceMetaChars.ToArray
+            Dim n As Integer = Integer.Parse(parameters.ElementAtOrDefault(1, "0"))
+
+            Return ParserFunction.ParseDocument(
+                document:=document,
+                pip:=Function(i)
+                         Dim text As String = i.GetPlantText
+                         Dim parts As String() = text.Split(chars)
+
+                         Return New InnerPlantText With {.InnerText = parts.ElementAtOrDefault(n)}
+                     End Function,
+                isArray:=isArray
+            )
+        End Function
+
         ''' <summary>
         ''' removes of the text string that matched the pattern of given regexp list
         ''' </summary>
