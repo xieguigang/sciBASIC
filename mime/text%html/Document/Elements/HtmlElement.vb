@@ -244,6 +244,23 @@ Namespace Document
         End Property
 
         ''' <summary>
+        ''' 这个函数是应用于判断<see cref="getElementsByClassName(String)"/>或者<see cref="getElementsByName(String)"/>或者<see cref="getElementsByTagName(String)"/>
+        ''' 函数所返回来的结果，所以不会对<see cref="InnerPlantText"/>节点产生误判
+        ''' </summary>
+        ''' <param name="query"></param>
+        ''' <returns></returns>
+        Public Iterator Function GetDirectChilds(query As IEnumerable(Of HtmlElement)) As IEnumerable(Of HtmlElement)
+            For Each item As HtmlElement In query
+                For Each child As InnerPlantText In elementNodes
+                    If child Is item Then
+                        Yield item
+                        Exit For
+                    End If
+                Next
+            Next
+        End Function
+
+        ''' <summary>
         ''' Get the element with the specified ID
         ''' </summary>
         ''' <param name="id">Required. The ID attribute's value of the element you want to get</param>

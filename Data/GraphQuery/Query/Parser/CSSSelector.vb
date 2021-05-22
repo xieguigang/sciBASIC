@@ -66,7 +66,9 @@ Public Class CSSSelector : Inherits Parser
                 ' get elements by class name
                 Return New HtmlElement With {
                     .TagName = query,
-                    .HtmlElements = list
+                    .HtmlElements = DirectCast(document, HtmlElement) _
+                        .GetDirectChilds(list) _
+                        .ToArray
                 }
             Else
                 Return GetElementByIndex(list, CInt(Val(n)))
@@ -78,7 +80,9 @@ Public Class CSSSelector : Inherits Parser
                 ' get elements by tag name
                 Return New HtmlElement With {
                     .TagName = query,
-                    .HtmlElements = list
+                    .HtmlElements = DirectCast(document, HtmlElement) _
+                        .GetDirectChilds(list) _
+                        .ToArray
                 }
             Else
                 Return GetElementByIndex(list, CInt(Val(n)))

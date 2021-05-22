@@ -59,6 +59,8 @@ Public MustInherit Class Parser
     End Sub
 
     Public Function Parse(document As InnerPlantText, isArray As Boolean, env As Engine) As InnerPlantText
+        ' only the last parser works in array mode
+        ' if the isArray parameter is set to TRUE
         Dim arrayMode As Boolean = isArray AndAlso pipeNext Is Nothing
         Dim value As InnerPlantText = ParseImpl(document, arrayMode, env)
 
