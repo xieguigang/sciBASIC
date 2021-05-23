@@ -86,6 +86,15 @@ Namespace Language
                             End If
 
                             i.MoveNext()
+                        ElseIf name = "=" Then
+                            ' 语法错误或者文本没有转义
+                            ' kegg数据库中的化学反应过程符号 <=>
+                            tagStack.Peek.Add(New InnerPlantText("<="))
+
+                            If i.Current.name = HtmlTokens.closeTag Then
+                                i.MoveNext()
+                                tagStack.Peek.Add(New InnerPlantText(">"))
+                            End If
                         Else
                             Dim newTag As New HtmlElement With {.TagName = name}
                             Dim tagClosed As Boolean = False
