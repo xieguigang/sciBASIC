@@ -51,6 +51,10 @@ Namespace ApplicationServices
     ''' </summary>
     Public Class TempFileSystem
 
+        Public Shared Function TempDir() As String
+            Return App.AppSystemTemp
+        End Function
+
         ''' <summary>
         ''' Get temp file name in app system temp directory.
         ''' </summary>
