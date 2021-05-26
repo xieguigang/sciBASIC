@@ -100,12 +100,16 @@ Namespace TextParser
             End If
 
             Return Function(i)
-                       Dim text As String = i.GetPlantText
+                       If i Is Nothing Then
+                           Return New InnerPlantText With {.InnerText = ""}
+                       Else
+                           Dim text As String = i.GetPlantText
 
-                       text = Strings.Trim(text)
-                       text = text.Trim(chars)
+                           text = Strings.Trim(text)
+                           text = text.Trim(chars)
 
-                       Return New InnerPlantText With {.InnerText = text}
+                           Return New InnerPlantText With {.InnerText = text}
+                       End If
                    End Function
         End Function
 

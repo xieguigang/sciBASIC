@@ -52,8 +52,8 @@ Namespace Text
         ''' <summary>
         ''' 对于空文本，这个函数返回一个空集合
         ''' </summary>
-        ''' <param name="text$"></param>
-        ''' <param name="lineBreak%"></param>
+        ''' <param name="text">原始文本</param>
+        ''' <param name="lineBreak">每一行文本的最大字符数量</param>
         ''' <returns></returns>
         <Extension>
         Public Iterator Function Chunks(text$, lineBreak%) As IEnumerable(Of String)

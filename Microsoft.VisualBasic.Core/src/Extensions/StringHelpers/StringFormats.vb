@@ -54,6 +54,8 @@ Public Module StringFormats
     Public Function Lanudry(bytes As Double) As String
         If bytes <= 0 Then
             Return "0 B"
+        ElseIf bytes.IsNaNImaginary Then
+            Return "n/a KB"
         End If
 
         Dim symbols = {"B", "KB", "MB", "GB", "TB"}
