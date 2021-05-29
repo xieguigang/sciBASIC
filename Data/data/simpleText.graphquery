@@ -1,0 +1,5 @@
+# the demo code that show below will retrive
+# the text content in the html document as the
+# text query result
+
+content text()
