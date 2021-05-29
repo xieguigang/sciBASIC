@@ -1,0 +1,6 @@
+anchors css("a") [{
+	
+	href attr("href")
+	text text() 
+	
+}]
