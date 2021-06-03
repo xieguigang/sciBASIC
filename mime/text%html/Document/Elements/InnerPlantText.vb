@@ -67,6 +67,12 @@ Namespace Document
             End Get
         End Property
 
+        ''' <summary>
+        ''' 纯文本节点没有标签名称
+        ''' </summary>
+        ''' <returns></returns>
+        Private ReadOnly Property nodeName As String = Nothing Implements IXmlNode.nodeName
+
         Sub New()
         End Sub
 

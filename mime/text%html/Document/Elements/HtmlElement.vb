@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::e761b7a619f180e0616df2b9e5a30ce6, mime\text%html\Document\Elements\HtmlElement.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class HtmlElement
-    ' 
-    '         Properties: [class], Attributes, HtmlElements, id, IsEmpty
-    '                     IsPlantText, name, OnlyInnerText, TagName
-    ' 
-    '         Function: GetAllChilds, GetAllChildsByNodeName, getElementById, getElementsByClassName, getElementsByName
-    '                   getElementsByTagName, GetHtmlText, GetPlantText, Query, ToString
-    ' 
-    '         Sub: (+4 Overloads) Add
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class HtmlElement
+' 
+'         Properties: [class], Attributes, HtmlElements, id, IsEmpty
+'                     IsPlantText, name, OnlyInnerText, TagName
+' 
+'         Function: GetAllChilds, GetAllChildsByNodeName, getElementById, getElementsByClassName, getElementsByName
+'                   getElementsByTagName, GetHtmlText, GetPlantText, Query, ToString
+' 
+'         Sub: (+4 Overloads) Add
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -69,7 +69,7 @@ Namespace Document
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Property TagName As String
+        Public Property TagName As String Implements IXmlDocumentTree.nodeName
 
         ''' <summary>
         ''' 标签的属性列表
@@ -249,8 +249,8 @@ Namespace Document
         ''' </summary>
         ''' <param name="query"></param>
         ''' <returns></returns>
-        Public Iterator Function GetDirectChilds(query As IEnumerable(Of HtmlElement)) As IEnumerable(Of HtmlElement)
-            For Each item As HtmlElement In query
+        Public Iterator Function GetDirectChilds(query As IEnumerable(Of InnerPlantText)) As IEnumerable(Of InnerPlantText)
+            For Each item As InnerPlantText In query
                 For Each child As InnerPlantText In elementNodes
                     If child Is item Then
                         Yield item
@@ -369,8 +369,9 @@ Namespace Document
         Public Function getElementsByTagName(tagname As String) As HtmlElement()
             Static api As MethodInfo = GetType(HtmlElement).GetMethod(NameOf(getElementsByTagName))
 
+            ' 20210603 html文档之中的标签名称应该是大小写无关的么？
             Return tagIndex _
-                .TryGetValue(tagname) _
+                .TryGetValue(Strings.LCase(tagname)) _
                 .JoinIterates(Query(api, tagname)) _
                 .Distinct _
                 .ToArray

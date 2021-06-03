@@ -118,7 +118,25 @@ Public Class RootPathSelector : Inherits XPath
     End Function
 
     Public Overrides Function Query(document As IXmlDocumentTree) As IXmlNode()
-        Throw New NotImplementedException()
+        If selectNext Is Nothing Then
+            Return document _
+                .GetAllChilds _
+                .Where(Function(node)
+                           Return node.nodeName.TextEquals(expression)
+                       End Function) _
+                .ToArray
+        Else
+            Return document _
+                .GetAllChilds _
+                .Where(Function(node)
+                           Return node.nodeName.TextEquals(expression)
+                       End Function) _
+                .Select(Function(root)
+                            Return selectNext.Query(root)
+                        End Function) _
+                .IteratesALL _
+                .ToArray
+        End If
     End Function
 End Class
 

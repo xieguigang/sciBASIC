@@ -66,6 +66,10 @@ Module graphQueryTest
 
     Sub simpleParserTest()
 
+        Call QueryParser.GetQuery("value css('Value') | css('String, Number, Boolean') [
+            text()
+        ]")
+
         Call QueryParser.GetQuery("reaction css('a', '*') [text()]")
 
     End Sub

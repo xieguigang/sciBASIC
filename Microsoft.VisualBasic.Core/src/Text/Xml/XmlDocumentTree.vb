@@ -48,7 +48,17 @@ Namespace Text.Xml
 
     Public Interface IXmlDocumentTree : Inherits IXmlNode
 
+        ''' <summary>
+        ''' 获取当前节点内的所有直接的子节点
+        ''' </summary>
+        ''' <returns></returns>
         Function GetAllChilds() As IXmlNode()
+
+        ''' <summary>
+        ''' 得到当前节点内所有的目标名称的子节点
+        ''' </summary>
+        ''' <param name="nodename"></param>
+        ''' <returns></returns>
         Function GetAllChildsByNodeName(nodename As String) As IXmlDocumentTree()
 
     End Interface
@@ -57,6 +67,8 @@ Namespace Text.Xml
     ''' includes tree node and text node
     ''' </summary>
     Public Interface IXmlNode
+
+        ReadOnly Property nodeName As String
 
         Function GetInnerText() As String
 

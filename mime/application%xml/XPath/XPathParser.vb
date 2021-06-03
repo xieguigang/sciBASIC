@@ -68,8 +68,8 @@ Public Class XPathParser
         Dim i As Integer = InStrAny(expression, "/", "@")
 
         If i > 0 Then
-            path.expression = expression.Substring(0, i)
-            path.selectNext = Parse(expression)
+            path.expression = expression.Substring(0, i - 1)
+            path.selectNext = Parse(expression.Substring(i))
         Else
             path.expression = expression
         End If
