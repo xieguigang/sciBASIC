@@ -79,8 +79,11 @@ Namespace Serialization.Bencoding
             Dim index = 0
 
             Try
-                If Equals(bencodedString, Nothing) Then Return Nothing
-                Dim rootElements As List(Of BElement) = New List(Of BElement)()
+                If Equals(bencodedString, Nothing) Then
+                    Return Nothing
+                End If
+
+                Dim rootElements As New List(Of BElement)()
 
                 While bencodedString.Length > index
                     rootElements.Add(ReadElement(bencodedString, index))
@@ -110,8 +113,9 @@ Namespace Serialization.Bencoding
         End Function
 
         Private Function ReadDictionary(ByRef bencodedString As String, ByRef index As Integer) As BDictionary
+            Dim dict As New BDictionary()
+
             index += 1
-            Dim dict As BDictionary = New BDictionary()
 
             Try
 
@@ -129,12 +133,14 @@ Namespace Serialization.Bencoding
             End Try
 
             index += 1
+
             Return dict
         End Function
 
         Private Function ReadList(ByRef bencodedString As String, ByRef index As Integer) As BList
+            Dim lst As New BList()
+
             index += 1
-            Dim lst As BList = New BList()
 
             Try
 
@@ -149,13 +155,20 @@ Namespace Serialization.Bencoding
             End Try
 
             index += 1
+
             Return lst
         End Function
 
         Private Function ReadInteger(ByRef bencodedString As String, ByRef index As Integer) As BInteger
+            Dim [end] As Integer
+
             index += 1
-            Dim [end] = bencodedString.IndexOf("e"c, index)
-            If [end] = -1 Then Throw [Error]()
+            [end] = bencodedString.IndexOf("e"c, index)
+
+            If [end] = -1 Then
+                Throw [Error]()
+            End If
+
             Dim [integer] As Long
 
             Try
