@@ -1386,8 +1386,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit_UnixDocker|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\..\..\..\mzkit\dist\bin\</OutputPath>
-    <DefineConstants>FRAMEWORD_CORE=1,UNIX=1,NET_48=TRUE</DefineConstants>
+    <OutputPath>..\..\..\..\..\..\mzkit\dist\bin\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1,UNIX=1,NET_48=1</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -1878,11 +1878,11 @@
     <Compile Include="Scripting\TokenIcer\CodeSpan.vb" />
     <Compile Include="Scripting\TokenIcer\Token.vb" />
     <Compile Include="Serialization\BEncoding\BencodeDecoder.vb" />
-    <Compile Include="Serialization\BEncoding\BElement.vb" />
-    <Compile Include="Serialization\BEncoding\BInteger.vb" />
-    <Compile Include="Serialization\BEncoding\BString.vb" />
-    <Compile Include="Serialization\BEncoding\BList.vb" />
-    <Compile Include="Serialization\BEncoding\BDictionary.vb" />
+    <Compile Include="Serialization\BEncoding\BElements\BElement.vb" />
+    <Compile Include="Serialization\BEncoding\BElements\BInteger.vb" />
+    <Compile Include="Serialization\BEncoding\BElements\BString.vb" />
+    <Compile Include="Serialization\BEncoding\BElements\BList.vb" />
+    <Compile Include="Serialization\BEncoding\BElements\BDictionary.vb" />
     <Compile Include="Serialization\BEncoding\BencodingException.vb" />
     <Compile Include="Serialization\BEncoding\BencodingExtensions.vb" />
     <Compile Include="Serialization\BinaryDumping\ObjectVisitor.vb" />
