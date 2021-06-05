@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>Microsoft.VisualBasic.MIME.application.xml</RootNamespace>
+    <RootNamespace>Microsoft.VisualBasic.MIME.text.markdown</RootNamespace>
     <TargetFramework>net5.0</TargetFramework>
-    <AssemblyName>Microsoft.VisualBasic.MIME.application.xml</AssemblyName>
+    <AssemblyName>Microsoft.VisualBasic.MIME.text.markdown</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release</Configurations>
   </PropertyGroup>
@@ -69,6 +69,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\text%html\html_netcore5.vbproj" />
   </ItemGroup>
 
 </Project>
