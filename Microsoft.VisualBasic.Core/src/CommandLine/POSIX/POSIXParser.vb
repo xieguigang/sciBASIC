@@ -50,7 +50,7 @@ Namespace CommandLine.POSIX
             Dim continuteToken As String = Nothing
 
             For Each item As String In tokens
-                If CliArgumentParsers.IsPossibleLogicFlag(item) Then
+                If item = "?" OrElse item = "??" OrElse CliArgumentParsers.IsPossibleLogicFlag(item) Then
                     ' 在这里使用nothing来和""产生的空字符串进行区分
                     If Not continuteToken Is Nothing Then
                         Yield continuteToken

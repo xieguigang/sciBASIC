@@ -150,6 +150,7 @@ Namespace CommandLine.Parsers
                                  Optional rawInput$ = Nothing) As CommandLine
 
 #If UNIX Then
+            ' 20210606 这个主要是针对docker环境的命令行传递的问题
             Dim tokens$() = POSIX.JoinTokens(args.SafeQuery).ToArray
 #Else
             Dim tokens$() = args.SafeQuery.ToArray
