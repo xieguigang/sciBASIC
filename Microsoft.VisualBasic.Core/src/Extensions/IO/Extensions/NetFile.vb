@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::d60307d810dd9446858860f1dd36e636, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\NetFile.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module NetFile
-    ' 
-    '         Function: GetMapPath, MapNetFile, NetFileExists, OpenNetStream
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module NetFile
+' 
+'         Function: GetMapPath, MapNetFile, NetFileExists, OpenNetStream
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -103,23 +103,12 @@ Namespace FileIO
         <ExportAPI("Map.Path")>
         <Extension>
         Public Function GetMapPath(url As String) As String
-            If InStr(url, "http://", CompareMethod.Text) +
-                InStr(url, "https://", CompareMethod.Text) > 0 Then
-
-                url = Strings.Split(url, "//").Last
-
-                Dim tokens$() = url.Split("/"c)
-                Dim folders As String = tokens.Take(tokens.Length - 1).JoinBy("/")
-
-                url = tokens.Last.NormalizePathString
-                url = App.AppSystemTemp & "/" & folders & "/" & url
-
-                Call folders.MakeDir
-
-                Return url
+            If InStr(url, "http://", CompareMethod.Text) + InStr(url, "https://", CompareMethod.Text) > 0 Then
+                Return mapToLocalUrl(url)
+            ElseIf url.StartsWith("github://") Then
+                Return mapToLocalUrl(url.Replace("github://", "https://raw.githubusercontent.com/"))
             ElseIf InStr(url, "file://", CompareMethod.Text) = 1 Then
-                url = Mid(url, 8)
-                Return url
+                Return Mid(url, 8)
             Else
                 If url.FileExists Then
                     Return url
@@ -127,6 +116,20 @@ Namespace FileIO
                     Throw New Exception(url & " is a unrecognized url path!")
                 End If
             End If
+        End Function
+
+        Private Function mapToLocalUrl(url As String) As String
+            url = Strings.Split(url, "//").Last
+
+            Dim tokens$() = url.Split("/"c)
+            Dim folders As String = tokens.Take(tokens.Length - 1).JoinBy("/")
+
+            url = tokens.Last.NormalizePathString
+            url = App.AppSystemTemp & "/" & folders & "/" & url
+
+            Call folders.MakeDir
+
+            Return url
         End Function
     End Module
 End Namespace
