@@ -106,7 +106,7 @@ Namespace FileIO
             If InStr(url, "http://", CompareMethod.Text) + InStr(url, "https://", CompareMethod.Text) > 0 Then
                 Return mapToLocalUrl(url)
             ElseIf url.StartsWith("github://") Then
-                Return mapToLocalUrl(url.Replace("github://", "https://raw.githubusercontent.com/"))
+                Return mapToLocalUrl(MapGithubRawUrl(url))
             ElseIf InStr(url, "file://", CompareMethod.Text) = 1 Then
                 Return Mid(url, 8)
             Else
@@ -115,6 +115,14 @@ Namespace FileIO
                 Else
                     Throw New Exception(url & " is a unrecognized url path!")
                 End If
+            End If
+        End Function
+
+        Friend Function MapGithubRawUrl(url As String) As String
+            If url.StartsWith("github://") Then
+                Return url.Replace("github://", "https://raw.githubusercontent.com/")
+            Else
+                Return url
             End If
         End Function
 
