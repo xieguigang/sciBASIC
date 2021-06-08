@@ -204,6 +204,7 @@ Public Module Scatter
                     Optional XtickFormat$ = "F2",
                     Optional YtickFormat$ = "F2",
                     Optional axisStroke$ = Stroke.AxisStroke,
+                    Optional axisLabelCSS$ = CSSFont.Win10Normal,
                     Optional scatterReorder As Boolean = False)
 
         Dim theme As New Theme With {
@@ -213,7 +214,8 @@ Public Module Scatter
             .gridFill = gridFill,
             .background = bg,
             .axisStroke = axisStroke,
-            .drawAxis = drawAxis
+            .drawAxis = drawAxis,
+            .axisLabelCSS = axisLabelCSS
         }
         Dim plot As Plot
 
@@ -304,6 +306,7 @@ Public Module Scatter
                          Optional XtickFormat$ = "F2",
                          Optional YtickFormat$ = "F2",
                          Optional axisStroke$ = Stroke.AxisStroke,
+                         Optional axisLabelCSS$ = CSSFont.Win10Normal,
                          Optional scatterReorder As Boolean = False) As GraphicsData
 
         Dim plotInternal =
@@ -350,7 +353,8 @@ Public Module Scatter
                     XtickFormat:=XtickFormat,
                     YtickFormat:=YtickFormat,
                     axisStroke:=axisStroke,
-                    scatterReorder:=scatterReorder
+                    scatterReorder:=scatterReorder,
+                    axisLabelCSS:=axisLabelCSS
                 )
             End Sub
 
