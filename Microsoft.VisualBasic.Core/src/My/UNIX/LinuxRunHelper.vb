@@ -127,6 +127,9 @@ Namespace My.UNIX
         ''' <param name="args"></param>
         ''' <param name="verbose"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' <see cref="CommandLine.Call"/>
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Shell(command As String, args As String, Optional verbose As Boolean = False, Optional stdin$ = Nothing) As String
             Dim cmdl As String
