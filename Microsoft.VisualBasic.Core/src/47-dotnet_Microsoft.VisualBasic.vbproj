@@ -1664,6 +1664,7 @@
     <Compile Include="ComponentModel\DataStructures\Deque\IDeque.vb" />
     <Compile Include="ComponentModel\DataStructures\Deque\ReversedEnumerator.vb" />
     <Compile Include="ComponentModel\DataStructures\Deque\ReverseQueue.vb" />
+    <Compile Include="ComponentModel\File\ITextWriter.vb" />
     <Compile Include="ComponentModel\File\IOWorkModes.vb" />
     <Compile Include="ComponentModel\File\XmlAssembly\DigitalSignature.vb" />
     <Compile Include="ComponentModel\File\XmlAssembly\XmlStyleProcessor.vb" />
