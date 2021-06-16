@@ -44,6 +44,7 @@
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Math.Framework
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 

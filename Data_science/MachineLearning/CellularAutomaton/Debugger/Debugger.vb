@@ -44,6 +44,7 @@
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 
 Public Class Debugger(Of T As Individual) : Implements IDisposable
