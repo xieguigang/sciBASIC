@@ -74,6 +74,7 @@ Namespace Net.Protocols.ContentTypes
         Public Const ZIP As String = "application/zip"
         Public Const Png As String = "image/png"
         Public Const Xml As String = "text/xml"
+        Public Const Html As String = "text/html"
 
         ''' <summary>
         ''' ``application/octet-stream``
