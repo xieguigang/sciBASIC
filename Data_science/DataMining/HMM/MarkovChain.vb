@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6e37ea842771209e21d4ce1f7cd6bc3, Data_science\DataMining\HMM\MarkovChain.vb"
+﻿#Region "Microsoft.VisualBasic::cc6b7a0e153c50499f77769576782af0, Data_science\DataMining\HMM\MarkovChain.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,6 @@
     '     Constructor: (+1 Overloads) Sub New
     '     Function: GetTransMatrix, SequenceProb
     ' 
-    ' 
     ' /********************************************************************************/
 
 #End Region
@@ -68,5 +67,3 @@ Public Class MarkovChain
         Return prob.SequenceProb(sequence)
     End Function
 End Class
-
-

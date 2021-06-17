@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b8cd74561289cf38ee428aefa6e34b0, Data\word2vec\utils\HuffmanNode.vb"
+﻿#Region "Microsoft.VisualBasic::69f690dca4b1b48dc667099859cc3cac, Data\word2vec\utils\HuffmanNode.vb"
 
     ' Author:
     ' 
@@ -58,4 +58,3 @@ Namespace utils
         Function merge(sibling As HuffmanNode) As HuffmanNode
     End Interface
 End Namespace
-

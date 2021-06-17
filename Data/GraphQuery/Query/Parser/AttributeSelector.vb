@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aceef90c7762210d87c1531fa3a5830f, Data\GraphQuery\Query\Parser\AttributeSelector.vb"
+﻿#Region "Microsoft.VisualBasic::c31e500ea7db8cdf9e9fe85eff0ceea9, Data\GraphQuery\Query\Parser\AttributeSelector.vb"
 
     ' Author:
     ' 
@@ -68,4 +68,3 @@ Public Class AttributeSelector : Inherits Parser
         End If
     End Function
 End Class
-

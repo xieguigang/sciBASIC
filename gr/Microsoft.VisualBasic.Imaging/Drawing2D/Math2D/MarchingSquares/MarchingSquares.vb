@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e8c16e0e38334ff60d679fd42046385c, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\MarchingSquares.vb"
+﻿#Region "Microsoft.VisualBasic::c7a127cb2d724c1c97b3621714f36b1f, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\MarchingSquares.vb"
 
     ' Author:
     ' 
@@ -227,4 +227,3 @@ Namespace Drawing2D.Math2D.MarchingSquares
         End Function
     End Class
 End Namespace
-

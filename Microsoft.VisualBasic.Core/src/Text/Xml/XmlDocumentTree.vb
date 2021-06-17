@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5012630bde3f5b220cbf4fe5af78d49d, Microsoft.VisualBasic.Core\src\Text\Xml\XmlDocumentTree.vb"
+﻿#Region "Microsoft.VisualBasic::b68d6bf18c430b9fd63d2d08e0e08576, Microsoft.VisualBasic.Core\src\Text\Xml\XmlDocumentTree.vb"
 
     ' Author:
     ' 
@@ -36,6 +36,8 @@
     '         Function: GetAllChilds, GetAllChildsByNodeName
     ' 
     '     Interface IXmlNode
+    ' 
+    '         Properties: nodeName
     ' 
     '         Function: GetInnerText
     ' 

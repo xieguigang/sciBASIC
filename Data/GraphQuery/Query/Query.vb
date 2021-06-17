@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3e732bfb65b63a05b72bcf4e2d75d6a, Data\GraphQuery\Query\Query.vb"
+﻿#Region "Microsoft.VisualBasic::3a829ba96a80c96d74f0eb7daf8856f9, Data\GraphQuery\Query\Query.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,6 @@
     '     Function: ToString
     ' 
     '     Sub: Add
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -99,5 +98,3 @@ Public Class Query
     End Function
 
 End Class
-
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a03ed1f2498dcdf0be5178912b024c4, Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BInteger.vb"
+﻿#Region "Microsoft.VisualBasic::0a03ed1f2498dcdf0be5178912b024c4, Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BElements\BInteger.vb"
 
     ' Author:
     ' 

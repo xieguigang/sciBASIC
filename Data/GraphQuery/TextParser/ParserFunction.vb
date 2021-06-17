@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::46e1ddfbe8cbfb7578edef053788074d, Data\GraphQuery\TextParser\ParserFunction.vb"
+﻿#Region "Microsoft.VisualBasic::3e0065aaf90998c0e658e3bb5045e19a, Data\GraphQuery\TextParser\ParserFunction.vb"
 
     ' Author:
     ' 
@@ -54,7 +54,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices

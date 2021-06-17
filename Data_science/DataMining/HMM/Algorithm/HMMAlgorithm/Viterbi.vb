@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad198cb6858754a044809778d5e2bf21, Data_science\DataMining\HMM\Algorithm\HMMAlgorithm\Viterbi.vb"
+﻿#Region "Microsoft.VisualBasic::6ef1a2f35c001382b3869809465abd8c, Data_science\DataMining\HMM\Algorithm\HMMAlgorithm\Viterbi.vb"
 
     ' Author:
     ' 
@@ -71,4 +71,3 @@ Namespace Algorithm.HMMAlgorithm
         End Function
     End Class
 End Namespace
-

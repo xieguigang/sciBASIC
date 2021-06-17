@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d258bd92ccf60bfad998c9a20b62224a, Data_science\DataMining\HMM\Models\Alpha.vb"
+﻿#Region "Microsoft.VisualBasic::4691e1bc7df46f9cdd85facdf8f52039, Data_science\DataMining\HMM\Models\Alpha.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace Models
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::934beeaf13976951e403d3ac7dbab02a, mime\application%xml\XPath\XPathQuery.vb"
+﻿#Region "Microsoft.VisualBasic::6ec17e2391f6dc39637597adf6f958ee, mime\application%xml\XPath\XPathQuery.vb"
 
     ' Author:
     ' 
@@ -58,4 +58,3 @@ Public Class XPathQuery
         Return xpath.Query(document)
     End Function
 End Class
-

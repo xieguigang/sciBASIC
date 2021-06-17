@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::415596730b8eb9bf56e86031ddea08ea, Data\word2vec\utils\Tokenizer.vb"
+﻿#Region "Microsoft.VisualBasic::4e98854761425691fb7eaca994a321da, Data\word2vec\utils\Tokenizer.vb"
 
     ' Author:
     ' 
@@ -122,4 +122,3 @@ Namespace utils
         End Function
     End Class
 End Namespace
-

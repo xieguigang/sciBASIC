@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b909b540252635d1a7b179838160e385, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\TempFileSystem.vb"
+﻿#Region "Microsoft.VisualBasic::8a8ba0ed0df30266239c43b858a92496, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\TempFileSystem.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class TempFileSystem
     ' 
-    '         Function: __sysTEMP, CreateTempFilePath, GenerateTemp, GetAppSysTempFile
+    '         Function: __sysTEMP, CreateTempFilePath, GenerateTemp, GetAppSysTempFile, TempDir
     ' 
     ' 
     ' /********************************************************************************/

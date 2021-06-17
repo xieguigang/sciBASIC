@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::136c50f26fd41863c211e1ee80876b00, Data\word2vec\HuffmanNeuron.vb"
+﻿#Region "Microsoft.VisualBasic::b95d4ee07a795dd03f098b859afdfda7, Data\word2vec\HuffmanNeuron.vb"
 
     ' Author:
     ' 
@@ -101,4 +101,3 @@ Namespace NlpVec
         End Sub
     End Class
 End Namespace
-

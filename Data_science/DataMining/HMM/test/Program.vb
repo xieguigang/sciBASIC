@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af80d1dc19840f5b5fbb5eb03a6b09b0, Data_science\DataMining\HMM\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::efa83513f1ec16969f85eca7f1b7e70d, Data_science\DataMining\HMM\test\Program.vb"
 
     ' Author:
     ' 
@@ -108,4 +108,3 @@ Module Program
     End Sub
 
 End Module
-

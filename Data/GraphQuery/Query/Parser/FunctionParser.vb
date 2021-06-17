@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b648d657a67157bca48675e5a9163ea, Data\GraphQuery\Query\Parser\FunctionParser.vb"
+﻿#Region "Microsoft.VisualBasic::e0ad02daeca1a7f415446804223c54b1, Data\GraphQuery\Query\Parser\FunctionParser.vb"
 
     ' Author:
     ' 
@@ -52,4 +52,3 @@ Public Class FunctionParser : Inherits Parser
         Return env.Execute(document, func, parameters, isArray)
     End Function
 End Class
-

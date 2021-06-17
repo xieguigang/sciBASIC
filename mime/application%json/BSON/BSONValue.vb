@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7345176afc6adac13485e12f530305d1, mime\application%json\BSON\BSONValue.vb"
+﻿#Region "Microsoft.VisualBasic::97d8b66bbc12725c95aa03dc2175d6d8, mime\application%json\BSON\BSONValue.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     '                     int64Value, isNone, stringValue, valueType
     ' 
     '         Constructor: (+9 Overloads) Sub New
-    '         Function: FromValue, ToString
+    '         Function: FromValue, GetObjectValue, ToString
     '         Operators: <>, =
     ' 
     ' 

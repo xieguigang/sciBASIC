@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4cec3ea45891e473e235bf2c0f832fa1, Data\word2vec\utils\HuffmanTree.vb"
+﻿#Region "Microsoft.VisualBasic::24299c3c5b866b1c6b6acc4654f25bac, Data\word2vec\utils\HuffmanTree.vb"
 
     ' Author:
     ' 
@@ -78,4 +78,3 @@ Namespace utils
         End Function
     End Class
 End Namespace
-

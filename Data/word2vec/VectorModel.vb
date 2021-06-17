@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb3f1f3f58e3ef0f67e1555b8a563043, Data\word2vec\VectorModel.vb"
+﻿#Region "Microsoft.VisualBasic::d446bade7e0147373c6dba7a147a0c45, Data\word2vec\VectorModel.vb"
 
     ' Author:
     ' 
@@ -319,4 +319,3 @@ Namespace NlpVec
 
     End Class
 End Namespace
-

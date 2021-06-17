@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d3fcdd51f24d57d51e5eec57425d798, mime\text%html\Parser\TokenIcer.vb"
+﻿#Region "Microsoft.VisualBasic::a8baf821610ad8baf3062dfaaf1a5818, mime\text%html\Parser\TokenIcer.vb"
 
     ' Author:
     ' 
@@ -142,5 +142,3 @@ Namespace Language
 
     End Class
 End Namespace
-
-

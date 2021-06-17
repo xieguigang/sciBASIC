@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac03b347c109df3f748a9cdd77f8bede, Data\word2vec\WordNeuron.vb"
+﻿#Region "Microsoft.VisualBasic::9b9464a71dbcf7c8cce7014079a52442, Data\word2vec\WordNeuron.vb"
 
     ' Author:
     ' 
@@ -80,4 +80,3 @@ Namespace NlpVec
         End Sub
     End Class
 End Namespace
-

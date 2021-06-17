@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea5384aa0f61077d650fedac55a501b2, Data\Trinity\Test\graphQueryTest.vb"
+﻿#Region "Microsoft.VisualBasic::984725eeaf753ec0c852975f22b168d1, Data\Trinity\Test\graphQueryTest.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,8 @@
 
     ' Module graphQueryTest
     ' 
-    '     Sub: BookTest, complextest, Main, simpleArrayTest, SimpleTest
+    '     Sub: BookTest, complextest, Main, simpleArrayTest, simpleParserTest
+    '          SimpleTest
     ' 
     ' Class QueryData
     ' 

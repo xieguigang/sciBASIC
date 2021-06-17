@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03307742468f33d50caa338f805983ca, Data\GraphQuery\Query\Parser\XPathSelector.vb"
+﻿#Region "Microsoft.VisualBasic::5158d1f9acebe55c8c4a98f0f904b7bc, Data\GraphQuery\Query\Parser\XPathSelector.vb"
 
     ' Author:
     ' 
@@ -71,4 +71,3 @@ Public Class XPathSelector : Inherits Parser
         Return query
     End Function
 End Class
-

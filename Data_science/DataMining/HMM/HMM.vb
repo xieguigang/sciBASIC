@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6988406b5aac38bcbbdecd5f26e4c95, Data_science\DataMining\HMM\HMM.vb"
+﻿#Region "Microsoft.VisualBasic::505fdd588a9be6ac395d01b33b24a4dd, Data_science\DataMining\HMM\HMM.vb"
 
     ' Author:
     ' 
@@ -103,4 +103,3 @@ Public Class HMM
         Return BaumWelch.baumWelchAlgorithm(obSequence)
     End Function
 End Class
-

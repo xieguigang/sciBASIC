@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d93db405c0cda3dbfff4488166b53fdd, Data\word2vec\trainer\WordScore.vb"
+﻿#Region "Microsoft.VisualBasic::9a01d09061deddf92ace0bcca94219bc, Data\word2vec\trainer\WordScore.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace NlpVec
 

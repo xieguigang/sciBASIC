@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b260dbf3893d21e8948055e54e23228c, Data_science\DataMining\HMM\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::3bc740b0e6c822ca72528443b9a0abf4, Data_science\DataMining\HMM\Utils.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,6 @@
     ' 
     '     Function: findSequence, gamma, xi
     ' 
-    ' 
     ' /********************************************************************************/
 
 #End Region
@@ -65,5 +64,3 @@ Module Utils
         Return (alpha * trans * emiss * beta) / forward
     End Function
 End Module
-
-

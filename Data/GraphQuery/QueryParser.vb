@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c274b32e8c9d5b0c010188e5144de531, Data\GraphQuery\QueryParser.vb"
+﻿#Region "Microsoft.VisualBasic::50b82a0ef9c6c402646f2ca0d220709f, Data\GraphQuery\QueryParser.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,6 @@
     ' Class QueryParser
     ' 
     '     Function: GetParser, GetQuery, GetQueryTokens
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -174,5 +173,3 @@ Public Class QueryParser
         End Select
     End Function
 End Class
-
-

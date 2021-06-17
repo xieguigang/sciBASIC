@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f570b4badfa1b1ac7219e2d07a1d51b0, mime\application%xml\XPath\XPath.vb"
+﻿#Region "Microsoft.VisualBasic::ccc7b98d4153d413b2fef299f5e98d9c, mime\application%xml\XPath\XPath.vb"
 
     ' Author:
     ' 
@@ -64,7 +64,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml

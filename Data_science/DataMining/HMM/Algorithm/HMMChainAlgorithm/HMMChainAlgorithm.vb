@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3858ac2f733e0afc59eb6564a115ba5, Data_science\DataMining\HMM\Algorithm\HMMChainAlgorithm\HMMChainAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::68400bbec7653f2fa118550a3a3e68e9, Data_science\DataMining\HMM\Algorithm\HMMChainAlgorithm\HMMChainAlgorithm.vb"
 
     ' Author:
     ' 
@@ -53,4 +53,3 @@ Namespace Algorithm.HMMChainAlgorithm
         End Sub
     End Class
 End Namespace
-

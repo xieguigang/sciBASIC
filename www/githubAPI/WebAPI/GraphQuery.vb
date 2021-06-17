@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2b328ae994aaecbe6cd1d3676ac8152, www\githubAPI\WebAPI\GraphQuery.vb"
+﻿#Region "Microsoft.VisualBasic::7573b60df864014fcb6561f08a3d63b7, www\githubAPI\WebAPI\GraphQuery.vb"
 
     ' Author:
     ' 
@@ -47,4 +47,3 @@ Module GraphQuery
 
     "
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf533d12701547325e115dfcf822eb3e, Data\GraphQuery\Engine.vb"
+﻿#Region "Microsoft.VisualBasic::5bd8b50429c24ae5aeb0698a12e91501, Data\GraphQuery\Engine.vb"
 
     ' Author:
     ' 
@@ -173,4 +173,3 @@ Public Class Engine
         Return obj
     End Function
 End Class
-

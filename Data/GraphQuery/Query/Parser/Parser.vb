@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3242442f11b76074e59a0e267f28301a, Data\GraphQuery\Query\Parser\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::99b043fa67e536b5cd846bad4e84591b, Data\GraphQuery\Query\Parser\Parser.vb"
 
     ' Author:
     ' 
@@ -104,4 +104,3 @@ Public MustInherit Class Parser
     End Operator
 
 End Class
-

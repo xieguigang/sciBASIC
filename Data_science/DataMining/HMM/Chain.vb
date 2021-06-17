@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b5ba7ae4eab47711e13e0e4a5ec0dbe, Data_science\DataMining\HMM\Chain.vb"
+﻿#Region "Microsoft.VisualBasic::ff6e6ce0ff44ac99345881ec94961ae3, Data_science\DataMining\HMM\Chain.vb"
 
     ' Author:
     ' 
@@ -100,4 +100,3 @@ Public Class Chain
         Return obSequence.JoinBy("->")
     End Function
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::532a6c9fb2523d8c016a5fe27edfd2d4, Data\word2vec\Word2Vec.vb"
+﻿#Region "Microsoft.VisualBasic::82a814e180d7c64f98264509178edcb5, Data\word2vec\Word2Vec.vb"
 
     ' Author:
     ' 
@@ -449,4 +449,3 @@ Namespace NlpVec
         End Function
     End Class
 End Namespace
-
