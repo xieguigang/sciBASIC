@@ -124,7 +124,9 @@ B21,B22,B23,...
         ''' <summary>
         ''' First line in the table is the column name definition line.
         ''' </summary>
-        ''' <remarks></remarks>
+        ''' <remarks>
+        ''' 已经去掉了首行标题行了的
+        ''' </remarks>
         Protected Friend _innerTable As New List(Of RowObject)
 
         ''' <summary>
