@@ -20,6 +20,9 @@ Module demoCDFWrite
                 .size = a.Length
             }
 
+            Call cdf.GlobalAttributes(New attribute("time", Now.ToString, CDFDataTypes.CHAR)) _
+                    .GlobalAttributes(New attribute("num_of_variables", 4, CDFDataTypes.INT)) _
+                    .GlobalAttributes(New attribute("github", "https://github.com/xieguigang/sciBASIC", CDFDataTypes.CHAR))
 
             Call cdf.AddVariable("a", a, data_size, {New attribute("note", "this is an integer vector", CDFDataTypes.CHAR)})
             Call cdf.AddVariable("b", b, data_size)
