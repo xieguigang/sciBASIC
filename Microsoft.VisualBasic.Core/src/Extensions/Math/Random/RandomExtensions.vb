@@ -238,8 +238,13 @@ Namespace Math
         ''' </remarks>
         <ExportAPI("NextBoolean")>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function NextBoolean(r As Random) As Boolean
+        <Extension>
+        Public Function NextBoolean(r As Random) As Boolean
             Return r.[Next](2) > 0 ' 1 > 0 OR 0 > 0
+        End Function
+
+        Public Function NextBoolean() As Boolean
+            Return seeds.[Next](2) > 0 ' 1 > 0 OR 0 > 0
         End Function
 
         ''' <summary>

@@ -113,6 +113,10 @@ Namespace Text.Parser
             Return last
         End Function
 
+        ''' <summary>
+        ''' populate all chars in current object and then clear the buffer list
+        ''' </summary>
+        ''' <returns></returns>
         Public Function PopAllChars() As Char()
             Return buffer.PopAll
         End Function
