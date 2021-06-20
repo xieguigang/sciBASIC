@@ -72,6 +72,22 @@ Namespace Filters
                         Next
                     Next
 
+                    If lR > 255 Then
+                        lR = 255
+                    ElseIf lR < 0 Then
+                        lR = 0
+                    End If
+                    If G > 255 Then
+                        G = 255
+                    ElseIf G < 0 Then
+                        G = 0
+                    End If
+                    If B > 255 Then
+                        B = 255
+                    ElseIf B < 0 Then
+                        B = 0
+                    End If
+
                     color = Color.FromArgb(lR, G, B) '颜色结构储存该点RGB
                     lSmooth.SetPixel(i, j, color) '位图存储该点像素值
                 Next
