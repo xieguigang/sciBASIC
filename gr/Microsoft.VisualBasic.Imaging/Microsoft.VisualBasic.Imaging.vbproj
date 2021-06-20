@@ -866,8 +866,10 @@
     <Compile Include="Drivers\Drivers.vb" />
     <Compile Include="Drivers\ImageSynthesis.vb" />
     <Compile Include="Extensions.vb" />
+    <Compile Include="Filters\Matrix.vb" />
     <Compile Include="Filters\GaussBlur.vb" />
     <Compile Include="Filters\GaussianSmooth.vb" />
+    <Compile Include="Filters\Matrix2DFilters.vb" />
     <Compile Include="GifEncoder.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
