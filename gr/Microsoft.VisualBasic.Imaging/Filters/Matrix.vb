@@ -16,7 +16,7 @@ Namespace Filters
             raw = bitmap
         End Sub
 
-        Public Function GetBitmap(method As Matrix2DFilters) As Bitmap
+        Public Function GetSmoothBitmap(method As Matrix2DFilters) As Bitmap
             Dim sMat As Byte(,) = Image_2_Arry2D(raw)
 
             Select Case method
