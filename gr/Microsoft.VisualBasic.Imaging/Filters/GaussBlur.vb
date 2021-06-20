@@ -4,7 +4,10 @@ Imports System.Runtime.InteropServices.Marshal
 
 Namespace Filters
 
-    Public Class GaussBlur
+    Public NotInheritable Class GaussBlur
+
+        Private Sub New()
+        End Sub
 
         ''' <summary>
         ''' 对一幅图片进行快速模糊处理，函数由 [小鱼儿] 提供
