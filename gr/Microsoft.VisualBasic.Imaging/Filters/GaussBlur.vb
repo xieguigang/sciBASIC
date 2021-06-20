@@ -38,8 +38,9 @@ Namespace Filters
             Dim ends As Integer = oriWidth - 2
 
             For iCol = 1 To ends
+                ' 处理第一行第2个到倒数第2个像素
                 rgb2(iCol * 3) = (CInt(0) +
-                                        rgb((iCol - 1) * 3) +  ' 处理第一行第2个到倒数第2个像素
+                                        rgb((iCol - 1) * 3) +
                                         rgb(iCol * 3) +
                                         rgb((iCol + 1) * 3) +
                                         rgb(s + (iCol - 1) * 3) +
@@ -61,8 +62,9 @@ Namespace Filters
                                         rgb(s + (iCol + 1) * 3 + 2)) / 6
             Next
 
+            ' 处理第一行最后一个像素
             rgb2(w * 3) = (CInt(0) + rgb(w * 3 - 3) + rgb(w * 3) +
-                                        rgb(w * 3 - 3 + s) + rgb(w * 3 + s)) / 4  '处理第一行最后一个像素
+                                        rgb(w * 3 - 3 + s) + rgb(w * 3 + s)) / 4
             rgb2(w * 3 + 1) = (CInt(0) + rgb(w * 3 - 2) + rgb(w * 3 - 1) +
                                         rgb(w * 3 - 2 + s) + rgb(w * 3 + s - 1)) / 4
             rgb2(w * 3 + 2) = (CInt(0) + rgb(w * 3 - 1) + rgb(w * 3 + 2) +
@@ -70,8 +72,8 @@ Namespace Filters
             ends = h - 2
 
             For iRow = 1 To ends
-
-                rgb2(iRow * s) = (CInt(0) + rgb((iRow - 1) * s) + rgb((iRow - 1) * s + 3) + '处理每行第一个像素
+                ' 处理每行第一个像素
+                rgb2(iRow * s) = (CInt(0) + rgb((iRow - 1) * s) + rgb((iRow - 1) * s + 3) +
                                         rgb(iRow * s) + rgb(iRow * s + 3) +
                                         rgb((iRow + 1) * s) + rgb((iRow + 1) * s + 3)) / 6
                 rgb2(iRow * s + 1) = (CInt(0) + rgb((iRow - 1) * s + 1) + rgb((iRow - 1) * s + 3 + 1) +
@@ -82,8 +84,9 @@ Namespace Filters
                                         rgb((iRow + 1) * s + 2) + rgb((iRow + 1) * s + 3 + 2)) / 6
 
                 For iCol = 1 To img2.Width - 2
+                    ' 处理每行其他像素
                     rgb2(iRow * s + iCol * 3) = (CInt(0) +
-                                                        rgb((iRow - 1) * s + (iCol - 1) * 3) +  '处理每行其他像素
+                                                        rgb((iRow - 1) * s + (iCol - 1) * 3) +
                                                         rgb((iRow - 1) * s + iCol * 3) +
                                                         rgb((iRow - 1) * s + (iCol + 1) * 3) +
                                                         rgb(iRow * s + (iCol - 1) * 3) +
@@ -114,7 +117,8 @@ Namespace Filters
                                                         rgb((iRow + 1) * s + (iCol + 1) * 3 + 2)) / 9
                 Next
 
-                rgb2(iRow * s + w * 3) = (CInt(0) + rgb((iRow - 1) * s + w * 3) + rgb((iRow - 1) * s + w * 3 - 3) +   '处理每行最后一个像素
+                ' 处理每行最后一个像素
+                rgb2(iRow * s + w * 3) = (CInt(0) + rgb((iRow - 1) * s + w * 3) + rgb((iRow - 1) * s + w * 3 - 3) +
                             rgb(iRow * s + w * 3) + rgb(iRow * s + w * 3 - 3) +
                             rgb((iRow + 1) * s + w * 3) + rgb((iRow + 1) * s + w * 3 - 3)) / 6
                 rgb2(iRow * s + w * 3 + 1) = (CInt(0) + rgb((iRow - 1) * s + w * 3 + 1) + rgb((iRow - 1) * s + w * 3 - 3 + 1) +
@@ -126,7 +130,7 @@ Namespace Filters
 
             Next
 
-            '处理最后一行第一个像素
+            ' 处理最后一行第一个像素
             rgb2((h - 1) * s) = (CInt(0) + rgb((h - 2) * s) + rgb((h - 2) * s + 3) + rgb((h - 1) * s) + rgb((h - 1) * s)) / 4
             rgb2((h - 1) * s + 1) = (CInt(0) + rgb((h - 2) * s + 1) + rgb((h - 2) * s + 3 + 1) + rgb((h - 1) * s + 1) + rgb((h - 1) * s + 1)) / 4
             rgb2((h - 1) * s + 2) = (CInt(0) + rgb((h - 2) * s + 2) + rgb((h - 2) * s + 3 + 2) + rgb((h - 1) * s + 2) + rgb((h - 1) * s + 2)) / 4
@@ -134,8 +138,9 @@ Namespace Filters
             ends = oriWidth - 2
 
             For iCol = 1 To ends
+                ' 处理最后一行第2个到倒数第2个像素
                 rgb2((h - 1) * s + iCol * 3) = (CInt(0) +
-                                        rgb((h - 2) * s + (iCol - 1) * 3) +   '处理最后一行第2个到倒数第2个像素
+                                        rgb((h - 2) * s + (iCol - 1) * 3) +
                                         rgb((h - 2) * s + iCol * 3) +
                                         rgb((h - 2) * s + (iCol + 1) * 3) +
                                         rgb((h - 1) * s + (iCol - 1) * 3) +
@@ -157,7 +162,8 @@ Namespace Filters
                                         rgb((h - 1) * s + (iCol + 1) * 3 + 2)) / 6
             Next
 
-            rgb2((h - 1) * s + w * 3) = (CInt(0) + rgb((h - 1) * s + w * 3 - 3) + rgb((h - 1) * s + w * 3) +  '处理最后一行最后一个像素
+            ' 处理最后一行最后一个像素
+            rgb2((h - 1) * s + w * 3) = (CInt(0) + rgb((h - 1) * s + w * 3 - 3) + rgb((h - 1) * s + w * 3) +
                                 rgb((h - 2) * s + w * 3 - 3) + rgb((h - 2) * s + w * 3)) / 4
             rgb2((h - 1) * s + w * 3 + 1) = (CInt(0) + rgb((h - 1) * s + w * 3 - 3 + 1) + rgb((h - 1) * s + w * 3 + 1) +
                                 rgb((h - 2) * s + w * 3 - 3 + 1) + rgb((h - 2) * s + w * 3 + 1)) / 4
