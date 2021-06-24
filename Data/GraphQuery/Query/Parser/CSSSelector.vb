@@ -1,49 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::996193447a4bfb34039752d2adcb6440, Data\GraphQuery\Query\Parser\CSSSelector.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class CSSSelector
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: ParseImpl, selectByClass, selectByList, selectByTagName
-    ' 
-    ' Structure Selector
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    ' /********************************************************************************/
+' Class CSSSelector
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: ParseImpl, selectByClass, selectByList, selectByTagName
+' 
+' Structure Selector
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Html.Document
 
@@ -64,15 +65,21 @@ Public Class CSSSelector : Inherits Parser
             Return New InnerPlantText
         End If
 
+        Dim css As New Selector(query, n, isArray)
+
+        If css.isComposeCssQuery Then
+            Return css.RunComposeCssQuery(document, env)
+        End If
+
         If query.IndexOf(","c) > -1 Then
-            Return selectByList(document, New Selector(query, n, isArray))
+            Return selectByList(document, css)
         ElseIf query.First = "#"c Then
             ' get element by id
             Return DirectCast(document, HtmlElement).getElementById(query.Substring(1))
         ElseIf query.First = "."c Then
-            Return selectByClass(document, New Selector(query, n, isArray))
+            Return selectByClass(document, css)
         Else
-            Return selectByTagName(document, New Selector(query, n, isArray))
+            Return selectByTagName(document, css)
         End If
     End Function
 
@@ -139,9 +146,14 @@ Public Class CSSSelector : Inherits Parser
 
     Private Function selectByTagName(document As InnerPlantText, selector As Selector) As InnerPlantText
         Dim list As HtmlElement() = DirectCast(document, HtmlElement).getElementsByTagName(selector.query)
+        Dim query As InnerPlantText = getElementQueryOutput(document, list, selector)
 
-        If selector.isArray AndAlso parameters.Length = 1 Then
-            ' get elements by tag name
+        Return query
+    End Function
+
+    Friend Shared Function getElementQueryOutput(document As HtmlElement, list As HtmlElement(), selector As Selector) As InnerPlantText
+        If selector.isArray AndAlso selector.n.StringEmpty Then
+            ' get elements by tag name/class
             Return New HtmlElement With {
                 .TagName = selector.query,
                 .HtmlElements = DirectCast(document, HtmlElement) _
@@ -160,23 +172,9 @@ Public Class CSSSelector : Inherits Parser
 
     Private Function selectByClass(document As InnerPlantText, selector As Selector) As InnerPlantText
         Dim list As HtmlElement() = DirectCast(document, HtmlElement).getElementsByClassName(selector.query.Substring(1))
+        Dim query As InnerPlantText = getElementQueryOutput(document, list, selector)
 
-        If selector.isArray AndAlso parameters.Length = 1 Then
-            ' get elements by class name
-            Return New HtmlElement With {
-                .TagName = selector.query,
-                .HtmlElements = DirectCast(document, HtmlElement) _
-                    .GetDirectChilds(list) _
-                    .ToArray
-            }
-        ElseIf selector.isArray AndAlso selector.n = "*" Then
-            Return New HtmlElement With {
-                .TagName = selector.query,
-                .HtmlElements = list
-            }
-        Else
-            Return GetElementByIndex(list, CInt(Val(selector.n)))
-        End If
+        Return query
     End Function
 End Class
 
@@ -186,10 +184,30 @@ Public Structure Selector
     Dim isArray As Boolean
     Dim n As String
 
+    Public ReadOnly Property isComposeCssQuery As Boolean
+        Get
+            Return query.Contains("[") AndAlso query.Contains("]")
+        End Get
+    End Property
+
     Sub New(query As String, n As String, isArray As Boolean)
         Me.query = query
         Me.n = n
         Me.isArray = isArray
     End Sub
+
+    Public Function RunComposeCssQuery(document As InnerPlantText, env As Engine) As InnerPlantText
+        ' there is a whitespace that needs to be trimed
+        Dim query = Me.query.GetTagValue("[", trim:="] ")
+        Dim attributeQuery As NamedValue(Of String) = query.Value.GetTagValue("=", trim:="'""")
+        Dim list As HtmlElement() = DirectCast(document, HtmlElement).getElementsByTagName(query.Name)
+        Dim queryByAttr = (From tag As HtmlElement
+                           In list
+                           Where tag.hasAttribute(attributeQuery.Name)
+                           Where tag(attributeQuery.Name).Equals(attributeQuery.Value)).ToArray
+        Dim queryOut As InnerPlantText = CSSSelector.getElementQueryOutput(document, queryByAttr, Me)
+
+        Return queryOut
+    End Function
 
 End Structure
