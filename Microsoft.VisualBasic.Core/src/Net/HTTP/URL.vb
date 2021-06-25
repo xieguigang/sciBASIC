@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::41143267e70f799ff23bc3bc88caa538, Microsoft.VisualBasic.Core\src\Net\HTTP\URL.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class URL
-    ' 
-    '         Properties: hashcode, hostName, path, port, protocol
-    '                     query
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: BuildUrl, GetValues, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class URL
+' 
+'         Properties: hashcode, hostName, path, port, protocol
+'                     query
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: BuildUrl, GetValues, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -81,6 +81,34 @@ Namespace Net.Http
         End Property
 
         Sub New(url As String)
+            Call Parser(url, hashcode, query, protocol, port, hostName, path)
+        End Sub
+
+        Private Sub New()
+        End Sub
+
+        Public Function GetValues(query As String) As String()
+            With LCase(query)
+                If .DoCall(AddressOf _query.ContainsKey) Then
+                    Return .DoCall(Function(key) _query(key))
+                Else
+                    Return Nothing
+                End If
+            End With
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return $"{protocol}{hostName}:{port}/{path}?{query.Select(Function(q) q.Value.Select(Function(val) $"{q.Key}={UrlEncode(val)}")).IteratesALL.JoinBy("&")}#{hashcode}"
+        End Function
+
+        Private Shared Sub Parser(url As String,
+                                  ByRef hashcode As String,
+                                  ByRef query As Dictionary(Of String, String()),
+                                  ByRef protocol As String,
+                                  ByRef port As Integer,
+                                  ByRef hostName As String,
+                                  ByRef path As String)
+
             With url.GetTagValue("?", trim:=True, failureNoName:=False)
                 Dim tokens = .Value.Split("#"c)
                 Dim tmp$
@@ -143,21 +171,10 @@ Namespace Net.Http
             End If
         End Sub
 
-        Private Sub New()
-        End Sub
-
-        Public Function GetValues(query As String) As String()
-            With LCase(query)
-                If .DoCall(AddressOf _query.ContainsKey) Then
-                    Return .DoCall(Function(key) _query(key))
-                Else
-                    Return Nothing
-                End If
-            End With
-        End Function
-
-        Public Overrides Function ToString() As String
-            Return $"{protocol}{hostName}:{port}/{path}?{query.Select(Function(q) q.Value.Select(Function(val) $"{q.Key}={UrlEncode(val)}")).IteratesALL.JoinBy("&")}#{hashcode}"
+        Public Shared Function Parse(urlStr As String) As URL
+            Dim url As New URL
+            Call Parser(urlStr, url.hashcode, url.query, url.protocol, url.port, url.hostName, url.path)
+            Return url
         End Function
 
         Public Shared Function BuildUrl(url As String, query As IEnumerable(Of NamedValue(Of String))) As URL
