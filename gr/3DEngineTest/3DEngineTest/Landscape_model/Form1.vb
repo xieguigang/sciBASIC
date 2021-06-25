@@ -39,6 +39,7 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Data.ChartPlots.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 
 Public Class Form1

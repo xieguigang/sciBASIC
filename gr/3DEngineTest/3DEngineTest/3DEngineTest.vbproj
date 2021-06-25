@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2C5B56A6-7A48-457F-B347-3E15CF82D579}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>_3DEngineTest.Program</StartupObject>
+    <StartupObject>_3DEngineTest.FormLandscape</StartupObject>
     <RootNamespace>_3DEngineTest</RootNamespace>
     <AssemblyName>3DEngineTest</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -203,6 +203,10 @@
     <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\Math\math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>math-core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Data_science\Visualization\Canvas3D\Canvas3D.vbproj">
+      <Project>{d67818e6-749d-4b3f-a108-36d45ecb5123}</Project>
+      <Name>Canvas3D</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
