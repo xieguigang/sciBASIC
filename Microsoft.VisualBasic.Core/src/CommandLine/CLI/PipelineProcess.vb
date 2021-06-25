@@ -120,12 +120,13 @@ Namespace CommandLine
         ''' <param name="args">参数</param>
         ''' <param name="onReadLine">行信息（委托）</param>
         ''' <remarks>https://github.com/lishewen/LSWFramework/blob/master/LSWClassLib/CMD/CMDHelper.vb</remarks>
-        Public Sub ExecSub(app As String, args As String, onReadLine As Action(Of String), Optional [in] As String = "")
+        Public Function ExecSub(app$, args$, onReadLine As Action(Of String), Optional in$ = "") As Integer
             Dim p As Process = CreatePipeline(app, args)
             Dim reader As StreamReader = p.StandardOutput
 
             If Not String.IsNullOrEmpty([in]) Then
                 Dim writer As StreamWriter = p.StandardInput
+
                 Call writer.WriteLine([in])
                 Call writer.Flush()
             End If
@@ -135,7 +136,9 @@ Namespace CommandLine
             End While
 
             Call p.WaitForExit()
-        End Sub
+
+            Return p.ExitCode
+        End Function
 
         Private Function CreatePipeline(app As String, args As String) As Process
             Dim p As New Process

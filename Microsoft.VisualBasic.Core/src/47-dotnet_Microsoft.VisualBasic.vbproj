@@ -1644,6 +1644,7 @@
     <Compile Include="ApplicationServices\VBDev\NetCore5\target.vb" />
     <Compile Include="ApplicationServices\VBDev\NetCore5\deps.json.vb" />
     <Compile Include="CommandLine\CLI\ProcessEx.vb" />
+    <Compile Include="CommandLine\InteropService\Pipeline\RunSlavePipeline.vb" />
     <Compile Include="CommandLine\Parsers\CommandLineTokenlizer.vb" />
     <Compile Include="CommandLine\Parsers\CliArgumentParsers.vb" />
     <Compile Include="CommandLine\POSIX\POSIXArguments.vb" />
