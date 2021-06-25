@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d82932e674746521c5078cb2b794f4c9, gr\network-visualization\Datavisualization.Network\Graph\Model\data\EdgeData.vb"
+﻿#Region "Microsoft.VisualBasic::f35a7c022fdcd4c46963b8dfd748c7bc, gr\network-visualization\Datavisualization.Network\Graph\Model\data\EdgeData.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class EdgeData
     ' 
-    '         Properties: bends, color, length
+    '         Properties: bends, length, style
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: Clone, ToString
@@ -58,7 +58,12 @@ Namespace Graph
         ''' <returns></returns>
         Public Property length As Double
         Public Property bends As XYMetaHandle()
-        Public Property color As SolidBrush
+
+        ''' <summary>
+        ''' [color, width, dash]
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property style As Pen
 
         Public Sub New()
             MyBase.New()
@@ -81,10 +86,19 @@ Namespace Graph
         End Function
 
         Public Function Clone() As EdgeData
+            Dim bendList As XYMetaHandle() = bends _
+                .SafeQuery _
+                .Select(Function(a)
+                            Return New XYMetaHandle(a)
+                        End Function) _
+                .ToArray
+
             Return New EdgeData With {
                 .label = label,
-                .bends = bends.SafeQuery.Select(Function(a) New XYMetaHandle(a)).ToArray,
-                .color = color,
+                .bends = bendList,
+                .style = New Pen(style.Color, style.Width) With {
+                    .DashStyle = style.DashStyle
+                },
                 .length = length,
                 .Properties = New Dictionary(Of String, String)(Properties)
             }

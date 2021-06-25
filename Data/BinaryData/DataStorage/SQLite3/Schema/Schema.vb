@@ -96,6 +96,9 @@ Namespace ManagedSqlite.Core.SQLSchema
                 If name.ToUpper = "UNIQUE" AndAlso block(1).text = "(" AndAlso block.Last.text = ")" Then
                     Continue For
                 End If
+                If block(Scan0).text = "PRIMARY" AndAlso block(1).text = "KEY" Then
+                    Continue For
+                End If
 
                 If type.ToLower = "[varchar]" Then
                     If tokens.Length > 2 AndAlso tokens(2).text.IsPattern("\(\s*\d+\s*\)") Then

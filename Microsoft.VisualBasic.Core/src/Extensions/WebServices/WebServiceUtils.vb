@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::89cff043c91db6e4b83991fa5861cbea, Microsoft.VisualBasic.Core\src\Extensions\WebServices\WebServiceUtils.vb"
+﻿#Region "Microsoft.VisualBasic::46bc327559f9a94943af1599bb165f4d, Microsoft.VisualBasic.Core\src\Extensions\WebServices\WebServiceUtils.vb"
 
     ' Author:
     ' 
@@ -61,6 +61,7 @@ Imports System.Web
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq.Extensions
@@ -757,7 +758,7 @@ RE0:
                 Call browser.Headers.Add(UserAgent.UAheader, ua Or DefaultUA)
                 Call $"{strUrl} --> {save}".__DEBUG_ECHO
                 Call save.ParentPath.MakeDir
-                Call browser.DownloadFile(strUrl, save)
+                Call browser.DownloadFile(NetFile.MapGithubRawUrl(strUrl), save)
             End Using
 
             Return True

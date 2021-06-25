@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2c3283e21aecc4303ea3041a2de4e27, Data\Trinity\Test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::0414c1f8f64a4775be05bc560774f8ae, Data\Trinity\Test\Module1.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Data.Graph.Analysis.PageRank
+Imports Microsoft.VisualBasic.Data.GraphTheory.Analysis.PageRank
 Imports Microsoft.VisualBasic.Data.NLP
 Imports Microsoft.VisualBasic.Serialization.JSON
 

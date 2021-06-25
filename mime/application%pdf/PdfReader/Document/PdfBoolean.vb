@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4bc159fa1b1b005c79084dcc50408779, mime\application%pdf\PdfReader\Document\PdfBoolean.vb"
+﻿#Region "Microsoft.VisualBasic::a3ac8962a0d043a63bec6dbfd019ff23, mime\application%pdf\PdfReader\Document\PdfBoolean.vb"
 
     ' Author:
     ' 
@@ -46,7 +46,6 @@
 
 #End Region
 
-
 Namespace PdfReader
     Public Class PdfBoolean
         Inherits PdfObject
@@ -80,4 +79,3 @@ Namespace PdfReader
         End Operator
     End Class
 End Namespace
-

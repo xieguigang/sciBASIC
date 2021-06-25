@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e34192d086e6c575a04bc3c602d8318, Data\BinaryData\DataStorage\SQLite3\Sqlite3Database.vb"
+﻿#Region "Microsoft.VisualBasic::a67b4de7b9e29a3c592d5c80028241dd, Data\BinaryData\DataStorage\SQLite3\Sqlite3Database.vb"
 
     ' Author:
     ' 
@@ -46,7 +46,6 @@
 
 #End Region
 
-Imports System.Collections.Generic
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Internal

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d3d422bd2e1f1b67c748d866dc120124, mime\text%html\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::169be9ac45e8e386f2a20cf4e159bf6d, mime\text%html\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,21 +33,23 @@
 
     ' Module Extensions
     ' 
-    '     Function: Markdown2HTML
+    '     Function: CreateDocument
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.MIME.Markup.MarkDown
+Imports Microsoft.VisualBasic.MIME.Html.Document
 
 <HideModuleName>
 Public Module Extensions
 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function Markdown2HTML(markdown$, Optional opt As MarkdownOptions = Nothing) As String
-        Return New MarkdownHTML(opt Or MarkdownOptions.DefaultOption).Transform(text:=markdown)
+    Public Function CreateDocument(xml As XElement) As HtmlDocument
+        Dim html As String = xml.ToString
+        Dim document As HtmlDocument = HtmlDocument.LoadDocument(html)
+
+        Return document
     End Function
 End Module

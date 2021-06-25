@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c76f69f945508f55b2deda8e0a83b23, gr\Microsoft.VisualBasic.Imaging\Drivers\CSS\RuntimeInvoker.vb"
+﻿#Region "Microsoft.VisualBasic::4c7a47cafb990417bf2f585c8479f951, gr\Microsoft.VisualBasic.Imaging\Drivers\CSS\RuntimeInvoker.vb"
 
     ' Author:
     ' 
@@ -48,8 +48,8 @@ Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS.Parser
+Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Language.CSS
 
 Namespace Driver.CSS
 
@@ -220,7 +220,7 @@ Namespace Driver.CSS
             ' 因为args是必须参数，所以要首先进行赋值遍历
             For Each arg As ParameterInfo In parameters
                 If values.ContainsKey(arg.Name) Then
-                    arguments += values(arg.Name).value
+                    arguments += values(arg.Name).Value
                 Else
                     arguments += arg.ScanValue(values, CSS)
                 End If
@@ -233,7 +233,7 @@ Namespace Driver.CSS
         Private Function ScanValue(arg As ParameterInfo, values As Dictionary(Of ArgumentReference), CSS As CSSFile) As Object
             With values.Keys.Where(Function(s) s.TextEquals(arg.Name)).FirstOrDefault
                 If Not .StringEmpty Then
-                    Return values(.ByRef).value
+                    Return values(.ByRef).Value
                 End If
             End With
 

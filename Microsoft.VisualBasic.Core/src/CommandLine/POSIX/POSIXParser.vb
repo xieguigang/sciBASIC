@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9469df824995e9fade5353fd0936ea11, Microsoft.VisualBasic.Core\src\CommandLine\POSIX\POSIXParser.vb"
+﻿#Region "Microsoft.VisualBasic::e46c85a5b3d42b865153ab4fde167e4a, Microsoft.VisualBasic.Core\src\CommandLine\POSIX\POSIXParser.vb"
 
     ' Author:
     ' 
@@ -50,7 +50,7 @@ Namespace CommandLine.POSIX
             Dim continuteToken As String = Nothing
 
             For Each item As String In tokens
-                If CliArgumentParsers.IsPossibleLogicFlag(item) Then
+                If item = "?" OrElse item = "??" OrElse CliArgumentParsers.IsPossibleLogicFlag(item) Then
                     ' 在这里使用nothing来和""产生的空字符串进行区分
                     If Not continuteToken Is Nothing Then
                         Yield continuteToken

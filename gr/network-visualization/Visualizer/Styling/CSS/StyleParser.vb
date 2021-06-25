@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2365f0cb078ca78811663253b4bb807c, gr\network-visualization\Visualizer\Styling\CSS\StyleParser.vb"
+﻿#Region "Microsoft.VisualBasic::175d9df9b7a86cf85d25e2b4b6367bc7, gr\network-visualization\Visualizer\Styling\CSS\StyleParser.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS.Parser
+Imports Microsoft.VisualBasic.MIME.Html.Language.CSS
 
 Namespace Styling.CSS
 

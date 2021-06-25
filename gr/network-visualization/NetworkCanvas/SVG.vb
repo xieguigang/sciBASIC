@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a746663d4a05ac09ead9d9ea34073c7, gr\network-visualization\NetworkCanvas\SVG.vb"
+﻿#Region "Microsoft.VisualBasic::83705d3dac3f4a5bec210503fa86740b, gr\network-visualization\NetworkCanvas\SVG.vb"
 
     ' Author:
     ' 
@@ -60,7 +60,7 @@ Imports Microsoft.VisualBasic.Imaging.SVG
 Imports Microsoft.VisualBasic.Imaging.SVG.CSS
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.MIME.Markup.HTML
+Imports Microsoft.VisualBasic.MIME.Html
 
 ''' <summary>
 ''' <see cref="NetworkGraph"/> to svg doc

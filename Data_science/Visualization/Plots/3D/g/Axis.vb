@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0c85cfae97a6f91db89ea16450d2251, Data_science\Visualization\Plots\3D\g\Axis.vb"
+﻿#Region "Microsoft.VisualBasic::1d340b6b36c80740384282a120e4cf5e, Data_science\Visualization\Plots\3D\g\Axis.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,7 @@ Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D.Device
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Plot3D.Model

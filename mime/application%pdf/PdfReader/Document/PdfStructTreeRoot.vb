@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5438cdc2d98ce27fb6ef3f39d66645c, mime\application%pdf\PdfReader\Document\PdfStructTreeRoot.vb"
+﻿#Region "Microsoft.VisualBasic::fcc1ddeb40d9361e287e9acf34fb18af, mime\application%pdf\PdfReader\Document\PdfStructTreeRoot.vb"
 
     ' Author:
     ' 
@@ -125,4 +125,3 @@ Namespace PdfReader
         End Property
     End Class
 End Namespace
-

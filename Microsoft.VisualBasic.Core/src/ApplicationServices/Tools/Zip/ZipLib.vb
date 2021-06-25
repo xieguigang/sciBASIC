@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d99d5c4881ada5d4631a8db4833f444, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\ZipLib.vb"
+﻿#Region "Microsoft.VisualBasic::85604320fc93554e703d573ded5fe2a8, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\ZipLib.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module ZipLib
     ' 
-    '         Function: CheckValidZipFile, IsADirectoryEntry, IsSourceFolderZip
+    '         Function: CheckValidZipFile, IsADirectoryEntry, (+2 Overloads) IsSourceFolderZip
     ' 
     '         Sub: AddToArchive, AppendZip, DeleteItems, DirectoryArchive, FileArchive
     '              WriteFiles

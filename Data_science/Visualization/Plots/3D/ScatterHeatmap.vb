@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61b00ce8826490999a0f2d33b23e03c7, Data_science\Visualization\Plots\3D\ScatterHeatmap.vb"
+﻿#Region "Microsoft.VisualBasic::467b8ab3cf58cfaf3d7b2a7310434835, Data_science\Visualization\Plots\3D\ScatterHeatmap.vb"
 
     ' Author:
     ' 
@@ -57,8 +57,8 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.MIME.Markup.HTML
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.MIME.Html
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports stdNum = System.Math
 
 Namespace Plot3D

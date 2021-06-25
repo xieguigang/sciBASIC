@@ -67,6 +67,11 @@ Namespace netCDF.Components
         <XmlText>
         Dim size As Integer
 
+        Sub New(name As String, size As Integer)
+            Me.name = name
+            Me.size = size
+        End Sub
+
         Public Overrides Function ToString() As String
             Return $"{name}(size={size})"
         End Function

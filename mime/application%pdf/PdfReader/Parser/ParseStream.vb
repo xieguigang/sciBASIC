@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba7da2a3b6ff5c1ba7318285d6c77cdd, mime\application%pdf\PdfReader\Parser\ParseStream.vb"
+﻿#Region "Microsoft.VisualBasic::67a2829f1312136bfb4849aa70887c7d, mime\application%pdf\PdfReader\Parser\ParseStream.vb"
 
     ' Author:
     ' 
@@ -139,4 +139,3 @@ Namespace PdfReader
         End Function
     End Class
 End Namespace
-

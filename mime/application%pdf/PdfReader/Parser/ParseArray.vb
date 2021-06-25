@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::befcb2656cdeaba64c37a1479c711cbc, mime\application%pdf\PdfReader\Parser\ParseArray.vb"
+﻿#Region "Microsoft.VisualBasic::bf2f6d65c0c1fa96c78f3a53edc033b4, mime\application%pdf\PdfReader\Parser\ParseArray.vb"
 
     ' Author:
     ' 
@@ -55,4 +55,3 @@ Namespace PdfReader
         Public Property Objects As List(Of ParseObjectBase)
     End Class
 End Namespace
-

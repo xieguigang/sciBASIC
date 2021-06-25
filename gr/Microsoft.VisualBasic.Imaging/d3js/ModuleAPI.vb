@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7fd0f2df07b321f76cf02f49e9fa4b38, gr\Microsoft.VisualBasic.Imaging\d3js\ModuleAPI.vb"
+﻿#Region "Microsoft.VisualBasic::a3a5e2d6fcbab72c9eb07a4bcef2a14b, gr\Microsoft.VisualBasic.Imaging\d3js\ModuleAPI.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.d3js.Layout
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Namespace d3js
 

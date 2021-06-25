@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bbd70f0c353071bded05afce9800ca2f, mime\application%pdf\PdfReader\Document\PdfDecrypt.vb"
+﻿#Region "Microsoft.VisualBasic::f76c043490b1ebc321bd2637655313c6, mime\application%pdf\PdfReader\Document\PdfDecrypt.vb"
 
     ' Author:
     ' 
@@ -79,4 +79,3 @@ Namespace PdfReader
         End Function
     End Class
 End Namespace
-

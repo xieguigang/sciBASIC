@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41a4c92a92a7273c45a7efed654a2dbd, Data_science\Visualization\Plots-statistics\PCA\PC2.vb"
+﻿#Region "Microsoft.VisualBasic::a64a38c5a263fee27de57021d2e7829b, Data_science\Visualization\Plots-statistics\PCA\PC2.vb"
 
     ' Author:
     ' 
@@ -51,7 +51,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.MIME.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports PCA_analysis = Microsoft.VisualBasic.Math.LinearAlgebra.Prcomp.PCA
 

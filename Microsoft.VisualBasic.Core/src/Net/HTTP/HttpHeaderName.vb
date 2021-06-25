@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab0912fa3a453451d0d712184546e1ad, Microsoft.VisualBasic.Core\src\Net\HTTP\HttpHeaderName.vb"
+﻿#Region "Microsoft.VisualBasic::90bb1cf86dad89664ec9d7cf56d45643, Microsoft.VisualBasic.Core\src\Net\HTTP\HttpHeaderName.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '     Module HttpHeaderNameExtensions
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: ParseHeaderName
+    '         Function: HeaderToString, ParseHeaderName
     ' 
     ' 
     ' /********************************************************************************/
@@ -50,6 +50,7 @@
 
 Imports System.ComponentModel
 Imports System.Net
+Imports System.Runtime.CompilerServices
 
 Namespace Net.Http
 
@@ -112,15 +113,15 @@ Namespace Net.Http
         '
         ' 摘要:
         '     Content-Length 标头，指定随附的正文数据的长度（以字节为单位）。
-        ContentLength = 11
+        <Description("Content-Length")> ContentLength = 11
         '
         ' 摘要:
         '     Content-Type 标头，指定随附的正文数据的 MIME 类型。
-        ContentType = 12
+        <Description("Content-Type")> ContentType = 12
         '
         ' 摘要:
         '     Content-Encoding 标头，指定应用到随附的正文数据的编码。
-        ContentEncoding = 13
+        <Description("Content-Encoding")> ContentEncoding = 13
         '
         ' 摘要:
         '     Content-Langauge 标头，指定自然语言或伴随正文数据的语言。
@@ -173,10 +174,12 @@ Namespace Net.Http
         ' 摘要:
         '     Server 标头，指定关于起始服务器代理的信息。
         Server = 26
-        '
-        ' 摘要:
-        '     Set-Cookie 标头，指定提供给客户端的 Cookie 数据。
-        SetCookie = 27
+
+        ''' <summary>
+        ''' Set-Cookie 标头，指定提供给客户端的 Cookie 数据。
+        ''' </summary>
+        <Description("Set-Cookie")> SetCookie = 27
+
         '
         ' 摘要:
         '     Vary 标头，指定用于确定缓存的响应是否为新响应的请求标头。
@@ -205,14 +208,21 @@ Namespace Net.Http
     Public Module HttpHeaderNameExtensions
 
         ReadOnly strMaps As Dictionary(Of String, HttpHeaderName)
+        ReadOnly toString As Dictionary(Of HttpHeaderName, String)
 
         Sub New()
             strMaps = New Dictionary(Of String, HttpHeaderName)
+            toString = Enums(Of HttpHeaderName).ToDictionary(Function(header) header, Function(any) any.Description)
 
             For Each val As HttpHeaderName In Enums(Of HttpHeaderName)()
                 strMaps(val.Description.ToLower) = val
             Next
         End Sub
+
+        <Extension>
+        Public Function HeaderToString(header As HttpHeaderName) As String
+            Return toString(header)
+        End Function
 
         ''' <summary>
         ''' 因为可能存在比较多的自定义header，所以在这里不要直接使用字典的Add方法添加

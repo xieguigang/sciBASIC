@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31c1c38e9ecf68717ff9fc862a943ea1, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Plot\Circular.vb"
+﻿#Region "Microsoft.VisualBasic::39b8403727b9e02efc7ca3df343d9f79, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Plot\Circular.vb"
 
     ' Author:
     ' 
@@ -41,14 +41,13 @@
 #End Region
 
 Imports System.Drawing
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.Encoder
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Math2D
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports stdNum = System.Math
 
 Public Class Circular : Inherits DendrogramPanel

@@ -116,6 +116,10 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\text%25markdown\markdown.vbproj">
+      <Project>{83ec1406-fe08-46a1-88b3-ce56d7e9961c}</Project>
+      <Name>markdown</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MIME-htmls.vbproj">
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
       <Name>MIME-htmls</Name>

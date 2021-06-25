@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60bb8a8f7e2cab539d2c8a5f5eb702cd, Data_science\Visualization\Plots-statistics\BoxPlot.vb"
+﻿#Region "Microsoft.VisualBasic::7e7bb9484e98b52f5e904a0c016345fe, Data_science\Visualization\Plots-statistics\BoxPlot.vb"
 
     ' Author:
     ' 
@@ -58,7 +58,7 @@ Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Quantile
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 ''' <summary>

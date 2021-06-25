@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::81d378a52bec403ef725f8547eac0250, gr\Microsoft.VisualBasic.Imaging\d3js\CSS.vb"
+﻿#Region "Microsoft.VisualBasic::730672e552bd208222b944940fa8c937, gr\Microsoft.VisualBasic.Imaging\d3js\CSS.vb"
 
     ' Author:
     ' 
@@ -56,8 +56,7 @@
 
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.MIME.Markup.HTML
+Imports Microsoft.VisualBasic.MIME.Html
 
 Namespace d3js.SVG.CSS
 

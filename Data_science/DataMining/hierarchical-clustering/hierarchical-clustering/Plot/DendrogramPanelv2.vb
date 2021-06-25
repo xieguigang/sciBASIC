@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::06e6117a720007c79a35cee6348f4ee1, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Plot\DendrogramPanelV2.vb"
+﻿#Region "Microsoft.VisualBasic::c19f0c2a0c29a44f1be0b6fd90d7c2ff, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Plot\DendrogramPanelV2.vb"
 
     ' Author:
     ' 
@@ -52,7 +52,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports stdNum = System.Math
 
 ''' <summary>

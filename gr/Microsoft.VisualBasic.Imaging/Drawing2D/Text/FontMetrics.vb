@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4dea4af6a5a5d8555a093cb2561629fc, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\FontMetrics.vb"
+﻿#Region "Microsoft.VisualBasic::fab2475c1d9b8c56453ddc90a79f4b70, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\FontMetrics.vb"
 
     ' Author:
     ' 
@@ -50,8 +50,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.SVG
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Namespace Drawing2D.Text
 

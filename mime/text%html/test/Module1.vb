@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fab5a20f525c30ca12f8eb7f2571b553, mime\text%html\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::798d8b28423e607b4781d33ac2392b3a, mime\text%html\test\Module1.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
 #End Region
 
 Imports System.Text
-Imports Microsoft.VisualBasic.MIME.Markup.MarkDown
+Imports Microsoft.VisualBasic.MIME.text.markdown
 
 Module Module1
 

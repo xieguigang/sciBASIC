@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d2eed4e30110099e702aaa847ae4965, gr\network-visualization\Visualizer\Styling\Expression\BrushExpression.vb"
+﻿#Region "Microsoft.VisualBasic::f1b4d8d3fbcdb1b59a8f41fbc416fe3c, gr\network-visualization\Visualizer\Styling\Expression\BrushExpression.vb"
 
     ' Author:
     ' 
@@ -51,7 +51,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Styling.CSS
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS.Parser
+Imports Microsoft.VisualBasic.MIME.Html.Language.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Styling

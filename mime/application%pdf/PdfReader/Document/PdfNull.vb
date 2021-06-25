@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::296f551bca81f307f74454e04aaea4cb, mime\application%pdf\PdfReader\Document\PdfNull.vb"
+﻿#Region "Microsoft.VisualBasic::a13f6454460e04c2025835f07ef6f16e, mime\application%pdf\PdfReader\Document\PdfNull.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,6 @@
 
 #End Region
 
-
 Namespace PdfReader
     Public Class PdfNull
         Inherits PdfObject
@@ -62,4 +61,3 @@ Namespace PdfReader
         End Sub
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4113e37f5e6246d227e11abd68754e1, mime\application%pdf\PdfReader\Parser\ParseObjectBase.vb"
+﻿#Region "Microsoft.VisualBasic::8deb7022a32ace0845aa7b4055e175a9, mime\application%pdf\PdfReader\Parser\ParseObjectBase.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,6 @@
 
 #End Region
 
-
 Namespace PdfReader
     Public MustInherit Class ParseObjectBase
         Public Shared ReadOnly [True] As ParseBoolean = New ParseBoolean(True)
@@ -48,4 +47,3 @@ Namespace PdfReader
         Public Shared ReadOnly Null As ParseNull = New ParseNull()
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0441d5eb9caa47a8f885c6f0f400e6c0, mime\application%pdf\PdfReader\Document\PdfStream.vb"
+﻿#Region "Microsoft.VisualBasic::e40b4f87b9792507d688617cab562c65, mime\application%pdf\PdfReader\Document\PdfStream.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace PdfReader
     Public Class PdfStream
@@ -90,4 +89,3 @@ Namespace PdfReader
         End Property
     End Class
 End Namespace
-

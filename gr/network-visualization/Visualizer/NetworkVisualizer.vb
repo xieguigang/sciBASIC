@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::783de79d969a5486311c04117419425e, gr\network-visualization\Visualizer\NetworkVisualizer.vb"
+﻿#Region "Microsoft.VisualBasic::72e6341470214c4033a93b8b4d819869, gr\network-visualization\Visualizer\NetworkVisualizer.vb"
 
     ' Author:
     ' 
@@ -73,10 +73,9 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.MIME.Markup.HTML
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.MIME.Html
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports stdNum = System.Math
@@ -671,10 +670,12 @@ Public Module NetworkVisualizer
             Dim w! = linkWidth(edge)
             Dim lineColor As Pen
 
-            If edge.data.color Is Nothing Then
+            If edge.data.style Is Nothing Then
                 lineColor = New Pen(defaultEdgeColor, w)
             Else
-                lineColor = New Pen(edge.data.color, w)
+                lineColor = New Pen(edge.data.style.Color, w) With {
+                    .DashStyle = edge.data.style.DashStyle
+                }
             End If
 
             With edge.data!interaction_type

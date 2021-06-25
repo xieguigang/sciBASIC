@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84b66bc41f30126d86759c6a93923a3d, Microsoft.VisualBasic.Core\src\Text\Parser\CharBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::9e9395524523c7adde596f535af78b57, Microsoft.VisualBasic.Core\src\Text\Parser\CharBuffer.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '         Sub: Clear
     ' 
     '         Operators: *, (+3 Overloads) +, <, (+2 Overloads) <>, (+2 Overloads) =
-    '                    >
+    '                    >, (+2 Overloads) Like
     ' 
     ' 
     ' /********************************************************************************/
@@ -113,10 +113,18 @@ Namespace Text.Parser
             Return last
         End Function
 
+        ''' <summary>
+        ''' populate all chars in current object and then clear the buffer list
+        ''' </summary>
+        ''' <returns></returns>
         Public Function PopAllChars() As Char()
             Return buffer.PopAll
         End Function
 
+        ''' <summary>
+        ''' text
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
             Return buffer.CharString
         End Function
@@ -198,6 +206,18 @@ Namespace Text.Parser
 
         Public Shared Operator <(buf As CharBuffer, size As Integer) As Boolean
             Return buf.buffer.Count < size
+        End Operator
+
+        Public Shared Operator Like(buf As CharBuffer, any As String()) As Boolean
+            Dim str As String = buf.ToString
+
+            For Each right As String In any
+                If str = right Then
+                    Return True
+                End If
+            Next
+
+            Return False
         End Operator
     End Class
 End Namespace

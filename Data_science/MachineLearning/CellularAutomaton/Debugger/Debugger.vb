@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::495621c2aecd50a552d5d9d5ba8f2b5f, Data_science\MachineLearning\CellularAutomaton\Debugger\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::439386f73746d0a5fcb5ee068e8d28dc, Data_science\MachineLearning\CellularAutomaton\Debugger\Debugger.vb"
 
     ' Author:
     ' 
@@ -44,6 +44,7 @@
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 
 Public Class Debugger(Of T As Individual) : Implements IDisposable

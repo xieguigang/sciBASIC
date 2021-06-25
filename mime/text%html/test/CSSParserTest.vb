@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b8e50801156a99f5c8740ce9b79b0e9, mime\text%html\test\CSSParserTest.vb"
+﻿#Region "Microsoft.VisualBasic::861980b0e9f4047efcaa283d8ea56c0d, mime\text%html\test\CSSParserTest.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS.Parser
+Imports Microsoft.VisualBasic.MIME.Html.Language.CSS
 
 Module CSSParserTest
 

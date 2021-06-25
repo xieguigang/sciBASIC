@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10fc975ea7c3bb3c6fcb183c807583a9, mime\application%pdf\PdfReader\Parser\ParseIndirectObject.vb"
+﻿#Region "Microsoft.VisualBasic::bbe34c2878848ca1c1fad14f80bb26b2, mime\application%pdf\PdfReader\Parser\ParseIndirectObject.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,6 @@
 
 #End Region
 
-
 Namespace PdfReader
     Public Class ParseIndirectObject
         Inherits ParseObjectBase
@@ -83,4 +82,3 @@ Namespace PdfReader
         End Property
     End Class
 End Namespace
-

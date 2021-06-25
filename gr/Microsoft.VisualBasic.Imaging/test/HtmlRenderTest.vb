@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ddcdef950eba93a936a826907724eae, gr\Microsoft.VisualBasic.Imaging\test\HtmlRenderTest.vb"
+﻿#Region "Microsoft.VisualBasic::79c9503f4bf9c59c1e3c7e89a39076fd, gr\Microsoft.VisualBasic.Imaging\test\HtmlRenderTest.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,7 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
-Imports Microsoft.VisualBasic.MIME.Markup.HTML
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Public Module HtmlRenderTest
 

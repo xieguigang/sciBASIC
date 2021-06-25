@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::62ddeeb1de76a868d63b03ac0929a903, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\RoundRect.vb"
+﻿#Region "Microsoft.VisualBasic::cbc7e10ca0dcb92228513fcdd8536730, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\RoundRect.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,7 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Namespace Drawing2D.Shapes
 

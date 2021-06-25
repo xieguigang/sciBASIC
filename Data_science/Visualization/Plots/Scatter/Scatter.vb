@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ed3e3bca8804258e8d7df8cfe82a054, Data_science\Visualization\Plots\Scatter\Scatter.vb"
+﻿#Region "Microsoft.VisualBasic::37a8eb487ae709a7bbaa6819a4b43432, Data_science\Visualization\Plots\Scatter\Scatter.vb"
 
     ' Author:
     ' 
@@ -65,7 +65,7 @@ Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting.MathExpression
 Imports Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Public Module Scatter
@@ -204,6 +204,7 @@ Public Module Scatter
                     Optional XtickFormat$ = "F2",
                     Optional YtickFormat$ = "F2",
                     Optional axisStroke$ = Stroke.AxisStroke,
+                    Optional axisLabelCSS$ = CSSFont.Win10Normal,
                     Optional scatterReorder As Boolean = False)
 
         Dim theme As New Theme With {
@@ -213,7 +214,8 @@ Public Module Scatter
             .gridFill = gridFill,
             .background = bg,
             .axisStroke = axisStroke,
-            .drawAxis = drawAxis
+            .drawAxis = drawAxis,
+            .axisLabelCSS = axisLabelCSS
         }
         Dim plot As Plot
 
@@ -304,6 +306,7 @@ Public Module Scatter
                          Optional XtickFormat$ = "F2",
                          Optional YtickFormat$ = "F2",
                          Optional axisStroke$ = Stroke.AxisStroke,
+                         Optional axisLabelCSS$ = CSSFont.Win10Normal,
                          Optional scatterReorder As Boolean = False) As GraphicsData
 
         Dim plotInternal =
@@ -350,7 +353,8 @@ Public Module Scatter
                     XtickFormat:=XtickFormat,
                     YtickFormat:=YtickFormat,
                     axisStroke:=axisStroke,
-                    scatterReorder:=scatterReorder
+                    scatterReorder:=scatterReorder,
+                    axisLabelCSS:=axisLabelCSS
                 )
             End Sub
 
