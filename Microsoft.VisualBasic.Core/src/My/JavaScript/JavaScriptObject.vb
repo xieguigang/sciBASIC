@@ -1,75 +1,75 @@
-﻿#Region "Microsoft.VisualBasic::da95ee99a60e21d9671e1700c65d59bc, Microsoft.VisualBasic.Core\src\My\JavaScript\JavaScriptObject.vb"
+﻿#Region "Microsoft.VisualBasic::182a66377b4e66c10d3b43081b21f99b, Microsoft.VisualBasic.Core\src\My\JavaScript\JavaScriptObject.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Interface IJavaScriptObjectAccessor
-' 
-'         Properties: Accessor
-' 
-'     Class Descriptor
-' 
-'         Properties: configurable, enumerable, value, writable
-' 
-'     Enum MemberAccessorResult
-' 
-'         ClassMemberProperty, ExtensionProperty, Undefined
-' 
-'  
-' 
-' 
-' 
-'     Class JavaScriptValue
-' 
-'         Properties: Accessor, IsConstant, Literal
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'         Function: GetValue, ToString
-' 
-'         Sub: SetValue
-' 
-'     Class JavaScriptObject
-' 
-'         Properties: length, this
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: GetDescription, GetEnumerator, GetGenericJson, GetMemberValue, GetNames
-'                   IEnumerable_GetEnumerator, IEnumerable_GetEnumerator1, ToString
-' 
-'         Sub: Delete
-' 
-' 
-' /********************************************************************************/
+    '     Interface IJavaScriptObjectAccessor
+    ' 
+    '         Properties: Accessor
+    ' 
+    '     Class Descriptor
+    ' 
+    '         Properties: configurable, enumerable, value, writable
+    ' 
+    '     Enum MemberAccessorResult
+    ' 
+    '         ClassMemberProperty, ExtensionProperty, Undefined
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Class JavaScriptValue
+    ' 
+    '         Properties: Accessor, IsConstant, Literal
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: GetValue, ToString
+    ' 
+    '         Sub: SetValue
+    ' 
+    '     Class JavaScriptObject
+    ' 
+    '         Properties: length, this
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: GetDescription, GetEnumerator, GetGenericJson, GetMemberValue, GetNames
+    '                   IEnumerable_GetEnumerator, IEnumerable_GetEnumerator1, Join, ToString
+    ' 
+    '         Sub: Delete
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

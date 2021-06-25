@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9faeb7c9edf9050ffa75af1c2571f39, mime\application%json\Serializer\JSONSerializer.vb"
+﻿#Region "Microsoft.VisualBasic::cdd59b6a0114f259ead31dc6a039afec, mime\application%json\Serializer\JSONSerializer.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module JSONSerializer
     ' 
-    '     Function: BuildJsonString, GetJson, jsonArrayString, jsonObjectString, jsonValueString
+    '     Function: (+2 Overloads) BuildJsonString, GetJson, jsonArrayString, jsonObjectString, jsonValueString
     ' 
     ' /********************************************************************************/
 
@@ -41,10 +41,14 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json.BSON
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.ValueTypes
+Imports any = Microsoft.VisualBasic.Scripting
 
 Public Module JSONSerializer
 
@@ -76,6 +80,11 @@ Public Module JSONSerializer
     End Function
 
     <Extension>
+    Public Function BuildJsonString(json As JsonElement, Optional indent As Boolean = False) As String
+        Return json.BuildJsonString(New JSONSerializerOptions With {.indent = indent})
+    End Function
+
+    <Extension>
     Public Function BuildJsonString(json As JsonElement, opts As JSONSerializerOptions) As String
         If json Is Nothing Then
             Return "null"
@@ -90,6 +99,12 @@ Public Module JSONSerializer
         End Select
     End Function
 
+    ''' <summary>
+    ''' "..."
+    ''' </summary>
+    ''' <param name="obj"></param>
+    ''' <param name="opt"></param>
+    ''' <returns></returns>
     <Extension>
     Private Function jsonValueString(obj As JsonValue, opt As JSONSerializerOptions) As String
         Dim value As Object = obj.value
@@ -97,17 +112,31 @@ Public Module JSONSerializer
         If value Is Nothing Then
             Return "null"
         ElseIf value.GetType Is obj.BSONValue Then
-            Return DirectCast(value, BSONValue).ToString
+            value = DirectCast(value, BSONValue).GetObjectValue
+        End If
+
+        If TypeOf value Is Date AndAlso opt.unixTimestamp Then
+            Return DirectCast(value, Date).UnixTimeStamp
+        ElseIf TypeOf value Is String Then
+            Return JsonContract.GetObjectJson(GetType(String), value)
+        ElseIf TypeOf value Is Boolean Then
+            Return value.ToString.ToLower
         Else
-            Return BSONValue.FromValue(value).ToString
+            Return any.ToString(value)
         End If
     End Function
 
+    ''' <summary>
+    ''' {...}
+    ''' </summary>
+    ''' <param name="obj"></param>
+    ''' <param name="opt"></param>
+    ''' <returns></returns>
     <Extension>
     Private Function jsonObjectString(obj As JsonObject, opt As JSONSerializerOptions) As String
         Dim members As New List(Of String)
 
-        For Each member In obj
+        For Each member As NamedValue(Of JsonElement) In obj
             members.Add($"""{member.Name}"": {member.Value.BuildJsonString(opt)}")
         Next
 
@@ -120,11 +149,17 @@ Public Module JSONSerializer
         End If
     End Function
 
+    ''' <summary>
+    ''' [...]
+    ''' </summary>
+    ''' <param name="arr"></param>
+    ''' <param name="opt"></param>
+    ''' <returns></returns>
     <Extension>
     Private Function jsonArrayString(arr As JsonArray, opt As JSONSerializerOptions) As String
         Dim a As New StringBuilder
         Dim array$() = arr _
-            .Select(Function(x) x.BuildJsonString(opt)) _
+            .Select(Function(item) item.BuildJsonString(opt)) _
             .ToArray
 
         If opt.indent Then

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::113af15f2118b475350f1b343aa5abb7, gr\Microsoft.VisualBasic.Imaging\SVG\XML\SVG.vb"
+﻿#Region "Microsoft.VisualBasic::3abb3bba0115a1cd978c2dce87391631, gr\Microsoft.VisualBasic.Imaging\SVG\XML\SVG.vb"
 
     ' Author:
     ' 
@@ -55,9 +55,9 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Imaging.SVG.CSS
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.MIME.Markup.HTML
+Imports Microsoft.VisualBasic.MIME.Html
 Imports Microsoft.VisualBasic.Text
-Imports htmlNode = Microsoft.VisualBasic.MIME.Markup.HTML.XmlMeta.Node
+Imports htmlNode = Microsoft.VisualBasic.MIME.Html.XmlMeta.Node
 
 Namespace SVG.XML
 

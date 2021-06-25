@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2aa4be27ca6eec9cb00b543564800791, Data\BinaryData\BinaryData\Stream\ByteOrder.vb"
+﻿#Region "Microsoft.VisualBasic::f668828807fd60660a0940026f619ffe, Data\BinaryData\BinaryData\Stream\ByteOrder.vb"
 
     ' Author:
     ' 
@@ -46,8 +46,11 @@
 ''' Represents the possible endianness of binary data.
 ''' </summary>
 Public Enum ByteOrder As UShort
+
     ''' <summary>
     ''' The binary data is present in big endian.
+    ''' 
+    ''' (network byte order)
     ''' </summary>
     BigEndian = &HFEFF
 

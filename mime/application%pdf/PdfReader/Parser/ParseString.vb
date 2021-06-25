@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1871b64e1830faf2c1ace86511a002e, mime\application%pdf\PdfReader\Parser\ParseString.vb"
+﻿#Region "Microsoft.VisualBasic::fc11eb05aed966ef5571f424a36cb1a3, mime\application%pdf\PdfReader\Parser\ParseString.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,6 @@
 
 #End Region
 
-
 Namespace PdfReader
     Public Class ParseString
         Inherits ParseObjectBase
@@ -71,4 +70,3 @@ Namespace PdfReader
         Private Property Token As TokenString
     End Class
 End Namespace
-

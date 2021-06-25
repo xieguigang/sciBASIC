@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7b82975a8f2a6d5ad70781db8069798, Microsoft.VisualBasic.Core\src\CommandLine\Parsers\CLIParser.vb"
+﻿#Region "Microsoft.VisualBasic::0fb95d646b67a56f1e5b09562057d1e3, Microsoft.VisualBasic.Core\src\CommandLine\Parsers\CLIParser.vb"
 
     ' Author:
     ' 
@@ -150,6 +150,7 @@ Namespace CommandLine.Parsers
                                  Optional rawInput$ = Nothing) As CommandLine
 
 #If UNIX Then
+            ' 20210606 这个主要是针对docker环境的命令行传递的问题
             Dim tokens$() = POSIX.JoinTokens(args.SafeQuery).ToArray
 #Else
             Dim tokens$() = args.SafeQuery.ToArray

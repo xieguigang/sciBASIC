@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2146e9873875aa4b5085f91ce76c6fea, Data_science\Visualization\Plots\ViolinPlot.vb"
+﻿#Region "Microsoft.VisualBasic::f04866421ae6a51452cef434ebf213e9, Data_science\Visualization\Plots\ViolinPlot.vb"
 
     ' Author:
     ' 
@@ -56,7 +56,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.Math.Quantile
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports stdNum = System.Math

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f289b2fab36ed193256bcd8c3ed7652c, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\SerializationIO.vb"
+﻿#Region "Microsoft.VisualBasic::a1bd7efd74d26ef3c83346b698b9aaa4, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\SerializationIO.vb"
 
     ' Author:
     ' 

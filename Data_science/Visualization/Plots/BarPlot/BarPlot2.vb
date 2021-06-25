@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::39b857dd98b563e3d11920623945a77a, Data_science\Visualization\Plots\BarPlot\BarPlot2.vb"
+﻿#Region "Microsoft.VisualBasic::b5f2255d65178b56f826438fa494eb1b, Data_science\Visualization\Plots\BarPlot\BarPlot2.vb"
 
     ' Author:
     ' 
@@ -50,7 +50,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Namespace BarPlot
 

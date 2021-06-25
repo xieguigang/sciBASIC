@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e4b80e5b8a0c239e98ca5052730d92a, mime\application%pdf\PdfReader\Parser\ParseReal.vb"
+﻿#Region "Microsoft.VisualBasic::e9ec99e8382633aa47f71f0e34ea779e, mime\application%pdf\PdfReader\Parser\ParseReal.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,6 @@
 
 #End Region
 
-
 Namespace PdfReader
     Public Class ParseReal
         Inherits ParseObjectBase
@@ -67,4 +66,3 @@ Namespace PdfReader
         End Property
     End Class
 End Namespace
-

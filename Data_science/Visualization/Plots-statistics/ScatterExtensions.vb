@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5029fd70ebf38c5381bd2ac6ae317fcc, Data_science\Visualization\Plots-statistics\ScatterExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::6ebfee7ff26d32199ff36f28fbcf816e, Data_science\Visualization\Plots-statistics\ScatterExtensions.vb"
 
     ' Author:
     ' 
@@ -54,7 +54,7 @@ Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Calculus
 Imports Microsoft.VisualBasic.Math.Calculus.Dynamics.Data
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.MIME.HTML.CSS
 
 Public Module ScatterExtensions
 

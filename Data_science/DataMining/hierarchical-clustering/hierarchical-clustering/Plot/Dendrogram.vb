@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::37020d8cd119f955a7b8d33c4328c011, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Plot\Dendrogram.vb"
+﻿#Region "Microsoft.VisualBasic::3d3852b57927d281afe4fc59ad0f7d38, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Plot\Dendrogram.vb"
 
     ' Author:
     ' 
@@ -42,11 +42,11 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.Encoder
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
-Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Public Module Dendrogram
 

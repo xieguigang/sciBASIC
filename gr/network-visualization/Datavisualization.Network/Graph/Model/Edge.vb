@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a916c7fc878614dc64e653a940c235df, gr\network-visualization\Datavisualization.Network\Graph\Model\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::088de77d981966bcb6cc6d05b5f6f73d, gr\network-visualization\Datavisualization.Network\Graph\Model\Edge.vb"
 
     ' Author:
     ' 
@@ -244,7 +244,7 @@ Namespace Graph
                     .length = data.length,
                     .Properties = New Dictionary(Of String, String)(data.Properties),
                     .bends = data.bends.SafeQuery.ToArray,
-                    .color = data.color
+                    .style = data.style
                 }
             }
         End Function

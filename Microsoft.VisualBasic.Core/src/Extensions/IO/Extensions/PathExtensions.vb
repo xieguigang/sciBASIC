@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::acc7b0307a639e3fb2d5338819f44492, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\PathExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::6d805e7c11bb8649b629d7a2c7b90c6b, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\PathExtensions.vb"
 
     ' Author:
     ' 
@@ -36,12 +36,10 @@
     '     Function: BaseName, ChangeSuffix, DeleteFile, DIR, DirectoryExists
     '               DirectoryName, EnumerateFiles, (+2 Overloads) ExtensionSuffix, FileCopy, FileExists
     '               FileLength, FileMove, FileName, FileOpened, GetDirectoryFullPath
-    '               GetFullPath, ListDirectory, ListFiles, Long2Short, (+2 Overloads) NormalizePathString
-    '               ParentDirName, ParentPath, PathCombine, PathIllegal, ReadDirectory
-    '               (+2 Overloads) RelativePath, SafeCopyTo, SplitPath, TheFile, ToDIR_URL
-    '               ToFileURL, TrimDIR, TrimSuffix, UnixPath
-    ' 
-    '     Sub: MakeDir
+    '               GetFullPath, ListDirectory, ListFiles, Long2Short, MakeDir
+    '               (+2 Overloads) NormalizePathString, ParentDirName, ParentPath, PathCombine, PathIllegal
+    '               ReadDirectory, (+2 Overloads) RelativePath, SafeCopyTo, SplitPath, TheFile
+    '               ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix, UnixPath
     ' 
     ' /********************************************************************************/
 
@@ -201,7 +199,8 @@ Public Module PathExtensions
     ''' Make directory
     ''' </summary>
     ''' <param name="DIR"></param>
-    <Extension> Public Sub MakeDir(DIR$, Optional throwEx As Boolean = True)
+    <Extension>
+    Public Function MakeDir(DIR$, Optional throwEx As Boolean = True) As Boolean
         If DIR.StringEmpty OrElse DIR = "./" OrElse DIR = ".\" Then
             ' 2017-12-25
             ' 当前文件夹
@@ -215,6 +214,7 @@ Public Module PathExtensions
 
         Try
             Call FileIO.FileSystem.CreateDirectory(DIR)
+            Return True
         Catch ex As Exception
             ex = New Exception("DIR value is: " & DIR, ex)
 
@@ -224,7 +224,9 @@ Public Module PathExtensions
                 Call App.LogException(ex)
             End If
         End Try
-    End Sub
+
+        Return False
+    End Function
 
     <Extension>
     Public Function PathCombine(path As String, addTag As String) As String

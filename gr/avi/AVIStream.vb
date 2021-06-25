@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4fbe28b0a4894d1c88b368d50b3a719b, gr\avi\AVIStream.vb"
+﻿#Region "Microsoft.VisualBasic::c2f1e1842f6cbd8e130158d5b9db2e75, gr\avi\AVIStream.vb"
 
     ' Author:
     ' 
@@ -47,6 +47,7 @@
 
 Imports System.Drawing
 Imports System.Drawing.Imaging
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 
 Public Class AVIStream
@@ -62,7 +63,7 @@ Public Class AVIStream
         Me.fps = fps
         Me.width = width
         Me.height = height
-        Me.temp = App.GetAppSysTempFile(".rgb_frames", App.PID, prefix:=GetHashCode.ToHexString)
+        Me.temp = TempFileSystem.GetAppSysTempFile(".rgb_frames", App.PID, prefix:=GetHashCode.ToHexString)
     End Sub
 
     Public Sub addFrame(image As Bitmap)

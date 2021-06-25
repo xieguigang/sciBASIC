@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5d9d32caaefbc1ad8833ba8a6626f9b, Data_science\Visualization\Plots\Scatter\Data\Annotation.vb"
+﻿#Region "Microsoft.VisualBasic::3f73b28b47bf79e944b8c57f8b0fca54, Data_science\Visualization\Plots\Scatter\Data\Annotation.vb"
 
     ' Author:
     ' 
@@ -43,13 +43,12 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Structure Annotation

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f5985c2935076744cdd2e7de789e453, mime\application%pdf\PdfReader\Parser\ParseObjectReference.vb"
+﻿#Region "Microsoft.VisualBasic::05fe3e7ff88f140aa71445e977390715, mime\application%pdf\PdfReader\Parser\ParseObjectReference.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,6 @@
 
 #End Region
 
-
 Namespace PdfReader
     Public Class ParseObjectReference
         Inherits ParseObjectBase
@@ -73,4 +72,3 @@ Namespace PdfReader
         End Property
     End Class
 End Namespace
-

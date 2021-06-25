@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a605fd195c0f78d4b9587f5a2ce2f424, Data_science\Graph\Analysis\PageRank\GraphMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::2ee7637549fe8cfc666ef440f74c7f93, Data_science\Graph\Analysis\PageRank\GraphMatrix.vb"
 
     ' Author:
     ' 
@@ -62,19 +62,19 @@ Namespace Analysis.PageRank
         ''' 
         ''' </summary>
         Sub New(g As Graph)
-            Dim index As New Index(Of String)(g.Vertex.Keys)
+            Dim index As New Index(Of String)(g.vertex.Keys)
 
-            nodes = g.Vertex
+            nodes = g.vertex.ToArray
             edges = g.ToArray
 
             For Each node As Vertex In nodes
-                indices(node.Label) = New List(Of Integer)
+                indices(node.label) = New List(Of Integer)
             Next
 
             For Each edge As VertexEdge In edges
                 With edge
-                    Call indices(.U.Label) _
-                        .Add(index(.V.Label))
+                    Call indices(.U.label) _
+                        .Add(index(.V.label))
                 End With
             Next
 
@@ -112,7 +112,7 @@ Namespace Analysis.PageRank
         Public Function TranslateVector(v#(), Optional reorder As Boolean = False) As Dictionary(Of String, Double)
             If Not reorder Then
                 Return nodes _
-                    .ToDictionary(Function(n) n.Label,
+                    .ToDictionary(Function(n) n.label,
                                   Function(i) v(i.ID))
             Else
                 Dim orders As SeqValue(Of Double)() = v _
@@ -121,7 +121,7 @@ Namespace Analysis.PageRank
                     .ToArray
 
                 Return orders.ToDictionary(
-                    Function(i) nodes(i).Label,
+                    Function(i) nodes(i).label,
                     Function(value) +value)
             End If
         End Function
@@ -136,7 +136,7 @@ Namespace Analysis.PageRank
             Return gm _
                 .nodes _
                 .Select(Function(k)
-                            Return gm.indices(k.Label)
+                            Return gm.indices(k.label)
                         End Function) _
                 .ToArray
         End Operator

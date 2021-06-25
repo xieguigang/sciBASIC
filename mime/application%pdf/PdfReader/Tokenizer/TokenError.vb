@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45f3b9d6e8d97509da72e0d0c81e030a, mime\application%pdf\PdfReader\Tokenizer\TokenError.vb"
+﻿#Region "Microsoft.VisualBasic::5201621898821355e17301e32ebcf27d, mime\application%pdf\PdfReader\Tokenizer\TokenError.vb"
 
     ' Author:
     ' 
@@ -72,4 +72,3 @@ Namespace PdfReader
         End Property
     End Class
 End Namespace
-

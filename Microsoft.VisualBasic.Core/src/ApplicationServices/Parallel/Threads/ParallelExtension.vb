@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2875acd90dd861470a506cbeb2c8cf4, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\ParallelExtension.vb"
+﻿#Region "Microsoft.VisualBasic::48d83426f1b5819c12852c39aa446d8d, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\ParallelExtension.vb"
 
     ' Author:
     ' 
@@ -85,11 +85,21 @@ Namespace Parallel
 #End If
         End Sub
 
+        ''' <summary>
+        ''' execute the given <paramref name="func"/>, and hen do events
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="func"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
         Public Function DoEvents(Of T)(func As Func(Of T)) As T
             Dim result As T = func()
+#If netcore5 = 0 Then
+#If UNIX = False Then
             Call DoEvents()
+#End If
+#End If
             Return result
         End Function
 

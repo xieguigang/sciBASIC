@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c113d96b43f39aafdaee13891127ba33, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringFormats.vb"
+﻿#Region "Microsoft.VisualBasic::2f9208f9e2392bc3c86a4d1bafe83a42, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringFormats.vb"
 
     ' Author:
     ' 
@@ -54,6 +54,8 @@ Public Module StringFormats
     Public Function Lanudry(bytes As Double) As String
         If bytes <= 0 Then
             Return "0 B"
+        ElseIf bytes.IsNaNImaginary Then
+            Return "n/a KB"
         End If
 
         Dim symbols = {"B", "KB", "MB", "GB", "TB"}

@@ -163,7 +163,7 @@ Namespace Imaging
                 Return Graphics.InterpolationMode
             End Get
             Set(value As InterpolationMode)
-                Graphics.InterpolationMode = value
+                g.InterpolationMode = value
             End Set
         End Property
         '
@@ -269,7 +269,7 @@ Namespace Imaging
                 Return Graphics.SmoothingMode
             End Get
             Set(value As SmoothingMode)
-                Graphics.SmoothingMode = value
+                g.SmoothingMode = value
             End Set
         End Property
         '
@@ -1243,7 +1243,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     image is null.
         Public Overrides Sub DrawImage(image As Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit)
-
+            Call Graphics.DrawImage(image, destPoints, srcRect, srcUnit)
         End Sub
         '
         ' Summary:
@@ -1270,7 +1270,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     image is null.
         Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcRect As Rectangle, srcUnit As GraphicsUnit)
-
+            Call Graphics.DrawImage(image, destRect, srcRect, srcUnit)
         End Sub
 
         ''' <summary>
@@ -1327,7 +1327,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     image is null.
         Public Overrides Sub DrawImage(image As Image, x As Single, y As Single, srcRect As RectangleF, srcUnit As GraphicsUnit)
-
+            Graphics.DrawImage(image, x, y, srcRect, srcUnit)
         End Sub
         '
         ' Summary:
@@ -1357,7 +1357,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     image is null.
         Public Overrides Sub DrawImage(image As Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, imageAttr As ImageAttributes)
-
+            Graphics.DrawImage(image, destPoints, srcRect, srcUnit, imageAttr)
         End Sub
         '
         ' Summary:

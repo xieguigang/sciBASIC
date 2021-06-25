@@ -66,20 +66,28 @@ Namespace Imaging.BitmapImage
         ReadOnly raw As Bitmap
         ReadOnly handle As BitmapData
 
+        ''' <summary>
+        ''' 图片可能是 BGRA 4通道
+        ''' 也可能是 BGR 3通道的
+        ''' </summary>
+        ReadOnly channels As Integer
+
         Protected Sub New(ptr As IntPtr,
                           byts%,
                           raw As Bitmap,
-                          handle As BitmapData)
+                          handle As BitmapData,
+                          channel As Integer)
 
             Call MyBase.New(ptr, byts)
 
             Me.raw = raw
             Me.handle = handle
 
-            Stride = handle.Stride
-            Width = raw.Width
-            Height = raw.Height
-            Size = New Size(Width, Height)
+            Me.Stride = handle.Stride
+            Me.Width = raw.Width
+            Me.Height = raw.Height
+            Me.Size = New Size(Width, Height)
+            Me.channels = channel
         End Sub
 
         Public ReadOnly Property Width As Integer
@@ -119,8 +127,8 @@ Namespace Imaging.BitmapImage
         ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetIndex(x As Integer, y As Integer) As Integer
-            y = y * (Width * 4)
-            x = x * 4
+            y = y * (Width * channels)
+            x = x * channels
             Return x + y
         End Function
 
@@ -142,7 +150,12 @@ Namespace Imaging.BitmapImage
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetPixel(x As Integer, y As Integer) As Color
             Dim i As Integer = GetIndex(x, y)
-            Dim iA As Byte = buffer(i + 3)
+            Dim iA As Byte = 255
+
+            If channels = 4 Then
+                iA = buffer(i + 3)
+            End If
+
             Dim iR As Byte = buffer(i + 2)
             Dim iG As Byte = buffer(i + 1)
             Dim iB As Byte = buffer(i + 0)
@@ -153,8 +166,8 @@ Namespace Imaging.BitmapImage
         ''' <summary>
         ''' Sets the color of the specified pixel in this System.Drawing.Bitmap.(这个函数线程不安全)
         ''' </summary>
-        ''' <param name="x">The x-coordinate of the pixel to set.</param>
-        ''' <param name="y">The y-coordinate of the pixel to set.</param>
+        ''' <param name="x">The x-coordinate of the pixel to set. [0, width-1]</param>
+        ''' <param name="y">The y-coordinate of the pixel to set. [0, height-1]</param>
         ''' <param name="color">
         ''' A System.Drawing.Color structure that represents the color to assign to the specified
         ''' pixel.</param>
@@ -163,7 +176,10 @@ Namespace Imaging.BitmapImage
         Public Sub SetPixel(x As Integer, y As Integer, color As Color)
             Dim i As Integer = GetIndex(x, y)
 
-            buffer(i + 3) = color.A
+            If channels = 4 Then
+                buffer(i + 3) = color.A
+            End If
+
             buffer(i + 2) = color.R
             buffer(i + 1) = color.G
             buffer(i + 0) = color.B
@@ -193,8 +209,18 @@ Namespace Imaging.BitmapImage
             Dim ptr As IntPtr = bmpData.Scan0
             ' Declare an array to hold the bytes of the bitmap.
             Dim bytes As Integer = stdNum.Abs(bmpData.Stride) * curBitmap.Height
+            Dim pixels As Integer = curBitmap.Width * curBitmap.Height
+            Dim channels As Integer
 
-            Return New BitmapBuffer(ptr, bytes, curBitmap, bmpData)
+            If bytes = pixels * 3 Then
+                channels = 3
+            ElseIf bytes = pixels * 4 Then
+                channels = 4
+            Else
+                Throw New NotImplementedException
+            End If
+
+            Return New BitmapBuffer(ptr, bytes, curBitmap, bmpData, channels)
         End Function
 
         Protected Overrides Sub Dispose(disposing As Boolean)

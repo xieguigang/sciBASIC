@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bfa22032bbdb0d80e8774c19257e467f, mime\application%pdf\PdfReader\Parser\ParseNull.vb"
+﻿#Region "Microsoft.VisualBasic::86f7154e7e85332cdab743464b9fb044, mime\application%pdf\PdfReader\Parser\ParseNull.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,6 @@
 
 #End Region
 
-
 Namespace PdfReader
     Public Class ParseNull
         Inherits ParseObjectBase
@@ -49,4 +48,3 @@ Namespace PdfReader
         End Sub
     End Class
 End Namespace
-

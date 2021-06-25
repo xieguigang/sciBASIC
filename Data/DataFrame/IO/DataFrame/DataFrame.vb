@@ -145,11 +145,15 @@ Namespace IO
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function CreateDataSource() As DynamicObjectLoader()
-            Dim LQuery As DynamicObjectLoader() = LinqAPI.Exec(Of DynamicObjectLoader) <=
+            Dim LQuery As DynamicObjectLoader() = LinqAPI.Exec(Of DynamicObjectLoader) _
+ _
+            () <=
  _
                 From i As Integer
-                In RowNumbers.Sequence.AsParallel
-                Let line As RowObject = _innerTable(i)  ' 已经去掉了首行标题行了的
+                In RowNumbers _
+                    .Sequence _
+                    .AsParallel
+                Let line As RowObject = _innerTable(i)
                 Select row = New DynamicObjectLoader With {
                     .lineNumber = i,
                     .RowData = line,
@@ -532,9 +536,7 @@ Namespace IO
             Call Me.Reset()
 
             Do While Me.Read
-                newTable += New RowObject(
-                    pList.Select(
-                    Function(i) current.Column(i)))
+                newTable += New RowObject(pList.Select(Function(i) current.Column(i)))
             Loop
 
             Return New DataFrame With {

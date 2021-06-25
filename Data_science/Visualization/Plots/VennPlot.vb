@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::463b3d9556916af384454af8b205ab12, Data_science\Visualization\Plots\VennPlot.vb"
+﻿#Region "Microsoft.VisualBasic::71c7d95515a06b23c8cc0b225f6aad96, Data_science\Visualization\Plots\VennPlot.vb"
 
     ' Author:
     ' 
@@ -52,7 +52,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports stdNum = System.Math
 

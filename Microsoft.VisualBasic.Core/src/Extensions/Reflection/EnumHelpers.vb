@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de9dc9cf1c6af1dd0cfada747461ef98, Microsoft.VisualBasic.Core\src\Extensions\Reflection\EnumHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::1f68c02a2d6247208e0d9a5467a2540c, Microsoft.VisualBasic.Core\src\Extensions\Reflection\EnumHelpers.vb"
 
     ' Author:
     ' 
@@ -44,6 +44,7 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.My
 
 Public Module EnumHelpers
 
@@ -90,15 +91,23 @@ Public Module EnumHelpers
     Public Function Enums(Of T As Structure)() As T()
         Dim enumType As Type = GetType(T)
 
-        If Not enumType.IsInheritsFrom(GetType(System.Enum)) Then
+        If Not enumType.IsInheritsFrom(GetType([Enum])) Then
             Return Nothing
+        Else
+            Dim enumsCache As Dictionary(Of Type, Array) = SingletonHolder(Of Dictionary(Of Type, Array)).Instance
+
+            If Not enumsCache.ContainsKey(enumType) Then
+                enumsCache(enumType) = enumType _
+                    .GetEnumValues _
+                    .AsObjectEnumerator _
+                    .Select(Function([enum]) DirectCast([enum], T)) _
+                    .ToArray
+            End If
         End If
 
-        Dim enumValues As T() = enumType _
-            .GetEnumValues _
-            .AsObjectEnumerator _
-            .Select(Function([enum]) DirectCast([enum], T)) _
-            .ToArray
+        Dim enumValues As T() = SingletonHolder(Of Dictionary(Of Type, Array)) _
+            .Instance _
+            .Item(enumType)
 
         Return enumValues
     End Function

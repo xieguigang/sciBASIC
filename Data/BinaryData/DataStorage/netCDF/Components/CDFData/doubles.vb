@@ -53,6 +53,13 @@ Namespace netCDF.Components
             End Get
         End Property
 
+        Sub New()
+        End Sub
+
+        Sub New(data As IEnumerable(Of Double))
+            buffer = data.ToArray
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Widening Operator CType(data As Double()) As doubles
             Return New doubles With {.buffer = data}

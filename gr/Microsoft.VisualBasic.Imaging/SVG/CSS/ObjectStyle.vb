@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ae1e37a2c7473b18f586e8d74468e48, gr\Microsoft.VisualBasic.Imaging\SVG\CSS\ObjectStyle.vb"
+﻿#Region "Microsoft.VisualBasic::db24a54361e12779d42acbb7bdd1978b, gr\Microsoft.VisualBasic.Imaging\SVG\CSS\ObjectStyle.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,7 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Namespace SVG.CSS
 

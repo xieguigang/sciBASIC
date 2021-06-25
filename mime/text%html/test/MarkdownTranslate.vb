@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb1fd6143b6bb53d85570eb440ae4487, mime\text%html\test\MarkdownTranslate.vb"
+﻿#Region "Microsoft.VisualBasic::919e452450838cfe27a252cd8313eb23, mime\text%html\test\MarkdownTranslate.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.MIME.Markup.MarkDown
+Imports Microsoft.VisualBasic.MIME.text.markdown
 
 Module MarkdownTranslate
 

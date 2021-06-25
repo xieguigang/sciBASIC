@@ -633,11 +633,13 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\mzkit\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'PlantMAT|AnyCPU'">
     <DefineTrace>true</DefineTrace>
@@ -684,7 +686,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Voyager1|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\..\..\..\..\..\..\voyager-1\Apps\</OutputPath>
+    <OutputPath>..\..\..\..\..\..\..\..\voyager-1\dist\assembly\</OutputPath>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>

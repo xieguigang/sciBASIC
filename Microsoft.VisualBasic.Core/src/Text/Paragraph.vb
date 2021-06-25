@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9963abdb1cd9050ffd80f3c10d220fc, Microsoft.VisualBasic.Core\src\Text\Paragraph.vb"
+﻿#Region "Microsoft.VisualBasic::1393efce71055cbb018e4b67e56889be, Microsoft.VisualBasic.Core\src\Text\Paragraph.vb"
 
     ' Author:
     ' 
@@ -52,8 +52,8 @@ Namespace Text
         ''' <summary>
         ''' 对于空文本，这个函数返回一个空集合
         ''' </summary>
-        ''' <param name="text$"></param>
-        ''' <param name="lineBreak%"></param>
+        ''' <param name="text">原始文本</param>
+        ''' <param name="lineBreak">每一行文本的最大字符数量</param>
         ''' <returns></returns>
         <Extension>
         Public Iterator Function Chunks(text$, lineBreak%) As IEnumerable(Of String)

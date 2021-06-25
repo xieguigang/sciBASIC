@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5bb52eb8d8253d4ddc6eef6fa6607030, Data_science\Visualization\Plots-statistics\SampleView.vb"
+﻿#Region "Microsoft.VisualBasic::f0473840fc5ad295910f61039799b9f1, Data_science\Visualization\Plots-statistics\SampleView.vb"
 
     ' Author:
     ' 
@@ -52,7 +52,7 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Statistics.MomentFunctions
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.MIME.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 ''' <summary>

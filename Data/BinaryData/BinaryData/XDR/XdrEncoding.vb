@@ -53,7 +53,16 @@ Namespace Xdr
         ''' http://tools.ietf.org/html/rfc4506#section-4.1
         ''' </summary>
         Public Function DecodeInt32(r As IByteReader) As Integer
-            Return (r.Read() << &H18) Or (r.Read() << &H10) Or (r.Read() << &H8) Or r.Read()
+            If r.EndOfStream Then
+                ' Return 0
+                Throw New InvalidProgramException
+            Else
+                Dim H18 = r.Read() << &H18
+                Dim H10 = r.Read() << &H10
+                Dim H8 = r.Read() << &H8
+
+                Return H18 Or H10 Or H8 Or r.Read()
+            End If
         End Function
 
         ''' <summary>

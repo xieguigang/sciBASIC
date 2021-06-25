@@ -70,6 +70,15 @@ Namespace netCDF.Components
             End Get
         End Property
 
+        Default Public Overloads Property Item(i As Integer) As T
+            Get
+                Return buffer(i)
+            End Get
+            Set(value As T)
+                buffer(i) = value
+            End Set
+        End Property
+
         Default Public Overloads Property Item(i As i32) As T
             Get
                 Return buffer(i)

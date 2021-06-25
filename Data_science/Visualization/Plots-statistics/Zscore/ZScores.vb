@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1f5189fe0a2fea2ee631b066584f890, Data_science\Visualization\Plots-statistics\Zscore\ZScores.vb"
+﻿#Region "Microsoft.VisualBasic::af33d8793ce06a950129cf1fdfaeca4f, Data_science\Visualization\Plots-statistics\Zscore\ZScores.vb"
 
     ' Author:
     ' 
@@ -52,7 +52,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.MIME.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 ''' <summary>

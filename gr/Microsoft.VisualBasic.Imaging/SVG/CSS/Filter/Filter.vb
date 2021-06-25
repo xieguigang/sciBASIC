@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11334432aa609cced95db91f0007c779, gr\Microsoft.VisualBasic.Imaging\SVG\CSS\Filter\Filter.vb"
+﻿#Region "Microsoft.VisualBasic::a8641172a6a4fa400915aab6b2d30f55, gr\Microsoft.VisualBasic.Imaging\SVG\CSS\Filter\Filter.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,7 @@
 #End Region
 
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.XmlMeta
+Imports Microsoft.VisualBasic.MIME.Html.XmlMeta
 
 Namespace SVG.CSS
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47f43462f418549d5cb7876b2ef55571, Data_science\Visualization\Plots\3D\g\Grid.vb"
+﻿#Region "Microsoft.VisualBasic::283323255f104320a20f0501b64dd834, Data_science\Visualization\Plots\3D\g\Grid.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D.Device
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Namespace Plot3D.Model
 

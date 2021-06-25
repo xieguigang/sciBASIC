@@ -58,7 +58,9 @@ Namespace Net.Http
         ''' 如果得到的一个gzip压缩的数据块头部没有magic number的话，则使用这个方法手动的添加标记后再做解压缩
         ''' </summary>
         ''' <param name="data"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' 返回来的数据的头部多了两个gzip压缩流的magic字节
+        ''' </returns>
         <Extension>
         Public Function AddGzipMagic(data As IEnumerable(Of Byte)) As IEnumerable(Of Byte)
             Return New Byte() {&H1F, &H8B}.JoinIterates(data)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63d4a5bb1d5323d45c5576be90d763e7, www\Microsoft.VisualBasic.NETProtocol\TcpServicesSocket.vb"
+﻿#Region "Microsoft.VisualBasic::9bfbc9550954786a17bba017682937bc, www\Microsoft.VisualBasic.NETProtocol\TcpServicesSocket.vb"
 
     ' Author:
     ' 
@@ -33,14 +33,15 @@
 
     '     Class TcpServicesSocket
     ' 
-    '         Properties: IsShutdown, LocalPort, ResponseHandler, Running
+    '         Properties: IsShutdown, LastError, LocalPort, ResponseHandler, Running
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: BeginListen, IsServerInternalException, LoopbackEndPoint, (+2 Overloads) Run, ToString
+    '         Function: BeginListen, IsServerInternalException, LoopbackEndPoint, (+2 Overloads) Run, startSocket
+    '                   ToString
     ' 
     '         Sub: AcceptCallback, (+2 Overloads) Dispose, ForceCloseHandle, HandleRequest, ReadCallback
-    '              Send, startSocket, WaitForStart
+    '              Send, WaitForStart
     ' 
     ' 
     ' /********************************************************************************/
@@ -80,8 +81,8 @@ Namespace Tcp
 
         Dim _threadEndAccept As Boolean = True
         Dim _exceptionHandle As ExceptionHandler
-        Dim _servicesSocket As Socket
         Dim _maxAccepts As Integer = 4
+        Dim _debugMode As Boolean = False
 
 #End Region
 
@@ -110,16 +111,20 @@ Namespace Tcp
 
         Shared ReadOnly defaultHandler As New [Default](Of ExceptionHandler)(AddressOf VBDebugger.PrintException)
 
+        Public ReadOnly Property LastError As String
+
         ''' <summary>
         ''' 消息处理的方法接口： Public Delegate Function DataResponseHandler(str As String, RemotePort As Integer) As String
         ''' </summary>
         ''' <param name="localPort">监听的本地端口号，假若需要进行端口映射的话，则可以在<see cref="Run"></see>方法之中设置映射的端口号</param>
         ''' <remarks></remarks>
         Sub New(Optional localPort As Integer = 11000,
-                Optional exceptionHandler As ExceptionHandler = Nothing)
+                Optional exceptionHandler As ExceptionHandler = Nothing,
+                Optional debug As Boolean = False)
 
             Me._LocalPort = localPort
             Me._exceptionHandle = exceptionHandler Or defaultHandler
+            Me._debugMode = debug
         End Sub
 
         ''' <summary>
@@ -128,10 +133,14 @@ Namespace Tcp
         ''' <param name="requestEventHandler"></param>
         ''' <param name="localPort"></param>
         ''' <param name="exceptionHandler"></param>
-        Sub New(requestEventHandler As DataRequestHandler, localPort%, Optional exceptionHandler As ExceptionHandler = Nothing)
-            Me.ResponseHandler = requestEventHandler
+        Sub New(requestEventHandler As DataRequestHandler, localPort%,
+                Optional exceptionHandler As ExceptionHandler = Nothing,
+                Optional debug As Boolean = False)
+
+            Me._ResponseHandler = requestEventHandler
             Me._exceptionHandle = exceptionHandler Or defaultHandler
             Me._LocalPort = localPort
+            Me._debugMode = debug
         End Sub
 
         ''' <summary>
@@ -183,9 +192,29 @@ Namespace Tcp
         ''' <remarks></remarks>
         Public Function Run(localEndPoint As TcpEndPoint) As Integer Implements IServicesSocket.Run
             Dim callback As AsyncCallback
-            Dim exitCode As Integer
+            Dim exitCode As Integer = 0
+            Dim socket As Socket = Nothing
 
-            Call startSocket(localEndPoint)
+            If _debugMode Then
+                Call Console.WriteLine("Start run socket...")
+            End If
+
+            For i As Integer = 0 To 10
+                ' start or run retry?
+                socket = startSocket(localEndPoint)
+
+                ' 20210516 not sure why object is nothing
+                ' on unix .NET 5 platform
+                If Not socket Is Nothing Then
+                    If _debugMode Then
+                        Call Console.WriteLine($"Socket initialize success! ({socket.GetHashCode})")
+                    End If
+
+                    Exit For
+                ElseIf _debugMode Then
+                    Call Console.WriteLine("Services socket is nothing, retry...")
+                End If
+            Next
 
             While Not Me.disposedValue
                 If _threadEndAccept Then
@@ -193,15 +222,19 @@ Namespace Tcp
 
                     callback = New AsyncCallback(AddressOf AcceptCallback)
 
-                    If _servicesSocket Is Nothing Then
-                        Call Console.WriteLine("socket initialize failured!")
+                    If socket Is Nothing Then
+                        If _debugMode Then
+                            Call Console.WriteLine("socket initialize failured!")
+                        End If
+
                         exitCode = -1
+
                         Exit While
                     End If
 
                     Try
                         ' Free 之后可能会出现空引用错误，则忽略掉这个错误，退出线程
-                        Call _servicesSocket.BeginAccept(callback, _servicesSocket)
+                        Call socket.BeginAccept(callback, socket)
                     Catch ex As Exception
                         Call App.LogException(ex)
                     End Try
@@ -210,7 +243,18 @@ Namespace Tcp
                 Call Thread.Sleep(1)
             End While
 
+            If _debugMode Then
+                Call Console.WriteLine("Exit socket loop...")
+                Call Console.WriteLine($"status code = {exitCode}")
+            End If
+
             _Running = False
+
+            Call socket.Dispose()
+
+            If _debugMode Then
+                Call Console.WriteLine("Release socket done!")
+            End If
 
             Return exitCode
         End Function
@@ -219,7 +263,13 @@ Namespace Tcp
         ''' Create a TCP/IP socket.
         ''' </summary>
         ''' <param name="localEndPoint"></param>
-        Private Sub startSocket(localEndPoint As TcpEndPoint)
+        Private Function startSocket(localEndPoint As TcpEndPoint) As Socket
+            Dim _servicesSocket As Socket
+
+            If _debugMode Then
+                Call Console.WriteLine($"Create socket object, bind to {localEndPoint.ToString}...")
+            End If
+
             _LocalPort = localEndPoint.Port
             _servicesSocket = New Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)
 
@@ -227,8 +277,10 @@ Namespace Tcp
                 ' Bind the socket to the local endpoint and listen
                 ' for incoming connections.
                 Call _servicesSocket.Bind(localEndPoint)
-                Call _servicesSocket.ReceiveBufferSize.SetValue(4096 * 1024 * 10)
-                Call _servicesSocket.SendBufferSize.SetValue(4096 * 1024 * 10)
+
+                _servicesSocket.ReceiveBufferSize = (4096 * 1024 * 10)
+                _servicesSocket.SendBufferSize = (4096 * 1024 * 10)
+
                 Call _servicesSocket.Listen(backlog:=128)
             Catch ex As Exception
                 Dim exMessage As String =
@@ -236,7 +288,10 @@ Namespace Tcp
                     vbCrLf &
                     vbCrLf &
                     ex.ToString
-                Call _exceptionHandle(New Exception(exMessage, ex))
+
+                _exceptionHandle(New Exception(exMessage, ex))
+                _LastError = $"[{ex.GetType.Name}] {ex.Message}"
+
                 Throw
             Finally
 #If DEBUG Then
@@ -246,7 +301,14 @@ Namespace Tcp
 
             _threadEndAccept = True
             _Running = True
-        End Sub
+
+            If _debugMode Then
+                Call Console.WriteLine(_servicesSocket.LocalEndPoint.ToString)
+                Call Console.WriteLine(_servicesSocket.Handle.ToString)
+            End If
+
+            Return _servicesSocket
+        End Function
 
         Public Sub WaitForStart()
             Do While Running = False
@@ -421,12 +483,7 @@ Namespace Tcp
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not Me.disposedValue Then
                 If disposing Then
-
-                    Call _servicesSocket.Dispose()
-                    Call _servicesSocket.Free()
-
                     _Running = False
-
                     ' TODO: dispose managed state (managed objects).
                 End If
 

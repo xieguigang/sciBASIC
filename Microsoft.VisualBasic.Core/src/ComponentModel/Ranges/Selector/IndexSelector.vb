@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95139befeafc8875d31a9c3935bef117, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Selector\IndexSelector.vb"
+﻿#Region "Microsoft.VisualBasic::466091d693617e1e941716a2c1fa5628, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Selector\IndexSelector.vb"
 
     ' Author:
     ' 
@@ -35,14 +35,6 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: FromSortSequence, SelectByRange
-    ' 
-    '     Class OrderSelector
-    ' 
-    '         Properties: Count, Desc, Max, Min
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Find, FirstGreaterThan, GetEnumerator, IEnumerable_GetEnumerator, SelectByRange
-    '                   SelectUntilGreaterThan, SelectUntilLessThan, ToString
     ' 
     ' 
     ' /********************************************************************************/

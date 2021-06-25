@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f6ef510c3dcffdfda903986d0e7518e, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\HTMLRender.vb"
+﻿#Region "Microsoft.VisualBasic::514efbde58b7f1691ee49f5c09746d6f, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\HTMLRender.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.MIME.Markup.HTML
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Namespace Drawing2D.Text
 

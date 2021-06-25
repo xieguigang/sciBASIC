@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::663d71d3a59935265448a3de9b863654, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Plot\DendrogramPanel.vb"
+﻿#Region "Microsoft.VisualBasic::f4d3b7bbca9e6e34c5e9b72aa119e969, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Plot\DendrogramPanel.vb"
 
     ' Author:
     ' 
@@ -48,7 +48,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.Encoder
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Public MustInherit Class DendrogramPanel : Inherits Plot
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25f7439690cdf2cebb6257a221b2987f, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\Range.vb"
+﻿#Region "Microsoft.VisualBasic::4c2421304db1ca234e1160091b9ed5b7, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\Range.vb"
 
     ' Author:
     ' 
@@ -37,13 +37,6 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: (+2 Overloads) IsInside, IsOverlapping, ToString
-    ' 
-    '     Class RangeTagValue
-    ' 
-    '         Properties: Value
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: ToString
     ' 
     ' 
     ' /********************************************************************************/

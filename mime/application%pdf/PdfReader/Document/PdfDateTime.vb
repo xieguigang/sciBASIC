@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0614e182343384c83d9746edafc60578, mime\application%pdf\PdfReader\Document\PdfDateTime.vb"
+﻿#Region "Microsoft.VisualBasic::d1a26c565fbb53add348a72b5fda1a2c, mime\application%pdf\PdfReader\Document\PdfDateTime.vb"
 
     ' Author:
     ' 
@@ -78,4 +78,3 @@ Namespace PdfReader
         End Property
     End Class
 End Namespace
-

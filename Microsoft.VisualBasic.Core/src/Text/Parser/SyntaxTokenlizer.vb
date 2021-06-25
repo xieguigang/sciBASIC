@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::280281952dac82bdc43ff46df82c23ff, Microsoft.VisualBasic.Core\src\Text\Parser\SyntaxTokenlizer.vb"
+﻿#Region "Microsoft.VisualBasic::8d19a5f7569f61e05f1f50ae2de9c97a, Microsoft.VisualBasic.Core\src\Text\Parser\SyntaxTokenlizer.vb"
 
     ' Author:
     ' 
@@ -51,7 +51,7 @@ Namespace Text.Parser
     Public MustInherit Class SyntaxTokenlizer(Of T As IComparable, SyntaxToken As CodeToken(Of T))
 
         Protected ReadOnly text As CharPtr
-        Protected buffer As CharBuffer
+        Protected buffer As New CharBuffer
 
         Protected ReadOnly Property lastSplashEscape As Boolean
             Get
@@ -87,7 +87,9 @@ Namespace Text.Parser
             Loop
 
             If buffer > 0 Then
-                Yield popOutToken()
+                If Not token = popOutToken() Is Nothing Then
+                    Yield CType(token, SyntaxToken)
+                End If
             End If
         End Function
 

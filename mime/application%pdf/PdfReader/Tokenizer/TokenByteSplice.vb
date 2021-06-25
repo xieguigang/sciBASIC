@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::98596d2c92b9316c1ef64c51cbc5a2a0, mime\application%pdf\PdfReader\Tokenizer\TokenByteSplice.vb"
+﻿#Region "Microsoft.VisualBasic::bbc599d86a4699896362a32a092a0535, mime\application%pdf\PdfReader\Tokenizer\TokenByteSplice.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,6 @@
 
 #End Region
 
-
 Namespace PdfReader
     Public Structure TokenByteSplice
         Public Bytes As Byte()
@@ -48,4 +47,3 @@ Namespace PdfReader
         Public Length As Integer
     End Structure
 End Namespace
-

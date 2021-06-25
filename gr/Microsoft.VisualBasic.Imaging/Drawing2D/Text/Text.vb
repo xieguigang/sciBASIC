@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7bde37a7efa216c325a9b29960090210, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Text.vb"
+﻿#Region "Microsoft.VisualBasic::429964ef1eaf3e0f813d64451e42d8f6, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Text.vb"
 
     ' Author:
     ' 
@@ -45,8 +45,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
-Imports Microsoft.VisualBasic.MIME.Markup.HTML
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.Render
+Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Microsoft.VisualBasic.Scripting.Expressions
 Imports GdiImage = System.Drawing.Image
 

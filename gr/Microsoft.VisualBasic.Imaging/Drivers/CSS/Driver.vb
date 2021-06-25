@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7198ae6f70bd1c6b353198bf905ab13f, gr\Microsoft.VisualBasic.Imaging\Drivers\CSS\Driver.vb"
+﻿#Region "Microsoft.VisualBasic::cd33f604e0637dd1eea818bd53b6364b, gr\Microsoft.VisualBasic.Imaging\Drivers\CSS\Driver.vb"
 
     ' Author:
     ' 
@@ -64,7 +64,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Namespace Driver.CSS
 
@@ -118,7 +118,7 @@ Namespace Driver.CSS
         ''' </summary>
         Font
         ''' <summary>
-        ''' <see cref="MIME.Markup.HTML.CSS.Stroke"/>
+        ''' <see cref="Stroke"/>
         ''' </summary>
         Stroke
         ''' <summary>
@@ -130,7 +130,7 @@ Namespace Driver.CSS
         ''' </summary>
         Size
         ''' <summary>
-        ''' <see cref="MIME.Markup.HTML.CSS.Padding"/>
+        ''' <see cref="Padding"/>
         ''' </summary>
         Padding
         ''' <summary>

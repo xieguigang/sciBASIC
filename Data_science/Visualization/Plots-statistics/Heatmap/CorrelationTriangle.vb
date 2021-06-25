@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ee24ece9d58b41c04a5c140328cbdea, Data_science\Visualization\Plots-statistics\Heatmap\CorrelationTriangle.vb"
+﻿#Region "Microsoft.VisualBasic::cbda86ab3ced6bcdce2235d96a8d6b56, Data_science\Visualization\Plots-statistics\Heatmap\CorrelationTriangle.vb"
 
     ' Author:
     ' 
@@ -58,7 +58,7 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.DataFrame
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports stdNum = System.Math
 
 Namespace Heatmap

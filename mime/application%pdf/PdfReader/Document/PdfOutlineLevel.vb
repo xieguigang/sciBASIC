@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dfc81e78226b29f7d56e39bfe2e0e733, mime\application%pdf\PdfReader\Document\PdfOutlineLevel.vb"
+﻿#Region "Microsoft.VisualBasic::6852c763020854d99c3bcd1579dd9df3, mime\application%pdf\PdfReader\Document\PdfOutlineLevel.vb"
 
     ' Author:
     ' 
@@ -85,4 +85,3 @@ Namespace PdfReader
         End Property
     End Class
 End Namespace
-

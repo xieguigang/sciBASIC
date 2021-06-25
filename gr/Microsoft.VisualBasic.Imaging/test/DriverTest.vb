@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f7bebc758d73979328658ac23979c08f, gr\Microsoft.VisualBasic.Imaging\test\DriverTest.vb"
+﻿#Region "Microsoft.VisualBasic::e239c0dda5f646c523665e3ad5acc3cb, gr\Microsoft.VisualBasic.Imaging\test\DriverTest.vb"
 
     ' Author:
     ' 
@@ -43,8 +43,8 @@
 
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Driver.CSS
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS.Parser
+Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Language.CSS
 Imports VisualBasic = Microsoft.VisualBasic.Language.Runtime
 
 Module DriverTest

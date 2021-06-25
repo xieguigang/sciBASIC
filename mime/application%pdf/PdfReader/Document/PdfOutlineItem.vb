@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4e5e43be54419ffb23686ba4bf2a66c, mime\application%pdf\PdfReader\Document\PdfOutlineItem.vb"
+﻿#Region "Microsoft.VisualBasic::2debca7cd3efe83ccc0e320cc30e40a7, mime\application%pdf\PdfReader\Document\PdfOutlineItem.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace PdfReader
     Public Class PdfOutlineItem
@@ -97,4 +96,3 @@ Namespace PdfReader
         End Property
     End Class
 End Namespace
-

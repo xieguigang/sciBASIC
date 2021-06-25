@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c004661e68c365899c938c6a9a93674, Data_science\MachineLearning\CellularAutomaton\Debugger\WriteCDF.vb"
+﻿#Region "Microsoft.VisualBasic::523286f1672134e323284c68b946bca9, Data_science\MachineLearning\CellularAutomaton\Debugger\WriteCDF.vb"
 
     ' Author:
     ' 
@@ -49,7 +49,7 @@ Module WriteCDF
         Using file As New CDFWriter(path)
             Dim w = cache(Scan0).Length
             Dim h = cache.Length
-            Dim data As CDFData
+            Dim data As integers
             Dim id As i32 = Scan0
             Dim dims As Dimension()
             Dim attrs As attribute()
@@ -59,12 +59,11 @@ Module WriteCDF
                 New attribute With {.name = "size\width", .type = CDFDataTypes.INT, .value = w},
                 New attribute With {.name = "size\height", .type = CDFDataTypes.INT, .value = h}
             )
-            file.Dimensions(Dimension.Integer)
 
             For j As Integer = 0 To w - 1
                 For i As Integer = 0 To h - 1
                     data = cache(i)(j).ToArray
-                    dims = {Dimension.Integer}
+                    dims = {New Dimension With {.name = $"sizeof", .size = data.Length}}
                     attrs = {
                         New attribute With {.name = "i", .type = CDFDataTypes.INT, .value = i},
                         New attribute With {.name = "j", .type = CDFDataTypes.INT, .value = j}
