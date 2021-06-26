@@ -2,8 +2,9 @@
 
     Public Class RunSlavePipeline
 
-        Public Event SetProgress(percentage As Double, details As String)
+        Public Event SetProgress(percentage As Integer, details As String)
         Public Event SetMessage(message As String)
+        Public Event Finish()
 
         ReadOnly app As String
         ReadOnly arguments As String
@@ -14,7 +15,9 @@
         End Sub
 
         Public Function Run() As Integer
-            Return PipelineProcess.ExecSub(app, arguments, AddressOf ProcessMessage)
+            Dim code As Integer = PipelineProcess.ExecSub(app, arguments, AddressOf ProcessMessage)
+            RaiseEvent Finish()
+            Return code
         End Function
 
         Private Sub ProcessMessage(line As String)
