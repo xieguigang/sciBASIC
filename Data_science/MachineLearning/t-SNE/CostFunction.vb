@@ -14,8 +14,11 @@ Friend Class CostFunction
         Me.tSNE = tSNE
     End Sub
 
-    ' return cost and gradient, given an arrangement
-    Private Sub CostGrad(Y As Double()())
+    ''' <summary>
+    ''' return cost and gradient, given an arrangement
+    ''' </summary>
+    ''' <param name="Y"></param>
+    Public Sub CostGrad(Y As Double()())
         Dim N = mN
         Dim [dim] = tSNE.mDim ' dim of output space
         Dim P = tSNE.mP
@@ -35,7 +38,8 @@ Friend Class CostFunction
                     dsum += dhere * dhere
                 Next
 
-                Dim qu = 1.0 / (1.0 + dsum) ' Student t-distribution
+                ' Student t-distribution
+                Dim qu = 1.0 / (1.0 + dsum)
                 lQu(i * N + j) = qu
                 lQu(j * N + i) = qu
                 qsum += 2 * qu

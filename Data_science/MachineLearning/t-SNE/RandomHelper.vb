@@ -1,5 +1,5 @@
-﻿Imports stdNum = System.Math
-Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+﻿Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+Imports stdNum = System.Math
 
 Friend Class RandomHelper
 

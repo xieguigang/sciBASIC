@@ -1,4 +1,6 @@
-﻿Module Helper
+﻿Imports stdNum = System.Math
+
+Module Helper
 
     ''' <summary>
     ''' utilitity that creates contiguous vector of zeros of size n
@@ -63,9 +65,9 @@
     ''' <param name="tol"></param>
     ''' <returns></returns>
     Friend Function d2p(D As Double(), perplexity As Double, tol As Double) As Double()
-        Dim Nf = Math.Sqrt(D.Length) ' this better be an integer
-        Dim N As Integer = Math.Floor(Nf)
-        Dim Htarget = Math.Log(perplexity) ' target entropy of distribution
+        Dim Nf = stdNum.Sqrt(D.Length) ' this better be an integer
+        Dim N As Integer = stdNum.Floor(Nf)
+        Dim Htarget = stdNum.Log(perplexity) ' target entropy of distribution
         Dim P = zeros(N * N) ' temporary probability matrix
         Dim prow = zeros(N) ' a temporary storage compartment
 
@@ -87,7 +89,7 @@
                 Dim psum = 0.0
 
                 For j = 0 To N - 1
-                    Dim pj = Math.Exp(-D(i * N + j) * beta)
+                    Dim pj = stdNum.Exp(-D(i * N + j) * beta)
                     If i = j Then pj = 0 ' we dont care about diagonals
                     prow(j) = pj
                     psum += pj
@@ -98,8 +100,12 @@
 
                 For j = 0 To N - 1
                     Dim pj = prow(j) / psum
+
                     prow(j) = pj
-                    If pj > 0.0000001 Then Hhere -= pj * Math.Log(pj)
+
+                    If pj > 0.0000001 Then
+                        Hhere -= pj * stdNum.Log(pj)
+                    End If
                 Next
 
                 ' adjust beta based on result
@@ -126,8 +132,14 @@
 
                 ' stopping conditions: too many tries or got a good precision
                 num += 1
-                If Math.Abs(Hhere - Htarget) < tol Then done = True
-                If num >= maxtries Then done = True
+
+                If stdNum.Abs(Hhere - Htarget) < tol Then
+                    done = True
+                End If
+
+                If num >= maxtries Then
+                    done = True
+                End If
             End While
 
             ' console.log('data point ' + i + ' gets precision ' + beta + ' after ' + num + ' binary search steps.');
@@ -142,9 +154,8 @@
         Dim N2 = N * 2
 
         For i = 0 To N - 1
-
             For j = 0 To N - 1
-                Pout(i * N + j) = Math.Max((P(i * N + j) + P(j * N + i)) / N2, 1.0E-100)
+                Pout(i * N + j) = stdNum.Max((P(i * N + j) + P(j * N + i)) / N2, 1.0E-100)
             Next
         Next
 

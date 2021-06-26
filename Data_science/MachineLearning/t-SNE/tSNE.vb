@@ -29,6 +29,7 @@ Public Class tSNE
     ''' </summary>
     Friend ReadOnly mDim As Integer
     Friend ReadOnly random As RandomHelper
+    Friend ReadOnly cost As CostFunction
 
     Public Sub New(perplexity As Double, [dim] As Integer, epsilon As Double)
         mPerplexity = perplexity
@@ -36,6 +37,7 @@ Public Class tSNE
         mEpsilon = epsilon
         mIter = 0
         random = New RandomHelper(Me)
+        cost = New CostFunction(Me)
     End Sub
 
     ''' <summary>
@@ -92,7 +94,7 @@ Public Class tSNE
     Public Function [Step]() As Double
         mIter += 1
         Dim N = mN
-        CostGrad(mY) ' evaluate gradient
+        Me.cost.CostGrad(mY) ' evaluate gradient
         Dim cost = mCost
         Dim grad = mGrad
 
