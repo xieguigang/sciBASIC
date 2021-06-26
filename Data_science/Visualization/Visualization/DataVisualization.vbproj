@@ -543,8 +543,8 @@
     </Compile>
     <Compile Include="BinaryTree\Tree.vb" />
     <Compile Include="Embedding\EmbeddingRender.vb" />
-    <Compile Include="Embedding\Umap3D.vb" />
-    <Compile Include="Embedding\Umap2D.vb" />
+    <Compile Include="Embedding\Embedding3D.vb" />
+    <Compile Include="Embedding\Embedding2D.vb" />
     <Compile Include="Embedding\EmbeddingRenderExtensions.vb" />
     <Compile Include="Embedding\UmapGraph.vb" />
   </ItemGroup>

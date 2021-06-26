@@ -66,15 +66,7 @@ Public MustInherit Class EmbeddingRender : Inherits Plot
         Me.clusters = clusters
         Me.colorSet = colorSet
         Me.umap = umap
-
-        If Not labels.IsNullOrEmpty Then
-            Me.labels = labels.ToArray
-        Else
-            Me.labels = umap.GetGraph.Dims.rows _
-                .SeqIterator _
-                .Select(Function(i) $"x_{i + 1}") _
-                .ToArray
-        End If
+        Me.labels = labels.ToArray
     End Sub
 
     Protected Function getClusterLabel(i As Integer) As String

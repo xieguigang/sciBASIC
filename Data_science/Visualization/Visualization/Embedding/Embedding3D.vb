@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::e698ae93ac56d3672c151436b633ad4a, Data_science\Visualization\Visualization\UMAP\Umap3D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class Umap3D
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: PlotInternal
-    ' 
-    ' /********************************************************************************/
+' Class Umap3D
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Sub: PlotInternal
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -45,18 +45,19 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D.Impl
+Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.DataMining.UMAP
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Linq
 
-Public Class Umap3D : Inherits EmbeddingRender
+Public Class Embedding3D : Inherits EmbeddingRender
 
     ReadOnly camera As Camera
     ReadOnly bubbleAlpha%
 
-    Public Sub New(umap As Umap, camera As Camera, labels$(), clusters As Dictionary(Of String, String), colorSet$, bubbleAlpha%, theme As Theme)
+    Public Sub New(umap As IDataEmbedding, camera As Camera, labels$(), clusters As Dictionary(Of String, String), colorSet$, bubbleAlpha%, theme As Theme)
         MyBase.New(umap, labels, clusters, colorSet, theme)
 
         Me.camera = camera

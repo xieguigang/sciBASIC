@@ -103,7 +103,7 @@ Public Module EmbeddingRenderExtensions
             .legendSplitSize = If(clusters Is Nothing OrElse clusters.Count <= 5, 0, 5)
         }
 
-        Return New Umap2D(
+        Return New Embedding2D(
             umap:=umap,
             labels:=labels.SafeQuery.ToArray,
             clusters:=clusters,
@@ -159,7 +159,7 @@ Public Module EmbeddingRenderExtensions
             .tagColor = labelColor
         }
 
-        Return New Umap3D(
+        Return New Embedding3D(
             umap:=umap,
             labels:=labels.SafeQuery.ToArray,
             clusters:=clusters,
