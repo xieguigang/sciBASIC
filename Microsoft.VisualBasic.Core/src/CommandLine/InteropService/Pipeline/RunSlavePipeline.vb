@@ -9,6 +9,12 @@
         ReadOnly app As String
         ReadOnly arguments As String
 
+        Public ReadOnly Property CommandLine As String
+            Get
+                Return $"{app} {arguments}"
+            End Get
+        End Property
+
         Sub New(app$, arguments$)
             Me.app = app
             Me.arguments = arguments
