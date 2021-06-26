@@ -459,6 +459,10 @@
       <Project>{4e06139a-d524-417f-a980-db3bf534cbdc}</Project>
       <Name>Randomizer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DataMining\DataMining.vbproj">
+      <Project>{1B42809B-603F-4CEA-A0DB-91276582B9CA}</Project>
+      <Name>DataMining</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

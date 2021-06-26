@@ -1,6 +1,7 @@
-﻿Imports stdNum = System.Math
+﻿Imports Microsoft.VisualBasic.DataMining.ComponentModel
+Imports stdNum = System.Math
 
-Public Class tSNE
+Public Class tSNE : Inherits IDataProjection
 
     ''' <summary>
     ''' effective number of nearest neighbors
@@ -31,6 +32,12 @@ Public Class tSNE
     Friend ReadOnly random As RandomHelper
     Friend ReadOnly cost As CostFunction
 
+    Public Overrides ReadOnly Property dimension As Integer
+        Get
+            Return mDim
+        End Get
+    End Property
+
     Public Sub New(perplexity As Double, [dim] As Integer, epsilon As Double)
         mPerplexity = perplexity
         mDim = [dim]
@@ -44,7 +51,7 @@ Public Class tSNE
     ''' return current solution
     ''' </summary>
     ''' <returns></returns>
-    Public Function GetSolution() As Double()()
+    Public Overrides Function GetEmbedding() As Double()()
         Return mY
     End Function
 
