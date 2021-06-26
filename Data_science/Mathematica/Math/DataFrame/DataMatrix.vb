@@ -53,7 +53,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Public Class DataMatrix
+Public Class DataMatrix : Implements IBucketVector
 
     Protected ReadOnly names As Index(Of String)
     Protected ReadOnly matrix As Double()()
@@ -151,4 +151,8 @@ Public Class DataMatrix
     Public Shared Narrowing Operator CType(mat As DataMatrix) As GeneralMatrix
         Return New GeneralMatrix(mat.matrix)
     End Operator
+
+    Public Function GetVector() As IEnumerable Implements IBucketVector.GetVector
+        Return PopulateRows.IteratesALL.ToArray
+    End Function
 End Class

@@ -54,6 +54,12 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.Collection
 
+    Public Interface IBucketVector
+
+        Function GetVector() As IEnumerable
+
+    End Interface
+
     ''' <summary>
     ''' An ultralarge size dictionary object.
     ''' (当你发现一个数据集合非常的大的时候，一个字典会出现溢出，则这个时候就需要这个超大容量的Bucket字典容器了)

@@ -162,6 +162,18 @@ Namespace Math
         ''' Returns a random floating-point number that is greater than or equal to min of the range,
         ''' and less than the max of the range.
         ''' </summary>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function NextDouble(min As Double, max As Double) As Double
+            Return (max - min) * seeds.NextDouble + min
+        End Function
+
+        ''' <summary>
+        ''' Returns a random floating-point number that is greater than or equal to min of the range,
+        ''' and less than the max of the range.
+        ''' </summary>
         ''' <param name="rnd"></param>
         ''' <param name="range"></param>
         ''' <returns></returns>
