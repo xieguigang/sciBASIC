@@ -124,6 +124,10 @@ Namespace Math
             Return seeds.NextDouble()
         End Function
 
+        Public Function NextDouble() As Double
+            Return seeds.NextDouble
+        End Function
+
         ''' <summary>
         ''' Returns a non-negative random integer that is less than the specified maximum.
         ''' </summary>
