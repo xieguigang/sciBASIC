@@ -542,11 +542,11 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="BinaryTree\Tree.vb" />
-    <Compile Include="UMAP\UmapRender.vb" />
-    <Compile Include="UMAP\Umap3D.vb" />
-    <Compile Include="UMAP\Umap2D.vb" />
-    <Compile Include="UMAP\UmapRenderExtensions.vb" />
-    <Compile Include="UMAP\UmapGraph.vb" />
+    <Compile Include="Embedding\UmapRender.vb" />
+    <Compile Include="Embedding\Umap3D.vb" />
+    <Compile Include="Embedding\Umap2D.vb" />
+    <Compile Include="Embedding\UmapRenderExtensions.vb" />
+    <Compile Include="Embedding\UmapGraph.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
