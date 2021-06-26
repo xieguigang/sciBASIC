@@ -42,8 +42,8 @@ Module Helper
     ''' <param name="X"></param>
     ''' <returns></returns>
     Friend Function xtod(X As Double()()) As Double()
-        Dim N = X.Length
-        Dim dist = zeros(N * N) ' allocate contiguous array
+        Dim N As Integer = X.Length
+        Dim dist As Double() = zeros(N * N) ' allocate contiguous array
 
         For i As Integer = 0 To N - 1
             For j As Integer = i + 1 To N - 1
