@@ -48,15 +48,26 @@ Public Class tSNE
         Return mY
     End Function
 
-    ' this function takes a set of high-dimensional points
-    ' and creates matrix P from them using gaussian kernel
-    Public Sub InitDataRaw(X As Double()())
-        Dim N = X.Length
-        Dim D = X(0).Length
-        Dim dists = xtod(X) ' convert X to distances using gaussian kernel
-        mP = d2p(dists, mPerplexity, 0.0001) ' attach to object
-        mN = N ' back up the size of the dataset
-        InitSolution() ' refresh this
+    ''' <summary>
+    ''' this function takes a set of high-dimensional points
+    ''' and creates matrix P from them using gaussian kernel
+    ''' </summary>
+    ''' <param name="X"></param>
+    Public Sub InitDataRaw(X As IEnumerable(Of Double()))
+        With X.ToArray
+            Dim N = .Length
+            Dim D = DirectCast(.GetValue(0), Double()).Length
+
+            ' convert X to distances using gaussian kernel
+            Dim dists = xtod(X)
+
+            ' attach to object
+            ' then back up the size of the dataset
+            mP = d2p(dists, mPerplexity, 0.0001)
+            mN = N
+        End With
+
+        Call InitSolution()
     End Sub
 
     ' this function takes a given distance matrix and creates
