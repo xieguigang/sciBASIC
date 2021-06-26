@@ -545,7 +545,7 @@
     <Compile Include="Embedding\EmbeddingRender.vb" />
     <Compile Include="Embedding\Umap3D.vb" />
     <Compile Include="Embedding\Umap2D.vb" />
-    <Compile Include="Embedding\UmapRenderExtensions.vb" />
+    <Compile Include="Embedding\EmbeddingRenderExtensions.vb" />
     <Compile Include="Embedding\UmapGraph.vb" />
   </ItemGroup>
   <ItemGroup>

@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::41a3beb6b7e9b4523c9cad4829188457, Data_science\Visualization\Visualization\UMAP\UmapRenderExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module UmapRenderExtensions
-    ' 
-    '     Function: DrawUmap2D, DrawUmap3D, GetPoint2D, GetPoint3D
-    ' 
-    ' /********************************************************************************/
+' Module UmapRenderExtensions
+' 
+'     Function: DrawUmap2D, DrawUmap3D, GetPoint2D, GetPoint3D
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
-Imports Microsoft.VisualBasic.DataMining.UMAP
+Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Driver
@@ -50,10 +50,10 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 <HideModuleName>
-Public Module UmapRenderExtensions
+Public Module EmbeddingRenderExtensions
 
     <Extension>
-    Public Function GetPoint2D(umap As Umap) As PointF()
+    Public Function GetPoint2D(umap As IDataEmbedding) As PointF()
         If umap.dimension <> 2 Then
             Throw New InvalidProgramException($"the given umap projection result(dimension={umap.dimension}) is not a 2D data!")
         Else
@@ -66,7 +66,7 @@ Public Module UmapRenderExtensions
     End Function
 
     <Extension>
-    Public Function GetPoint3D(umap As Umap) As Point3D()
+    Public Function GetPoint3D(umap As IDataEmbedding) As Point3D()
         If umap.dimension <> 3 Then
             Throw New InvalidProgramException($"the given umap projection result(dimension={umap.dimension}) is not a 3D data!")
         Else
@@ -86,15 +86,15 @@ Public Module UmapRenderExtensions
     ''' <param name="clusters">[label => clusterid]</param>
     ''' <returns></returns>
     <Extension>
-    Public Function DrawUmap2D(umap As Umap,
-                               Optional labels As IEnumerable(Of String) = Nothing,
-                               Optional clusters As Dictionary(Of String, String) = Nothing,
-                               Optional size$ = "2440,1920",
-                               Optional padding$ = g.DefaultUltraLargePadding,
-                               Optional colorSet$ = "Set1:c8",
-                               Optional showConvexHull As Boolean = True,
-                               Optional pointSize% = 10,
-                               Optional legendLabelCSS$ = CSSFont.PlotLabelNormal) As GraphicsData
+    Public Function DrawEmbedding2D(umap As IDataEmbedding,
+                                    Optional labels As IEnumerable(Of String) = Nothing,
+                                    Optional clusters As Dictionary(Of String, String) = Nothing,
+                                    Optional size$ = "2440,1920",
+                                    Optional padding$ = g.DefaultUltraLargePadding,
+                                    Optional colorSet$ = "Set1:c8",
+                                    Optional showConvexHull As Boolean = True,
+                                    Optional pointSize% = 10,
+                                    Optional legendLabelCSS$ = CSSFont.PlotLabelNormal) As GraphicsData
 
         Dim theme As New Theme With {
             .padding = padding,
@@ -133,20 +133,20 @@ Public Module UmapRenderExtensions
     ''' <param name="bubbleAlpha"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function DrawUmap3D(umap As Umap, camera As Camera,
-                               Optional labels As IEnumerable(Of String) = Nothing,
-                               Optional clusters As Dictionary(Of String, String) = Nothing,
-                               Optional size$ = "2048,2048",
-                               Optional padding$ = g.DefaultPadding,
-                               Optional bg$ = "white",
-                               Optional colorSet$ = "Set1:c8",
-                               Optional axisLabelCSS$ = CSSFont.PlotLabelNormal,
-                               Optional axisStroke$ = Stroke.AxisStroke,
-                               Optional labelCSS$ = CSSFont.Win10Normal,
-                               Optional pointSize# = 10,
-                               Optional showLabels As Boolean = True,
-                               Optional labelColor$ = "black",
-                               Optional bubbleAlpha As Integer = 0) As GraphicsData
+    Public Function DrawEmbedding3D(umap As IDataEmbedding, camera As Camera,
+                                    Optional labels As IEnumerable(Of String) = Nothing,
+                                    Optional clusters As Dictionary(Of String, String) = Nothing,
+                                    Optional size$ = "2048,2048",
+                                    Optional padding$ = g.DefaultPadding,
+                                    Optional bg$ = "white",
+                                    Optional colorSet$ = "Set1:c8",
+                                    Optional axisLabelCSS$ = CSSFont.PlotLabelNormal,
+                                    Optional axisStroke$ = Stroke.AxisStroke,
+                                    Optional labelCSS$ = CSSFont.Win10Normal,
+                                    Optional pointSize# = 10,
+                                    Optional showLabels As Boolean = True,
+                                    Optional labelColor$ = "black",
+                                    Optional bubbleAlpha As Integer = 0) As GraphicsData
 
         Dim theme As New Theme With {
             .padding = padding,
