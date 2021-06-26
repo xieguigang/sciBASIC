@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.DataMining.ComponentModel
+Imports Microsoft.VisualBasic.Linq
 Imports stdNum = System.Math
 
 Public Class tSNE : Inherits IDataEmbedding
@@ -66,7 +67,7 @@ Public Class tSNE : Inherits IDataEmbedding
             Dim D = DirectCast(.GetValue(0), Double()).Length
 
             ' convert X to distances using gaussian kernel
-            Dim dists = xtod(X)
+            Dim dists = .DoCall(AddressOf xtod)
 
             ' attach to object
             ' then back up the size of the dataset
