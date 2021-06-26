@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports stdNum = System.Math
 
-Public Class tSNE : Inherits IDataProjection
+Public Class tSNE : Inherits IDataEmbedding
 
     ''' <summary>
     ''' effective number of nearest neighbors

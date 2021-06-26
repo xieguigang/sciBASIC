@@ -47,7 +47,7 @@ Imports Microsoft.VisualBasic.DataMining.UMAP
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
 
-Public MustInherit Class UmapRender : Inherits Plot
+Public MustInherit Class EmbeddingRender : Inherits Plot
 
     Protected ReadOnly labels As String()
 

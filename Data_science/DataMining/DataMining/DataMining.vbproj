@@ -752,7 +752,7 @@
     <Compile Include="Clustering\KMeans\CompleteLinkage\ClusterAPI.vb" />
     <Compile Include="Clustering\KMeans\CompleteLinkage\CompleteLinkageClustering.vb" />
     <Compile Include="Clustering\KMeans\CompleteLinkage\LloydsMethodClustering.vb" />
-    <Compile Include="ComponentModel\IDataProjection.vb" />
+    <Compile Include="ComponentModel\IDataEmbedding.vb" />
     <Compile Include="ComponentModel\Encoder\Class.vb" />
     <Compile Include="ComponentModel\Discretizer\NormalRangeDiscretizer.vb" />
     <Compile Include="ComponentModel\Encoder\ClassEncoder.vb" />

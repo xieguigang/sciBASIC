@@ -51,7 +51,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Linq
 
-Public Class Umap3D : Inherits UmapRender
+Public Class Umap3D : Inherits EmbeddingRender
 
     ReadOnly camera As Camera
     ReadOnly bubbleAlpha%

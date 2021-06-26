@@ -48,7 +48,7 @@ Imports Microsoft.VisualBasic.DataMining.UMAP
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 
-Public Class Umap2D ： Inherits UmapRender
+Public Class Umap2D ： Inherits EmbeddingRender
 
     ReadOnly showConvexHull As Boolean
 

@@ -542,7 +542,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="BinaryTree\Tree.vb" />
-    <Compile Include="Embedding\UmapRender.vb" />
+    <Compile Include="Embedding\EmbeddingRender.vb" />
     <Compile Include="Embedding\Umap3D.vb" />
     <Compile Include="Embedding\Umap2D.vb" />
     <Compile Include="Embedding\UmapRenderExtensions.vb" />

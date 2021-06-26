@@ -60,7 +60,7 @@ Imports stdNum = System.Math
 ''' <remarks>
 ''' https://github.com/curiosity-ai/umap-sharp
 ''' </remarks>
-Public NotInheritable Class Umap : Inherits IDataProjection
+Public NotInheritable Class Umap : Inherits IDataEmbedding
 
     Friend Const SMOOTH_K_TOLERANCE As Double = 0.00001F
     Friend Const MIN_K_DIST_SCALE As Double = 0.001F
