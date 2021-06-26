@@ -60,7 +60,7 @@ Module Helper
     ''' <summary>
     ''' compute (p_{i|j} + p_{j|i})/(2n)
     ''' </summary>
-    ''' <param name="D"></param>
+    ''' <param name="D">distance matrix</param>
     ''' <param name="perplexity"></param>
     ''' <param name="tol"></param>
     ''' <returns></returns>
