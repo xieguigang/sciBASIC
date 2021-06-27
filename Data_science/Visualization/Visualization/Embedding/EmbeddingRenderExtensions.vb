@@ -100,7 +100,9 @@ Public Module EmbeddingRenderExtensions
             .padding = padding,
             .pointSize = pointSize,
             .legendLabelCSS = legendLabelCSS,
-            .legendSplitSize = If(clusters Is Nothing OrElse clusters.Count <= 5, 0, 5)
+            .legendSplitSize = If(clusters Is Nothing OrElse clusters.Count <= 5, 0, 5),
+            .legendBoxStroke = Nothing,
+            .axisTickCSS = CSSFont.Win7LargerNormal
         }
 
         Return New Embedding2D(
