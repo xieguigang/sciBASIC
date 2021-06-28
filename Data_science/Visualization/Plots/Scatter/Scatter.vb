@@ -215,14 +215,18 @@ Public Module Scatter
             .background = bg,
             .axisStroke = axisStroke,
             .drawAxis = drawAxis,
-            .axisLabelCSS = axisLabelCSS
+            .axisLabelCSS = axisLabelCSS,
+            .mainCSS = titleFontCSS,
+            .xAxisLayout = xlayout,
+            .yAxisLayout = ylayout
         }
         Dim plot As Plot
 
         If drawLine Then
-            plot = New Plots.LinePlot2D(data:=c, theme:=theme) With {
+            plot = New Plots.LinePlot2D(data:=c, theme:=theme, fill:=fill) With {
                 .xlabel = Xlabel,
-                .ylabel = Ylabel
+                .ylabel = Ylabel,
+                .main = title
             }
         Else
             plot = New Plots.Scatter2D(
@@ -307,7 +311,8 @@ Public Module Scatter
                          Optional YtickFormat$ = "F2",
                          Optional axisStroke$ = Stroke.AxisStroke,
                          Optional axisLabelCSS$ = CSSFont.Win10Normal,
-                         Optional scatterReorder As Boolean = False) As GraphicsData
+                         Optional scatterReorder As Boolean = False,
+                         Optional dpi As Integer = 100) As GraphicsData
 
         Dim plotInternal =
             Sub(ByRef g As IGraphics, layout As GraphicsRegion)
@@ -362,7 +367,8 @@ Public Module Scatter
             size:=size.SizeParser,
             padding:=padding,
             bg:=bg,
-            plotAPI:=plotInternal
+            plotAPI:=plotInternal,
+            dpi:=$"{dpi},{dpi}"
         )
     End Function
 

@@ -70,9 +70,10 @@ Namespace Plots
         ReadOnly fillPie As Boolean
         ReadOnly interplot As Splines
 
-        Public Sub New(data As IEnumerable(Of SerialData), theme As Theme)
+        Public Sub New(data As IEnumerable(Of SerialData), theme As Theme, Optional fill As Boolean = False)
             MyBase.New(theme)
 
+            Me.fill = fill
             Me.array = data.ToArray
         End Sub
 
@@ -168,7 +169,7 @@ Namespace Plots
                 Dim fillBrush As New SolidBrush(Color.FromArgb(100, baseColor:=line.color))
                 Dim d! = line.pointSize
                 Dim r As Single = line.pointSize / 2
-                Dim bottom! = gSize.Height - rect.PlotRegion.Bottom
+                Dim bottom! = rect.PlotRegion.Bottom
                 Dim getPointBrush = Function(pt As PointData)
                                         If pt.color.StringEmpty Then
                                             Return br
@@ -180,9 +181,9 @@ Namespace Plots
 
                 Dim pt1, pt2 As PointF
                 Dim pts As SlideWindow(Of PointData)() = line.pts _
-                .getSplinePoints(spline:=interplot) _
-                .SlideWindows(2) _
-                .ToArray
+                    .getSplinePoints(spline:=interplot) _
+                    .SlideWindows(2) _
+                    .ToArray
 
                 For Each pt As SlideWindow(Of PointData) In pts
                     Dim a As PointData = pt.First

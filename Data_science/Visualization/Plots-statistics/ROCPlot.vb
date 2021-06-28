@@ -123,7 +123,7 @@ Public Module ROCPlot
     ''' <param name="bg$"></param>
     ''' <param name="lineWidth!"></param>
     ''' <param name="fillAUC"></param>
-    ''' <param name="AUCfillColor$"></param>
+    ''' <param name="referenceLineColor$"></param>
     ''' <param name="showReference"></param>
     ''' <returns></returns>
     Public Function Plot(roc As SerialData,
@@ -132,11 +132,11 @@ Public Module ROCPlot
                          Optional bg$ = "white",
                          Optional lineWidth! = 10,
                          Optional fillAUC As Boolean = True,
-                         Optional AUCfillColor$ = "skyblue",
+                         Optional referenceLineColor$ = "skyblue",
                          Optional showReference As Boolean = False) As GraphicsData
 
         Dim reference As New SerialData With {
-            .color = AUCfillColor.TranslateColor,
+            .color = referenceLineColor.TranslateColor,
             .lineType = DashStyle.Dash,
             .pointSize = 5,
             .width = lineWidth,
@@ -145,7 +145,7 @@ Public Module ROCPlot
         }
 
         roc.width = lineWidth
-        roc.color = AUCfillColor.TranslateColor
+        ' roc.color = AUCfillColor.TranslateColor
         roc.pts = roc.pts.OrderBy(Function(p) p.pt.Y).ToArray
 
         Dim input As SerialData()
@@ -171,7 +171,9 @@ Public Module ROCPlot
             htmlLabel:=False,
             title:=$"ROC (AUC={roc.title})",
             labelFontStyle:=CSSFont.Win7VeryLarge,
-            tickFontStyle:=CSSFont.Win7Large
+            tickFontStyle:=CSSFont.Win7Large,
+            dpi:=300,
+            titleFontCSS:=CSSFont.PlotTitleNormal
         )
 
         Return img
