@@ -88,7 +88,7 @@ Public Module ROCPlot
             .pts = points _
                 .OrderBy(Function(p) p.pt.X) _
                 .ToArray,
-            .title = AUC
+            .title = AUC.ToString("F2")
         }
     End Function
 
