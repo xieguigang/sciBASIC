@@ -121,7 +121,9 @@ Namespace FileIO
 
         Friend Function MapGithubRawUrl(url As String) As String
             If url.StartsWith("github://") Then
-                Return url.Replace("github://", "https://raw.githubusercontent.com/")
+                Return url _
+                    .Replace("github://", "https://raw.githubusercontent.com/") _
+                    .Replace("/blob/master/", "/master/")
             Else
                 Return url
             End If

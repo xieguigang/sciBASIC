@@ -755,10 +755,12 @@ RE0:
                     AddHandler browser.DownloadProgressChanged, progressHandle
                 End If
 
+                strUrl = NetFile.MapGithubRawUrl(strUrl)
+
                 Call browser.Headers.Add(UserAgent.UAheader, ua Or DefaultUA)
                 Call $"{strUrl} --> {save}".__DEBUG_ECHO
                 Call save.ParentPath.MakeDir
-                Call browser.DownloadFile(NetFile.MapGithubRawUrl(strUrl), save)
+                Call browser.DownloadFile(strUrl, save)
             End Using
 
             Return True
