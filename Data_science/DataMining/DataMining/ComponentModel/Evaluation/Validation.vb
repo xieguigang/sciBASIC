@@ -209,7 +209,7 @@ Namespace ComponentModel.Evaluation
             }
         End Function
 
-        Shared ReadOnly normalRange As [Default](Of Sequence) = New Sequence(0, 1, 10000)
+        Shared ReadOnly normalRange As [Default](Of Sequence) = New Sequence(0, 1, 100000)
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function AUC(validates As IEnumerable(Of Validation)) As Double

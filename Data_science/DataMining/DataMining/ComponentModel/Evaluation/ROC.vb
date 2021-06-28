@@ -1,51 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::f002cf715004743765469dc5c4ab5f41, Data_science\DataMining\DataMining\ComponentModel\Evaluation\ROC.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module ROC
-    ' 
-    '         Function: accumulate, (+3 Overloads) AUC
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module ROC
+' 
+'         Function: accumulate, (+3 Overloads) AUC
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdNum = System.Math
+Imports Microsoft.VisualBasic.Math.SyntaxAPI
 
 Namespace ComponentModel.Evaluation
 
@@ -59,41 +60,30 @@ Namespace ComponentModel.Evaluation
         ''' </summary>
         ''' <param name="validates"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' https://blog.revolutionanalytics.com/2016/11/calculating-auc.html
+        ''' 
+        ''' ```r
+        ''' simple_auc &lt;- function(TPR, FPR){
+        '''    # inputs already sorted, best scores first 
+        '''    dFPR &lt;- c(diff(FPR), 0)
+        '''    dTPR &lt;- c(diff(TPR), 0)
+        '''    sum(TPR * dFPR) + sum(dTPR * dFPR) / 2;
+        ''' }
+        '''
+        ''' with(roc_df, simple_auc(TPR, FPR))
+        ''' ```
+        ''' </remarks>
         <Extension>
         Public Function AUC(validates As IEnumerable(Of Validation)) As Double
-            Dim raw = validates _
-                .OrderByDescending(Function(d) d.Threshold) _
-                .ToArray
+            With validates.OrderBy(Function(x) x.Sensibility).ToArray
+                Dim TPR As Vector = .Select(Function(v) v.Sensibility).AsVector
+                Dim FPR As Vector = .Select(Function(v) v.FPR).AsVector
+                Dim dFPR As Vector = C(diff(FPR), 0)
+                Dim dTPR As Vector = C(diff(TPR), 0)
 
-            If raw.All(Function(a) a.Specificity = 100 AndAlso a.Sensibility = 100) Then
-                Return 1
-            Else
-                Return raw.accumulate().Sum / 100
-            End If
-        End Function
-
-        <Extension>
-        Private Iterator Function accumulate(data As Validation()) As IEnumerable(Of Double)
-            Dim x2, x1 As Double
-            Dim fx2, fx1 As Double
-            Dim h As Double
-            Dim delta As Double
-
-            ' x = 1 - Specificity
-            ' y = Sensibility
-            '
-            ' 梯形面积计算： 矩形面积+直角三角形面积
-
-            For i As Integer = 1 To data.Length - 1
-                x2 = data(i).Specificity
-                x1 = data(i - 1).Specificity
-                fx2 = data(i).Sensibility
-                fx1 = data(i - 1).Sensibility
-                h = x2 - x1
-                delta = (fx2 + fx1) * h / 2
-
-                Yield delta
-            Next
+                Return (TPR * dFPR).Sum + (dTPR * dFPR).Sum / 2
+            End With
         End Function
 
         ''' <summary>

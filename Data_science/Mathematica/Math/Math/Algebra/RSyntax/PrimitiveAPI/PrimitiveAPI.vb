@@ -147,6 +147,22 @@ Namespace SyntaxAPI
             Return New Vector(args)
         End Function
 
+        Public Function c(ParamArray args As Object()) As Vector
+            Dim output As New List(Of Double)
+
+            For Each item In args
+                If TypeOf item Is Double Then
+                    output.Add(item)
+                ElseIf TypeOf item Is Vector Then
+                    output.AddRange(DirectCast(item, Vector))
+                Else
+                    Throw New NotImplementedException(item.GetType.FullName)
+                End If
+            Next
+
+            Return New Vector(output)
+        End Function
+
         ''' <summary>
         ''' Given a set of logical vectors, is at least one of the values true?
         ''' </summary>
