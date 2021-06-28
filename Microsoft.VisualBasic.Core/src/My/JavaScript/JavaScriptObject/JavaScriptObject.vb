@@ -223,7 +223,7 @@ Namespace My.JavaScript
             Next
         End Function
 
-        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+        Protected Overridable Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
             Yield GetEnumerator()
             Yield IEnumerable_GetEnumerator1()
         End Function

@@ -79,11 +79,16 @@ Namespace ComponentModel.Evaluation
             With validates.OrderBy(Function(x) x.Sensibility).ToArray
                 Dim TPR As Vector = .Select(Function(v) v.Sensibility).AsVector
                 Dim FPR As Vector = .Select(Function(v) v.FPR).AsVector
-                Dim dFPR As Vector = C(diff(FPR), 0)
-                Dim dTPR As Vector = C(diff(TPR), 0)
 
-                Return (TPR * dFPR).Sum + (dTPR * dFPR).Sum / 2
+                Return SimpleAUC(TPR, FPR)
             End With
+        End Function
+
+        Public Function SimpleAUC(TPR As Vector, FPR As Vector) As Double
+            Dim dFPR As Vector = C(diff(FPR), 0)
+            Dim dTPR As Vector = C(diff(TPR), 0)
+
+            Return (TPR * dFPR).Sum + (dTPR * dFPR).Sum / 2
         End Function
 
         ''' <summary>

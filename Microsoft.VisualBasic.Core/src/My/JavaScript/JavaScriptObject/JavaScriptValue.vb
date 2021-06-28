@@ -1,9 +1,5 @@
-﻿Imports System.Reflection
-Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports any = Microsoft.VisualBasic.Scripting
 
 Namespace My.JavaScript
@@ -17,7 +13,7 @@ Namespace My.JavaScript
 
         Public ReadOnly Property IsConstant As Boolean
             Get
-                Return Accessor.IsNull
+                Return Accessor.member Is Nothing
             End Get
         End Property
 

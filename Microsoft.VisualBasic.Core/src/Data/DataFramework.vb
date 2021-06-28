@@ -316,6 +316,15 @@ Namespace ComponentModel.DataSourceModel
             Return numerics.Any(Function(num) num Is type)
         End Function
 
+        Public Function IsIntegerType(type As Type) As Boolean
+            Static ints As Type() = {
+                GetType(Integer), GetType(Short), GetType(Byte), GetType(Long),
+                GetType(UInteger), GetType(UShort), GetType(SByte), GetType(ULong)
+            }
+
+            Return ints.Any(Function(int) int Is type)
+        End Function
+
         Public Enum EnumCastTo
             none
             [string]

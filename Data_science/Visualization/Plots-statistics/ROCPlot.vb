@@ -54,6 +54,12 @@ Imports Microsoft.VisualBasic.MIME.HTML.CSS
 
 Public Module ROCPlot
 
+    ''' <summary>
+    ''' x = <see cref="Validation.Specificity"/>;
+    ''' y = <see cref="Validation.Sensibility"/>;
+    ''' </summary>
+    ''' <param name="test"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function CreateSerial(test As IEnumerable(Of Validation)) As SerialData
         Dim points As New List(Of PointData)
