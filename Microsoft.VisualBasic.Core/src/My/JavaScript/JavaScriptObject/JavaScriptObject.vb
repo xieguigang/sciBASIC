@@ -77,81 +77,9 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports any = Microsoft.VisualBasic.Scripting
 
 Namespace My.JavaScript
-
-    Public Interface IJavaScriptObjectAccessor
-        Default Property Accessor(name As String) As Object
-    End Interface
-
-    Public Class Descriptor
-
-        Public Property value As Object
-        Public Property writable As Boolean
-        Public Property enumerable As Boolean
-        Public Property configurable As Boolean
-
-    End Class
-
-    Public Enum MemberAccessorResult
-        ''' <summary>
-        ''' Member is not exists in current javascript object
-        ''' </summary>
-        Undefined
-        ''' <summary>
-        ''' IS a member property in this javascript object
-        ''' </summary>
-        ClassMemberProperty
-        ''' <summary>
-        ''' Is an extension property object this javascript object
-        ''' </summary>
-        ExtensionProperty
-    End Enum
-
-    Public Class JavaScriptValue
-
-        Public Property Accessor As BindProperty(Of DataFrameColumnAttribute)
-        Public Property Literal As Object
-
-        Dim target As JavaScriptObject
-
-        Public ReadOnly Property IsConstant As Boolean
-            Get
-                Return Accessor.IsNull
-            End Get
-        End Property
-
-        Sub New(bind As BindProperty(Of DataFrameColumnAttribute), target As JavaScriptObject)
-            Me.Accessor = bind
-            Me.target = target
-        End Sub
-
-        Sub New()
-        End Sub
-
-        Public Function GetValue() As Object
-            If IsConstant Then
-                Return Literal
-            Else
-                Return Accessor.GetValue(target)
-            End If
-        End Function
-
-        Public Sub SetValue(value As Object)
-            If IsConstant Then
-                Literal = value
-            Else
-                Accessor.SetValue(target, value)
-            End If
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return any.ToString(GetValue)
-        End Function
-    End Class
 
     ''' <summary>
     ''' javascript object
@@ -179,7 +107,7 @@ Namespace My.JavaScript
         ''' </summary>
         ''' <param name="memberName"></param>
         ''' <returns></returns>
-        Default Public Property Accessor(memberName As String) As Object Implements IJavaScriptObjectAccessor.Accessor
+        Default Public Property Item(memberName As String) As Object Implements IJavaScriptObjectAccessor.Accessor
             Get
                 Return GetMemberValue(memberName, Nothing)
             End Get

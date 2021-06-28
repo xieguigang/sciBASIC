@@ -1691,6 +1691,9 @@
     <Compile Include="Extensions\Image\Math\QuadrantRegions.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\SampleObservation.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\Min.vb" />
+    <Compile Include="My\JavaScript\JavaScriptObject\Abstract.vb" />
+    <Compile Include="My\JavaScript\JavaScriptObject\Descriptor.vb" />
+    <Compile Include="My\JavaScript\JavaScriptObject\JavaScriptValue.vb" />
     <Compile Include="Net\HTTP\WebResponse.vb" />
     <Compile Include="Globals.vb" />
     <Compile Include="Extensions\Reflection\Marshal\Span1.vb" />
@@ -1785,7 +1788,7 @@
     <Compile Include="Extensions\ValueTypes\TimeSpanScale.vb" />
     <Compile Include="My\JavaScript\ES6\Map.vb" />
     <Compile Include="My\JavaScript\Linq.vb" />
-    <Compile Include="My\JavaScript\JavaScriptObject.vb" />
+    <Compile Include="My\JavaScript\JavaScriptObject\JavaScriptObject.vb" />
     <Compile Include="My\JavaScript\String.vb" />
     <Compile Include="My\JavaScript\UnionType.vb" />
     <Compile Include="Language\Language\Java\NamespaceDoc.vb" />
