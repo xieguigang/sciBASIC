@@ -215,7 +215,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
                 Next
             Next
 
-            Dim isoPath As GeneralPath = New GeneralPath()
+            Dim isoPath As New GeneralPath(threshold)
 
             For r = 0 To numRows - 1
 

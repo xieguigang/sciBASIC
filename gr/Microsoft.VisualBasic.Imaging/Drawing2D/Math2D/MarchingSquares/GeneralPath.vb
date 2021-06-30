@@ -7,6 +7,11 @@ Namespace Drawing2D.Math2D.MarchingSquares
 
         Dim polygons As New List(Of PointF())
         Dim temp As New List(Of PointF)
+        Dim level As Double
+
+        Sub New(level As Double)
+            Me.level = level
+        End Sub
 
         Friend Sub moveTo(x As Double, y As Double)
             temp.Add(New PointF(x, y))
@@ -14,6 +19,14 @@ Namespace Drawing2D.Math2D.MarchingSquares
 
         Friend Sub lineTo(x As Double, y As Double)
             temp.Add(New PointF(x, y))
+        End Sub
+
+        Public Sub Fill(canvas As IGraphics, color As Brush)
+
+        End Sub
+
+        Public Sub Draw(canvas As IGraphics, border As Pen)
+
         End Sub
 
         Friend Sub closePath()

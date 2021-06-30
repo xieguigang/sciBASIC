@@ -19,14 +19,15 @@ Namespace Contour
                              Optional gridSize$ = "5,5") As GraphicsData
 
             Dim matrix As New MapMatrix(sample, size.SizeParser, gridSize.SizeParser)
-            Dim contour As New MarchingSquares(matrix)
-            Dim q As QuantileEstimationGK = matrix.GetLevelQuantile
+            Dim contour As New MarchingSquares()
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
-                    Dim level_cutoff As Double = q.Query(0.5)
+                    Dim level_cutoff As Double() = matrix.GetPercentages
+                    Dim data As Double()() = matrix.GetMatrixInterpolation.ToArray
 
-                    For Each polygon As PointF() In contour.CreateMapData(threshold:=level_cutoff)
-                        Call g.DrawPolygon(Pens.Black, polygon)
+                    For Each polygon As GeneralPath In contour.mkIsos(data, levels:=level_cutoff)
+                        Call polygon.Fill(g, Brushes.Red)
+                        Call polygon.Draw(g, Pens.Black)
                     Next
                 End Sub
 
