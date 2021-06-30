@@ -108,7 +108,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
             Dim range As DoubleRange = data
             Dim percentage As DoubleRange = {0, 1}
 
-            Return {0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.975, 0.99} _
+            Return {0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.975} _
                 .Select(Function(p)
                             Return percentage.ScaleMapping(p, range)
                         End Function) _

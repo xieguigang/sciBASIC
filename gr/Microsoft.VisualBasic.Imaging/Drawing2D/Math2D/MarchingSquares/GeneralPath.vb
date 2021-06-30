@@ -22,11 +22,15 @@ Namespace Drawing2D.Math2D.MarchingSquares
         End Sub
 
         Public Sub Fill(canvas As IGraphics, color As Brush)
-
+            For Each polygon In polygons
+                Call canvas.FillPolygon(color, polygon)
+            Next
         End Sub
 
         Public Sub Draw(canvas As IGraphics, border As Pen)
-
+            For Each polygon In polygons
+                Call canvas.DrawPolygon(border, polygon)
+            Next
         End Sub
 
         Friend Sub closePath()
