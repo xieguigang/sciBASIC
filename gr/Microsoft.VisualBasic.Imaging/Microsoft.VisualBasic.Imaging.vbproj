@@ -773,7 +773,6 @@
     <Compile Include="d3js\scale\ordinal.vb" />
     <Compile Include="Drawing2D\Math2D\MarchingSquares\GeneralPath.vb" />
     <Compile Include="Drawing2D\Math2D\MarchingSquares\ASCIIPrinter.vb" />
-    <Compile Include="Drawing2D\Math2D\MarchingSquares\IntMeasureData.vb" />
     <Compile Include="Drawing2D\Math2D\MarchingSquares\MapMatrix.vb" />
     <Compile Include="Drawing2D\Math2D\MarchingSquares\MeasureData.vb" />
     <Compile Include="Drawing2D\Math2D\MarchingSquares\Side.vb" />
