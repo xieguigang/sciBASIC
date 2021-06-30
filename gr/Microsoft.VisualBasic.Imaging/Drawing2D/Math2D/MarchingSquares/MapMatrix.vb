@@ -89,6 +89,8 @@ Namespace Drawing2D.Math2D.MarchingSquares
             h = size.Height
             grid_w = gridSize.Width
             grid_h = gridSize.Height
+
+            Call InitData()
         End Sub
 
         Public Function GetLevelQuantile() As QuantileEstimationGK
