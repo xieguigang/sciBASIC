@@ -20,7 +20,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
 
             For i = 0 To levels.Length - 1
                 ' Create contour for this level using Marching Squares algorithm.
-                s += map.asciiContourPrint(map.mkContour(dataP, levels(i)))
+                s += map.asciiContourPrint(map.makeContour(dataP, levels(i)))
                 s += vbLf
             Next
 

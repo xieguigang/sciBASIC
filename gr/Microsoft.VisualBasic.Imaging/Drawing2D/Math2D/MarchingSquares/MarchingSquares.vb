@@ -132,7 +132,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
 
             For i = 0 To levels.Length - 1
                 ' Create contour for this level using Marching Squares algorithm.
-                Dim contour = mkContour(dataP, levels(i))
+                Dim contour = makeContour(dataP, levels(i))
                 ' Convert contour to GeneralPath.
                 isos(i) = mkIso(contour, dataP, levels(i))
             Next
@@ -148,15 +148,13 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' <param name="level"> threshold to use as iso levels. </param>
         ''' <returns> return an array of iso GeneralPaths. Each array element
         ''' corresponds to the same threshold in the 'levels' input array. </returns>
-        Friend Function mkContour(data As Double()(), level As Double) As IsoCell()()
+        Friend Function makeContour(data As Double()(), level As Double) As IsoCell()()
 
             ' Pad data to guarantee iso GeneralPaths will be closed shapes.
             Dim numRows = data.Length
             Dim numCols = data(0).Length
 
             ' Create array indicating iso cell neighbor info.
-            'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
-            'ORIGINAL LINE: IsoCell[][] contours = new IsoCell[numRows - 1][numCols - 1];
             Dim contours As IsoCell()() = MAT(Of IsoCell)(numRows - 1, numCols - 1)
 
             For r = 0 To numRows - 1 - 1
@@ -329,8 +327,6 @@ Namespace Drawing2D.Math2D.MarchingSquares
 
             superMin -= 1
 
-            'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
-            'ORIGINAL LINE: double[][] padded = new double[rows + 2][cols + 2];
             Dim padded = MAT(Of Double)(rows + 2, cols + 2)
 
             For i = 0 To cols + 2 - 1
