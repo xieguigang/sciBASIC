@@ -86,7 +86,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' values of, e.g., (0.5, 0), plotting is better if the data indicated, say,
         ''' (0.83, 0) should be used.
         ''' </summary>
-        ''' <paramname="cellSide"> which side crossing is wanted. </param>
+        ''' <param name="cellSide"> which side crossing is wanted. </param>
         ''' <returns> crossing based on data and normalized to [0, 1]. </returns>
         Public Overridable Function normalizedPointCCW(ByVal cellSide As Side) As Point2D
             Select Case cellSide
@@ -108,7 +108,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' this method determines the first side that would used in a counter-
         ''' clockwise traversal of an isoline.
         ''' </summary>
-        ''' <paramname="prev"> previous side, used only for ambiguous cases of 5 and 10. </param>
+        ''' <param name="prev"> previous side, used only for ambiguous cases of 5 and 10. </param>
         ''' <returns> side to start with in a CCW traversal. </returns>
         Public Overridable Function firstSideCCW(ByVal prev As Side) As Side
             Select Case neighborInfo_Renamed
@@ -161,7 +161,7 @@ _Select2_CaseDefault:
         ''' this method determines the second side of a cell that would used in a
         ''' counter-clockwise traversal of an isoline.
         ''' </summary>
-        ''' <paramname="prev"> previous side, used only for ambiguous cases of 5 and 10. </param>
+        ''' <param name="prev"> previous side, used only for ambiguous cases of 5 and 10. </param>
         ''' <returns> side to finish with in a call during a CCW traversal. </returns>
         Public Overridable Function secondSideCCW(ByVal prev As Side) As Side
             Select Case neighborInfo_Renamed
@@ -211,7 +211,7 @@ _Select2_CaseDefault:
         ''' <summary>
         ''' Find the next cell to use in a CCW traversal of an isoline.
         ''' </summary>
-        ''' <paramname="prev"> previous side, used only for ambiguous cases of 5 and 10. </param>
+        ''' <param name="prev"> previous side, used only for ambiguous cases of 5 and 10. </param>
         ''' <returns> next cell to use in a CCW traversal. </returns>
         Public Overridable Function nextCellCCW(ByVal prev As Side) As Side
             Return secondSideCCW(prev)
@@ -225,7 +225,7 @@ _Select2_CaseDefault:
         ''' afterward so that subsequent searches for isolines will not loop
         ''' infinitely.
         ''' </summary>
-        ''' <paramname="prev"> </param>
+        ''' <param name="prev"> </param>
         Public Overridable Sub clearIso(ByVal prev As Side)
             Select Case neighborInfo_Renamed
                 Case 0, 5, 10, 15
