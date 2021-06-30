@@ -60,15 +60,6 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' 插值后得到的稠密矩阵数据
         ''' </summary>
         Friend data As Double(,)
-        Friend x_num% = 100
-        Friend y_num% = 100
-
-#Region "the input parameters"
-        Friend grid_w#
-        Friend grid_h#
-        Friend w#, h#
-#End Region
-
         ''' <summary>
         ''' 实际的测量结果数据，一般为一个稀疏矩阵
         ''' </summary>
@@ -90,16 +81,9 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' 
         ''' </summary>
         ''' <param name="raw">现实世界中的原始测量结果数据</param>
-        ''' <param name="size">画布的大小</param>
-        ''' <param name="gridSize">网格的大小</param>
-        Sub New(raw As IEnumerable(Of MeasureData), size As SizeF, gridSize As SizeF)
+        Sub New(raw As IEnumerable(Of MeasureData))
             dots = raw.ToArray
-            w = size.Width
-            h = size.Height
-            grid_w = gridSize.Width
-            grid_h = gridSize.Height
-
-            Call InitData()
+            InitData()
         End Sub
 
         Public Function GetLevelQuantile() As QuantileEstimationGK
@@ -132,18 +116,17 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' </returns>
         Public Iterator Function GetMatrixInterpolation() As IEnumerable(Of Double())
             Dim x, y As Double
-            Dim dx As Double = grid_w
-            Dim dy As Double = grid_h
+            Dim dims As Size = dimension
             Dim scan As New List(Of Double)
 
-            For i As Integer = 0 To x_num - 1
-                For j As Integer = 0 To y_num - 1
+            For i As Integer = 0 To dims.Width - 1
+                For j As Integer = 0 To dims.Height - 1
                     scan += data(i, j)
-                    y += dy
+                    y += 1
                 Next
 
                 y = 0
-                x = x + dx
+                x = x + 1
 
                 Yield scan.PopAll
             Next
@@ -155,9 +138,10 @@ Namespace Drawing2D.Math2D.MarchingSquares
         Friend Function InitData() As MapMatrix
             Dim measure_data = Me.dots
             Dim d As Double
+            Dim dims = dimension
+            Dim x_num = dims.Width
+            Dim y_num = dims.Height
 
-            x_num = CInt(w / grid_w)
-            y_num = CInt(h / grid_h)
             data = New Double(x_num - 1, y_num - 1) {}
             min = Single.MaxValue
             max = Single.MinValue

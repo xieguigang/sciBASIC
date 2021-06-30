@@ -19,10 +19,10 @@ Namespace Contour
                              Optional padding$ = g.DefaultLargerPadding,
                              Optional bg$ = "white",
                              Optional colorSet$ = "Jet",
-                             Optional gridSize$ = "5,5") As GraphicsData
+                             Optional gridSize$ = "3,3") As GraphicsData
 
-            Dim matrix As New MapMatrix(sample, size.SizeParser, gridSize.SizeParser)
             Dim contour As New MarchingSquares()
+            Dim matrix As New MapMatrix(sample)
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
                     Dim level_cutoff As Double() = matrix.GetPercentages
