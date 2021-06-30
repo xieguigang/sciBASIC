@@ -57,6 +57,10 @@ Namespace d3js.scale
         ''' 作图的时候的用户数据区间
         ''' </summary>
         Dim _domain As DoubleRange
+        ''' <summary>
+        ''' 适用于Y坐标轴数据的映射，因为Y坐标轴与绘制的像素Y之间是反过来的关系
+        ''' </summary>
+        Dim _reverse As Boolean
 
         ''' <summary>
         ''' 作图的时候的用户数据区间
@@ -90,7 +94,8 @@ Namespace d3js.scale
         ''' choice for continuous quantitative data because they preserve proportional differences. 
         ''' Each range value y can be expressed as a function of the domain value x: ``y = mx + b``.
         ''' </summary>
-        Sub New()
+        Friend Sub New(Optional reverse As Boolean = False)
+            _reverse = reverse
         End Sub
 
         ''' <summary>
@@ -104,7 +109,14 @@ Namespace d3js.scale
                 If _domain.Length = 0.0 Then
                     Return 0
                 Else
-                    Return _domain.ScaleMapping(x, _range)
+                    Dim z As Double = _domain.ScaleMapping(x, _range)
+
+                    If _reverse Then
+                        z = _range.Max - z + _range.Min
+                        Return z
+                    Else
+                        Return z
+                    End If
                 End If
             End Get
         End Property

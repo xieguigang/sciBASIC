@@ -36,7 +36,7 @@ Namespace Contour
                     Dim dims = matrix.dimension
                     Dim rect = region.PlotRegion
                     Dim scaleX = d3js.scale.linear.domain(New Double() {0, dims.Width}).range(New Double() {rect.Left, rect.Right})
-                    Dim scaleY = d3js.scale.linear.domain(New Double() {0, dims.Height}).range(New Double() {rect.Top, rect.Bottom})
+                    Dim scaleY = d3js.scale.linear(True).domain(New Double() {0, dims.Height}).range(New Double() {rect.Top, rect.Bottom})
 
                     For Each polygon As GeneralPath In contour.mkIsos(data, levels:=level_cutoff)
                         Dim color As SolidBrush = colors(++i)

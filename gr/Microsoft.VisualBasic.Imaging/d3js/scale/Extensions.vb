@@ -108,11 +108,16 @@ Namespace d3js.scale
         ''' Notice how D3 Is able To interpolate 5 even If we haven't specified it explicitly in the 
         ''' domain.
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' Constructs a new continuous scale with the unit domain [0, 1], the unit range [0, 1], 
+        ''' the default interpolator and clamping disabled. Linear scales are a good default 
+        ''' choice for continuous quantitative data because they preserve proportional differences. 
+        ''' Each range value y can be expressed as a function of the domain value x: ``y = mx + b``.
+        ''' </returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
-        Public Function linear() As LinearScale
-            Return New LinearScale
+        Public Function linear(Optional reverse As Boolean = False) As LinearScale
+            Return New LinearScale(reverse)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
