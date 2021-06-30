@@ -3,31 +3,29 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports stdNum = System.Math
 
-''' <summary>
-''' MarchingSquares.java
-''' 
-''' Mike Markowski     mike.ab3ap@gmail.com
-''' Apr 22, 2013
-''' 
-''' v0.1 Initial release, Apr 22, 2013
-''' 
-''' Copyright 2013 Michael Markowski
-''' 
-''' This program is free software: you can redistribute it and/or modify
-''' it under the terms of the GNU General Public License as published by
-''' the Free Software Foundation, either version 3 of the License, or
-''' (at your option) any later version.
-''' 
-''' This program is distributed in the hope that it will be useful,
-''' but WITHOUT ANY WARRANTY; without even the implied warranty of
-''' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-''' GNU General Public License for more details.
-''' 
-''' You should have received a copy of the GNU General Public License
-''' along with this program.  If not, see </>.
-''' </summary>
+' MarchingSquares.java
+' 
+' Mike Markowski     mike.ab3ap@gmail.com
+' Apr 22, 2013
+' 
+' v0.1 Initial release, Apr 22, 2013
+' 
+' Copyright 2013 Michael Markowski
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program.  If not, see </>.
 
-Namespace map
+Namespace Drawing2D.Math2D.MarchingSquares
 
     ''' <summary>
     ''' Algorithm taken from: http://en.wikipedia.org/wiki/Marching_squares . See
@@ -269,7 +267,7 @@ Namespace map
         Private Sub isoSubpath(ByVal isoData As IsoCell()(), ByVal r As Integer, ByVal c As Integer, ByVal iso As GraphicsPath)
 
             ' Found an iso line at [r][c], so start there.
-            Dim prevSide = side.NONE
+            Dim prevSide = Side.NONE
             Dim start = isoData(r)(c)
             Dim pt As Point2D = start.normalizedPointCCW(start.firstSideCCW(prevSide))
             Dim x As Double = c + pt.X
@@ -286,13 +284,13 @@ Namespace map
             prevSide = start.nextCellCCW(prevSide)
 
             Select Case prevSide
-                Case side.BOTTOM
+                Case Side.BOTTOM
                     r -= 1
-                Case side.LEFT
+                Case Side.LEFT
                     c -= 1
-                Case side.RIGHT
+                Case Side.RIGHT
                     c += 1
-                Case side.TOP
+                Case Side.TOP
                     r += 1
             End Select
 
@@ -313,13 +311,13 @@ Namespace map
                 prevSide = curCell.nextCellCCW(prevSide)
 
                 Select Case prevSide
-                    Case side.BOTTOM
+                    Case Side.BOTTOM
                         r -= 1
-                    Case side.LEFT
+                    Case Side.LEFT
                         c -= 1
-                    Case side.RIGHT
+                    Case Side.RIGHT
                         c += 1
-                    Case side.TOP
+                    Case Side.TOP
                         r += 1
                 End Select
 

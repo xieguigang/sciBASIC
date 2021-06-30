@@ -24,14 +24,7 @@
 ' this program. If not, see </>.
 
 
-Namespace map
-    Public Enum side
-        LEFT
-        RIGHT
-        TOP
-        BOTTOM
-        NONE
-    End Enum
+Namespace Drawing2D.Math2D.MarchingSquares
 
     ''' <summary>
     ''' IsoCell is used to describe properties of data cells, in particular,
@@ -95,15 +88,15 @@ Namespace map
         ''' </summary>
         ''' <paramname="cellSide"> which side crossing is wanted. </param>
         ''' <returns> crossing based on data and normalized to [0, 1]. </returns>
-        Public Overridable Function normalizedPointCCW(ByVal cellSide As side) As Point2D
+        Public Overridable Function normalizedPointCCW(ByVal cellSide As Side) As Point2D
             Select Case cellSide
-                Case side.BOTTOM
+                Case Side.BOTTOM
                     Return New Point2D(bottom_Renamed, 0)
-                Case side.LEFT
+                Case Side.LEFT
                     Return New Point2D(0, left_Renamed)
-                Case side.RIGHT
+                Case Side.RIGHT
                     Return New Point2D(1, right_Renamed)
-                Case side.TOP
+                Case Side.TOP
                     Return New Point2D(top_Renamed, 1)
                 Case Else
                     Return Nothing
@@ -117,23 +110,23 @@ Namespace map
         ''' </summary>
         ''' <paramname="prev"> previous side, used only for ambiguous cases of 5 and 10. </param>
         ''' <returns> side to start with in a CCW traversal. </returns>
-        Public Overridable Function firstSideCCW(ByVal prev As side) As side
+        Public Overridable Function firstSideCCW(ByVal prev As Side) As Side
             Select Case neighborInfo_Renamed
                 Case 1, 3, 7
-                    Return side.LEFT
+                    Return Side.LEFT
                 Case 2, 6, 14
-                    Return side.BOTTOM
+                    Return Side.BOTTOM
                 Case 4, 12, 13
-                    Return side.RIGHT
+                    Return Side.RIGHT
                 Case 8, 9, 11
-                    Return side.TOP
+                    Return Side.TOP
                 Case 5
 
                     Select Case prev
-                        Case side.LEFT
-                            Return side.RIGHT
-                        Case side.RIGHT
-                            Return side.LEFT
+                        Case Side.LEFT
+                            Return Side.RIGHT
+                        Case Side.RIGHT
+                            Return Side.LEFT
                         Case Else
                             Console.WriteLine(Me.[GetType]().FullName & ".firstSideCCW: case 5!")
                             Environment.Exit(1)
@@ -144,10 +137,10 @@ Namespace map
 _Select2_Case10:
 
                     Select Case prev
-                        Case side.BOTTOM
-                            Return side.TOP
-                        Case side.TOP
-                            Return side.BOTTOM
+                        Case Side.BOTTOM
+                            Return Side.TOP
+                        Case Side.TOP
+                            Return Side.BOTTOM
                         Case Else
                             Console.WriteLine(Me.[GetType]().FullName & ".firstSideCCW: case 10!")
                             Environment.Exit(1)
@@ -170,23 +163,23 @@ _Select2_CaseDefault:
         ''' </summary>
         ''' <paramname="prev"> previous side, used only for ambiguous cases of 5 and 10. </param>
         ''' <returns> side to finish with in a call during a CCW traversal. </returns>
-        Public Overridable Function secondSideCCW(ByVal prev As side) As side
+        Public Overridable Function secondSideCCW(ByVal prev As Side) As Side
             Select Case neighborInfo_Renamed
                 Case 8, 12, 14
-                    Return side.LEFT
+                    Return Side.LEFT
                 Case 1, 9, 13
-                    Return side.BOTTOM
+                    Return Side.BOTTOM
                 Case 2, 3, 11
-                    Return side.RIGHT
+                    Return Side.RIGHT
                 Case 4, 6, 7
-                    Return side.TOP
+                    Return Side.TOP
                 Case 5
 
                     Select Case prev
-                        Case side.LEFT ' Normal case 5.
-                            Return If(flipped_Renamed, side.BOTTOM, side.TOP)
-                        Case side.RIGHT ' Normal case 5.
-                            Return If(flipped_Renamed, side.TOP, side.BOTTOM)
+                        Case Side.LEFT ' Normal case 5.
+                            Return If(flipped_Renamed, Side.BOTTOM, Side.TOP)
+                        Case Side.RIGHT ' Normal case 5.
+                            Return If(flipped_Renamed, Side.TOP, Side.BOTTOM)
                         Case Else
                             Console.WriteLine(Me.[GetType]().FullName & ".secondSideCCW: case 5!")
                             Environment.Exit(1)
@@ -197,10 +190,10 @@ _Select2_CaseDefault:
 _Select2_Case10:
 
                     Select Case prev
-                        Case side.BOTTOM ' Normal case 10
-                            Return If(flipped_Renamed, side.RIGHT, side.LEFT)
-                        Case side.TOP ' Normal case 10
-                            Return If(flipped_Renamed, side.LEFT, side.RIGHT)
+                        Case Side.BOTTOM ' Normal case 10
+                            Return If(flipped_Renamed, Side.RIGHT, Side.LEFT)
+                        Case Side.TOP ' Normal case 10
+                            Return If(flipped_Renamed, Side.LEFT, Side.RIGHT)
                         Case Else
                             Console.WriteLine(Me.[GetType]().FullName & ".secondSideCCW: case 10!")
                             Environment.Exit(1)
@@ -211,7 +204,7 @@ _Select2_Case10:
 _Select2_CaseDefault:
                     Console.WriteLine(Me.[GetType]().FullName & ".secondSideCCW: shouldn't be here!  Neighborinfo = " & neighborInfo_Renamed)
                     Environment.Exit(1)
-                    Return side.NONE
+                    Return Side.NONE
             End Select
         End Function
 
@@ -220,7 +213,7 @@ _Select2_CaseDefault:
         ''' </summary>
         ''' <paramname="prev"> previous side, used only for ambiguous cases of 5 and 10. </param>
         ''' <returns> next cell to use in a CCW traversal. </returns>
-        Public Overridable Function nextCellCCW(ByVal prev As side) As side
+        Public Overridable Function nextCellCCW(ByVal prev As Side) As Side
             Return secondSideCCW(prev)
         End Function
 
@@ -233,7 +226,7 @@ _Select2_CaseDefault:
         ''' infinitely.
         ''' </summary>
         ''' <paramname="prev"> </param>
-        Public Overridable Sub clearIso(ByVal prev As side)
+        Public Overridable Sub clearIso(ByVal prev As Side)
             Select Case neighborInfo_Renamed
                 Case 0, 5, 10, 15
                 Case Else
