@@ -13,6 +13,10 @@ Namespace Drawing2D.Math2D.MarchingSquares
             Me.level = level
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return $"{polygons.Count} polygons under threshold {level}"
+        End Function
+
         Friend Sub moveTo(x As Double, y As Double)
             temp.Add(New PointF(x, y))
         End Sub

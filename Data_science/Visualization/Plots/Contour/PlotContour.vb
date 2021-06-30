@@ -26,7 +26,7 @@ Namespace Contour
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
                     Dim level_cutoff As Double() = matrix.GetPercentages
-                    Dim data As Double()() = matrix.GetMatrixInterpolation.ToArray
+                    Dim data As Double()() = matrix.GetMatrixInterpolation.MatrixTranspose.ToArray
                     Dim colors As Color() = Designer.GetColors(colorSet, level_cutoff.Length)
                     Dim i As i32 = Scan0
 
