@@ -65,9 +65,6 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' </summary>
         ReadOnly dots() As MeasureData
 
-        Friend min#
-        Friend max#
-
         Public ReadOnly Property dimension As Size
             Get
                 Dim w As Integer = Aggregate p In dots Into Max(p.X)
@@ -136,49 +133,53 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' 数据插值
         ''' </summary>
         Friend Function InitData() As MapMatrix
-            Dim measure_data = Me.dots
-            Dim d As Double
             Dim dims = dimension
             Dim x_num = dims.Width
             Dim y_num = dims.Height
 
             data = New Double(x_num - 1, y_num - 1) {}
-            min = Single.MaxValue
-            max = Single.MinValue
 
             For i As Integer = 0 To x_num - 1
-                For j As Integer = 0 To y_num - 1
-                    Dim value As Single = 0
-                    Dim find = False
-
-                    For Each imd As MeasureData In measure_data
-                        If i = imd.X AndAlso j = imd.Y Then
-                            value = imd.Z
-                            find = True
-                            Exit For
-                        End If
-                    Next
-
-                    If Not find Then
-                        Dim lD As Double = 0
-                        Dim DV As Double = 0
-
-                        For Each imd As MeasureData In measure_data
-                            d = 1.0 / ((imd.X - i) * (imd.X - i) + (imd.Y - j) * (imd.Y - j))
-                            lD += d
-                            DV += imd.Z * d
-                        Next
-
-                        value = CSng(DV / lD)
-                    End If
-
-                    data(i, j) = value
-                    min = stdNum.Min(min, value)
-                    max = stdNum.Max(max, value)
+                For Each j In getYScan(i, y_num)
+                    data(i, j) = j.value
                 Next
             Next
 
             Return Me
+        End Function
+
+        Private Function getYScan(i As Integer, y_num As Integer) As IEnumerable(Of SeqValue(Of Double))
+            Return y_num.Sequence _
+                .AsParallel _
+                .Select(Function(j)
+                            Dim value As Single = 0
+                            Dim find As Boolean = False
+                            Dim d As Double
+
+                            For Each imd As MeasureData In dots
+                                If i = imd.X AndAlso j = imd.Y Then
+                                    value = imd.Z
+                                    find = True
+                                    Exit For
+                                End If
+                            Next
+
+                            If Not find Then
+                                Dim lD As Double = 0
+                                Dim DV As Double = 0
+
+                                For Each imd As MeasureData In dots
+                                    d = 1.0 / ((imd.X - i) * (imd.X - i) + (imd.Y - j) * (imd.Y - j))
+                                    lD += d
+                                    DV += imd.Z * d
+                                Next
+
+                                value = CSng(DV / lD)
+                            End If
+
+                            Return New SeqValue(Of Double)(j, value)
+                        End Function) _
+                .OrderBy(Function(j) j.i)
         End Function
     End Class
 End Namespace

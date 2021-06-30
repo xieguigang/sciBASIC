@@ -64,7 +64,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
     ''' <para>Apply a threshold to the 2D field to make a binary image containing:
     ''' 
     ''' </para>
-    ''' <para>1 where the data value is above the isovalue<br>
+    ''' <para>1 where the data value is above the isovalue
     ''' 0 where the data value is below the isovalue
     ''' 
     ''' </para>
