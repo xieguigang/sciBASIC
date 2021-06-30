@@ -12,7 +12,7 @@
     ''' </summary>
     Module Matrix2DFiltersAlgorithm
 
-        Public Function sf_medianFilter(ByVal sMat As Byte(,)) As Byte(,)
+        Public Function sf_medianFilter(sMat As Byte(,)) As Byte(,)
             Dim mH = sMat.GetLength(0)
             Dim mW = sMat.GetLength(1)
             Dim Mat = New Byte(mH - 1, mW - 1) {}
@@ -55,7 +55,7 @@
             Next
         End Sub
 
-        Public Function sf_minvalFilter(ByVal sMat As Byte(,)) As Byte(,)
+        Public Function sf_minvalFilter(sMat As Byte(,)) As Byte(,)
             Dim mH = sMat.GetLength(0)
             Dim mW = sMat.GetLength(1)
             Dim Mat = New Byte(mH - 1, mW - 1) {}
@@ -80,7 +80,7 @@
             Return Mat
         End Function
 
-        Public Function sf_maxvalFilter(ByVal sMat As Byte(,)) As Byte(,)
+        Public Function sf_maxvalFilter(sMat As Byte(,)) As Byte(,)
             Dim mH = sMat.GetLength(0)
             Dim mW = sMat.GetLength(1)
             Dim Mat = New Byte(mH - 1, mW - 1) {}
@@ -105,7 +105,7 @@
             Return Mat
         End Function
 
-        Public Function sf_meanFilter(ByVal sMat As Byte(,)) As Byte(,)
+        Public Function sf_meanFilter(sMat As Byte(,)) As Byte(,)
             Dim mH = sMat.GetLength(0)
             Dim mW = sMat.GetLength(1)
             Dim Mat = New Byte(mH - 1, mW - 1) {}

@@ -35,7 +35,7 @@ Namespace Filters
             Return $"[{raw.Width}, {raw.Height}]"
         End Function
 
-        Public Shared Function Image_2_Arry2D(ByVal srcBmp As Bitmap) As Byte(,)
+        Public Shared Function Image_2_Arry2D(srcBmp As Bitmap) As Byte(,)
             Dim rect As New Rectangle(0, 0, srcBmp.Width, srcBmp.Height)
             Dim srcBmpData As BitmapData = srcBmp.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb)
             Dim srcPtr As IntPtr = srcBmpData.Scan0
@@ -65,7 +65,7 @@ Namespace Filters
             Return mat
         End Function
 
-        Public Shared Function Arry2D_2_Image(ByVal mat As Byte(,)) As Bitmap
+        Public Shared Function Arry2D_2_Image(mat As Byte(,)) As Bitmap
             Dim height = mat.GetLength(0)
             Dim width = mat.GetLength(1)
             Dim srcBmp As New Bitmap(width, height)

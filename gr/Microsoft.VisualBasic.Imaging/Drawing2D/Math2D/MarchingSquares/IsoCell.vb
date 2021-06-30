@@ -55,7 +55,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
             Get
                 Return flipped_Renamed
             End Get
-            Set(ByVal value As Boolean)
+            Set(value As Boolean)
                 flipped_Renamed = value
             End Set
         End Property
@@ -73,7 +73,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
             Get
                 Return neighborInfo_Renamed
             End Get
-            Set(ByVal value As Integer)
+            Set(value As Integer)
                 neighborInfo_Renamed = value
             End Set
         End Property
@@ -88,7 +88,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' </summary>
         ''' <param name="cellSide"> which side crossing is wanted. </param>
         ''' <returns> crossing based on data and normalized to [0, 1]. </returns>
-        Public Overridable Function normalizedPointCCW(ByVal cellSide As Side) As Point2D
+        Public Overridable Function normalizedPointCCW(cellSide As Side) As Point2D
             Select Case cellSide
                 Case Side.BOTTOM
                     Return New Point2D(bottom_Renamed, 0)
@@ -110,7 +110,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' </summary>
         ''' <param name="prev"> previous side, used only for ambiguous cases of 5 and 10. </param>
         ''' <returns> side to start with in a CCW traversal. </returns>
-        Public Overridable Function firstSideCCW(ByVal prev As Side) As Side
+        Public Overridable Function firstSideCCW(prev As Side) As Side
             Select Case neighborInfo_Renamed
                 Case 1, 3, 7
                     Return Side.LEFT
@@ -156,7 +156,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' </summary>
         ''' <param name="prev"> previous side, used only for ambiguous cases of 5 and 10. </param>
         ''' <returns> side to finish with in a call during a CCW traversal. </returns>
-        Public Overridable Function secondSideCCW(ByVal prev As Side) As Side
+        Public Overridable Function secondSideCCW(prev As Side) As Side
             Select Case neighborInfo_Renamed
                 Case 8, 12, 14
                     Return Side.LEFT
@@ -199,7 +199,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' </summary>
         ''' <param name="prev"> previous side, used only for ambiguous cases of 5 and 10. </param>
         ''' <returns> next cell to use in a CCW traversal. </returns>
-        Public Overridable Function nextCellCCW(ByVal prev As Side) As Side
+        Public Overridable Function nextCellCCW(prev As Side) As Side
             Return secondSideCCW(prev)
         End Function
 
@@ -212,7 +212,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' infinitely.
         ''' </summary>
         ''' <param name="prev"> </param>
-        Public Overridable Sub clearIso(ByVal prev As Side)
+        Public Overridable Sub clearIso(prev As Side)
             Select Case neighborInfo_Renamed
                 Case 0, 5, 10, 15
                 Case Else
@@ -225,7 +225,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
             Get
                 Return left_Renamed
             End Get
-            Set(ByVal value As Double)
+            Set(value As Double)
                 left_Renamed = value
             End Set
         End Property
@@ -236,7 +236,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
             Get
                 Return right_Renamed
             End Get
-            Set(ByVal value As Double)
+            Set(value As Double)
                 right_Renamed = value
             End Set
         End Property
@@ -247,7 +247,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
             Get
                 Return top_Renamed
             End Get
-            Set(ByVal value As Double)
+            Set(value As Double)
                 top_Renamed = value
             End Set
         End Property
@@ -258,7 +258,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
             Get
                 Return bottom_Renamed
             End Get
-            Set(ByVal value As Double)
+            Set(value As Double)
                 bottom_Renamed = value
             End Set
         End Property

@@ -12,7 +12,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' <param name="levels"> thresholds to use as iso levels. </param>
         ''' <returns> return a string of ascii art corresponding to Marching Squares
         ''' generation if isolines. </returns>
-        Public Function asciiPrintContours(map As MarchingSquares, ByVal data As Double()(), ByVal levels As Double()) As String
+        Public Function asciiPrintContours(map As MarchingSquares, data As Double()(), levels As Double()) As String
             Dim s = ""
             ' Pad data to guarantee iso GeneralPaths will be closed shapes.
             Dim dataP = map.padData(data, levels)
@@ -32,7 +32,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' <param name="a"> array of contour neighbor values. </param>
         ''' <returns> string roughly representing contour in 'a'. </returns>
         <Extension>
-        Private Function asciiContourPrint(map As MarchingSquares, ByVal a As IsoCell()()) As String
+        Private Function asciiContourPrint(map As MarchingSquares, a As IsoCell()()) As String
             Dim s = ""
             Dim rows = a.Length
             Dim cols = a(0).Length

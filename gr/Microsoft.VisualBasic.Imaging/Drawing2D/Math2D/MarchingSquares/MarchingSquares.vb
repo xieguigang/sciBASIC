@@ -125,7 +125,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' <param name="levels"> thresholds to use as iso levels. </param>
         ''' <returns> return an array of iso GeneralPaths. Each array element
         ''' corresponds to the same threshold in the 'levels' input array. </returns>
-        Public Overridable Function mkIsos(ByVal data As Double()(), ByVal levels As Double()) As GeneralPath()
+        Public Overridable Function mkIsos(data As Double()(), levels As Double()) As GeneralPath()
             ' Pad data to guarantee iso GeneralPaths will be closed shapes.
             Dim dataP = padData(data, levels)
             Dim isos = New GeneralPath(levels.Length - 1) {}
@@ -148,7 +148,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' <param name="level"> threshold to use as iso levels. </param>
         ''' <returns> return an array of iso GeneralPaths. Each array element
         ''' corresponds to the same threshold in the 'levels' input array. </returns>
-        Friend Function mkContour(ByVal data As Double()(), ByVal level As Double) As IsoCell()()
+        Friend Function mkContour(data As Double()(), level As Double) As IsoCell()()
 
             ' Pad data to guarantee iso GeneralPaths will be closed shapes.
             Dim numRows = data.Length
@@ -203,7 +203,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' <param name="threshold"> this isoline's threshold value. </param>
         ''' <returns> GeneralPath, possibly with disjoint areas and holes,
         ''' representing isolines.  Shape is guaranteed closed and can be filled. </returns>
-        Private Function mkIso(ByVal isoData As IsoCell()(), ByVal data As Double()(), ByVal threshold As Double) As GeneralPath
+        Private Function mkIso(isoData As IsoCell()(), data As Double()(), threshold As Double) As GeneralPath
             Dim numRows = isoData.Length
             Dim numCols = isoData(0).Length
             Dim r, c As Integer
@@ -242,7 +242,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' <param name="r"> row in isoData to start new sub-path. </param>
         ''' <param name="c"> column is isoData to start new sub-path. </param>
         ''' <param name="iso"> existing GeneralPath to which sub-path will be added. </param>
-        Private Sub isoSubpath(ByVal isoData As IsoCell()(), ByVal r As Integer, ByVal c As Integer, ByVal iso As GeneralPath)
+        Private Sub isoSubpath(isoData As IsoCell()(), r As Integer, c As Integer, iso As GeneralPath)
 
             ' Found an iso line at [r][c], so start there.
             Dim prevSide = Side.NONE
@@ -314,7 +314,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' <param name="data"> 2d data array to be padded </param>
         ''' <returns> array which is a copy of input padded with top/bottom rows and
         ''' left/right columns of values 1 less than smallest value in array. </returns>
-        Friend Function padData(ByVal data As Double()(), ByVal levels As Double()) As Double()()
+        Friend Function padData(data As Double()(), levels As Double()) As Double()()
             Dim rows = data.Length
             Dim cols = data(0).Length
 
@@ -353,7 +353,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
             Return padded
         End Function
 
-        Public Overridable Function ovalOfCassini(ByVal x As Double, ByVal y As Double) As Double
+        Public Overridable Function ovalOfCassini(x As Double, y As Double) As Double
             Return ovalOfCassini(x, y, 0.48, 0.5)
         End Function
 
@@ -366,7 +366,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' <param name="a"> </param>
         ''' <param name="b">
         ''' @return </param>
-        Public Overridable Function ovalOfCassini(ByVal x As Double, ByVal y As Double, ByVal a As Double, ByVal b As Double) As Double
+        Public Overridable Function ovalOfCassini(x As Double, y As Double, a As Double, b As Double) As Double
             Return (x * x + y * y + a * a) * (x * x + y * y + a * a) - 4 * a * a * x * x - b * b * b * b
         End Function
 
@@ -380,7 +380,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' <param name="r"> current row index. </param>
         ''' <param name="c"> current column index. </param>
         ''' <param name="threshold"> threshold for this iso level. </param>
-        Private Sub interpolateCrossing(ByVal isoData As IsoCell()(), ByVal data As Double()(), ByVal r As Integer, ByVal c As Integer, ByVal threshold As Double)
+        Private Sub interpolateCrossing(isoData As IsoCell()(), data As Double()(), r As Integer, c As Integer, threshold As Double)
             Dim a, b As Double
             Dim cell = isoData(r)(c)
             Dim ll = data(r)(c)

@@ -471,7 +471,7 @@ Namespace InternetTime
                 Dim offspan As TimeSpan = TimeZone.CurrentTimeZone.GetUtcOffset(DateTime.Now)
                 Return time.Add(offspan)
             End Get
-            Set(ByVal Value As DateTime)
+            Set(Value As DateTime)
                 SetDate(offTransmitTimestamp, Value)
             End Set
         End Property
@@ -510,7 +510,7 @@ Namespace InternetTime
         ''' </summary>
         ''' <param name="milliseconds"></param>
         ''' <returns></returns>
-        Private Function ComputeDate(ByVal milliseconds As Decimal) As DateTime
+        Private Function ComputeDate(milliseconds As Decimal) As DateTime
             Dim span As TimeSpan = TimeSpan.FromMilliseconds(milliseconds)
             Dim time As DateTime = New DateTime(1900, 1, 1)
             time = time.Add(span)
@@ -522,7 +522,7 @@ Namespace InternetTime
         ''' </summary>
         ''' <param name="offset"></param>
         ''' <returns></returns>
-        Private Function GetMilliSeconds(ByVal offset As Byte) As Decimal
+        Private Function GetMilliSeconds(offset As Byte) As Decimal
             Dim intPart As Decimal = 0, fractPart As Decimal = 0
             Dim i As Int32
             For i = 0 To 3
@@ -540,7 +540,7 @@ Namespace InternetTime
         ''' </summary>
         ''' <param name="offset"></param>
         ''' <param name="dateval"></param>
-        Private Sub SetDate(ByVal offset As Byte, ByVal dateval As DateTime)
+        Private Sub SetDate(offset As Byte, dateval As DateTime)
             Dim intPart As Decimal = 0, fractPart As Decimal = 0
             Dim StartOfCentury As DateTime = New DateTime(1900, 1, 1, 0, 0, 0)
             Dim milliseconds As Decimal = Int(dateval.Subtract(StartOfCentury).TotalMilliseconds)
@@ -574,7 +574,7 @@ Namespace InternetTime
             TransmitTimestamp = DateTime.Now
         End Sub
 
-        Public Sub New(ByVal host As String)
+        Public Sub New(host As String)
             TimeServer = host
         End Sub
 
@@ -582,7 +582,7 @@ Namespace InternetTime
         ''' Connect to the time server and update system time
         ''' </summary>
         ''' <param name="UpdateSystemTime"></param>
-        Public Sub Connect(ByVal UpdateSystemTime As Boolean)
+        Public Sub Connect(UpdateSystemTime As Boolean)
             'Resolve server address
             Dim hostadd As IPHostEntry = Dns.GetHostEntry(TimeServer) ' Dns.Resolve(TimeServer)
             Dim EPhost As System.Net.IPEndPoint = New System.Net.IPEndPoint(hostadd.AddressList(0), 123)
