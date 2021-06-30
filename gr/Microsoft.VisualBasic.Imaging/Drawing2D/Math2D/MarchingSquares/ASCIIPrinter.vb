@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports System.Text
 
 Namespace Drawing2D.Math2D.MarchingSquares
 
@@ -33,15 +34,15 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' <returns> string roughly representing contour in 'a'. </returns>
         <Extension>
         Private Function asciiContourPrint(map As MarchingSquares, a As IsoCell()()) As String
-            Dim s = ""
+            Dim s As New StringBuilder
             Dim rows = a.Length
             Dim cols = a(0).Length
 
             For j = 0 To cols - 1
-                s += "==="
+                s.Append("===")
             Next
 
-            s += vbLf
+            s.AppendLine()
 
             For i = rows - 1 To 0 Step -1
 
@@ -49,136 +50,136 @@ Namespace Drawing2D.Math2D.MarchingSquares
 
                     Select Case a(i)(j).neighborInfo
                         Case 0, 1, 2, 3
-                            s += "xxx"
+                            s.Append("xxx")
                         Case 4
-                            s += "x\ "
+                            s.Append("x\ ")
                         Case 5
 
                             If a(i)(j).flipped Then
-                                s += "x\ "
+                                s.Append("x\ ")
                                 Exit Select
                             End If
 
                         Case 7
-                            s += "x/ "
+                            s.Append("x/ ")
                         Case 6
-                            s += "x| "
+                            s.Append("x| ")
                         Case 8
-                            s += " /x"
+                            s.Append(" /x")
                         Case 9
-                            s += " |x"
+                            s.Append(" |x")
                         Case 10
 
                             If a(i)(j).flipped Then
-                                s += " /x"
+                                s.Append(" /x")
                                 Exit Select
                             End If
 
                         Case 11
-                            s += " \x"
+                            s.Append(" \x")
                         Case Else
-                            s += "   "
+                            s.Append("   ")
                     End Select
                 Next
 
-                s += vbLf
+                s.AppendLine()
 
                 For j = 0 To cols - 1
 
                     Select Case a(i)(j).neighborInfo
                         Case 0
-                            s += "xxx"
+                            s.Append("xxx")
                         Case 1
-                            s += "\xx"
+                            s.Append("\xx")
                         Case 2
-                            s += "xx/"
+                            s.Append("xx/")
                         Case 3, 12
-                            s += "---"
+                            s.Append("---")
                         Case 4
-                            s += "xx\"
+                            s.Append("xx\")
                         Case 5
 
                             If a(i)(j).flipped Then
-                                s += "\x\"
+                                s.Append("\x\")
                             Else
-                                s += "/ /"
+                                s.Append("/ /")
                             End If
 
                         Case 6
-                            s += "x| "
+                            s.Append("x| ")
                         Case 7
-                            s += "/  "
+                            s.Append("/  ")
                         Case 8
-                            s += "/xx"
+                            s.Append("/xx")
                         Case 9
-                            s += " |x"
+                            s.Append(" |x")
                         Case 10
 
                             If a(i)(j).flipped Then
-                                s += "/x/"
+                                s.Append("/x/")
                             Else
-                                s += "\ \"
+                                s.Append("\ \")
                             End If
 
                         Case 11
-                            s += "  \"
+                            s.Append("  \")
                         Case 13
-                            s += "  /"
+                            s.Append("  /")
                         Case 14
-                            s += "\  "
+                            s.Append("\  ")
                         Case 15
-                            s += "   "
+                            s.Append("   ")
                     End Select
                 Next
 
-                s += vbLf
+                s.AppendLine()
 
                 For j = 0 To cols - 1
 
                     Select Case a(i)(j).neighborInfo
                         Case 0, 4, 8, 12
-                            s += "xxx"
+                            s.Append("xxx")
                         Case 1
-                            s += " \x"
+                            s.Append(" \x")
                         Case 2
-                            s += "x/ "
+                            s.Append("x/ ")
                         Case 3, 7, 11, 15
-                            s += "   "
+                            s.Append("   ")
                         Case 5
 
                             If a(i)(j).flipped Then
-                                s += " \x"
+                                s.Append(" \x")
                             Else
-                                s += " /x"
+                                s.Append(" /x")
                             End If
 
                         Case 6
-                            s += "x| "
+                            s.Append("x| ")
                         Case 9
-                            s += " |x"
+                            s.Append(" |x")
                         Case 10
 
                             If a(i)(j).flipped Then
-                                s += "x/ "
-                                Exit Select
+                                s.Append("x/ ")
                             End If
 
                         Case 14
-                            s += "x\ "
+                            s.Append("x\ ")
                         Case 13
-                            s += " /x"
+                            s.Append(" /x")
                     End Select
                 Next
 
-                s += vbLf
+                s.AppendLine()
             Next
 
             For j = 0 To cols - 1
-                s += "==="
+                s.Append("===")
             Next
 
-            s += vbLf
-            Return s
+            s.AppendLine()
+
+            Return s.ToString
         End Function
     End Module
 End Namespace

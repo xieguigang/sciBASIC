@@ -17,11 +17,11 @@ Namespace Drawing2D.Math2D.MarchingSquares
             Return $"{polygons.Count} polygons under threshold {level}"
         End Function
 
-        Friend Sub moveTo(x As Double, y As Double)
+        Friend Sub MoveTo(x As Double, y As Double)
             temp.Add(New PointF(x, y))
         End Sub
 
-        Friend Sub lineTo(x As Double, y As Double)
+        Friend Sub LineTo(x As Double, y As Double)
             temp.Add(New PointF(x, y))
         End Sub
 
@@ -49,7 +49,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
             Next
         End Sub
 
-        Friend Sub closePath()
+        Friend Sub ClosePath()
             polygons.Add(temp.PopAll)
         End Sub
     End Class

@@ -250,13 +250,13 @@ Namespace Drawing2D.Math2D.MarchingSquares
             Dim pt As Point2D = start.normalizedPointCCW(start.firstSideCCW(prevSide))
             Dim x As Double = c + pt.X
             Dim y As Double = r + pt.Y
-            iso.moveTo(x, y)
+            iso.MoveTo(x, y)
             pt = start.normalizedPointCCW(start.secondSideCCW(prevSide))
             Dim xPrev As Double = c + pt.X
             Dim yPrev As Double = r + pt.Y
 
             If stdNum.Abs(x - xPrev) > epsilon AndAlso stdNum.Abs(y - yPrev) > epsilon Then
-                iso.lineTo(x, y)
+                iso.LineTo(x, y)
             End If
 
             prevSide = start.nextCellCCW(prevSide)
@@ -281,7 +281,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
                 y = r + pt.Y
 
                 If stdNum.Abs(x - xPrev) > epsilon AndAlso stdNum.Abs(y - yPrev) > epsilon Then
-                    iso.lineTo(x, y)
+                    iso.LineTo(x, y)
                 End If
 
                 xPrev = x
@@ -303,7 +303,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
                 curCell = isoData(r)(c)
             End While
 
-            iso.closePath()
+            iso.ClosePath()
         End Sub
 
         ''' <summary>
