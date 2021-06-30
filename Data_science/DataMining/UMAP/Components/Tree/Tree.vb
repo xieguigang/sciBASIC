@@ -224,7 +224,6 @@ Namespace Tree
                 Dim output = New List(Of Integer())()
 
                 For Each tree In forest
-
                     For Each entry In tree.Indices
                         output.Add(entry)
                     Next

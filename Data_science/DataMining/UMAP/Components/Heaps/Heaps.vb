@@ -170,16 +170,16 @@ Friend Module Heaps
     ''' Given an array of heaps (of indices and weights), unpack the heap out to give and array of sorted lists of indices and weights by increasing weight. This is effectively just the second half of heap sort
     ''' (the first half not being required since we already have the data in a heap).
     ''' </summary>
-    Public Function DeHeapSort(heap As Heap) As (Integer()(), Double()())
+    Public Function DeHeapSort(heap As Heap, startingIteration As Action(Of Integer, Integer, String)) As (Integer()(), Double()())
         ' Note: The comment on this method doesn't seem to quite fit with the method signature (where a single Heap is provided, not an array of Heaps)
         Dim indices = heap(0)
         Dim weights = heap(1)
 
-        For i = 0 To indices.Length - 1
+        For i As Integer = 0 To indices.Length - 1
             Dim indHeap = indices(i)
             Dim distHeap = weights(i)
 
-            For j = 0 To indHeap.Length - 1 - 1
+            For j As Integer = 0 To indHeap.Length - 1 - 1
                 Dim indHeapIndex = indHeap.Length - j - 1
                 Dim distHeapIndex = distHeap.Length - j - 1
                 Dim temp1 = indHeap(0)
@@ -188,11 +188,19 @@ Friend Module Heaps
                 Dim temp2 = distHeap(0)
                 distHeap(0) = distHeap(distHeapIndex)
                 distHeap(distHeapIndex) = temp2
-                Heaps.SiftDown(distHeap, indHeap, distHeapIndex, 0)
+
+                Call Heaps.SiftDown(distHeap, indHeap, distHeapIndex, 0)
             Next
+
+            Call startingIteration?.Invoke(i, indices.Length, $"DeHeapSort {i}/{indices.Length}")
         Next
 
-        Dim indicesAsInts = indices.[Select](Function(floatArray) floatArray.[Select](Function(value) CInt(value)).ToArray()).ToArray()
+        Dim indicesAsInts = indices _
+            .[Select](Function(floatArray)
+                          Return floatArray.[Select](Function(value) CInt(value)).ToArray()
+                      End Function) _
+            .ToArray()
+
         Return (indicesAsInts, weights)
     End Function
 

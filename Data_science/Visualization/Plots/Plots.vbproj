@@ -644,6 +644,7 @@
     <Compile Include="BarPlot\StyledBarplot.vb" />
     <Compile Include="Contour\MatrixEvaluate.vb" />
     <Compile Include="Contour\EvaluatePoints.vb" />
+    <Compile Include="Contour\PlotContour.vb" />
     <Compile Include="Contour\Utils.vb" />
     <Compile Include="csv\Extensions.vb" />
     <Compile Include="Fractions\LabelStyles.vb" />

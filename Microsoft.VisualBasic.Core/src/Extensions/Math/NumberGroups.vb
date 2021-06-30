@@ -61,6 +61,10 @@ Imports stdNum = System.Math
 
 Namespace Math
 
+    Public Interface INumericKey
+        Property key As Double
+    End Interface
+
     ''' <summary>
     ''' Simple number vector grouping
     ''' </summary>
@@ -340,6 +344,28 @@ Namespace Math
         <Extension>
         Public Function GroupBy(numbers As IEnumerable(Of Double), offsets#) As IEnumerable(Of NamedCollection(Of Double))
             Return numbers.GroupBy(Self(Of Double), Function(a, b) stdNum.Abs(a - b) <= offsets)
+        End Function
+
+        ''' <summary>
+        ''' 将一维的数据按照一定的偏移量分组输出
+        ''' </summary>
+        ''' <param name="numbers"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function GroupBy(numbers As IEnumerable(Of Double), tolerance As GenericLambda(Of Double).IEquals) As IEnumerable(Of NamedCollection(Of Double))
+            Return numbers.GroupBy(Self(Of Double), tolerance)
+        End Function
+
+        ''' <summary>
+        ''' 将一维的数据按照一定的偏移量分组输出
+        ''' </summary>
+        ''' <param name="numbers"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function GroupBy(Of T As INumericKey)(numbers As IEnumerable(Of T), tolerance As GenericLambda(Of Double).IEquals) As IEnumerable(Of NamedCollection(Of T))
+            Return numbers.GroupBy(Function(i) i.key, tolerance)
         End Function
 
         ''' <summary>

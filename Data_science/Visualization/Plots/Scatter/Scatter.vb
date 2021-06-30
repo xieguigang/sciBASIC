@@ -218,7 +218,11 @@ Public Module Scatter
             .axisLabelCSS = axisLabelCSS,
             .mainCSS = titleFontCSS,
             .xAxisLayout = xlayout,
-            .yAxisLayout = ylayout
+            .yAxisLayout = ylayout,
+            .legendBoxStroke = legendRegionBorder?.ToString,
+            .axisTickCSS = tickFontStyle,
+            .legendLabelCSS = legendFontCSS,
+            .legendSplitSize = legendSplit
         }
         Dim plot As Plot
 
