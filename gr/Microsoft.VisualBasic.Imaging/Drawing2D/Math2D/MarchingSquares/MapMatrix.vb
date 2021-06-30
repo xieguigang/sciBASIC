@@ -77,6 +77,15 @@ Namespace Drawing2D.Math2D.MarchingSquares
         Friend min#
         Friend max#
 
+        Public ReadOnly Property dimension As Size
+            Get
+                Dim w As Integer = Aggregate p In dots Into Max(p.X)
+                Dim h As Integer = Aggregate p In dots Into Max(p.Y)
+
+                Return New Size(w, h)
+            End Get
+        End Property
+
         ''' <summary>
         ''' 
         ''' </summary>

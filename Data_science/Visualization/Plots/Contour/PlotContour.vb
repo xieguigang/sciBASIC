@@ -29,12 +29,16 @@ Namespace Contour
                     Dim data As Double()() = matrix.GetMatrixInterpolation.MatrixTranspose.ToArray
                     Dim colors As Color() = Designer.GetColors(colorSet, level_cutoff.Length)
                     Dim i As i32 = Scan0
+                    Dim dims = matrix.dimension
+                    Dim rect = region.PlotRegion
+                    Dim scaleX = d3js.scale.linear.domain(New Double() {0, dims.Width}).range(New Double() {rect.Left, rect.Right})
+                    Dim scaleY = d3js.scale.linear.domain(New Double() {0, dims.Height}).range(New Double() {rect.Top, rect.Bottom})
 
                     For Each polygon As GeneralPath In contour.mkIsos(data, levels:=level_cutoff)
                         Dim color As Color = colors(++i)
 
-                        Call polygon.Fill(g, New SolidBrush(color))
-                        Call polygon.Draw(g, Pens.Black)
+                        Call polygon.Fill(g, New SolidBrush(color), scaleX, scaleY)
+                        Call polygon.Draw(g, Pens.Black, scaleX, scaleY)
                     Next
                 End Sub
 
