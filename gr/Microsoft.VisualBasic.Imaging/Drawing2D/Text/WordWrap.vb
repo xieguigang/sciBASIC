@@ -97,7 +97,7 @@ Namespace Drawing2D.Text
         ''' <param name="splitChars">在行末所插入的分隔符</param>
         ''' <returns></returns>
         <Extension>
-        Public Function DoWordWrap(str$, width%, Optional splitChars$ = " -" & ASCII.TAB) As String
+        Public Function DoWordWrap(str$, width%, Optional splitChars$ = " -" & VisualBasic.Text.ASCII.TAB) As String
             Dim words = Explode(str, splitChars)
             Dim curLineLength = 0
             Dim sb As New StringBuilder()

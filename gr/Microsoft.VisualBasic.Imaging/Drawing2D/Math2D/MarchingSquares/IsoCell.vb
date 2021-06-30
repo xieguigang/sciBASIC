@@ -131,11 +131,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
                             Console.WriteLine(Me.[GetType]().FullName & ".firstSideCCW: case 5!")
                             Environment.Exit(1)
                     End Select
-
-                    GoTo _Select1_Case10
                 Case 10
-_Select2_Case10:
-
                     Select Case prev
                         Case Side.BOTTOM
                             Return Side.TOP
@@ -145,10 +141,7 @@ _Select2_Case10:
                             Console.WriteLine(Me.[GetType]().FullName & ".firstSideCCW: case 10!")
                             Environment.Exit(1)
                     End Select
-
-                    GoTo _Select2_CaseDefault
                 Case Else
-_Select2_CaseDefault:
                     Console.WriteLine(Me.[GetType]().FullName & ".firstSideCCW: default!")
                     Environment.Exit(1)
             End Select
@@ -184,11 +177,7 @@ _Select2_CaseDefault:
                             Console.WriteLine(Me.[GetType]().FullName & ".secondSideCCW: case 5!")
                             Environment.Exit(1)
                     End Select
-
-                    GoTo _Select1_Case10
                 Case 10
-_Select2_Case10:
-
                     Select Case prev
                         Case Side.BOTTOM ' Normal case 10
                             Return If(flipped_Renamed, Side.RIGHT, Side.LEFT)
@@ -198,10 +187,7 @@ _Select2_Case10:
                             Console.WriteLine(Me.[GetType]().FullName & ".secondSideCCW: case 10!")
                             Environment.Exit(1)
                     End Select
-
-                    GoTo _Select2_CaseDefault
                 Case Else
-_Select2_CaseDefault:
                     Console.WriteLine(Me.[GetType]().FullName & ".secondSideCCW: shouldn't be here!  Neighborinfo = " & neighborInfo_Renamed)
                     Environment.Exit(1)
                     Return Side.NONE
