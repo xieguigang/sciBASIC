@@ -133,7 +133,10 @@ Public Module ROCPlot
                          Optional lineWidth! = 10,
                          Optional fillAUC As Boolean = True,
                          Optional referenceLineColor$ = "skyblue",
-                         Optional showReference As Boolean = False) As GraphicsData
+                         Optional showReference As Boolean = False,
+                         Optional labelFontStyle$ = CSSFont.PlotTitleNormal,
+                         Optional titleFontCSS$ = CSSFont.Win7VeryLarge,
+                         Optional tickFontStyle$ = CSSFont.Win7LargerBold) As GraphicsData
 
         Dim reference As New SerialData With {
             .color = referenceLineColor.TranslateColor,
@@ -170,10 +173,10 @@ Public Module ROCPlot
             drawAxis:=True,
             htmlLabel:=False,
             title:=$"ROC (AUC={roc.title})",
-            labelFontStyle:=CSSFont.Win7VeryLarge,
-            tickFontStyle:=CSSFont.Win7Large,
+            labelFontStyle:=labelFontStyle,
+            tickFontStyle:=tickFontStyle,
             dpi:=300,
-            titleFontCSS:=CSSFont.PlotTitleNormal
+            titleFontCSS:=titleFontCSS
         )
 
         Return img
