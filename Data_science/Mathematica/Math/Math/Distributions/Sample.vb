@@ -56,6 +56,9 @@ Namespace Distributions
     ''' <summary>
     ''' The data sample xml model
     ''' </summary>
+    ''' <remarks>
+    ''' summary of the sample data vector
+    ''' </remarks>
     Public Class SampleDistribution
 
         <XmlAttribute> Public Property min As Double
@@ -74,6 +77,8 @@ Namespace Distributions
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute> Public Property quantile As Double()
+
+        <XmlAttribute> Public Property mode As Double
 
         Public ReadOnly Property CI95Range As Double()
             Get
@@ -117,6 +122,7 @@ Namespace Distributions
                 average = v.Average
                 stdErr = v.SD
                 size = v.Length
+                mode = EvaluateMode(v.OrderBy(Function(d) d).ToArray)
             End If
 
             If estimateQuantile AndAlso v.Length > 0 Then
@@ -131,6 +137,36 @@ Namespace Distributions
                 End With
             End If
         End Sub
+
+        Public Shared Function EvaluateMode(data As Double()) As Double
+            Dim modeValue As Double = Double.NaN
+            Dim modeCount As Integer = 0
+            Dim currValue = data(0)
+            Dim currCount = 1
+
+            ' Count the amount of repeat And update mode variables
+            For i As Integer = 1 To data.Length - 1
+                If data(i) = currValue Then
+                    currCount += 1
+                Else
+                    If (currCount >= modeCount) Then
+                        modeCount = currCount
+                        modeValue = currValue
+                    End If
+
+                    currValue = data(i)
+                    currCount = 1
+                End If
+            Next
+
+            ' Check the last count
+            If (currCount >= modeCount) Then
+                modeCount = currCount
+                modeValue = currValue
+            End If
+
+            Return modeValue
+        End Function
 
         ''' <summary>
         ''' <see cref="DoubleRange"/> = ``[<see cref="min"/>, <see cref="max"/>]``

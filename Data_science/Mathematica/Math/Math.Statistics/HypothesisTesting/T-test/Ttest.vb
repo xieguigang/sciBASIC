@@ -67,15 +67,29 @@ Namespace Hypothesis
                              Optional alpha# = 0.05) As TtestResult
 
             Dim sample As New BasicProductMoments(x)
+            Dim opt As New Topt With {
+                .alpha = alpha,
+                .mu = mu,
+                .alternative = alternative
+            }
+            Dim pvalueAlter As Hypothesis = alternative
+
+            If alternative <> Hypothesis.TwoSided Then
+                If alternative = Hypothesis.Less Then
+                    pvalueAlter = Hypothesis.Greater
+                Else
+                    pvalueAlter = Hypothesis.Less
+                End If
+            End If
 
             Return New TtestResult With {
-                .alpha = alpha,
                 .DegreeFreedom = sample.SampleSize - 1,
-                .StdErr = stdNum.Sqrt(sample.Variance / sample.SampleSize),
+                .SD = stdNum.Sqrt(sample.Variance),
+                .StdErr = stdNum.Sqrt(.SD ^ 2 / sample.SampleSize),
                 .TestValue = (sample.Mean - mu) / .StdErr,
-                .Pvalue = Pvalue(.TestValue, .DegreeFreedom, alternative),
+                .Pvalue = Pvalue(.TestValue, .DegreeFreedom, pvalueAlter),
                 .Mean = sample.Mean,
-                .alternative = alternative,
+                .opt = opt,
                 .x = sample.ToArray
             }
         End Function
@@ -103,15 +117,16 @@ Namespace Hypothesis
             Dim va#() = a.ToArray, vb = b.ToArray
             Dim left As New BasicProductMoments(a)
             Dim right As New BasicProductMoments(b)
-            Dim v#
+            ' degree of freedom
+            Dim df#
 
             If varEqual Then
-                v = left.SampleSize + right.SampleSize - 2
+                df = left.SampleSize + right.SampleSize - 2
             Else
-                v = welch2df(va.Variance, vb.Variance, left.SampleSize, right.SampleSize)
+                df = welch2df(va.Variance, vb.Variance, left.SampleSize, right.SampleSize)
             End If
 
-            Dim commonVariance# = ((left.SampleSize - 1) * va.Variance + (right.SampleSize - 1) * vb.Variance) / v
+            Dim commonVariance# = ((left.SampleSize - 1) * va.Variance + (right.SampleSize - 1) * vb.Variance) / df
             Dim testVal#
             Dim stdErr# = stdNum.Sqrt(commonVariance * (1 / left.SampleSize + 1 / right.SampleSize))
 
@@ -121,16 +136,21 @@ Namespace Hypothesis
                 testVal = welch2t(left.Mean, right.Mean, va.Variance, vb.Variance, left.SampleSize, right.SampleSize)
             End If
 
-            Dim pvalue# = t.Pvalue(testVal, v, alternative)
+            Dim pvalue# = t.Pvalue(testVal, df, alternative)
+            Dim opt As New Topt With {
+                .alpha = alpha,
+                .alternative = alternative,
+                .mu = mu
+            }
 
             Return New TwoSampleResult With {
-                .alpha = alpha,
-                .DegreeFreedom = v,
-                .Mean = left.Mean - right.Mean,
+                .DegreeFreedom = df,
+                .Mean = mu,
                 .StdErr = stdErr,
+                .SD = stdErr,
                 .TestValue = testVal,
                 .Pvalue = pvalue,
-                .alternative = alternative,
+                .opt = opt,
                 .MeanX = left.Mean,
                 .MeanY = right.Mean,
                 .x = va,
@@ -155,16 +175,19 @@ Namespace Hypothesis
         End Function
 
         ''' <summary>
-        ''' 
+        ''' two sample p-value
         ''' </summary>
         ''' <param name="t#">The t test value</param>
         ''' <param name="v">v is the degrees of freedom</param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 请注意，双样本检测与单样本检测的pvalue在less和greater是反过来的
+        ''' </remarks>
         Public Function Pvalue(t#, v#, Optional hyp As Hypothesis = Hypothesis.TwoSided) As Double
             Select Case hyp
-                Case Hypothesis.Greater
-                    Return 1 - Tcdf(t, v)
                 Case Hypothesis.Less
+                    Return 1 - Tcdf(t, v)
+                Case Hypothesis.Greater
                     Return Tcdf(t, v)
                 Case Else
                     Return 2 * (1 - Tcdf(stdNum.Abs(t), v))

@@ -98,16 +98,16 @@ Namespace Imaging.Math2D
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function IntersectionOf(line As Line, polygon As Polygon) As Intersections
-            If polygon.Length = 0 Then
+        Public Function IntersectionOf(line As Line, polygon As Polygon2D) As Intersections
+            If polygon.length = 0 Then
                 Return Intersections.None
             End If
-            If polygon.Length = 1 Then
+            If polygon.length = 1 Then
                 Return IntersectionOf(polygon(0), line)
             End If
             Dim tangent As Boolean = False
-            For index As Integer = 0 To polygon.Length - 1
-                Dim index2 As Integer = (index + 1) Mod polygon.Length
+            For index As Integer = 0 To polygon.length - 1
+                Dim index2 As Integer = (index + 1) Mod polygon.length
                 Dim intersection As Intersections = IntersectionOf(line, New Line(polygon(index), polygon(index2)))
                 If intersection = Intersections.Intersection Then
                     Return intersection
@@ -125,8 +125,8 @@ Namespace Imaging.Math2D
         ''' <param name="point"></param>
         ''' <param name="polygon"></param>
         ''' <returns></returns>
-        Public Function IntersectionOf(point As PointF, polygon As Polygon) As Intersections
-            Select Case polygon.Length
+        Public Function IntersectionOf(point As PointF, polygon As Polygon2D) As Intersections
+            Select Case polygon.length
                 Case 0
                     Return Intersections.None
                 Case 1
@@ -142,17 +142,21 @@ Namespace Imaging.Math2D
             Dim counter As Integer = 0
             Dim i As Integer
             Dim p1 As PointF
-            Dim n As Integer = polygon.Length
+            Dim n As Integer = polygon.length
+
             p1 = polygon(0)
+
             If point = p1 Then
                 Return Intersections.Tangent
             End If
 
             For i = 1 To n
                 Dim p2 As PointF = polygon(i Mod n)
+
                 If point = p2 Then
                     Return Intersections.Tangent
                 End If
+
                 If point.Y > stdNum.Min(p1.Y, p2.Y) Then
                     If point.Y <= stdNum.Max(p1.Y, p2.Y) Then
                         If point.X <= stdNum.Max(p1.X, p2.X) Then

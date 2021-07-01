@@ -143,7 +143,7 @@ Namespace Math.Statistics.Linq
         Public Function Variance(source As IEnumerable(Of Double)) As Double
             Dim avg As Double = source.Average()
             Dim d As Double = source.Aggregate(0.0, Function(total, [next]) As Double
-                                                        total += System.Math.Pow([next] - avg, 2)
+                                                        total += ([next] - avg) ^ 2
                                                         Return total
                                                     End Function)
             Return d / (source.Count() - 1)

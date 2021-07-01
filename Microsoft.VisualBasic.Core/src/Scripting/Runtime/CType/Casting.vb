@@ -185,6 +185,7 @@ Namespace Scripting.Runtime
         ''' <param name="pt$"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         <Extension> Public Function SizeParser(pt$) As Size
             Return pt.FloatSizeParser.ToSize
         End Function

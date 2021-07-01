@@ -54,6 +54,7 @@ Public Module SpecialFunctions
     Const MAXLOG As Double = 709.782712893384
     Const MINLOG As Double = -745.13321910194122
     Const MAXGAM As Double = 171.62437695630271
+    Const MAXNUM As Double = 1.7976931348623157E+308
 
     Public Function Covariance(array1 As Double(), array2 As Double()) As Double
         Dim tmp As Double = 0
@@ -153,7 +154,9 @@ Public Module SpecialFunctions
         Dim a, b, t, x, xc, w, y As Double
         Dim flag As Boolean
 
-        If aa <= 0.0 OrElse bb <= 0.0 Then Throw New ArithmeticException("ibeta: Domain error!")
+        If aa <= 0.0 OrElse bb <= 0.0 Then
+            Throw New ArithmeticException("ibeta: Domain error!")
+        End If
 
         If (xx <= 0.0) OrElse (xx >= 1.0) Then
             If xx = 0.0 Then Return 0.0

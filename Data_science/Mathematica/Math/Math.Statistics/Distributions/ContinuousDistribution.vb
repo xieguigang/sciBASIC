@@ -160,12 +160,12 @@ Namespace Distributions
                             ParamVals(i) = flds(i).GetDouble(Me)
                         Case "int"
                             ParamVals(i) = flds(i).GetInt(Me)
-                            'JAVA TO VB CONVERTER TODO TASK: VB does not allow fall-through from a non-empty 'case':
+
                         Case Else
                     End Select
-                    'JAVA TO VB CONVERTER TODO TASK: There is no equivalent in VB to Java 'multi-catch' syntax:
+
                 Catch ex As Exception 'System.ArgumentException Or IllegalAccessException ex
-                    ' java.util.logging.Logger.getLogger(GetType(ContinuousDistribution).Name).log(java.util.logging.Level.SEVERE, Nothing, ex)
+
                 End Try
             Next
             Return ParamVals
