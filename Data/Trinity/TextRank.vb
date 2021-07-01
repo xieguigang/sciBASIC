@@ -129,35 +129,39 @@ Public Module TextRank
         stopwords = stopwords Or StopWords.DefaultStopWords
 
         For Each text As String In source
-
             ' 假设每一句话之中的单词之间的顺序就是网络连接的方向
             Dim blocks = text _
                 .ToLower _
                 .Words _
                 .Removes(stopwords) _
-                .SlideWindows(win_size) _
                 .ToArray
 
-            For Each textBlock As SlideWindow(Of String) In blocks
-
-                For Each word As String In textBlock
-                    If Not g.ExistVertex(word) Then
-                        Call g.AddVertex(word)
-                    End If
-                Next
-
-                For Each combine As (a$, b$) In textBlock.FullCombination
-                    Dim edge As VertexEdge = g.CreateEdge(combine.a, combine.b)
-
-                    If Not g.ExistEdge(edge) Then
-                        Call g.AddEdge(combine.a, combine.b)
-                    End If
-                Next
-            Next
+            Call g.TextRankGraph(blocks, win_size)
         Next
 
         Return New GraphMatrix(g)
     End Function
+
+    <Extension>
+    Public Sub TextRankGraph(g As Graph, text As String(), Optional win_size% = 2)
+        Dim blocks As SlideWindow(Of String)() = text.SlideWindows(win_size).ToArray
+
+        For Each textBlock As SlideWindow(Of String) In blocks
+            For Each word As String In textBlock
+                If Not g.ExistVertex(word) Then
+                    Call g.AddVertex(word)
+                End If
+            Next
+
+            For Each combine As (a$, b$) In textBlock.FullCombination
+                Dim edge As VertexEdge = g.CreateEdge(combine.a, combine.b)
+
+                If Not g.ExistEdge(edge) Then
+                    Call g.AddEdge(combine.a, combine.b)
+                End If
+            Next
+        Next
+    End Sub
 
     ''' <summary>
     ''' Using for generate article's <see cref="NLPExtensions.Abstract(WeightedPRGraph, Integer, Double)"/>
