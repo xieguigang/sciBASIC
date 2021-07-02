@@ -68,6 +68,7 @@ Namespace Graphic
         Public Property xlabel As String = "X"
         Public Property ylabel As String = "Y"
         Public Property zlabel As String = "Z"
+        Public Property legendTitle As String = "Legend"
 
         ''' <summary>
         ''' the main title string

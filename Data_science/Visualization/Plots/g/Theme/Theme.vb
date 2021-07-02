@@ -92,6 +92,7 @@ Namespace Graphic.Canvas
         ''' </summary>
         ''' <returns></returns>
         Public Property legendTickCSS As String = CSSFont.Win7Normal
+        Public Property legendTickAxisStroke As String = Stroke.AxisStroke
         Public Property legendTickFormat As String = "F2"
 
         ''' <summary>

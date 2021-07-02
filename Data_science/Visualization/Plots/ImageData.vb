@@ -88,7 +88,7 @@ Public Module ImageDataExtensions
         Dim xrange As DoubleRange = $"0 -> {img.Width}"
         Dim yrange As DoubleRange = $"0 -> {img.Height}"
 
-        Return Contour.Utils.Plot(
+        Return Contour.HeatMap.Plot(
             color, xrange, yrange,
             xsteps:=steps, ysteps:=steps, unit:=1,
             colorMap:="Jet",

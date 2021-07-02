@@ -1,14 +1,8 @@
-﻿Imports System.Drawing
-Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.MarchingSquares
 Imports Microsoft.VisualBasic.Imaging.Driver
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.MIME.Html.CSS
-Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Contour
 
@@ -23,43 +17,50 @@ Namespace Contour
                              Optional legendTitle$ = "Contour Levels",
                              Optional legendTitleCSS$ = CSSFont.Win7LargeBold,
                              Optional tickCSS$ = CSSFont.Win10NormalLarger,
-                             Optional tickAxisStroke$ = Stroke.ScatterLineStroke) As GraphicsData
+                             Optional tickAxisStroke$ = Stroke.ScatterLineStroke,
+                             Optional ppi% = 300) As GraphicsData
 
             Dim contours As GeneralPath() = ContourLayer.GetContours(sample).ToArray
-            Dim plotInternal =
-                Sub(ByRef g As IGraphics, region As GraphicsRegion)
-                    Dim level_cutoff As Double() = contours.Select(Function(c) c.level).ToArray
-                    Dim colors As SolidBrush() = Designer _
-                        .GetColors(colorSet, level_cutoff.Length) _
-                        .Select(Function(c) New SolidBrush(c)) _
-                        .ToArray
-                    Dim i As i32 = Scan0
-                    Dim dims = contours(Scan0).dimension
-                    Dim rect = region.PlotRegion
-                    Dim scaleX = d3js.scale.linear.domain(New Double() {0, dims.Width}).range(New Double() {rect.Left, rect.Right})
-                    Dim scaleY = d3js.scale.linear(True).domain(New Double() {0, dims.Height}).range(New Double() {rect.Top, rect.Bottom})
+            Dim theme As New Theme With {
+                .padding = padding,
+                .background = bg,
+                .colorSet = colorSet,
+                .legendTitleCSS = legendTitleCSS,
+                .legendTickCSS = tickCSS,
+                .legendTickAxisStroke = tickAxisStroke
+            }
+            Dim plotApp As New ContourPlot(contours, theme) With {
+                .legendTitle = legendTitle
+            }
 
-                    For Each polygon As GeneralPath In contours
-                        Dim color As SolidBrush = colors(++i)
+            Return plotApp.Plot(size, ppi)
+        End Function
 
-                        Call polygon.Fill(g, color, scaleX, scaleY)
-                        Call polygon.Draw(g, Pens.Black, scaleX, scaleY)
-                    Next
+        <Extension>
+        Public Function Plot(sample As IEnumerable(Of ContourLayer),
+                             Optional size$ = "2700,2000",
+                             Optional padding$ = "padding:100px 400px 100px 100px;",
+                             Optional bg$ = "white",
+                             Optional colorSet$ = "Jet",
+                             Optional legendTitle$ = "Contour Levels",
+                             Optional legendTitleCSS$ = CSSFont.Win7LargeBold,
+                             Optional tickCSS$ = CSSFont.Win10NormalLarger,
+                             Optional tickAxisStroke$ = Stroke.ScatterLineStroke,
+                             Optional ppi% = 300) As GraphicsData
 
-                    Dim layout As New Rectangle(rect.Right + 10, rect.Top, region.Padding.Right / 3 * 2, rect.Height / 3 * 2)
-                    Dim legendTitleFont As Font = CSSFont.TryParse(legendTitleCSS)
-                    Dim tickFont As Font = CSSFont.TryParse(tickCSS)
-                    Dim tickStroke As Pen = Stroke.TryParse(tickAxisStroke)
+            Dim theme As New Theme With {
+                .padding = padding,
+                .background = bg,
+                .colorSet = colorSet,
+                .legendTitleCSS = legendTitleCSS,
+                .legendTickCSS = tickCSS,
+                .legendTickAxisStroke = tickAxisStroke
+            }
+            Dim plotApp As New ContourPlot(sample, theme) With {
+                .legendTitle = legendTitle
+            }
 
-                    Call g.ColorMapLegend(layout, colors, level_cutoff, legendTitleFont, title:=legendTitle, tickFont, tickStroke)
-                End Sub
-
-            Return g.GraphicsPlots(
-                size:=size.SizeParser,
-                padding:=padding,
-                bg:=bg,
-                plotAPI:=plotInternal
-            )
+            Return plotApp.Plot(size, ppi)
         End Function
     End Module
 End Namespace
