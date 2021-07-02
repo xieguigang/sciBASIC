@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.MarchingSquares
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Namespace Contour
@@ -37,6 +38,14 @@ Namespace Contour
                 .ToArray
         End Sub
 
+        Private Function getDimensions() As Size
+            Dim layers = contours.Select(Function(layer) layer.GetContour.shapes).IteratesALL.ToArray
+            Dim w As Integer = Aggregate polygon In layers Into Max(polygon.x.Max)
+            Dim h As Integer = Aggregate polygon In layers Into Max(polygon.y.Max)
+
+            Return New Size(w, h)
+        End Function
+
         Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
             Dim level_cutoff As Double() = contours.Select(Function(c) c.level).ToArray
             Dim colors As SolidBrush() = Designer _
@@ -44,7 +53,7 @@ Namespace Contour
                 .Select(Function(c) New SolidBrush(c)) _
                 .ToArray
             Dim i As i32 = Scan0
-            Dim dims = contours(Scan0).dimension
+            Dim dims As Size = getDimensions()
             Dim rect = canvas.PlotRegion
             Dim scaleX = d3js.scale.linear.domain(New Double() {0, dims.Width}).range(New Double() {rect.Left, rect.Right})
             Dim scaleY = d3js.scale.linear(True).domain(New Double() {0, dims.Height}).range(New Double() {rect.Top, rect.Bottom})
