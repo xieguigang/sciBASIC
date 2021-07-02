@@ -104,11 +104,16 @@ Namespace KMeans
                 .IteratesALL _
                 .Distinct _
                 .ToArray
-            Dim clusters As ClusterCollection(Of ClusterEntity) =
-                ClusterDataSet(clusterCount:=expected,
-                               source:=rawInput.Select(Function(x) x.ToModel(projection:=maps)).ToArray,
-                               debug:=debug,
-                               parallel:=parallel)
+            Dim clusters As ClusterCollection(Of ClusterEntity) = ClusterDataSet(
+                clusterCount:=expected,
+                source:=rawInput _
+                    .Select(Function(xi)
+                                Return xi.ToModel(projection:=maps)
+                            End Function) _
+                    .ToArray,
+                debug:=debug,
+                parallel:=parallel
+            )
             Dim result As New List(Of EntityClusterModel)
 
             For Each cluster As SeqValue(Of KMeansCluster(Of ClusterEntity)) In clusters.SeqIterator(offset:=1)

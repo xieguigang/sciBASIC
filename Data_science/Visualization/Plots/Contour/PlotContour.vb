@@ -10,7 +10,7 @@ Namespace Contour
 
         <Extension>
         Public Function Plot(sample As IEnumerable(Of MeasureData),
-                             Optional size$ = "2700,2000",
+                             Optional size$ = "3600,2400",
                              Optional padding$ = "padding:100px 400px 100px 100px;",
                              Optional bg$ = "white",
                              Optional colorSet$ = "Jet",

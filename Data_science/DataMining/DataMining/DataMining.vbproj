@@ -747,11 +747,13 @@
     <Compile Include="AprioriRules\Algorithm\Entities\Transaction.vb" />
     <Compile Include="AprioriRules\Algorithm\Implementation\StrongRules.vb" />
     <Compile Include="AprioriRules\Helper\Encoding.vb" />
+    <Compile Include="Clustering\Density.vb" />
     <Compile Include="Clustering\FuzzyCMeans\Classify.vb" />
     <Compile Include="Clustering\FuzzyCMeans\CMeans.vb" />
     <Compile Include="Clustering\KMeans\CompleteLinkage\ClusterAPI.vb" />
     <Compile Include="Clustering\KMeans\CompleteLinkage\CompleteLinkageClustering.vb" />
     <Compile Include="Clustering\KMeans\CompleteLinkage\LloydsMethodClustering.vb" />
+    <Compile Include="Clustering\KNN.vb" />
     <Compile Include="ComponentModel\IDataEmbedding.vb" />
     <Compile Include="ComponentModel\Encoder\Class.vb" />
     <Compile Include="ComponentModel\Discretizer\NormalRangeDiscretizer.vb" />

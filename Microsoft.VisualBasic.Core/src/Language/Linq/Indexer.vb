@@ -59,6 +59,8 @@ Namespace Language
 
             If type Is GetType(Integer) Then
                 Return {DirectCast(args, Integer)}
+            ElseIf type Is GetType(Double) OrElse type Is GetType(Single) Then
+                Return {CType(CDbl(args), Integer)}
             ElseIf type.ImplementInterface(GetType(IEnumerable(Of Integer))) Then
                 Return DirectCast(args, IEnumerable(Of Integer))
             ElseIf type.ImplementInterface(GetType(IEnumerable(Of Boolean))) Then
