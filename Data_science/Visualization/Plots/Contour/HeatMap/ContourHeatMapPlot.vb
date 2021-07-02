@@ -57,7 +57,7 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports stdNum = System.Math
 
-Namespace Contour
+Namespace Contour.HeatMap
 
     ''' <summary>
     ''' Contour heatmap 
@@ -73,7 +73,7 @@ Namespace Contour
     ''' 
     ''' 和普通的heatmap相比，这里的坐标轴是连续的数值变量，而普通的heatmap，其坐标轴都是离散的分类变量
     ''' </summary>
-    Public Class ContourPlot : Inherits Plot
+    Public Class ContourHeatMapPlot : Inherits Plot
 
         Public matrix As EvaluatePoints
         Public xrange As DoubleRange, yrange As DoubleRange

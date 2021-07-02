@@ -7,11 +7,34 @@ Namespace Drawing2D.Math2D.MarchingSquares
 
         Dim polygons As New List(Of PointF())
         Dim temp As New List(Of PointF)
-        Dim level As Double
+
+        Public ReadOnly Property level As Double
+        Public Property dimension As Size
 
         Sub New(level As Double)
             Me.level = level
         End Sub
+
+        Sub New(contour As ContourLayer)
+            level = contour.threshold
+            polygons = contour.shapes _
+                .Select(Function(p) p.ToArray) _
+                .AsList
+        End Sub
+
+        Public Function GetContour() As ContourLayer
+            Return New ContourLayer With {
+                .threshold = level,
+                .shapes = polygons _
+                    .Select(Function(list)
+                                Return New Polygon2D With {
+                                    .x = list.Select(Function(p) CInt(p.X)).ToArray,
+                                    .y = list.Select(Function(p) CInt(p.Y)).ToArray
+                                }
+                            End Function) _
+                    .ToArray
+            }
+        End Function
 
         Public Overrides Function ToString() As String
             Return $"{polygons.Count} polygons under threshold {level}"

@@ -47,7 +47,7 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
 Imports stdNum = System.Math
 
-Namespace Contour
+Namespace Contour.HeatMap
 
     ''' <summary> 
     ''' 直接返回矩阵数据

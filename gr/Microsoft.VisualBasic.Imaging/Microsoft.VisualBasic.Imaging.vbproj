@@ -771,6 +771,7 @@
     <Compile Include="d3js\scale\linear.vb" />
     <Compile Include="d3js\scale\Extensions.vb" />
     <Compile Include="d3js\scale\ordinal.vb" />
+    <Compile Include="Drawing2D\Math2D\MarchingSquares\ContourLayer.vb" />
     <Compile Include="Drawing2D\Math2D\MarchingSquares\GeneralPath.vb" />
     <Compile Include="Drawing2D\Math2D\MarchingSquares\ASCIIPrinter.vb" />
     <Compile Include="Drawing2D\Math2D\MarchingSquares\MapMatrix.vb" />

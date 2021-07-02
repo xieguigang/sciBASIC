@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::320745241ee7bdc54de62fd6f65d7c61, Data_science\Visualization\Plots\Contour\Utils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Utils
-    ' 
-    '         Function: __getData, Compile, CreatePlot, (+3 Overloads) Plot
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Utils
+' 
+'         Function: __getData, Compile, CreatePlot, (+3 Overloads) Plot
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -53,7 +53,7 @@ Imports Microsoft.VisualBasic.Math.Scripting.MathExpression
 Imports Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 
-Namespace Contour
+Namespace Contour.HeatMap
 
     Public Module Utils
 
@@ -176,7 +176,7 @@ Namespace Contour
                 .colorSet = colorMap,
                 .background = bg
             }
-            Dim plotInternal As New ContourPlot(theme) With {
+            Dim plotInternal As New ContourHeatMapPlot(theme) With {
                 .xrange = xrange,
                 .yrange = yrange,
                 .parallel = parallel,
@@ -228,7 +228,7 @@ Namespace Contour
                                    Optional maxZ# = Double.MaxValue,
                                    Optional legendTickFormat$ = "F2",
                                    Optional xsteps! = 1,
-                                   Optional ysteps! = 1) As ContourPlot
+                                   Optional ysteps! = 1) As ContourHeatMapPlot
 
             Dim margin As Padding = padding
             Dim theme As New Theme With {
@@ -243,7 +243,7 @@ Namespace Contour
             Dim xrange As DoubleRange = matrixData.Select(Function(d) Val(d.ID)).ToArray
             Dim yrange As DoubleRange = matrixData.PropertyNames.Select(Function(a) Val(a)).ToArray
 
-            Return New ContourPlot(theme) With {
+            Return New ContourHeatMapPlot(theme) With {
                 .legendTitle = legendTitle,
                 .mapLevels = mapLevels,
                 .matrix = New MatrixEvaluate(matrixData, New SizeF(unit, unit)),
