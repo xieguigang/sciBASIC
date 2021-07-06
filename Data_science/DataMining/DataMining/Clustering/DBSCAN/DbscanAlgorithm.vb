@@ -108,7 +108,9 @@ Namespace DBSCAN
                     p.ClusterId = ClusterIDs.Noise
                 Else
                     clusterId += 1
-                    ExpandCluster(allPointsDbscan, p, neighborPts, clusterId, epsilon, minPts)
+                    ' point to be in a cluster
+                    p.ClusterId = clusterId
+                    ExpandCluster(allPointsDbscan, neighborPts, clusterId, epsilon, minPts)
                     seeds.Add(i)
                 End If
             Next
@@ -133,21 +135,17 @@ Namespace DBSCAN
         ''' 
         ''' </summary>
         ''' <param name="allPoints">Dataset</param>
-        ''' <param name="point">point to be in a cluster</param>
         ''' <param name="neighborPts">other points in same region with point parameter</param>
         ''' <param name="clusterId">given clusterId</param>
         ''' <param name="epsilon">Desired region ball range</param>
         ''' <param name="minPts">Minimum number of points to be in a region</param>
         Private Sub ExpandCluster(allPoints As DbscanPoint(Of T)(),
-                                  point As DbscanPoint(Of T),
                                   neighborPts As DbscanPoint(Of T)(),
                                   clusterId As Integer,
                                   epsilon As Double,
                                   minPts As Integer)
 
             Dim neighborPts2 As DbscanPoint(Of T)() = Nothing
-
-            point.ClusterId = clusterId
 
             For i As Integer = 0 To neighborPts.Length - 1
                 Dim pn As DbscanPoint(Of T) = neighborPts(i)
@@ -158,6 +156,7 @@ Namespace DBSCAN
 
                     If neighborPts2.Length >= minPts Then
                         neighborPts = neighborPts.Union(neighborPts2).ToArray()
+                        ExpandCluster(allPoints, neighborPts2, clusterId, epsilon, minPts)
                     End If
                 End If
 
