@@ -79,7 +79,6 @@ Namespace Contour.HeatMap
         Public xrange As DoubleRange, yrange As DoubleRange
         Public xsteps!, ysteps!
         Public parallel As Boolean
-        Public legendTitle$
         Public mapLevels%
 
         Public unit%

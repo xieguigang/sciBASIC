@@ -72,7 +72,6 @@ Namespace Heatmap
         Dim drawValueLabel As Boolean
         Dim variantSize As Boolean
         Dim mapLevels As Integer
-        Dim legendTitle As String
         Dim cor As CorrelationData
 
         Public Sub New(cor As CorrelationData, theme As Theme)

@@ -80,15 +80,17 @@ Module Utils
                 Dim j = random.Next(0, poolSize)
                 Dim broken = False
 
-                For k = 0 To i - 1
-
+                For k As Integer = 0 To i - 1
                     If j = result(k) Then
                         broken = True
                         Exit For
                     End If
                 Next
 
-                If Not broken Then rejectSample = False
+                If Not broken Then
+                    rejectSample = False
+                End If
+
                 result(i) = j
             End While
         Next

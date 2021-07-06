@@ -44,6 +44,7 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 Imports stdNum = System.Math
 
@@ -71,8 +72,11 @@ Friend Class NNDescent : Implements NNDescentFn
 
     Private Function rpTreeInit(leafArray As Integer()(), data As Double()(), currentGraph As Heap, startingIteration As Action(Of Integer, Integer, String)) As Heap
         Dim d As Double
+        Dim leafSize As Integer = leafArray.Length
+        Dim jj As i32 = 0
+        Dim dd As Integer = leafSize / 100
 
-        For n As Integer = 0 To leafArray.Length - 1
+        For n As Integer = 0 To leafSize - 1
             For i As Integer = 0 To leafArray(n).Length - 1
                 If leafArray(n)(i) < 0 Then
                     Exit For
@@ -90,7 +94,10 @@ Friend Class NNDescent : Implements NNDescentFn
                 Next
             Next
 
-            Call startingIteration?.Invoke(n, leafArray.Length, $"rpTreeInit {n}/{leafArray.Length}")
+            If startingIteration IsNot Nothing AndAlso ++jj = dd Then
+                jj = 0
+                startingIteration.Invoke(n, leafArray.Length, $"rpTreeInit {CInt(n / leafSize * 100)}% [{n}/{leafSize}]")
+            End If
         Next
 
         Return currentGraph
@@ -110,6 +117,10 @@ Friend Class NNDescent : Implements NNDescentFn
         Dim nVertices As Integer = data.Length
         Dim currentGraph As Heap = Heaps.MakeHeap(nVertices, nNeighbors)
         Dim d As Double
+        Dim jj As i32 = 0
+        Dim dd As Integer = nVertices / 10
+
+        Call startingIteration?.Invoke(0, 1, "start sample rejection loop...")
 
         For i As Integer = 0 To nVertices - 1
             Dim indices As Integer() = Utils.RejectionSample(nNeighbors, data.Length, random)
@@ -121,7 +132,10 @@ Friend Class NNDescent : Implements NNDescentFn
                 Call Heaps.HeapPush(currentGraph, indices(j), d, i, 1)
             Next
 
-            Call startingIteration?.Invoke(i, nVertices, $"Heaps.HeapPush {i}/{nVertices}")
+            If startingIteration IsNot Nothing AndAlso ++jj = dd Then
+                jj = 0
+                startingIteration.Invoke(i, nVertices, $"Heaps.HeapPush {CInt(100 * i / nVertices)}% [{i}/{nVertices}]")
+            End If
         Next
 
         If rpTreeInit Then
@@ -133,10 +147,10 @@ Friend Class NNDescent : Implements NNDescentFn
         Dim dataSize As Integer = data.Length
 
         For n As Integer = 0 To nIters - 1
-            startingIteration?.Invoke(n, nIters, $"{n}/{nIters}")
+            startingIteration?.Invoke(n, nIters, $"NNDescentLoop {n}/{nIters}")
             candidateNeighbors = Heaps.BuildCandidates(currentGraph, nVertices, nNeighbors, maxCandidates, random)
 
-            c = NNDescentLoop(currentGraph, nVertices, maxCandidates, candidateNeighbors, rho, data)
+            c = NNDescentLoopPar(currentGraph, nVertices, maxCandidates, candidateNeighbors, rho, data)
 
             If c <= delta * nNeighbors * dataSize Then
                 Exit For
@@ -146,9 +160,79 @@ Friend Class NNDescent : Implements NNDescentFn
         Return Heaps.DeHeapSort(currentGraph, startingIteration)
     End Function
 
-    Private Function NNDescentLoop(currentGraph As Heap, nVertices As Integer, maxCandidates As Integer, candidateNeighbors As Heap, rho As Double, data As Double()()) As Double
+    ''' <summary>
+    ''' <see cref="NNDescentLoop"/>的并行化版本
+    ''' </summary>
+    ''' <param name="currentGraph">被修改的数据</param>
+    ''' <param name="nVertices">readonly</param>
+    ''' <param name="maxCandidates">readonly</param>
+    ''' <param name="candidateNeighbors">readonly</param>
+    ''' <param name="rho">readonly</param>
+    ''' <param name="data">readonly</param>
+    ''' <returns></returns>
+    Private Function NNDescentLoopPar(currentGraph As Heap,
+                                      nVertices As Integer,
+                                      maxCandidates As Integer,
+                                      candidateNeighbors As Heap,
+                                      rho As Double,
+                                      data As Double()()) As Double
+
+        Dim cc As Double = Enumerable.Range(0, nVertices) _
+            .AsParallel _
+            .Select(Function(i)
+                        Dim c As Double
+
+                        For j As Integer = 0 To maxCandidates - 1
+                            Dim p = CInt(stdNum.Floor(candidateNeighbors(0)(i)(j)))
+                            Dim d As Double
+
+                            If p < 0 OrElse (random.NextFloat() < rho) Then
+                                Continue For
+                            End If
+
+                            For k = 0 To maxCandidates - 1
+                                Dim q = CInt(stdNum.Floor(candidateNeighbors(0)(i)(k)))
+                                Dim cj = candidateNeighbors(2)(i)(j)
+                                Dim ck = candidateNeighbors(2)(i)(k)
+
+                                If q < 0 OrElse cj = 0 AndAlso ck = 0 Then
+                                    Continue For
+                                Else
+                                    d = distanceFn(data(p), data(q))
+                                End If
+
+                                c += Heaps.HeapPush(currentGraph, p, d, q, 1)
+                                c += Heaps.HeapPush(currentGraph, q, d, p, 1)
+                            Next
+                        Next
+
+                        Return c
+                    End Function) _
+            .Sum
+
+        Return cc
+    End Function
+
+    ''' <summary>
+    ''' 这个loop在大样本数据集下会非常慢
+    ''' </summary>
+    ''' <param name="currentGraph">被修改的数据</param>
+    ''' <param name="nVertices">readonly</param>
+    ''' <param name="maxCandidates">readonly</param>
+    ''' <param name="candidateNeighbors">readonly</param>
+    ''' <param name="rho">readonly</param>
+    ''' <param name="data">readonly</param>
+    ''' <returns></returns>
+    Private Function NNDescentLoop(currentGraph As Heap,
+                                   nVertices As Integer,
+                                   maxCandidates As Integer,
+                                   candidateNeighbors As Heap,
+                                   rho As Double,
+                                   data As Double()()) As Double
         Dim d As Double
         Dim c As Double
+
+        Call Console.WriteLine("NNDescentLoop")
 
         For i As Integer = 0 To nVertices - 1
             For j As Integer = 0 To maxCandidates - 1

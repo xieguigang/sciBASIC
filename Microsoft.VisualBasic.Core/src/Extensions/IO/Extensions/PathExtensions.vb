@@ -162,6 +162,9 @@ Public Module PathExtensions
     ''' <param name="path"></param>
     ''' <param name="isAny">不带小数点的文件拓展名列表</param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' case ignored
+    ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ExtensionSuffix(path$, ParamArray isAny As String()) As Boolean

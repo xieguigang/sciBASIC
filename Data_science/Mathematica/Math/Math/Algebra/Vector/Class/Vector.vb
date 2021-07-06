@@ -239,7 +239,10 @@ Namespace LinearAlgebra
         ''' <summary>
         ''' Creates vector with a specific value sequence.
         ''' </summary>
-        ''' <param name="data"></param>
+        ''' <param name="data">
+        ''' a sequence of numeric value that will fill the vector's 
+        ''' data <see cref="buffer"/>.
+        ''' </param>
         Sub New(data As IEnumerable(Of Double))
             Call MyBase.New(data)
         End Sub

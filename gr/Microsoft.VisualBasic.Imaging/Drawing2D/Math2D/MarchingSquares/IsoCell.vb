@@ -113,8 +113,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
                         Case Side.RIGHT
                             Return Side.LEFT
                         Case Else
-                            Console.WriteLine(Me.[GetType]().FullName & ".firstSideCCW: case 5!")
-                            Environment.Exit(1)
+                            Throw New InvalidExpressionException(Me.[GetType]().FullName & ".firstSideCCW: case 5!")
                     End Select
                 Case 10
                     Select Case prev
@@ -123,12 +122,10 @@ Namespace Drawing2D.Math2D.MarchingSquares
                         Case Side.TOP
                             Return Side.BOTTOM
                         Case Else
-                            Console.WriteLine(Me.[GetType]().FullName & ".firstSideCCW: case 10!")
-                            Environment.Exit(1)
+                            Throw New InvalidExpressionException(Me.[GetType]().FullName & ".firstSideCCW: case 10!")
                     End Select
                 Case Else
-                    Console.WriteLine(Me.[GetType]().FullName & ".firstSideCCW: default!")
-                    Environment.Exit(1)
+                    Throw New InvalidExpressionException(Me.[GetType]().FullName & ".firstSideCCW: default!")
             End Select
 
             Return Nothing
@@ -159,8 +156,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
                         Case Side.RIGHT ' Normal case 5.
                             Return If(flipped, Side.TOP, Side.BOTTOM)
                         Case Else
-                            Console.WriteLine(Me.[GetType]().FullName & ".secondSideCCW: case 5!")
-                            Environment.Exit(1)
+                            Throw New InvalidExpressionException(Me.[GetType]().FullName & ".secondSideCCW: case 5!")
                     End Select
                 Case 10
                     Select Case prev
@@ -169,13 +165,10 @@ Namespace Drawing2D.Math2D.MarchingSquares
                         Case Side.TOP ' Normal case 10
                             Return If(flipped, Side.LEFT, Side.RIGHT)
                         Case Else
-                            Console.WriteLine(Me.[GetType]().FullName & ".secondSideCCW: case 10!")
-                            Environment.Exit(1)
+                            Throw New InvalidExpressionException(Me.[GetType]().FullName & ".secondSideCCW: case 10!")
                     End Select
                 Case Else
-                    Console.WriteLine(Me.[GetType]().FullName & ".secondSideCCW: shouldn't be here!  Neighborinfo = " & neighborInfo)
-                    Environment.Exit(1)
-                    Return Side.NONE
+                    Throw New InvalidExpressionException(Me.[GetType]().FullName & ".secondSideCCW: shouldn't be here!  Neighborinfo = " & neighborInfo)
             End Select
         End Function
 

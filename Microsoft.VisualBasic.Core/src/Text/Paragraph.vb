@@ -73,7 +73,8 @@ Namespace Text
         ''' <remarks>
         ''' 假若长度分割落在单词内，则添加一个连接符，假如是空格或者标点符号，则不处理
         ''' </remarks>
-        <Extension> Public Iterator Function SplitParagraph(text$, len%) As IEnumerable(Of String)
+        <Extension>
+        Public Iterator Function SplitParagraph(text$, len%) As IEnumerable(Of String)
             Dim lines$() = text.LineTokens
 
             For Each i As SeqValue(Of String) In lines.SeqIterator

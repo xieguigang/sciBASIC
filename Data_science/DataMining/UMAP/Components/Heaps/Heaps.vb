@@ -1,47 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::4f9c6782431506d3313f8f5ec035bf48, Data_science\DataMining\UMAP\Components\Heaps\Heaps.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Heaps
-    ' 
-    '     Function: BuildCandidates, DeHeapSort, HeapPush, MakeArrays, MakeHeap
-    '               SmallestFlagged, UncheckedHeapPush
-    ' 
-    '     Sub: SiftDown
-    ' 
-    ' /********************************************************************************/
+' Module Heaps
+' 
+'     Function: BuildCandidates, DeHeapSort, HeapPush, MakeArrays, MakeHeap
+'               SmallestFlagged, UncheckedHeapPush
+' 
+'     Sub: SiftDown
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 Imports stdNum = System.Math
 
@@ -62,7 +63,7 @@ Friend Module Heaps
         Return heap
     End Function
 
-    Private Function MakeArrays(fillValue As Double, nPoints As Integer, size As Integer)
+    Private Function MakeArrays(fillValue As Double, nPoints As Integer, size As Integer) As Double()()
         Return Utils.Empty(nPoints).Select(Function(any) Utils.Filled(size, fillValue)).ToArray()
     End Function
 
@@ -73,11 +74,16 @@ Friend Module Heaps
     Public Function HeapPush(heap As Heap, row As Integer, weight As Double, index As Integer, flag As Integer) As Integer
         Dim indices = heap(0)(row)
         Dim weights = heap(1)(row)
-        If weight >= weights(0) Then Return 0
+
+        If weight >= weights(0) Then
+            Return 0
+        End If
 
         ' Break if we already have this element.
         For i = 0 To indices.Length - 1
-            If index = indices(i) Then Return 0
+            If index = indices(i) Then
+                Return 0
+            End If
         Next
 
         Return Heaps.UncheckedHeapPush(heap, row, weight, index, flag)
@@ -91,7 +97,10 @@ Friend Module Heaps
         Dim indices = heap(0)(row)
         Dim weights = heap(1)(row)
         Dim isNew = heap(2)(row)
-        If weight >= weights(0) Then Return 0
+
+        If weight >= weights(0) Then
+            Return 0
+        End If
 
         ' Insert val at position zero
         weights(0) = weight
@@ -141,24 +150,34 @@ Friend Module Heaps
         weights(i) = weight
         indices(i) = index
         isNew(i) = flag
+
         Return 1
     End Function
 
     ''' <summary>
-    ''' Build a heap of candidate neighbors for nearest neighbor descent. For each vertex the candidate neighbors are any current neighbors, and any vertices that have the vertex as one of their nearest neighbors.
+    ''' Build a heap of candidate neighbors for nearest neighbor descent. 
+    ''' For each vertex the candidate neighbors are any current neighbors, 
+    ''' and any vertices that have the vertex as one of their nearest 
+    ''' neighbors.
     ''' </summary>
     Public Function BuildCandidates(currentGraph As Heap, nVertices As Integer, nNeighbors As Integer, maxCandidates As Integer, random As IProvideRandomValues) As Heap
         Dim candidateNeighbors = Heaps.MakeHeap(nVertices, maxCandidates)
 
-        For i = 0 To nVertices - 1
+        Call Console.WriteLine("Build candidates...")
 
-            For j = 0 To nNeighbors - 1
-                If currentGraph(0)(i)(j) < 0 Then Continue For
+        For i As Integer = 0 To nVertices - 1
+            For j As Integer = 0 To nNeighbors - 1
+                If currentGraph(0)(i)(j) < 0 Then
+                    Continue For
+                End If
+
                 Dim idx = CInt(currentGraph(0)(i)(j)) ' TOOD: Should Heap be int values instead of float?
                 Dim isn = CInt(currentGraph(2)(i)(j)) ' TOOD: Should Heap be int values instead of float?
                 Dim d = random.NextFloat()
+
                 Heaps.HeapPush(candidateNeighbors, i, d, idx, isn)
                 Heaps.HeapPush(candidateNeighbors, idx, d, i, isn)
+
                 currentGraph(2)(i)(j) = 0
             Next
         Next
@@ -174,6 +193,8 @@ Friend Module Heaps
         ' Note: The comment on this method doesn't seem to quite fit with the method signature (where a single Heap is provided, not an array of Heaps)
         Dim indices = heap(0)
         Dim weights = heap(1)
+        Dim dd As Integer = indices.Length / 10
+        Dim jj As i32 = 0
 
         For i As Integer = 0 To indices.Length - 1
             Dim indHeap = indices(i)
@@ -182,9 +203,11 @@ Friend Module Heaps
             For j As Integer = 0 To indHeap.Length - 1 - 1
                 Dim indHeapIndex = indHeap.Length - j - 1
                 Dim distHeapIndex = distHeap.Length - j - 1
+
                 Dim temp1 = indHeap(0)
                 indHeap(0) = indHeap(indHeapIndex)
                 indHeap(indHeapIndex) = temp1
+
                 Dim temp2 = distHeap(0)
                 distHeap(0) = distHeap(distHeapIndex)
                 distHeap(distHeapIndex) = temp2
@@ -192,7 +215,10 @@ Friend Module Heaps
                 Call Heaps.SiftDown(distHeap, indHeap, distHeapIndex, 0)
             Next
 
-            Call startingIteration?.Invoke(i, indices.Length, $"DeHeapSort {i}/{indices.Length}")
+            If startingIteration IsNot Nothing AndAlso ++jj = dd Then
+                jj = 0
+                startingIteration.Invoke(i, indices.Length, $"DeHeapSort {CInt(100 * i / indices.Length)}% [{i}/{indices.Length}]")
+            End If
         Next
 
         Dim indicesAsInts = indices _
