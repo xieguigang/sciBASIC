@@ -221,7 +221,7 @@ Public Class Bubble : Inherits Plot
                 b = New SolidBrush(s.color)
             End If
 
-            For Each pt As PointData In s
+            For Each pt As PointData In s.pts
                 Dim r As Double = getRadius(pt)
                 Dim p As New Point(CInt(pt.pt.X - r), CInt(pt.pt.Y - r))
                 Dim rect As New Rectangle(p, New Size(r * 2, r * 2))

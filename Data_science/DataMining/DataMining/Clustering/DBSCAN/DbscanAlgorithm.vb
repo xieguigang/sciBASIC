@@ -147,9 +147,7 @@ Namespace DBSCAN
 
             Dim neighborPts2 As DbscanPoint(Of T)() = Nothing
 
-            For i As Integer = 0 To neighborPts.Length - 1
-                Dim pn As DbscanPoint(Of T) = neighborPts(i)
-
+            For Each pn As DbscanPoint(Of T) In neighborPts.Where(Function(p) Not p.IsVisited)
                 If _full OrElse Not pn.IsVisited Then
                     pn.IsVisited = True
                     neighborPts2 = RegionQuery(allPoints, pn.ClusterPoint, epsilon)
