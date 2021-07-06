@@ -177,6 +177,7 @@ Namespace DBSCAN
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function RegionQuery(allPoints As DbscanPoint(Of T)(), point As T, epsilon As Double) As DbscanPoint(Of T)()
             Return allPoints _
+                .AsParallel _
                 .Where(Function(x) _metricFunc(point, x.ClusterPoint) <= epsilon) _
                 .ToArray()
         End Function
