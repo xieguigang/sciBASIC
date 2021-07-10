@@ -754,7 +754,10 @@
     <Compile Include="Clustering\KMeans\CompleteLinkage\CompleteLinkageClustering.vb" />
     <Compile Include="Clustering\KMeans\CompleteLinkage\LloydsMethodClustering.vb" />
     <Compile Include="Clustering\KNN.vb" />
+    <Compile Include="ComponentModel\Encoder\Variable\Categorical.vb" />
+    <Compile Include="ComponentModel\Encoder\Variable\CategoricalEncoder.vb" />
     <Compile Include="ComponentModel\IDataEmbedding.vb" />
+    <Compile Include="ComponentModel\Encoder\Variable\Binary.vb" />
     <Compile Include="ComponentModel\Encoder\Class.vb" />
     <Compile Include="ComponentModel\Discretizer\NormalRangeDiscretizer.vb" />
     <Compile Include="ComponentModel\Encoder\ClassEncoder.vb" />

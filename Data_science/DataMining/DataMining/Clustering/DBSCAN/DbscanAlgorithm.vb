@@ -85,7 +85,8 @@ Namespace DBSCAN
         Public Function ComputeClusterDBSCAN(allPoints As T(),
                                              epsilon As Double,
                                              minPts As Integer,
-                                             Optional ByRef isseed As Integer() = Nothing) As NamedCollection(Of T)()
+                                             Optional ByRef is_seed As Integer() = Nothing,
+                                             Optional filterNoise As Boolean = True) As NamedCollection(Of T)()
 
             Dim allPointsDbscan As DbscanPoint(Of T)() = allPoints _
                 .Select(Function(x) New DbscanPoint(Of T)(x)) _
@@ -116,15 +117,25 @@ Namespace DBSCAN
             Next
 
             With allPointsDbscan _
-                .Where(Function(x) x.ClusterId > 0) _
-                .GroupBy(Function(x) x.ClusterId)
+                .Where(Function(x)
+                           If Not filterNoise Then
+                               Return True
+                           Else
+                               Return x.ClusterId > 0
+                           End If
+                       End Function) _
+                .GroupBy(Function(x)
+                             Return x.ClusterId
+                         End Function)
 
-                isseed = seeds.ToArray
+                is_seed = seeds.ToArray
 
                 Return .Select(Function(x)
                                    Return New NamedCollection(Of T) With {
                                        .name = x.Key,
-                                       .value = x.[Select](Function(y) y.ClusterPoint).ToArray()
+                                       .value = x _
+                                           .Select(Function(y) y.ClusterPoint) _
+                                           .ToArray()
                                    }
                                End Function) _
                        .ToArray

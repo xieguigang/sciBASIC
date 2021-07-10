@@ -73,6 +73,13 @@ Imports stdNum = System.Math
 ' * Boston, MA  02110-1301  USA
 ' 
 
+Public Enum AnalysisTypes
+    AICM
+    Smoothed
+    Arithmetic
+    Harmonic
+End Enum
+
 ''' <summary>
 ''' @author Marc Suchard
 ''' @author Alexei Drummond
@@ -89,7 +96,7 @@ Public Class MarginalLikelihoodAnalysis
     ''' "aicm" for AICM, 
     ''' "arithmetic" for arithmetic mean
     ''' </summary>
-    ReadOnly analysisType As String
+    ReadOnly analysisType As AnalysisTypes
     ReadOnly bootstrapLength As Integer
 
     Dim marginalLikelihoodCalculated As Boolean = False
@@ -97,6 +104,7 @@ Public Class MarginalLikelihoodAnalysis
     Dim _bootstrappedSE As Double
 
     Public Property Burnin As Integer
+
     Public ReadOnly Property LogMarginalLikelihood As Double
         Get
             If Not marginalLikelihoodCalculated Then
@@ -124,7 +132,7 @@ Public Class MarginalLikelihoodAnalysis
     ''' <param name="burnin">          used for 'toString' display purposes only </param>
     ''' <param name="analysisType"> </param>
     ''' <param name="bootstrapLength"> a value of zero will turn off bootstrapping </param>
-    Public Sub New(sample As List(Of Double), burnin As Integer, analysisType As String, bootstrapLength As Integer)
+    Public Sub New(sample As List(Of Double), burnin As Integer, analysisType As AnalysisTypes, bootstrapLength As Integer)
         Me.sample = sample
         Me.Burnin = burnin
         Me.analysisType = analysisType
@@ -132,15 +140,13 @@ Public Class MarginalLikelihoodAnalysis
     End Sub
 
     Public Function calculateLogMarginalLikelihood(sample As List(Of Double)) As Double
-        If analysisType.Equals("aicm") Then
-            Return logMarginalLikelihoodAICM(sample)
-        ElseIf analysisType.Equals("smoothed") Then
-            Return logMarginalLikelihoodSmoothed(sample)
-        ElseIf analysisType.Equals("arithmetic") Then
-            Return logMarginalLikelihoodArithmetic(sample)
-        Else
-            Return logMarginalLikelihoodHarmonic(sample)
-        End If
+        Select Case analysisType
+            Case AnalysisTypes.AICM : Return logMarginalLikelihoodAICM(sample)
+            Case AnalysisTypes.Smoothed : Return logMarginalLikelihoodSmoothed(sample)
+            Case AnalysisTypes.Arithmetic : Return logMarginalLikelihoodArithmetic(sample)
+            Case Else
+                Return logMarginalLikelihoodHarmonic(sample)
+        End Select
     End Function
 
     ''' <summary>

@@ -70,7 +70,9 @@ Namespace Graphic.Legend
         ''' <param name="str$"></param>
         ''' <param name="defaultStyle"></param>
         ''' <returns></returns>
-        Public Function GetStyle(str$, Optional defaultStyle As LegendStyles = LegendStyles.Circle) As LegendStyles
+        ''' 
+        <Extension>
+        Public Function ParseLegendStyle(str$, Optional defaultStyle As LegendStyles = LegendStyles.Circle) As LegendStyles
             With LCase(str)
                 If legendExpressions.ContainsKey(.ByRef) Then
                     Return legendExpressions(.ByRef)
@@ -90,7 +92,7 @@ Namespace Graphic.Legend
             Return expr _
                 .Split(","c) _
                 .Select(AddressOf Trim) _
-                .Select(AddressOf GetStyle) _
+                .Select(AddressOf ParseLegendStyle) _
                 .ToArray
         End Function
 

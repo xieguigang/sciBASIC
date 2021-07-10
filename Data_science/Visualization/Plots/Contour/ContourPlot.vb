@@ -56,7 +56,7 @@ Namespace Contour
             Dim dims As Size = getDimensions()
             Dim rect = canvas.PlotRegion
             Dim scaleX = d3js.scale.linear.domain(New Double() {0, dims.Width}).range(New Double() {rect.Left, rect.Right})
-            Dim scaleY = d3js.scale.linear(True).domain(New Double() {0, dims.Height}).range(New Double() {rect.Top, rect.Bottom})
+            Dim scaleY = d3js.scale.linear.domain(New Double() {0, dims.Height}).range(New Double() {rect.Top, rect.Bottom})
 
             For Each polygon As GeneralPath In contours
                 Dim color As SolidBrush = colors(++i)

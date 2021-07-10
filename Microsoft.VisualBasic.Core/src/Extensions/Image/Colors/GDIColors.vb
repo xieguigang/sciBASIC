@@ -1,47 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::7f1a80f26d3ae3ab31478c1b52f44d96, Microsoft.VisualBasic.Core\src\Extensions\Image\Colors\GDIColors.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module GDIColors
-    ' 
-    '         Properties: AllDotNetColorNames, AllDotNetPrefixColors, ChartColors
-    ' 
-    '         Function: __getDotNetColors, (+2 Overloads) Alpha, ARGBExpression, AsDefaultColor, Average
-    '                   ColorTranslatorInternal, Darken, Equals, EuclideanDistance, Greyscale
-    '                   HTMLColors, IsColorExpression, IsNullOrEmpty, IsTransparent, Lighten
-    '                   Middle, RGBExpression, ToColor, TranslateColor
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module GDIColors
+' 
+'         Properties: AllDotNetColorNames, AllDotNetPrefixColors, ChartColors
+' 
+'         Function: __getDotNetColors, (+2 Overloads) Alpha, ARGBExpression, AsDefaultColor, Average
+'                   ColorTranslatorInternal, Darken, Equals, EuclideanDistance, Greyscale
+'                   HTMLColors, IsColorExpression, IsNullOrEmpty, IsTransparent, Lighten
+'                   Middle, RGBExpression, ToColor, TranslateColor
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -53,6 +53,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Math.Correlations
 Imports stdNum = System.Math
 
 Namespace Imaging
@@ -79,7 +80,8 @@ Namespace Imaging
         ''' <param name="x"></param>
         ''' <param name="y"></param>
         ''' <returns></returns>
-        <Extension> Public Function Middle(x As Color, y As Color) As Color
+        <Extension>
+        Public Function Middle(x As Color, y As Color) As Color
             Dim r% = (y.R - x.R) / 2 + x.R
             Dim g% = (y.G - x.G) / 2 + x.G
             Dim b% = (y.B - x.B) / 2 + x.B
@@ -421,7 +423,7 @@ Namespace Imaging
 
         <Extension>
         Public Function EuclideanDistance(a As Color, b As Color) As Double
-            Return Math.EuclideanDistance({a.R, a.G, a.B}, {b.R, b.G, b.B})
+            Return DistanceMethods.EuclideanDistance({a.R, a.G, a.B}, {b.R, b.G, b.B})
         End Function
     End Module
 End Namespace

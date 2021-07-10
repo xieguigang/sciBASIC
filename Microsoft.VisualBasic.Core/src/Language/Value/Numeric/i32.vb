@@ -236,6 +236,10 @@ Namespace Language
             Return x / b.Value
         End Operator
 
+        Public Shared Operator *(x As i32, b As Integer) As Integer
+            Return x.Value * b
+        End Operator
+
         ''' <summary>
         ''' 必须要overloads这个方法，否则会出现无法将Value(Of Integer)转换为int的错误
         ''' </summary>

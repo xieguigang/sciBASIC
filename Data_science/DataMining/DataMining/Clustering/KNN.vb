@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Correlations
 Imports Parallels = System.Threading.Tasks.Parallel
 
 Namespace Clustering
@@ -65,7 +66,7 @@ Namespace Clustering
                     toExclusive:=trainingSet.Length,
                     body:=Sub(index)
 #Disable Warning
-                              Dim dist = KMeansAlgorithm.EuclideanDistance(
+                              Dim dist = DistanceMethods.EuclideanDistance(
                                   X:=testSet(test).value,
                                   Y:=trainingSet(index).entityVector
                               )

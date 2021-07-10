@@ -81,7 +81,9 @@ Namespace AprioriRules
                             Return (code:=a + i, raw:=s)
                         End Function) _
                 .ToDictionary(Function(c) ChrW(c.code),
-                              Function(c) c.raw)
+                              Function(c)
+                                  Return c.raw
+                              End Function)
             itemCodes = CodeMappings.ToDictionary(Function(t) t.Value, Function(t) t.Key)
             AllItems = CodeMappings.Values.ToArray
             AllCodes = CodeMappings.Keys.ToArray
@@ -121,11 +123,11 @@ Namespace AprioriRules
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function TransactionEncoding(data As IEnumerable(Of Transaction)) As IEnumerable(Of String)
-            Return From item In data Select __transactionEncoding(item)
+            Return From item In data Select TransactionEncoding(item)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Function __transactionEncoding(data As Transaction) As String
+        Private Function TransactionEncoding(data As Transaction) As String
             Return data.Items.Select(Function(item) itemCodes(item)).CharString
         End Function
     End Class

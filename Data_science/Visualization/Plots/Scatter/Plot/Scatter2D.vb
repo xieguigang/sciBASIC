@@ -94,7 +94,7 @@ Namespace Plots
             Me.ablines = ablines
         End Sub
 
-        Protected Overrides Sub PlotInternal(ByRef g As IGraphics, rect As GraphicsRegion)
+        Public Function GetDataScaler(ByRef g As IGraphics, rect As GraphicsRegion) As DataScaler
             Dim XTicks#(), YTicks#()
 
             '    With array.CreateAxisTicks(
@@ -148,15 +148,20 @@ Namespace Plots
             End If
 
             Y = d3js.scale.linear.domain(YTicks).range(integers:={region.Bottom, region.Top})
-            ' End If
 
-            Dim scaler As New DataScaler With {
+            Return New DataScaler With {
                 .X = X,
                 .Y = Y,
                 .region = region,
                 .AxisTicks = (XTicks, YTicks)
             }
+        End Function
+
+        Protected Overrides Sub PlotInternal(ByRef g As IGraphics, rect As GraphicsRegion)
+            Dim scaler As DataScaler = GetDataScaler(g, rect)
             Dim gSize As Size = rect.Size
+            Dim canvas As IGraphics = g
+            Dim region As Rectangle = rect.PlotRegion
 
             If theme.drawAxis Then
                 Call g.DrawAxis(
@@ -194,7 +199,7 @@ Namespace Plots
                                         End If
                                     End Function
                 Dim polygon As New List(Of PointF)
-
+                Dim shapeSize As New Size(d, d)
                 Dim scatter As IEnumerable(Of PointData)
 
                 If scatterReorder Then
@@ -209,7 +214,16 @@ Namespace Plots
                     polygon.Add(pt1)
 
                     If fillPie Then
-                        Call g.FillPie(getPointBrush(pt), pt1.X - r, pt1.Y - r, d, d, 0, 360)
+                        Select Case line.shape
+                            Case LegendStyles.Circle
+                                pt1 = New PointF(pt1.X - r, pt1.Y - r)
+                            Case LegendStyles.Square
+                                pt1 = New PointF(pt1.X, pt1.Y - d)
+                            Case Else
+                                ' do nothing
+                        End Select
+
+                        g.DrawLegendShape(pt1, shapeSize, line.shape, getPointBrush(pt))
                     End If
 
                     Call Parallel.DoEvents()

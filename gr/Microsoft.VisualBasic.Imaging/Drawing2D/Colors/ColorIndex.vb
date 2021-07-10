@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::c8bf3cbca14a6ff3a996187baf3e1e9b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ColorIndex.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class ColorIndex
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: GetLevel, IndexOf
-    ' 
-    '     Structure ColorRange
-    ' 
-    '         Properties: Level, Points
-    ' 
-    '         Function: GetMinDistance, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class ColorIndex
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: GetLevel, IndexOf
+' 
+'     Structure ColorRange
+' 
+'         Properties: Level, Points
+' 
+'         Function: GetMinDistance, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -53,8 +53,8 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports stdNum = System.Math
 
 Namespace Drawing2D.Colors
 
@@ -111,7 +111,8 @@ Namespace Drawing2D.Colors
 
             For i As Integer = 0 To colors.Length - 1
                 With colors(i)
-                    Dim d# = Math.EuclideanDistance(value, New Double() { .R, .G, .B})
+                    Dim d# = DistanceMethods.EuclideanDistance(value, New Double() { .R, .G, .B})
+
                     If d <= minD Then
                         minD = d
                         minIndex = i
@@ -155,7 +156,7 @@ Namespace Drawing2D.Colors
                 Dim array As Double() = { .R, .G, .B}
                 Return Points.Min(
                     Function(x)
-                        Return Math.EuclideanDistance(array, New Double() {x.R, x.G, x.B})
+                        Return DistanceMethods.EuclideanDistance(array, New Double() {x.R, x.G, x.B})
                     End Function)
             End With
         End Function

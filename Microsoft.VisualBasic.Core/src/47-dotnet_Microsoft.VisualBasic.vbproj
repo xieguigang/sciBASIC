@@ -1974,6 +1974,8 @@
     <Compile Include="Text\StringSimilarity\IEqualityComparer.vb" />
     <Compile Include="Extensions\StringHelpers\NumericFormatHelper.vb" />
     <Compile Include="Net\HTTP\Stream\GZStream.vb" />
+	<Compile Include="Extensions\Math\Correlations\DistanceMethods.vb" />
+	
     <Compile Include="Net\HTTP\sitemap.xml.vb" />
     <Compile Include="Language\Runtime.vb" />
     <Compile Include="Language\Language\C\Vector.vb" />
