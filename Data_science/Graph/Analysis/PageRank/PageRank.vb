@@ -169,49 +169,64 @@ Namespace Analysis.PageRank
 
             Dim iNew As Vector = Vector.Ones(N) / N
             Dim iOld As Vector = Vector.Ones(N) / N
-
+            Dim diff As Vector
             Dim done As Boolean = False
+            Dim diffSumMod As Double
 
             While Not done
                 ' normalize every now and then for numerical stability
                 iNew /= iNew.Sum
+                diff = PageRankLoop1(iNew, iOld, checkSteps, alpha, M, N, leafNodes, at, numLinks)
+                diffSumMod = diff.SumMagnitude
+                done = diffSumMod < convergence
 
-                For i As Integer = 0 To checkSteps - 1
-                    ' swap arrays
-                    Call iOld.Swap(iNew)
-
-                    ' an element in the 1 x I vector. 
-                    ' all elements are identical.
-                    Dim oneIv As Double = (1 - alpha) * iOld.Sum / N
-
-                    ' an element of the A x I vector.
-                    ' all elements are identical.
-                    Dim oneAv As Double = 0.0
-
-                    If M > 0 Then
-                        oneAv = alpha * iOld.Take(leafNodes).Sum / N
-                    End If
-
-                    ' the elements of the H x I multiplication
-                    For j As Integer = 0 To N - 1
-                        Dim page As List(Of Integer) = at(j)
-                        Dim h As Double = 0
-
-                        If page.Count > 0 Then
-                            ' .DotProduct
-                            h = alpha * iOld.Take(page).DotProduct(1.0 / numLinks.Take(page))
-                        End If
-
-                        iNew(j) = h + oneAv + oneIv
-                    Next
-                Next
-
-                Dim diff As Vector = iNew - iOld
+                Call Console.WriteLine($"{diffSumMod} < {convergence}")
 
                 Yield iNew
-
-                done = diff.SumMagnitude < convergence
             End While
+        End Function
+
+        Private Function PageRankLoop1(ByRef iNew As Vector,
+                                       ByRef iOld As Vector,
+                                       ByRef checkSteps%,
+                                       ByRef alpha#,
+                                       ByRef M%,
+                                       ByRef N%,
+                                       ByRef leafNodes As List(Of Integer),
+                                       ByRef at As List(Of Integer)(),
+                                       ByRef numLinks As Vector) As Vector
+
+            For i As Integer = 0 To checkSteps - 1
+                ' swap arrays
+                Call iOld.Swap(iNew)
+
+                ' an element in the 1 x I vector. 
+                ' all elements are identical.
+                Dim oneIv As Double = (1 - alpha) * iOld.Sum / N
+
+                ' an element of the A x I vector.
+                ' all elements are identical.
+                Dim oneAv As Double = 0.0
+
+                If M > 0 Then
+                    oneAv = alpha * iOld.Take(leafNodes).Sum / N
+                End If
+
+                ' the elements of the H x I multiplication
+                For j As Integer = 0 To N - 1
+                    Dim page As List(Of Integer) = at(j)
+                    Dim h As Double = 0
+
+                    If page.Count > 0 Then
+                        ' .DotProduct
+                        h = alpha * iOld.Take(page).DotProduct(1.0 / numLinks.Take(page))
+                    End If
+
+                    iNew(j) = h + oneAv + oneIv
+                Next
+            Next
+
+            Return iNew - iOld
         End Function
 #End Region
     End Class

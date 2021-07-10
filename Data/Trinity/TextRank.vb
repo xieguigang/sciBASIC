@@ -154,10 +154,12 @@ Public Module TextRank
             Next
 
             For Each combine As (a$, b$) In textBlock.FullCombination
-                Dim edge As VertexEdge = g.CreateEdge(combine.a, combine.b)
+                If combine.a <> combine.b Then
+                    Dim edge As VertexEdge = g.CreateEdge(combine.a, combine.b)
 
-                If Not g.ExistEdge(edge) Then
-                    Call g.AddEdge(combine.a, combine.b)
+                    If Not g.ExistEdge(edge) Then
+                        Call g.AddEdge(combine.a, combine.b)
+                    End If
                 End If
             Next
         Next
