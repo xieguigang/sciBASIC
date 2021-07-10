@@ -275,7 +275,7 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Delete(u%, v%) As G
-        Dim key$ = $"{u}-{v}"
+        Dim key$ = VertexEdge.EdgeKey(vertices(u), vertices(v))
 
         If edges.ContainsKey(key) Then
             Call edges.Remove(key)

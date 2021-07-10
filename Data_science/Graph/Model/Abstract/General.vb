@@ -61,4 +61,18 @@ End Class
 ''' </summary>
 Public Class Graph : Inherits Graph(Of TV, VertexEdge, Graph)
 
+    Public Function FindEdge(u As String, v As String) As VertexEdge
+        If Not (vertices.ContainsKey(u) OrElse vertices.ContainsKey(v)) Then
+            Return Nothing
+        Else
+            Dim key As String = VertexEdge.EdgeKey(vertices(u), vertices(v))
+
+            If edges.ContainsKey(key) Then
+                Return edges(key)
+            Else
+                Return Nothing
+            End If
+        End If
+    End Function
+
 End Class
