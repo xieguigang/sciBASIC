@@ -143,7 +143,7 @@ Public Module TextRank
     End Function
 
     <Extension>
-    Public Sub TextRankGraph(g As Graph, text As String(), Optional win_size% = 2)
+    Public Sub TextRankGraph(g As Graph, text As String(), Optional win_size% = 2, Optional directed As Boolean = True)
         Dim blocks As SlideWindow(Of String)() = text.SlideWindows(win_size).ToArray
 
         For Each textBlock As SlideWindow(Of String) In blocks
@@ -153,17 +153,37 @@ Public Module TextRank
                 End If
             Next
 
-            For Each combine As (a$, b$) In textBlock.FullCombination
-                If combine.a <> combine.b Then
-                    Dim edge As VertexEdge = g.FindEdge(combine.a, combine.b)
+            If directed Then
+                For i As Integer = 0 To textBlock.Length - 1
+                    For j As Integer = i To textBlock.Length - 1
+                        ' direction is i -> j
+                        ' so i should always less than j
+                        If i < j Then
+                            Dim a = textBlock(i)
+                            Dim b = textBlock(j)
+                            Dim edge As VertexEdge = g.FindEdge(a, b)
 
-                    If edge Is Nothing Then
-                        Call g.AddEdge(combine.a, combine.b)
-                    Else
-                        edge.weight += 1
+                            If edge Is Nothing Then
+                                Call g.AddEdge(a, b)
+                            Else
+                                edge.weight += 1
+                            End If
+                        End If
+                    Next
+                Next
+            Else
+                For Each combine As (a$, b$) In textBlock.FullCombination
+                    If combine.a <> combine.b Then
+                        Dim edge As VertexEdge = g.FindEdge(combine.a, combine.b)
+
+                        If edge Is Nothing Then
+                            Call g.AddEdge(combine.a, combine.b)
+                        Else
+                            edge.weight += 1
+                        End If
                     End If
-                End If
-            Next
+                Next
+            End If
         Next
     End Sub
 

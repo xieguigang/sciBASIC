@@ -122,7 +122,9 @@ Namespace Analysis.PageRank
 
                 Return orders.ToDictionary(
                     Function(i) nodes(i).label,
-                    Function(value) +value)
+                    Function(value)
+                        Return +value
+                    End Function)
             End If
         End Function
 
