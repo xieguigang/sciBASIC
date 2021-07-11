@@ -107,6 +107,10 @@ Namespace vbproj
             Return Me.GetJson
         End Function
 
+        Public Shared Function Load(file As String) As Project
+            Return file.LoadXml(Of Project)
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Save(path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save
             Return Me.GetXml.SaveTo(path, encoding)
