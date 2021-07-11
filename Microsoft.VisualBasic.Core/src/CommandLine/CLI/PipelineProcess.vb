@@ -204,7 +204,8 @@ Namespace CommandLine
         ''' <param name="args">CLI arguments</param>
         ''' <returns></returns>
         <Extension>
-        Public Function [Call](app As String, args As String,
+        Public Function [Call](app As String,
+                               Optional args As String = Nothing,
                                Optional [in] As String = "",
                                Optional debug As Boolean = False) As String
 
