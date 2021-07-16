@@ -126,6 +126,11 @@ Namespace Serialization.Bencoding
 
                 For Each key As Object In raw.Keys
                     item = raw.Item(key)
+
+                    If item Is Nothing Then
+                        Continue For
+                    End If
+
                     table.Add(New BString(key.ToString), ToBEncode(item, digest))
                 Next
 
