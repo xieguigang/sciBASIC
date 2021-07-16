@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::54eaed4e5ba53c2d6b9eb03ad7b367d7, vs_solutions\dev\VisualStudio\IL\Globals.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Globals
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: ProcessSpecialTypes
-    ' 
-    '         Sub: LoadOpCodes
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Globals
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: ProcessSpecialTypes
+' 
+'         Sub: LoadOpCodes
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -157,31 +157,30 @@ Namespace IL
         Public modules As [Module]() = Nothing
 
         Sub New()
+            singleByteOpCodes = New OpCode(255) {}
+            multiByteOpCodes = New OpCode(255) {}
+
             Call LoadOpCodes()
         End Sub
 
         Private Sub LoadOpCodes()
-            singleByteOpCodes = New OpCode(255) {}
-            multiByteOpCodes = New OpCode(255) {}
-            Dim infoArray1 As FieldInfo() = GetType(OpCodes).GetFields()
+            For Each info1 As FieldInfo In GetType(OpCodes).GetFields()
+                If Not info1.FieldType Is GetType(OpCode) Then
+                    Continue For
+                End If
 
-            For num1 = 0 To infoArray1.Length - 1
-                Dim info1 = infoArray1(num1)
+                Dim code1 As OpCode = info1.GetValue(Nothing)
+                Dim num2 As UShort = code1.Value
 
-                If info1.FieldType Is GetType(OpCode) Then
-                    Dim code1 As OpCode = info1.GetValue(Nothing)
-                    Dim num2 As UShort = code1.Value
+                If num2 < &H100 Then
+                    singleByteOpCodes(num2) = code1
+                Else
 
-                    If num2 < &H100 Then
-                        singleByteOpCodes(num2) = code1
-                    Else
-
-                        If (num2 And &HFF00) <> &HFE00 Then
-                            Throw New Exception("Invalid OpCode.")
-                        End If
-
-                        multiByteOpCodes(num2 And &HFF) = code1
+                    If (num2 And &HFF00) <> &HFE00 Then
+                        Throw New Exception("Invalid OpCode.")
                     End If
+
+                    multiByteOpCodes(num2 And &HFF) = code1
                 End If
             Next
         End Sub

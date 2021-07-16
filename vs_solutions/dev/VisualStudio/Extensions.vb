@@ -64,9 +64,13 @@ Imports Microsoft.VisualBasic.Linq
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function EnumerateSourceFiles(vbproj As Project, Optional skipAssmInfo As Boolean = False) As IEnumerable(Of String)
-        Return vbproj _
-            .ItemGroups _
+    Public Function EnumerateSourceFiles(vbproj As Project,
+                                         Optional skipAssmInfo As Boolean = False,
+                                         Optional fullName As Boolean = False) As IEnumerable(Of String)
+        Dim itemList As ItemGroup() = vbproj.ItemGroups
+        Dim sourceFolder As String = DirectCast(vbproj, IFileReference).FilePath.ParentPath
+
+        Return itemList _
             .Where(Function(items) Not items.Compiles.IsNullOrEmpty) _
             .Select(Function(items)
                         Return items.Compiles _
@@ -75,6 +79,13 @@ Imports Microsoft.VisualBasic.Linq
                                   End Function) _
                            .Select(Function(vb)
                                        Return vb.Include.Replace("%28", "(").Replace("%29", ")")
+                                   End Function) _
+                           .Select(Function(relative)
+                                       If fullName Then
+                                           Return $"{sourceFolder}/{relative}"
+                                       Else
+                                           Return relative
+                                       End If
                                    End Function)
                     End Function) _
             .IteratesALL _
@@ -91,7 +102,9 @@ Imports Microsoft.VisualBasic.Linq
     Public Function AssemblyInfo(vbproj As Project) As AssemblyInfo
         With DirectCast(vbproj, IFileReference)
             If Not .FilePath.FileExists Then
-                Return New AssemblyInfo
+                Return New AssemblyInfo With {
+                    .BuiltTime = Now
+                }
             Else
                 Return GetAssemblyInfo(.FilePath)
             End If
