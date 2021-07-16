@@ -512,11 +512,14 @@ Namespace Graphic.Axis
                     Y += size.Height
             End Select
 
-            Dim ZERO As New Point(scaler.region.Left + offset.X, Y)                 ' 坐标轴原点
-            Dim right As New Point(ZERO.X + size.Width, Y)   ' X轴
+            ' 坐标轴原点
+            Dim ZERO As New Point(scaler.region.Left + offset.X, Y)
+            ' X轴
+            Dim right As New Point(ZERO.X + size.Width, Y)
             Dim d! = If(overridesTickLine <= 0, 10, overridesTickLine)
 
-            Call g.DrawLine(pen, ZERO, right)   ' X轴
+            ' X轴
+            Call g.DrawLine(pen, ZERO, right)
 
             If Not noTicks AndAlso Not scaler.AxisTicks.X.IsNullOrEmpty Then
                 ' 绘制坐标轴标签

@@ -51,7 +51,7 @@ Public Module BucketOperators
     ''' Data partitioning function.
     ''' (将目标集合之中的数据按照<paramref name="partitionSize"></paramref>参数分配到子集合之中，
     ''' 这个函数之中不能够使用并行化Linq拓展，以保证元素之间的相互原有的顺序，
-    ''' 每一个子集和之中的元素数量为<paramref name="partitionSize"/>)
+    ''' 每一个子集合之中的元素数量为<paramref name="partitionSize"/>)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>

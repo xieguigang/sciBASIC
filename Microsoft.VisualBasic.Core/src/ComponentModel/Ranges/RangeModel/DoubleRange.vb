@@ -114,12 +114,34 @@ Namespace ComponentModel.Ranges.Model
             End If
         End Sub
 
+        Sub New(data As Integer())
+            If data.Length = 0 Then
+                Min = Double.NaN
+                Max = Double.NaN
+            Else
+                Min = data.Min
+                Max = data.Max
+            End If
+        End Sub
+
         ''' <summary>
         ''' 从一个任意的实数向量之中构建出一个实数区间范围
         ''' </summary>
         ''' <param name="vector"></param>
         Sub New(vector As IEnumerable(Of Double))
             Call Me.New(data:=vector.ToArray)
+        End Sub
+
+        Sub New(vector As IEnumerable(Of Integer))
+            With vector.ToArray
+                If .Length = 0 Then
+                    Min = Double.NaN
+                    Max = Double.NaN
+                Else
+                    Min = .Min
+                    Max = .Max
+                End If
+            End With
         End Sub
 
         Sub New(range As IntRange)

@@ -280,7 +280,7 @@ Namespace Plots
                           .title = s.title
                       }
 
-                Call DrawLegends(g, legends, rect)
+                Call DrawLegends(g, legends, showBorder:=True, canvas:=rect)
             End If
 
             Call DrawMainTitle(g, region)

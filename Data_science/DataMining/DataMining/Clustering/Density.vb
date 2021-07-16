@@ -15,6 +15,7 @@ Namespace Clustering
         ''' <param name="dataset"></param>
         ''' <param name="k"></param>
         ''' <returns>
+        ''' a collection of tuple [id -> density].
         ''' the larger of the result value, the higher density value it is
         ''' </returns>
         Public Shared Iterator Function GetDensity(dataset As IEnumerable(Of ClusterEntity), Optional k As Integer = 6) As IEnumerable(Of NamedValue(Of Double))

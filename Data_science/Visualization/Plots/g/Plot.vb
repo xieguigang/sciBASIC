@@ -125,7 +125,7 @@ Namespace Graphic
 
         Protected MustOverride Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
 
-        Protected Sub DrawLegends(g As IGraphics, legends As LegendObject(), canvas As GraphicsRegion)
+        Protected Sub DrawLegends(g As IGraphics, legends As LegendObject(), showBorder As Boolean, canvas As GraphicsRegion)
             Dim legendLabelFont As Font = CSSFont.TryParse(theme.legendLabelCSS)
             Dim lsize As SizeF = g.MeasureString("A", legendLabelFont)
             Dim legendParts As LegendObject()() = Nothing
@@ -163,7 +163,7 @@ Namespace Graphic
                 Call g.DrawLegends(
                     legendPos, legends, legendSize,
                     shapeBorder:=theme.legendBoxStroke,
-                    regionBorder:=theme.legendBoxStroke,
+                    regionBorder:=If(showBorder, theme.legendBoxStroke, Nothing),
                     fillBg:=theme.legendBoxBackground
                 )
             Else
@@ -171,7 +171,7 @@ Namespace Graphic
                     Call g.DrawLegends(
                         legendPos, part, legendSize,
                         shapeBorder:=theme.legendBoxStroke,
-                        regionBorder:=theme.legendBoxStroke,
+                        regionBorder:=If(showBorder, theme.legendBoxStroke, Nothing),
                         fillBg:=theme.legendBoxBackground
                     )
 

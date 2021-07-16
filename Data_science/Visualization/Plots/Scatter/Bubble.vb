@@ -226,6 +226,11 @@ Public Class Bubble : Inherits Plot
                 Dim p As New Point(CInt(pt.pt.X - r), CInt(pt.pt.Y - r))
                 Dim rect As New Rectangle(p, New Size(r * 2, r * 2))
 
+                If r.IsNaNImaginary Then
+                    Call $"invalid radius value of {pt}".Warning
+                    Continue For
+                End If
+
                 With pt.color
                     If .StringEmpty Then
                         Call g.FillPie(b, rect, 0, 360)

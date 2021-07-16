@@ -175,7 +175,8 @@ Namespace Scripting.MathExpression
 
             If tokenBlocks(Scan0).Length = 1 AndAlso tokenBlocks(Scan0)(Scan0) = (MathTokens.Operator, {"-", "+"}) Then
                 ' insert a ZERO before
-                tokenBlocks.Insert(Scan0, {New MathToken(MathTokens.Literal, 0)})
+                tokenBlocks.RemoveAt(Scan0)
+                tokenBlocks(0)(0).text = "-" & tokenBlocks(0)(0).text
             End If
 
             For i As Integer = Scan0 To tokenBlocks.Count - 1

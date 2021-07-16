@@ -89,6 +89,8 @@ Namespace d3js.scale
         ''' </returns>
         Public MustOverride ReadOnly Property domainSize As Double
 
+        Public MustOverride ReadOnly Property rangeMax As Double
+
     End Class
 
     Public MustInherit Class IScale(Of T As IScale(Of T)) : Inherits Scaler
@@ -107,6 +109,12 @@ Namespace d3js.scale
         ''' 绘图的时候的实际的像素区间
         ''' </summary>
         Protected _range As DoubleRange = defaultRange.DefaultValue.Range
+
+        Public Overrides ReadOnly Property rangeMax As Double
+            Get
+                Return _range.Max
+            End Get
+        End Property
 
         ''' <summary>
         ''' If range is specified, sets the range of the ordinal scale to the specified array of values. 

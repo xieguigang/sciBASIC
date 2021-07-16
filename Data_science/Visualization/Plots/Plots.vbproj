@@ -634,8 +634,10 @@
     <Compile Include="3D\Scatter.vb" />
     <Compile Include="3D\Data.vb" />
     <Compile Include="BarPlot\AlignmentPlot.vb" />
+    <Compile Include="BarPlot\BiDirectionBarPlot.vb" />
     <Compile Include="BarPlot\Data\BarDataSample.vb" />
     <Compile Include="BarPlot\Data\Constructor.vb" />
+    <Compile Include="BarPlot\Data\BiDirectionData.vb" />
     <Compile Include="BarPlot\Histogram\Extensions.vb" />
     <Compile Include="BarPlot\Data\BarPlotDataExtensions.vb" />
     <Compile Include="BarPlot\LevelBarplot.vb" />
