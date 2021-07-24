@@ -120,9 +120,10 @@ Namespace CommandLine
         ''' <param name="args">参数</param>
         ''' <param name="onReadLine">行信息（委托）</param>
         ''' <remarks>https://github.com/lishewen/LSWFramework/blob/master/LSWClassLib/CMD/CMDHelper.vb</remarks>
-        Public Function ExecSub(app$, args$, onReadLine As Action(Of String), Optional in$ = "") As Integer
+        Public Function ExecSub(app$, args$, onReadLine As Action(Of String), Optional in$ = "", Optional ByRef stdErr As String = Nothing) As Integer
             Dim p As Process = CreatePipeline(app, args)
             Dim reader As StreamReader = p.StandardOutput
+            Dim errReader As StreamReader = p.StandardError
 
             If Not String.IsNullOrEmpty([in]) Then
                 Dim writer As StreamWriter = p.StandardInput
@@ -134,6 +135,8 @@ Namespace CommandLine
             While Not reader.EndOfStream
                 Call onReadLine(reader.ReadLine)
             End While
+
+            stdErr = reader.ReadToEnd
 
             Call p.WaitForExit()
 
@@ -148,6 +151,7 @@ Namespace CommandLine
             p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden
             p.StartInfo.RedirectStandardOutput = True
             p.StartInfo.RedirectStandardInput = True
+            p.StartInfo.RedirectStandardError = True
             p.StartInfo.UseShellExecute = False
             p.StartInfo.CreateNoWindow = True
             p.Start()
@@ -207,7 +211,8 @@ Namespace CommandLine
         Public Function [Call](app As String,
                                Optional args As String = Nothing,
                                Optional [in] As String = "",
-                               Optional debug As Boolean = False) As String
+                               Optional debug As Boolean = False,
+                               Optional ByRef stdErr As String = Nothing) As String
 
             Dim stdout As New List(Of String)
             Dim readLine As Action(Of String)
@@ -221,7 +226,7 @@ Namespace CommandLine
                 readLine = AddressOf stdout.Add
             End If
 
-            Call ExecSub(app, args, readLine, [in])
+            Call ExecSub(app, args, readLine, [in], stdErr)
 
             Return stdout.JoinBy(vbCrLf)
         End Function

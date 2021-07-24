@@ -465,7 +465,8 @@ Public Module TextDoc
     ''' <remarks></remarks>
     '''
     <ExportAPI("Write.Text")>
-    <Extension> Public Function SaveTo(array As IEnumerable(Of String), path$, Optional encoding As Encoding = Nothing) As Boolean
+    <Extension>
+    Public Function SaveTo(array As IEnumerable(Of String), path$, Optional encoding As Encoding = Nothing, Optional newLine As Char = ASCII.LF) As Boolean
         If String.IsNullOrEmpty(path) Then
             Return False
         End If
@@ -473,7 +474,9 @@ Public Module TextDoc
         Call "".SaveTo(path)
 
         Using fs As New FileStream(path, FileMode.OpenOrCreate),
-            file As New StreamWriter(fs, encoding Or DefaultEncoding)
+            file As New StreamWriter(fs, encoding Or DefaultEncoding) With {
+                .NewLine = newLine
+            }
 
             For Each line$ In array.SafeQuery
                 Call file.WriteLine(line)
