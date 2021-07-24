@@ -163,6 +163,15 @@ Namespace Imaging.BitmapImage
             Return Color.FromArgb(CInt(iA), CInt(iR), CInt(iG), CInt(iB))
         End Function
 
+        Public Shared Function ToPixel2D(i As Integer, width As Integer, Optional channels As Integer = 4) As Point
+            i = i / channels
+
+            Dim y As Integer = i / width
+            Dim x As Integer = i Mod width
+
+            Return New Point(x, y)
+        End Function
+
         ''' <summary>
         ''' Sets the color of the specified pixel in this System.Drawing.Bitmap.(这个函数线程不安全)
         ''' </summary>
