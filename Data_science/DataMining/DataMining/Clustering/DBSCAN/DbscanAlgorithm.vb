@@ -1,51 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::bf1eb00ddc581674928d35393cd1e3e8, Data_science\DataMining\DataMining\Clustering\DBSCAN\DbscanAlgorithm.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class DbscanAlgorithm
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: ComputeClusterDBSCAN, RegionQuery
-    ' 
-    '         Sub: ExpandCluster
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class DbscanAlgorithm
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: ComputeClusterDBSCAN, RegionQuery
+' 
+'         Sub: ExpandCluster
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.DataMining.Clustering
 
 Namespace DBSCAN
 
@@ -62,6 +63,8 @@ Namespace DBSCAN
 
         ReadOnly _metricFunc As Func(Of T, T, Double)
         ReadOnly _full As Boolean
+
+        Dim maxStackSize As Integer
 
         ''' <summary>
         ''' Takes metric function to compute distances between dataset items T
@@ -81,18 +84,54 @@ Namespace DBSCAN
         ''' <param name="allPoints">Dataset</param>
         ''' <param name="epsilon">Desired region ball radius</param>
         ''' <param name="minPts">Minimum number of points to be in a region</param>
+        ''' <param name="densityCut">
+        ''' value in range of ``[0,1]``. a percentage location for create threshold of the density values
+        ''' </param>
         ''' <returns>sets of clusters, renew the parameter</returns>
+        ''' 
         Public Function ComputeClusterDBSCAN(allPoints As T(),
                                              epsilon As Double,
                                              minPts As Integer,
                                              Optional ByRef is_seed As Integer() = Nothing,
-                                             Optional filterNoise As Boolean = True) As NamedCollection(Of T)()
+                                             Optional filterNoise As Boolean = True,
+                                             Optional densityCut As Double = -1) As NamedCollection(Of T)()
 
             Dim allPointsDbscan As DbscanPoint(Of T)() = allPoints _
-                .Select(Function(x) New DbscanPoint(Of T)(x)) _
+                .Select(Function(x, i)
+                            Return New DbscanPoint(Of T)(x) With {
+                                .ID = (i + 1).ToHexString
+                            }
+                        End Function) _
                 .ToArray()
+            Dim metric As Func(Of DbscanPoint(Of T), DbscanPoint(Of T), Double) =
+                Function(a, b)
+                    Return _metricFunc(a.ClusterPoint, b.ClusterPoint)
+                End Function
+            Dim densityList As Dictionary(Of String, Double) = Nothing
             Dim clusterId As Integer = 0
             Dim seeds As New List(Of Integer)
+
+            maxStackSize = allPoints.Length
+
+            If densityCut > 0 Then
+                Dim allDensity = Density _
+                    .GetDensity(Of DbscanPoint(Of T))(allPointsDbscan, metric, k:=minPts) _
+                    .ToArray
+                Dim orderDensity As Double() = allDensity _
+                    .Select(Function(d) d.Value) _
+                    .OrderBy(Function(d) d) _
+                    .ToArray
+
+                densityCut = orderDensity(densityCut * allDensity.Length)
+                densityList = allDensity _
+                    .ToDictionary(Function(i) i.Name,
+                                  Function(i)
+                                      Return i.Value
+                                  End Function)
+
+                Call Console.WriteLine($"Density cutoff for dbscan is: {densityCut}!")
+                Call Console.WriteLine($"There are {orderDensity.Where(Function(d) d < densityCut).Count}/{densityList.Count} lower than this threshold value.")
+            End If
 
             For i As Integer = 0 To allPointsDbscan.Length - 1
                 Dim p As DbscanPoint(Of T) = allPointsDbscan(i)
@@ -103,6 +142,11 @@ Namespace DBSCAN
                     p.IsVisited = True
                 End If
 
+                If densityCut > 0 AndAlso densityList(p.ID) < densityCut Then
+                    p.ClusterId = ClusterIDs.Noise
+                    Continue For
+                End If
+
                 Dim neighborPts As DbscanPoint(Of T)() = RegionQuery(allPointsDbscan, p.ClusterPoint, epsilon)
 
                 If neighborPts.Length < minPts Then
@@ -111,7 +155,7 @@ Namespace DBSCAN
                     clusterId += 1
                     ' point to be in a cluster
                     p.ClusterId = clusterId
-                    ExpandCluster(allPointsDbscan, neighborPts, clusterId, epsilon, minPts)
+                    ExpandCluster(allPointsDbscan, neighborPts, clusterId, epsilon, minPts, densityCut, densityList, 0)
                     seeds.Add(i)
                 End If
             Next
@@ -154,25 +198,39 @@ Namespace DBSCAN
                                   neighborPts As DbscanPoint(Of T)(),
                                   clusterId As Integer,
                                   epsilon As Double,
-                                  minPts As Integer)
+                                  minPts As Integer,
+                                  densityCut As Double,
+                                  densityList As Dictionary(Of String, Double),
+                                  stackDepth As Integer)
 
             Dim neighborPts2 As DbscanPoint(Of T)() = Nothing
 
-            For Each pn As DbscanPoint(Of T) In neighborPts.Where(Function(p) Not p.IsVisited)
-                If _full OrElse Not pn.IsVisited Then
+            Do While neighborPts.Length > 0
+                Dim pn As DbscanPoint(Of T) = (From p As DbscanPoint(Of T) In neighborPts Where Not p.IsVisited).FirstOrDefault
+
+                If pn Is Nothing Then
+                    Exit Do
+                ElseIf _full OrElse Not pn.IsVisited Then
                     pn.IsVisited = True
                     neighborPts2 = RegionQuery(allPoints, pn.ClusterPoint, epsilon)
 
-                    If neighborPts2.Length >= minPts Then
-                        neighborPts = neighborPts.Union(neighborPts2).ToArray()
-                        ExpandCluster(allPoints, neighborPts2, clusterId, epsilon, minPts)
+                    If densityCut > 0 AndAlso densityList(pn.ID) < densityCut Then
+                        pn.ClusterId = ClusterIDs.Noise
+                    ElseIf neighborPts2.Length >= minPts Then
+                        neighborPts = neighborPts _
+                            .Union(neighborPts2) _
+                            .ToArray()
+
+                        If stackDepth < maxStackSize Then
+                            Call ExpandCluster(allPoints, neighborPts2, clusterId, epsilon, minPts, densityCut, densityList, stackDepth + 1)
+                        End If
                     End If
                 End If
 
                 If pn.ClusterId = ClusterIDs.Unclassified Then
                     pn.ClusterId = clusterId
                 End If
-            Next
+            Loop
         End Sub
 
         ''' <summary>

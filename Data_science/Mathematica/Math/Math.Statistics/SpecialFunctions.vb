@@ -110,6 +110,10 @@ Public Module SpecialFunctions
         Return Factorial(n, k) \ VBMath.Factorial(n - k)
     End Function
 
+    Public Function Binom(n As Integer, k As Integer) As Double
+        Return VBMath.Factorial(n) / (VBMath.Factorial(k) * VBMath.Factorial(n - k))
+    End Function
+
     Public Function Binomial(probability As Double, n As Integer, k As Integer) As Double
         Dim value As Double = 0
         For i As Integer = 0 To k

@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::ff44d6c535633fec44e72f9a62a7eeaf, Microsoft.VisualBasic.Core\src\Language\Language\Java\MersenneTwisterFast.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class MersenneTwisterFast
-    ' 
-    '         Properties: Seed
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: nextBoolean, nextByte, nextChar, nextDouble, nextFloat
-    '                   nextGamma, nextGaussian, (+2 Overloads) nextInt, nextLong, nextShort
-    '                   permuted, shuffled
-    ' 
-    '         Sub: nextBytes, permute, (+2 Overloads) shuffle
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class MersenneTwisterFast
+' 
+'         Properties: Seed
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: nextBoolean, nextByte, nextChar, nextDouble, nextFloat
+'                   nextGamma, nextGaussian, (+2 Overloads) nextInt, nextLong, nextShort
+'                   permuted, shuffled
+' 
+'         Sub: nextBytes, permute, (+2 Overloads) shuffle
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 '
 ' * MersenneTwisterFast.java
@@ -652,7 +652,7 @@ Namespace Language.Java
                     v2 = 2 * ((((CLng(CInt(CUInt(a) >> 6))) << 27) + (CInt(CUInt(b) >> 5))) / CDbl(1L << 53)) - 1
                     s = v1 * v1 + v2 * v2
                 Loop While s >= 1
-                Dim multiplier As Double = sys.Sqrt(-2 * sys.Log(s) / s)
+                Dim multiplier As Double = stdNum.Sqrt(-2 * stdNum.Log(s) / s)
                 nextNextGaussian = v2 * multiplier
                 haveNextNextGaussian = True
                 Return v1 * multiplier
@@ -875,13 +875,13 @@ Namespace Language.Java
                 Do
                     p = b * nextDouble()
                     If p <= 1.0 Then ' Step 2. Case gds <= 1
-                        gds = sys.Exp(sys.Log(p) / a)
-                        If sys.Log(nextDouble()) <= -gds Then
+                        gds = stdNum.Exp(stdNum.Log(p) / a)
+                        If stdNum.Log(nextDouble()) <= -gds Then
                             Return (gds / lambda)
                         End If ' Step 3. Case gds > 1
                     Else
-                        gds = -sys.Log((b - p) / a)
-                        If sys.Log(nextDouble()) <= ((a - 1.0) * sys.Log(gds)) Then Return (gds / lambda)
+                        gds = -stdNum.Log((b - p) / a)
+                        If stdNum.Log(nextDouble()) <= ((a - 1.0) * stdNum.Log(gds)) Then Return (gds / lambda)
                     End If
                 Loop ' CASE B: Acceptance complement algorithm gd (gaussian
             Else
@@ -889,7 +889,7 @@ Namespace Language.Java
                 If a <> aa Then ' Step 1. Preparations
                     aa = a
                     ss = a - 0.5
-                    s = sys.Sqrt(ss)
+                    s = stdNum.Sqrt(ss)
                     d = 5.656854249 - 12.0 * s
                 End If
                 ' Step 2. Normal deviate
@@ -898,7 +898,7 @@ Namespace Language.Java
                     v2 = 2.0 * nextDouble() - 1.0
                     v12 = v1 * v1 + v2 * v2
                 Loop While v12 > 1.0
-                t = v1 * sys.Sqrt(-2.0 * sys.Log(v12) / v12)
+                t = v1 * stdNum.Sqrt(-2.0 * stdNum.Log(v12) / v12)
                 x = s + 0.5 * t
                 gds = x * x
                 If t >= 0.0 Then Return (gds / lambda) ' Immediate acceptance
@@ -928,35 +928,35 @@ Namespace Language.Java
                 End If
                 If x > 0.0 Then ' Step 5. Calculation of q
                     v = t / (s + s) ' Step 6.
-                    If sys.Abs(v) > 0.25 Then
-                        q = q0 - s * t + 0.25 * t * t + (ss + ss) * sys.Log(1.0 + v)
+                    If stdNum.Abs(v) > 0.25 Then
+                        q = q0 - s * t + 0.25 * t * t + (ss + ss) * stdNum.Log(1.0 + v)
                     Else
                         q = q0 + 0.5 * t * t * ((((((((a9 * v + a8) * v + a7) * v + a6) * v + a5) * v + a4) * v + a3) * v + a2) * v + a1) * v
                     End If ' Step 7. Quotient acceptance
-                    If sys.Log(1.0 - u) <= q Then Return (gds / lambda)
+                    If stdNum.Log(1.0 - u) <= q Then Return (gds / lambda)
                 End If
 
                 Do ' Step 8. Double exponential deviate t
                     Do
-                        e = -sys.Log(nextDouble())
+                        e = -stdNum.Log(nextDouble())
                         u = nextDouble()
                         u = u + u - 1.0
                         sign_u = If(u > 0, 1.0, -1.0)
                         t = b + (e * si) * sign_u
                     Loop While t <= -0.71874483771719 ' Step 9. Rejection of t
                     v = t / (s + s) ' Step 10. New q(t)
-                    If sys.Abs(v) > 0.25 Then
-                        q = q0 - s * t + 0.25 * t * t + (ss + ss) * sys.Log(1.0 + v)
+                    If stdNum.Abs(v) > 0.25 Then
+                        q = q0 - s * t + 0.25 * t * t + (ss + ss) * stdNum.Log(1.0 + v)
                     Else
                         q = q0 + 0.5 * t * t * ((((((((a9 * v + a8) * v + a7) * v + a6) * v + a5) * v + a4) * v + a3) * v + a2) * v + a1) * v
                     End If
                     If q <= 0.0 Then Continue Do ' Step 11.
                     If q > 0.5 Then
-                        w = sys.Exp(q) - 1.0
+                        w = stdNum.Exp(q) - 1.0
                     Else
                         w = ((((((e7 * q + e6) * q + e5) * q + e4) * q + e3) * q + e2) * q + e1) * q
                     End If ' Step 12. Hat acceptance
-                    If c * u * sign_u <= w * sys.Exp(e - 0.5 * t * t) Then
+                    If c * u * sign_u <= w * stdNum.Exp(e - 0.5 * t * t) Then
                         x = s + 0.5 * t
                         Return (x * x / lambda)
                     End If

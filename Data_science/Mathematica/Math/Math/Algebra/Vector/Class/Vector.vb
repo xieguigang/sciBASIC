@@ -785,6 +785,12 @@ Namespace LinearAlgebra
             Return New BooleanVector(From d As Double In x Select d >= n)
         End Operator
 
+        ''' <summary>
+        ''' x &lt;= n
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <=(x As Vector, n As Double) As BooleanVector
             Return New BooleanVector(From d As Double In x Select d <= n)
