@@ -97,5 +97,26 @@ Namespace Scripting.SymbolBuilder.VBLanguage
                     Throw New InvalidExpressionException($"Character '{c}' is not a valid VB type char!")
             End Select
         End Function
+
+        Public Shared Function CharToType(c As Char) As Type
+            Select Case c
+                Case "!"c
+                    Return GetType(Single)
+                Case "@"c
+                    Return GetType(Decimal)
+                Case "#"c
+                    Return GetType(Double)
+                Case "$"c
+                    Return GetType(String)
+                Case "%"c
+                    Return GetType(Integer)
+                Case "&"c
+                    Return GetType(Long)
+                Case "?"c
+                    Return GetType(Boolean)
+                Case Else
+                    Throw New InvalidExpressionException($"Character '{c}' is not a valid VB type char!")
+            End Select
+        End Function
     End Class
 End Namespace

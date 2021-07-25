@@ -147,7 +147,7 @@ Namespace CommandLine
             Dim p As New Process
             p.StartInfo = New ProcessStartInfo
             p.StartInfo.FileName = app
-            p.StartInfo.Arguments = args
+            p.StartInfo.Arguments = args.TrimNewLine(replacement:=" ")
             p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden
             p.StartInfo.RedirectStandardOutput = True
             p.StartInfo.RedirectStandardInput = True

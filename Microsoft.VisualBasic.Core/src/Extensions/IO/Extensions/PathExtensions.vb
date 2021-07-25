@@ -77,7 +77,7 @@ Public Module PathExtensions
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ChangeSuffix(path$, newSuffix$) As String
-        Return path.TrimSuffix & "." & newSuffix
+        Return path.TrimSuffix & "." & newSuffix.Trim("."c, "*"c)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
