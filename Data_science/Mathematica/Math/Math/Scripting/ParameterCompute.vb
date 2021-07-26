@@ -108,7 +108,7 @@ Namespace Scripting
                 .ToArray
             Dim getValue As Func(Of String, String) = values.GetValue()
 
-            For Each expr As UnaryExpression In arrayData
+            For Each expr As Expressions.UnaryExpression In arrayData
                 Dim member = DirectCast(expr.Operand, MemberExpression)
                 Dim constantExpression As ConstantExpression = DirectCast(member.Expression, ConstantExpression)
                 Dim name As String = member.Member.Name.Replace("$VB$Local_", "")
