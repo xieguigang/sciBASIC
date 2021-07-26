@@ -45,6 +45,9 @@
 
 Namespace Scripting.MathExpression.Impl
 
+    ''' <summary>
+    ''' symbol x
+    ''' </summary>
     Public Class SymbolExpression : Inherits Expression
 
         Public ReadOnly Property symbolName As String
