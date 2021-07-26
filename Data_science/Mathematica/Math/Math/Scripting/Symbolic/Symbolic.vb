@@ -76,9 +76,9 @@ Namespace Scripting.MathExpression
             If bin = "*"c Then
                 If TypeOf right Is SymbolExpression Then
                     Return New UnifySymbol(right) With {
-                    .factor = left,
-                    .power = New Literal(1)
-                }
+                        .factor = left,
+                        .power = New Literal(1)
+                    }
                 End If
             End If
             Return New BinaryExpression(left, right, bin)
@@ -95,8 +95,8 @@ Namespace Scripting.MathExpression
             ElseIf bin = "^" Then
                 If TypeOf left Is SymbolExpression Then
                     Return New UnifySymbol(left) With {
-                    .power = right
-                }
+                        .power = right
+                    }
                 Else
                     Return New BinaryExpression(left, right, bin)
                 End If
@@ -116,6 +116,12 @@ Namespace Scripting.MathExpression
                 Return makeSimple(DirectCast(left, Literal), right, bin.operator)
             ElseIf TypeOf right Is Literal Then
                 Return makeSimple(left, DirectCast(right, Literal), bin.operator)
+            ElseIf (TypeOf left Is SymbolExpression AndAlso TypeOf right Is SymbolExpression) AndAlso bin.operator = "*" Then
+                If (DirectCast(left, SymbolExpression).symbolName = DirectCast(right, SymbolExpression).symbolName) Then
+                    Return New BinaryExpression(left, New Literal(2), "^")
+                Else
+                    raw = New BinaryExpression(left, right, bin.operator)
+                End If
             Else
                 raw = New BinaryExpression(left, right, bin.operator)
             End If

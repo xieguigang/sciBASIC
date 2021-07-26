@@ -63,11 +63,17 @@ Namespace Scripting.MathExpression
             combines.Add({b, b})
 
             For i As Integer = 3 To power
-                For Each x As Expression In {a, b}
-                    For Each line As Expression() In combines
-                        combines.Add(line.JoinIterates({x}).ToArray)
-                    Next
+                Dim list = combines.ToArray
+                Dim empty As New List(Of Expression())
+
+                For Each line As Expression() In list
+                    empty.Add(line.JoinIterates({a}).ToArray)
                 Next
+                For Each line As Expression() In list
+                    empty.Add(line.JoinIterates({b}).ToArray)
+                Next
+
+                combines = empty
             Next
 
             Dim simplify = combines _

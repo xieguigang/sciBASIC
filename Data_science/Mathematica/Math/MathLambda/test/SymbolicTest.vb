@@ -65,10 +65,25 @@ Module SymbolicTest
     End Sub
 
     Sub expands()
-        Dim expr = ScriptEngine.ParseExpression("(a+b)^2")
-        Dim result = expr.Expands
+        Dim expr1 = ScriptEngine.ParseExpression($"(a+b)^3")
+        Dim result1 = expr1.Expands
 
-        Console.WriteLine($"{expr} -> {result}")
+        expr1 = ScriptEngine.ParseExpression($"(a+b+c)^3")
+        result1 = expr1.Expands
+
+        ScriptEngine.SetVariable("a", 1)
+        ScriptEngine.SetVariable("b", 2)
+        ScriptEngine.SetVariable("c", 3)
+
+        Call Console.WriteLine(expr1.Evaluate(ScriptEngine.Expression))
+        Call Console.WriteLine(result1.Evaluate(ScriptEngine.Expression))
+
+        For i As Integer = 0 To 4
+            Dim expr = ScriptEngine.ParseExpression($"(a+b)^{i}")
+            Dim result = expr.Expands
+
+            Console.WriteLine($"{expr} -> {result}")
+        Next
 
         Pause()
     End Sub
