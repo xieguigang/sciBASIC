@@ -76,26 +76,25 @@ Namespace Scripting.MathExpression
                          End Function) _
                 .Select(Function(tokens)
                             Return simple(tokens)
-                        End Function)
+                        End Function) _
+                .ToArray
 
-            Dim bin As BinaryExpression = Nothing
-            Dim left As Expression = simplify.First
+            Dim bin As Expression = simplify.First
 
             For Each i In simplify.Skip(1)
-                bin = New BinaryExpression(left, i, "+")
+                bin = New BinaryExpression(bin, i, "+")
             Next
 
             Return bin
         End Function
 
         Private Function simple(group As IGrouping(Of String, Expression())) As Expression
-            Dim PI As BinaryExpression = Nothing
             Dim all = group.ToArray
             Dim merge = all.First
-            Dim left As Expression = merge.First
+            Dim PI As Expression = merge.First
 
             For Each i In merge.Skip(1)
-                PI = New BinaryExpression(left, i, "*")
+                PI = New BinaryExpression(PI, i, "*")
             Next
 
             If all.Length = 1 Then
