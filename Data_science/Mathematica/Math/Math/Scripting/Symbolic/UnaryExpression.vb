@@ -17,5 +17,9 @@ Namespace Scripting.MathExpression
                     Throw New NotImplementedException([operator])
             End Select
         End Function
+
+        Public Overrides Function ToString() As String
+            Return $"{[operator]}{value}"
+        End Function
     End Class
 End Namespace
