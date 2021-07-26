@@ -10,9 +10,11 @@ Namespace Scripting.MathExpression
 
         <Extension>
         Public Function Expands(expression As Expression) As Expression
-            If TypeOf expression Is SymbolExpression Then
-
+            If Not TypeOf expression Is BinaryExpression Then
+                Return expression
             End If
+
+
         End Function
     End Module
 End Namespace
