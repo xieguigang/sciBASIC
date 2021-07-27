@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c1d9f45dea8dba325abf89572ff0d9b0, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\WordWrap.vb"
+﻿#Region "Microsoft.VisualBasic::a4cd2fe870dc3305a68c035365df58fb, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\WordWrap.vb"
 
     ' Author:
     ' 

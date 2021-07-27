@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa0e334cf7209274cc80aaf4bd3ac325, Data_science\DataMining\DataMining\MarginalLikelihoodAnalysis.vb"
+﻿#Region "Microsoft.VisualBasic::3edc2f561bdab4e29c61373edb95c8db, Data_science\DataMining\DataMining\MarginalLikelihoodAnalysis.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,14 @@
 
     ' Summaries:
 
+    ' Enum AnalysisTypes
+    ' 
+    '     AICM, Arithmetic, Harmonic, Smoothed
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
     ' Class MarginalLikelihoodAnalysis
     ' 
     '     Properties: BootstrappedSE, Burnin, LogMarginalLikelihood

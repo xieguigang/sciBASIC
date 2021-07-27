@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d741ddb03156683e0da3ec460f922ed3, Data_science\Visualization\Plots\Contour\ContourPlot.vb"
+﻿#Region "Microsoft.VisualBasic::cab6e0e3af245077453fb3132fb83ea3, Data_science\Visualization\Plots\Contour\HeatMap\ContourHeatMapPlot.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@
 
     ' Summaries:
 
-    '     Class ContourPlot
+    '     Class ContourHeatMapPlot
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

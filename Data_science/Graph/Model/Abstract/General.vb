@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cbea04a9a7debf0f487187f198e2a692, Data_science\Graph\Model\Abstract\General.vb"
+﻿#Region "Microsoft.VisualBasic::b25baf2be827517ea1b242c9274627a5, Data_science\Graph\Model\Abstract\General.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     ' Class Graph
     ' 
-    ' 
+    '     Function: FindEdge
     ' 
     ' /********************************************************************************/
 

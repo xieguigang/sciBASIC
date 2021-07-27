@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6168dd87b03416581210c4096bf716e0, Data_science\Mathematica\Math\Math\Distributions\Sample.vb"
+﻿#Region "Microsoft.VisualBasic::00d3927b8ed86ee97e518953da8dc6a0, Data_science\Mathematica\Math\Math\Distributions\Sample.vb"
 
     ' Author:
     ' 
@@ -33,11 +33,11 @@
 
     '     Class SampleDistribution
     ' 
-    '         Properties: average, CI95Range, max, min, outlierBoundary
-    '                     quantile, size, stdErr
+    '         Properties: average, CI95Range, max, min, mode
+    '                     outlierBoundary, quantile, size, stdErr
     ' 
     '         Constructor: (+3 Overloads) Sub New
-    '         Function: GetRange, ToString
+    '         Function: EvaluateMode, GetRange, ToString
     ' 
     ' 
     ' /********************************************************************************/

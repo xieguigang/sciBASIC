@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a509bfd7c733ece398acdd94680b11f1, Microsoft.VisualBasic.Core\src\CommandLine\CommandLine.vb"
+﻿#Region "Microsoft.VisualBasic::3f685703b4c3f91abe28cb0ef29214cb, Microsoft.VisualBasic.Core\src\CommandLine\CommandLine.vb"
 
     ' Author:
     ' 
@@ -43,8 +43,8 @@
     '                   GetEnumerator1, GetFloat, GetFullDIRPath, GetFullFilePath, GetGuid
     '                   GetInt16, GetInt32, GetInt64, GetObject, GetOrdinal
     '                   GetString, GetValue, HavebFlag, IsNull, IsTrue
-    '                   OpenHandle, OpenStreamInput, OpenStreamOutput, ReadInput, (+2 Overloads) Remove
-    '                   ToArgumentVector, ToString, TrimNamePrefix
+    '                   OpenHandle, OpenStreamInput, OpenStreamOutput, Parse, ParseTokens
+    '                   ReadInput, (+2 Overloads) Remove, ToArgumentVector, ToString, TrimNamePrefix
     ' 
     '         Sub: (+2 Overloads) Add, Clear, CopyTo
     ' 

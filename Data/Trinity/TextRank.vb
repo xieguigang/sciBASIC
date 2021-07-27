@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f37dc30ab984f9e9c77c6c9cc8f87819, Data\Trinity\TextRank.vb"
+﻿#Region "Microsoft.VisualBasic::be9ecd4b50c4c63428cea914469d45f6, Data\Trinity\TextRank.vb"
 
     ' Author:
     ' 
@@ -35,6 +35,8 @@
     ' 
     '     Function: Removes, Sentences, Similarity, StripMessy, TextGraph
     '               TextRankGraph, Words
+    ' 
+    '     Sub: TextRankGraph
     ' 
     ' /********************************************************************************/
 

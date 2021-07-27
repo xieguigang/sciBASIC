@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bcb9fe5f6231dbbfddd914104c5700ec, gr\Microsoft.VisualBasic.Imaging\d3js\scale\IScale.vb"
+﻿#Region "Microsoft.VisualBasic::14c8eef78ed023f1b27ccd480de23fbc, gr\Microsoft.VisualBasic.Imaging\d3js\scale\IScale.vb"
 
     ' Author:
     ' 
@@ -36,6 +36,8 @@
     ' 
     ' 
     '     Class IScale
+    ' 
+    '         Properties: rangeMax
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: (+3 Overloads) range

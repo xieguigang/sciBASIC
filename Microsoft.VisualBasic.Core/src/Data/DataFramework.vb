@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70e83e367a8e4fb685e4ab7251e1a1d5, Microsoft.VisualBasic.Core\src\Data\DataFramework.vb"
+﻿#Region "Microsoft.VisualBasic::478b06ff41fecaa700288b78592c2d33, Microsoft.VisualBasic.Core\src\Data\DataFramework.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '                   ParseSchemaInternal, (+2 Overloads) Schema, ValueTable
     '         Delegate Function
     ' 
-    '             Function: IsNumericType, IsPrimitive, valueToString
+    '             Function: IsIntegerType, IsNumericType, IsPrimitive, valueToString
     '         Enum EnumCastTo
     ' 
     '             [integer], [string], none

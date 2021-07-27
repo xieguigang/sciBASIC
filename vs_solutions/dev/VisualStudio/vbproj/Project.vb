@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::441494b5751eef7ad7bfc4c3b623ac3e, vs_solutions\dev\VisualStudio\vbproj\Project.vb"
+﻿#Region "Microsoft.VisualBasic::557058139dbdf659910b2c94d644cda5, vs_solutions\dev\VisualStudio\vbproj\Project.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: [Imports], DefaultTargets, FilePath, ItemGroups, MimeType
     '                     PropertyGroups, Targets, ToolsVersion
     ' 
-    '         Function: GetProfile, (+2 Overloads) Save, ToString
+    '         Function: GetProfile, Load, (+2 Overloads) Save, ToString
     ' 
     ' 
     ' /********************************************************************************/

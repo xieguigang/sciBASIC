@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b72f0418d1865f92e931ebec63005007, Microsoft.VisualBasic.Core\src\Language\Value\Variant.vb"
+﻿#Region "Microsoft.VisualBasic::14611faca3d56405d20170e15e3260a5, Microsoft.VisualBasic.Core\src\Language\Value\Variant.vb"
 
     ' Author:
     ' 
@@ -38,13 +38,6 @@
     '         Constructor: (+3 Overloads) Sub New
     '         Function: [TryCast], GetUnderlyingType
     '         Operators: (+2 Overloads) <>, (+2 Overloads) =, (+2 Overloads) Like
-    ' 
-    '     Class [Variant]
-    ' 
-    '         Properties: VC
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    '         Operators: (+2 Overloads) Like
     ' 
     ' 
     ' /********************************************************************************/

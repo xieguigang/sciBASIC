@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::193c19a8b6f69e06eff6c1f9cb8c646a, Microsoft.VisualBasic.Core\src\Extensions\Collection\BucketOperators.vb"
+﻿#Region "Microsoft.VisualBasic::79b7fdec7ccc63b6a3a733dfb733105d, Microsoft.VisualBasic.Core\src\Extensions\Collection\BucketOperators.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d702053418b9e2cfb55da16e434a72c, Microsoft.VisualBasic.Core\src\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::573f8226f3706cab4a6520cc52a2c1c5, Microsoft.VisualBasic.Core\src\Extensions\Math\Math.vb"
 
     ' Author:
     ' 
@@ -33,11 +33,11 @@
 
     '     Module VBMath
     ' 
-    '         Function: Covariance, CumSum, Distance, (+6 Overloads) EuclideanDistance, Factorial
-    '                   FactorialSequence, FormatNumeric, Hypot, IsPowerOf2, (+2 Overloads) Log2
-    '                   LogN, Max, Permut, PoissonPDF, Pow2
-    '                   (+3 Overloads) ProductALL, (+3 Overloads) RangesAt, RMS, RMSE, RSD
-    '                   (+4 Overloads) SD, (+2 Overloads) seq, (+5 Overloads) Sum, WeighedAverage
+    '         Function: Covariance, CumSum, Factorial, FactorialSequence, FormatNumeric
+    '                   Hypot, IsPowerOf2, (+2 Overloads) Log2, LogN, Max
+    '                   Permut, PoissonPDF, Pow2, (+3 Overloads) ProductALL, (+3 Overloads) RangesAt
+    '                   RMS, RMSE, RSD, (+4 Overloads) SD, (+2 Overloads) seq
+    '                   (+5 Overloads) Sum, WeighedAverage
     ' 
     ' 
     ' /********************************************************************************/

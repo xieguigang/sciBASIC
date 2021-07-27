@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d13a972be6243bff1fdc790c828849d, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\base\Combination\Combination.vb"
+﻿#Region "Microsoft.VisualBasic::5084445643912836c81bcddaefdd75a6, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\base\Combination\Combination.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,8 @@
 
     '     Module Combination
     ' 
-    '         Function: CreateCombos, FullCombination, Generate, (+2 Overloads) Iterates, Iteration
+    '         Function: AllCombinations, CreateCombos, FullCombination, Generate, (+2 Overloads) Iterates
+    '                   Iteration
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::182a66377b4e66c10d3b43081b21f99b, Microsoft.VisualBasic.Core\src\My\JavaScript\JavaScriptObject.vb"
+﻿#Region "Microsoft.VisualBasic::3f0b263a722e820cb244b5f83fcf977a, Microsoft.VisualBasic.Core\src\My\JavaScript\JavaScriptObject\JavaScriptObject.vb"
 
     ' Author:
     ' 
@@ -31,32 +31,6 @@
 
     ' Summaries:
 
-    '     Interface IJavaScriptObjectAccessor
-    ' 
-    '         Properties: Accessor
-    ' 
-    '     Class Descriptor
-    ' 
-    '         Properties: configurable, enumerable, value, writable
-    ' 
-    '     Enum MemberAccessorResult
-    ' 
-    '         ClassMemberProperty, ExtensionProperty, Undefined
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Class JavaScriptValue
-    ' 
-    '         Properties: Accessor, IsConstant, Literal
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: GetValue, ToString
-    ' 
-    '         Sub: SetValue
-    ' 
     '     Class JavaScriptObject
     ' 
     '         Properties: length, this

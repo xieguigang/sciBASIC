@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36ba2ab99112b3987e5604d0e8a9094b, Data_science\Mathematica\data\Student's T-test\t.test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::8c62335a7d04996c211d9e1da172eb29, Data_science\Mathematica\data\Student's T-test\t.test\Program.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module Program
     ' 
-    '     Sub: Main
+    '     Sub: Main, oneSample, twoSample
     ' 
     ' /********************************************************************************/
 

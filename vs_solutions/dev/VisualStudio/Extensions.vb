@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d40e0f48fa4ad343c3f76188ef34649, vs_solutions\dev\VisualStudio\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::f4ff91d7e8c03fe1c6922c18c8ed05b2, vs_solutions\dev\VisualStudio\Extensions.vb"
 
     ' Author:
     ' 

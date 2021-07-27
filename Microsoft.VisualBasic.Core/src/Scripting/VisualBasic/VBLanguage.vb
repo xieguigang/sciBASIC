@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a6c949f8bd03b2b1555e857dfed4bca, Microsoft.VisualBasic.Core\src\Scripting\VisualBasic\VBLanguage.vb"
+﻿#Region "Microsoft.VisualBasic::0064a6a31284baa503da7845ed505bf0, Microsoft.VisualBasic.Core\src\Scripting\VisualBasic\VBLanguage.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: TypeChar
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: TypeCharName
+    '         Function: CharToType, TypeCharName
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c07470d05fa7e02f1ca1fe84b0c684c0, Microsoft.VisualBasic.Core\src\Language\Value\Numeric\i32.vb"
+﻿#Region "Microsoft.VisualBasic::ddb75e3e6c7f1397dca6e24e5a6452fd, Microsoft.VisualBasic.Core\src\Language\Value\Numeric\i32.vb"
 
     ' Author:
     ' 
@@ -37,9 +37,9 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: (+2 Overloads) CompareTo, Equals, GetHexInteger, (+2 Overloads) ToString
-    '         Operators: (+3 Overloads) -, (+2 Overloads) /, (+4 Overloads) +, (+3 Overloads) <, <<
-    '                    <=, (+3 Overloads) >, >=, (+2 Overloads) And, (+2 Overloads) IsFalse
-    '                    (+2 Overloads) IsTrue, (+2 Overloads) Not
+    '         Operators: (+3 Overloads) -, *, (+2 Overloads) /, (+4 Overloads) +, (+3 Overloads) <
+    '                    <<, <=, (+3 Overloads) >, >=, (+2 Overloads) And
+    '                    (+2 Overloads) IsFalse, (+2 Overloads) IsTrue, (+2 Overloads) Not
     ' 
     ' 
     ' /********************************************************************************/

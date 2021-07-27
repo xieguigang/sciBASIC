@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::066efab556583cc8147fe3f73a4db134, Data_science\Mathematica\Math\Math.Statistics\SpecialFunctions.vb"
+﻿#Region "Microsoft.VisualBasic::b4d58b24ca6728c7abf385bc685d6f95, Data_science\Mathematica\Math\Math.Statistics\SpecialFunctions.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,10 @@
 
     ' Module SpecialFunctions
     ' 
-    '     Function: BetaFunction, Binomial, Choose, Correlation, Covariance
-    '               EvaluatePolynomial, Factorial, gamma, gammaln, incbcf
-    '               incbd, IncompleteGamma, IncompleteGammaComplement, InvBinomal, MutualProbability
-    '               pseries, RegularizedIncompleteBetaFunction, safeDiv, StirlingsFormula
+    '     Function: BetaFunction, Binom, Binomial, Choose, Correlation
+    '               Covariance, EvaluatePolynomial, Factorial, gamma, gammaln
+    '               incbcf, incbd, IncompleteGamma, IncompleteGammaComplement, InvBinomal
+    '               MutualProbability, pseries, RegularizedIncompleteBetaFunction, safeDiv, StirlingsFormula
     ' 
     ' /********************************************************************************/
 

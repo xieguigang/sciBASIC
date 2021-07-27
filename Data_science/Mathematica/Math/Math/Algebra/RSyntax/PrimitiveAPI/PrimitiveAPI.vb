@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de91c1b44bdfa71d622d43d0d7b591dc, Data_science\Mathematica\Math\Math\Algebra\RSyntax\PrimitiveAPI\PrimitiveAPI.vb"
+﻿#Region "Microsoft.VisualBasic::5e8b6b750d85496c7d6655a14b08ec19, Data_science\Mathematica\Math\Math\Algebra\RSyntax\PrimitiveAPI\PrimitiveAPI.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,9 @@
 
     '     Module PrimitiveAPI
     ' 
-    '         Function: [stop], [Try], All, Any, (+3 Overloads) C
-    '                   getOption, IfElse, (+3 Overloads) Length, Missing, (+2 Overloads) Paste
-    '                   (+2 Overloads) Rep, (+2 Overloads) warning, ZeroVector
+    '         Function: [stop], [Try], All, Any, c
+    '                   (+3 Overloads) C, getOption, IfElse, (+3 Overloads) Length, Missing
+    '                   (+2 Overloads) Paste, (+2 Overloads) Rep, (+2 Overloads) warning, ZeroVector
     ' 
     '         Sub: [Try]
     ' 

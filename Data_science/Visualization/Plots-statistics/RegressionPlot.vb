@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70d2fb48ac6f8f171e1759cac5c9daff, Data_science\Visualization\Plots-statistics\RegressionPlot.vb"
+﻿#Region "Microsoft.VisualBasic::9ca2323566291b4dd33c959f44b7c403, Data_science\Visualization\Plots-statistics\RegressionPlot.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '     Function: Plot
     ' 
-    '     Sub: printLegend, printXPredicted
+    '     Sub: printEquation, printLegend, printXPredicted
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4127c2e7af1e95565930a09b47a62a7a, Data_science\Visualization\Plots\g\Legends\LegendPlot.vb"
+﻿#Region "Microsoft.VisualBasic::cbc1046cdc9eb4e2d93eb742784e31e4, Data_science\Visualization\Plots\g\Legends\LegendPlot.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module LegendPlotExtensions
     ' 
-    '         Function: DrawLegend, GetStyle, LegendStyls, MaxLegendSize
+    '         Function: DrawLegend, LegendStyls, MaxLegendSize, ParseLegendStyle
     ' 
     '         Sub: DrawLegends, DrawLegendShape
     ' 

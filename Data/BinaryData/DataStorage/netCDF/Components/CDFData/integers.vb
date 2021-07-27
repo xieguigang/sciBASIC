@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d063bf67caabcfc2b604a5bb7b12456, Data\BinaryData\DataStorage\netCDF\Components\CDFData\integers.vb"
+﻿#Region "Microsoft.VisualBasic::a00b30e6cce7f5686473b1ca6841747a, Data\BinaryData\DataStorage\netCDF\Components\CDFData\integers.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,8 @@
     '     Class integers
     ' 
     '         Properties: cdfDataType
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     ' 
     ' /********************************************************************************/

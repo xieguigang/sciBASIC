@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c85afb4bd1380d2ee929f90df30d1e43, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\DoubleRange.vb"
+﻿#Region "Microsoft.VisualBasic::f0b5310b80679c5f51d83563bc1eb810, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\DoubleRange.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: Length, Max, Min
     ' 
-    '         Constructor: (+7 Overloads) Sub New
+    '         Constructor: (+9 Overloads) Sub New
     '         Function: Contains, (+2 Overloads) Enumerate, GetEnumerator, IEnumerable_GetEnumerator, (+3 Overloads) IsInside
     '                   (+2 Overloads) IsOverlapping, ScaleMapping, (+2 Overloads) ToString, TryParse
     '         Operators: *, <>, =, (+2 Overloads) Like

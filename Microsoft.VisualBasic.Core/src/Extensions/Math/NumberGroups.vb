@@ -1,51 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::73731bb54f71dff46e7b697ce9efc4a6, Microsoft.VisualBasic.Core\src\Extensions\Math\NumberGroups.vb"
+﻿#Region "Microsoft.VisualBasic::1d8c89234cfdfc90cf30cc3c827d4ba4, Microsoft.VisualBasic.Core\src\Extensions\Math\NumberGroups.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Module NumberGroups
-' 
-'         Function: BinarySearch, (+3 Overloads) GroupBy, GroupByImpl, GroupByParallel, Groups
-'                   Match, Min
-' 
-'     Interface IVector
-' 
-'         Properties: Data
-' 
-'     Interface INumberTag
-' 
-'         Properties: Tag
-' 
-' 
-' /********************************************************************************/
+    '     Interface INumericKey
+    ' 
+    '         Properties: key
+    ' 
+    '     Module NumberGroups
+    ' 
+    '         Function: BinarySearch, diff, (+5 Overloads) GroupBy, GroupByImpl, GroupByParallel
+    '                   Groups, Match, Min
+    ' 
+    '     Interface IVector
+    ' 
+    '         Properties: Data
+    ' 
+    '     Interface INumberTag
+    ' 
+    '         Properties: Tag
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

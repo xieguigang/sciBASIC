@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d3836e423a3ede0e90187f83ac0b186a, Data_science\Mathematica\Math\DataFrame\DataMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::2f6936eb416217102f35dbd562eca75e, Data_science\Mathematica\Math\DataFrame\DataMatrix.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '     Properties: keys, size
     ' 
     '     Constructor: (+2 Overloads) Sub New
-    '     Function: PopulateRowObjects, PopulateRows, ToString, Visit
+    '     Function: GetVector, PopulateRowObjects, PopulateRows, ToString, Visit
     ' 
     ' /********************************************************************************/
 

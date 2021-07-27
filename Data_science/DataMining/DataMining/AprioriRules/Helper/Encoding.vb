@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::327a5d3ae11977a081a1dd5e2be4efb6, Data_science\DataMining\DataMining\AprioriRules\Helper\Encoding.vb"
+﻿#Region "Microsoft.VisualBasic::215821029db9113be0d815793c42d62f, Data_science\DataMining\DataMining\AprioriRules\Helper\Encoding.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: AllCodes, AllItems, CodeMappings
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: __transactionEncoding, Decode, GenerateCodes, ToString, TransactionEncoding
+    '         Function: Decode, GenerateCodes, ToString, (+2 Overloads) TransactionEncoding
     ' 
     ' 
     ' /********************************************************************************/

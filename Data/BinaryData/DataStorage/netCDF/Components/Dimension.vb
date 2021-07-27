@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65b185c557111e3d3cb56423411cf418, Data\BinaryData\DataStorage\netCDF\Components\Dimension.vb"
+﻿#Region "Microsoft.VisualBasic::de276ee1524bc401e3931015077207e9, Data\BinaryData\DataStorage\netCDF\Components\Dimension.vb"
 
     ' Author:
     ' 
@@ -35,6 +35,7 @@
     ' 
     '         Properties: name
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
     ' 
     ' 
