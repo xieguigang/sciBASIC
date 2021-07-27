@@ -10,6 +10,7 @@
     <Authors>xieguigang</Authors>
     <Version>5.0.2323</Version>
     <Product>sciBASIC</Product>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

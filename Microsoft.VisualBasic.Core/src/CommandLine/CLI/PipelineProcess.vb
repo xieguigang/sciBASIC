@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::04d64c5457fe0ab3b1cbb8dbf1c5f940, Microsoft.VisualBasic.Core\src\CommandLine\CLI\PipelineProcess.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module PipelineProcess
-    ' 
-    '         Function: (+2 Overloads) [Call], CallDotNetCorePipeline, CreatePipeline, ExecSub, FindProc
-    '                   (+2 Overloads) GetProc
-    ' 
-    '         Sub: ExecSub
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module PipelineProcess
+' 
+'         Function: (+2 Overloads) [Call], CallDotNetCorePipeline, CreatePipeline, ExecSub, FindProc
+'                   (+2 Overloads) GetProc
+' 
+'         Sub: ExecSub
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -120,7 +120,10 @@ Namespace CommandLine
         ''' <param name="args">参数</param>
         ''' <param name="onReadLine">行信息（委托）</param>
         ''' <remarks>https://github.com/lishewen/LSWFramework/blob/master/LSWClassLib/CMD/CMDHelper.vb</remarks>
-        Public Function ExecSub(app$, args$, onReadLine As Action(Of String), Optional in$ = "", Optional ByRef stdErr As String = Nothing) As Integer
+        Public Function ExecSub(app$, args$, onReadLine As Action(Of String),
+                                Optional in$ = "",
+                                Optional ByRef stdErr As String = Nothing) As Integer
+
             Dim p As Process = CreatePipeline(app, args)
             Dim reader As StreamReader = p.StandardOutput
             Dim errReader As StreamReader = p.StandardError
@@ -143,15 +146,24 @@ Namespace CommandLine
             Return p.ExitCode
         End Function
 
-        Private Function CreatePipeline(app As String, args As String) As Process
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="app"></param>
+        ''' <param name="args"></param>
+        ''' <param name="it">
+        ''' docker run -it XXX
+        ''' </param>
+        ''' <returns></returns>
+        Public Function CreatePipeline(app As String, args As String, Optional it As Boolean = True) As Process
             Dim p As New Process
             p.StartInfo = New ProcessStartInfo
             p.StartInfo.FileName = app
             p.StartInfo.Arguments = args.TrimNewLine(replacement:=" ")
             p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden
-            p.StartInfo.RedirectStandardOutput = True
-            p.StartInfo.RedirectStandardInput = True
-            p.StartInfo.RedirectStandardError = True
+            p.StartInfo.RedirectStandardOutput = it
+            p.StartInfo.RedirectStandardInput = it
+            p.StartInfo.RedirectStandardError = it
             p.StartInfo.UseShellExecute = False
             p.StartInfo.CreateNoWindow = True
             p.Start()
@@ -212,7 +224,8 @@ Namespace CommandLine
                                Optional args As String = Nothing,
                                Optional [in] As String = "",
                                Optional debug As Boolean = False,
-                               Optional ByRef stdErr As String = Nothing) As String
+                               Optional ByRef stdErr As String = Nothing,
+                               Optional ByRef exitCode As Integer = 0) As String
 
             Dim stdout As New List(Of String)
             Dim readLine As Action(Of String)
@@ -226,7 +239,7 @@ Namespace CommandLine
                 readLine = AddressOf stdout.Add
             End If
 
-            Call ExecSub(app, args, readLine, [in], stdErr)
+            exitCode = ExecSub(app, args, readLine, [in], stdErr)
 
             Return stdout.JoinBy(vbCrLf)
         End Function

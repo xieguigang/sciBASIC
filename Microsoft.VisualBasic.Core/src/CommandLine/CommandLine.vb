@@ -1004,5 +1004,14 @@ Namespace CommandLine
         Public Shared Operator >=(args As CommandLine, name As String) As String
             Throw New NotSupportedException
         End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function Parse(commandlineStr As String) As CommandLine
+            Return Parsers.TryParse(commandlineStr.GetTokens, False, commandlineStr)
+        End Function
+
+        Public Shared Function ParseTokens(commandlineStr As String) As String()
+            Return commandlineStr.GetTokens
+        End Function
     End Class
 End Namespace

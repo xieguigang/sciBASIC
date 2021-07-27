@@ -40,10 +40,15 @@ Namespace Contour
 
         Private Function getDimensions() As Size
             Dim layers = contours.Select(Function(layer) layer.GetContour.shapes).IteratesALL.ToArray
-            Dim w As Integer = Aggregate polygon In layers Into Max(polygon.x.Max)
-            Dim h As Integer = Aggregate polygon In layers Into Max(polygon.y.Max)
 
-            Return New Size(w, h)
+            If layers.Length = 0 Then
+                Return New Size
+            Else
+                Dim w As Integer = Aggregate polygon In layers Into Max(polygon.x.Max)
+                Dim h As Integer = Aggregate polygon In layers Into Max(polygon.y.Max)
+
+                Return New Size(w, h)
+            End If
         End Function
 
         Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
@@ -55,15 +60,18 @@ Namespace Contour
             Dim i As i32 = Scan0
             Dim dims As Size = getDimensions()
             Dim rect = canvas.PlotRegion
-            Dim scaleX = d3js.scale.linear.domain(New Double() {0, dims.Width}).range(New Double() {rect.Left, rect.Right})
-            Dim scaleY = d3js.scale.linear.domain(New Double() {0, dims.Height}).range(New Double() {rect.Top, rect.Bottom})
 
-            For Each polygon As GeneralPath In contours
-                Dim color As SolidBrush = colors(++i)
+            If dims.Width * dims.Height > 0 Then
+                Dim scaleX = d3js.scale.linear.domain(New Double() {0, dims.Width}).range(New Double() {rect.Left, rect.Right})
+                Dim scaleY = d3js.scale.linear.domain(New Double() {0, dims.Height}).range(New Double() {rect.Top, rect.Bottom})
 
-                Call polygon.Fill(g, color, scaleX, scaleY)
-                Call polygon.Draw(g, Pens.Black, scaleX, scaleY)
-            Next
+                For Each polygon As GeneralPath In contours
+                    Dim color As SolidBrush = colors(++i)
+
+                    Call polygon.Fill(g, color, scaleX, scaleY)
+                    Call polygon.Draw(g, Pens.Black, scaleX, scaleY)
+                Next
+            End If
 
             Dim layout As New Rectangle(rect.Right + 10, rect.Top, canvas.Padding.Right / 3 * 2, rect.Height / 3 * 2)
             Dim legendTitleFont As Font = CSSFont.TryParse(theme.legendTitleCSS)

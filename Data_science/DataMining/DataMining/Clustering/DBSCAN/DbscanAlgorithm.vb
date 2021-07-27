@@ -47,6 +47,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DataMining.Clustering
+Imports stdNum = System.Math
 
 Namespace DBSCAN
 
@@ -111,7 +112,7 @@ Namespace DBSCAN
             Dim clusterId As Integer = 0
             Dim seeds As New List(Of Integer)
 
-            maxStackSize = allPoints.Length
+            maxStackSize = stdNum.Min(allPoints.Length / 2, 4096)
 
             If densityCut > 0 Then
                 Dim allDensity = Density _
@@ -131,6 +132,8 @@ Namespace DBSCAN
 
                 Call Console.WriteLine($"Density cutoff for dbscan is: {densityCut}!")
                 Call Console.WriteLine($"There are {orderDensity.Where(Function(d) d < densityCut).Count}/{densityList.Count} lower than this threshold value.")
+            Else
+                Call Console.WriteLine("No density cutoff of your sample data.")
             End If
 
             For i As Integer = 0 To allPointsDbscan.Length - 1
@@ -227,7 +230,7 @@ Namespace DBSCAN
                     End If
                 End If
 
-                If pn.ClusterId = ClusterIDs.Unclassified Then
+                If pn.ClusterId = ClusterIDs.Unclassified OrElse pn.ClusterId = ClusterIDs.Noise Then
                     pn.ClusterId = clusterId
                 End If
             Loop
