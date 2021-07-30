@@ -1,47 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::44eae710ba807a19ae8e26b56f6894d6, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\MarchingSquares.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class MarchingSquares
-    ' 
-    '         Function: makeContour, mkIso, mkIsos, (+2 Overloads) ovalOfCassini, padData
-    ' 
-    '         Sub: interpolateCrossing, isoSubpath
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class MarchingSquares
+' 
+'         Function: makeContour, mkIso, mkIsos, (+2 Overloads) ovalOfCassini, padData
+' 
+'         Sub: interpolateCrossing, isoSubpath
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
@@ -145,7 +146,13 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' shape GeneralPath, in particular whether or not to generate a call
         ''' to lineTo().
         ''' </summary>
-        Private ReadOnly epsilon As Double = 0.0000000001
+        ReadOnly epsilon As Double = 0.0000000001
+        ReadOnly dimeansion As Size
+
+        Sub New(dimSize As Size, epsilon As Double)
+            Me.dimeansion = dimSize
+            Me.epsilon = epsilon
+        End Sub
 
         ''' <summary>
         ''' Typically, mkIsos() is the only method in this class that programs will
@@ -169,19 +176,21 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' <param name="levels"> thresholds to use as iso levels. </param>
         ''' <returns> return an array of iso GeneralPaths. Each array element
         ''' corresponds to the same threshold in the 'levels' input array. </returns>
-        Public Overridable Function mkIsos(data As Double()(), levels As Double()) As GeneralPath()
+        Public Iterator Function mkIsos(data As Double()(), levels As Double()) As IEnumerable(Of GeneralPath)
             ' Pad data to guarantee iso GeneralPaths will be closed shapes.
             Dim dataP = padData(data, levels)
-            Dim isos = New GeneralPath(levels.Length - 1) {}
+            Dim path As GeneralPath
+            Dim contour As IsoCell()()
 
-            For i = 0 To levels.Length - 1
+            For i As Integer = 0 To levels.Length - 1
                 ' Create contour for this level using Marching Squares algorithm.
-                Dim contour = makeContour(dataP, levels(i))
+                contour = makeContour(dataP, levels(i))
                 ' Convert contour to GeneralPath.
-                isos(i) = mkIso(contour, dataP, levels(i))
-            Next
+                path = mkIso(contour, dataP, levels(i))
+                path.dimension = dimeansion
 
-            Return isos
+                Yield path
+            Next
         End Function
 
         ''' <summary>
