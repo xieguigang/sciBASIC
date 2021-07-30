@@ -144,7 +144,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' 数据插值
         ''' </summary>
         Friend Function InitData() As MapMatrix
-            Dim dims = dimension
+            Dim dims As Size = dimension
             Dim x_num = dims.Width
             Dim y_num = dims.Height
 
@@ -163,34 +163,38 @@ Namespace Drawing2D.Math2D.MarchingSquares
             Return y_num.Sequence _
                 .AsParallel _
                 .Select(Function(j)
-                            Dim value As Single = 0
-                            Dim find As Boolean = False
-                            Dim d As Double
-
-                            For Each imd As MeasureData In dots
-                                If i = imd.X AndAlso j = imd.Y Then
-                                    value = imd.Z
-                                    find = True
-                                    Exit For
-                                End If
-                            Next
-
-                            If Not find Then
-                                Dim lD As Double = 0
-                                Dim DV As Double = 0
-
-                                For Each imd As MeasureData In dots
-                                    d = 1.0 / ((imd.X - i) * (imd.X - i) + (imd.Y - j) * (imd.Y - j))
-                                    lD += d
-                                    DV += imd.Z * d
-                                Next
-
-                                value = CSng(DV / lD)
-                            End If
-
-                            Return New SeqValue(Of Double)(j, value)
+                            Return interpolate(j)
                         End Function) _
                 .OrderBy(Function(j) j.i)
+        End Function
+
+        Private Function interpolate(j As Integer) As SeqValue(Of Double)
+            Dim value As Single = 0
+            Dim find As Boolean = False
+            Dim d As Double
+
+            For Each imd As MeasureData In dots
+                If i = imd.X AndAlso j = imd.Y Then
+                    value = imd.Z
+                    find = True
+                    Exit For
+                End If
+            Next
+
+            If Not find Then
+                Dim lD As Double = 0
+                Dim DV As Double = 0
+
+                For Each imd As MeasureData In dots
+                    d = 1.0 / ((imd.X - i) * (imd.X - i) + (imd.Y - j) * (imd.Y - j))
+                    lD += d
+                    DV += imd.Z * d
+                Next
+
+                value = CSng(DV / lD)
+            End If
+
+            Return New SeqValue(Of Double)(j, value)
         End Function
     End Class
 End Namespace
