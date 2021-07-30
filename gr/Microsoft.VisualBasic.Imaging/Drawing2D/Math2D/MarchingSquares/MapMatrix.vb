@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::a0bd1dfe0e5c3bc99550bfaabda93f4d, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\MapMatrix.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class MapMatrix
-    ' 
-    '         Properties: dimension
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetLevelQuantile, GetMatrixInterpolation, GetPercentages, getYScan, InitData
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class MapMatrix
+' 
+'         Properties: dimension
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: GetLevelQuantile, GetMatrixInterpolation, GetPercentages, getYScan, InitData
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -93,6 +93,15 @@ Namespace Drawing2D.Math2D.MarchingSquares
         End Function
 
         Public Function GetPercentages() As Double()
+            Return GetPercentages(0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.975)
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="levels">``[0,1]``</param>
+        ''' <returns></returns>
+        Public Function GetPercentages(ParamArray levels As Double()) As Double()
             Dim data As Double() = Me.data _
                 .RowIterator _
                 .IteratesALL _
@@ -100,7 +109,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
             Dim range As DoubleRange = data
             Dim percentage As DoubleRange = {0, 1}
 
-            Return {0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.975} _
+            Return levels _
                 .Select(Function(p)
                             Return percentage.ScaleMapping(p, range)
                         End Function) _
