@@ -92,7 +92,8 @@ Public Module ViolinPlot
                          Optional stroke$ = Stroke.AxisStroke,
                          Optional title$ = "Volin Plot",
                          Optional titleFontCSS$ = Canvas.Resolution2K.PlotTitle,
-                         Optional labelAngle As Double = -45) As GraphicsData
+                         Optional labelAngle As Double = -45,
+                         Optional showStats As Boolean = True) As GraphicsData
 
         With dataset.ToArray
             Return .PropertyNames _
@@ -114,7 +115,8 @@ Public Module ViolinPlot
                                    strokeCSS:=stroke,
                                    title:=title,
                                    titleFontCSS:=titleFontCSS,
-                                   labelAngle:=labelAngle
+                                   labelAngle:=labelAngle,
+                                   showStats:=showStats
                                )
                            End Function)
         End With
@@ -143,7 +145,8 @@ Public Module ViolinPlot
                          Optional strokeCSS$ = "stroke: #6e797a; stroke-width: 15px; stroke-dash: solid;",
                          Optional title$ = "Volin Plot",
                          Optional titleFontCSS$ = Canvas.Resolution2K.PlotTitle,
-                         Optional labelAngle As Double = -45) As GraphicsData
+                         Optional labelAngle As Double = -45,
+                         Optional showStats As Boolean = True) As GraphicsData
 
         Dim matrix As NamedCollection(Of Double)() = dataset.ToArray
 
@@ -298,7 +301,9 @@ Public Module ViolinPlot
 
                     labelSize = g.MeasureString(group.name, labelFont)
 
-                    Call g.DrawString(sampleDescrib, labelFont, Brushes.Black, New PointF(X + semiWidth / 5, upper + labelSize.Height * 2))
+                    If showStats Then
+                        Call g.DrawString(sampleDescrib, labelFont, Brushes.Black, New PointF(X + semiWidth / 5, upper + labelSize.Height * 2))
+                    End If
 
                     If labelAngle = 0.0 Then
                         labelPos = New PointF With {

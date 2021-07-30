@@ -1,41 +1,41 @@
 ﻿#Region "Microsoft.VisualBasic::1d18cf705bd6cf227cd0351b84682ae3, Data_science\Visualization\Plots-statistics\ROCPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module ROCPlot
-    ' 
-    '     Function: (+2 Overloads) CreateSerial, Plot
-    ' 
-    ' /********************************************************************************/
+' Module ROCPlot
+' 
+'     Function: (+2 Overloads) CreateSerial, Plot
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -50,7 +50,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.Interpolation
-Imports Microsoft.VisualBasic.MIME.HTML.CSS
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Public Module ROCPlot
 
@@ -159,13 +159,13 @@ Public Module ROCPlot
             input = {roc}
         End If
 
-        Dim img = Scatter.Plot(
+        Dim img As GraphicsData = Scatter.Plot(
             input,
             size:=size,
             padding:=margin,
             bg:=bg,
             interplot:=Splines.B_Spline,
-            xaxis:="0,1", yaxis:="0,1",
+            xlim:=1, ylim:=1,
             showLegend:=False,
             fill:=fillAUC,
             Xlabel:="1 - Specificity",

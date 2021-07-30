@@ -109,7 +109,7 @@ Public Class Circular : Inherits DendrogramPanel
             For Each tick As Double In axisTicks
                 r = scaleR(tick)
 
-                tickLable = tick.ToString(theme.axisTickFormat)
+                tickLable = tick.ToString(theme.XaxisTickFormat)
                 tickLabelSize = g.MeasureString(tickLable, tickFont)
 
                 g.DrawLine(axisPen, New PolarPoint(r, angle).Point, New PolarPoint(r, angle).Point)

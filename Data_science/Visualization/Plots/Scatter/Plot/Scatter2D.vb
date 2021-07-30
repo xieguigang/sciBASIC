@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::ebc0226b5e1f986ff000c0ece5830352, Data_science\Visualization\Plots\Scatter\Plot\Scatter2D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Scatter2D
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: GetDataScaler
-    ' 
-    '         Sub: PlotInternal
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Scatter2D
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: GetDataScaler
+' 
+'         Sub: PlotInternal
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -82,6 +82,9 @@ Namespace Plots
         ReadOnly ablines As Line()
         ReadOnly hullPolygonIndex As Index(Of String)
 
+        Friend xlim As Double
+        Friend ylim As Double
+
         Public Sub New(data As IEnumerable(Of SerialData), theme As Theme,
                        Optional scatterReorder As Boolean = False,
                        Optional fillPie As Boolean = True,
@@ -109,8 +112,18 @@ Namespace Plots
             '        XTicks = .x
             '        YTicks = .y
             '    End With
-            XTicks = array.Select(Function(s) s.pts).IteratesALL.Select(Function(p) CDbl(p.pt.X)).Range.CreateAxisTicks
-            YTicks = array.Select(Function(s) s.pts).IteratesALL.Select(Function(p) CDbl(p.pt.Y)).Range.CreateAxisTicks
+            XTicks = array.Select(Function(s) s.pts).IteratesALL.Select(Function(p) CDbl(p.pt.X)).ToArray
+            YTicks = array.Select(Function(s) s.pts).IteratesALL.Select(Function(p) CDbl(p.pt.Y)).ToArray
+
+            If Not xlim.IsNaNImaginary Then
+                XTicks = XTicks.JoinIterates({xlim}).ToArray
+            End If
+            If Not ylim.IsNaNImaginary Then
+                YTicks = YTicks.JoinIterates({ylim}).ToArray
+            End If
+
+            XTicks = XTicks.Range.CreateAxisTicks
+            YTicks = YTicks.Range.CreateAxisTicks
 
             'If ticksY > 0 Then
             '    YTicks = AxisScalling.GetAxisByTick(YTicks, tick:=ticksY)
@@ -150,7 +163,10 @@ Namespace Plots
                     .range(integers:={region.Left, region.Right})
             End If
 
-            Y = d3js.scale.linear.domain(YTicks).range(integers:={region.Bottom, region.Top})
+            Y = d3js.scale _
+                .linear _
+                .domain(YTicks) _
+                .range(integers:={region.Bottom, region.Top})
 
             Return New DataScaler With {
                 .X = X,
@@ -178,8 +194,8 @@ Namespace Plots
                     gridX:=theme.gridStrokeX,
                     gridY:=theme.gridStrokeY,
                     gridFill:=theme.gridFill,
-                    XtickFormat:=theme.axisTickFormat,
-                    YtickFormat:=theme.axisTickFormat,
+                    XtickFormat:=theme.XaxisTickFormat,
+                    YtickFormat:=theme.YaxisTickFormat,
                     axisStroke:=theme.axisStroke
                 )
             End If

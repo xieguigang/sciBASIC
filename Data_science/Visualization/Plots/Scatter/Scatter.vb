@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::533783357dfec8b5c49a896860c90fd2, Data_science\Visualization\Plots\Scatter\Scatter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Scatter
-    ' 
-    '     Function: CreateAxisTicks, (+2 Overloads) FromPoints, FromVector, getSplinePoints, (+5 Overloads) Plot
-    '               PlotFunction
-    ' 
-    '     Sub: Plot
-    ' 
-    ' /********************************************************************************/
+' Module Scatter
+' 
+'     Function: CreateAxisTicks, (+2 Overloads) FromPoints, FromVector, getSplinePoints, (+5 Overloads) Plot
+'               PlotFunction
+' 
+'     Sub: Plot
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -152,9 +152,6 @@ Public Module Scatter
     ''' <param name="drawLine">
     ''' 是否绘制两个点之间的连接线段，当这个参数为False的时候，将不会绘制连线，就相当于绘制散点图了，而非折线图
     ''' </param>
-    ''' <param name="xaxis">
-    ''' 参数<paramref name="xaxis"/>和<paramref name="yaxis"/>必须要同时不为空才会起作用
-    ''' </param>
     ''' <param name="legendSize">默认为(120,40)</param>
     ''' <param name="preferPositive"><see cref="CreateAxisTicks"/></param>
     ''' <param name="hullConvexList">
@@ -182,8 +179,8 @@ Public Module Scatter
                     Optional drawAxis As Boolean = True,
                     Optional Xlabel$ = "X",
                     Optional Ylabel$ = "Y",
-                    Optional yaxis$ = Nothing,
-                    Optional xaxis$ = Nothing,
+                    Optional ylim As Double = Double.NaN,
+                    Optional xlim As Double = Double.NaN,
                     Optional ablines As Line() = Nothing,
                     Optional htmlLabel As Boolean = False,
                     Optional ticksY# = -1,
@@ -209,7 +206,7 @@ Public Module Scatter
 
         Dim theme As New Theme With {
             .drawLegend = showLegend,
-            .axisTickFormat = XtickFormat,
+            .XaxisTickFormat = XtickFormat,
             .drawGrid = showGrid,
             .gridFill = gridFill,
             .background = bg,
@@ -222,7 +219,8 @@ Public Module Scatter
             .legendBoxStroke = legendRegionBorder?.ToString,
             .axisTickCSS = tickFontStyle,
             .legendLabelCSS = legendFontCSS,
-            .legendSplitSize = legendSplit
+            .legendSplitSize = legendSplit,
+            .YaxisTickFormat = YtickFormat
         }
         Dim plot As Plot
 
@@ -242,7 +240,9 @@ Public Module Scatter
                 hullConvexList:=hullConvexList
             ) With {
                 .xlabel = Xlabel,
-                .ylabel = Ylabel
+                .ylabel = Ylabel,
+                .xlim = xlim,
+                .ylim = ylim
             }
         End If
 
@@ -258,9 +258,6 @@ Public Module Scatter
     ''' <param name="fill">是否对曲线下的区域进行填充？这个参数只有在<paramref name="drawLine"/>开启的情况下才会发生作用</param>
     ''' <param name="drawLine">
     ''' 是否绘制两个点之间的连接线段，当这个参数为False的时候，将不会绘制连线，就相当于绘制散点图了，而非折线图
-    ''' </param>
-    ''' <param name="xaxis">
-    ''' 参数<paramref name="xaxis"/>和<paramref name="yaxis"/>必须要同时不为空才会起作用
     ''' </param>
     ''' <param name="legendSize">默认为(120,40)</param>
     ''' <param name="preferPositive"><see cref="CreateAxisTicks"/></param>
@@ -292,8 +289,8 @@ Public Module Scatter
                          Optional drawAxis As Boolean = True,
                          Optional Xlabel$ = "X",
                          Optional Ylabel$ = "Y",
-                         Optional yaxis$ = Nothing,
-                         Optional xaxis$ = Nothing,
+                         Optional ylim As Double = Double.NaN,
+                         Optional xlim As Double = Double.NaN,
                          Optional ablines As Line() = Nothing,
                          Optional htmlLabel As Boolean = False,
                          Optional ticksY# = -1,
@@ -335,9 +332,9 @@ Public Module Scatter
                     fillPie:=fillPie,
                     legendFontCSS:=legendFontCSS,
                     absoluteScaling:=absoluteScaling,
-                    xaxis:=xaxis,
+                    xlim:=xlim,
                     XaxisAbsoluteScalling:=XaxisAbsoluteScalling,
-                    yaxis:=yaxis,
+                    ylim:=ylim,
                     YaxisAbsoluteScalling:=YaxisAbsoluteScalling,
                     drawAxis:=drawAxis,
                     xlayout:=xlayout,

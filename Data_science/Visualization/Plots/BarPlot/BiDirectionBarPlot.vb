@@ -113,15 +113,15 @@ Namespace BarPlot
                 Dim bar As New Rectangle(center - len1, y, len1, barHeight)
 
                 g.FillRectangle(colorFactor1, bar)
-                labelSize = g.MeasureString(sample.data(0).ToString(theme.axisTickFormat), tickLabelFont)
-                g.DrawString(sample.data(0).ToString(theme.axisTickFormat), tickLabelFont, Brushes.Black, New PointF(bar.Left - labelSize.Width, bar.Top + (bar.Height - labelSize.Height) / 2))
+                labelSize = g.MeasureString(sample.data(0).ToString(theme.XaxisTickFormat), tickLabelFont)
+                g.DrawString(sample.data(0).ToString(theme.XaxisTickFormat), tickLabelFont, Brushes.Black, New PointF(bar.Left - labelSize.Width, bar.Top + (bar.Height - labelSize.Height) / 2))
 
                 Dim len2 = scale(sample.data(1))
 
                 bar = New Rectangle(center, y, len2, barHeight)
                 g.FillRectangle(colorFactor2, bar)
-                labelSize = g.MeasureString(sample.data(1).ToString(theme.axisTickFormat), tickLabelFont)
-                g.DrawString(sample.data(1).ToString(theme.axisTickFormat), tickLabelFont, Brushes.Black, New PointF(bar.Right, bar.Top + (bar.Height - labelSize.Height) / 2))
+                labelSize = g.MeasureString(sample.data(1).ToString(theme.XaxisTickFormat), tickLabelFont)
+                g.DrawString(sample.data(1).ToString(theme.XaxisTickFormat), tickLabelFont, Brushes.Black, New PointF(bar.Right, bar.Top + (bar.Height - labelSize.Height) / 2))
 
                 ' draw label
                 labelSize = g.MeasureString(sample.tag, labelFont)
@@ -149,19 +149,19 @@ Namespace BarPlot
 
             For Each tick As Double In ticks
                 offset = scale(tick)
-                labelSize = g.MeasureString(tick.ToString(theme.axisTickFormat), labelFont)
+                labelSize = g.MeasureString(tick.ToString(theme.XaxisTickFormat), labelFont)
 
                 ' left
                 x = center + offset - labelSize.Width / 2
                 labelPos = New Point(x, y)
-                g.DrawString(tick.ToString(theme.axisTickFormat), labelFont, Brushes.Black, labelPos)
+                g.DrawString(tick.ToString(theme.XaxisTickFormat), labelFont, Brushes.Black, labelPos)
                 x = center + offset
                 g.DrawLine(Pens.Black, New PointF(x, y), New PointF(x, rect.Bottom))
 
                 ' right
                 x = center - offset - labelSize.Width / 2
                 labelPos = New Point(x, y)
-                g.DrawString(tick.ToString(theme.axisTickFormat), labelFont, Brushes.Black, labelPos)
+                g.DrawString(tick.ToString(theme.XaxisTickFormat), labelFont, Brushes.Black, labelPos)
                 g.DrawLine(Pens.Black, New PointF(center - offset, y), New PointF(center - offset, rect.Bottom))
             Next
 

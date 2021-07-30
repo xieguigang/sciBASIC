@@ -123,7 +123,7 @@ Public Class DendrogramPanelV2 : Inherits DendrogramPanel
 
             For Each tick As Double In axisTicks
                 x = plotRegion.Left + plotRegion.Right - scaleX(tick)
-                tickLable = tick.ToString(theme.axisTickFormat)
+                tickLable = tick.ToString(theme.XaxisTickFormat)
                 tickLabelSize = g.MeasureString(tickLable, tickFont)
 
                 g.DrawLine(axisPen, New PointF(x, y), New PointF(x, y - dh))

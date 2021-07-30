@@ -88,6 +88,8 @@ Namespace Contour
                              Optional legendTitleCSS$ = CSSFont.Win7LargeBold,
                              Optional tickCSS$ = CSSFont.Win10NormalLarger,
                              Optional tickAxisStroke$ = Stroke.ScatterLineStroke,
+                             Optional xlim As Double = Double.NaN,
+                             Optional ylim As Double = Double.NaN,
                              Optional ppi% = 300) As GraphicsData
 
             Dim theme As New Theme With {
@@ -99,7 +101,9 @@ Namespace Contour
                 .legendTickAxisStroke = tickAxisStroke
             }
             Dim plotApp As New ContourPlot(sample, theme) With {
-                .legendTitle = legendTitle
+                .legendTitle = legendTitle,
+                .xlim = xlim,
+                .ylim = ylim
             }
 
             Return plotApp.Plot(size, ppi)

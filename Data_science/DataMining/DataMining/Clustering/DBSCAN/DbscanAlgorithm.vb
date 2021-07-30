@@ -112,7 +112,7 @@ Namespace DBSCAN
             Dim clusterId As Integer = 0
             Dim seeds As New List(Of Integer)
 
-            maxStackSize = stdNum.Min(allPoints.Length / 2, 4096)
+            maxStackSize = stdNum.Min(allPoints.Length / 2, 1024)
 
             If densityCut > 0 Then
                 Dim allDensity = Density _
@@ -136,10 +136,12 @@ Namespace DBSCAN
                 Call Console.WriteLine("No density cutoff of your sample data.")
             End If
 
+            Call Console.WriteLine($"max stack size for expands cluster is {maxStackSize}")
+
             For i As Integer = 0 To allPointsDbscan.Length - 1
                 Dim p As DbscanPoint(Of T) = allPointsDbscan(i)
 
-                If p.IsVisited Then
+                If p.IsVisited AndAlso Not (p.ClusterId = ClusterIDs.Unclassified OrElse p.ClusterId = ClusterIDs.Noise) Then
                     Continue For
                 Else
                     p.IsVisited = True
@@ -158,8 +160,9 @@ Namespace DBSCAN
                     clusterId += 1
                     ' point to be in a cluster
                     p.ClusterId = clusterId
-                    ExpandCluster(allPointsDbscan, neighborPts, clusterId, epsilon, minPts, densityCut, densityList, 0)
-                    seeds.Add(i)
+
+                    Call ExpandCluster(allPointsDbscan, neighborPts, clusterId, epsilon, minPts, densityCut, densityList, 0)
+                    Call seeds.Add(i)
                 End If
             Next
 
@@ -236,6 +239,8 @@ Namespace DBSCAN
             Loop
         End Sub
 
+        ReadOnly queryCache As New Dictionary(Of T, DbscanPoint(Of T)())
+
         ''' <summary>
         ''' Checks and searchs neighbor points for given point
         ''' </summary>
@@ -246,10 +251,14 @@ Namespace DBSCAN
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function RegionQuery(allPoints As DbscanPoint(Of T)(), point As T, epsilon As Double) As DbscanPoint(Of T)()
-            Return allPoints _
-                .AsParallel _
-                .Where(Function(x) _metricFunc(point, x.ClusterPoint) <= epsilon) _
-                .ToArray()
+            If Not queryCache.ContainsKey(point) Then
+                queryCache(point) = allPoints _
+                    .AsParallel _
+                    .Where(Function(x) _metricFunc(point, x.ClusterPoint) <= epsilon) _
+                    .ToArray()
+            End If
+
+            Return queryCache(point)
         End Function
     End Class
 End Namespace

@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::56149882e60e5453e138a76dae222f8a, Data_science\Mathematica\Math\Math\Quantile\QuantileEstimationGK.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class QuantileEstimationGK
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: Query, ToString
-    ' 
-    '         Sub: compress, (+2 Overloads) Insert
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class QuantileEstimationGK
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: Query, ToString
+' 
+'         Sub: compress, (+2 Overloads) Insert
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -180,6 +180,10 @@ Namespace Quantile
         Public Function Query(quantile#) As Double Implements QuantileQuery.Query
             Dim rankMin As Integer = 0
             Dim desired As Integer = CInt(Fix(quantile * count))
+
+            If sample.Count = 0 Then
+                Return 0
+            End If
 
             For i As Integer = 1 To sample.Count - 1
                 Dim prev As X = sample(i - 1)

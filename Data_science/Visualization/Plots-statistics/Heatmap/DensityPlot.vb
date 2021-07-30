@@ -131,8 +131,6 @@ Namespace Heatmap
                     r:=ptSize
                 )
             Dim scatterPadding As Padding = padding
-            Dim xAxis = xrange.CreateAxisTicks.AxisExpression
-            Dim yAxis = yrange.CreateAxisTicks.AxisExpression
 
             scatterPadding.Right += legendWidth
 
@@ -145,8 +143,8 @@ Namespace Heatmap
                 ablines:=ablines,
                 Xlabel:=labX,
                 Ylabel:=labY,
-                xaxis:=xAxis,
-                yaxis:=yAxis,
+                xlim:=xrange.Max,
+                ylim:=yrange.Max,
                 htmlLabel:=htmlLabel,
                 labelFontStyle:=CSSFont.Win7VeryLarge,
                 tickFontStyle:=CSSFont.Win7Large).CreateGraphics

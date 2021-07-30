@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::80ed4d8d485e2c168aa87148a6f0cf53, Data_science\Visualization\Plots\Contour\ContourPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class ContourPlot
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    ' 
-    '         Function: getDimensions
-    ' 
-    '         Sub: PlotInternal
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class ContourPlot
+' 
+'         Constructor: (+3 Overloads) Sub New
+' 
+'         Function: getDimensions
+' 
+'         Sub: PlotInternal
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -60,6 +60,9 @@ Namespace Contour
     Public Class ContourPlot : Inherits Plot
 
         ReadOnly contours As GeneralPath()
+
+        Friend xlim As Double = Double.NaN
+        Friend ylim As Double = Double.NaN
 
         Public Sub New(sample As IEnumerable(Of MeasureData), theme As Theme)
             MyBase.New(theme)
@@ -86,15 +89,25 @@ Namespace Contour
 
         Private Function getDimensions() As Size
             Dim layers = contours.Select(Function(layer) layer.GetContour.shapes).IteratesALL.ToArray
+            Dim size As Size
 
             If layers.Length = 0 Then
-                Return New Size
+                size = New Size
             Else
                 Dim w As Integer = Aggregate polygon In layers Into Max(polygon.x.Max)
                 Dim h As Integer = Aggregate polygon In layers Into Max(polygon.y.Max)
 
-                Return New Size(w, h)
+                size = New Size(w, h)
             End If
+
+            If Not xlim.IsNaNImaginary Then
+                size = New Size(xlim, size.Height)
+            End If
+            If Not ylim.IsNaNImaginary Then
+                size = New Size(size.Width, ylim)
+            End If
+
+            Return size
         End Function
 
         Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
@@ -105,7 +118,11 @@ Namespace Contour
                 .ToArray
             Dim i As i32 = Scan0
             Dim dims As Size = getDimensions()
-            Dim rect = canvas.PlotRegion
+            Dim rect As Rectangle = canvas.PlotRegion
+
+            If Not (xlim.IsNaNImaginary AndAlso ylim.IsNaNImaginary) Then
+                Call g.FillRectangle(colors(Scan0), rect)
+            End If
 
             If dims.Width * dims.Height > 0 Then
                 Dim scaleX = d3js.scale.linear.domain(New Double() {0, dims.Width}).range(New Double() {rect.Left, rect.Right})

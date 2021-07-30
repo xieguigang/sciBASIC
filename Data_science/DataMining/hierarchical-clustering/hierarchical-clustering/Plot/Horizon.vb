@@ -106,7 +106,7 @@ Public Class Horizon : Inherits DendrogramPanelV2
 
             For Each tick As Double In axisTicks
                 y = plotRegion.Top + plotRegion.Bottom - scaleY(tick)
-                tickLable = tick.ToString(theme.axisTickFormat)
+                tickLable = tick.ToString(theme.XaxisTickFormat)
                 tickLabelSize = g.MeasureString(tickLable, tickFont)
 
                 g.DrawLine(axisPen, New PointF(x, y), New PointF(x - dh, y))

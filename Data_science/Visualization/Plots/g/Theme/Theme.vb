@@ -168,7 +168,8 @@ Namespace Graphic.Canvas
         ''' 一般为F2或者G3
         ''' </summary>
         ''' <returns></returns>
-        Public Property axisTickFormat As String = "F2"
+        Public Property XaxisTickFormat As String = "F2"
+        Public Property YaxisTickFormat As String = "F2"
 
 #End Region
 
