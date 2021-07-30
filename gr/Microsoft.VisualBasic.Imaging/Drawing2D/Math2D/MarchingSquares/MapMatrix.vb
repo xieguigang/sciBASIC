@@ -163,12 +163,12 @@ Namespace Drawing2D.Math2D.MarchingSquares
             Return y_num.Sequence _
                 .AsParallel _
                 .Select(Function(j)
-                            Return interpolate(j)
+                            Return interpolate(i, j)
                         End Function) _
                 .OrderBy(Function(j) j.i)
         End Function
 
-        Private Function interpolate(j As Integer) As SeqValue(Of Double)
+        Private Function interpolate(i As Integer, j As Integer) As SeqValue(Of Double)
             Dim value As Single = 0
             Dim find As Boolean = False
             Dim d As Double
