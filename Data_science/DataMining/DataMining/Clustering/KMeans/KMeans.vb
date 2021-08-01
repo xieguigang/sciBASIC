@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::533c6f1204165f3ad05e81a40531112d, Data_science\DataMining\DataMining\Clustering\KMeans\KMeans.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module KMeansAlgorithm
-    ' 
-    '         Function: (+2 Overloads) ClusterDataSet, ClusterMean, CrossOver, means, minIndex
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module KMeansAlgorithm
+' 
+'         Function: (+2 Overloads) ClusterDataSet, ClusterMean, CrossOver, means, minIndex
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -46,6 +46,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Math.Correlations
+Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Parallel.Linq
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports stdNum = System.Math
@@ -200,7 +201,7 @@ Namespace KMeans
                     ' clusters = clusters.CrossOver
                 Else
                     If debug Then
-                        Call $"[{iterationCount}/{[stop]}] stableClustersCount <> clusters.NumOfCluster => {stableClustersCount} <> {clusters.NumOfCluster} = {stableClustersCount <> clusters.NumOfCluster}".__DEBUG_ECHO
+                        Call $"[{iterationCount}/{[stop]}] stable <> NumOfCluster -> {stableClustersCount} <> {clusters.NumOfCluster} = {stableClustersCount <> clusters.NumOfCluster}".__DEBUG_ECHO
                     End If
                     If lastStables = stableClustersCount Then
                         hits += 1
@@ -257,8 +258,9 @@ Namespace KMeans
         <Extension>
         Public Function ClusterDataSet(Of T As EntityBase(Of Double))(clusters As ClusterCollection(Of T), data As T(), Optional parallel As Boolean = False) As ClusterCollection(Of T)
             Dim fieldCount As Integer = data(Scan0).Length
-            Dim newClusters As New ClusterCollection(Of T)     ' create a new collection of clusters
+            Dim newClusters As New ClusterCollection(Of T)
 
+            ' create a new collection of clusters
             For count As Integer = 0 To clusters.NumOfCluster - 1
                 Dim newCluster As New KMeansCluster(Of T)
                 newClusters.Add(newCluster)
@@ -269,20 +271,15 @@ Namespace KMeans
             End If
 
             If parallel Then
+                Dim min As SeqValue(Of Double)()
 
                 ' Kmeans并行算法
                 For Each x As T In data
-                    Dim min = LinqAPI.Exec(Of SeqValue(Of Double)) _
- _
-                        () <= From c As SeqValue(Of KMeansCluster(Of T))
-                              In clusters.SeqIterator.AsParallel
-                              Let cluster As KMeansCluster(Of T) = c.value
-                              Let clusterMean As Double() = cluster.means(x)
-                              Let distance As Double = x.entityVector.EuclideanDistance(clusterMean) ' 计算出当前的cluster和当前的实体对象之间的距离
-                              Select New SeqValue(Of Double) With {
-                                  .i = c.i,
-                                  .value = distance
-                              }
+                    If App.IsMicrosoftPlatform Then
+                        min = clusters.ParallelMicrosoft(x)
+                    Else
+                        min = clusters.ParallelUnix(x)
+                    End If
 
                     ' 升序排序就可以得到距离最小的cluster的distance，最后取出下标值
                     Dim index As Integer = min _
@@ -299,6 +296,39 @@ Namespace KMeans
             End If
 
             Return newClusters
+        End Function
+
+        <Extension>
+        Private Function ParallelUnix(Of T As EntityBase(Of Double))(clusters As ClusterCollection(Of T), x As T) As IEnumerable(Of SeqValue(Of Double))
+            Dim blockQuery = From cblock As SeqValue(Of KMeansCluster(Of T))()
+                             In clusters _
+                                 .SeqIterator _
+                                 .Split(1 + clusters.NumOfCluster / 8) _
+                                 .AsParallel
+                             Select From c As SeqValue(Of KMeansCluster(Of T))
+                                    In cblock
+                                    Let cluster As KMeansCluster(Of T) = c.value
+                                    Let clusterMean As Double() = cluster.means(x)
+                                    Let distance As Double = x.entityVector.EuclideanDistance(clusterMean) ' 计算出当前的cluster和当前的实体对象之间的距离
+                                    Select New SeqValue(Of Double) With {
+                                        .i = c.i,
+                                        .value = distance
+                                    }
+
+            Return blockQuery.ToArray.IteratesALL
+        End Function
+
+        <Extension>
+        Private Function ParallelMicrosoft(Of T As EntityBase(Of Double))(clusters As ClusterCollection(Of T), x As T) As IEnumerable(Of SeqValue(Of Double))
+            Return From c As SeqValue(Of KMeansCluster(Of T))
+                   In clusters.SeqIterator.AsParallel
+                   Let cluster As KMeansCluster(Of T) = c.value
+                   Let clusterMean As Double() = cluster.means(x)
+                   Let distance As Double = x.entityVector.EuclideanDistance(clusterMean) ' 计算出当前的cluster和当前的实体对象之间的距离
+                   Select New SeqValue(Of Double) With {
+                       .i = c.i,
+                       .value = distance
+                   }
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -329,9 +359,11 @@ Namespace KMeans
                 Else
                     secondClusterDistance = EuclideanDistance(dataPoint.entityVector, clusterMean)
 
-                    If firstClusterDistance > secondClusterDistance Then ' 相比前一个cluster的计算结果，在这里有一个更好的计算结果，则使用这个对象的下标
+                    ' 相比前一个cluster的计算结果，在这里有一个更好的计算结果，则使用这个对象的下标
+                    If firstClusterDistance > secondClusterDistance Then
                         firstClusterDistance = secondClusterDistance
-                        position = cluster  ' 得到某个聚类和当前的数据对象距离最小的下标
+                        ' 得到某个聚类和当前的数据对象距离最小的下标
+                        position = cluster
                     End If
                 End If
             Next

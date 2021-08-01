@@ -57,6 +57,10 @@ Namespace KMeans
 
         Friend ReadOnly _innerList As New List(Of KMeansCluster(Of T))
 
+        ''' <summary>
+        ''' the numbers of the kmeans clusters
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property NumOfCluster As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
