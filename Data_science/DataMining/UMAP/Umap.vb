@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::bbbec44cd5f126d19bad681ff474d2df, Data_science\DataMining\UMAP\Umap.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class Umap
-    ' 
-    '     Properties: dimension
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: [Step], Clip, FindABParams, FuzzySimplicialSet, GetEmbedding
-    '               GetGraph, GetNEpochs, GetProgress, InitializeFit, InitializeSimplicialSetEmbedding
-    '               MakeEpochsPerSample, NearestNeighbors, RDist, Round, ScaleProgressReporter
-    ' 
-    '     Sub: InitializeOptimization, Iterate, OptimizeLayoutStep, PrepareForOptimizationLoop, RunIterate
-    ' 
-    ' /********************************************************************************/
+' Class Umap
+' 
+'     Properties: dimension
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: [Step], Clip, FindABParams, FuzzySimplicialSet, GetEmbedding
+'               GetGraph, GetNEpochs, GetProgress, InitializeFit, InitializeSimplicialSetEmbedding
+'               MakeEpochsPerSample, NearestNeighbors, RDist, Round, ScaleProgressReporter
+' 
+'     Sub: InitializeOptimization, Iterate, OptimizeLayoutStep, PrepareForOptimizationLoop, RunIterate
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -266,6 +266,7 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
         Dim i As i32 = Scan0
 
         _rpForest = New Tree.FlatTree(nTrees - 1) {}
+        forestProgressReporter(0, $"make {nTrees} trees...")
 
         For Each node As (i%, Tree.FlatTree) In Enumerable.Range(0, nTrees) _
             .AsParallel _
@@ -276,7 +277,7 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
                     End Function)
 
             _rpForest(node.i) = node.Item2
-            forestProgressReporter(CSng(++i) / nTrees, "MakeTree")
+            forestProgressReporter(CSng(++i) / nTrees, $"[{i}/{nTrees}] MakeTree")
         Next
 
         Dim leafArray As Integer()() = Tree.MakeLeafArray(_rpForest)
@@ -456,7 +457,8 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
                 ' leaving 20% for the Step iterations - the progress reporter calls made here are based on the 
                 ' assumption that Step will be called the recommended number of times (the number-of-epochs value 
                 ' returned From InitializeFit)
-                Umap.ScaleProgressReporter(_progressReporter, 0.8F, 1)(CSng(currentEpoch) / numberOfEpochsToComplete, "OptimizeLayoutStep")
+                ' Umap.ScaleProgressReporter(_progressReporter, 0.8F, 1)(CSng(currentEpoch) / numberOfEpochsToComplete, "OptimizeLayoutStep")
+                Call Console.Write(".")
             End If
         End If
 

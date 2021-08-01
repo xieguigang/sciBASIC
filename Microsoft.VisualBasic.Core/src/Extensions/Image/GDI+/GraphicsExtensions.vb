@@ -108,12 +108,8 @@ Namespace Imaging
         ''' <param name="dpiResolution"></param>
         ''' <returns></returns>
         Public Function PointSizeScale(pointSize As Single, dpiResolution As Single) As Single
-#If netcore5 = 1 Then
-            Return pointSize
-#Else
-            ' fix for running on unix mono 
+            ' fix for running on unix mono/dotnet core 
             Return If(App.IsMicrosoftPlatform, pointSize, pointSize * dpiResolution / 96)
-#End If
         End Function
 
         <Extension>

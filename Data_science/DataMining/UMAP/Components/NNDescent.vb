@@ -74,7 +74,7 @@ Friend Class NNDescent : Implements NNDescentFn
         Dim d As Double
         Dim leafSize As Integer = leafArray.Length
         Dim jj As i32 = 0
-        Dim dd As Integer = leafSize / 100
+        Dim dd As Integer = leafSize / 20
 
         For n As Integer = 0 To leafSize - 1
             For i As Integer = 0 To leafArray(n).Length - 1
