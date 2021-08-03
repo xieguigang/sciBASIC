@@ -276,9 +276,9 @@ Namespace KMeans
                 ' Kmeans并行算法
                 For Each x As T In data
                     If App.IsMicrosoftPlatform Then
-                        min = clusters.ParallelMicrosoft(x)
+                        min = clusters.ParallelMicrosoft(x).ToArray
                     Else
-                        min = clusters.ParallelUnix(x)
+                        min = clusters.ParallelUnix(x).ToArray
                     End If
 
                     ' 升序排序就可以得到距离最小的cluster的distance，最后取出下标值
