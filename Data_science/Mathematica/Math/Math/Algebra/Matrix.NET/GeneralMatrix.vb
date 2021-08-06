@@ -427,6 +427,15 @@ Namespace LinearAlgebra.Matrix
             End Get
         End Property
 
+        Default Public Shadows Property Value(i As Integer) As Vector
+            Get
+                Return buffer(i).AsVector
+            End Get
+            Set(value As Vector)
+                buffer(i) = value.Array
+            End Set
+        End Property
+
         ''' <summary>Get a submatrix.</summary>
         ''' <param name="i0">  Initial row index
         ''' </param>

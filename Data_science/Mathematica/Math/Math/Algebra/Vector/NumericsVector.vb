@@ -64,6 +64,11 @@ Namespace LinearAlgebra
             Return New Vector(source.Select(Function(x) CDbl(CObj(x))))
         End Function
 
+        ''' <summary>
+        ''' numeric to integer values
+        ''' </summary>
+        ''' <param name="vector"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function AsInteger(vector As Vector) As Integer()
             Return vector.Select(Function(x) CInt(x)).ToArray
