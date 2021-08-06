@@ -60,8 +60,10 @@ Namespace MatrixMarket
 
             Do While Not line = reader.ReadLine Is Nothing
                 tokens = CType(line, String).Trim.StringSplit("\s+")
-                M = Integer.Parse(tokens(Scan0))
-                N = Integer.Parse(tokens(1))
+
+                ' Indices are 1-based, i.e. A(1,1) Is the first element.
+                M = Integer.Parse(tokens(Scan0)) - 1
+                N = Integer.Parse(tokens(1)) - 1
                 matrix(M, N) = Double.Parse(tokens(2))
             Loop
 
