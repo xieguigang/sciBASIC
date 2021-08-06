@@ -82,8 +82,8 @@ Namespace Plots
         ReadOnly ablines As Line()
         ReadOnly hullPolygonIndex As Index(Of String)
 
-        Friend xlim As Double
-        Friend ylim As Double
+        Friend xlim As Double = Double.NaN
+        Friend ylim As Double = Double.NaN
 
         Public Sub New(data As IEnumerable(Of SerialData), theme As Theme,
                        Optional scatterReorder As Boolean = False,

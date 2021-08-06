@@ -76,33 +76,39 @@ Namespace Clustering
         ''' </returns>
         Public Shared Iterator Function GetDensity(Of T As {Class, INamedValue})(dataset As IEnumerable(Of T), metric As Func(Of T, T, Double), Optional k As Integer = 6) As IEnumerable(Of NamedValue(Of Double))
             Dim raw = dataset.ToArray
+            Dim query = From row As T
+                        In raw.AsParallel
+                        Select QueryDensity(row, raw, metric, k)
 
-            For Each row As T In raw
-                Dim d As Double() = raw _
-                    .Where(Function(di) Not di Is row) _
-                    .AsParallel _
-                    .Select(Function(r)
-                                Return metric(r, row)
-                            End Function) _
-                    .OrderBy(Function(di) di) _
-                    .ToArray
-                Dim nearest As Double() = d.Take(k).ToArray
-                Dim mean As Double
-
-                If nearest.Length = 0 Then
-                    mean = 10000
-                Else
-                    mean = nearest.Average
-                End If
-
-                Yield New NamedValue(Of Double) With {
-                    .Name = row.Key,
-                    .Value = 1 / mean,
-                    .Description = nearest _
-                        .Select(Function(di) di.ToString("F2")) _
-                        .JoinBy("; ")
-                }
+            For Each rowQuery As NamedValue(Of Double) In query
+                Yield rowQuery
             Next
+        End Function
+
+        Private Shared Function QueryDensity(Of T As {Class, INamedValue})(row As T, raw As T(), metric As Func(Of T, T, Double), k As Integer) As NamedValue(Of Double)
+            Dim d As Double() = raw _
+                .Where(Function(di) Not di Is row) _
+                .Select(Function(r)
+                            Return metric(r, row)
+                        End Function) _
+                .OrderBy(Function(di) di) _
+                .ToArray
+            Dim nearest As Double() = d.Take(k).ToArray
+            Dim mean As Double
+
+            If nearest.Length = 0 Then
+                mean = 10000
+            Else
+                mean = nearest.Average
+            End If
+
+            Return New NamedValue(Of Double) With {
+                .Name = row.Key,
+                .Value = 1 / mean,
+                .Description = nearest _
+                    .Select(Function(di) di.ToString("F2")) _
+                    .JoinBy("; ")
+            }
         End Function
     End Class
 End Namespace
