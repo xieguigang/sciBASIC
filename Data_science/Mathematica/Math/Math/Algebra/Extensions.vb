@@ -108,9 +108,10 @@ Namespace LinearAlgebra
                     Dim u As Integer = nodei.Intersect(nodej).Count
 
                     If u > 0 Then
+                        ' symmetrize the graph
                         weights(r, 0) = i + 1
                         weights(r, 1) = k + 1
-                        weights(r, 2) = u / (2.0 * ncol - u) / 2  ' symmetrize the graph
+                        weights(r, 2) = u / (2.0 * ncol - u) / 2
                         r += 1
                     End If
                 Next
