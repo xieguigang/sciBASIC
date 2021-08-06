@@ -521,8 +521,10 @@
     <Compile Include="Correlation\DistanceMatrix.vb" />
     <Compile Include="Correlation\Builder.vb" />
     <Compile Include="Correlation\Distance.vb" />
+    <Compile Include="MatrixMarket\MTXFormat.vb" />
     <Compile Include="Impute.vb" />
     <Compile Include="Correlation\Correlation.vb" />
+    <Compile Include="MatrixMarket\RUAFormat.vb" />
     <Compile Include="MatrixVisit.vb" />
     <Compile Include="InternalHelpers.vb" />
     <Compile Include="InferMethods.vb" />
@@ -571,6 +573,9 @@
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>math-core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MatrixMarket\formats.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
