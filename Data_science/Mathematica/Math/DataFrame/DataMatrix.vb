@@ -102,6 +102,10 @@ Public Class DataMatrix : Implements IBucketVector
         End If
     End Sub
 
+    Sub New(M%, N%)
+        Me.matrix = MAT(Of Double)(M, N)
+    End Sub
+
     Public Function Visit(Of DataSet As {New, INamedValue, DynamicPropertyBase(Of Double)})(projectName As String, direction As MatrixVisit) As DataSet
         Dim v As New DataSet With {.Key = projectName}
         Dim i As Integer = names(projectName)

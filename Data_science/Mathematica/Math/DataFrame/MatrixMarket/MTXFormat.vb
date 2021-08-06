@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports Microsoft.VisualBasic.Language
 
 Namespace MatrixMarket
 
@@ -46,7 +47,25 @@ Namespace MatrixMarket
         End Function
 
         Public Shared Function ReadMatrix(reader As StreamReader) As DataMatrix
+            Dim line As Value(Of String) = ""
 
+            Do While (line = reader.ReadLine).First = "%"c
+            Loop
+
+            Dim tokens As String() = CType(line, String).Trim.StringSplit("\s+")
+            Dim M As Integer = Integer.Parse(tokens(Scan0))
+            Dim N As Integer = Integer.Parse(tokens(1))
+            Dim L As Integer = Integer.Parse(tokens(2))
+            Dim matrix As New DataMatrix(M, N)
+
+            Do While Not line = reader.ReadLine Is Nothing
+                tokens = CType(line, String).Trim.StringSplit("\s+")
+                M = Integer.Parse(tokens(Scan0))
+                N = Integer.Parse(tokens(1))
+                matrix(M, N) = Double.Parse(tokens(2))
+            Loop
+
+            Return matrix
         End Function
     End Class
 End Namespace

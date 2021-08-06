@@ -187,9 +187,7 @@ Public Module IOExtensions
 
         If mode = FileMode.Open AndAlso [readOnly] = True AndAlso App.MemoryLoad = My.FrameworkInternal.MemoryLoads.Heavy Then
             If path.FileLength < 1024& * 1024& * 1024& * 2& Then
-                Using memory As New MemoryStream(path.ReadBinary)
-                    Return memory
-                End Using
+                Return New MemoryStream(path.ReadBinary)
             End If
         End If
 
