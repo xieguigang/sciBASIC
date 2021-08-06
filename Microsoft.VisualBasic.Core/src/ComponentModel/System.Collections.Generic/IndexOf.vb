@@ -251,6 +251,12 @@ Namespace ComponentModel.Collection
             Return maps(x)
         End Function
 
+        Public Iterator Function Add(x As T()) As IEnumerable(Of Integer)
+            For Each xi As T In x
+                Yield Add(xi)
+            Next
+        End Function
+
         Public Sub Clear()
             Call maps.Clear()
             Call index.Clear()
