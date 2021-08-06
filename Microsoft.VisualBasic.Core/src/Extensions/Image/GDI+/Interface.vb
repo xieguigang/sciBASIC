@@ -102,22 +102,23 @@ Namespace Imaging
         ''' enumeration. The default is System.Drawing.Drawing2D.CompositingQuality.Default.</returns>
         Public MustOverride Property CompositingQuality As CompositingQuality
 
-        '
-        ' Summary:
-        '     Gets the horizontal resolution of this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     The value, in dots per inch, for the horizontal resolution supported by this
-        '     System.Drawing.Graphics.
+        ''' <summary>
+        ''' Gets the horizontal resolution of this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <returns>The value, in dots per inch, for the horizontal resolution supported by this
+        ''' System.Drawing.Graphics.</returns>
         Public MustOverride ReadOnly Property DpiX As Single
-        '
-        ' Summary:
-        '     Gets the vertical resolution of this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     The value, in dots per inch, for the vertical resolution supported by this System.Drawing.Graphics.
+
+        ''' <summary>
+        ''' Gets the vertical resolution of this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <returns>The value, in dots per inch, for the vertical resolution supported by this System.Drawing.Graphics.</returns>
         Public MustOverride ReadOnly Property DpiY As Single
 
+        ''' <summary>
+        ''' max value of the [DpiX, DpiY]
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Dpi As Single
             Get
                 Return stdNum.Max(DpiX, DpiY)

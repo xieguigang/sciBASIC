@@ -84,7 +84,6 @@ Public MustInherit Class DendrogramPanel : Inherits Plot
         Me.classIndex = classes.SafeQuery.ToDictionary(Function(a) a.name)
         Me.classinfo = classinfo
         Me.showAllLabels = showAllLabels
-        Me.labelFont = CSSFont.TryParse(theme.tagCSS)
         Me.linkColor = Stroke.TryParse(theme.gridStrokeX).GDIObject
         Me.showAllNodes = showAllNodes
         Me.pointColor = pointColor.GetBrush

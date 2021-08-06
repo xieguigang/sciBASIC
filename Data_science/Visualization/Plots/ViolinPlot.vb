@@ -146,7 +146,8 @@ Public Module ViolinPlot
                          Optional title$ = "Volin Plot",
                          Optional titleFontCSS$ = Canvas.Resolution2K.PlotTitle,
                          Optional labelAngle As Double = -45,
-                         Optional showStats As Boolean = True) As GraphicsData
+                         Optional showStats As Boolean = True,
+                         Optional ppi As Integer = 100) As GraphicsData
 
         Dim matrix As NamedCollection(Of Double)() = dataset.ToArray
 
@@ -172,13 +173,13 @@ Public Module ViolinPlot
             .IteratesALL _
             .ToArray
         Dim yticks = alldata.Range.CreateAxisTicks
-        Dim yTickFont As Font = CSSFont.TryParse(ytickFontCSS)
+        Dim yTickFont As Font = CSSFont.TryParse(ytickFontCSS).GDIObject(ppi)
         Dim colors = Designer.GetColors(colorset, matrix.Length)
         Dim labelSize As SizeF
-        Dim labelFont As Font = CSSFont.TryParse(yLabelFontCSS)
+        Dim labelFont As Font = CSSFont.TryParse(yLabelFontCSS).GDIObject(ppi)
         Dim labelPos As PointF
         Dim polygonStroke As Pen = Stroke.TryParse(strokeCSS)
-        Dim titleFont As Font = CSSFont.TryParse(titleFontCSS)
+        Dim titleFont As Font = CSSFont.TryParse(titleFontCSS).GDIObject(ppi)
 
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)

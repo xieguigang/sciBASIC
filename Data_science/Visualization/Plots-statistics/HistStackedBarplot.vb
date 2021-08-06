@@ -122,7 +122,7 @@ Public Module HistStackedBarplot
 
                 Dim left! = treeRegion.Right + dtreeBar
                 Dim top! = treeRegion.Top
-                Dim legendTitleFont As Font = CSSFont.TryParse(legendTitleFontCSS).GDIObject
+                Dim legendTitleFont As Font = CSSFont.TryParse(legendTitleFontCSS).GDIObject(g.Dpi)
                 Dim maxLabelSize As SizeF = data _
                     .Serials _
                     .Keys _

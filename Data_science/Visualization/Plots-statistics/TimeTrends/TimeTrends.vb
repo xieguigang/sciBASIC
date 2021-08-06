@@ -122,7 +122,8 @@ Public Module TimeTrends
                          Optional legendTitle$ = "Trends",
                          Optional legendRangeTitle$ = "[min, max]",
                          Optional legendTitleColor$ = "black",
-                         Optional displayLegendBorder As Boolean = True) As GraphicsData
+                         Optional displayLegendBorder As Boolean = True,
+                         Optional ppi As Integer = 100) As GraphicsData
 
         Static shortDateString As New [Default](Of Func(Of Date, String))(Function(d) d.ToShortDateString)
 
@@ -141,10 +142,10 @@ Public Module TimeTrends
             .CreateAxisTicks(5)
         Dim rangePoly As (min As List(Of PointF), max As List(Of PointF))
 
-        Dim valueLabelFont As Font = CSSFont.TryParse(valueLabelFontCSS)
-        Dim tickLabelFont As Font = CSSFont.TryParse(tickLabelFontCSS)
-        Dim titleFont As Font = CSSFont.TryParse(titleFontCSS)
-        Dim subTitleFont As Font = CSSFont.TryParse(subTitleFontCSS)
+        Dim valueLabelFont As Font = CSSFont.TryParse(valueLabelFontCSS).GDIObject(ppi)
+        Dim tickLabelFont As Font = CSSFont.TryParse(tickLabelFontCSS).GDIObject(ppi)
+        Dim titleFont As Font = CSSFont.TryParse(titleFontCSS).GDIObject(ppi)
+        Dim subTitleFont As Font = CSSFont.TryParse(subTitleFontCSS).GDIObject(ppi)
 
         Dim lineStyle As New Pen(lineColor.TranslateColor, lineWidth)
         Dim axisPen As Pen = Stroke.TryParse(axisStrokeCSS).GDIObject

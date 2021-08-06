@@ -170,7 +170,7 @@ Namespace CSS
         ''' bugs fixed for config dpi value on unix mono platform 
         ''' </param>
         ''' <returns></returns>
-        Public ReadOnly Property GDIObject(Optional dpi As Integer = 100) As Font
+        Public ReadOnly Property GDIObject(dpi As Integer) As Font
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New Font(family, PointSizeScale(size, dpiResolution:=dpi), style)
@@ -338,9 +338,9 @@ Namespace CSS
             Return New CSSFont(font)
         End Operator
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Narrowing Operator CType(font As CSSFont) As Font
-            Return font.GDIObject
-        End Operator
+        '<MethodImpl(MethodImplOptions.AggressiveInlining)>
+        'Public Shared Narrowing Operator CType(font As CSSFont) As Font
+        '    Return font.GDIObject
+        'End Operator
     End Class
 End Namespace

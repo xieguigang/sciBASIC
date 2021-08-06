@@ -86,7 +86,7 @@ Public Class Circular : Inherits DendrogramPanel
         ' 绘制距离标尺
         Dim outer = scaleR(axisTicks.Max)
         Dim inner = scaleR(0)
-        Dim tickFont As Font = CSSFont.TryParse(theme.axisTickCSS)
+        Dim tickFont As Font = CSSFont.TryParse(theme.axisTickCSS).GDIObject(g.Dpi)
         Dim tickFontHeight As Single = g.MeasureString("0", tickFont).Height
         Dim dh As Double = tickFontHeight / 3
         Dim tickLable As String

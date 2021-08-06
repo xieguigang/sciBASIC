@@ -216,8 +216,8 @@ Namespace Contour.HeatMap
                        End Function) _
                 .ToArray
             Dim rangeTicks#() = realData.Range.CreateAxisTicks
-            Dim legendFont As Font = CSSFont.TryParse(theme.legendLabelCSS)
-            Dim tickFont As Font = CSSFont.TryParse(theme.legendTickCSS)
+            Dim legendFont As Font = CSSFont.TryParse(theme.legendLabelCSS).GDIObject(g.Dpi)
+            Dim tickFont As Font = CSSFont.TryParse(theme.legendTickCSS).GDIObject(g.Dpi)
 
             Call g.ColorMapLegend(
                 layout:=legendLayout,

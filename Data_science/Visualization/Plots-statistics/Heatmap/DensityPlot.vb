@@ -178,8 +178,8 @@ Namespace Heatmap
                     .IteratesALL _
                     .Range _
                     .CreateAxisTicks
-                Dim legendTitleFont As Font = CSSFont.TryParse(legendTitleFontCSS).GDIObject
-                Dim legendTickFont As Font = CSSFont.TryParse(legendTickFontCSS).GDIObject
+                Dim legendTitleFont As Font = CSSFont.TryParse(legendTitleFontCSS).GDIObject(g.Dpi)
+                Dim legendTickFont As Font = CSSFont.TryParse(legendTickFontCSS).GDIObject(g.Dpi)
                 Dim legendTickStroke As Pen = Stroke.TryParse(legendTickStrokeCSS).GDIObject
 
                 Call Legends.ColorMapLegend(

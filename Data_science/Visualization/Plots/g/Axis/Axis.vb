@@ -185,7 +185,7 @@ Namespace Graphic.Axis
 
             ' 填充网格要先于坐标轴的绘制操作进行，否则会将坐标轴给覆盖掉
             Dim rect As Rectangle = scaler.region
-            Dim tickFont As Font = CSSFont.TryParse(tickFontStyle)
+            Dim tickFont As Font = CSSFont.TryParse(tickFontStyle).GDIObject(g.Dpi)
             Dim gridPenX As Pen = Stroke.TryParse(gridX)
             Dim gridPenY As Pen = Stroke.TryParse(gridY)
 
@@ -278,7 +278,7 @@ Namespace Graphic.Axis
                              scaler, scaler.X(0), scaler.AxisTicks.Y,
                              YAxisLayoutStyles.Left,
                              offset,
-                             labelFont, CSSFont.TryParse(tickFont),
+                             labelFont, CSSFont.TryParse(tickFont).GDIObject(g.Dpi),
                              False
                      )
             End With
@@ -385,7 +385,7 @@ Namespace Graphic.Axis
 
                     Call g.DrawImageUnscaled(labelImage, location)
                 Else
-                    Dim font As Font = CSSFont.TryParse(labelFont)
+                    Dim font As Font = CSSFont.TryParse(labelFont).GDIObject(g.Dpi)
                     Dim fSize As SizeF = g.MeasureString(label, font)
                     Dim location As New PointF With {
                         .X = scaler.region.Left - fSize.Height - maxYTickSize * 1.5,
@@ -436,8 +436,8 @@ Namespace Graphic.Axis
         ''' <param name="fcolor">Brush color or texture.</param>
         ''' <returns></returns>
         <Extension>
-        Public Function DrawLabel(label$, css$, Optional fcolor$ = "black", Optional size$ = "1440,900") As Image
-            Dim font As Font = CSSFont.TryParse(css, [default]:=New Font(FontFace.MicrosoftYaHei, 12)).GDIObject
+        Public Function DrawLabel(label$, css$, Optional fcolor$ = "black", Optional size$ = "1440,900", Optional ppi As Integer = 100) As Image
+            Dim font As Font = CSSFont.TryParse(css, [default]:=New Font(FontFace.MicrosoftYaHei, 12)).GDIObject(ppi)
             Return label.DrawLabel(font, fcolor, size)
         End Function
 
@@ -559,7 +559,7 @@ Namespace Graphic.Axis
 
                     Call g.DrawImageUnscaled(labelImage, point)
                 Else
-                    Dim font As Font = CSSFont.TryParse(labelFont).GDIObject
+                    Dim font As Font = CSSFont.TryParse(labelFont).GDIObject(g.Dpi)
                     Dim fSize As SizeF = g.MeasureString(label, font)
                     Dim y1 As Double = scaler.region.Bottom + tickFont.Height + d * 5
                     Dim y2 As Double = scaler.region.Bottom + ((g.Size.Height - scaler.region.Bottom) - fSize.Height) / 2

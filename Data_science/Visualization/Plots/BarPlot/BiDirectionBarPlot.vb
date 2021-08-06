@@ -76,7 +76,7 @@ Namespace BarPlot
             Dim rect As Rectangle = canvas.PlotRegion
             Dim dh As Double = rect.Height / data.size
             Dim barHeight As Double = dh * 0.7
-            Dim labelFont As Font = CSSFont.TryParse(theme.axisLabelCSS)
+            Dim labelFont As Font = CSSFont.TryParse(theme.axisLabelCSS).GDIObject(g.Dpi)
             Dim maxLen As Double = g.MeasureString(data.samples.Select(Function(d) d.tag).MaxLengthString, labelFont).Width
             Dim boxLeft As Double = rect.Left + maxLen
             Dim boxWidth As Double = rect.Right - boxLeft
@@ -93,13 +93,13 @@ Namespace BarPlot
             Dim charWidth As Single = g.MeasureString("X", labelFont).Width
 
             ' draw main title
-            Dim titleFont As Font = CSSFont.TryParse(theme.mainCSS)
+            Dim titleFont As Font = CSSFont.TryParse(theme.mainCSS).GDIObject(g.Dpi)
             Dim labelSize As SizeF = g.MeasureString(main, titleFont)
             Dim labelPos As New Point With {
                 .X = rect.Left + (rect.Width - labelSize.Width) / 2,
                 .Y = (canvas.Padding.Top - labelSize.Height) / 2
             }
-            Dim tickLabelFont As Font = CSSFont.TryParse(theme.axisTickCSS)
+            Dim tickLabelFont As Font = CSSFont.TryParse(theme.axisTickCSS).GDIObject(g.Dpi)
 
             Call g.DrawString(main, titleFont, Brushes.Black, labelPos)
 
@@ -137,7 +137,7 @@ Namespace BarPlot
             Dim ticks As Double() = data.samples.Select(Function(d) d.data).IteratesALL.CreateAxisTicks(ticks:=3)
 
             y = rect.Bottom + 10
-            labelFont = CSSFont.TryParse(theme.axisTickCSS)
+            labelFont = CSSFont.TryParse(theme.axisTickCSS).GDIObject(g.Dpi)
             labelSize = g.MeasureString(0, labelFont)
 
             ' draw ZERO
@@ -165,7 +165,7 @@ Namespace BarPlot
                 g.DrawLine(Pens.Black, New PointF(center - offset, y), New PointF(center - offset, rect.Bottom))
             Next
 
-            labelFont = CSSFont.TryParse(theme.axisLabelCSS)
+            labelFont = CSSFont.TryParse(theme.axisLabelCSS).GDIObject(g.Dpi)
             labelSize = g.MeasureString(xlabel, labelFont)
             labelPos = New Point With {
                 .X = rect.Left + (rect.Width - labelSize.Width) / 2,

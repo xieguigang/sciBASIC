@@ -326,7 +326,7 @@ Namespace Drawing2D.Colors
                                          Optional AxisStroke$ = Stroke.AxisStroke,
                                          Optional scientificNotation As Boolean = False)
 
-            Dim font As Font = CSSFont.TryParse(labelFontCSS).GDIObject
+            Dim font As Font = CSSFont.TryParse(labelFontCSS).GDIObject(g.Dpi)
             Dim l = designer.Length
             Dim dx = region.Width / l
             Dim h = region.Height * (2 / 3)

@@ -137,8 +137,8 @@ Namespace Contour
             End If
 
             Dim layout As New Rectangle(rect.Right + 10, rect.Top, canvas.Padding.Right / 3 * 2, rect.Height / 3 * 2)
-            Dim legendTitleFont As Font = CSSFont.TryParse(theme.legendTitleCSS)
-            Dim tickFont As Font = CSSFont.TryParse(theme.legendTickCSS)
+            Dim legendTitleFont As Font = CSSFont.TryParse(theme.legendTitleCSS).GDIObject(g.Dpi)
+            Dim tickFont As Font = CSSFont.TryParse(theme.legendTickCSS).GDIObject(g.Dpi)
             Dim tickStroke As Pen = Stroke.TryParse(theme.legendTickAxisStroke)
 
             Call g.ColorMapLegend(layout, colors, level_cutoff, legendTitleFont, title:=legendTitle, tickFont, tickStroke)

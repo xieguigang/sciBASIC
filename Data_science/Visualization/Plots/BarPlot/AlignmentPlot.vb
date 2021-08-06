@@ -272,7 +272,7 @@ Namespace BarPlot
                         '}
                         Dim dt! = 15
                         Dim tickPen As New Pen(Color.Black, 1)
-                        Dim tickFont As Font = CSSFont.TryParse(tickCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 12.0!)).GDIObject
+                        Dim tickFont As Font = CSSFont.TryParse(tickCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 12.0!)).GDIObject(g.Dpi)
                         Dim drawlabel = Sub(c As IGraphics, label$)
                                             Dim tsize = c.MeasureString(label, tickFont)
                                             Dim pos As New Point(.Left - dt - tsize.Width, y - tsize.Height / 2)
@@ -310,7 +310,7 @@ Namespace BarPlot
                             Call drawlabel(g, label)
                         Next
 
-                        Dim labelFont As Font = CSSFont.TryParse(labelCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 12.0!, FontStyle.Bold)).GDIObject
+                        Dim labelFont As Font = CSSFont.TryParse(labelCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 12.0!, FontStyle.Bold)).GDIObject(g.Dpi)
                         Dim labSize As SizeF = g.MeasureString(ylab, labelFont)
                         Dim labPos As PointF
 
@@ -341,7 +341,7 @@ Namespace BarPlot
                         Call g.DrawString(xlab, labelFont, Brushes.Black, New Point(.Right - fWidth, ymid + 2))
 
                         Dim left!
-                        Dim xCSSFont As Font = CSSFont.TryParse(X_CSS).GDIObject
+                        Dim xCSSFont As Font = CSSFont.TryParse(X_CSS).GDIObject(g.Dpi)
                         Dim xsz As SizeF
                         Dim xpos As PointF
                         Dim xlabel$
@@ -466,7 +466,7 @@ Namespace BarPlot
                             Dim box As Rectangle
                             Dim legendFont As Font = CSSFont _
                                 .TryParse(legendFontCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 16.0!)) _
-                                .GDIObject
+                                .GDIObject(g.Dpi)
                             Dim fHeight! = g.MeasureString("1", legendFont).Height
 
                             y = 3
@@ -482,7 +482,7 @@ Namespace BarPlot
 
                         Dim titleFont As Font = CSSFont _
                             .TryParse(titleCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 16.0!)) _
-                            .GDIObject
+                            .GDIObject(g.Dpi)
                         Dim titleSize As SizeF = g.MeasureString(title, titleFont)
                         Dim tl As New Point With {
                             .X = (region.Width - titleSize.Width) / 2,

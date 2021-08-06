@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::03eb61ea12aa2be617bd71c933d137ef, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\GraphicsExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module GraphicsExtensions
-    ' 
-    '         Function: CanvasCreateFromImageFile, (+2 Overloads) Clone, ColorBrush, CreateCanvas2D, (+4 Overloads) CreateGDIDevice
-    '                   CreateObject, EntireImage, GetBrush, GetBrushes, (+2 Overloads) GetIcon
-    '                   GetStreamBuffer, GetStringPath, (+2 Overloads) GraphicsPath, ImageAddFrame, IsValidGDIParameter
-    '                   (+3 Overloads) LoadImage, (+2 Overloads) Opacity, (+2 Overloads) PointF, PointSizeScale, SaveIcon
-    '                   SizeF, ToFloat, ToPoint, ToPoints, ToStream
-    ' 
-    '         Sub: (+5 Overloads) DrawCircle
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module GraphicsExtensions
+' 
+'         Function: CanvasCreateFromImageFile, (+2 Overloads) Clone, ColorBrush, CreateCanvas2D, (+4 Overloads) CreateGDIDevice
+'                   CreateObject, EntireImage, GetBrush, GetBrushes, (+2 Overloads) GetIcon
+'                   GetStreamBuffer, GetStringPath, (+2 Overloads) GraphicsPath, ImageAddFrame, IsValidGDIParameter
+'                   (+3 Overloads) LoadImage, (+2 Overloads) Opacity, (+2 Overloads) PointF, PointSizeScale, SaveIcon
+'                   SizeF, ToFloat, ToPoint, ToPoints, ToStream
+' 
+'         Sub: (+5 Overloads) DrawCircle
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -108,8 +108,12 @@ Namespace Imaging
         ''' <param name="dpiResolution"></param>
         ''' <returns></returns>
         Public Function PointSizeScale(pointSize As Single, dpiResolution As Single) As Single
-            ' fix for running on unix mono/dotnet core 
-            Return If(App.IsMicrosoftPlatform, pointSize, pointSize * dpiResolution / 96)
+            If Environment.OSVersion.Platform <> PlatformID.Win32NT Then
+                ' fix for running on unix mono/dotnet core 
+                Return If(App.IsMicrosoftPlatform, pointSize, pointSize * dpiResolution / 96)
+            Else
+                Return pointSize
+            End If
         End Function
 
         <Extension>

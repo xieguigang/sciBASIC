@@ -86,7 +86,7 @@ Public Class Horizon : Inherits DendrogramPanelV2
         Dim bottom = plotRegion.Top + plotRegion.Bottom - scaleY(0)
         Dim x = plotRegion.Left + unitWidth - unitWidth / 2
         Dim y!
-        Dim tickFont As Font = CSSFont.TryParse(theme.axisTickCSS)
+        Dim tickFont As Font = CSSFont.TryParse(theme.axisTickCSS).GDIObject(g.Dpi)
         Dim tickFontHeight As Single = g.MeasureString("0", tickFont).Height
         Dim dh As Double = tickFontHeight / 3
         Dim tickLable As String

@@ -258,9 +258,11 @@ Namespace Graphic.Legend
                                    l As LegendObject,
                                    Optional border As Stroke = Nothing,
                                    Optional radius% = 5,
-                                   Optional titleBrush As Brush = Nothing, Optional lineWidth! = -1) As SizeF
+                                   Optional titleBrush As Brush = Nothing,
+                                   Optional lineWidth! = -1,
+                                   Optional ppi As Integer = 100) As SizeF
 
-            Dim font As Font = l.GetFont
+            Dim font As Font = l.GetFont(ppi)
             Dim fSize As SizeF = g.MeasureString(l.title, font)
             Dim labelPosition As New PointF With {
                 .X = pos.X + canvas.Width + 5,
@@ -384,7 +386,7 @@ Namespace Graphic.Legend
             Dim maxW! = Single.MinValue, maxH! = Single.MinValue
 
             For Each l As LegendObject In legends
-                Dim font As Font = CSSFont.TryParse(l.fontstyle)
+                Dim font As Font = CSSFont.TryParse(l.fontstyle).GDIObject(g.Dpi)
                 Dim size As SizeF = g.MeasureString(l.title, font)
 
                 If maxW < size.Width Then
