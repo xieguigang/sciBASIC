@@ -1,3 +1,6 @@
-﻿Public Class RUAFormat
+﻿Namespace MatrixMarket
 
-End Class
+    Public Class RUAFormat
+
+    End Class
+End Namespace

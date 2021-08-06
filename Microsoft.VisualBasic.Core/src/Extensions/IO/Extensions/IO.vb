@@ -185,7 +185,7 @@ Public Module IOExtensions
             access = FileShare.Read
         End If
 
-        If mode = FileMode.Open AndAlso [readOnly] = True AndAlso App.MemoryLoad = My.FrameworkInternal.MemoryLoad.Heavy Then
+        If mode = FileMode.Open AndAlso [readOnly] = True AndAlso App.MemoryLoad = My.FrameworkInternal.MemoryLoads.Heavy Then
             If path.FileLength < 1024& * 1024& * 1024& * 2& Then
                 Using memory As New MemoryStream(path.ReadBinary)
                     Return memory

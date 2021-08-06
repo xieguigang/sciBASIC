@@ -1692,6 +1692,7 @@
     <Compile Include="Extensions\Math\StatisticsMathExtensions\SampleObservation.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\Min.vb" />
     <Compile Include="Language\Value\TripleVariant.vb" />
+    <Compile Include="My\Framework\MemoryLoads.vb" />
     <Compile Include="My\JavaScript\JavaScriptObject\Abstract.vb" />
     <Compile Include="My\JavaScript\JavaScriptObject\Descriptor.vb" />
     <Compile Include="My\JavaScript\JavaScriptObject\JavaScriptValue.vb" />
@@ -1974,8 +1975,7 @@
     <Compile Include="Text\StringSimilarity\IEqualityComparer.vb" />
     <Compile Include="Extensions\StringHelpers\NumericFormatHelper.vb" />
     <Compile Include="Net\HTTP\Stream\GZStream.vb" />
-	<Compile Include="Extensions\Math\Correlations\DistanceMethods.vb" />
-	
+    <Compile Include="Extensions\Math\Correlations\DistanceMethods.vb" />
     <Compile Include="Net\HTTP\sitemap.xml.vb" />
     <Compile Include="Language\Runtime.vb" />
     <Compile Include="Language\Language\C\Vector.vb" />
