@@ -25,7 +25,7 @@ Module LouvainTest
         Dim clusters = Communities.Analysis(g)
 
         Call Console.WriteLine(Communities.Modularity(clusters))
-        Call Console.WriteLine(Communities.Community(g).GetJson)
+        Call Console.WriteLine(Communities.Community(g).GetJson(indent:=True))
 
         Call clusters.Tabular.Save("E:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\Louvain\testdata_graph")
 
