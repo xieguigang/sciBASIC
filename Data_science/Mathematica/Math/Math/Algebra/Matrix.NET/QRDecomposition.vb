@@ -95,7 +95,7 @@ Namespace LinearAlgebra.Matrix
         ''' </param>
         Public Sub New(A As GeneralMatrix)
             ' Initialize.
-            QR = A.ArrayCopy
+            QR = A.ArrayPack(deepcopy:=True)
             m = A.RowDimension
             n = A.ColumnDimension
             Rdiag = New Double(n - 1) {}
@@ -246,7 +246,7 @@ Namespace LinearAlgebra.Matrix
 
             ' Copy right hand side
             Dim nx As Integer = B.ColumnDimension
-            Dim X As Double()() = B.ArrayCopy
+            Dim X As Double()() = B.ArrayPack(deepcopy:=True)
 
             ' Compute Y = transpose(Q)*B
             For k As Integer = 0 To n - 1

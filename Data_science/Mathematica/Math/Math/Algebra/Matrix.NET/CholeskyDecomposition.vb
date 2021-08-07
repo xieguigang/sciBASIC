@@ -89,7 +89,7 @@ Namespace LinearAlgebra.Matrix
         ''' </param>
         Public Sub New(Arg As GeneralMatrix)
             ' Initialize.
-            Dim A As Double()() = Arg.Array
+            Dim A As Double()() = Arg.ArrayPack
             n = Arg.RowDimension
             L = New Double(n - 1)() {}
             For i As Integer = 0 To n - 1
@@ -162,7 +162,7 @@ Namespace LinearAlgebra.Matrix
             End If
 
             ' Copy right hand side.
-            Dim X As Double()() = B.ArrayCopy
+            Dim X As Double()() = B.ArrayPack(deepcopy:=True)
             Dim nx As Integer = B.ColumnDimension
 
             ' Solve L*Y = B;

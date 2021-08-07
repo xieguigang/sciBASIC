@@ -903,7 +903,7 @@ Namespace LinearAlgebra.Matrix
         ''' </summary>
         ''' <param name="Arg">Square matrix</param>
         Public Sub New(Arg As GeneralMatrix)
-            Dim A As Double()() = Arg.Array
+            Dim A As Double()() = Arg.ArrayPack
             n = Arg.ColumnDimension
             Dim V = New Double(n - 1)() {}
             For i As Integer = 0 To n - 1

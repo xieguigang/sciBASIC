@@ -175,9 +175,9 @@ Namespace LinearAlgebra.Matrix
             Dim n As Int16 = K.RowDimension
             Dim rank As Int16 = GetRank(K, 9)
             Dim m As Int16 = K.Length / n
-            Dim temp1 As GeneralMatrix = GeneralMatrix.Number
-            Dim temp2 As GeneralMatrix = GeneralMatrix.Number
-            Dim temp3 As GeneralMatrix = GeneralMatrix.Number
+            Dim temp1 As GeneralMatrix = NumericMatrix.Number
+            Dim temp2 As GeneralMatrix = NumericMatrix.Number
+            Dim temp3 As GeneralMatrix = NumericMatrix.Number
             If rank = m Then
                 If m = n Then
                     Inv2(K, Return_K, n)
@@ -193,8 +193,8 @@ Namespace LinearAlgebra.Matrix
                 Inv2(temp2, temp3, n) 'temp3为逆
                 Mul(temp3, temp1, n, Return_K)
             Else
-                Dim s = GeneralMatrix.Number
-                Dim g = GeneralMatrix.Number
+                Dim s = NumericMatrix.Number
+                Dim g = NumericMatrix.Number
                 Dim s1(0, 0) As Double
                 Dim g1(0, 0) As Double
                 Dim s2(0, 0) As Double '逆
@@ -619,7 +619,7 @@ Namespace LinearAlgebra.Matrix
             Dim k As Int16
             Dim t As Int16
             Dim m As Int16
-            Dim A As GeneralMatrix = GeneralMatrix.Number
+            Dim A As GeneralMatrix = NumericMatrix.Number
             Ret = New NumericMatrix(n - 1, 1) ' ReDim Ret(n - 1, 1) 'u v
             Dim erro As Double = stdNum.Pow(0.1, errors)
             Dim b As Double
@@ -864,7 +864,7 @@ Namespace LinearAlgebra.Matrix
             Dim i As Int16
             Dim j As Int16
             Dim ii As Int16
-            Dim At = GeneralMatrix.Number
+            Dim At = NumericMatrix.Number
             Dim AtA(0, 0) As Double
             Dim b(0, 0) As Double
             Dim b1(0, 0) As Double
@@ -974,7 +974,7 @@ Namespace LinearAlgebra.Matrix
             If i <> 1 Or B.Length <> k_m Then
                 Return False
             End If
-            Dim kt = GeneralMatrix.Number
+            Dim kt = NumericMatrix.Number
             Dim kmul(0, 0) As Double
             Dim n As Integer = K.Length / k_m
             kt = K.Transpose '   Math_Matrix_T(K, n, kt)
@@ -1563,7 +1563,7 @@ Namespace LinearAlgebra.Matrix
             If n * m <> A.Length Then
                 Return -1
             End If
-            Dim At = GeneralMatrix.Number
+            Dim At = NumericMatrix.Number
             At = A.Transpose '    Call Math_Matrix_T(A, n, At) '???原文If Math_Matrix_T(A, n, At) Then
             Dim AtA(0, 0) As Double
             If n > m Then
@@ -1990,7 +1990,7 @@ Namespace LinearAlgebra.Matrix
             Dim N As Integer
             Dim i As Integer
             If n1 < n2 Then
-                Ret = GeneralMatrix.Number '     ReDim Ret(0, 0)
+                Ret = NumericMatrix.Number '     ReDim Ret(0, 0)
                 n1 -= 1
                 RetMod = New NumericMatrix(0, n1) '   ReDim RetMod(0, n1)
                 For i = 0 To n1
@@ -2427,7 +2427,7 @@ Loopexit:
             'n为F的阶数
             '其中F=R*U
             'U^2=T(F)*F其中T(F)表示F的转置
-            Dim FT = GeneralMatrix.Number, temp(0, 0) As Double
+            Dim FT = NumericMatrix.Number, temp(0, 0) As Double
             FT = F.Transpose '  Math_Matrix_T(F, n, FT)
             Mul(FT, F, n, temp)
             If Sqrt(temp, n, U) = -1 Then
@@ -2454,7 +2454,7 @@ Loopexit:
             'n为F的阶数
             '其中F=V*R
             'V^2=F*T(F)其中T(F)表示F的转置
-            Dim FT = GeneralMatrix.Number, temp(0, 0) As Double
+            Dim FT = NumericMatrix.Number, temp(0, 0) As Double
             FT = F.Transpose '     Math_Matrix_T(F, n, FT)
             Mul(F, FT, n, temp)
             If Sqrt(temp, n, V) = -1 Then
@@ -2671,7 +2671,7 @@ Loopexit:
                         End While
                     End If
                     If n > a1n Then
-                        Ret = GeneralMatrix.Number '       ReDim Ret(0, 0)
+                        Ret = NumericMatrix.Number '       ReDim Ret(0, 0)
                         Return 1
                     End If
                     For i = n To a1n

@@ -97,7 +97,7 @@ Namespace LinearAlgebra.Matrix
         Public Sub New(Arg As GeneralMatrix)
             ' Derived from LINPACK code.
             ' Initialize.
-            Dim A As Double()() = Arg.ArrayCopy
+            Dim A As Double()() = Arg.ArrayPack(deepcopy:=True)
             Dim U, V As Double()()
 
             m = Arg.RowDimension

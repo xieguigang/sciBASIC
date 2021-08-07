@@ -401,7 +401,15 @@ Namespace LinearAlgebra.Matrix
             End Set
         End Property
 
-        Default Public Shadows ReadOnly Property Value(indices As IEnumerable(Of Integer)) As GeneralMatrix
+        ''' <summary>
+        ''' column projection via column index
+        ''' </summary>
+        ''' <remarks>
+        ''' select column values for each row for create a new matrix
+        ''' </remarks>
+        ''' <param name="indices"></param>
+        ''' <returns></returns>
+        Default Public Shadows ReadOnly Property Value(indices As IEnumerable(Of Integer)) As GeneralMatrix Implements GeneralMatrix.X
             Get
                 Dim index%() = indices.ToArray
                 Dim subMAT = buffer _
@@ -412,7 +420,7 @@ Namespace LinearAlgebra.Matrix
             End Get
         End Property
 
-        Default Public Shadows Property Value(i As Integer) As Vector
+        Default Public Shadows Property Value(i As Integer) As Vector Implements GeneralMatrix.X
             Get
                 Return buffer(i).AsVector
             End Get
@@ -1291,7 +1299,7 @@ Namespace LinearAlgebra.Matrix
         ''' <param name="m"></param>
         ''' <param name="n"></param>
         ''' <remarks></remarks>
-        Public Sub Resize(m As Integer, n As Integer)
+        Public Function Resize(m As Integer, n As Integer) As GeneralMatrix Implements GeneralMatrix.Resize
             Me.m = m
             Me.n = n
 
@@ -1300,7 +1308,9 @@ Namespace LinearAlgebra.Matrix
             For i As Integer = 0 To buffer.Length - 1
                 ReDim Preserve buffer(i)(m - 1)
             Next
-        End Sub
+
+            Return Me
+        End Function
 
         ''' <summary>Clone the GeneralMatrix object.</summary>
         Public Function Clone() As Object Implements ICloneable.Clone
@@ -1335,7 +1345,7 @@ Namespace LinearAlgebra.Matrix
             Next
         End Function
 
-        Public Iterator Function RowVectors() As IEnumerable(Of Vector)
+        Public Iterator Function RowVectors() As IEnumerable(Of Vector) Implements GeneralMatrix.RowVectors
             For Each row As Double() In buffer
                 Yield row.AsVector
             Next

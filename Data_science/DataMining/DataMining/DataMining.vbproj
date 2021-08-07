@@ -772,7 +772,6 @@
     <Compile Include="ComponentModel\Encoder\Extensions.vb" />
     <Compile Include="Clustering\DBSCAN\DbscanAlgorithm.vb" />
     <Compile Include="Clustering\DBSCAN\DbscanPoint.vb" />
-    <Compile Include="Clustering\Clustering.vb" />
     <Compile Include="Clustering\FuzzyCMeans\Entity.vb" />
     <Compile Include="ComponentModel\Discretizer\Discretizer.vb" />
     <Compile Include="ComponentModel\Normalizer\Methods.vb" />

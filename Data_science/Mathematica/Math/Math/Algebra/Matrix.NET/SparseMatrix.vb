@@ -19,7 +19,7 @@ Namespace LinearAlgebra.Matrix
             End Get
         End Property
 
-        Default Property Xij(i As Integer, j As Integer) As Double Implements GeneralMatrix.X
+        Default Overloads Property X(i As Integer, j As Integer) As Double Implements GeneralMatrix.X
             Get
                 If rows.ContainsKey(i) Then
                     If rows(i).ContainsKey(j) Then
@@ -42,6 +42,43 @@ Namespace LinearAlgebra.Matrix
                 End If
             End Set
         End Property
+
+        Default Public Overloads Property X(i As Integer) As Vector Implements GeneralMatrix.X
+            Get
+                Throw New NotImplementedException()
+            End Get
+            Set(value As Vector)
+                Throw New NotImplementedException()
+            End Set
+        End Property
+
+        Default Public Overloads ReadOnly Property X(indices As IEnumerable(Of Integer)) As GeneralMatrix Implements GeneralMatrix.X
+            Get
+                Dim idxList As Integer() = indices.ToArray
+                Dim rows = Me.rows _
+                    .ToDictionary(Function(r) r.Key,
+                                  Function(r)
+                                      Dim cols As New Dictionary(Of Integer, Double)
+                                      Dim src As Dictionary(Of Integer, Double) = r.Value
+
+                                      For Each j As Integer In idxList
+                                          If src.ContainsKey(j) Then
+                                              cols.Add(j, src(j))
+                                          End If
+                                      Next
+
+                                      Return cols
+                                  End Function)
+
+                Return New SparseMatrix(rows, m, idxList.Length)
+            End Get
+        End Property
+
+        Private Sub New(matrix As Dictionary(Of Integer, Dictionary(Of Integer, Double)), m%, n%)
+            Me.rows = matrix
+            Me.m = m
+            Me.n = n
+        End Sub
 
         ''' <summary>
         ''' 
@@ -68,7 +105,7 @@ Namespace LinearAlgebra.Matrix
                               End Function)
         End Sub
 
-        Public Function Resize(M As Integer, N As Integer) As SparseMatrix
+        Public Function Resize(M As Integer, N As Integer) As GeneralMatrix Implements GeneralMatrix.Resize
             Me.m = M
             Me.n = N
             Return Me
@@ -96,6 +133,12 @@ Namespace LinearAlgebra.Matrix
             Next
 
             Return real
+        End Function
+
+        Public Iterator Function RowVectors() As IEnumerable(Of Vector) Implements GeneralMatrix.RowVectors
+            For Each row As Double() In ArrayPack()
+                Yield row.AsVector
+            Next
         End Function
     End Class
 End Namespace
