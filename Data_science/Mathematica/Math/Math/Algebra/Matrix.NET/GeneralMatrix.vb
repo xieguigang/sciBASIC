@@ -1,4 +1,6 @@
 ﻿
+Imports Microsoft.VisualBasic.Language.Vectorization
+
 Namespace LinearAlgebra.Matrix
 
     ''' <summary>
@@ -13,7 +15,7 @@ Namespace LinearAlgebra.Matrix
         ''' <param name="j"></param>
         ''' <returns></returns>
         Default Property X(i As Integer, j As Integer) As Double
-        Default Property X(i As Integer) As Vector
+        Default Property X(i As Integer, Optional byRow As Boolean = True) As Vector
 
         ''' <summary>
         ''' column projection via column index
@@ -24,6 +26,7 @@ Namespace LinearAlgebra.Matrix
         ''' <param name="indices"></param>
         ''' <returns></returns>
         Default ReadOnly Property X(indices As IEnumerable(Of Integer)) As GeneralMatrix
+        Default ReadOnly Property X(rowIdx As BooleanVector) As GeneralMatrix
 
         ''' <summary>
         ''' m
