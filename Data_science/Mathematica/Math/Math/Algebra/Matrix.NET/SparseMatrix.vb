@@ -140,5 +140,9 @@ Namespace LinearAlgebra.Matrix
                 Yield row.AsVector
             Next
         End Function
+
+        Public Function GetMatrix(r() As Integer, j0 As Integer, j1 As Integer) As GeneralMatrix Implements GeneralMatrix.GetMatrix
+            Throw New NotImplementedException()
+        End Function
     End Class
 End Namespace

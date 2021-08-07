@@ -526,7 +526,7 @@ Namespace LinearAlgebra.Matrix
         ''' <exception cref="System.IndexOutOfRangeException">   Submatrix indices
         ''' </exception>
 
-        Public Overridable Function GetMatrix(r As Integer(), j0 As Integer, j1 As Integer) As GeneralMatrix
+        Public Overridable Function GetMatrix(r As Integer(), j0 As Integer, j1 As Integer) As GeneralMatrix Implements GeneralMatrix.GetMatrix
             Dim X As New NumericMatrix(r.Length, j1 - j0 + 1)
             Dim B As Double()() = X.Array
             Try

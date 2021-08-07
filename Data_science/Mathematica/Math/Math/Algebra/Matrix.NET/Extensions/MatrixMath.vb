@@ -360,8 +360,8 @@ Namespace LinearAlgebra.Matrix
             Next
             m += 1
             n += 1
-            Mul(Q, E, n, K)
-            Mul(K, P, m, Ret)
+            Mul(New NumericMatrix(Q), New NumericMatrix(E), n, K)
+            Mul(K, New NumericMatrix(P), m, Ret)
             Return n
         End Function
 
@@ -652,7 +652,7 @@ Namespace LinearAlgebra.Matrix
                     Next
                 Next
             Else
-                Hessenberg(K1, n, A) '将方阵K1转化成上Hessenberg矩阵A
+                Hessenberg(New NumericMatrix(K1), n, A) '将方阵K1转化成上Hessenberg矩阵A
             End If
             m = n
             While m <> 0
@@ -925,7 +925,7 @@ Namespace LinearAlgebra.Matrix
                 For i = 0 To n
                     At(i, 0) = V(i, j)
                 Next
-                Mul(A, At, n + 1, b1)
+                Mul(A, At, n + 1, New NumericMatrix(b1))
                 For i = 0 To m
                     If S(j, j) = 0 Then
                         U(i, j) = b1(i, 0) / Error1
@@ -943,7 +943,7 @@ Namespace LinearAlgebra.Matrix
                         At(i, j) = U(j, i)
                     Next
                 Next
-                Cramer22(At, b, ii, A)
+                Cramer22(At, New NumericMatrix(b), ii, A)
                 temp = 0
                 For i = 0 To m
                     temp += A(i, 0) * A(i, 0)
@@ -1002,7 +1002,7 @@ Namespace LinearAlgebra.Matrix
             Dim l(N, N) As Double
             Dim u(N, N) As Double
             Dim temp As Double = 0
-            If LU(k, N + 1, l, u) Then
+            If LU(k, N + 1, New NumericMatrix(l), New NumericMatrix(u)) Then
                 temp = 1
                 While N > -1
                     temp *= l(N, N)
@@ -1047,7 +1047,7 @@ Namespace LinearAlgebra.Matrix
                     Next
                 Next
                 m += 1
-                det = Det2(temp, m)
+                det = Det2(New NumericMatrix(temp), m)
             End While
             If det > 0 Then
                 Return 1
@@ -1411,7 +1411,7 @@ Namespace LinearAlgebra.Matrix
                 'lu分解法求逆
                 Dim l(N, N) As Double
                 Dim u(N, N) As Double
-                If (LU(K, N + 1, l, u)) Then
+                If (LU(K, N + 1, New NumericMatrix(l), New NumericMatrix(u))) Then
                     Dim d(N) As Double
                     Dim x(N) As Double
                     Dim e(N) As Double
@@ -1486,9 +1486,9 @@ Namespace LinearAlgebra.Matrix
                         Next
                     Next
                     If is1 Then
-                        temp += k(0, i) * DetF(t, N - 1)
+                        temp += k(0, i) * DetF(New NumericMatrix(t), N - 1)
                     Else
-                        temp -= k(0, i) * DetF(t, N - 1)
+                        temp -= k(0, i) * DetF(New NumericMatrix(t), N - 1)
                     End If
                 End If
                 is1 = Not is1
@@ -1539,7 +1539,7 @@ Namespace LinearAlgebra.Matrix
                             i_temp += 1
                         End If
                     Next
-                    Return_K(j, i) = DetF(Temp, N) / Det '编程时,最好返回Return_K/Det这种格式
+                    Return_K(j, i) = DetF(New NumericMatrix(Temp), N) / Det '编程时,最好返回Return_K/Det这种格式
                     If is2 = False Then
                         Return_K(j, i) = -Return_K(j, i)
                     End If
@@ -1567,12 +1567,12 @@ Namespace LinearAlgebra.Matrix
             At = A.Transpose '    Call Math_Matrix_T(A, n, At) '???原文If Math_Matrix_T(A, n, At) Then
             Dim AtA(0, 0) As Double
             If n > m Then
-                Mul(A, At, n, AtA)
+                Mul(A, At, n, New NumericMatrix(AtA))
                 n = m
             Else
-                Mul(At, A, m, AtA)
+                Mul(At, A, m, New NumericMatrix(AtA))
             End If
-            If (EigSym(AtA, n, 7, At, Nothing)) Then
+            If (EigSym(New NumericMatrix(AtA), n, 7, At, Nothing)) Then
                 Dim i As Int16
                 m = -1
                 n -= 1
@@ -1737,7 +1737,7 @@ Namespace LinearAlgebra.Matrix
                             i2 += 1
                         End If
                     Next
-                    det = Det2(temp, n)
+                    det = Det2(New NumericMatrix(temp), n)
                     If is2 = False Then
                         det = -det
                     End If
@@ -1799,7 +1799,7 @@ Namespace LinearAlgebra.Matrix
                         Next
                     Next
                 Next
-                Pow(temp, m + 1, n \ 2, Ret)
+                Pow(New NumericMatrix(temp), m + 1, n \ 2, Ret)
                 If n Mod 2 = 1 Then
                     For i = 0 To m
                         For j = 0 To m
@@ -1878,7 +1878,7 @@ Namespace LinearAlgebra.Matrix
                 ATemp2(0, 0) = 1
                 ATemp2(0, 1) = Ret(N, 0)
                 ATemp2(0, 2) = Ret(N, 1)
-                PolyDiv(A, ATemp2, Nothing, ATemp, 11)
+                PolyDiv(A, New NumericMatrix(ATemp2), Nothing, New NumericMatrix(ATemp), 11)
                 A_n = ATemp.Length - 1
                 i = A_n
                 A = New NumericMatrix(0, i) '     ReDim A(0, i)
@@ -1907,7 +1907,7 @@ Namespace LinearAlgebra.Matrix
             Dim n As Integer
             Dim max As Double
             Dim min As Double
-            n = Svd(k, m, s)
+            n = Svd(k, m, New NumericMatrix(s))
             If n < 2 Then
                 Return 0
             End If
@@ -2352,7 +2352,7 @@ Loopexit:
             'ks=inv(p)*diag(sqrt(eig(k))*p
             Dim eigvalue(0, 0) As Double
             Dim i, j As Integer
-            If EigenValue(K, n, 500, 10, eigvalue, False) Then
+            If EigenValue(K, n, 500, 10, New NumericMatrix(eigvalue), False) Then
                 n -= 1
                 For i = 0 To n '判断是否只存在正的实数特征值
                     If eigvalue(i, 1) <> 0 Or eigvalue(i, 0) < 0 Then
@@ -2362,17 +2362,17 @@ Loopexit:
                 Dim diag(n, n), eigtor(n, n), temp(n, 0), temp2(n, 0) As Double
                 For i = 0 To n
                     diag(i, i) = stdNum.Sqrt(eigvalue(i, 0))
-                    EigTorF(K, n + 1, eigvalue(i, 0), temp)
+                    EigTorF(K, n + 1, eigvalue(i, 0), New NumericMatrix(temp))
                     For j = 0 To n
                         eigtor(j, i) = temp(j, 0)
                     Next
                 Next
                 n += 1
-                If Inv2(eigtor, temp, n) = False Then
-                    Inv(eigtor, temp)
+                If Inv2(New NumericMatrix(eigtor), New NumericMatrix(temp), n) = False Then
+                    Inv(New NumericMatrix(eigtor), New NumericMatrix(temp))
                 End If
-                Mul(eigtor, diag, n, temp2)
-                Mul(temp2, temp, n, ks)
+                Mul(New NumericMatrix(eigtor), New NumericMatrix(diag), n, New NumericMatrix(temp2))
+                Mul(New NumericMatrix(temp2), New NumericMatrix(temp), n, ks)
                 Return 1
             Else
                 Return -1
@@ -2429,14 +2429,14 @@ Loopexit:
             'U^2=T(F)*F其中T(F)表示F的转置
             Dim FT = NumericMatrix.Number, temp(0, 0) As Double
             FT = F.Transpose '  Math_Matrix_T(F, n, FT)
-            Mul(FT, F, n, temp)
-            If Sqrt(temp, n, U) = -1 Then
+            Mul(FT, F, n, New NumericMatrix(temp))
+            If Sqrt(New NumericMatrix(temp), n, U) = -1 Then
                 Return False
             End If
-            If Inv2(U, temp, n) = False Then
-                Inv(U, temp)
+            If Inv2(U, New NumericMatrix(temp), n) = False Then
+                Inv(U, New NumericMatrix(temp))
             End If
-            Mul(F, temp, n, R)
+            Mul(F, New NumericMatrix(temp), n, R)
             Return True
         End Function
 
@@ -2456,14 +2456,14 @@ Loopexit:
             'V^2=F*T(F)其中T(F)表示F的转置
             Dim FT = NumericMatrix.Number, temp(0, 0) As Double
             FT = F.Transpose '     Math_Matrix_T(F, n, FT)
-            Mul(F, FT, n, temp)
-            If Sqrt(temp, n, V) = -1 Then
+            Mul(F, FT, n, New NumericMatrix(temp))
+            If Sqrt(New NumericMatrix(temp), n, V) = -1 Then
                 Return False
             End If
-            If Inv2(V, temp, n) = False Then
-                Inv(V, temp)
+            If Inv2(V, New NumericMatrix(temp), n) = False Then
+                Inv(V, New NumericMatrix(temp))
             End If
-            Mul(temp, F, n, R)
+            Mul(New NumericMatrix(temp), F, n, R)
             Return True
         End Function
 
@@ -2495,7 +2495,7 @@ Loopexit:
             For i = 0 To m2 - 1
                 e(i, i + m2) = -1
             Next
-            Mul(e, k, m + 1, ret)
+            Mul(New NumericMatrix(e), k, m + 1, ret)
             Return 0
         End Function
 
@@ -2789,7 +2789,7 @@ Loopexit:
             Dim u(0, 0) As Double
             Dim s(0, 0) As Double
             Dim sm As Integer
-            If SvdSplit(k, m, Nothing, Nothing, s, sm, u, Nothing) = False Then
+            If SvdSplit(k, m, Nothing, Nothing, New NumericMatrix(s), sm, New NumericMatrix(u), Nothing) = False Then
                 Return 0
             End If
             Dim i As Integer
@@ -3119,7 +3119,7 @@ Loopexit:
             For i = 0 To A2_n - 1
                 A22(0, i) = A2(0, i)
             Next
-            Return PolyGCFCall(A11, A1_n, A22, A2_n, Ret, Erro)
+            Return PolyGCFCall(New NumericMatrix(A11), A1_n, New NumericMatrix(A22), A2_n, Ret, Erro)
         End Function
 
         ''' <summary>
