@@ -51,7 +51,7 @@ Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
-Namespace SyntaxAPI.Vectors
+Namespace Scripting.Rscript
 
     ''' <summary>
     ''' 在这个泛型向量之中,仅包含有对元素对象的访问方法的封装,并没有涉及类型解析等反射操作

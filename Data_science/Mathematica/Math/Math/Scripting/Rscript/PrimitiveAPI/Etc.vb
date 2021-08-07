@@ -49,7 +49,7 @@ Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
-Namespace SyntaxAPI
+Namespace Scripting.Rscript
 
     <Package("RBase.Is")>
     Public Module [Is]
