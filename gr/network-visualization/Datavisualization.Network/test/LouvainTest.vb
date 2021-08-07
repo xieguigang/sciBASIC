@@ -8,7 +8,7 @@ Module LouvainTest
 
     Sub Main()
 
-        Dim links = "E:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\Louvain\testdata.txt".ReadAllLines.Skip(1).Select(Function(str) Strings.Trim(str).StringSplit("\s+")).ToArray
+        Dim links = "E:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\Louvain\facebook_combined.txt".ReadAllLines.Skip(1).Select(Function(str) Strings.Trim(str).StringSplit("\s+")).ToArray
         Dim g As New NetworkGraph
 
         For Each line In links
@@ -27,7 +27,7 @@ Module LouvainTest
         Call Console.WriteLine(Communities.Modularity(clusters))
         Call Console.WriteLine(Communities.Community(g).GetJson(indent:=True))
 
-        Call clusters.Tabular.Save("E:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\Louvain\testdata_graph")
+        Call clusters.Tabular.Save("E:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\Louvain\facebook_combined_graph")
 
         Pause()
     End Sub
