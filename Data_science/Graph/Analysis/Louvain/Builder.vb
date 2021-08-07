@@ -35,7 +35,7 @@ Namespace Analysis.Louvain
             louvain.head(u) = stdNum.Min(Threading.Interlocked.Increment(louvain.top), louvain.top - 1)
         End Sub
 
-        Public Function Load(Of Node As {New, Network.Node}, Edge As {New, Network.Edge(Of Node)})(g As NetworkGraph(Of Node, Edge)) As LouvainCommunity
+        Public Shared Function Load(Of Node As {New, Network.Node}, Edge As {New, Network.Edge(Of Node)})(g As NetworkGraph(Of Node, Edge)) As LouvainCommunity
             Dim louvain As New LouvainCommunity With {
                 .n = g.size.vertex,
                 .global_n = .n,
@@ -43,17 +43,18 @@ Namespace Analysis.Louvain
                 .edge = New Louvain.Edge(.m - 1) {},
                 .head = New Integer(.n - 1) {}
             }
+            Dim builder As New Builder
 
             For i As Integer = 0 To louvain.n - 1
                 louvain.head(i) = -1
             Next
 
             louvain.top = 0
-            global_edge = New Louvain.Edge(louvain.m - 1) {}
-            global_head = New Integer(louvain.n - 1) {}
+            builder.global_edge = New Louvain.Edge(louvain.m - 1) {}
+            builder.global_head = New Integer(louvain.n - 1) {}
 
             For i = 0 To louvain.n - 1
-                global_head(i) = -1
+                builder.global_head(i) = -1
             Next
 
             louvain.global_cluster = New Integer(louvain.n - 1) {}
@@ -64,13 +65,13 @@ Namespace Analysis.Louvain
 
             louvain.node_weight = New Double(louvain.n - 1) {}
             louvain.totalEdgeWeight = 0.0
-            louvain.DoCall(Sub(alg) loadGraphMatrix(alg, g))
+            louvain.DoCall(Sub(alg) loadGraphMatrix(alg, builder, g))
             louvain.resolution = 1 / louvain.totalEdgeWeight
 
             Return louvain
         End Function
 
-        Private Sub loadGraphMatrix(Of Node As {New, Network.Node}, Edge As {New, Network.Edge(Of Node)})(ByRef louvain As LouvainCommunity, g As NetworkGraph(Of Node, Edge))
+        Private Shared Sub loadGraphMatrix(Of Node As {New, Network.Node}, Edge As {New, Network.Edge(Of Node)})(ByRef louvain As LouvainCommunity, builder As Builder, g As NetworkGraph(Of Node, Edge))
             Dim hasWeight As Boolean = g.graphEdges.Any(Function(l) l.weight <> 0.0)
 
             For Each link As Edge In g.graphEdges
@@ -84,10 +85,10 @@ Namespace Analysis.Louvain
                     curw = 1.0
                 End If
 
-                Call addEdge(louvain, u, v, curw)
-                Call addEdge(louvain, v, u, curw)
-                Call addGlobalEdge(u, v, curw)
-                Call addGlobalEdge(v, u, curw)
+                Call builder.addEdge(louvain, u, v, curw)
+                Call builder.addEdge(louvain, v, u, curw)
+                Call builder.addGlobalEdge(u, v, curw)
+                Call builder.addGlobalEdge(v, u, curw)
 
                 louvain.totalEdgeWeight += 2 * curw
                 louvain.node_weight(u) += curw
