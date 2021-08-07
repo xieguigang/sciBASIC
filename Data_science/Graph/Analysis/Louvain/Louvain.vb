@@ -122,6 +122,7 @@ Namespace Analysis.Louvain
             Dim bestCluster = -1  ' 最优的簇号下标(先默认是自己)
             Dim maxx_deltaQ = 0.0 ' 增量的最大值
             Dim vis = New Boolean(n - 1) {}
+            Dim cur_deltaQ As Double
 
             cluster_weight(cluster(i)) -= node_weight(i)
             j = head(i)
@@ -132,11 +133,12 @@ Namespace Analysis.Louvain
 
                 If vis(l) Then
                     ' 一个領接簇只判断一次
-                    Continue While
+                    Exit While
+                Else
+                    vis(l) = True
                 End If
 
-                vis(l) = True
-                Dim cur_deltaQ = edgeWeightPerCluster(l)
+                cur_deltaQ = edgeWeightPerCluster(l)
                 cur_deltaQ -= node_weight(i) * cluster_weight(l) * resolution
 
                 If cur_deltaQ > maxx_deltaQ Then

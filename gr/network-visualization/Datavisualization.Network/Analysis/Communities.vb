@@ -71,11 +71,22 @@ Namespace Analysis
             Return mov
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="g">
+        ''' 请注意，这个必须要要求节点的编号是连续的``0:n``序列中的值，不可以存在重复编号
+        ''' </param>
+        ''' <returns></returns>
         Public Shared Function Analysis(g As NetworkGraph) As NetworkGraph
             Dim clusters As String() = Louvain.Builder _
                 .Load(g) _
                 .SolveClusters _
                 .GetCommunity
+
+            For Each v As Node In g.vertex
+                v.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE) = clusters(v.ID)
+            Next
 
             Return g
         End Function
