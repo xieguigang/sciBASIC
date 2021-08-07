@@ -41,12 +41,15 @@
 
 Namespace KNN
 
-    Friend Class KNNState
+    Public Class KNNState
 
-        Friend _knnIndices As Integer()() = Nothing
-        Friend _knnDistances As Double()() = Nothing
+        Public Property knnIndices As Integer()() = Nothing
 
-        Friend parameters As KNNArguments
+        ''' <summary>
+        ''' weights
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property knnDistances As Double()() = Nothing
 
     End Class
 End Namespace

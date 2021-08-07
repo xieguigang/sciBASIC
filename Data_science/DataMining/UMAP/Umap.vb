@@ -54,7 +54,6 @@ Imports Microsoft.VisualBasic.DataMining.UMAP.KNN
 Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Language.Python
 Imports Microsoft.VisualBasic.Math
-Imports i32 = Microsoft.VisualBasic.Language.i32
 Imports stdNum = System.Math
 
 ''' <summary>
@@ -74,17 +73,14 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
     ReadOnly _repulsionStrength As Double = 1
     ReadOnly _setOpMixRatio As Double = 1
     ReadOnly _spread As Double = 1
-    ReadOnly _distanceFn As DistanceCalculation
-    ReadOnly _random As IProvideRandomValues
+    Friend ReadOnly _distanceFn As DistanceCalculation
+    Friend ReadOnly _random As IProvideRandomValues
     ReadOnly _customNumberOfEpochs As Integer?
     ReadOnly _progressReporter As RunSlavePipeline.SetProgressEventHandler
     ReadOnly _optimizationState As OptimizationState
     ReadOnly _customMapCutoff As Double?
 
-    ''' <summary>
-    ''' KNN state (can be precomputed and supplied via initializeFit)
-    ''' </summary>
-    ReadOnly knn As KNNState
+    Friend ReadOnly KNNArguments As KNNArguments
 
     ''' <summary>
     ''' Internal graph connectivity representation
@@ -92,12 +88,16 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
     Private _graph As SparseMatrix = Nothing
     Private _x As Double()() = Nothing
     Private _isInitialized As Boolean = False
-    Private _rpForest As Tree.FlatTree()
 
+    ''' <summary>
+    ''' KNN state (can be precomputed and supplied via initializeFit)
+    ''' </summary>
+    Dim _knn As KNNState
     ''' <summary>
     ''' Projected embedding
     ''' </summary>
     Dim _embedding As Double()
+    Dim _rpForest As Tree.FlatTree()
 
     Public Overrides ReadOnly Property dimension As Integer
         Get
@@ -132,9 +132,7 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
         If customNumberOfEpochs IsNot Nothing AndAlso customNumberOfEpochs <= 0 Then
             Throw New ArgumentOutOfRangeException(NameOf(customNumberOfEpochs), "if non-null then must be a positive value")
         Else
-            knn = New KNNState With {
-                .parameters = New KNNArguments(numberOfNeighbors, localConnectivity, KnnIter, bandwidth)
-            }
+            KNNArguments = New KNNArguments(numberOfNeighbors, localConnectivity, KnnIter, bandwidth)
         End If
 
         _customMapCutoff = customMapCutoff
@@ -153,7 +151,7 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
                        ' do nothing
                    End Sub
         Else
-            Return Umap.ScaleProgressReporter(_progressReporter, 0, 0.8F)
+            Return ScaleProgressReporter(_progressReporter, 0, 0.8F)
         End If
     End Function
 
@@ -180,15 +178,8 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
         Dim initializeFitProgressReporter As RunSlavePipeline.SetProgressEventHandler = GetProgress()
 
         _x = x
-
-        If knn._knnIndices Is Nothing AndAlso knn._knnDistances Is Nothing Then
-            ' This part of the process very roughly accounts for 1/3 of the work
-            With Me.NearestNeighbors(x, Umap.ScaleProgressReporter(initializeFitProgressReporter, 0, 0.3F))
-                knn._knnIndices = .knnIndices
-                knn._knnDistances = .knnDistances
-            End With
-        End If
-
+        ' This part of the process very roughly accounts for 1/3 of the work
+        _knn = New KNearestNeighbour(KNNArguments, _distanceFn, _random).NearestNeighbors(x, ScaleProgressReporter(initializeFitProgressReporter, 0, 0.3F), _rpForest)
         ' This part of the process very roughly accounts for 2/3 of the work (the reamining work is in the Step calls)
         _graph = Me.FuzzySimplicialSet(
             x:=x,
@@ -250,76 +241,15 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
     End Function
 
     ''' <summary>
-    ''' Compute the ``nNeighbors`` nearest points for each data point in ``X`` - this may be exact, but more likely is approximated via nearest neighbor descent.
-    ''' </summary>
-    Friend Function NearestNeighbors(x As Double()(), progressReporter As RunSlavePipeline.SetProgressEventHandler) As (knnIndices As Integer()(), knnDistances As Double()())
-        Dim metricNNDescent = New NNDescent(_distanceFn, _random)
-
-        Call progressReporter(0.05F, "Create NNDescent")
-
-        Dim nTrees = 5 + Round(stdNum.Sqrt(x.Length) / 20)
-        Dim nIters = stdNum.Max(5, CInt(stdNum.Floor(stdNum.Round(stdNum.Log(x.Length, 2)))))
-
-        Call progressReporter(0.1F, "Set Iteration Parameters")
-
-        Dim leafSize = stdNum.Max(10, knn.parameters.k)
-        Dim forestProgressReporter = Umap.ScaleProgressReporter(progressReporter, 0.1F, 0.4F)
-        Dim i As i32 = Scan0
-
-        _rpForest = New Tree.FlatTree(nTrees - 1) {}
-        forestProgressReporter(0, $"make {nTrees} trees...")
-
-        For Each node As (i%, Tree.FlatTree) In Enumerable.Range(0, nTrees) _
-            .AsParallel _
-            .Select(Function(n)
-                        ' x is readonly in make tree
-                        ' progress can be parallel
-                        Return (n, Tree.FlattenTree(Tree.MakeTree(x, leafSize, n, _random), leafSize))
-                    End Function)
-
-            _rpForest(node.i) = node.Item2
-            forestProgressReporter(CSng(++i) / nTrees, $"[{i}/{nTrees}] MakeTree")
-        Next
-
-        Dim leafArray As Integer()() = Tree.MakeLeafArray(_rpForest)
-        Dim nnDescendProgressReporter As RunSlavePipeline.SetProgressEventHandler = Umap.ScaleProgressReporter(progressReporter, 0.5F, 1)
-
-        Call progressReporter(0.45F, "MakeNNDescent")
-
-        ' Handle python3 rounding down from 0.5 discrpancy
-        Return metricNNDescent.MakeNNDescent(
-            data:=x,
-            leafArray:=leafArray,
-            nNeighbors:=knn.parameters.k,
-            nIters:=nIters,
-            startingIteration:=Sub(n, max, msg)
-                                   nnDescendProgressReporter(CSng(n) / max, msg)
-                               End Sub)
-    End Function
-
-    ''' <summary>
-    ''' Handle python3 rounding down from 0.5 discrpancy
-    ''' </summary>
-    ''' <param name="n"></param>
-    ''' <returns></returns>
-    Private Shared Function Round(n As Double) As Integer
-        If n = 0.5 Then
-            Return 0
-        Else
-            Return stdNum.Floor(stdNum.Round(n))
-        End If
-    End Function
-
-    ''' <summary>
     ''' Given a set of data X, a neighborhood size, and a measure of distance compute the fuzzy simplicial set(here represented as a fuzzy graph in the form of a sparse matrix) associated
     ''' to the data. This is done by locally approximating geodesic distance at each point, creating a fuzzy simplicial set for each such point, and then combining all the local fuzzy
     ''' simplicial sets into a global one via a fuzzy union.
     ''' </summary>
     Private Function FuzzySimplicialSet(x As Double()(), setOpMixRatio As Double, progressReporter As RunSlavePipeline.SetProgressEventHandler) As SparseMatrix
-        Dim knnIndices = If(knn._knnIndices, New Integer(-1)() {})
-        Dim knnDistances = If(knn._knnDistances, New Single(-1)() {})
+        Dim knnIndices = If(_knn.knnIndices, New Integer(-1)() {})
+        Dim knnDistances = If(_knn.knnDistances, New Single(-1)() {})
         Dim report As New ProgressReporter With {.report = progressReporter}
-        Dim sigmasRhos = report.Run(Function() SmoothKNN.SmoothKNNDistance(knnDistances, knn.parameters), 0.1, "SmoothKNNDistance")
+        Dim sigmasRhos = report.Run(Function() SmoothKNN.SmoothKNNDistance(knnDistances, KNNArguments), 0.1, "SmoothKNNDistance")
         Dim rowsColsVals = report.Run(Function() SmoothKNN.ComputeMembershipStrengths(knnIndices, knnDistances, sigmasRhos.sigmas, sigmasRhos.rhos), 0.2, "ComputeMembershipStrengths")
         Dim sparseMatrix = report.Run(Function() New SparseMatrix(rowsColsVals.Row, rowsColsVals.Col, rowsColsVals.X, (x.Length, x.Length)), 0.3, "Create SparseMatrix")
         Dim transpose = sparseMatrix.Transpose()
@@ -581,12 +511,5 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
         Else
             Return x
         End If
-    End Function
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Private Shared Function ScaleProgressReporter(progressReporter As RunSlavePipeline.SetProgressEventHandler, start As Double, [end] As Double) As RunSlavePipeline.SetProgressEventHandler
-        Return Sub(progress, msg)
-                   progressReporter(([end] - start) * progress + start, msg)
-               End Sub
     End Function
 End Class

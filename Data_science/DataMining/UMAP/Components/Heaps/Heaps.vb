@@ -1,47 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::97e2bc94d2eeab8844717050f342f048, Data_science\DataMining\UMAP\Components\Heaps\Heaps.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Heaps
-    ' 
-    '     Function: BuildCandidates, DeHeapSort, HeapPush, MakeArrays, MakeHeap
-    '               SmallestFlagged, UncheckedHeapPush
-    ' 
-    '     Sub: SiftDown
-    ' 
-    ' /********************************************************************************/
+' Module Heaps
+' 
+'     Function: BuildCandidates, DeHeapSort, HeapPush, MakeArrays, MakeHeap
+'               SmallestFlagged, UncheckedHeapPush
+' 
+'     Sub: SiftDown
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.DataMining.UMAP.KNN
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 Imports stdNum = System.Math
@@ -189,7 +190,7 @@ Friend Module Heaps
     ''' Given an array of heaps (of indices and weights), unpack the heap out to give and array of sorted lists of indices and weights by increasing weight. This is effectively just the second half of heap sort
     ''' (the first half not being required since we already have the data in a heap).
     ''' </summary>
-    Public Function DeHeapSort(heap As Heap, startingIteration As Action(Of Integer, Integer, String)) As (Integer()(), Double()())
+    Public Function DeHeapSort(heap As Heap, startingIteration As Action(Of Integer, Integer, String)) As KNNState
         ' Note: The comment on this method doesn't seem to quite fit with the method signature (where a single Heap is provided, not an array of Heaps)
         Dim indices = heap(0)
         Dim weights = heap(1)
@@ -227,7 +228,10 @@ Friend Module Heaps
                       End Function) _
             .ToArray()
 
-        Return (indicesAsInts, weights)
+        Return New KNNState With {
+            .knnIndices = indicesAsInts,
+            .knnDistances = weights
+        }
     End Function
 
     ''' <summary>
