@@ -308,7 +308,7 @@ Namespace LinearAlgebra.Matrix
         ''' <summary>Get row dimension.</summary>
         ''' <returns>     m, the number of rows.
         ''' </returns>
-        Public Overridable ReadOnly Property RowDimension() As Integer
+        Public Overridable ReadOnly Property RowDimension() As Integer Implements GeneralMatrix.RowDimension
             Get
                 Return m
             End Get
@@ -317,7 +317,7 @@ Namespace LinearAlgebra.Matrix
         ''' <summary>Get column dimension.</summary>
         ''' <returns>     n, the number of columns.
         ''' </returns>
-        Public Overridable ReadOnly Property ColumnDimension() As Integer
+        Public Overridable ReadOnly Property ColumnDimension() As Integer Implements GeneralMatrix.ColumnDimension
             Get
                 Return n
             End Get
@@ -408,10 +408,12 @@ Namespace LinearAlgebra.Matrix
         ''' <exception cref="System.IndexOutOfRangeException">  
         ''' </exception>
 
-        Default Public Shadows Property Value(i%, j%) As Double
+        Default Public Shadows Property Value(i%, j%) As Double Implements GeneralMatrix.X
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return buffer(i)(j)
             End Get
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Set(value As Double)
                 buffer(i)(j) = value
             End Set
@@ -645,7 +647,7 @@ Namespace LinearAlgebra.Matrix
         ''' <returns>    A'
         ''' </returns>
 
-        Public Overridable Function Transpose() As GeneralMatrix
+        Public Overridable Function Transpose() As GeneralMatrix Implements GeneralMatrix.Transpose
             Dim X As New NumericMatrix(n, m)
             Dim C As Double()() = X.Array
             For i As Integer = 0 To m - 1
@@ -716,7 +718,7 @@ Namespace LinearAlgebra.Matrix
         ''' <summary>Unary minus</summary>
         ''' <returns>    -A
         ''' </returns>
-        Public Shared Operator -(m As GeneralMatrix) As GeneralMatrix
+        Public Shared Operator -(m As NumericMatrix) As GeneralMatrix
             Dim X As New NumericMatrix(m.m, m.n)
             Dim C As Double()() = X.Array
             For i As Integer = 0 To m.m - 1
@@ -739,7 +741,7 @@ Namespace LinearAlgebra.Matrix
             Dim C As Double()() = X.Array
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
-                    C(i)(j) = buffer(i)(j) + B.buffer(i)(j)
+                    C(i)(j) = buffer(i)(j) + B(i, j)
                 Next
             Next
             Return X
@@ -755,7 +757,7 @@ Namespace LinearAlgebra.Matrix
             CheckMatrixDimensions(B)
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
-                    buffer(i)(j) = buffer(i)(j) + B.buffer(i)(j)
+                    buffer(i)(j) = buffer(i)(j) + B(i, j)
                 Next
             Next
             Return Me
@@ -774,7 +776,7 @@ Namespace LinearAlgebra.Matrix
 
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
-                    C(i)(j) = buffer(i)(j) - B.buffer(i)(j)
+                    C(i)(j) = buffer(i)(j) - B(i, j)
                 Next
             Next
 
@@ -841,7 +843,7 @@ Namespace LinearAlgebra.Matrix
             CheckMatrixDimensions(B)
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
-                    buffer(i)(j) = buffer(i)(j) - B.buffer(i)(j)
+                    buffer(i)(j) = buffer(i)(j) - B(i, j)
                 Next
             Next
             Return Me
@@ -859,7 +861,7 @@ Namespace LinearAlgebra.Matrix
             Dim C As Double()() = X.Array
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
-                    C(i)(j) = buffer(i)(j) * B.buffer(i)(j)
+                    C(i)(j) = buffer(i)(j) * B(i, j)
                 Next
             Next
             Return X
@@ -875,7 +877,7 @@ Namespace LinearAlgebra.Matrix
             CheckMatrixDimensions(B)
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
-                    buffer(i)(j) = buffer(i)(j) * B.buffer(i)(j)
+                    buffer(i)(j) = buffer(i)(j) * B(i, j)
                 Next
             Next
             Return Me
@@ -893,7 +895,7 @@ Namespace LinearAlgebra.Matrix
             Dim C As Double()() = X.Array
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
-                    C(i)(j) = buffer(i)(j) / B.buffer(i)(j)
+                    C(i)(j) = buffer(i)(j) / B(i, j)
                 Next
             Next
             Return X
@@ -909,7 +911,7 @@ Namespace LinearAlgebra.Matrix
             CheckMatrixDimensions(B)
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
-                    buffer(i)(j) = buffer(i)(j) / B.buffer(i)(j)
+                    buffer(i)(j) = buffer(i)(j) / B(i, j)
                 Next
             Next
             Return Me
@@ -927,7 +929,7 @@ Namespace LinearAlgebra.Matrix
             Dim C As Double()() = X.Array
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
-                    C(i)(j) = B.buffer(i)(j) / buffer(i)(j)
+                    C(i)(j) = B(i, j) / buffer(i)(j)
                 Next
             Next
             Return X
@@ -943,7 +945,7 @@ Namespace LinearAlgebra.Matrix
             CheckMatrixDimensions(B)
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
-                    buffer(i)(j) = B.buffer(i)(j) / buffer(i)(j)
+                    buffer(i)(j) = B(i, j) / buffer(i)(j)
                 Next
             Next
             Return Me
@@ -1006,15 +1008,15 @@ Namespace LinearAlgebra.Matrix
         ''' <exception cref="System.ArgumentException">Matrix inner dimensions must agree.
         ''' </exception>
         Public Overridable Function Multiply(B As GeneralMatrix) As GeneralMatrix
-            If B.m <> n Then
+            If B.RowDimension <> n Then
                 Throw New System.ArgumentException("GeneralMatrix inner dimensions must agree.")
             End If
-            Dim X As New NumericMatrix(m, B.n)
+            Dim X As New NumericMatrix(m, B.ColumnDimension)
             Dim C As Double()() = X.Array
             Dim Bcolj As Double() = New Double(n - 1) {}
-            For j As Integer = 0 To B.n - 1
+            For j As Integer = 0 To B.ColumnDimension - 1
                 For k As Integer = 0 To n - 1
-                    Bcolj(k) = B.buffer(k)(j)
+                    Bcolj(k) = B(k, j)
                 Next
                 For i As Integer = 0 To m - 1
                     Dim Arowi As Double() = buffer(i)
@@ -1036,7 +1038,7 @@ Namespace LinearAlgebra.Matrix
         ''' <param name="m1"></param>
         ''' <param name="m2"></param>
         ''' <returns></returns>
-        Public Shared Operator +(m1 As GeneralMatrix, m2 As GeneralMatrix) As GeneralMatrix
+        Public Shared Operator +(m1 As NumericMatrix, m2 As GeneralMatrix) As GeneralMatrix
             Return m1.Add(m2)
         End Operator
 
@@ -1046,19 +1048,19 @@ Namespace LinearAlgebra.Matrix
         ''' <param name="m1"></param>
         ''' <param name="m2"></param>
         ''' <returns></returns>
-        Public Shared Operator -(m1 As GeneralMatrix, m2 As GeneralMatrix) As GeneralMatrix
+        Public Shared Operator -(m1 As NumericMatrix, m2 As GeneralMatrix) As GeneralMatrix
             Return m1.Subtract(m2)
         End Operator
 
-        Public Shared Operator -(m1 As GeneralMatrix, x As Double) As GeneralMatrix
+        Public Shared Operator -(m1 As NumericMatrix, x As Double) As GeneralMatrix
             Return m1.Subtract(x)
         End Operator
 
-        Public Shared Operator ^(m1 As GeneralMatrix, y As Double) As GeneralMatrix
+        Public Shared Operator ^(m1 As NumericMatrix, y As Double) As GeneralMatrix
             Return m1.Power(y)
         End Operator
 
-        Public Shared Operator -(x As Double, m As GeneralMatrix) As GeneralMatrix
+        Public Shared Operator -(x As Double, m As NumericMatrix) As GeneralMatrix
             Dim Xmat As New NumericMatrix(m.RowDimension, m.ColumnDimension)
             Dim C As Double()() = Xmat.Array
 
@@ -1079,7 +1081,7 @@ Namespace LinearAlgebra.Matrix
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator *(m1 As GeneralMatrix, m2 As GeneralMatrix) As GeneralMatrix
+        Public Shared Operator *(m1 As NumericMatrix, m2 As GeneralMatrix) As GeneralMatrix
             Return m1.Multiply(m2)
         End Operator
 
@@ -1090,7 +1092,7 @@ Namespace LinearAlgebra.Matrix
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator *(x As Double, m2 As GeneralMatrix) As GeneralMatrix
+        Public Shared Operator *(x As Double, m2 As NumericMatrix) As GeneralMatrix
             Return m2.Multiply(x)
         End Operator
 
@@ -1101,7 +1103,7 @@ Namespace LinearAlgebra.Matrix
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator *(v As Vector, m2 As GeneralMatrix) As GeneralMatrix
+        Public Shared Operator *(v As Vector, m2 As NumericMatrix) As GeneralMatrix
             Return m2.Multiply(v)
         End Operator
 
@@ -1172,9 +1174,9 @@ Namespace LinearAlgebra.Matrix
         ''' </param>
         ''' <returns>     solution if A is square, least squares solution otherwise.
         ''' </returns>
-
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Function SolveTranspose(B As GeneralMatrix) As GeneralMatrix
-            Return Transpose().Solve(B.Transpose())
+            Return DirectCast(Transpose(), NumericMatrix).Solve(B.Transpose())
         End Function
 
         ''' <summary>Matrix inverse or pseudoinverse</summary>
@@ -1247,7 +1249,7 @@ Namespace LinearAlgebra.Matrix
         ''' <summary>Check if size(A) == size(B) *</summary>
 
         Private Sub CheckMatrixDimensions(B As GeneralMatrix)
-            If B.m <> m OrElse B.n <> n Then
+            If B.RowDimension <> m OrElse B.ColumnDimension <> n Then
                 Throw New System.ArgumentException("GeneralMatrix dimensions must agree.")
             End If
         End Sub
@@ -1335,11 +1337,11 @@ Namespace LinearAlgebra.Matrix
         Private Sub ISerializable_GetObjectData(info As SerializationInfo, context As StreamingContext) Implements ISerializable.GetObjectData
         End Sub
 
-        Public Shared Widening Operator CType(data#(,)) As GeneralMatrix
+        Public Shared Widening Operator CType(data#(,)) As NumericMatrix
             Return New NumericMatrix(data.RowIterator.ToArray)
         End Operator
 
-        Public Shared Widening Operator CType(data#()()) As GeneralMatrix
+        Public Shared Widening Operator CType(data#()()) As NumericMatrix
             Return New NumericMatrix(data)
         End Operator
 
