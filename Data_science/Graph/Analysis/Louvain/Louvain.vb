@@ -3,6 +3,12 @@ Imports stdNum = System.Math
 
 Namespace Analysis.Louvain
 
+    ''' <summary>
+    ''' A fast algorithm To find communities In large network
+    ''' </summary>
+    ''' <remarks>
+    ''' Blondel V D, Guillaume J L, Lambiotte R, et al. Fast unfolding of communities in large networks[J]. Journal of Statistical Mechanics, 2008, 2008(10)155-168.
+    ''' </remarks>
     Public Class LouvainCommunity
 
         ''' <summary>
@@ -74,7 +80,7 @@ Namespace Analysis.Louvain
         Friend global_head As Integer()
         Friend global_top As Integer = 0
 
-        Friend Overridable Sub addEdge(ByVal u As Integer, ByVal v As Integer, ByVal weight As Double)
+        Friend Overridable Sub addEdge(u As Integer, v As Integer, weight As Double)
             If edge(top) Is Nothing Then
                 edge(top) = New Edge()
             End If
@@ -85,7 +91,7 @@ Namespace Analysis.Louvain
             head(u) = stdNum.Min(Threading.Interlocked.Increment(top), top - 1)
         End Sub
 
-        Friend Overridable Sub addNewEdge(ByVal u As Integer, ByVal v As Integer, ByVal weight As Double)
+        Friend Overridable Sub addNewEdge(u As Integer, v As Integer, weight As Double)
             If new_edge(new_top) Is Nothing Then
                 new_edge(new_top) = New Edge()
             End If
@@ -96,7 +102,7 @@ Namespace Analysis.Louvain
             new_head(u) = stdNum.Min(Threading.Interlocked.Increment(new_top), new_top - 1)
         End Sub
 
-        Friend Overridable Sub addGlobalEdge(ByVal u As Integer, ByVal v As Integer, ByVal weight As Double)
+        Friend Overridable Sub addGlobalEdge(u As Integer, v As Integer, weight As Double)
             If global_edge(global_top) Is Nothing Then
                 global_edge(global_top) = New Edge()
             End If
@@ -175,7 +181,7 @@ Namespace Analysis.Louvain
             Next
         End Sub
 
-        Friend Overridable Function try_move_i(ByVal i As Integer) As Boolean ' 尝试将i加入某个簇
+        Friend Overridable Function try_move_i(i As Integer) As Boolean ' 尝试将i加入某个簇
             Dim edgeWeightPerCluster = New Double(n - 1) {}
             Dim j As Integer = head(i)
 
@@ -339,14 +345,6 @@ Namespace Analysis.Louvain
 
             n = new_n
             init_cluster()
-        End Sub
-
-        Friend Overridable Sub print()
-            For i = 0 To global_n - 1
-                Console.WriteLine(i & ": " & global_cluster(i))
-            Next
-
-            Console.WriteLine("-------")
         End Sub
 
         Friend Overridable Sub louvain()
