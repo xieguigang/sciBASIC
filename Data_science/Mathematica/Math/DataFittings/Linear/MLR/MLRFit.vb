@@ -113,7 +113,7 @@ Namespace Multivariate
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function LinearFitting(x As GeneralMatrix, f As Vector) As MLRFit
+        Public Shared Function LinearFitting(x As NumericMatrix, f As Vector) As MLRFit
             Return x.LinearFitting(f)
         End Function
     End Class

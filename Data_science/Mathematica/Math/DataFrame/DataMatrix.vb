@@ -176,8 +176,8 @@ Public Class DataMatrix : Implements IBucketVector
         End If
     End Function
 
-    Public Shared Narrowing Operator CType(mat As DataMatrix) As GeneralMatrix
-        Return New GeneralMatrix(mat.matrix)
+    Public Shared Narrowing Operator CType(mat As DataMatrix) As NumericMatrix
+        Return New NumericMatrix(mat.matrix)
     End Operator
 
     Public Function GetVector() As IEnumerable Implements IBucketVector.GetVector

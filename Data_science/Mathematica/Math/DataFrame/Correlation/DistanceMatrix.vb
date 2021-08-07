@@ -86,7 +86,7 @@ Public Class DistanceMatrix : Inherits DataMatrix
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Sub New(names As IEnumerable(Of String), matrix As GeneralMatrix, Optional isDistance As Boolean = True)
-        Call Me.New(names.Indexing, matrix.Array, isDistance)
+        Call Me.New(names.Indexing, matrix.ArrayPack, isDistance)
     End Sub
 
     Sub New(names As Index(Of String), matrix As Double()(), isDistance As Boolean)
@@ -120,7 +120,7 @@ Public Class DistanceMatrix : Inherits DataMatrix
                 .ToArray
         Next
 
-        Return New DistanceMatrix(names, matrix, isDistance)
+        Return New DistanceMatrix(names, matrix.ToArray, isDistance)
     End Function
 
 End Class
