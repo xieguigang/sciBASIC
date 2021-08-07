@@ -1,4 +1,4 @@
-﻿Imports Microsoft.VisualBasic.Data.GraphTheory.Network
+﻿Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports stdNum = System.Math
 
 Namespace Analysis.Louvain
@@ -69,27 +69,19 @@ Namespace Analysis.Louvain
         Friend new_edge As Edge()
         Friend new_head As Integer()
         Friend new_top As Integer = 0
+
         ''' <summary>
         ''' 最大迭代次数
         ''' </summary>
-        Friend ReadOnly iteration_time As Integer = 3
-        ''' <summary>
-        ''' 全局初始的临接表  只保存一次，永久不变，不参与后期运算
-        ''' </summary>
-        Friend global_edge As Edge()
-        Friend global_head As Integer()
-        Friend global_top As Integer = 0
+        ReadOnly maxIterations As Integer = 3
 
-        Friend Overridable Sub addEdge(u As Integer, v As Integer, weight As Double)
-            If edge(top) Is Nothing Then
-                edge(top) = New Edge()
-            End If
-
-            edge(top).v = v
-            edge(top).weight = weight
-            edge(top).next = head(u)
-            head(u) = stdNum.Min(Threading.Interlocked.Increment(top), top - 1)
+        Sub New(Optional maxIterations As Integer = 3)
+            Me.maxIterations = maxIterations
         End Sub
+
+        Public Function GetCommunity() As String()
+            Return global_cluster.Select(Function(cl) cl.ToString).ToArray
+        End Function
 
         Friend Overridable Sub addNewEdge(u As Integer, v As Integer, weight As Double)
             If new_edge(new_top) Is Nothing Then
@@ -102,96 +94,32 @@ Namespace Analysis.Louvain
             new_head(u) = stdNum.Min(Threading.Interlocked.Increment(new_top), new_top - 1)
         End Sub
 
-        Friend Overridable Sub addGlobalEdge(u As Integer, v As Integer, weight As Double)
-            If global_edge(global_top) Is Nothing Then
-                global_edge(global_top) = New Edge()
-            End If
-
-            global_edge(global_top).v = v
-            global_edge(global_top).weight = weight
-            global_edge(global_top).next = global_head(u)
-            global_head(u) = stdNum.Min(Threading.Interlocked.Increment(global_top), global_top - 1)
-        End Sub
-
-        Public Function init(Of Node As {New, Network.Node}, Edge As {New, Network.Edge(Of Node)})(g As NetworkGraph(Of Node, Edge)) As LouvainCommunity
-            n = g.size.vertex
-            global_n = n
-            m = g.size.edges
-            m *= 2
-            Me.edge = New Louvain.Edge(m - 1) {}
-            head = New Integer(n - 1) {}
-
-            For i = 0 To n - 1
-                head(i) = -1
-            Next
-
-            top = 0
-            global_edge = New Louvain.Edge(m - 1) {}
-            global_head = New Integer(n - 1) {}
-
-            For i = 0 To n - 1
-                global_head(i) = -1
-            Next
-
-            global_top = 0
-            global_cluster = New Integer(n - 1) {}
-
-            For i = 0 To global_n - 1
-                global_cluster(i) = i
-            Next
-
-            node_weight = New Double(n - 1) {}
-            totalEdgeWeight = 0.0
-
-            Dim hasWeight As Boolean = g.graphEdges.Any(Function(l) l.weight <> 0.0)
-
-            For Each link As Edge In g.graphEdges
-                Dim u = link.U.ID
-                Dim v = link.V.ID
-                Dim curw As Double
-
-                If hasWeight Then
-                    curw = link.weight
-                Else
-                    curw = 1.0
-                End If
-
-                addEdge(u, v, curw)
-                addEdge(v, u, curw)
-                addGlobalEdge(u, v, curw)
-                addGlobalEdge(v, u, curw)
-                totalEdgeWeight += 2 * curw
-                node_weight(u) += curw
-
-                If u <> v Then
-                    node_weight(v) += curw
-                End If
-            Next
-
-            resolution = 1 / totalEdgeWeight
-
-            Return Me
-        End Function
-
-        Friend Overridable Sub init_cluster()
+        Friend Overridable Sub setCluster0()
             cluster = New Integer(n - 1) {}
 
-            For i = 0 To n - 1 ' 一个结点一个簇
+            For i As Integer = 0 To n - 1
+                ' 一个节点一个簇
                 cluster(i) = i
             Next
         End Sub
 
-        Friend Overridable Function try_move_i(i As Integer) As Boolean ' 尝试将i加入某个簇
+        ''' <summary>
+        ''' 尝试将i加入某个簇
+        ''' </summary>
+        ''' <param name="i"></param>
+        ''' <returns></returns>
+        Friend Overridable Function TryMoveNode(i As Integer) As Boolean
             Dim edgeWeightPerCluster = New Double(n - 1) {}
             Dim j As Integer = head(i)
 
             While j <> -1
-                Dim l = cluster(edge(j).v) ' l是nodeid所在簇的编号
+                ' l是nodeid所在簇的编号
+                Dim l = cluster(edge(j).v)
                 edgeWeightPerCluster(l) += edge(j).weight
                 j = edge(j).next
             End While
 
-            Dim bestCluster = -1 ' 最优的簇号下标(先默认是自己)
+            Dim bestCluster = -1  ' 最优的簇号下标(先默认是自己)
             Dim maxx_deltaQ = 0.0 ' 增量的最大值
             Dim vis = New Boolean(n - 1) {}
 
@@ -199,9 +127,11 @@ Namespace Analysis.Louvain
             j = head(i)
 
             While j <> -1
-                Dim l = cluster(edge(j).v) ' l代表領接点的簇号
+                ' l代表領接点的簇号
+                Dim l = cluster(edge(j).v)
 
-                If vis(l) Then ' 一个領接簇只判断一次
+                If vis(l) Then
+                    ' 一个領接簇只判断一次
                     Continue While
                 End If
 
@@ -221,10 +151,11 @@ Namespace Analysis.Louvain
             If maxx_deltaQ < eps Then
                 bestCluster = cluster(i)
             End If
-            'System.out.println(maxx_deltaQ);  
+
             cluster_weight(bestCluster) += node_weight(i)
 
-            If bestCluster <> cluster(i) Then ' i成功移动了
+            If bestCluster <> cluster(i) Then
+                ' i成功移动了
                 cluster(i) = bestCluster
                 Return True
             End If
@@ -328,10 +259,7 @@ Namespace Analysis.Louvain
                 new_global_cluster(i) = index(cluster(global_cluster(i)))
             Next
 
-            For i = 0 To global_n - 1
-                global_cluster(i) = new_global_cluster(i)
-            Next
-
+            global_cluster = new_global_cluster
             top = new_top
 
             For i = 0 To m - 1
@@ -344,47 +272,49 @@ Namespace Analysis.Louvain
             Next
 
             n = new_n
-            init_cluster()
         End Sub
 
-        Friend Overridable Sub louvain()
-            init_cluster()
-            Dim count = 0 ' 迭代次数
+        Public Function SolveClusters() As LouvainCommunity
+            Dim count As Integer = 0   ' 迭代次数
             Dim update_flag As Boolean ' 标记是否发生过更新
+            Dim enum_time As Integer
+            Dim point As Integer
 
-            Do ' 第一重循环，每次循环rebuild一次图
-                '    print(); // 打印簇列表  
+            Call setCluster0()
+
+            Do
+                ' 第一重循环，每次循环rebuild一次图
                 count += 1
                 cluster_weight = New Double(n - 1) {}
 
-                For j = 0 To n - 1 ' 生成簇的权值
+                For j = 0 To n - 1
+                    ' 生成簇的权值
                     cluster_weight(cluster(j)) += node_weight(j)
                 Next
 
-                Dim order = New Integer(n - 1) {} ' 生成随机序列
+                ' 生成随机序列
+                Dim order = New Integer(n - 1) {}
 
                 For i = 0 To n - 1
                     order(i) = i
                 Next
 
-                Dim random As Random = New Random()
-
                 For i = 0 To n - 1
-                    Dim j = random.Next(n)
+                    Dim j = randf.seeds.Next(n)
                     Dim temp = order(i)
                     order(i) = order(j)
                     order(j) = temp
                 Next
 
-                Dim enum_time = 0 ' 枚举次数，到n时代表所有点已经遍历过且无移动的点
-                Dim point = 0 ' 循环指针
+                enum_time = 0       ' 枚举次数，到n时代表所有点已经遍历过且无移动的点
+                point = 0           ' 循环指针
                 update_flag = False ' 是否发生过更新的标记
 
                 Do
-                    Dim i = order(point)
+                    Dim i As Integer = order(point)
                     point = (point + 1) Mod n
 
-                    If try_move_i(i) Then ' 对i点做尝试
+                    If TryMoveNode(i) Then
                         enum_time = 0
                         update_flag = True
                     Else
@@ -392,12 +322,15 @@ Namespace Analysis.Louvain
                     End If
                 Loop While enum_time < n
 
-                If count > iteration_time OrElse Not update_flag Then ' 如果没更新过或者迭代次数超过指定值
+                If count > maxIterations OrElse Not update_flag Then
                     Exit Do
                 End If
 
-                rebuildGraph() ' 重构图
+                rebuildGraph()
+                setCluster0()
             Loop While True
-        End Sub
+
+            Return Me
+        End Function
     End Class
 End Namespace

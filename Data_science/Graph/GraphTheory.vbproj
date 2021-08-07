@@ -650,6 +650,7 @@
   <ItemGroup>
     <Compile Include="Analysis\Dijkstra\LinkCalculator.vb" />
     <Compile Include="Analysis\GraphAnalysis.vb" />
+    <Compile Include="Analysis\Louvain\Builder.vb" />
     <Compile Include="Analysis\Louvain\Edge.vb" />
     <Compile Include="Analysis\Louvain\Louvain.vb" />
     <Compile Include="Analysis\Louvain\Debugger.vb" />
