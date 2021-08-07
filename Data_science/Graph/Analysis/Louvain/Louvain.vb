@@ -1,27 +1,76 @@
-﻿Imports System
-Imports System.Collections.Generic
+﻿Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 Imports stdNum = System.Math
 
 Namespace Analysis.Louvain
-    Public Class Louvain
-        Friend n As Integer ' 结点个数
-        Friend m As Integer ' 边数
-        Friend cluster As Integer() ' 结点i属于哪个簇
-        Friend edge As Edge() ' 邻接表
-        Friend head As Integer() ' 头结点下标
-        Friend top As Integer ' 已用E的个数
-        Friend resolution As Double ' 1/2m 全局不变
-        Friend node_weight As Double() ' 结点的权值
-        Friend totalEdgeWeight As Double ' 总边权值
-        Friend cluster_weight As Double() ' 簇的权值
-        Friend eps As Double = 0.00000000000001 ' 误差
-        Friend global_n As Integer ' 最初始的n
-        Friend global_cluster As Integer() ' 最后的结果，i属于哪个簇
-        Friend new_edge As Edge() '新的邻接表
+
+    Public Class LouvainCommunity
+
+        ''' <summary>
+        ''' number of vertex
+        ''' </summary>
+        Friend n As Integer
+        ''' <summary>
+        ''' number of edges
+        ''' </summary>
+        Friend m As Integer
+        ''' <summary>
+        ''' community
+        ''' </summary>
+        Friend cluster As Integer()
+        ''' <summary>
+        ''' 邻接表
+        ''' </summary>
+        Friend edge As Edge()
+        ''' <summary>
+        ''' 头节点下标
+        ''' </summary>
+        Friend head As Integer()
+        ''' <summary>
+        ''' 已用E的个数
+        ''' </summary>
+        Friend top As Integer
+        ''' <summary>
+        ''' 1/2m 全局不变
+        ''' </summary>
+        Friend resolution As Double
+        ''' <summary>
+        ''' 节点的权重值
+        ''' </summary>
+        Friend node_weight As Double()
+        ''' <summary>
+        ''' 总边权值
+        ''' </summary>
+        Friend totalEdgeWeight As Double
+        ''' <summary>
+        ''' 簇的权值
+        ''' </summary>
+        Friend cluster_weight As Double()
+        ''' <summary>
+        ''' 误差
+        ''' </summary>
+        Friend eps As Double = 0.00000000000001
+        ''' <summary>
+        ''' 最初始的n
+        ''' </summary>
+        Friend global_n As Integer
+        ''' <summary>
+        ''' 最后的结果，i属于哪个簇
+        ''' </summary>
+        Friend global_cluster As Integer()
+        ''' <summary>
+        ''' 新的邻接表
+        ''' </summary>
+        Friend new_edge As Edge()
         Friend new_head As Integer()
         Friend new_top As Integer = 0
-        Friend ReadOnly iteration_time As Integer = 3 ' 最大迭代次数
-        Friend global_edge As Edge() '全局初始的临接表  只保存一次，永久不变，不参与后期运算
+        ''' <summary>
+        ''' 最大迭代次数
+        ''' </summary>
+        Friend ReadOnly iteration_time As Integer = 3
+        ''' <summary>
+        ''' 全局初始的临接表  只保存一次，永久不变，不参与后期运算
+        ''' </summary>
+        Friend global_edge As Edge()
         Friend global_head As Integer()
         Friend global_top As Integer = 0
 
@@ -58,83 +107,65 @@ Namespace Analysis.Louvain
             global_head(u) = stdNum.Min(Threading.Interlocked.Increment(global_top), global_top - 1)
         End Sub
 
-        Friend Overridable Sub init(ByVal filePath As String)
-            Try
-                Dim encoding = "UTF-8"
-                Dim file As File = New File(filePath)
+        Public Function init(Of Node As {New, Network.Node}, Edge As {New, Network.Edge(Of Node)})(g As NetworkGraph(Of Node, Edge)) As LouvainCommunity
+            n = g.size.vertex
+            global_n = n
+            m = g.size.edges
+            m *= 2
+            Me.edge = New Louvain.Edge(m - 1) {}
+            head = New Integer(n - 1) {}
 
-                If file.file AndAlso file.exists() Then ' 判断文件是否存在
-                    Dim read As StreamReader = New StreamReader(New FileStream(file, FileMode.Open, FileAccess.Read), encoding) ' 考虑到编码格式
-                    Dim bufferedReader As StreamReader = New StreamReader(read)
-                    Dim lineTxt As String = Nothing
-                    lineTxt = bufferedReader.ReadLine()
+            For i = 0 To n - 1
+                head(i) = -1
+            Next
 
-                    ''''' 预处理部分  
-                    Dim cur2 = lineTxt.Split(" ", True)
-                    global_n = CSharpImpl.__Assign(n, Integer.Parse(cur2(0)))
-                    m = Integer.Parse(cur2(1))
-                    m *= 2
-                    edge = New Edge(m - 1) {}
-                    head = New Integer(n - 1) {}
+            top = 0
+            global_edge = New Louvain.Edge(m - 1) {}
+            global_head = New Integer(n - 1) {}
 
-                    For i = 0 To n - 1
-                        head(i) = -1
-                    Next
+            For i = 0 To n - 1
+                global_head(i) = -1
+            Next
 
-                    top = 0
-                    global_edge = New Edge(m - 1) {}
-                    global_head = New Integer(n - 1) {}
+            global_top = 0
+            global_cluster = New Integer(n - 1) {}
 
-                    For i = 0 To n - 1
-                        global_head(i) = -1
-                    Next
+            For i = 0 To global_n - 1
+                global_cluster(i) = i
+            Next
 
-                    global_top = 0
-                    global_cluster = New Integer(n - 1) {}
+            node_weight = New Double(n - 1) {}
+            totalEdgeWeight = 0.0
 
-                    For i = 0 To global_n - 1
-                        global_cluster(i) = i
-                    Next
+            Dim hasWeight As Boolean = g.graphEdges.Any(Function(l) l.weight <> 0.0)
 
-                    node_weight = New Double(n - 1) {}
-                    totalEdgeWeight = 0.0
+            For Each link As Edge In g.graphEdges
+                Dim u = link.U.ID
+                Dim v = link.V.ID
+                Dim curw As Double
 
-                    While Not String.ReferenceEquals((CSharpImpl.__Assign(lineTxt, bufferedReader.ReadLine())), Nothing)
-                        Dim cur = lineTxt.Split(" ", True)
-                        Dim u = Integer.Parse(cur(0))
-                        Dim v = Integer.Parse(cur(1))
-                        Dim curw As Double
-
-                        If cur.Length > 2 Then
-                            curw = Double.Parse(cur(2))
-                        Else
-                            curw = 1.0
-                        End If
-
-                        addEdge(u, v, curw)
-                        addEdge(v, u, curw)
-                        addGlobalEdge(u, v, curw)
-                        addGlobalEdge(v, u, curw)
-                        totalEdgeWeight += 2 * curw
-                        node_weight(u) += curw
-
-                        If u <> v Then
-                            node_weight(v) += curw
-                        End If
-                    End While
-
-                    resolution = 1 / totalEdgeWeight
-                    read.Close()
+                If hasWeight Then
+                    curw = link.weight
                 Else
-                    Console.WriteLine("找不到指定的文件")
+                    curw = 1.0
                 End If
 
-            Catch e As Exception
-                Console.WriteLine("读取文件内容出错")
-                Console.WriteLine(e.ToString())
-                Console.Write(e.StackTrace)
-            End Try
-        End Sub
+                addEdge(u, v, curw)
+                addEdge(v, u, curw)
+                addGlobalEdge(u, v, curw)
+                addGlobalEdge(v, u, curw)
+                totalEdgeWeight += 2 * curw
+                node_weight(u) += curw
+
+                If u <> v Then
+                    node_weight(v) += curw
+                End If
+            Next
+
+            resolution = 1 / totalEdgeWeight
+
+            Return Me
+        End Function
 
         Friend Overridable Sub init_cluster()
             cluster = New Integer(n - 1) {}
@@ -146,7 +177,7 @@ Namespace Analysis.Louvain
 
         Friend Overridable Function try_move_i(ByVal i As Integer) As Boolean ' 尝试将i加入某个簇
             Dim edgeWeightPerCluster = New Double(n - 1) {}
-            Dim j = head(i)
+            Dim j As Integer = head(i)
 
             While j <> -1
                 Dim l = cluster(edge(j).v) ' l是nodeid所在簇的编号
@@ -157,8 +188,9 @@ Namespace Analysis.Louvain
             Dim bestCluster = -1 ' 最优的簇号下标(先默认是自己)
             Dim maxx_deltaQ = 0.0 ' 增量的最大值
             Dim vis = New Boolean(n - 1) {}
+
             cluster_weight(cluster(i)) -= node_weight(i)
-            Dim j = head(i)
+            j = head(i)
 
             While j <> -1
                 Dim l = cluster(edge(j).v) ' l代表領接点的簇号
@@ -202,9 +234,9 @@ Namespace Analysis.Louvain
             Dim change = New Integer(n - 1) {}
             Dim change_size = 0
             Dim vis = New Boolean(n - 1) {}
+            Dim k As Integer
 
-            For i = 0 To n - 1
-
+            For i As Integer = 0 To n - 1
                 If vis(cluster(i)) Then
                     Continue For
                 End If
@@ -213,39 +245,47 @@ Namespace Analysis.Louvain
                 change(stdNum.Min(Threading.Interlocked.Increment(change_size), change_size - 1)) = cluster(i)
             Next
 
-            Dim index = New Integer(n - 1) {} ' index[i]代表 i号簇在新图中的结点编号
+            ' index[i]代表 i号簇在新图中的结点编号
+            Dim index = New Integer(n - 1) {}
 
             For i = 0 To change_size - 1
                 index(change(i)) = i
             Next
 
-            Dim new_n = change_size ' 新图的大小
+            ' 新图的大小
+            Dim new_n = change_size
             new_edge = New Edge(m - 1) {}
             new_head = New Integer(new_n - 1) {}
             new_top = 0
-            Dim new_node_weight = New Double(new_n - 1) {} ' 新点权和
+
+            ' 新点权和
+            Dim new_node_weight = New Double(new_n - 1) {}
 
             For i = 0 To new_n - 1
                 new_head(i) = -1
             Next
 
-            Dim nodeInCluster As List(Of Integer?)() = New List(Of Integer?)(new_n - 1) {} ' 代表每个簇中的节点列表
+            ' 代表每个簇中的节点列表
+            Dim nodeInCluster As List(Of Integer)() = New List(Of Integer)(new_n - 1) {}
 
             For i = 0 To new_n - 1
-                nodeInCluster(i) = New List(Of Integer?)()
+                nodeInCluster(i) = New List(Of Integer)()
             Next
 
             For i = 0 To n - 1
                 nodeInCluster(index(cluster(i))).Add(i)
             Next
 
-            For u = 0 To new_n - 1 ' 将同一个簇的挨在一起分析。可以将visindex数组降到一维
-                Dim visindex = New Boolean(new_n - 1) {} ' visindex[v]代表新图中u节点到v的边在临街表是第几个（多了1，为了初始化方便）
-                Dim delta_w = New Double(new_n - 1) {} ' 边权的增量
+            For u = 0 To new_n - 1
+                ' 将同一个簇的挨在一起分析。可以将visindex数组降到一维
+                ' visindex[v]代表新图中u节点到v的边在临街表是第几个（多了1，为了初始化方便）
+                Dim visindex = New Boolean(new_n - 1) {}
+                ' 边权的增量
+                Dim delta_w = New Double(new_n - 1) {}
 
                 For i = 0 To nodeInCluster(u).Count - 1
                     Dim t As Integer = nodeInCluster(u)(i)
-                    Dim k = head(t)
+                    k = head(t)
 
                     While k <> -1
                         Dim j = edge(k).v
@@ -266,7 +306,7 @@ Namespace Analysis.Louvain
                     new_node_weight(u) += node_weight(t)
                 Next
 
-                Dim k = new_head(u)
+                k = new_head(u)
 
                 While k <> -1
                     Dim v = new_edge(k).v
