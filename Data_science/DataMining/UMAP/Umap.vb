@@ -179,7 +179,7 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
 
         _x = x
         ' This part of the process very roughly accounts for 1/3 of the work
-        _knn = New KNearestNeighbour(KNNArguments, _distanceFn, _random).NearestNeighbors(x, ScaleProgressReporter(initializeFitProgressReporter, 0, 0.3F), _rpForest)
+        _knn = New KNearestNeighbour(KNNArguments.k, _distanceFn, _random).NearestNeighbors(x, ScaleProgressReporter(initializeFitProgressReporter, 0, 0.3F), _rpForest)
         ' This part of the process very roughly accounts for 2/3 of the work (the reamining work is in the Step calls)
         _graph = Me.FuzzySimplicialSet(
             x:=x,

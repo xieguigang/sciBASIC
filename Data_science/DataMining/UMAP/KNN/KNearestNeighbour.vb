@@ -20,12 +20,12 @@ Namespace KNN
     ''' </summary>
     Public Class KNearestNeighbour
 
-        ReadOnly m_arguments As KNNArguments
+        ReadOnly m_k As Integer
         ReadOnly m_distanceFn As DistanceCalculation
         ReadOnly m_random As IProvideRandomValues
 
-        Sub New(knn As KNNArguments, Optional distanceFn As DistanceCalculation = Nothing, Optional random As IProvideRandomValues = Nothing)
-            m_arguments = knn
+        Sub New(knn As Integer, Optional distanceFn As DistanceCalculation = Nothing, Optional random As IProvideRandomValues = Nothing)
+            m_k = knn
             m_distanceFn = If(distanceFn, AddressOf DistanceFunctions.Cosine)
             m_random = If(random, DefaultRandomGenerator.Instance)
         End Sub
@@ -43,7 +43,7 @@ Namespace KNN
 
             Call progressReporter(0.1F, "Set Iteration Parameters")
 
-            Dim leafSize = stdNum.Max(10, m_arguments.k)
+            Dim leafSize = stdNum.Max(10, m_k)
             Dim forestProgressReporter = ScaleProgressReporter(progressReporter, 0.1F, 0.4F)
             Dim i As i32 = Scan0
 
@@ -71,7 +71,7 @@ Namespace KNN
             Return metricNNDescent.MakeNNDescent(
                 data:=x,
                 leafArray:=leafArray,
-                nNeighbors:=m_arguments.k,
+                nNeighbors:=m_k,
                 nIters:=nIters,
                 startingIteration:=Sub(n, max, msg)
                                        nnDescendProgressReporter(CSng(n) / max, msg)
@@ -99,8 +99,15 @@ Namespace KNN
         ''' <returns>
         ''' a n-by-k matrix of neighbor indices
         ''' </returns>
-        Public Shared Function find_neighbors(data As NumericMatrix, k As Integer) As Integer()
+        Public Shared Function FindNeighbors(data As NumericMatrix, k As Integer,
+                                             Optional distanceFn As DistanceCalculation = Nothing,
+                                             Optional random As IProvideRandomValues = Nothing,
+                                             Optional report As RunSlavePipeline.SetProgressEventHandler = Nothing) As KNNState
+            If report Is Nothing Then
+                report = AddressOf RunSlavePipeline.SendProgress
+            End If
 
+            Return New KNearestNeighbour(k, distanceFn, random).NearestNeighbors(data.Array, report)
         End Function
     End Class
 End Namespace
