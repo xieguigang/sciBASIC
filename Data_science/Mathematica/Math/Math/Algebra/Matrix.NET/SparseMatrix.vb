@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Language.Vectorization
 
 Namespace LinearAlgebra.Matrix
 
@@ -43,7 +44,7 @@ Namespace LinearAlgebra.Matrix
             End Set
         End Property
 
-        Default Public Overloads Property X(i As Integer) As Vector Implements GeneralMatrix.X
+        Default Public Overloads Property X(i As Integer, Optional byrow As Boolean = True) As Vector Implements GeneralMatrix.X
             Get
                 Throw New NotImplementedException()
             End Get
@@ -71,6 +72,12 @@ Namespace LinearAlgebra.Matrix
                                   End Function)
 
                 Return New SparseMatrix(rows, m, idxList.Length)
+            End Get
+        End Property
+
+        Default Public Overloads ReadOnly Property X(rowIdx As BooleanVector) As GeneralMatrix Implements GeneralMatrix.X
+            Get
+                Throw New NotImplementedException()
             End Get
         End Property
 

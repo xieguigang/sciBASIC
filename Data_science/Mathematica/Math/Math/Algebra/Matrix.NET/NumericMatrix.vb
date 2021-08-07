@@ -424,13 +424,37 @@ Namespace LinearAlgebra.Matrix
             End Get
         End Property
 
-        Default Public Shadows Property Value(i As Integer) As Vector Implements GeneralMatrix.X
+        Default Public Shadows Property Value(i As Integer, Optional byRow As Boolean = True) As Vector Implements GeneralMatrix.X
             Get
-                Return buffer(i).AsVector
+                If byRow Then
+                    Return buffer(i).AsVector
+                Else
+                    Return buffer.Select(Function(r) r(i)).AsVector
+                End If
             End Get
             Set(value As Vector)
-                buffer(i) = value.Array
+                If byRow Then
+                    buffer(i) = value.Array
+                Else
+                    For rId As Integer = 0 To buffer.Length - 1
+                        buffer(rId)(i) = value(rId)
+                    Next
+                End If
             End Set
+        End Property
+
+        Default Public Shadows ReadOnly Property Value(rowIdx As BooleanVector) As GeneralMatrix Implements GeneralMatrix.X
+            Get
+                Dim subMat As New List(Of Double())
+
+                For i As Integer = 0 To buffer.Length - 1
+                    If rowIdx(i) Then
+                        subMat.Add(buffer(i))
+                    End If
+                Next
+
+                Return New NumericMatrix(subMat.ToArray)
+            End Get
         End Property
 
         ''' <summary>Get a submatrix.</summary>
