@@ -105,6 +105,10 @@ Namespace LinearAlgebra.Matrix
                               End Function)
         End Sub
 
+        Sub New(v As IndexVector)
+            Call Me.New(v.Row, v.Col, v.X)
+        End Sub
+
         Public Function Resize(M As Integer, N As Integer) As GeneralMatrix Implements GeneralMatrix.Resize
             Me.m = M
             Me.n = N

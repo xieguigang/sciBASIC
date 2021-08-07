@@ -889,6 +889,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algebra\Extensions.vb" />
+    <Compile Include="Algebra\Matrix.NET\IndexVector.vb" />
     <Compile Include="Algebra\Matrix.NET\GeneralMatrix.vb" />
     <Compile Include="Algebra\Matrix.NET\SparseMatrix.vb" />
     <Compile Include="Algebra\PCA\Algorithm.vb" />
