@@ -122,7 +122,7 @@ Namespace LinearAlgebra.Matrix
     ''' Pointer to the two-dimensional array of matrix elements.
     ''' </remarks>
     <Serializable>
-    Public Class GeneralMatrixc : Inherits Vector(Of Double())
+    Public Class NumericMatrix : Inherits Vector(Of Double())
         Implements ICloneable
         Implements ISerializable
         Implements IDisposable
