@@ -1,44 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::0cea23678d1376a23bd43e15dc6d0cbc, Data_science\DataMining\UMAP\KNN\UMAP_KNN.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class UMAP_KNN
-    ' 
-    '     Function: ComputeMembershipStrengths, SmoothKNNDistance
-    ' 
-    ' /********************************************************************************/
+' Class UMAP_KNN
+' 
+'     Function: ComputeMembershipStrengths, SmoothKNNDistance
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports stdNum = System.Math
 
 Friend Class UMAP_KNN
@@ -132,7 +133,7 @@ Friend Class UMAP_KNN
         Return (result, rho)
     End Function
 
-    Friend Shared Function ComputeMembershipStrengths(knnIndices As Integer()(), knnDistances As Double()(), sigmas As Double(), rhos As Double()) As (rows As Integer(), cols As Integer(), vals As Double())
+    Friend Shared Function ComputeMembershipStrengths(knnIndices As Integer()(), knnDistances As Double()(), sigmas As Double(), rhos As Double()) As IndexVector
         Dim nSamples As Integer = knnIndices.Length
         Dim nNeighbors As Integer = knnIndices(0).Length
         Dim rows = New Integer(nSamples * nNeighbors - 1) {}
@@ -161,7 +162,7 @@ Friend Class UMAP_KNN
             Next
         Next
 
-        Return (rows, cols, vals)
+        Return New IndexVector(rows, cols, vals)
     End Function
 
 End Class

@@ -320,7 +320,7 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
         Dim report As New ProgressReporter With {.report = progressReporter}
         Dim sigmasRhos = report.Run(Function() UMAP_KNN.SmoothKNNDistance(knnDistances, knn.parameters), 0.1, "SmoothKNNDistance")
         Dim rowsColsVals = report.Run(Function() UMAP_KNN.ComputeMembershipStrengths(knnIndices, knnDistances, sigmasRhos.sigmas, sigmasRhos.rhos), 0.2, "ComputeMembershipStrengths")
-        Dim sparseMatrix = report.Run(Function() New SparseMatrix(rowsColsVals.rows, rowsColsVals.cols, rowsColsVals.vals, (x.Length, x.Length)), 0.3, "Create SparseMatrix")
+        Dim sparseMatrix = report.Run(Function() New SparseMatrix(rowsColsVals.Row, rowsColsVals.Col, rowsColsVals.X, (x.Length, x.Length)), 0.3, "Create SparseMatrix")
         Dim transpose = sparseMatrix.Transpose()
         Dim prodMatrix = sparseMatrix.PairwiseMultiply(transpose)
         Dim a = report.Run(Function() sparseMatrix.Add(CType(transpose, SparseMatrix)).Subtract(prodMatrix), 0.4, "T - prod")
