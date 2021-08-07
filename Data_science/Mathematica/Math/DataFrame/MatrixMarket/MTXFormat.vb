@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 
 Namespace MatrixMarket
 
@@ -40,13 +41,13 @@ Namespace MatrixMarket
     ''' </summary>
     Public Class MTXFormat
 
-        Public Shared Function ReadMatrix(file As Stream) As DataMatrix
+        Public Shared Function ReadMatrix(file As Stream) As SparseMatrix
             Using reader As New StreamReader(file)
                 Return ReadMatrix(reader)
             End Using
         End Function
 
-        Public Shared Function ReadMatrix(reader As StreamReader) As DataMatrix
+        Public Shared Function ReadMatrix(reader As StreamReader) As SparseMatrix
             Dim line As Value(Of String) = ""
 
             Do While (line = reader.ReadLine).First = "%"c
@@ -56,7 +57,7 @@ Namespace MatrixMarket
             Dim M As Integer = Integer.Parse(tokens(Scan0))
             Dim N As Integer = Integer.Parse(tokens(1))
             Dim L As Integer = Integer.Parse(tokens(2))
-            Dim matrix As New DataMatrix(M, N)
+            Dim matrix As New SparseMatrix(M, N)
 
             Do While Not line = reader.ReadLine Is Nothing
                 tokens = CType(line, String).Trim.StringSplit("\s+")
