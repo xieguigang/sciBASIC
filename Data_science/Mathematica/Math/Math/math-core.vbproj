@@ -889,6 +889,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algebra\Extensions.vb" />
+    <Compile Include="Algebra\Matrix.NET\GeneralMatrix.vb" />
+    <Compile Include="Algebra\Matrix.NET\SparseMatrix.vb" />
     <Compile Include="Algebra\PCA\Algorithm.vb" />
     <Compile Include="Algebra\PCA\Helper.vb" />
     <Compile Include="Algebra\Polynomial\Formula.vb" />
@@ -997,7 +999,7 @@
     <Compile Include="Algebra\LP\OptimizationType.vb" />
     <Compile Include="Algebra\Matrix.NET\CholeskyDecomposition.vb" />
     <Compile Include="Algebra\Matrix.NET\EigenvalueDecomposition.vb" />
-    <Compile Include="Algebra\Matrix.NET\GeneralMatrix.vb" />
+    <Compile Include="Algebra\Matrix.NET\NumericMatrix.vb" />
     <Compile Include="Algebra\Matrix.NET\LUDecomposition.vb" />
     <Compile Include="Algebra\Matrix.NET\QRDecomposition.vb" />
     <Compile Include="Algebra\Matrix.NET\SingularValueDecomposition.vb" />

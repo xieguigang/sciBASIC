@@ -133,8 +133,8 @@ Friend Class UMAP_KNN
     End Function
 
     Friend Shared Function ComputeMembershipStrengths(knnIndices As Integer()(), knnDistances As Double()(), sigmas As Double(), rhos As Double()) As (rows As Integer(), cols As Integer(), vals As Double())
-        Dim nSamples = knnIndices.Length
-        Dim nNeighbors = knnIndices(0).Length
+        Dim nSamples As Integer = knnIndices.Length
+        Dim nNeighbors As Integer = knnIndices(0).Length
         Dim rows = New Integer(nSamples * nNeighbors - 1) {}
         Dim cols = New Integer(nSamples * nNeighbors - 1) {}
         Dim vals = New Double(nSamples * nNeighbors - 1) {}

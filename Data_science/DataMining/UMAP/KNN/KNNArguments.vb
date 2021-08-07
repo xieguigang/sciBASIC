@@ -55,7 +55,11 @@ Public Structure KNNArguments
     Public Property nIter As Integer
     Public Property bandwidth As Double
 
-    Sub New(k As Integer, Optional localConnectivity As Double = 1, Optional nIter As Integer = 64, Optional bandwidth As Double = 1)
+    Sub New(k As Integer,
+            Optional localConnectivity As Double = 1,
+            Optional nIter As Integer = 64,
+            Optional bandwidth As Double = 1)
+
         Me.k = k
         Me.localConnectivity = localConnectivity
         Me.nIter = nIter
