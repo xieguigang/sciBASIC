@@ -72,7 +72,7 @@ Namespace LinearAlgebra.Matrix
         <Extension> Public Function SG(K As GeneralMatrix) As (M As GeneralMatrix, N As GeneralMatrix, rank As Int16)
             Dim erro As Double = stdNum.Pow(0.1, 10)
             Dim n As Int16 = K.RowDimension
-            Dim m As Int16 = K.Length / n
+            Dim m As Int16 = K.RowDimension / n
             Dim i As Int16
             Dim j As Int16
             Dim Rank As Int16 = GetRank(K, 9)
@@ -174,7 +174,7 @@ Namespace LinearAlgebra.Matrix
         Public Function Pinv(K As GeneralMatrix, Return_K As GeneralMatrix) As Int16
             Dim n As Int16 = K.RowDimension
             Dim rank As Int16 = GetRank(K, 9)
-            Dim m As Int16 = K.Length / n
+            Dim m As Int16 = K.RowDimension / n
             Dim temp1 As GeneralMatrix = NumericMatrix.Number
             Dim temp2 As GeneralMatrix = NumericMatrix.Number
             Dim temp3 As GeneralMatrix = NumericMatrix.Number
@@ -205,12 +205,12 @@ Namespace LinearAlgebra.Matrix
                 End With
                 temp1 = s.Transpose '   Math_Matrix_T(s, rank, temp1)
                 temp2 = g.Transpose '      Math_Matrix_T(g, n, temp2)
-                Mul(s, temp1, rank, s1)
-                Mul(temp2, g, rank, g1)
-                Inv2(s1, s2, m)
-                Inv2(g1, g2, n)
-                Mul(temp1, s2, m, temp3) 'rank*m
-                Mul(g2, temp2, n, temp1) 'n*rank
+                Mul(s, temp1, rank, New NumericMatrix(s1))
+                Mul(temp2, g, rank, New NumericMatrix(g1))
+                Inv2(New NumericMatrix(s1), New NumericMatrix(s2), m)
+                Inv2(New NumericMatrix(g1), New NumericMatrix(g2), n)
+                Mul(temp1, New NumericMatrix(s2), m, temp3) 'rank*m
+                Mul(New NumericMatrix(g2), temp2, n, temp1) 'n*rank
                 Mul(temp1, temp3, rank, Return_K)
             End If
             Return n
@@ -226,7 +226,7 @@ Namespace LinearAlgebra.Matrix
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function Pinv2(K As GeneralMatrix, Erro As Int16, m As Int16, Ret As GeneralMatrix) As Int16
-            Dim n As Integer = K.Length / m
+            Dim n As Integer = K.RowDimension / m
             Dim Erro1 As Double = stdNum.Pow(0.1, Erro)
             If Erro1 = 1 Then
                 Erro1 = 0
@@ -374,7 +374,7 @@ Namespace LinearAlgebra.Matrix
         ''' <remarks></remarks>
         Public Function GetRank(K As GeneralMatrix, [error] As Int16) As Int16
             Dim n As Int16 = K.RowDimension
-            Dim m As Int16 = K.Length \ n
+            Dim m As Int16 = K.RowDimension \ n
             Dim i As Int16 = 0
             Dim i1 As Int16
             Dim j As Int16 = 0
@@ -480,7 +480,7 @@ Namespace LinearAlgebra.Matrix
         ''' <remarks></remarks>
         Public Function QR(K As GeneralMatrix, Q As GeneralMatrix, R As GeneralMatrix) As Boolean
             Dim n As Int16 = K.RowDimension
-            If n * n <> K.Length Or Det2(K, n) = 0 Then 'K必须是非奇异的n阶方阵
+            If n * n <> K.RowDimension Or Det2(K, n) = 0 Then 'K必须是非奇异的n阶方阵
                 Return False
             End If
             n -= 1
@@ -548,7 +548,7 @@ Namespace LinearAlgebra.Matrix
         ''' <remarks></remarks>
         Public Function Schmidt(K As GeneralMatrix, Ret As GeneralMatrix) As Boolean
             Dim n As Int16 = K.RowDimension
-            If n * n <> K.Length Or Det2(K, n) = 0 Then 'K必须是非奇异的n阶方阵
+            If n * n <> K.RowDimension Or Det2(K, n) = 0 Then 'K必须是非奇异的n阶方阵
                 Return False
             End If
             n -= 1
@@ -611,8 +611,8 @@ Namespace LinearAlgebra.Matrix
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function EigenValue(K11 As GeneralMatrix, n As Int16, LoopNumber As Int16, errors As Int16, Ret As GeneralMatrix, IsHess As Boolean) As Boolean 'ret里是n*2的数组，第一列是实数部分，第2列为虚数部分
-            Dim i As Int16 = K11.Length / n
-            If n * n <> K11.Length Then '只有方阵才有特征值
+            Dim i As Int16 = K11.RowDimension / n
+            If n * n <> K11.RowDimension Then '只有方阵才有特征值
                 Return False
             End If
             Dim j As Int16
@@ -860,7 +860,7 @@ Namespace LinearAlgebra.Matrix
         ''' <remarks></remarks>
         Public Function SvdSplit(A As GeneralMatrix, m As Int16, V As GeneralMatrix, V_m As Int16, S As GeneralMatrix, S_m As Int16, U As GeneralMatrix, U_m As Int16) As Boolean
             'A=USV*
-            Dim n As Int16 = A.Length / m
+            Dim n As Int16 = A.RowDimension / m
             Dim i As Int16
             Dim j As Int16
             Dim ii As Int16
@@ -871,8 +871,8 @@ Namespace LinearAlgebra.Matrix
             Dim temp As Double
             Dim Error1 As Double = stdNum.Pow(0.1, 10) '误差控制
             At = A.Transpose '   Math_Matrix_T(A, n, At)
-            Mul(At, A, m, AtA)
-            EigSym(AtA, n, 9, b, b1) 'b特征值，b1特征向量
+            Mul(At, A, m, New NumericMatrix(AtA))
+            EigSym(New NumericMatrix(AtA), n, 9, New NumericMatrix(b), New NumericMatrix(b1)) 'b特征值，b1特征向量
             V_m = n
             S_m = m
             U_m = m
@@ -971,18 +971,18 @@ Namespace LinearAlgebra.Matrix
         ''' <remarks></remarks>
         Public Function Cramer22(K As GeneralMatrix, B As GeneralMatrix, k_m As Integer, x As GeneralMatrix) As Boolean 'Kx=B求解x。K不一定为方阵。其结果返回最小二乘解
             Dim i As Integer = B.RowDimension
-            If i <> 1 Or B.Length <> k_m Then
+            If i <> 1 Or B.RowDimension <> k_m Then
                 Return False
             End If
             Dim kt = NumericMatrix.Number
             Dim kmul(0, 0) As Double
-            Dim n As Integer = K.Length / k_m
+            Dim n As Integer = K.RowDimension / k_m
             kt = K.Transpose '   Math_Matrix_T(K, n, kt)
-            Mul(kt, K, k_m, kmul)
+            Mul(kt, K, k_m, New NumericMatrix(kmul))
             Mul(kt, B, k_m, K)
             ' 相当于求解kmul*x=k
-            If Inv2(kmul, kt, n) = False Then
-                If Inv(kmul, kt) = False Then
+            If Inv2(New NumericMatrix(kmul), kt, n) = False Then
+                If Inv(New NumericMatrix(kmul), kt) = False Then
                     Return False
                 End If
             End If
@@ -1020,7 +1020,7 @@ Namespace LinearAlgebra.Matrix
         ''' <remarks></remarks>
         Public Function SPD(K As GeneralMatrix) As Int16 '返回-1 矩阵非对称矩阵，返回0矩阵不正定，返回1矩阵正定.主要是判断矩阵是否是正定矩阵
             Dim n As Int16 = K.RowDimension
-            Dim m As Int16 = K.Length / n
+            Dim m As Int16 = K.RowDimension / n
             If m <> n Then
                 Return -1
             End If
@@ -1119,7 +1119,7 @@ Namespace LinearAlgebra.Matrix
         ''' <remarks></remarks>
         Public Function QR22(A As GeneralMatrix, Q As GeneralMatrix, R As GeneralMatrix, Q_n As Int16, R_n As Int16) As Boolean '此函数不像Math_Matrix_QR2函数一样行数不小于列数,所以应该通用.
             Dim n As Int16 = A.RowDimension
-            Dim m As Int16 = A.Length / n
+            Dim m As Int16 = A.RowDimension / n
             If m = 1 Or n = 1 Then
                 Return False
             End If
@@ -1233,7 +1233,7 @@ Namespace LinearAlgebra.Matrix
         ''' <remarks></remarks>
         Public Function QR2(A As GeneralMatrix, Q As GeneralMatrix, R As GeneralMatrix, Q_n As Int16, R_n As Int16) As Boolean '行数不小于列数
             Dim n As Int16 = A.RowDimension
-            Dim m As Int16 = A.Length / n
+            Dim m As Int16 = A.RowDimension / n
             Dim max As Double = n - 1
             If m = 1 Or n = 1 Or m < n Then
                 Return False
@@ -1345,7 +1345,7 @@ Namespace LinearAlgebra.Matrix
         ''' <returns>其意义是K=LU.函数执行成功返回True,失败返回False</returns>
         ''' <remarks></remarks>
         Public Function LU(K As GeneralMatrix, n As Int16, L As GeneralMatrix, U As GeneralMatrix) As Boolean '方阵的LU分解
-            If n * n <> K.Length Then
+            If n * n <> K.RowDimension Then
                 Return False
             End If
             n -= 1
@@ -1395,8 +1395,8 @@ Namespace LinearAlgebra.Matrix
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function Inv2(K As GeneralMatrix, Return_K As GeneralMatrix, N As Integer) As Boolean
-            Dim i As Integer = K.Length \ N
-            If i * N <> K.Length Then
+            Dim i As Integer = K.RowDimension \ N
+            If i * N <> K.RowDimension Then
                 Return False
             End If
             N -= 1
@@ -1504,8 +1504,8 @@ Namespace LinearAlgebra.Matrix
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function Inv(K As GeneralMatrix, Return_K As GeneralMatrix) As Boolean '求矩阵K的逆.成功返回True与其逆矩阵Return_K
-            Dim i As Integer = K.Length
-            Dim N As Integer = System.Math.Pow(i, 0.5)
+            Dim i As Integer = K.RowDimension
+            Dim N As Integer = stdNum.Pow(i, 0.5)
             If i <> N * N Or N = 1 Then '必须是N阶方阵
                 Return False
             End If
@@ -1559,8 +1559,8 @@ Namespace LinearAlgebra.Matrix
         ''' <returns>函数执行成功返回奇异值的个数,即Ret的行数,失败返回-1</returns>
         ''' <remarks></remarks>
         Public Function Svd(A As GeneralMatrix, m As Int16, Ret As GeneralMatrix) As Int16 '返回矩阵A的奇异值Ret。本函数出错返回-1。成功返回奇异值的个数，即m*1矩阵的Ret的m
-            Dim n As Int16 = A.Length / m
-            If n * m <> A.Length Then
+            Dim n As Int16 = A.RowDimension / m
+            If n * m <> A.RowDimension Then
                 Return -1
             End If
             Dim At = NumericMatrix.Number
@@ -1610,8 +1610,8 @@ Namespace LinearAlgebra.Matrix
         ''' <returns></returns>
         ''' <remarks>本函数采用用豪斯赫尔蒙德变换将实对称阵化为对称三对角</remarks>
         Public Function SymTridMatrix(A As GeneralMatrix, n As Int16, Is对称 As Boolean, ret As GeneralMatrix) As Boolean '用豪斯赫尔蒙德变换将实对称阵化为对称三对角阵，翻译徐士良老师的解法
-            Dim m As Int16 = A.Length / n
-            If m <> n Or m * n <> A.Length Then
+            Dim m As Int16 = A.RowDimension / n
+            If m <> n Or m * n <> A.RowDimension Then
                 Return False
             End If
             Dim i As Int16
@@ -1706,7 +1706,7 @@ Namespace LinearAlgebra.Matrix
         ''' 建议使用左连翠提出的《伴随矩阵的新求法》里的方法进行求解。里面的方法可以求解非满秩矩阵的伴随矩阵。
         ''' </remarks>
         Public Function Adj(K As GeneralMatrix, n As Int16, Ret As GeneralMatrix) As Boolean '求方阵K的伴随矩阵
-            If n < 1 Or n * n <> K.Length Then
+            If n < 1 Or n * n <> K.RowDimension Then
                 Return False
             End If
             Dim i As Int16
@@ -1888,7 +1888,7 @@ Namespace LinearAlgebra.Matrix
                 End While
                 N -= 1
             End While
-            Return Ret.Length / 2
+            Return Ret.RowDimension / 2
         End Function
 
         ''' <summary>
@@ -1938,7 +1938,7 @@ Namespace LinearAlgebra.Matrix
         ''' <remarks></remarks>
         Public Function Scatter(X As GeneralMatrix, m As Integer, S As GeneralMatrix) As Integer
             '返回X矩阵的散点矩阵(Scatter GeneralMatrix)S
-            Dim n As Integer = X.Length \ m - 1
+            Dim n As Integer = X.RowDimension \ m - 1
             m -= 1
             Dim i As Integer
             Dim j As Integer
@@ -1964,7 +1964,7 @@ Namespace LinearAlgebra.Matrix
                     tempx(i, 0) = X(i, j)
                     tempxt(0, i) = X(i, j)
                 Next
-                Mul(tempx, tempxt, 1, temp)
+                Mul(New NumericMatrix(tempx), New NumericMatrix(tempxt), 1, New NumericMatrix(temp))
                 For i1 = 0 To m
                     For j1 = 0 To m
                         S(i1, j1) += temp(i1, j1)
@@ -1985,8 +1985,8 @@ Namespace LinearAlgebra.Matrix
         ''' <returns></returns>
         ''' <remarks>A1/A2=Ret……RetMod</remarks>
         Public Function PolyDivEx(A1 As GeneralMatrix, A2 As GeneralMatrix, RetMod As GeneralMatrix, Ret As GeneralMatrix, Erro As Integer) As Integer '多项式的除法，里边的数组均为1*n的矩阵,原理:A1/A2=Ret……RetMod'函数最终返回Ret商的数组大小
-            Dim n1 As Integer = A1.Length
-            Dim n2 As Integer = A2.Length
+            Dim n1 As Integer = A1.RowDimension
+            Dim n2 As Integer = A2.RowDimension
             Dim N As Integer
             Dim i As Integer
             If n1 < n2 Then
@@ -2042,7 +2042,7 @@ Namespace LinearAlgebra.Matrix
                     RetMod(0, i) = A1(0, i)
                 Next
             End If
-            Return Ret.Length
+            Return Ret.RowDimension
         End Function
 
         ''' <summary>
@@ -2180,8 +2180,8 @@ A:              For temp_i = A_m + 1 To n
         ''' <returns></returns>
         ''' <remarks>本代码采用雅可比过关法求解</remarks>
         Public Function EigSym(A As GeneralMatrix, n As Int16, Erro1 As Int16, Ret As GeneralMatrix, Ret_Eigenvectors As GeneralMatrix) As Boolean '返回n阶对称矩阵K的特征值ret.翻译徐士良老师的算法。其方法是雅可比过关法。特征向量Ret_Eigenvectors每一列对应ret每一行的特征值
-            Dim i As Int16 = A.Length / n
-            If i * i <> A.Length Then
+            Dim i As Int16 = A.RowDimension / n
+            If i * i <> A.RowDimension Then
                 Return False
             End If
             n -= 1
@@ -2294,10 +2294,10 @@ Loopexit:
                 Return False
             End If
             i = K2.RowDimension
-            If i * n <> K2.Length Then
+            If i * n <> K2.RowDimension Then
                 Return False
             End If
-            Dim a As Integer = K1.Length \ n - 1
+            Dim a As Integer = K1.RowDimension \ n - 1
             Dim b As Integer = i - 1
             Dim j As Integer = 0
             Dim k As Integer
@@ -2534,8 +2534,8 @@ Loopexit:
             '多项式相乘,函数返回Ret的大小.Ret为1行的矩阵
             Dim i As Integer
             Dim j As Integer
-            Dim size1 As Integer = Mul1.Length - 1
-            Dim size2 As Integer = Mul2.Length - 1
+            Dim size1 As Integer = Mul1.RowDimension - 1
+            Dim size2 As Integer = Mul2.RowDimension - 1
             Ret = New NumericMatrix(0, size1 + size2) '    ReDim Ret(0, size1 + size2)
             For i = 0 To size1
                 For j = 0 To size2
@@ -2556,8 +2556,8 @@ Loopexit:
         ''' <returns></returns>
         ''' <remarks>A1/A2=Ret……RetMod</remarks>
         Public Function PolyDiv(A1 As GeneralMatrix, A2 As GeneralMatrix, RetMod As GeneralMatrix, Ret As GeneralMatrix, Erro As Integer) As Integer '多项式的除法，里边的数组均为1*n的矩阵,原理:A1/A2=Ret……RetMod'函数最终返回Ret商的数组大小
-            Dim n1 As Integer = A1.Length
-            Dim n2 As Integer = A2.Length
+            Dim n1 As Integer = A1.RowDimension
+            Dim n2 As Integer = A2.RowDimension
             Dim N As Integer
             Dim i As Integer
             If n1 < n2 Then
@@ -2613,7 +2613,7 @@ Loopexit:
                     RetMod(0, i) = A1(0, i)
                 Next
             End If
-            Return Ret.Length
+            Return Ret.RowDimension
         End Function
 
         ''' <summary>
@@ -2627,8 +2627,8 @@ Loopexit:
         ''' <remarks>A1%A2=Ret</remarks>
         Public Function PolyMod(A1 As GeneralMatrix, A2 As GeneralMatrix, Ret As GeneralMatrix, Erro As Integer) As Integer
             '多项式求余Ret=A1%A2,函数返回余项Ret的列数.A1，A2，Ret均为1行的矩阵
-            Dim a1n As Integer = A1.Length
-            Dim a2n As Integer = A2.Length
+            Dim a1n As Integer = A1.RowDimension
+            Dim a2n As Integer = A2.RowDimension
             Dim i As Integer
             Dim temp As Double
             a1n -= 1
@@ -2704,7 +2704,7 @@ Loopexit:
             '离散傅里叶变换逆变换,Number为点数
             '返回Number*2的矩阵,第一列为实数部分,第2列为虚数部分
             'k是m*2的矩阵,第一列为实数,第2列为虚数
-            If Number > m Or Number < 1 Or m * 2 <> k.Length Then
+            If Number > m Or Number < 1 Or m * 2 <> k.RowDimension Then
                 Return False
             End If
             m = Number - 1
@@ -2747,7 +2747,7 @@ Loopexit:
             '离散傅里叶变换,Number为点数
             '返回Number*2的矩阵,第一列为实数部分,第2列为虚数部分
             'k是m*2的矩阵,第一列为实数,第2列为虚数
-            If Number > m Or Number < 1 Or m * 2 <> k.Length Then
+            If Number > m Or Number < 1 Or m * 2 <> k.RowDimension Then
                 Return False
             End If
             m = Number - 1
@@ -2843,7 +2843,7 @@ Loopexit:
             k(0, j) = start
             Dim i As Integer = 0
             Dim Number As Integer = 1
-            While Number < k.Length
+            While Number < k.RowDimension
                 j += 1
                 i -= 1
                 If i < 0 Then
@@ -2882,13 +2882,13 @@ Loopexit:
             Dim C(n, n) As Double
             Dim D(n, n) As Double
             Dim temp As Double = (n + 1) * (n + 1)
-            Magic_1(n + 1, start, A)
+            Magic_1(n + 1, start, New NumericMatrix(A))
             start = start + temp
-            Magic_1(n + 1, start, B)
+            Magic_1(n + 1, start, New NumericMatrix(B))
             start = start + temp
-            Magic_1(n + 1, start, C)
+            Magic_1(n + 1, start, New NumericMatrix(C))
             start = start + temp
-            Magic_1(n + 1, start, D)
+            Magic_1(n + 1, start, New NumericMatrix(D))
             start = start + temp
             Dim i As Integer
             Dim j As Integer
@@ -2994,10 +2994,10 @@ Loopexit:
         ''' </remarks>
         Public Function Sove2(A As GeneralMatrix, b As GeneralMatrix, A_m As Integer, B_m As Integer, X As GeneralMatrix) As Boolean
             '采用全选主元素法求解
-            If A_m <> B_m Or B_m <> b.Length Then
+            If A_m <> B_m Or B_m <> b.RowDimension Then
                 Return False
             End If
-            Dim n As Integer = A.Length \ A_m - 1
+            Dim n As Integer = A.RowDimension \ A_m - 1
             A_m -= 1
             Dim i As Integer
             Dim Indez_i As Integer

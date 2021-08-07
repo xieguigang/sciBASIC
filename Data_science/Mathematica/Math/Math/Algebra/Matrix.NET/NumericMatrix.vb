@@ -214,6 +214,10 @@ Namespace LinearAlgebra.Matrix
             Call Me.New(rows.Select(Function(v) v.ToArray).ToArray)
         End Sub
 
+        Sub New(M As Double(,))
+            Call Me.New(M.RowIterator.ToArray)
+        End Sub
+
         ''' <summary>Construct a matrix quickly without checking arguments.</summary>
         ''' <param name="A">   Two-dimensional array of doubles.
         ''' </param>

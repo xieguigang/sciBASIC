@@ -41,5 +41,18 @@ Namespace LinearAlgebra.Matrix
         Function Resize(m As Integer, n As Integer) As GeneralMatrix
         Function RowVectors() As IEnumerable(Of Vector)
 
+        ''' <summary>Get a submatrix.</summary>
+        ''' <param name="r">   Array of row indices.
+        ''' </param>
+        ''' <param name="j0">  Initial column index
+        ''' </param>
+        ''' <param name="j1">  Final column index
+        ''' </param>
+        ''' <returns>     A(r(:),j0:j1)
+        ''' </returns>
+        ''' <exception cref="System.IndexOutOfRangeException">   Submatrix indices
+        ''' </exception>
+        Function GetMatrix(r As Integer(), j0 As Integer, j1 As Integer) As GeneralMatrix
+
     End Interface
 End Namespace
