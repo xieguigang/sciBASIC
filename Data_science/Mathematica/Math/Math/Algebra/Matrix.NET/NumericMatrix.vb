@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::ab4f78c428bb6055d84c993bfee25315, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\GeneralMatrix.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class GeneralMatrix
-    ' 
-    '         Properties: ArrayCopy, ColumnDimension, ColumnPackedCopy, DiagonalVector, RowDimension
-    '                     RowPackedCopy
-    ' 
-    '         Constructor: (+6 Overloads) Sub New
-    ' 
-    '         Function: Abs, Add, AddEquals, ArrayLeftDivide, ArrayLeftDivideEquals
-    '                   ArrayMultiply, ArrayMultiplyEquals, ArrayRightDivide, ArrayRightDivideEquals, chol
-    '                   Clone, Condition, Copy, Create, Determinant
-    '                   Eigen, (+4 Overloads) GetMatrix, Identity, Inverse, Log
-    '                   LUD, (+3 Overloads) Multiply, MultiplyEquals, Norm1, Norm2
-    '                   NormF, NormInf, Number, Power, QRD
-    '                   Rank, RowApply, RowVectors, Solve, SolveTranspose
-    '                   (+2 Overloads) Subtract, SubtractEquals, SVD, ToString, Trace
-    '                   Transpose
-    ' 
-    '         Sub: CheckMatrixDimensions, (+2 Overloads) Dispose, Finalize, ISerializable_GetObjectData, Resize
-    '              (+4 Overloads) SetMatrix
-    ' 
-    '         Operators: (+4 Overloads) -, (+3 Overloads) *, ^, +
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class GeneralMatrix
+' 
+'         Properties: ArrayCopy, ColumnDimension, ColumnPackedCopy, DiagonalVector, RowDimension
+'                     RowPackedCopy
+' 
+'         Constructor: (+6 Overloads) Sub New
+' 
+'         Function: Abs, Add, AddEquals, ArrayLeftDivide, ArrayLeftDivideEquals
+'                   ArrayMultiply, ArrayMultiplyEquals, ArrayRightDivide, ArrayRightDivideEquals, chol
+'                   Clone, Condition, Copy, Create, Determinant
+'                   Eigen, (+4 Overloads) GetMatrix, Identity, Inverse, Log
+'                   LUD, (+3 Overloads) Multiply, MultiplyEquals, Norm1, Norm2
+'                   NormF, NormInf, Number, Power, QRD
+'                   Rank, RowApply, RowVectors, Solve, SolveTranspose
+'                   (+2 Overloads) Subtract, SubtractEquals, SVD, ToString, Trace
+'                   Transpose
+' 
+'         Sub: CheckMatrixDimensions, (+2 Overloads) Dispose, Finalize, ISerializable_GetObjectData, Resize
+'              (+4 Overloads) SetMatrix
+' 
+'         Operators: (+4 Overloads) -, (+3 Overloads) *, ^, +
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -255,24 +255,6 @@ Namespace LinearAlgebra.Matrix
 #End Region
 
 #Region "Public Properties"
-
-        ''' <summary>Copy the internal two-dimensional array.</summary>
-        ''' <returns>     Two-dimensional array copy of matrix elements.
-        ''' </returns>
-        Public Overridable ReadOnly Property ArrayCopy() As Double()()
-            Get
-                Dim C As Double()() = New Double(m - 1)() {}
-                For i As Integer = 0 To m - 1
-                    C(i) = New Double(n - 1) {}
-                Next
-                For i As Integer = 0 To m - 1
-                    For j As Integer = 0 To n - 1
-                        C(i)(j) = buffer(i)(j)
-                    Next
-                Next
-                Return C
-            End Get
-        End Property
 
         ''' <summary>Make a one-dimensional column packed copy of the internal array.</summary>
         ''' <returns>     Matrix elements packed in a one-dimensional array by columns.
@@ -1357,6 +1339,26 @@ Namespace LinearAlgebra.Matrix
             For Each row As Double() In buffer
                 Yield row.AsVector
             Next
+        End Function
+
+        ''' <summary>Copy the internal two-dimensional array.</summary>
+        ''' <returns>     Two-dimensional array copy of matrix elements.
+        ''' </returns>
+        Public Function ArrayPack(Optional deepcopy As Boolean = False) As Double()() Implements GeneralMatrix.ArrayPack
+            If Not deepcopy Then
+                Return buffer
+            Else
+                Dim makecopy As Double()() = New Double(m - 1)() {}
+                For i As Integer = 0 To m - 1
+                    makecopy(i) = New Double(n - 1) {}
+                Next
+                For i As Integer = 0 To m - 1
+                    For j As Integer = 0 To n - 1
+                        makecopy(i)(j) = buffer(i)(j)
+                    Next
+                Next
+                Return makecopy
+            End If
         End Function
     End Class
 End Namespace

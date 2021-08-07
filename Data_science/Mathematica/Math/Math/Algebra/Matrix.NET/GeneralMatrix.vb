@@ -20,6 +20,7 @@ Namespace LinearAlgebra.Matrix
         ReadOnly Property ColumnDimension As Integer
 
         Function Transpose() As GeneralMatrix
+        Function ArrayPack(Optional deepcopy As Boolean = False) As Double()()
 
     End Interface
 End Namespace
