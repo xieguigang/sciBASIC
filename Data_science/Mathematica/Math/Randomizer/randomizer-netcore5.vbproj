@@ -62,6 +62,8 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <DocumentationFile>Microsoft.VisualBasic.Math.Randomizer.xml</DocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DefineConstants>netcore5=1</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
