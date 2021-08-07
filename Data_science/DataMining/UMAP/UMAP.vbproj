@@ -391,7 +391,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="KNN\UMAP_KNN.vb" />
+    <Compile Include="KNN\SmoothKNN.vb" />
     <Compile Include="KNN\KNNArguments.vb" />
     <Compile Include="UmapProject.vb" />
     <Compile Include="Components\Heaps\Heap.vb" />
