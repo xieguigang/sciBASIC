@@ -667,7 +667,7 @@ Namespace LinearAlgebra
                 Throw New ArgumentException("Inner vector dimensions must agree！")
             End If
 
-            Dim vvmat As New GeneralMatrix(N0, N0)
+            Dim vvmat As New NumericMatrix(N0, N0)
 
             For i As Integer = 0 To N0 - 1
                 For j As Integer = 0 To N0 - 1

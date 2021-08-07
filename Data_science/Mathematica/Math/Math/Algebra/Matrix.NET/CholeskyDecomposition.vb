@@ -140,7 +140,7 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
 
         Public Overridable Function GetL() As GeneralMatrix
-            Return New GeneralMatrix(L, n, n)
+            Return New NumericMatrix(L, n, n)
         End Function
 
         ''' <summary>Solve A*X = B</summary>
@@ -188,7 +188,7 @@ Namespace LinearAlgebra.Matrix
                     Next
                 Next
             Next
-            Return New GeneralMatrix(X, n, nx)
+            Return New NumericMatrix(X, n, nx)
         End Function
 #End Region
 

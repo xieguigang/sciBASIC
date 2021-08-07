@@ -185,7 +185,7 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
         Public Overridable ReadOnly Property L() As GeneralMatrix
             Get
-                Dim X As New GeneralMatrix(m, n)
+                Dim X As New NumericMatrix(m, n)
                 Dim La As Double()() = X.Array
                 For i As Integer = 0 To m - 1
                     For j As Integer = 0 To n - 1
@@ -207,7 +207,7 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
         Public Overridable ReadOnly Property U() As GeneralMatrix
             Get
-                Dim X As New GeneralMatrix(n, n)
+                Dim X As New NumericMatrix(n, n)
                 Dim Ua As Double()() = X.Array
                 For i As Integer = 0 To n - 1
                     For j As Integer = 0 To n - 1

@@ -97,7 +97,7 @@ Namespace LinearAlgebra
         Public Function jaccard_coeff(idx As GeneralMatrix) As GeneralMatrix
             Dim nrow As Integer = idx.RowDimension
             Dim ncol As Integer = idx.ColumnDimension
-            Dim weights As New GeneralMatrix(nrow * ncol, 3)
+            Dim weights As New NumericMatrix(nrow * ncol, 3)
             Dim r As Integer = 0
 
             For i As Integer = 0 To nrow - 1

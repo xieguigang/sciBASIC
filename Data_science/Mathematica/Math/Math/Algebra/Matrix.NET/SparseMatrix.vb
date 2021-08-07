@@ -1,6 +1,6 @@
 ﻿Namespace LinearAlgebra.Matrix
 
-    Public Class SparseMatrix
+    Public Class SparseMatrix : Implements GeneralMatrix
 
         Dim row As Integer()
         Dim col As Integer()

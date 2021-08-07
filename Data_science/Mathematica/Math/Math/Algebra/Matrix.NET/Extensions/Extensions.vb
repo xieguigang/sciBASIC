@@ -78,7 +78,7 @@ Namespace LinearAlgebra.Matrix
 
         Public Function rand(m%, n%) As GeneralMatrix
             With New Random()
-                Dim A As New GeneralMatrix(m, n)
+                Dim A As New NumericMatrix(m, n)
                 Dim X As Double()() = A.Array
 
                 For i As Integer = 0 To m - 1

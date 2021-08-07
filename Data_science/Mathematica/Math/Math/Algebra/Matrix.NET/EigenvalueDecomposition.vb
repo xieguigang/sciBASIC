@@ -985,7 +985,7 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
         Public Overridable ReadOnly Property D() As GeneralMatrix
             Get
-                Dim X As New GeneralMatrix(n, n)
+                Dim X As New NumericMatrix(n, n)
                 Dim Da As Double()() = X.Array
                 For i As Integer = 0 To n - 1
                     For j As Integer = 0 To n - 1
@@ -1010,7 +1010,7 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
         Public ReadOnly Property V() As GeneralMatrix
             Get
-                Return New GeneralMatrix(_V, n, n)
+                Return New NumericMatrix(_V, n, n)
             End Get
         End Property
 #End Region

@@ -102,7 +102,7 @@ Namespace LinearAlgebra.Matrix
     ''' 
     ''' ```csharp
     ''' double[][] vals;
-    ''' GeneralMatrix A = new GeneralMatrix(vals);
+    ''' GeneralMatrix A = New NumericMatrix(vals);
     ''' GeneralMatrix b = GeneralMatrix.Random(3,1);
     ''' GeneralMatrix x = A.Solve(b);
     ''' GeneralMatrix r = A.Multiply(x).Subtract(b);
@@ -126,6 +126,7 @@ Namespace LinearAlgebra.Matrix
         Implements ICloneable
         Implements ISerializable
         Implements IDisposable
+        Implements GeneralMatrix
 
 #Region "Class variables"
 
@@ -345,7 +346,7 @@ Namespace LinearAlgebra.Matrix
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Number() As GeneralMatrix
-            Return New GeneralMatrix(0, 0)
+            Return New NumericMatrix(0, 0)
         End Function
 
         ''' <summary>Construct a matrix from a copy of a 2-D array.</summary>
@@ -357,7 +358,7 @@ Namespace LinearAlgebra.Matrix
         Public Shared Function Create(A As Double()()) As GeneralMatrix
             Dim m As Integer = A.Length
             Dim n As Integer = A(0).Length
-            Dim X As New GeneralMatrix(m, n)
+            Dim X As New NumericMatrix(m, n)
             Dim C As Double()() = X.Array
             For i As Integer = 0 To m - 1
                 If A(i).Length <> n Then
@@ -371,7 +372,7 @@ Namespace LinearAlgebra.Matrix
         End Function
 
         Public Function Abs() As GeneralMatrix
-            Dim X As New GeneralMatrix(m, n)
+            Dim X As New NumericMatrix(m, n)
             Dim C As Double()() = X.Array
 
             For i As Integer = 0 To m - 1
@@ -387,7 +388,7 @@ Namespace LinearAlgebra.Matrix
         ''' Make a deep copy of a matrix
         ''' </summary>
         Public Overridable Overloads Function Copy() As GeneralMatrix
-            Dim X As New GeneralMatrix(m, n)
+            Dim X As New NumericMatrix(m, n)
             Dim C As Double()() = X.Array
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
@@ -423,7 +424,7 @@ Namespace LinearAlgebra.Matrix
                     .Select(Function(x) x.Takes(index)) _
                     .ToArray
 
-                Return New GeneralMatrix(subMAT)
+                Return New NumericMatrix(subMAT)
             End Get
         End Property
 
@@ -451,7 +452,7 @@ Namespace LinearAlgebra.Matrix
         ''' </exception>
 
         Public Overridable Function GetMatrix(i0 As Integer, i1 As Integer, j0 As Integer, j1 As Integer) As GeneralMatrix
-            Dim X As New GeneralMatrix(i1 - i0 + 1, j1 - j0 + 1)
+            Dim X As New NumericMatrix(i1 - i0 + 1, j1 - j0 + 1)
             Dim B As Double()() = X.Array
             Try
                 For i As Integer = i0 To i1
@@ -476,7 +477,7 @@ Namespace LinearAlgebra.Matrix
         ''' </exception>
 
         Public Overridable Function GetMatrix(r As Integer(), c As Integer()) As GeneralMatrix
-            Dim X As New GeneralMatrix(r.Length, c.Length)
+            Dim X As New NumericMatrix(r.Length, c.Length)
             Dim B As Double()() = X.Array
             Try
                 For i As Integer = 0 To r.Length - 1
@@ -503,7 +504,7 @@ Namespace LinearAlgebra.Matrix
         ''' </exception>
 
         Public Overridable Function GetMatrix(i0 As Integer, i1 As Integer, c As Integer()) As GeneralMatrix
-            Dim X As New GeneralMatrix(i1 - i0 + 1, c.Length)
+            Dim X As New NumericMatrix(i1 - i0 + 1, c.Length)
             Dim B As Double()() = X.Array
             Try
                 For i As Integer = i0 To i1
@@ -530,7 +531,7 @@ Namespace LinearAlgebra.Matrix
         ''' </exception>
 
         Public Overridable Function GetMatrix(r As Integer(), j0 As Integer, j1 As Integer) As GeneralMatrix
-            Dim X As New GeneralMatrix(r.Length, j1 - j0 + 1)
+            Dim X As New NumericMatrix(r.Length, j1 - j0 + 1)
             Dim B As Double()() = X.Array
             Try
                 For i As Integer = 0 To r.Length - 1
@@ -645,7 +646,7 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
 
         Public Overridable Function Transpose() As GeneralMatrix
-            Dim X As New GeneralMatrix(n, m)
+            Dim X As New NumericMatrix(n, m)
             Dim C As Double()() = X.Array
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
@@ -716,7 +717,7 @@ Namespace LinearAlgebra.Matrix
         ''' <returns>    -A
         ''' </returns>
         Public Shared Operator -(m As GeneralMatrix) As GeneralMatrix
-            Dim X As New GeneralMatrix(m.m, m.n)
+            Dim X As New NumericMatrix(m.m, m.n)
             Dim C As Double()() = X.Array
             For i As Integer = 0 To m.m - 1
                 For j As Integer = 0 To m.n - 1
@@ -734,7 +735,7 @@ Namespace LinearAlgebra.Matrix
 
         Public Overridable Function Add(B As GeneralMatrix) As GeneralMatrix
             CheckMatrixDimensions(B)
-            Dim X As New GeneralMatrix(m, n)
+            Dim X As New NumericMatrix(m, n)
             Dim C As Double()() = X.Array
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
@@ -768,7 +769,7 @@ Namespace LinearAlgebra.Matrix
         Public Overridable Function Subtract(B As GeneralMatrix) As GeneralMatrix
             Call CheckMatrixDimensions(B)
 
-            Dim X As New GeneralMatrix(m, n)
+            Dim X As New NumericMatrix(m, n)
             Dim C As Double()() = X.Array
 
             For i As Integer = 0 To m - 1
@@ -787,7 +788,7 @@ Namespace LinearAlgebra.Matrix
         ''' A - B
         ''' </returns>
         Public Overridable Function Subtract(B As Double) As GeneralMatrix
-            Dim X As New GeneralMatrix(m, n)
+            Dim X As New NumericMatrix(m, n)
             Dim C As Double()() = X.Array
 
             For i As Integer = 0 To m - 1
@@ -805,7 +806,7 @@ Namespace LinearAlgebra.Matrix
         ''' <returns>x ^ y
         ''' </returns>
         Public Overridable Function Power(y As Double) As GeneralMatrix
-            Dim X As New GeneralMatrix(m, n)
+            Dim X As New NumericMatrix(m, n)
             Dim C As Double()() = X.Array
 
             For i As Integer = 0 To m - 1
@@ -818,7 +819,7 @@ Namespace LinearAlgebra.Matrix
         End Function
 
         Public Overridable Function Log(Optional newBase As Double = stdNum.E) As GeneralMatrix
-            Dim X As New GeneralMatrix(m, n)
+            Dim X As New NumericMatrix(m, n)
             Dim C As Double()() = X.Array
 
             For i As Integer = 0 To m - 1
@@ -854,7 +855,7 @@ Namespace LinearAlgebra.Matrix
 
         Public Overridable Function ArrayMultiply(B As GeneralMatrix) As GeneralMatrix
             CheckMatrixDimensions(B)
-            Dim X As New GeneralMatrix(m, n)
+            Dim X As New NumericMatrix(m, n)
             Dim C As Double()() = X.Array
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
@@ -888,7 +889,7 @@ Namespace LinearAlgebra.Matrix
 
         Public Overridable Function ArrayRightDivide(B As GeneralMatrix) As GeneralMatrix
             CheckMatrixDimensions(B)
-            Dim X As New GeneralMatrix(m, n)
+            Dim X As New NumericMatrix(m, n)
             Dim C As Double()() = X.Array
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
@@ -922,7 +923,7 @@ Namespace LinearAlgebra.Matrix
 
         Public Overridable Function ArrayLeftDivide(B As GeneralMatrix) As GeneralMatrix
             CheckMatrixDimensions(B)
-            Dim X As New GeneralMatrix(m, n)
+            Dim X As New NumericMatrix(m, n)
             Dim C As Double()() = X.Array
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
@@ -955,7 +956,7 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
 
         Public Overridable Function Multiply(s As Double) As GeneralMatrix
-            Dim X As New GeneralMatrix(m, n)
+            Dim X As New NumericMatrix(m, n)
             Dim C As Double()() = X.Array
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
@@ -970,7 +971,7 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
 
         Public Overridable Function Multiply(v As Vector) As GeneralMatrix
-            Dim X As New GeneralMatrix(m, n)
+            Dim X As New NumericMatrix(m, n)
             Dim C As Double()() = X.Array
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
@@ -1008,7 +1009,7 @@ Namespace LinearAlgebra.Matrix
             If B.m <> n Then
                 Throw New System.ArgumentException("GeneralMatrix inner dimensions must agree.")
             End If
-            Dim X As New GeneralMatrix(m, B.n)
+            Dim X As New NumericMatrix(m, B.n)
             Dim C As Double()() = X.Array
             Dim Bcolj As Double() = New Double(n - 1) {}
             For j As Integer = 0 To B.n - 1
@@ -1058,7 +1059,7 @@ Namespace LinearAlgebra.Matrix
         End Operator
 
         Public Shared Operator -(x As Double, m As GeneralMatrix) As GeneralMatrix
-            Dim Xmat As New GeneralMatrix(m.RowDimension, m.ColumnDimension)
+            Dim Xmat As New NumericMatrix(m.RowDimension, m.ColumnDimension)
             Dim C As Double()() = Xmat.Array
 
             For i As Integer = 0 To m.RowDimension - 1
@@ -1229,7 +1230,7 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
 
         Public Shared Function Identity(m As Integer, n As Integer) As GeneralMatrix
-            Dim A As New GeneralMatrix(m, n)
+            Dim A As New NumericMatrix(m, n)
             Dim X As Double()() = A.Array
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
@@ -1335,11 +1336,11 @@ Namespace LinearAlgebra.Matrix
         End Sub
 
         Public Shared Widening Operator CType(data#(,)) As GeneralMatrix
-            Return New GeneralMatrix(data.RowIterator.ToArray)
+            Return New NumericMatrix(data.RowIterator.ToArray)
         End Operator
 
         Public Shared Widening Operator CType(data#()()) As GeneralMatrix
-            Return New GeneralMatrix(data)
+            Return New NumericMatrix(data)
         End Operator
 
         Public Iterator Function RowApply(Of T)(apply As Func(Of Double(), Integer, T)) As IEnumerable(Of T)

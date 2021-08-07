@@ -79,8 +79,8 @@ Namespace LinearAlgebra.Matrix
             Dim return_M, return_N As GeneralMatrix
 
             If Rank = m And m = n Then
-                return_M = New GeneralMatrix(m - 1, n - 1) '    ReDim Return_M(m - 1, n - 1)
-                return_N = New GeneralMatrix(m - 1, n - 1) '    ReDim Return_N(m - 1, n - 1)
+                return_M = New NumericMatrix(m - 1, n - 1) '    ReDim Return_M(m - 1, n - 1)
+                return_N = New NumericMatrix(m - 1, n - 1) '    ReDim Return_N(m - 1, n - 1)
                 For i = 0 To m - 1
                     return_N(i, i) = 1
                     For j = 0 To m - 1
@@ -133,7 +133,7 @@ Namespace LinearAlgebra.Matrix
                 j += 1
             End While
             j1 = 0
-            return_M = New GeneralMatrix(m - 1, Rank - 1) '    ReDim Return_M(m - 1, Rank - 1)
+            return_M = New NumericMatrix(m - 1, Rank - 1) '    ReDim Return_M(m - 1, Rank - 1)
             For i = 0 To m - 1
                 j = i
                 While j < n
@@ -155,7 +155,7 @@ Namespace LinearAlgebra.Matrix
                     j += 1
                 End While
             Next
-            return_N = New GeneralMatrix(Rank - 1, n - 1) '    ReDim Return_N(Rank - 1, n - 1)
+            return_N = New NumericMatrix(Rank - 1, n - 1) '    ReDim Return_N(Rank - 1, n - 1)
             For i = 0 To Rank - 1
                 For j = 0 To n - 1
                     return_N(i, j) = tempk(i, j)
@@ -524,8 +524,8 @@ Namespace LinearAlgebra.Matrix
                 Next
                 Btemp(i) = stdNum.Pow(Btemp(i), 0.5)
             Next
-            Q = New GeneralMatrix(n, n) '  ReDim Q(n, n)
-            R = New GeneralMatrix(n, n) '   ReDim R(n, n)
+            Q = New NumericMatrix(n, n) '  ReDim Q(n, n)
+            R = New NumericMatrix(n, n) '   ReDim R(n, n)
             For i = 0 To n
                 For j = 0 To n
                     Q(j, i) = B(j, i) / Btemp(i)
@@ -590,7 +590,7 @@ Namespace LinearAlgebra.Matrix
                 Next
                 Btemp(i) = stdNum.Pow(Btemp(i), 0.5)
             Next
-            Ret = New GeneralMatrix(n, n) '  ReDim Ret(n, n)
+            Ret = New NumericMatrix(n, n) '  ReDim Ret(n, n)
             For i = 0 To n
                 For j = 0 To n
                     Ret(j, i) = B(j, i) / Btemp(i)
@@ -620,7 +620,7 @@ Namespace LinearAlgebra.Matrix
             Dim t As Int16
             Dim m As Int16
             Dim A As GeneralMatrix = GeneralMatrix.Number
-            Ret = New GeneralMatrix(n - 1, 1) ' ReDim Ret(n - 1, 1) 'u v
+            Ret = New NumericMatrix(n - 1, 1) ' ReDim Ret(n - 1, 1) 'u v
             Dim erro As Double = stdNum.Pow(0.1, errors)
             Dim b As Double
             Dim c As Double
@@ -800,7 +800,7 @@ Namespace LinearAlgebra.Matrix
             Dim temp As Double
             Dim MaxNumber As Int16
             n -= 1
-            ret = New GeneralMatrix(n, n) '   ReDim ret(n, n)
+            ret = New NumericMatrix(n, n) '   ReDim ret(n, n)
             For k = 1 To n - 1
                 i = k - 1
                 MaxNumber = k
@@ -892,9 +892,9 @@ Namespace LinearAlgebra.Matrix
                     End If
                 Next
             Next
-            S = New GeneralMatrix(m, n) '    ReDim S(m, n)
-            V = New GeneralMatrix(n, n)  '    ReDim V(n, n)
-            U = New GeneralMatrix(m, m) '   ReDim U(m, m)
+            S = New NumericMatrix(m, n) '    ReDim S(m, n)
+            V = New NumericMatrix(n, n)  '    ReDim V(n, n)
+            U = New NumericMatrix(m, m) '   ReDim U(m, m)
             ii = 0
             If m > n Then
                 j = n
@@ -920,7 +920,7 @@ Namespace LinearAlgebra.Matrix
                 Next
             Next
             j = 0
-            At = New GeneralMatrix(n, 0)
+            At = New NumericMatrix(n, 0)
             While j < ii
                 For i = 0 To n
                     At(i, 0) = V(i, j)
@@ -936,7 +936,7 @@ Namespace LinearAlgebra.Matrix
                 j += 1
             End While
             While ii <= m
-                At = New GeneralMatrix(ii - 1, m)
+                At = New NumericMatrix(ii - 1, m)
                 ReDim b(ii - 1, 0)
                 For i = 0 To ii - 1
                     For j = 0 To m
@@ -1077,7 +1077,7 @@ Namespace LinearAlgebra.Matrix
             Dim k As Integer
             Dim n As Integer = A.RowDimension
             n -= 1
-            L = New GeneralMatrix(n, n) '     ReDim L(n, n)
+            L = New NumericMatrix(n, n) '     ReDim L(n, n)
             L(0, 0) = stdNum.Sqrt(A(0, 0))
             For i = 1 To n
                 j = 0
@@ -1131,8 +1131,8 @@ Namespace LinearAlgebra.Matrix
             If m < n Then
                 max = m
             End If
-            Q = New GeneralMatrix(m, m) '   ReDim Q(m, m)
-            R = New GeneralMatrix(m, n) '    ReDim R(m, n)
+            Q = New NumericMatrix(m, m) '   ReDim Q(m, m)
+            R = New NumericMatrix(m, n) '    ReDim R(m, n)
             Dim i As Int16
             Dim j As Int16
             Dim l As Int16
@@ -1245,8 +1245,8 @@ Namespace LinearAlgebra.Matrix
             R_n = n
             m -= 1
             n -= 1
-            Q = New GeneralMatrix(m, m) '        ReDim Q(m, m)
-            R = New GeneralMatrix(m, n) '  ReDim R(m, n)
+            Q = New NumericMatrix(m, m) '        ReDim Q(m, m)
+            R = New NumericMatrix(m, n) '  ReDim R(m, n)
             Dim i As Int16
             Dim j As Int16
             Dim l As Int16
@@ -1349,8 +1349,8 @@ Namespace LinearAlgebra.Matrix
                 Return False
             End If
             n -= 1
-            L = New GeneralMatrix(n, n) '    ReDim L(n, n)
-            U = New GeneralMatrix(n, n) '      ReDim U(n, n)
+            L = New NumericMatrix(n, n) '    ReDim L(n, n)
+            U = New NumericMatrix(n, n) '      ReDim U(n, n)
             Dim j As Int16
             Dim i As Int16
             Dim a As Int16
@@ -1400,7 +1400,7 @@ Namespace LinearAlgebra.Matrix
                 Return False
             End If
             N -= 1
-            Return_K = New GeneralMatrix(N, N) '!!!!! Redim Return_K(N,N)
+            Return_K = New NumericMatrix(N, N) '!!!!! Redim Return_K(N,N)
             If i = 1 Then
                 If K(0, 0) = 0 Then
                     Return False
@@ -1514,7 +1514,7 @@ Namespace LinearAlgebra.Matrix
                 Return False
             End If
             N -= 1
-            Return_K = New GeneralMatrix(N, N) '  ReDim Return_K(N, N)
+            Return_K = New NumericMatrix(N, N) '  ReDim Return_K(N, N)
             Dim Temp((N - 1), (N - 1)) As Double
             Dim i_temp As Integer = 0
             Dim j_temp As Integer = 0
@@ -1582,7 +1582,7 @@ Namespace LinearAlgebra.Matrix
                     End If
                 Next
                 If m <> -1 Then
-                    Ret = New GeneralMatrix(m, 0) '       ReDim Ret(m, 0)
+                    Ret = New NumericMatrix(m, 0) '       ReDim Ret(m, 0)
                     m = 0
                     For i = 0 To n
                         If At(i, 0) > 0 Then
@@ -1636,7 +1636,7 @@ Namespace LinearAlgebra.Matrix
             Dim w(n) As Double
             Dim b(n, n) As Double
             Dim c(n, n) As Double
-            ret = New GeneralMatrix(n, n) '    ReDim ret(n, n)
+            ret = New NumericMatrix(n, n) '    ReDim ret(n, n)
             k = 0
             While k < n - 1
                 s = 0
@@ -1718,7 +1718,7 @@ Namespace LinearAlgebra.Matrix
             Dim is1 As Boolean = True
             Dim is2 As Boolean
             n -= 1
-            Ret = New GeneralMatrix(n, n) '   ReDim Ret(n, n)
+            Ret = New NumericMatrix(n, n) '   ReDim Ret(n, n)
             Dim det As Double
             Dim temp(n - 1, n - 1) As Double
             For i = 0 To n
@@ -1767,7 +1767,7 @@ Namespace LinearAlgebra.Matrix
             Dim j As Integer
             Dim k As Integer
             Dim temp(m, m) As Double
-            Ret = New GeneralMatrix(m, m) '  ReDim Ret(m, m)
+            Ret = New NumericMatrix(m, m) '  ReDim Ret(m, m)
             If n < 9 Then
                 For i = 0 To m
                     For j = 0 To m
@@ -1849,7 +1849,7 @@ Namespace LinearAlgebra.Matrix
             Dim ATemp(0, 0) As Double
             Dim ATemp2(0, 2) As Double
             Dim Erro1 As Double = stdNum.Pow(0.1, Erro)
-            Ret = New GeneralMatrix(N, 1) '    ReDim Ret(N, 1)
+            Ret = New NumericMatrix(N, 1) '    ReDim Ret(N, 1)
             While N >= 0
                 u = 1
                 v = 1
@@ -1881,7 +1881,7 @@ Namespace LinearAlgebra.Matrix
                 PolyDiv(A, ATemp2, Nothing, ATemp, 11)
                 A_n = ATemp.Length - 1
                 i = A_n
-                A = New GeneralMatrix(0, i) '     ReDim A(0, i)
+                A = New NumericMatrix(0, i) '     ReDim A(0, i)
                 While i >= 0
                     A(0, i) = ATemp(0, i)
                     i -= 1
@@ -1958,7 +1958,7 @@ Namespace LinearAlgebra.Matrix
                     X(i, j) -= x1
                 Next
             Next
-            S = New GeneralMatrix(m, m) '    ReDim S(m, m)
+            S = New NumericMatrix(m, m) '    ReDim S(m, m)
             For j = 0 To n
                 For i = 0 To m
                     tempx(i, 0) = X(i, j)
@@ -1992,7 +1992,7 @@ Namespace LinearAlgebra.Matrix
             If n1 < n2 Then
                 Ret = GeneralMatrix.Number '     ReDim Ret(0, 0)
                 n1 -= 1
-                RetMod = New GeneralMatrix(0, n1) '   ReDim RetMod(0, n1)
+                RetMod = New NumericMatrix(0, n1) '   ReDim RetMod(0, n1)
                 For i = 0 To n1
                     RetMod(0, i) = A1(0, i)
                 Next
@@ -2001,7 +2001,7 @@ Namespace LinearAlgebra.Matrix
             Dim error1 As Double = stdNum.Abs(A2(0, 0)) * stdNum.Pow(0.1, Erro)
             Dim j As Integer
             N = n1 - n2
-            Ret = New GeneralMatrix(0, N) '  ReDim Ret(0, N)
+            Ret = New NumericMatrix(0, N) '  ReDim Ret(0, N)
             N = 0
             While n1 >= n2
                 Ret(0, N) = A1(0, 0) / A2(0, 0)
@@ -2032,12 +2032,12 @@ Namespace LinearAlgebra.Matrix
                     Call A1.Resize(0, j) '    ReDim Preserve A1(0, j)
                 Else
                     n1 = 0
-                    RetMod = New GeneralMatrix(0, 0) '    ReDim RetMod(0, 0)
+                    RetMod = New NumericMatrix(0, 0) '    ReDim RetMod(0, 0)
                 End If
             End While
             If n1 > 0 Then
                 n1 -= 1
-                RetMod = New GeneralMatrix(0, n1) '   ReDim RetMod(0, n1)
+                RetMod = New NumericMatrix(0, n1) '   ReDim RetMod(0, n1)
                 For i = 0 To n1
                     RetMod(0, i) = A1(0, i)
                 Next
@@ -2083,7 +2083,7 @@ Namespace LinearAlgebra.Matrix
             Dim max As Double
             Dim temp, A(n, n) As Double
             Dim Index(n), b(n, 0) As Integer
-            X = New GeneralMatrix(n, 0) '  ReDim X(n, 0)
+            X = New NumericMatrix(n, 0) '  ReDim X(n, 0)
             For i = 0 To n
                 For temp_i = 0 To n
                     A(i, temp_i) = A1(i, temp_i)
@@ -2206,7 +2206,7 @@ A:              For temp_i = A_m + 1 To n
             Dim y As Double
             Dim d As Double
             Dim ero As Double = stdNum.Pow(0.1, Erro1)
-            Ret_Eigenvectors = New GeneralMatrix(n, n) '  ReDim Ret_Eigenvectors(n, n)
+            Ret_Eigenvectors = New NumericMatrix(n, n) '  ReDim Ret_Eigenvectors(n, n)
             For i = 0 To n
                 Ret_Eigenvectors(i, i) = 1
             Next
@@ -2272,7 +2272,7 @@ Loop00:
             Next
             GoTo Loop1
 Loopexit:
-            Ret = New GeneralMatrix(n, 0) '   ReDim Ret(n, 0)
+            Ret = New NumericMatrix(n, 0) '   ReDim Ret(n, 0)
             For i = 0 To n
                 Ret(i, 0) = A(i, i)
             Next
@@ -2301,7 +2301,7 @@ Loopexit:
             Dim b As Integer = i - 1
             Dim j As Integer = 0
             Dim k As Integer
-            Return_K = New GeneralMatrix(a, b) '     ReDim Retrun_K(a, b)
+            Return_K = New NumericMatrix(a, b) '     ReDim Retrun_K(a, b)
             n -= 1
             For i = 0 To a
                 For j = 0 To b
@@ -2508,7 +2508,7 @@ Loopexit:
         Public Sub Lehmer(n As Integer, k As GeneralMatrix)
             '创建n阶Lehmer矩阵
             n -= 1
-            k = New GeneralMatrix(n, n) '   ReDim k(n, n)
+            k = New NumericMatrix(n, n) '   ReDim k(n, n)
             Dim i As Integer
             Dim j As Integer
             For i = 0 To n
@@ -2536,7 +2536,7 @@ Loopexit:
             Dim j As Integer
             Dim size1 As Integer = Mul1.Length - 1
             Dim size2 As Integer = Mul2.Length - 1
-            Ret = New GeneralMatrix(0, size1 + size2) '    ReDim Ret(0, size1 + size2)
+            Ret = New NumericMatrix(0, size1 + size2) '    ReDim Ret(0, size1 + size2)
             For i = 0 To size1
                 For j = 0 To size2
                     Ret(0, i + j) += Mul1(0, i) * Mul2(0, j)
@@ -2561,9 +2561,9 @@ Loopexit:
             Dim N As Integer
             Dim i As Integer
             If n1 < n2 Then
-                Ret = New GeneralMatrix(0, 0) '     ReDim Ret(0, 0)
+                Ret = New NumericMatrix(0, 0) '     ReDim Ret(0, 0)
                 n1 -= 1
-                RetMod = New GeneralMatrix(0, n1) '     ReDim RetMod(0, n1)
+                RetMod = New NumericMatrix(0, n1) '     ReDim RetMod(0, n1)
                 For i = 0 To n1
                     RetMod(0, i) = A1(0, i)
                 Next
@@ -2572,7 +2572,7 @@ Loopexit:
             Dim error1 As Double = stdNum.Abs(A2(0, 0)) * stdNum.Pow(0.1, Erro)
             Dim j As Integer
             N = n1 - n2
-            Ret = New GeneralMatrix(0, N) '     ReDim Ret(0, N)
+            Ret = New NumericMatrix(0, N) '     ReDim Ret(0, N)
             N = 0
             While n1 >= n2
                 Ret(0, N) = A1(0, 0) / A2(0, 0)
@@ -2600,15 +2600,15 @@ Loopexit:
                     End While
                     n1 -= i
                     j = n1 - 1
-                    A1 = New GeneralMatrix(0, j) '     ReDim Preserve A1(0, j)
+                    A1 = New NumericMatrix(0, j) '     ReDim Preserve A1(0, j)
                 Else
                     n1 = 0
-                    RetMod = New GeneralMatrix(0, 0) '  ReDim RetMod(0, 0)
+                    RetMod = New NumericMatrix(0, 0) '  ReDim RetMod(0, 0)
                 End If
             End While
             If n1 > 0 Then
                 n1 -= 1
-                RetMod = New GeneralMatrix(0, n1) '      ReDim RetMod(0, n1)
+                RetMod = New NumericMatrix(0, n1) '      ReDim RetMod(0, n1)
                 For i = 0 To n1
                     RetMod(0, i) = A1(0, i)
                 Next
@@ -2634,11 +2634,11 @@ Loopexit:
             a1n -= 1
             a2n -= 1
             If a2n = 0 Then
-                Ret = New GeneralMatrix(0, 0) '   ReDim Ret(0, 0)
+                Ret = New NumericMatrix(0, 0) '   ReDim Ret(0, 0)
                 Return 1
             End If
             If a1n < a2n Then
-                Ret = New GeneralMatrix(0, a1n) '   ReDim Ret(0, a1n)
+                Ret = New NumericMatrix(0, a1n) '   ReDim Ret(0, a1n)
                 For i = 0 To a1n
                     Ret(0, i) = A1(0, i)
                 Next
@@ -2679,7 +2679,7 @@ Loopexit:
                     Next
                     a1n -= n
                     If a1n < a2n Then
-                        Ret = New GeneralMatrix(0, a1n) '     ReDim Ret(0, a1n)
+                        Ret = New NumericMatrix(0, a1n) '     ReDim Ret(0, a1n)
                         For i = 0 To a1n
                             Ret(0, i) = A1(0, i)
                         Next
@@ -2708,7 +2708,7 @@ Loopexit:
                 Return False
             End If
             m = Number - 1
-            X = New GeneralMatrix(m, 1) '     ReDim X(m, 1)
+            X = New NumericMatrix(m, 1) '     ReDim X(m, 1)
             Dim i As Integer
             Dim j As Integer
             Dim tempx As Double
@@ -2751,7 +2751,7 @@ Loopexit:
                 Return False
             End If
             m = Number - 1
-            X = New GeneralMatrix(m, 1) '    ReDim X(m, 1)
+            X = New NumericMatrix(m, 1) '    ReDim X(m, 1)
             Dim i As Integer
             Dim j As Integer
             Dim tempx As Double
@@ -2810,7 +2810,7 @@ Loopexit:
                 Return 0
             End If
             m -= 1
-            ret = New GeneralMatrix(m, rank) '     ReDim ret(m, rank)
+            ret = New NumericMatrix(m, rank) '     ReDim ret(m, rank)
             For i = 0 To m
                 For j = 0 To rank
                     ret(i, j) = u(i, j)
@@ -2827,7 +2827,7 @@ Loopexit:
         ''' <param name="k">获得的幻方</param>
         ''' <remarks></remarks>
         Private Sub Magic(n As Integer, start As Double, k As GeneralMatrix)
-            k = New GeneralMatrix(n - 1, n - 1) ' ReDim k(n - 1, n - 1)
+            k = New NumericMatrix(n - 1, n - 1) ' ReDim k(n - 1, n - 1)
             If n Mod 4 = 0 Then
                 Magic_4(n, start, k)
             ElseIf n Mod 2 = 0 Then
@@ -3007,7 +3007,7 @@ Loopexit:
             Dim max As Double
             Dim temp As Double
             Dim Index(n) As Integer
-            X = New GeneralMatrix(n, 0) '   ReDim X(n, 0)
+            X = New NumericMatrix(n, 0) '   ReDim X(n, 0)
             For i = 0 To n
                 Index(i) = i
             Next
@@ -3137,7 +3137,7 @@ Loopexit:
             If A1_n < A2_n Then
                 Return PolyGCFCall(A2, A2_n, A1, A1_n, Ret, Erro)
             ElseIf A2_n = 1 Then
-                Ret = New GeneralMatrix(0, 0) '     ReDim Ret(0, 0)
+                Ret = New NumericMatrix(0, 0) '     ReDim Ret(0, 0)
                 Ret(0, 0) = 1
                 Return 1
             End If
@@ -3164,7 +3164,7 @@ Loopexit:
                 End While
                 If i = A1_n Then
                     A2_n -= 1
-                    Ret = New GeneralMatrix(0, A2_n) '  ReDim Ret(0, A2_n)
+                    Ret = New NumericMatrix(0, A2_n) '  ReDim Ret(0, A2_n)
                     For i = 0 To A2_n
                         Ret(0, i) = A2(0, i)
                     Next
@@ -3195,7 +3195,7 @@ Loopexit:
             Dim i As Integer
             Dim j As Integer
             n -= 1
-            k = New GeneralMatrix(n, n) ' ReDim k(n, n)
+            k = New NumericMatrix(n, n) ' ReDim k(n, n)
             For i = 0 To n
                 k(0, i) = 1
                 k(i, 0) = 1

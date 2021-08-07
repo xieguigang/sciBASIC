@@ -164,7 +164,7 @@ Namespace LinearAlgebra.Prcomp
 
         Sub New(vectors As IEnumerable(Of Vector), Optional center As Boolean = True, Optional scale As Boolean = False)
             Dim matrix = adjust(vectors.ToArray, center, scale)
-            Dim svd = New GeneralMatrix(matrix).SVD()
+            Dim svd = New NumericMatrix(matrix).SVD()
 
             Me.center = center
             Me.scale = scale
@@ -198,7 +198,7 @@ Namespace LinearAlgebra.Prcomp
             'End If
 
             Dim U As GeneralMatrix = Me.Loadings(nPC.Sequence)
-            Dim X As New GeneralMatrix(data)
+            Dim X As New NumericMatrix(data)
             Dim P As Vector() = (X * U) _
                 .RowVectors _
                 .ToArray
