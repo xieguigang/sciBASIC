@@ -711,6 +711,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Analysis\Communities.vb" />
     <Compile Include="Analysis\Model\DirectedVertex.vb" />
     <Compile Include="Analysis\Model\EdgeSet.vb" />
     <Compile Include="Analysis\Model\GraphIndex.vb" />
