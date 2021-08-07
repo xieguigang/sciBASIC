@@ -93,10 +93,12 @@ Namespace CommandLine.InteropService.Pipeline
         End Sub
 
         Public Shared Sub SendMessage(message As String)
+            Call VBDebugger.WaitOutput()
             Call Console.WriteLine($"[SET_MESSAGE] {message}")
         End Sub
 
         Public Shared Sub SendProgress(percentage As Double, message As String)
+            Call VBDebugger.WaitOutput()
             Call Console.WriteLine($"[SET_PROGRESS] {percentage} {message}")
         End Sub
 
