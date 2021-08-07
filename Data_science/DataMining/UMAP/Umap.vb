@@ -50,6 +50,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
+Imports Microsoft.VisualBasic.DataMining.UMAP.KNN
 Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Language.Python
 Imports Microsoft.VisualBasic.Math
@@ -318,8 +319,8 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
         Dim knnIndices = If(knn._knnIndices, New Integer(-1)() {})
         Dim knnDistances = If(knn._knnDistances, New Single(-1)() {})
         Dim report As New ProgressReporter With {.report = progressReporter}
-        Dim sigmasRhos = report.Run(Function() UMAP_KNN.SmoothKNNDistance(knnDistances, knn.parameters), 0.1, "SmoothKNNDistance")
-        Dim rowsColsVals = report.Run(Function() UMAP_KNN.ComputeMembershipStrengths(knnIndices, knnDistances, sigmasRhos.sigmas, sigmasRhos.rhos), 0.2, "ComputeMembershipStrengths")
+        Dim sigmasRhos = report.Run(Function() SmoothKNN.SmoothKNNDistance(knnDistances, knn.parameters), 0.1, "SmoothKNNDistance")
+        Dim rowsColsVals = report.Run(Function() SmoothKNN.ComputeMembershipStrengths(knnIndices, knnDistances, sigmasRhos.sigmas, sigmasRhos.rhos), 0.2, "ComputeMembershipStrengths")
         Dim sparseMatrix = report.Run(Function() New SparseMatrix(rowsColsVals.Row, rowsColsVals.Col, rowsColsVals.X, (x.Length, x.Length)), 0.3, "Create SparseMatrix")
         Dim transpose = sparseMatrix.Transpose()
         Dim prodMatrix = sparseMatrix.PairwiseMultiply(transpose)
