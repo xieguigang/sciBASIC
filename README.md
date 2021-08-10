@@ -224,6 +224,9 @@ Call bitmap.GetBinaryBitmap(BinarizationStyles.SparseGray)
 
 ## sciBASIC# Graphics Artist
 
+![](./Data_science/Graph/Model/Tree/KdTree/KDtree-visual.png)
+> data visualization of the KD-tree based KNN search result
+
 [![](./gr/network-visualization/KEGG-pathway-network-clusters.png)](https://github.com/SMRUCC/GCModeller/blob/master/src/GCModeller/models/Networks/STRING/FunctionalEnrichmentPlot.vb)
 
 + **[Network Visualization Interface](./gr/network-visualization/)**
