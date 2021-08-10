@@ -1,50 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::b31ffe789fd07f7d6e2741fc15d059fa, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Layouts\Point2D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Point2D
-    ' 
-    '         Properties: Point, X, Y
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    '         Function: Clone, (+2 Overloads) Equals, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Point2D
+' 
+'         Properties: Point, X, Y
+' 
+'         Constructor: (+4 Overloads) Sub New
+'         Function: Clone, (+2 Overloads) Equals, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Math.Correlations
 Imports stdNum = System.Math
 
 Namespace Imaging.LayoutModel
@@ -104,6 +105,12 @@ Namespace Imaging.LayoutModel
             End Get
         End Property
 
+        Public ReadOnly Property PointF As PointF
+            Get
+                Return New PointF(X, Y)
+            End Get
+        End Property
+
         ''' <summary>
         ''' Constructs a new point at (0, 0).
         ''' </summary>
@@ -117,6 +124,10 @@ Namespace Imaging.LayoutModel
         ''' <param name="point"> Point that specifies the location. </param>
         Public Sub New(point As Point)
             Me.New(point.X, point.Y)
+        End Sub
+
+        Sub New(point As PointF)
+            Call Me.New(point.X, point.Y)
         End Sub
 
         ''' <summary>
@@ -163,6 +174,18 @@ Namespace Imaging.LayoutModel
             Return New Point2D(X, Y)
         End Function
 
+        Public Function DistanceTo(b As Point) As Double
+            Return {X, Y}.EuclideanDistance(New Double() {b.X, b.Y})
+        End Function
+
+        Public Function DistanceTo(b As PointF) As Double
+            Return {X, Y}.EuclideanDistance(New Double() {b.X, b.Y})
+        End Function
+
+        Public Function DistanceTo(b As Point2D) As Double
+            Return {X, Y}.EuclideanDistance({b.X, b.Y})
+        End Function
+
         ''' <summary>
         ''' Returns a <code>String</code> that represents the value
         ''' of this <code>mxPoint</code>. </summary>
@@ -170,5 +193,9 @@ Namespace Imaging.LayoutModel
         Public Overrides Function ToString() As String
             Return Me.GetType().Name & "[" & X & ", " & Y & "]"
         End Function
+
+        Public Shared Narrowing Operator CType(p As Point2D) As PointF
+            Return New PointF(p.X, p.Y)
+        End Operator
     End Class
 End Namespace

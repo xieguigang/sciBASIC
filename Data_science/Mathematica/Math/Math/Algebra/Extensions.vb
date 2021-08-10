@@ -47,6 +47,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 
 Namespace LinearAlgebra
@@ -96,28 +97,26 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         Public Function jaccard_coeff(idx As Integer()()) As GeneralMatrix
             Dim nrow As Integer = idx.Length
-            Dim ncol As Integer = idx(Scan0).Length
-            Dim weights As New NumericMatrix(nrow * ncol, 3)
-            Dim r As Integer = 0
+            Dim weights As New List(Of Double())
 
             For i As Integer = 0 To nrow - 1
-                For j As Integer = 0 To ncol - 1
-                    Dim k = idx(i)(j) - 1
+                For Each k As Integer In idx(i)
+                    If k < 0 Then
+                        Continue For
+                    End If
+
                     Dim nodei As Integer() = idx(i)
-                    Dim nodej As Integer() = idx(j)
+                    Dim nodej As Integer() = idx(k)
                     Dim u As Integer = nodei.Intersect(nodej).Count
 
                     If u > 0 Then
                         ' symmetrize the graph
-                        weights(r, 0) = i + 1
-                        weights(r, 1) = k + 1
-                        weights(r, 2) = u / (2.0 * ncol - u) / 2
-                        r += 1
+                        weights.Add({i, k, u / (2.0 * nodei.Length - u) / 2})
                     End If
                 Next
             Next
 
-            Return weights
+            Return New NumericMatrix(weights.ToArray)
         End Function
     End Module
 End Namespace
