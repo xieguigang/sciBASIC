@@ -96,6 +96,16 @@ Namespace LinearAlgebra.LinearProgramming
             Me.DecimalFormat = DecimalFormat
         End Sub
 
+        Public Function GetSolution(name As String) As Double
+            Return solution(variableNames.IndexOf(name))
+        End Function
+
+        Public Iterator Function GetSolution(names As String()) As IEnumerable(Of Double)
+            For Each name As String In names
+                Yield solution(variableNames.IndexOf(name))
+            Next
+        End Function
+
         Public Overrides Function ToString() As String
             If Not failureMessage.StringEmpty Then
                 Return failureMessage
