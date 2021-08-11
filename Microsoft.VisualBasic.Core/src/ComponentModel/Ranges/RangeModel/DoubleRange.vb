@@ -234,12 +234,12 @@ Namespace ComponentModel.Ranges.Model
             Return ((IsInside(range.Min)) OrElse (IsInside(range.Max)))
         End Function
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Widening Operator CType(exp As String) As DoubleRange
-            Dim r As New DoubleRange
-            Call exp.Parser(r.Min, r.Max)
-            Return r
-        End Operator
+        '<MethodImpl(MethodImplOptions.AggressiveInlining)>
+        'Public Shared Widening Operator CType(exp As String) As DoubleRange
+        '    Dim r As New DoubleRange
+        '    Call exp.Parser(r.Min, r.Max)
+        '    Return r
+        'End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(data#()) As DoubleRange
@@ -368,7 +368,9 @@ Namespace ComponentModel.Ranges.Model
             End If
 
             Try
-                Return expression
+                Dim r As New DoubleRange
+                Call expression.Parser(r.Min, r.Max)
+                Return r
             Catch ex As Exception
                 Return Nothing
             End Try

@@ -132,7 +132,7 @@ Namespace Scripting.Runtime
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function NumericRangeParser(exp As String) As DoubleRange
-            Return CType(exp, DoubleRange)
+            Return DoubleRange.TryParse(exp)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

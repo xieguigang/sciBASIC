@@ -160,7 +160,7 @@ Public Module TimeTrends
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim yScaler = region.YScaler(yTicks)
-                Dim xScaler = timer.Scaler(region.XRange)
+                Dim xScaler = timer.Scaler(DoubleRange.TryParse(region.XRange))
                 Dim rect As Rectangle = region.PlotRegion
                 Dim x#, y#
                 Dim ty#() = {0, 0, 0}

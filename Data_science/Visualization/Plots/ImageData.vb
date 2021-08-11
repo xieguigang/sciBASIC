@@ -85,8 +85,8 @@ Public Module ImageDataExtensions
     <Extension>
     Public Function Image2DMap(img As Image, Optional steps% = 1) As GraphicsData
         Dim color = img.PointZProvider
-        Dim xrange As DoubleRange = $"0 -> {img.Width}"
-        Dim yrange As DoubleRange = $"0 -> {img.Height}"
+        Dim xrange As DoubleRange = DoubleRange.TryParse($"0 -> {img.Width}")
+        Dim yrange As DoubleRange = DoubleRange.TryParse($"0 -> {img.Height}")
 
         Return Contour.HeatMap.Plot(
             color, xrange, yrange,
@@ -98,8 +98,8 @@ Public Module ImageDataExtensions
     <Extension>
     Public Function Image3DMap(img As Image, camera As Camera, Optional steps% = 1) As GraphicsData
         Dim Z = img.SurfaceProvider
-        Dim xrange As DoubleRange = $"0 -> {img.Width}"
-        Dim yrange As DoubleRange = $"0 -> {img.Height}"
+        Dim xrange As DoubleRange = DoubleRange.TryParse($"0 -> {img.Width}")
+        Dim yrange As DoubleRange = DoubleRange.TryParse($"0 -> {img.Height}")
 
         Return Plot3D.ScatterHeatmap.Plot(
             Z, xrange, yrange,

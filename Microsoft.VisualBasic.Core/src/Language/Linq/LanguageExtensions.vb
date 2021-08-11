@@ -82,7 +82,7 @@ Namespace Language
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Sub Add(list As List(Of DoubleRange), range$)
-            list += range
+            list += DoubleRange.TryParse(range)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
