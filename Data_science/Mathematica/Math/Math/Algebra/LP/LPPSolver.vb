@@ -5,6 +5,9 @@ Imports stdNum = System.Math
 
 Namespace LinearAlgebra.LinearProgramming
 
+    ''' <summary>
+    ''' 使用单纯形法进行线性规划问题的求解
+    ''' </summary>
     Friend Class LPPSolver
 
         ReadOnly lpp As LPP
@@ -210,6 +213,11 @@ Namespace LinearAlgebra.LinearProgramming
             Return Nothing
         End Function
 
+        ''' <summary>
+        ''' 判断当前的这个线性规划问题是否是可解的？ 
+        ''' </summary>
+        ''' <param name="possibleSolution"></param>
+        ''' <returns></returns>
         Private Function isFeasible(possibleSolution As List(Of Integer)) As Boolean
             For j As Integer = 0 To lpp.constraintRightHandSides.Length - 1
                 pivot(possibleSolution(j), j)
@@ -238,6 +246,11 @@ Namespace LinearAlgebra.LinearProgramming
         End Function
 
         ' TODO: Review
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="varIndex"></param>
+        ''' <param name="constIndex"></param>
         Public Sub pivot(varIndex As Integer, constIndex As Integer)
             Dim pivotConstraint As List(Of Double) = lpp.constraintCoefficients(constIndex)
             Dim pivotConstraintRHS As Double = lpp.constraintRightHandSides(constIndex)
@@ -298,13 +311,13 @@ Namespace LinearAlgebra.LinearProgramming
         End Sub
 
         Private Function findInitialBasicVariables(artificialVariables As List(Of Integer)) As List(Of Integer)
-
             ' Declare Basic Variable array, boolean to indicate if a feasible solution has been found
             Dim alpha As New List(Of Integer)()
             Dim foundBasicFeasSol As Boolean = False
 
             ' Determine the number of regular variables
             Dim q As Integer = 0
+
             For j As Integer = 0 To artificialVariables.Count - 1
                 If artificialVariables(j) <> -1 Then
                     q += 1
@@ -316,7 +329,6 @@ Namespace LinearAlgebra.LinearProgramming
             Dim powerSetSize As Integer = CInt(Fix(stdNum.Pow(2, n)))
 
             For i As Integer = 0 To powerSetSize - 1
-
                 ' Reinitialize potential basic feasible solution
                 alpha = New List(Of Integer)()
 
@@ -340,6 +352,7 @@ Namespace LinearAlgebra.LinearProgramming
             '  No feasible solution is found, create dummy solution vector.
             If Not foundBasicFeasSol Then
                 alpha = New List(Of Integer)()
+
                 For j As Integer = 0 To lpp.constraintRightHandSides.Length - 1
                     alpha.Add(-1)
                 Next
