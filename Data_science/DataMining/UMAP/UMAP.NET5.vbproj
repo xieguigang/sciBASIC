@@ -127,6 +127,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\Graph\graph-netcore5.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\Randomizer\randomizer-netcore5.vbproj" />
     <ProjectReference Include="..\DataMining\DataMining.NET5.vbproj" />

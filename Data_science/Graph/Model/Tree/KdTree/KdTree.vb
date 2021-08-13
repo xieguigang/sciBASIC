@@ -330,14 +330,16 @@ Namespace KdTree
             Dim bestNodes As New List(Of KdNodeHeapItem(Of T))
             Dim query As New KdTreeNode(Of T)(point, 0, Nothing)
 
-            Call nearestSearch(query, root, 0, bestNodes, maxNodes)
+            Call nearestSearch(query, root, 0, bestNodes, maxNodes + 1)
 
-            For Each node As KdNodeHeapItem(Of T) In bestNodes _
+            Dim bestOutput = bestNodes _
                 .GroupBy(Function(i) i.node.data) _
                 .Select(Function(i) i.First) _
                 .OrderBy(Function(i) access.metric(i.node.data, point)) _
-                .Take(maxNodes)
+                .Take(maxNodes) _
+                .ToArray
 
+            For Each node As KdNodeHeapItem(Of T) In bestOutput
                 If Not maxDistance Is Nothing Then
                     If node.distance <= maxDistance Then
                         Yield New KdNodeHeapItem(Of T)(node.node, node.distance)
@@ -366,11 +368,11 @@ Namespace KdTree
                                   maxNodes As Integer)
             Dim dimension As Integer = depth Mod dimensions.Length
             Dim axis As String = dimensions(dimension)
-            Dim distance = access.metric(point.data, node.data)
+            Dim distance As Double = access.metric(point.data, node.data)
             Dim i As Integer
 
             If result = 0 Then
-                result.Add(New KdNodeHeapItem(Of T)(node, distance))
+                result.Push(New KdNodeHeapItem(Of T)(node, distance))
             End If
 
             For i = 0 To result.Count - 1
@@ -404,14 +406,6 @@ Namespace KdTree
             ' value than the longest distance we already have in our _search results
             If Not opposite Is Nothing AndAlso opposite.distanceSquared(point.data, access) <= result(result.Count - 1).distance Then
                 Call nearestSearch(point, opposite, depth + 1, result, maxNodes)
-            End If
-        End Sub
-
-        Private Sub saveNode(bestNodes As BinaryHeap(Of KdNodeHeapItem(Of T)), node As KdTreeNode(Of T), distance#, maxNodes%)
-            Call bestNodes.push(New KdNodeHeapItem(Of T)(node, distance))
-
-            If (bestNodes.size > maxNodes) Then
-                bestNodes.pop()
             End If
         End Sub
 

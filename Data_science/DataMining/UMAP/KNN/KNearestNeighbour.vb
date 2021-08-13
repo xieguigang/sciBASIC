@@ -33,7 +33,7 @@ Namespace KNN
         ''' <summary>
         ''' Compute the ``nNeighbors`` nearest points for each data point in ``X`` - this may be exact, but more likely is approximated via nearest neighbor descent.
         ''' </summary>
-        Friend Function NearestNeighbors(x As Double()(), progressReporter As RunSlavePipeline.SetProgressEventHandler, Optional ByRef rpForest As FlatTree() = Nothing) As KNNState
+        Friend Function NearestNeighbors(x As Double()(), progressReporter As RunSlavePipeline.SetProgressEventHandler) As KNNState
             Dim metricNNDescent = New NNDescent(m_distanceFn, m_random)
 
             Call progressReporter(0.05F, "Create NNDescent")
@@ -46,9 +46,9 @@ Namespace KNN
             Dim leafSize = stdNum.Max(10, m_k)
             Dim forestProgressReporter = ScaleProgressReporter(progressReporter, 0.1F, 0.4F)
             Dim i As i32 = Scan0
+            Dim rpForest = New FlatTree(nTrees - 1) {}
 
-            rpForest = New FlatTree(nTrees - 1) {}
-            forestProgressReporter(0, $"make {nTrees} trees...")
+            Call forestProgressReporter(0, $"make {nTrees} trees...")
 
             For Each node As (i%, Tree.FlatTree) In Enumerable.Range(0, nTrees) _
                 .AsParallel _

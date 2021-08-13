@@ -104,7 +104,7 @@
     <ProjectReference Include="..\..\..\gr\physics\physics-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\DataMining\DataMining\DataMining.NET5.vbproj" />
-    <ProjectReference Include="..\..\DataMining\UMAP\umap-netcore5.vbproj" />
+    <ProjectReference Include="..\..\DataMining\UMAP\UMAP.NET5.vbproj" />
     <ProjectReference Include="..\..\Graph\graph-netcore5.vbproj" />
     <ProjectReference Include="..\..\MachineLearning\MachineLearning\machine_learning-netcore5.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\DataFrame\dataframeUtils-netcore5.vbproj" />

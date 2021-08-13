@@ -41,6 +41,9 @@
 
 Namespace KNN
 
+    ''' <summary>
+    ''' index and the distance matrix of the corresponding indexed entity
+    ''' </summary>
     Public Class KNNState
 
         Public Property knnIndices As Integer()() = Nothing

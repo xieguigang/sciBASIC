@@ -47,10 +47,10 @@
 
 #End Region
 
-Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.DataMining.UMAP.KNN
+Imports Microsoft.VisualBasic.DataMining.UMAP.KNN.KDTreeMethod
 Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Language.Python
 Imports Microsoft.VisualBasic.Math
@@ -80,6 +80,11 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
     ReadOnly _optimizationState As OptimizationState
     ReadOnly _customMapCutoff As Double?
 
+    ''' <summary>
+    ''' run knn search via kd-tree as mectric engine?
+    ''' </summary>
+    ReadOnly _kdTreeKNNEngine As Boolean = False
+
     Friend ReadOnly KNNArguments As KNNArguments
 
     ''' <summary>
@@ -97,7 +102,6 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
     ''' Projected embedding
     ''' </summary>
     Dim _embedding As Double()
-    Dim _rpForest As Tree.FlatTree()
 
     Public Overrides ReadOnly Property dimension As Integer
         Get
@@ -127,6 +131,7 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
                    Optional bandwidth As Double = 1,
                    Optional customNumberOfEpochs As Integer? = Nothing,
                    Optional customMapCutoff As Double? = Nothing,
+                   Optional kdTreeKNNEngine As Boolean = False,
                    Optional progressReporter As RunSlavePipeline.SetProgressEventHandler = Nothing)
 
         If customNumberOfEpochs IsNot Nothing AndAlso customNumberOfEpochs <= 0 Then
@@ -135,6 +140,7 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
             KNNArguments = New KNNArguments(numberOfNeighbors, localConnectivity, KnnIter, bandwidth)
         End If
 
+        _kdTreeKNNEngine = kdTreeKNNEngine
         _customMapCutoff = customMapCutoff
         _distanceFn = If(distance, AddressOf DistanceFunctions.Cosine)
         _random = If(random, DefaultRandomGenerator.Instance)
@@ -178,8 +184,14 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
         Dim initializeFitProgressReporter As RunSlavePipeline.SetProgressEventHandler = GetProgress()
 
         _x = x
-        ' This part of the process very roughly accounts for 1/3 of the work
-        _knn = New KNearestNeighbour(KNNArguments.k, _distanceFn, _random).NearestNeighbors(x, ScaleProgressReporter(initializeFitProgressReporter, 0, 0.3F), _rpForest)
+
+        If _kdTreeKNNEngine Then
+            _knn = KDTreeMetric.GetKNN(x, k:=KNNArguments.k)
+        Else
+            ' This part of the process very roughly accounts for 1/3 of the work
+            _knn = New KNearestNeighbour(KNNArguments.k, _distanceFn, _random).NearestNeighbors(x, ScaleProgressReporter(initializeFitProgressReporter, 0, 0.3F))
+        End If
+
         ' This part of the process very roughly accounts for 2/3 of the work (the reamining work is in the Step calls)
         _graph = Me.FuzzySimplicialSet(
             x:=x,
