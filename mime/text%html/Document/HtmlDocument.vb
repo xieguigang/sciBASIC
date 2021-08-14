@@ -1,46 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::ced68f71f5e358dda2ee088cf0f7e6e0, mime\text%html\Document\HtmlDocument.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class HtmlDocument
-    ' 
-    '         Function: LoadDocument
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class HtmlDocument
+' 
+'         Function: LoadDocument
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Text
 Imports Microsoft.VisualBasic.MIME.Html.Language
+Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 
 Namespace Document
 
@@ -51,9 +53,21 @@ Namespace Document
         ''' </summary>
         ''' <param name="handle">document text or url or file path</param>
         ''' <returns></returns>
-        Public Shared Function LoadDocument(handle As String) As HtmlDocument
+        Public Shared Function LoadDocument(handle As String, Optional strip As Boolean = False) As HtmlDocument
             Dim text As String = handle.SolveStream
-            Dim document As HtmlDocument = HtmlParser.ParseTree(document:=text)
+            Dim htmlInput As String = text
+
+            If strip Then
+                htmlInput = htmlInput _
+                    .RemovesJavaScript _
+                    .RemovesCSSstyles
+
+                htmlInput = New StringBuilder(htmlInput) _
+                    .RemovesHtmlComments _
+                    .ToString
+            End If
+
+            Dim document As HtmlDocument = HtmlParser.ParseTree(document:=htmlInput)
 
             Return document
         End Function

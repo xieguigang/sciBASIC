@@ -324,18 +324,6 @@ Namespace Text.Parser.HtmlParser
             End If
         End Function
 
-        <Extension> Private Function stripTag(ByRef tag$) As String
-            If tag Is Nothing Then
-                tag = ""
-            Else
-                tag = tag _
-                    .Trim("<"c) _
-                    .Trim(">"c) _
-                    .Trim("/"c)
-            End If
-            Return tag
-        End Function
-
         ''' <summary>
         ''' 将<paramref name="html"/>中的``&lt;script>&lt;/script>``代码块删除
         ''' </summary>
