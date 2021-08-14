@@ -209,7 +209,7 @@ Namespace TextParser
         ''' </remarks>
         <ExportAPI("regexp")>
         Public Function regexp(document As InnerPlantText, parameters As String(), isArray As Boolean) As InnerPlantText
-            Dim options As String = parameters(1)
+            Dim options As String = parameters.ElementAtOrDefault(1)
             Dim pattern As String = parameters(Scan0)
             Dim opts As RegexOptions = RegexOptions.Compiled
             Dim r As New Regex(pattern, opts)
