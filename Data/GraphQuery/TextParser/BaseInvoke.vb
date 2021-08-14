@@ -77,6 +77,25 @@ Namespace TextParser
         End Function
 
         ''' <summary>
+        ''' Clear the extra spaces and line breaks internal the text content string
+        ''' </summary>
+        ''' <param name="document"></param>
+        ''' <param name="parameters"></param>
+        ''' <param name="isArray"></param>
+        ''' <returns></returns>
+        <ExportAPI("strip")>
+        Public Function strip(document As InnerPlantText, parameters As String(), isArray As Boolean) As InnerPlantText
+            Return ParserFunction.ParseDocument(
+                document, Function(i)
+                              Dim text As String = i.GetPlantText
+                              text = text.StringReplace("[\s\r\n\t]+", " ")
+                              Return New InnerPlantText With {.InnerText = text}
+                          End Function,
+                isArray:=isArray
+            )
+        End Function
+
+        ''' <summary>
         ''' Clear spaces and line breaks before and after the string
         ''' </summary>
         ''' <param name="document"></param>
