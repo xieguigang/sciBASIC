@@ -68,5 +68,9 @@ Namespace Scripting.MathExpression.Impl
         Public Overrides Function ToString() As String
             Return $"({left} {[operator]} {right})"
         End Function
+
+        Public Shared Function Power(x As Expression, y As Integer) As Expression
+            Return New BinaryExpression(x, New Literal(y), "^"c)
+        End Function
     End Class
 End Namespace
