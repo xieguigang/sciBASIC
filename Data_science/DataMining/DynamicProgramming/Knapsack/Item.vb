@@ -1,4 +1,6 @@
-﻿Namespace Knapsack
+﻿Imports System.Runtime.CompilerServices
+
+Namespace Knapsack
 
     Public Class Item
 
@@ -6,6 +8,7 @@
         Public Property Value As Integer
         Public Property Weight As Integer
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New(name As String, value As Integer, weight As Integer)
             Me.Name = name
             Me.Value = value

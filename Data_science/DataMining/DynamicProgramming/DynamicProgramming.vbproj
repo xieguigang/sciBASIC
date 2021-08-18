@@ -424,7 +424,6 @@
     <Compile Include="NeedlemanWunsch\GlobalAlign.vb" />
     <Compile Include="NeedlemanWunsch\Workspace.vb" />
     <Compile Include="Knapsack\Item.vb" />
-    <Compile Include="Knapsack\KnapsackInput.vb" />
     <Compile Include="Knapsack\KnapsackSolution.vb" />
     <Compile Include="Knapsack\KnapsackSolver.vb" />
     <Compile Include="SmithWaterman\Directions.vb" />
