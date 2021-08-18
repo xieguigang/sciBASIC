@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::877132dbf5150fb08a32fb406394e504, Data_science\DataMining\DataMining\Clustering\DBSCAN\DbscanPoint.vb"
+﻿#Region "Microsoft.VisualBasic::0f40893066a6e185ff3673b25f6b8f42, Data_science\DataMining\DataMining\Clustering\DBSCAN\DbscanPoint.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,8 @@
 
     '     Class DbscanPoint
     ' 
+    '         Properties: ID
+    ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
     ' 
@@ -48,9 +50,12 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+
 Namespace DBSCAN
 
-    Public Class DbscanPoint(Of T)
+    Public Class DbscanPoint(Of T) : Implements INamedValue
 
         Public IsVisited As Boolean
         Public ClusterPoint As T
@@ -61,6 +66,8 @@ Namespace DBSCAN
             IsVisited = False
             ClusterId = ClusterIDs.Unclassified
         End Sub
+
+        Public Property ID As String Implements IKeyedEntity(Of String).Key
 
         Public Overrides Function ToString() As String
             Return $"[{ClusterId}] {ClusterPoint.ToString}"

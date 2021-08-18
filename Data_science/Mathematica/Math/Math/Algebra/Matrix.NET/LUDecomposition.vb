@@ -96,7 +96,7 @@ Namespace LinearAlgebra.Matrix
         Public Sub New(A As GeneralMatrix)
             ' Use a "left-looking", dot-product, Crout/Doolittle algorithm.
 
-            LU = A.ArrayCopy
+            LU = A.ArrayPack(deepcopy:=True)
             m = A.RowDimension
             n = A.ColumnDimension
             piv = New Integer(m - 1) {}
@@ -185,7 +185,7 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
         Public Overridable ReadOnly Property L() As GeneralMatrix
             Get
-                Dim X As New GeneralMatrix(m, n)
+                Dim X As New NumericMatrix(m, n)
                 Dim La As Double()() = X.Array
                 For i As Integer = 0 To m - 1
                     For j As Integer = 0 To n - 1
@@ -207,7 +207,7 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
         Public Overridable ReadOnly Property U() As GeneralMatrix
             Get
-                Dim X As New GeneralMatrix(n, n)
+                Dim X As New NumericMatrix(n, n)
                 Dim Ua As Double()() = X.Array
                 For i As Integer = 0 To n - 1
                     For j As Integer = 0 To n - 1
@@ -290,7 +290,7 @@ Namespace LinearAlgebra.Matrix
             ' Copy right hand side with pivoting
             Dim nx As Integer = B.ColumnDimension
             Dim Xmat As GeneralMatrix = B.GetMatrix(piv, 0, nx - 1)
-            Dim X As Double()() = Xmat.Array
+            Dim X As Double()() = Xmat.ArrayPack
 
             ' Solve L*Y = B(piv,:)
             For k As Integer = 0 To n - 1

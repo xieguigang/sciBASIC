@@ -1,4 +1,56 @@
-﻿Namespace Filters
+﻿#Region "Microsoft.VisualBasic::fd1aa5a1ba7dc369bf5fe01ebc7fc7cf, gr\Microsoft.VisualBasic.Imaging\Filters\Matrix2DFilters.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Enum Matrix2DFilters
+    ' 
+    '         Max, Mean, Median, Min
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Module Matrix2DFiltersAlgorithm
+    ' 
+    '         Function: sf_maxvalFilter, sf_meanFilter, sf_medianFilter, sf_minvalFilter
+    ' 
+    '         Sub: sf_BubbleSort
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Namespace Filters
 
     Public Enum Matrix2DFilters
         Median
@@ -12,7 +64,7 @@
     ''' </summary>
     Module Matrix2DFiltersAlgorithm
 
-        Public Function sf_medianFilter(ByVal sMat As Byte(,)) As Byte(,)
+        Public Function sf_medianFilter(sMat As Byte(,)) As Byte(,)
             Dim mH = sMat.GetLength(0)
             Dim mW = sMat.GetLength(1)
             Dim Mat = New Byte(mH - 1, mW - 1) {}
@@ -55,7 +107,7 @@
             Next
         End Sub
 
-        Public Function sf_minvalFilter(ByVal sMat As Byte(,)) As Byte(,)
+        Public Function sf_minvalFilter(sMat As Byte(,)) As Byte(,)
             Dim mH = sMat.GetLength(0)
             Dim mW = sMat.GetLength(1)
             Dim Mat = New Byte(mH - 1, mW - 1) {}
@@ -80,7 +132,7 @@
             Return Mat
         End Function
 
-        Public Function sf_maxvalFilter(ByVal sMat As Byte(,)) As Byte(,)
+        Public Function sf_maxvalFilter(sMat As Byte(,)) As Byte(,)
             Dim mH = sMat.GetLength(0)
             Dim mW = sMat.GetLength(1)
             Dim Mat = New Byte(mH - 1, mW - 1) {}
@@ -105,7 +157,7 @@
             Return Mat
         End Function
 
-        Public Function sf_meanFilter(ByVal sMat As Byte(,)) As Byte(,)
+        Public Function sf_meanFilter(sMat As Byte(,)) As Byte(,)
             Dim mH = sMat.GetLength(0)
             Dim mW = sMat.GetLength(1)
             Dim Mat = New Byte(mH - 1, mW - 1) {}

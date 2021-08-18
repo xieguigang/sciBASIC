@@ -68,6 +68,8 @@ Namespace Heatmap
                              Optional minRadius! = 1,
                              Optional scaleMethod As DrawElements = DrawElements.Rows) As GraphicsData
 
+            Throw New NotImplementedException
+
             Dim dataMatrix = data.ToArray
             Dim columnNames$() = dataMatrix.PropertyNames
             Dim nrows = dataMatrix.Length

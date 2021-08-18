@@ -270,9 +270,9 @@ Namespace Heatmap
                     Else
                         ' legend位于整个图片的右上角
                         Call Legends.ColorMapLegend(g, llayout, colors, ticks,
-                                                    CSSFont.TryParse(CSSFont.Win7LargerNormal),
+                                                    CSSFont.TryParse(CSSFont.Win7LargerNormal).GDIObject(g.Dpi),
                                                     legendTitle,
-                                                    CSSFont.TryParse(CSSFont.Win7Normal),
+                                                    CSSFont.TryParse(CSSFont.Win7Normal).GDIObject(g.Dpi),
                                                     Stroke.TryParse(Stroke.StrongHighlightStroke))
                     End If
 

@@ -104,10 +104,11 @@ Namespace Fractions
                              Optional reorder% = 0,
                              Optional legendUnitSize$ = "60,50",
                              Optional shadowDistance# = 80,
-                             Optional shadowAngle# = 35) As GraphicsData
+                             Optional shadowAngle# = 35,
+                             Optional ppi As Integer = 100) As GraphicsData
 
             Dim margin As Padding = padding
-            Dim font As Font = CSSFont.TryParse(legendFont)
+            Dim font As Font = CSSFont.TryParse(legendFont).GDIObject(ppi)
 
 #Const DEBUG = 0
             If reorder <> 0 Then
@@ -125,7 +126,7 @@ Namespace Fractions
                     Dim gSize = region.PlotRegion.Size
                     Dim r# = stdNum.Min(gSize.Width, gSize.Height - shadowDistance) / 2 ' 最大的半径值
                     Dim topLeft As New Point(margin.Left, margin.Top)
-                    Dim valueLabelFont As Font = CSSFont.TryParse(valueLabelStyle)
+                    Dim valueLabelFont As Font = CSSFont.TryParse(valueLabelStyle).GDIObject(g.Dpi)
                     Dim layoutRect As Rectangle
 
                     If minRadius <= 0 OrElse CDbl(minRadius) >= r Then  ' 半径固定不变的样式

@@ -889,6 +889,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algebra\Extensions.vb" />
+    <Compile Include="Algebra\Matrix.NET\IndexVector.vb" />
+    <Compile Include="Algebra\Matrix.NET\GeneralMatrix.vb" />
+    <Compile Include="Algebra\Matrix.NET\SparseMatrix.vb" />
     <Compile Include="Algebra\PCA\Algorithm.vb" />
     <Compile Include="Algebra\PCA\Helper.vb" />
     <Compile Include="Algebra\Polynomial\Formula.vb" />
@@ -964,11 +967,11 @@
     <Compile Include="Algebra\Helpers\Variable.vb" />
     <Compile Include="Algebra\Matrix.NET\Extensions\MatrixMath.vb" />
     <Compile Include="Algebra\Vector\Class\Math.vb" />
-    <Compile Include="Algebra\RSyntax\Math\Poisson.vb" />
-    <Compile Include="Algebra\RSyntax\Math\Skellam.vb" />
-    <Compile Include="Algebra\RSyntax\PrimitiveAPI\Etc.vb" />
-    <Compile Include="Algebra\RSyntax\PrimitiveAPI\PrimitiveAPI.vb" />
-    <Compile Include="Algebra\RSyntax\Vectors\GenericVector%28Of T%29.vb" />
+    <Compile Include="Scripting\Rscript\Math\Poisson.vb" />
+    <Compile Include="Scripting\Rscript\Math\Skellam.vb" />
+    <Compile Include="Scripting\Rscript\PrimitiveAPI\Etc.vb" />
+    <Compile Include="Scripting\Rscript\PrimitiveAPI\base.vb" />
+    <Compile Include="Scripting\Rscript\Vectors\GenericVector%28Of T%29.vb" />
     <Compile Include="Algebra\Solvers\SOR.vb" />
     <Compile Include="Algebra\Solvers\GaussianElimination.vb" />
     <Compile Include="Algebra\Solvers\ISolver.vb" />
@@ -1001,7 +1004,7 @@
     <Compile Include="Algebra\LP\OptimizationType.vb" />
     <Compile Include="Algebra\Matrix.NET\CholeskyDecomposition.vb" />
     <Compile Include="Algebra\Matrix.NET\EigenvalueDecomposition.vb" />
-    <Compile Include="Algebra\Matrix.NET\GeneralMatrix.vb" />
+    <Compile Include="Algebra\Matrix.NET\NumericMatrix.vb" />
     <Compile Include="Algebra\Matrix.NET\LUDecomposition.vb" />
     <Compile Include="Algebra\Matrix.NET\QRDecomposition.vb" />
     <Compile Include="Algebra\Matrix.NET\SingularValueDecomposition.vb" />
@@ -1049,7 +1052,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Algebra\RSyntax\README.txt" />
+    <Content Include="Scripting\Rscript\README.txt" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb1d8387a5397a4a0cf6dd668b2837c0, Data_science\Mathematica\Math\Math.Statistics\Distributions\ContinuousDistribution.vb"
+﻿#Region "Microsoft.VisualBasic::3bb77958f11d187e82360ee4631b5d1d, Data_science\Mathematica\Math\Math.Statistics\Distributions\ContinuousDistribution.vb"
 
     ' Author:
     ' 
@@ -160,12 +160,12 @@ Namespace Distributions
                             ParamVals(i) = flds(i).GetDouble(Me)
                         Case "int"
                             ParamVals(i) = flds(i).GetInt(Me)
-                            'JAVA TO VB CONVERTER TODO TASK: VB does not allow fall-through from a non-empty 'case':
+
                         Case Else
                     End Select
-                    'JAVA TO VB CONVERTER TODO TASK: There is no equivalent in VB to Java 'multi-catch' syntax:
+
                 Catch ex As Exception 'System.ArgumentException Or IllegalAccessException ex
-                    ' java.util.logging.Logger.getLogger(GetType(ContinuousDistribution).Name).log(java.util.logging.Level.SEVERE, Nothing, ex)
+
                 End Try
             Next
             Return ParamVals

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a70a60e0f96dc80af4b696710ae48295, Data_science\Mathematica\Math\Math\Spline\CubicSpline\CubicSplineVector.vb"
+﻿#Region "Microsoft.VisualBasic::92697823b563ec315a8dc3ef312bceae, Data_science\Mathematica\Math\Math\Spline\CubicSpline\CubicSplineVector.vb"
 
     ' Author:
     ' 
@@ -48,7 +48,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 Namespace Interpolation
 
@@ -152,7 +152,7 @@ Namespace Interpolation
             Dim cubicNum%, cubicPos!
 
             position = position * _cubics.Count
-            cubicNum = CInt(Fix(sys.Min(_cubics.Count - 1, position)))
+            cubicNum = CInt(Fix(stdNum.Min(_cubics.Count - 1, position)))
             cubicPos = (position - cubicNum)
 
             Return _cubics(cubicNum).Eval(cubicPos)

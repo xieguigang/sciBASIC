@@ -650,6 +650,9 @@
   <ItemGroup>
     <Compile Include="Analysis\Dijkstra\LinkCalculator.vb" />
     <Compile Include="Analysis\GraphAnalysis.vb" />
+    <Compile Include="Analysis\Louvain\Builder.vb" />
+    <Compile Include="Analysis\Louvain\Edge.vb" />
+    <Compile Include="Analysis\Louvain\Louvain.vb" />
     <Compile Include="Analysis\PageRank\WeightedPRGraph.vb" />
     <Compile Include="Analysis\PageRank\GraphMatrix.vb" />
     <Compile Include="Analysis\PageRank\PageRank.vb" />

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff9a49025fc73db5d6cb73acd1bf561d, Data_science\Visualization\Plots\Scatter\Data\SerialData.vb"
+﻿#Region "Microsoft.VisualBasic::23b47c5a75be194974dba74813af3af5, Data_science\Visualization\Plots\Scatter\Data\SerialData.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '     Properties: DataAnnotations, title
     ' 
-    '     Function: GetEnumerator, GetPen, GetPointByX, IEnumerable_GetEnumerator, ToString
+    '     Function: GetPen, GetPointByX, ToString
     ' 
     '     Sub: AddMarker
     ' 
@@ -55,7 +55,7 @@ Imports Microsoft.VisualBasic.MIME.Html.CSS
 ''' 一条曲线的绘图数据模型
 ''' </summary>
 Public Class SerialData : Implements INamedValue
-    Implements IEnumerable(Of PointData)
+    ' Implements IEnumerable(Of PointData)
 
     ''' <summary>
     ''' 绘图的点的数据，请注意，这里面的点之间是有顺序之分的
@@ -125,15 +125,5 @@ Public Class SerialData : Implements INamedValue
 
     Public Overrides Function ToString() As String
         Return $"{color.ToHtmlColor} {title} ({pts.Length} points)"
-    End Function
-
-    Public Iterator Function GetEnumerator() As IEnumerator(Of PointData) Implements IEnumerable(Of PointData).GetEnumerator
-        For Each x In pts
-            Yield x
-        Next
-    End Function
-
-    Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
-        Yield GetEnumerator()
     End Function
 End Class

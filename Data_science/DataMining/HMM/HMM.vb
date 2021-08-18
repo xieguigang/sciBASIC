@@ -44,7 +44,7 @@
 Imports Microsoft.VisualBasic.DataMining.HiddenMarkovChain.Algorithm.HMMAlgorithm
 Imports Microsoft.VisualBasic.DataMining.HiddenMarkovChain.Models
 Imports Microsoft.VisualBasic.My.JavaScript
-Imports Matrix = Microsoft.VisualBasic.Math.LinearAlgebra.Matrix.GeneralMatrix
+Imports Matrix = Microsoft.VisualBasic.Math.LinearAlgebra.Matrix.NumericMatrix
 
 ''' <summary>
 ''' HMM用于建模数据序列，无论是从连续概率分布还是从离散概率分布得出的。

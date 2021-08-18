@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d702053418b9e2cfb55da16e434a72c, Microsoft.VisualBasic.Core\src\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::573f8226f3706cab4a6520cc52a2c1c5, Microsoft.VisualBasic.Core\src\Extensions\Math\Math.vb"
 
     ' Author:
     ' 
@@ -33,11 +33,11 @@
 
     '     Module VBMath
     ' 
-    '         Function: Covariance, CumSum, Distance, (+6 Overloads) EuclideanDistance, Factorial
-    '                   FactorialSequence, FormatNumeric, Hypot, IsPowerOf2, (+2 Overloads) Log2
-    '                   LogN, Max, Permut, PoissonPDF, Pow2
-    '                   (+3 Overloads) ProductALL, (+3 Overloads) RangesAt, RMS, RMSE, RSD
-    '                   (+4 Overloads) SD, (+2 Overloads) seq, (+5 Overloads) Sum, WeighedAverage
+    '         Function: Covariance, CumSum, Factorial, FactorialSequence, FormatNumeric
+    '                   Hypot, IsPowerOf2, (+2 Overloads) Log2, LogN, Max
+    '                   Permut, PoissonPDF, Pow2, (+3 Overloads) ProductALL, (+3 Overloads) RangesAt
+    '                   RMS, RMSE, RSD, (+4 Overloads) SD, (+2 Overloads) seq
+    '                   (+5 Overloads) Sum, WeighedAverage
     ' 
     ' 
     ' /********************************************************************************/
@@ -565,79 +565,6 @@ Namespace Math
         <Extension> Public Function SD(values As IEnumerable(Of Single)) As Double
             Return values.Select(Function(x) CDbl(x)).SD
         End Function
-
-        ''' <summary>
-        ''' 多位坐标的欧几里得距离，与坐标点0进行比较
-        ''' </summary>
-        ''' <param name="vector"></param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function EuclideanDistance(vector As IEnumerable(Of Double)) As Double
-            ' 由于是和令进行比较，减零仍然为原来的数，所以这里直接使用n^2了
-            Return stdNum.Sqrt((From n In vector Select n ^ 2).Sum)
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function EuclideanDistance(Vector As IEnumerable(Of Integer)) As Double
-            Return stdNum.Sqrt((From n In Vector Select n ^ 2).Sum)
-        End Function
-
-        <Extension>
-        Public Function EuclideanDistance(a As IEnumerable(Of Integer), b As IEnumerable(Of Integer)) As Double
-            If a.Count <> b.Count Then
-                Return -1
-            Else
-                Return stdNum.Sqrt((From i As Integer In a.Sequence Select (a(i) - b(i)) ^ 2).Sum)
-            End If
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function EuclideanDistance(a As IEnumerable(Of Double), b As IEnumerable(Of Double)) As Double
-            Return EuclideanDistance(a.ToArray, b.ToArray)
-        End Function
-
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="a">Point A</param>
-        ''' <param name="b">Point B</param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function EuclideanDistance(a As Byte(), b As Byte()) As Double
-            If a.Length <> b.Length Then
-                Return -1.0R
-            Else
-                Return stdNum.Sqrt((From i As Integer In a.Sequence Select (CInt(a(i)) - CInt(b(i))) ^ 2).Sum)
-            End If
-        End Function
-
-        ''' <summary>
-        ''' 计算两个向量之间的欧氏距离，请注意，这两个向量的长度必须要相等
-        ''' </summary>
-        ''' <param name="a">Point A</param>
-        ''' <param name="b">Point B</param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function EuclideanDistance(a As Double(), b As Double()) As Double
-            If a.Length <> b.Length Then
-                Return -1.0R
-            Else
-                Return stdNum.Sqrt((From i As Integer In a.Sequence Select (a(i) - b(i)) ^ 2).Sum)
-            End If
-        End Function
-
-#If NET_48 = 1 Or netcore5 = 1 Then
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function Distance(pt As (X#, Y#), x#, y#) As Double
-            Return {pt.X, pt.Y}.EuclideanDistance({x, y})
-        End Function
-
-#End If
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("RangesAt")>

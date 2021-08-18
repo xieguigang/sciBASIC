@@ -53,7 +53,7 @@ Namespace Multivariate
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function LinearFitting(x As Double(,), y#()) As MLRFit
-            Return New GeneralMatrix(x.RowIterator.ToArray).LinearFitting(y)
+            Return New NumericMatrix(x.RowIterator.ToArray).LinearFitting(y)
         End Function
 
         ''' <summary>
@@ -85,14 +85,14 @@ Namespace Multivariate
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function LinearFitting(x As GeneralMatrix, f As Vector) As MLRFit
+        Public Function LinearFitting(x As NumericMatrix, f As Vector) As MLRFit
             Dim N = f.Length
             Dim p = x.ColumnDimension
-            Dim Y As New GeneralMatrix(f, N)
+            Dim Y As New NumericMatrix(f, N)
             Dim mean# = f.Average
             Dim beta = x.QRD.Solve(Y)
             Dim SST = ((f - mean) ^ 2).Sum
-            Dim residuals As GeneralMatrix = x.Multiply(beta) - Y
+            Dim residuals As NumericMatrix = x.Multiply(beta) - Y
             Dim SSE = residuals.Norm2 ^ 2
             Dim MLR As New MLRFit With {
                 .beta = x.ColumnDimension _

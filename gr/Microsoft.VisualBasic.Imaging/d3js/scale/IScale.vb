@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bcb9fe5f6231dbbfddd914104c5700ec, gr\Microsoft.VisualBasic.Imaging\d3js\scale\IScale.vb"
+﻿#Region "Microsoft.VisualBasic::14c8eef78ed023f1b27ccd480de23fbc, gr\Microsoft.VisualBasic.Imaging\d3js\scale\IScale.vb"
 
     ' Author:
     ' 
@@ -36,6 +36,8 @@
     ' 
     ' 
     '     Class IScale
+    ' 
+    '         Properties: rangeMax
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: (+3 Overloads) range
@@ -89,6 +91,8 @@ Namespace d3js.scale
         ''' </returns>
         Public MustOverride ReadOnly Property domainSize As Double
 
+        Public MustOverride ReadOnly Property rangeMax As Double
+
     End Class
 
     Public MustInherit Class IScale(Of T As IScale(Of T)) : Inherits Scaler
@@ -107,6 +111,12 @@ Namespace d3js.scale
         ''' 绘图的时候的实际的像素区间
         ''' </summary>
         Protected _range As DoubleRange = defaultRange.DefaultValue.Range
+
+        Public Overrides ReadOnly Property rangeMax As Double
+            Get
+                Return _range.Max
+            End Get
+        End Property
 
         ''' <summary>
         ''' If range is specified, sets the range of the ordinal scale to the specified array of values. 

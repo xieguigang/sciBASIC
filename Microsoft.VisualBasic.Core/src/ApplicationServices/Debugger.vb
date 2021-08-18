@@ -474,11 +474,11 @@ Public Module VBDebugger
     ''' print message, alias for <see cref="Console.Write(String)"/>.(支持``sprintf``之中的转义字符)
     ''' </summary>
     ''' <param name="s$"></param>
-    Public Sub cat(s$)
+    Public Sub cat(ParamArray s As String())
         If Not Mute Then
             Call My.InnerQueue.AddToQueue(
                 Sub()
-                    Call Console.Write(s.ReplaceMetaChars)
+                    Call Console.Write(s.SafeQuery.Select(AddressOf ReplaceMetaChars).JoinBy(""))
                 End Sub)
         End If
     End Sub

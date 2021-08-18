@@ -55,6 +55,12 @@ Namespace ApplicationServices.Development
         ''' The compile date and time of the assembly file.
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' ##### 20210715
+        ''' 
+        ''' 当这个值为空值的时候，JSON序列化会出错；
+        ''' 所以假若需要进行JSON序列化，请及时赋值一个时间值，或者直接使用<see cref="Now"/>进行初始化
+        ''' </remarks>
         Public Property BuiltTime As Date
 
         Public Const ProjectFile As String = "My Project\AssemblyInfo.vb"

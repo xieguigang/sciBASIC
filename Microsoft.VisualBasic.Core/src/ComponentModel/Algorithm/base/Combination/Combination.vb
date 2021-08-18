@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d13a972be6243bff1fdc790c828849d, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\base\Combination\Combination.vb"
+﻿#Region "Microsoft.VisualBasic::5084445643912836c81bcddaefdd75a6, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\base\Combination\Combination.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,8 @@
 
     '     Module Combination
     ' 
-    '         Function: CreateCombos, FullCombination, Generate, (+2 Overloads) Iterates, Iteration
+    '         Function: AllCombinations, CreateCombos, FullCombination, Generate, (+2 Overloads) Iterates
+    '                   Iteration
     ' 
     ' 
     ' /********************************************************************************/
@@ -81,10 +82,18 @@ Namespace ComponentModel.Algorithm.base
             End With
         End Function
 
-        <Extension> Public Iterator Function Iteration(Of T)(source As T()()) As IEnumerable(Of T())
+        ''' <summary>
+        ''' create a vs b vs c ...
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Iterator Function Iteration(Of T)(source As T()()) As IEnumerable(Of T())
             Dim first As T() = source.First
 
-            If source.Length = 2 Then ' 只剩下两个的时候，会退出递归操作
+            ' 只剩下两个的时候，会退出递归操作
+            If source.Length = 2 Then
                 Dim last As T() = source.Last
 
                 For Each x As T In first
@@ -94,7 +103,8 @@ Namespace ComponentModel.Algorithm.base
                 Next
             Else
                 For Each x As T In first
-                    For Each subArray As T() In source.Skip(1).ToArray.Iteration   ' 递归组合迭代
+                    ' 递归组合迭代
+                    For Each subArray As T() In source.Skip(1).ToArray.Iteration
                         Yield New List(Of T)(x) + subArray
                     Next
                 Next
@@ -103,6 +113,19 @@ Namespace ComponentModel.Algorithm.base
 
         Public Function Generate(Of T)(source As T()()) As T()()
             Return source.Iteration.ToArray
+        End Function
+
+        <Extension>
+        Public Iterator Function AllCombinations(Of T)(source As T()) As IEnumerable(Of T())
+            If source.Length = 1 Then
+                Yield {source(Scan0)}
+            Else
+                For Each tag As T In source
+                    For Each combine In source.Skip(1).ToArray.AllCombinations
+                        Yield {tag}.JoinIterates(combine).ToArray
+                    Next
+                Next
+            End If
         End Function
 
         <Extension>

@@ -55,7 +55,7 @@ Namespace LinearAlgebra.Matrix
 
         <Extension>
         Public Function ColumnVector(matrix As GeneralMatrix, i%) As Vector
-            Return New Vector(matrix({i}).Select(Function(r) r(Scan0)))
+            Return New Vector(matrix({i}).ArrayPack.Select(Function(r) r(Scan0)))
         End Function
 
         Public Function size(M As GeneralMatrix, d%) As Integer
@@ -78,7 +78,7 @@ Namespace LinearAlgebra.Matrix
 
         Public Function rand(m%, n%) As GeneralMatrix
             With New Random()
-                Dim A As New GeneralMatrix(m, n)
+                Dim A As New NumericMatrix(m, n)
                 Dim X As Double()() = A.Array
 
                 For i As Integer = 0 To m - 1
@@ -96,8 +96,7 @@ Namespace LinearAlgebra.Matrix
         ''' Normalizes the input matrix so that each column is centered at 0.
         ''' </summary>
         <Extension> Public Function CenterNormalize(m As GeneralMatrix) As GeneralMatrix
-            'ORIGINAL LINE: double[][] @out = new double[input.Length][input[0].Length];
-            Dim input = m.Array
+            Dim input = m.ArrayPack
             Dim out As Double()() = MAT(Of Double)(input.Length, input(0).Length)
 
             For i As Integer = 0 To input.Length - 1
@@ -107,24 +106,28 @@ Namespace LinearAlgebra.Matrix
                 Next
             Next
 
-            Return out
+            Return New NumericMatrix(out)
         End Function
 
         ''' <summary>
         ''' Constructs the covariance matrix for this data set.
         ''' @return	the covariance matrix of this data set
         ''' </summary>
-        <Extension> Public Function Covariance(matrix As GeneralMatrix) As GeneralMatrix
-            'ORIGINAL LINE: double[][] @out = new double[matrix.Length][matrix.Length];
-            Dim out As Double()() = MAT(Of Double)(matrix.Length, matrix.Length)
+        <Extension>
+        Public Function Covariance(matrix As GeneralMatrix) As GeneralMatrix
+            Dim length As Integer = matrix.RowDimension
+            Dim out As Double()() = MAT(Of Double)(length, length)
+            Dim array = matrix.ArrayPack
+
             For i As Integer = 0 To out.Length - 1
                 For j As Integer = 0 To out.Length - 1
-                    Dim dataA As Double() = matrix.Array(i)
-                    Dim dataB As Double() = matrix.Array(j)
+                    Dim dataA As Double() = array(i)
+                    Dim dataB As Double() = array(j)
                     out(i)(j) = dataA.Covariance(dataB)
                 Next
             Next
-            Return out
+
+            Return New NumericMatrix(out)
         End Function
 
         ''' <summary>
@@ -133,7 +136,8 @@ Namespace LinearAlgebra.Matrix
         ''' <param name="m"></param>
         ''' <param name="format$"></param>
         ''' <param name="out"></param>
-        <Extension> Public Sub Print(m As GeneralMatrix, Optional format$ = "F4", Optional out As StreamWriter = Nothing)
+        <Extension>
+        Public Sub Print(m As GeneralMatrix, Optional format$ = "F4", Optional out As StreamWriter = Nothing)
             Dim openSTD As Boolean = False
             Dim line$
 
@@ -142,7 +146,7 @@ Namespace LinearAlgebra.Matrix
                 openSTD = True
             End If
 
-            For Each row As Double() In m
+            For Each row As Double() In m.ArrayPack
                 line = row _
                     .Select(Function(x)
                                 If x >= 0 Then

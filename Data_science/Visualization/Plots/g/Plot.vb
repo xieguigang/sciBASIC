@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d6b54c01838084fe30e86ecb6ce3c02, Data_science\Visualization\Plots\g\Plot.vb"
+﻿#Region "Microsoft.VisualBasic::a3e97c6e24457acbb06229551936754d, Data_science\Visualization\Plots\g\Plot.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class Plot
     ' 
-    '         Properties: main, xlabel, ylabel, zlabel
+    '         Properties: legendTitle, main, xlabel, ylabel, zlabel
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
@@ -68,6 +68,7 @@ Namespace Graphic
         Public Property xlabel As String = "X"
         Public Property ylabel As String = "Y"
         Public Property zlabel As String = "Z"
+        Public Property legendTitle As String = "Legend"
 
         ''' <summary>
         ''' the main title string
@@ -124,8 +125,8 @@ Namespace Graphic
 
         Protected MustOverride Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
 
-        Protected Sub DrawLegends(g As IGraphics, legends As LegendObject(), canvas As GraphicsRegion)
-            Dim legendLabelFont As Font = CSSFont.TryParse(theme.legendLabelCSS)
+        Protected Sub DrawLegends(g As IGraphics, legends As LegendObject(), showBorder As Boolean, canvas As GraphicsRegion)
+            Dim legendLabelFont As Font = CSSFont.TryParse(theme.legendLabelCSS).GDIObject(g.Dpi)
             Dim lsize As SizeF = g.MeasureString("A", legendLabelFont)
             Dim legendParts As LegendObject()() = Nothing
             Dim maxWidth!
@@ -140,7 +141,7 @@ Namespace Graphic
 
             If theme.legendLayout Is Nothing Then
                 Dim maxLen = legends.Select(Function(l) l.title).MaxLengthString
-                Dim lFont As Font = CSSFont.TryParse(legends.First.fontstyle).GDIObject
+                Dim lFont As Font = CSSFont.TryParse(legends.First.fontstyle).GDIObject(g.Dpi)
 
                 maxWidth! = g.MeasureString(maxLen, lFont).Width
 
@@ -162,7 +163,7 @@ Namespace Graphic
                 Call g.DrawLegends(
                     legendPos, legends, legendSize,
                     shapeBorder:=theme.legendBoxStroke,
-                    regionBorder:=theme.legendBoxStroke,
+                    regionBorder:=If(showBorder, theme.legendBoxStroke, Nothing),
                     fillBg:=theme.legendBoxBackground
                 )
             Else
@@ -170,7 +171,7 @@ Namespace Graphic
                     Call g.DrawLegends(
                         legendPos, part, legendSize,
                         shapeBorder:=theme.legendBoxStroke,
-                        regionBorder:=theme.legendBoxStroke,
+                        regionBorder:=If(showBorder, theme.legendBoxStroke, Nothing),
                         fillBg:=theme.legendBoxBackground
                     )
 
@@ -184,7 +185,7 @@ Namespace Graphic
 
         Protected Sub DrawMainTitle(g As IGraphics, plotRegion As Rectangle)
             If Not main.StringEmpty Then
-                Dim fontOfTitle As Font = CSSFont.TryParse(theme.mainCSS)
+                Dim fontOfTitle As Font = CSSFont.TryParse(theme.mainCSS).GDIObject(g.Dpi)
                 Dim titleSize As SizeF = g.MeasureString(main, fontOfTitle)
                 Dim position As New PointF With {
                     .X = plotRegion.X + (plotRegion.Width - titleSize.Width) / 2,

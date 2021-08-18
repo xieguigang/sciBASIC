@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8299af33084e88eadde48cd6248ef03, Data_science\Mathematica\Math\Math\Scripting\Expression\ExpressionBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::d3c0fb409b96628e4904c379da3acb0d, Data_science\Mathematica\Math\Math\Scripting\Expression\ExpressionBuilder.vb"
 
     ' Author:
     ' 
@@ -175,7 +175,8 @@ Namespace Scripting.MathExpression
 
             If tokenBlocks(Scan0).Length = 1 AndAlso tokenBlocks(Scan0)(Scan0) = (MathTokens.Operator, {"-", "+"}) Then
                 ' insert a ZERO before
-                tokenBlocks.Insert(Scan0, {New MathToken(MathTokens.Literal, 0)})
+                tokenBlocks.RemoveAt(Scan0)
+                tokenBlocks(0)(0).text = "-" & tokenBlocks(0)(0).text
             End If
 
             For i As Integer = Scan0 To tokenBlocks.Count - 1

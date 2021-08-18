@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::62919df9358850a2ac7a228cb48a3e4f, mime\text%html\CSS\FontStyle.vb"
+﻿#Region "Microsoft.VisualBasic::74aa5467add31b62b2537a252bb889d4, mime\text%html\CSS\FontStyle.vb"
 
     ' Author:
     ' 
@@ -90,6 +90,7 @@ Namespace CSS
         Public Const Win7UltraLargeNormal$ = "font-style: normal; font-size: 72; font-family: " & FontFace.MicrosoftYaHei & ";"
 
         Public Const PlotTitle$ = "font-style: strong; font-size: 24; font-family: " & FontFace.BookmanOldStyle & ";"
+        Public Const PlotTitleNormal$ = "font-style: normal; font-size: 24; font-family: " & FontFace.BookmanOldStyle & ";"
         Public Const PlotSubTitle$ = "font-style: normal; font-size: 20; font-family: " & FontFace.BookmanOldStyle & ";"
         Public Const PlotSmallTitle$ = "font-style: normal; font-size: 16; font-family: " & FontFace.BookmanOldStyle & ";"
         Public Const PlotLabelNormal$ = "font-style: normal; font-size: 12; font-family: " & FontFace.BookmanOldStyle & ";"
@@ -169,7 +170,7 @@ Namespace CSS
         ''' bugs fixed for config dpi value on unix mono platform 
         ''' </param>
         ''' <returns></returns>
-        Public ReadOnly Property GDIObject(Optional dpi As Integer = 100) As Font
+        Public ReadOnly Property GDIObject(dpi As Integer) As Font
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New Font(family, PointSizeScale(size, dpiResolution:=dpi), style)
@@ -337,9 +338,9 @@ Namespace CSS
             Return New CSSFont(font)
         End Operator
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Narrowing Operator CType(font As CSSFont) As Font
-            Return font.GDIObject
-        End Operator
+        '<MethodImpl(MethodImplOptions.AggressiveInlining)>
+        'Public Shared Narrowing Operator CType(font As CSSFont) As Font
+        '    Return font.GDIObject
+        'End Operator
     End Class
 End Namespace

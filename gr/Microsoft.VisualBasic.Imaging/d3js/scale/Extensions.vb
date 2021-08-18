@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d8c6bd945ccd1534d5f0f64dc120901, gr\Microsoft.VisualBasic.Imaging\d3js\scale\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::297a7b17bb958a3901d06fef61a79138, gr\Microsoft.VisualBasic.Imaging\d3js\scale\Extensions.vb"
 
     ' Author:
     ' 
@@ -108,11 +108,16 @@ Namespace d3js.scale
         ''' Notice how D3 Is able To interpolate 5 even If we haven't specified it explicitly in the 
         ''' domain.
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' Constructs a new continuous scale with the unit domain [0, 1], the unit range [0, 1], 
+        ''' the default interpolator and clamping disabled. Linear scales are a good default 
+        ''' choice for continuous quantitative data because they preserve proportional differences. 
+        ''' Each range value y can be expressed as a function of the domain value x: ``y = mx + b``.
+        ''' </returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
-        Public Function linear() As LinearScale
-            Return New LinearScale
+        Public Function linear(Optional reverse As Boolean = False) As LinearScale
+            Return New LinearScale(reverse)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

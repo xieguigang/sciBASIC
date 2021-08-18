@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74f682e5dc8d139db3d259dd34115c85, Data_science\Visualization\Plots\g\Theme\Theme.vb"
+﻿#Region "Microsoft.VisualBasic::d58bfe9daa4731a725afc740c015fba1, Data_science\Visualization\Plots\g\Theme\Theme.vb"
 
     ' Author:
     ' 
@@ -37,9 +37,9 @@
     '                     axisTickStroke, background, colorSet, drawAxis, drawGrid
     '                     drawLabels, drawLegend, gridFill, gridStrokeX, gridStrokeY
     '                     htmlLabel, legendBoxBackground, legendBoxStroke, legendLabelCSS, legendLayout
-    '                     legendSplitSize, legendTickCSS, legendTickFormat, legendTitleCSS, lineStroke
-    '                     mainCSS, padding, pointSize, subtitleCSS, tagColor
-    '                     tagCSS, tagLinkStroke, xAxisLayout, yAxisLayout
+    '                     legendSplitSize, legendTickAxisStroke, legendTickCSS, legendTickFormat, legendTitleCSS
+    '                     lineStroke, mainCSS, padding, pointSize, subtitleCSS
+    '                     tagColor, tagCSS, tagLinkStroke, xAxisLayout, yAxisLayout
     ' 
     '         Function: Clone, GetLegendPosition, ToString
     ' 
@@ -92,6 +92,7 @@ Namespace Graphic.Canvas
         ''' </summary>
         ''' <returns></returns>
         Public Property legendTickCSS As String = CSSFont.Win7Normal
+        Public Property legendTickAxisStroke As String = Stroke.AxisStroke
         Public Property legendTickFormat As String = "F2"
 
         ''' <summary>
@@ -167,7 +168,8 @@ Namespace Graphic.Canvas
         ''' 一般为F2或者G3
         ''' </summary>
         ''' <returns></returns>
-        Public Property axisTickFormat As String = "F2"
+        Public Property XaxisTickFormat As String = "F2"
+        Public Property YaxisTickFormat As String = "F2"
 
 #End Region
 

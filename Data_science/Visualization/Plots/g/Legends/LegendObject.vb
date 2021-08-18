@@ -79,8 +79,8 @@ Namespace Graphic.Legend
         ''' <see cref="fontstyle"/> to <see cref="Font"/>
         ''' </summary>
         ''' <returns></returns>
-        Public Function GetFont() As Font
-            Return CSSFont.TryParse(fontstyle).GDIObject
+        Public Function GetFont(ppi As Integer) As Font
+            Return CSSFont.TryParse(fontstyle).GDIObject(ppi)
         End Function
 
         ''' <summary>
@@ -91,7 +91,7 @@ Namespace Graphic.Legend
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function MeasureTitle(g As IGraphics) As SizeF
-            Return g.MeasureString(title, GetFont)
+            Return g.MeasureString(title, GetFont(g.Dpi))
         End Function
 
         Public Overrides Function ToString() As String

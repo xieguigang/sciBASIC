@@ -72,15 +72,15 @@ Namespace LinearAlgebra.Matrix
         <Extension> Public Function SG(K As GeneralMatrix) As (M As GeneralMatrix, N As GeneralMatrix, rank As Int16)
             Dim erro As Double = stdNum.Pow(0.1, 10)
             Dim n As Int16 = K.RowDimension
-            Dim m As Int16 = K.Length / n
+            Dim m As Int16 = K.RowDimension / n
             Dim i As Int16
             Dim j As Int16
             Dim Rank As Int16 = GetRank(K, 9)
             Dim return_M, return_N As GeneralMatrix
 
             If Rank = m And m = n Then
-                return_M = New GeneralMatrix(m - 1, n - 1) '    ReDim Return_M(m - 1, n - 1)
-                return_N = New GeneralMatrix(m - 1, n - 1) '    ReDim Return_N(m - 1, n - 1)
+                return_M = New NumericMatrix(m - 1, n - 1) '    ReDim Return_M(m - 1, n - 1)
+                return_N = New NumericMatrix(m - 1, n - 1) '    ReDim Return_N(m - 1, n - 1)
                 For i = 0 To m - 1
                     return_N(i, i) = 1
                     For j = 0 To m - 1
@@ -133,7 +133,7 @@ Namespace LinearAlgebra.Matrix
                 j += 1
             End While
             j1 = 0
-            return_M = New GeneralMatrix(m - 1, Rank - 1) '    ReDim Return_M(m - 1, Rank - 1)
+            return_M = New NumericMatrix(m - 1, Rank - 1) '    ReDim Return_M(m - 1, Rank - 1)
             For i = 0 To m - 1
                 j = i
                 While j < n
@@ -155,7 +155,7 @@ Namespace LinearAlgebra.Matrix
                     j += 1
                 End While
             Next
-            return_N = New GeneralMatrix(Rank - 1, n - 1) '    ReDim Return_N(Rank - 1, n - 1)
+            return_N = New NumericMatrix(Rank - 1, n - 1) '    ReDim Return_N(Rank - 1, n - 1)
             For i = 0 To Rank - 1
                 For j = 0 To n - 1
                     return_N(i, j) = tempk(i, j)
@@ -174,10 +174,10 @@ Namespace LinearAlgebra.Matrix
         Public Function Pinv(K As GeneralMatrix, Return_K As GeneralMatrix) As Int16
             Dim n As Int16 = K.RowDimension
             Dim rank As Int16 = GetRank(K, 9)
-            Dim m As Int16 = K.Length / n
-            Dim temp1 As GeneralMatrix = GeneralMatrix.Number
-            Dim temp2 As GeneralMatrix = GeneralMatrix.Number
-            Dim temp3 As GeneralMatrix = GeneralMatrix.Number
+            Dim m As Int16 = K.RowDimension / n
+            Dim temp1 As GeneralMatrix = NumericMatrix.Number
+            Dim temp2 As GeneralMatrix = NumericMatrix.Number
+            Dim temp3 As GeneralMatrix = NumericMatrix.Number
             If rank = m Then
                 If m = n Then
                     Inv2(K, Return_K, n)
@@ -193,8 +193,8 @@ Namespace LinearAlgebra.Matrix
                 Inv2(temp2, temp3, n) 'temp3为逆
                 Mul(temp3, temp1, n, Return_K)
             Else
-                Dim s = GeneralMatrix.Number
-                Dim g = GeneralMatrix.Number
+                Dim s = NumericMatrix.Number
+                Dim g = NumericMatrix.Number
                 Dim s1(0, 0) As Double
                 Dim g1(0, 0) As Double
                 Dim s2(0, 0) As Double '逆
@@ -205,12 +205,12 @@ Namespace LinearAlgebra.Matrix
                 End With
                 temp1 = s.Transpose '   Math_Matrix_T(s, rank, temp1)
                 temp2 = g.Transpose '      Math_Matrix_T(g, n, temp2)
-                Mul(s, temp1, rank, s1)
-                Mul(temp2, g, rank, g1)
-                Inv2(s1, s2, m)
-                Inv2(g1, g2, n)
-                Mul(temp1, s2, m, temp3) 'rank*m
-                Mul(g2, temp2, n, temp1) 'n*rank
+                Mul(s, temp1, rank, New NumericMatrix(s1))
+                Mul(temp2, g, rank, New NumericMatrix(g1))
+                Inv2(New NumericMatrix(s1), New NumericMatrix(s2), m)
+                Inv2(New NumericMatrix(g1), New NumericMatrix(g2), n)
+                Mul(temp1, New NumericMatrix(s2), m, temp3) 'rank*m
+                Mul(New NumericMatrix(g2), temp2, n, temp1) 'n*rank
                 Mul(temp1, temp3, rank, Return_K)
             End If
             Return n
@@ -226,7 +226,7 @@ Namespace LinearAlgebra.Matrix
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function Pinv2(K As GeneralMatrix, Erro As Int16, m As Int16, Ret As GeneralMatrix) As Int16
-            Dim n As Integer = K.Length / m
+            Dim n As Integer = K.RowDimension / m
             Dim Erro1 As Double = stdNum.Pow(0.1, Erro)
             If Erro1 = 1 Then
                 Erro1 = 0
@@ -360,8 +360,8 @@ Namespace LinearAlgebra.Matrix
             Next
             m += 1
             n += 1
-            Mul(Q, E, n, K)
-            Mul(K, P, m, Ret)
+            Mul(New NumericMatrix(Q), New NumericMatrix(E), n, K)
+            Mul(K, New NumericMatrix(P), m, Ret)
             Return n
         End Function
 
@@ -374,7 +374,7 @@ Namespace LinearAlgebra.Matrix
         ''' <remarks></remarks>
         Public Function GetRank(K As GeneralMatrix, [error] As Int16) As Int16
             Dim n As Int16 = K.RowDimension
-            Dim m As Int16 = K.Length \ n
+            Dim m As Int16 = K.RowDimension \ n
             Dim i As Int16 = 0
             Dim i1 As Int16
             Dim j As Int16 = 0
@@ -480,7 +480,7 @@ Namespace LinearAlgebra.Matrix
         ''' <remarks></remarks>
         Public Function QR(K As GeneralMatrix, Q As GeneralMatrix, R As GeneralMatrix) As Boolean
             Dim n As Int16 = K.RowDimension
-            If n * n <> K.Length Or Det2(K, n) = 0 Then 'K必须是非奇异的n阶方阵
+            If n * n <> K.RowDimension Or Det2(K, n) = 0 Then 'K必须是非奇异的n阶方阵
                 Return False
             End If
             n -= 1
@@ -524,8 +524,8 @@ Namespace LinearAlgebra.Matrix
                 Next
                 Btemp(i) = stdNum.Pow(Btemp(i), 0.5)
             Next
-            Q = New GeneralMatrix(n, n) '  ReDim Q(n, n)
-            R = New GeneralMatrix(n, n) '   ReDim R(n, n)
+            Q = New NumericMatrix(n, n) '  ReDim Q(n, n)
+            R = New NumericMatrix(n, n) '   ReDim R(n, n)
             For i = 0 To n
                 For j = 0 To n
                     Q(j, i) = B(j, i) / Btemp(i)
@@ -548,7 +548,7 @@ Namespace LinearAlgebra.Matrix
         ''' <remarks></remarks>
         Public Function Schmidt(K As GeneralMatrix, Ret As GeneralMatrix) As Boolean
             Dim n As Int16 = K.RowDimension
-            If n * n <> K.Length Or Det2(K, n) = 0 Then 'K必须是非奇异的n阶方阵
+            If n * n <> K.RowDimension Or Det2(K, n) = 0 Then 'K必须是非奇异的n阶方阵
                 Return False
             End If
             n -= 1
@@ -590,7 +590,7 @@ Namespace LinearAlgebra.Matrix
                 Next
                 Btemp(i) = stdNum.Pow(Btemp(i), 0.5)
             Next
-            Ret = New GeneralMatrix(n, n) '  ReDim Ret(n, n)
+            Ret = New NumericMatrix(n, n) '  ReDim Ret(n, n)
             For i = 0 To n
                 For j = 0 To n
                     Ret(j, i) = B(j, i) / Btemp(i)
@@ -611,16 +611,16 @@ Namespace LinearAlgebra.Matrix
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function EigenValue(K11 As GeneralMatrix, n As Int16, LoopNumber As Int16, errors As Int16, Ret As GeneralMatrix, IsHess As Boolean) As Boolean 'ret里是n*2的数组，第一列是实数部分，第2列为虚数部分
-            Dim i As Int16 = K11.Length / n
-            If n * n <> K11.Length Then '只有方阵才有特征值
+            Dim i As Int16 = K11.RowDimension / n
+            If n * n <> K11.RowDimension Then '只有方阵才有特征值
                 Return False
             End If
             Dim j As Int16
             Dim k As Int16
             Dim t As Int16
             Dim m As Int16
-            Dim A As GeneralMatrix = GeneralMatrix.Number
-            Ret = New GeneralMatrix(n - 1, 1) ' ReDim Ret(n - 1, 1) 'u v
+            Dim A As GeneralMatrix = NumericMatrix.Number
+            Ret = New NumericMatrix(n - 1, 1) ' ReDim Ret(n - 1, 1) 'u v
             Dim erro As Double = stdNum.Pow(0.1, errors)
             Dim b As Double
             Dim c As Double
@@ -652,7 +652,7 @@ Namespace LinearAlgebra.Matrix
                     Next
                 Next
             Else
-                Hessenberg(K1, n, A) '将方阵K1转化成上Hessenberg矩阵A
+                Hessenberg(New NumericMatrix(K1), n, A) '将方阵K1转化成上Hessenberg矩阵A
             End If
             m = n
             While m <> 0
@@ -800,7 +800,7 @@ Namespace LinearAlgebra.Matrix
             Dim temp As Double
             Dim MaxNumber As Int16
             n -= 1
-            ret = New GeneralMatrix(n, n) '   ReDim ret(n, n)
+            ret = New NumericMatrix(n, n) '   ReDim ret(n, n)
             For k = 1 To n - 1
                 i = k - 1
                 MaxNumber = k
@@ -860,19 +860,19 @@ Namespace LinearAlgebra.Matrix
         ''' <remarks></remarks>
         Public Function SvdSplit(A As GeneralMatrix, m As Int16, V As GeneralMatrix, V_m As Int16, S As GeneralMatrix, S_m As Int16, U As GeneralMatrix, U_m As Int16) As Boolean
             'A=USV*
-            Dim n As Int16 = A.Length / m
+            Dim n As Int16 = A.RowDimension / m
             Dim i As Int16
             Dim j As Int16
             Dim ii As Int16
-            Dim At = GeneralMatrix.Number
+            Dim At = NumericMatrix.Number
             Dim AtA(0, 0) As Double
             Dim b(0, 0) As Double
             Dim b1(0, 0) As Double
             Dim temp As Double
             Dim Error1 As Double = stdNum.Pow(0.1, 10) '误差控制
             At = A.Transpose '   Math_Matrix_T(A, n, At)
-            Mul(At, A, m, AtA)
-            EigSym(AtA, n, 9, b, b1) 'b特征值，b1特征向量
+            Mul(At, A, m, New NumericMatrix(AtA))
+            EigSym(New NumericMatrix(AtA), n, 9, New NumericMatrix(b), New NumericMatrix(b1)) 'b特征值，b1特征向量
             V_m = n
             S_m = m
             U_m = m
@@ -892,9 +892,9 @@ Namespace LinearAlgebra.Matrix
                     End If
                 Next
             Next
-            S = New GeneralMatrix(m, n) '    ReDim S(m, n)
-            V = New GeneralMatrix(n, n)  '    ReDim V(n, n)
-            U = New GeneralMatrix(m, m) '   ReDim U(m, m)
+            S = New NumericMatrix(m, n) '    ReDim S(m, n)
+            V = New NumericMatrix(n, n)  '    ReDim V(n, n)
+            U = New NumericMatrix(m, m) '   ReDim U(m, m)
             ii = 0
             If m > n Then
                 j = n
@@ -920,12 +920,12 @@ Namespace LinearAlgebra.Matrix
                 Next
             Next
             j = 0
-            At = New GeneralMatrix(n, 0)
+            At = New NumericMatrix(n, 0)
             While j < ii
                 For i = 0 To n
                     At(i, 0) = V(i, j)
                 Next
-                Mul(A, At, n + 1, b1)
+                Mul(A, At, n + 1, New NumericMatrix(b1))
                 For i = 0 To m
                     If S(j, j) = 0 Then
                         U(i, j) = b1(i, 0) / Error1
@@ -936,14 +936,14 @@ Namespace LinearAlgebra.Matrix
                 j += 1
             End While
             While ii <= m
-                At = New GeneralMatrix(ii - 1, m)
+                At = New NumericMatrix(ii - 1, m)
                 ReDim b(ii - 1, 0)
                 For i = 0 To ii - 1
                     For j = 0 To m
                         At(i, j) = U(j, i)
                     Next
                 Next
-                Cramer22(At, b, ii, A)
+                Cramer22(At, New NumericMatrix(b), ii, A)
                 temp = 0
                 For i = 0 To m
                     temp += A(i, 0) * A(i, 0)
@@ -971,18 +971,18 @@ Namespace LinearAlgebra.Matrix
         ''' <remarks></remarks>
         Public Function Cramer22(K As GeneralMatrix, B As GeneralMatrix, k_m As Integer, x As GeneralMatrix) As Boolean 'Kx=B求解x。K不一定为方阵。其结果返回最小二乘解
             Dim i As Integer = B.RowDimension
-            If i <> 1 Or B.Length <> k_m Then
+            If i <> 1 Or B.RowDimension <> k_m Then
                 Return False
             End If
-            Dim kt = GeneralMatrix.Number
+            Dim kt = NumericMatrix.Number
             Dim kmul(0, 0) As Double
-            Dim n As Integer = K.Length / k_m
+            Dim n As Integer = K.RowDimension / k_m
             kt = K.Transpose '   Math_Matrix_T(K, n, kt)
-            Mul(kt, K, k_m, kmul)
+            Mul(kt, K, k_m, New NumericMatrix(kmul))
             Mul(kt, B, k_m, K)
             ' 相当于求解kmul*x=k
-            If Inv2(kmul, kt, n) = False Then
-                If Inv(kmul, kt) = False Then
+            If Inv2(New NumericMatrix(kmul), kt, n) = False Then
+                If Inv(New NumericMatrix(kmul), kt) = False Then
                     Return False
                 End If
             End If
@@ -1002,7 +1002,7 @@ Namespace LinearAlgebra.Matrix
             Dim l(N, N) As Double
             Dim u(N, N) As Double
             Dim temp As Double = 0
-            If LU(k, N + 1, l, u) Then
+            If LU(k, N + 1, New NumericMatrix(l), New NumericMatrix(u)) Then
                 temp = 1
                 While N > -1
                     temp *= l(N, N)
@@ -1020,7 +1020,7 @@ Namespace LinearAlgebra.Matrix
         ''' <remarks></remarks>
         Public Function SPD(K As GeneralMatrix) As Int16 '返回-1 矩阵非对称矩阵，返回0矩阵不正定，返回1矩阵正定.主要是判断矩阵是否是正定矩阵
             Dim n As Int16 = K.RowDimension
-            Dim m As Int16 = K.Length / n
+            Dim m As Int16 = K.RowDimension / n
             If m <> n Then
                 Return -1
             End If
@@ -1047,7 +1047,7 @@ Namespace LinearAlgebra.Matrix
                     Next
                 Next
                 m += 1
-                det = Det2(temp, m)
+                det = Det2(New NumericMatrix(temp), m)
             End While
             If det > 0 Then
                 Return 1
@@ -1077,7 +1077,7 @@ Namespace LinearAlgebra.Matrix
             Dim k As Integer
             Dim n As Integer = A.RowDimension
             n -= 1
-            L = New GeneralMatrix(n, n) '     ReDim L(n, n)
+            L = New NumericMatrix(n, n) '     ReDim L(n, n)
             L(0, 0) = stdNum.Sqrt(A(0, 0))
             For i = 1 To n
                 j = 0
@@ -1119,7 +1119,7 @@ Namespace LinearAlgebra.Matrix
         ''' <remarks></remarks>
         Public Function QR22(A As GeneralMatrix, Q As GeneralMatrix, R As GeneralMatrix, Q_n As Int16, R_n As Int16) As Boolean '此函数不像Math_Matrix_QR2函数一样行数不小于列数,所以应该通用.
             Dim n As Int16 = A.RowDimension
-            Dim m As Int16 = A.Length / n
+            Dim m As Int16 = A.RowDimension / n
             If m = 1 Or n = 1 Then
                 Return False
             End If
@@ -1131,8 +1131,8 @@ Namespace LinearAlgebra.Matrix
             If m < n Then
                 max = m
             End If
-            Q = New GeneralMatrix(m, m) '   ReDim Q(m, m)
-            R = New GeneralMatrix(m, n) '    ReDim R(m, n)
+            Q = New NumericMatrix(m, m) '   ReDim Q(m, m)
+            R = New NumericMatrix(m, n) '    ReDim R(m, n)
             Dim i As Int16
             Dim j As Int16
             Dim l As Int16
@@ -1233,7 +1233,7 @@ Namespace LinearAlgebra.Matrix
         ''' <remarks></remarks>
         Public Function QR2(A As GeneralMatrix, Q As GeneralMatrix, R As GeneralMatrix, Q_n As Int16, R_n As Int16) As Boolean '行数不小于列数
             Dim n As Int16 = A.RowDimension
-            Dim m As Int16 = A.Length / n
+            Dim m As Int16 = A.RowDimension / n
             Dim max As Double = n - 1
             If m = 1 Or n = 1 Or m < n Then
                 Return False
@@ -1245,8 +1245,8 @@ Namespace LinearAlgebra.Matrix
             R_n = n
             m -= 1
             n -= 1
-            Q = New GeneralMatrix(m, m) '        ReDim Q(m, m)
-            R = New GeneralMatrix(m, n) '  ReDim R(m, n)
+            Q = New NumericMatrix(m, m) '        ReDim Q(m, m)
+            R = New NumericMatrix(m, n) '  ReDim R(m, n)
             Dim i As Int16
             Dim j As Int16
             Dim l As Int16
@@ -1345,12 +1345,12 @@ Namespace LinearAlgebra.Matrix
         ''' <returns>其意义是K=LU.函数执行成功返回True,失败返回False</returns>
         ''' <remarks></remarks>
         Public Function LU(K As GeneralMatrix, n As Int16, L As GeneralMatrix, U As GeneralMatrix) As Boolean '方阵的LU分解
-            If n * n <> K.Length Then
+            If n * n <> K.RowDimension Then
                 Return False
             End If
             n -= 1
-            L = New GeneralMatrix(n, n) '    ReDim L(n, n)
-            U = New GeneralMatrix(n, n) '      ReDim U(n, n)
+            L = New NumericMatrix(n, n) '    ReDim L(n, n)
+            U = New NumericMatrix(n, n) '      ReDim U(n, n)
             Dim j As Int16
             Dim i As Int16
             Dim a As Int16
@@ -1395,12 +1395,12 @@ Namespace LinearAlgebra.Matrix
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function Inv2(K As GeneralMatrix, Return_K As GeneralMatrix, N As Integer) As Boolean
-            Dim i As Integer = K.Length \ N
-            If i * N <> K.Length Then
+            Dim i As Integer = K.RowDimension \ N
+            If i * N <> K.RowDimension Then
                 Return False
             End If
             N -= 1
-            Return_K = New GeneralMatrix(N, N) '!!!!! Redim Return_K(N,N)
+            Return_K = New NumericMatrix(N, N) '!!!!! Redim Return_K(N,N)
             If i = 1 Then
                 If K(0, 0) = 0 Then
                     Return False
@@ -1411,7 +1411,7 @@ Namespace LinearAlgebra.Matrix
                 'lu分解法求逆
                 Dim l(N, N) As Double
                 Dim u(N, N) As Double
-                If (LU(K, N + 1, l, u)) Then
+                If (LU(K, N + 1, New NumericMatrix(l), New NumericMatrix(u))) Then
                     Dim d(N) As Double
                     Dim x(N) As Double
                     Dim e(N) As Double
@@ -1486,9 +1486,9 @@ Namespace LinearAlgebra.Matrix
                         Next
                     Next
                     If is1 Then
-                        temp += k(0, i) * DetF(t, N - 1)
+                        temp += k(0, i) * DetF(New NumericMatrix(t), N - 1)
                     Else
-                        temp -= k(0, i) * DetF(t, N - 1)
+                        temp -= k(0, i) * DetF(New NumericMatrix(t), N - 1)
                     End If
                 End If
                 is1 = Not is1
@@ -1504,8 +1504,8 @@ Namespace LinearAlgebra.Matrix
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function Inv(K As GeneralMatrix, Return_K As GeneralMatrix) As Boolean '求矩阵K的逆.成功返回True与其逆矩阵Return_K
-            Dim i As Integer = K.Length
-            Dim N As Integer = System.Math.Pow(i, 0.5)
+            Dim i As Integer = K.RowDimension
+            Dim N As Integer = stdNum.Pow(i, 0.5)
             If i <> N * N Or N = 1 Then '必须是N阶方阵
                 Return False
             End If
@@ -1514,7 +1514,7 @@ Namespace LinearAlgebra.Matrix
                 Return False
             End If
             N -= 1
-            Return_K = New GeneralMatrix(N, N) '  ReDim Return_K(N, N)
+            Return_K = New NumericMatrix(N, N) '  ReDim Return_K(N, N)
             Dim Temp((N - 1), (N - 1)) As Double
             Dim i_temp As Integer = 0
             Dim j_temp As Integer = 0
@@ -1539,7 +1539,7 @@ Namespace LinearAlgebra.Matrix
                             i_temp += 1
                         End If
                     Next
-                    Return_K(j, i) = DetF(Temp, N) / Det '编程时,最好返回Return_K/Det这种格式
+                    Return_K(j, i) = DetF(New NumericMatrix(Temp), N) / Det '编程时,最好返回Return_K/Det这种格式
                     If is2 = False Then
                         Return_K(j, i) = -Return_K(j, i)
                     End If
@@ -1559,20 +1559,20 @@ Namespace LinearAlgebra.Matrix
         ''' <returns>函数执行成功返回奇异值的个数,即Ret的行数,失败返回-1</returns>
         ''' <remarks></remarks>
         Public Function Svd(A As GeneralMatrix, m As Int16, Ret As GeneralMatrix) As Int16 '返回矩阵A的奇异值Ret。本函数出错返回-1。成功返回奇异值的个数，即m*1矩阵的Ret的m
-            Dim n As Int16 = A.Length / m
-            If n * m <> A.Length Then
+            Dim n As Int16 = A.RowDimension / m
+            If n * m <> A.RowDimension Then
                 Return -1
             End If
-            Dim At = GeneralMatrix.Number
+            Dim At = NumericMatrix.Number
             At = A.Transpose '    Call Math_Matrix_T(A, n, At) '???原文If Math_Matrix_T(A, n, At) Then
             Dim AtA(0, 0) As Double
             If n > m Then
-                Mul(A, At, n, AtA)
+                Mul(A, At, n, New NumericMatrix(AtA))
                 n = m
             Else
-                Mul(At, A, m, AtA)
+                Mul(At, A, m, New NumericMatrix(AtA))
             End If
-            If (EigSym(AtA, n, 7, At, Nothing)) Then
+            If (EigSym(New NumericMatrix(AtA), n, 7, At, Nothing)) Then
                 Dim i As Int16
                 m = -1
                 n -= 1
@@ -1582,7 +1582,7 @@ Namespace LinearAlgebra.Matrix
                     End If
                 Next
                 If m <> -1 Then
-                    Ret = New GeneralMatrix(m, 0) '       ReDim Ret(m, 0)
+                    Ret = New NumericMatrix(m, 0) '       ReDim Ret(m, 0)
                     m = 0
                     For i = 0 To n
                         If At(i, 0) > 0 Then
@@ -1610,8 +1610,8 @@ Namespace LinearAlgebra.Matrix
         ''' <returns></returns>
         ''' <remarks>本函数采用用豪斯赫尔蒙德变换将实对称阵化为对称三对角</remarks>
         Public Function SymTridMatrix(A As GeneralMatrix, n As Int16, Is对称 As Boolean, ret As GeneralMatrix) As Boolean '用豪斯赫尔蒙德变换将实对称阵化为对称三对角阵，翻译徐士良老师的解法
-            Dim m As Int16 = A.Length / n
-            If m <> n Or m * n <> A.Length Then
+            Dim m As Int16 = A.RowDimension / n
+            If m <> n Or m * n <> A.RowDimension Then
                 Return False
             End If
             Dim i As Int16
@@ -1636,7 +1636,7 @@ Namespace LinearAlgebra.Matrix
             Dim w(n) As Double
             Dim b(n, n) As Double
             Dim c(n, n) As Double
-            ret = New GeneralMatrix(n, n) '    ReDim ret(n, n)
+            ret = New NumericMatrix(n, n) '    ReDim ret(n, n)
             k = 0
             While k < n - 1
                 s = 0
@@ -1706,7 +1706,7 @@ Namespace LinearAlgebra.Matrix
         ''' 建议使用左连翠提出的《伴随矩阵的新求法》里的方法进行求解。里面的方法可以求解非满秩矩阵的伴随矩阵。
         ''' </remarks>
         Public Function Adj(K As GeneralMatrix, n As Int16, Ret As GeneralMatrix) As Boolean '求方阵K的伴随矩阵
-            If n < 1 Or n * n <> K.Length Then
+            If n < 1 Or n * n <> K.RowDimension Then
                 Return False
             End If
             Dim i As Int16
@@ -1718,7 +1718,7 @@ Namespace LinearAlgebra.Matrix
             Dim is1 As Boolean = True
             Dim is2 As Boolean
             n -= 1
-            Ret = New GeneralMatrix(n, n) '   ReDim Ret(n, n)
+            Ret = New NumericMatrix(n, n) '   ReDim Ret(n, n)
             Dim det As Double
             Dim temp(n - 1, n - 1) As Double
             For i = 0 To n
@@ -1737,7 +1737,7 @@ Namespace LinearAlgebra.Matrix
                             i2 += 1
                         End If
                     Next
-                    det = Det2(temp, n)
+                    det = Det2(New NumericMatrix(temp), n)
                     If is2 = False Then
                         det = -det
                     End If
@@ -1767,7 +1767,7 @@ Namespace LinearAlgebra.Matrix
             Dim j As Integer
             Dim k As Integer
             Dim temp(m, m) As Double
-            Ret = New GeneralMatrix(m, m) '  ReDim Ret(m, m)
+            Ret = New NumericMatrix(m, m) '  ReDim Ret(m, m)
             If n < 9 Then
                 For i = 0 To m
                     For j = 0 To m
@@ -1799,7 +1799,7 @@ Namespace LinearAlgebra.Matrix
                         Next
                     Next
                 Next
-                Pow(temp, m + 1, n \ 2, Ret)
+                Pow(New NumericMatrix(temp), m + 1, n \ 2, Ret)
                 If n Mod 2 = 1 Then
                     For i = 0 To m
                         For j = 0 To m
@@ -1849,7 +1849,7 @@ Namespace LinearAlgebra.Matrix
             Dim ATemp(0, 0) As Double
             Dim ATemp2(0, 2) As Double
             Dim Erro1 As Double = stdNum.Pow(0.1, Erro)
-            Ret = New GeneralMatrix(N, 1) '    ReDim Ret(N, 1)
+            Ret = New NumericMatrix(N, 1) '    ReDim Ret(N, 1)
             While N >= 0
                 u = 1
                 v = 1
@@ -1878,17 +1878,17 @@ Namespace LinearAlgebra.Matrix
                 ATemp2(0, 0) = 1
                 ATemp2(0, 1) = Ret(N, 0)
                 ATemp2(0, 2) = Ret(N, 1)
-                PolyDiv(A, ATemp2, Nothing, ATemp, 11)
+                PolyDiv(A, New NumericMatrix(ATemp2), Nothing, New NumericMatrix(ATemp), 11)
                 A_n = ATemp.Length - 1
                 i = A_n
-                A = New GeneralMatrix(0, i) '     ReDim A(0, i)
+                A = New NumericMatrix(0, i) '     ReDim A(0, i)
                 While i >= 0
                     A(0, i) = ATemp(0, i)
                     i -= 1
                 End While
                 N -= 1
             End While
-            Return Ret.Length / 2
+            Return Ret.RowDimension / 2
         End Function
 
         ''' <summary>
@@ -1907,7 +1907,7 @@ Namespace LinearAlgebra.Matrix
             Dim n As Integer
             Dim max As Double
             Dim min As Double
-            n = Svd(k, m, s)
+            n = Svd(k, m, New NumericMatrix(s))
             If n < 2 Then
                 Return 0
             End If
@@ -1938,7 +1938,7 @@ Namespace LinearAlgebra.Matrix
         ''' <remarks></remarks>
         Public Function Scatter(X As GeneralMatrix, m As Integer, S As GeneralMatrix) As Integer
             '返回X矩阵的散点矩阵(Scatter GeneralMatrix)S
-            Dim n As Integer = X.Length \ m - 1
+            Dim n As Integer = X.RowDimension \ m - 1
             m -= 1
             Dim i As Integer
             Dim j As Integer
@@ -1958,13 +1958,13 @@ Namespace LinearAlgebra.Matrix
                     X(i, j) -= x1
                 Next
             Next
-            S = New GeneralMatrix(m, m) '    ReDim S(m, m)
+            S = New NumericMatrix(m, m) '    ReDim S(m, m)
             For j = 0 To n
                 For i = 0 To m
                     tempx(i, 0) = X(i, j)
                     tempxt(0, i) = X(i, j)
                 Next
-                Mul(tempx, tempxt, 1, temp)
+                Mul(New NumericMatrix(tempx), New NumericMatrix(tempxt), 1, New NumericMatrix(temp))
                 For i1 = 0 To m
                     For j1 = 0 To m
                         S(i1, j1) += temp(i1, j1)
@@ -1985,14 +1985,14 @@ Namespace LinearAlgebra.Matrix
         ''' <returns></returns>
         ''' <remarks>A1/A2=Ret……RetMod</remarks>
         Public Function PolyDivEx(A1 As GeneralMatrix, A2 As GeneralMatrix, RetMod As GeneralMatrix, Ret As GeneralMatrix, Erro As Integer) As Integer '多项式的除法，里边的数组均为1*n的矩阵,原理:A1/A2=Ret……RetMod'函数最终返回Ret商的数组大小
-            Dim n1 As Integer = A1.Length
-            Dim n2 As Integer = A2.Length
+            Dim n1 As Integer = A1.RowDimension
+            Dim n2 As Integer = A2.RowDimension
             Dim N As Integer
             Dim i As Integer
             If n1 < n2 Then
-                Ret = GeneralMatrix.Number '     ReDim Ret(0, 0)
+                Ret = NumericMatrix.Number '     ReDim Ret(0, 0)
                 n1 -= 1
-                RetMod = New GeneralMatrix(0, n1) '   ReDim RetMod(0, n1)
+                RetMod = New NumericMatrix(0, n1) '   ReDim RetMod(0, n1)
                 For i = 0 To n1
                     RetMod(0, i) = A1(0, i)
                 Next
@@ -2001,7 +2001,7 @@ Namespace LinearAlgebra.Matrix
             Dim error1 As Double = stdNum.Abs(A2(0, 0)) * stdNum.Pow(0.1, Erro)
             Dim j As Integer
             N = n1 - n2
-            Ret = New GeneralMatrix(0, N) '  ReDim Ret(0, N)
+            Ret = New NumericMatrix(0, N) '  ReDim Ret(0, N)
             N = 0
             While n1 >= n2
                 Ret(0, N) = A1(0, 0) / A2(0, 0)
@@ -2032,17 +2032,17 @@ Namespace LinearAlgebra.Matrix
                     Call A1.Resize(0, j) '    ReDim Preserve A1(0, j)
                 Else
                     n1 = 0
-                    RetMod = New GeneralMatrix(0, 0) '    ReDim RetMod(0, 0)
+                    RetMod = New NumericMatrix(0, 0) '    ReDim RetMod(0, 0)
                 End If
             End While
             If n1 > 0 Then
                 n1 -= 1
-                RetMod = New GeneralMatrix(0, n1) '   ReDim RetMod(0, n1)
+                RetMod = New NumericMatrix(0, n1) '   ReDim RetMod(0, n1)
                 For i = 0 To n1
                     RetMod(0, i) = A1(0, i)
                 Next
             End If
-            Return Ret.Length
+            Return Ret.RowDimension
         End Function
 
         ''' <summary>
@@ -2083,7 +2083,7 @@ Namespace LinearAlgebra.Matrix
             Dim max As Double
             Dim temp, A(n, n) As Double
             Dim Index(n), b(n, 0) As Integer
-            X = New GeneralMatrix(n, 0) '  ReDim X(n, 0)
+            X = New NumericMatrix(n, 0) '  ReDim X(n, 0)
             For i = 0 To n
                 For temp_i = 0 To n
                     A(i, temp_i) = A1(i, temp_i)
@@ -2180,8 +2180,8 @@ A:              For temp_i = A_m + 1 To n
         ''' <returns></returns>
         ''' <remarks>本代码采用雅可比过关法求解</remarks>
         Public Function EigSym(A As GeneralMatrix, n As Int16, Erro1 As Int16, Ret As GeneralMatrix, Ret_Eigenvectors As GeneralMatrix) As Boolean '返回n阶对称矩阵K的特征值ret.翻译徐士良老师的算法。其方法是雅可比过关法。特征向量Ret_Eigenvectors每一列对应ret每一行的特征值
-            Dim i As Int16 = A.Length / n
-            If i * i <> A.Length Then
+            Dim i As Int16 = A.RowDimension / n
+            If i * i <> A.RowDimension Then
                 Return False
             End If
             n -= 1
@@ -2206,7 +2206,7 @@ A:              For temp_i = A_m + 1 To n
             Dim y As Double
             Dim d As Double
             Dim ero As Double = stdNum.Pow(0.1, Erro1)
-            Ret_Eigenvectors = New GeneralMatrix(n, n) '  ReDim Ret_Eigenvectors(n, n)
+            Ret_Eigenvectors = New NumericMatrix(n, n) '  ReDim Ret_Eigenvectors(n, n)
             For i = 0 To n
                 Ret_Eigenvectors(i, i) = 1
             Next
@@ -2272,7 +2272,7 @@ Loop00:
             Next
             GoTo Loop1
 Loopexit:
-            Ret = New GeneralMatrix(n, 0) '   ReDim Ret(n, 0)
+            Ret = New NumericMatrix(n, 0) '   ReDim Ret(n, 0)
             For i = 0 To n
                 Ret(i, 0) = A(i, i)
             Next
@@ -2294,14 +2294,14 @@ Loopexit:
                 Return False
             End If
             i = K2.RowDimension
-            If i * n <> K2.Length Then
+            If i * n <> K2.RowDimension Then
                 Return False
             End If
-            Dim a As Integer = K1.Length \ n - 1
+            Dim a As Integer = K1.RowDimension \ n - 1
             Dim b As Integer = i - 1
             Dim j As Integer = 0
             Dim k As Integer
-            Return_K = New GeneralMatrix(a, b) '     ReDim Retrun_K(a, b)
+            Return_K = New NumericMatrix(a, b) '     ReDim Retrun_K(a, b)
             n -= 1
             For i = 0 To a
                 For j = 0 To b
@@ -2352,7 +2352,7 @@ Loopexit:
             'ks=inv(p)*diag(sqrt(eig(k))*p
             Dim eigvalue(0, 0) As Double
             Dim i, j As Integer
-            If EigenValue(K, n, 500, 10, eigvalue, False) Then
+            If EigenValue(K, n, 500, 10, New NumericMatrix(eigvalue), False) Then
                 n -= 1
                 For i = 0 To n '判断是否只存在正的实数特征值
                     If eigvalue(i, 1) <> 0 Or eigvalue(i, 0) < 0 Then
@@ -2362,17 +2362,17 @@ Loopexit:
                 Dim diag(n, n), eigtor(n, n), temp(n, 0), temp2(n, 0) As Double
                 For i = 0 To n
                     diag(i, i) = stdNum.Sqrt(eigvalue(i, 0))
-                    EigTorF(K, n + 1, eigvalue(i, 0), temp)
+                    EigTorF(K, n + 1, eigvalue(i, 0), New NumericMatrix(temp))
                     For j = 0 To n
                         eigtor(j, i) = temp(j, 0)
                     Next
                 Next
                 n += 1
-                If Inv2(eigtor, temp, n) = False Then
-                    Inv(eigtor, temp)
+                If Inv2(New NumericMatrix(eigtor), New NumericMatrix(temp), n) = False Then
+                    Inv(New NumericMatrix(eigtor), New NumericMatrix(temp))
                 End If
-                Mul(eigtor, diag, n, temp2)
-                Mul(temp2, temp, n, ks)
+                Mul(New NumericMatrix(eigtor), New NumericMatrix(diag), n, New NumericMatrix(temp2))
+                Mul(New NumericMatrix(temp2), New NumericMatrix(temp), n, ks)
                 Return 1
             Else
                 Return -1
@@ -2427,16 +2427,16 @@ Loopexit:
             'n为F的阶数
             '其中F=R*U
             'U^2=T(F)*F其中T(F)表示F的转置
-            Dim FT = GeneralMatrix.Number, temp(0, 0) As Double
+            Dim FT = NumericMatrix.Number, temp(0, 0) As Double
             FT = F.Transpose '  Math_Matrix_T(F, n, FT)
-            Mul(FT, F, n, temp)
-            If Sqrt(temp, n, U) = -1 Then
+            Mul(FT, F, n, New NumericMatrix(temp))
+            If Sqrt(New NumericMatrix(temp), n, U) = -1 Then
                 Return False
             End If
-            If Inv2(U, temp, n) = False Then
-                Inv(U, temp)
+            If Inv2(U, New NumericMatrix(temp), n) = False Then
+                Inv(U, New NumericMatrix(temp))
             End If
-            Mul(F, temp, n, R)
+            Mul(F, New NumericMatrix(temp), n, R)
             Return True
         End Function
 
@@ -2454,16 +2454,16 @@ Loopexit:
             'n为F的阶数
             '其中F=V*R
             'V^2=F*T(F)其中T(F)表示F的转置
-            Dim FT = GeneralMatrix.Number, temp(0, 0) As Double
+            Dim FT = NumericMatrix.Number, temp(0, 0) As Double
             FT = F.Transpose '     Math_Matrix_T(F, n, FT)
-            Mul(F, FT, n, temp)
-            If Sqrt(temp, n, V) = -1 Then
+            Mul(F, FT, n, New NumericMatrix(temp))
+            If Sqrt(New NumericMatrix(temp), n, V) = -1 Then
                 Return False
             End If
-            If Inv2(V, temp, n) = False Then
-                Inv(V, temp)
+            If Inv2(V, New NumericMatrix(temp), n) = False Then
+                Inv(V, New NumericMatrix(temp))
             End If
-            Mul(temp, F, n, R)
+            Mul(New NumericMatrix(temp), F, n, R)
             Return True
         End Function
 
@@ -2495,7 +2495,7 @@ Loopexit:
             For i = 0 To m2 - 1
                 e(i, i + m2) = -1
             Next
-            Mul(e, k, m + 1, ret)
+            Mul(New NumericMatrix(e), k, m + 1, ret)
             Return 0
         End Function
 
@@ -2508,7 +2508,7 @@ Loopexit:
         Public Sub Lehmer(n As Integer, k As GeneralMatrix)
             '创建n阶Lehmer矩阵
             n -= 1
-            k = New GeneralMatrix(n, n) '   ReDim k(n, n)
+            k = New NumericMatrix(n, n) '   ReDim k(n, n)
             Dim i As Integer
             Dim j As Integer
             For i = 0 To n
@@ -2534,9 +2534,9 @@ Loopexit:
             '多项式相乘,函数返回Ret的大小.Ret为1行的矩阵
             Dim i As Integer
             Dim j As Integer
-            Dim size1 As Integer = Mul1.Length - 1
-            Dim size2 As Integer = Mul2.Length - 1
-            Ret = New GeneralMatrix(0, size1 + size2) '    ReDim Ret(0, size1 + size2)
+            Dim size1 As Integer = Mul1.RowDimension - 1
+            Dim size2 As Integer = Mul2.RowDimension - 1
+            Ret = New NumericMatrix(0, size1 + size2) '    ReDim Ret(0, size1 + size2)
             For i = 0 To size1
                 For j = 0 To size2
                     Ret(0, i + j) += Mul1(0, i) * Mul2(0, j)
@@ -2556,14 +2556,14 @@ Loopexit:
         ''' <returns></returns>
         ''' <remarks>A1/A2=Ret……RetMod</remarks>
         Public Function PolyDiv(A1 As GeneralMatrix, A2 As GeneralMatrix, RetMod As GeneralMatrix, Ret As GeneralMatrix, Erro As Integer) As Integer '多项式的除法，里边的数组均为1*n的矩阵,原理:A1/A2=Ret……RetMod'函数最终返回Ret商的数组大小
-            Dim n1 As Integer = A1.Length
-            Dim n2 As Integer = A2.Length
+            Dim n1 As Integer = A1.RowDimension
+            Dim n2 As Integer = A2.RowDimension
             Dim N As Integer
             Dim i As Integer
             If n1 < n2 Then
-                Ret = New GeneralMatrix(0, 0) '     ReDim Ret(0, 0)
+                Ret = New NumericMatrix(0, 0) '     ReDim Ret(0, 0)
                 n1 -= 1
-                RetMod = New GeneralMatrix(0, n1) '     ReDim RetMod(0, n1)
+                RetMod = New NumericMatrix(0, n1) '     ReDim RetMod(0, n1)
                 For i = 0 To n1
                     RetMod(0, i) = A1(0, i)
                 Next
@@ -2572,7 +2572,7 @@ Loopexit:
             Dim error1 As Double = stdNum.Abs(A2(0, 0)) * stdNum.Pow(0.1, Erro)
             Dim j As Integer
             N = n1 - n2
-            Ret = New GeneralMatrix(0, N) '     ReDim Ret(0, N)
+            Ret = New NumericMatrix(0, N) '     ReDim Ret(0, N)
             N = 0
             While n1 >= n2
                 Ret(0, N) = A1(0, 0) / A2(0, 0)
@@ -2600,20 +2600,20 @@ Loopexit:
                     End While
                     n1 -= i
                     j = n1 - 1
-                    A1 = New GeneralMatrix(0, j) '     ReDim Preserve A1(0, j)
+                    A1 = New NumericMatrix(0, j) '     ReDim Preserve A1(0, j)
                 Else
                     n1 = 0
-                    RetMod = New GeneralMatrix(0, 0) '  ReDim RetMod(0, 0)
+                    RetMod = New NumericMatrix(0, 0) '  ReDim RetMod(0, 0)
                 End If
             End While
             If n1 > 0 Then
                 n1 -= 1
-                RetMod = New GeneralMatrix(0, n1) '      ReDim RetMod(0, n1)
+                RetMod = New NumericMatrix(0, n1) '      ReDim RetMod(0, n1)
                 For i = 0 To n1
                     RetMod(0, i) = A1(0, i)
                 Next
             End If
-            Return Ret.Length
+            Return Ret.RowDimension
         End Function
 
         ''' <summary>
@@ -2627,18 +2627,18 @@ Loopexit:
         ''' <remarks>A1%A2=Ret</remarks>
         Public Function PolyMod(A1 As GeneralMatrix, A2 As GeneralMatrix, Ret As GeneralMatrix, Erro As Integer) As Integer
             '多项式求余Ret=A1%A2,函数返回余项Ret的列数.A1，A2，Ret均为1行的矩阵
-            Dim a1n As Integer = A1.Length
-            Dim a2n As Integer = A2.Length
+            Dim a1n As Integer = A1.RowDimension
+            Dim a2n As Integer = A2.RowDimension
             Dim i As Integer
             Dim temp As Double
             a1n -= 1
             a2n -= 1
             If a2n = 0 Then
-                Ret = New GeneralMatrix(0, 0) '   ReDim Ret(0, 0)
+                Ret = New NumericMatrix(0, 0) '   ReDim Ret(0, 0)
                 Return 1
             End If
             If a1n < a2n Then
-                Ret = New GeneralMatrix(0, a1n) '   ReDim Ret(0, a1n)
+                Ret = New NumericMatrix(0, a1n) '   ReDim Ret(0, a1n)
                 For i = 0 To a1n
                     Ret(0, i) = A1(0, i)
                 Next
@@ -2671,7 +2671,7 @@ Loopexit:
                         End While
                     End If
                     If n > a1n Then
-                        Ret = GeneralMatrix.Number '       ReDim Ret(0, 0)
+                        Ret = NumericMatrix.Number '       ReDim Ret(0, 0)
                         Return 1
                     End If
                     For i = n To a1n
@@ -2679,7 +2679,7 @@ Loopexit:
                     Next
                     a1n -= n
                     If a1n < a2n Then
-                        Ret = New GeneralMatrix(0, a1n) '     ReDim Ret(0, a1n)
+                        Ret = New NumericMatrix(0, a1n) '     ReDim Ret(0, a1n)
                         For i = 0 To a1n
                             Ret(0, i) = A1(0, i)
                         Next
@@ -2704,11 +2704,11 @@ Loopexit:
             '离散傅里叶变换逆变换,Number为点数
             '返回Number*2的矩阵,第一列为实数部分,第2列为虚数部分
             'k是m*2的矩阵,第一列为实数,第2列为虚数
-            If Number > m Or Number < 1 Or m * 2 <> k.Length Then
+            If Number > m Or Number < 1 Or m * 2 <> k.RowDimension Then
                 Return False
             End If
             m = Number - 1
-            X = New GeneralMatrix(m, 1) '     ReDim X(m, 1)
+            X = New NumericMatrix(m, 1) '     ReDim X(m, 1)
             Dim i As Integer
             Dim j As Integer
             Dim tempx As Double
@@ -2747,11 +2747,11 @@ Loopexit:
             '离散傅里叶变换,Number为点数
             '返回Number*2的矩阵,第一列为实数部分,第2列为虚数部分
             'k是m*2的矩阵,第一列为实数,第2列为虚数
-            If Number > m Or Number < 1 Or m * 2 <> k.Length Then
+            If Number > m Or Number < 1 Or m * 2 <> k.RowDimension Then
                 Return False
             End If
             m = Number - 1
-            X = New GeneralMatrix(m, 1) '    ReDim X(m, 1)
+            X = New NumericMatrix(m, 1) '    ReDim X(m, 1)
             Dim i As Integer
             Dim j As Integer
             Dim tempx As Double
@@ -2789,7 +2789,7 @@ Loopexit:
             Dim u(0, 0) As Double
             Dim s(0, 0) As Double
             Dim sm As Integer
-            If SvdSplit(k, m, Nothing, Nothing, s, sm, u, Nothing) = False Then
+            If SvdSplit(k, m, Nothing, Nothing, New NumericMatrix(s), sm, New NumericMatrix(u), Nothing) = False Then
                 Return 0
             End If
             Dim i As Integer
@@ -2810,7 +2810,7 @@ Loopexit:
                 Return 0
             End If
             m -= 1
-            ret = New GeneralMatrix(m, rank) '     ReDim ret(m, rank)
+            ret = New NumericMatrix(m, rank) '     ReDim ret(m, rank)
             For i = 0 To m
                 For j = 0 To rank
                     ret(i, j) = u(i, j)
@@ -2827,7 +2827,7 @@ Loopexit:
         ''' <param name="k">获得的幻方</param>
         ''' <remarks></remarks>
         Private Sub Magic(n As Integer, start As Double, k As GeneralMatrix)
-            k = New GeneralMatrix(n - 1, n - 1) ' ReDim k(n - 1, n - 1)
+            k = New NumericMatrix(n - 1, n - 1) ' ReDim k(n - 1, n - 1)
             If n Mod 4 = 0 Then
                 Magic_4(n, start, k)
             ElseIf n Mod 2 = 0 Then
@@ -2843,7 +2843,7 @@ Loopexit:
             k(0, j) = start
             Dim i As Integer = 0
             Dim Number As Integer = 1
-            While Number < k.Length
+            While Number < k.RowDimension
                 j += 1
                 i -= 1
                 If i < 0 Then
@@ -2882,13 +2882,13 @@ Loopexit:
             Dim C(n, n) As Double
             Dim D(n, n) As Double
             Dim temp As Double = (n + 1) * (n + 1)
-            Magic_1(n + 1, start, A)
+            Magic_1(n + 1, start, New NumericMatrix(A))
             start = start + temp
-            Magic_1(n + 1, start, B)
+            Magic_1(n + 1, start, New NumericMatrix(B))
             start = start + temp
-            Magic_1(n + 1, start, C)
+            Magic_1(n + 1, start, New NumericMatrix(C))
             start = start + temp
-            Magic_1(n + 1, start, D)
+            Magic_1(n + 1, start, New NumericMatrix(D))
             start = start + temp
             Dim i As Integer
             Dim j As Integer
@@ -2994,10 +2994,10 @@ Loopexit:
         ''' </remarks>
         Public Function Sove2(A As GeneralMatrix, b As GeneralMatrix, A_m As Integer, B_m As Integer, X As GeneralMatrix) As Boolean
             '采用全选主元素法求解
-            If A_m <> B_m Or B_m <> b.Length Then
+            If A_m <> B_m Or B_m <> b.RowDimension Then
                 Return False
             End If
-            Dim n As Integer = A.Length \ A_m - 1
+            Dim n As Integer = A.RowDimension \ A_m - 1
             A_m -= 1
             Dim i As Integer
             Dim Indez_i As Integer
@@ -3007,7 +3007,7 @@ Loopexit:
             Dim max As Double
             Dim temp As Double
             Dim Index(n) As Integer
-            X = New GeneralMatrix(n, 0) '   ReDim X(n, 0)
+            X = New NumericMatrix(n, 0) '   ReDim X(n, 0)
             For i = 0 To n
                 Index(i) = i
             Next
@@ -3119,7 +3119,7 @@ Loopexit:
             For i = 0 To A2_n - 1
                 A22(0, i) = A2(0, i)
             Next
-            Return PolyGCFCall(A11, A1_n, A22, A2_n, Ret, Erro)
+            Return PolyGCFCall(New NumericMatrix(A11), A1_n, New NumericMatrix(A22), A2_n, Ret, Erro)
         End Function
 
         ''' <summary>
@@ -3137,7 +3137,7 @@ Loopexit:
             If A1_n < A2_n Then
                 Return PolyGCFCall(A2, A2_n, A1, A1_n, Ret, Erro)
             ElseIf A2_n = 1 Then
-                Ret = New GeneralMatrix(0, 0) '     ReDim Ret(0, 0)
+                Ret = New NumericMatrix(0, 0) '     ReDim Ret(0, 0)
                 Ret(0, 0) = 1
                 Return 1
             End If
@@ -3164,7 +3164,7 @@ Loopexit:
                 End While
                 If i = A1_n Then
                     A2_n -= 1
-                    Ret = New GeneralMatrix(0, A2_n) '  ReDim Ret(0, A2_n)
+                    Ret = New NumericMatrix(0, A2_n) '  ReDim Ret(0, A2_n)
                     For i = 0 To A2_n
                         Ret(0, i) = A2(0, i)
                     Next
@@ -3195,7 +3195,7 @@ Loopexit:
             Dim i As Integer
             Dim j As Integer
             n -= 1
-            k = New GeneralMatrix(n, n) ' ReDim k(n, n)
+            k = New NumericMatrix(n, n) ' ReDim k(n, n)
             For i = 0 To n
                 k(0, i) = 1
                 k(i, 0) = 1

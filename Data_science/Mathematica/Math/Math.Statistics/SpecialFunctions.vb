@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::066efab556583cc8147fe3f73a4db134, Data_science\Mathematica\Math\Math.Statistics\SpecialFunctions.vb"
+﻿#Region "Microsoft.VisualBasic::b4d58b24ca6728c7abf385bc685d6f95, Data_science\Mathematica\Math\Math.Statistics\SpecialFunctions.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,10 @@
 
     ' Module SpecialFunctions
     ' 
-    '     Function: BetaFunction, Binomial, Choose, Correlation, Covariance
-    '               EvaluatePolynomial, Factorial, gamma, gammaln, incbcf
-    '               incbd, IncompleteGamma, IncompleteGammaComplement, InvBinomal, MutualProbability
-    '               pseries, RegularizedIncompleteBetaFunction, safeDiv, StirlingsFormula
+    '     Function: BetaFunction, Binom, Binomial, Choose, Correlation
+    '               Covariance, EvaluatePolynomial, Factorial, gamma, gammaln
+    '               incbcf, incbd, IncompleteGamma, IncompleteGammaComplement, InvBinomal
+    '               MutualProbability, pseries, RegularizedIncompleteBetaFunction, safeDiv, StirlingsFormula
     ' 
     ' /********************************************************************************/
 
@@ -54,6 +54,7 @@ Public Module SpecialFunctions
     Const MAXLOG As Double = 709.782712893384
     Const MINLOG As Double = -745.13321910194122
     Const MAXGAM As Double = 171.62437695630271
+    Const MAXNUM As Double = 1.7976931348623157E+308
 
     Public Function Covariance(array1 As Double(), array2 As Double()) As Double
         Dim tmp As Double = 0
@@ -109,6 +110,10 @@ Public Module SpecialFunctions
         Return Factorial(n, k) \ VBMath.Factorial(n - k)
     End Function
 
+    Public Function Binom(n As Integer, k As Integer) As Double
+        Return VBMath.Factorial(n) / (VBMath.Factorial(k) * VBMath.Factorial(n - k))
+    End Function
+
     Public Function Binomial(probability As Double, n As Integer, k As Integer) As Double
         Dim value As Double = 0
         For i As Integer = 0 To k
@@ -153,7 +158,9 @@ Public Module SpecialFunctions
         Dim a, b, t, x, xc, w, y As Double
         Dim flag As Boolean
 
-        If aa <= 0.0 OrElse bb <= 0.0 Then Throw New ArithmeticException("ibeta: Domain error!")
+        If aa <= 0.0 OrElse bb <= 0.0 Then
+            Throw New ArithmeticException("ibeta: Domain error!")
+        End If
 
         If (xx <= 0.0) OrElse (xx >= 1.0) Then
             If xx = 0.0 Then Return 0.0

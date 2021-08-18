@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69c3b155ffbc11bec813324df1d4df31, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\GDICanvas.vb"
+﻿#Region "Microsoft.VisualBasic::b7897fa2309e0d0c0ddb0828f75a9518, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\GDICanvas.vb"
 
     ' Author:
     ' 
@@ -2046,9 +2046,9 @@ Namespace Imaging
         ''' <param name="pt1">System.Drawing.PointF structure that represents the first point to connect.</param>
         ''' <param name="pt2">System.Drawing.PointF structure that represents the second point to connect.</param>
         Public Overrides Sub DrawLine(pen As Pen, pt1 As PointF, pt2 As PointF)
-            If pt1.X < 0 OrElse pt1.Y < 0 OrElse pt2.X < 0 OrElse pt2.Y < 0 Then
-                Return
-            End If
+            'If pt1.X < 0 OrElse pt1.Y < 0 OrElse pt2.X < 0 OrElse pt2.Y < 0 Then
+            '    Return
+            'End If
 
             Call Graphics.DrawLine(pen, pt1, pt2)
         End Sub

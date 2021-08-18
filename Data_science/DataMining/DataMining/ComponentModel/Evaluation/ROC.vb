@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f002cf715004743765469dc5c4ab5f41, Data_science\DataMining\DataMining\ComponentModel\Evaluation\ROC.vb"
+﻿#Region "Microsoft.VisualBasic::85afd95c514a25b7b5f5a4d22dcceee4, Data_science\DataMining\DataMining\ComponentModel\Evaluation\ROC.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module ROC
     ' 
-    '         Function: accumulate, (+3 Overloads) AUC
+    '         Function: (+3 Overloads) AUC, SimpleAUC
     ' 
     ' 
     ' /********************************************************************************/
@@ -43,9 +43,10 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdNum = System.Math
+Imports Microsoft.VisualBasic.Math.Scripting.Rscript
 
 Namespace ComponentModel.Evaluation
 
@@ -59,41 +60,35 @@ Namespace ComponentModel.Evaluation
         ''' </summary>
         ''' <param name="validates"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' https://blog.revolutionanalytics.com/2016/11/calculating-auc.html
+        ''' 
+        ''' ```r
+        ''' simple_auc &lt;- function(TPR, FPR){
+        '''    # inputs already sorted, best scores first 
+        '''    dFPR &lt;- c(diff(FPR), 0)
+        '''    dTPR &lt;- c(diff(TPR), 0)
+        '''    sum(TPR * dFPR) + sum(dTPR * dFPR) / 2;
+        ''' }
+        '''
+        ''' with(roc_df, simple_auc(TPR, FPR))
+        ''' ```
+        ''' </remarks>
         <Extension>
         Public Function AUC(validates As IEnumerable(Of Validation)) As Double
-            Dim raw = validates _
-                .OrderByDescending(Function(d) d.Threshold) _
-                .ToArray
+            With validates.OrderBy(Function(x) x.Sensibility).ToArray
+                Dim TPR As Vector = .Select(Function(v) v.Sensibility).AsVector
+                Dim FPR As Vector = .Select(Function(v) v.FPR).AsVector
 
-            If raw.All(Function(a) a.Specificity = 100 AndAlso a.Sensibility = 100) Then
-                Return 1
-            Else
-                Return raw.accumulate().Sum / 100
-            End If
+                Return SimpleAUC(TPR, FPR)
+            End With
         End Function
 
-        <Extension>
-        Private Iterator Function accumulate(data As Validation()) As IEnumerable(Of Double)
-            Dim x2, x1 As Double
-            Dim fx2, fx1 As Double
-            Dim h As Double
-            Dim delta As Double
+        Public Function SimpleAUC(TPR As Vector, FPR As Vector) As Double
+            Dim dFPR As Vector = C(diff(FPR), 0)
+            Dim dTPR As Vector = C(diff(TPR), 0)
 
-            ' x = 1 - Specificity
-            ' y = Sensibility
-            '
-            ' 梯形面积计算： 矩形面积+直角三角形面积
-
-            For i As Integer = 1 To data.Length - 1
-                x2 = data(i).Specificity
-                x1 = data(i - 1).Specificity
-                fx2 = data(i).Sensibility
-                fx1 = data(i - 1).Sensibility
-                h = x2 - x1
-                delta = (fx2 + fx1) * h / 2
-
-                Yield delta
-            Next
+            Return (TPR * dFPR).Sum + (dTPR * dFPR).Sum / 2
         End Function
 
         ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91736a80e657ef482c36db9168fd54d7, Data\DataFrame\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::ed566a37aa088878c05d92973f670bd6, Data\DataFrame\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -633,7 +633,7 @@ Public Module Extensions
     ''' <param name="source"></param>
     ''' <param name="path$"></param>
     ''' <param name="encoding"></param>
-    ''' <param name="KeyMap$">将<see cref="EntityObject.ID"/>重命名为这个参数的值，假若这个参数值不是空字符串的话</param>
+    ''' <param name="KeyMap">将<see cref="EntityObject.ID"/>重命名为这个参数的值，假若这个参数值不是空字符串的话</param>
     ''' <param name="blank$"></param>
     ''' <param name="reorderKeys"></param>
     ''' <returns></returns>

@@ -1,53 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::9ece501ec7f08e0e4d3a41b7b75b7825, Data_science\DataMining\UMAP\Umap.vb"
+﻿#Region "Microsoft.VisualBasic::bbbec44cd5f126d19bad681ff474d2df, Data_science\DataMining\UMAP\Umap.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class Umap
-    ' 
-    '     Properties: dimension
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: [Step], Clip, FindABParams, FuzzySimplicialSet, GetEmbedding
-    '               GetGraph, GetNEpochs, GetProgress, InitializeFit, InitializeSimplicialSetEmbedding
-    '               MakeEpochsPerSample, NearestNeighbors, RDist, Round, ScaleProgressReporter
-    ' 
-    '     Sub: InitializeOptimization, Iterate, OptimizeLayoutStep, PrepareForOptimizationLoop, RunIterate
-    ' 
-    ' /********************************************************************************/
+' Class Umap
+' 
+'     Properties: dimension
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: [Step], Clip, FindABParams, FuzzySimplicialSet, GetEmbedding
+'               GetGraph, GetNEpochs, GetProgress, InitializeFit, InitializeSimplicialSetEmbedding
+'               MakeEpochsPerSample, NearestNeighbors, RDist, Round, ScaleProgressReporter
+' 
+'     Sub: InitializeOptimization, Iterate, OptimizeLayoutStep, PrepareForOptimizationLoop, RunIterate
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
+Imports Microsoft.VisualBasic.DataMining.ComponentModel
+Imports Microsoft.VisualBasic.DataMining.UMAP.KNN
+Imports Microsoft.VisualBasic.DataMining.UMAP.KNN.KDTreeMethod
 Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Language.Python
 Imports Microsoft.VisualBasic.Math
@@ -59,7 +62,7 @@ Imports stdNum = System.Math
 ''' <remarks>
 ''' https://github.com/curiosity-ai/umap-sharp
 ''' </remarks>
-Public NotInheritable Class Umap
+Public NotInheritable Class Umap : Inherits IDataEmbedding
 
     Friend Const SMOOTH_K_TOLERANCE As Double = 0.00001F
     Friend Const MIN_K_DIST_SCALE As Double = 0.001F
@@ -70,17 +73,19 @@ Public NotInheritable Class Umap
     ReadOnly _repulsionStrength As Double = 1
     ReadOnly _setOpMixRatio As Double = 1
     ReadOnly _spread As Double = 1
-    ReadOnly _distanceFn As DistanceCalculation
-    ReadOnly _random As IProvideRandomValues
+    Friend ReadOnly _distanceFn As DistanceCalculation
+    Friend ReadOnly _random As IProvideRandomValues
     ReadOnly _customNumberOfEpochs As Integer?
-    ReadOnly _progressReporter As IProgressReporter
+    ReadOnly _progressReporter As RunSlavePipeline.SetProgressEventHandler
     ReadOnly _optimizationState As OptimizationState
     ReadOnly _customMapCutoff As Double?
 
     ''' <summary>
-    ''' KNN state (can be precomputed and supplied via initializeFit)
+    ''' run knn search via kd-tree as mectric engine?
     ''' </summary>
-    ReadOnly knn As KNNState
+    ReadOnly _kdTreeKNNEngine As Boolean = False
+
+    Friend ReadOnly KNNArguments As KNNArguments
 
     ''' <summary>
     ''' Internal graph connectivity representation
@@ -88,14 +93,17 @@ Public NotInheritable Class Umap
     Private _graph As SparseMatrix = Nothing
     Private _x As Double()() = Nothing
     Private _isInitialized As Boolean = False
-    Private _rpForest As Tree.FlatTree() = New Tree.FlatTree(-1) {}
 
+    ''' <summary>
+    ''' KNN state (can be precomputed and supplied via initializeFit)
+    ''' </summary>
+    Dim _knn As KNNState
     ''' <summary>
     ''' Projected embedding
     ''' </summary>
     Dim _embedding As Double()
 
-    Public ReadOnly Property dimension As Integer
+    Public Overrides ReadOnly Property dimension As Integer
         Get
             Return _optimizationState.Dim
         End Get
@@ -123,16 +131,16 @@ Public NotInheritable Class Umap
                    Optional bandwidth As Double = 1,
                    Optional customNumberOfEpochs As Integer? = Nothing,
                    Optional customMapCutoff As Double? = Nothing,
-                   Optional progressReporter As IProgressReporter = Nothing)
+                   Optional kdTreeKNNEngine As Boolean = False,
+                   Optional progressReporter As RunSlavePipeline.SetProgressEventHandler = Nothing)
 
         If customNumberOfEpochs IsNot Nothing AndAlso customNumberOfEpochs <= 0 Then
             Throw New ArgumentOutOfRangeException(NameOf(customNumberOfEpochs), "if non-null then must be a positive value")
         Else
-            knn = New KNNState With {
-                .parameters = New KNNArguments(numberOfNeighbors, localConnectivity, KnnIter, bandwidth)
-            }
+            KNNArguments = New KNNArguments(numberOfNeighbors, localConnectivity, KnnIter, bandwidth)
         End If
 
+        _kdTreeKNNEngine = kdTreeKNNEngine
         _customMapCutoff = customMapCutoff
         _distanceFn = If(distance, AddressOf DistanceFunctions.Cosine)
         _random = If(random, DefaultRandomGenerator.Instance)
@@ -143,13 +151,13 @@ Public NotInheritable Class Umap
         _progressReporter = progressReporter
     End Sub
 
-    Private Function GetProgress() As IProgressReporter
+    Private Function GetProgress() As RunSlavePipeline.SetProgressEventHandler
         If _progressReporter Is Nothing Then
-            Return Sub(progress)
+            Return Sub(progress, msg)
                        ' do nothing
                    End Sub
         Else
-            Return Umap.ScaleProgressReporter(_progressReporter, 0, 0.8F)
+            Return ScaleProgressReporter(_progressReporter, 0, 0.8F)
         End If
     End Function
 
@@ -173,16 +181,15 @@ Public NotInheritable Class Umap
         ' InitializeFit Takes at least 80% of the total time (the calls to Step are
         ' completed much more quickly AND they naturally lend themselves to granular progress updates; 
         ' one per loop compared to the recommended number of epochs)
-        Dim initializeFitProgressReporter As IProgressReporter = GetProgress()
+        Dim initializeFitProgressReporter As RunSlavePipeline.SetProgressEventHandler = GetProgress()
 
         _x = x
 
-        If knn._knnIndices Is Nothing AndAlso knn._knnDistances Is Nothing Then
+        If _kdTreeKNNEngine Then
+            _knn = KDTreeMetric.GetKNN(x, k:=KNNArguments.k)
+        Else
             ' This part of the process very roughly accounts for 1/3 of the work
-            With Me.NearestNeighbors(x, Umap.ScaleProgressReporter(initializeFitProgressReporter, 0, 0.3F))
-                knn._knnIndices = .knnIndices
-                knn._knnDistances = .knnDistances
-            End With
+            _knn = New KNearestNeighbour(KNNArguments.k, _distanceFn, _random).NearestNeighbors(x, ScaleProgressReporter(initializeFitProgressReporter, 0, 0.3F))
         End If
 
         ' This part of the process very roughly accounts for 2/3 of the work (the reamining work is in the Step calls)
@@ -212,7 +219,7 @@ Public NotInheritable Class Umap
     ''' get projection result
     ''' </summary>
     ''' <returns></returns>
-    Public Function GetEmbedding() As Double()()
+    Public Overrides Function GetEmbedding() As Double()()
         Dim final As Double()() = New Double(_optimizationState.NVertices - 1)() {}
         Dim span As Double() = _embedding
 
@@ -246,69 +253,23 @@ Public NotInheritable Class Umap
     End Function
 
     ''' <summary>
-    ''' Compute the ``nNeighbors`` nearest points for each data point in ``X`` - this may be exact, but more likely is approximated via nearest neighbor descent.
-    ''' </summary>
-    Friend Function NearestNeighbors(x As Double()(), progressReporter As IProgressReporter) As (knnIndices As Integer()(), knnDistances As Double()())
-        Dim metricNNDescent = New NNDescent(_distanceFn, _random)
-
-        Call progressReporter(0.05F)
-
-        Dim nTrees = 5 + Round(stdNum.Sqrt(x.Length) / 20)
-        Dim nIters = stdNum.Max(5, CInt(stdNum.Floor(stdNum.Round(stdNum.Log(x.Length, 2)))))
-
-        Call progressReporter(0.1F)
-
-        Dim leafSize = stdNum.Max(10, knn.parameters.k)
-        Dim forestProgressReporter = Umap.ScaleProgressReporter(progressReporter, 0.1F, 0.4F)
-
-        _rpForest = Enumerable.Range(0, nTrees) _
-            .[Select](Function(i)
-                          forestProgressReporter(CSng(i) / nTrees)
-                          Return Tree.FlattenTree(Tree.MakeTree(x, leafSize, i, _random), leafSize)
-                      End Function) _
-            .ToArray()
-
-        Dim leafArray = Tree.MakeLeafArray(_rpForest)
-
-        Call progressReporter(0.45F)
-
-        Dim nnDescendProgressReporter = Umap.ScaleProgressReporter(progressReporter, 0.5F, 1)
-
-        ' Handle python3 rounding down from 0.5 discrpancy
-        Return metricNNDescent.MakeNNDescent(x, leafArray, knn.parameters.k, nIters, startingIteration:=Sub(i, max) nnDescendProgressReporter(CSng(i) / max))
-    End Function
-
-    ''' <summary>
-    ''' Handle python3 rounding down from 0.5 discrpancy
-    ''' </summary>
-    ''' <param name="n"></param>
-    ''' <returns></returns>
-    Private Shared Function Round(n As Double) As Integer
-        If n = 0.5 Then
-            Return 0
-        Else
-            Return stdNum.Floor(stdNum.Round(n))
-        End If
-    End Function
-
-    ''' <summary>
     ''' Given a set of data X, a neighborhood size, and a measure of distance compute the fuzzy simplicial set(here represented as a fuzzy graph in the form of a sparse matrix) associated
     ''' to the data. This is done by locally approximating geodesic distance at each point, creating a fuzzy simplicial set for each such point, and then combining all the local fuzzy
     ''' simplicial sets into a global one via a fuzzy union.
     ''' </summary>
-    Private Function FuzzySimplicialSet(x As Double()(), setOpMixRatio As Double, progressReporter As IProgressReporter) As SparseMatrix
-        Dim knnIndices = If(knn._knnIndices, New Integer(-1)() {})
-        Dim knnDistances = If(knn._knnDistances, New Single(-1)() {})
+    Private Function FuzzySimplicialSet(x As Double()(), setOpMixRatio As Double, progressReporter As RunSlavePipeline.SetProgressEventHandler) As SparseMatrix
+        Dim knnIndices = If(_knn.knnIndices, New Integer(-1)() {})
+        Dim knnDistances = If(_knn.knnDistances, New Single(-1)() {})
         Dim report As New ProgressReporter With {.report = progressReporter}
-        Dim sigmasRhos = report.Run(Function() UMAP_KNN.SmoothKNNDistance(knnDistances, knn.parameters), 0.1)
-        Dim rowsColsVals = report.Run(Function() UMAP_KNN.ComputeMembershipStrengths(knnIndices, knnDistances, sigmasRhos.sigmas, sigmasRhos.rhos), 0.2)
-        Dim sparseMatrix = report.Run(Function() New SparseMatrix(rowsColsVals.rows, rowsColsVals.cols, rowsColsVals.vals, (x.Length, x.Length)), 0.3)
+        Dim sigmasRhos = report.Run(Function() SmoothKNN.SmoothKNNDistance(knnDistances, KNNArguments), 0.1, "SmoothKNNDistance")
+        Dim rowsColsVals = report.Run(Function() SmoothKNN.ComputeMembershipStrengths(knnIndices, knnDistances, sigmasRhos.sigmas, sigmasRhos.rhos), 0.2, "ComputeMembershipStrengths")
+        Dim sparseMatrix = report.Run(Function() New SparseMatrix(rowsColsVals.Row, rowsColsVals.Col, rowsColsVals.X, (x.Length, x.Length)), 0.3, "Create SparseMatrix")
         Dim transpose = sparseMatrix.Transpose()
         Dim prodMatrix = sparseMatrix.PairwiseMultiply(transpose)
-        Dim a = report.Run(Function() sparseMatrix.Add(CType(transpose, SparseMatrix)).Subtract(prodMatrix), 0.4)
-        Dim b = report.Run(Function() a.MultiplyScalar(setOpMixRatio), 0.5)
-        Dim c = report.Run(Function() prodMatrix.MultiplyScalar(1 - setOpMixRatio), 0.6)
-        Dim result = report.Run(Function() b.Add(c), 0.7)
+        Dim a = report.Run(Function() sparseMatrix.Add(CType(transpose, SparseMatrix)).Subtract(prodMatrix), 0.4, "T - prod")
+        Dim b = report.Run(Function() a.MultiplyScalar(setOpMixRatio), 0.5, "a * setOpMixRatio")
+        Dim c = report.Run(Function() prodMatrix.MultiplyScalar(1 - setOpMixRatio), 0.6, "prod * (1 - setOpMixRatio)")
+        Dim result = report.Run(Function() b.Add(c), 0.7, "b + c")
 
         Return result
     End Function
@@ -439,7 +400,8 @@ Public NotInheritable Class Umap
                 ' leaving 20% for the Step iterations - the progress reporter calls made here are based on the 
                 ' assumption that Step will be called the recommended number of times (the number-of-epochs value 
                 ' returned From InitializeFit)
-                Umap.ScaleProgressReporter(_progressReporter, 0.8F, 1)(CSng(currentEpoch) / numberOfEpochsToComplete)
+                ' Umap.ScaleProgressReporter(_progressReporter, 0.8F, 1)(CSng(currentEpoch) / numberOfEpochsToComplete, "OptimizeLayoutStep")
+                Call Console.Write(".")
             End If
         End If
 
@@ -561,10 +523,5 @@ Public NotInheritable Class Umap
         Else
             Return x
         End If
-    End Function
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Private Shared Function ScaleProgressReporter(progressReporter As IProgressReporter, start As Double, [end] As Double) As IProgressReporter
-        Return Sub(progress) progressReporter(([end] - start) * progress + start)
     End Function
 End Class

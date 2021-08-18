@@ -174,7 +174,7 @@ Namespace Drawing2D
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function XScaler(xrange As DoubleRange) As Func(Of Double, Double)
-            Return scaler(xrange, Me.XRange)
+            Return scaler(xrange, DoubleRange.TryParse(Me.XRange))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

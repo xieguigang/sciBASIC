@@ -89,11 +89,12 @@ Public Module BoxPlot
                                      Optional rangeScale# = 1.25,
                                      Optional showDataPoints As Boolean = True,
                                      Optional showOutliers As Boolean = True,
-                                     Optional fillBox As Boolean = True) As GraphicsData
+                                     Optional fillBox As Boolean = True,
+                                     Optional ppi As Integer = 100) As GraphicsData
 
-        Dim yAxisLabelFont As Font = CSSFont.TryParse(YAxisLabelFontCSS)
-        Dim groupLabelFont As Font = CSSFont.TryParse(groupLabelCSSFont)
-        Dim tickLabelFont As Font = CSSFont.TryParse(tickFontCSS)
+        Dim yAxisLabelFont As Font = CSSFont.TryParse(YAxisLabelFontCSS).GDIObject(ppi)
+        Dim groupLabelFont As Font = CSSFont.TryParse(groupLabelCSSFont).GDIObject(ppi)
+        Dim tickLabelFont As Font = CSSFont.TryParse(tickFontCSS).GDIObject(ppi)
         Dim colors As LoopArray(Of SolidBrush) = Designer _
             .GetColors(schema) _
             .Select(Function(color) New SolidBrush(color)) _
@@ -170,8 +171,8 @@ Public Module BoxPlot
                         pen = New Pen(brush.Color, lineWidth)
                     End If
 
-                    If Not outlier.Outlier.IsNullOrEmpty Then
-                        quartile = outlier.Normal.Quartile
+                    If Not outlier.outlier.IsNullOrEmpty Then
+                        quartile = outlier.normal.Quartile
                     End If
 
                     ' max
@@ -214,12 +215,12 @@ Public Module BoxPlot
 
                     ' outliers + normal points
                     If showDataPoints Then
-                        For Each n As Double In outlier.Normal
+                        For Each n As Double In outlier.normal
                             Call g.FillEllipse(brush, New PointF(x1, y(n)).CircleRectangle(dotSize))
                         Next
                     End If
                     If showOutliers Then
-                        For Each n As Double In outlier.Outlier
+                        For Each n As Double In outlier.outlier
                             Call g.FillEllipse(brush, New PointF(x1, y(n)).CircleRectangle(dotSize))
                         Next
                     End If

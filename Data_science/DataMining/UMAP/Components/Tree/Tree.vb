@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41124035c32932ec0fabd3ae798c7e2a, Data_science\DataMining\UMAP\Components\Tree\Tree.vb"
+﻿#Region "Microsoft.VisualBasic::e56018c1e94db7648183289009cac8f0, Data_science\DataMining\UMAP\Components\Tree\Tree.vb"
 
     ' Author:
     ' 
@@ -224,7 +224,6 @@ Namespace Tree
                 Dim output = New List(Of Integer())()
 
                 For Each tree In forest
-
                     For Each entry In tree.Indices
                         output.Add(entry)
                     Next

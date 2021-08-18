@@ -120,8 +120,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
-    <ProjectReference Include="..\..\DataMining\DataMining\datamining-netcore5.vbproj" />
-    <ProjectReference Include="..\..\Mathematica\Math\Math\math-netcore5.vbproj" />
+    <ProjectReference Include="..\..\DataMining\DataMining\DataMining.NET5.vbproj" />
+    <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
   </ItemGroup>
 
 </Project>

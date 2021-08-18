@@ -184,7 +184,8 @@ Public Module NetworkVisualizer
                               Optional convexHullScale! = 1.0125,
                               Optional convexHullCurveDegree As Single = 2,
                               Optional fillConvexHullPolygon As Boolean = True,
-                              Optional driver As Drivers = Drivers.Default) As GraphicsData
+                              Optional driver As Drivers = Drivers.Default,
+                              Optional ppi As Integer = 100) As GraphicsData
 
         Call GetType(NetworkVisualizer).Assembly _
             .FromAssembly _
@@ -233,7 +234,7 @@ Public Module NetworkVisualizer
                 .family = FontFace.MicrosoftYaHei,
                 .size = 12,
                 .style = FontStyle.Regular
-            }).GDIObject
+            }).GDIObject(ppi)
 
         Call "Initialize variables, done!".__INFO_ECHO
 
@@ -555,7 +556,7 @@ Public Module NetworkVisualizer
                      End Function) _
             .ToArray
         Dim colors As LoopArray(Of Color) = Designer.GetColors(hullPolygonGroups.Description Or "set1:c8".AsDefault)
-        Dim convexHullLabelFont As Font = CSSFont.TryParse(convexHullLabelFontCSS$)
+        Dim convexHullLabelFont As Font = CSSFont.TryParse(convexHullLabelFontCSS$).GDIObject(g.Dpi)
         Dim singleGroupKey As String = Nothing
 
         If hullPolygonGroups.Value.StringEmpty Then

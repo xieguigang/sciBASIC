@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c1d9f45dea8dba325abf89572ff0d9b0, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\WordWrap.vb"
+﻿#Region "Microsoft.VisualBasic::a4cd2fe870dc3305a68c035365df58fb, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\WordWrap.vb"
 
     ' Author:
     ' 
@@ -97,7 +97,7 @@ Namespace Drawing2D.Text
         ''' <param name="splitChars">在行末所插入的分隔符</param>
         ''' <returns></returns>
         <Extension>
-        Public Function DoWordWrap(str$, width%, Optional splitChars$ = " -" & ASCII.TAB) As String
+        Public Function DoWordWrap(str$, width%, Optional splitChars$ = " -" & VisualBasic.Text.ASCII.TAB) As String
             Dim words = Explode(str, splitChars)
             Dim curLineLength = 0
             Dim sb As New StringBuilder()

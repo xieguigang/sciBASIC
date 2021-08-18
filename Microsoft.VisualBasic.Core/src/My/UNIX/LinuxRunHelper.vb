@@ -121,7 +121,7 @@ Namespace My.UNIX
         End Function
 
         ''' <summary>
-        ''' Run linux command
+        ''' Run linux command via ``/bin/bash``
         ''' </summary>
         ''' <param name="command"></param>
         ''' <param name="args"></param>

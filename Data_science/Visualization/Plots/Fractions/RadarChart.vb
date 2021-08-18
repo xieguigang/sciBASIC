@@ -158,7 +158,8 @@ Namespace Fractions
                              Optional labelFontCSS$ = CSSFont.Win7VeryVeryLarge,
                              Optional axisStrokeStyle$ = Stroke.WhiteLineStroke,
                              Optional spline As Boolean = True,
-                             Optional textWrap As Integer = 16) As GraphicsData
+                             Optional textWrap As Integer = 16,
+                             Optional ppi As Integer = 100) As GraphicsData
 
             Dim serialColors As Color() = Designer.GetColors(serialColorSchema) _
                                                   .Select(Function(c) c.Alpha(colorAlpha)) _
@@ -173,7 +174,7 @@ Namespace Fractions
                                        .ToArray
             Dim dDegree# = 360 / directions.Length
             Dim axisPen As Pen = Stroke.TryParse(axisStrokeStyle).GDIObject
-            Dim labelFont As Font = CSSFont.TryParse(labelFontCSS).GDIObject
+            Dim labelFont As Font = CSSFont.TryParse(labelFontCSS).GDIObject(ppi)
             Dim regionFillColor As New SolidBrush(regionFill.TranslateColor)
 
             If axisRange Is Nothing Then

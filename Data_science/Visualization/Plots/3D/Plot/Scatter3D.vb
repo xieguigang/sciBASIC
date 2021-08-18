@@ -91,15 +91,15 @@ Namespace Plot3D.Impl
             Me.hullAlpha = hullAlpha
             Me.hullBspline = hullBspline
 
-            Call populateModels()
+            Call populateModels(100)
         End Sub
 
-        Private Iterator Function populateModels() As IEnumerable(Of Element3D)
+        Private Iterator Function populateModels(ppi As Integer) As IEnumerable(Of Element3D)
             Dim points As Point3D() = serials _
                 .Select(Function(s) s.Points.Values) _
                 .IteratesALL _
                 .ToArray
-            Dim axisLabelFont As Font = CSSFont.TryParse(theme.axisLabelCSS)
+            Dim axisLabelFont As Font = CSSFont.TryParse(theme.axisLabelCSS).GDIObject(ppi)
 
             ' 首先需要获取得到XYZ值的范围
             Dim X, Y, Z As Vector
@@ -168,7 +168,7 @@ Namespace Plot3D.Impl
                             }
                         End Function) _
                 .ToArray
-            Dim font As Font = CSSFont.TryParse(theme.axisLabelCSS)
+            Dim font As Font = CSSFont.TryParse(theme.axisLabelCSS).GDIObject(g.Dpi)
             Dim region As Rectangle = canvas.PlotRegion
 
             ' 绘制图例？？
@@ -187,11 +187,11 @@ Namespace Plot3D.Impl
             Dim labelColor As New SolidBrush(theme.tagColor.TranslateColor)
 
             ' 要先绘制三维图形，要不然会将图例遮住的
-            Call populateModels.RenderAs3DChart(
+            Call populateModels(g.Dpi).RenderAs3DChart(
                 canvas:=g,
                 camera:=camera,
                 region:=canvas,
-                labelFont:=CSSFont.TryParse(theme.tagCSS),
+                labelFont:=CSSFont.TryParse(theme.tagCSS).GDIObject(g.Dpi),
                 labelerItr:=0,
                 showLabel:=theme.drawLabels,
                 labelColor:=labelColor

@@ -1,49 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::825f095ad3ae278aefed597d9fbe229a, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\Distance.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Distance
-    ' 
-    '         Properties: Distance, NaN, Weight
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: Clone, compareTo, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Distance
+' 
+'         Properties: Distance, NaN, Weight
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Function: Clone, compareTo, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
-
-Imports System
 
 '
 '*****************************************************************************
@@ -65,8 +63,7 @@ Imports System
 
 Namespace Hierarchy
 
-    Public Class Distance
-        Implements IComparable(Of Distance), ICloneable
+    Public Class Distance : Implements IComparable(Of Distance), ICloneable
 
         Public Property Distance As Double
         Public Property Weight As Double

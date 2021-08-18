@@ -110,7 +110,7 @@ Namespace d3js
         Public Function Label(g As Graphics2D, labels As IEnumerable(Of String), Optional fontCSS$ = CSSFont.Win7Normal) As IEnumerable(Of Label)
             Dim font As Font = CSSFont _
                 .TryParse(fontCSS) _
-                .GDIObject
+                .GDIObject(g.Dpi)
 
             Return labels _
                 .SafeQuery _

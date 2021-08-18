@@ -97,7 +97,7 @@ Namespace LinearAlgebra.Matrix
         Public Sub New(Arg As GeneralMatrix)
             ' Derived from LINPACK code.
             ' Initialize.
-            Dim A As Double()() = Arg.ArrayCopy
+            Dim A As Double()() = Arg.ArrayPack(deepcopy:=True)
             Dim U, V As Double()()
 
             m = Arg.RowDimension
@@ -540,7 +540,7 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
         Public Overridable ReadOnly Property S() As GeneralMatrix
             Get
-                Dim X As New GeneralMatrix(n, n)
+                Dim X As New NumericMatrix(n, n)
                 Dim Sa As Double()() = X.Array
                 For i As Integer = 0 To n - 1
                     For j As Integer = 0 To n - 1
@@ -560,7 +560,7 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
         Public ReadOnly Property U() As GeneralMatrix
             Get
-                Return New GeneralMatrix(valueU, m, System.Math.Min(m + 1, n))
+                Return New NumericMatrix(valueU, m, System.Math.Min(m + 1, n))
             End Get
         End Property
 
@@ -569,7 +569,7 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
         Public ReadOnly Property V() As GeneralMatrix
             Get
-                Return New GeneralMatrix(valueV, n, n)
+                Return New NumericMatrix(valueV, n, n)
             End Get
         End Property
 

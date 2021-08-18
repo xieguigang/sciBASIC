@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d805e7c11bb8649b629d7a2c7b90c6b, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\PathExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::3d4641146f9abf074f011c4fffccd20f, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\PathExtensions.vb"
 
     ' Author:
     ' 
@@ -77,7 +77,7 @@ Public Module PathExtensions
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ChangeSuffix(path$, newSuffix$) As String
-        Return path.TrimSuffix & "." & newSuffix
+        Return path.TrimSuffix & "." & newSuffix.Trim("."c, "*"c)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -162,6 +162,9 @@ Public Module PathExtensions
     ''' <param name="path"></param>
     ''' <param name="isAny">不带小数点的文件拓展名列表</param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' case ignored
+    ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ExtensionSuffix(path$, ParamArray isAny As String()) As Boolean

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af02e7de7fcd6f9b0a06a0d83af7e6e7, gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
+﻿#Region "Microsoft.VisualBasic::e5a819f63d58b3343fb76d1cafa8f299, gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
 
     ' Author:
     ' 
@@ -98,7 +98,7 @@ Namespace Drawing2D
         ''' 与<see cref="DefaultPadding"/>相比而言，这个padding的值在坐标轴Axis的label的绘制上空间更加大
         ''' </summary>
         Public Const DefaultLargerPadding$ = "padding:100px 100px 150px 150px;"
-        Public Const DefaultUltraLargePadding$ = "padding:150px 150px 300px 300px;"
+        Public Const DefaultUltraLargePadding$ = "padding:250px 150px 300px 300px;"
 
         ''' <summary>
         ''' 所有的页边距都是零

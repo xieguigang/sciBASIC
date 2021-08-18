@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::60ddeaadfd4b9a545c087a3af0200aeb, gr\network-visualization\Visualizer\Styling\Expression\SizeExpression.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module SizeExpression
-    ' 
-    '         Function: Evaluate, mappingSize, passthroughSize, unifySize
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module SizeExpression
+' 
+'         Function: Evaluate, mappingSize, passthroughSize, unifySize
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -82,7 +82,7 @@ Namespace Styling
             Dim t = expression.MapExpressionParser
 
             If t.type = MapperTypes.Continuous Then
-                Dim range As DoubleRange = $"{t.values(0)},{t.values(1)}"
+                Dim range As DoubleRange = {t.values(0), t.values(1)}
                 Dim selector = t.propertyName.SelectNodeValue
                 Dim getValue = Function(node As Node) Val(selector(node))
 

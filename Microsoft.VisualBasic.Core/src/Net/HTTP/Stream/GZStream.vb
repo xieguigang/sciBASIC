@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9996a59b520da11640f39c1a55171422, Microsoft.VisualBasic.Core\src\Net\HTTP\Stream\GZStream.vb"
+﻿#Region "Microsoft.VisualBasic::b1bc75d7bd8d81ecdc01bf9c6342d8b8, Microsoft.VisualBasic.Core\src\Net\HTTP\Stream\GZStream.vb"
 
     ' Author:
     ' 

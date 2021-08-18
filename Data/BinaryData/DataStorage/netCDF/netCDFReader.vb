@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df7f33bdc530a2326a7444c7c4443ac0, Data\BinaryData\DataStorage\netCDF\netCDFReader.vb"
+﻿#Region "Microsoft.VisualBasic::1c571fc5d519df73d39bc1fb377267ac, Data\BinaryData\DataStorage\netCDF\netCDFReader.vb"
 
     ' Author:
     ' 
@@ -176,7 +176,7 @@ Namespace netCDF
             End Get
         End Property
 
-        Sub New(buffer As BinaryDataReader)
+        Sub New(buffer As BinaryDataReader, Optional ignoreDuplicated As Boolean = False)
             Dim version As Value(Of Byte) = Scan0
 
             buffer.ByteOrder = ByteOrder.BigEndian
@@ -193,21 +193,34 @@ Namespace netCDF
             Dim conflictsId As String() = header.checkVariableIdConflicts.ToArray
 
             If conflictsId.Length > 0 Then
-                Throw New DuplicateNameException(conflictsId.GetJson)
+                If ignoreDuplicated Then
+                    Me.variableTable = header.variables _
+                        .GroupBy(Function(v) v.name) _
+                        .ToDictionary(Function(var)
+                                          Return var.Key
+                                      End Function,
+                                      Function(group)
+                                          Return group.First
+                                      End Function)
+                Else
+                    Throw New DuplicateNameException(conflictsId.GetJson)
+                End If
+            Else
+                Me.variableTable = header _
+                    .variables _
+                    .ToDictionary(Function(var)
+                                      Return var.name
+                                  End Function)
             End If
-
-            Me.variableTable = header _
-                .variables _
-                .ToDictionary(Function(var) var.name)
         End Sub
 
-        Sub New(file As Stream, Optional encoding As Encodings = Encodings.UTF8)
-            Call Me.New(New BinaryDataReader(file, encoding))
+        Sub New(file As Stream, Optional encoding As Encodings = Encodings.UTF8, Optional ignoreDuplicated As Boolean = False)
+            Call Me.New(New BinaryDataReader(file, encoding), ignoreDuplicated)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Sub New(path$, Optional encoding As Encodings = Encodings.UTF8)
-            Call Me.New(path.OpenBinaryReader(encoding))
+        Sub New(path$, Optional encoding As Encodings = Encodings.UTF8, Optional ignoreDuplicated As Boolean = False)
+            Call Me.New(path.OpenBinaryReader(encoding), ignoreDuplicated)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

@@ -249,7 +249,7 @@ Namespace BarPlot.Histogram
                         htmlLabel:=False)
 
                     If Not title.StringEmpty Then
-                        Dim titleFont As Font = CSSFont.TryParse(titleCss)
+                        Dim titleFont As Font = CSSFont.TryParse(titleCss).GDIObject(g.Dpi)
                         Dim titleSize As SizeF = g.MeasureString(title, titleFont)
                         Dim titlePos As New PointF With {
                             .X = region.PlotRegion.Left + (region.PlotRegion.Width - titleSize.Width) / 2,

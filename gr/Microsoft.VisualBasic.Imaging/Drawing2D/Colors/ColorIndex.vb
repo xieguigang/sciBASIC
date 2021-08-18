@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8bf3cbca14a6ff3a996187baf3e1e9b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ColorIndex.vb"
+﻿#Region "Microsoft.VisualBasic::816ee368b23f588554b98ef2ac658fb3, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ColorIndex.vb"
 
     ' Author:
     ' 
@@ -53,8 +53,8 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports stdNum = System.Math
 
 Namespace Drawing2D.Colors
 
@@ -111,7 +111,8 @@ Namespace Drawing2D.Colors
 
             For i As Integer = 0 To colors.Length - 1
                 With colors(i)
-                    Dim d# = Math.EuclideanDistance(value, New Double() { .R, .G, .B})
+                    Dim d# = DistanceMethods.EuclideanDistance(value, New Double() { .R, .G, .B})
+
                     If d <= minD Then
                         minD = d
                         minIndex = i
@@ -155,7 +156,7 @@ Namespace Drawing2D.Colors
                 Dim array As Double() = { .R, .G, .B}
                 Return Points.Min(
                     Function(x)
-                        Return Math.EuclideanDistance(array, New Double() {x.R, x.G, x.B})
+                        Return DistanceMethods.EuclideanDistance(array, New Double() {x.R, x.G, x.B})
                     End Function)
             End With
         End Function

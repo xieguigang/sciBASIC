@@ -88,12 +88,26 @@ Public Class JsonParser
         psErrors = "*"
     End Sub
 
+    ''' <summary>
+    ''' parse a json file
+    ''' </summary>
+    ''' <param name="file">
+    ''' a file path of the json data file
+    ''' </param>
+    ''' <returns></returns>
     Public Function Open(file As String) As JsonElement
         Using sr As New StreamReader(file)
             Return OpenJSON(sr.ReadToEnd)
         End Using
     End Function
 
+    ''' <summary>
+    ''' parse json text content
+    ''' </summary>
+    ''' <param name="jsonStr">
+    ''' the json text content
+    ''' </param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function OpenJSON(jsonStr As String) As JsonElement
         _JSONvalue = parse(jsonStr)

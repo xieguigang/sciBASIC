@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04d64c5457fe0ab3b1cbb8dbf1c5f940, Microsoft.VisualBasic.Core\src\CommandLine\CLI\PipelineProcess.vb"
+﻿#Region "Microsoft.VisualBasic::2c32ddf2a62f2e631c8e995348370035, Microsoft.VisualBasic.Core\src\CommandLine\CLI\PipelineProcess.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,8 @@
 
     '     Module PipelineProcess
     ' 
-    '         Function: (+2 Overloads) [Call], CallDotNetCorePipeline, CreatePipeline, ExecSub, FindProc
+    '         Function: (+2 Overloads) [Call], CallDotNetCorePipeline, CreatePipeline, (+2 Overloads) ExecSub, FindProc
     '                   (+2 Overloads) GetProc
-    ' 
-    '         Sub: ExecSub
     ' 
     ' 
     ' /********************************************************************************/
@@ -120,12 +118,17 @@ Namespace CommandLine
         ''' <param name="args">参数</param>
         ''' <param name="onReadLine">行信息（委托）</param>
         ''' <remarks>https://github.com/lishewen/LSWFramework/blob/master/LSWClassLib/CMD/CMDHelper.vb</remarks>
-        Public Sub ExecSub(app As String, args As String, onReadLine As Action(Of String), Optional [in] As String = "")
+        Public Function ExecSub(app$, args$, onReadLine As Action(Of String),
+                                Optional in$ = "",
+                                Optional ByRef stdErr As String = Nothing) As Integer
+
             Dim p As Process = CreatePipeline(app, args)
             Dim reader As StreamReader = p.StandardOutput
+            Dim errReader As StreamReader = p.StandardError
 
             If Not String.IsNullOrEmpty([in]) Then
                 Dim writer As StreamWriter = p.StandardInput
+
                 Call writer.WriteLine([in])
                 Call writer.Flush()
             End If
@@ -134,17 +137,31 @@ Namespace CommandLine
                 Call onReadLine(reader.ReadLine)
             End While
 
-            Call p.WaitForExit()
-        End Sub
+            stdErr = reader.ReadToEnd
 
-        Private Function CreatePipeline(app As String, args As String) As Process
+            Call p.WaitForExit()
+
+            Return p.ExitCode
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="app"></param>
+        ''' <param name="args"></param>
+        ''' <param name="it">
+        ''' docker run -it XXX
+        ''' </param>
+        ''' <returns></returns>
+        Public Function CreatePipeline(app As String, args As String, Optional it As Boolean = True) As Process
             Dim p As New Process
             p.StartInfo = New ProcessStartInfo
             p.StartInfo.FileName = app
-            p.StartInfo.Arguments = args
+            p.StartInfo.Arguments = args.TrimNewLine(replacement:=" ")
             p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden
-            p.StartInfo.RedirectStandardOutput = True
-            p.StartInfo.RedirectStandardInput = True
+            p.StartInfo.RedirectStandardOutput = it
+            p.StartInfo.RedirectStandardInput = it
+            p.StartInfo.RedirectStandardError = it
             p.StartInfo.UseShellExecute = False
             p.StartInfo.CreateNoWindow = True
             p.Start()
@@ -201,9 +218,12 @@ Namespace CommandLine
         ''' <param name="args">CLI arguments</param>
         ''' <returns></returns>
         <Extension>
-        Public Function [Call](app As String, args As String,
+        Public Function [Call](app As String,
+                               Optional args As String = Nothing,
                                Optional [in] As String = "",
-                               Optional debug As Boolean = False) As String
+                               Optional debug As Boolean = False,
+                               Optional ByRef stdErr As String = Nothing,
+                               Optional ByRef exitCode As Integer = 0) As String
 
             Dim stdout As New List(Of String)
             Dim readLine As Action(Of String)
@@ -217,7 +237,7 @@ Namespace CommandLine
                 readLine = AddressOf stdout.Add
             End If
 
-            Call ExecSub(app, args, readLine, [in])
+            exitCode = ExecSub(app, args, readLine, [in], stdErr)
 
             Return stdout.JoinBy(vbCrLf)
         End Function

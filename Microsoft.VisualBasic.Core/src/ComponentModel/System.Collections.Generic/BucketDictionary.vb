@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::49af228d25c84a121e8be74cf1f0095c, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\BucketDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::3086fa466de9d82cddf70b0eac24a358, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\BucketDictionary.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,10 @@
 
     ' Summaries:
 
+    '     Interface IBucketVector
+    ' 
+    '         Function: GetVector
+    ' 
     '     Class BucketDictionary
     ' 
     '         Properties: Count, Keys, Values
@@ -53,6 +57,12 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.Collection
+
+    Public Interface IBucketVector
+
+        Function GetVector() As IEnumerable
+
+    End Interface
 
     ''' <summary>
     ''' An ultralarge size dictionary object.
