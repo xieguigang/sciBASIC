@@ -11,6 +11,7 @@ Namespace Knapsack
         Sub New(items As IList(Of Item), capacity As Integer)
             Me.Items = items
             Me.Capacity = capacity
+            Me.table = New Double(Me.Items.Count + 1 - 1, capacity + 1 - 1) {}
         End Sub
 
         Public Function GetWeight(items As IList(Of Item)) As Double
@@ -26,13 +27,13 @@ Namespace Knapsack
         End Function
 
         Private Function TakeItems() As KnapsackSolution
-            Dim best = New KnapsackSolution() With {
+            Dim row As Integer = Items.Count
+            Dim col As Integer = Capacity
+            Dim best As New KnapsackSolution() With {
                 .Items = New List(Of Item)()
             }
-            Dim row = Items.Count, col = Capacity
 
             While row > 0
-
                 If table(row, col) <> table(row - 1, col) Then
                     best.Items.Add(Items(row - 1))
                     col -= Items(row - 1).Weight
@@ -48,13 +49,12 @@ Namespace Knapsack
         End Function
 
         Private Function FillTable() As KnapsackSolver
-            table = New Double(Items.Count + 1 - 1, Capacity + 1 - 1) {}
+            Dim item As Item
 
-            For row = 1 To Items.Count
-                Dim item = Items(row - 1)
+            For row As Integer = 1 To Items.Count
+                item = Items(row - 1)
 
-                For col = 0 To Capacity
-
+                For col As Integer = 0 To Capacity
                     If item.Weight > col Then
                         table(row, col) = table(row - 1, col)
                     Else
