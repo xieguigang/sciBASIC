@@ -1,50 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::b66c7d1af4fa1766cd9ea6a6c9865e2f, Microsoft.VisualBasic.Core\src\ApplicationServices\Utils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Utils
-    ' 
-    '         Function: FormatTicks, Shell, TaskRun, (+2 Overloads) Time
-    ' 
-    '         Sub: TryRun
-    '         Delegate Function
-    ' 
-    '             Function: CLIPath, CLIToken, FileMimeType, GetMIMEDescrib
-    ' 
-    '             Sub: (+2 Overloads) Wait
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Utils
+' 
+'         Function: FormatTicks, Shell, TaskRun, (+2 Overloads) Time
+' 
+'         Sub: TryRun
+'         Delegate Function
+' 
+'             Function: CLIPath, CLIToken, FileMimeType, GetMIMEDescrib
+' 
+'             Sub: (+2 Overloads) Wait
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -264,6 +264,15 @@ Namespace ApplicationServices
             If token.Contains(" "c) Then
                 token = $"""{token}"""
             End If
+
+#If netcore5 Then
+            ' 20210819 fix for docker command on unix platform
+            If token.TextEquals("$PWD") Then
+                token = """$PWD"""
+            ElseIf token.TextEquals("$PWD:$PWD") Then
+                token = """$PWD:$PWD"""
+            End If
+#End If
 
             Return token
         End Function
