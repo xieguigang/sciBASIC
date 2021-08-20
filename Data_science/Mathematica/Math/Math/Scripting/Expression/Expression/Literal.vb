@@ -49,6 +49,12 @@ Namespace Scripting.MathExpression.Impl
 
         Public ReadOnly Property number As Double
 
+        Public ReadOnly Property isInteger As Boolean
+            Get
+                Return CDbl(CInt(number)) = number
+            End Get
+        End Property
+
         Sub New(text As String)
             Me.number = Val(text)
         End Sub

@@ -943,6 +943,10 @@
     <Compile Include="Scripting\Expression\Expression\Expression.vb" />
     <Compile Include="Scripting\Expression\MathToken.vb" />
     <Compile Include="Scripting\Expression\Splitter.vb" />
+    <Compile Include="Scripting\Symbolic\UnaryExpression.vb" />
+    <Compile Include="Scripting\Symbolic\PolyExpansion.vb" />
+    <Compile Include="Scripting\Symbolic\UnifySymbol.vb" />
+    <Compile Include="Scripting\Symbolic\Symbolic.vb" />
     <Compile Include="Scripting\VectorModel.vb" />
     <Compile Include="Scripting\Factors\NamedVectorFactory.vb" />
     <Compile Include="Scripting\Factors\FactorVector.vb" />
