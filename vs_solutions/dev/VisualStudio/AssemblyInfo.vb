@@ -51,7 +51,9 @@ Public Module AssemblyInfoExtensions
                         }
                     End Function) _
             .ToDictionary
-        Dim info As New DevAssemblyInfo
+        Dim info As New DevAssemblyInfo With {
+            .BuiltTime = Now
+        }
 
         For Each reader As PropertyInfo In GetType(DevAssemblyInfo).GetProperties(PublicProperty)
             With reader

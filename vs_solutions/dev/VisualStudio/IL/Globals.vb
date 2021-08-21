@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54eaed4e5ba53c2d6b9eb03ad7b367d7, vs_solutions\dev\VisualStudio\IL\Globals.vb"
+﻿#Region "Microsoft.VisualBasic::0cad90964e58d1afd98117ed7237c3f5, vs_solutions\dev\VisualStudio\IL\Globals.vb"
 
     ' Author:
     ' 
@@ -157,31 +157,30 @@ Namespace IL
         Public modules As [Module]() = Nothing
 
         Sub New()
+            singleByteOpCodes = New OpCode(255) {}
+            multiByteOpCodes = New OpCode(255) {}
+
             Call LoadOpCodes()
         End Sub
 
         Private Sub LoadOpCodes()
-            singleByteOpCodes = New OpCode(255) {}
-            multiByteOpCodes = New OpCode(255) {}
-            Dim infoArray1 As FieldInfo() = GetType(OpCodes).GetFields()
+            For Each info1 As FieldInfo In GetType(OpCodes).GetFields()
+                If Not info1.FieldType Is GetType(OpCode) Then
+                    Continue For
+                End If
 
-            For num1 = 0 To infoArray1.Length - 1
-                Dim info1 = infoArray1(num1)
+                Dim code1 As OpCode = info1.GetValue(Nothing)
+                Dim num2 As UShort = code1.Value
 
-                If info1.FieldType Is GetType(OpCode) Then
-                    Dim code1 As OpCode = info1.GetValue(Nothing)
-                    Dim num2 As UShort = code1.Value
+                If num2 < &H100 Then
+                    singleByteOpCodes(num2) = code1
+                Else
 
-                    If num2 < &H100 Then
-                        singleByteOpCodes(num2) = code1
-                    Else
-
-                        If (num2 And &HFF00) <> &HFE00 Then
-                            Throw New Exception("Invalid OpCode.")
-                        End If
-
-                        multiByteOpCodes(num2 And &HFF) = code1
+                    If (num2 And &HFF00) <> &HFE00 Then
+                        Throw New Exception("Invalid OpCode.")
                     End If
+
+                    multiByteOpCodes(num2 And &HFF) = code1
                 End If
             Next
         End Sub

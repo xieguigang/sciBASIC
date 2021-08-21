@@ -135,8 +135,8 @@ Namespace Layouts.EdgeBundling.Mingle
                     node = nodes(i).node
                     dist = nodes(i).distance
 
-                    If node.obj.v.ID <> n.ID Then
-                        Call graph.CreateEdge(n, node.obj.v)
+                    If node.data.v.ID <> n.ID Then
+                        Call graph.CreateEdge(n, node.data.v)
                     End If
                 Next
             Next

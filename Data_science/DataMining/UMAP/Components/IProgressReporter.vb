@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a0c96638bc8e8079395582facca1e33, Data_science\DataMining\UMAP\Components\IProgressReporter.vb"
+﻿#Region "Microsoft.VisualBasic::74243db976226d7956ee82d201cd5f6b, Data_science\DataMining\UMAP\Components\IProgressReporter.vb"
 
     ' Author:
     ' 
@@ -31,31 +31,26 @@
 
     ' Summaries:
 
-    ' Delegate Sub
-    ' 
-    ' 
     ' Class ProgressReporter
     ' 
     '     Function: Run
-    ' 
-    ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
+
 ''' <summary>
 ''' The progress will be a value from 0 to 1 that indicates approximately how much of the processing has been completed
 ''' </summary>
-Public Delegate Sub IProgressReporter(progress As Double)
-
 Friend Class ProgressReporter
 
-    Public report As IProgressReporter
+    Public report As RunSlavePipeline.SetProgressEventHandler
 
-    Public Function Run(Of T)(action As Func(Of T), progress As Double) As T
+    Public Function Run(Of T)(action As Func(Of T), progress As Double, msg As String) As T
         Dim result As T = action()
-        Call report(progress)
+        Call report(progress, msg)
         Return result
     End Function
 

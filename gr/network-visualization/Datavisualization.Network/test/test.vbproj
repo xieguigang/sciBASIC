@@ -6,12 +6,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{23A002A3-DEA8-4823-946B-D0C8CE113F67}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>GraphTesting.OrthogonalTest</StartupObject>
+    <StartupObject>GraphTesting.LouvainTest</StartupObject>
     <RootNamespace>GraphTesting</RootNamespace>
     <AssemblyName>GraphTesting</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Console</MyType>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -96,12 +96,14 @@
     <Compile Include="Module1.vb" />
     <Compile Include="endPointTest.vb" />
     <Compile Include="ColaTest.vb" />
+    <Compile Include="LouvainTest.vb" />
     <Compile Include="OrthogonalTest.vb" />
     <Compile Include="subnetworkTest.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>

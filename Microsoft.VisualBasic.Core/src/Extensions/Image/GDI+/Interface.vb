@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::900e31b0444209fb553658c606572684, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Interface.vb"
+﻿#Region "Microsoft.VisualBasic::cf66e261534745b2d836d2ebf033ec50, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Interface.vb"
 
     ' Author:
     ' 
@@ -102,22 +102,23 @@ Namespace Imaging
         ''' enumeration. The default is System.Drawing.Drawing2D.CompositingQuality.Default.</returns>
         Public MustOverride Property CompositingQuality As CompositingQuality
 
-        '
-        ' Summary:
-        '     Gets the horizontal resolution of this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     The value, in dots per inch, for the horizontal resolution supported by this
-        '     System.Drawing.Graphics.
+        ''' <summary>
+        ''' Gets the horizontal resolution of this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <returns>The value, in dots per inch, for the horizontal resolution supported by this
+        ''' System.Drawing.Graphics.</returns>
         Public MustOverride ReadOnly Property DpiX As Single
-        '
-        ' Summary:
-        '     Gets the vertical resolution of this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     The value, in dots per inch, for the vertical resolution supported by this System.Drawing.Graphics.
+
+        ''' <summary>
+        ''' Gets the vertical resolution of this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <returns>The value, in dots per inch, for the vertical resolution supported by this System.Drawing.Graphics.</returns>
         Public MustOverride ReadOnly Property DpiY As Single
 
+        ''' <summary>
+        ''' max value of the [DpiX, DpiY]
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Dpi As Single
             Get
                 Return stdNum.Max(DpiX, DpiY)
@@ -4347,12 +4348,12 @@ Namespace Imaging
         Public MustOverride Function MeasureCharacterRanges(text As String, font As Font, layoutRect As RectangleF, stringFormat As StringFormat) As Region()
 
         ''' <summary>
-        ''' Measures the specified string when drawn with the specified <see cref="System.Drawing.Font"/>.
+        ''' Measures the specified string when drawn with the specified <see cref="Font"/>.
         ''' </summary>
         ''' <param name="text">String to measure.</param>
-        ''' <param name="font">System.Drawing.Font that defines the text format of the string.</param>
-        ''' <returns>This method returns a System.Drawing.SizeF structure that represents the size,
-        ''' in the units specified by the System.Drawing.Graphics.PageUnit property, of the
+        ''' <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
+        ''' <returns>This method returns a <see cref="SizeF"/> structure that represents the size,
+        ''' in the units specified by the <see cref="PageUnit"/> property, of the
         ''' string specified by the text parameter as drawn with the font parameter.
         ''' </returns>
         Public MustOverride Function MeasureString(text As String, font As Font) As SizeF

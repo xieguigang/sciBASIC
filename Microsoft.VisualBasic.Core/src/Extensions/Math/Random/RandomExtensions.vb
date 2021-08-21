@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1da58685ed6ef204d07121ad3a8890fd, Microsoft.VisualBasic.Core\src\Extensions\Math\Random\RandomExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::92fcb0d49af1df2a9a590887626b0e13, Microsoft.VisualBasic.Core\src\Extensions\Math\Random\RandomExtensions.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     ' 
     '         Properties: seeds
     ' 
-    '         Function: GetNextBetween, (+2 Overloads) GetRandomValue, NextBoolean, (+2 Overloads) NextDouble, (+2 Overloads) NextGaussian
+    '         Function: GetNextBetween, (+2 Overloads) GetRandomValue, (+2 Overloads) NextBoolean, (+4 Overloads) NextDouble, (+2 Overloads) NextGaussian
     '                   NextInteger, NextTriangular, Permutation, randf, RandomSingle
     '                   Seed
     ' 
@@ -124,6 +124,10 @@ Namespace Math
             Return seeds.NextDouble()
         End Function
 
+        Public Function NextDouble() As Double
+            Return seeds.NextDouble
+        End Function
+
         ''' <summary>
         ''' Returns a non-negative random integer that is less than the specified maximum.
         ''' </summary>
@@ -152,6 +156,18 @@ Namespace Math
             SyncLock seeds
                 Return seeds.NextDouble(range:=rng)
             End SyncLock
+        End Function
+
+        ''' <summary>
+        ''' Returns a random floating-point number that is greater than or equal to min of the range,
+        ''' and less than the max of the range.
+        ''' </summary>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function NextDouble(min As Double, max As Double) As Double
+            Return (max - min) * seeds.NextDouble + min
         End Function
 
         ''' <summary>

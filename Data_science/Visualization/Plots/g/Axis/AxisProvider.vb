@@ -110,7 +110,7 @@ Namespace Graphic.Axis
 
             Return New AxisProvider With {
                 .n = n.ParseInteger,
-                .Range = DoubleRange.op_Implicit(range),
+                .Range = DoubleRange.TryParse(range),
                 .Tick = tick.ParseNumeric
             }
         End Function

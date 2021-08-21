@@ -123,7 +123,7 @@ Namespace Drawing3D.Models
             Next
         End Sub
 
-        Public Sub Draw(ByRef canvas As Graphics, camera As Camera) Implements I3DModel.Draw
+        Public Sub Draw(ByRef canvas As IGraphics, camera As Camera) Implements I3DModel.Draw
             Dim faces As New List(Of Surface)
 
             For Each f As Surface In Me.faces

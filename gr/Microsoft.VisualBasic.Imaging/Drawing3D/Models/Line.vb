@@ -54,7 +54,7 @@ Namespace Drawing3D.Models
         Public a, b As Point3D
         Public pen As Pen
 
-        Public Sub Draw(ByRef canvas As Graphics, camera As Camera) Implements I3DModel.Draw
+        Public Sub Draw(ByRef canvas As IGraphics, camera As Camera) Implements I3DModel.Draw
             Dim pts As PointF() = camera _
                 .Project(Me) _
                 .Select(Function(pt) pt.PointXY(camera.screen)) _

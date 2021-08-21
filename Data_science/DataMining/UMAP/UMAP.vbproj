@@ -96,10 +96,12 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\..\GCModeller\bin\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.DataMining.UMAP.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|AnyCPU'">
     <DefineTrace>true</DefineTrace>
@@ -389,7 +391,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="KNN\UMAP_KNN.vb" />
+    <Compile Include="KNN\KNearestNeighbour.vb" />
+    <Compile Include="KNN\SmoothKNN.vb" />
     <Compile Include="KNN\KNNArguments.vb" />
     <Compile Include="UmapProject.vb" />
     <Compile Include="Components\Heaps\Heap.vb" />
@@ -458,6 +461,10 @@
     <ProjectReference Include="..\..\Mathematica\Math\Randomizer\Randomizer.vbproj">
       <Project>{4e06139a-d524-417f-a980-db3bf534cbdc}</Project>
       <Name>Randomizer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataMining\DataMining.vbproj">
+      <Project>{1B42809B-603F-4CEA-A0DB-91276582B9CA}</Project>
+      <Name>DataMining</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

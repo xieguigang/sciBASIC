@@ -1644,6 +1644,7 @@
     <Compile Include="ApplicationServices\VBDev\NetCore5\target.vb" />
     <Compile Include="ApplicationServices\VBDev\NetCore5\deps.json.vb" />
     <Compile Include="CommandLine\CLI\ProcessEx.vb" />
+    <Compile Include="CommandLine\InteropService\Pipeline\RunSlavePipeline.vb" />
     <Compile Include="CommandLine\Parsers\CommandLineTokenlizer.vb" />
     <Compile Include="CommandLine\Parsers\CliArgumentParsers.vb" />
     <Compile Include="CommandLine\POSIX\POSIXArguments.vb" />
@@ -1690,6 +1691,11 @@
     <Compile Include="Extensions\Image\Math\QuadrantRegions.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\SampleObservation.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\Min.vb" />
+    <Compile Include="Language\Value\TripleVariant.vb" />
+    <Compile Include="My\Framework\MemoryLoads.vb" />
+    <Compile Include="My\JavaScript\JavaScriptObject\Abstract.vb" />
+    <Compile Include="My\JavaScript\JavaScriptObject\Descriptor.vb" />
+    <Compile Include="My\JavaScript\JavaScriptObject\JavaScriptValue.vb" />
     <Compile Include="Net\HTTP\WebResponse.vb" />
     <Compile Include="Globals.vb" />
     <Compile Include="Extensions\Reflection\Marshal\Span1.vb" />
@@ -1763,7 +1769,6 @@
     <Compile Include="Extensions\Image\GDI+\Layouts\ColaExtensions.vb" />
     <Compile Include="Extensions\Image\GDI+\Layouts\Point2D.vb" />
     <Compile Include="Extensions\Image\Math\Models\PolarPoint.vb" />
-    <Compile Include="Extensions\Image\Math\Models\Polygon.vb" />
     <Compile Include="Extensions\Image\Math\Models\Line.vb" />
     <Compile Include="Extensions\IO\IOStream.vb" />
     <Compile Include="Extensions\IO\Extensions\StreamHelper.vb" />
@@ -1784,7 +1789,7 @@
     <Compile Include="Extensions\ValueTypes\TimeSpanScale.vb" />
     <Compile Include="My\JavaScript\ES6\Map.vb" />
     <Compile Include="My\JavaScript\Linq.vb" />
-    <Compile Include="My\JavaScript\JavaScriptObject.vb" />
+    <Compile Include="My\JavaScript\JavaScriptObject\JavaScriptObject.vb" />
     <Compile Include="My\JavaScript\String.vb" />
     <Compile Include="My\JavaScript\UnionType.vb" />
     <Compile Include="Language\Language\Java\NamespaceDoc.vb" />
@@ -1970,6 +1975,7 @@
     <Compile Include="Text\StringSimilarity\IEqualityComparer.vb" />
     <Compile Include="Extensions\StringHelpers\NumericFormatHelper.vb" />
     <Compile Include="Net\HTTP\Stream\GZStream.vb" />
+    <Compile Include="Extensions\Math\Correlations\DistanceMethods.vb" />
     <Compile Include="Net\HTTP\sitemap.xml.vb" />
     <Compile Include="Language\Runtime.vb" />
     <Compile Include="Language\Language\C\Vector.vb" />

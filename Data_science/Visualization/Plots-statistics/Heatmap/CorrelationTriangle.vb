@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cbda86ab3ced6bcdce2235d96a8d6b56, Data_science\Visualization\Plots-statistics\Heatmap\CorrelationTriangle.vb"
+﻿#Region "Microsoft.VisualBasic::04de1672f0ccc6958b7033337b1eb76e, Data_science\Visualization\Plots-statistics\Heatmap\CorrelationTriangle.vb"
 
     ' Author:
     ' 
@@ -72,7 +72,6 @@ Namespace Heatmap
         Dim drawValueLabel As Boolean
         Dim variantSize As Boolean
         Dim mapLevels As Integer
-        Dim legendTitle As String
         Dim cor As CorrelationData
 
         Public Sub New(cor As CorrelationData, theme As Theme)
@@ -120,9 +119,9 @@ Namespace Heatmap
             ' legend位于整个图片的右上角
             Call Legends.ColorMapLegend(
                 g, llayout, colors, AxisScalling.CreateAxisTicks(data:={-1, 1}),
-                titleFont:=CSSFont.TryParse(theme.legendTitleCSS),
+                titleFont:=CSSFont.TryParse(theme.legendTitleCSS).GDIObject(g.Dpi),
                 title:=legendTitle,
-                tickFont:=CSSFont.TryParse(theme.legendLabelCSS),
+                tickFont:=CSSFont.TryParse(theme.legendLabelCSS).GDIObject(g.Dpi),
                 tickAxisStroke:=Stroke.TryParse(Stroke.StrongHighlightStroke)
             )
 
@@ -228,12 +227,12 @@ Namespace Heatmap
                                               Optional valuelabelFontCSS$ = CSSFont.PlotLabelNormal,
                                               Optional variantSize As Boolean = True,
                                               Optional gridCSS$ = "stroke: lightgray; stroke-width: 1px; stroke-dash: solid;",
-                                              Optional driver As Drivers = Drivers.Default) As GraphicsData
+                                              Optional driver As Drivers = Drivers.Default,
+                                              Optional ppi As Integer = 100) As GraphicsData
 
-
-            Dim valuelabelFont As Font = CSSFont.TryParse(valuelabelFontCSS)
+            Dim valuelabelFont As Font = CSSFont.TryParse(valuelabelFontCSS).GDIObject(ppi)
             Dim gridBrush As Pen = Stroke.TryParse(gridCSS).GDIObject
-            Dim rowLabelFont As Font = CSSFont.TryParse(rowLabelFontStyle).GDIObject
+            Dim rowLabelFont As Font = CSSFont.TryParse(rowLabelFontStyle).GDIObject(ppi)
             Dim keys$() = data.keys
             Dim colors As SolidBrush() = Designer.GetColors(mapName, mapLevels).Reverse.GetBrushes
             Dim cor As New CorrelationData(data, range)

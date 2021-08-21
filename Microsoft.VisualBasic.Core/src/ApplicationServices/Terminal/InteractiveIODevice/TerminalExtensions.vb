@@ -109,8 +109,10 @@ Namespace ApplicationServices.Terminal
                 End If
 
                 If resizeHandles.Count = 0 Then
+#If netcore5 = 0 Then
                     eventThread.Abort()
                     eventThread = Nothing
+#End If
                 End If
             End RemoveHandler
             RaiseEvent()

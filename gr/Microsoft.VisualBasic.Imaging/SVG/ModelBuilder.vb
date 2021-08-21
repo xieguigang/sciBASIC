@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c58a658d0fe3491fb7e498c6ba4caca, gr\Microsoft.VisualBasic.Imaging\SVG\ModelBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::68a80aa1c574e6717f9e0d9e420a0d06, gr\Microsoft.VisualBasic.Imaging\SVG\ModelBuilder.vb"
 
     ' Author:
     ' 
@@ -143,7 +143,7 @@ Namespace SVG
             Dim c As Char
             Dim parameters As New List(Of Double)
             Dim buffer As New List(Of Char)
-            Dim action As Char = ASCII.NUL
+            Dim action As Char = Text.ASCII.NUL
             Dim gdiPath As New Path2D
 
             Do While Not scanner.EndRead
@@ -153,7 +153,7 @@ Namespace SVG
 
                 If Char.IsLetter(c) Then
 
-                    If Not action = ASCII.NUL Then
+                    If Not action = Text.ASCII.NUL Then
                         Call gdiPath.Call(action, parameters, path)
                     End If
 

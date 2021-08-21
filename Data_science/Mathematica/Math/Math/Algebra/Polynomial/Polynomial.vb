@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::876d1d753054eda02a58df9b7edc67ea, Data_science\Mathematica\Math\Math\Algebra\Polynomial\Polynomial.vb"
+﻿#Region "Microsoft.VisualBasic::da7d37f5c2821e7d67cec90f93723e9e, Data_science\Mathematica\Math\Math\Algebra\Polynomial\Polynomial.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: IsLinear
     ' 
-    '         Function: Evaluate, (+3 Overloads) ToString
+    '         Function: Evaluate, Parse, (+3 Overloads) ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -44,6 +44,8 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Scripting.MathExpression
+Imports Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl
 
 Namespace LinearAlgebra
 
@@ -126,6 +128,42 @@ Namespace LinearAlgebra
             Dim Y$ = items.JoinBy(" + ")
 
             Return Y
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="str">
+        ''' a+bx
+        ''' y=a+bx
+        ''' </param>
+        ''' <returns></returns>
+        Public Shared Function Parse(str As String) As Polynomial
+            If str.Contains("="c) Then
+                str = str.GetTagValue("=", trim:=True).Value
+            End If
+
+            Dim tokens As Expression = New ExpressionTokenIcer(str) _
+                .GetTokens _
+                .ToArray _
+                .DoCall(AddressOf BuildExpression)
+            Dim values As New List(Of Double)
+
+            Do While TypeOf tokens Is BinaryExpression
+                Dim bin = DirectCast(tokens, BinaryExpression)
+
+                If TypeOf bin.left Is Literal Then
+                    values.Add(bin.left.Evaluate(Nothing))
+                Else
+                    values.Add(1)
+                End If
+
+                tokens = bin.right
+            Loop
+
+            Return New Polynomial With {
+                .Factors = values.ToArray
+            }
         End Function
     End Class
 End Namespace

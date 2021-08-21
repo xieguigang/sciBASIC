@@ -1,4 +1,47 @@
-﻿Imports System.Drawing
+﻿#Region "Microsoft.VisualBasic::bcc412c8457460dd1f319b47d3c6e853, gr\Microsoft.VisualBasic.Imaging\Filters\Matrix.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Matrix
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Arry2D_2_Image, GetSmoothBitmap, Image_2_Arry2D, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Drawing
 Imports System.Drawing.Imaging
 Imports System.Runtime.InteropServices
 Imports stdNum = System.Math
@@ -35,7 +78,7 @@ Namespace Filters
             Return $"[{raw.Width}, {raw.Height}]"
         End Function
 
-        Public Shared Function Image_2_Arry2D(ByVal srcBmp As Bitmap) As Byte(,)
+        Public Shared Function Image_2_Arry2D(srcBmp As Bitmap) As Byte(,)
             Dim rect As New Rectangle(0, 0, srcBmp.Width, srcBmp.Height)
             Dim srcBmpData As BitmapData = srcBmp.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb)
             Dim srcPtr As IntPtr = srcBmpData.Scan0
@@ -65,7 +108,7 @@ Namespace Filters
             Return mat
         End Function
 
-        Public Shared Function Arry2D_2_Image(ByVal mat As Byte(,)) As Bitmap
+        Public Shared Function Arry2D_2_Image(mat As Byte(,)) As Bitmap
             Dim height = mat.GetLength(0)
             Dim width = mat.GetLength(1)
             Dim srcBmp As New Bitmap(width, height)
@@ -96,5 +139,6 @@ Namespace Filters
         End Function
     End Class
 End Namespace
+
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ce48117f59e53a69440dbce566a966f, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\MeasureData.vb"
+﻿#Region "Microsoft.VisualBasic::fd7ce61d7668f2d82922c2b4e8495d24, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\MeasureData.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,11 @@
 
     ' Summaries:
 
-    '     Structure MeasureData
+    '     Class MeasureData
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Properties: X, Y, Z
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: ToString
     ' 
     ' 
@@ -46,22 +48,25 @@ Namespace Drawing2D.Math2D.MarchingSquares
     ''' <summary>
     ''' 测量数据
     ''' </summary>
-    Public Structure MeasureData
+    Public Class MeasureData
 
         ''' <summary>
         ''' 坐标X
         ''' </summary>
-        Public X As Single
+        Public Property X As Integer
 
         ''' <summary>
         ''' 坐标Y
         ''' </summary>
-        Public Y As Single
+        Public Property Y As Integer
 
         ''' <summary>
         ''' 高度
         ''' </summary>
-        Public Z As Double
+        Public Property Z As Double
+
+        Sub New()
+        End Sub
 
         ''' <summary>
         ''' 初始化测量数据
@@ -69,7 +74,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' <param name="x">坐标x</param>
         ''' <param name="y">坐标y</param>
         ''' <param name="z">高度</param>
-        Public Sub New(x As Single, y As Single, z As Double)
+        Public Sub New(x As Integer, y As Integer, z As Double)
             Me.X = x
             Me.Y = y
             Me.Z = z
@@ -78,5 +83,5 @@ Namespace Drawing2D.Math2D.MarchingSquares
         Public Overrides Function ToString() As String
             Return $"[{X}, {Y}] {Z}"
         End Function
-    End Structure
+    End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a783861f00817ed88af0072d14ab6fc9, Data_science\Mathematica\Math\Math.Statistics\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::17fa217c16bf3f6207485cae13e83349, Data_science\Mathematica\Math\Math.Statistics\Extensions.vb"
 
     ' Author:
     ' 
@@ -47,6 +47,15 @@ Public Module Extensions
 
     ' 95％置信区间上限=均数+1.96×标准差
     ' 95％置信区间下限=均数-1.96×标准差
+
+    '       Z
+    ' 80%   1.282
+    ' 85%   1.440
+    ' 90%   1.645
+    ' 95%   1.960
+    ' 99%   2.576
+    ' 99.5%	2.807
+    ' 99.9%	3.291
 
     ''' <summary>
     ''' 从95%的置信区间推断出可能的SD值

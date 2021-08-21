@@ -87,5 +87,9 @@ Namespace Layouts.EdgeBundling.Mingle
         Public Overrides Function nodeIs(a As GraphKdNode, b As GraphKdNode) As Boolean
             Return a Is b
         End Function
+
+        Public Overrides Function activate() As GraphKdNode
+            Return New GraphKdNode
+        End Function
     End Class
 End Namespace

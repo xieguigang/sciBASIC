@@ -62,5 +62,10 @@ Namespace Javascript
         Public Function [As](Of T As JsonElement)() As T
             Return DirectCast(Me, T)
         End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function ParseJSON(jsonStr As String) As JsonElement
+            Return New JsonParser().OpenJSON(jsonStr)
+        End Function
     End Class
 End Namespace

@@ -159,7 +159,7 @@ Public Module IOExtensions
     Public Function Open(path$,
                          Optional mode As FileMode = FileMode.OpenOrCreate,
                          Optional doClear As Boolean = False,
-                         Optional [readOnly] As Boolean = False) As FileStream
+                         Optional [readOnly] As Boolean = False) As Stream
 
         Dim access As FileShare
 
@@ -183,6 +183,12 @@ Public Module IOExtensions
         Else
             ' 读操作，则只允许共享读文件
             access = FileShare.Read
+        End If
+
+        If mode = FileMode.Open AndAlso [readOnly] = True AndAlso App.MemoryLoad = My.FrameworkInternal.MemoryLoads.Heavy Then
+            If path.FileLength < 1024& * 1024& * 1024& * 2& Then
+                Return New MemoryStream(path.ReadBinary)
+            End If
         End If
 
         Return New FileStream(path, mode, If([readOnly], FileAccess.Read, FileAccess.ReadWrite), access, App.BufferSize)

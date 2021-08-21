@@ -77,7 +77,7 @@ Namespace KMeans
         End Function
 
         Public Overrides Function ToString() As String
-            Return ID
+            Return $"[{Cluster}] {ID}"
         End Function
 
         Public Function ToModel(Optional projection As String() = Nothing) As ClusterEntity

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1033cb650817654b80646f6a8867d3f7, Data_science\Mathematica\SignalProcessing\SignalProcessing\PeakFinding\Algorithm.vb"
+﻿#Region "Microsoft.VisualBasic::f687f15ee5ff6d30e9434dfb37814389, Data_science\Mathematica\SignalProcessing\SignalProcessing\PeakFinding\Algorithm.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,19 @@
     '     Class ElevationAlgorithm
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: filterBySinAngles, FindAllSignalPeaks, sin
+    '         Function: filterBySinAngles, (+2 Overloads) FindAllSignalPeaks, sin
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports stdNum = System.Math
@@ -74,8 +75,22 @@ Namespace PeakFinding
             Me.baseline_quantile = baselineQuantile
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function FindAllSignalPeaks(signals As GeneralSignal) As IEnumerable(Of SignalPeak)
+            Return FindAllSignalPeaks(signals.GetTimeSignals)
+        End Function
+
         Public Iterator Function FindAllSignalPeaks(signals As IEnumerable(Of ITimeSignal)) As IEnumerable(Of SignalPeak)
             Dim data As ITimeSignal() = signals.OrderBy(Function(t) t.time).ToArray
+            Dim dt As Double = data _
+                .Select(Function(t, i)
+                            If i = 0 Then
+                                Return 0
+                            Else
+                                Return t.time - data(i - 1).time
+                            End If
+                        End Function) _
+                .Average
             Dim baseline As Double = data.SignalBaseline(baseline_quantile)
             Dim line As IVector(Of Vector2D) = data.AccumulateLine(baseline).Shadows
             ' 计算出角度
@@ -89,17 +104,46 @@ Namespace PeakFinding
             Dim area As Vector2D()
 
             For Each region As SeqValue(Of Vector2D()) In slopes
-                'If region.value.Length = 1 Then
-                '    Dim t As Single = region.value(Scan0).x
-                '    Dim i As Integer = Which(angles.Select(Function(a) a.x = t)).First
+                If region.value.Length = 1 Then
+                    Dim t As Single = region.value(Scan0).x
+                    Dim i As Integer = which(angles.Select(Function(a) stdNum.Abs(a.x - t) <= dt)).First
 
-                '    region = New SeqValue(Of Vector2D()) With {
-                '        .value = {angles(i - 1), region.value(Scan0), angles(i + 1)}
-                '    }
-                'End If
+                    If i > 0 Then
+                        If i < angles.Length - 1 Then
+                            region = New SeqValue(Of Vector2D()) With {
+                                .value = {angles(i - 1), region.value(Scan0), angles(i + 1)},
+                                .i = region.i
+                            }
+                        Else
+                            region = New SeqValue(Of Vector2D()) With {
+                                .value = {angles(i - 1), region.value(Scan0)},
+                                .i = region.i
+                            }
+                        End If
+                    Else
+                        If i < angles.Length - 1 Then
+                            region = New SeqValue(Of Vector2D()) With {
+                                .value = {region.value(Scan0), angles(i + 1)},
+                                .i = region.i
+                            }
+                        End If
+                    End If
+                ElseIf region.value.Length = 2 Then
+                    ' Dim t1 As Single = region.value(Scan0).x
+                    Dim t2 As Single = region.value(1).x
+                    ' Dim i As Integer = which(angles.Select(Function(a) a.x = t1)).First
+                    Dim j As Integer = which(angles.Select(Function(a) stdNum.Abs(a.x - t2) <= dt)).First
 
-                rtmin = region.value.First.x
-                rtmax = region.value.Last.x
+                    If j < angles.Length - 1 Then
+                        region = New SeqValue(Of Vector2D()) With {
+                            .i = region.i,
+                            .value = region.value.JoinIterates({angles(j + 1)}).ToArray
+                        }
+                    End If
+                End If
+
+                rtmin = region.value.First.x - dt
+                rtmax = region.value.Last.x + dt
                 area = line((time >= rtmin) & (time <= rtmax))
 
                 ' 因为Y是累加曲线的值，所以可以近似的看作为峰面积积分值
@@ -117,7 +161,7 @@ Namespace PeakFinding
             Dim i As i32 = 0
 
             For Each a As Vector2D In angles
-                If a.y < sin_angle Then
+                If a.y <= sin_angle Then
                     If buffer > 0 Then
                         buffer += a
 

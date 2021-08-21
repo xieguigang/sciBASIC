@@ -501,13 +501,15 @@
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\mzkit\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mzkit|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -771,10 +773,13 @@
     <Compile Include="d3js\scale\linear.vb" />
     <Compile Include="d3js\scale\Extensions.vb" />
     <Compile Include="d3js\scale\ordinal.vb" />
-    <None Include="Drawing2D\Math2D\MarchingSquares\README.md" />
+    <Compile Include="Drawing2D\Math2D\MarchingSquares\ContourLayer.vb" />
+    <Compile Include="Drawing2D\Math2D\MarchingSquares\GeneralPath.vb" />
+    <Compile Include="Drawing2D\Math2D\MarchingSquares\ASCIIPrinter.vb" />
     <Compile Include="Drawing2D\Math2D\MarchingSquares\MapMatrix.vb" />
-    <Compile Include="Drawing2D\Math2D\MarchingSquares\IntMeasureData.vb" />
     <Compile Include="Drawing2D\Math2D\MarchingSquares\MeasureData.vb" />
+    <Compile Include="Drawing2D\Math2D\MarchingSquares\Side.vb" />
+    <Compile Include="Drawing2D\Math2D\MarchingSquares\IsoCell.vb" />
     <Compile Include="Drawing2D\Math2D\MarchingSquares\MarchingSquares.vb" />
     <Compile Include="Drawing2D\Render2D\RenderShape.vb" />
     <Compile Include="Drawing2D\Render2D\RenderContext.vb" />

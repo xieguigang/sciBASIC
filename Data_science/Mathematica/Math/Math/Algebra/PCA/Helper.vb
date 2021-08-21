@@ -77,7 +77,7 @@ Namespace LinearAlgebra.Prcomp
                               .Select(Function(i) $"Comp.{i}")) _
                          .ToArray
 
-            For Each factor In pca.Loadings.Array.SeqIterator(offset:=1)
+            For Each factor In pca.Loadings.ArrayPack.SeqIterator(offset:=1)
                 table += {"X" & factor.i} _
                     .JoinIterates(factor.value.AsCharacter(True)) _
                     .ToArray

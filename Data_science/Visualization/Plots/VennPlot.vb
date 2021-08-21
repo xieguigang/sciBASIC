@@ -77,10 +77,11 @@ Public Module VennPlot
                           Optional bg$ = "white",
                           Optional opacity# = 0.85,
                           Optional strokeCSS$ = Stroke.AxisStroke,
-                          Optional regionTitleFontCSS$ = CSSFont.Win7Large) As GraphicsData
+                          Optional regionTitleFontCSS$ = CSSFont.Win7Large,
+                          Optional ppi As Integer = 100) As GraphicsData
 
         Dim strokePen As Pen = Stroke.TryParse(strokeCSS)
-        Dim regionTitleFont As Font = CSSFont.TryParse(regionTitleFontCSS)
+        Dim regionTitleFont As Font = CSSFont.TryParse(regionTitleFontCSS).GDIObject(ppi)
 
         Call {a, b}.fixSetCompleteness
 
@@ -148,10 +149,11 @@ Public Module VennPlot
                           Optional bg$ = "white",
                           Optional opacity# = 0.85,
                           Optional strokeCSS$ = Stroke.AxisStroke,
-                          Optional regionTitleFontCSS$ = CSSFont.Win7Large) As GraphicsData
+                          Optional regionTitleFontCSS$ = CSSFont.Win7Large,
+                          Optional ppi As Integer = 100) As GraphicsData
 
         Dim strokePen As Pen = Stroke.TryParse(strokeCSS)
-        Dim regionTitleFont As Font = CSSFont.TryParse(regionTitleFontCSS)
+        Dim regionTitleFont As Font = CSSFont.TryParse(regionTitleFontCSS).GDIObject(ppi)
 
         Call {a, b, c}.fixSetCompleteness
 

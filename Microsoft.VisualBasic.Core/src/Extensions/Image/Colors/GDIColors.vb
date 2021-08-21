@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f1a80f26d3ae3ab31478c1b52f44d96, Microsoft.VisualBasic.Core\src\Extensions\Image\Colors\GDIColors.vb"
+﻿#Region "Microsoft.VisualBasic::dfed00e54951d2ac6c41e1ff27b32a5e, Microsoft.VisualBasic.Core\src\Extensions\Image\Colors\GDIColors.vb"
 
     ' Author:
     ' 
@@ -53,6 +53,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Math.Correlations
 Imports stdNum = System.Math
 
 Namespace Imaging
@@ -79,7 +80,8 @@ Namespace Imaging
         ''' <param name="x"></param>
         ''' <param name="y"></param>
         ''' <returns></returns>
-        <Extension> Public Function Middle(x As Color, y As Color) As Color
+        <Extension>
+        Public Function Middle(x As Color, y As Color) As Color
             Dim r% = (y.R - x.R) / 2 + x.R
             Dim g% = (y.G - x.G) / 2 + x.G
             Dim b% = (y.B - x.B) / 2 + x.B
@@ -421,7 +423,7 @@ Namespace Imaging
 
         <Extension>
         Public Function EuclideanDistance(a As Color, b As Color) As Double
-            Return Math.EuclideanDistance({a.R, a.G, a.B}, {b.R, b.G, b.B})
+            Return DistanceMethods.EuclideanDistance({a.R, a.G, a.B}, {b.R, b.G, b.B})
         End Function
     End Module
 End Namespace

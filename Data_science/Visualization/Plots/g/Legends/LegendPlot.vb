@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4127c2e7af1e95565930a09b47a62a7a, Data_science\Visualization\Plots\g\Legends\LegendPlot.vb"
+﻿#Region "Microsoft.VisualBasic::cbc1046cdc9eb4e2d93eb742784e31e4, Data_science\Visualization\Plots\g\Legends\LegendPlot.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module LegendPlotExtensions
     ' 
-    '         Function: DrawLegend, GetStyle, LegendStyls, MaxLegendSize
+    '         Function: DrawLegend, LegendStyls, MaxLegendSize, ParseLegendStyle
     ' 
     '         Sub: DrawLegends, DrawLegendShape
     ' 
@@ -70,7 +70,9 @@ Namespace Graphic.Legend
         ''' <param name="str$"></param>
         ''' <param name="defaultStyle"></param>
         ''' <returns></returns>
-        Public Function GetStyle(str$, Optional defaultStyle As LegendStyles = LegendStyles.Circle) As LegendStyles
+        ''' 
+        <Extension>
+        Public Function ParseLegendStyle(str$, Optional defaultStyle As LegendStyles = LegendStyles.Circle) As LegendStyles
             With LCase(str)
                 If legendExpressions.ContainsKey(.ByRef) Then
                     Return legendExpressions(.ByRef)
@@ -90,7 +92,7 @@ Namespace Graphic.Legend
             Return expr _
                 .Split(","c) _
                 .Select(AddressOf Trim) _
-                .Select(AddressOf GetStyle) _
+                .Select(AddressOf ParseLegendStyle) _
                 .ToArray
         End Function
 
@@ -256,9 +258,11 @@ Namespace Graphic.Legend
                                    l As LegendObject,
                                    Optional border As Stroke = Nothing,
                                    Optional radius% = 5,
-                                   Optional titleBrush As Brush = Nothing, Optional lineWidth! = -1) As SizeF
+                                   Optional titleBrush As Brush = Nothing,
+                                   Optional lineWidth! = -1,
+                                   Optional ppi As Integer = 100) As SizeF
 
-            Dim font As Font = l.GetFont
+            Dim font As Font = l.GetFont(ppi)
             Dim fSize As SizeF = g.MeasureString(l.title, font)
             Dim labelPosition As New PointF With {
                 .X = pos.X + canvas.Width + 5,
@@ -382,7 +386,7 @@ Namespace Graphic.Legend
             Dim maxW! = Single.MinValue, maxH! = Single.MinValue
 
             For Each l As LegendObject In legends
-                Dim font As Font = CSSFont.TryParse(l.fontstyle)
+                Dim font As Font = CSSFont.TryParse(l.fontstyle).GDIObject(g.Dpi)
                 Dim size As SizeF = g.MeasureString(l.title, font)
 
                 If maxW < size.Width Then

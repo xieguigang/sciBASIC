@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70d2fb48ac6f8f171e1759cac5c9daff, Data_science\Visualization\Plots-statistics\RegressionPlot.vb"
+﻿#Region "Microsoft.VisualBasic::9ca2323566291b4dd33c959f44b7c403, Data_science\Visualization\Plots-statistics\RegressionPlot.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '     Function: Plot
     ' 
-    '     Sub: printLegend, printXPredicted
+    '     Sub: printEquation, printLegend, printXPredicted
     ' 
     ' /********************************************************************************/
 
@@ -118,7 +118,9 @@ Public Module RegressionPlot
                          Optional factorFormat$ = "G4",
                          Optional showErrorBand As Boolean = True,
                          Optional labelerIterations% = 1000,
-                         Optional gridFill$ = NameOf(Color.LightGray)) As GraphicsData
+                         Optional gridFill$ = NameOf(Color.LightGray),
+                         Optional showYFitPoints As Boolean = True,
+                         Optional ppi As Integer = 100) As GraphicsData
 
         Dim xTicks#() = fit.X.AsEnumerable _
             .Range(scale:=1.125) _
@@ -136,7 +138,7 @@ Public Module RegressionPlot
         Dim predictedPointBorder As Pen = Stroke.TryParse(predictPointStroke).GDIObject
         Dim predictedBrush As Brush = predictPointStyle.GetBrush
         Dim errorFitPointBrush As Brush = errorFitPointStyle.GetBrush
-        Dim pointLabelFont As Font = CSSFont.TryParse(pointLabelFontCSS)
+        Dim pointLabelFont As Font = CSSFont.TryParse(pointLabelFontCSS).GDIObject(ppi)
         Dim labelAnchorPen As Pen = Stroke.TryParse(labelAnchorLineStroke).GDIObject
         Dim polynomial = DirectCast(fit.Polynomial, Polynomial)
         Dim plotInternal =
@@ -144,7 +146,7 @@ Public Module RegressionPlot
                 Dim rect = region.PlotRegion
 
                 If xTicks.IsNullOrEmpty OrElse yTicks.IsNullOrEmpty Then
-                    Call g.DrawString("Invalid curve!", CSSFont.TryParse(title), Brushes.Black, New PointF)
+                    Call g.DrawString("Invalid curve!", CSSFont.TryParse(title).GDIObject(g.Dpi), Brushes.Black, New PointF)
                     Return
                 End If
 
@@ -189,9 +191,27 @@ Public Module RegressionPlot
                         Call g.DrawLine(regressionPen, A, B)
                     Next
                 Else
-                    ' regression line
-                    Dim A As New PointF With {.X = fit.X.Min, .Y = polynomial(.X)}
-                    Dim B As New PointF With {.X = fit.X.Max, .Y = polynomial(.X)}
+                    'For Each t As SlideWindow(Of TestPoint) In fit.ErrorTest _
+                    '    .Select(Function(d) DirectCast(d, TestPoint)) _
+                    '    .SlideWindows(2)
+
+                    '    ' regression line 
+                    '    Dim A As New PointF With {.X = t.First.X, .Y = t.First.Yfit}
+                    '    Dim B As New PointF With {.X = t.Last.X, .Y = t.Last.Yfit}
+
+                    '    A = scaler.Translate(A)
+                    '    B = scaler.Translate(B)
+
+                    '    Call g.DrawLine(regressionPen, A, B)
+                    'Next
+
+                    ' regression line 
+                    Dim xMin As Double = fit.X.Min
+                    Dim xMax As Double = fit.X.Max
+                    Dim yMin As Double = polynomial(xMin)
+                    Dim yMax As Double = polynomial(xMax)
+                    Dim A As New PointF With {.X = xMin, .Y = yMin}
+                    Dim B As New PointF With {.X = xMax, .Y = yMax}
 
                     A = scaler.Translate(A)
                     B = scaler.Translate(B)
@@ -199,27 +219,29 @@ Public Module RegressionPlot
                     Call g.DrawLine(regressionPen, A, B)
                 End If
 
-                ' 绘制蓝色的fit计算点
-                For Each point As TestPoint In fit.ErrorTest
-                    Dim pt As New PointF With {
-                        .X = point.X,
-                        .Y = point.Yfit
-                    }
+                If showYFitPoints Then
+                    ' 绘制蓝色的fit计算点
+                    For Each point As TestPoint In fit.ErrorTest
+                        Dim pt As New PointF With {
+                            .X = point.X,
+                            .Y = point.Yfit
+                        }
 
-                    pt = scaler.Translate(pt)
+                        pt = scaler.Translate(pt)
 
-                    g.DrawCircle(
-                        centra:=pt,
-                        r:=pointSize,
-                        color:=errorFitPointBrush
-                    )
-                    g.DrawCircle(
-                        centra:=pt,
-                        r:=pointSize,
-                        color:=predictedPointBorder,
-                        fill:=False
-                    )
-                Next
+                        g.DrawCircle(
+                            centra:=pt,
+                            r:=pointSize,
+                            color:=errorFitPointBrush
+                        )
+                        g.DrawCircle(
+                            centra:=pt,
+                            r:=pointSize,
+                            color:=predictedPointBorder,
+                            fill:=False
+                        )
+                    Next
+                End If
 
                 If showErrorBand Then
                     Dim dx = xTicks(1) - xTicks(0)
@@ -272,8 +294,10 @@ Public Module RegressionPlot
                     Call g.printLegend(fit, rect, linearDetailsFontCSS, legendLabelFontCSS, factorFormat, Not predictedX Is Nothing)
                 End If
 
+                Call g.printEquation(fit, rect, linearDetailsFontCSS, legendLabelFontCSS, factorFormat, Not predictedX Is Nothing)
+
                 If Not title.StringEmpty Then
-                    Dim titleFont As Font = CSSFont.TryParse(titleFontCss)
+                    Dim titleFont As Font = CSSFont.TryParse(titleFontCss).GDIObject(g.Dpi)
                     Dim titleSize = g.MeasureString(title, titleFont)
                     Dim top = (rect.Top - titleSize.Height) / 2
                     Dim left = rect.Left + (rect.Width - titleSize.Width) / 2
@@ -286,7 +310,8 @@ Public Module RegressionPlot
             size.SizeParser,
             margin,
             bg,
-            plotInternal
+            plotInternal,
+            dpi:=$"{ppi},{ppi}"
         )
     End Function
 
@@ -354,8 +379,8 @@ Public Module RegressionPlot
     End Sub
 
     <Extension>
-    Private Sub printLegend(g As IGraphics, fit As IFitted, rect As RectangleF, linearDetailsFontCSS$, legendLabelFontCSS$, factorFormat$, hasPredictedSamples As Boolean)
-        Dim legendLabelFont As Font = CSSFont.TryParse(linearDetailsFontCSS)
+    Private Sub printEquation(g As IGraphics, fit As IFitted, rect As RectangleF, linearDetailsFontCSS$, legendLabelFontCSS$, factorFormat$, hasPredictedSamples As Boolean)
+        Dim legendLabelFont As Font = CSSFont.TryParse(linearDetailsFontCSS).GDIObject(g.Dpi)
         Dim eq$ = "f<sub>(x)</sub> = " & fit.Polynomial.ToString(factorFormat, html:=True)
         Dim R2$ = "R<sup>2</sup> = " & fit.CorrelationCoefficient.ToString("F5")
         Dim pt As New PointF With {
@@ -371,12 +396,16 @@ Public Module RegressionPlot
         }
 
         Call g.DrawHtmlString(R2, legendLabelFont, Color.Black, pt)
+    End Sub
 
+    <Extension>
+    Private Sub printLegend(g As IGraphics, fit As IFitted, rect As RectangleF, linearDetailsFontCSS$, legendLabelFontCSS$, factorFormat$, hasPredictedSamples As Boolean)
         Dim legends As LegendObject() = {
             New LegendObject With {.color = "blue", .fontstyle = legendLabelFontCSS, .style = LegendStyles.Circle, .title = "Predicts"},
             New LegendObject With {.color = "red", .fontstyle = legendLabelFontCSS, .style = LegendStyles.Circle, .title = "Standard Reference"},
             New LegendObject With {.color = "black", .fontstyle = legendLabelFontCSS, .style = LegendStyles.SolidLine, .title = "Linear"}
         }
+        Dim legendLabelFont As Font = CSSFont.TryParse(linearDetailsFontCSS).GDIObject(g.Dpi)
 
         If hasPredictedSamples Then
             legends.Add(New LegendObject With {.color = "green", .fontstyle = legendLabelFontCSS, .style = LegendStyles.Circle, .title = "Samples"})

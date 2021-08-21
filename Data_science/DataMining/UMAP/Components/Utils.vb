@@ -1,50 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::c041395073981c845c4d74324fd39257, Data_science\DataMining\UMAP\Components\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::8fd4d60b939bac46733d5b728a6bc04a, Data_science\DataMining\UMAP\Components\Utils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Utils
-    ' 
-    '     Function: Empty, Filled, Range, RejectionSample
-    ' 
-    '     Sub: ShuffleTogether
-    ' 
-    ' /********************************************************************************/
+' Module Utils
+' 
+'     Function: Empty, Filled, Range, RejectionSample
+' 
+'     Sub: ShuffleTogether
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.Math
 
 Module Utils
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Friend Function ScaleProgressReporter(progressReporter As RunSlavePipeline.SetProgressEventHandler, start As Double, [end] As Double) As RunSlavePipeline.SetProgressEventHandler
+        Return Sub(progress, msg)
+                   progressReporter(([end] - start) * progress + start, msg)
+               End Sub
+    End Function
 
     ''' <summary>
     ''' Creates an empty array
@@ -80,15 +88,17 @@ Module Utils
                 Dim j = random.Next(0, poolSize)
                 Dim broken = False
 
-                For k = 0 To i - 1
-
+                For k As Integer = 0 To i - 1
                     If j = result(k) Then
                         broken = True
                         Exit For
                     End If
                 Next
 
-                If Not broken Then rejectSample = False
+                If Not broken Then
+                    rejectSample = False
+                End If
+
                 result(i) = j
             End While
         Next

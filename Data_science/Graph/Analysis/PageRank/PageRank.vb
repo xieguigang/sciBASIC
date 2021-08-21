@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4371a6d5bcf83146a00c22b0c7bfa73b, Data_science\Graph\Analysis\PageRank\PageRank.vb"
+﻿#Region "Microsoft.VisualBasic::20b379ef25f3b7a6a1b1cb3aea4eba5f, Data_science\Graph\Analysis\PageRank\PageRank.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,14 @@
     '     Class PageRank
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: ComputePageRank, PageRankGenerator, TransposeLinkMatrix
+    '         Function: ComputePageRank, PageRankGenerator, PageRankLoop1, TransposeLinkMatrix
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Analysis.PageRank
@@ -169,49 +170,77 @@ Namespace Analysis.PageRank
 
             Dim iNew As Vector = Vector.Ones(N) / N
             Dim iOld As Vector = Vector.Ones(N) / N
-
+            Dim diff As Vector
             Dim done As Boolean = False
+            Dim diffSumMod As Double
 
             While Not done
                 ' normalize every now and then for numerical stability
                 iNew /= iNew.Sum
+                diff = PageRankLoop1(iNew, iOld, checkSteps, alpha, M, N, leafNodes, at, numLinks)
+                diffSumMod = diff.SumMagnitude
+                done = diffSumMod < convergence
 
-                For i As Integer = 0 To checkSteps - 1
-                    ' swap arrays
-                    Call iOld.Swap(iNew)
-
-                    ' an element in the 1 x I vector. 
-                    ' all elements are identical.
-                    Dim oneIv As Double = (1 - alpha) * iOld.Sum / N
-
-                    ' an element of the A x I vector.
-                    ' all elements are identical.
-                    Dim oneAv As Double = 0.0
-
-                    If M > 0 Then
-                        oneAv = alpha * iOld.Take(leafNodes).Sum / N
-                    End If
-
-                    ' the elements of the H x I multiplication
-                    For j As Integer = 0 To N - 1
-                        Dim page As List(Of Integer) = at(j)
-                        Dim h As Double = 0
-
-                        If page.Count > 0 Then
-                            ' .DotProduct
-                            h = alpha * iOld.Take(page).DotProduct(1.0 / numLinks.Take(page))
-                        End If
-
-                        iNew(j) = h + oneAv + oneIv
-                    Next
-                Next
-
-                Dim diff As Vector = iNew - iOld
+                Call Console.WriteLine($"{diffSumMod} < {convergence}")
 
                 Yield iNew
-
-                done = diff.SumMagnitude < convergence
             End While
+        End Function
+
+        Private Function PageRankLoop1(ByRef iNew As Vector,
+                                       ByRef iOld As Vector,
+                                       ByRef checkSteps%,
+                                       alpha#,
+                                       ByRef M%,
+                                       ByRef N%,
+                                       ByRef leafNodes As List(Of Integer),
+                                       at As List(Of Integer)(),
+                                       numLinks As Vector) As Vector
+
+            Dim tempVec As Vector
+
+            For i As Integer = 0 To checkSteps - 1
+                ' swap arrays
+                tempVec = iNew
+                iNew = iOld
+                iOld = tempVec
+
+                ' an element in the 1 x I vector. 
+                ' all elements are identical.
+                Dim oneIv As Double = (1 - alpha) * iOld.Sum / N
+
+                ' an element of the A x I vector.
+                ' all elements are identical.
+                Dim oneAv As Double = 0.0
+
+                If M > 0 Then
+                    oneAv = alpha * iOld.Take(leafNodes).Sum / N
+                End If
+
+                ' the elements of the H x I multiplication
+                Dim eval = N.Sequence _
+                    .AsParallel _
+                    .Select(Function(j)
+                                Dim page As List(Of Integer) = at(j)
+                                Dim h As Double = 0
+
+                                If page.Count > 0 Then
+                                    ' .DotProduct
+                                    h = alpha * tempVec.Take(page).DotProduct(1.0 / numLinks.Take(page))
+                                End If
+
+                                Return (h + oneAv + oneIv, j)
+                            End Function) _
+                    .OrderBy(Function(d) d.j) _
+                    .Select(Function(d) d.Item1) _
+                    .ToArray
+
+                For j As Integer = 0 To N - 1
+                    iNew(j) = eval(j)
+                Next
+            Next
+
+            Return iNew - iOld
         End Function
 #End Region
     End Class

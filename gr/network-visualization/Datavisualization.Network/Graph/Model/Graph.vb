@@ -1,53 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::8b25861233bc6c3bf68911ce9d8fc668, gr\network-visualization\Datavisualization.Network\Graph\Model\Graph.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class NetworkGraph
-    ' 
-    '         Properties: connectedNodes
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: (+3 Overloads) AddEdge, AddNode, (+2 Overloads) Clone, ComputeIfNotExists, Copy
-    '                   (+2 Overloads) CreateEdge, createEdgeInternal, (+2 Overloads) CreateNode, GetConnectedGraph, GetConnectedVertex
-    '                   GetEdge, (+2 Overloads) GetEdges, (+2 Overloads) GetElementByID, GetElementsByClassName, GetElementsByName
-    '                   StyleSelectorGetElementById, ToString
-    ' 
-    '         Sub: AddGraphListener, Clear, (+2 Overloads) CreateEdges, (+2 Overloads) CreateNodes, DetachNode
-    '              FilterEdges, FilterNodes, Merge, notify, RemoveEdge
-    '              (+2 Overloads) RemoveNode
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class NetworkGraph
+' 
+'         Properties: connectedNodes
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: (+3 Overloads) AddEdge, AddNode, (+2 Overloads) Clone, ComputeIfNotExists, Copy
+'                   (+2 Overloads) CreateEdge, createEdgeInternal, (+2 Overloads) CreateNode, GetConnectedGraph, GetConnectedVertex
+'                   GetEdge, (+2 Overloads) GetEdges, (+2 Overloads) GetElementByID, GetElementsByClassName, GetElementsByName
+'                   StyleSelectorGetElementById, ToString
+' 
+'         Sub: AddGraphListener, Clear, (+2 Overloads) CreateEdges, (+2 Overloads) CreateNodes, DetachNode
+'              FilterEdges, FilterNodes, Merge, notify, RemoveEdge
+'              (+2 Overloads) RemoveNode
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -259,7 +259,7 @@ Namespace Graph
                          ' 在利用这个函数创建edge的时候，
                          ' 会将创建出来的新edge添加进入当前的这个图对象之中
                          ' 所以不需要再次调用addedge方法了
-                         Return CreateEdge(GetElementById(u), GetElementById(v), weight, data)
+                         Return CreateEdge(GetElementByID(u), GetElementByID(v), weight, data)
                      End Function)
 
             Return Me
@@ -410,7 +410,7 @@ Namespace Graph
         End Function
 
         Public Overloads Function GetConnectedVertex(label As String) As Node()
-            Dim node As Node = GetElementById(label)
+            Dim node As Node = GetElementByID(label)
             Dim edges As Edge() = GetEdges(node).ToArray
             Dim connectedNodes As Node() = edges _
                 .Select(Function(e) {e.U, e.V}) _
@@ -447,7 +447,7 @@ Namespace Graph
         End Function
 
         Public Sub RemoveNode(labelId As String)
-            Call RemoveNode(GetElementById(labelId))
+            Call RemoveNode(GetElementByID(labelId))
         End Sub
 
         ''' <summary>
@@ -541,6 +541,7 @@ Namespace Graph
             _eventListeners.Add(iListener)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Sub notify(<CallerMemberName> Optional event$ = Nothing)
             For Each listener As IGraphEventListener In _eventListeners
                 Call listener.GraphChanged(Me, [event])
@@ -548,7 +549,17 @@ Namespace Graph
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"Network graph have {vertices.Count} nodes and {graphEdges.Count} edges."
+            Dim communities As String() = vertex _
+                .Select(Function(v) v.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)) _
+                .Where(Function(groupId) Not groupId.StringEmpty) _
+                .Distinct _
+                .ToArray
+
+            If communities.Length = 0 Then
+                Return $"Network graph have {vertices.Count} nodes and {graphEdges.Count} edges."
+            Else
+                Return $"Network graph [{vertices.Count} nodes, {graphEdges.Count} edges] has {communities.Length} community class ({communities.JoinBy(", ")})."
+            End If
         End Function
 
         ''' <summary>
@@ -594,8 +605,8 @@ Namespace Graph
 
             For Each edge As Edge In graphEdges
                 g.CreateEdge(
-                    u:=g.GetElementById(edge.U.label),
-                    v:=g.GetElementById(edge.V.label),
+                    u:=g.GetElementByID(edge.U.label),
+                    v:=g.GetElementByID(edge.V.label),
                     weight:=edge.weight,
                     data:=edge.data.Clone
                 )

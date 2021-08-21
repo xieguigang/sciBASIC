@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d3a8020e3457d39268c231f63cb01ac, Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\BitmapBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::d56cc23e0fb50467756b1f1221673e60, Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\BitmapBuffer.vb"
 
     ' Author:
     ' 
@@ -37,8 +37,8 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: FromBitmap, FromImage, GetEnumerator, GetImage, GetIndex
-    '                   GetPixel, IEnumerable_GetEnumerator, OutOfRange
+    '         Function: FromBitmap, FromImage, GetEnumerator, GetImage, (+2 Overloads) GetIndex
+    '                   GetPixel, IEnumerable_GetEnumerator, OutOfRange, ToPixel2D
     ' 
     '         Sub: Dispose, SetPixel
     ' 
@@ -132,6 +132,12 @@ Namespace Imaging.BitmapImage
             Return x + y
         End Function
 
+        Public Shared Function GetIndex(x As Integer, y As Integer, width As Integer, channels As Integer) As Integer
+            y = y * (width * channels)
+            x = x * channels
+            Return x + y
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function OutOfRange(x%, y%) As Boolean
             Return x < 0 OrElse x >= Width OrElse y < 0 OrElse y >= Height
@@ -161,6 +167,15 @@ Namespace Imaging.BitmapImage
             Dim iB As Byte = buffer(i + 0)
 
             Return Color.FromArgb(CInt(iA), CInt(iR), CInt(iG), CInt(iB))
+        End Function
+
+        Public Shared Function ToPixel2D(i As Integer, width As Integer, Optional channels As Integer = 4) As Point
+            i = i / channels
+
+            Dim y As Integer = i / width
+            Dim x As Integer = i Mod width
+
+            Return New Point(x, y)
         End Function
 
         ''' <summary>

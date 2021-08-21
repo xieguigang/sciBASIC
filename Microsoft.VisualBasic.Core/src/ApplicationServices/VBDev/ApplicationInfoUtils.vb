@@ -49,6 +49,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports System.Runtime.Versioning
 Imports Microsoft.VisualBasic.Linq
+Imports any = Microsoft.VisualBasic.Scripting
 
 Namespace ApplicationServices.Development
 
@@ -127,12 +128,16 @@ Namespace ApplicationServices.Development
         ''' </remarks>
         <Extension>
         Public Function CalculateCompileTime(assm As Assembly) As Date
-            Dim version As Version = assm.GetName.Version
-            Dim builtTime = New DateTime(2000, 1, 1) _
-                .AddDays(version.Build) _
-                .AddSeconds(version.MinorRevision * 2)
+            If assm Is Nothing Then
+                Return Nothing
+            Else
+                Dim version As Version = assm.GetName.Version
+                Dim builtTime = New DateTime(2000, 1, 1) _
+                    .AddDays(version.Build) _
+                    .AddSeconds(version.MinorRevision * 2)
 
-            Return builtTime
+                Return builtTime
+            End If
         End Function
 
         <Extension>
@@ -147,11 +152,11 @@ Namespace ApplicationServices.Development
                 .Guid = GetGuid(assm),
                 .AssemblyVersion = assm.tryGetVersion.ToString,
                 .BuiltTime = assm.CalculateCompileTime,
-                .AssemblyFullName = assm.GetName.ToString,
+                .AssemblyFullName = any.ToString(assm.GetName),
                 .AssemblyInformationalVersion = GetInformationalVersion(assm),
                 .AssemblyTrademark = GetTrademark(assm),
                 .TargetFramework = GetTargetFramework(assm),
-                .Name = assm.GetName.Name
+                .Name = assm.GetName?.Name
             }
         End Function
 

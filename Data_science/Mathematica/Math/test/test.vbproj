@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{3095C9DC-C1C2-4AE9-9C97-9AF5C61DC18A}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Test.VectorTest</StartupObject>
+    <StartupObject>Test.matrixReaderTest</StartupObject>
     <RootNamespace>Test</RootNamespace>
     <AssemblyName>Test</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -99,6 +99,7 @@
     <Compile Include="LPPTest.vb" />
     <Compile Include="Module1.vb" />
     <Compile Include="HalfTest.vb" />
+    <Compile Include="matrixReaderTest.vb" />
     <Compile Include="scriptTest.vb" />
     <Compile Include="VectorTest.vb" />
     <Compile Include="quantileTest.vb" />
@@ -147,6 +148,10 @@
     <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataFrame\DataFrame.vbproj">
+      <Project>{6140aed7-e317-46dd-9c15-7fe400795992}</Project>
+      <Name>DataFrame</Name>
     </ProjectReference>
     <ProjectReference Include="..\Math\math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>

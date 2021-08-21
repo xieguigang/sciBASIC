@@ -542,11 +542,11 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="BinaryTree\Tree.vb" />
-    <Compile Include="UMAP\UmapRender.vb" />
-    <Compile Include="UMAP\Umap3D.vb" />
-    <Compile Include="UMAP\Umap2D.vb" />
-    <Compile Include="UMAP\UmapRenderExtensions.vb" />
-    <Compile Include="UMAP\UmapGraph.vb" />
+    <Compile Include="Embedding\EmbeddingRender.vb" />
+    <Compile Include="Embedding\Embedding3D.vb" />
+    <Compile Include="Embedding\Embedding2D.vb" />
+    <Compile Include="Embedding\EmbeddingRenderExtensions.vb" />
+    <Compile Include="Embedding\UmapGraph.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -616,6 +616,10 @@
     <ProjectReference Include="..\..\MachineLearning\MachineLearning\MachineLearning.vbproj">
       <Project>{a43ec013-2b55-4d25-b9f1-96bd5fb1e577}</Project>
       <Name>MachineLearning</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MachineLearning\t-SNE\t-SNE.vbproj">
+      <Project>{651c48ef-9f4a-4727-b110-fdd1a08d7de3}</Project>
+      <Name>t-SNE</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Mathematica\Math\DataFrame\DataFrame.vbproj">
       <Project>{6140aed7-e317-46dd-9c15-7fe400795992}</Project>

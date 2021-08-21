@@ -1,43 +1,46 @@
-﻿#Region "Microsoft.VisualBasic::9630a4c077df41e49c66e92f0582168e, Data_science\Visualization\Plots\Scatter\Plot\Scatter2D.vb"
+﻿#Region "Microsoft.VisualBasic::ebc0226b5e1f986ff000c0ece5830352, Data_science\Visualization\Plots\Scatter\Plot\Scatter2D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Scatter2D
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: PlotInternal
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Scatter2D
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: GetDataScaler
+' 
+'         Sub: PlotInternal
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -79,6 +82,9 @@ Namespace Plots
         ReadOnly ablines As Line()
         ReadOnly hullPolygonIndex As Index(Of String)
 
+        Friend xlim As Double = Double.NaN
+        Friend ylim As Double = Double.NaN
+
         Public Sub New(data As IEnumerable(Of SerialData), theme As Theme,
                        Optional scatterReorder As Boolean = False,
                        Optional fillPie As Boolean = True,
@@ -94,7 +100,7 @@ Namespace Plots
             Me.ablines = ablines
         End Sub
 
-        Protected Overrides Sub PlotInternal(ByRef g As IGraphics, rect As GraphicsRegion)
+        Public Function GetDataScaler(ByRef g As IGraphics, rect As GraphicsRegion) As DataScaler
             Dim XTicks#(), YTicks#()
 
             '    With array.CreateAxisTicks(
@@ -106,8 +112,18 @@ Namespace Plots
             '        XTicks = .x
             '        YTicks = .y
             '    End With
-            XTicks = array.Select(Function(s) s.pts).IteratesALL.Select(Function(p) CDbl(p.pt.X)).Range.CreateAxisTicks
-            YTicks = array.Select(Function(s) s.pts).IteratesALL.Select(Function(p) CDbl(p.pt.Y)).Range.CreateAxisTicks
+            XTicks = array.Select(Function(s) s.pts).IteratesALL.Select(Function(p) CDbl(p.pt.X)).ToArray
+            YTicks = array.Select(Function(s) s.pts).IteratesALL.Select(Function(p) CDbl(p.pt.Y)).ToArray
+
+            If Not xlim.IsNaNImaginary Then
+                XTicks = XTicks.JoinIterates({xlim}).ToArray
+            End If
+            If Not ylim.IsNaNImaginary Then
+                YTicks = YTicks.JoinIterates({ylim}).ToArray
+            End If
+
+            XTicks = XTicks.Range.CreateAxisTicks
+            YTicks = YTicks.Range.CreateAxisTicks
 
             'If ticksY > 0 Then
             '    YTicks = AxisScalling.GetAxisByTick(YTicks, tick:=ticksY)
@@ -128,7 +144,7 @@ Namespace Plots
             'Else
             ' 如果所有数据点都有单词，则X轴使用离散映射
             If array.All(Function(line) line.pts.All(Function(a) Not a.axisLabel.StringEmpty)) Then
-                    Dim allTermLabels As String() = array _
+                Dim allTermLabels As String() = array _
                     .Select(Function(line)
                                 Return line.pts.Select(Function(a) a.axisLabel)
                             End Function) _
@@ -136,27 +152,35 @@ Namespace Plots
                     .Distinct _
                     .ToArray
 
-                    X = d3js.scale _
+                X = d3js.scale _
                     .ordinal _
                     .domain(allTermLabels) _
                     .range(integers:={region.Left, region.Right})
-                Else
-                    X = d3js.scale _
+            Else
+                X = d3js.scale _
                     .linear _
                     .domain(XTicks) _
                     .range(integers:={region.Left, region.Right})
-                End If
+            End If
 
-                Y = d3js.scale.linear.domain(YTicks).range(integers:={region.Bottom, region.Top})
-            ' End If
+            Y = d3js.scale _
+                .linear _
+                .domain(YTicks) _
+                .range(integers:={region.Bottom, region.Top})
 
-            Dim scaler As New DataScaler With {
+            Return New DataScaler With {
                 .X = X,
                 .Y = Y,
                 .region = region,
                 .AxisTicks = (XTicks, YTicks)
             }
+        End Function
+
+        Protected Overrides Sub PlotInternal(ByRef g As IGraphics, rect As GraphicsRegion)
+            Dim scaler As DataScaler = GetDataScaler(g, rect)
             Dim gSize As Size = rect.Size
+            Dim canvas As IGraphics = g
+            Dim region As Rectangle = rect.PlotRegion
 
             If theme.drawAxis Then
                 Call g.DrawAxis(
@@ -170,8 +194,8 @@ Namespace Plots
                     gridX:=theme.gridStrokeX,
                     gridY:=theme.gridStrokeY,
                     gridFill:=theme.gridFill,
-                    XtickFormat:=theme.axisTickFormat,
-                    YtickFormat:=theme.axisTickFormat,
+                    XtickFormat:=theme.XaxisTickFormat,
+                    YtickFormat:=theme.YaxisTickFormat,
                     axisStroke:=theme.axisStroke
                 )
             End If
@@ -194,7 +218,7 @@ Namespace Plots
                                         End If
                                     End Function
                 Dim polygon As New List(Of PointF)
-
+                Dim shapeSize As New Size(d, d)
                 Dim scatter As IEnumerable(Of PointData)
 
                 If scatterReorder Then
@@ -209,7 +233,16 @@ Namespace Plots
                     polygon.Add(pt1)
 
                     If fillPie Then
-                        Call g.FillPie(getPointBrush(pt), pt1.X - r, pt1.Y - r, d, d, 0, 360)
+                        Select Case line.shape
+                            Case LegendStyles.Circle
+                                pt1 = New PointF(pt1.X - r, pt1.Y - r)
+                            Case LegendStyles.Square
+                                pt1 = New PointF(pt1.X, pt1.Y - d)
+                            Case Else
+                                ' do nothing
+                        End Select
+
+                        g.DrawLegendShape(pt1, shapeSize, line.shape, getPointBrush(pt))
                     End If
 
                     Call Parallel.DoEvents()
@@ -251,7 +284,7 @@ Namespace Plots
                                 .title = s.title
                             }
 
-                Call DrawLegends(g, legends, rect)
+                Call DrawLegends(g, legends, showBorder:=True, canvas:=rect)
             End If
 
             Call DrawMainTitle(g, region)

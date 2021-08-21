@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::306e53b14b6f0ca926455656b9996a5d, Data_science\Mathematica\SignalProcessing\SignalProcessing\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::5afaf6e4cf5ae56926395efbbee6da86, Data_science\Mathematica\SignalProcessing\SignalProcessing\test\Program.vb"
 
     ' Author:
     ' 
@@ -62,7 +62,7 @@ Module Program
     End Sub
 
     Sub peakFinding()
-        Dim signals = File.Load("D:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\GUCA.csv").Skip(1).Select(Function(r) New TimeSignal With {.time = r(0), .intensity = r(1)}).ToArray
+        Dim signals = File.Load("E:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\GUCA.csv").Skip(1).Select(Function(r) New TimeSignal With {.time = r(0), .intensity = r(1)}).ToArray
         Dim peaks = New ElevationAlgorithm(3, 0.65).FindAllSignalPeaks(signals.As(Of ITimeSignal)).ToArray
 
         Pause()

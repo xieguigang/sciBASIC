@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1e366c5f5b9689399abde4490aaabce, Data\BinaryData\DataStorage\netCDF\Components\CDFData\doubles.vb"
+﻿#Region "Microsoft.VisualBasic::46bcda59aa959a473a7268b5d76156e6, Data\BinaryData\DataStorage\netCDF\Components\CDFData\doubles.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,8 @@
     '     Class doubles
     ' 
     '         Properties: cdfDataType
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     ' 
     ' /********************************************************************************/

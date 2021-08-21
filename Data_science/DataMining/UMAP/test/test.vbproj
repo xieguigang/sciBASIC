@@ -146,6 +146,10 @@
       <Project>{4e06139a-d524-417f-a980-db3bf534cbdc}</Project>
       <Name>Randomizer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\DataMining\DataMining.vbproj">
+      <Project>{1b42809b-603f-4cea-a0db-91276582b9ca}</Project>
+      <Name>DataMining</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UMAP.vbproj">
       <Project>{c57630a3-33b1-4cad-9dc8-3a9e66ce93ff}</Project>
       <Name>UMAP</Name>

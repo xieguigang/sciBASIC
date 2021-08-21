@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::98f0536d3a79f97e042301688dab1b07, Data_science\Visualization\Plots\Scatter\Bubble.vb"
+﻿#Region "Microsoft.VisualBasic::086d291719f180c4a7b33a791e2aae8b, Data_science\Visualization\Plots\Scatter\Bubble.vb"
 
     ' Author:
     ' 
@@ -145,8 +145,8 @@ Public Class Bubble : Inherits Plot
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         Dim mapper As Mapper
         Dim rangeData As New Scaling(data, False)
-        Dim tagLabelFont As Font = CSSFont.TryParse(theme.tagCSS).GDIObject
-        Dim titleFont As Font = CSSFont.TryParse(theme.mainCSS)
+        Dim tagLabelFont As Font = CSSFont.TryParse(theme.tagCSS).GDIObject(g.Dpi)
+        Dim titleFont As Font = CSSFont.TryParse(theme.mainCSS).GDIObject(g.Dpi)
 
         If xAxis.StringEmpty Then
             ' 任意一个位空值就会使用普通的axis数据计算方法
@@ -221,10 +221,15 @@ Public Class Bubble : Inherits Plot
                 b = New SolidBrush(s.color)
             End If
 
-            For Each pt As PointData In s
+            For Each pt As PointData In s.pts
                 Dim r As Double = getRadius(pt)
                 Dim p As New Point(CInt(pt.pt.X - r), CInt(pt.pt.Y - r))
                 Dim rect As New Rectangle(p, New Size(r * 2, r * 2))
+
+                If r.IsNaNImaginary Then
+                    Call $"invalid radius value of {pt}".Warning
+                    Continue For
+                End If
 
                 With pt.color
                     If .StringEmpty Then
@@ -289,7 +294,7 @@ Public Class Bubble : Inherits Plot
     End Sub
 
     Private Sub drawLegend(g As IGraphics, canvas As GraphicsRegion)
-        Dim legendLabelFont As Font = CSSFont.TryParse(theme.axisLabelCSS)
+        Dim legendLabelFont As Font = CSSFont.TryParse(theme.axisLabelCSS).GDIObject(g.Dpi)
         Dim maxSize! = data _
             .Select(Function(s) s.title) _
             .Select(Function(str) g.MeasureString(str, legendLabelFont).Width) _

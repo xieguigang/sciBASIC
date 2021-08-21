@@ -103,7 +103,7 @@ Public Class DendrogramPanelV2 : Inherits DendrogramPanel
         Dim right = plotRegion.Left + plotRegion.Right - scaleX(0)
         Dim y = plotRegion.Top + unitWidth - unitWidth / 2
         Dim x!
-        Dim tickFont As Font = CSSFont.TryParse(theme.axisTickCSS)
+        Dim tickFont As Font = CSSFont.TryParse(theme.axisTickCSS).GDIObject(g.Dpi)
         Dim tickFontHeight As Single = g.MeasureString("0", tickFont).Height
         Dim dh As Double = tickFontHeight / 3
         Dim tickLable As String
@@ -123,7 +123,7 @@ Public Class DendrogramPanelV2 : Inherits DendrogramPanel
 
             For Each tick As Double In axisTicks
                 x = plotRegion.Left + plotRegion.Right - scaleX(tick)
-                tickLable = tick.ToString(theme.axisTickFormat)
+                tickLable = tick.ToString(theme.XaxisTickFormat)
                 tickLabelSize = g.MeasureString(tickLable, tickFont)
 
                 g.DrawLine(axisPen, New PointF(x, y), New PointF(x, y - dh))

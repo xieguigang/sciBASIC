@@ -95,7 +95,7 @@ Namespace LinearAlgebra.Matrix
         ''' </param>
         Public Sub New(A As GeneralMatrix)
             ' Initialize.
-            QR = A.ArrayCopy
+            QR = A.ArrayPack(deepcopy:=True)
             m = A.RowDimension
             n = A.ColumnDimension
             Rdiag = New Double(n - 1) {}
@@ -157,7 +157,7 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
         Public Overridable ReadOnly Property H() As GeneralMatrix
             Get
-                Dim X As New GeneralMatrix(m, n)
+                Dim X As New NumericMatrix(m, n)
                 Dim Ha As Double()() = X.Array
                 For i As Integer = 0 To m - 1
                     For j As Integer = 0 To n - 1
@@ -178,7 +178,7 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
         Public Overridable ReadOnly Property R() As GeneralMatrix
             Get
-                Dim X As New GeneralMatrix(n, n)
+                Dim X As New NumericMatrix(n, n)
                 Dim Ra As Double()() = X.Array
                 For i As Integer = 0 To n - 1
                     For j As Integer = 0 To n - 1
@@ -200,7 +200,7 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
         Public Overridable ReadOnly Property Q() As GeneralMatrix
             Get
-                Dim X As New GeneralMatrix(m, n)
+                Dim X As New NumericMatrix(m, n)
                 Dim Qa As Double()() = X.Array
                 For k As Integer = n - 1 To 0 Step -1
                     For i As Integer = 0 To m - 1
@@ -246,7 +246,7 @@ Namespace LinearAlgebra.Matrix
 
             ' Copy right hand side
             Dim nx As Integer = B.ColumnDimension
-            Dim X As Double()() = B.ArrayCopy
+            Dim X As Double()() = B.ArrayPack(deepcopy:=True)
 
             ' Compute Y = transpose(Q)*B
             For k As Integer = 0 To n - 1
@@ -273,7 +273,7 @@ Namespace LinearAlgebra.Matrix
                 Next
             Next
 
-            Return (New GeneralMatrix(X, n, nx).GetMatrix(0, n - 1, 0, nx - 1))
+            Return (New NumericMatrix(X, n, nx).GetMatrix(0, n - 1, 0, nx - 1))
         End Function
 
 #End Region

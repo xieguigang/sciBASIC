@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6436f3c98cbde326f61c83e0214ec736, Microsoft.VisualBasic.Core\src\Scripting\Runtime\CType\Casting.vb"
+﻿#Region "Microsoft.VisualBasic::a46afabe714c294f3fba43141ed1193d, Microsoft.VisualBasic.Core\src\Scripting\Runtime\CType\Casting.vb"
 
     ' Author:
     ' 
@@ -132,7 +132,7 @@ Namespace Scripting.Runtime
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function NumericRangeParser(exp As String) As DoubleRange
-            Return CType(exp, DoubleRange)
+            Return DoubleRange.TryParse(exp)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -185,6 +185,7 @@ Namespace Scripting.Runtime
         ''' <param name="pt$"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         <Extension> Public Function SizeParser(pt$) As Size
             Return pt.FloatSizeParser.ToSize
         End Function

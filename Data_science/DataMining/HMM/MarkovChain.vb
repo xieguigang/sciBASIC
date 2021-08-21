@@ -43,7 +43,7 @@
 Imports Microsoft.VisualBasic.DataMining.HiddenMarkovChain.Algorithm
 Imports Microsoft.VisualBasic.DataMining.HiddenMarkovChain.Models
 Imports Microsoft.VisualBasic.My.JavaScript
-Imports Matrix = Microsoft.VisualBasic.Math.LinearAlgebra.Matrix.GeneralMatrix
+Imports Matrix = Microsoft.VisualBasic.Math.LinearAlgebra.Matrix.NumericMatrix
 
 Public Class MarkovChain
 

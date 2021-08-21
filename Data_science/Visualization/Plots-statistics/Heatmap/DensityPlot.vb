@@ -131,8 +131,6 @@ Namespace Heatmap
                     r:=ptSize
                 )
             Dim scatterPadding As Padding = padding
-            Dim xAxis = xrange.CreateAxisTicks.AxisExpression
-            Dim yAxis = yrange.CreateAxisTicks.AxisExpression
 
             scatterPadding.Right += legendWidth
 
@@ -145,8 +143,8 @@ Namespace Heatmap
                 ablines:=ablines,
                 Xlabel:=labX,
                 Ylabel:=labY,
-                xaxis:=xAxis,
-                yaxis:=yAxis,
+                xlim:=xrange.Max,
+                ylim:=yrange.Max,
                 htmlLabel:=htmlLabel,
                 labelFontStyle:=CSSFont.Win7VeryLarge,
                 tickFontStyle:=CSSFont.Win7Large).CreateGraphics
@@ -180,8 +178,8 @@ Namespace Heatmap
                     .IteratesALL _
                     .Range _
                     .CreateAxisTicks
-                Dim legendTitleFont As Font = CSSFont.TryParse(legendTitleFontCSS).GDIObject
-                Dim legendTickFont As Font = CSSFont.TryParse(legendTickFontCSS).GDIObject
+                Dim legendTitleFont As Font = CSSFont.TryParse(legendTitleFontCSS).GDIObject(g.Dpi)
+                Dim legendTickFont As Font = CSSFont.TryParse(legendTickFontCSS).GDIObject(g.Dpi)
                 Dim legendTickStroke As Pen = Stroke.TryParse(legendTickStrokeCSS).GDIObject
 
                 Call Legends.ColorMapLegend(

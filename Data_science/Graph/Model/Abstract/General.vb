@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cbea04a9a7debf0f487187f198e2a692, Data_science\Graph\Model\Abstract\General.vb"
+﻿#Region "Microsoft.VisualBasic::b25baf2be827517ea1b242c9274627a5, Data_science\Graph\Model\Abstract\General.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     ' Class Graph
     ' 
-    ' 
+    '     Function: FindEdge
     ' 
     ' /********************************************************************************/
 
@@ -60,5 +60,19 @@ End Class
 ''' that Is, it has no multiple edges And no self-loops.
 ''' </summary>
 Public Class Graph : Inherits Graph(Of TV, VertexEdge, Graph)
+
+    Public Function FindEdge(u As String, v As String) As VertexEdge
+        If Not (vertices.ContainsKey(u) OrElse vertices.ContainsKey(v)) Then
+            Return Nothing
+        Else
+            Dim key As String = VertexEdge.EdgeKey(vertices(u), vertices(v))
+
+            If edges.ContainsKey(key) Then
+                Return edges(key)
+            Else
+                Return Nothing
+            End If
+        End If
+    End Function
 
 End Class

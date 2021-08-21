@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e52fb923691786f6ed99bbb88af77c4, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\Hypothesis.vb"
+﻿#Region "Microsoft.VisualBasic::bf7a152cbf3f8938020766d7d480b22a, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\Hypothesis.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,6 @@
 
     '     Enum Hypothesis
     ' 
-    '         Greater, Less, TwoSided
     ' 
     '  
     ' 
@@ -44,20 +43,22 @@
 
 #End Region
 
+Imports System.ComponentModel
+
 Namespace Hypothesis
 
     Public Enum Hypothesis
         ''' <summary>
         ''' ``mu > mu0``
         ''' </summary>
-        Greater
+        <Description("greater than")> Greater = 1
         ''' <summary>
         ''' ``mu &lt; mu0``
         ''' </summary>
-        Less
+        <Description("less than")> Less = -1
         ''' <summary>
-        ''' ``mu &lt;> mu0``
+        ''' not equals ``mu &lt;> mu0``
         ''' </summary>
-        TwoSided
+        <Description("not equal to")> TwoSided = 0
     End Enum
 End Namespace

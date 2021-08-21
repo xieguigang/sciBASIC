@@ -1,55 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::509d81320b78a26c1c036b207ce69cbf, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::911bd524e4933c37d02ff2ce3368edce, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Vector
-    ' 
-    '         Properties: [Mod], Data, Inf, IsNumeric, NAN
-    '                     Range, SumMagnitude, Unit, Zero
-    ' 
-    '         Constructor: (+12 Overloads) Sub New
-    ' 
-    '         Function: Abs, AsSparse, CumSum, DotProduct, Ones
-    '                   Order, Product, (+2 Overloads) rand, ScaleToRange, slice
-    '                   SumMagnitudes, (+2 Overloads) ToString
-    ' 
-    '         Sub: (+3 Overloads) CopyTo
-    ' 
-    '         Operators: (+4 Overloads) -, (+6 Overloads) *, (+3 Overloads) /, (+3 Overloads) ^, (+4 Overloads) +
-    '                    <, (+3 Overloads) <=, (+2 Overloads) <>, (+2 Overloads) =, >
-    '                    (+3 Overloads) >=, (+2 Overloads) Or, (+2 Overloads) Xor
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Vector
+' 
+'         Properties: [Mod], Data, Inf, IsNumeric, NAN
+'                     Range, SumMagnitude, Unit, Zero
+' 
+'         Constructor: (+12 Overloads) Sub New
+' 
+'         Function: Abs, AsSparse, CumSum, DotProduct, Ones
+'                   Order, Product, (+2 Overloads) rand, ScaleToRange, slice
+'                   SumMagnitudes, (+2 Overloads) ToString
+' 
+'         Sub: (+3 Overloads) CopyTo
+' 
+'         Operators: (+4 Overloads) -, (+6 Overloads) *, (+3 Overloads) /, (+3 Overloads) ^, (+4 Overloads) +
+'                    <, (+3 Overloads) <=, (+2 Overloads) <>, (+2 Overloads) =, >
+'                    (+3 Overloads) >=, (+2 Overloads) Or, (+2 Overloads) Xor
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -61,7 +61,7 @@ Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
-Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
+Imports Microsoft.VisualBasic.Math.Scripting.Rscript
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports numpy = Microsoft.VisualBasic.Language.Python
@@ -239,7 +239,10 @@ Namespace LinearAlgebra
         ''' <summary>
         ''' Creates vector with a specific value sequence.
         ''' </summary>
-        ''' <param name="data"></param>
+        ''' <param name="data">
+        ''' a sequence of numeric value that will fill the vector's 
+        ''' data <see cref="buffer"/>.
+        ''' </param>
         Sub New(data As IEnumerable(Of Double))
             Call MyBase.New(data)
         End Sub
@@ -664,7 +667,7 @@ Namespace LinearAlgebra
                 Throw New ArgumentException("Inner vector dimensions must agree！")
             End If
 
-            Dim vvmat As New GeneralMatrix(N0, N0)
+            Dim vvmat As New NumericMatrix(N0, N0)
 
             For i As Integer = 0 To N0 - 1
                 For j As Integer = 0 To N0 - 1
@@ -782,6 +785,12 @@ Namespace LinearAlgebra
             Return New BooleanVector(From d As Double In x Select d >= n)
         End Operator
 
+        ''' <summary>
+        ''' x &lt;= n
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <=(x As Vector, n As Double) As BooleanVector
             Return New BooleanVector(From d As Double In x Select d <= n)

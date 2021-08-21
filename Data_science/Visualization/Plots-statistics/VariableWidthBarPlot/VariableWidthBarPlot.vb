@@ -69,7 +69,8 @@ Public Module VariableWidthBarPlot
                          Optional tickFontCSS$ = CSSFont.Win7Large,
                          Optional tickLength% = 20,
                          Optional showDataLabel As Boolean = True,
-                         Optional dataLabelFontCSS$ = CSSFont.Win7Large) As GraphicsData
+                         Optional dataLabelFontCSS$ = CSSFont.Win7Large,
+                         Optional ppi As Integer = 100) As GraphicsData
 
         Dim colors As Color() = Designer.GetColors(colorSchema)
         Dim list = data.ToArray
@@ -79,16 +80,16 @@ Public Module VariableWidthBarPlot
         Dim p As i32 = Scan0
         Dim axisPen As Pen = Stroke.TryParse(axisPenCSS).GDIObject
         Dim tickPen As Pen = Stroke.TryParse(ticksPenCSS).GDIObject
-        Dim XLabelFont As Font = CSSFont.TryParse(XLabelFontCSS).GDIObject
-        Dim tickFont As Font = CSSFont.TryParse(tickFontCSS).GDIObject
-        Dim titleFont As Font = CSSFont.TryParse(titleFontCSS).GDIObject
-        Dim dataLabelFont As Font = CSSFont.TryParse(dataLabelFontCSS).GDIObject
+        Dim XLabelFont As Font = CSSFont.TryParse(XLabelFontCSS).GDIObject(ppi)
+        Dim tickFont As Font = CSSFont.TryParse(tickFontCSS).GDIObject(ppi)
+        Dim titleFont As Font = CSSFont.TryParse(titleFontCSS).GDIObject(ppi)
+        Dim dataLabelFont As Font = CSSFont.TryParse(dataLabelFontCSS).GDIObject(ppi)
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
 
                 Dim plotRect As Rectangle = region.PlotRegion
                 Dim scaler As New DataScaler With {
-                    .Region = plotRect,
+                    .region = plotRect,
                     .X = d3js.scale.linear.domain(X).range(integers:={plotRect.Left, plotRect.Right}),
                     .Y = d3js.scale.linear.domain(Y).range(integers:={plotRect.Top, plotRect.Bottom})
                 }

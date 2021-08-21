@@ -87,7 +87,7 @@ Public Class CorrelationMatrix : Inherits DataMatrix
     End Sub
 
     Public Function GetPvalueMatrix() As GeneralMatrix
-        Return New GeneralMatrix(pvalueMat)
+        Return New NumericMatrix(pvalueMat)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

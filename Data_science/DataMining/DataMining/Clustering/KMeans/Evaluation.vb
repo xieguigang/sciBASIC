@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ccf71e45508cbc9ee2080c72708807b, Data_science\DataMining\DataMining\Clustering\KMeans\Evaluation.vb"
+﻿#Region "Microsoft.VisualBasic::c01efe879a62dd983db25056f69b3d3a, Data_science\DataMining\DataMining\Clustering\KMeans\Evaluation.vb"
 
     ' Author:
     ' 
@@ -40,6 +40,7 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Math.Correlations
 Imports stdNum = System.Math
 
 Namespace KMeans

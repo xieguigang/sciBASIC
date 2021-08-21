@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c85afb4bd1380d2ee929f90df30d1e43, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\DoubleRange.vb"
+﻿#Region "Microsoft.VisualBasic::f0b5310b80679c5f51d83563bc1eb810, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\DoubleRange.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: Length, Max, Min
     ' 
-    '         Constructor: (+7 Overloads) Sub New
+    '         Constructor: (+9 Overloads) Sub New
     '         Function: Contains, (+2 Overloads) Enumerate, GetEnumerator, IEnumerable_GetEnumerator, (+3 Overloads) IsInside
     '                   (+2 Overloads) IsOverlapping, ScaleMapping, (+2 Overloads) ToString, TryParse
     '         Operators: *, <>, =, (+2 Overloads) Like
@@ -114,12 +114,34 @@ Namespace ComponentModel.Ranges.Model
             End If
         End Sub
 
+        Sub New(data As Integer())
+            If data.Length = 0 Then
+                Min = Double.NaN
+                Max = Double.NaN
+            Else
+                Min = data.Min
+                Max = data.Max
+            End If
+        End Sub
+
         ''' <summary>
         ''' 从一个任意的实数向量之中构建出一个实数区间范围
         ''' </summary>
         ''' <param name="vector"></param>
         Sub New(vector As IEnumerable(Of Double))
             Call Me.New(data:=vector.ToArray)
+        End Sub
+
+        Sub New(vector As IEnumerable(Of Integer))
+            With vector.ToArray
+                If .Length = 0 Then
+                    Min = Double.NaN
+                    Max = Double.NaN
+                Else
+                    Min = .Min
+                    Max = .Max
+                End If
+            End With
         End Sub
 
         Sub New(range As IntRange)
@@ -212,12 +234,12 @@ Namespace ComponentModel.Ranges.Model
             Return ((IsInside(range.Min)) OrElse (IsInside(range.Max)))
         End Function
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Widening Operator CType(exp As String) As DoubleRange
-            Dim r As New DoubleRange
-            Call exp.Parser(r.Min, r.Max)
-            Return r
-        End Operator
+        '<MethodImpl(MethodImplOptions.AggressiveInlining)>
+        'Public Shared Widening Operator CType(exp As String) As DoubleRange
+        '    Dim r As New DoubleRange
+        '    Call exp.Parser(r.Min, r.Max)
+        '    Return r
+        'End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(data#()) As DoubleRange
@@ -346,7 +368,9 @@ Namespace ComponentModel.Ranges.Model
             End If
 
             Try
-                Return expression
+                Dim r As New DoubleRange
+                Call expression.Parser(r.Min, r.Max)
+                Return r
             Catch ex As Exception
                 Return Nothing
             End Try

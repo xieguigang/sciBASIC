@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b540de8a717ff9fbd9b35c81052ae1a6, Data_science\DataMining\DataMining\Clustering\KMeans\Kmedoids.vb"
+﻿#Region "Microsoft.VisualBasic::752ae9d468b4f47e24dc93f5ed189067, Data_science\DataMining\DataMining\Clustering\KMeans\Kmedoids.vb"
 
     ' Author:
     ' 
@@ -41,6 +41,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Math.Correlations
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace KMeans

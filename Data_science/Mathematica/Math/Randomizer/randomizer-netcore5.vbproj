@@ -62,11 +62,13 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <DocumentationFile>Microsoft.VisualBasic.Math.Randomizer.xml</DocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DefineConstants>netcore5=1</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
-    <ProjectReference Include="..\Math\math-netcore5.vbproj" />
+    <ProjectReference Include="..\Math\Math.NET5.vbproj" />
   </ItemGroup>
 
 </Project>

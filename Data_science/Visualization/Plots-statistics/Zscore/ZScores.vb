@@ -74,16 +74,17 @@ Public Module ZScoresPlots
                          Optional axisStrokeCSS$ = Stroke.AxisStroke,
                          Optional legendBoxStroke$ = Stroke.AxisStroke,
                          Optional displayZERO As Boolean = True,
-                         Optional ZEROStrokeCSS$ = Stroke.AxisGridStroke) As GraphicsData
+                         Optional ZEROStrokeCSS$ = Stroke.AxisGridStroke,
+                         Optional ppi As Integer = 100) As GraphicsData
 
         Dim ticks#() = data.Range.CreateAxisTicks
         Dim range As DoubleRange = ticks
         Dim maxGroupLabel$ = data.groups.Keys.MaxLengthString
         Dim maxSerialsLabel$ = data.serials.Keys.MaxLengthString
-        Dim serialLabelFont As Font = CSSFont.TryParse(serialLabelFontCSS)
-        Dim legendLabelFont As Font = CSSFont.TryParse(legendLabelFontCSS)
-        Dim titleFont As Font = CSSFont.TryParse(titleFontCSS)
-        Dim tickFont As Font = CSSFont.TryParse(tickFontCSS)
+        Dim serialLabelFont As Font = CSSFont.TryParse(serialLabelFontCSS).GDIObject(ppi)
+        Dim legendLabelFont As Font = CSSFont.TryParse(legendLabelFontCSS).GDIObject(ppi)
+        Dim titleFont As Font = CSSFont.TryParse(titleFontCSS).GDIObject(ppi)
+        Dim tickFont As Font = CSSFont.TryParse(tickFontCSS).GDIObject(ppi)
         Dim groups = data.groups
         Dim colors = data.colors
         Dim pointSize As New SizeF(pointWidth, pointWidth)

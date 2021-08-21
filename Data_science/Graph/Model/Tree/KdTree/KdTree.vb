@@ -1,64 +1,86 @@
 ﻿#Region "Microsoft.VisualBasic::84bf24556f098eb861c49d7edc214b61, Data_science\Graph\Model\Tree\KdTree\KdTree.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class KdTree
-    ' 
-    '         Properties: balanceFactor
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: buildTree, count, findMax, findMin, height
-    '                   innerSearch, insert, nearest, nodeSearch, remove
-    ' 
-    '         Sub: nearestSearch, removeNode, saveNode
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class KdTree
+' 
+'         Properties: balanceFactor
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: buildTree, count, findMax, findMin, height
+'                   innerSearch, insert, nearest, nodeSearch, remove
+' 
+'         Sub: nearestSearch, removeNode, saveNode
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Python
+Imports Microsoft.VisualBasic.Linq
 Imports stdNum = System.Math
 
 Namespace KdTree
 
+    ''' <summary>
+    ''' KDTree is a class supporting KD-tree insertion, deletion, equality search,
+    ''' range search, and nearest neighbor(s) using double-precision floating-point
+    ''' keys. Splitting dimension is chosen naively, by depth modulo K. Semantics are
+    ''' as follows:
+    ''' 
+    ''' + Two different keys containing identical numbers should retrieve the same
+    ''' value from a given KD-tree. Therefore keys are cloned when a node is
+    ''' inserted. 
+    ''' + As with Hashtables, values inserted into a KD-tree are <I>not</I> cloned.
+    ''' Modifying a value between insertion and retrieval will therefore modify the
+    ''' value stored in the tree.
+    ''' 
+    ''' @author Simon Levy, Bjoern Heckel
+    ''' @version %I%, %G%
+    ''' @since JDK1.2
+    ''' </summary>
     Public Class KdTree(Of T As New)
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
         Dim dimensions As String()
-        Dim points As T()
         Dim access As KdNodeAccessor(Of T)
         Dim root As KdTreeNode(Of T)
+        Dim m_points As New List(Of T)
 
         Public ReadOnly Property balanceFactor() As Double
             Get
@@ -66,30 +88,64 @@ Namespace KdTree
             End Get
         End Property
 
+        ''' <summary>
+        ''' how many dimensions we're working with here
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property dimSize As Integer
+            Get
+                Return dimensions.Length
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' total number of nodes 
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property counts As Integer
+
+        Public ReadOnly Property rootNode As KdTreeNode(Of T)
+            Get
+                Return root
+            End Get
+        End Property
+
         Sub New(points As T(), metric As KdNodeAccessor(Of T))
-            Me.points = points
             Me.access = metric
             Me.dimensions = metric.GetDimensions
             Me.root = buildTree(points, Scan0, Nothing)
+            Me.m_points.AddRange(points)
         End Sub
 
+        Public Function GetPoints() As IEnumerable(Of T)
+            Return m_points.AsEnumerable
+        End Function
+
         Private Function buildTree(points As T(), depth As Integer, parent As KdTreeNode(Of T)) As KdTreeNode(Of T)
-            Dim [dim] = depth Mod dimensions.Length
+            Dim axis = depth Mod dimensions.Length
             Dim median As Integer
             Dim node As KdTreeNode(Of T)
 
             If points.Length = 0 Then
                 Return Nothing
             ElseIf points.Length = 1 Then
-                Return New KdTreeNode(Of T)(points(Scan0), [dim], parent)
+                Return New KdTreeNode(Of T)(points(Scan0), axis, parent)
             Else
-                Call points.Sort(Function(a, b) access(a, dimensions([dim])) - access(b, dimensions([dim])))
+                ' sort by the axis dimensions
+                points.Sort(Function(a, b)
+                                Return access(a, dimensions(axis)) - access(b, dimensions(axis))
+                            End Function)
+
+                _counts += 1
+                median = stdNum.Floor(points.Length / 2)
             End If
 
-            median = stdNum.Floor(points.Length / 2)
-            node = New KdTreeNode(Of T)(points(median), [dim], parent)
-            node.left = buildTree(points.slice(0, median).ToArray, depth + 1, node)
-            node.right = buildTree(points.slice(median + 1).ToArray, depth + 1, node)
+            Dim left = points.slice(0, median).ToArray
+            Dim right = points.slice(median + 1).ToArray
+
+            node = New KdTreeNode(Of T)(points(median), axis, parent)
+            node.left = buildTree(left, depth + 1, node)
+            node.right = buildTree(right, depth + 1, node)
 
             Return node
         End Function
@@ -107,7 +163,7 @@ Namespace KdTree
                 dimension = dimensions(insertPosition.dimension)
             End If
 
-            If access.getByDimension(point, dimension) < access.getByDimension(insertPosition.obj, dimension) Then
+            If access.getByDimension(point, dimension) < access.getByDimension(insertPosition.data, dimension) Then
                 insertPosition.left = newNode
             Else
                 insertPosition.right = newNode
@@ -119,13 +175,13 @@ Namespace KdTree
         Private Function nodeSearch(point As T, node As KdTreeNode(Of T)) As KdTreeNode(Of T)
             If node Is Nothing Then
                 Return Nothing
-            ElseIf access.nodeIs(node.obj, point) Then
+            ElseIf access.nodeIs(node.data, point) Then
                 Return node
             End If
 
             Dim dimension = dimensions(node.dimension)
 
-            If access.getByDimension(point, dimension) < access.getByDimension(node.obj, dimension) Then
+            If access.getByDimension(point, dimension) < access.getByDimension(node.data, dimension) Then
                 Return nodeSearch(node.left, node)
             Else
                 Return nodeSearch(node.right, node)
@@ -139,7 +195,7 @@ Namespace KdTree
 
             Dim dimension = dimensions(node.dimension)
 
-            If access.getByDimension(point, dimension) < access.getByDimension(node.obj, dimension) Then
+            If access.getByDimension(point, dimension) < access.getByDimension(node.data, dimension) Then
                 Return innerSearch(point, node.left, node)
             Else
                 Return innerSearch(point, node.right, node)
@@ -169,7 +225,7 @@ Namespace KdTree
 
                 pDimension = dimensions(node.parent.dimension)
 
-                If access.getByDimension(node, pDimension) < access.getByDimension(node.parent.obj, pDimension) Then
+                If access.getByDimension(node, pDimension) < access.getByDimension(node.parent.data, pDimension) Then
                     node.parent.left = Nothing
                 Else
                     node.parent.right = Nothing
@@ -184,9 +240,9 @@ Namespace KdTree
                 nextNode = findMin(node.right, node.dimension)
             End If
 
-            nextObj = nextNode.obj
+            nextObj = nextNode.data
             Call removeNode(nextNode)
-            node.obj = nextObj
+            node.data = nextObj
         End Sub
 
         Private Function findMax(node As KdTreeNode(Of T), [dim] As Integer) As KdTreeNode(Of T)
@@ -208,15 +264,15 @@ Namespace KdTree
                 End If
             End If
 
-            own = access.getByDimension(node.obj, dimension)
+            own = access.getByDimension(node.data, dimension)
             Left = findMax(node.left, [dim])
             Right = findMax(node.right, [dim])
             max = node
 
-            If Not Left Is Nothing AndAlso access.getByDimension(Left.obj, dimension) > own Then
+            If Not Left Is Nothing AndAlso access.getByDimension(Left.data, dimension) > own Then
                 max = Left
             End If
-            If Not Right Is Nothing AndAlso access.getByDimension(Right.obj, dimension) > access.getByDimension(max.obj, dimension) Then
+            If Not Right Is Nothing AndAlso access.getByDimension(Right.data, dimension) > access.getByDimension(max.data, dimension) Then
                 max = Right
             End If
 
@@ -242,102 +298,114 @@ Namespace KdTree
                 End If
             End If
 
-            own = access.getByDimension(node.obj, dimension)
+            own = access.getByDimension(node.data, dimension)
             left = findMin(node.left, [dim])
             Right = findMin(node.right, [dim])
             min = node
 
-            If Not left Is Nothing AndAlso access.getByDimension(left.obj, dimension) < own Then
+            If Not left Is Nothing AndAlso access.getByDimension(left.data, dimension) < own Then
                 min = left
             End If
 
-            If Not Right Is Nothing AndAlso access.getByDimension(Right.obj, dimension) < access.getByDimension(min.obj, dimension) Then
+            If Not Right Is Nothing AndAlso access.getByDimension(Right.data, dimension) < access.getByDimension(min.data, dimension) Then
                 min = Right
             End If
 
             Return min
         End Function
 
+        ''' <summary>
+        ''' Find KD-tree node whose key is identical to key. Uses algorithm
+        ''' translated from 352.srch.c of Gonnet &amp; Baeza-Yates.
+        ''' </summary>
+        ''' <param name="point">
+        ''' key for KD-tree node
+        ''' </param>
+        ''' <param name="maxDistance"></param>
+        ''' <param name="maxNodes">
+        ''' k
+        ''' </param>
+        ''' <returns></returns>
         Public Iterator Function nearest(point As T, maxNodes As Integer, Optional maxDistance As Double? = Nothing) As IEnumerable(Of KdNodeHeapItem(Of T))
-            Dim bestNodes As New BinaryHeap(Of KdNodeHeapItem(Of T))(Function(e) -e.distance)
+            Dim bestNodes As New List(Of KdNodeHeapItem(Of T))
+            Dim query As New KdTreeNode(Of T)(point, 0, Nothing)
 
-            If Not maxDistance Is Nothing Then
-                For i As Integer = 0 To maxNodes - 1
-                    bestNodes.push(New KdNodeHeapItem(Of T)(Nothing, maxDistance))
-                Next
-            End If
+            Call nearestSearch(query, root, 0, bestNodes, maxNodes + 1)
 
-            Call nearestSearch(point, root, bestNodes, maxNodes)
+            Dim bestOutput = bestNodes _
+                .GroupBy(Function(i) i.node.data) _
+                .Select(Function(i) i.First) _
+                .OrderBy(Function(i) access.metric(i.node.data, point)) _
+                .Take(maxNodes) _
+                .ToArray
 
-            For i As Integer = 0 To maxNodes - 1
-                If Not bestNodes(i) Is Nothing Then
-                    Yield New KdNodeHeapItem(Of T)(bestNodes(i).node, bestNodes(i).distance)
+            For Each node As KdNodeHeapItem(Of T) In bestOutput
+                If Not maxDistance Is Nothing Then
+                    If node.distance <= maxDistance Then
+                        Yield New KdNodeHeapItem(Of T)(node.node, node.distance)
+                    End If
+                Else
+                    Yield New KdNodeHeapItem(Of T)(node.node, node.distance)
                 End If
             Next
         End Function
 
-        Private Sub nearestSearch(point As T, node As KdTreeNode(Of T), bestNodes As BinaryHeap(Of KdNodeHeapItem(Of T)), maxNodes%)
-            Dim bestChild As KdTreeNode(Of T)
-            Dim dimension = dimensions(node.dimension),
-          ownDistance = access.metric(point, node.obj),
-          linearPoint = New T,
-          linearDistance As Double,
-          otherChild As KdTreeNode(Of T)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="point">
+        ''' the user query target point
+        ''' </param>
+        ''' <param name="node">
+        ''' the parent node for search
+        ''' </param>
+        ''' <param name="result"></param>
+        ''' <param name="maxNodes"></param>
+        Private Sub nearestSearch(point As KdTreeNode(Of T),
+                                  node As KdTreeNode(Of T),
+                                  depth As Integer,
+                                  result As List(Of KdNodeHeapItem(Of T)),
+                                  maxNodes As Integer)
+            Dim dimension As Integer = depth Mod dimensions.Length
+            Dim axis As String = dimensions(dimension)
+            Dim distance As Double = access.metric(point.data, node.data)
+            Dim i As Integer
 
-            For i As Integer = 0 To dimensions.Length - 1
-                If i = node.dimension Then
-                    access(linearPoint, dimensions(i)) = access.getByDimension(point, dimensions(i))
-                Else
-                    access(linearPoint, dimensions(i)) = access.getByDimension(node.obj, dimensions(i))
+            If result = 0 Then
+                result.Push(New KdNodeHeapItem(Of T)(node, distance))
+            End If
+
+            For i = 0 To result.Count - 1
+                If distance < result(i).distance Then
+                    Exit For
                 End If
             Next
 
-            linearDistance = access.metric(linearPoint, node.obj)
-
-            If node.right Is Nothing AndAlso node.left Is Nothing Then
-                If bestNodes.size < maxNodes OrElse ownDistance < bestNodes.peek().distance Then
-                    saveNode(bestNodes, node, ownDistance, maxNodes)
-                End If
-
-                Return
+            ' splice in our result
+            If i >= 0 AndAlso i <= maxNodes Then
+                result.Insert(i, New KdNodeHeapItem(Of T)(node, distance))
             End If
 
-            If node.right Is Nothing Then
-                bestChild = node.left
-            ElseIf node.left Is Nothing Then
-                bestChild = node.right
-            Else
-                If access.getByDimension(point, dimension) < access.getByDimension(node.obj, dimension) Then
-                    bestChild = node.left
-                Else
-                    bestChild = node.right
-                End If
+            ' get rid of any extra results
+            Do While result > maxNodes
+                result.Pop()
+            Loop
+
+            ' whats got the got best _search result? left or right?
+            Dim goLeft = access(node.data, axis) < access(point.data, axis)
+            Dim target = If(goLeft, node.left, node.right)
+            Dim opposite = If(goLeft, node.right, node.left)
+
+            ' target has our most likely nearest point, we go down that side of the
+            ' tree first
+            If Not target Is Nothing Then
+                Call nearestSearch(point, target, depth + 1, result, maxNodes)
             End If
 
-            Call nearestSearch(point, bestChild, bestNodes, maxNodes)
-
-            If bestNodes.size() < maxNodes OrElse ownDistance < bestNodes.peek.distance Then
-                saveNode(bestNodes, node, ownDistance, maxNodes)
-            End If
-
-            If bestNodes.size < maxNodes OrElse stdNum.Abs(linearDistance) < bestNodes.peek.distance Then
-                If bestChild Is node.left Then
-                    otherChild = node.right
-                Else
-                    otherChild = node.left
-                End If
-
-                If Not otherChild Is Nothing Then
-                    nearestSearch(point, otherChild, bestNodes, maxNodes)
-                End If
-            End If
-        End Sub
-
-        Private Sub saveNode(bestNodes As BinaryHeap(Of KdNodeHeapItem(Of T)), node As KdTreeNode(Of T), distance#, maxNodes%)
-            Call bestNodes.push(New KdNodeHeapItem(Of T)(node, distance))
-
-            If (bestNodes.size > maxNodes) Then
-                bestNodes.pop()
+            ' _search the opposite direction, only if there is potentially a better
+            ' value than the longest distance we already have in our _search results
+            If Not opposite Is Nothing AndAlso opposite.distanceSquared(point.data, access) <= result(result.Count - 1).distance Then
+                Call nearestSearch(point, opposite, depth + 1, result, maxNodes)
             End If
         End Sub
 

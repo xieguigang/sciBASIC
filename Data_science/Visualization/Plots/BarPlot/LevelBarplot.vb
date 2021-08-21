@@ -89,12 +89,13 @@ Namespace BarPlot
                              Optional legendTitle$ = "Value Levels",
                              Optional valueTitle$ = "Value Levels",
                              Optional valueTitleFontCSS$ = CSSFont.Win7LargerBold,
-                             Optional nolabelTrim As Boolean = False) As GraphicsData
+                             Optional nolabelTrim As Boolean = False,
+                             Optional ppi As Integer = 100) As GraphicsData
 
-            Dim titleFont As Font = CSSFont.TryParse(titleFontCSS)
-            Dim labelFont As Font = CSSFont.TryParse(labelFontCSS)
-            Dim tickFont As Font = CSSFont.TryParse(tickFontCSS)
-            Dim valueTitleFont As Font = CSSFont.TryParse(valueTitleFontCSS)
+            Dim titleFont As Font = CSSFont.TryParse(titleFontCSS).GDIObject(ppi)
+            Dim labelFont As Font = CSSFont.TryParse(labelFontCSS).GDIObject(ppi)
+            Dim tickFont As Font = CSSFont.TryParse(tickFontCSS).GDIObject(ppi)
+            Dim valueTitleFont As Font = CSSFont.TryParse(valueTitleFontCSS).GDIObject(ppi)
             Dim trim As Func(Of String, String)
 
             If nolabelTrim Then
