@@ -224,6 +224,13 @@ Namespace Parallel
             Return encoding.GetString(ChunkBuffer)
         End Function
 
+        Public Function GetIntegers() As Integer()
+            Return ChunkBuffer _
+                .Split(4) _
+                .Select(Function(byts) BitConverter.ToInt32(byts, Scan0)) _
+                .ToArray
+        End Function
+
         ''' <summary>
         ''' 将数据首先生成字符串，然后根据函数指针<paramref name="handler"/>句柄的描述从字符串之中反序列化加载对象
         ''' </summary>
