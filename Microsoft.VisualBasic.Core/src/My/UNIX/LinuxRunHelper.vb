@@ -41,12 +41,15 @@
 
 #End Region
 
+#If netcore5 = 1 Then
 Imports System.Buffers
+Imports Microsoft.VisualBasic.CommandLine.Reflection
+#End If
+
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine
-Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Text
 
 Namespace My.UNIX
