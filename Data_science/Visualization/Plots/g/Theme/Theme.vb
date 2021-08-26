@@ -144,6 +144,9 @@ Namespace Graphic.Canvas
         ''' </summary>
         ''' <returns></returns>
         Public Property xAxisLayout As XAxisLayoutStyles = XAxisLayoutStyles.Bottom
+
+        Public Property xAxisRotate As Double = 0
+
         ''' <summary>
         ''' Y坐标轴的布局
         ''' </summary>

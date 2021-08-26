@@ -181,7 +181,8 @@ Namespace Graphic.Axis
                             Optional tickFontStyle$ = CSSFont.Win7Normal,
                             Optional htmlLabel As Boolean = True,
                             Optional XtickFormat$ = "F2",
-                            Optional YtickFormat$ = "F2")
+                            Optional YtickFormat$ = "F2",
+                            Optional xlabelRotate As Double = 0)
 
             ' 填充网格要先于坐标轴的绘制操作进行，否则会将坐标轴给覆盖掉
             Dim rect As Rectangle = scaler.region
@@ -238,7 +239,8 @@ Namespace Graphic.Axis
                              labelFontStyle,
                              tickFont,
                              htmlLabel:=htmlLabel,
-                             tickFormat:=XtickFormat
+                             tickFormat:=XtickFormat,
+                             xRotate:=xlabelRotate
                      )
             End If
             If ylayout <> YAxisLayoutStyles.None Then
@@ -496,7 +498,8 @@ Namespace Graphic.Axis
                                      Optional overridesTickLine% = -1,
                                      Optional noTicks As Boolean = False,
                                      Optional htmlLabel As Boolean = True,
-                                     Optional tickFormat$ = "F2")
+                                     Optional tickFormat$ = "F2",
+                                     Optional xRotate As Double = 0)
 
             Dim Y% = scaler.region.Top + offset.Y
             Dim size = scaler.region.Size
@@ -545,7 +548,14 @@ Namespace Graphic.Axis
                     Dim sz As SizeF = g.MeasureString(labelText, tickFont)
 
                     Call g.DrawLine(pen, axisX, New PointF(x, ZERO.Y + d!))
-                    Call g.DrawString(labelText, tickFont, Brushes.Black, New Point(x - sz.Width / 2, ZERO.Y + d * 1.2))
+
+                    If xRotate <> 0 AndAlso TypeOf g Is Graphics2D Then
+                        Dim text As New GraphicsText(g)
+
+                        Call text.DrawString(labelText, tickFont, Brushes.Black, New Point(x - sz.Width / 2, ZERO.Y + d * 1.2), angle:=xRotate)
+                    Else
+                        Call g.DrawString(labelText, tickFont, Brushes.Black, New Point(x - sz.Width / 2, ZERO.Y + d * 1.2))
+                    End If
                 Next
             End If
 
