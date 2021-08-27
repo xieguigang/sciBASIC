@@ -92,13 +92,18 @@ Namespace Graph
                             Return New XYMetaHandle(a)
                         End Function) _
                 .ToArray
+            Dim styleCopy As Pen = Nothing
+
+            If Not style Is Nothing Then
+                styleCopy = New Pen(style.Color, style.Width) With {
+                    .DashStyle = style.DashStyle
+                }
+            End If
 
             Return New EdgeData With {
                 .label = label,
                 .bends = bendList,
-                .style = New Pen(style.Color, style.Width) With {
-                    .DashStyle = style.DashStyle
-                },
+                .style = styleCopy,
                 .length = length,
                 .Properties = New Dictionary(Of String, String)(Properties)
             }

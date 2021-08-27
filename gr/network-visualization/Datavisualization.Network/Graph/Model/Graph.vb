@@ -215,7 +215,9 @@ Namespace Graph
         ''' </summary>
         ''' <param name="labelID"><see cref="Node.label"/></param>
         ''' <param name="dataLabel"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' 查找失败会返回空值
+        ''' </returns>
         Public Function GetElementByID(labelID$, Optional dataLabel As Boolean = False) As Node
             If Not dataLabel AndAlso vertices.ContainsKey(labelID) Then
                 Return vertices(labelID)
@@ -432,7 +434,11 @@ Namespace Graph
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetEdges(u As Node, v As Node) As IEnumerable(Of Edge)
-            Return _index.GetEdges(u, v)
+            If u Is Nothing OrElse v Is Nothing Then
+                Return {}
+            Else
+                Return _index.GetEdges(u, v).SafeQuery
+            End If
         End Function
 
         ''' <summary>
