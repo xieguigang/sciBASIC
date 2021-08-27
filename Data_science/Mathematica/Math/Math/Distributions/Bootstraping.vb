@@ -1,47 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::5165b24104bf8c6294ce023aa4b02bd9, Data_science\Mathematica\Math\Math\Distributions\Bootstraping.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Bootstraping
-    ' 
-    '         Function: Distributes, Hist, Sample, (+2 Overloads) Samples, Sampling
-    '                   TabulateBin, TabulateMode
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Bootstraping
+' 
+'         Function: Distributes, Hist, Sample, (+2 Overloads) Samples, Sampling
+'                   TabulateBin, TabulateMode
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Language
@@ -83,17 +84,45 @@ Namespace Distributions
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source">总体样本</param>
-        ''' <param name="N">每一个样本的大小</param>
-        ''' <param name="bags">采样的次数</param>
+        ''' <param name="N">每一个样本的大小，即在每一个袋子中有多少个样本元素</param>
+        ''' <param name="bags">采样的次数，这个函数返回多少个袋子集合？</param>
+        ''' <param name="replace">
+        ''' 是否为有放回的进行抽样？默认是有放回的。设置这个参数为False表示不重复的采样，即抽取过后的元素将不会再出现在后面的采样结果之中
+        ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Iterator Function Samples(Of T)(source As IEnumerable(Of T), N As Integer, Optional bags As Integer = 100) As IEnumerable(Of SeqValue(Of T()))
+        Public Iterator Function Samples(Of T)(source As IEnumerable(Of T), N As Integer,
+                                               Optional bags As Integer = 100,
+                                               Optional replace As Boolean = True) As IEnumerable(Of SeqValue(Of T()))
+
             Dim array As T() = source.ToArray
+            Dim index As New List(Of Integer)(array.Sequence)
             Dim sampleBags = Iterator Function() As IEnumerable(Of T)
-                                 For k As Integer = 0 To N - 1
-                                     ' 在这里是有放回的随机采样
-                                     Yield array(seeds.Next(array.Length))
-                                 Next
+                                 If replace Then
+                                     For k As Integer = 0 To N - 1
+                                         ' 在这里是有放回的随机采样
+                                         Yield array(seeds.Next(array.Length))
+                                     Next
+                                 Else
+                                     Dim i As Integer
+
+                                     If index.Count = 0 Then
+                                         Return
+                                     End If
+
+                                     ' 无放回的抽样
+                                     For k As Integer = 0 To N - 1
+                                         i = seeds.Next(index.Count)
+                                         i = index(i)
+                                         index.Remove(item:=i)
+
+                                         Yield array(i)
+
+                                         If index.Count = 0 Then
+                                             Return
+                                         End If
+                                     Next
+                                 End If
                              End Function
 
             For i As Integer = 0 To bags
