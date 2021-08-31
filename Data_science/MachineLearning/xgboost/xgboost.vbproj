@@ -4,9 +4,12 @@
     <OptionInfer>On</OptionInfer>
     <TargetFramework>net5.0</TargetFramework>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.cs</DefaultItemExcludes>
+    <AssemblyName>Microsoft.VisualBasic.MachineLearning.XGBoost</AssemblyName>
+    <RootNamespace>Microsoft.VisualBasic.MachineLearning.XGBoost</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\DataMining\DataMining\DataMining.NET5.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
