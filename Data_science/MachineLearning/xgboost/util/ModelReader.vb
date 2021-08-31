@@ -12,7 +12,7 @@ Namespace util
         Implements IDisposable
 
         Private ReadOnly stream As Stream
-        Private buffer As SByte()
+        Private buffer As Byte()
 
         <Obsolete>
         Public Sub New(filename As String)
@@ -25,7 +25,7 @@ Namespace util
 
         Private Function fillBuffer(numBytes As Integer) As Integer
             If buffer Is Nothing OrElse buffer.Length < numBytes Then
-                buffer = New SByte(numBytes - 1) {}
+                buffer = New Byte(numBytes - 1) {}
             End If
 
             Dim numBytesRead = 0
@@ -44,7 +44,8 @@ Namespace util
         End Function
 
         Public Overridable Function readByteAsInt() As Integer
-            Return stream.Read()
+            Return stream.ReadByte
+            ' Return stream.Read()
         End Function
 
         Public Overridable Function readByteArray(numBytes As Integer) As SByte()
@@ -74,7 +75,7 @@ Namespace util
                 Throw New EOFException("Cannot read int value (shortage): " & numBytesRead)
             End If
 
-            Return ByteBuffer.wrap(buffer).order(byteOrder).int
+            Return ByteBuffer.wrap(buffer).order(byteOrder).getInt
         End Function
 
         Public Overridable Function readIntArray(numValues As Integer) As Integer()
@@ -88,7 +89,7 @@ Namespace util
             Dim result = New Integer(numValues - 1) {}
 
             For i = 0 To numValues - 1
-                result(i) = byteBuffer.int
+                result(i) = byteBuffer.getInt
             Next
 
             Return result
@@ -111,15 +112,15 @@ Namespace util
                 Throw New IOException("Cannot read long value (shortage): " & numBytesRead)
             End If
 
-            Return ByteBuffer.wrap(buffer).order(ByteOrder.LittleEndian).[long]
+            Return ByteBuffer.wrap(buffer).order(ByteOrder.LittleEndian).[getLong]
         End Function
 
         Public Overridable Function asFloat(bytes As SByte()) As Single
-            Return ByteBuffer.wrap(bytes).order(ByteOrder.LittleEndian).float
+            Return ByteBuffer.wrap(bytes).order(ByteOrder.LittleEndian).getFloat
         End Function
 
         Public Overridable Function asUnsignedInt(bytes As SByte()) As Integer
-            Dim result As Integer = ByteBuffer.wrap(bytes).order(ByteOrder.LittleEndian).int
+            Dim result As Integer = ByteBuffer.wrap(bytes).order(ByteOrder.LittleEndian).getInt
 
             If result < 0 Then
                 Throw New IOException("Cannot treat as unsigned int (overflow): " & result)
@@ -135,7 +136,7 @@ Namespace util
                 Throw New IOException("Cannot read float value (shortage): " & numBytesRead)
             End If
 
-            Return ByteBuffer.wrap(buffer).order(ByteOrder.LittleEndian).float
+            Return ByteBuffer.wrap(buffer).order(ByteOrder.LittleEndian).getFloat
         End Function
 
         Public Overridable Function readFloatArray(numValues As Integer) As Single()
@@ -149,7 +150,7 @@ Namespace util
             Dim result = New Single(numValues - 1) {}
 
             For i = 0 To numValues - 1
-                result(i) = byteBuffer.float
+                result(i) = byteBuffer.getFloat
             Next
 
             Return result
@@ -166,7 +167,7 @@ Namespace util
             Dim result = New Double(numValues - 1) {}
 
             For i = 0 To numValues - 1
-                result(i) = byteBuffer.[double]
+                result(i) = byteBuffer.[getDouble]
             Next
 
             Return result
