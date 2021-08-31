@@ -6,6 +6,7 @@
     <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.cs</DefaultItemExcludes>
     <AssemblyName>Microsoft.VisualBasic.MachineLearning.XGBoost</AssemblyName>
     <RootNamespace>Microsoft.VisualBasic.MachineLearning.XGBoost</RootNamespace>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
