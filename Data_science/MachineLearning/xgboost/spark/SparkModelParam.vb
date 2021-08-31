@@ -1,7 +1,7 @@
-﻿Imports System
-Imports ModelReader = biz.k11i.xgboost.util.ModelReader
+﻿Imports Microsoft.VisualBasic.MachineLearning.XGBoost.util
 
-Namespace biz.k11i.xgboost.spark
+Namespace spark
+
     <Serializable>
     Public Class SparkModelParam
         Public Const MODEL_TYPE_CLS As String = "_cls_"

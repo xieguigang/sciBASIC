@@ -1,9 +1,6 @@
-﻿Imports System
-Imports FVec = biz.k11i.xgboost.util.FVec
-Imports ModelReader = biz.k11i.xgboost.util.ModelReader
+﻿Imports Microsoft.VisualBasic.MachineLearning.XGBoost.util
 
-Namespace biz.k11i.xgboost.gbm
-
+Namespace gbm
 
     ''' <summary>
     ''' Linear booster implementation

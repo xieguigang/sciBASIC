@@ -1,8 +1,8 @@
-﻿Imports System
-Imports FVec = biz.k11i.xgboost.util.FVec
-Imports ModelReader = biz.k11i.xgboost.util.ModelReader
+﻿
+Imports Microsoft.VisualBasic.MachineLearning.XGBoost.util
+Imports stdNum = System.Math
 
-Namespace biz.k11i.xgboost.gbm
+Namespace gbm
 
     ''' <summary>
     ''' Gradient boosted DART tree implementation.
@@ -30,7 +30,7 @@ Namespace biz.k11i.xgboost.gbm
 
         Friend Overrides Function pred(ByVal feat As FVec, ByVal bst_group As Integer, ByVal root_index As Integer, ByVal ntree_limit As Integer) As Double
             Dim trees = _groupTrees(bst_group)
-            Dim treeleft = If(ntree_limit = 0, trees.Length, Math.Min(ntree_limit, trees.Length))
+            Dim treeleft = If(ntree_limit = 0, trees.Length, stdNum.Min(ntree_limit, trees.Length))
             Dim psum As Double = 0
 
             For i = 0 To treeleft - 1

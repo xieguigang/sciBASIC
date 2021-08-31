@@ -1,9 +1,7 @@
-﻿Imports System
-Imports FVec = biz.k11i.xgboost.util.FVec
-Imports ModelReader = biz.k11i.xgboost.util.ModelReader
+﻿Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.MachineLearning.XGBoost.util
 
-Namespace biz.k11i.xgboost.tree
-
+Namespace tree
 
     ''' <summary>
     ''' Regression tree.
@@ -44,10 +42,10 @@ Namespace biz.k11i.xgboost.tree
         ''' <returns> leaf index </returns>
         Public Overridable Function getLeafIndex(ByVal feat As FVec, ByVal root_id As Integer) As Integer
             Dim pid = root_id
-            Dim n As Node
+            Dim n As New Value(Of Node)
 
-            While Not CSharpImpl.__Assign(n, nodes(pid))._isLeaf
-                pid = n.next(feat)
+            While Not (n = nodes(pid))._isLeaf
+                pid = n.Value.next(feat)
             End While
 
             Return pid
@@ -132,10 +130,10 @@ Namespace biz.k11i.xgboost.tree
 
                 If is_leaf() Then
                     leaf_value = reader.readFloat()
-                    split_cond = Float.NaN
+                    split_cond = Double.NaN
                 Else
                     split_cond = reader.readFloat()
-                    leaf_value = Float.NaN
+                    leaf_value = Double.NaN
                 End If
 
                 _defaultNext = cdefault()
@@ -192,14 +190,6 @@ Namespace biz.k11i.xgboost.tree
                 base_weight = reader.readFloat()
                 leaf_child_cnt = reader.readInt()
             End Sub
-        End Class
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
         End Class
     End Class
 End Namespace

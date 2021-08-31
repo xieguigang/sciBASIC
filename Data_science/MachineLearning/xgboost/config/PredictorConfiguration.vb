@@ -1,6 +1,6 @@
-﻿Imports ObjFunction = biz.k11i.xgboost.learner.ObjFunction
+﻿Imports Microsoft.VisualBasic.MachineLearning.XGBoost.learner
 
-Namespace biz.k11i.xgboost.config
+Namespace config
     Public Class PredictorConfiguration
         Public Class BuilderType
             Friend predictorConfiguration As PredictorConfiguration

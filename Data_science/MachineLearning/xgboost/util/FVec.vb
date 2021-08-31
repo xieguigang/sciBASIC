@@ -1,7 +1,7 @@
 ﻿Imports System
 Imports System.Collections.Generic
 
-Namespace biz.k11i.xgboost.util
+Namespace util
 
     ''' <summary>
     ''' Interface of feature vector.

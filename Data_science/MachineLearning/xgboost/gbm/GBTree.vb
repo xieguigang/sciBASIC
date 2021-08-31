@@ -1,10 +1,8 @@
-﻿Imports System
-Imports RegTree = biz.k11i.xgboost.tree.RegTree
-Imports FVec = biz.k11i.xgboost.util.FVec
-Imports ModelReader = biz.k11i.xgboost.util.ModelReader
+﻿Imports Microsoft.VisualBasic.MachineLearning.XGBoost.tree
+Imports Microsoft.VisualBasic.MachineLearning.XGBoost.util
+Imports stdNum = System.Math
 
-Namespace biz.k11i.xgboost.gbm
-
+Namespace gbm
 
     ''' <summary>
     ''' Gradient boosted tree implementation.
@@ -58,7 +56,7 @@ Namespace biz.k11i.xgboost.gbm
                 For j = 0 To tree_info.Length - 1
 
                     If tree_info(j) = i Then
-                        _groupTrees(i)(Math.Min(Threading.Interlocked.Increment(treeCount), treeCount - 1)) = trees(j)
+                        _groupTrees(i)(stdNum.Min(Threading.Interlocked.Increment(treeCount), treeCount - 1)) = trees(j)
                     End If
                 Next
             Next
@@ -84,7 +82,7 @@ Namespace biz.k11i.xgboost.gbm
 
         Friend Overridable Function pred(ByVal feat As FVec, ByVal bst_group As Integer, ByVal root_index As Integer, ByVal ntree_limit As Integer) As Double
             Dim trees = _groupTrees(bst_group)
-            Dim treeleft = If(ntree_limit = 0, trees.Length, Math.Min(ntree_limit, trees.Length))
+            Dim treeleft = If(ntree_limit = 0, trees.Length, stdNum.Min(ntree_limit, trees.Length))
             Dim psum As Double = 0
 
             For i = 0 To treeleft - 1
@@ -99,7 +97,7 @@ Namespace biz.k11i.xgboost.gbm
         End Function
 
         Friend Overridable Function predPath(ByVal feat As FVec, ByVal root_index As Integer, ByVal ntree_limit As Integer) As Integer()
-            Dim treeleft = If(ntree_limit = 0, trees.Length, Math.Min(ntree_limit, trees.Length))
+            Dim treeleft = If(ntree_limit = 0, trees.Length, stdNum.Min(ntree_limit, trees.Length))
             Dim leafIndex = New Integer(treeleft - 1) {}
 
             For i = 0 To treeleft - 1

@@ -1,6 +1,9 @@
-﻿Imports System
+﻿Imports System.IO
+Imports System.Text
+Imports Microsoft.VisualBasic.Data.IO
+Imports stdNum = System.Math
 
-Namespace biz.k11i.xgboost.util
+Namespace util
 
     ''' <summary>
     ''' Reads the Xgboost model from stream.
@@ -69,13 +72,13 @@ Namespace biz.k11i.xgboost.util
         'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
         'ORIGINAL LINE: public int readInt() throws java.io.IOException
         Public Overridable Function readInt() As Integer
-            Return readInt(ByteOrder.LITTLE_ENDIAN)
+            Return readInt(ByteOrder.LittleEndian)
         End Function
 
         'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
         'ORIGINAL LINE: public int readIntBE() throws java.io.IOException
         Public Overridable Function readIntBE() As Integer
-            Return readInt(ByteOrder.BIG_ENDIAN)
+            Return readInt(ByteOrder.BigEndian)
         End Function
 
         'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
@@ -99,7 +102,7 @@ Namespace biz.k11i.xgboost.util
                 Throw New EOFException(String.Format("Cannot read int array (shortage): expected = {0:D}, actual = {1:D}", numValues * 4, numBytesRead))
             End If
 
-            Dim byteBuffer As ByteBuffer = ByteBuffer.wrap(buffer).order(ByteOrder.LITTLE_ENDIAN)
+            Dim byteBuffer As ByteBuffer = byteBuffer.wrap(buffer).order(ByteOrder.LittleEndian)
             Dim result = New Integer(numValues - 1) {}
 
             For i = 0 To numValues - 1
@@ -130,17 +133,17 @@ Namespace biz.k11i.xgboost.util
                 Throw New IOException("Cannot read long value (shortage): " & numBytesRead)
             End If
 
-            Return ByteBuffer.wrap(buffer).order(ByteOrder.LITTLE_ENDIAN).[long]
+            Return ByteBuffer.wrap(buffer).order(ByteOrder.LittleEndian).[long]
         End Function
 
         Public Overridable Function asFloat(ByVal bytes As SByte()) As Single
-            Return ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).float
+            Return ByteBuffer.wrap(bytes).order(ByteOrder.LittleEndian).float
         End Function
 
         'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
         'ORIGINAL LINE: public int asUnsignedInt(byte[] bytes) throws java.io.IOException
         Public Overridable Function asUnsignedInt(ByVal bytes As SByte()) As Integer
-            Dim result As Integer = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).int
+            Dim result As Integer = ByteBuffer.wrap(bytes).order(ByteOrder.LittleEndian).int
 
             If result < 0 Then
                 Throw New IOException("Cannot treat as unsigned int (overflow): " & result)
@@ -158,7 +161,7 @@ Namespace biz.k11i.xgboost.util
                 Throw New IOException("Cannot read float value (shortage): " & numBytesRead)
             End If
 
-            Return ByteBuffer.wrap(buffer).order(ByteOrder.LITTLE_ENDIAN).float
+            Return ByteBuffer.wrap(buffer).order(ByteOrder.LittleEndian).float
         End Function
 
         'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
@@ -170,7 +173,7 @@ Namespace biz.k11i.xgboost.util
                 Throw New EOFException(String.Format("Cannot read float array (shortage): expected = {0:D}, actual = {1:D}", numValues * 4, numBytesRead))
             End If
 
-            Dim byteBuffer As ByteBuffer = ByteBuffer.wrap(buffer).order(ByteOrder.LITTLE_ENDIAN)
+            Dim byteBuffer As ByteBuffer = byteBuffer.wrap(buffer).order(ByteOrder.LittleEndian)
             Dim result = New Single(numValues - 1) {}
 
             For i = 0 To numValues - 1
@@ -189,7 +192,7 @@ Namespace biz.k11i.xgboost.util
                 Throw New EOFException(String.Format("Cannot read double array (shortage): expected = {0:D}, actual = {1:D}", numValues * 8, numBytesRead))
             End If
 
-            Dim byteBuffer As ByteBuffer = ByteBuffer.wrap(buffer).order(ByteOrder.BIG_ENDIAN)
+            Dim byteBuffer As ByteBuffer = byteBuffer.wrap(buffer).order(ByteOrder.BigEndian)
             Dim result = New Double(numValues - 1) {}
 
             For i = 0 To numValues - 1
@@ -230,7 +233,7 @@ Namespace biz.k11i.xgboost.util
                 Throw New IOException(String.Format("Cannot read string({0:D}) (shortage): {1:D}", numBytes, numBytesRead))
             End If
 
-            Return StringHelperClass.NewString(buffer, 0, numBytes, Charset.forName("UTF-8"))
+            Return Encoding.UTF8.GetString(CType(CObj(buffer), Byte()), 0, numBytes)
         End Function
 
         'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
@@ -256,24 +259,24 @@ Namespace biz.k11i.xgboost.util
             Dim chararr_count = 0
 
             While count < utflen
-                c = buffer(count) And &HfF
+                c = buffer(count) And &HFF
 
                 If c > 127 Then
                     Exit While
                 End If
 
                 count += 1
-                chararr(Math.Min(Threading.Interlocked.Increment(chararr_count), chararr_count - 1)) = Microsoft.VisualBasic.ChrW(c)
+                chararr(stdNum.Min(Threading.Interlocked.Increment(chararr_count), chararr_count - 1)) = Microsoft.VisualBasic.ChrW(c)
             End While
 
             While count < utflen
-                c = buffer(count) And &HfF
+                c = buffer(count) And &HFF
 
                 Select Case c >> 4
                     Case 0, 1, 2, 3, 4, 5, 6, 7
                         ' 0xxxxxxx
                         count += 1
-                        chararr(Math.Min(Threading.Interlocked.Increment(chararr_count), chararr_count - 1)) = Microsoft.VisualBasic.ChrW(c)
+                        chararr(stdNum.Min(Threading.Interlocked.Increment(chararr_count), chararr_count - 1)) = Microsoft.VisualBasic.ChrW(c)
                     Case 12, 13
                         ' 110x xxxx   10xx xxxx
                         count += 2
@@ -288,7 +291,7 @@ Namespace biz.k11i.xgboost.util
                             Throw New UTFDataFormatException("malformed input around byte " & count)
                         End If
 
-                        chararr(Math.Min(Threading.Interlocked.Increment(chararr_count), chararr_count - 1)) = Microsoft.VisualBasic.ChrW((c And &H1F) << 6 Or char2 And &H3F)
+                        chararr(stdNum.Min(Threading.Interlocked.Increment(chararr_count), chararr_count - 1)) = Microsoft.VisualBasic.ChrW((c And &H1F) << 6 Or char2 And &H3F)
                     Case 14
                         ' 1110 xxxx  10xx xxxx  10xx xxxx 
                         count += 3
@@ -304,7 +307,7 @@ Namespace biz.k11i.xgboost.util
                             Throw New UTFDataFormatException("malformed input around byte " & count - 1)
                         End If
 
-                        chararr(Math.Min(Threading.Interlocked.Increment(chararr_count), chararr_count - 1)) = Microsoft.VisualBasic.ChrW((c And &H0F) << 12 Or (char2 And &H3F) << 6 Or (char3 And &H3F) << 0)
+                        chararr(stdNum.Min(Threading.Interlocked.Increment(chararr_count), chararr_count - 1)) = Microsoft.VisualBasic.ChrW((c And &HF) << 12 Or (char2 And &H3F) << 6 Or (char3 And &H3F) << 0)
                     Case Else
                         ' 10xx xxxx,  1111 xxxx 
                         Throw New UTFDataFormatException("malformed input around byte " & count)

@@ -1,8 +1,6 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports FastMath = net.jafama.FastMath
+﻿Imports stdNum = System.Math
 
-Namespace biz.k11i.xgboost.learner
+Namespace learner
 
 
     ''' <summary>
@@ -10,7 +8,8 @@ Namespace biz.k11i.xgboost.learner
     ''' </summary>
     <Serializable>
     Public Class ObjFunction
-        Private Shared ReadOnly FUNCTIONS As IDictionary(Of String, ObjFunction) = New Dictionary(Of String, ObjFunction)()
+
+        Private Shared ReadOnly FUNCTIONS As New Dictionary(Of String, ObjFunction)()
 
         Shared Sub New()
             Call register("rank:pairwise", New ObjFunction())
@@ -53,16 +52,10 @@ Namespace biz.k11i.xgboost.learner
         ''' </summary>
         ''' <paramname="useJafama"> {@code true} if you want to use Jafama's <seealsocref="FastMath"/>,
         '''                  or {@code false} if you don't want to use it but JDK's <seealsocref="Math"/>. </param>
-        Public Shared Sub useFastMathExp(ByVal useJafama As Boolean)
-            If useJafama Then
-                Call register("binary:logistic", New RegLossObjLogistic_Jafama())
-                Call register("reg:logistic", New RegLossObjLogistic_Jafama())
-                Call register("multi:softprob", New SoftmaxMultiClassObjProb_Jafama())
-            Else
-                Call register("binary:logistic", New RegLossObjLogistic())
-                Call register("reg:logistic", New RegLossObjLogistic())
-                Call register("multi:softprob", New SoftmaxMultiClassObjProb())
-            End If
+        Public Shared Sub useFastMathExp()
+            Call register("binary:logistic", New RegLossObjLogistic())
+            Call register("reg:logistic", New RegLossObjLogistic())
+            Call register("multi:softprob", New SoftmaxMultiClassObjProb())
         End Sub
 
         ''' <summary>
@@ -92,7 +85,7 @@ Namespace biz.k11i.xgboost.learner
         Friend Class RegLossObjLogistic
             Inherits ObjFunction
 
-            Public Overrides Overloads Function predTransform(ByVal preds As Double()) As Double()
+            Public Overloads Overrides Function predTransform(ByVal preds As Double()) As Double()
                 For i = 0 To preds.Length - 1
                     preds(i) = sigmoid(preds(i))
                 Next
@@ -100,27 +93,12 @@ Namespace biz.k11i.xgboost.learner
                 Return preds
             End Function
 
-            Public Overrides Overloads Function predTransform(ByVal pred As Double) As Double
+            Public Overloads Overrides Function predTransform(ByVal pred As Double) As Double
                 Return sigmoid(pred)
             End Function
 
             Friend Overridable Function sigmoid(ByVal x As Double) As Double
-                Return 1 / (1 + Math.Exp(-x))
-            End Function
-        End Class
-
-        ''' <summary>
-        ''' Logistic regression.
-        ''' <para>
-        ''' Jafama's <seealsocref="FastMath"/> version.
-        ''' </para>
-        ''' </summary>
-        <Serializable>
-        Friend Class RegLossObjLogistic_Jafama
-            Inherits RegLossObjLogistic
-
-            Friend Overrides Function sigmoid(ByVal x As Double) As Double
-                Return 1 / (1 + net.jafama.FastMath.exp(-x))
+                Return 1 / (1 + stdNum.Exp(-x))
             End Function
         End Class
 
@@ -131,7 +109,7 @@ Namespace biz.k11i.xgboost.learner
         Friend Class SoftmaxMultiClassObjClassify
             Inherits ObjFunction
 
-            Public Overrides Overloads Function predTransform(ByVal preds As Double()) As Double()
+            Public Overloads Overrides Function predTransform(ByVal preds As Double()) As Double()
                 Dim maxIndex = 0
                 Dim max = preds(0)
 
@@ -146,7 +124,7 @@ Namespace biz.k11i.xgboost.learner
                 Return New Double() {maxIndex}
             End Function
 
-            Public Overrides Overloads Function predTransform(ByVal pred As Double) As Double
+            Public Overloads Overrides Function predTransform(ByVal pred As Double) As Double
                 Throw New NotSupportedException()
             End Function
         End Class
@@ -158,11 +136,11 @@ Namespace biz.k11i.xgboost.learner
         Friend Class SoftmaxMultiClassObjProb
             Inherits ObjFunction
 
-            Public Overrides Overloads Function predTransform(ByVal preds As Double()) As Double()
+            Public Overloads Overrides Function predTransform(ByVal preds As Double()) As Double()
                 Dim max = preds(0)
 
                 For i = 1 To preds.Length - 1
-                    max = Math.Max(preds(i), max)
+                    max = stdNum.Max(preds(i), max)
                 Next
 
                 Dim sum As Double = 0
@@ -179,27 +157,12 @@ Namespace biz.k11i.xgboost.learner
                 Return preds
             End Function
 
-            Public Overrides Overloads Function predTransform(ByVal pred As Double) As Double
+            Public Overloads Overrides Function predTransform(ByVal pred As Double) As Double
                 Throw New NotSupportedException()
             End Function
 
             Friend Overridable Function exp(ByVal x As Double) As Double
-                Return Math.Exp(x)
-            End Function
-        End Class
-
-        ''' <summary>
-        ''' Multiclass classification (predicted probability).
-        ''' <para>
-        ''' Jafama's <seealsocref="FastMath"/> version.
-        ''' </para>
-        ''' </summary>
-        <Serializable>
-        Friend Class SoftmaxMultiClassObjProb_Jafama
-            Inherits SoftmaxMultiClassObjProb
-
-            Friend Overrides Function exp(ByVal x As Double) As Double
-                Return net.jafama.FastMath.exp(x)
+                Return stdNum.Exp(x)
             End Function
         End Class
     End Class
