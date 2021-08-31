@@ -21,7 +21,7 @@ Namespace config
             End Function
         End Class
 
-        Public Shared ReadOnly [DEFAULT] As PredictorConfiguration = New PredictorConfiguration()
+        Public Shared ReadOnly [DEFAULT] As New PredictorConfiguration()
 
         Public Overridable ReadOnly Property objFunction As ObjFunction
 
