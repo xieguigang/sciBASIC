@@ -12,7 +12,7 @@ Namespace util
         ''' </summary>
         ''' <paramname="index"> index </param>
         ''' <returns> value </returns>
-        Function fvalue(ByVal index As Integer) As Double
+        Function fvalue(index As Integer) As Double
     End Interface
 
     Public Class FVec_Transformer
@@ -26,7 +26,7 @@ Namespace util
         ''' <paramname="values">         float values </param>
         ''' <paramname="treatsZeroAsNA"> treat zero as N/A if true </param>
         ''' <returns> FVec </returns>
-        Public Shared Function fromArray(ByVal values As Single(), ByVal treatsZeroAsNA As Boolean) As FVec
+        Public Shared Function fromArray(values As Single(), treatsZeroAsNA As Boolean) As FVec
             Return New FVecArrayImpl.FVecFloatArrayImpl(values, treatsZeroAsNA)
         End Function
 
@@ -36,7 +36,7 @@ Namespace util
         ''' <paramname="values">         double values </param>
         ''' <paramname="treatsZeroAsNA"> treat zero as N/A if true </param>
         ''' <returns> FVec </returns>
-        Public Shared Function fromArray(ByVal values As Double(), ByVal treatsZeroAsNA As Boolean) As FVec
+        Public Shared Function fromArray(values As Double(), treatsZeroAsNA As Boolean) As FVec
             Return New FVecArrayImpl.FVecDoubleArrayImpl(values, treatsZeroAsNA)
         End Function
 
@@ -46,7 +46,7 @@ Namespace util
         ''' <paramname="values">          float values </param>
         ''' <paramname="treatsValueAsNA"> treat specify value as N/A </param>
         ''' <returns> FVec </returns>
-        Public Shared Function fromArray(ByVal values As Single(), ByVal treatsValueAsNA As Single) As FVec
+        Public Shared Function fromArray(values As Single(), treatsValueAsNA As Single) As FVec
             Return New FVecArrayImpl.FVecFloatArrayImplement(values, treatsValueAsNA)
         End Function
 
@@ -56,7 +56,7 @@ Namespace util
         ''' <paramname="values">          double values </param>
         ''' <paramname="treatsValueAsNA"> treat specify value as N/A </param>
         ''' <returns> FVec </returns>
-        Public Shared Function fromArray(ByVal values As Double(), ByVal treatsValueAsNA As Double) As FVec
+        Public Shared Function fromArray(values As Double(), treatsValueAsNA As Double) As FVec
             Return New FVecArrayImpl.FVecDoubleArrayImplement(values, treatsValueAsNA)
         End Function
 
@@ -65,7 +65,7 @@ Namespace util
         ''' </summary>
         ''' <paramname="map"> map containing non-zero values </param>
         ''' <returns> FVec </returns>
-        Public Shared Function fromMap(Of T1 As Number)(ByVal map As IDictionary(Of Integer, T1)) As FVec
+        Public Shared Function fromMap(Of T1 As Number)(map As IDictionary(Of Integer, T1)) As FVec
             Return New FVecMapImpl(Of T1)(map)
         End Function
     End Class
@@ -76,11 +76,11 @@ Namespace util
 
         Private ReadOnly values As IDictionary(Of Integer, T1)
 
-        Public Sub New(ByVal values As IDictionary(Of Integer, T1))
+        Public Sub New(values As IDictionary(Of Integer, T1))
             Me.values = values
         End Sub
 
-        Public Overridable Function fvalue(ByVal index As Integer) As Double Implements FVec.fvalue
+        Public Overridable Function fvalue(index As Integer) As Double Implements FVec.fvalue
             Dim number As Number = values.GetValueOrNull(index)
 
             If number Is Nothing Then
@@ -99,12 +99,12 @@ Namespace util
             Friend ReadOnly values As Single()
             Friend ReadOnly treatsZeroAsNA As Boolean
 
-            Friend Sub New(ByVal values As Single(), ByVal treatsZeroAsNA As Boolean)
+            Friend Sub New(values As Single(), treatsZeroAsNA As Boolean)
                 Me.values = values
                 Me.treatsZeroAsNA = treatsZeroAsNA
             End Sub
 
-            Public Overridable Function fvalue(ByVal index As Integer) As Double Implements FVec.fvalue
+            Public Overridable Function fvalue(index As Integer) As Double Implements FVec.fvalue
                 If values.Length <= index Then
                     Return Double.NaN
                 End If
@@ -126,12 +126,12 @@ Namespace util
             Friend ReadOnly values As Single()
             Friend ReadOnly treatsValueAsNA As Single
 
-            Friend Sub New(ByVal values As Single(), ByVal treatsValueAsNA As Single)
+            Friend Sub New(values As Single(), treatsValueAsNA As Single)
                 Me.values = values
                 Me.treatsValueAsNA = treatsValueAsNA
             End Sub
 
-            Public Overridable Function fvalue(ByVal index As Integer) As Double Implements FVec.fvalue
+            Public Overridable Function fvalue(index As Integer) As Double Implements FVec.fvalue
                 If values.Length <= index Then
                     Return Double.NaN
                 End If
@@ -153,12 +153,12 @@ Namespace util
             Friend ReadOnly values As Double()
             Friend ReadOnly treatsZeroAsNA As Boolean
 
-            Friend Sub New(ByVal values As Double(), ByVal treatsZeroAsNA As Boolean)
+            Friend Sub New(values As Double(), treatsZeroAsNA As Boolean)
                 Me.values = values
                 Me.treatsZeroAsNA = treatsZeroAsNA
             End Sub
 
-            Public Overridable Function fvalue(ByVal index As Integer) As Double Implements FVec.fvalue
+            Public Overridable Function fvalue(index As Integer) As Double Implements FVec.fvalue
                 If values.Length <= index Then
                     Return Double.NaN
                 End If
@@ -180,12 +180,12 @@ Namespace util
             Friend ReadOnly values As Double()
             Friend ReadOnly treatsValueAsNA As Double
 
-            Friend Sub New(ByVal values As Double(), ByVal treatsValueAsNA As Double)
+            Friend Sub New(values As Double(), treatsValueAsNA As Double)
                 Me.values = values
                 Me.treatsValueAsNA = treatsValueAsNA
             End Sub
 
-            Public Overridable Function fvalue(ByVal index As Integer) As Double Implements FVec.fvalue
+            Public Overridable Function fvalue(index As Integer) As Double Implements FVec.fvalue
                 If values.Length <= index Then
                     Return Double.NaN
                 End If

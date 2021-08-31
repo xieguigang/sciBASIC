@@ -7,25 +7,17 @@ Namespace spark
         Public Const MODEL_TYPE_CLS As String = "_cls_"
         Public Const MODEL_TYPE_REG As String = "_reg_"
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: Fields cannot have the same name as methods:
         Friend ReadOnly modelType_Renamed As String
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: Fields cannot have the same name as methods:
         Friend ReadOnly featureCol_Renamed As String
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: Fields cannot have the same name as methods:
         Friend ReadOnly labelCol_Renamed As String
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: Fields cannot have the same name as methods:
         Friend ReadOnly predictionCol_Renamed As String
 
         ' classification model only
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: Fields cannot have the same name as methods:
         Friend ReadOnly rawPredictionCol_Renamed As String
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: Fields cannot have the same name as methods:
         Friend ReadOnly thresholds_Renamed As Double()
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: public SparkModelParam(String modelType, String featureCol, biz.k11i.xgboost.util.ModelReader reader) throws java.io.IOException
-        Public Sub New(ByVal modelType As String, ByVal featureCol As String, ByVal reader As ModelReader)
+        Public Sub New(modelType As String, featureCol As String, reader As ModelReader)
             modelType_Renamed = modelType
             featureCol_Renamed = featureCol
             labelCol_Renamed = reader.readUTF()

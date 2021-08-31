@@ -20,9 +20,7 @@ Namespace gbm
             ' do nothing
         End Sub
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: @Override public void loadModel(biz.k11i.xgboost.util.ModelReader reader, boolean with_pbuffer) throws java.io.IOException
-        Public Overrides Sub loadModel(ByVal reader As ModelReader, ByVal with_pbuffer As Boolean)
+        Public Overrides Sub loadModel(reader As ModelReader, with_pbuffer As Boolean)
             mparam = New ModelParam(reader)
             trees = New RegTree(mparam.num_trees - 1) {}
 
@@ -62,7 +60,7 @@ Namespace gbm
             Next
         End Sub
 
-        Public Overrides Function predict(ByVal feat As FVec, ByVal ntree_limit As Integer) As Double()
+        Public Overrides Function predict(feat As FVec, ntree_limit As Integer) As Double()
             Dim preds = New Double(mparam.num_output_group - 1) {}
 
             For gid = 0 To mparam.num_output_group - 1
@@ -72,7 +70,7 @@ Namespace gbm
             Return preds
         End Function
 
-        Public Overrides Function predictSingle(ByVal feat As FVec, ByVal ntree_limit As Integer) As Double
+        Public Overrides Function predictSingle(feat As FVec, ntree_limit As Integer) As Double
             If mparam.num_output_group <> 1 Then
                 Throw New InvalidOperationException("Can't invoke predictSingle() because this model outputs multiple values: " & mparam.num_output_group)
             End If
@@ -80,7 +78,7 @@ Namespace gbm
             Return pred(feat, 0, 0, ntree_limit)
         End Function
 
-        Friend Overridable Function pred(ByVal feat As FVec, ByVal bst_group As Integer, ByVal root_index As Integer, ByVal ntree_limit As Integer) As Double
+        Friend Overridable Function pred(feat As FVec, bst_group As Integer, root_index As Integer, ntree_limit As Integer) As Double
             Dim trees = _groupTrees(bst_group)
             Dim treeleft = If(ntree_limit = 0, trees.Length, stdNum.Min(ntree_limit, trees.Length))
             Dim psum As Double = 0
@@ -92,11 +90,11 @@ Namespace gbm
             Return psum
         End Function
 
-        Public Overrides Function predictLeaf(ByVal feat As FVec, ByVal ntree_limit As Integer) As Integer()
+        Public Overrides Function predictLeaf(feat As FVec, ntree_limit As Integer) As Integer()
             Return predPath(feat, 0, ntree_limit)
         End Function
 
-        Friend Overridable Function predPath(ByVal feat As FVec, ByVal root_index As Integer, ByVal ntree_limit As Integer) As Integer()
+        Friend Overridable Function predPath(feat As FVec, root_index As Integer, ntree_limit As Integer) As Integer()
             Dim treeleft = If(ntree_limit = 0, trees.Length, stdNum.Min(ntree_limit, trees.Length))
             Dim leafIndex = New Integer(treeleft - 1) {}
 
@@ -128,9 +126,7 @@ Namespace gbm
             ' ! \brief reserved parameters 
             Friend ReadOnly reserved As Integer()
 
-            'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-            'ORIGINAL LINE: ModelParam(biz.k11i.xgboost.util.ModelReader reader) throws java.io.IOException
-            Friend Sub New(ByVal reader As ModelReader)
+            Friend Sub New(reader As ModelReader)
                 num_trees = reader.readInt()
                 num_roots = reader.readInt()
                 num_feature = reader.readInt()

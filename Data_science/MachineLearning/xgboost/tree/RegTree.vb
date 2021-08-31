@@ -17,9 +17,7 @@ Namespace tree
         ''' </summary>
         ''' <paramname="reader"> input stream </param>
         ''' <exceptioncref="IOException"> If an I/O error occurs </exception>
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: public void loadModel(biz.k11i.xgboost.util.ModelReader reader) throws java.io.IOException
-        Public Overridable Sub loadModel(ByVal reader As ModelReader)
+        Public Overridable Sub loadModel(reader As ModelReader)
             paramField = New Param(reader)
             nodes = New Node(paramField.num_nodes - 1) {}
 
@@ -40,7 +38,7 @@ Namespace tree
         ''' <paramname="feat">    feature vector </param>
         ''' <paramname="root_id"> starting root index </param>
         ''' <returns> leaf index </returns>
-        Public Overridable Function getLeafIndex(ByVal feat As FVec, ByVal root_id As Integer) As Integer
+        Public Overridable Function getLeafIndex(feat As FVec, root_id As Integer) As Integer
             Dim pid = root_id
             Dim n As New Value(Of Node)
 
@@ -57,7 +55,7 @@ Namespace tree
         ''' <paramname="feat">    feature vector </param>
         ''' <paramname="root_id"> starting root index </param>
         ''' <returns> leaf value </returns>
-        Public Overridable Function getLeafValue(ByVal feat As FVec, ByVal root_id As Integer) As Double
+        Public Overridable Function getLeafValue(feat As FVec, root_id As Integer) As Double
             Dim n = nodes(root_id)
 
             While Not n._isLeaf
@@ -90,9 +88,7 @@ Namespace tree
             ' ! \brief reserved part 
             Friend ReadOnly reserved As Integer()
 
-            'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-            'ORIGINAL LINE: Param(biz.k11i.xgboost.util.ModelReader reader) throws java.io.IOException
-            Friend Sub New(ByVal reader As ModelReader)
+            Friend Sub New(reader As ModelReader)
                 num_roots = reader.readInt()
                 num_nodes = reader.readInt()
                 num_deleted = reader.readInt()
@@ -119,10 +115,11 @@ Namespace tree
             Friend ReadOnly _splitIndex As Integer
             Friend ReadOnly _isLeaf As Boolean
 
-            ' set parent
-            'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-            'ORIGINAL LINE: Node(biz.k11i.xgboost.util.ModelReader reader) throws java.io.IOException
-            Friend Sub New(ByVal reader As ModelReader)
+            ''' <summary>
+            ''' set parent
+            ''' </summary>
+            ''' <param name="reader"></param>
+            Friend Sub New(reader As ModelReader)
                 parent_ = reader.readInt()
                 cleft_ = reader.readInt()
                 cright_ = reader.readInt()
@@ -157,7 +154,7 @@ Namespace tree
                 Return CInt(CUInt(sindex_) >> 31) <> 0
             End Function
 
-            Friend Overridable Function [next](ByVal feat As FVec) As Integer
+            Friend Overridable Function [next](feat As FVec) As Integer
                 Dim fvalue = feat.fvalue(_splitIndex)
 
                 If fvalue <> fvalue Then ' is NaN?
@@ -182,9 +179,7 @@ Namespace tree
             ' ! \brief number of child that is leaf node known up to now 
             Friend ReadOnly leaf_child_cnt As Integer
 
-            'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-            'ORIGINAL LINE: RTreeNodeStat(biz.k11i.xgboost.util.ModelReader reader) throws java.io.IOException
-            Friend Sub New(ByVal reader As ModelReader)
+            Friend Sub New(reader As ModelReader)
                 loss_chg = reader.readFloat()
                 sum_hess = reader.readFloat()
                 base_weight = reader.readFloat()

@@ -27,7 +27,7 @@ Namespace learner
         ''' </summary>
         ''' <paramname="name"> name of objective function </param>
         ''' <returns> objective function </returns>
-        Public Shared Function fromName(ByVal name As String) As ObjFunction
+        Public Shared Function fromName(name As String) As ObjFunction
             Dim result = FUNCTIONS.GetValueOrNull(name)
 
             If result Is Nothing Then
@@ -43,7 +43,7 @@ Namespace learner
         ''' <paramname="name"> name of objective function </param>
         ''' <paramname="objFunction"> objective function </param>
         ''' @deprecated This method will be made private. Please use <seealsocref="PredictorConfiguration.BuilderType"/> instead. 
-        Public Shared Sub register(ByVal name As String, ByVal objFunction As ObjFunction)
+        Public Shared Sub register(name As String, objFunction As ObjFunction)
             FUNCTIONS(name) = objFunction
         End Sub
 
@@ -63,7 +63,7 @@ Namespace learner
         ''' </summary>
         ''' <paramname="preds"> prediction </param>
         ''' <returns> transformed values </returns>
-        Public Overridable Function predTransform(ByVal preds As Double()) As Double()
+        Public Overridable Function predTransform(preds As Double()) As Double()
             ' do nothing
             Return preds
         End Function
@@ -73,7 +73,7 @@ Namespace learner
         ''' </summary>
         ''' <paramname="pred"> prediction </param>
         ''' <returns> transformed value </returns>
-        Public Overridable Function predTransform(ByVal pred As Double) As Double
+        Public Overridable Function predTransform(pred As Double) As Double
             ' do nothing
             Return pred
         End Function
@@ -85,7 +85,7 @@ Namespace learner
         Friend Class RegLossObjLogistic
             Inherits ObjFunction
 
-            Public Overloads Overrides Function predTransform(ByVal preds As Double()) As Double()
+            Public Overloads Overrides Function predTransform(preds As Double()) As Double()
                 For i = 0 To preds.Length - 1
                     preds(i) = sigmoid(preds(i))
                 Next
@@ -93,11 +93,11 @@ Namespace learner
                 Return preds
             End Function
 
-            Public Overloads Overrides Function predTransform(ByVal pred As Double) As Double
+            Public Overloads Overrides Function predTransform(pred As Double) As Double
                 Return sigmoid(pred)
             End Function
 
-            Friend Overridable Function sigmoid(ByVal x As Double) As Double
+            Friend Overridable Function sigmoid(x As Double) As Double
                 Return 1 / (1 + stdNum.Exp(-x))
             End Function
         End Class
@@ -109,7 +109,7 @@ Namespace learner
         Friend Class SoftmaxMultiClassObjClassify
             Inherits ObjFunction
 
-            Public Overloads Overrides Function predTransform(ByVal preds As Double()) As Double()
+            Public Overloads Overrides Function predTransform(preds As Double()) As Double()
                 Dim maxIndex = 0
                 Dim max = preds(0)
 
@@ -124,7 +124,7 @@ Namespace learner
                 Return New Double() {maxIndex}
             End Function
 
-            Public Overloads Overrides Function predTransform(ByVal pred As Double) As Double
+            Public Overloads Overrides Function predTransform(pred As Double) As Double
                 Throw New NotSupportedException()
             End Function
         End Class
@@ -136,7 +136,7 @@ Namespace learner
         Friend Class SoftmaxMultiClassObjProb
             Inherits ObjFunction
 
-            Public Overloads Overrides Function predTransform(ByVal preds As Double()) As Double()
+            Public Overloads Overrides Function predTransform(preds As Double()) As Double()
                 Dim max = preds(0)
 
                 For i = 1 To preds.Length - 1
@@ -157,11 +157,11 @@ Namespace learner
                 Return preds
             End Function
 
-            Public Overloads Overrides Function predTransform(ByVal pred As Double) As Double
+            Public Overloads Overrides Function predTransform(pred As Double) As Double
                 Throw New NotSupportedException()
             End Function
 
-            Friend Overridable Function exp(ByVal x As Double) As Double
+            Friend Overridable Function exp(x As Double) As Double
                 Return stdNum.Exp(x)
             End Function
         End Class

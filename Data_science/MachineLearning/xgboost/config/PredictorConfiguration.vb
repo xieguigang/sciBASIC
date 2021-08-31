@@ -9,7 +9,7 @@ Namespace config
                 predictorConfiguration = New PredictorConfiguration()
             End Sub
 
-            Public Overridable Function objFunction(ByVal objFunction As ObjFunction) As BuilderType
+            Public Overridable Function objFunction(objFunction As ObjFunction) As BuilderType
                 predictorConfiguration.objFunction_Renamed = objFunction
                 Return Me
             End Function
@@ -23,7 +23,6 @@ Namespace config
 
         Public Shared ReadOnly [DEFAULT] As PredictorConfiguration = New PredictorConfiguration()
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: Fields cannot have the same name as methods:
         Private objFunction_Renamed As ObjFunction
 
         Public Overridable ReadOnly Property objFunction As ObjFunction

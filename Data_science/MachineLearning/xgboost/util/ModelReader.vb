@@ -14,22 +14,16 @@ Namespace util
         Private ReadOnly stream As Stream
         Private buffer As SByte()
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: @Deprecated public ModelReader(String filename) throws java.io.IOException
         <Obsolete>
-        Public Sub New(ByVal filename As String)
+        Public Sub New(filename As String)
             Me.New(New FileStream(filename, FileMode.Open, FileAccess.Read))
         End Sub
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: public ModelReader(java.io.InputStream in) throws java.io.IOException
-        Public Sub New(ByVal [in] As Stream)
+        Public Sub New([in] As Stream)
             stream = [in]
         End Sub
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: private int fillBuffer(int numBytes) throws java.io.IOException
-        Private Function fillBuffer(ByVal numBytes As Integer) As Integer
+        Private Function fillBuffer(numBytes As Integer) As Integer
             If buffer Is Nothing OrElse buffer.Length < numBytes Then
                 buffer = New SByte(numBytes - 1) {}
             End If
@@ -49,15 +43,11 @@ Namespace util
             Return numBytesRead
         End Function
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: public int readByteAsInt() throws java.io.IOException
         Public Overridable Function readByteAsInt() As Integer
             Return stream.Read()
         End Function
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: public byte[] readByteArray(int numBytes) throws java.io.IOException
-        Public Overridable Function readByteArray(ByVal numBytes As Integer) As SByte()
+        Public Overridable Function readByteArray(numBytes As Integer) As SByte()
             Dim numBytesRead = fillBuffer(numBytes)
 
             If numBytesRead < numBytes Then
@@ -69,21 +59,15 @@ Namespace util
             Return result
         End Function
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: public int readInt() throws java.io.IOException
         Public Overridable Function readInt() As Integer
             Return readInt(ByteOrder.LittleEndian)
         End Function
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: public int readIntBE() throws java.io.IOException
         Public Overridable Function readIntBE() As Integer
             Return readInt(ByteOrder.BigEndian)
         End Function
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: private int readInt(java.nio.ByteOrder byteOrder) throws java.io.IOException
-        Private Function readInt(ByVal byteOrder As ByteOrder) As Integer
+        Private Function readInt(byteOrder As ByteOrder) As Integer
             Dim numBytesRead = fillBuffer(4)
 
             If numBytesRead < 4 Then
@@ -93,9 +77,7 @@ Namespace util
             Return ByteBuffer.wrap(buffer).order(byteOrder).int
         End Function
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: public int[] readIntArray(int numValues) throws java.io.IOException
-        Public Overridable Function readIntArray(ByVal numValues As Integer) As Integer()
+        Public Overridable Function readIntArray(numValues As Integer) As Integer()
             Dim numBytesRead = fillBuffer(numValues * 4)
 
             If numBytesRead < numValues * 4 Then
@@ -112,8 +94,6 @@ Namespace util
             Return result
         End Function
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: public int readUnsignedInt() throws java.io.IOException
         Public Overridable Function readUnsignedInt() As Integer
             Dim result As Integer = readInt()
 
@@ -124,8 +104,6 @@ Namespace util
             Return result
         End Function
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: public long readLong() throws java.io.IOException
         Public Overridable Function readLong() As Long
             Dim numBytesRead = fillBuffer(8)
 
@@ -136,13 +114,11 @@ Namespace util
             Return ByteBuffer.wrap(buffer).order(ByteOrder.LittleEndian).[long]
         End Function
 
-        Public Overridable Function asFloat(ByVal bytes As SByte()) As Single
+        Public Overridable Function asFloat(bytes As SByte()) As Single
             Return ByteBuffer.wrap(bytes).order(ByteOrder.LittleEndian).float
         End Function
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: public int asUnsignedInt(byte[] bytes) throws java.io.IOException
-        Public Overridable Function asUnsignedInt(ByVal bytes As SByte()) As Integer
+        Public Overridable Function asUnsignedInt(bytes As SByte()) As Integer
             Dim result As Integer = ByteBuffer.wrap(bytes).order(ByteOrder.LittleEndian).int
 
             If result < 0 Then
@@ -152,8 +128,6 @@ Namespace util
             Return result
         End Function
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: public float readFloat() throws java.io.IOException
         Public Overridable Function readFloat() As Single
             Dim numBytesRead = fillBuffer(4)
 
@@ -164,9 +138,7 @@ Namespace util
             Return ByteBuffer.wrap(buffer).order(ByteOrder.LittleEndian).float
         End Function
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: public float[] readFloatArray(int numValues) throws java.io.IOException
-        Public Overridable Function readFloatArray(ByVal numValues As Integer) As Single()
+        Public Overridable Function readFloatArray(numValues As Integer) As Single()
             Dim numBytesRead = fillBuffer(numValues * 4)
 
             If numBytesRead < numValues * 4 Then
@@ -183,9 +155,7 @@ Namespace util
             Return result
         End Function
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: public double[] readDoubleArrayBE(int numValues) throws java.io.IOException
-        Public Overridable Function readDoubleArrayBE(ByVal numValues As Integer) As Double()
+        Public Overridable Function readDoubleArrayBE(numValues As Integer) As Double()
             Dim numBytesRead = fillBuffer(numValues * 8)
 
             If numBytesRead < numValues * 8 Then
@@ -202,9 +172,7 @@ Namespace util
             Return result
         End Function
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: public void skip(long numBytes) throws java.io.IOException
-        Public Overridable Sub skip(ByVal numBytes As Long)
+        Public Overridable Sub skip(numBytes As Long)
             Dim numBytesRead As Long = stream.skip(numBytes)
 
             If numBytesRead < numBytes Then
@@ -212,8 +180,6 @@ Namespace util
             End If
         End Sub
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: public String readString() throws java.io.IOException
         Public Overridable Function readString() As String
             Dim length As Long = readLong()
 
@@ -224,9 +190,7 @@ Namespace util
             Return readString(length)
         End Function
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: public String readString(int numBytes) throws java.io.IOException
-        Public Overridable Function readString(ByVal numBytes As Integer) As String
+        Public Overridable Function readString(numBytes As Integer) As String
             Dim numBytesRead = fillBuffer(numBytes)
 
             If numBytesRead < numBytes Then
@@ -236,17 +200,13 @@ Namespace util
             Return Encoding.UTF8.GetString(CType(CObj(buffer), Byte()), 0, numBytes)
         End Function
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: public String readUTF() throws java.io.IOException
         Public Overridable Function readUTF() As String
             Dim utflen As Integer = readByteAsInt()
             utflen = CShort((utflen << 8 Or readByteAsInt()))
             Return readUTF(utflen)
         End Function
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: public String readUTF(int utflen) throws java.io.IOException
-        Public Overridable Function readUTF(ByVal utflen As Integer) As String
+        Public Overridable Function readUTF(utflen As Integer) As String
             Dim numBytesRead = fillBuffer(utflen)
 
             If numBytesRead < utflen Then
@@ -317,8 +277,6 @@ Namespace util
             Return New String(chararr, 0, chararr_count)
         End Function
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: @Override public void close() throws java.io.IOException
         Public Overridable Sub Dispose() Implements IDisposable.Dispose
             stream.Close()
         End Sub

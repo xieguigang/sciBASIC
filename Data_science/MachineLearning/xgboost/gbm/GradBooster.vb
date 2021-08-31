@@ -14,9 +14,7 @@ Namespace gbm
         ''' <paramname="reader">       input stream </param>
         ''' <paramname="with_pbuffer"> whether the incoming data contains pbuffer </param>
         ''' <exceptioncref="IOException"> If an I/O error occurs </exception>
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: void loadModel(biz.k11i.xgboost.util.ModelReader reader, boolean with_pbuffer) throws java.io.IOException;
-        Sub loadModel(ByVal reader As ModelReader, ByVal with_pbuffer As Boolean)
+        Sub loadModel(reader As ModelReader, with_pbuffer As Boolean)
 
         ''' <summary>
         ''' Generates predictions for given feature vector.
@@ -24,7 +22,7 @@ Namespace gbm
         ''' <paramname="feat">        feature vector </param>
         ''' <paramname="ntree_limit"> limit the number of trees used in prediction </param>
         ''' <returns> prediction result </returns>
-        Function predict(ByVal feat As FVec, ByVal ntree_limit As Integer) As Double()
+        Function predict(feat As FVec, ntree_limit As Integer) As Double()
 
         ''' <summary>
         ''' Generates a prediction for given feature vector.
@@ -35,7 +33,7 @@ Namespace gbm
         ''' <paramname="feat">        feature vector </param>
         ''' <paramname="ntree_limit"> limit the number of trees used in prediction </param>
         ''' <returns> prediction result </returns>
-        Function predictSingle(ByVal feat As FVec, ByVal ntree_limit As Integer) As Double
+        Function predictSingle(feat As FVec, ntree_limit As Integer) As Double
 
         ''' <summary>
         ''' Predicts the leaf index of each tree. This is only valid in gbtree predictor.
@@ -43,7 +41,7 @@ Namespace gbm
         ''' <paramname="feat">        feature vector </param>
         ''' <paramname="ntree_limit"> limit the number of trees used in prediction </param>
         ''' <returns> predicted leaf indexes </returns>
-        Function predictLeaf(ByVal feat As FVec, ByVal ntree_limit As Integer) As Integer()
+        Function predictLeaf(feat As FVec, ntree_limit As Integer) As Integer()
     End Interface
 
     Public Class GradBooster_Factory
@@ -52,7 +50,7 @@ Namespace gbm
         ''' </summary>
         ''' <paramname="name"> name of gradient booster </param>
         ''' <returns> created gradient booster </returns>
-        Public Shared Function createGradBooster(ByVal name As String) As GradBooster
+        Public Shared Function createGradBooster(name As String) As GradBooster
             If "gbtree".Equals(name) Then
                 Return New GBTree()
             ElseIf "gblinear".Equals(name) Then
@@ -69,14 +67,14 @@ Namespace gbm
     Public MustInherit Class GBBase
         Implements GradBooster
 
-        Public MustOverride Function predictLeaf(ByVal feat As FVec, ByVal ntree_limit As Integer) As Integer() Implements GradBooster.predictLeaf
-        Public MustOverride Function predictSingle(ByVal feat As FVec, ByVal ntree_limit As Integer) As Double Implements GradBooster.predictSingle
-        Public MustOverride Function predict(ByVal feat As FVec, ByVal ntree_limit As Integer) As Double() Implements GradBooster.predict
-        Public MustOverride Sub loadModel(ByVal reader As ModelReader, ByVal with_pbuffer As Boolean) Implements GradBooster.loadModel
+        Public MustOverride Function predictLeaf(feat As FVec, ntree_limit As Integer) As Integer() Implements GradBooster.predictLeaf
+        Public MustOverride Function predictSingle(feat As FVec, ntree_limit As Integer) As Double Implements GradBooster.predictSingle
+        Public MustOverride Function predict(feat As FVec, ntree_limit As Integer) As Double() Implements GradBooster.predict
+        Public MustOverride Sub loadModel(reader As ModelReader, with_pbuffer As Boolean) Implements GradBooster.loadModel
         Protected Friend num_class As Integer
 
         Public Overridable WriteOnly Property numClass As Integer Implements GradBooster.numClass
-            Set(ByVal value As Integer)
+            Set(value As Integer)
                 num_class = value
             End Set
         End Property

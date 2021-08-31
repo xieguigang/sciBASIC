@@ -11,16 +11,13 @@ Imports Microsoft.VisualBasic.MachineLearning.XGBoost.util
 <Serializable>
 Public Class Predictor
     Private mparam As ModelParam
-    'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: Fields cannot have the same name as methods:
     Private sparkModelParam_Renamed As SparkModelParam
     Private name_obj As String
     Private name_gbm As String
     Private obj As ObjFunction
     Private gbm As GradBooster
 
-    'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-    'ORIGINAL LINE: public Predictor(java.io.InputStream in) throws java.io.IOException
-    Public Sub New(ByVal [in] As Stream)
+    Public Sub New([in] As Stream)
         Me.New([in], Nothing)
     End Sub
 
@@ -30,9 +27,7 @@ Public Class Predictor
     ''' <paramname="in"> input stream </param>
     ''' <paramname="configuration"> configuration </param>
     ''' <exceptioncref="IOException"> If an I/O error occurs </exception>
-    'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-    'ORIGINAL LINE: public Predictor(java.io.InputStream in, biz.k11i.xgboost.config.PredictorConfiguration configuration) throws java.io.IOException
-    Public Sub New(ByVal [in] As Stream, ByVal configuration As PredictorConfiguration)
+    Public Sub New([in] As Stream, configuration As PredictorConfiguration)
         If configuration Is Nothing Then
             configuration = PredictorConfiguration.DEFAULT
         End If
@@ -44,9 +39,7 @@ Public Class Predictor
         gbm.loadModel(reader, mparam.saved_with_pbuffer <> 0)
     End Sub
 
-    'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-    'ORIGINAL LINE: void readParam(biz.k11i.xgboost.util.ModelReader reader) throws java.io.IOException
-    Friend Overridable Sub readParam(ByVal reader As ModelReader)
+    Friend Overridable Sub readParam(reader As ModelReader)
         Dim first4Bytes = reader.readByteArray(4)
         Dim next4Bytes = reader.readByteArray(4)
         Dim base_score As Single
@@ -90,7 +83,7 @@ Public Class Predictor
         name_gbm = reader.readString()
     End Sub
 
-    Friend Overridable Sub initObjFunction(ByVal configuration As PredictorConfiguration)
+    Friend Overridable Sub initObjFunction(configuration As PredictorConfiguration)
         obj = configuration.objFunction
 
         If obj Is Nothing Then
@@ -109,7 +102,7 @@ Public Class Predictor
     ''' </summary>
     ''' <paramname="feat"> feature vector </param>
     ''' <returns> prediction values </returns>
-    Public Overridable Function predict(ByVal feat As FVec) As Double()
+    Public Overridable Function predict(feat As FVec) As Double()
         Return predict(feat, False)
     End Function
 
@@ -119,7 +112,7 @@ Public Class Predictor
     ''' <paramname="feat">          feature vector </param>
     ''' <paramname="output_margin"> whether to only predict margin value instead of transformed prediction </param>
     ''' <returns> prediction values </returns>
-    Public Overridable Function predict(ByVal feat As FVec, ByVal output_margin As Boolean) As Double()
+    Public Overridable Function predict(feat As FVec, output_margin As Boolean) As Double()
         Return predict(feat, output_margin, 0)
     End Function
 
@@ -130,7 +123,7 @@ Public Class Predictor
     ''' <paramname="output_margin"> whether to only predict margin value instead of transformed prediction </param>
     ''' <paramname="ntree_limit">   limit the number of trees used in prediction </param>
     ''' <returns> prediction values </returns>
-    Public Overridable Function predict(ByVal feat As FVec, ByVal output_margin As Boolean, ByVal ntree_limit As Integer) As Double()
+    Public Overridable Function predict(feat As FVec, output_margin As Boolean, ntree_limit As Integer) As Double()
         Dim preds = predictRaw(feat, ntree_limit)
 
         If Not output_margin Then
@@ -140,7 +133,7 @@ Public Class Predictor
         Return preds
     End Function
 
-    Friend Overridable Function predictRaw(ByVal feat As FVec, ByVal ntree_limit As Integer) As Double()
+    Friend Overridable Function predictRaw(feat As FVec, ntree_limit As Integer) As Double()
         Dim preds = gbm.predict(feat, ntree_limit)
 
         For i = 0 To preds.Length - 1
@@ -158,7 +151,7 @@ Public Class Predictor
     ''' </summary>
     ''' <paramname="feat"> feature vector </param>
     ''' <returns> prediction value </returns>
-    Public Overridable Function predictSingle(ByVal feat As FVec) As Double
+    Public Overridable Function predictSingle(feat As FVec) As Double
         Return predictSingle(feat, False)
     End Function
 
@@ -171,7 +164,7 @@ Public Class Predictor
     ''' <paramname="feat">          feature vector </param>
     ''' <paramname="output_margin"> whether to only predict margin value instead of transformed prediction </param>
     ''' <returns> prediction value </returns>
-    Public Overridable Function predictSingle(ByVal feat As FVec, ByVal output_margin As Boolean) As Double
+    Public Overridable Function predictSingle(feat As FVec, output_margin As Boolean) As Double
         Return predictSingle(feat, output_margin, 0)
     End Function
 
@@ -185,7 +178,7 @@ Public Class Predictor
     ''' <paramname="output_margin"> whether to only predict margin value instead of transformed prediction </param>
     ''' <paramname="ntree_limit">   limit the number of trees used in prediction </param>
     ''' <returns> prediction value </returns>
-    Public Overridable Function predictSingle(ByVal feat As FVec, ByVal output_margin As Boolean, ByVal ntree_limit As Integer) As Double
+    Public Overridable Function predictSingle(feat As FVec, output_margin As Boolean, ntree_limit As Integer) As Double
         Dim pred = predictSingleRaw(feat, ntree_limit)
 
         If Not output_margin Then
@@ -195,7 +188,7 @@ Public Class Predictor
         Return pred
     End Function
 
-    Friend Overridable Function predictSingleRaw(ByVal feat As FVec, ByVal ntree_limit As Integer) As Double
+    Friend Overridable Function predictSingleRaw(feat As FVec, ntree_limit As Integer) As Double
         Return gbm.predictSingle(feat, ntree_limit) + mparam.base_score
     End Function
 
@@ -204,7 +197,7 @@ Public Class Predictor
     ''' </summary>
     ''' <paramname="feat"> feature vector </param>
     ''' <returns> leaf indexes </returns>
-    Public Overridable Function predictLeaf(ByVal feat As FVec) As Integer()
+    Public Overridable Function predictLeaf(feat As FVec) As Integer()
         Return predictLeaf(feat, 0)
     End Function
 
@@ -214,7 +207,7 @@ Public Class Predictor
     ''' <paramname="feat">        feature vector </param>
     ''' <paramname="ntree_limit"> limit </param>
     ''' <returns> leaf indexes </returns>
-    Public Overridable Function predictLeaf(ByVal feat As FVec, ByVal ntree_limit As Integer) As Integer()
+    Public Overridable Function predictLeaf(feat As FVec, ntree_limit As Integer) As Integer()
         Return gbm.predictLeaf(feat, ntree_limit)
     End Function
 
@@ -250,9 +243,7 @@ Public Class Predictor
         ' ! \brief reserved field 
         Friend ReadOnly reserved As Integer()
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: ModelParam(float base_score, int num_feature, biz.k11i.xgboost.util.ModelReader reader) throws java.io.IOException
-        Friend Sub New(ByVal base_score As Single, ByVal num_feature As Integer, ByVal reader As ModelReader)
+        Friend Sub New(base_score As Single, num_feature As Integer, reader As ModelReader)
             Me.base_score = base_score
             Me.num_feature = num_feature
             num_class = reader.readInt()

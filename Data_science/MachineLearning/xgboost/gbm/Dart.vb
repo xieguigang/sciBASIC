@@ -17,9 +17,7 @@ Namespace gbm
             ' do nothing
         End Sub
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: @Override public void loadModel(biz.k11i.xgboost.util.ModelReader reader, boolean with_pbuffer) throws java.io.IOException
-        Public Overrides Sub loadModel(ByVal reader As ModelReader, ByVal with_pbuffer As Boolean)
+        Public Overrides Sub loadModel(reader As ModelReader, with_pbuffer As Boolean)
             MyBase.loadModel(reader, with_pbuffer)
 
             If mparam.num_trees <> 0 Then
@@ -28,7 +26,7 @@ Namespace gbm
             End If
         End Sub
 
-        Friend Overrides Function pred(ByVal feat As FVec, ByVal bst_group As Integer, ByVal root_index As Integer, ByVal ntree_limit As Integer) As Double
+        Friend Overrides Function pred(feat As FVec, bst_group As Integer, root_index As Integer, ntree_limit As Integer) As Double
             Dim trees = _groupTrees(bst_group)
             Dim treeleft = If(ntree_limit = 0, trees.Length, stdNum.Min(ntree_limit, trees.Length))
             Dim psum As Double = 0
