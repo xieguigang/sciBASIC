@@ -9,8 +9,8 @@ Namespace config
                 predictorConfiguration = New PredictorConfiguration()
             End Sub
 
-            Public Overridable Function objFunction(objFunction As ObjFunction) As BuilderType
-                predictorConfiguration.objFunction_Renamed = objFunction
+            Public Overridable Function objFunction(objFunc As ObjFunction) As BuilderType
+                predictorConfiguration._objFunction = objFunc
                 Return Me
             End Function
 
@@ -23,13 +23,7 @@ Namespace config
 
         Public Shared ReadOnly [DEFAULT] As PredictorConfiguration = New PredictorConfiguration()
 
-        Private objFunction_Renamed As ObjFunction
-
         Public Overridable ReadOnly Property objFunction As ObjFunction
-            Get
-                Return objFunction_Renamed
-            End Get
-        End Property
 
         Public Shared Function builder() As BuilderType
             Return New BuilderType()
