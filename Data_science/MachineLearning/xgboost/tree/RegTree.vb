@@ -15,7 +15,7 @@ Namespace tree
         ''' <summary>
         ''' Loads model from stream.
         ''' </summary>
-        ''' <paramname="reader"> input stream </param>
+        ''' <param name="reader"> input stream </param>
         ''' <exceptioncref="IOException"> If an I/O error occurs </exception>
         Public Overridable Sub loadModel(reader As ModelReader)
             paramField = New Param(reader)
@@ -35,8 +35,8 @@ Namespace tree
         ''' <summary>
         ''' Retrieves nodes from root to leaf and returns leaf index.
         ''' </summary>
-        ''' <paramname="feat">    feature vector </param>
-        ''' <paramname="root_id"> starting root index </param>
+        ''' <param name="feat">    feature vector </param>
+        ''' <param name="root_id"> starting root index </param>
         ''' <returns> leaf index </returns>
         Public Overridable Function getLeafIndex(feat As FVec, root_id As Integer) As Integer
             Dim pid = root_id
@@ -52,8 +52,8 @@ Namespace tree
         ''' <summary>
         ''' Retrieves nodes from root to leaf and returns leaf value.
         ''' </summary>
-        ''' <paramname="feat">    feature vector </param>
-        ''' <paramname="root_id"> starting root index </param>
+        ''' <param name="feat">    feature vector </param>
+        ''' <param name="root_id"> starting root index </param>
         ''' <returns> leaf value </returns>
         Public Overridable Function getLeafValue(feat As FVec, root_id As Integer) As Double
             Dim n = nodes(root_id)

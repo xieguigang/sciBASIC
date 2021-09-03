@@ -10,6 +10,7 @@ Imports Microsoft.VisualBasic.MachineLearning.XGBoost.util
 ''' </summary>
 <Serializable>
 Public Class Predictor
+
     Private mparam As ModelParam
     Private sparkModelParam_Renamed As SparkModelParam
     Private name_obj As String
@@ -24,8 +25,8 @@ Public Class Predictor
     ''' <summary>
     ''' Instantiates with the Xgboost model
     ''' </summary>
-    ''' <paramname="in"> input stream </param>
-    ''' <paramname="configuration"> configuration </param>
+    ''' <param name="in"> input stream </param>
+    ''' <param name="configuration"> configuration </param>
     ''' <exceptioncref="IOException"> If an I/O error occurs </exception>
     Public Sub New([in] As Stream, configuration As PredictorConfiguration)
         If configuration Is Nothing Then
@@ -100,7 +101,7 @@ Public Class Predictor
     ''' <summary>
     ''' Generates predictions for given feature vector.
     ''' </summary>
-    ''' <paramname="feat"> feature vector </param>
+    ''' <param name="feat"> feature vector </param>
     ''' <returns> prediction values </returns>
     Public Overridable Function predict(feat As FVec) As Double()
         Return predict(feat, False)
@@ -109,8 +110,8 @@ Public Class Predictor
     ''' <summary>
     ''' Generates predictions for given feature vector.
     ''' </summary>
-    ''' <paramname="feat">          feature vector </param>
-    ''' <paramname="output_margin"> whether to only predict margin value instead of transformed prediction </param>
+    ''' <param name="feat">          feature vector </param>
+    ''' <param name="output_margin"> whether to only predict margin value instead of transformed prediction </param>
     ''' <returns> prediction values </returns>
     Public Overridable Function predict(feat As FVec, output_margin As Boolean) As Double()
         Return predict(feat, output_margin, 0)
@@ -119,9 +120,9 @@ Public Class Predictor
     ''' <summary>
     ''' Generates predictions for given feature vector.
     ''' </summary>
-    ''' <paramname="feat">          feature vector </param>
-    ''' <paramname="output_margin"> whether to only predict margin value instead of transformed prediction </param>
-    ''' <paramname="ntree_limit">   limit the number of trees used in prediction </param>
+    ''' <param name="feat">          feature vector </param>
+    ''' <param name="output_margin"> whether to only predict margin value instead of transformed prediction </param>
+    ''' <param name="ntree_limit">   limit the number of trees used in prediction </param>
     ''' <returns> prediction values </returns>
     Public Overridable Function predict(feat As FVec, output_margin As Boolean, ntree_limit As Integer) As Double()
         Dim preds = predictRaw(feat, ntree_limit)
@@ -149,7 +150,7 @@ Public Class Predictor
     ''' This method only works when the model outputs single value.
     ''' </para>
     ''' </summary>
-    ''' <paramname="feat"> feature vector </param>
+    ''' <param name="feat"> feature vector </param>
     ''' <returns> prediction value </returns>
     Public Overridable Function predictSingle(feat As FVec) As Double
         Return predictSingle(feat, False)
@@ -161,8 +162,8 @@ Public Class Predictor
     ''' This method only works when the model outputs single value.
     ''' </para>
     ''' </summary>
-    ''' <paramname="feat">          feature vector </param>
-    ''' <paramname="output_margin"> whether to only predict margin value instead of transformed prediction </param>
+    ''' <param name="feat">          feature vector </param>
+    ''' <param name="output_margin"> whether to only predict margin value instead of transformed prediction </param>
     ''' <returns> prediction value </returns>
     Public Overridable Function predictSingle(feat As FVec, output_margin As Boolean) As Double
         Return predictSingle(feat, output_margin, 0)
@@ -174,9 +175,9 @@ Public Class Predictor
     ''' This method only works when the model outputs single value.
     ''' </para>
     ''' </summary>
-    ''' <paramname="feat">          feature vector </param>
-    ''' <paramname="output_margin"> whether to only predict margin value instead of transformed prediction </param>
-    ''' <paramname="ntree_limit">   limit the number of trees used in prediction </param>
+    ''' <param name="feat">          feature vector </param>
+    ''' <param name="output_margin"> whether to only predict margin value instead of transformed prediction </param>
+    ''' <param name="ntree_limit">   limit the number of trees used in prediction </param>
     ''' <returns> prediction value </returns>
     Public Overridable Function predictSingle(feat As FVec, output_margin As Boolean, ntree_limit As Integer) As Double
         Dim pred = predictSingleRaw(feat, ntree_limit)
@@ -195,7 +196,7 @@ Public Class Predictor
     ''' <summary>
     ''' Predicts leaf index of each tree.
     ''' </summary>
-    ''' <paramname="feat"> feature vector </param>
+    ''' <param name="feat"> feature vector </param>
     ''' <returns> leaf indexes </returns>
     Public Overridable Function predictLeaf(feat As FVec) As Integer()
         Return predictLeaf(feat, 0)
@@ -204,8 +205,8 @@ Public Class Predictor
     ''' <summary>
     ''' Predicts leaf index of each tree.
     ''' </summary>
-    ''' <paramname="feat">        feature vector </param>
-    ''' <paramname="ntree_limit"> limit </param>
+    ''' <param name="feat">        feature vector </param>
+    ''' <param name="ntree_limit"> limit </param>
     ''' <returns> leaf indexes </returns>
     Public Overridable Function predictLeaf(feat As FVec, ntree_limit As Integer) As Integer()
         Return gbm.predictLeaf(feat, ntree_limit)

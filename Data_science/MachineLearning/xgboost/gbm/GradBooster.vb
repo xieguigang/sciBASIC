@@ -11,16 +11,16 @@ Namespace gbm
         ''' <summary>
         ''' Loads model from stream.
         ''' </summary>
-        ''' <paramname="reader">       input stream </param>
-        ''' <paramname="with_pbuffer"> whether the incoming data contains pbuffer </param>
+        ''' <param name="reader">       input stream </param>
+        ''' <param name="with_pbuffer"> whether the incoming data contains pbuffer </param>
         ''' <exceptioncref="IOException"> If an I/O error occurs </exception>
         Sub loadModel(reader As ModelReader, with_pbuffer As Boolean)
 
         ''' <summary>
         ''' Generates predictions for given feature vector.
         ''' </summary>
-        ''' <paramname="feat">        feature vector </param>
-        ''' <paramname="ntree_limit"> limit the number of trees used in prediction </param>
+        ''' <param name="feat">        feature vector </param>
+        ''' <param name="ntree_limit"> limit the number of trees used in prediction </param>
         ''' <returns> prediction result </returns>
         Function predict(feat As FVec, ntree_limit As Integer) As Double()
 
@@ -30,16 +30,16 @@ Namespace gbm
         ''' This method only works when the model outputs single value.
         ''' </para>
         ''' </summary>
-        ''' <paramname="feat">        feature vector </param>
-        ''' <paramname="ntree_limit"> limit the number of trees used in prediction </param>
+        ''' <param name="feat">        feature vector </param>
+        ''' <param name="ntree_limit"> limit the number of trees used in prediction </param>
         ''' <returns> prediction result </returns>
         Function predictSingle(feat As FVec, ntree_limit As Integer) As Double
 
         ''' <summary>
         ''' Predicts the leaf index of each tree. This is only valid in gbtree predictor.
         ''' </summary>
-        ''' <paramname="feat">        feature vector </param>
-        ''' <paramname="ntree_limit"> limit the number of trees used in prediction </param>
+        ''' <param name="feat">        feature vector </param>
+        ''' <param name="ntree_limit"> limit the number of trees used in prediction </param>
         ''' <returns> predicted leaf indexes </returns>
         Function predictLeaf(feat As FVec, ntree_limit As Integer) As Integer()
     End Interface
@@ -48,7 +48,7 @@ Namespace gbm
         ''' <summary>
         ''' Creates a gradient booster from given name.
         ''' </summary>
-        ''' <paramname="name"> name of gradient booster </param>
+        ''' <param name="name"> name of gradient booster </param>
         ''' <returns> created gradient booster </returns>
         Public Shared Function createGradBooster(name As String) As GradBooster
             If "gbtree".Equals(name) Then

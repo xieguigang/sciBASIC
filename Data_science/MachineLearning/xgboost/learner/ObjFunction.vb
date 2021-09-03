@@ -25,7 +25,7 @@ Namespace learner
         ''' <summary>
         ''' Gets <seealsocref="ObjFunction"/> from given name.
         ''' </summary>
-        ''' <paramname="name"> name of objective function </param>
+        ''' <param name="name"> name of objective function </param>
         ''' <returns> objective function </returns>
         Public Shared Function fromName(name As String) As ObjFunction
             Dim result = FUNCTIONS.GetValueOrNull(name)
@@ -40,8 +40,8 @@ Namespace learner
         ''' <summary>
         ''' Register an <seealsocref="ObjFunction"/> for a given name.
         ''' </summary>
-        ''' <paramname="name"> name of objective function </param>
-        ''' <paramname="objFunction"> objective function </param>
+        ''' <param name="name"> name of objective function </param>
+        ''' <param name="objFunction"> objective function </param>
         ''' @deprecated This method will be made private. Please use <seealsocref="PredictorConfiguration.BuilderType"/> instead. 
         Public Shared Sub register(name As String, objFunction As ObjFunction)
             FUNCTIONS(name) = objFunction
@@ -50,7 +50,7 @@ Namespace learner
         ''' <summary>
         ''' Uses Jafama's <seealsocref="FastMath"/> instead of <seealsocref="Math"/>.
         ''' </summary>
-        ''' <paramname="useJafama"> {@code true} if you want to use Jafama's <seealsocref="FastMath"/>,
+        ''' <param name="useJafama"> {@code true} if you want to use Jafama's <seealsocref="FastMath"/>,
         '''                  or {@code false} if you don't want to use it but JDK's <seealsocref="Math"/>. </param>
         Public Shared Sub useFastMathExp()
             Call register("binary:logistic", New RegLossObjLogistic())
@@ -61,7 +61,7 @@ Namespace learner
         ''' <summary>
         ''' Transforms prediction values.
         ''' </summary>
-        ''' <paramname="preds"> prediction </param>
+        ''' <param name="preds"> prediction </param>
         ''' <returns> transformed values </returns>
         Public Overridable Function predTransform(preds As Double()) As Double()
             ' do nothing
@@ -71,7 +71,7 @@ Namespace learner
         ''' <summary>
         ''' Transforms a prediction value.
         ''' </summary>
-        ''' <paramname="pred"> prediction </param>
+        ''' <param name="pred"> prediction </param>
         ''' <returns> transformed value </returns>
         Public Overridable Function predTransform(pred As Double) As Double
             ' do nothing

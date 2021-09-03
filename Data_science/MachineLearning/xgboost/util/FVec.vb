@@ -10,65 +10,62 @@ Namespace util
         ''' <summary>
         ''' Gets index-th value.
         ''' </summary>
-        ''' <paramname="index"> index </param>
+        ''' <param name="index"> index </param>
         ''' <returns> value </returns>
         Function fvalue(index As Integer) As Double
     End Interface
 
-    Public Class FVec_Transformer
-        Friend Sub New()
-            ' do nothing
-        End Sub
+    Public Module FVecTransformer
 
         ''' <summary>
         ''' Builds FVec from dense vector.
         ''' </summary>
-        ''' <paramname="values">         float values </param>
-        ''' <paramname="treatsZeroAsNA"> treat zero as N/A if true </param>
+        ''' <param name="values">         float values </param>
+        ''' <param name="treatsZeroAsNA"> treat zero as N/A if true </param>
         ''' <returns> FVec </returns>
-        Public Shared Function fromArray(values As Single(), treatsZeroAsNA As Boolean) As FVec
+        Public Function fromArray(values As Single(), treatsZeroAsNA As Boolean) As FVec
             Return New FVecArrayImpl.FVecFloatArrayImpl(values, treatsZeroAsNA)
         End Function
 
         ''' <summary>
         ''' Builds FVec from dense vector.
         ''' </summary>
-        ''' <paramname="values">         double values </param>
-        ''' <paramname="treatsZeroAsNA"> treat zero as N/A if true </param>
+        ''' <param name="values">         double values </param>
+        ''' <param name="treatsZeroAsNA"> treat zero as N/A if true </param>
         ''' <returns> FVec </returns>
-        Public Shared Function fromArray(values As Double(), treatsZeroAsNA As Boolean) As FVec
+        Public Function fromArray(values As Double(), treatsZeroAsNA As Boolean) As FVec
             Return New FVecArrayImpl.FVecDoubleArrayImpl(values, treatsZeroAsNA)
         End Function
 
         ''' <summary>
         ''' Builds FVec from dense vector.
         ''' </summary>
-        ''' <paramname="values">          float values </param>
-        ''' <paramname="treatsValueAsNA"> treat specify value as N/A </param>
+        ''' <param name="values">          float values </param>
+        ''' <param name="treatsValueAsNA"> treat specify value as N/A </param>
         ''' <returns> FVec </returns>
-        Public Shared Function fromArray(values As Single(), treatsValueAsNA As Single) As FVec
+        Public Function fromArray(values As Single(), treatsValueAsNA As Single) As FVec
             Return New FVecArrayImpl.FVecFloatArrayImplement(values, treatsValueAsNA)
         End Function
 
         ''' <summary>
         ''' Builds FVec from dense vector.
         ''' </summary>
-        ''' <paramname="values">          double values </param>
-        ''' <paramname="treatsValueAsNA"> treat specify value as N/A </param>
+        ''' <param name="values">          double values </param>
+        ''' <param name="treatsValueAsNA"> treat specify value as N/A </param>
         ''' <returns> FVec </returns>
-        Public Shared Function fromArray(values As Double(), treatsValueAsNA As Double) As FVec
+        Public Function fromArray(values As Double(), treatsValueAsNA As Double) As FVec
             Return New FVecArrayImpl.FVecDoubleArrayImplement(values, treatsValueAsNA)
         End Function
 
         ''' <summary>
         ''' Builds FVec from map.
         ''' </summary>
-        ''' <paramname="map"> map containing non-zero values </param>
+        ''' <param name="map"> map containing non-zero values </param>
         ''' <returns> FVec </returns>
-        Public Shared Function fromMap(Of T1 As IComparable)(map As IDictionary(Of Integer, T1)) As FVec
+        Public Function fromMap(Of T1 As IComparable)(map As IDictionary(Of Integer, T1)) As FVec
             Return New FVecMapImpl(Of T1)(map)
         End Function
-    End Class
+    End Module
 
     <Serializable>
     Friend Class FVecMapImpl(Of T1 As IComparable)
