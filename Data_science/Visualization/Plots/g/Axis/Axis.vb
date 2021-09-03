@@ -552,7 +552,11 @@ Namespace Graphic.Axis
                     If xRotate <> 0 AndAlso TypeOf g Is Graphics2D Then
                         Dim text As New GraphicsText(g)
 
-                        Call text.DrawString(labelText, tickFont, Brushes.Black, New Point(x - sz.Width / 2, ZERO.Y + d * 1.2), angle:=xRotate)
+                        If xRotate > 0 Then
+                            Call text.DrawString(labelText, tickFont, Brushes.Black, New Point(x, ZERO.Y + d * 1.2), angle:=xRotate)
+                        Else
+                            Call text.DrawString(labelText, tickFont, Brushes.Black, New Point(x, ZERO.Y + sz.Height * stdNum.Sin(xRotate * 180 / stdNum.PI)), angle:=xRotate)
+                        End If
                     Else
                         Call g.DrawString(labelText, tickFont, Brushes.Black, New Point(x - sz.Width / 2, ZERO.Y + d * 1.2))
                     End If

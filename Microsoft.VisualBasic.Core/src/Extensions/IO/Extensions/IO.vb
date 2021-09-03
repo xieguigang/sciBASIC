@@ -154,6 +154,9 @@ Public Module IOExtensions
     ''' 是否将原来的文件之中的数据清空？默认不是，否则将会以追加模式工作
     ''' </param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' 这个函数只有在完全处于<see cref="FileMode.Open"/>模式下，并且readonly为TRUE，这个时候才会有可能将所有原始数据一次性读取进入内存中
+    ''' </remarks>
     <ExportAPI("Open.File")>
     <Extension>
     Public Function Open(path$,

@@ -239,7 +239,8 @@ Namespace CommandLine
                         ex = New Exception(cli.ToString, ex)
 
                         Call App.LogException(ex)
-                        Call ex.PrintException
+                        Call ex.PrintException(enableRedirect:=False)
+                        Call VBDebugger.WaitOutput()
 
                         Return 500
                     End Try

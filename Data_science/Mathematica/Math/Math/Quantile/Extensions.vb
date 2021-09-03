@@ -120,9 +120,31 @@ Namespace Quantile
         ''' <param name="compact_size%"></param>
         ''' <returns></returns>
         <Extension>
+        Public Function GKQuantile(source As IEnumerable(Of Integer),
+                                   Optional epsilon# = Extensions.epsilon,
+                                   Optional compact_size% = 1000) As QuantileEstimationGK
+
+            Dim estimator As New QuantileEstimationGK(epsilon, compact_size)
+
+            For Each x As Integer In source
+                Call estimator.Insert(x)
+            Next
+
+            Return estimator
+        End Function
+
+        ''' <summary>
+        ''' <see cref="QuantileEstimationGK"/> for numeric vector.
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <param name="epsilon#"></param>
+        ''' <param name="compact_size%"></param>
+        ''' <returns></returns>
+        <Extension>
         Public Function GKQuantile(source As IEnumerable(Of Double),
                                    Optional epsilon# = Extensions.epsilon,
                                    Optional compact_size% = 1000) As QuantileEstimationGK
+
             Dim estimator As New QuantileEstimationGK(epsilon, compact_size)
 
             For Each x As Double In source
