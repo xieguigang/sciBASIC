@@ -3,7 +3,6 @@ Imports stdNum = System.Math
 
 Namespace learner
 
-
     ''' <summary>
     ''' Objective function implementations.
     ''' </summary>
