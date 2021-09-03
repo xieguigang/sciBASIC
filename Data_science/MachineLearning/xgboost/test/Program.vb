@@ -35,8 +35,8 @@ Module Program
     ''' <summary>
     ''' Predicts leaf index of each tree.
     ''' </summary>
-    ''' <paramname="predictor"> Predictor </param>
-    ''' <paramname="data"> test data </param>
+    ''' <param name="predictor"> Predictor </param>
+    ''' <param name="data"> test data </param>
     Friend Sub predictLeafIndex(ByVal predictor As Predictor, ByVal data As IList(Of KeyValuePair(Of Integer, FVec)))
         Dim count = 0
 
