@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.MachineLearning.XGBoost.util
+﻿Imports System.IO
+Imports Microsoft.VisualBasic.MachineLearning.XGBoost.util
 
 Namespace gbm
 
@@ -13,7 +14,7 @@ Namespace gbm
         ''' </summary>
         ''' <param name="reader">       input stream </param>
         ''' <param name="with_pbuffer"> whether the incoming data contains pbuffer </param>
-        ''' <exceptioncref="IOException"> If an I/O error occurs </exception>
+        ''' <exception cref="IOException"> If an I/O error occurs </exception>
         Sub loadModel(reader As ModelReader, with_pbuffer As Boolean)
 
         ''' <summary>

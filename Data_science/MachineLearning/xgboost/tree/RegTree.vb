@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Language
+﻿Imports System.IO
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning.XGBoost.util
 
 Namespace tree
@@ -16,7 +17,7 @@ Namespace tree
         ''' Loads model from stream.
         ''' </summary>
         ''' <param name="reader"> input stream </param>
-        ''' <exceptioncref="IOException"> If an I/O error occurs </exception>
+        ''' <exception cref="IOException"> If an I/O error occurs </exception>
         Public Overridable Sub loadModel(reader As ModelReader)
             paramField = New Param(reader)
             nodes = New Node(paramField.num_nodes - 1) {}

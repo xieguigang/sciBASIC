@@ -27,7 +27,7 @@ Public Class Predictor
     ''' </summary>
     ''' <param name="in"> input stream </param>
     ''' <param name="configuration"> configuration </param>
-    ''' <exceptioncref="IOException"> If an I/O error occurs </exception>
+    ''' <exception cref="IOException"> If an I/O error occurs </exception>
     Public Sub New([in] As Stream, configuration As PredictorConfiguration)
         If configuration Is Nothing Then
             configuration = PredictorConfiguration.DEFAULT

@@ -55,7 +55,7 @@ Module Program
 
         For Each line As String In "E:\GCModeller\src\runtime\sciBASIC#\Data_science\MachineLearning\xgboost\test\resources\data\agaricus.txt.0.test".ReadAllLines
             Dim values = line.Split(" "c)
-            Dim map As IDictionary(Of Integer?, Single?) = New Dictionary(Of Integer?, Single?)()
+            Dim map As New Dictionary(Of Integer, Single)()
 
             For i = 1 To values.Length - 1
                 Dim pair = values(i).Split(":"c)

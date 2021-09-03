@@ -1,4 +1,5 @@
-﻿Imports stdNum = System.Math
+﻿Imports Microsoft.VisualBasic.MachineLearning.XGBoost.config
+Imports stdNum = System.Math
 
 Namespace learner
 
@@ -23,7 +24,7 @@ Namespace learner
         End Sub
 
         ''' <summary>
-        ''' Gets <seealsocref="ObjFunction"/> from given name.
+        ''' Gets <seealso cref="ObjFunction"/> from given name.
         ''' </summary>
         ''' <param name="name"> name of objective function </param>
         ''' <returns> objective function </returns>
@@ -38,20 +39,15 @@ Namespace learner
         End Function
 
         ''' <summary>
-        ''' Register an <seealsocref="ObjFunction"/> for a given name.
+        ''' Register an <seealso cref="ObjFunction"/> for a given name.
         ''' </summary>
         ''' <param name="name"> name of objective function </param>
         ''' <param name="objFunction"> objective function </param>
-        ''' @deprecated This method will be made private. Please use <seealsocref="PredictorConfiguration.BuilderType"/> instead. 
+        ''' @deprecated This method will be made private. Please use <seealso cref="PredictorConfiguration.BuilderType"/> instead. 
         Public Shared Sub register(name As String, objFunction As ObjFunction)
             FUNCTIONS(name) = objFunction
         End Sub
 
-        ''' <summary>
-        ''' Uses Jafama's <seealsocref="FastMath"/> instead of <seealsocref="Math"/>.
-        ''' </summary>
-        ''' <param name="useJafama"> {@code true} if you want to use Jafama's <seealsocref="FastMath"/>,
-        '''                  or {@code false} if you don't want to use it but JDK's <seealsocref="Math"/>. </param>
         Public Shared Sub useFastMathExp()
             Call register("binary:logistic", New RegLossObjLogistic())
             Call register("reg:logistic", New RegLossObjLogistic())
