@@ -2,12 +2,13 @@ Imports System
 Imports Microsoft.VisualBasic.MachineLearning
 Imports Microsoft.VisualBasic.MachineLearning.XGBoost
 Imports Microsoft.VisualBasic.MachineLearning.XGBoost.util
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module Program
 
     Public Sub Main(ByVal args As String())
-        Dim data As IList(Of SimpleEntry(Of Integer?, XGBoost.util.FVec)) = loadData()
-        Dim predictor As Predictor = New Predictor(TestHelper.getResourceAsStream("model/gbtree/v47/binary-logistic.model"))
+        Dim data As IList(Of KeyValuePair(Of Integer, XGBoost.util.FVec)) = loadData()
+        Dim predictor As Predictor = New Predictor("E:\GCModeller\src\runtime\sciBASIC#\Data_science\MachineLearning\xgboost\test\resources\model\gbtree\v47\binary-logistic.model".Open)
         predictAndLogLoss(predictor, data)
         predictLeafIndex(predictor, data)
     End Sub
@@ -41,7 +42,7 @@ Module Program
 
         For Each pair As KeyValuePair(Of Integer, XGBoost.util.FVec) In data
             Dim leafIndexes As Integer() = predictor.predictLeaf(pair.Value)
-            Console.Write("leafIndexes[{0:D}]: {1}{2}", Math.Min(Threading.Interlocked.Increment(count), count - 1), Arrays.ToString(leafIndexes), Environment.NewLine)
+            Console.Write("leafIndexes[{0:D}]: {1}{2}", Math.Min(Threading.Interlocked.Increment(count), count - 1), (leafIndexes).GetJson, Environment.NewLine)
         Next
     End Sub
 
@@ -52,7 +53,7 @@ Module Program
     Friend Function loadData() As IList(Of KeyValuePair(Of Integer, FVec))
         Dim result As IList(Of KeyValuePair(Of Integer, XGBoost.util.FVec)) = New List(Of KeyValuePair(Of Integer, XGBoost.util.FVec))()
 
-        For Each line As String In Files.readAllLines((New File(TestHelper.getResourcePath(CStr("data/agaricus.txt.0.test")))).toPath(), StandardCharsets.UTF_8)
+        For Each line As String In "E:\GCModeller\src\runtime\sciBASIC#\Data_science\MachineLearning\xgboost\test\resources\data\agaricus.txt.0.test".ReadAllLines
             Dim values = line.Split(" "c)
             Dim map As IDictionary(Of Integer?, Single?) = New Dictionary(Of Integer?, Single?)()
 
