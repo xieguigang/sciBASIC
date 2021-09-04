@@ -29,7 +29,22 @@ Namespace ComponentModel.Evaluation
 
     Public Delegate Function IMetric(pred As Double(), label As Double()) As Double
 
-    Public Class Metric
+    Public NotInheritable Class Metric
+
+        Private Sub New()
+        End Sub
+
+        Public Shared Function Parse(metric As String) As Metrics
+            Select Case Strings.LCase(metric)
+                Case NameOf(Metrics.acc) : Return Metrics.acc
+                Case NameOf(Metrics.auc) : Return Metrics.auc
+                Case NameOf(Metrics.error) : Return Metrics.error
+                Case NameOf(Metrics.mae) : Return Metrics.mae
+                Case NameOf(Metrics.mse) : Return Metrics.mse
+                Case Else
+                    Return Metrics.mse
+            End Select
+        End Function
 
         Public Shared Function GetMetric(metric As Metrics) As IMetric
             Select Case metric
