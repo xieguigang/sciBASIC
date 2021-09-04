@@ -91,7 +91,6 @@ Namespace train
                                    Optional lambda As Double = 1,
                                    Optional gamma As Double = 0,
                                    Optional num_thread As Integer = -1)
-            _eta = eta
             Me.num_boost_round = num_boost_round
             Me.max_depth = max_depth
             Me.rowsample = rowsample
@@ -103,6 +102,9 @@ Namespace train
             Me.eval_metric = eval_metric
             Me.min_child_weight = min_child_weight
             Me.scale_pos_weight = scale_pos_weight
+
+            _eta = eta
+
             Dim attribute_list As New AttributeList(trainset)
             Dim class_list As New ClassList(trainset)
             Dim row_sampler As New RowSampler(trainset.dataset_size, Me.rowsample)
@@ -211,8 +213,9 @@ Namespace train
         End Sub
 
         Public Overridable Function predict(features As Single()()) As Double()
-            GBM.logger.info("TGBoost start predicting...")
             Dim pred = New Double(features.Length - 1) {}
+
+            GBM.logger.info("TGBoost start predicting...")
 
             For i = 0 To pred.Length - 1
                 pred(i) += _first_round_pred

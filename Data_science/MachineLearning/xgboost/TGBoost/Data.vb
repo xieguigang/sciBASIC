@@ -10,9 +10,12 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language.Java
 
 Namespace train
-    Public Class Data
+
+    Public MustInherit Class Data
+
         'we use -Double.MAX_VALUE to represent missing value
-        Public Shared NULL As Single = -Single.MaxValue
+        Public Const NA As Single = -Single.MaxValue
+
     End Class
 
     Public Class TrainData : Inherits Data
@@ -104,7 +107,7 @@ Namespace train
                         If strs(col).Equals("") Then
                             missing_index(col)(cur_missing_index(col)) = row
                             cur_missing_index(col) += 1
-                            origin_feature(row)(col) = Data.NULL
+                            origin_feature(row)(col) = Data.NA
                         Else
                             feature_value_index(col)(cur_index(col))(0) = Single.Parse(strs(col))
                             feature_value_index(col)(cur_index(col))(1) = row
@@ -167,7 +170,7 @@ Namespace train
                     For col = 0 To feature_dim - 1
 
                         If strs(col).Equals("") Then
-                            origin_feature(row)(col) = Data.NULL
+                            origin_feature(row)(col) = Data.NA
                         Else
                             origin_feature(row)(col) = Single.Parse(strs(col))
                         End If
@@ -224,7 +227,7 @@ Namespace train
                     For col = 0 To feature_dim - 1
 
                         If strs(col).Equals("") Then
-                            origin_feature(row)(col) = Data.NULL
+                            origin_feature(row)(col) = Data.NA
                         Else
                             origin_feature(row)(col) = Single.Parse(strs(col))
                         End If

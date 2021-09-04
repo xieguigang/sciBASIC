@@ -90,7 +90,7 @@ Namespace train
                     If attribute_list.cat_features_cols.Contains(split_feature) Then
                         Dim left_child_catvalue As List(Of Double) = treenode.split_left_child_catvalue
 
-                        If val = Data.NULL Then
+                        If val = Data.NA Then
                             If nan_go_to = 0 Then
                                 corresponding_tree_node(i) = treenode.nan_child
                             ElseIf nan_go_to = 1 Then
@@ -106,7 +106,7 @@ Namespace train
                     Else
                         Dim split_threshold As Double = treenode.split_threshold
 
-                        If val = Data.NULL Then
+                        If val = Data.NA Then
                             If nan_go_to = 0 Then
                                 corresponding_tree_node(i) = treenode.nan_child
                             ElseIf nan_go_to = 1 Then

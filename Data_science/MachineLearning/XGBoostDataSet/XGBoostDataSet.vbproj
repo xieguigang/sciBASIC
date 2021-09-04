@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Microsoft.VisualBasic.MachineLearning.XGBoost.DataSet</RootNamespace>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>Microsoft.VisualBasic.MachineLearning.XGBoost.DataSet</AssemblyName>
+  </PropertyGroup>
+
+</Project>

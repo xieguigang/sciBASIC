@@ -384,7 +384,7 @@ Namespace train
 
                 While Not cur_tree_node.is_leaf
 
-                    If feature(cur_tree_node.split_feature) = Data.NULL Then
+                    If feature(cur_tree_node.split_feature) = Data.NA Then
                         'it is missing value
                         If cur_tree_node.nan_go_to = 0 Then
                             cur_tree_node = cur_tree_node.nan_child
