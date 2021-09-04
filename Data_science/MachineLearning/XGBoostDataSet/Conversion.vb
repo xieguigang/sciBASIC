@@ -76,8 +76,29 @@ Public Module Conversion
     End Function
 
     <Extension>
-    Public Function ToValidateSet(matrix As DoubleTagged(Of Single())(), fieldNames As String()) As ValidationData
+    Public Function ToValidateSet(matrix As DoubleTagged(Of Single())()) As ValidationData
+        Dim data As New ValidationData
+        Dim rowLine As Single()
 
+        data.feature_dim = matrix(Scan0).Value.Length
+        data.dataset_size = matrix.Length
+        data.label = New Double(data.dataset_size - 1) {}
+        data.origin_feature = MAT(Of Single)(data.dataset_size, data.feature_dim)
+
+        For row = 0 To data.dataset_size - 1
+            rowLine = matrix(row).Value
+            data.label(row) = matrix(row).Tag
+
+            For col = 0 To data.feature_dim - 1
+                If rowLine(col) = ValidationData.NA OrElse rowLine(col).IsNaNImaginary Then
+                    data.origin_feature(row)(col) = ValidationData.NA
+                Else
+                    data.origin_feature(row)(col) = rowLine(col)
+                End If
+            Next
+        Next
+
+        Return data
     End Function
 
     <Extension>
