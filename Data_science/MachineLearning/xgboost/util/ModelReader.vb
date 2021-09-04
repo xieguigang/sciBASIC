@@ -1,20 +1,18 @@
 ﻿Imports System.IO
 Imports System.Text
 Imports Microsoft.VisualBasic.Data.IO
-Imports stdNum = System.Math
+Imports Microsoft.VisualBasic.Language
 
 Namespace util
 
     ''' <summary>
     ''' Reads the Xgboost model from stream.
     ''' </summary>
-    Public Class ModelReader
-        Implements IDisposable
+    Public Class ModelReader : Implements IDisposable
 
         Private ReadOnly stream As Stream
         Private buffer As Byte()
 
-        <Obsolete>
         Public Sub New(filename As String)
             Me.New(New FileStream(filename, FileMode.Open, FileAccess.Read))
         End Sub
@@ -85,7 +83,7 @@ Namespace util
                 Throw New EOFException(String.Format("Cannot read int array (shortage): expected = {0:D}, actual = {1:D}", numValues * 4, numBytesRead))
             End If
 
-            Dim byteBuffer As ByteBuffer = byteBuffer.wrap(buffer).order(ByteOrder.LittleEndian)
+            Dim byteBuffer As ByteBuffer = ByteBuffer.wrap(buffer).order(ByteOrder.LittleEndian)
             Dim result = New Integer(numValues - 1) {}
 
             For i = 0 To numValues - 1
@@ -146,7 +144,7 @@ Namespace util
                 Throw New EOFException(String.Format("Cannot read float array (shortage): expected = {0:D}, actual = {1:D}", numValues * 4, numBytesRead))
             End If
 
-            Dim byteBuffer As ByteBuffer = byteBuffer.wrap(buffer).order(ByteOrder.LittleEndian)
+            Dim byteBuffer As ByteBuffer = ByteBuffer.wrap(buffer).order(ByteOrder.LittleEndian)
             Dim result = New Single(numValues - 1) {}
 
             For i = 0 To numValues - 1
@@ -163,7 +161,7 @@ Namespace util
                 Throw New EOFException(String.Format("Cannot read double array (shortage): expected = {0:D}, actual = {1:D}", numValues * 8, numBytesRead))
             End If
 
-            Dim byteBuffer As ByteBuffer = byteBuffer.wrap(buffer).order(ByteOrder.BigEndian)
+            Dim byteBuffer As ByteBuffer = ByteBuffer.wrap(buffer).order(ByteOrder.BigEndian)
             Dim result = New Double(numValues - 1) {}
 
             For i = 0 To numValues - 1
@@ -217,7 +215,7 @@ Namespace util
             Dim chararr = New Char(utflen - 1) {}
             Dim c, char2, char3 As Integer
             Dim count = 0
-            Dim chararr_count = 0
+            Dim chararr_count As i32 = 0
 
             While count < utflen
                 c = buffer(count) And &HFF
@@ -227,7 +225,7 @@ Namespace util
                 End If
 
                 count += 1
-                chararr(stdNum.Min(Threading.Interlocked.Increment(chararr_count), chararr_count - 1)) = Microsoft.VisualBasic.ChrW(c)
+                chararr(++chararr_count) = ChrW(c)
             End While
 
             While count < utflen
@@ -237,7 +235,7 @@ Namespace util
                     Case 0, 1, 2, 3, 4, 5, 6, 7
                         ' 0xxxxxxx
                         count += 1
-                        chararr(stdNum.Min(Threading.Interlocked.Increment(chararr_count), chararr_count - 1)) = Microsoft.VisualBasic.ChrW(c)
+                        chararr(++chararr_count) = ChrW(c)
                     Case 12, 13
                         ' 110x xxxx   10xx xxxx
                         count += 2
@@ -252,7 +250,7 @@ Namespace util
                             Throw New UTFDataFormatException("malformed input around byte " & count)
                         End If
 
-                        chararr(stdNum.Min(Threading.Interlocked.Increment(chararr_count), chararr_count - 1)) = Microsoft.VisualBasic.ChrW((c And &H1F) << 6 Or char2 And &H3F)
+                        chararr(++chararr_count) = ChrW((c And &H1F) << 6 Or char2 And &H3F)
                     Case 14
                         ' 1110 xxxx  10xx xxxx  10xx xxxx 
                         count += 3
@@ -268,7 +266,7 @@ Namespace util
                             Throw New UTFDataFormatException("malformed input around byte " & count - 1)
                         End If
 
-                        chararr(stdNum.Min(Threading.Interlocked.Increment(chararr_count), chararr_count - 1)) = Microsoft.VisualBasic.ChrW((c And &HF) << 12 Or (char2 And &H3F) << 6 Or (char3 And &H3F) << 0)
+                        chararr(++chararr_count) = ChrW((c And &HF) << 12 Or (char2 And &H3F) << 6 Or (char3 And &H3F) << 0)
                     Case Else
                         ' 10xx xxxx,  1111 xxxx 
                         Throw New UTFDataFormatException("malformed input around byte " & count)

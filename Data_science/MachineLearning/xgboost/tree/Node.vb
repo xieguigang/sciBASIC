@@ -1,4 +1,6 @@
-﻿Namespace tree
+﻿Imports Microsoft.VisualBasic.MachineLearning.XGBoost.util
+
+Namespace tree
 
     <Serializable> Friend Class Node
         ' pointer to parent, highest bit is used to
