@@ -1,4 +1,6 @@
-﻿Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
+﻿Imports System.IO
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
+Imports Microsoft.VisualBasic.Language.Java
 Imports Microsoft.VisualBasic.My
 
 Namespace train
@@ -104,16 +106,16 @@ Namespace train
 
                 'save this tree
                 trees_Renamed.Add(tree)
-                GBM.logger.log(Level.INFO, String.Format("current tree has {0:D} nodes,including {1:D} nan tree nodes", tree.nodes_cnt, tree.nan_nodes_cnt))
+                GBM.logger.log(MSG_TYPES.INF, String.Format("current tree has {0:D} nodes,including {1:D} nan tree nodes", tree.nodes_cnt, tree.nan_nodes_cnt))
 
                 'print training information
                 If eval_metric.Equals("") Then
-                    GBM.logger.log(Level.FINEST, String.Format("TGBoost round {0:D}", i))
+                    GBM.logger.log(MSG_TYPES.FINEST, String.Format("TGBoost round {0:D}", i))
                 Else
                     Dim train_metric = Me.calculate_metric(eval_metric, loss_Renamed.transform(class_list.pred), class_list.label)
 
                     If Not do_validation Then
-                        GBM.logger.log(Level.INFO, String.Format("TGBoost round {0:D},train-{1}:{2:F6}", i, eval_metric, train_metric))
+                        GBM.logger.log(MSG_TYPES.INF, String.Format("TGBoost round {0:D},train-{1}:{2:F6}", i, eval_metric, train_metric))
                     Else
                         Dim cur_tree_pred As Double() = tree.predict(valset.origin_feature)
 
@@ -122,7 +124,7 @@ Namespace train
                         Next
 
                         Dim val_metric = Me.calculate_metric(eval_metric, loss_Renamed.transform(val_pred), valset.label)
-                        GBM.logger.log(Level.INFO, String.Format("TGBoost round {0:D},train-{1}:{2:F6},val-{3}:{4:F6}", i, eval_metric, train_metric, eval_metric, val_metric))
+                        GBM.logger.log(MSG_TYPES.INF, String.Format("TGBoost round {0:D},train-{1}:{2:F6},val-{3}:{4:F6}", i, eval_metric, train_metric, eval_metric, val_metric))
                         'check whether to early stop
                         If maximize Then
                             If val_metric > best_val_metric Then
@@ -134,7 +136,7 @@ Namespace train
                             End If
 
                             If become_worse_round > early_stopping_rounds Then
-                                GBM.logger.log(Level.INFO, String.Format("TGBoost training stop,best round is {0:D},best val-{1} is {2:F6}", i, eval_metric, best_val_metric))
+                                GBM.logger.log(MSG_TYPES.INF, String.Format("TGBoost training stop,best round is {0:D},best val-{1} is {2:F6}", i, eval_metric, best_val_metric))
                                 Exit For
                             End If
                         Else
@@ -148,7 +150,7 @@ Namespace train
                             End If
 
                             If become_worse_round > early_stopping_rounds Then
-                                GBM.logger.log(Level.INFO, String.Format("TGBoost training stop,best round is {0:D},best val-{1} is {2:F6}", i, eval_metric, best_val_metric))
+                                GBM.logger.log(MSG_TYPES.INF, String.Format("TGBoost training stop,best round is {0:D},best val-{1} is {2:F6}", i, eval_metric, best_val_metric))
                                 Exit For
                             End If
                         End If
@@ -207,7 +209,7 @@ Namespace train
             ElseIf eval_metric.Equals("auc") Then
                 Return Metric.auc(pred, label)
             Else
-                Throw New sun.reflect.generics.reflectiveObjects.NotImplementedException()
+                Throw New NotImplementedException()
             End If
         End Function
 

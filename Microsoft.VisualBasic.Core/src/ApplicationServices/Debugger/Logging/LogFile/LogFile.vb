@@ -125,6 +125,10 @@ Namespace ApplicationServices.Debugging.Logging
             Call WriteLine(msg, obj, MSG_TYPES.INF)
         End Sub
 
+        Public Sub log(level As MSG_TYPES, msg As String, <CallerMemberName> Optional obj$ = Nothing)
+            Call WriteLine(msg, obj, level)
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub LogException(msg As String, <CallerMemberName> Optional obj$ = Nothing)
             Call WriteLine(msg, obj, type:=MSG_TYPES.ERR)

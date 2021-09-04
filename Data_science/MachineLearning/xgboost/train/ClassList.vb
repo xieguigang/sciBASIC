@@ -1,4 +1,6 @@
-﻿Namespace train
+﻿Imports Microsoft.VisualBasic.Language.Java
+
+Namespace train
     Public Class ClassList
         Public dataset_size As Integer
         Public label As Double()
