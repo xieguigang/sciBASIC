@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language.Java
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Parallel.Threads
 Imports stdNum = System.Math
 
@@ -375,7 +376,7 @@ Namespace train
         End Sub
 
         Friend Class PredictCallable
-            Inherits Callable(Of Double?)
+            Inherits Callable(Of Double)
 
             Private ReadOnly outerInstance As Tree
             Friend feature As Single()
@@ -385,7 +386,7 @@ Namespace train
                 Me.feature = feature
             End Sub
 
-            Public Overrides Function [call]() As Double?
+            Public Overrides Function [call]() As Double
                 Dim cur_tree_node As TreeNode = outerInstance.root_Renamed
 
                 While Not cur_tree_node.is_leaf
@@ -432,38 +433,15 @@ Namespace train
         End Class
 
         Public Overridable Function predict(ByVal features As Single()()) As Double()
-            Dim pool As ExecutorService = Executors.newFixedThreadPool(num_thread)
-            Dim list As IList(Of Future) = New List(Of Future)()
-
-            For i = 0 To features.Length - 1
-                Dim c As Callable(Of Double?) = New Tree.PredictCallable(Me, features(i))
-                Dim f As Future = pool.submit(c)
-                list.Add(f)
-            Next
-
-            pool.shutdown()
-
-            Try
-                pool.awaitTermination(Long.MaxValue, TimeUnit.NANOSECONDS)
-            Catch e As InterruptedException
-                Console.WriteLine(e.ToString())
-                Console.Write(e.StackTrace)
-            End Try
-
-            Dim ret = New Double(features.Length - 1) {}
-
-            For i = 0 To ret.Length - 1
-
-                Try
-                    ret(i) = CDbl(list(i).[get]())
-                Catch e As InterruptedException
-                    Console.WriteLine(e.ToString())
-                    Console.Write(e.StackTrace)
-                Catch e As ExecutionException
-                    Console.WriteLine(e.ToString())
-                    Console.Write(e.StackTrace)
-                End Try
-            Next
+            Dim ret As Double() = features _
+                .SeqIterator() _
+                .AsParallel _
+                .Select(Function(i)
+                            Return (i.idx, New Tree.PredictCallable(Me, i.value).call)
+                        End Function) _
+                .OrderBy(Function(i) i.idx) _
+                .Select(Function(i) i.Item2) _
+                .ToArray
 
             Return ret
         End Function
