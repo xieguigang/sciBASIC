@@ -296,10 +296,10 @@ Namespace train
                     Dim treenode As TreeNode = alive_nodes.Poll
 
                     'consider categorical feature
-                    Dim ret As List(Of Double?) = treenode.get_best_feature_threshold_gain()
-                    Dim best_feature = ret(0).Value
-                    Dim best_gain = ret(1).Value
-                    Dim best_nan_go_to = ret(2).Value
+                    Dim ret As List(Of Double) = treenode.get_best_feature_threshold_gain()
+                    Dim best_feature = ret(0)
+                    Dim best_gain = ret(1)
+                    Dim best_nan_go_to = ret(2)
                     Dim best_threshold As Double = 0
                     Dim left_child_catvalue As List(Of Double?) = New List(Of Double?)()
 
@@ -308,7 +308,7 @@ Namespace train
                             left_child_catvalue.Add(ret(j))
                         Next
                     Else
-                        best_threshold = ret(3).Value
+                        best_threshold = ret(3)
                     End If
 
                     If best_gain <= 0 Then

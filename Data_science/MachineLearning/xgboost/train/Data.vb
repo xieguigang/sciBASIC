@@ -27,8 +27,8 @@ Namespace train
         Private cat_features_names As List(Of String)
         Public cat_features_cols As List(Of Integer?) = New List(Of Integer?)()
 
-        Public Sub New(file As String, categorical_features As List(Of String))
-            cat_features_names = categorical_features
+        Public Sub New(file As String, categorical_features As IEnumerable(Of String))
+            cat_features_names = categorical_features.AsList
             first_scan(file)
             second_scan(file)
         End Sub

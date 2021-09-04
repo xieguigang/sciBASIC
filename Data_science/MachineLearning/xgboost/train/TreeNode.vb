@@ -9,6 +9,7 @@
 '        the middle child is nan_child, its index is 3*root.index
 
 Imports Microsoft.VisualBasic.Language.Java
+Imports Microsoft.VisualBasic.Language
 
 Namespace train
     Public Class TreeNode
@@ -119,7 +120,7 @@ Namespace train
             cat_feature_col_leftcatvalue(col) = left_child_catvalue
         End Sub
 
-        Public Overridable Function get_best_feature_threshold_gain() As List(Of Double?)
+        Public Overridable Function get_best_feature_threshold_gain() As List(Of Double)
             Dim best_feature = 0
             Dim max_gain = -Double.MaxValue
 
@@ -131,7 +132,7 @@ Namespace train
                 End If
             Next
             'consider categorical feature
-            Dim ret As List(Of Double?) = New List(Of Double?)()
+            Dim ret As New List(Of Double)()
             ret.Add(CDbl(best_feature))
             ret.Add(max_gain)
             ret.Add(best_nan_go_to(best_feature))
