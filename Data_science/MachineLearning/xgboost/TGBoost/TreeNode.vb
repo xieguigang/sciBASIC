@@ -118,7 +118,7 @@ Namespace train
         Public Overridable Sub set_categorical_feature_best_split(col As Integer, left_child_catvalue As List(Of Integer), gain As Double, nan_go_to As Double)
             best_gains(col) = gain
             best_nan_go_to(col) = nan_go_to
-            cat_feature_col_leftcatvalue(col) = left_child_catvalue
+            cat_feature_col_leftcatvalue(col.ToString) = left_child_catvalue
         End Sub
 
         Public Overridable Function get_best_feature_threshold_gain() As List(Of Double)
@@ -138,8 +138,8 @@ Namespace train
             ret.Add(max_gain)
             ret.Add(best_nan_go_to(best_feature))
 
-            If cat_feature_col_leftcatvalue.ContainsKey(best_feature) Then
-                For Each catvalue As Double In cat_feature_col_leftcatvalue.GetValueOrNull(best_feature)
+            If cat_feature_col_leftcatvalue.ContainsKey(best_feature.ToString) Then
+                For Each catvalue As Double In cat_feature_col_leftcatvalue.GetValueOrNull(best_feature.ToString)
                     ret.Add(catvalue)
                 Next
             Else

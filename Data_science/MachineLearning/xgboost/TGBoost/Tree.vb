@@ -40,7 +40,7 @@ Namespace train
                        lambda As Double,
                        gamma As Double,
                        num_thread As Integer,
-                       cat_features_cols As List(Of Integer))
+                       cat_features_cols As IEnumerable(Of Integer))
 
             Me.min_sample_split = min_sample_split
             Me.min_child_weight = min_child_weight
@@ -49,7 +49,7 @@ Namespace train
             Me.rowsample = rowsample
             Me.lambda = lambda
             Me.gamma = gamma
-            Me.cat_features_cols = cat_features_cols
+            Me.cat_features_cols = cat_features_cols.AsList
 
             If num_thread = -1 Then
                 Me.num_thread = App.CPUCoreNumbers
@@ -197,11 +197,12 @@ Namespace train
 
             Public Overrides Sub run()
                 Dim nodes As New HashSet(Of TreeNode)()
+                Dim colkey As String = col.ToString
 
                 For interval As Integer = 0 To attribute_list.cutting_inds(CInt(col)).Length - 1
                     'update the corresponding treenode's cat_feature_col_value_GH
                     Dim inds As Integer() = attribute_list.cutting_inds(col)(interval)
-                    Dim cat_value = CInt(attribute_list.cutting_thresholds(col)(interval))
+                    Dim cat_value As String = CStr(attribute_list.cutting_thresholds(col)(interval))
 
                     For Each ind As Integer In inds
                         Dim treenode As TreeNode = class_list.corresponding_tree_node(ind)
@@ -212,10 +213,10 @@ Namespace train
 
                         If Not nodes.Contains(treenode) Then
                             nodes.Add(treenode)
-                            treenode.cat_feature_col_value_GH(key:=col) = New Dictionary(Of String, Double())
+                            treenode.cat_feature_col_value_GH(key:=colkey) = New Dictionary(Of String, Double())
                         End If
 
-                        Dim colVal = treenode.cat_feature_col_value_GH.ComputeIfAbsent(col, Function() New Dictionary(Of String, Double()))
+                        Dim colVal = treenode.cat_feature_col_value_GH.ComputeIfAbsent(colkey, Function() New Dictionary(Of String, Double()))
 
                         If colVal.ContainsKey(cat_value) Then
                             colVal(key:=cat_value)(0) += class_list.grad(ind)
@@ -227,18 +228,21 @@ Namespace train
                 Next
 
                 For Each node As TreeNode In nodes
-                    Dim catvalue_GdivH As Double()() = MAT(Of Double)(node.cat_feature_col_value_GH.GetValueOrNull(col).Count, 4)
+                    Dim catvalue_GdivH As Double()() = MAT(Of Double)(node.cat_feature_col_value_GH.GetValueOrNull(colkey).Count, 4)
                     Dim i = 0
+                    Dim catkey As String
 
-                    For Each catvalue As Integer In node.cat_feature_col_value_GH.GetValueOrNull(col).Keys
+                    For Each catvalue As Integer In node.cat_feature_col_value_GH.GetValueOrNull(colkey).Keys
+                        catkey = catvalue.ToString
                         catvalue_GdivH(i)(0) = catvalue
-                        catvalue_GdivH(i)(1) = node.cat_feature_col_value_GH.GetValueOrNull(col)(catvalue)(0)
-                        catvalue_GdivH(i)(2) = node.cat_feature_col_value_GH.GetValueOrNull(col)(catvalue)(1)
+                        catvalue_GdivH(i)(1) = node.cat_feature_col_value_GH.GetValueOrNull(colkey)(catkey)(0)
+                        catvalue_GdivH(i)(2) = node.cat_feature_col_value_GH.GetValueOrNull(colkey)(catkey)(1)
                         catvalue_GdivH(i)(3) = catvalue_GdivH(i)(1) / catvalue_GdivH(i)(2)
                         i += 1
                     Next
 
-                    Array.Sort(catvalue_GdivH, New Tree.ProcessEachCategoricalFeature.ComparatorAnonymousInnerClass)
+                    Call Array.Sort(catvalue_GdivH, New ComparatorAnonymousInnerClass)
+
                     Dim G_total As Double = node.Grad
                     Dim H_total As Double = node.Hess
                     Dim G_nan As Double = node.Grad_missing(col)

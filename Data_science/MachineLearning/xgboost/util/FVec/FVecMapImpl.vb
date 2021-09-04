@@ -14,7 +14,7 @@
         End Sub
 
         Public Overridable Function fvalue(index As Integer) As Double Implements FVec.fvalue
-            Dim number As IComparable = values.GetValueOrNull(index)
+            Dim number As IComparable = values.GetValueOrNull(index.ToString)
 
             If number Is Nothing Then
                 Return Double.NaN

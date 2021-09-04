@@ -8,8 +8,7 @@ Namespace gbm
     ''' Gradient boosted DART tree implementation.
     ''' </summary>
     <Serializable>
-    Public Class Dart
-        Inherits GBTree
+    Public Class Dart : Inherits GBTree
 
         Private weightDrop As Single()
 

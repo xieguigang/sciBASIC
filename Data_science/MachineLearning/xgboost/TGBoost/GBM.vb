@@ -96,7 +96,7 @@ Namespace train
             Me.gamma = gamma
             Me.min_sample_split = min_sample_split
             Me.num_thread = num_thread
-            Me.eval_metric = eval_metric
+            Me.eval_metric = eval_metric.Description
             Me.min_child_weight = min_child_weight
             Me.scale_pos_weight = scale_pos_weight
 
