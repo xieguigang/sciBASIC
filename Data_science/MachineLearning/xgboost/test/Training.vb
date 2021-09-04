@@ -2,26 +2,26 @@
 
 Namespace train
     Public Class Training
-        Public Shared Sub training(ByVal args As String())
-            Dim file_training = args(1)
-            Dim file_validation = args(2)
-            Dim file_model = args(3)
-            Dim early_stopping_round = Integer.Parse(args(4))
-            Dim maximize = args(5).Equals("true")
-            Dim eval_metric = args(6)
-            Dim loss = args(7)
-            Dim eta = Double.Parse(args(8))
-            Dim num_boost_round = Integer.Parse(args(9))
-            Dim max_depth = Integer.Parse(args(10))
-            Dim scale_pos_weight = Double.Parse(args(11))
-            Dim rowsample = Double.Parse(args(12))
-            Dim colample = Double.Parse(args(13))
-            Dim min_child_weight = Double.Parse(args(14))
-            Dim min_sample_split = Integer.Parse(args(15))
-            Dim lambda = Double.Parse(args(16))
-            Dim gamma = Double.Parse(args(17))
-            Dim num_thread = Integer.Parse(args(18))
-            Dim cat_features = args(19).Split(","c)
+        Public Shared Sub training()
+            Dim file_training = "E:\GCModeller\src\R-sharp\Library\demo\machineLearning\XGBoost\train.csv"
+            Dim file_validation = "E:\GCModeller\src\R-sharp\Library\demo\machineLearning\XGBoost\val.csv"
+            Dim file_model = "E:\GCModeller\src\R-sharp\Library\demo\machineLearning\XGBoost\test.xgb"
+            Dim early_stopping_round = 10
+            Dim maximize = True
+            Dim eval_metric = "auc"
+            Dim loss = "logloss"
+            Dim eta = 0.3
+            Dim num_boost_round = 20
+            Dim max_depth = 7
+            Dim scale_pos_weight = 1.0
+            Dim rowsample = 0.8
+            Dim colample = 0.8
+            Dim min_child_weight = 1
+            Dim min_sample_split = 5
+            Dim lambda = 1
+            Dim gamma = 0
+            Dim num_thread = 0
+            Dim cat_features = {"PRI_jet_num"}
             Dim categorical_features As List(Of String) = New List(Of String)()
 
             For Each cat_feature In cat_features
@@ -51,20 +51,17 @@ Namespace train
             ModelSerializer.save_model(tgb, file_model)
         End Sub
 
-        Public Shared Sub testing(ByVal args As String())
-            Dim file_model = args(1)
-            Dim file_testing = args(2)
-            Dim file_output = args(3)
+        Public Shared Sub testing()
+            Dim file_model = "E:\GCModeller\src\R-sharp\Library\demo\machineLearning\XGBoost\test.xgb"
+            Dim file_testing = "E:\GCModeller\src\R-sharp\Library\demo\machineLearning\XGBoost\test.csv"
+            Dim file_output = "E:\GCModeller\src\R-sharp\Library\demo\machineLearning\XGBoost\test_result.csv"
             Dim tgb As GBM = ModelSerializer.load_model(file_model)
             tgb.predict(file_testing, file_output)
         End Sub
 
         Public Shared Sub Main(ByVal args As String())
-            If args(0).Equals("training") Then
-                training(args)
-            ElseIf args(0).Equals("testing") Then
-                testing(args)
-            End If
+            Call training()
+            Call testing()
         End Sub
     End Class
 End Namespace
