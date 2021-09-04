@@ -71,10 +71,6 @@ Namespace train
             _eta = eta
         End Sub
 
-        Public Shared Function LoadTrainingDataSet(file_training As String, categorical_features As IEnumerable(Of String)) As TrainData
-            Return New TrainData(file_training, categorical_features)
-        End Function
-
         Public Overridable Sub fit(trainset As TrainData, valset As ValidationData,
                                    Optional early_stopping_rounds As Integer = 10,
                                    Optional maximize As Boolean = True,
@@ -91,6 +87,7 @@ Namespace train
                                    Optional lambda As Double = 1,
                                    Optional gamma As Double = 0,
                                    Optional num_thread As Integer = -1)
+
             Me.num_boost_round = num_boost_round
             Me.max_depth = max_depth
             Me.rowsample = rowsample
@@ -231,17 +228,5 @@ Namespace train
 
             Return _loss.transform(pred)
         End Function
-
-        Public Overridable Sub predict(file_test As String, file_output As String)
-            Dim testdata As TestData = New TestData(file_test)
-            Dim preds = Me.predict(testdata.origin_feature)
-            Dim strs = New String(preds.Length - 1) {}
-
-            For i = 0 To strs.Length - 1
-                strs(i) = preds(i).ToString()
-            Next
-
-            Call String.Join(vbLf, strs).SaveTo(file_output)
-        End Sub
     End Class
 End Namespace

@@ -6,4 +6,8 @@
     <AssemblyName>Microsoft.VisualBasic.MachineLearning.XGBoost.DataSet</AssemblyName>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\xgboost\xgboost.vbproj" />
+  </ItemGroup>
+
 </Project>

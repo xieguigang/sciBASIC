@@ -4,10 +4,12 @@
 'if we use ArrayList,only one scanning is needed, but it is memory consumption
 
 Imports System.IO
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.Values
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Language.Java
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
+
+<Assembly: InternalsVisibleTo("Microsoft.VisualBasic.MachineLearning.XGBoost.DataSet")>
 
 Namespace train
 
@@ -25,103 +27,20 @@ Namespace train
         Public missing_index As Integer()()
         Public feature_dim As Integer
         Public dataset_size As Integer
-        Private missing_count As List(Of Integer?) = New List(Of Integer?)()
+
+        Friend missing_count As New List(Of Integer)()
+        Friend cat_features_names As List(Of String)
+
         Public origin_feature As Single()()
-        Private cat_features_names As List(Of String)
-        Public cat_features_cols As List(Of Integer?) = New List(Of Integer?)()
+        Public cat_features_cols As New List(Of Integer)()
 
-        Public Sub New(file As String, categorical_features As IEnumerable(Of String))
+        Public Sub New(categorical_features As IEnumerable(Of String))
             cat_features_names = categorical_features.AsList
-            first_scan(file)
-            second_scan(file)
         End Sub
 
-        'to obtain: feature_dim, dataset_size,missing_count,cat_features_dim
-        Private Sub first_scan(file As String)
-            Try
-                Dim br As StreamReader = New StreamReader(file)
-                Dim header As String = br.ReadLine()
-                Dim columns = header.Split(","c)
-                feature_dim = columns.Length - 1
-
-                For i = 0 To columns.Length - 1
-
-                    If cat_features_names.Contains(columns(i)) Then
-                        cat_features_cols.Add(i)
-                    End If
-                Next
-
-                For i = 0 To feature_dim - 1
-                    missing_count.Add(0)
-                Next
-
-                Dim line As New Value(Of String)
-                dataset_size = 0
-
-                While Not (line = br.ReadLine()) Is Nothing
-                    Dim strs = line.Split(","c)
-                    dataset_size += 1
-
-                    For i = 0 To feature_dim - 1
-
-                        If strs(i).Equals("") Then
-                            missing_count(i) = missing_count(i) + 1
-                        End If
-                    Next
-                End While
-
-            Catch e As IOException
-                Console.WriteLine(e.ToString())
-                Console.Write(e.StackTrace)
-            End Try
-        End Sub
-
-        'to obtain:feature_value_index,label,missing_index,origin_feature,cat_features_values
-        Private Sub second_scan(file As String)
-            label = New Double(dataset_size - 1) {}
-            missing_index = New Integer(feature_dim - 1)() {}
-            feature_value_index = New Single(feature_dim - 1)()() {}
-
-            For i = 0 To feature_dim - 1
-                Dim cnt = missing_count(i).Value
-                missing_index(i) = New Integer(cnt - 1) {}
-                feature_value_index(i) = MAT(Of Single)(dataset_size - cnt, 2)
-            Next
-
-            origin_feature = MAT(Of Single)(dataset_size, feature_dim)
-
-            Try
-                Dim br As StreamReader = New StreamReader(file)
-                br.ReadLine()
-                Dim cur_index = New Integer(feature_dim - 1) {}
-                Dim cur_missing_index = New Integer(feature_dim - 1) {}
-                Arrays.fill(cur_index, 0)
-                Arrays.fill(cur_missing_index, 0)
-
-                For row = 0 To dataset_size - 1
-                    Dim strs As String() = br.ReadLine().Split(",")
-                    label(row) = Single.Parse(strs(strs.Length - 1))
-
-                    For col = 0 To feature_dim - 1
-
-                        If strs(col).Equals("") Then
-                            missing_index(col)(cur_missing_index(col)) = row
-                            cur_missing_index(col) += 1
-                            origin_feature(row)(col) = Data.NA
-                        Else
-                            feature_value_index(col)(cur_index(col))(0) = Single.Parse(strs(col))
-                            feature_value_index(col)(cur_index(col))(1) = row
-                            cur_index(col) += 1
-                            origin_feature(row)(col) = Single.Parse(strs(col))
-                        End If
-                    Next
-                Next
-
-            Catch e As IOException
-                Console.WriteLine(e.ToString())
-                Console.Write(e.StackTrace)
-            End Try
-        End Sub
+        Public Overrides Function ToString() As String
+            Return cat_features_names.ToArray.GetJson
+        End Function
     End Class
 
     Public Class ValidationData
@@ -132,112 +51,18 @@ Namespace train
         Public origin_feature As Single()()
         Public label As Double()
 
-        Public Sub New(file As String)
-            first_scan(file)
-            second_scan(file)
-        End Sub
-
-        Private Sub first_scan(file As String)
-            Try
-                Dim br As StreamReader = New StreamReader(file)
-                Dim header As String = br.ReadLine()
-                feature_dim = header.Split(","c).Length - 1
-                Dim line As New Value(Of String)
-                dataset_size = 0
-
-                While Not (line = br.ReadLine()) Is Nothing
-                    dataset_size += 1
-                End While
-
-            Catch e As IOException
-                Console.WriteLine(e.ToString())
-                Console.Write(e.StackTrace)
-            End Try
-        End Sub
-
-        Private Sub second_scan(file As String)
-            label = New Double(dataset_size - 1) {}
-            origin_feature = MAT(Of Single)(dataset_size, feature_dim)
-
-            Try
-                Dim br As StreamReader = New StreamReader(file)
-                br.ReadLine()
-
-                For row = 0 To dataset_size - 1
-                    Dim strs As String() = br.ReadLine().Split(",")
-                    label(row) = Single.Parse(strs(strs.Length - 1))
-
-                    For col = 0 To feature_dim - 1
-
-                        If strs(col).Equals("") Then
-                            origin_feature(row)(col) = Data.NA
-                        Else
-                            origin_feature(row)(col) = Single.Parse(strs(col))
-                        End If
-                    Next
-                Next
-
-            Catch e As IOException
-                Console.WriteLine(e.ToString())
-                Console.Write(e.StackTrace)
-            End Try
-        End Sub
     End Class
 
-    Friend Class TestData
+    Public Class TestData
         Inherits Data
 
         Public feature_dim As Integer
         Public dataset_size As Integer
+
+        ''' <summary>
+        ''' <see cref="GBM.predict(Single()())"/>
+        ''' </summary>
         Public origin_feature As Single()()
 
-        Public Sub New(file As String)
-            first_scan(file)
-            second_scan(file)
-        End Sub
-
-        Private Sub first_scan(file As String)
-            Try
-                Dim br As StreamReader = New StreamReader(file)
-                Dim header As String = br.ReadLine()
-                feature_dim = header.Split(","c).Length
-                Dim line As New Value(Of String)
-                dataset_size = 0
-
-                While Not (line = br.ReadLine()) Is Nothing
-                    dataset_size += 1
-                End While
-
-            Catch e As IOException
-                Console.WriteLine(e.ToString())
-                Console.Write(e.StackTrace)
-            End Try
-        End Sub
-
-        Private Sub second_scan(file As String)
-            origin_feature = MAT(Of Single)(dataset_size, feature_dim)
-
-            Try
-                Dim br As StreamReader = New StreamReader(file)
-                br.ReadLine()
-
-                For row = 0 To dataset_size - 1
-                    Dim strs As String() = br.ReadLine().Split(",")
-
-                    For col = 0 To feature_dim - 1
-
-                        If strs(col).Equals("") Then
-                            origin_feature(row)(col) = Data.NA
-                        Else
-                            origin_feature(row)(col) = Single.Parse(strs(col))
-                        End If
-                    Next
-                Next
-
-            Catch e As IOException
-                Console.WriteLine(e.ToString())
-                Console.Write(e.StackTrace)
-            End Try
-        End Sub
     End Class
 End Namespace
