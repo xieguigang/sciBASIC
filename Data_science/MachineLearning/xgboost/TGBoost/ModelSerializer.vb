@@ -74,28 +74,33 @@ Namespace train
             Return sb.ToString()
         End Function
 
-        'Serialize the GBM model into txt file
-        Public Shared Sub save_model(gbm As GBM, path As String)
+        ''' <summary>
+        ''' Serialize the GBM model into txt file
+        ''' </summary>
+        ''' <param name="gbm"></param>
+        ''' <returns></returns>
+        Public Shared Iterator Function save_model(gbm As GBM) As IEnumerable(Of String)
             Dim first_round_predict As Double = gbm.first_round_pred
             Dim eta As Double = gbm.eta
             Dim loss As Loss = gbm.loss
             Dim trees As List(Of Tree) = gbm.trees
-            Dim sb As New StringBuilder()
 
-            sb.Append("first_round_predict=" & first_round_predict & vbLf)
-            sb.Append("eta=" & eta & vbLf)
+            Yield "first_round_predict=" & first_round_predict
+            Yield "eta=" & eta
 
             If TypeOf loss Is LogisticLoss Then
-                sb.Append("logloss" & vbLf)
+                Yield "logloss"
             Else
-                sb.Append("squareloss" & vbLf)
+                Yield "squareloss"
             End If
 
-            For i = 1 To trees.Count
-                sb.Append("tree[" & i & "]:" & vbLf)
+            For i As Integer = 1 To trees.Count
                 Dim tree As Tree = trees(i - 1)
                 Dim root As TreeNode = tree.root
                 Dim queue As New List(Of TreeNode)()
+
+                Yield "tree[" & i & "]:"
+
                 queue.Add(root)
 
                 While queue.Count > 0
@@ -106,9 +111,9 @@ Namespace train
                         Dim node As TreeNode = queue.Poll
 
                         If node.is_leaf Then
-                            sb.Append(ModelSerializer.serializeLeafNode(node) & vbLf)
+                            Yield ModelSerializer.serializeLeafNode(node)
                         Else
-                            sb.Append(ModelSerializer.serializeInternalNode(node) & vbLf)
+                            Yield ModelSerializer.serializeInternalNode(node)
                             queue.Add(node.left_child)
 
                             If node.nan_child IsNot Nothing Then
@@ -121,95 +126,95 @@ Namespace train
                 End While
             Next
 
-            sb.Append("tree[end]")
-            sb.SaveTo(path)
-        End Sub
+            Yield "tree[end]"
+        End Function
 
-        'unserialize the txt file into GBM model.
-        Public Shared Function load_model(path As String) As GBM
-            Using br As New StreamReader(path)
-                Dim first_round_predict As Double = Double.Parse(br.ReadLine().Split("=")(1))
-                Dim eta As Double = Double.Parse(br.ReadLine().Split("=")(1))
-                Dim loss As Loss = Nothing
+        ''' <summary>
+        ''' unserialize the txt file into GBM model.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Shared Function load_model(txtLine As String()) As GBM
+            Dim i As i32 = 0
+            Dim first_round_predict As Double = Double.Parse(txtLine(++i).Split("=")(1))
+            Dim eta As Double = Double.Parse(txtLine(++i).Split("=")(1))
+            Dim loss As Loss = Nothing
 
-                If br.ReadLine().Equals("logloss") Then
-                    loss = New LogisticLoss()
-                Else
-                    loss = New SquareLoss()
-                End If
+            If txtLine(++i) = "logloss" Then
+                loss = New LogisticLoss()
+            Else
+                loss = New SquareLoss()
+            End If
 
-                Dim trees As List(Of Tree) = New List(Of Tree)()
-                Dim line As New Value(Of String)
-                Dim map As Dictionary(Of Integer?, TreeNode) = New Dictionary(Of Integer?, TreeNode)()
+            Dim trees As List(Of Tree) = New List(Of Tree)()
+            Dim line As New Value(Of String)
+            Dim map As Dictionary(Of Integer?, TreeNode) = New Dictionary(Of Integer?, TreeNode)()
 
-                While Not (line = br.ReadLine()) Is Nothing
+            While Not (line = txtLine.ElementAtOrDefault(++i)) Is Nothing
+                If line.StartsWith("tree") Then
+                    'store this tree,clear map
+                    If map.Count > 0 Then
+                        Dim queue As New List(Of TreeNode)()
+                        Dim root As TreeNode = map.GetValueOrNull(1)
+                        queue.Add(root)
 
-                    If line.StartsWith("tree") Then
-                        'store this tree,clear map
-                        If map.Count > 0 Then
-                            Dim queue As New List(Of TreeNode)()
-                            Dim root As TreeNode = map.GetValueOrNull(1)
-                            queue.Add(root)
+                        While queue.Count > 0
+                            Dim cur_level_num = queue.Count
 
-                            While queue.Count > 0
-                                Dim cur_level_num = queue.Count
+                            While cur_level_num <> 0
+                                cur_level_num -= 1
+                                Dim node As TreeNode = queue.Poll
 
-                                While cur_level_num <> 0
-                                    cur_level_num -= 1
-                                    Dim node As TreeNode = queue.Poll
+                                If Not node.is_leaf Then
+                                    node.left_child = map.GetValueOrNull(3 * node.index - 1)
+                                    node.right_child = map.GetValueOrNull(3 * node.index + 1)
+                                    queue.Add(node.left_child)
+                                    queue.Add(node.right_child)
 
-                                    If Not node.is_leaf Then
-                                        node.left_child = map.GetValueOrNull(3 * node.index - 1)
-                                        node.right_child = map.GetValueOrNull(3 * node.index + 1)
-                                        queue.Add(node.left_child)
-                                        queue.Add(node.right_child)
-
-                                        If map.ContainsKey(3 * node.index) Then
-                                            node.nan_child = map.GetValueOrNull(3 * node.index)
-                                            queue.Add(node.nan_child)
-                                        End If
+                                    If map.ContainsKey(3 * node.index) Then
+                                        node.nan_child = map.GetValueOrNull(3 * node.index)
+                                        queue.Add(node.nan_child)
                                     End If
-                                End While
+                                End If
                             End While
+                        End While
 
-                            trees.Add(New Tree(root))
-                            map.Clear()
-                        End If
+                        trees.Add(New Tree(root))
+                        map.Clear()
+                    End If
+                Else
+                    'store this node into map
+                    Dim index = Integer.Parse(line.Split(":"c)(0))
+
+                    If line.Split(":"c)(1).StartsWith("leaf") Then
+                        Dim leaf_score = Double.Parse(line.Split(":"c)(CInt(1)).Split("=")(1))
+                        Dim node As TreeNode = New TreeNode(index, leaf_score)
+                        map(index) = node
                     Else
-                        'store this node into map
-                        Dim index = Integer.Parse(line.Split(":"c)(0))
+                        Dim nan_go_to = Double.Parse(line.Split("="c)(1))
+                        Dim split_info = line.Split(":"c)(1).Split("]")(0)
+                        split_info = split_info.Substring(1)
+                        Dim strs = split_info.Split(","c)
+                        Dim split_feature = Integer.Parse(strs(0))
 
-                        If line.Split(":"c)(1).StartsWith("leaf") Then
-                            Dim leaf_score = Double.Parse(line.Split(":"c)(CInt(1)).Split("=")(1))
-                            Dim node As TreeNode = New TreeNode(index, leaf_score)
+                        If strs(1).Equals("num") Then
+                            Dim split_threshold = Double.Parse(strs(2))
+                            Dim node As TreeNode = New TreeNode(index, split_feature, split_threshold, nan_go_to)
                             map(index) = node
                         Else
-                            Dim nan_go_to = Double.Parse(line.Split("="c)(1))
-                            Dim split_info = line.Split(":"c)(1).Split("]")(0)
-                            split_info = split_info.Substring(1)
-                            Dim strs = split_info.Split(","c)
-                            Dim split_feature = Integer.Parse(strs(0))
+                            Dim split_left_child_catvalue As New List(Of Double)()
 
-                            If strs(1).Equals("num") Then
-                                Dim split_threshold = Double.Parse(strs(2))
-                                Dim node As TreeNode = New TreeNode(index, split_feature, split_threshold, nan_go_to)
-                                map(index) = node
-                            Else
-                                Dim split_left_child_catvalue As New List(Of Double)()
+                            For j As Integer = 2 To strs.Length - 1
+                                split_left_child_catvalue.Add(Double.Parse(strs(j)))
+                            Next
 
-                                For i = 2 To strs.Length - 1
-                                    split_left_child_catvalue.Add(Double.Parse(strs(i)))
-                                Next
-
-                                Dim node As TreeNode = New TreeNode(index, split_feature, split_left_child_catvalue, nan_go_to)
-                                map(index) = node
-                            End If
+                            Dim node As TreeNode = New TreeNode(index, split_feature, split_left_child_catvalue, nan_go_to)
+                            map(index) = node
                         End If
                     End If
-                End While
+                End If
+            End While
 
-                Return New GBM(trees, loss, first_round_predict, eta)
-            End Using
+            Return New GBM(trees, loss, first_round_predict, eta)
         End Function
     End Class
 End Namespace
