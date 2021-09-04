@@ -53,7 +53,7 @@
         ''' <remarks>
         ''' 构建稀疏矩阵中的一行数据
         ''' </remarks>
-        Public Function fromMap(Of T1 As IComparable)(map As IDictionary(Of Integer, T1)) As FVec
+        Public Function fromMap(Of T1 As IComparable)(map As IDictionary(Of String, T1)) As FVec
             Return New FVecMapImpl(Of T1)(map)
         End Function
     End Module

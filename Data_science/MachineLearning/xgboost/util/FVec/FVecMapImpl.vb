@@ -7,9 +7,9 @@
     <Serializable>
     Friend Class FVecMapImpl(Of T1 As IComparable) : Implements FVec
 
-        Private ReadOnly values As IDictionary(Of Integer, T1)
+        Private ReadOnly values As IDictionary(Of String, T1)
 
-        Public Sub New(values As IDictionary(Of Integer, T1))
+        Public Sub New(values As IDictionary(Of String, T1))
             Me.values = values
         End Sub
 

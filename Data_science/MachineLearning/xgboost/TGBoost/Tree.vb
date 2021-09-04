@@ -196,14 +196,14 @@ Namespace train
             End Sub
 
             Public Overrides Sub run()
-                Dim nodes As HashSet(Of TreeNode) = New HashSet(Of TreeNode)()
+                Dim nodes As New HashSet(Of TreeNode)()
 
                 For interval As Integer = 0 To attribute_list.cutting_inds(CInt(col)).Length - 1
                     'update the corresponding treenode's cat_feature_col_value_GH
                     Dim inds As Integer() = attribute_list.cutting_inds(col)(interval)
                     Dim cat_value = CInt(attribute_list.cutting_thresholds(col)(interval))
 
-                    For Each ind In inds
+                    For Each ind As Integer In inds
                         Dim treenode As TreeNode = class_list.corresponding_tree_node(ind)
 
                         If treenode.is_leaf Then
@@ -212,14 +212,16 @@ Namespace train
 
                         If Not nodes.Contains(treenode) Then
                             nodes.Add(treenode)
-                            treenode.cat_feature_col_value_GH(col) = New Dictionary(Of Integer, Double())
+                            treenode.cat_feature_col_value_GH(key:=col) = New Dictionary(Of String, Double())
                         End If
 
-                        If treenode.cat_feature_col_value_GH.GetValueOrNull(CInt(col)).ContainsKey(cat_value) Then
-                            treenode.cat_feature_col_value_GH.GetValueOrNull(CInt(col))(cat_value)(0) += class_list.grad(ind)
-                            treenode.cat_feature_col_value_GH.GetValueOrNull(CInt(col))(cat_value)(1) += class_list.hess(ind)
+                        Dim colVal = treenode.cat_feature_col_value_GH.ComputeIfAbsent(col, Function() New Dictionary(Of String, Double()))
+
+                        If colVal.ContainsKey(cat_value) Then
+                            colVal(key:=cat_value)(0) += class_list.grad(ind)
+                            colVal(key:=cat_value)(1) += class_list.hess(ind)
                         Else
-                            treenode.cat_feature_col_value_GH.GetValueOrNull(CInt(col)).put(cat_value, New Double() {class_list.grad(ind), class_list.hess(ind)})
+                            colVal.put(cat_value, New Double() {class_list.grad(ind), class_list.hess(ind)})
                         End If
                     Next
                 Next

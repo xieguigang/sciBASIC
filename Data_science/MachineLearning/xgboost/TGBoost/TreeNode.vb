@@ -44,8 +44,8 @@ Namespace train
         'leaf node
         Friend leaf_score As Double
         'for categorical feature,store (col,(value,(grad_sum,hess_sum)))
-        Public cat_feature_col_value_GH As New Dictionary(Of Integer, Dictionary(Of Integer, Double()))()
-        Private cat_feature_col_leftcatvalue As New Dictionary(Of Integer, List(Of Integer))()
+        Public cat_feature_col_value_GH As New Dictionary(Of String, Dictionary(Of String, Double()))()
+        Private cat_feature_col_leftcatvalue As New Dictionary(Of String, List(Of Integer))()
 
         Public Sub New(index As Integer, leaf_score As Double)
             'leaf node construct
