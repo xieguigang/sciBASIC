@@ -103,6 +103,10 @@ Public Module Conversion
 
     <Extension>
     Public Function ToTestDataSet(matrix As Single()()) As TestData
-
+        Return New TestData With {
+           .dataset_size = matrix.Length,
+           .feature_dim = matrix(Scan0).Length,
+           .origin_feature = matrix
+        }
     End Function
 End Module

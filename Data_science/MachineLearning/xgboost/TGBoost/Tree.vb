@@ -205,25 +205,27 @@ Namespace train
                     Dim cat_value As String = CStr(attribute_list.cutting_thresholds(col)(interval))
 
                     For Each ind As Integer In inds
-                        Dim treenode As TreeNode = class_list.corresponding_tree_node(ind)
+                        Dim treeNode As TreeNode = class_list.corresponding_tree_node(ind)
 
-                        If treenode.is_leaf Then
-                            Continue For
-                        End If
+                        SyncLock treeNode
+                            If treeNode.is_leaf Then
+                                Continue For
+                            End If
 
-                        If Not nodes.Contains(treenode) Then
-                            nodes.Add(treenode)
-                            treenode.cat_feature_col_value_GH(key:=colkey) = New Dictionary(Of String, Double())
-                        End If
+                            If Not nodes.Contains(treeNode) Then
+                                nodes.Add(treeNode)
+                                treeNode.cat_feature_col_value_GH(key:=colkey) = New Dictionary(Of String, Double())
+                            End If
 
-                        Dim colVal = treenode.cat_feature_col_value_GH.ComputeIfAbsent(colkey, Function() New Dictionary(Of String, Double()))
+                            Dim colVal = treeNode.cat_feature_col_value_GH.ComputeIfAbsent(colkey, Function() New Dictionary(Of String, Double()))
 
-                        If colVal.ContainsKey(cat_value) Then
-                            colVal(key:=cat_value)(0) += class_list.grad(ind)
-                            colVal(key:=cat_value)(1) += class_list.hess(ind)
-                        Else
-                            colVal.put(cat_value, New Double() {class_list.grad(ind), class_list.hess(ind)})
-                        End If
+                            If colVal.ContainsKey(cat_value) Then
+                                colVal(key:=cat_value)(0) += class_list.grad(ind)
+                                colVal(key:=cat_value)(1) += class_list.hess(ind)
+                            Else
+                                colVal.put(cat_value, New Double() {class_list.grad(ind), class_list.hess(ind)})
+                            End If
+                        End SyncLock
                     Next
                 Next
 
