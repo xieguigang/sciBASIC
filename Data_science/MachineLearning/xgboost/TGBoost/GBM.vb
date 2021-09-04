@@ -54,12 +54,17 @@ Namespace train
         Private scale_pos_weight As Double
         Private eval_metric As String
 
-        Shared ReadOnly logger As LogFile = FrameworkInternal.getLogger("InfoLogging")
+        Shared ReadOnly logger As LogFile
 
         Public Overridable ReadOnly Property first_round_pred As Double
         Public Overridable ReadOnly Property eta As Double
         Public Overridable ReadOnly Property loss As Loss
         Public Overridable ReadOnly Property trees As New List(Of Tree)
+
+        Shared Sub New()
+            logger = FrameworkInternal.getLogger("XGBoostInfoLogging")
+            App.AddExitCleanHook(AddressOf logger.Save)
+        End Sub
 
         Public Sub New()
         End Sub
@@ -255,6 +260,7 @@ Namespace train
         Public Overridable Function predict(features As Single()()) As Double()
             Dim pred = New Double(features.Length - 1) {}
 
+            GBM.logger.info($"feature set: {features.GetHashCode}")
             GBM.logger.info("TGBoost start predicting...")
 
             For i = 0 To pred.Length - 1

@@ -443,6 +443,11 @@ Namespace train
             End Function
         End Class
 
+        ''' <summary>
+        ''' 这个并行函数返回的数据与原始数据的顺序保持一致
+        ''' </summary>
+        ''' <param name="features"></param>
+        ''' <returns></returns>
         Public Overridable Function predict(features As Single()()) As Double()
             Dim ret As Double() = features _
                 .SeqIterator() _
