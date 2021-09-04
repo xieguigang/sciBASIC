@@ -161,7 +161,8 @@ Namespace train
                     best_val_metric,
                     best_round,
                     become_worse_round,
-                    early_stopping_rounds
+                    early_stopping_rounds,
+                    eval_metric
                 ) Then
 
                     Exit For
@@ -182,7 +183,8 @@ Namespace train
                                      ByRef best_val_metric As Double,
                                      ByRef best_round As Integer,
                                      ByRef become_worse_round As Integer,
-                                     ByRef early_stopping_rounds As Integer) As Boolean
+                                     ByRef early_stopping_rounds As Integer,
+                                     ByRef eval_metric As Metrics) As Boolean
 
             Dim tree As New Tree(min_sample_split, min_child_weight, max_depth, colsample, rowsample, lambda, gamma, num_thread, attribute_list.cat_features_cols)
 
