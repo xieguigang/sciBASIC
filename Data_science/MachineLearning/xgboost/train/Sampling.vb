@@ -41,26 +41,4 @@ Namespace train
             col_selected = cols.subList(0, n_selected)
         End Sub
     End Class
-
-    Public Class Sampling
-        Public Shared Sub Main(args As String())
-            'test case
-            Dim rs As RowSampler = New RowSampler(1000000, 0.8)
-            Console.WriteLine(rs.row_mask.subList(0, 20))
-            rs.shuffle()
-            Console.WriteLine(rs.row_mask.subList(0, 20))
-            Dim sum = 0
-
-            For Each v As Double In rs.row_mask
-                sum += CInt(v)
-            Next
-
-            Console.WriteLine(sum)
-            Dim cs As ColumnSampler = New ColumnSampler(1000, 0.6)
-            Console.WriteLine(cs.col_selected.subList(0, 20))
-            cs.shuffle()
-            Console.WriteLine(cs.col_selected.subList(0, 20))
-            Console.WriteLine(cs.col_selected.Count)
-        End Sub
-    End Class
 End Namespace
