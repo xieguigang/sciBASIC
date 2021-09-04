@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.MachineLearning.XGBoost.train
+﻿Imports Microsoft.VisualBasic.DataMining.ComponentModel.Evaluation
+Imports Microsoft.VisualBasic.MachineLearning.XGBoost.train
 
 Namespace train
     Public Class Training
@@ -8,7 +9,7 @@ Namespace train
             Dim file_model = "E:\GCModeller\src\R-sharp\Library\demo\machineLearning\XGBoost\test.xgb"
             Dim early_stopping_round = 10
             Dim maximize = True
-            Dim eval_metric = "auc"
+            Dim eval_metric As Metrics = Metrics.auc
             Dim loss = "logloss"
             Dim eta = 0.3
             Dim num_boost_round = 20
@@ -28,10 +29,11 @@ Namespace train
                 categorical_features.Add(cat_feature)
             Next
 
-            Dim tgb As GBM = New GBM()
-            tgb.fit(file_training,
-                    file_validation,
-                    categorical_features,
+            Dim tgb As New GBM()
+            Dim trainData As TrainData = GBM.LoadTrainingDataSet(file_training, categorical_features)
+            Dim valids As New ValidationData(file_validation)
+
+            tgb.fit(trainData, valids,
                     early_stopping_round,
                     maximize,
                     eval_metric,
@@ -48,6 +50,7 @@ Namespace train
                     gamma,
                     num_thread
                     )
+
             ModelSerializer.save_model(tgb, file_model)
         End Sub
 

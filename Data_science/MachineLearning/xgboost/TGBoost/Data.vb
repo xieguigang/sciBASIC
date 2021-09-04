@@ -121,7 +121,7 @@ Namespace train
         End Sub
     End Class
 
-    Friend Class ValidationData
+    Public Class ValidationData
         Inherits Data
 
         Public feature_dim As Integer

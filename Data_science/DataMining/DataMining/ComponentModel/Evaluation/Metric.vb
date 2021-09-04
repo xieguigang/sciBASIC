@@ -1,8 +1,48 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports stdNum = System.Math
 
-Namespace train
+Namespace ComponentModel.Evaluation
+
+    Public Enum Metrics
+        none
+        ''' <summary>
+        ''' Metric.accuracy(pred, label)
+        ''' </summary>
+        acc
+        ''' <summary>
+        ''' Metric.error(pred, label)
+        ''' </summary>
+        [error]
+        ''' <summary>
+        ''' Metric.mean_square_error(pred, label)
+        ''' </summary>
+        mse
+        ''' <summary>
+        ''' Metric.mean_absolute_error(pred, label)
+        ''' </summary>
+        mae
+        ''' <summary>
+        ''' Metric.auc(pred, label)
+        ''' </summary>
+        auc
+    End Enum
+
+    Public Delegate Function IMetric(pred As Double(), label As Double()) As Double
+
     Public Class Metric
+
+        Public Shared Function GetMetric(metric As Metrics) As IMetric
+            Select Case metric
+                Case Metrics.acc : Return AddressOf accuracy
+                Case Metrics.error : Return AddressOf [error]
+                Case Metrics.mse : Return AddressOf mean_square_error
+                Case Metrics.mae : Return AddressOf mean_absolute_error
+                Case Metrics.auc : Return AddressOf auc
+                Case Else
+                    Throw New NotImplementedException()
+            End Select
+        End Function
+
         Public Shared Function accuracy(pred As Double(), label As Double()) As Double
             Dim hit = 0.0
 
@@ -48,7 +88,7 @@ Namespace train
             Next
 
             Dim n_neg = pred.Length - n_pos
-            Dim label_pred As Double()() = Mat(Of Double)(pred.Length, 2)
+            Dim label_pred As Double()() = MAT(Of Double)(pred.Length, 2)
 
             For i = 0 To pred.Length - 1
                 label_pred(i)(0) = label(i)

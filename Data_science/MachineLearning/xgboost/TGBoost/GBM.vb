@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
+Imports Microsoft.VisualBasic.DataMining.ComponentModel.Evaluation
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Java
 Imports Microsoft.VisualBasic.My
@@ -70,10 +71,14 @@ Namespace train
             _eta = eta
         End Sub
 
-        Public Overridable Sub fit(file_training As String, file_validation As String, categorical_features As IEnumerable(Of String),
+        Public Shared Function LoadTrainingDataSet(file_training As String, categorical_features As IEnumerable(Of String)) As TrainData
+            Return New TrainData(file_training, categorical_features)
+        End Function
+
+        Public Overridable Sub fit(trainset As TrainData, valset As ValidationData,
                                    Optional early_stopping_rounds As Integer = 10,
                                    Optional maximize As Boolean = True,
-                                   Optional eval_metric As String = "auc",
+                                   Optional eval_metric As Metrics = Metrics.auc,
                                    Optional loss As String = "logloss",
                                    Optional eta As Double = 0.3,
                                    Optional num_boost_round As Integer = 20,
@@ -98,12 +103,11 @@ Namespace train
             Me.eval_metric = eval_metric
             Me.min_child_weight = min_child_weight
             Me.scale_pos_weight = scale_pos_weight
-            Dim trainset As TrainData = New TrainData(file_training, categorical_features)
-            Dim attribute_list As AttributeList = New AttributeList(trainset)
-            Dim class_list As ClassList = New ClassList(trainset)
-            Dim row_sampler As RowSampler = New RowSampler(trainset.dataset_size, Me.rowsample)
-            Dim col_sampler As ColumnSampler = New ColumnSampler(trainset.feature_dim, Me.colsample)
-            trainset = Nothing
+            Dim attribute_list As New AttributeList(trainset)
+            Dim class_list As New ClassList(trainset)
+            Dim row_sampler As New RowSampler(trainset.dataset_size, Me.rowsample)
+            Dim col_sampler As New ColumnSampler(trainset.feature_dim, Me.colsample)
+            Dim calculate_metric As IMetric = Metric.GetMetric(eval_metric)
 
             If loss.Equals("logloss") Then
                 _loss = New LogisticLoss()
@@ -118,16 +122,14 @@ Namespace train
 
             'to evaluate on validation set and conduct early stopping
             Dim do_validation As Boolean
-            Dim valset As ValidationData
             Dim val_pred As Double()
 
-            If file_validation.Equals("") Then
+            If valset Is Nothing Then
                 do_validation = False
                 valset = Nothing
                 val_pred = Nothing
             Else
                 do_validation = True
-                valset = New ValidationData(file_validation)
                 val_pred = New Double(valset.dataset_size - 1) {}
                 Arrays.fill(val_pred, _first_round_pred)
             End If
@@ -146,7 +148,7 @@ Namespace train
             GBM.logger.info("TGBoost start training")
 
             For i = 0 To num_boost_round - 1
-                Dim tree As Tree = New Tree(min_sample_split, min_child_weight, max_depth, colsample, rowsample, lambda, gamma, num_thread, attribute_list.cat_features_cols)
+                Dim tree As New Tree(min_sample_split, min_child_weight, max_depth, colsample, rowsample, lambda, gamma, num_thread, attribute_list.cat_features_cols)
                 tree.fit(attribute_list, class_list, row_sampler, col_sampler)
                 'when finish building this tree, update the class_list.pred, grad, hess
                 class_list.update_pred(_eta)
@@ -161,7 +163,7 @@ Namespace train
                 If eval_metric.Equals("") Then
                     GBM.logger.log(MSG_TYPES.FINEST, String.Format("TGBoost round {0:D}", i))
                 Else
-                    Dim train_metric = Me.calculate_metric(eval_metric, _loss.transform(class_list.pred), class_list.label)
+                    Dim train_metric = calculate_metric(_loss.transform(class_list.pred), class_list.label)
 
                     If Not do_validation Then
                         GBM.logger.log(MSG_TYPES.INF, String.Format("TGBoost round {0:D},train-{1}:{2:F6}", i, eval_metric, train_metric))
@@ -172,7 +174,7 @@ Namespace train
                             val_pred(n) += _eta * cur_tree_pred(n)
                         Next
 
-                        Dim val_metric = Me.calculate_metric(eval_metric, _loss.transform(val_pred), valset.label)
+                        Dim val_metric = calculate_metric(_loss.transform(val_pred), valset.label)
                         GBM.logger.log(MSG_TYPES.INF, String.Format("TGBoost round {0:D},train-{1}:{2:F6},val-{3}:{4:F6}", i, eval_metric, train_metric, eval_metric, val_metric))
                         'check whether to early stop
                         If maximize Then
@@ -238,21 +240,5 @@ Namespace train
 
             Call String.Join(vbLf, strs).SaveTo(file_output)
         End Sub
-
-        Private Function calculate_metric(eval_metric As String, pred As Double(), label As Double()) As Double
-            If eval_metric.Equals("acc") Then
-                Return Metric.accuracy(pred, label)
-            ElseIf eval_metric.Equals("error") Then
-                Return Metric.error(pred, label)
-            ElseIf eval_metric.Equals("mse") Then
-                Return Metric.mean_square_error(pred, label)
-            ElseIf eval_metric.Equals("mae") Then
-                Return Metric.mean_absolute_error(pred, label)
-            ElseIf eval_metric.Equals("auc") Then
-                Return Metric.auc(pred, label)
-            Else
-                Throw New NotImplementedException()
-            End If
-        End Function
     End Class
 End Namespace
