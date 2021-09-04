@@ -8,6 +8,8 @@
 '        its right child's index is 3*root.index+1,
 '        the middle child is nan_child, its index is 3*root.index
 
+Imports Microsoft.VisualBasic.Language.Java
+
 Namespace train
     Public Class TreeNode
         Public index As Integer

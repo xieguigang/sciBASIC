@@ -1,4 +1,11 @@
-﻿Namespace train
+﻿Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Language.Java
+Imports Microsoft.VisualBasic.Parallel.Threads
+Imports stdNum = System.Math
+
+Namespace train
+
     Public Class Tree
 
         Private root_Renamed As TreeNode
@@ -19,7 +26,7 @@
 
         Public Sub New(ByVal root As TreeNode)
             root_Renamed = root
-            num_thread = Runtime.runtime.availableProcessors()
+            num_thread = App.CPUCoreNumbers
         End Sub
 
         Public Sub New(ByVal min_sample_split As Integer, ByVal min_child_weight As Double, ByVal max_depth As Integer, ByVal colsample As Double, ByVal rowsample As Double, ByVal lambda As Double, ByVal gamma As Double, ByVal num_thread As Integer, ByVal cat_features_cols As List(Of Integer?))
@@ -33,12 +40,12 @@
             Me.cat_features_cols = cat_features_cols
 
             If num_thread = -1 Then
-                Me.num_thread = Runtime.runtime.availableProcessors()
+                Me.num_thread = App.CPUCoreNumbers
             Else
                 Me.num_thread = num_thread
             End If
             'to avoid divide zero
-            Me.lambda = Math.Max(Me.lambda, 0.00001)
+            Me.lambda = stdNum.Max(Me.lambda, 0.00001)
         End Sub
 
         Private Function calculate_leaf_score(ByVal G As Double, ByVal H As Double) As Double
@@ -54,18 +61,18 @@
             Dim H_right = H_total - H_left - H_nan
 
             'if we let those with missing value go to a nan child
-            Dim gain_1 = 0.5 * (Math.Pow(G_left, 2) / (H_left + lambda) + Math.Pow(G_right, 2) / (H_right + lambda) + Math.Pow(G_nan, 2) / (H_nan + lambda) - Math.Pow(G_total, 2) / (H_total + lambda)) - gamma
+            Dim gain_1 = 0.5 * (stdNum.Pow(G_left, 2) / (H_left + lambda) + stdNum.Pow(G_right, 2) / (H_right + lambda) + stdNum.Pow(G_nan, 2) / (H_nan + lambda) - stdNum.Pow(G_total, 2) / (H_total + lambda)) - gamma
 
             'uncomment this line, then we use xgboost's method to deal with missing value
             'gain_1 = -Double.MAX_VALUE;
 
             'if we let those with missing value go to left child
-            Dim gain_2 = 0.5 * (Math.Pow(G_left + G_nan, 2) / (H_left + H_nan + lambda) + Math.Pow(G_right, 2) / (H_right + lambda) - Math.Pow(G_total, 2) / (H_total + lambda)) - gamma
+            Dim gain_2 = 0.5 * (stdNum.Pow(G_left + G_nan, 2) / (H_left + H_nan + lambda) + stdNum.Pow(G_right, 2) / (H_right + lambda) - stdNum.Pow(G_total, 2) / (H_total + lambda)) - gamma
 
             'if we let those with missing value go to right child
-            Dim gain_3 = 0.5 * (Math.Pow(G_left, 2) / (H_left + lambda) + Math.Pow(G_right + G_nan, 2) / (H_right + H_nan + lambda) - Math.Pow(G_total, 2) / (H_total + lambda)) - gamma
+            Dim gain_3 = 0.5 * (stdNum.Pow(G_left, 2) / (H_left + lambda) + stdNum.Pow(G_right + G_nan, 2) / (H_right + H_nan + lambda) - stdNum.Pow(G_total, 2) / (H_total + lambda)) - gamma
             Dim nan_go_to As Double
-            Dim gain = Math.Max(gain_1, Math.Max(gain_2, gain_3))
+            Dim gain = stdNum.Max(gain_1, stdNum.Max(gain_2, gain_3))
 
             If gain_1 = gain Then
                 nan_go_to = 0 'nan child
@@ -92,8 +99,8 @@
 
             'then we create the root node, initialize histogram(Gradient sum and Hessian sum)
             Dim root_node As TreeNode = New TreeNode(1, 1, attribute_list.feature_dim, False)
-            root_node.Grad_setter(Me.sum(class_list.grad))
-            root_node.Hess_setter(Me.sum(class_list.hess))
+            root_node.Grad_setter(class_list.grad.Sum)
+            root_node.Hess_setter(class_list.hess.Sum)
             root_Renamed = root_node
 
 
@@ -193,12 +200,12 @@
 
                         If Not nodes.Contains(treenode) Then
                             nodes.Add(treenode)
-                            treenode.cat_feature_col_value_GH(col) = New Dictionary(Of)()
+                            treenode.cat_feature_col_value_GH(col) = New Dictionary(Of Integer?, Double())
                         End If
 
                         If treenode.cat_feature_col_value_GH.GetValueOrNull(CInt(col)).ContainsKey(cat_value) Then
-                            treenode.cat_feature_col_value_GH.GetValueOrNull(CInt(col)).[Get](cat_value)(0) += class_list.grad(ind)
-                            treenode.cat_feature_col_value_GH.GetValueOrNull(CInt(col)).[Get](cat_value)(1) += class_list.hess(ind)
+                            treenode.cat_feature_col_value_GH.GetValueOrNull(CInt(col))(cat_value)(0) += class_list.grad(ind)
+                            treenode.cat_feature_col_value_GH.GetValueOrNull(CInt(col))(cat_value)(1) += class_list.hess(ind)
                         Else
                             treenode.cat_feature_col_value_GH.GetValueOrNull(CInt(col)).put(cat_value, New Double() {class_list.grad(ind), class_list.hess(ind)})
                         End If
@@ -206,18 +213,18 @@
                 Next
 
                 For Each node As TreeNode In nodes
-                    Dim catvalue_GdivH As Double()() = RectangularArrays.ReturnRectangularDoubleArray(node.cat_feature_col_value_GH.GetValueOrNull(col).size(), 4)
+                    Dim catvalue_GdivH As Double()() = MAT(Of Double)(node.cat_feature_col_value_GH.GetValueOrNull(col).Count, 4)
                     Dim i = 0
 
                     For Each catvalue As Integer In node.cat_feature_col_value_GH.GetValueOrNull(col).Keys
                         catvalue_GdivH(i)(0) = catvalue
-                        catvalue_GdivH(i)(1) = node.cat_feature_col_value_GH.GetValueOrNull(col).[Get](catvalue)(0)
-                        catvalue_GdivH(i)(2) = node.cat_feature_col_value_GH.GetValueOrNull(col).[Get](catvalue)(1)
+                        catvalue_GdivH(i)(1) = node.cat_feature_col_value_GH.GetValueOrNull(col)(catvalue)(0)
+                        catvalue_GdivH(i)(2) = node.cat_feature_col_value_GH.GetValueOrNull(col)(catvalue)(1)
                         catvalue_GdivH(i)(3) = catvalue_GdivH(i)(1) / catvalue_GdivH(i)(2)
                         i += 1
                     Next
 
-                    Array.Sort(catvalue_GdivH, New Tree.ProcessEachCategoricalFeature.ComparatorAnonymousInnerClass(Me))
+                    Array.Sort(catvalue_GdivH, New Tree.ProcessEachCategoricalFeature.ComparatorAnonymousInnerClass)
                     Dim G_total As Double = node.Grad
                     Dim H_total As Double = node.Hess
                     Dim G_nan As Double = node.Grad_missing(col)
@@ -252,16 +259,9 @@
                 Next
             End Sub
 
-            Private Class ComparatorAnonymousInnerClass
-                Implements IComparer(Of Double())
+            Private Class ComparatorAnonymousInnerClass : Implements IComparer(Of Double())
 
-                Private ReadOnly outerInstance As Tree.ProcessEachCategoricalFeature
-
-                Public Sub New(ByVal outerInstance As Tree.ProcessEachCategoricalFeature)
-                    Me.outerInstance = outerInstance
-                End Sub
-
-                Public Overridable Function compare(ByVal a As Double(), ByVal b As Double()) As Integer
+                Public Function compare(ByVal a As Double(), ByVal b As Double()) As Integer Implements IComparer(Of Double()).Compare
                     Return a(3).CompareTo(b(3))
                 End Function
             End Class
@@ -375,7 +375,7 @@
         End Sub
 
         Friend Class PredictCallable
-            Inherits Callable
+            Inherits Callable(Of Double?)
 
             Private ReadOnly outerInstance As Tree
             Friend feature As Single()
@@ -436,7 +436,7 @@
             Dim list As IList(Of Future) = New List(Of Future)()
 
             For i = 0 To features.Length - 1
-                Dim c As Callable = New Tree.PredictCallable(Me, features(i))
+                Dim c As Callable(Of Double?) = New Tree.PredictCallable(Me, features(i))
                 Dim f As Future = pool.submit(c)
                 list.Add(f)
             Next
@@ -471,16 +471,6 @@
         Private Sub clean_up()
             alive_nodes = Nothing
         End Sub
-
-        Private Function sum(ByVal vals As Double()) As Double
-            Dim s As Double = 0
-
-            For Each v In vals
-                s += v
-            Next
-
-            Return s
-        End Function
 
         Public Overridable ReadOnly Property root As TreeNode
             Get

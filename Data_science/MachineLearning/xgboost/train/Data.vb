@@ -6,6 +6,8 @@
 Imports System.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Values
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Language.Java
 
 Namespace train
     Public Class Data
@@ -13,8 +15,7 @@ Namespace train
         Public Shared NULL As Single = -Single.MaxValue
     End Class
 
-    Friend Class TrainData
-        Inherits Data
+    Public Class TrainData : Inherits Data
 
         Public feature_value_index As Single()()()
         Public label As Double()
@@ -37,7 +38,7 @@ Namespace train
             Try
                 Dim br As StreamReader = New StreamReader(file)
                 Dim header As String = br.ReadLine()
-                Dim columns = header.Split(",", True)
+                Dim columns = header.Split(","c)
                 feature_dim = columns.Length - 1
 
                 For i = 0 To columns.Length - 1
@@ -81,10 +82,10 @@ Namespace train
             For i = 0 To feature_dim - 1
                 Dim cnt = missing_count(i).Value
                 missing_index(i) = New Integer(cnt - 1) {}
-                feature_value_index(i) = RectangularArrays.ReturnRectangularFloatArray(dataset_size - cnt, 2)
+                feature_value_index(i) = MAT(Of Single)(dataset_size - cnt, 2)
             Next
 
-            origin_feature = RectangularArrays.ReturnRectangularFloatArray(dataset_size, feature_dim)
+            origin_feature = MAT(Of Single)(dataset_size, feature_dim)
 
             Try
                 Dim br As StreamReader = New StreamReader(file)
@@ -153,7 +154,7 @@ Namespace train
 
         Private Sub second_scan(ByVal file As String)
             label = New Double(dataset_size - 1) {}
-            origin_feature = mat(Of Single)(dataset_size, feature_dim)
+            origin_feature = MAT(Of Single)(dataset_size, feature_dim)
 
             Try
                 Dim br As StreamReader = New StreamReader(file)
@@ -211,7 +212,7 @@ Namespace train
         End Sub
 
         Private Sub second_scan(ByVal file As String)
-            origin_feature = RectangularArrays.ReturnRectangularFloatArray(dataset_size, feature_dim)
+            origin_feature = MAT(Of Single)(dataset_size, feature_dim)
 
             Try
                 Dim br As StreamReader = New StreamReader(file)

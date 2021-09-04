@@ -1,4 +1,7 @@
-﻿Namespace train
+﻿Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
+Imports Microsoft.VisualBasic.My
+
+Namespace train
     Public Class GBM
 
         Private trees_Renamed As List(Of Tree) = New List(Of Tree)()
@@ -19,7 +22,7 @@
         Private min_child_weight As Double
         Private scale_pos_weight As Double
         Private eval_metric As String
-        Private Shared logger As Logger = logger.getLogger("InfoLogging")
+        Private Shared logger As LogFile = FrameworkInternal.getLogger("InfoLogging")
 
         Public Sub New()
         End Sub

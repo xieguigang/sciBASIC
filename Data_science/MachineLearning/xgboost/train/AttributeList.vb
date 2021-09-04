@@ -1,4 +1,6 @@
-﻿Namespace train
+﻿Imports Microsoft.VisualBasic.Language.Java
+
+Namespace train
     Public Class AttributeList
         Public feature_dim As Integer
         Private attribute_list As Single()()()
@@ -21,21 +23,16 @@
 
         'pre-sort: for each feature,sort (value,index) by the value
         Private Sub sort_attribute_list()
+            Dim comparer As New ComparatorAnonymousInnerClass
+
             For i = 0 To feature_dim - 1
-                Arrays.sort(attribute_list(i), New ComparatorAnonymousInnerClass(Me))
+                Array.Sort(attribute_list(i), comparer)
             Next
         End Sub
 
-        Private Class ComparatorAnonymousInnerClass
-            Implements IComparer(Of Single())
+        Private Class ComparatorAnonymousInnerClass : Implements IComparer(Of Single())
 
-            Private ReadOnly outerInstance As AttributeList
-
-            Public Sub New(ByVal outerInstance As AttributeList)
-                Me.outerInstance = outerInstance
-            End Sub
-
-            Public Overridable Function compare(ByVal a As Single(), ByVal b As Single()) As Integer
+            Public Overridable Function compare(ByVal a As Single(), ByVal b As Single()) As Integer Implements IComparer(Of Single()).Compare
                 Return a(0).CompareTo(b(0))
             End Function
         End Class
@@ -85,6 +82,7 @@
         End Sub
 
         Private Sub clean_up()
+            Erase attribute_list
             attribute_list = Nothing
         End Sub
     End Class

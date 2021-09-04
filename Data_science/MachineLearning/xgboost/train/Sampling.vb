@@ -1,19 +1,25 @@
-﻿Namespace train
-    Friend Class RowSampler
+﻿Imports Microsoft.VisualBasic.Language.Java.Arrays
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+
+Namespace train
+    Public Class RowSampler
         Public row_mask As List(Of Double?) = New List(Of Double?)()
 
         Public Sub New(ByVal n As Integer, ByVal sampling_rate As Double)
             For i = 0 To n - 1
-                row_mask.Add(If(GlobalRandom.NextDouble <= sampling_rate, 1.0, 0.0))
+                row_mask.Add(If(randf.NextDouble <= sampling_rate, 1.0, 0.0))
             Next
         End Sub
 
         Public Overridable Sub shuffle()
-            Collections.shuffle(row_mask)
+            Dim rands = row_mask.Shuffles
+
+            row_mask.Clear()
+            row_mask.AddRange(rands)
         End Sub
     End Class
 
-    Friend Class ColumnSampler
+    Public Class ColumnSampler
         Private cols As List(Of Integer?) = New List(Of Integer?)()
         Public col_selected As IList(Of Integer?)
         Private n_selected As Integer
@@ -28,7 +34,10 @@
         End Sub
 
         Public Overridable Sub shuffle()
-            Collections.shuffle(cols)
+            Dim rands = cols.Shuffles
+
+            cols.Clear()
+            cols.AddRange(rands)
             col_selected = cols.subList(0, n_selected)
         End Sub
     End Class
