@@ -1,6 +1,4 @@
-﻿Imports Microsoft.VisualBasic.Language.Java
-
-Namespace train
+﻿Namespace train
     Public Class AttributeList
         Public feature_dim As Integer
         Private attribute_list As Single()()()

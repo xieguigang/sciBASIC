@@ -202,7 +202,7 @@ Namespace train
 
                         If Not nodes.Contains(treenode) Then
                             nodes.Add(treenode)
-                            treenode.cat_feature_col_value_GH(col) = New Dictionary(Of Integer?, Double())
+                            treenode.cat_feature_col_value_GH(col) = New Dictionary(Of Integer, Double())
                         End If
 
                         If treenode.cat_feature_col_value_GH.GetValueOrNull(CInt(col)).ContainsKey(cat_value) Then
@@ -251,7 +251,7 @@ Namespace train
                         End If
                     Next
 
-                    Dim left_child_catvalue As List(Of Integer?) = New List(Of Integer?)()
+                    Dim left_child_catvalue As New List(Of Integer)()
 
                     For i = 0 To best_split
                         left_child_catvalue.Add(CInt(catvalue_GdivH(i)(0)))
@@ -301,7 +301,7 @@ Namespace train
                     Dim best_gain = ret(1)
                     Dim best_nan_go_to = ret(2)
                     Dim best_threshold As Double = 0
-                    Dim left_child_catvalue As List(Of Double?) = New List(Of Double?)()
+                    Dim left_child_catvalue As New List(Of Double)()
 
                     If cat_features_cols.Contains(CInt(best_feature)) Then
                         For j = 3 To ret.Count - 1

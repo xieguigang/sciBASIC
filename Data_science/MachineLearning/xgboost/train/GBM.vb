@@ -6,14 +6,7 @@ Imports Microsoft.VisualBasic.My
 Namespace train
     Public Class GBM
 
-        Private trees_Renamed As List(Of Tree) = New List(Of Tree)()
-
-        Private eta_Renamed As Double
         Private num_boost_round As Integer
-
-        Private first_round_pred_Renamed As Double
-
-        Private loss_Renamed As Loss
         Private max_depth As Integer
         Private rowsample As Double
         Private colsample As Double
@@ -26,14 +19,19 @@ Namespace train
         Private eval_metric As String
         Private Shared logger As LogFile = FrameworkInternal.getLogger("InfoLogging")
 
+        Public Overridable ReadOnly Property first_round_pred As Double
+        Public Overridable ReadOnly Property eta As Double
+        Public Overridable ReadOnly Property loss As Loss
+        Public Overridable ReadOnly Property trees As List(Of Tree)
+
         Public Sub New()
         End Sub
 
         Public Sub New(trees As List(Of Tree), loss As Loss, first_round_pred As Double, eta As Double)
-            trees_Renamed = trees
-            loss_Renamed = loss
-            first_round_pred_Renamed = first_round_pred
-            eta_Renamed = eta
+            _trees = trees
+            _loss = loss
+            _first_round_pred = first_round_pred
+            _eta = eta
         End Sub
 
         Public Overridable Sub fit(file_training As String, file_validation As String, categorical_features As IEnumerable(Of String),
@@ -52,7 +50,7 @@ Namespace train
                                    lambda As Double,
                                    gamma As Double,
                                    num_thread As Integer)
-            eta_Renamed = eta
+            _eta = eta
             Me.num_boost_round = num_boost_round
             Me.max_depth = max_depth
             Me.rowsample = rowsample
@@ -72,15 +70,15 @@ Namespace train
             trainset = Nothing
 
             If loss.Equals("logloss") Then
-                loss_Renamed = New LogisticLoss()
-                first_round_pred_Renamed = 0.0
+                _loss = New LogisticLoss()
+                _first_round_pred = 0.0
             ElseIf loss.Equals("squareloss") Then
-                loss_Renamed = New SquareLoss()
-                first_round_pred_Renamed = Me.average(class_list.label)
+                _loss = New SquareLoss()
+                _first_round_pred = class_list.label.Average
             End If
 
-            class_list.initialize_pred(first_round_pred_Renamed)
-            class_list.update_grad_hess(loss_Renamed, Me.scale_pos_weight)
+            class_list.initialize_pred(_first_round_pred)
+            class_list.update_grad_hess(_loss, Me.scale_pos_weight)
 
             'to evaluate on validation set and conduct early stopping
             Dim do_validation As Boolean
@@ -95,7 +93,7 @@ Namespace train
                 do_validation = True
                 valset = New ValidationData(file_validation)
                 val_pred = New Double(valset.dataset_size - 1) {}
-                Arrays.fill(val_pred, first_round_pred_Renamed)
+                Arrays.fill(val_pred, _first_round_pred)
             End If
 
             Dim best_val_metric As Double
@@ -115,19 +113,19 @@ Namespace train
                 Dim tree As Tree = New Tree(min_sample_split, min_child_weight, max_depth, colsample, rowsample, lambda, gamma, num_thread, attribute_list.cat_features_cols)
                 tree.fit(attribute_list, class_list, row_sampler, col_sampler)
                 'when finish building this tree, update the class_list.pred, grad, hess
-                class_list.update_pred(eta_Renamed)
-                class_list.update_grad_hess(loss_Renamed, Me.scale_pos_weight)
+                class_list.update_pred(_eta)
+                class_list.update_grad_hess(_loss, Me.scale_pos_weight)
 
 
                 'save this tree
-                trees_Renamed.Add(tree)
+                _trees.Add(tree)
                 GBM.logger.log(MSG_TYPES.INF, String.Format("current tree has {0:D} nodes,including {1:D} nan tree nodes", tree.nodes_cnt, tree.nan_nodes_cnt))
 
                 'print training information
                 If eval_metric.Equals("") Then
                     GBM.logger.log(MSG_TYPES.FINEST, String.Format("TGBoost round {0:D}", i))
                 Else
-                    Dim train_metric = Me.calculate_metric(eval_metric, loss_Renamed.transform(class_list.pred), class_list.label)
+                    Dim train_metric = Me.calculate_metric(eval_metric, _loss.transform(class_list.pred), class_list.label)
 
                     If Not do_validation Then
                         GBM.logger.log(MSG_TYPES.INF, String.Format("TGBoost round {0:D},train-{1}:{2:F6}", i, eval_metric, train_metric))
@@ -135,10 +133,10 @@ Namespace train
                         Dim cur_tree_pred As Double() = tree.predict(valset.origin_feature)
 
                         For n = 0 To val_pred.Length - 1
-                            val_pred(n) += eta_Renamed * cur_tree_pred(n)
+                            val_pred(n) += _eta * cur_tree_pred(n)
                         Next
 
-                        Dim val_metric = Me.calculate_metric(eval_metric, loss_Renamed.transform(val_pred), valset.label)
+                        Dim val_metric = Me.calculate_metric(eval_metric, _loss.transform(val_pred), valset.label)
                         GBM.logger.log(MSG_TYPES.INF, String.Format("TGBoost round {0:D},train-{1}:{2:F6},val-{3}:{4:F6}", i, eval_metric, train_metric, eval_metric, val_metric))
                         'check whether to early stop
                         If maximize Then
@@ -179,18 +177,18 @@ Namespace train
             Dim pred = New Double(features.Length - 1) {}
 
             For i = 0 To pred.Length - 1
-                pred(i) += first_round_pred_Renamed
+                pred(i) += _first_round_pred
             Next
 
-            For Each tree As Tree In trees_Renamed
+            For Each tree As Tree In _trees
                 Dim cur_tree_pred As Double() = tree.predict(features)
 
                 For i = 0 To pred.Length - 1
-                    pred(i) += eta_Renamed * cur_tree_pred(i)
+                    pred(i) += _eta * cur_tree_pred(i)
                 Next
             Next
 
-            Return loss_Renamed.transform(pred)
+            Return _loss.transform(pred)
         End Function
 
         Public Overridable Sub predict(file_test As String, file_output As String)
@@ -220,39 +218,5 @@ Namespace train
                 Throw New NotImplementedException()
             End If
         End Function
-
-        Private Function average(vals As Double()) As Double
-            Dim sum = 0.0
-
-            For Each v In vals
-                sum += v
-            Next
-
-            Return sum / vals.Length
-        End Function
-
-        Public Overridable ReadOnly Property first_round_pred As Double
-            Get
-                Return first_round_pred_Renamed
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property eta As Double
-            Get
-                Return eta_Renamed
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property loss As Loss
-            Get
-                Return loss_Renamed
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property trees As List(Of Tree)
-            Get
-                Return trees_Renamed
-            End Get
-        End Property
     End Class
 End Namespace

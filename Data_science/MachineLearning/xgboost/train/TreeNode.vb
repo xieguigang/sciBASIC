@@ -36,15 +36,15 @@ Namespace train
         'internal node
         Public split_feature As Integer
         Public split_threshold As Double
-        Public split_left_child_catvalue As List(Of Double?)
+        Public split_left_child_catvalue As List(Of Double)
         Public nan_child As TreeNode
         Public left_child As TreeNode
         Public right_child As TreeNode
         'leaf node
         Friend leaf_score As Double
         'for categorical feature,store (col,(value,(grad_sum,hess_sum)))
-        Public cat_feature_col_value_GH As Dictionary(Of Integer?, Dictionary(Of Integer?, Double())) = New Dictionary(Of Integer?, Dictionary(Of Integer?, Double()))()
-        Private cat_feature_col_leftcatvalue As Dictionary(Of Integer?, List(Of Integer?)) = New Dictionary(Of Integer?, List(Of Integer?))()
+        Public cat_feature_col_value_GH As New Dictionary(Of Integer, Dictionary(Of Integer, Double()))()
+        Private cat_feature_col_leftcatvalue As New Dictionary(Of Integer, List(Of Integer))()
 
         Public Sub New(index As Integer, leaf_score As Double)
             'leaf node construct
@@ -62,7 +62,7 @@ Namespace train
             Me.nan_go_to = nan_go_to
         End Sub
 
-        Public Sub New(index As Integer, split_feature As Integer, split_left_child_catvalue As List(Of Double?), nan_go_to As Double)
+        Public Sub New(index As Integer, split_feature As Integer, split_left_child_catvalue As List(Of Double), nan_go_to As Double)
             'internal node construct,categorical split feature
             is_leaf = False
             Me.index = index
@@ -114,7 +114,7 @@ Namespace train
             End If
         End Sub
 
-        Public Overridable Sub set_categorical_feature_best_split(col As Integer, left_child_catvalue As List(Of Integer?), gain As Double, nan_go_to As Double)
+        Public Overridable Sub set_categorical_feature_best_split(col As Integer, left_child_catvalue As List(Of Integer), gain As Double, nan_go_to As Double)
             best_gains(col) = gain
             best_nan_go_to(col) = nan_go_to
             cat_feature_col_leftcatvalue(col) = left_child_catvalue
@@ -159,7 +159,7 @@ Namespace train
             clean_up()
         End Sub
 
-        Public Overridable Sub internal_node_setter(feature As Double, left_child_catvalue As List(Of Double?), nan_go_to As Double, nan_child As TreeNode, left_child As TreeNode, right_child As TreeNode, is_leaf As Boolean)
+        Public Overridable Sub internal_node_setter(feature As Double, left_child_catvalue As List(Of Double), nan_go_to As Double, nan_child As TreeNode, left_child As TreeNode, right_child As TreeNode, is_leaf As Boolean)
             split_feature = CInt(feature)
             split_left_child_catvalue = left_child_catvalue
             Me.nan_go_to = nan_go_to
