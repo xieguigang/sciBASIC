@@ -10,7 +10,6 @@ Namespace train
 
     Public Class Tree
 
-        Private root_Renamed As TreeNode
         Private min_sample_split As Integer
         Private min_child_weight As Double
         Private max_depth As Integer
@@ -19,19 +18,30 @@ Namespace train
         Private lambda As Double
         Private gamma As Double
         Private num_thread As Integer
-        Private cat_features_cols As List(Of Integer?)
+        Private cat_features_cols As List(Of Integer)
         Private alive_nodes As New List(Of TreeNode)()
         'number of tree node of this tree
         Public nodes_cnt As Integer = 0
         'number of nan tree node of this tree
         Public nan_nodes_cnt As Integer = 0
 
+        Public Overridable ReadOnly Property root As TreeNode
+
         Public Sub New(root As TreeNode)
-            root_Renamed = root
+            _root = root
             num_thread = App.CPUCoreNumbers
         End Sub
 
-        Public Sub New(min_sample_split As Integer, min_child_weight As Double, max_depth As Integer, colsample As Double, rowsample As Double, lambda As Double, gamma As Double, num_thread As Integer, cat_features_cols As List(Of Integer?))
+        Public Sub New(min_sample_split As Integer,
+                       min_child_weight As Double,
+                       max_depth As Integer,
+                       colsample As Double,
+                       rowsample As Double,
+                       lambda As Double,
+                       gamma As Double,
+                       num_thread As Integer,
+                       cat_features_cols As List(Of Integer))
+
             Me.min_sample_split = min_sample_split
             Me.min_child_weight = min_child_weight
             Me.max_depth = max_depth
@@ -46,6 +56,7 @@ Namespace train
             Else
                 Me.num_thread = num_thread
             End If
+
             'to avoid divide zero
             Me.lambda = stdNum.Max(Me.lambda, 0.00001)
         End Sub
@@ -98,13 +109,12 @@ Namespace train
             row_sampler.shuffle()
             class_list.sampling(row_sampler.row_mask)
 
-
             'then we create the root node, initialize histogram(Gradient sum and Hessian sum)
-            Dim root_node As TreeNode = New TreeNode(1, 1, attribute_list.feature_dim, False)
+            Dim root_node As New TreeNode(1, 1, attribute_list.feature_dim, False)
+
             root_node.Grad_setter(class_list.grad.Sum)
             root_node.Hess_setter(class_list.hess.Sum)
-            root_Renamed = root_node
-
+            _root = root_node
 
             'put it into the alive_node, and fill the class_list, all data are assigned to root node initially
             alive_nodes.Add(root_node)
@@ -380,7 +390,7 @@ Namespace train
             End Sub
 
             Public Overrides Function [call]() As Double
-                Dim cur_tree_node As TreeNode = outerInstance.root_Renamed
+                Dim cur_tree_node As TreeNode = outerInstance.root
 
                 While Not cur_tree_node.is_leaf
 
@@ -442,11 +452,5 @@ Namespace train
         Private Sub clean_up()
             alive_nodes = Nothing
         End Sub
-
-        Public Overridable ReadOnly Property root As TreeNode
-            Get
-                Return root_Renamed
-            End Get
-        End Property
     End Class
 End Namespace

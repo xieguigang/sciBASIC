@@ -3,7 +3,8 @@ Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace train
     Public Class RowSampler
-        Public row_mask As List(Of Double?) = New List(Of Double?)()
+
+        Public row_mask As New List(Of Double)()
 
         Public Sub New(n As Integer, sampling_rate As Double)
             For i = 0 To n - 1
@@ -20,8 +21,9 @@ Namespace train
     End Class
 
     Public Class ColumnSampler
-        Private cols As List(Of Integer?) = New List(Of Integer?)()
-        Public col_selected As List(Of Integer?)
+
+        Private cols As New List(Of Integer)()
+        Public col_selected As List(Of Integer)
         Private n_selected As Integer
 
         Public Sub New(n As Integer, sampling_rate As Double)

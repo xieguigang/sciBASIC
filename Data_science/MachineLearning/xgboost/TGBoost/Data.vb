@@ -3,9 +3,7 @@
 'second scan, get each feature's (value,index) and missing value indexes
 'if we use ArrayList,only one scanning is needed, but it is memory consumption
 
-Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -43,8 +41,7 @@ Namespace train
         End Function
     End Class
 
-    Public Class ValidationData
-        Inherits Data
+    Public Class ValidationData : Inherits Data
 
         Public feature_dim As Integer
         Public dataset_size As Integer
@@ -53,8 +50,7 @@ Namespace train
 
     End Class
 
-    Public Class TestData
-        Inherits Data
+    Public Class TestData : Inherits Data
 
         Public feature_dim As Integer
         Public dataset_size As Integer

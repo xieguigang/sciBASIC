@@ -1,7 +1,9 @@
 ﻿Imports Microsoft.VisualBasic.Language.Java
 
 Namespace train
+
     Public Class ClassList
+
         Public dataset_size As Integer
         Public label As Double()
         Public corresponding_tree_node As TreeNode()
@@ -43,10 +45,10 @@ Namespace train
             End If
         End Sub
 
-        Public Overridable Sub sampling(row_mask As List(Of Double?))
+        Public Overridable Sub sampling(row_mask As List(Of Double))
             For i = 0 To dataset_size - 1
-                grad(i) *= row_mask(i).Value
-                hess(i) *= row_mask(i).Value
+                grad(i) *= row_mask(i)
+                hess(i) *= row_mask(i)
             Next
         End Sub
 

@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.DataMining.ComponentModel.Evaluation
+Imports Microsoft.VisualBasic.MachineLearning.XGBoost.DataSet
 Imports Microsoft.VisualBasic.MachineLearning.XGBoost.train
 
 Namespace train
@@ -30,8 +31,8 @@ Namespace train
             Next
 
             Dim tgb As New GBM()
-            Dim trainData As TrainData = GBM.LoadTrainingDataSet(file_training, categorical_features)
-            Dim valids As New ValidationData(file_validation)
+            Dim trainData As TrainData = Tabular.ReadTrainData(file_training, categorical_features)
+            Dim valids As ValidationData = Tabular.ReadValidationData(file_validation)
 
             tgb.fit(trainData, valids,
                     early_stopping_round,
@@ -59,7 +60,9 @@ Namespace train
             Dim file_testing = "E:\GCModeller\src\R-sharp\Library\demo\machineLearning\XGBoost\test.csv"
             Dim file_output = "E:\GCModeller\src\R-sharp\Library\demo\machineLearning\XGBoost\test_result.csv"
             Dim tgb As GBM = ModelSerializer.load_model(file_model)
-            tgb.predict(file_testing, file_output)
+            Dim test As TestData = Tabular.ReadTestData(file_testing)
+
+            tgb.predict(test.origin_feature).Select(Function(s) s.ToString).SaveTo(file_output)
         End Sub
 
         Public Shared Sub Main(ByVal args As String())

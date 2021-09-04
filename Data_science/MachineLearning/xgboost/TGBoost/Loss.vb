@@ -11,8 +11,7 @@ Namespace train
 
     End Class
 
-    Friend Class SquareLoss
-        Inherits Loss
+    Friend Class SquareLoss : Inherits Loss
 
         Public Overrides Function transform(pred As Double()) As Double()
             Return pred
@@ -35,8 +34,7 @@ Namespace train
         End Function
     End Class
 
-    Friend Class LogisticLoss
-        Inherits Loss
+    Friend Class LogisticLoss : Inherits Loss
 
         Private Function clip(val As Double) As Double
             If val < 0.00001 Then

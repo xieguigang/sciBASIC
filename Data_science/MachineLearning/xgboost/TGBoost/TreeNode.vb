@@ -13,6 +13,7 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace train
     Public Class TreeNode
+
         Public index As Integer
         Public depth As Integer
         Public feature_dim As Integer
@@ -176,14 +177,19 @@ Namespace train
             clean_up()
         End Sub
 
+        ''' <summary>
+        ''' release memory
+        ''' </summary>
         Private Sub clean_up()
-            'release memory
-            best_thresholds = Nothing
-            best_gains = Nothing
-            best_nan_go_to = Nothing
-            G_left = Nothing
-            H_left = Nothing
+            Erase best_thresholds
+            Erase best_gains
+            Erase best_nan_go_to
+            Erase G_left
+            Erase H_left
+
+            cat_feature_col_value_GH.Clear()
             cat_feature_col_value_GH = Nothing
+            cat_feature_col_leftcatvalue.Clear()
             cat_feature_col_leftcatvalue = Nothing
         End Sub
     End Class
