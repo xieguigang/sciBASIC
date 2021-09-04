@@ -152,7 +152,7 @@ Namespace train
             GBM.logger.info("TGBoost start training")
 
             For i As Integer = 0 To num_boost_round - 1
-                If Not doIteration(
+                If Not TGBoostIteration(
                     i,
                     attribute_list,
                     class_list,
@@ -175,21 +175,21 @@ Namespace train
             Next
         End Sub
 
-        Private Function doIteration(i As Integer,
-                                     ByRef attribute_list As AttributeList,
-                                     ByRef class_list As ClassList,
-                                     ByRef row_sampler As RowSampler,
-                                     ByRef col_sampler As ColumnSampler,
-                                     ByRef calculate_metric As IMetric,
-                                     ByRef do_validation As Boolean,
-                                     ByRef valset As ValidationData,
-                                     ByRef val_pred As Double(),
-                                     ByRef maximize As Boolean,
-                                     ByRef best_val_metric As Double,
-                                     ByRef best_round As Integer,
-                                     ByRef become_worse_round As Integer,
-                                     ByRef early_stopping_rounds As Integer,
-                                     ByRef eval_metric As Metrics) As Boolean
+        Private Function TGBoostIteration(i As Integer,
+                                          ByRef attribute_list As AttributeList,
+                                          ByRef class_list As ClassList,
+                                          ByRef row_sampler As RowSampler,
+                                          ByRef col_sampler As ColumnSampler,
+                                          ByRef calculate_metric As IMetric,
+                                          ByRef do_validation As Boolean,
+                                          ByRef valset As ValidationData,
+                                          ByRef val_pred As Double(),
+                                          ByRef maximize As Boolean,
+                                          ByRef best_val_metric As Double,
+                                          ByRef best_round As Integer,
+                                          ByRef become_worse_round As Integer,
+                                          ByRef early_stopping_rounds As Integer,
+                                          ByRef eval_metric As Metrics) As Boolean
 
             Dim tree As New Tree(min_sample_split, min_child_weight, max_depth, colsample, rowsample, lambda, gamma, num_thread, attribute_list.cat_features_cols)
 
