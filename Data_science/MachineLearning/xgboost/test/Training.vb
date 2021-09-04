@@ -29,7 +29,25 @@ Namespace train
             Next
 
             Dim tgb As GBM = New GBM()
-            tgb.fit(file_training, file_validation, categorical_features, early_stopping_round, maximize, eval_metric, loss, eta, num_boost_round, max_depth, scale_pos_weight, rowsample, colample, min_child_weight, min_sample_split, lambda, gamma, num_thread)
+            tgb.fit(file_training,
+                    file_validation,
+                    categorical_features,
+                    early_stopping_round,
+                    maximize,
+                    eval_metric,
+                    loss,
+                    eta,
+                    num_boost_round,
+                    max_depth,
+                    scale_pos_weight,
+                    rowsample,
+                    colample,
+                    min_child_weight,
+                    min_sample_split,
+                    lambda,
+                    gamma,
+                    num_thread
+                    )
             ModelSerializer.save_model(tgb, file_model)
         End Sub
 

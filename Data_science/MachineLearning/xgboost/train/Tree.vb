@@ -26,12 +26,12 @@ Namespace train
         'number of nan tree node of this tree
         Public nan_nodes_cnt As Integer = 0
 
-        Public Sub New(ByVal root As TreeNode)
+        Public Sub New(root As TreeNode)
             root_Renamed = root
             num_thread = App.CPUCoreNumbers
         End Sub
 
-        Public Sub New(ByVal min_sample_split As Integer, ByVal min_child_weight As Double, ByVal max_depth As Integer, ByVal colsample As Double, ByVal rowsample As Double, ByVal lambda As Double, ByVal gamma As Double, ByVal num_thread As Integer, ByVal cat_features_cols As List(Of Integer?))
+        Public Sub New(min_sample_split As Integer, min_child_weight As Double, max_depth As Integer, colsample As Double, rowsample As Double, lambda As Double, gamma As Double, num_thread As Integer, cat_features_cols As List(Of Integer?))
             Me.min_sample_split = min_sample_split
             Me.min_child_weight = min_child_weight
             Me.max_depth = max_depth
@@ -50,12 +50,12 @@ Namespace train
             Me.lambda = stdNum.Max(Me.lambda, 0.00001)
         End Sub
 
-        Private Function calculate_leaf_score(ByVal G As Double, ByVal H As Double) As Double
+        Private Function calculate_leaf_score(G As Double, H As Double) As Double
             'According to xgboost, the leaf score is : - G / (H+lambda)
             Return -G / (H + lambda)
         End Function
 
-        Private Function calculate_split_gain(ByVal G_left As Double, ByVal H_left As Double, ByVal G_nan As Double, ByVal H_nan As Double, ByVal G_total As Double, ByVal H_total As Double) As Double()
+        Private Function calculate_split_gain(G_left As Double, H_left As Double, G_nan As Double, H_nan As Double, G_total As Double, H_total As Double) As Double()
             'According to xgboost, the scoring function is:
             '     gain = 0.5 * (GL^2/(HL+lambda) + GR^2/(HR+lambda) - (GL+GR)^2/(HL+HR+lambda)) - gamma
             'this gain is the loss reduction, We want it to be as large as possible.
@@ -92,7 +92,7 @@ Namespace train
             Return New Double() {nan_go_to, gain}
         End Function
 
-        Public Overridable Sub fit(ByVal attribute_list As AttributeList, ByVal class_list As ClassList, ByVal row_sampler As RowSampler, ByVal col_sampler As ColumnSampler)
+        Public Overridable Sub fit(attribute_list As AttributeList, class_list As ClassList, row_sampler As RowSampler, col_sampler As ColumnSampler)
             'when we start to fit a tree, we first conduct row and column sampling
             col_sampler.shuffle()
             row_sampler.shuffle()
@@ -129,7 +129,7 @@ Namespace train
             Public attribute_list As AttributeList
             Public class_list As ClassList
 
-            Public Sub New(ByVal outerInstance As Tree, ByVal col As Integer, ByVal attribute_list As AttributeList, ByVal class_list As ClassList)
+            Public Sub New(outerInstance As Tree, col As Integer, attribute_list As AttributeList, class_list As ClassList)
                 Me.outerInstance = outerInstance
                 Me.col = col
                 Me.attribute_list = attribute_list
@@ -178,7 +178,7 @@ Namespace train
             Public attribute_list As AttributeList
             Public class_list As ClassList
 
-            Public Sub New(ByVal outerInstance As Tree, ByVal col As Integer, ByVal attribute_list As AttributeList, ByVal class_list As ClassList)
+            Public Sub New(outerInstance As Tree, col As Integer, attribute_list As AttributeList, class_list As ClassList)
                 Me.outerInstance = outerInstance
                 Me.col = col
                 Me.attribute_list = attribute_list
@@ -263,13 +263,13 @@ Namespace train
 
             Private Class ComparatorAnonymousInnerClass : Implements IComparer(Of Double())
 
-                Public Function compare(ByVal a As Double(), ByVal b As Double()) As Integer Implements IComparer(Of Double()).Compare
+                Public Function compare(a As Double(), b As Double()) As Integer Implements IComparer(Of Double()).Compare
                     Return a(3).CompareTo(b(3))
                 End Function
             End Class
         End Class
 
-        Private Sub build(ByVal attribute_list As AttributeList, ByVal class_list As ClassList, ByVal col_sampler As ColumnSampler)
+        Private Sub build(attribute_list As AttributeList, class_list As ClassList, col_sampler As ColumnSampler)
             While alive_nodes.Count > 0
                 nodes_cnt += alive_nodes.Count
 
@@ -374,7 +374,7 @@ Namespace train
             Private ReadOnly outerInstance As Tree
             Friend feature As Single()
 
-            Public Sub New(ByVal outerInstance As Tree, ByVal feature As Single())
+            Public Sub New(outerInstance As Tree, feature As Single())
                 Me.outerInstance = outerInstance
                 Me.feature = feature
             End Sub
@@ -425,7 +425,7 @@ Namespace train
             End Function
         End Class
 
-        Public Overridable Function predict(ByVal features As Single()()) As Double()
+        Public Overridable Function predict(features As Single()()) As Double()
             Dim ret As Double() = features _
                 .SeqIterator() _
                 .AsParallel _

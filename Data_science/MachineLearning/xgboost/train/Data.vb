@@ -27,14 +27,14 @@ Namespace train
         Private cat_features_names As List(Of String)
         Public cat_features_cols As List(Of Integer?) = New List(Of Integer?)()
 
-        Public Sub New(ByVal file As String, ByVal categorical_features As List(Of String))
+        Public Sub New(file As String, categorical_features As List(Of String))
             cat_features_names = categorical_features
             first_scan(file)
             second_scan(file)
         End Sub
 
         'to obtain: feature_dim, dataset_size,missing_count,cat_features_dim
-        Private Sub first_scan(ByVal file As String)
+        Private Sub first_scan(file As String)
             Try
                 Dim br As StreamReader = New StreamReader(file)
                 Dim header As String = br.ReadLine()
@@ -74,7 +74,7 @@ Namespace train
         End Sub
 
         'to obtain:feature_value_index,label,missing_index,origin_feature,cat_features_values
-        Private Sub second_scan(ByVal file As String)
+        Private Sub second_scan(file As String)
             label = New Double(dataset_size - 1) {}
             missing_index = New Integer(feature_dim - 1)() {}
             feature_value_index = New Single(feature_dim - 1)()() {}
@@ -129,12 +129,12 @@ Namespace train
         Public origin_feature As Single()()
         Public label As Double()
 
-        Public Sub New(ByVal file As String)
+        Public Sub New(file As String)
             first_scan(file)
             second_scan(file)
         End Sub
 
-        Private Sub first_scan(ByVal file As String)
+        Private Sub first_scan(file As String)
             Try
                 Dim br As StreamReader = New StreamReader(file)
                 Dim header As String = br.ReadLine()
@@ -152,7 +152,7 @@ Namespace train
             End Try
         End Sub
 
-        Private Sub second_scan(ByVal file As String)
+        Private Sub second_scan(file As String)
             label = New Double(dataset_size - 1) {}
             origin_feature = MAT(Of Single)(dataset_size, feature_dim)
 
@@ -188,12 +188,12 @@ Namespace train
         Public dataset_size As Integer
         Public origin_feature As Single()()
 
-        Public Sub New(ByVal file As String)
+        Public Sub New(file As String)
             first_scan(file)
             second_scan(file)
         End Sub
 
-        Private Sub first_scan(ByVal file As String)
+        Private Sub first_scan(file As String)
             Try
                 Dim br As StreamReader = New StreamReader(file)
                 Dim header As String = br.ReadLine()
@@ -211,7 +211,7 @@ Namespace train
             End Try
         End Sub
 
-        Private Sub second_scan(ByVal file As String)
+        Private Sub second_scan(file As String)
             origin_feature = MAT(Of Single)(dataset_size, feature_dim)
 
             Try

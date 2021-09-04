@@ -9,7 +9,7 @@ Namespace train
         Public grad As Double()
         Public hess As Double()
 
-        Public Sub New(ByVal data As TrainData)
+        Public Sub New(data As TrainData)
             dataset_size = data.dataset_size
             label = data.label
             pred = New Double(dataset_size - 1) {}
@@ -18,17 +18,17 @@ Namespace train
             corresponding_tree_node = New TreeNode(dataset_size - 1) {}
         End Sub
 
-        Public Overridable Sub initialize_pred(ByVal first_round_pred As Double)
+        Public Overridable Sub initialize_pred(first_round_pred As Double)
             Arrays.fill(pred, first_round_pred)
         End Sub
 
-        Public Overridable Sub update_pred(ByVal eta As Double)
+        Public Overridable Sub update_pred(eta As Double)
             For i = 0 To dataset_size - 1
                 pred(i) += eta * corresponding_tree_node(i).leaf_score
             Next
         End Sub
 
-        Public Overridable Sub update_grad_hess(ByVal loss As Loss, ByVal scale_pos_weight As Double)
+        Public Overridable Sub update_grad_hess(loss As Loss, scale_pos_weight As Double)
             grad = loss.grad(pred, label)
             hess = loss.hess(pred, label)
 
@@ -43,7 +43,7 @@ Namespace train
             End If
         End Sub
 
-        Public Overridable Sub sampling(ByVal row_mask As List(Of Double?))
+        Public Overridable Sub sampling(row_mask As List(Of Double?))
             For i = 0 To dataset_size - 1
                 grad(i) *= row_mask(i).Value
                 hess(i) *= row_mask(i).Value
@@ -52,7 +52,7 @@ Namespace train
 
         'TODO
         'parallel each col's calculation
-        Public Overridable Sub update_grad_hess_missing_for_tree_node(ByVal missing_value_attribute_list As Integer()())
+        Public Overridable Sub update_grad_hess_missing_for_tree_node(missing_value_attribute_list As Integer()())
             For col = 0 To missing_value_attribute_list.Length - 1
 
                 For Each i In missing_value_attribute_list(col)
@@ -78,7 +78,7 @@ Namespace train
             Next
         End Sub
 
-        Public Overridable Sub update_corresponding_tree_node(ByVal attribute_list As AttributeList)
+        Public Overridable Sub update_corresponding_tree_node(attribute_list As AttributeList)
             For i = 0 To dataset_size - 1
                 Dim treenode As TreeNode = corresponding_tree_node(i)
 

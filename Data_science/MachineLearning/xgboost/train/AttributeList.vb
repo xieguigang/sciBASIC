@@ -10,7 +10,7 @@ Namespace train
         Public origin_feature As Single()()
         Public cat_features_cols As List(Of Integer?)
 
-        Public Sub New(ByVal data As TrainData)
+        Public Sub New(data As TrainData)
             missing_value_attribute_list = data.missing_index
             feature_dim = data.feature_dim
             attribute_list = data.feature_value_index
@@ -32,7 +32,7 @@ Namespace train
 
         Private Class ComparatorAnonymousInnerClass : Implements IComparer(Of Single())
 
-            Public Overridable Function compare(ByVal a As Single(), ByVal b As Single()) As Integer Implements IComparer(Of Single()).Compare
+            Public Overridable Function compare(a As Single(), b As Single()) As Integer Implements IComparer(Of Single()).Compare
                 Return a(0).CompareTo(b(0))
             End Function
         End Class

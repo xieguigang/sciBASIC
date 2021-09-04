@@ -45,14 +45,14 @@ Namespace train
         Public cat_feature_col_value_GH As Dictionary(Of Integer?, Dictionary(Of Integer?, Double())) = New Dictionary(Of Integer?, Dictionary(Of Integer?, Double()))()
         Private cat_feature_col_leftcatvalue As Dictionary(Of Integer?, List(Of Integer?)) = New Dictionary(Of Integer?, List(Of Integer?))()
 
-        Public Sub New(ByVal index As Integer, ByVal leaf_score As Double)
+        Public Sub New(index As Integer, leaf_score As Double)
             'leaf node construct
             is_leaf = True
             Me.index = index
             Me.leaf_score = leaf_score
         End Sub
 
-        Public Sub New(ByVal index As Integer, ByVal split_feature As Integer, ByVal split_threshold As Double, ByVal nan_go_to As Double)
+        Public Sub New(index As Integer, split_feature As Integer, split_threshold As Double, nan_go_to As Double)
             'internal node construct,numeric split feature
             is_leaf = False
             Me.index = index
@@ -61,7 +61,7 @@ Namespace train
             Me.nan_go_to = nan_go_to
         End Sub
 
-        Public Sub New(ByVal index As Integer, ByVal split_feature As Integer, ByVal split_left_child_catvalue As List(Of Double?), ByVal nan_go_to As Double)
+        Public Sub New(index As Integer, split_feature As Integer, split_left_child_catvalue As List(Of Double?), nan_go_to As Double)
             'internal node construct,categorical split feature
             is_leaf = False
             Me.index = index
@@ -70,7 +70,7 @@ Namespace train
             Me.nan_go_to = nan_go_to
         End Sub
 
-        Public Sub New(ByVal index As Integer, ByVal depth As Integer, ByVal feature_dim As Integer, ByVal is_leaf As Boolean)
+        Public Sub New(index As Integer, depth As Integer, feature_dim As Integer, is_leaf As Boolean)
             Me.index = index
             Me.depth = depth
             Me.feature_dim = feature_dim
@@ -85,27 +85,27 @@ Namespace train
             Arrays.fill(best_gains, -Double.MaxValue)
         End Sub
 
-        Public Overridable Sub Grad_add(ByVal value As Double)
+        Public Overridable Sub Grad_add(value As Double)
             Grad += value
         End Sub
 
-        Public Overridable Sub Hess_add(ByVal value As Double)
+        Public Overridable Sub Hess_add(value As Double)
             Hess += value
         End Sub
 
-        Public Overridable Sub num_sample_add(ByVal value As Double)
+        Public Overridable Sub num_sample_add(value As Double)
             num_sample += CInt(value)
         End Sub
 
-        Public Overridable Sub Grad_setter(ByVal value As Double)
+        Public Overridable Sub Grad_setter(value As Double)
             Grad = value
         End Sub
 
-        Public Overridable Sub Hess_setter(ByVal value As Double)
+        Public Overridable Sub Hess_setter(value As Double)
             Hess = value
         End Sub
 
-        Public Overridable Sub update_best_split(ByVal col As Integer, ByVal threshold As Double, ByVal gain As Double, ByVal nan_go_to As Double)
+        Public Overridable Sub update_best_split(col As Integer, threshold As Double, gain As Double, nan_go_to As Double)
             If gain > best_gains(col) Then
                 best_gains(col) = gain
                 best_thresholds(col) = threshold
@@ -113,7 +113,7 @@ Namespace train
             End If
         End Sub
 
-        Public Overridable Sub set_categorical_feature_best_split(ByVal col As Integer, ByVal left_child_catvalue As List(Of Integer?), ByVal gain As Double, ByVal nan_go_to As Double)
+        Public Overridable Sub set_categorical_feature_best_split(col As Integer, left_child_catvalue As List(Of Integer?), gain As Double, nan_go_to As Double)
             best_gains(col) = gain
             best_nan_go_to(col) = nan_go_to
             cat_feature_col_leftcatvalue(col) = left_child_catvalue
@@ -147,7 +147,7 @@ Namespace train
             Return ret
         End Function
 
-        Public Overridable Sub internal_node_setter(ByVal feature As Double, ByVal threshold As Double, ByVal nan_go_to As Double, ByVal nan_child As TreeNode, ByVal left_child As TreeNode, ByVal right_child As TreeNode, ByVal is_leaf As Boolean)
+        Public Overridable Sub internal_node_setter(feature As Double, threshold As Double, nan_go_to As Double, nan_child As TreeNode, left_child As TreeNode, right_child As TreeNode, is_leaf As Boolean)
             split_feature = CInt(feature)
             split_threshold = threshold
             Me.nan_go_to = nan_go_to
@@ -158,7 +158,7 @@ Namespace train
             clean_up()
         End Sub
 
-        Public Overridable Sub internal_node_setter(ByVal feature As Double, ByVal left_child_catvalue As List(Of Double?), ByVal nan_go_to As Double, ByVal nan_child As TreeNode, ByVal left_child As TreeNode, ByVal right_child As TreeNode, ByVal is_leaf As Boolean)
+        Public Overridable Sub internal_node_setter(feature As Double, left_child_catvalue As List(Of Double?), nan_go_to As Double, nan_child As TreeNode, left_child As TreeNode, right_child As TreeNode, is_leaf As Boolean)
             split_feature = CInt(feature)
             split_left_child_catvalue = left_child_catvalue
             Me.nan_go_to = nan_go_to
@@ -169,7 +169,7 @@ Namespace train
             clean_up()
         End Sub
 
-        Public Overridable Sub leaf_node_setter(ByVal leaf_score As Double, ByVal is_leaf As Boolean)
+        Public Overridable Sub leaf_node_setter(leaf_score As Double, is_leaf As Boolean)
             Me.is_leaf = is_leaf
             Me.leaf_score = leaf_score
             clean_up()

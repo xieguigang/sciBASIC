@@ -29,14 +29,14 @@ Namespace train
         Public Sub New()
         End Sub
 
-        Public Sub New(ByVal trees As List(Of Tree), ByVal loss As Loss, ByVal first_round_pred As Double, ByVal eta As Double)
+        Public Sub New(trees As List(Of Tree), loss As Loss, first_round_pred As Double, eta As Double)
             trees_Renamed = trees
             loss_Renamed = loss
             first_round_pred_Renamed = first_round_pred
             eta_Renamed = eta
         End Sub
 
-        Public Overridable Sub fit(ByVal file_training As String, ByVal file_validation As String, ByVal categorical_features As List(Of String), ByVal early_stopping_rounds As Integer, ByVal maximize As Boolean, ByVal eval_metric As String, ByVal loss As String, ByVal eta As Double, ByVal num_boost_round As Integer, ByVal max_depth As Integer, ByVal scale_pos_weight As Double, ByVal rowsample As Double, ByVal colsample As Double, ByVal min_child_weight As Double, ByVal min_sample_split As Integer, ByVal lambda As Double, ByVal gamma As Double, ByVal num_thread As Integer)
+        Public Overridable Sub fit(file_training As String, file_validation As String, categorical_features As List(Of String), early_stopping_rounds As Integer, maximize As Boolean, eval_metric As String, loss As String, eta As Double, num_boost_round As Integer, max_depth As Integer, scale_pos_weight As Double, rowsample As Double, colsample As Double, min_child_weight As Double, min_sample_split As Integer, lambda As Double, gamma As Double, num_thread As Integer)
             eta_Renamed = eta
             Me.num_boost_round = num_boost_round
             Me.max_depth = max_depth
@@ -159,7 +159,7 @@ Namespace train
             Next
         End Sub
 
-        Public Overridable Function predict(ByVal features As Single()()) As Double()
+        Public Overridable Function predict(features As Single()()) As Double()
             GBM.logger.info("TGBoost start predicting...")
             Dim pred = New Double(features.Length - 1) {}
 
@@ -178,7 +178,7 @@ Namespace train
             Return loss_Renamed.transform(pred)
         End Function
 
-        Public Overridable Sub predict(ByVal file_test As String, ByVal file_output As String)
+        Public Overridable Sub predict(file_test As String, file_output As String)
             Dim testdata As TestData = New TestData(file_test)
             Dim preds = Me.predict(testdata.origin_feature)
             Dim strs = New String(preds.Length - 1) {}
@@ -190,7 +190,7 @@ Namespace train
             Call String.Join(vbLf, strs).SaveTo(file_output)
         End Sub
 
-        Private Function calculate_metric(ByVal eval_metric As String, ByVal pred As Double(), ByVal label As Double()) As Double
+        Private Function calculate_metric(eval_metric As String, pred As Double(), label As Double()) As Double
             If eval_metric.Equals("acc") Then
                 Return Metric.accuracy(pred, label)
             ElseIf eval_metric.Equals("error") Then
@@ -206,7 +206,7 @@ Namespace train
             End If
         End Function
 
-        Private Function average(ByVal vals As Double()) As Double
+        Private Function average(vals As Double()) As Double
             Dim sum = 0.0
 
             For Each v In vals

@@ -26,7 +26,7 @@ Namespace train
     ' 
 
     Public Class ModelSerializer
-        Private Shared Function serializeLeafNode(ByVal node As TreeNode) As String
+        Private Shared Function serializeLeafNode(node As TreeNode) As String
             Dim sb As StringBuilder = New StringBuilder()
             sb.Append(node.index)
             sb.Append(":leaf=")
@@ -34,7 +34,7 @@ Namespace train
             Return sb.ToString()
         End Function
 
-        Private Shared Function serializeInternalNode(ByVal node As TreeNode) As String
+        Private Shared Function serializeInternalNode(node As TreeNode) As String
             Dim sb As StringBuilder = New StringBuilder()
             sb.Append(node.index)
             sb.Append(":[")
@@ -73,7 +73,7 @@ Namespace train
         End Function
 
         'Serialize the GBM model into txt file
-        Public Shared Sub save_model(ByVal gbm As GBM, ByVal path As String)
+        Public Shared Sub save_model(gbm As GBM, path As String)
             Dim first_round_predict As Double = gbm.first_round_pred
             Dim eta As Double = gbm.eta
             Dim loss As Loss = gbm.loss
@@ -123,7 +123,7 @@ Namespace train
         End Sub
 
         'unserialize the txt file into GBM model.
-        Public Shared Function load_model(ByVal path As String) As GBM
+        Public Shared Function load_model(path As String) As GBM
             Try
                 Dim br As StreamReader = New StreamReader(path)
                 Dim first_round_predict As Double = Double.Parse(br.ReadLine().Split("=")(1))

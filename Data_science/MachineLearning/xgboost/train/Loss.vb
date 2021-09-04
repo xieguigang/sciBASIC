@@ -5,20 +5,20 @@ Namespace train
 
     Public MustInherit Class Loss
 
-        Public MustOverride Function grad(ByVal pred As Double(), ByVal label As Double()) As Double()
-        Public MustOverride Function hess(ByVal pred As Double(), ByVal label As Double()) As Double()
-        Public MustOverride Function transform(ByVal pred As Double()) As Double()
+        Public MustOverride Function grad(pred As Double(), label As Double()) As Double()
+        Public MustOverride Function hess(pred As Double(), label As Double()) As Double()
+        Public MustOverride Function transform(pred As Double()) As Double()
 
     End Class
 
     Friend Class SquareLoss
         Inherits Loss
 
-        Public Overrides Function transform(ByVal pred As Double()) As Double()
+        Public Overrides Function transform(pred As Double()) As Double()
             Return pred
         End Function
 
-        Public Overrides Function grad(ByVal pred As Double(), ByVal label As Double()) As Double()
+        Public Overrides Function grad(pred As Double(), label As Double()) As Double()
             Dim ret = New Double(pred.Length - 1) {}
 
             For i = 0 To ret.Length - 1
@@ -28,7 +28,7 @@ Namespace train
             Return ret
         End Function
 
-        Public Overrides Function hess(ByVal pred As Double(), ByVal label As Double()) As Double()
+        Public Overrides Function hess(pred As Double(), label As Double()) As Double()
             Dim ret = New Double(pred.Length - 1) {}
             Arrays.fill(ret, 1.0)
             Return ret
@@ -38,7 +38,7 @@ Namespace train
     Friend Class LogisticLoss
         Inherits Loss
 
-        Private Function clip(ByVal val As Double) As Double
+        Private Function clip(val As Double) As Double
             If val < 0.00001 Then
                 Return 0.00001
             ElseIf val > 0.99999 Then
@@ -48,7 +48,7 @@ Namespace train
             End If
         End Function
 
-        Public Overrides Function transform(ByVal pred As Double()) As Double()
+        Public Overrides Function transform(pred As Double()) As Double()
             Dim ret = New Double(pred.Length - 1) {}
 
             For i = 0 To ret.Length - 1
@@ -58,7 +58,7 @@ Namespace train
             Return ret
         End Function
 
-        Public Overrides Function grad(ByVal pred As Double(), ByVal label As Double()) As Double()
+        Public Overrides Function grad(pred As Double(), label As Double()) As Double()
             Dim pred1 = transform(pred)
             Dim ret = New Double(pred1.Length - 1) {}
 
@@ -69,7 +69,7 @@ Namespace train
             Return ret
         End Function
 
-        Public Overrides Function hess(ByVal pred As Double(), ByVal label As Double()) As Double()
+        Public Overrides Function hess(pred As Double(), label As Double()) As Double()
             Dim pred1 = transform(pred)
             Dim ret = New Double(pred.Length - 1) {}
 

@@ -3,7 +3,7 @@ Imports stdNum = System.Math
 
 Namespace train
     Public Class Metric
-        Public Shared Function accuracy(ByVal pred As Double(), ByVal label As Double()) As Double
+        Public Shared Function accuracy(pred As Double(), label As Double()) As Double
             Dim hit = 0.0
 
             For i = 0 To pred.Length - 1
@@ -16,11 +16,11 @@ Namespace train
             Return hit / pred.Length
         End Function
 
-        Public Shared Function [error](ByVal pred As Double(), ByVal label As Double()) As Double
+        Public Shared Function [error](pred As Double(), label As Double()) As Double
             Return 1.0 - Metric.accuracy(pred, label)
         End Function
 
-        Public Shared Function mean_square_error(ByVal pred As Double(), ByVal label As Double()) As Double
+        Public Shared Function mean_square_error(pred As Double(), label As Double()) As Double
             Dim sum = 0.0
 
             For i = 0 To pred.Length - 1
@@ -30,7 +30,7 @@ Namespace train
             Return sum / pred.Length
         End Function
 
-        Public Shared Function mean_absolute_error(ByVal pred As Double(), ByVal label As Double()) As Double
+        Public Shared Function mean_absolute_error(pred As Double(), label As Double()) As Double
             Dim sum = 0.0
 
             For i = 0 To pred.Length - 1
@@ -40,7 +40,7 @@ Namespace train
             Return sum / pred.Length
         End Function
 
-        Public Shared Function auc(ByVal pred As Double(), ByVal label As Double()) As Double
+        Public Shared Function auc(pred As Double(), label As Double()) As Double
             Dim n_pos As Double = 0
 
             For Each v In label
@@ -76,7 +76,7 @@ Namespace train
             Public Sub New()
             End Sub
 
-            Public Overridable Function compare(ByVal a As Double(), ByVal b As Double()) As Integer Implements IComparer(Of Double()).Compare
+            Public Overridable Function compare(a As Double(), b As Double()) As Integer Implements IComparer(Of Double()).Compare
                 Return a(1).CompareTo(b(1))
             End Function
         End Class

@@ -5,7 +5,7 @@ Namespace train
     Public Class RowSampler
         Public row_mask As List(Of Double?) = New List(Of Double?)()
 
-        Public Sub New(ByVal n As Integer, ByVal sampling_rate As Double)
+        Public Sub New(n As Integer, sampling_rate As Double)
             For i = 0 To n - 1
                 row_mask.Add(If(randf.NextDouble <= sampling_rate, 1.0, 0.0))
             Next
@@ -24,7 +24,7 @@ Namespace train
         Public col_selected As List(Of Integer?)
         Private n_selected As Integer
 
-        Public Sub New(ByVal n As Integer, ByVal sampling_rate As Double)
+        Public Sub New(n As Integer, sampling_rate As Double)
             For i = 0 To n - 1
                 cols.Add(i)
             Next
@@ -43,7 +43,7 @@ Namespace train
     End Class
 
     Public Class Sampling
-        Public Shared Sub Main(ByVal args As String())
+        Public Shared Sub Main(args As String())
             'test case
             Dim rs As RowSampler = New RowSampler(1000000, 0.8)
             Console.WriteLine(rs.row_mask.subList(0, 20))
