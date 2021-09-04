@@ -1,5 +1,5 @@
-﻿Imports System.IO
-Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
+﻿Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Java
 Imports Microsoft.VisualBasic.My
 
@@ -36,7 +36,22 @@ Namespace train
             eta_Renamed = eta
         End Sub
 
-        Public Overridable Sub fit(file_training As String, file_validation As String, categorical_features As List(Of String), early_stopping_rounds As Integer, maximize As Boolean, eval_metric As String, loss As String, eta As Double, num_boost_round As Integer, max_depth As Integer, scale_pos_weight As Double, rowsample As Double, colsample As Double, min_child_weight As Double, min_sample_split As Integer, lambda As Double, gamma As Double, num_thread As Integer)
+        Public Overridable Sub fit(file_training As String, file_validation As String, categorical_features As IEnumerable(Of String),
+                                   early_stopping_rounds As Integer,
+                                   maximize As Boolean,
+                                   eval_metric As String,
+                                   loss As String,
+                                   eta As Double,
+                                   num_boost_round As Integer,
+                                   max_depth As Integer,
+                                   scale_pos_weight As Double,
+                                   rowsample As Double,
+                                   colsample As Double,
+                                   min_child_weight As Double,
+                                   min_sample_split As Integer,
+                                   lambda As Double,
+                                   gamma As Double,
+                                   num_thread As Integer)
             eta_Renamed = eta
             Me.num_boost_round = num_boost_round
             Me.max_depth = max_depth
