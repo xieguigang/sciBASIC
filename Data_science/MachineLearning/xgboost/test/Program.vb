@@ -13,6 +13,8 @@ Module Program
         Dim predictor As Predictor = New Predictor("E:\GCModeller\src\runtime\sciBASIC#\Data_science\MachineLearning\xgboost\test\resources\model\gbtree\v47\binary-logistic.model".Open)
         predictAndLogLoss(predictor, data)
         predictLeafIndex(predictor, data)
+
+        Pause()
     End Sub
 
     ''' <summary>
