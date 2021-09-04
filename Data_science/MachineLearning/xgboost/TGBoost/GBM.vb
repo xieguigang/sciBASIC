@@ -71,21 +71,21 @@ Namespace train
         End Sub
 
         Public Overridable Sub fit(file_training As String, file_validation As String, categorical_features As IEnumerable(Of String),
-                                   early_stopping_rounds As Integer,
-                                   maximize As Boolean,
-                                   eval_metric As String,
-                                   loss As String,
-                                   eta As Double,
-                                   num_boost_round As Integer,
-                                   max_depth As Integer,
-                                   scale_pos_weight As Double,
-                                   rowsample As Double,
-                                   colsample As Double,
-                                   min_child_weight As Double,
-                                   min_sample_split As Integer,
-                                   lambda As Double,
-                                   gamma As Double,
-                                   num_thread As Integer)
+                                   Optional early_stopping_rounds As Integer = 10,
+                                   Optional maximize As Boolean = True,
+                                   Optional eval_metric As String = "auc",
+                                   Optional loss As String = "logloss",
+                                   Optional eta As Double = 0.3,
+                                   Optional num_boost_round As Integer = 20,
+                                   Optional max_depth As Integer = 7,
+                                   Optional scale_pos_weight As Double = 1,
+                                   Optional rowsample As Double = 0.8,
+                                   Optional colsample As Double = 0.8,
+                                   Optional min_child_weight As Double = 1,
+                                   Optional min_sample_split As Integer = 5,
+                                   Optional lambda As Double = 1,
+                                   Optional gamma As Double = 0,
+                                   Optional num_thread As Integer = -1)
             _eta = eta
             Me.num_boost_round = num_boost_round
             Me.max_depth = max_depth
