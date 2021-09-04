@@ -187,14 +187,7 @@ Namespace train
                 strs(i) = preds(i).ToString()
             Next
 
-            Dim content = String.Join(vbLf, strs)
-
-            Try
-                Files.write(Paths.[get](file_output), content.GetBytes())
-            Catch e As IOException
-                Console.WriteLine(e.ToString())
-                Console.Write(e.StackTrace)
-            End Try
+            Call String.Join(vbLf, strs).SaveTo(file_output)
         End Sub
 
         Private Function calculate_metric(ByVal eval_metric As String, ByVal pred As Double(), ByVal label As Double()) As Double

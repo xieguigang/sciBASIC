@@ -1,5 +1,7 @@
-﻿Namespace train
-    Public Class Main
+﻿Imports Microsoft.VisualBasic.MachineLearning.XGBoost.train
+
+Namespace train
+    Public Class Training
         Public Shared Sub training(ByVal args As String())
             Dim file_training = args(1)
             Dim file_validation = args(2)
@@ -19,7 +21,7 @@
             Dim lambda = Double.Parse(args(16))
             Dim gamma = Double.Parse(args(17))
             Dim num_thread = Integer.Parse(args(18))
-            Dim cat_features = args(19).Split(",", True)
+            Dim cat_features = args(19).Split(","c)
             Dim categorical_features As List(Of String) = New List(Of String)()
 
             For Each cat_feature In cat_features

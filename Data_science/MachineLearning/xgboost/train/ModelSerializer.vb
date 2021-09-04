@@ -25,7 +25,6 @@ Namespace train
     ' 2:leaf=0.9900
     ' 
 
-
     Public Class ModelSerializer
         Private Shared Function serializeLeafNode(ByVal node As TreeNode) As String
             Dim sb As StringBuilder = New StringBuilder()
@@ -120,13 +119,7 @@ Namespace train
             Next
 
             sb.Append("tree[end]")
-
-            Try
-                Files.write(Paths.[get](path), sb.ToString().GetBytes())
-            Catch e As IOException
-                Console.WriteLine(e.ToString())
-                Console.Write(e.StackTrace)
-            End Try
+            sb.SaveTo(path)
         End Sub
 
         'unserialize the txt file into GBM model.
@@ -182,17 +175,17 @@ Namespace train
                         End If
                     Else
                         'store this node into map
-                        Dim index = Integer.Parse(line.Split(":", True)(0))
+                        Dim index = Integer.Parse(line.Split(":"c)(0))
 
-                        If line.Split(":", True)(1).StartsWith("leaf") Then
-                            Dim leaf_score = Double.Parse(line.Split(":", True)(CInt(1)).Split("=")(1))
+                        If line.Split(":"c)(1).StartsWith("leaf") Then
+                            Dim leaf_score = Double.Parse(line.Split(":"c)(CInt(1)).Split("=")(1))
                             Dim node As TreeNode = New TreeNode(index, leaf_score)
                             map(index) = node
                         Else
-                            Dim nan_go_to = Double.Parse(line.Split("=", True)(1))
-                            Dim split_info = line.Split(":", True)(1).Split("]")(0)
+                            Dim nan_go_to = Double.Parse(line.Split("="c)(1))
+                            Dim split_info = line.Split(":"c)(1).Split("]")(0)
                             split_info = split_info.Substring(1)
-                            Dim strs = split_info.Split(",", True)
+                            Dim strs = split_info.Split(","c)
                             Dim split_feature = Integer.Parse(strs(0))
 
                             If strs(1).Equals("num") Then

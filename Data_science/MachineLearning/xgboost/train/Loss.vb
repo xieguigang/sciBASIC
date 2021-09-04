@@ -1,16 +1,14 @@
-﻿Namespace train
-    Public Class Loss
-        Public Overridable Function grad(ByVal pred As Double(), ByVal label As Double()) As Double()
-            Throw New NotImplementedException()
-        End Function
+﻿Imports Microsoft.VisualBasic.Language.Java
+Imports stdNum = System.Math
 
-        Public Overridable Function hess(ByVal pred As Double(), ByVal label As Double()) As Double()
-            Throw New NotImplementedException()
-        End Function
+Namespace train
 
-        Public Overridable Function transform(ByVal pred As Double()) As Double()
-            Throw New NotImplementedException()
-        End Function
+    Public MustInherit Class Loss
+
+        Public MustOverride Function grad(ByVal pred As Double(), ByVal label As Double()) As Double()
+        Public MustOverride Function hess(ByVal pred As Double(), ByVal label As Double()) As Double()
+        Public MustOverride Function transform(ByVal pred As Double()) As Double()
+
     End Class
 
     Friend Class SquareLoss
@@ -54,7 +52,7 @@
             Dim ret = New Double(pred.Length - 1) {}
 
             For i = 0 To ret.Length - 1
-                ret(i) = clip(1.0 / (1.0 + Math.Exp(-pred(i))))
+                ret(i) = clip(1.0 / (1.0 + stdNum.Exp(-pred(i))))
             Next
 
             Return ret
