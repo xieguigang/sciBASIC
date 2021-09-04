@@ -62,7 +62,7 @@ Namespace train
         Public Overridable ReadOnly Property trees As New List(Of Tree)
 
         Shared Sub New()
-            logger = FrameworkInternal.getLogger("XGBoostInfoLogging")
+            logger = FrameworkInternal.getLogger("XGBoostInfoLogging", split:=Sub(header, msg, level) VBDebugger.cat($"{header}({level}): {msg}", vbCrLf))
             App.AddExitCleanHook(AddressOf logger.Save)
         End Sub
 

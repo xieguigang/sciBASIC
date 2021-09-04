@@ -68,9 +68,9 @@ Namespace My.FrameworkInternal
         ReadOnly saveWrite As New Dictionary(Of Type, ISave)
         ReadOnly defaultWriter As New [Default](Of ISave)(AddressOf SaveJSON)
 
-        Public Function getLogger(category As String) As LogFile
+        Public Function getLogger(category As String, Optional split As LoggingDriver = Nothing) As LogFile
             Dim path As String = App.CurrentDirectory & $"/{category}{MD5(Now.ToString & RandomASCIIString(8))}.log"
-            Dim file As New LogFile(path)
+            Dim file As New LogFile(path, split:=split)
 
             Return file
         End Function

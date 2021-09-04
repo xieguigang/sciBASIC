@@ -67,6 +67,7 @@ Namespace ApplicationServices.Debugging.Logging
 
         Dim buffer As TextWriter
         Dim counts&
+        Dim split As LoggingDriver
 
         ''' <summary>
         ''' 没有路径名称和拓展名，仅包含有单独的文件名
@@ -109,34 +110,52 @@ Namespace ApplicationServices.Debugging.Logging
         Public Sub New(path As String,
                        Optional autoFlush As Boolean = True,
                        Optional bufferSize As Integer = 1024,
-                       Optional append As Boolean = True)
+                       Optional append As Boolean = True,
+                       Optional split As LoggingDriver = Nothing)
 
             Dim file As New FileStream(path, If(append, FileMode.Append, FileMode.Truncate))
 
-            buffer = New StreamWriter(file, Encoding.UTF8, bufferSize) With {
+            Me.buffer = New StreamWriter(file, Encoding.UTF8, bufferSize) With {
                 .AutoFlush = autoFlush
             }
-            buffer.WriteLine($"//{vbTab}[{Now.ToString}]{vbTab}{New String("=", 25)}  START WRITE LOGGING SECTION  {New String("=", 25)}" & vbCrLf)
-            filePath = FileIO.FileSystem.GetFileInfo(path).FullName
+            Me.buffer.WriteLine($"//{vbTab}[{Now.ToString}]{vbTab}{New String("=", 25)}  START WRITE LOGGING SECTION  {New String("=", 25)}" & vbCrLf)
+            Me.filePath = FileIO.FileSystem.GetFileInfo(path).FullName
+            Me.split = split
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub info(msg As String, <CallerMemberName> Optional obj$ = Nothing)
             Call WriteLine(msg, obj, MSG_TYPES.INF)
+
+            If Not split Is Nothing Then
+                Call split(obj, msg, MSG_TYPES.INF)
+            End If
         End Sub
 
         Public Sub log(level As MSG_TYPES, msg As String, <CallerMemberName> Optional obj$ = Nothing)
             Call WriteLine(msg, obj, level)
+
+            If Not split Is Nothing Then
+                Call split(obj, msg, level)
+            End If
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub LogException(msg As String, <CallerMemberName> Optional obj$ = Nothing)
             Call WriteLine(msg, obj, type:=MSG_TYPES.ERR)
+
+            If Not split Is Nothing Then
+                Call split(obj, msg, MSG_TYPES.ERR)
+            End If
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub LogException(ex As Exception, <CallerMemberName> Optional obj$ = Nothing)
             Call WriteLine(ex.ToString, obj, type:=MSG_TYPES.ERR)
+
+            If Not split Is Nothing Then
+                Call split(obj, ex.ToString, MSG_TYPES.ERR)
+            End If
         End Sub
 
         ''' <summary>
