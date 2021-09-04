@@ -274,25 +274,17 @@ Namespace train
                 nodes_cnt += alive_nodes.Count
 
                 'parallelly scan and process each selected attribute list
-                Dim pool As ExecutorService = Executors.newFixedThreadPool(num_thread)
+                Dim pool As New List(Of ThreadStart)
 
                 For Each col As Integer In col_sampler.col_selected
-
                     If attribute_list.cat_features_cols.Contains(col) Then
-                        pool.execute(New Tree.ProcessEachCategoricalFeature(Me, col, attribute_list, class_list))
+                        pool.Add(New Tree.ProcessEachCategoricalFeature(Me, col, attribute_list, class_list))
                     Else
-                        pool.execute(New Tree.ProcessEachNumericFeature(Me, col, attribute_list, class_list))
+                        pool.Add(New Tree.ProcessEachNumericFeature(Me, col, attribute_list, class_list))
                     End If
                 Next
 
-                pool.shutdown()
-
-                Try
-                    pool.awaitTermination(Long.MaxValue, TimeUnit.NANOSECONDS)
-                Catch e As InterruptedException
-                    Console.WriteLine(e.ToString())
-                    Console.Write(e.StackTrace)
-                End Try
+                Call ThreadStart.execute(pool)
 
                 'once had scan all column, we can get the best (feature,threshold,gain) for each alive tree node
                 Dim cur_level_node_size = alive_nodes.Count

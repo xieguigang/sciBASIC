@@ -21,7 +21,7 @@ Namespace train
 
     Public Class ColumnSampler
         Private cols As List(Of Integer?) = New List(Of Integer?)()
-        Public col_selected As IList(Of Integer?)
+        Public col_selected As List(Of Integer?)
         Private n_selected As Integer
 
         Public Sub New(ByVal n As Integer, ByVal sampling_rate As Double)

@@ -92,27 +92,27 @@ Namespace train
                 sb.Append("tree[" & i & "]:" & vbLf)
                 Dim tree As Tree = trees(i - 1)
                 Dim root As TreeNode = tree.root
-                Dim queue As LinkedList(Of TreeNode) = New LinkedList(Of TreeNode)()
-                queue.AddLast(root)
+                Dim queue As New List(Of TreeNode)()
+                queue.Add(root)
 
                 While queue.Count > 0
                     Dim cur_level_num = queue.Count
 
                     While cur_level_num <> 0
                         cur_level_num -= 1
-                        Dim node As TreeNode = queue.RemoveFirst()
+                        Dim node As TreeNode = queue.Poll
 
                         If node.is_leaf Then
                             sb.Append(ModelSerializer.serializeLeafNode(node) & vbLf)
                         Else
                             sb.Append(ModelSerializer.serializeInternalNode(node) & vbLf)
-                            queue.AddLast(node.left_child)
+                            queue.Add(node.left_child)
 
                             If node.nan_child IsNot Nothing Then
-                                queue.AddLast(node.nan_child)
+                                queue.Add(node.nan_child)
                             End If
 
-                            queue.AddLast(node.right_child)
+                            queue.Add(node.right_child)
                         End If
                     End While
                 End While
