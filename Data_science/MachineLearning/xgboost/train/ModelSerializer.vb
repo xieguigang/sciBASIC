@@ -145,26 +145,26 @@ Namespace train
                     If line.StartsWith("tree") Then
                         'store this tree,clear map
                         If map.Count > 0 Then
-                            Dim queue As LinkedList(Of TreeNode) = New LinkedList(Of TreeNode)()
+                            Dim queue As New List(Of TreeNode)()
                             Dim root As TreeNode = map.GetValueOrNull(1)
-                            queue.AddLast(root)
+                            queue.Add(root)
 
                             While queue.Count > 0
                                 Dim cur_level_num = queue.Count
 
                                 While cur_level_num <> 0
                                     cur_level_num -= 1
-                                    Dim node As TreeNode = queue.RemoveFirst()
+                                    Dim node As TreeNode = queue.Poll
 
                                     If Not node.is_leaf Then
                                         node.left_child = map.GetValueOrNull(3 * node.index - 1)
                                         node.right_child = map.GetValueOrNull(3 * node.index + 1)
-                                        queue.AddLast(node.left_child)
-                                        queue.AddLast(node.right_child)
+                                        queue.Add(node.left_child)
+                                        queue.Add(node.right_child)
 
                                         If map.ContainsKey(3 * node.index) Then
                                             node.nan_child = map.GetValueOrNull(3 * node.index)
-                                            queue.AddLast(node.nan_child)
+                                            queue.Add(node.nan_child)
                                         End If
                                     End If
                                 End While

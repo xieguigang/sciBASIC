@@ -5,6 +5,7 @@
     <RootNamespace>test</RootNamespace>
     <TargetFramework>net5.0</TargetFramework>
     <Platforms>AnyCPU;ARM32;x64</Platforms>
+    <StartupObject>test.train.Training</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Java
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Parallel.Threads
@@ -19,7 +20,7 @@ Namespace train
         Private gamma As Double
         Private num_thread As Integer
         Private cat_features_cols As List(Of Integer?)
-        Private alive_nodes As LinkedList(Of TreeNode) = New LinkedList(Of TreeNode)()
+        Private alive_nodes As New List(Of TreeNode)()
         'number of tree node of this tree
         Public nodes_cnt As Integer = 0
         'number of nan tree node of this tree
@@ -106,7 +107,7 @@ Namespace train
 
 
             'put it into the alive_node, and fill the class_list, all data are assigned to root node initially
-            alive_nodes.AddLast(root_node)
+            alive_nodes.Add(root_node)
 
             For i As Integer = 0 To class_list.dataset_size - 1
                 class_list.corresponding_tree_node(i) = root_node
@@ -295,12 +296,12 @@ Namespace train
 
                 'once had scan all column, we can get the best (feature,threshold,gain) for each alive tree node
                 Dim cur_level_node_size = alive_nodes.Count
-                Dim new_tree_nodes As LinkedList(Of TreeNode) = New LinkedList(Of TreeNode)()
+                Dim new_tree_nodes As New List(Of TreeNode)()
 
                 'time consumption: 0.0x ms
                 For i = 0 To cur_level_node_size - 1
                     'pop each alive treenode
-                    Dim treenode As TreeNode = alive_nodes.RemoveFirst()
+                    Dim treenode As TreeNode = alive_nodes.Poll
 
                     'consider categorical feature
                     Dim ret As List(Of Double?) = treenode.get_best_feature_threshold_gain()
@@ -340,11 +341,11 @@ Namespace train
                             treenode.internal_node_setter(best_feature, best_threshold, best_nan_go_to, nan_child, left_child, right_child, False)
                         End If
 
-                        new_tree_nodes.AddLast(left_child)
-                        new_tree_nodes.AddLast(right_child)
+                        new_tree_nodes.Add(left_child)
+                        new_tree_nodes.Add(right_child)
 
                         If nan_child IsNot Nothing Then
-                            new_tree_nodes.AddLast(nan_child)
+                            new_tree_nodes.Add(nan_child)
                         End If
                     End If
                 Next
@@ -364,12 +365,12 @@ Namespace train
                 'if yes, it is leaf node, calculate its leaf score
                 'if no, put into self.alive_node
                 While new_tree_nodes.Count <> 0
-                    Dim treenode As TreeNode = new_tree_nodes.RemoveFirst()
+                    Dim treenode As TreeNode = new_tree_nodes.Poll
 
                     If treenode.depth >= max_depth OrElse treenode.Hess < min_child_weight OrElse treenode.num_sample <= min_sample_split Then
                         treenode.leaf_node_setter(Me.calculate_leaf_score(treenode.Grad, treenode.Hess), True)
                     Else
-                        alive_nodes.AddLast(treenode)
+                        alive_nodes.Add(treenode)
                     End If
                 End While
             End While
@@ -437,7 +438,7 @@ Namespace train
                 .SeqIterator() _
                 .AsParallel _
                 .Select(Function(i)
-                            Return (i.idx, New Tree.PredictCallable(Me, i.value).call)
+                            Return (idx:=i.i, New Tree.PredictCallable(Me, i.value).call)
                         End Function) _
                 .OrderBy(Function(i) i.idx) _
                 .Select(Function(i) i.Item2) _
