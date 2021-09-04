@@ -1,5 +1,9 @@
 ﻿Namespace util
 
+    ''' <summary>
+    ''' 稀疏矩阵
+    ''' </summary>
+    ''' <typeparam name="T1"></typeparam>
     <Serializable>
     Friend Class FVecMapImpl(Of T1 As IComparable) : Implements FVec
 
