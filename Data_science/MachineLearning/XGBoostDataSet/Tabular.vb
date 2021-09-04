@@ -8,6 +8,8 @@ Imports Microsoft.VisualBasic.MachineLearning.XGBoost.train
 
 Public Module Tabular
 
+#Region "ReadTestData"
+
     Public Function ReadTestData(file As String) As TestData
         Dim data As New TestData
 
@@ -52,6 +54,9 @@ Public Module Tabular
             Next
         End Using
     End Sub
+#End Region
+
+#Region "ReadValidationData"
 
     Public Function ReadValidationData(file As String) As ValidationData
         Dim data As New ValidationData
@@ -99,6 +104,9 @@ Public Module Tabular
             Next
         End Using
     End Sub
+#End Region
+
+#Region "ReadTrainData"
 
     Public Function ReadTrainData(file As String, categorical_features As IEnumerable(Of String)) As TrainData
         Dim data As New TrainData(categorical_features)
@@ -195,4 +203,6 @@ Public Module Tabular
             Next
         Next
     End Sub
+#End Region
+
 End Module
