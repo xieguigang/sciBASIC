@@ -736,7 +736,7 @@ Namespace LinearAlgebra.Matrix
         ''' <summary>Unary minus</summary>
         ''' <returns>    -A
         ''' </returns>
-        Public Shared Operator -(m As NumericMatrix) As GeneralMatrix
+        Public Shared Operator -(m As NumericMatrix) As NumericMatrix
             Dim X As New NumericMatrix(m.m, m.n)
             Dim C As Double()() = X.Array
             For i As Integer = 0 To m.m - 1
@@ -838,7 +838,7 @@ Namespace LinearAlgebra.Matrix
             Return X
         End Function
 
-        Public Overridable Function Log(Optional newBase As Double = stdNum.E) As GeneralMatrix
+        Public Overridable Function Log(Optional newBase As Double = stdNum.E) As NumericMatrix
             Dim X As New NumericMatrix(m, n)
             Dim C As Double()() = X.Array
 

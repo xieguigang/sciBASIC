@@ -93,6 +93,8 @@ Public Class DendrogramPanelV2 : Inherits DendrogramPanel
             axisTicks = {0, hist.DistanceValue}.Range.CreateAxisTicks
         End If
 
+        labelFont = CSSFont.TryParse(theme.tagCSS).GDIObject(g.Dpi)
+
         Dim scaleX As d3js.scale.LinearScale = d3js.scale _
             .linear() _
             .domain(axisTicks) _

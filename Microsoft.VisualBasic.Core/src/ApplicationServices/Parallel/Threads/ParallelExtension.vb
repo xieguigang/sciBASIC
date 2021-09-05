@@ -112,7 +112,7 @@ Namespace Parallel
         ''' </returns>
         <Extension>
         <DebuggerStepThrough>
-        Public Function RunTask(start As ThreadStart) As Thread
+        Public Function RunTask(start As Threading.ThreadStart) As Thread
             Dim thread As New Thread(start)
             thread.Start()
             Return thread
@@ -130,7 +130,7 @@ Namespace Parallel
         ''' </summary>
         ''' <param name="start"></param>
         ''' <returns></returns>
-        Public Function AsyncTask(start As ThreadStart) As IAsyncResult
+        Public Function AsyncTask(start As Threading.ThreadStart) As IAsyncResult
             Return start.BeginInvoke(Nothing, Nothing)
         End Function
     End Module

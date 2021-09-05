@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::086d291719f180c4a7b33a791e2aae8b, Data_science\Visualization\Plots\Scatter\Bubble.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class Bubble
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: logRadius, Plot
-    ' 
-    '     Sub: drawLegend, PlotInternal
-    ' 
-    ' /********************************************************************************/
+' Class Bubble
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: logRadius, Plot
+' 
+'     Sub: drawLegend, PlotInternal
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -163,8 +163,8 @@ Public Class Bubble : Inherits Plot
 
         Dim scale As Func(Of Double, Double) = New Func(Of Double, Double)(Function(r) r) Or usingLogRadius.When(usingLogScaleRadius)
         Dim x, y As d3js.scale.LinearScale
-        Dim xTicks = mapper.xAxis.CreateAxisTicks(ticks:=5)
-        Dim yTicks = mapper.yAxis.CreateAxisTicks
+        Dim xTicks = mapper.xAxis.CreateAxisTicks(ticks:=5, decimalDigits:=If(mapper.xAxis.Max > 0.01, 2, -1))
+        Dim yTicks = mapper.yAxis.CreateAxisTicks(, decimalDigits:=If(mapper.xAxis.Max > 0.01, 2, -1))
         Dim labels As New List(Of Label)
         Dim anchors As New List(Of Anchor)
         Dim labelSize As SizeF
@@ -196,7 +196,8 @@ Public Class Bubble : Inherits Plot
             labelFont:=theme.axisLabelCSS,
             htmlLabel:=False,
             ylayout:=theme.yAxisLayout,
-            gridFill:=theme.gridFill
+            gridFill:=theme.gridFill,
+            XtickFormat:=If(mapper.xAxis.Max > 0.01, "F2", "G2")
         )
 
         Dim bubblePen As Pen = Nothing

@@ -261,7 +261,11 @@ Public Module VBDebugger
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function PrintException(Of ex As Exception)(exception As ex, <CallerMemberName> Optional memberName$ = "") As Boolean
+    Public Function PrintException(Of ex As Exception)(exception As ex,
+                                                       <CallerMemberName>
+                                                       Optional memberName$ = "",
+                                                       Optional enableRedirect As Boolean = True) As Boolean
+
         Dim lines = New Exception(memberName, exception).ToString.LineTokens
         Dim exceptions$() = Strings.Split(lines.First, "--->")
         Dim formats = exceptions(0) & vbCrLf &
@@ -270,7 +274,7 @@ Public Module VBDebugger
             vbCrLf &
             lines.Skip(1).JoinBy(vbCrLf)
 
-        Return formats.PrintException(memberName)
+        Return formats.PrintException(memberName, enableRedirect)
     End Function
 
     ''' <summary>
@@ -282,8 +286,12 @@ Public Module VBDebugger
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function PrintException(msg$, <CallerMemberName> Optional memberName$ = "") As Boolean
-        If My.Log4VB.redirectError Is Nothing Then
+    Public Function PrintException(msg$,
+                                   <CallerMemberName>
+                                   Optional memberName$ = "",
+                                   Optional enableRedirect As Boolean = True) As Boolean
+
+        If My.Log4VB.redirectError Is Nothing OrElse Not enableRedirect Then
             Return My.Log4VB.Print($"ERROR {Now.ToString}", $"<{memberName}>::{msg}", ConsoleColor.Red, MSG_TYPES.ERR)
         Else
             Call My.Log4VB.redirectError(memberName, msg, MSG_TYPES.ERR)

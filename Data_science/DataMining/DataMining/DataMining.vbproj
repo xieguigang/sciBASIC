@@ -747,6 +747,8 @@
     <Compile Include="AprioriRules\Algorithm\Entities\Transaction.vb" />
     <Compile Include="AprioriRules\Algorithm\Implementation\StrongRules.vb" />
     <Compile Include="AprioriRules\Helper\Encoding.vb" />
+    <Compile Include="Clustering\DBSCAN\DbscanSession.vb" />
+    <Compile Include="Clustering\DBSCAN\Optics\Point.vb" />
     <Compile Include="Clustering\Density.vb" />
     <Compile Include="Clustering\FuzzyCMeans\Classify.vb" />
     <Compile Include="Clustering\FuzzyCMeans\CMeans.vb" />

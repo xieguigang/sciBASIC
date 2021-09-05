@@ -63,6 +63,17 @@ End Interface
 <HideModuleName> Public Module Extensions
 
     <Extension>
+    Public Function skip(buffer As Stream, nbytes As Integer) As Long
+        If buffer.Position + nbytes > buffer.Length Then
+            nbytes = buffer.Length - buffer.Position
+        End If
+
+        Call buffer.Seek(nbytes, SeekOrigin.Current)
+
+        Return nbytes
+    End Function
+
+    <Extension>
     Public Function VerifyMagicSignature(block As IMagicBlock, buffer As BinaryDataReader) As Boolean
         Return block.VerifyMagicSignature(buffer.ReadString(block.magic.Length))
     End Function

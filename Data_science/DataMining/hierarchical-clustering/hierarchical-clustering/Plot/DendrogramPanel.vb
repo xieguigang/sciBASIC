@@ -65,7 +65,7 @@ Public MustInherit Class DendrogramPanel : Inherits Plot
     Protected Friend ReadOnly showLeafLabels As Boolean
     Protected Friend ReadOnly showRuler As Boolean
 
-    Protected ReadOnly labelFont As Font
+    Protected labelFont As Font
     Protected ReadOnly linkColor As Pen
     Protected ReadOnly pointColor As SolidBrush
 

@@ -889,6 +889,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algebra\Extensions.vb" />
+    <Compile Include="Algebra\LP\LPPDebugView.vb" />
+    <Compile Include="Algebra\LP\LPPSolver.vb" />
     <Compile Include="Algebra\Matrix.NET\IndexVector.vb" />
     <Compile Include="Algebra\Matrix.NET\GeneralMatrix.vb" />
     <Compile Include="Algebra\Matrix.NET\SparseMatrix.vb" />

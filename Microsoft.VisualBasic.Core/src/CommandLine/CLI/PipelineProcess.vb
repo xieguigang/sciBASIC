@@ -1,43 +1,43 @@
 ﻿#Region "Microsoft.VisualBasic::2c32ddf2a62f2e631c8e995348370035, Microsoft.VisualBasic.Core\src\CommandLine\CLI\PipelineProcess.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module PipelineProcess
-    ' 
-    '         Function: (+2 Overloads) [Call], CallDotNetCorePipeline, CreatePipeline, (+2 Overloads) ExecSub, FindProc
-    '                   (+2 Overloads) GetProc
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module PipelineProcess
+' 
+'         Function: (+2 Overloads) [Call], CallDotNetCorePipeline, CreatePipeline, (+2 Overloads) ExecSub, FindProc
+'                   (+2 Overloads) GetProc
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -122,7 +122,7 @@ Namespace CommandLine
                                 Optional in$ = "",
                                 Optional ByRef stdErr As String = Nothing) As Integer
 
-            Dim p As Process = CreatePipeline(app, args)
+            Dim p As Process = CreatePipeline(app, args, it:=Not app.ExtensionSuffix("sh"))
             Dim reader As StreamReader = p.StandardOutput
             Dim errReader As StreamReader = p.StandardError
 
@@ -150,7 +150,11 @@ Namespace CommandLine
         ''' <param name="app"></param>
         ''' <param name="args"></param>
         ''' <param name="it">
+        ''' this option will affects the UseShellExecute:
+        ''' 
+        ''' ```
         ''' docker run -it XXX
+        ''' ```
         ''' </param>
         ''' <returns></returns>
         Public Function CreatePipeline(app As String, args As String, Optional it As Boolean = True) As Process
@@ -162,7 +166,7 @@ Namespace CommandLine
             p.StartInfo.RedirectStandardOutput = it
             p.StartInfo.RedirectStandardInput = it
             p.StartInfo.RedirectStandardError = it
-            p.StartInfo.UseShellExecute = False
+            p.StartInfo.UseShellExecute = Not it
             p.StartInfo.CreateNoWindow = True
             p.Start()
 

@@ -86,71 +86,6 @@ Namespace Plots
             Me.fillPie = fillPie
         End Sub
 
-        Public Function CreateScaler(ByRef g As IGraphics, rect As GraphicsRegion) As DataScaler
-            Dim canvas As IGraphics = g
-            Dim region As Rectangle = rect.PlotRegion
-            Dim XTicks#(), YTicks#()
-
-            '    With array.CreateAxisTicks(
-            '    preferPositive:=preferPositive,
-            '    scaleX:=If(XaxisAbsoluteScalling, 1, 1.25),
-            '    scaleY:=If(YaxisAbsoluteScalling, 1, 1.25)
-            ')
-
-            '        XTicks = .x
-            '        YTicks = .y
-            '    End With
-
-            '    If ticksY > 0 Then
-            '        YTicks = AxisScalling.GetAxisByTick(YTicks, tick:=ticksY)
-            '    End If
-
-            XTicks = array.Select(Function(s) s.pts).IteratesALL.Select(Function(p) CDbl(p.pt.X)).Range.CreateAxisTicks
-            YTicks = array.Select(Function(s) s.pts).IteratesALL.Select(Function(p) CDbl(p.pt.Y)).Range.CreateAxisTicks
-
-            Dim X As Scaler
-            Dim Y As LinearScale
-
-            ' 使用手动指定的范围
-            ' 手动指定坐标轴值的范围的时候，X坐标轴无法使用term离散映射
-            If Not xaxis.StringEmpty AndAlso Not yaxis.StringEmpty Then
-                XTicks = AxisProvider.TryParse(xaxis).AxisTicks
-                YTicks = AxisProvider.TryParse(yaxis).AxisTicks
-                X = XTicks.LinearScale.range(integers:={region.Left, region.Right})
-                Y = YTicks.LinearScale.range(integers:={region.Bottom, region.Top})
-            Else
-                ' 如果所有数据点都有单词，则X轴使用离散映射
-                If array.All(Function(line) line.pts.All(Function(a) Not a.axisLabel.StringEmpty)) Then
-                    Dim allTermLabels As String() = array _
-                        .Select(Function(line)
-                                    Return line.pts.Select(Function(a) a.axisLabel)
-                                End Function) _
-                        .IteratesALL _
-                        .Distinct _
-                        .ToArray
-
-                    X = d3js.scale _
-                        .ordinal _
-                        .domain(allTermLabels) _
-                        .range(integers:={region.Left, region.Right})
-                Else
-                    X = d3js.scale _
-                        .linear _
-                        .domain(XTicks) _
-                        .range(integers:={region.Left, region.Right})
-                End If
-
-                Y = d3js.scale.linear.domain(YTicks).range(integers:={region.Bottom, region.Top})
-            End If
-
-            Return New DataScaler With {
-                .X = X,
-                .Y = Y,
-                .region = region,
-                .AxisTicks = (XTicks, YTicks)
-            }
-        End Function
-
         Protected Overrides Sub PlotInternal(ByRef g As IGraphics, rect As GraphicsRegion)
             Dim canvas As IGraphics = g
             Dim region As Rectangle = rect.PlotRegion
@@ -158,12 +93,11 @@ Namespace Plots
             Dim gSize As Size = rect.Size
 
             If theme.drawAxis Then
-                Call g.DrawAxis(
-                    rect, scaler, theme.drawGrid,
+                Call g.DrawAxis(scaler, rect, theme.drawGrid,
                     xlabel:=xlabel, ylabel:=ylabel,
                     htmlLabel:=theme.htmlLabel,
                     tickFontStyle:=theme.axisTickCSS,
-                    labelFont:=theme.axisLabelCSS,
+                    labelFontStyle:=theme.axisLabelCSS,
                     xlayout:=theme.xAxisLayout,
                     ylayout:=theme.yAxisLayout,
                     gridX:=theme.gridStrokeX,
@@ -171,7 +105,8 @@ Namespace Plots
                     gridFill:=theme.gridFill,
                     XtickFormat:=theme.XaxisTickFormat,
                     YtickFormat:=theme.YaxisTickFormat,
-                    axisStroke:=theme.axisStroke
+                    axisStroke:=theme.axisStroke,
+                    xlabelRotate:=theme.xAxisRotate
                 )
             End If
 
@@ -296,5 +231,71 @@ Namespace Plots
                 Call g.DrawLine(line.Stroke, a, b)
             Next
         End Sub
+
+        Public Function CreateScaler(ByRef g As IGraphics, rect As GraphicsRegion) As DataScaler
+            Dim canvas As IGraphics = g
+            Dim region As Rectangle = rect.PlotRegion
+            Dim XTicks#(), YTicks#()
+
+            '    With array.CreateAxisTicks(
+            '    preferPositive:=preferPositive,
+            '    scaleX:=If(XaxisAbsoluteScalling, 1, 1.25),
+            '    scaleY:=If(YaxisAbsoluteScalling, 1, 1.25)
+            ')
+
+            '        XTicks = .x
+            '        YTicks = .y
+            '    End With
+
+            '    If ticksY > 0 Then
+            '        YTicks = AxisScalling.GetAxisByTick(YTicks, tick:=ticksY)
+            '    End If
+
+            XTicks = array.Select(Function(s) s.pts).IteratesALL.Select(Function(p) CDbl(p.pt.X)).Range.CreateAxisTicks
+            YTicks = array.Select(Function(s) s.pts).IteratesALL.Select(Function(p) CDbl(p.pt.Y)).Range.CreateAxisTicks
+
+            Dim X As Scaler
+            Dim Y As LinearScale
+
+            ' 使用手动指定的范围
+            ' 手动指定坐标轴值的范围的时候，X坐标轴无法使用term离散映射
+            If Not xaxis.StringEmpty AndAlso Not yaxis.StringEmpty Then
+                XTicks = AxisProvider.TryParse(xaxis).AxisTicks
+                YTicks = AxisProvider.TryParse(yaxis).AxisTicks
+                X = XTicks.LinearScale.range(integers:={region.Left, region.Right})
+                Y = YTicks.LinearScale.range(integers:={region.Bottom, region.Top})
+            Else
+                ' 如果所有数据点都有单词，则X轴使用离散映射
+                If array.All(Function(line) line.pts.All(Function(a) Not a.axisLabel.StringEmpty)) Then
+                    Dim allTermLabels As String() = array _
+                        .Select(Function(line)
+                                    Return line.pts.Select(Function(a) a.axisLabel)
+                                End Function) _
+                        .IteratesALL _
+                        .Distinct _
+                        .ToArray
+
+                    X = d3js.scale _
+                        .ordinal _
+                        .domain(allTermLabels) _
+                        .range(integers:={region.Left, region.Right})
+                Else
+                    X = d3js.scale _
+                        .linear _
+                        .domain(XTicks) _
+                        .range(integers:={region.Left, region.Right})
+                End If
+
+                Y = d3js.scale.linear.domain(YTicks).range(integers:={region.Bottom, region.Top})
+            End If
+
+            Return New DataScaler With {
+                .X = X,
+                .Y = Y,
+                .region = region,
+                .AxisTicks = (XTicks, YTicks)
+            }
+        End Function
+
     End Class
 End Namespace
