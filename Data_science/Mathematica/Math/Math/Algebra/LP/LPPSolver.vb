@@ -332,7 +332,7 @@ Namespace LinearAlgebra.LinearProgramming
 
             ' Set up parameters for finding subsets
             Dim n As Integer = lpp.variableNames.Count - q
-            Dim powerSetSize As Integer = CInt(Fix(stdNum.Pow(2, n)))
+            Dim powerSetSize As Integer = CInt(Fix(2 ^ n))
 
             For i As Integer = 0 To powerSetSize - 1
                 ' Reinitialize potential basic feasible solution
