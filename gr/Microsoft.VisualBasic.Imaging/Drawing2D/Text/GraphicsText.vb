@@ -63,6 +63,10 @@ Namespace Drawing2D.Text
             Me.g = g
         End Sub
 
+        Public Sub New(g As Graphics2D)
+            Me.g = g.Graphics
+        End Sub
+
         ''' <summary>
         ''' 绘制根据矩形旋转文本
         ''' </summary>

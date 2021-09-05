@@ -73,5 +73,10 @@ Namespace ApplicationServices.Debugging.Logging
         ''' </summary>
         ''' <remarks></remarks>
         <Description("DEBUG")> DEBUG = ConsoleColor.Blue
+
+        ''' <summary>
+        ''' Specialized Developer Info
+        ''' </summary>
+        FINEST
     End Enum
 End Namespace

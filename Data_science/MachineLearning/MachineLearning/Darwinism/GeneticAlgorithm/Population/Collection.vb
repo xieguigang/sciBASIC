@@ -52,7 +52,6 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Java
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
-Imports Microsoft.VisualBasic.Serialization
 
 Namespace Darwinism.GAF
 
@@ -102,7 +101,7 @@ Namespace Darwinism.GAF
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub Trim(capacitySize As Integer)
-            innerList = innerList.SubList(0, capacitySize)
+            innerList = innerList.subList(0, capacitySize)
         End Sub
 
         Public Overrides Function GetCollection() As IEnumerable(Of Chr)

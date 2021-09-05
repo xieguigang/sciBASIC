@@ -153,7 +153,7 @@ Namespace Graphic
                     }
                 Else
                     legendPos = New Point With {
-                        .X = region.Size.Width - lsize.Width / 3 - maxWidth,
+                        .X = region.Size.Width - lsize.Width / 4 - maxWidth,
                         .Y = region.Top + lFont.Height
                     }
                 End If

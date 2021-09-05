@@ -202,7 +202,8 @@ Public Module Scatter
                     Optional YtickFormat$ = "F2",
                     Optional axisStroke$ = Stroke.AxisStroke,
                     Optional axisLabelCSS$ = CSSFont.Win10Normal,
-                    Optional scatterReorder As Boolean = False)
+                    Optional scatterReorder As Boolean = False,
+                    Optional xAxisLabelRotate As Double = 0)
 
         Dim theme As New Theme With {
             .drawLegend = showLegend,
@@ -220,7 +221,8 @@ Public Module Scatter
             .axisTickCSS = tickFontStyle,
             .legendLabelCSS = legendFontCSS,
             .legendSplitSize = legendSplit,
-            .YaxisTickFormat = YtickFormat
+            .YaxisTickFormat = YtickFormat,
+            .xAxisRotate = xAxisLabelRotate
         }
         Dim plot As Plot
 

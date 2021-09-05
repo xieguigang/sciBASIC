@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::9bfe45e3c4ea016666771c7552f39962, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Logging\LogFile\LogFile.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class LogFile
-    ' 
-    '         Properties: fileName, filePath, MimeType, NowTimeNormalizedString
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: SaveLog, SystemInfo, ToString
-    ' 
-    '         Sub: (+2 Overloads) Dispose, (+2 Overloads) LogException, Save, (+4 Overloads) WriteLine
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class LogFile
+' 
+'         Properties: fileName, filePath, MimeType, NowTimeNormalizedString
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: SaveLog, SystemInfo, ToString
+' 
+'         Sub: (+2 Overloads) Dispose, (+2 Overloads) LogException, Save, (+4 Overloads) WriteLine
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -67,6 +67,7 @@ Namespace ApplicationServices.Debugging.Logging
 
         Dim buffer As TextWriter
         Dim counts&
+        Dim split As LoggingDriver
 
         ''' <summary>
         ''' 没有路径名称和拓展名，仅包含有单独的文件名
@@ -109,35 +110,64 @@ Namespace ApplicationServices.Debugging.Logging
         Public Sub New(path As String,
                        Optional autoFlush As Boolean = True,
                        Optional bufferSize As Integer = 1024,
-                       Optional append As Boolean = True)
+                       Optional append As Boolean = True,
+                       Optional split As LoggingDriver = Nothing)
 
             Dim file As New FileStream(path, If(append, FileMode.Append, FileMode.Truncate))
 
-            buffer = New StreamWriter(file, Encoding.UTF8, bufferSize) With {
+            Me.buffer = New StreamWriter(file, Encoding.UTF8, bufferSize) With {
                 .AutoFlush = autoFlush
             }
-            buffer.WriteLine($"//{vbTab}[{Now.ToString}]{vbTab}{New String("=", 25)}  START WRITE LOGGING SECTION  {New String("=", 25)}" & vbCrLf)
-            filePath = FileIO.FileSystem.GetFileInfo(path).FullName
+            Me.buffer.WriteLine($"//{vbTab}[{Now.ToString}]{vbTab}{New String("=", 25)}  START WRITE LOGGING SECTION  {New String("=", 25)}" & vbCrLf)
+            Me.filePath = FileIO.FileSystem.GetFileInfo(path).FullName
+            Me.split = split
         End Sub
 
-        Public Sub LogException(Msg As String, <CallerMemberName> Optional Object$ = Nothing)
-            Call WriteLine(Msg, [Object], type:=MSG_TYPES.ERR)
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub info(msg As String, <CallerMemberName> Optional obj$ = Nothing)
+            Call WriteLine(msg, obj, MSG_TYPES.INF)
+
+            If Not split Is Nothing Then
+                Call split(obj, msg, MSG_TYPES.INF)
+            End If
         End Sub
 
-        Public Sub LogException(ex As Exception, <CallerMemberName> Optional Object$ = Nothing)
-            Call WriteLine(ex.ToString, [Object], type:=MSG_TYPES.ERR)
+        Public Sub log(level As MSG_TYPES, msg As String, <CallerMemberName> Optional obj$ = Nothing)
+            Call WriteLine(msg, obj, level)
+
+            If Not split Is Nothing Then
+                Call split(obj, msg, level)
+            End If
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub LogException(msg As String, <CallerMemberName> Optional obj$ = Nothing)
+            Call WriteLine(msg, obj, type:=MSG_TYPES.ERR)
+
+            If Not split Is Nothing Then
+                Call split(obj, msg, MSG_TYPES.ERR)
+            End If
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub LogException(ex As Exception, <CallerMemberName> Optional obj$ = Nothing)
+            Call WriteLine(ex.ToString, obj, type:=MSG_TYPES.ERR)
+
+            If Not split Is Nothing Then
+                Call split(obj, ex.ToString, MSG_TYPES.ERR)
+            End If
         End Sub
 
         ''' <summary>
         ''' 向日志文件之中写入数据
         ''' </summary>
-        ''' <param name="Msg"></param>
-        ''' <param name="[Object]"></param>
+        ''' <param name="msg"></param>
+        ''' <param name="obj"></param>
         ''' <param name="type"></param>
-        Public Sub WriteLine(Msg As String, <CallerMemberName> Optional [Object] As String = Nothing, Optional type As MSG_TYPES = MSG_TYPES.INF)
+        Public Sub WriteLine(msg As String, <CallerMemberName> Optional obj As String = Nothing, Optional type As MSG_TYPES = MSG_TYPES.INF)
             Dim log As New LogEntry With {
-                .message = Msg,
-                .[object] = [Object],
+                .message = msg,
+                .[object] = obj,
                 .time = Now,
                 .level = type
             }
@@ -150,13 +180,15 @@ Namespace ApplicationServices.Debugging.Logging
             Return $"[{counts} records]'{filePath.ToFileURL}'"
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub WriteLine(Optional s As String = "")
-            Call WriteLine(s, type:=MSG_TYPES.INF, [Object]:="")
+            Call WriteLine(s, type:=MSG_TYPES.INF, obj:="")
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub WriteLine(s As String())
             Dim str As String = String.Join(vbCrLf, s)
-            Call WriteLine(str, type:=MSG_TYPES.INF, [Object]:="")
+            Call WriteLine(str, type:=MSG_TYPES.INF, obj:="")
         End Sub
 
         ''' <summary>
@@ -166,8 +198,7 @@ Namespace ApplicationServices.Debugging.Logging
         ''' <param name="args">{[Object] As String, Optional Type As MsgType = MsgType.INF, Optional WriteToScreen As Boolean = True}</param>
         ''' <remarks></remarks>
         Public Sub WriteLine(s As String, ParamArray args() As String)
-            Dim [object] As String = IIf(String.IsNullOrEmpty(args(0)), "", args(0))
-            Call WriteLine(s, type:=MSG_TYPES.INF, [Object]:=[object])
+            Call WriteLine(s, type:=MSG_TYPES.INF, obj:=If(String.IsNullOrEmpty(args(0)), "", args(0)))
         End Sub
 
         ''' <summary>

@@ -51,7 +51,7 @@ Namespace Language.Java
     Public Module Arrays
 
         <Extension>
-        Public Sub Fill(Of T)(ByRef a As T(), val As T)
+        Public Sub fill(Of T)(ByRef a As T(), val As T)
             For i% = 0 To a.Length - 1
                 a(i%) = val
             Next
@@ -64,7 +64,7 @@ Namespace Language.Java
         End Function
 
         <Extension>
-        Public Function Shuffle(Of T)(ByRef list As List(Of T)) As List(Of T)
+        Public Function shuffle(Of T)(ByRef list As List(Of T)) As List(Of T)
             Call randf.seeds.Shuffle(list)
             Return list
         End Function
@@ -83,7 +83,7 @@ Namespace Language.Java
         ''' <returns>a view of the specified range within this list</returns>
         ''' 
         <Extension>
-        Public Function SubList(Of T)(list As List(Of T), fromIndex%, toIndex%) As List(Of T)
+        Public Function subList(Of T)(list As System.Collections.Generic.List(Of T), fromIndex%, toIndex%) As List(Of T)
             Return list.Skip(fromIndex).Take(toIndex - fromIndex).AsList
         End Function
 

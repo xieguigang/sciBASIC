@@ -1693,6 +1693,7 @@
     <Compile Include="Extensions\Math\StatisticsMathExtensions\Min.vb" />
     <Compile Include="Language\Value\TripleVariant.vb" />
     <Compile Include="My\Framework\MemoryLoads.vb" />
+    <Compile Include="My\JavaScript\DataView.vb" />
     <Compile Include="My\JavaScript\JavaScriptObject\Abstract.vb" />
     <Compile Include="My\JavaScript\JavaScriptObject\Descriptor.vb" />
     <Compile Include="My\JavaScript\JavaScriptObject\JavaScriptValue.vb" />

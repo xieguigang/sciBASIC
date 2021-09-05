@@ -259,10 +259,9 @@ Namespace Graphic.Legend
                                    Optional border As Stroke = Nothing,
                                    Optional radius% = 5,
                                    Optional titleBrush As Brush = Nothing,
-                                   Optional lineWidth! = -1,
-                                   Optional ppi As Integer = 100) As SizeF
+                                   Optional lineWidth! = -1) As SizeF
 
-            Dim font As Font = l.GetFont(ppi)
+            Dim font As Font = l.GetFont(g.Dpi)
             Dim fSize As SizeF = g.MeasureString(l.title, font)
             Dim labelPosition As New PointF With {
                 .X = pos.X + canvas.Width + 5,

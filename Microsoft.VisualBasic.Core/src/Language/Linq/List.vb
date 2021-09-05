@@ -716,5 +716,11 @@ Namespace Language
             Call Me.RemoveLast
             Return out
         End Function
+
+        Public Function Poll() As T
+            Dim out = First
+            Call Me.RemoveAt(Scan0)
+            Return out
+        End Function
     End Class
 End Namespace

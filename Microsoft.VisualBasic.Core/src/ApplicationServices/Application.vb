@@ -86,7 +86,11 @@ Namespace ApplicationServices
         Public Shared Sub DoEvents()
 #If netcore5 = 0 Then
 #If UNIX = False Then
-            Call Parallel.DoEvents()
+            Try
+                Call Parallel.DoEvents()
+            Catch ex As Exception
+                Call ex.PrintException
+            End Try
 #End If
 #End If
         End Sub

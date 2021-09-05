@@ -142,11 +142,11 @@ Namespace ComponentModel.Collection
         <Extension>
         Public Function ComputeIfAbsent(Of K, V)(table As IDictionary(Of K, V), key As K, lazyValue As Func(Of K, V)) As V
             SyncLock table
-                If Not table.ContainsKey(key) OrElse table(key) Is Nothing Then
-                    table(key) = lazyValue(key)
+                If Not table.ContainsKey(key) OrElse table(key:=key) Is Nothing Then
+                    table(key:=key) = lazyValue(key)
                 End If
 
-                Return table(key)
+                Return table(key:=key)
             End SyncLock
         End Function
 
