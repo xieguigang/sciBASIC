@@ -109,7 +109,7 @@ Namespace LinearAlgebra.LinearProgramming
                 objectiveFunctionType:=lppModel.objectiveFunctionType,
                 variableNames:=lppModel.variableNames,
                 objectiveFunctionCoefficients:=lppModel.objectiveFunctionCoefficients,
-                constraintCoefficients:=lppModel.constraintCoefficients,
+                constraintCoefficients:=lppModel.ParseMatrix,
                 constraintTypes:=lppModel.constraintTypes,
                 constraintRightHandSides:=lppModel.constraintRightHandSides,
                 objectiveFunctionValue:=lppModel.objectiveFunctionValue
