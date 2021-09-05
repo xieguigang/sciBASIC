@@ -46,16 +46,16 @@ Namespace LinearAlgebra.LinearProgramming
 
     Module Extensions
 
-        Public Function intToBinary(binary As Integer, digits As Integer) As List(Of Char)
+        Public Function intToBinary(binary As Long, digits As Integer) As List(Of Byte)
             Dim temp As String = Convert.ToString(binary, 2)
             Dim foundDigits As Integer = temp.Length
-            Dim returner As New List(Of Char)
+            Dim returner As New List(Of Byte)
 
             For i As Integer = foundDigits To digits - 1
-                returner.Add("0"c)
+                returner.Add(0)
             Next
 
-            returner.AddRange(temp)
+            returner.AddRange(temp.Select(Function(c) If(c = "1"c, CByte(1), CByte(0))))
 
             Return returner
         End Function

@@ -332,28 +332,36 @@ Namespace LinearAlgebra.LinearProgramming
 
             ' Set up parameters for finding subsets
             Dim n As Integer = lpp.variableNames.Count - q
-            Dim powerSetSize As Integer = CInt(Fix(2 ^ n))
+            Dim powerSetSize As Long = CLng(Fix(2 ^ n))
 
-            For i As Integer = 0 To powerSetSize - 1
-                ' Reinitialize potential basic feasible solution
-                alpha = New List(Of Integer)()
+            If n < 31 Then
+                For i As Long = 0 To powerSetSize - 1
+                    '  Convert the binary number to a string containing n digits
+                    Dim binary As List(Of Byte) = intToBinary(i, n)
 
-                '  Convert the binary number to a string containing n digits
-                Dim binary As List(Of Char) = intToBinary(i, n)
+                    If binary.Count < lpp.constraintRightHandSides.Length Then
+                        Continue For
+                    End If
 
-                '  Create the corresponding subset
-                For j As Integer = 0 To binary.Count - 1
-                    If binary(j) = "1"c Then
-                        alpha.Add(j)
+                    ' Reinitialize potential basic feasible solution
+                    alpha.Clear()
+
+                    '  Create the corresponding subset
+                    For j As Integer = 0 To binary.Count - 1
+                        If binary(j) = 1 Then
+                            alpha.Add(j)
+                        End If
+                    Next
+
+                    ' Check to see if the basic variable set alpha is feasible
+                    If alpha.Count = lpp.constraintRightHandSides.Length Then
+                        If isFeasible(alpha) Then
+                            foundBasicFeasSol = True
+                            Exit For
+                        End If
                     End If
                 Next
-
-                ' Check to see if the basic variable set alpha is feasible
-                If alpha.Count = lpp.constraintRightHandSides.Length AndAlso isFeasible(alpha) Then
-                    foundBasicFeasSol = True
-                    Exit For
-                End If
-            Next
+            End If
 
             '  No feasible solution is found, create dummy solution vector.
             If Not foundBasicFeasSol Then
