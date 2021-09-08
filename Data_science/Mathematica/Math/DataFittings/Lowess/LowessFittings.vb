@@ -20,7 +20,7 @@ Public Module LowessFittings
                            Optional nsteps As Integer = 3,
                            Optional delta As Double = 0.01) As (x As Double(), y As Double())
 
-        Dim data As PointF() = sample.ToArray
+        Dim data As PointF() = sample.OrderBy(Function(p) p.X).ToArray
         Dim x = data.Select(Function(p) CDbl(p.X)).ToArray
         Dim y = data.Select(Function(p) CDbl(p.Y)).ToArray
 
