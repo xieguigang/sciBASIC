@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Math
 Imports stdNum = System.Math
 
 Public Module LowessFittings
@@ -14,15 +15,22 @@ Public Module LowessFittings
         End If
     End Function
 
+    ''' <summary>
+    ''' Locally-weighted polynomial regression via the LOWESS algorithm.
+    ''' </summary>
+    ''' <param name="sample"></param>
+    ''' <param name="f">smoother span (proportion of points which influence smoothing at each value)</param>
+    ''' <param name="nsteps">number of iterations in the robust fit</param>
+    ''' <returns></returns>
     <Extension>
     Public Function Lowess(sample As IEnumerable(Of PointF),
                            Optional f As Double = 2 / 3,
-                           Optional nsteps As Integer = 3,
-                           Optional delta As Double = 0.01) As (x As Double(), y As Double())
+                           Optional nsteps As Integer = 3) As (x As Double(), y As Double())
 
         Dim data As PointF() = sample.OrderBy(Function(p) p.X).ToArray
         Dim x = data.Select(Function(p) CDbl(p.X)).ToArray
         Dim y = data.Select(Function(p) CDbl(p.Y)).ToArray
+        Dim delta As Double = Interpolation.Range(data.Length, x, 1)
 
         Return LowessFittings.Lowess(x, y, data.Length, f, nsteps, delta)
     End Function
