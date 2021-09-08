@@ -1,4 +1,6 @@
-﻿Imports stdNum = System.Math
+﻿Imports System.Drawing
+Imports System.Runtime.CompilerServices
+Imports stdNum = System.Math
 
 Public Module LowessFittings
 
@@ -10,6 +12,19 @@ Public Module LowessFittings
         Else
             Return stdNum.Sign(d)
         End If
+    End Function
+
+    <Extension>
+    Public Function Lowess(sample As IEnumerable(Of PointF),
+                           Optional f As Double = 2 / 3,
+                           Optional nsteps As Integer = 3,
+                           Optional delta As Double = 0.01) As (x As Double(), y As Double())
+
+        Dim data As PointF() = sample.ToArray
+        Dim x = data.Select(Function(p) CDbl(p.X)).ToArray
+        Dim y = data.Select(Function(p) CDbl(p.Y)).ToArray
+
+        Return LowessFittings.Lowess(x, y, data.Length, f, nsteps, delta)
     End Function
 
     ''' <summary>
@@ -33,9 +48,9 @@ Public Module LowessFittings
     Public Function Lowess(x As Double(),
                            y As Double(),
                            n As Integer,
-                           f As Double,
-                           nsteps As Integer,
-                           delta As Double) As (x As Double(), y As Double())
+                           Optional f As Double = 2 / 3,
+                           Optional nsteps As Integer = 3,
+                           Optional delta As Double = 0.01) As (x As Double(), y As Double())
 
         Dim nright As Integer
         Dim denom As Double
@@ -60,7 +75,7 @@ Public Module LowessFittings
         Dim r As Double
 
         If n < 2 Then
-            Return y
+            Return (x, y)
         End If
 
         ' Use at least two and at most n points:
