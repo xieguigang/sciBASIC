@@ -8,8 +8,6 @@ Namespace Filters
 
         <Extension>
         Public Function Pencil(img As BitmapBuffer, Optional ByVal Sensitivity As Long = 25, Optional woodCarving As Boolean = False) As BitmapBuffer
-            Dim I As Long
-            Dim L As Long
             Dim M As Long
             Dim N As Long
             Dim Col As Long
@@ -17,9 +15,9 @@ Namespace Filters
             Dim OutPutWid = img.Width
             Dim OutPutHei = img.Height
 
-            For I = 0 To OutPutWid - 2
+            For I As Integer = 0 To OutPutWid - 2
                 M = I + 1
-                For L = 0 To OutPutHei - 2
+                For L As Integer = 0 To OutPutHei - 2
                     N = L + 1
                     ' 当前点的灰度哦。
                     Col = img.GetPixel(0, I, L) * 3 + img.GetPixel(1, I, L) * 6 + img.GetPixel(2, I, L)
@@ -76,8 +74,6 @@ Namespace Filters
                     Call img.SetPixel(x, y, R, G, B)
                 Next
             Next
-
-            Return img
 
             Return img
         End Function
