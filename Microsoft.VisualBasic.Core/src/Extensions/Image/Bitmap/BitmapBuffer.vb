@@ -101,7 +101,11 @@ Namespace Imaging.BitmapImage
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetImage() As Bitmap
+        Public Function GetImage(Optional flush As Boolean = False) As Bitmap
+            If flush Then
+                Call Write()
+            End If
+
             Return DirectCast(raw.Clone, Bitmap)
         End Function
 
