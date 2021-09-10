@@ -69,7 +69,7 @@ Namespace CommandLine
             If args("---echo") Then
                 dev = App.StdOut
             Else
-                dev = ($"{App.HOME}/{cli_app.Type.Assembly.CodeBase.BaseName}.vb") _
+                dev = ($"{App.HOME}/{cli_app.Type.Assembly.Location.BaseName}.vb") _
                     .Open(, doClear:=True) _
                     .DoCall(Function(file)
                                 Return New StreamWriter(file, Encodings.UTF8WithoutBOM.CodePage)

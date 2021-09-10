@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::daf274f5260749c385e7e96bb0a5868c, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\IO.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module IOExtensions
-    ' 
-    '     Function: FixPath, FlushAllLines, (+3 Overloads) FlushStream, Open, OpenReader
-    '               OpenTextWriter, ReadBinary, ReadVector
-    ' 
-    '     Sub: ClearFileBytes, FlushTo
-    ' 
-    ' /********************************************************************************/
+' Module IOExtensions
+' 
+'     Function: FixPath, FlushAllLines, (+3 Overloads) FlushStream, Open, OpenReader
+'               OpenTextWriter, ReadBinary, ReadVector
+' 
+'     Sub: ClearFileBytes, FlushTo
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -190,6 +190,9 @@ Public Module IOExtensions
 
         If mode = FileMode.Open AndAlso [readOnly] = True AndAlso App.MemoryLoad = My.FrameworkInternal.MemoryLoads.Heavy Then
             If path.FileLength < 1024& * 1024& * 1024& * 2& Then
+                Call Console.WriteLine($"read all({path.FileLength}) {path}")
+                Call Console.WriteLine($"loads all binary data into memory for max performance!")
+
                 Return New MemoryStream(path.ReadBinary)
             End If
         End If
