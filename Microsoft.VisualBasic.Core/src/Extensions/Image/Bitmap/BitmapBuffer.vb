@@ -1,51 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::d56cc23e0fb50467756b1f1221673e60, Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\BitmapBuffer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class BitmapBuffer
-    ' 
-    '         Properties: Height, Size, Stride, Width
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: FromBitmap, FromImage, GetEnumerator, GetImage, (+2 Overloads) GetIndex
-    '                   GetPixel, IEnumerable_GetEnumerator, OutOfRange, ToPixel2D
-    ' 
-    '         Sub: Dispose, SetPixel
-    ' 
-    '         Operators: +
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class BitmapBuffer
+' 
+'         Properties: Height, Size, Stride, Width
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: FromBitmap, FromImage, GetEnumerator, GetImage, (+2 Overloads) GetIndex
+'                   GetPixel, IEnumerable_GetEnumerator, OutOfRange, ToPixel2D
+' 
+'         Sub: Dispose, SetPixel
+' 
+'         Operators: +
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -169,6 +169,27 @@ Namespace Imaging.BitmapImage
             Return Color.FromArgb(CInt(iA), CInt(iR), CInt(iG), CInt(iB))
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="channel">0r 1g 2b 3a</param>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <returns></returns>
+        Public Function GetPixel(channel As Integer, x As Integer, y As Integer) As Byte
+            Dim i As Integer = GetIndex(x, y)
+
+            If channel = 3 Then
+                If channels = 4 Then
+                    Return buffer(i + 3)
+                Else
+                    Return 255
+                End If
+            Else
+                Return buffer(i + (2 - channel))
+            End If
+        End Function
+
         Public Shared Function ToPixel2D(i As Integer, width As Integer, Optional channels As Integer = 4) As Point
             i = i / channels
 
@@ -198,6 +219,36 @@ Namespace Imaging.BitmapImage
             buffer(i + 2) = color.R
             buffer(i + 1) = color.G
             buffer(i + 0) = color.B
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub SetPixel(x As Integer, y As Integer, R As Byte, G As Byte, B As Byte)
+            Dim i As Integer = GetIndex(x, y)
+
+            buffer(i + 2) = R
+            buffer(i + 1) = G
+            buffer(i + 0) = B
+        End Sub
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="channel">0r 1g 2b 3a</param>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <param name="val"></param>
+        Public Sub SetPixel(channel As Integer, x As Integer, y As Integer, val As Byte)
+            Dim i As Integer = GetIndex(x, y)
+
+            If channel = 3 Then
+                If channels = 4 Then
+                    buffer(i + 3) = val
+                Else
+                    ' do nothing
+                End If
+            Else
+                buffer(i + (2 - channel)) = val
+            End If
         End Sub
 
         ''' <summary>
