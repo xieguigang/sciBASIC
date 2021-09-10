@@ -15,6 +15,7 @@ Namespace LinearAlgebra.LinearProgramming
 
     Public Class LppEquation
 
+        <XmlAttribute> Public Property symbol As String
         <XmlAttribute> Public Property constraintValue As Double
         <XmlAttribute> Public Property constraintType As String
 
@@ -69,7 +70,7 @@ Namespace LinearAlgebra.LinearProgramming
         Sub New()
         End Sub
 
-        Sub New(matrix As IEnumerable(Of Double()), type As String(), constraints As Double())
+        Sub New(matrix As IEnumerable(Of Double()), type As String(), constraints As Double(), symbols As String())
             constraintCoefficients = matrix _
                 .Select(Function(v, i)
                             Dim base64 = v _
@@ -80,7 +81,8 @@ Namespace LinearAlgebra.LinearProgramming
                             Return New LppEquation With {
                                 .constraintCoefficients = base64,
                                 .constraintType = type(i),
-                                .constraintValue = constraints(i)
+                                .constraintValue = constraints(i),
+                                .symbol = symbols(i)
                             }
                         End Function) _
                 .ToArray
