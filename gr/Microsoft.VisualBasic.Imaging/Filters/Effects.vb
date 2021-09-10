@@ -17,9 +17,9 @@ Namespace Filters
             Dim OutPutWid = img.Width
             Dim OutPutHei = img.Height
 
-            For I = 0 To OutPutWid - 1
+            For I = 0 To OutPutWid - 2
                 M = I + 1
-                For L = 0 To OutPutHei - 1
+                For L = 0 To OutPutHei - 2
                     N = L + 1
                     ' 当前点的灰度哦。
                     Col = img.GetPixel(0, I, L) * 3 + img.GetPixel(1, I, L) * 6 + img.GetPixel(2, I, L)
@@ -59,8 +59,8 @@ Namespace Filters
             Dim OutPutWid = img.Width
             Dim OutPutHei = img.Height
 
-            For x As Integer = 1 To OutPutWid - 1
-                For y As Integer = 1 To OutPutHei - 1
+            For x As Integer = 1 To OutPutWid - 2
+                For y As Integer = 1 To OutPutHei - 2
                     ' A  B  C  D
                     ' E  F  G  H
                     ' I  J  K  L
@@ -89,8 +89,8 @@ Namespace Filters
 
             Static point As Integer() = {-1, 0, 1}
 
-            For x As Integer = 1 To OutPutWid - 1
-                For y As Integer = 1 To OutPutHei - 1
+            For x As Integer = 1 To OutPutWid - 2
+                For y As Integer = 1 To OutPutHei - 2
                     ' A  B  C  D
                     ' E  F  G  H
                     ' I  J  K  L
@@ -113,8 +113,8 @@ Namespace Filters
                 max = 255
             End If
 
-            For x As Integer = 1 To OutPutWid - 1
-                For y As Integer = 1 To OutPutHei - 1
+            For x As Integer = 1 To OutPutWid - 2
+                For y As Integer = 1 To OutPutHei - 2
                     ' A  B  C  D
                     ' E  F  G  H
                     ' I  J  K  L
@@ -162,8 +162,8 @@ Namespace Filters
                 max = 255
             End If
 
-            For x As Integer = 0 To OutPutWid - 1
-                For y As Integer = 0 To OutPutHei - 1
+            For x As Integer = 0 To OutPutWid - 2
+                For y As Integer = 0 To OutPutHei - 2
                     Dim RR = img.GetPixel(0, x, y) * Div1
                     Dim GG = img.GetPixel(1, x, y) * Div1
                     Dim BB = img.GetPixel(2, x, y) * Div1
