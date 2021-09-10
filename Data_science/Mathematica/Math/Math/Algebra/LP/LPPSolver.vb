@@ -167,7 +167,6 @@ Namespace LinearAlgebra.LinearProgramming
                 End With
             Else
                 tick = Sub() limiter += 1
-
             End If
 
             'LaTeXString += latex.LPPtoLaTeX.beginTableaus(Input);
@@ -199,7 +198,8 @@ Namespace LinearAlgebra.LinearProgramming
 
                 Else
                     ' Get pivot constraint, continue.
-                    pivot(n, [next])
+                    Call pivot(n, [next])
+
                     basicVariables([next]) = n
                     solutionLog.AppendLine("Pivot at " & n & ", " & [next])
                 End If
@@ -253,61 +253,67 @@ Namespace LinearAlgebra.LinearProgramming
         ''' <param name="constIndex"></param>
         Public Sub pivot(varIndex As Integer, constIndex As Integer)
             Dim pivotConstraint As List(Of Double) = lpp.constraintCoefficients(constIndex)
-            Dim pivotConstraintRHS As Double = lpp.constraintRightHandSides(constIndex)
 
-            If pivotConstraint(varIndex) <> 0 Then
-
-                'Divide the pivot constraint through by the pivot variable coefficient
-                Dim pivotVarCoeff As Double = pivotConstraint(varIndex)
-                For i As Integer = 0 To pivotConstraint.Count - 1
-                    Dim coeff As Double = pivotConstraint(i)
-                    pivotConstraint(i) = coeff / pivotVarCoeff
-                Next
-                pivotConstraintRHS = (pivotConstraintRHS / pivotVarCoeff)
-                lpp.constraintCoefficients(constIndex) = pivotConstraint
-                lpp.constraintRightHandSides(constIndex) = pivotConstraintRHS
-
-                ' eliminate the pivot variable from the other constraints
-                For j As Integer = 0 To lpp.constraintCoefficients.Length - 1
-
-                    ' check constraint j != pivot constraint
-                    If j <> constIndex Then
-
-                        ' make constraint local variables
-                        Dim constraint As List(Of Double) = lpp.constraintCoefficients(j)
-                        Dim constraintRHS As Double = lpp.constraintRightHandSides(j)
-
-                        ' check the coefficient of the pivot variable in the non-pivot constraint != 0
-                        If constraint(varIndex) <> 0 Then
-                            Dim constraintPivotVarCoeff As Double = constraint(varIndex)
-
-                            ' perform Elimination variable by variable
-                            For i As Integer = 0 To constraint.Count - 1
-                                constraint(i) = constraint(i) - (pivotConstraint(i) * constraintPivotVarCoeff)
-                            Next
-
-                            ' write new constraint to LPP
-                            constraintRHS = (constraintRHS - (pivotConstraintRHS * constraintPivotVarCoeff))
-                            lpp.constraintCoefficients(j) = constraint
-                            lpp.constraintRightHandSides(j) = constraintRHS
-                        End If
-                    End If
-                Next
-
-                ' substitute pivot variable into the objective function.
-                pivotVarCoeff = lpp.objectiveFunctionCoefficients(varIndex)
-                pivotConstraint = lpp.constraintCoefficients(constIndex)
-                pivotConstraintRHS = lpp.constraintRightHandSides(constIndex)
-
-                lpp.objectiveFunctionCoefficients(varIndex) = 0.0
-                lpp.objectiveFunctionValue = lpp.objectiveFunctionValue + (pivotVarCoeff * pivotConstraintRHS)
-
-                For i As Integer = 0 To lpp.objectiveFunctionCoefficients.Count - 1
-                    If i <> varIndex Then
-                        lpp.objectiveFunctionCoefficients(i) = lpp.objectiveFunctionCoefficients(i) + ((-1) * pivotConstraint(i) * pivotVarCoeff)
-                    End If
-                Next
+            If pivotConstraint(varIndex) = 0.0 Then
+                Return
             End If
+
+            Dim pivotConstraintRHS As Double = lpp.constraintRightHandSides(constIndex)
+            ' Divide the pivot constraint through by the pivot variable coefficient
+            Dim pivotVarCoeff As Double = pivotConstraint(varIndex)
+            Dim coeff As Double
+
+            For i As Integer = 0 To pivotConstraint.Count - 1
+                coeff = pivotConstraint(i)
+                pivotConstraint(i) = coeff / pivotVarCoeff
+            Next
+
+            pivotConstraintRHS = pivotConstraintRHS / pivotVarCoeff
+
+            lpp.constraintCoefficients(constIndex) = pivotConstraint
+            lpp.constraintRightHandSides(constIndex) = pivotConstraintRHS
+
+            ' eliminate the pivot variable from the other constraints
+            For j As Integer = 0 To lpp.constraintCoefficients.Length - 1
+
+                ' check constraint j != pivot constraint
+                If j <> constIndex Then
+
+                    ' make constraint local variables
+                    Dim constraint As List(Of Double) = lpp.constraintCoefficients(j)
+                    Dim constraintRHS As Double = lpp.constraintRightHandSides(j)
+
+                    ' check the coefficient of the pivot variable in the non-pivot constraint != 0
+                    If constraint(varIndex) <> 0 Then
+                        Dim constraintPivotVarCoeff As Double = constraint(varIndex)
+
+                        ' perform Elimination variable by variable
+                        For i As Integer = 0 To constraint.Count - 1
+                            constraint(i) = constraint(i) - (pivotConstraint(i) * constraintPivotVarCoeff)
+                        Next
+
+                        ' write new constraint to LPP
+                        constraintRHS = (constraintRHS - (pivotConstraintRHS * constraintPivotVarCoeff))
+
+                        lpp.constraintCoefficients(j) = constraint
+                        lpp.constraintRightHandSides(j) = constraintRHS
+                    End If
+                End If
+            Next
+
+            ' substitute pivot variable into the objective function.
+            pivotVarCoeff = lpp.objectiveFunctionCoefficients(varIndex)
+            pivotConstraint = lpp.constraintCoefficients(constIndex)
+            pivotConstraintRHS = lpp.constraintRightHandSides(constIndex)
+
+            lpp.objectiveFunctionCoefficients(varIndex) = 0.0
+            lpp.objectiveFunctionValue = lpp.objectiveFunctionValue + (pivotVarCoeff * pivotConstraintRHS)
+
+            For i As Integer = 0 To lpp.objectiveFunctionCoefficients.Count - 1
+                If i <> varIndex Then
+                    lpp.objectiveFunctionCoefficients(i) = lpp.objectiveFunctionCoefficients(i) + ((-1) * pivotConstraint(i) * pivotVarCoeff)
+                End If
+            Next
         End Sub
 
         Private Function findInitialBasicVariables(artificialVariables As List(Of Integer)) As List(Of Integer)
@@ -326,26 +332,32 @@ Namespace LinearAlgebra.LinearProgramming
 
             ' Set up parameters for finding subsets
             Dim n As Integer = lpp.variableNames.Count - q
-            Dim powerSetSize As Integer = CInt(Fix(stdNum.Pow(2, n)))
+            Dim powerSetSize As Long = CLng(Fix(2 ^ n))
 
-            For i As Integer = 0 To powerSetSize - 1
-                ' Reinitialize potential basic feasible solution
-                alpha = New List(Of Integer)()
-
+            For i As Long = powerSetSize To 0 Step -1
                 '  Convert the binary number to a string containing n digits
-                Dim binary As List(Of Char) = intToBinary(i, n)
+                Dim binary As List(Of Byte) = intToBinary(i, n)
+
+                If binary.Count < lpp.constraintRightHandSides.Length Then
+                    Continue For
+                End If
+
+                ' Reinitialize potential basic feasible solution
+                alpha.Clear()
 
                 '  Create the corresponding subset
                 For j As Integer = 0 To binary.Count - 1
-                    If binary(j) = "1"c Then
+                    If binary(j) = 1 Then
                         alpha.Add(j)
                     End If
                 Next
 
                 ' Check to see if the basic variable set alpha is feasible
-                If alpha.Count = lpp.constraintRightHandSides.Length AndAlso isFeasible(alpha) Then
-                    foundBasicFeasSol = True
-                    Exit For
+                If alpha.Count = lpp.constraintRightHandSides.Length Then
+                    If isFeasible(alpha) Then
+                        foundBasicFeasSol = True
+                        Exit For
+                    End If
                 End If
             Next
 
@@ -365,9 +377,10 @@ Namespace LinearAlgebra.LinearProgramming
             Dim q As Double = 0
             Dim choice As Integer = -1
             Dim maxormin As Integer = If(lpp.objectiveFunctionType = OptimizationType.MAX, -1, 1)
+            Dim coefficientTerm As Double
 
             For i As Integer = 0 To lpp.objectiveFunctionCoefficients.Count - 1
-                Dim coefficientTerm As Double = maxormin * lpp.objectiveFunctionCoefficients(i)
+                coefficientTerm = maxormin * lpp.objectiveFunctionCoefficients(i)
 
                 If Not artificialVariables.Contains(i) Then
                     If coefficientTerm < q Then
