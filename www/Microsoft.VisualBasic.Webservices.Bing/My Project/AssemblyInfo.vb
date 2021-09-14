@@ -7,7 +7,7 @@ Imports System.Runtime.InteropServices
 ' associated with an assembly.
 
 ' Review the values of the assembly attributes
-
+#if netcore5=0 then 
 <Assembly: AssemblyTitle("KnowledgeBase module based on Microsoft Bing Search Provider and DOI system")> 
 <Assembly: AssemblyDescription("KnowledgeBase module based on Microsoft Bing Search Provider and DOI system")> 
 <Assembly: AssemblyCompany("")> 
@@ -33,3 +33,4 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.2.0.34")> 
 <Assembly: AssemblyFileVersion("1.0.3.0")> 
+#end if

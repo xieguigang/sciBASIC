@@ -145,7 +145,7 @@ Public Module RegressionPlot
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim rect = region.PlotRegion
 
-                If xTicks.IsNullOrEmpty OrElse yTicks.IsNullOrEmpty Then
+                If xTicks.IsNullOrEmpty OrElse yTicks.IsNullOrEmpty OrElse fit.ErrorTest.Length = 0 Then
                     Call g.DrawString("Invalid curve!", CSSFont.TryParse(title).GDIObject(g.Dpi), Brushes.Black, New PointF)
                     Return
                 End If
