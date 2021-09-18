@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::ea2b342ba1a25fb2bac17b41df465885, Microsoft.VisualBasic.Core\src\Extensions\Collection\Vector.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module VectorExtensions
-    ' 
-    '     Function: (+2 Overloads) After, All, Append, Coalesce, (+3 Overloads) Delete
-    '               (+2 Overloads) Fill, GetRange, IndexOf, Last, LoadAsNumericVector
-    '               MappingData, Midv, PadLeft, RepeatCalls, Replicate
-    '               SetValue, (+3 Overloads) Sort, Split, VectorShadows
-    ' 
-    '     Sub: (+4 Overloads) Add, InsertAt, (+2 Overloads) Memset
-    ' 
-    ' /********************************************************************************/
+' Module VectorExtensions
+' 
+'     Function: (+2 Overloads) After, All, Append, Coalesce, (+3 Overloads) Delete
+'               (+2 Overloads) Fill, GetRange, IndexOf, Last, LoadAsNumericVector
+'               MappingData, Midv, PadLeft, RepeatCalls, Replicate
+'               SetValue, (+3 Overloads) Sort, Split, VectorShadows
+' 
+'     Sub: (+4 Overloads) Add, InsertAt, (+2 Overloads) Memset
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -50,7 +50,6 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
@@ -63,6 +62,26 @@ Imports Microsoft.VisualBasic.My.JavaScript.Linq
 ''' 
 <HideModuleName>
 Public Module VectorExtensions
+
+    <Extension>
+    Public Sub RotateLeft(Of T)(ByRef ArrayToRotate As T(), ByVal iPlacesToRotate As Integer)
+        Dim kdd = ArrayToRotate.Take(iPlacesToRotate).ToArray
+        Dim ddk = ArrayToRotate.Skip(iPlacesToRotate).ToArray
+
+        Array.ConstrainedCopy(kdd, Scan0, ArrayToRotate, ArrayToRotate.Length - kdd.Length, kdd.Length)
+        Array.ConstrainedCopy(ddk, Scan0, ArrayToRotate, Scan0, ddk.Length)
+    End Sub
+
+    <Extension>
+    Public Sub RotateRight(Of T)(ByRef ArrayToRotate As T(), ByVal iPlacesToRotate As Integer)
+        ArrayToRotate = ArrayToRotate.Reverse.ToArray
+
+        Dim ddk = ArrayToRotate.Take(iPlacesToRotate).Reverse.ToArray
+        Dim kdd = ArrayToRotate.Skip(iPlacesToRotate).Reverse.ToArray
+
+        Array.ConstrainedCopy(ddk, Scan0, ArrayToRotate, Scan0, iPlacesToRotate)
+        Array.ConstrainedCopy(kdd, Scan0, ArrayToRotate, iPlacesToRotate, ArrayToRotate.Length - iPlacesToRotate)
+    End Sub
 
     ''' <summary>
     ''' Does all boolean test result is TRUE?

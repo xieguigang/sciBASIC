@@ -47,7 +47,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Prcomp
-Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
+Imports csvFile = Microsoft.VisualBasic.Data.csv.IO.File
 
 Module PCAPlotTest
 
@@ -55,7 +55,7 @@ Module PCAPlotTest
         Call decathlon2Test()
 
 
-        Dim data As GeneralMatrix = csv.Load("D:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\PCA\flower.csv").AsMatrix
+        Dim data As GeneralMatrix = csvFile.Load("D:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\PCA\flower.csv").AsMatrix
 
         Call PCAPlot.PC2(data, 8).AsGDIImage.SaveAs("D:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\PCA\flower.PCA2.png")
     End Sub

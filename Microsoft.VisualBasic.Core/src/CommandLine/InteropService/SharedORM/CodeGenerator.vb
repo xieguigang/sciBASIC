@@ -71,10 +71,18 @@ Namespace CommandLine.InteropService.SharedORM
 
         Sub New(App As Interpreter)
             Me.App = App
+
+#If netcore5 = 0 Then
             Me.exe = App.Type _
                 .Assembly _
                 .CodeBase _
                 .BaseName
+#Else
+            Me.exe = App.Type _
+                .Assembly _
+                .Location _
+                .BaseName
+#End If
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

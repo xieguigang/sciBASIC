@@ -74,7 +74,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' <param name="x">坐标x</param>
         ''' <param name="y">坐标y</param>
         ''' <param name="z">高度</param>
-        Public Sub New(x As Integer, y As Integer, z As Double)
+        Public Sub New(x As Integer, y As Integer, Optional z As Double = 0)
             Me.X = x
             Me.Y = y
             Me.Z = z

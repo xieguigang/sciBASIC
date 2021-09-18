@@ -48,7 +48,7 @@ Public Module ColorSpectrum
     ''' </summary>
     ''' <param name="wavelength">wavelength (nm, range in [380,780])</param>
     ''' <returns></returns>
-    Public Function wavelengthToColor(wavelength As Double) As Color
+    Public Function WavelengthToColor(wavelength As Double) As Color
         Dim r#,
             g#,
             b#,

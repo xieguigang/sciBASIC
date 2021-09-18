@@ -119,6 +119,9 @@ Public Module DoubleLinear
             .ToArray _
             .doFilterInternal(removed, removesZeroY)
 
+        If pointVec.Length = 0 Then
+            Return Nothing
+        End If
         If max < 0 Then
             ' auto
             max = pointVec.Length / 2 - 1

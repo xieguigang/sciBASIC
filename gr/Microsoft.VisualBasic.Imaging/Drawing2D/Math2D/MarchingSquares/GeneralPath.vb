@@ -53,8 +53,8 @@ Namespace Drawing2D.Math2D.MarchingSquares
 
     Public Class GeneralPath
 
-        Dim polygons As New List(Of PointF())
-        Dim temp As New List(Of PointF)
+        Friend ReadOnly polygons As New List(Of PointF())
+        Friend ReadOnly temp As New List(Of PointF)
 
         Public ReadOnly Property level As Double
         Public Property dimension As Size
@@ -82,6 +82,11 @@ Namespace Drawing2D.Math2D.MarchingSquares
                             End Function) _
                     .ToArray
             }
+        End Function
+
+        Public Function AddPolygon(poly As IEnumerable(Of PointF)) As GeneralPath
+            polygons.Add(poly.ToArray)
+            Return Me
         End Function
 
         Public Overrides Function ToString() As String
@@ -120,8 +125,17 @@ Namespace Drawing2D.Math2D.MarchingSquares
             Next
         End Sub
 
+        ''' <summary>
+        ''' clear current temp data
+        ''' </summary>
+        Public Sub Discard()
+            Call temp.Clear()
+        End Sub
+
         Friend Sub ClosePath()
-            polygons.Add(temp.PopAll)
+            If temp > 0 Then
+                Call polygons.Add(temp.PopAll)
+            End If
         End Sub
     End Class
 End Namespace

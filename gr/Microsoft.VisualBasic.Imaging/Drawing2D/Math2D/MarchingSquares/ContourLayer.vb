@@ -49,6 +49,7 @@
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Drawing2D.Math2D.MarchingSquares
 
@@ -71,6 +72,47 @@ Namespace Drawing2D.Math2D.MarchingSquares
             Next
         End Function
 
+        Private Shared Iterator Function FillDots(x As Double(), y As Double(), fillSize As Integer) As IEnumerable(Of MeasureData)
+            If fillSize <= 1 Then
+                For i As Integer = 0 To x.Length - 1
+                    Yield New MeasureData(x(i), y(i), 1)
+                Next
+            Else
+                Dim d As Integer = fillSize / 2
+
+                For i As Integer = 0 To x.Length - 1
+                    For z As Integer = -d To d
+                        If x(i) + z >= 0 AndAlso y(i) + z >= 0 Then
+                            Yield New MeasureData(x(i) + z, y(i) + z, 1)
+                        End If
+                    Next
+                Next
+            End If
+        End Function
+
+        ''' <summary>
+        ''' Do contour tracing for measure outline
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <returns></returns>
+        Public Shared Function GetOutline(x As Double(), y As Double(), Optional fillSize As Integer = 1) As GeneralPath
+            Dim sample As MeasureData() = FillDots(x, y, fillSize).ToArray
+            Dim topleft As New MeasureData(0, 0, 0)
+            Dim topright As New MeasureData(x.Max, y.Max, 0)
+            Dim bottomleft As New MeasureData(0, y.Max, 0)
+            Dim bottomright As New MeasureData(x.Max, 0, 0)
+            Dim allRegions = sample _
+                .JoinIterates({topleft, topright, bottomleft, bottomright}) _
+                .DoCall(Function(poly)
+                            Dim matrix As New MapMatrix(poly, interpolateFill:=False)
+                            Dim path As GeneralPath = ContourTracing.GetOutine(matrix)
+
+                            Return path
+                        End Function)
+
+            Return allRegions
+        End Function
     End Class
 
     Public Class Polygon2D

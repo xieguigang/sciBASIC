@@ -115,7 +115,7 @@ Namespace Text.Xml.Models
     ''' Property Info (Property Name and Property Value).
     ''' (和<see cref="NamedValue"/>所不同的是，这个对象之中的键值对集合的键值都是小段字符串)
     ''' </summary>
-    <XmlType("property")> Public Structure [Property] : Implements INamedValue
+    <XmlType("property")> Public Class [Property] : Implements INamedValue
 
         ''' <summary>
         ''' The property name
@@ -142,10 +142,13 @@ Namespace Text.Xml.Models
             Me.comment = comment
         End Sub
 
+        Sub New()
+        End Sub
+
         Public Overrides Function ToString() As String
             Return $"{name} = ""{value}"""
         End Function
-    End Structure
+    End Class
 
     ''' <summary>
     ''' 在这里不实现<see cref="IEnumerable(Of T)"/>是为了方便的实现XML序列化操作

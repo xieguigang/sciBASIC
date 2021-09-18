@@ -490,7 +490,14 @@ Public Module App
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetAppLocalData(app$, assemblyName$, <CallerMemberName> Optional track$ = Nothing) As String
-        Return $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{app}/{assemblyName}".GetDirectoryFullPath(track)
+#If netcore5 = 0 Then
+        ' XDG_DATA_HOME make be empty on unix
+        Dim localAppData As String = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
+#Else
+        Dim localAppData As String = $"{UserHOME}/.local/share/"
+#End If
+
+        Return $"{localAppData}/{app}/{assemblyName}".GetDirectoryFullPath(track)
     End Function
 
     Public Function GetAppLocalData(exe$) As String
