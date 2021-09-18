@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2C5B56A6-7A48-457F-B347-3E15CF82D579}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>_3DEngineTest.FormLandscape</StartupObject>
+    <StartupObject>_3DEngineTest.FormTest</StartupObject>
     <RootNamespace>_3DEngineTest</RootNamespace>
     <AssemblyName>3DEngineTest</AssemblyName>
     <FileAlignment>512</FileAlignment>
