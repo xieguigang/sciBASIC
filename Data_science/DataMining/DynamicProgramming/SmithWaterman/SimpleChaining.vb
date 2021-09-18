@@ -1,51 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::cfaa05bcc45fbdf8c40725ea27611a20, Data_science\DataMining\DynamicProgramming\SmithWaterman\SimpleChaining.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module SimpleChaining
-    ' 
-    '         Properties: FromAComparator
-    ' 
-    '         Function: Chaining, ChainingImpl, populateChains, sort
-    ' 
-    '         Sub: printLowerMatrix
-    '         Structure ComparatorHelper
-    ' 
-    '             Function: Compare
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module SimpleChaining
+' 
+'         Properties: FromAComparator
+' 
+'         Function: Chaining, ChainingImpl, populateChains, sort
+' 
+'         Sub: printLowerMatrix
+'         Structure ComparatorHelper
+' 
+'             Function: Compare
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -187,8 +187,9 @@ Namespace SmithWaterman
         End Function
 
         <Extension>
-        Private Iterator Function populateChains(matches As Match(), prevIndex As Integer(), maxIndex As Integer, max As Double, debug As Boolean) As IEnumerable
+        Private Iterator Function populateChains(matches As Match(), prevIndex As Integer(), maxIndex As Integer, max As Double, debug As Boolean) As IEnumerable(Of Match)
             Dim chainIndex As Integer() = New Integer(maxIndex - 1) {}
+            Dim ii As Integer = 1
 
             For i As Integer = 0 To chainIndex.Length - 1
                 chainIndex(i) = -1
@@ -196,10 +197,13 @@ Namespace SmithWaterman
 
             chainIndex(0) = maxIndex
 
-            Dim ii As Integer = 1
-
             While prevIndex(chainIndex(ii - 1)) >= 0
-                chainIndex(ii) = prevIndex(chainIndex(ii - 1))
+                If chainIndex.Length = ii Then
+                    Exit While
+                Else
+                    chainIndex(ii) = prevIndex(chainIndex(ii - 1))
+                End If
+
                 ii += 1
             End While
 

@@ -1,50 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::78232cc60eb0c5bc9e4e57b660ba0516, Data_science\Mathematica\Math\Math\Spline\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Enum Splines
-    ' 
-    '         B_Spline, Bezier, CatmullRomSpline, CentripetalCatmullRomSpline, CubicSpline
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Module Extensions
-    ' 
-    '         Function: CubicSpline, ParseSplineValue
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Enum Splines
+' 
+'         B_Spline, Bezier, CatmullRomSpline, CentripetalCatmullRomSpline, CubicSpline
+' 
+'  
+' 
+' 
+' 
+'     Module Extensions
+' 
+'         Function: CubicSpline, ParseSplineValue
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -97,6 +97,57 @@ Namespace Interpolation
                     Return Splines.None
                 End If
             End With
+        End Function
+
+        ''' <summary>
+        ''' Computes the range of a strided array.
+        ''' </summary>
+        ''' <param name="N">number of indexed elements</param>
+        ''' <param name="x">input array</param>
+        ''' <param name="stride">stride length</param>
+        ''' <returns></returns>
+        Public Function Range(N As Integer, x As Double(), stride As Integer) As Double
+            Dim max As Double
+            Dim min As Double
+            Dim ix As Integer
+            Dim v As Double
+
+            If N <= 0 Then
+                Return Double.NaN
+            End If
+
+            If N = 1 OrElse stride = 0 Then
+                If x(0).IsNaNImaginary Then
+                    Return Double.NaN
+                End If
+                Return 0.0
+            End If
+
+            If stride < 0 Then
+                ix = (1 - N) * stride
+            Else
+                ix = 0
+            End If
+
+            min = x(ix)
+            max = min
+
+            For i As Integer = 1 To N - 1
+                ix += stride
+                v = x(ix)
+
+                If v.IsNaNImaginary Then
+                    Return v
+                End If
+
+                If v < min Then
+                    min = v
+                ElseIf v > max Then
+                    max = v
+                End If
+            Next
+
+            Return max - min
         End Function
     End Module
 End Namespace

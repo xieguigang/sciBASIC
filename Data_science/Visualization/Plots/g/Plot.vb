@@ -125,12 +125,19 @@ Namespace Graphic
 
         Protected MustOverride Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
 
+        ''' <summary>
+        ''' custom layout via <see cref="theme.legendLayout"/>
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="legends"></param>
+        ''' <param name="showBorder"></param>
+        ''' <param name="canvas"></param>
         Protected Sub DrawLegends(g As IGraphics, legends As LegendObject(), showBorder As Boolean, canvas As GraphicsRegion)
             Dim legendLabelFont As Font = CSSFont.TryParse(theme.legendLabelCSS).GDIObject(g.Dpi)
             Dim lsize As SizeF = g.MeasureString("A", legendLabelFont)
             Dim legendParts As LegendObject()() = Nothing
             Dim maxWidth!
-            Dim legendPos As Point
+            Dim legendPos As PointF
             Dim legendSize$
             Dim region As Rectangle = canvas.PlotRegion
 
@@ -147,16 +154,18 @@ Namespace Graphic
 
                 If theme.legendSplitSize > 0 AndAlso legends.Length > theme.legendSplitSize Then
                     legendParts = legends.Split(theme.legendSplitSize)
-                    legendPos = New Point With {
+                    legendPos = New PointF With {
                         .X = region.Width - (lsize.Width + maxWidth + 5) * (legendParts.Length - 1),
                         .Y = region.Top + lFont.Height
                     }
                 Else
-                    legendPos = New Point With {
+                    legendPos = New PointF With {
                         .X = region.Size.Width - lsize.Width / 4 - maxWidth,
                         .Y = region.Top + lFont.Height
                     }
                 End If
+            Else
+                legendPos = theme.legendLayout.GetLocation(canvas, Nothing)
             End If
 
             If legendParts.IsNullOrEmpty Then

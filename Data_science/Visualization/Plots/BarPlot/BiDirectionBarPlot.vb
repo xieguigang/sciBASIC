@@ -192,6 +192,11 @@ Namespace BarPlot
                 New LegendObject With {.color = colorFactor2.Color.ToHtmlColor, .fontstyle = theme.legendLabelCSS, .style = LegendStyles.Square, .title = data.Factor2}
             }
 
+            theme.legendLayout = New Absolute With {
+                .x = canvas.PlotRegion.Right + 20,
+                .y = canvas.PlotRegion.Top + 20
+            }
+
             Call DrawLegends(g, legends, showBorder:=False, canvas:=canvas)
         End Sub
     End Class
