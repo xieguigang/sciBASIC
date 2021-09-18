@@ -49,7 +49,7 @@ Public Class CubeModel : Inherits GDIDevice
 
     Private Sub CubeModel_Load(sender As Object, e As EventArgs) Handles Me.Load
         Model = Function() cubeModel.faces
-        bg = Color.LightBlue
+        bg = Color.SkyBlue
         Animation = Sub()
                         ' Update the variable after each frame.
                         _camera.angleX += 1

@@ -54,8 +54,8 @@ Namespace Drawing3D.Models
     Public Class Cube : Implements I3DModel
 
         ''' <summary>
-        ''' Create an array representing the 6 faces of a cube. Each face is composed by indices to the vertex array
-        ''' above.
+        ''' Create an array representing the 6 faces of a cube. Each face is composed 
+        ''' by indices to the vertex array above.
         ''' </summary>
         Shared ReadOnly _faces%()() = {
             {0, 1, 2, 3},
@@ -74,8 +74,9 @@ Namespace Drawing3D.Models
         ''' <param name="d%">正方形的边的长度</param>
         ''' <param name="colors"></param>
         Sub New(Optional d% = 1, Optional colors As Color() = Nothing)
+            ' Create the cube vertices.
             Me.New(
-                vertices:={  ' Create the cube vertices.
+                vertices:={
                     New Point3D(-1 * d, 1 * d, -1 * d),
                     New Point3D(1 * d, 1 * d, -1 * d),
                     New Point3D(1 * d, -1 * d, -1 * d),
@@ -90,7 +91,7 @@ Namespace Drawing3D.Models
                 {   ' Define the colors of each face.
                     Color.BlueViolet,
                     Color.Cyan,
-                    Color.Green,
+                    Color.LimeGreen,
                     Color.Yellow,
                     Color.Violet,
                     Color.LightSkyBlue
@@ -98,13 +99,12 @@ Namespace Drawing3D.Models
         End Sub
 
         Sub New(vertices As Point3D(), colors As Color())
-            Me.New(
-                vertices,
-                colors.Select(Function(c) New SolidBrush(c)).ToArray)
+            Me.New(vertices, colors.Select(Function(c) New SolidBrush(c)).ToArray)
         End Sub
 
         Sub New(vertices As Point3D(), brushes As Brush())
-            ' Create the brushes to draw each face. Brushes are used to draw filled polygons.
+            ' Create the brushes to draw each face.
+            ' Brushes are used to draw filled polygons.
             faces = New Surface(5) {}
 
             For i% = 0 To 5
@@ -119,7 +119,6 @@ Namespace Drawing3D.Models
                     },
                     .brush = brushes(i)
                 }
-                '   faces(i).Allocation()
             Next
         End Sub
 

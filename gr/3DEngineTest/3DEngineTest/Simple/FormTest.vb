@@ -50,11 +50,11 @@ Public Class FormTest
     }
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Dim plat As New ColorPalette With {
-            .Dock = DockStyle.Fill
-        }
+        'Dim plat As New ColorPalette With {
+        '    .Dock = DockStyle.Fill
+        '}
 
-        Controls.Add(plat)
+        'Controls.Add(plat)
 
         Call Controls.Add(canvas)
         Call canvas.Run()
