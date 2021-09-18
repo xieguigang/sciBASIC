@@ -122,7 +122,7 @@ Namespace CommandLine
                                 Optional in$ = "",
                                 Optional ByRef stdErr As String = Nothing) As Integer
 
-            Dim p As Process = CreatePipeline(app, args, it:=Not app.ExtensionSuffix("sh"))
+            Dim p As Process = CreatePipeline(app, args, it:=(Not app.ExtensionSuffix("sh")) OrElse app.FileExists)
             Dim reader As StreamReader = p.StandardOutput
             Dim errReader As StreamReader = p.StandardError
 
@@ -155,6 +155,8 @@ Namespace CommandLine
         ''' ```
         ''' docker run -it XXX
         ''' ```
+        ''' 
+        ''' parameter value set to TRUE means not UseShellExecute
         ''' </param>
         ''' <returns></returns>
         Public Function CreatePipeline(app As String, args As String, Optional it As Boolean = True) As Process
@@ -167,7 +169,7 @@ Namespace CommandLine
             p.StartInfo.RedirectStandardInput = it
             p.StartInfo.RedirectStandardError = it
             p.StartInfo.UseShellExecute = Not it
-            p.StartInfo.CreateNoWindow = True
+            p.StartInfo.CreateNoWindow = Microsoft.VisualBasic.App.IsMicrosoftPlatform
             p.Start()
 
             Return p

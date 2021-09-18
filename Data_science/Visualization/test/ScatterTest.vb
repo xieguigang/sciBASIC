@@ -49,7 +49,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
+Imports csvFile = Microsoft.VisualBasic.Data.csv.IO.File
 Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Imaging
@@ -146,7 +146,7 @@ Module ScatterTest
         'Pause()
 
         For Each file As String In (ls - l - r - "*.csv" <= "D:\OneDrive\2017-9-25\DENV-1234")
-            Dim csv As csv = csv.Load(file)
+            Dim csv As csvFile = csvFile.Load(file)
             Dim X = csv.Columns(0).Skip(1).AsDouble
             Dim Y = csv.Columns(csv.Headers.IndexOf("mean")).Skip(1).AsDouble
             Dim err = csv.Columns(csv.Headers.IndexOf("sem")).Skip(1).AsDouble

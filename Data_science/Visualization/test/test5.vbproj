@@ -1,0 +1,121 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<RootNamespace>Microsoft.VisualBasic.Data.visualize</RootNamespace>
+		<TargetFramework>net5.0</TargetFramework>
+		<AssemblyName>test</AssemblyName>
+		<Authors>xie.guigang@live.com</Authors>
+		<Company>sciBASIC.NET</Company>
+		<Version>5.0.1.2389</Version>
+		<Copyright>GPL3</Copyright>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageProjectUrl>http://sciBASIC.NET</PackageProjectUrl>
+		<PackageIcon>logo-knot.png</PackageIcon>
+		<RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+		<Platforms>AnyCPU;x64</Platforms>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release</Configurations>
+		<OutputType>Exe</OutputType>
+		<StartupObject>Microsoft.VisualBasic.Data.visualize.OutlineTest</StartupObject>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+	  <OutputPath>bin\x64\</OutputPath>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+	  <DebugSymbols>true</DebugSymbols>
+	  <DebugType>full</DebugType>
+	  <DocumentationFile>Microsoft.VisualBasic.Data.visualize.xml</DocumentationFile>
+	  <DefineConstants>netcore5=1</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <DocumentationFile>Microsoft.VisualBasic.Data.visualize.xml</DocumentationFile>
+	  <DefineConstants>netcore5=1</DefineConstants>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+	  <DebugSymbols>true</DebugSymbols>
+	  <DebugType>full</DebugType>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	  <DocumentationFile>Microsoft.VisualBasic.Data.visualize.xml</DocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
+	  <DocumentationFile>Microsoft.VisualBasic.Data.visualize.xml</DocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|AnyCPU'">
+	  <DocumentationFile>Microsoft.VisualBasic.Data.visualize.xml</DocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+	  <DocumentationFile>Microsoft.VisualBasic.Data.visualize.xml</DocumentationFile>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+	  <Optimize>false</Optimize>
+	  <DebugSymbols>true</DebugSymbols>
+	  <DebugType>full</DebugType>
+	  <DefineDebug>false</DefineDebug>
+	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
+	  <DocumentationFile>Microsoft.VisualBasic.Data.visualize.xml</DocumentationFile>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+	  <Optimize>false</Optimize>
+	  <DebugSymbols>true</DebugSymbols>
+	  <DebugType>full</DebugType>
+	  <DefineDebug>false</DefineDebug>
+	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+	  <OutputPath>D:\GCModeller\src\R-sharp\App\</OutputPath>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|x64'">
+	  <DocumentationFile>Microsoft.VisualBasic.Data.visualize.xml</DocumentationFile>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+	  <Optimize>false</Optimize>
+	  <DebugSymbols>true</DebugSymbols>
+	  <DebugType>full</DebugType>
+	  <DefineDebug>false</DefineDebug>
+	  <DefineTrace>true</DefineTrace>
+	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="ChartingBase.Test\**" />
+	  <Compile Remove="Testing\**" />
+	  <EmbeddedResource Remove="ChartingBase.Test\**" />
+	  <EmbeddedResource Remove="Testing\**" />
+	  <None Remove="ChartingBase.Test\**" />
+	  <None Remove="Testing\**" />
+	  <None Include="..\..\..\LICENSE">
+	    <Pack>True</Pack>
+	    <PackagePath></PackagePath>
+	  </None>
+	  <None Include="..\..\..\vs_solutions\logo-knot.png">
+	    <Pack>True</Pack>
+	    <PackagePath></PackagePath>
+	  </None>
+	</ItemGroup>
+
+  <ItemGroup>
+    <Import Include="System.Data" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Data\DataFrame\dataframework-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\..\mime\text%html\html_netcore5.vbproj" />
+    <ProjectReference Include="..\..\DataMining\hierarchical-clustering\hierarchical-clustering\hctree.NET5.vbproj" />
+    <ProjectReference Include="..\..\Graph\graph-netcore5.vbproj" />
+    <ProjectReference Include="..\..\Mathematica\Math\DataFittings\linear-netcore5.vbproj" />
+    <ProjectReference Include="..\..\Mathematica\Math\DataFrame\dataframeUtils-netcore5.vbproj" />
+    <ProjectReference Include="..\..\Mathematica\Math\Math.Statistics\stats-netcore5.vbproj" />
+    <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
+    <ProjectReference Include="..\..\Mathematica\Math\ODE\odes-netcore5.vbproj" />
+    <ProjectReference Include="..\Plots-statistics\plots_extensions-netcore5.vbproj" />
+    <ProjectReference Include="..\Plots\plots-netcore5.vbproj" />
+  </ItemGroup>
+
+</Project>

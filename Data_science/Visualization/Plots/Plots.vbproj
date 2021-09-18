@@ -668,6 +668,7 @@
     <Compile Include="Scatter\Data\SerialData.vb" />
     <Compile Include="Scatter\LinePlot.vb" />
     <Compile Include="Scatter\Plot\LinePlot2D.vb" />
+    <Compile Include="Scatter\Plot\PolygonPlot2D.vb" />
     <Compile Include="Scatter\Plot\Scatter2D.vb" />
     <Compile Include="ViolinPlot.vb" />
     <Compile Include="Scatter\Bubble.vb" />

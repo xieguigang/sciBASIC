@@ -51,11 +51,11 @@ Module VolinPlotTest
 
 
 
-        Call VolinPlot.Plot(dataset:=data, size:="3300,3600", removesOutliers:=False, yTickFormat:="G2").Save("D:\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\data\sample_groups.VolinPlot.png")
+        Call ViolinPlot.Plot(dataset:=data, size:="3300,3600", removesOutliers:=False, yTickFormat:="G2").Save("D:\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\data\sample_groups.VolinPlot.png")
 
         g.SetDriver(Drivers.SVG)
 
-        Call VolinPlot.Plot(dataset:=data, size:="3300,3600", removesOutliers:=False, yTickFormat:="G2", labelAngle:=0.0).Save("D:\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\data\sample_groups.VolinPlot.svg")
+        Call ViolinPlot.Plot(dataset:=data, size:="3300,3600", removesOutliers:=False, yTickFormat:="G2", labelAngle:=0.0).Save("D:\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\data\sample_groups.VolinPlot.svg")
 
         Call Pause()
     End Sub

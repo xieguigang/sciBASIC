@@ -53,7 +53,7 @@ Module LabelingTest
         Using g As Graphics2D = New Size(1024, 1024).CreateGDIDevice(filled:=Color.White)
             Dim labelFont As Font = CSSFont _
                 .TryParse(CSSFont.PlotLabelNormal) _
-                .GDIObject
+                .GDIObject(300)
             Dim rand As New Random
             Dim labels As Label() = g.Label(130.SeqRandom.Select(Function(i) rand.NextDouble.ToString("F4"))).ToArray
             Dim anchors = labels _

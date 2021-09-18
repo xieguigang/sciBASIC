@@ -1,47 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::ca431332c6aabbd3c8e8b71654a92425, Data_science\Visualization\Plots\g\Axis\Axis.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Axis
-    ' 
-    '         Properties: delta
-    ' 
-    '         Function: __plotLabel, (+2 Overloads) DrawLabel
-    ' 
-    '         Sub: checkScaler, (+2 Overloads) DrawAxis, DrawString, DrawX, DrawY
-    '              DrawYGrid
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Axis
+' 
+'         Properties: delta
+' 
+'         Function: __plotLabel, (+2 Overloads) DrawLabel
+' 
+'         Sub: checkScaler, (+2 Overloads) DrawAxis, DrawString, DrawX, DrawY
+'              DrawYGrid
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -356,7 +356,7 @@ Namespace Graphic.Axis
                         End If
                     End If
 
-                    Dim labelText = (tick).ToString(tickFormat)
+                    Dim labelText As String = If(stdNum.Abs(tick) < 0.000001, "0", tick.ToString(tickFormat))
                     Dim sz As SizeF = g.MeasureString(labelText, tickFont)
 
                     If layout = YAxisLayoutStyles.Right Then
@@ -531,7 +531,13 @@ Namespace Graphic.Axis
                 If TypeOf scaler.X Is LinearScale Then
                     ticks = scaler.AxisTicks.X _
                         .Select(Function(tick)
-                                    Return (scaler.X(tick), (tick).ToString(tickFormat))
+                                    Dim tickLabel As String
+
+                                    If stdNum.Abs(tick) <= 0.000001 Then
+                                        Return (scaler.X(tick), "0")
+                                    Else
+                                        Return (scaler.X(tick), (tick).ToString(tickFormat))
+                                    End If
                                 End Function) _
                         .ToArray
                 Else

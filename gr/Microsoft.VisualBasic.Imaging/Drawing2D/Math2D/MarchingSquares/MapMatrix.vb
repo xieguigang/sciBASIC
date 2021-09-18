@@ -49,7 +49,6 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Quantile
-Imports stdNum = System.Math
 
 Namespace Drawing2D.Math2D.MarchingSquares
 
@@ -67,6 +66,15 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' </summary>
         ReadOnly dots() As MeasureData
 
+        Public ReadOnly Property size As Integer
+            Get
+                Dim dims = dimension
+                Dim l = dims.Width * dims.Height
+
+                Return l
+            End Get
+        End Property
+
         Public ReadOnly Property dimension As Size
             Get
                 Dim w As Integer = Aggregate p In dots Into Max(p.X)
@@ -80,12 +88,12 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' 
         ''' </summary>
         ''' <param name="raw">现实世界中的原始测量结果数据</param>
-        Sub New(raw As IEnumerable(Of MeasureData))
+        Sub New(raw As IEnumerable(Of MeasureData), Optional interpolateFill As Boolean = True)
             dots = raw.ToArray
 
             ' raw sparse point interpolate
             ' into dense matrix
-            Call interpolateData()
+            Call interpolateData(interpolateFill)
         End Sub
 
         Public Function GetLevelQuantile() As QuantileEstimationGK
@@ -146,7 +154,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' <summary>
         ''' 数据插值
         ''' </summary>
-        Friend Function interpolateData() As MapMatrix
+        Friend Function interpolateData(interpolateFill As Boolean) As MapMatrix
             Dim dims As Size = dimension
             Dim x_num = dims.Width
             Dim y_num = dims.Height
@@ -154,7 +162,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
             data = New Double(x_num - 1, y_num - 1) {}
 
             For i As Integer = 0 To x_num - 1
-                For Each j In getYScan(i, y_num)
+                For Each j In getYScan(i, y_num, interpolateFill)
                     data(i, j) = j.value
                 Next
             Next
@@ -162,16 +170,16 @@ Namespace Drawing2D.Math2D.MarchingSquares
             Return Me
         End Function
 
-        Private Function getYScan(i As Integer, y_num As Integer) As IEnumerable(Of SeqValue(Of Double))
+        Private Function getYScan(i As Integer, y_num As Integer, interpolateFill As Boolean) As IEnumerable(Of SeqValue(Of Double))
             Return y_num.Sequence _
                 .AsParallel _
                 .Select(Function(j)
-                            Return interpolate(i, j)
+                            Return interpolate(i, j, interpolateFill)
                         End Function) _
                 .OrderBy(Function(j) j.i)
         End Function
 
-        Private Function interpolate(i As Integer, j As Integer) As SeqValue(Of Double)
+        Private Function interpolate(i As Integer, j As Integer, interpolateFill As Boolean) As SeqValue(Of Double)
             Dim value As Single = 0
             Dim find As Boolean = False
             Dim d As Double
@@ -184,7 +192,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
                 End If
             Next
 
-            If Not find Then
+            If interpolateFill AndAlso Not find Then
                 Dim lD As Double = 0
                 Dim DV As Double = 0
 

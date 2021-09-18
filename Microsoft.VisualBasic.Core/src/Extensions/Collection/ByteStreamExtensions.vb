@@ -65,4 +65,14 @@ Public Module ByteStreamExtensions
     Public Function AsciiString(stream As IEnumerable(Of Byte)) As String
         Return Encoding.ASCII.GetString(stream.ToArray)
     End Function
+
+    <Extension>
+    Public Function RotateLeft(value As Integer, count As Integer) As Integer
+        Return (value << count) Or (value >> (32 - count))
+    End Function
+
+    <Extension>
+    Public Function RotateRight(value As Integer, count As Integer) As Integer
+        Return (value >> count) Or (value << (32 - count))
+    End Function
 End Module
