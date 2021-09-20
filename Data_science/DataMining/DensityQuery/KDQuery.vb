@@ -2,18 +2,17 @@
 Imports Microsoft.VisualBasic.Data.GraphTheory.KdTree
 Imports Microsoft.VisualBasic.DataMining.Clustering
 Imports Microsoft.VisualBasic.DataMining.KMeans
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.Correlations
 
 Public Class KDQuery : Implements IQueryDensity(Of ClusterEntity)
 
     ReadOnly tree As KdTree(Of ClusterEntity)
+    ReadOnly raws As ClusterEntity()
 
     <DebuggerStepThrough>
     Sub New(raw As IEnumerable(Of ClusterEntity))
-        With raw.ToArray
-            tree = New KdTree(Of ClusterEntity)(.ByRef, New Metric(.First.Length))
-        End With
+        Me.raws = raw.ToArray
+        Me.tree = New KdTree(Of ClusterEntity)(Me.raws, New Metric(Me.raws.First.Length))
     End Sub
 
     Public Function QueryDensity(row As ClusterEntity, k As Integer) As NamedValue(Of Double) Implements IQueryDensity(Of ClusterEntity).QueryDensity
@@ -37,6 +36,10 @@ Public Class KDQuery : Implements IQueryDensity(Of ClusterEntity)
                 .Select(Function(di) di.ToString("F2")) _
                 .JoinBy("; ")
         }
+    End Function
+
+    Public Function Raw() As IEnumerable(Of ClusterEntity) Implements IQueryDensity(Of ClusterEntity).Raw
+        Return raws
     End Function
 End Class
 
