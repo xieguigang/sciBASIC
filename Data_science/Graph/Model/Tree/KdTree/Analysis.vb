@@ -27,12 +27,14 @@ Namespace KdTree
         Public Iterator Function FindNeighbors(data As IEnumerable(Of TagVector), Optional k As Integer = 30) As IEnumerable(Of (size As Integer, indices As Integer(), weights As Double()))
             Dim allData As TagVector() = data.ToArray
             Dim tree As New KdTree(Of TagVector)(allData, RowMetric(ncols:=allData(Scan0).size))
+            Dim knnQuery = From row As TagVector
+                           In allData.AsParallel
+                           Let nn2 = tree.nearest(row, maxNodes:=k).OrderBy(Function(i) i.distance).ToArray
+                           Select row.index, nn2
+                           Order By index
 
-            For Each row As TagVector In allData
-                Dim nn2 = tree _
-                    .nearest(row, maxNodes:=k) _
-                    .OrderBy(Function(i) i.distance) _
-                    .ToArray
+            For Each row In knnQuery
+                Dim nn2 As KdNodeHeapItem(Of TagVector)() = row.nn2
                 Dim index As Integer() = nn2.Select(Function(xi) xi.node.data.index).ToArray
                 Dim weights As Double() = nn2.Select(Function(xi) xi.distance).ToArray
 
