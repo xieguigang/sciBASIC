@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::b6112f798cf6edece255a09292d6ea60, www\Microsoft.VisualBasic.NETProtocol\TcpRequest\NetResponse.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module NetResponse
-    ' 
-    '         Properties: RFC_ACCEPTED, RFC_ALREADY_REPORTED, RFC_AUTH_TIMEOUT, RFC_BAD_GATEWAY, RFC_BAD_REQUEST
-    '                     RFC_BANDWIDTH_LIMITED_EXCEEDED, RFC_BLOCKED, RFC_CERT_ERROR, RFC_CLOSED_REQUEST, RFC_CONFLICT
-    '                     RFC_CONNECT_TIMEOUT_ERROR, RFC_CONNECTION_TIMEOUT, RFC_CONTINUTE, RFC_CREATED, RFC_ENHANCE_YOUR_CALM
-    '                     RFC_EXPECTATION_FAILED, RFC_FAILED_DEPENDENCY, RFC_FORBIDDEN, RFC_FOUND, RFC_GATEWAY_TIMEOUT
-    '                     RFC_GONE, RFC_HTTP_TO_HTTPS, RFC_IM_TEAPOT, RFC_IM_USED, RFC_INSUFFICIENT_STORAGE
-    '                     RFC_INTERNAL_SERVER_ERROR, RFC_LEGAL_UNAVAILABLE, RFC_LENGTH_REQUIRED, RFC_LOCKED, RFC_LOGIN_TIMEOUT
-    '                     RFC_LOOP_DETECTED, RFC_METHOD_FAILURE, RFC_METHOD_NOT_ALLOWED, RFC_MISDIRECTED_REQUEST, RFC_MOVED_PERMANENTLY
-    '                     RFC_MULTI_CHOICES, RFC_MULTI_STATUS, RFC_NEGOTIATES, RFC_NETWORK_AUTH_REQUIRED, RFC_NO_CERT
-    '                     RFC_NO_CONTENT, RFC_NO_RESPONSE, RFC_NON_AUTH_INFO, RFC_NOT_ACCEPTABLE, RFC_NOT_EXTENDED
-    '                     RFC_NOT_FOUND, RFC_NOT_IMPLEMENTED, RFC_NOT_MODIFIED, RFC_OK, RFC_PARTIAL_CONTENT
-    '                     RFC_PAYLOAD_TOO_LARGE, RFC_PAYMENT_REQUIRED, RFC_PERMANENT_REDIRECT, RFC_PRECONDITION_FAILED, RFC_PRECONDITION_REQUIRED
-    '                     RFC_PROCESSING, RFC_PROXY_AUTH_REQUIRED, RFC_RANGE_NOT_SATISFIABLE, RFC_READ_TIMEOUT_ERROR, RFC_REDIRECT
-    '                     RFC_REQUEST_HEADER_FIELDS_TOO_LARGE, RFC_REQUEST_HEADER_TOO_LARGE, RFC_REQUEST_TIMEOUT, RFC_RESET_CONTENT, RFC_RESUME_INCOMPLETE
-    '                     RFC_RETRY_WITH, RFC_SEE_OTHER, RFC_SERVICE_UNAVAILABLE, RFC_SWITCH_PROXY, RFC_SWITCHING_PROTOCOLS
-    '                     RFC_TEMP_REDIRECT, RFC_TOKEN_INVALID, RFC_TOKEN_REQUIRED, RFC_TOO_MANY_REQUEST, RFC_UNAUTHORIZED
-    '                     RFC_UNKNOWN_ERROR, RFC_UNPROCESSABLE_ENTITY, RFC_UNSUPPORTED_MEDIA_TYPE, RFC_UPGRADE_REQUIRED, RFC_URI_TOO_LONG
-    '                     RFC_USE_PROXY, RFC_VERSION_NOT_SUPPORTED
-    ' 
-    '         Function: IsHTTP_RFC
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module NetResponse
+' 
+'         Properties: RFC_ACCEPTED, RFC_ALREADY_REPORTED, RFC_AUTH_TIMEOUT, RFC_BAD_GATEWAY, RFC_BAD_REQUEST
+'                     RFC_BANDWIDTH_LIMITED_EXCEEDED, RFC_BLOCKED, RFC_CERT_ERROR, RFC_CLOSED_REQUEST, RFC_CONFLICT
+'                     RFC_CONNECT_TIMEOUT_ERROR, RFC_CONNECTION_TIMEOUT, RFC_CONTINUTE, RFC_CREATED, RFC_ENHANCE_YOUR_CALM
+'                     RFC_EXPECTATION_FAILED, RFC_FAILED_DEPENDENCY, RFC_FORBIDDEN, RFC_FOUND, RFC_GATEWAY_TIMEOUT
+'                     RFC_GONE, RFC_HTTP_TO_HTTPS, RFC_IM_TEAPOT, RFC_IM_USED, RFC_INSUFFICIENT_STORAGE
+'                     RFC_INTERNAL_SERVER_ERROR, RFC_LEGAL_UNAVAILABLE, RFC_LENGTH_REQUIRED, RFC_LOCKED, RFC_LOGIN_TIMEOUT
+'                     RFC_LOOP_DETECTED, RFC_METHOD_FAILURE, RFC_METHOD_NOT_ALLOWED, RFC_MISDIRECTED_REQUEST, RFC_MOVED_PERMANENTLY
+'                     RFC_MULTI_CHOICES, RFC_MULTI_STATUS, RFC_NEGOTIATES, RFC_NETWORK_AUTH_REQUIRED, RFC_NO_CERT
+'                     RFC_NO_CONTENT, RFC_NO_RESPONSE, RFC_NON_AUTH_INFO, RFC_NOT_ACCEPTABLE, RFC_NOT_EXTENDED
+'                     RFC_NOT_FOUND, RFC_NOT_IMPLEMENTED, RFC_NOT_MODIFIED, RFC_OK, RFC_PARTIAL_CONTENT
+'                     RFC_PAYLOAD_TOO_LARGE, RFC_PAYMENT_REQUIRED, RFC_PERMANENT_REDIRECT, RFC_PRECONDITION_FAILED, RFC_PRECONDITION_REQUIRED
+'                     RFC_PROCESSING, RFC_PROXY_AUTH_REQUIRED, RFC_RANGE_NOT_SATISFIABLE, RFC_READ_TIMEOUT_ERROR, RFC_REDIRECT
+'                     RFC_REQUEST_HEADER_FIELDS_TOO_LARGE, RFC_REQUEST_HEADER_TOO_LARGE, RFC_REQUEST_TIMEOUT, RFC_RESET_CONTENT, RFC_RESUME_INCOMPLETE
+'                     RFC_RETRY_WITH, RFC_SEE_OTHER, RFC_SERVICE_UNAVAILABLE, RFC_SWITCH_PROXY, RFC_SWITCHING_PROTOCOLS
+'                     RFC_TEMP_REDIRECT, RFC_TOKEN_INVALID, RFC_TOKEN_REQUIRED, RFC_TOO_MANY_REQUEST, RFC_UNAUTHORIZED
+'                     RFC_UNKNOWN_ERROR, RFC_UNPROCESSABLE_ENTITY, RFC_UNSUPPORTED_MEDIA_TYPE, RFC_UPGRADE_REQUIRED, RFC_URI_TOO_LONG
+'                     RFC_USE_PROXY, RFC_VERSION_NOT_SUPPORTED
+' 
+'         Function: IsHTTP_RFC
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -696,9 +696,9 @@ Namespace HTTP
         ''' tolerated/interpreted (protocol violation or empty response)."[33]
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property RFC_UNKNOWN_ERROR As RequestStream
+        Public ReadOnly Property RFC_UNKNOWN_ERROR(Optional msg As String = Nothing) As RequestStream
             Get
-                Return New RequestStream(0, 520, "HTTP/520")
+                Return New RequestStream(0, 520, If(msg.StringEmpty, "HTTP/520", $"HTTP/520: {msg}"))
             End Get
         End Property
 

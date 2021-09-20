@@ -229,8 +229,8 @@ Namespace Distributions
         End Function
 
         <Extension>
-        Public Function TabulateMode(data As IEnumerable(Of Double)) As Double
-            Dim resample As Double() = data.TabulateBin
+        Public Function TabulateMode(data As IEnumerable(Of Double), Optional topBin As Boolean = False, Optional bags As Integer = 5) As Double
+            Dim resample As Double() = data.TabulateBin(topBin, bags)
 
             If resample.Length = 0 Then
                 Return Double.NaN
@@ -240,7 +240,7 @@ Namespace Distributions
         End Function
 
         <Extension>
-        Public Function TabulateBin(data As IEnumerable(Of Double)) As Double()
+        Public Function TabulateBin(data As IEnumerable(Of Double), Optional topBin As Boolean = False, Optional bags As Integer = 5) As Double()
             With data.ToArray
                 If .Length = 0 Then
                     Return {}
@@ -251,7 +251,7 @@ Namespace Distributions
                     Return .ByRef
                 End If
 
-                Dim steps As Double = New DoubleRange(.Min, .Max).Length / 5
+                Dim steps As Double = New DoubleRange(.Min, .Max).Length / bags
 
                 If steps < 0.000001 Then
                     Return .ByRef
@@ -261,17 +261,21 @@ Namespace Distributions
                 Dim maxN = which.Max(hist.Select(Function(bin) bin.Count))
                 Dim resample As Double()
 
-                If maxN = 0 Then
-                    resample = hist(Scan0).Raw.AsList + hist(1).Raw
-                ElseIf maxN = hist.Length - 1 Then
-                    resample =
-                        hist(hist.Length - 1).Raw.AsList +
-                        hist(hist.Length - 2).Raw
+                If topBin Then
+                    resample = hist(maxN).Raw
                 Else
-                    resample =
-                        hist(maxN - 1).Raw.AsList +
-                        hist(maxN).Raw +
-                        hist(maxN + 1).Raw
+                    If maxN = 0 Then
+                        resample = hist(Scan0).Raw.AsList + hist(1).Raw
+                    ElseIf maxN = hist.Length - 1 Then
+                        resample =
+                            hist(hist.Length - 1).Raw.AsList +
+                            hist(hist.Length - 2).Raw
+                    Else
+                        resample =
+                            hist(maxN - 1).Raw.AsList +
+                            hist(maxN).Raw +
+                            hist(maxN + 1).Raw
+                    End If
                 End If
 
                 Return resample

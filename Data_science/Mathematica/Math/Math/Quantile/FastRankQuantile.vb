@@ -41,6 +41,8 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Math.Distributions
+
 Namespace Quantile
 
     Public Class FastRankQuantile : Implements QuantileQuery
@@ -48,6 +50,12 @@ Namespace Quantile
         ReadOnly data As Double()
         ReadOnly max As Double
         ReadOnly min As Double
+
+        Public ReadOnly Property sample As SampleDistribution
+            Get
+                Return New SampleDistribution(data, estimateQuantile:=False)
+            End Get
+        End Property
 
         Sub New(vector As IEnumerable(Of Double))
             Me.data = vector.OrderBy(Function(a) a).ToArray
