@@ -111,4 +111,10 @@ Namespace Clustering
             }
         End Function
     End Class
+
+    Public Interface IQueryDensity(Of T As {Class, INamedValue})
+
+        Function QueryDensity(row As T, k As Integer) As NamedValue(Of Double)
+
+    End Interface
 End Namespace
