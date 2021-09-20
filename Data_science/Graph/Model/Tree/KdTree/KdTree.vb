@@ -330,7 +330,7 @@ Namespace KdTree
             Dim bestNodes As New List(Of KdNodeHeapItem(Of T))
             Dim query As New KdTreeNode(Of T)(point, 0, Nothing)
 
-            Call nearestSearch(query, root, 0, bestNodes, maxNodes + 1)
+            Call nearestSearch(query, root, 0, bestNodes, maxNodes * 60)
 
             Dim bestOutput = bestNodes _
                 .GroupBy(Function(i) i.node.data) _
@@ -366,13 +366,16 @@ Namespace KdTree
                                   depth As Integer,
                                   result As List(Of KdNodeHeapItem(Of T)),
                                   maxNodes As Integer)
+
             Dim dimension As Integer = depth Mod dimensions.Length
             Dim axis As String = dimensions(dimension)
             Dim distance As Double = access.metric(point.data, node.data)
             Dim i As Integer
+            Dim addNode As Boolean = False
 
             If result = 0 Then
                 result.Push(New KdNodeHeapItem(Of T)(node, distance))
+                addNode = True
             End If
 
             For i = 0 To result.Count - 1
@@ -382,7 +385,7 @@ Namespace KdTree
             Next
 
             ' splice in our result
-            If i >= 0 AndAlso i <= maxNodes Then
+            If i >= 0 AndAlso i <= maxNodes AndAlso Not addNode Then
                 result.Insert(i, New KdNodeHeapItem(Of T)(node, distance))
             End If
 

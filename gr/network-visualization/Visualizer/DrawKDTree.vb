@@ -1,5 +1,4 @@
 ﻿Imports System.Drawing
-Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
@@ -95,6 +94,7 @@ Public Class DrawKDTree : Inherits Plot
 
             Call render(g, scaler, root.left)
         End If
+
         If Not root.right Is Nothing Then
             pos2 = root.right.data.PointF
             pos2 = scaler.Translate(pos2.X, pos2.Y)

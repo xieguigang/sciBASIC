@@ -73,21 +73,21 @@ Module drawTest
     End Function
 
     Sub drawKDTreeTest()
-        Dim size As New Size(3600, 2700)
-        Dim points2 As Point2D() = 1000.SeqRandom.Select(Function(i) New Point2D(randf.NextInteger(size.Width), randf.NextInteger(size.Height))).ToArray
-        Dim points As FDGVector3() = {
-             New FDGVector3(0, 0, 0),
-             New FDGVector3(10, 10, 10),
-             New FDGVector3(0, 9, 8),
-             New FDGVector3(1, 9, 12),
-             New FDGVector3(100, 100, 100),
-             New FDGVector3(200, 200, 200)
-        }
+        Dim size As New Size(5200, 4500)
+        Dim points2 As Point2D() = 5000.SeqRandom.Select(Function(i) New Point2D(randf.NextInteger(size.Width), randf.NextInteger(size.Height))).ToArray
+        'Dim points As FDGVector3() = {
+        '     New FDGVector3(0, 0, 0),
+        '     New FDGVector3(10, 10, 10),
+        '     New FDGVector3(0, 9, 8),
+        '     New FDGVector3(1, 9, 12),
+        '     New FDGVector3(100, 100, 100),
+        '     New FDGVector3(200, 200, 200)
+        '}
 
 
-        Dim tree As New KdTree(Of FDGVector3)(points, New PointAccess3)
+        'Dim tree As New KdTree(Of FDGVector3)(points, New PointAccess3)
 
-        Dim results = tree.nearest(New FDGVector3(-128, 0, 10), 3).ToArray
+        'Dim results = tree.nearest(New FDGVector3(-128, 0, 10), 3).ToArray
 
         Dim tree2 As New KdTree(Of Point2D)(points2, New PointAccess)
         Dim query = {
@@ -101,7 +101,7 @@ Module drawTest
             New NamedValue(Of PointF)("1", points2.Random, "#ffff00")
         }
 
-        Call DrawKDTree.Plot(tree2, query, k:=30, size:="1600,900", padding:="padding: 20px 20px 20px 20px;").Save("./test.png")
+        Call DrawKDTree.Plot(tree2, query, k:=80, size:="3300,2000", padding:="padding: 50px 50px 50px 50px;").Save("./test.png")
 
         ' Pause()
     End Sub

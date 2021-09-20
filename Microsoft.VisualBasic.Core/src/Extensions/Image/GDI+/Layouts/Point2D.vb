@@ -126,6 +126,7 @@ Namespace Imaging.LayoutModel
             Me.New(point.X, point.Y)
         End Sub
 
+        <DebuggerStepThrough>
         Sub New(point As PointF)
             Call Me.New(point.X, point.Y)
         End Sub
@@ -143,6 +144,8 @@ Namespace Imaging.LayoutModel
         ''' </summary>
         ''' <param name="x"> X-coordinate of the point to be created. </param>
         ''' <param name="y"> Y-coordinate of the point to be created. </param>
+        ''' 
+        <DebuggerStepThrough>
         Public Sub New(x As Double, y As Double)
             Me.X = x
             Me.Y = y
