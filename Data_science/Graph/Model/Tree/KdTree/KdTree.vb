@@ -330,6 +330,7 @@ Namespace KdTree
             Dim bestNodes As New List(Of KdNodeHeapItem(Of T))
             Dim query As New KdTreeNode(Of T)(point, 0, Nothing)
 
+            ' 20210920 似乎在这里必须要保证足够大的采样集大小才可以找到正确的解
             Call nearestSearch(query, root, 0, bestNodes, maxNodes * 60)
 
             Dim bestOutput = bestNodes _
