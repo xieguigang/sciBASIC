@@ -82,8 +82,8 @@ Namespace Plots
         ReadOnly ablines As Line()
         ReadOnly hullPolygonIndex As Index(Of String)
 
-        Friend xlim As Double = Double.NaN
-        Friend ylim As Double = Double.NaN
+        Friend xlim As Double = -1
+        Friend ylim As Double = -1
 
         Public Sub New(data As IEnumerable(Of SerialData), theme As Theme,
                        Optional scatterReorder As Boolean = False,
@@ -115,10 +115,12 @@ Namespace Plots
             XTicks = array.Select(Function(s) s.pts).IteratesALL.Select(Function(p) CDbl(p.pt.X)).ToArray
             YTicks = array.Select(Function(s) s.pts).IteratesALL.Select(Function(p) CDbl(p.pt.Y)).ToArray
 
-            If Not xlim.IsNaNImaginary Then
+            Call Console.WriteLine($"xlim: {xlim}; ylim: {ylim}")
+
+            If (Not xlim.IsNaNImaginary) AndAlso xlim > 0 Then
                 XTicks = XTicks.JoinIterates({xlim}).ToArray
             End If
-            If Not ylim.IsNaNImaginary Then
+            If (Not ylim.IsNaNImaginary) AndAlso ylim > 0 Then
                 YTicks = YTicks.JoinIterates({ylim}).ToArray
             End If
 

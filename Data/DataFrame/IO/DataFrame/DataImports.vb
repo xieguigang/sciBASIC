@@ -77,8 +77,13 @@ Namespace IO
                 End If
             Next
 
-            If typeHits.Values.All(Function(x) x = 0) Then
+            If typeHits(GetType(String)) > 0 OrElse
+                typeHits.Values.All(Function(x) x = 0) OrElse
+                typeHits.Values.All(Function(x) x > 0) Then
+
                 Return GetType(String)
+            ElseIf typeHits(GetType(Double)) > 0 Then
+                Return GetType(Double)
             End If
 
             Return typeHits _

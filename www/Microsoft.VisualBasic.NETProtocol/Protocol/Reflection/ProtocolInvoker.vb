@@ -54,10 +54,12 @@ Namespace Protocols.Reflection
 
         ReadOnly obj As Object
         ReadOnly method As MethodInfo
+        ReadOnly debug As Boolean
 
-        Sub New(obj As Object, method As MethodInfo)
+        Sub New(obj As Object, method As MethodInfo, Optional debug As Boolean = False)
             Me.obj = obj
             Me.method = method
+            Me.debug = debug
         End Sub
 
         Public Function InvokeProtocol0(request As RequestStream, remoteDevice As System.Net.IPEndPoint) As BufferPipe
