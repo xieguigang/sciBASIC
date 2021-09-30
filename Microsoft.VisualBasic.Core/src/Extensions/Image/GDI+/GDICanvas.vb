@@ -1419,7 +1419,7 @@ Namespace Imaging
         End Sub
 
         ''' <summary>
-        ''' Draws the specified System.Drawing.Image at the specified location and with the
+        ''' Draws the specified <see cref="Image"/> at the specified location and with the
         ''' specified size.
         ''' </summary>
         ''' <param name="image">System.Drawing.Image to draw.</param>
