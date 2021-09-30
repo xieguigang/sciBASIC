@@ -48,10 +48,21 @@ Imports Microsoft.VisualBasic.Language.Default
 
 Namespace Drawing2D.Text.ASCIIArt
 
+    ''' <summary>
+    ''' a pixel char
+    ''' </summary>
     Public Class WeightedChar
 
+        ''' <summary>
+        ''' a char that represent a pixel on the source bitmap
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Character As String
         Public Property CharacterImage As Bitmap
+        ''' <summary>
+        ''' the gray scale value
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Weight As Double
 
         Public Overrides Function ToString() As String

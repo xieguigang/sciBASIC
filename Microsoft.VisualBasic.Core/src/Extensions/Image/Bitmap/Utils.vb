@@ -87,6 +87,12 @@ Namespace Imaging.BitmapImage
             Return source.Clone(rect, source.PixelFormat)
         End Function
 
+        ''' <summary>
+        ''' resize image to a new pixel size
+        ''' </summary>
+        ''' <param name="Image"></param>
+        ''' <param name="newSize"></param>
+        ''' <returns></returns>
         <ExportAPI("Image.Resize")>
         <Extension>
         Public Function Resize(Image As Image, newSize As Size) As Image
