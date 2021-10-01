@@ -662,6 +662,7 @@
     <Compile Include="Analysis\PQDijkstra\HeapNode.vb" />
     <Compile Include="Analysis\PQDijkstra\PQDijkstraProvider.vb" />
     <Compile Include="Model\Abstract\General.vb" />
+    <Compile Include="Model\GridNetwork\Grid2D.vb" />
     <Compile Include="Model\GridNetwork\GridCell.vb" />
     <Compile Include="Model\Tree\AbstractTree.vb" />
     <Compile Include="Model\Tree\KdTree\Analysis.vb" />
