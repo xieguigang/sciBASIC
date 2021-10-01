@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d1b6632a63b4c908cf489c41cc4990a5, Data\GraphQuery\TextParser\BaseInvoke.vb"
+﻿#Region "Microsoft.VisualBasic::3f4edea555d69fc4dfb0de9171979b76, Data\GraphQuery\TextParser\BaseInvoke.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Function: eq, filter, getText, html, match
     '                   regexp, regexpParseText, regexpReplace, replace, split
-    '                   text, (+2 Overloads) trim
+    '                   strip, tagValue, text, (+2 Overloads) trim
     ' 
     ' 
     ' /********************************************************************************/

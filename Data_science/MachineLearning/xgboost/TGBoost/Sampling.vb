@@ -1,4 +1,52 @@
-﻿Imports Microsoft.VisualBasic.Language.Java.Arrays
+﻿#Region "Microsoft.VisualBasic::a8d89f1280a3189bebce1e4f35c56881, Data_science\MachineLearning\xgboost\TGBoost\Sampling.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class RowSampler
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: shuffle
+    ' 
+    '     Class ColumnSampler
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: shuffle
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.Language.Java.Arrays
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace train
@@ -44,3 +92,4 @@ Namespace train
         End Sub
     End Class
 End Namespace
+

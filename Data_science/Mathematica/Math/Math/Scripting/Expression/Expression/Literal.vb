@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a0a1d41b832b9e51110d8dfbb92e971, Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\Literal.vb"
+﻿#Region "Microsoft.VisualBasic::1f44734a1b70ce403f90032cf909642b, Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\Literal.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class Literal
     ' 
-    '         Properties: number
+    '         Properties: isInteger, number
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: (+2 Overloads) Evaluate, GetNegative, GetReciprocal, ToString

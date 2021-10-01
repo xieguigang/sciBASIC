@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9340d17391d434881e0bf6dfb2efccf, Data_science\DataMining\UMAP\KNN\KNNArguments.vb"
+﻿#Region "Microsoft.VisualBasic::bc6cf39e51b0a829daa8044b62847971, Data_science\DataMining\UMAP\KNN\KNNArguments.vb"
 
     ' Author:
     ' 
@@ -31,12 +31,13 @@
 
     ' Summaries:
 
-    ' Structure KNNArguments
+    '     Structure KNNArguments
     ' 
-    '     Properties: bandwidth, k, localConnectivity, nIter
+    '         Properties: bandwidth, k, localConnectivity, nIter
     ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: ToString
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    ' 
     ' 
     ' /********************************************************************************/
 

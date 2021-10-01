@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b1acf46c0da816f42b79cd97de6df05, Microsoft.VisualBasic.Core\src\Extensions\Collection\ByteStreamExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::b2ac8d0c6bb29410ddd947bd1c3ec59e, Microsoft.VisualBasic.Core\src\Extensions\Collection\ByteStreamExtensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module ByteStreamExtensions
     ' 
-    '     Function: AsciiString, UnicodeString, UTF8String
+    '     Function: AsciiString, RotateLeft, RotateRight, UnicodeString, UTF8String
     ' 
     ' /********************************************************************************/
 

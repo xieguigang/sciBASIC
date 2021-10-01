@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18495e3221e8d7201abd4a08c9c7674d, Data_science\Mathematica\Math\MathLambda\Symbolic.vb"
+﻿#Region "Microsoft.VisualBasic::0ad0108fd823cbbd71719f81e36e5cf9, Data_science\Mathematica\Math\Math\Scripting\Symbolic\Symbolic.vb"
 
     ' Author:
     ' 
@@ -31,16 +31,10 @@
 
     ' Summaries:
 
-    ' Module Symbolic
+    '     Module Symbolic
     ' 
-    '     Function: isNormalized, (+4 Overloads) makeSimple, Simplify
+    '         Function: isNormalized, (+4 Overloads) makeSimple, Simplify
     ' 
-    ' Class UnifySymbol
-    ' 
-    '     Properties: factor, power
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: Evaluate, ToString
     ' 
     ' /********************************************************************************/
 

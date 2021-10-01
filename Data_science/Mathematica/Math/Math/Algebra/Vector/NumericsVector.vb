@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a22ee983dc47590ab78b680ff24c484, Data_science\Mathematica\Math\Math\Algebra\Vector\NumericsVector.vb"
+﻿#Region "Microsoft.VisualBasic::80a9a27cf99357ee4d06d7ab350433bf, Data_science\Mathematica\Math\Math\Algebra\Vector\NumericsVector.vb"
 
     ' Author:
     ' 

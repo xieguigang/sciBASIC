@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34b237b3e3952bafd66c908122423afb, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\GeneralPath.vb"
+﻿#Region "Microsoft.VisualBasic::2f976114354323b662d48a1209cad684, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\GeneralPath.vb"
 
     ' Author:
     ' 
@@ -37,9 +37,10 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: GetContour, GetPolygons, ToString
+    '         Function: AddPolygon, GetContour, GetPolygons, ToString
     ' 
-    '         Sub: ClosePath, Draw, Fill, LineTo, MoveTo
+    '         Sub: ClosePath, Discard, Draw, Fill, LineTo
+    '              MoveTo
     ' 
     ' 
     ' /********************************************************************************/

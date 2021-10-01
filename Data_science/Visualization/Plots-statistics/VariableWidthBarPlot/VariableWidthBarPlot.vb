@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::044c593f989c999fbe98895366170d75, Data_science\Visualization\Plots-statistics\VariableWidthBarPlot\VariableWidthBarPlot.vb"
+﻿#Region "Microsoft.VisualBasic::cf4bd361d8dbec3f1d8dbc85164990a4, Data_science\Visualization\Plots-statistics\VariableWidthBarPlot\VariableWidthBarPlot.vb"
 
     ' Author:
     ' 

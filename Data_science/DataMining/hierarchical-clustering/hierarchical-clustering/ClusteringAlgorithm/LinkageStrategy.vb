@@ -1,57 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::26d34881265a9011c2271b70bc919f8d, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm\LinkageStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::51a750ad09a00f3993ed48adf39f47b5, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm\LinkageStrategy.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Interface LinkageStrategy
-' 
-'     Function: CalculateDistance
-' 
-' Class SingleLinkageStrategy
-' 
-'     Function: CalculateDistance
-' 
-' Class WeightedLinkageStrategy
-' 
-'     Function: CalculateDistance
-' 
-' Class CompleteLinkageStrategy
-' 
-'     Function: CalculateDistance
-' 
-' Class AverageLinkageStrategy
-' 
-'     Function: CalculateDistance
-' 
-' /********************************************************************************/
+    ' Interface LinkageStrategy
+    ' 
+    '     Function: CalculateDistance
+    ' 
+    ' Class SingleLinkageStrategy
+    ' 
+    '     Function: CalculateDistance
+    ' 
+    ' Class WeightedLinkageStrategy
+    ' 
+    '     Function: CalculateDistance
+    ' 
+    ' Class CompleteLinkageStrategy
+    ' 
+    '     Function: CalculateDistance
+    ' 
+    ' Class AverageLinkageStrategy
+    ' 
+    '     Function: CalculateDistance
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::667e64df610f3d215cf43c33b9f3ed7d, Data_science\Visualization\Plots-statistics\HistStackedBarplot.vb"
+﻿#Region "Microsoft.VisualBasic::8148bc260b8c24426e8144382079ef46, Data_science\Visualization\Plots-statistics\HistStackedBarplot.vb"
 
     ' Author:
     ' 

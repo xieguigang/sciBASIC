@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c86d3c372b78076dc0d9da5bc0cca74, Data_science\Mathematica\Math\DataFrame\Correlation\DistanceMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::2141ad06ed1e6549c82c62a7c993b1dc, Data_science\Mathematica\Math\DataFrame\Correlation\DistanceMatrix.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a7592fc2ba5c1c7ec04afbb8f40afe62, Microsoft.VisualBasic.Core\src\Text\Parser\HtmlParser\HtmlStrips.vb"
+﻿#Region "Microsoft.VisualBasic::bbb02d80e95ae87e727150f71f9da47b, Microsoft.VisualBasic.Core\src\Text\Parser\HtmlParser\HtmlStrips.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '                   GetSelectOptions, GetSelectValue, GetValue, HtmlLines, HtmlList
     '                   HTMLTitle, paragraph, Regexp, RemovesCSSstyles, RemovesFooter
     '                   RemovesHtmlComments, RemovesHtmlHead, RemovesHtmlStrong, RemovesImageLinks, RemovesJavaScript
-    '                   RemoveTags, StripHTMLTags, stripTag, TrimResponseTail
+    '                   RemoveTags, StripHTMLTags, TrimResponseTail
     ' 
     ' 
     ' /********************************************************************************/

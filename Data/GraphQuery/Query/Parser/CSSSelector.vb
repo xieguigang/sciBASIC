@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07cf915f26aa37dd1f791fff486d4579, Data\GraphQuery\Query\Parser\CSSSelector.vb"
+﻿#Region "Microsoft.VisualBasic::ef0bd4491259a67a7c2fc667218f2966, Data\GraphQuery\Query\Parser\CSSSelector.vb"
 
     ' Author:
     ' 

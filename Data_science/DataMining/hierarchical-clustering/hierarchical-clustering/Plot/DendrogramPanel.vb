@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4d3b7bbca9e6e34c5e9b72aa119e969, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Plot\DendrogramPanel.vb"
+﻿#Region "Microsoft.VisualBasic::96da9da54cc3f6097a4a3be4e7d1f8ca, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Plot\DendrogramPanel.vb"
 
     ' Author:
     ' 

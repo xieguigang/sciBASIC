@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f0b5310b80679c5f51d83563bc1eb810, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\DoubleRange.vb"
+﻿#Region "Microsoft.VisualBasic::65a13050500e4bf1c023e665095c9d77, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\DoubleRange.vb"
 
     ' Author:
     ' 

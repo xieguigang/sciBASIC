@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5e661546a8baad03991d59967f979ad, Data_science\Mathematica\Math\Math\Quantile\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::9d2dae826b1316ca476a9278e2f737f3, Data_science\Mathematica\Math\Math\Quantile\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: debugView, (+2 Overloads) GKQuantile, QuantileLevels, SelectByQuantile, Threshold
+    '         Function: debugView, (+3 Overloads) GKQuantile, QuantileLevels, SelectByQuantile, Threshold
     ' 
     '         Sub: Summary
     ' 

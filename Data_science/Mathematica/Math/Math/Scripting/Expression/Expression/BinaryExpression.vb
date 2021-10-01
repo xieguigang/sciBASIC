@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb85e2658caab5610e1efd29fb139c60, Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\BinaryExpression.vb"
+﻿#Region "Microsoft.VisualBasic::8063d3eecd07b711fabc8be8c0a2091e, Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\BinaryExpression.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: [operator], left, right
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: Evaluate, ToString
+    '         Function: Evaluate, Power, ToString
     ' 
     ' 
     ' /********************************************************************************/

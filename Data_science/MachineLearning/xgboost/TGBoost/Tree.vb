@@ -1,4 +1,73 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel
+﻿#Region "Microsoft.VisualBasic::52ddaf609701d84b8f03db180b1631c7, Data_science\MachineLearning\xgboost\TGBoost\Tree.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Tree
+    ' 
+    '         Properties: root
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: calculate_leaf_score, calculate_split_gain, predict
+    ' 
+    '         Sub: build, clean_up, fit
+    '         Class ProcessEachNumericFeature
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Sub: run
+    ' 
+    '         Class ProcessEachCategoricalFeature
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Sub: run
+    '             Class ComparatorAnonymousInnerClass
+    ' 
+    '                 Function: compare
+    ' 
+    ' 
+    ' 
+    '         Class PredictCallable
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Function: [call]
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Java
@@ -467,3 +536,4 @@ Namespace train
         End Sub
     End Class
 End Namespace
+

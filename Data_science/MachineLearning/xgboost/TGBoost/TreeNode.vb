@@ -1,4 +1,51 @@
-﻿'        about TreeNode.index, an example:
+﻿#Region "Microsoft.VisualBasic::5a25bc9804ee4c4df45488471f82e5c8, Data_science\MachineLearning\xgboost\TGBoost\TreeNode.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class TreeNode
+    ' 
+    '         Constructor: (+4 Overloads) Sub New
+    ' 
+    '         Function: get_best_feature_threshold_gain
+    ' 
+    '         Sub: clean_up, Grad_add, Grad_setter, Hess_add, Hess_setter
+    '              (+2 Overloads) internal_node_setter, leaf_node_setter, num_sample_add, set_categorical_feature_best_split, update_best_split
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+'        about TreeNode.index, an example:
 '                    1
 '           2        3       4
 '        5  6  7   8 9 10  11 12 13
@@ -194,3 +241,4 @@ Namespace train
         End Sub
     End Class
 End Namespace
+

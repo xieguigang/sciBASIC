@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bfcfc16fd88fedb7a7929dae67d7a1ad, Data_science\MachineLearning\t-SNE\CostFunction.vb"
+﻿#Region "Microsoft.VisualBasic::b14575111acb769e54ce30377d1c624d, Data_science\MachineLearning\t-SNE\CostFunction.vb"
 
     ' Author:
     ' 
@@ -130,4 +130,3 @@ Friend Class CostFunction
     End Sub
 
 End Class
-

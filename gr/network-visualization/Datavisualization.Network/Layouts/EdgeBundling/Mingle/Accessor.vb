@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0a1507ea45a1b4da2dfb42aa96cb19e, gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Mingle\Accessor.vb"
+﻿#Region "Microsoft.VisualBasic::c325e0f5412ca62e83f8274b4b584861, gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Mingle\Accessor.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class Accessor
     ' 
-    '         Function: getByDimension, GetDimensions, metric, nodeIs
+    '         Function: activate, getByDimension, GetDimensions, metric, nodeIs
     ' 
     '         Sub: setByDimensin
     ' 

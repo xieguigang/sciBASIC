@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d554a52ed94f0a4aef6873d1d6f746bc, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\QRDecomposition.vb"
+﻿#Region "Microsoft.VisualBasic::049f8db2694fba3729b1469c779a9122, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\QRDecomposition.vb"
 
     ' Author:
     ' 

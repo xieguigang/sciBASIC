@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bcc412c8457460dd1f319b47d3c6e853, gr\Microsoft.VisualBasic.Imaging\Filters\Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::3777d4dd98e0fb72214b4f824740c1ee, gr\Microsoft.VisualBasic.Imaging\Filters\Matrix.vb"
 
     ' Author:
     ' 
@@ -139,6 +139,3 @@ Namespace Filters
         End Function
     End Class
 End Namespace
-
-
-

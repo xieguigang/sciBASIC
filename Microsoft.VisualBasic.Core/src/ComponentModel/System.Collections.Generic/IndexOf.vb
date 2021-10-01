@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d20bb5be4046a2734ca54f784bfe4ae8, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\IndexOf.vb"
+﻿#Region "Microsoft.VisualBasic::567596f6c5e3b403c96607e6a08cfe18, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\IndexOf.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '         Constructor: (+4 Overloads) Sub New
     ' 
-    '         Function: Add, EnumerateMapKeys, GetEnumerator, GetOrdinal, IEnumerable_GetEnumerator
+    '         Function: (+2 Overloads) Add, EnumerateMapKeys, GetEnumerator, GetOrdinal, IEnumerable_GetEnumerator
     '                   indexing, (+2 Overloads) Intersect, NotExists, ToString
     ' 
     '         Sub: Clear, Delete

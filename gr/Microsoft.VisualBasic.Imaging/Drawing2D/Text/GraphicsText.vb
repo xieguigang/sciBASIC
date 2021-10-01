@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0be4d04e72a1e68f972a893b204df551, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\GraphicsText.vb"
+﻿#Region "Microsoft.VisualBasic::4e92424f025703779c41b905bca4070b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\GraphicsText.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class GraphicsText
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '         Function: ConvertSize, GetRotatePoint
     ' 

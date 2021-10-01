@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::40eb0a3e75193f9df17e69ca5b36f66a, gr\Microsoft.VisualBasic.Imaging\test\imageSmoothTest.vb"
+﻿#Region "Microsoft.VisualBasic::31ffb644857677a13624e85fbba9654e, gr\Microsoft.VisualBasic.Imaging\test\imageSmoothTest.vb"
 
     ' Author:
     ' 
@@ -69,4 +69,3 @@ Module imageSmoothTest
         Call New Matrix(GaussBlur.GaussBlur(bitmap1)).GetSmoothBitmap(Matrix2DFilters.Max).SaveAs("E:\Resources\a.htm222l_Gauss+max.png")
     End Sub
 End Module
-

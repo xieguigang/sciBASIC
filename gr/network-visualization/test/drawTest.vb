@@ -1,43 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::ee92784f50716526655e60a4fee5e812, gr\network-visualization\test\drawTest.vb"
+﻿#Region "Microsoft.VisualBasic::7e1433838acd94295aff9bbe584c3569, gr\network-visualization\test\drawTest.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module drawTest
-' 
-'     Function: DrawTest
-' 
-'     Sub: Main
-' 
-' /********************************************************************************/
+    ' Module drawTest
+    ' 
+    '     Function: DrawTest
+    ' 
+    '     Sub: drawKDTreeTest, Main
+    ' 
+    ' Class PointAccess3
+    ' 
+    '     Function: activate, getByDimension, GetDimensions, metric, nodeIs
+    ' 
+    '     Sub: setByDimensin
+    ' 
+    ' Class PointAccess
+    ' 
+    '     Function: activate, getByDimension, GetDimensions, metric, nodeIs
+    ' 
+    '     Sub: setByDimensin
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

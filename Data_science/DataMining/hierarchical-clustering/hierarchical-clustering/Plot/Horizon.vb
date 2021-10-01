@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b93e48a588b4932e65f716b2a4964d4b, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Plot\Horizon.vb"
+﻿#Region "Microsoft.VisualBasic::5d4f00c2bedd26e28170ae1be79d022e, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Plot\Horizon.vb"
 
     ' Author:
     ' 

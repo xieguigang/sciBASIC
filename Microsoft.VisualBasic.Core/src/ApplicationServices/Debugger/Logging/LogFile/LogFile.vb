@@ -1,48 +1,49 @@
-﻿#Region "Microsoft.VisualBasic::9bfe45e3c4ea016666771c7552f39962, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Logging\LogFile\LogFile.vb"
+﻿#Region "Microsoft.VisualBasic::497315c756a0f8b0308e302819717da3, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Logging\LogFile\LogFile.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class LogFile
-' 
-'         Properties: fileName, filePath, MimeType, NowTimeNormalizedString
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: SaveLog, SystemInfo, ToString
-' 
-'         Sub: (+2 Overloads) Dispose, (+2 Overloads) LogException, Save, (+4 Overloads) WriteLine
-' 
-' 
-' /********************************************************************************/
+    '     Class LogFile
+    ' 
+    '         Properties: fileName, filePath, MimeType, NowTimeNormalizedString
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: SaveLog, SystemInfo, ToString
+    ' 
+    '         Sub: (+2 Overloads) Dispose, info, log, (+2 Overloads) LogException, Save
+    '              (+4 Overloads) WriteLine
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
