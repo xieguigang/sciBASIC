@@ -113,6 +113,18 @@ Public Class SerialData : Implements INamedValue
         }
     End Sub
 
+    Public Function BrushHandler() As Func(Of PointData, Brush)
+        Dim br As New SolidBrush(color)
+
+        Return Function(pt As PointData)
+                   If pt.color.StringEmpty Then
+                       Return br
+                   Else
+                       Return pt.color.GetBrush
+                   End If
+               End Function
+    End Function
+
     Public Function GetPointByX(x As Single) As PointData
         For Each pt As PointData In pts
             If pt.pt.X = x Then

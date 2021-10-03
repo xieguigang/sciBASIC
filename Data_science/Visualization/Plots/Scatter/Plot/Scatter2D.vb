@@ -178,6 +178,39 @@ Namespace Plots
             }
         End Function
 
+        Public Shared Iterator Function DrawScatter(g As IGraphics,
+                                                    scatter As IEnumerable(Of PointData),
+                                                    scaler As DataScaler,
+                                                    fillPie As Boolean,
+                                                    shape As LegendStyles,
+                                                    pointSize As Single,
+                                                    getPointBrush As Func(Of PointData, Brush)) As IEnumerable(Of PointF)
+            Dim r As Single = pointSize / 2
+            Dim d As Single = pointSize
+            Dim shapeSize As New Size(d, d)
+
+            For Each pt As PointData In scatter
+                Dim pt1 = scaler.Translate(pt)
+
+                Yield pt1
+
+                If fillPie Then
+                    Select Case shape
+                        Case LegendStyles.Circle
+                            pt1 = New PointF(pt1.X - r, pt1.Y - r)
+                        Case LegendStyles.Square
+                            pt1 = New PointF(pt1.X, pt1.Y - d)
+                        Case Else
+                            ' do nothing
+                    End Select
+
+                    g.DrawLegendShape(pt1, shapeSize, shape, getPointBrush(pt))
+                End If
+
+                Call Parallel.DoEvents()
+            Next
+        End Function
+
         Protected Overrides Sub PlotInternal(ByRef g As IGraphics, rect As GraphicsRegion)
             Dim scaler As DataScaler = GetDataScaler(g, rect)
             Dim gSize As Size = rect.Size
@@ -207,20 +240,8 @@ Namespace Plots
 
             For Each line As SerialData In array
                 Dim pen As Pen = line.GetPen
-                Dim br As New SolidBrush(line.color)
                 Dim fillBrush As New SolidBrush(Color.FromArgb(100, baseColor:=line.color))
-                Dim d! = line.pointSize
-                Dim r As Single = line.pointSize / 2
                 Dim bottom! = gSize.Height - rect.PlotRegion.Bottom
-                Dim getPointBrush = Function(pt As PointData)
-                                        If pt.color.StringEmpty Then
-                                            Return br
-                                        Else
-                                            Return pt.color.GetBrush
-                                        End If
-                                    End Function
-                Dim polygon As New List(Of PointF)
-                Dim shapeSize As New Size(d, d)
                 Dim scatter As IEnumerable(Of PointData)
 
                 If scatterReorder Then
@@ -229,26 +250,15 @@ Namespace Plots
                     scatter = line.pts
                 End If
 
-                For Each pt As PointData In scatter
-                    Dim pt1 = scaler.Translate(pt)
-
-                    polygon.Add(pt1)
-
-                    If fillPie Then
-                        Select Case line.shape
-                            Case LegendStyles.Circle
-                                pt1 = New PointF(pt1.X - r, pt1.Y - r)
-                            Case LegendStyles.Square
-                                pt1 = New PointF(pt1.X, pt1.Y - d)
-                            Case Else
-                                ' do nothing
-                        End Select
-
-                        g.DrawLegendShape(pt1, shapeSize, line.shape, getPointBrush(pt))
-                    End If
-
-                    Call Parallel.DoEvents()
-                Next
+                Dim polygon As PointF() = DrawScatter(
+                    g, scatter,
+                    scaler:=scaler,
+                    fillPie:=fillPie,
+                    shape:=line.shape,
+                    pointSize:=line.pointSize,
+                    getPointBrush:=line.BrushHandler
+                ) _
+                .ToArray
 
                 If line.title Like hullPolygonIndex Then
                     Call polygon _
@@ -261,7 +271,11 @@ Namespace Plots
                 End If
 
                 If Not line.DataAnnotations.IsNullOrEmpty Then
-                    Dim raw = array.Where(Function(s) s.title = line.title).First
+                    Dim raw As SerialData = array _
+                        .Where(Function(s)
+                                   Return s.title = line.title
+                               End Function) _
+                        .First
 
                     Call annotations.Add(line.title, (raw, line))
                 End If
