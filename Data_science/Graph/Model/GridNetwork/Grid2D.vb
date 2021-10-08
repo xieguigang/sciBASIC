@@ -85,6 +85,10 @@ Public Class Grid(Of T)
         Next
     End Function
 
+    Public Function ShuffleAll() As T()
+        Return EnumerateData.Shuffles
+    End Function
+
     ''' <summary>
     ''' get target cell data via a given pixel point
     ''' </summary>
