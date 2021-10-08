@@ -172,7 +172,7 @@ Public Module PrimitiveParser
         If num Is Nothing OrElse num = "" Then
             Return False
         Else
-            c = num(Scan0)
+            c = num(offset)
         End If
 
         ' check for number sign symbol
