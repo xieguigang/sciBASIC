@@ -379,7 +379,7 @@ Namespace Text.Xml.Linq
                 Do While (reader.Read())
                     ' Parse the file And return each of the child_node
                     If (reader.NodeType = XmlNodeType.Element AndAlso reader.Name = nodeName) Then
-                        If (Not (el = XNode.ReadFrom(reader)) Is Nothing) Then
+                        If (Not (el = DirectCast(XNode.ReadFrom(reader), XElement)) Is Nothing) Then
                             If Not selector Is Nothing Then
                                 If selector(el.Value) Then
                                     Yield el.Value

@@ -194,7 +194,18 @@ Public Module TextDoc
     ''' <param name="path"></param>
     ''' <returns>不存在的文件会返回空集合</returns>
     <Extension>
-    Public Iterator Function IterateAllLines(path$, Optional encoding As Encodings = Encodings.Default) As IEnumerable(Of String)
+    Public Function IterateAllLines(path$, Optional encoding As Encodings = Encodings.Default) As IEnumerable(Of String)
+        Return path.IterateAllLines(encoding.CodePage)
+    End Function
+
+    ''' <summary>
+    ''' Reading a super large size text file through stream method.
+    ''' (通过具有缓存的流对象读取文本数据，使用迭代器来读取文件之中的所有的行，大文件推荐使用这个方法进行读取操作)
+    ''' </summary>
+    ''' <param name="path"></param>
+    ''' <returns>不存在的文件会返回空集合</returns>
+    <Extension>
+    Public Iterator Function IterateAllLines(path$, encoding As Encoding) As IEnumerable(Of String)
         If path.IsURLPattern Then
             For Each line As String In path.GET.LineTokens
                 Yield line
@@ -210,7 +221,7 @@ Public Module TextDoc
         End If
 
         Using fs As Stream = path.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-            Using reader As New StreamReader(fs, encoding.CodePage)
+            Using reader As New StreamReader(fs, encoding Or DefaultEncoding)
                 Do While Not reader.EndOfStream
                     Yield reader.ReadLine
                 Loop
@@ -327,7 +338,7 @@ Public Module TextDoc
     <Extension>
     Public Function ReadAllLines(path$, Optional Encoding As Encoding = Nothing) As String()
         If path.FileExists Then
-            Return File.ReadAllLines(path, encoding:=Encoding Or DefaultEncoding)
+            Return path.IterateAllLines(encoding:=Encoding).ToArray
         Else
             Return New String() {}
         End If

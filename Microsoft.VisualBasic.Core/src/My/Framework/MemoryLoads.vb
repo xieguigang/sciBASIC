@@ -47,7 +47,14 @@
 Namespace My.FrameworkInternal
 
     Public Enum MemoryLoads As Byte
+        ''' <summary>
+        ''' lazy load
+        ''' </summary>
         Light
+        ''' <summary>
+        ''' less than 2GB
+        ''' </summary>
         Heavy
+        Max
     End Enum
 End Namespace

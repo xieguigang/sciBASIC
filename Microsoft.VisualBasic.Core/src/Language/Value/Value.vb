@@ -1,53 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::6a020e6f2d0f8017045a83d73c6b56d0, Microsoft.VisualBasic.Core\src\Language\Value\Value.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Value
-    ' 
-    '         Properties: HasValue, Value
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: [Default], (+2 Overloads) Equals, GetJson, GetUnderlyingType, (+2 Overloads) GetValueOrDefault
-    '                   IsNothing, ToString
-    '         Operators: -, (+3 Overloads) +, <=, <>, =
-    '                    >=, (+4 Overloads) Like
-    '         Interface IValueOf
-    ' 
-    '             Properties: Value
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Value
+' 
+'         Properties: HasValue, Value
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: [Default], (+2 Overloads) Equals, GetJson, GetUnderlyingType, (+2 Overloads) GetValueOrDefault
+'                   IsNothing, ToString
+'         Operators: -, (+3 Overloads) +, <=, <>, =
+'                    >=, (+4 Overloads) Like
+'         Interface IValueOf
+' 
+'             Properties: Value
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -280,6 +280,20 @@ Namespace Language
         Public Shared Operator =(value As Value(Of T), o As T) As T
             value.Value = o
             Return o
+        End Operator
+
+        ''' <summary>
+        ''' value equals?
+        ''' </summary>
+        ''' <param name="o"></param>
+        ''' <param name="value"></param>
+        ''' <returns></returns>
+        Public Shared Operator =(o As T, value As Value(Of T)) As Boolean
+            Return o.Equals(value.Value)
+        End Operator
+
+        Public Shared Operator <>(o As T, value As Value(Of T)) As Boolean
+            Return Not o = value
         End Operator
 
         ''' <summary>

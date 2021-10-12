@@ -51,6 +51,12 @@ Public Class Grid(Of T)
 
     ReadOnly matrix2D As Dictionary(Of Long, Dictionary(Of Long, GridCell(Of T)))
 
+    Public ReadOnly Property size As Integer
+        Get
+            Return Aggregate row In matrix2D Let rowCount = row.Value.Count Into Sum(rowCount)
+        End Get
+    End Property
+
     Private Sub New(points As IEnumerable(Of GridCell(Of T)))
         matrix2D = points _
             .GroupBy(Function(d) d.index.X) _
