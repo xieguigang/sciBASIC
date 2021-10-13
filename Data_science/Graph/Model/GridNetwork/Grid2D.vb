@@ -51,6 +51,18 @@ Public Class Grid(Of T)
 
     ReadOnly matrix2D As Dictionary(Of Long, Dictionary(Of Long, GridCell(Of T)))
 
+    Public ReadOnly Property width As Integer
+        Get
+            Return matrix2D.Keys.Max
+        End Get
+    End Property
+
+    Public ReadOnly Property height As Integer
+        Get
+            Return matrix2D.Values.Select(Function(d) d.Keys.Max).Max
+        End Get
+    End Property
+
     Public ReadOnly Property size As Integer
         Get
             Return Aggregate row In matrix2D Let rowCount = row.Value.Count Into Sum(rowCount)

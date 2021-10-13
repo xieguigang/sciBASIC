@@ -44,9 +44,18 @@ Imports System.Runtime.CompilerServices
 Friend NotInheritable Class OptimizationState
 
     Public CurrentEpoch As Integer = 0
+    ''' <summary>
+    ''' the index of source node
+    ''' </summary>
     Public Head As Integer() = New Integer(-1) {}
+    ''' <summary>
+    ''' the index of target node
+    ''' </summary>
     Public Tail As Integer() = New Integer(-1) {}
     Public EpochsPerSample As Double() = New Double(-1) {}
+    ''' <summary>
+    ''' edge weight?
+    ''' </summary>
     Public EpochOfNextSample As Double() = New Double(-1) {}
     Public EpochOfNextNegativeSample As Double() = New Double(-1) {}
     Public EpochsPerNegativeSample As Double() = New Double(-1) {}

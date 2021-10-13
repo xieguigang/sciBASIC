@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::adebbf3a06ebca208e83e0dc21a94a59, Data_science\Graph\Analysis\Louvain\Louvain.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class LouvainCommunity
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: GetCommunity, SolveClusters, TryMoveNode
-    ' 
-    '         Sub: addNewEdge, rebuildGraph, setCluster0
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class LouvainCommunity
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: GetCommunity, SolveClusters, TryMoveNode
+' 
+'         Sub: addNewEdge, rebuildGraph, setCluster0
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -342,12 +342,13 @@ Namespace Analysis.Louvain
 
                 ' 生成随机序列
                 Dim order = New Integer(n - 1) {}
+                Dim maxLoop As Integer = 0
 
-                For i = 0 To n - 1
+                For i As Integer = 0 To n - 1
                     order(i) = i
                 Next
 
-                For i = 0 To n - 1
+                For i As Integer = 0 To n - 1
                     Dim j = randf.seeds.Next(n)
                     Dim temp = order(i)
                     order(i) = order(j)
@@ -357,16 +358,23 @@ Namespace Analysis.Louvain
                 enum_time = 0       ' 枚举次数，到n时代表所有点已经遍历过且无移动的点
                 point = 0           ' 循环指针
                 update_flag = False ' 是否发生过更新的标记
+                maxLoop = node_weight.Length * 50
 
                 Do
                     Dim i As Integer = order(point)
+
                     point = (point + 1) Mod n
+                    maxLoop -= 1
 
                     If TryMoveNode(i) Then
                         enum_time = 0
                         update_flag = True
                     Else
                         enum_time += 1
+                    End If
+
+                    If maxLoop < 0 Then
+                        Exit Do
                     End If
                 Loop While enum_time < n
 

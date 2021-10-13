@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::a09997356f62c67cd8f5d7726abba57a, Data_science\DataMining\UMAP\Umap.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class Umap
-    ' 
-    '     Properties: dimension
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: [Step], Clip, FindABParams, FuzzySimplicialSet, GetEmbedding
-    '               GetGraph, GetNEpochs, GetProgress, InitializeFit, InitializeSimplicialSetEmbedding
-    '               MakeEpochsPerSample, RDist
-    ' 
-    '     Sub: InitializeOptimization, Iterate, OptimizeLayoutStep, PrepareForOptimizationLoop, RunIterate
-    ' 
-    ' /********************************************************************************/
+' Class Umap
+' 
+'     Properties: dimension
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: [Step], Clip, FindABParams, FuzzySimplicialSet, GetEmbedding
+'               GetGraph, GetNEpochs, GetProgress, InitializeFit, InitializeSimplicialSetEmbedding
+'               MakeEpochsPerSample, RDist
+' 
+'     Sub: InitializeOptimization, Iterate, OptimizeLayoutStep, PrepareForOptimizationLoop, RunIterate
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -77,6 +77,14 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
     Friend ReadOnly _random As IProvideRandomValues
     ReadOnly _customNumberOfEpochs As Integer?
     ReadOnly _progressReporter As RunSlavePipeline.SetProgressEventHandler
+
+    ''' <summary>
+    ''' graph data:
+    ''' 
+    ''' + head  source index
+    ''' + tail  target index
+    ''' + value edge weight
+    ''' </summary>
     ReadOnly _optimizationState As OptimizationState
     ReadOnly _customMapCutoff As Double?
 
@@ -162,6 +170,12 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
     End Function
 
     Public Function GetGraph() As SparseMatrix
+        'Return New SparseMatrix(
+        '    rows:=_optimizationState.Head,
+        '    cols:=_optimizationState.Tail,
+        '    values:=_optimizationState.EpochOfNextSample,
+        '    dims:=_graph.Dims
+        ')
         Return _graph
     End Function
 
@@ -279,17 +293,10 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
     ''' fuzzy set cross entropy between the 1-skeletons of the high and low dimensional fuzzy simplicial sets.
     ''' </summary>
     Private Function InitializeSimplicialSetEmbedding() As (head As Integer(), tail As Integer(), epochsPerSample As Double())
-        Dim nEpochs = GetNEpochs()
-        Dim graphMax = 0F
-
-        For Each value In _graph.GetValues()
-            If graphMax < value Then
-                graphMax = value
-            End If
-        Next
-
+        Dim nEpochs As Integer = GetNEpochs()
+        Dim graphMax As Double = _graph.GetValues().Max
         Dim cutoff As Double = If(_customMapCutoff Is Nothing, graphMax / nEpochs, graphMax * _customMapCutoff)
-        Dim graph = _graph.Map(Function(value) If(value < cutoff, 0, value))
+        Dim graph As SparseMatrix = _graph.Map(Function(value) If(value < cutoff, 0, value))
 
         ' We're not computing the spectral initialization in this implementation 
         ' until we determine a better eigenvalue/eigenvector computation approach
@@ -298,9 +305,9 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
         Call SIMDint.Uniform(_embedding, 10, _random)
 
         ' Get graph data in ordered way...
-        Dim weights = New List(Of Double)()
-        Dim head = New List(Of Integer)()
-        Dim tail = New List(Of Integer)()
+        Dim weights As New List(Of Double)()
+        Dim head As New List(Of Integer)()
+        Dim tail As New List(Of Integer)()
 
         For Each rowColValue In graph.GetAll()
             Dim row = rowColValue.Item1

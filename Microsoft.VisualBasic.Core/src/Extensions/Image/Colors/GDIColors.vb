@@ -332,16 +332,19 @@ Namespace Imaging
         <Extension>
         Public Function TranslateColor(exp$,
                                        Optional throwEx As Boolean = True,
-                                       Optional success As Boolean = False) As Color
+                                       Optional ByRef success As Boolean = False) As Color
 
             Static cache As New Dictionary(Of String, Color)
 
             If exp.StringEmpty Then
                 success = False
                 Return Color.Black
+            ElseIf cache.ContainsKey(exp) Then
+                success = Not cache(exp).IsEmpty
+                Return cache(exp)
             Else
-#Enable Warning
-                Return cache.ComputeIfAbsent(exp, Function() ColorTranslatorInternal(exp, throwEx, success))
+                cache(exp) = ColorTranslatorInternal(exp, throwEx, success)
+                Return cache(exp)
             End If
         End Function
 

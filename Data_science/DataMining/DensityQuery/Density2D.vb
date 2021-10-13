@@ -56,6 +56,19 @@ Public Module Density2D
         Return data.Density(Function(d) d.Key, getX, getY, gridSize)
     End Function
 
+    ''' <summary>
+    ''' get density value of geometry points
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="data"></param>
+    ''' <param name="getName"></param>
+    ''' <param name="getX"></param>
+    ''' <param name="getY"></param>
+    ''' <param name="gridSize"></param>
+    ''' <param name="parallel"></param>
+    ''' <returns>
+    ''' the resulted density value is in range of ``[0,1]``.
+    ''' </returns>
     <Extension>
     Public Iterator Function Density(Of T)(data As IEnumerable(Of T),
                                            getName As Func(Of T, String),
