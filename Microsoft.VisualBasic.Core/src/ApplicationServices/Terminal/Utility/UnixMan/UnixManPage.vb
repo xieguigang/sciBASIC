@@ -170,7 +170,7 @@ Namespace ApplicationServices.Terminal.Utility
 
                 For Each opt As NamedValue(Of String) In man.OPTIONS.SafeQuery
                     Call text.AppendLine(".PP")
-                    Call text.AppendLine($"\fB{opt.Name}\fB \fR\- {opt.Value}")
+                    Call text.AppendLine($"\fB{opt.Name}\fB \fR\- {opt.Value}. {opt.Description}")
                     Call text.AppendLine(".PP")
                 Next
             End If

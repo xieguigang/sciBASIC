@@ -142,6 +142,8 @@ Namespace Scripting
         Public Function CTypeDynamic(expression$, target As Type) As Object
             If expression.StringEmpty Then
                 Return Nothing
+            ElseIf target Is GetType(String) Then
+                Return expression
             End If
             If _CasterString.ContainsKey(target) Then
                 Dim caster As LoadObject = _CasterString(target)
