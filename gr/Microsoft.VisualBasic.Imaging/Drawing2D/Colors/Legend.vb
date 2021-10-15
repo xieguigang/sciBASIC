@@ -170,7 +170,8 @@ Namespace Drawing2D.Colors
                                   Optional unmapColor$ = Nothing,
                                   Optional ruleOffset! = 10,
                                   Optional format$ = "F2",
-                                  Optional legendOffsetLeft! = -99999)
+                                  Optional legendOffsetLeft! = -99999,
+                                  Optional noLeftBlank As Boolean = False)
 
             Dim titleSize As SizeF = g.MeasureString(title, titleFont)
             Dim legendOffsetTop!
@@ -183,9 +184,13 @@ Namespace Drawing2D.Colors
             legendOffsetTop = titleSize.Height * 2 + 5
 
             If offsetAuto Then
-                ' 下面的三个元素在宽度上面各自占1/3
-                ' 空白 | legend | 标尺
-                legendOffsetLeft = legendWidth
+                If noLeftBlank Then
+                    legendOffsetLeft = 0
+                Else
+                    ' 下面的三个元素在宽度上面各自占1/3
+                    ' 空白 | legend | 标尺
+                    legendOffsetLeft = legendWidth
+                End If
             End If
 
             If unmapColor.StringEmpty Then
