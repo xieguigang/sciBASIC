@@ -7,7 +7,11 @@
     <Authors>xie.guigang@live.com</Authors>
     <Company>sciBASIC.NET</Company>
     <Version>5.0.1.2389</Version>
-    <Copyright>GPL3</Copyright>
+
+	  <AssemblyVersion>5.33.*</AssemblyVersion>
+	  <Deterministic>false</Deterministic>
+
+	  <Copyright>GPL3</Copyright>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>http://sciBASIC.NET</PackageProjectUrl>
     <PackageIcon>logo-knot.png</PackageIcon>
