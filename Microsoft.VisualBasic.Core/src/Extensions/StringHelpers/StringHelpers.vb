@@ -986,11 +986,18 @@ Public Module StringHelpers
     ''' <summary>
     ''' 将正则匹配成功的字符串替换为指定的目标字符串：<paramref name="replaceAs"/>
     ''' </summary>
-    ''' <param name="s$"></param>
-    ''' <param name="pattern$"></param>
-    ''' <param name="replaceAs$"></param>
+    ''' <param name="s">
+    ''' 目标字符串
+    ''' </param>
+    ''' <param name="pattern">
+    ''' 进行目标内容搜索的正则表达式字符串
+    ''' </param>
+    ''' <param name="replaceAs"></param>
     ''' <param name="opt"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' 这个函数是一个安全的函数：对于空值字符串对象会直接返回一个空字符串
+    ''' </remarks>
     <Extension>
     Public Function StringReplace(s$, pattern$, replaceAs$, Optional opt As RegexOptions = RegexICSng) As String
         If Not s Is Nothing Then
