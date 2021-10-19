@@ -68,6 +68,30 @@ Namespace Graphic.Axis
         Public Property X As Scaler
         Public Property AxisTicks As (X As Vector, Y As Vector)
 
+        Public ReadOnly Property xmin As Double
+            Get
+                Return AxisTicks.X.Min
+            End Get
+        End Property
+
+        Public ReadOnly Property xmax As Double
+            Get
+                Return AxisTicks.X.Max
+            End Get
+        End Property
+
+        Public ReadOnly Property ymin As Double
+            Get
+                Return AxisTicks.Y.Min
+            End Get
+        End Property
+
+        Public ReadOnly Property ymax As Double
+            Get
+                Return AxisTicks.Y.Max
+            End Get
+        End Property
+
         ''' <summary>
         ''' 
         ''' </summary>

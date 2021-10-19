@@ -74,7 +74,7 @@ Namespace Graphic
         ''' the main title string
         ''' </summary>
         ''' <returns></returns>
-        Public Property main As String
+        Public Property main As String = Nothing
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(theme As Theme)

@@ -103,6 +103,7 @@ Imports stdNum = System.Math
     ''' <param name="s"></param>
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
     Public Function SSM(q As Vector, s As Vector) As Double
         If q.All(Function(a) a = 0.0R) OrElse s.All(Function(a) a = 0.0R) Then
             Return 0

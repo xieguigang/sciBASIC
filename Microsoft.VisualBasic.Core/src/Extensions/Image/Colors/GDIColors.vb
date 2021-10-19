@@ -256,11 +256,17 @@ Namespace Imaging
         ''' <param name="str">颜色表达式或者名称</param>
         ''' <returns></returns>
         <ExportAPI("Get.Color")>
-        <Extension> Public Function ToColor(str As String, Optional onFailure As Color = Nothing, Optional throwEx As Boolean = True) As Color
+        <Extension>
+        Public Function ToColor(str As String,
+                                Optional onFailure As Color = Nothing,
+                                Optional throwEx As Boolean = True,
+                                Optional ByRef success As Boolean = True) As Color
 #If NET_40 = 0 Then
             If String.IsNullOrEmpty(str) Then
+                success = False
                 Return Color.Black
             ElseIf str.TextEquals("transparent") Then
+                success = True
                 Return Color.Transparent
             End If
 
@@ -274,12 +280,16 @@ Namespace Imaging
                     Dim G As Integer = CInt(Val(tokens(1)))
                     Dim B As Integer = CInt(Val(tokens(2)))
 
+                    success = True
+
                     Return Color.FromArgb(R, G, B)
                 ElseIf tokens.Length = 4 Then ' argb
                     Dim A As Integer = CInt(Val(tokens(0)))
                     Dim R As Integer = CInt(Val(tokens(1)))
                     Dim G As Integer = CInt(Val(tokens(2)))
                     Dim B As Integer = CInt(Val(tokens(3)))
+
+                    success = True
 
                     Return Color.FromArgb(A, R, G, B)
                 End If
@@ -289,8 +299,11 @@ Namespace Imaging
             Dim key As String = str.ToLower
 
             If __allDotNETPrefixColors.ContainsKey(key) Then
+                success = True
                 Return __allDotNETPrefixColors(key)
             Else
+                success = False
+
                 ' __allDotNETPrefixColors里面已经包含有所有的颜色了
                 ' 如果不存在,则只能够返回空值了
                 If Not onFailure.IsEmpty Then
@@ -317,17 +330,24 @@ Namespace Imaging
         ''' 
         ''' </returns>
         <Extension>
-        Public Function TranslateColor(exp$, Optional throwEx As Boolean = True) As Color
+        Public Function TranslateColor(exp$,
+                                       Optional throwEx As Boolean = True,
+                                       Optional success As Boolean = False) As Color
+
             Static cache As New Dictionary(Of String, Color)
 
             If exp.StringEmpty Then
+                success = False
                 Return Color.Black
             Else
-                Return cache.ComputeIfAbsent(exp, Function() ColorTranslatorInternal(exp, throwEx))
+#Enable Warning
+                Return cache.ComputeIfAbsent(exp, Function() ColorTranslatorInternal(exp, throwEx, success))
             End If
         End Function
 
-        Private Function ColorTranslatorInternal(exp$, throwEx As Boolean) As Color
+        Private Function ColorTranslatorInternal(exp$, throwEx As Boolean, ByRef success As Boolean) As Color
+            success = True
+
             If exp.First = "#"c Then
                 ' 2017-2-2
                 ' 经过测试与3mf文件之中的材质颜色定义一致，没有问题
@@ -339,7 +359,7 @@ Namespace Imaging
                 Return ColorTranslator.FromOle(CInt(exp))
             End If
 
-            Return exp.ToColor(throwEx:=throwEx)
+            Return exp.ToColor(throwEx:=throwEx, success:=success)
         End Function
 
         <Extension>

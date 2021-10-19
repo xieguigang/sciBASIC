@@ -163,6 +163,8 @@ Namespace CSS
         ''' <returns></returns>
         <Description("font-variant")> Public Property [variant] As String
 
+        Public Property color As String = "black"
+
         ''' <summary>
         ''' Initializes a new <see cref="System.Drawing.Font"/> using a specified size and style.
         ''' </summary>

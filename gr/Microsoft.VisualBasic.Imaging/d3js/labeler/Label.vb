@@ -125,6 +125,10 @@ Namespace d3js.Layout
         ''' <returns></returns>
         Public ReadOnly Property rectangle As RectangleF
 
+        ''' <summary>
+        ''' [x, y]
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property location As PointF
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -133,6 +137,10 @@ Namespace d3js.Layout
         End Property
 
         Sub New()
+        End Sub
+
+        Sub New(size As SizeF)
+            Me.rectangle = New RectangleF(Nothing, size)
         End Sub
 
         Sub New(label$, pos As PointF, size As SizeF)

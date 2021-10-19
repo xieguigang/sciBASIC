@@ -1,63 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::2a26dbda2dc9895f13a06b22986b2042, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Marshal\IntPtr(Of T).vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Delegate Sub
-    ' 
-    ' 
-    '     Delegate Sub
-    ' 
-    ' 
-    '     Class IntPtr
-    ' 
-    '         Properties: Scan0
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: ToString
-    ' 
-    '         Sub: __unsafeWrite, (+2 Overloads) Dispose, (+2 Overloads) Write
-    ' 
-    '         Operators: -, +
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Delegate Sub
+' 
+' 
+'     Delegate Sub
+' 
+' 
+'     Class IntPtr
+' 
+'         Properties: Scan0
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: ToString
+' 
+'         Sub: __unsafeWrite, (+2 Overloads) Dispose, (+2 Overloads) Write
+' 
+'         Operators: -, +
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports PInvoke = System.Runtime.InteropServices.Marshal
 
 Namespace Emit.Marshal
 
@@ -100,6 +101,7 @@ Namespace Emit.Marshal
         ''' ```
         ''' </summary>
         ReadOnly __writeMemory As UnsafeWrite(Of T)
+        ReadOnly __unsafeCopys As UnsafeCopys(Of T)
 
         ''' <summary>
         ''' 
@@ -118,6 +120,8 @@ Namespace Emit.Marshal
         ''' </param>
         Sub New(p As System.IntPtr, chunkSize As Integer, unsafeCopys As UnsafeCopys(Of T), unsafeWrite As UnsafeWrite(Of T))
             __writeMemory = unsafeWrite
+            __unsafeCopys = unsafeCopys
+
             Scan0 = p
             buffer = New T(chunkSize - 1) {}
             Call unsafeCopys(Scan0, buffer, 0, buffer.Length)
@@ -128,9 +132,14 @@ Namespace Emit.Marshal
         ''' </summary>
         ''' <param name="raw"></param>
         ''' <param name="p"></param>
-        Sub New(ByRef raw As T(), Optional p As System.IntPtr = Nothing)
+        Sub New(ByRef raw As T(), Optional p As System.IntPtr? = Nothing)
             Call MyBase.New(raw)
             Scan0 = p
+        End Sub
+
+        Public Sub Write(data As T())
+            buffer = data
+            Call __unsafeWrite(Scan0)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -146,6 +155,11 @@ Namespace Emit.Marshal
         Public Sub Write()
             Call __unsafeWrite(Scan0)
         End Sub
+
+        Public Function Read() As T()
+            Call __unsafeCopys(Scan0, buffer, 0, buffer.Length)
+            Return buffer
+        End Function
 
         ''' <summary>
         ''' Please be carefull by using this method, if the memory region size of <see cref="Scan0"/> 
@@ -193,6 +207,8 @@ Namespace Emit.Marshal
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
                     Call Write()
+                    ' Free HGlobal memory
+                    Call PInvoke.FreeHGlobal(Scan0)
                 End If
 
                 ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
