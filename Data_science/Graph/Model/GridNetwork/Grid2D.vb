@@ -59,13 +59,18 @@ Public Class Grid(Of T)
 
     Public ReadOnly Property height As Integer
         Get
-            Return matrix2D.Values.Select(Function(d) d.Keys.Max).Max
+            Return Aggregate d As Dictionary(Of Long, GridCell(Of T))
+                   In matrix2D.Values
+                   Into Max(d.Keys.Max)
         End Get
     End Property
 
     Public ReadOnly Property size As Integer
         Get
-            Return Aggregate row In matrix2D Let rowCount = row.Value.Count Into Sum(rowCount)
+            Return Aggregate row
+                   In matrix2D
+                   Let rowCount = row.Value.Count
+                   Into Sum(rowCount)
         End Get
     End Property
 
@@ -157,6 +162,20 @@ Public Class Grid(Of T)
                 End If
             Next
         Next
+    End Function
+
+    Public Shared Function Create(data As IEnumerable(Of T), getPixel As Func(Of T, Point)) As Grid(Of T)
+        Return data _
+            .SafeQuery _
+            .Select(Function(d)
+                        Dim pxy As Point = getPixel(d)
+                        Dim cell As New GridCell(Of T)(pxy.X, pxy.Y, d)
+
+                        Return cell
+                    End Function) _
+            .DoCall(Function(vec)
+                        Return New Grid(Of T)(vec)
+                    End Function)
     End Function
 
     Public Shared Function Create(data As IEnumerable(Of T), getX As Func(Of T, Integer), getY As Func(Of T, Integer)) As Grid(Of T)
