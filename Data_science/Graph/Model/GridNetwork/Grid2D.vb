@@ -65,6 +65,10 @@ Public Class Grid(Of T)
         End Get
     End Property
 
+    ''' <summary>
+    ''' counts of all non-empty cell.
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property size As Integer
         Get
             Return Aggregate row
@@ -74,6 +78,10 @@ Public Class Grid(Of T)
         End Get
     End Property
 
+    ''' <summary>
+    ''' this constructor will removed duplicated pixels
+    ''' </summary>
+    ''' <param name="points"></param>
     Private Sub New(points As IEnumerable(Of GridCell(Of T)))
         matrix2D = points _
             .GroupBy(Function(d) d.index.X) _
@@ -164,6 +172,12 @@ Public Class Grid(Of T)
         Next
     End Function
 
+    ''' <summary>
+    ''' duplicated pixels will be removed from this constructor function
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="getPixel"></param>
+    ''' <returns></returns>
     Public Shared Function Create(data As IEnumerable(Of T), getPixel As Func(Of T, Point)) As Grid(Of T)
         Return data _
             .SafeQuery _
