@@ -109,6 +109,11 @@ Namespace Scripting.TokenIcer
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Trim(ParamArray chars As Char()) As String
+            Return text.Trim(chars)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return $"[{name}] {text}"
         End Function
