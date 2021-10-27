@@ -176,13 +176,20 @@ Public Class MsgPackSerializer
     End Function
 
     Public Shared Function Deserialize(t As Type, buffer As Byte(), offset As Integer) As Object
-        Using stream As MemoryStream = New MemoryStream(buffer)
-            stream.Seek(offset, SeekOrigin.Begin)
+        Using stream As New MemoryStream(buffer)
+            Call stream.Seek(offset, SeekOrigin.Begin)
 
-            Using reader As BinaryDataReader = New BinaryDataReader(stream)
+            Using reader As New BinaryDataReader(stream)
                 Dim o = DeserializeObjectType(t, reader)
                 Return Convert.ChangeType(o, t)
             End Using
+        End Using
+    End Function
+
+    Public Shared Function Deserialize(t As Type, buffer As Stream) As Object
+        Using reader As New BinaryDataReader(buffer)
+            Dim o = DeserializeObjectType(t, reader)
+            Return Convert.ChangeType(o, t)
         End Using
     End Function
 
@@ -231,17 +238,30 @@ Public Class MsgPackSerializer
         End If
     End Function
 
+    Public Shared Function Deserialize(buffer As Stream) As Object
+        Using reader As New BinaryDataReader(buffer)
+            Return GetSerializer(GetType(Object)).Deserialize(Nothing, reader)
+        End Using
+    End Function
+
+    Public Shared Function Deserialize(buffer As Byte(), Optional offset As Integer = Scan0) As Object
+        Using stream As New MemoryStream(buffer)
+            stream.Seek(offset, SeekOrigin.Begin)
+            Return Deserialize(stream)
+        End Using
+    End Function
+
     Friend Function Deserialize(result As Object, reader As BinaryDataReader) As Object
         Dim header As Byte = reader.ReadByte()
 
-        If header = Formats.NIL Then
+        If header = MsgPackFormats.NIL Then
             result = Nothing
         Else
             If DefaultContext.SerializationMethod = SerializationMethod.Array Then
-                If header = Formats.ARRAY_16 Then
+                If header = MsgPackFormats.ARRAY_16 Then
                     reader.ReadByte()
                     reader.ReadByte()
-                ElseIf header = Formats.ARRAY_32 Then
+                ElseIf header = MsgPackFormats.ARRAY_32 Then
                     reader.ReadByte()
                     reader.ReadByte()
                     reader.ReadByte()
@@ -258,9 +278,9 @@ Public Class MsgPackSerializer
 
                 If header >= FixedMap.MIN AndAlso header <= FixedMap.MAX Then
                     numElements = header And &HF
-                ElseIf header = Formats.MAP_16 Then
+                ElseIf header = MsgPackFormats.MAP_16 Then
                     numElements = (CInt(reader.ReadByte) << 8) + reader.ReadByte()
-                ElseIf header = Formats.MAP_32 Then
+                ElseIf header = MsgPackFormats.MAP_32 Then
                     numElements = (CInt(reader.ReadByte) << 24) + (CInt(reader.ReadByte) << 16) + (CInt(reader.ReadByte) << 8) + reader.ReadByte()
                 Else
                     Throw New ApplicationException("The serialized map format isn't valid")
@@ -286,7 +306,7 @@ Public Class MsgPackSerializer
 
     Private Sub Serialize(o As Object, writer As BinaryWriter)
         If o Is Nothing Then
-            writer.Write(Formats.NIL)
+            writer.Write(MsgPackFormats.NIL)
         ElseIf serializedType.IsPrimitive OrElse serializedType Is GetType(String) OrElse IsSerializableGenericCollection(serializedType) Then
             SerializeValue(o, writer, DefaultContext.SerializationMethod)
         ElseIf DefaultContext.SerializationMethod = SerializationMethod.Map Then
@@ -294,12 +314,12 @@ Public Class MsgPackSerializer
                 Dim arrayVal As Byte = FixedMap.MIN + props.Count
                 writer.Write(arrayVal)
             ElseIf props.Count <= UShort.MaxValue Then
-                writer.Write(Formats.MAP_16)
+                writer.Write(MsgPackFormats.MAP_16)
                 Dim data = BitConverter.GetBytes(CUShort(props.Count))
                 If BitConverter.IsLittleEndian Then Array.Reverse(data)
                 writer.Write(data)
             Else
-                writer.Write(Formats.MAP_32)
+                writer.Write(MsgPackFormats.MAP_32)
                 Dim data = BitConverter.GetBytes(CUInt(props.Count))
                 If BitConverter.IsLittleEndian Then Array.Reverse(data)
                 writer.Write(data)
@@ -314,12 +334,12 @@ Public Class MsgPackSerializer
                 Dim arrayVal As Byte = FixedArray.MIN + props.Count
                 writer.Write(arrayVal)
             ElseIf props.Count <= UShort.MaxValue Then
-                writer.Write(Formats.ARRAY_16)
+                writer.Write(MsgPackFormats.ARRAY_16)
                 Dim data = BitConverter.GetBytes(CUShort(props.Count))
                 If BitConverter.IsLittleEndian Then Array.Reverse(data)
                 writer.Write(data)
             Else
-                writer.Write(Formats.ARRAY_32)
+                writer.Write(MsgPackFormats.ARRAY_32)
                 Dim data = BitConverter.GetBytes(CUInt(props.Count))
                 If BitConverter.IsLittleEndian Then Array.Reverse(data)
                 writer.Write(data)

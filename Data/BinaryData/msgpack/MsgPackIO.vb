@@ -61,12 +61,12 @@ Public Module MsgPackIO
         Dim header As Byte = reader.ReadByte()
         Dim numElements = -1
 
-        If header <> Formats.NIL Then
+        If header <> MsgPackFormats.NIL Then
             If header >= FixedArray.MIN AndAlso header <= FixedArray.MAX Then
                 numElements = header - FixedArray.MIN
-            ElseIf header = Formats.ARRAY_16 Then
+            ElseIf header = MsgPackFormats.ARRAY_16 Then
                 numElements = (CInt(reader.ReadByte) << 8) + reader.ReadByte()
-            ElseIf header = Formats.ARRAY_32 Then
+            ElseIf header = MsgPackFormats.ARRAY_32 Then
                 numElements = (CInt(reader.ReadByte) << 24) + (CInt(reader.ReadByte) << 16) + (CInt(reader.ReadByte) << 8) + reader.ReadByte()
             Else
                 Throw New ApplicationException("The serialized data format is invalid due to an invalid array size specification at offset " & reader.BaseStream.Position)
@@ -141,14 +141,14 @@ Public Module MsgPackIO
             header = reader.ReadByte()
         End If
 
-        If header <> Formats.NIL Then
+        If header <> MsgPackFormats.NIL Then
             Dim numElements = 0
 
             If header >= FixedMap.MIN AndAlso header <= FixedMap.MAX Then
                 numElements = header.Value - FixedMap.MIN
-            ElseIf header = Formats.MAP_16 Then
+            ElseIf header = MsgPackFormats.MAP_16 Then
                 numElements = (CInt(reader.ReadByte) << 8) + reader.ReadByte()
-            ElseIf header = Formats.MAP_32 Then
+            ElseIf header = MsgPackFormats.MAP_32 Then
                 numElements = (CInt(reader.ReadByte) << 24) + (CInt(reader.ReadByte) << 16) + (CInt(reader.ReadByte) << 8) + reader.ReadByte()
             Else
                 Throw New ApplicationException("The serialized data format is invalid due to an invalid map size specification")
@@ -284,39 +284,39 @@ Public Module MsgPackIO
         Dim header As Byte = reader.ReadByte()
         Dim result As Object
 
-        If header = Formats.NIL Then
+        If header = MsgPackFormats.NIL Then
             result = Nothing
         ElseIf header = Bool.TRUE Then
             result = True
         ElseIf header = Bool.FALSE Then
             result = False
-        ElseIf header = Formats.FLOAT_64 Then
+        ElseIf header = MsgPackFormats.FLOAT_64 Then
             result = ReadMsgPackDouble(reader, nilImplication, header)
-        ElseIf header = Formats.FLOAT_32 Then
+        ElseIf header = MsgPackFormats.FLOAT_32 Then
             result = ReadMsgPackFloat(reader, nilImplication, header)
-        ElseIf header = Formats.INTEGER_16 Then
+        ElseIf header = MsgPackFormats.INTEGER_16 Then
             result = ReadMsgPackInt(reader, nilImplication, header)
-        ElseIf header = Formats.INTEGER_32 Then
+        ElseIf header = MsgPackFormats.INTEGER_32 Then
             result = ReadMsgPackInt(reader, nilImplication, header)
-        ElseIf header = Formats.INTEGER_64 Then
+        ElseIf header = MsgPackFormats.INTEGER_64 Then
             result = ReadMsgPackInt(reader, nilImplication, header)
-        ElseIf header = Formats.INTEGER_8 Then
+        ElseIf header = MsgPackFormats.INTEGER_8 Then
             result = ReadMsgPackInt(reader, nilImplication, header)
-        ElseIf header = Formats.STRING_8 Then
+        ElseIf header = MsgPackFormats.STRING_8 Then
             result = ReadMsgPackString(reader, nilImplication, header)
-        ElseIf header = Formats.STRING_16 Then
+        ElseIf header = MsgPackFormats.STRING_16 Then
             result = ReadMsgPackString(reader, nilImplication, header)
-        ElseIf header = Formats.STRING_32 Then
+        ElseIf header = MsgPackFormats.STRING_32 Then
             result = ReadMsgPackString(reader, nilImplication, header)
         ElseIf header >= FixedString.MIN AndAlso header <= FixedString.MAX Then
             result = ReadMsgPackString(reader, nilImplication, header)
-        ElseIf header = Formats.UNSIGNED_INTEGER_8 Then
+        ElseIf header = MsgPackFormats.UNSIGNED_INTEGER_8 Then
             result = ReadMsgPackInt(reader, nilImplication, header)
-        ElseIf header = Formats.UNSIGNED_INTEGER_16 Then
+        ElseIf header = MsgPackFormats.UNSIGNED_INTEGER_16 Then
             result = ReadMsgPackInt(reader, nilImplication, header)
-        ElseIf header = Formats.UNSIGNED_INTEGER_32 Then
+        ElseIf header = MsgPackFormats.UNSIGNED_INTEGER_32 Then
             result = ReadMsgPackInt(reader, nilImplication, header)
-        ElseIf header = Formats.UNSIGNED_INTEGER_64 Then
+        ElseIf header = MsgPackFormats.UNSIGNED_INTEGER_64 Then
             result = ReadMsgPackInt(reader, nilImplication, header)
         ElseIf header >= FixedInteger.POSITIVE_MIN AndAlso header <= FixedInteger.POSITIVE_MAX Then
 
@@ -327,7 +327,7 @@ Public Module MsgPackIO
             End If
         ElseIf header >= FixedInteger.NEGATIVE_MIN AndAlso header <= FixedInteger.NEGATIVE_MAX Then
             result = ReadMsgPackInt(reader, nilImplication, header)
-        ElseIf header >= FixedMap.MIN AndAlso header <= FixedMap.MAX OrElse header = Formats.MAP_16 OrElse header = Formats.MAP_32 Then
+        ElseIf header >= FixedMap.MIN AndAlso header <= FixedMap.MAX OrElse header = MsgPackFormats.MAP_16 OrElse header = MsgPackFormats.MAP_32 Then
             result = New Dictionary(Of String, Object)()
             DeserializeCollection(CType(result, Dictionary(Of String, Object)), reader, header)
         Else
@@ -355,7 +355,7 @@ Public Module MsgPackIO
         result = Nothing
         Dim v As Byte = reader.ReadByte()
 
-        If v = Formats.NIL Then
+        If v = MsgPackFormats.NIL Then
             If nilImplication = NilImplication.MemberDefault Then
                 If t.IsValueType Then
                     result = Activator.CreateInstance(t)
@@ -372,7 +372,7 @@ Public Module MsgPackIO
         Dim result As Object = Nothing
         Dim v As Byte = ReadHeader(GetType(Boolean), reader, nilImplication, result)
 
-        If v <> Formats.NIL Then
+        If v <> MsgPackFormats.NIL Then
             result = v = Bool.TRUE
         End If
 
@@ -383,8 +383,8 @@ Public Module MsgPackIO
         Dim result As Object = Nothing
         Dim v = If(header = 0, ReadHeader(GetType(Single), reader, nilImplication, result), header)
 
-        If v <> Formats.NIL Then
-            If v <> Formats.FLOAT_32 Then
+        If v <> MsgPackFormats.NIL Then
+            If v <> MsgPackFormats.FLOAT_32 Then
                 Throw New ApplicationException("Serialized data doesn't match type being deserialized to")
             End If
 
@@ -404,8 +404,8 @@ Public Module MsgPackIO
         Dim result As Object = Nothing
         Dim v = If(header = 0, ReadHeader(GetType(Double), reader, nilImplication, result), header)
 
-        If v <> Formats.NIL Then
-            If v <> Formats.FLOAT_64 Then
+        If v <> MsgPackFormats.NIL Then
+            If v <> MsgPackFormats.FLOAT_64 Then
                 Throw New ApplicationException("Serialized data doesn't match type being deserialized to")
             End If
 
@@ -425,8 +425,8 @@ Public Module MsgPackIO
         Dim result As Object = Nothing
         Dim v = If(header = 0, ReadHeader(GetType(ULong), reader, nilImplication, result), header)
 
-        If v <> Formats.NIL Then
-            If v <> Formats.UINT_64 Then
+        If v <> MsgPackFormats.NIL Then
+            If v <> MsgPackFormats.UINT_64 Then
                 Throw New ApplicationException("Serialized data doesn't match type being deserialized to")
             End If
 
@@ -440,30 +440,30 @@ Public Module MsgPackIO
         Dim result As Object = Nothing
         Dim v = If(header = 0, ReadHeader(GetType(Long), reader, nilImplication, result), header)
 
-        If v <> Formats.NIL Then
+        If v <> MsgPackFormats.NIL Then
             If v <= FixedInteger.POSITIVE_MAX Then
                 result = v
             ElseIf v >= FixedInteger.NEGATIVE_MIN Then
                 result = -(v - FixedInteger.NEGATIVE_MIN)
-            ElseIf v = Formats.UINT_8 Then
+            ElseIf v = MsgPackFormats.UINT_8 Then
                 result = reader.ReadByte()
-            ElseIf v = Formats.UINT_16 Then
+            ElseIf v = MsgPackFormats.UINT_16 Then
                 result = (CInt(reader.ReadByte) << 8) + reader.ReadByte()
-            ElseIf v = Formats.UINT_32 Then
+            ElseIf v = MsgPackFormats.UINT_32 Then
                 result = (CInt(reader.ReadByte) << 24) + (CUInt(reader.ReadByte) << 16) + (CUInt(reader.ReadByte) << 8) + CUInt(reader.ReadByte())
-            ElseIf v = Formats.UINT_64 Then
+            ElseIf v = MsgPackFormats.UINT_64 Then
                 result = (CULng(reader.ReadByte) << 56) + (CULng(reader.ReadByte) << 48) + (CULng(reader.ReadByte) << 40) + (CULng(reader.ReadByte) << 32) + (CULng(reader.ReadByte) << 24) + (CULng(reader.ReadByte) << 16) + (CULng(reader.ReadByte) << 8) + CULng(reader.ReadByte())
-            ElseIf v = Formats.INT_8 Then
+            ElseIf v = MsgPackFormats.INT_8 Then
                 result = reader.ReadSByte()
-            ElseIf v = Formats.INT_16 Then
+            ElseIf v = MsgPackFormats.INT_16 Then
                 Dim data = reader.ReadBytes(2)
                 If BitConverter.IsLittleEndian Then Array.Reverse(data)
                 result = BitConverter.ToInt16(data, 0)
-            ElseIf v = Formats.INT_32 Then
+            ElseIf v = MsgPackFormats.INT_32 Then
                 Dim data = reader.ReadBytes(4)
                 If BitConverter.IsLittleEndian Then Array.Reverse(data)
                 result = BitConverter.ToInt32(data, 0)
-            ElseIf v = Formats.INT_64 Then
+            ElseIf v = MsgPackFormats.INT_64 Then
                 Dim data = reader.ReadBytes(8)
                 If BitConverter.IsLittleEndian Then Array.Reverse(data)
                 result = BitConverter.ToInt64(data, 0)
@@ -479,16 +479,16 @@ Public Module MsgPackIO
         Dim result As Object = Nothing
         Dim v = If(header = 0, ReadHeader(GetType(String), reader, nilImplication, result), header)
 
-        If v <> Formats.NIL Then
+        If v <> MsgPackFormats.NIL Then
             Dim length = 0
 
             If v >= FixedString.MIN AndAlso v <= FixedString.MAX Then
                 length = v - FixedString.MIN
-            ElseIf v = Formats.STR_8 Then
+            ElseIf v = MsgPackFormats.STR_8 Then
                 length = reader.ReadByte()
-            ElseIf v = Formats.STR_16 Then
+            ElseIf v = MsgPackFormats.STR_16 Then
                 length = (CInt(reader.ReadByte) << 8) + reader.ReadByte()
-            ElseIf v = Formats.STR_32 Then
+            ElseIf v = MsgPackFormats.STR_32 Then
                 length = (CInt(reader.ReadByte) << 24) + (CInt(reader.ReadByte) << 16) + (CInt(reader.ReadByte) << 8) + reader.ReadByte()
             End If
 
@@ -516,7 +516,7 @@ Public Module MsgPackIO
             Array.Reverse(data)
         End If
 
-        writer.Write(Formats.FLOAT_32)
+        writer.Write(MsgPackFormats.FLOAT_32)
         writer.Write(data)
     End Sub
 
@@ -528,7 +528,7 @@ Public Module MsgPackIO
             Array.Reverse(data)
         End If
 
-        writer.Write(Formats.FLOAT_64)
+        writer.Write(MsgPackFormats.FLOAT_64)
         writer.Write(data)
     End Sub
 
@@ -543,12 +543,12 @@ Public Module MsgPackIO
     End Sub
 
     Friend Sub WriteMsgPack(writer As BinaryWriter, val As SByte)
-        writer.Write(Formats.INT_8)
+        writer.Write(MsgPackFormats.INT_8)
         writer.Write(val)
     End Sub
 
     Friend Sub WriteMsgPack(writer As BinaryWriter, val As Byte)
-        writer.Write(Formats.UINT_8)
+        writer.Write(MsgPackFormats.UINT_8)
         writer.Write(val)
     End Sub
 
@@ -561,10 +561,10 @@ Public Module MsgPackIO
         If val <= FixedInteger.POSITIVE_MAX Then
             writer.Write(CByte(val))
         ElseIf val <= Byte.MaxValue Then
-            writer.Write(Formats.UINT_8)
+            writer.Write(MsgPackFormats.UINT_8)
             writer.Write(CByte(val))
         Else
-            writer.Write(Formats.UINT_16)
+            writer.Write(MsgPackFormats.UINT_16)
             Dim data = BitConverter.GetBytes(val)
             If BitConverter.IsLittleEndian Then Array.Reverse(data)
             writer.Write(data)
@@ -575,13 +575,13 @@ Public Module MsgPackIO
         If val >= 0 AndAlso val <= FixedInteger.POSITIVE_MAX Then
             writer.Write(CByte(val))
         ElseIf val >= 0 AndAlso val <= Byte.MaxValue Then
-            writer.Write(Formats.UINT_8)
+            writer.Write(MsgPackFormats.UINT_8)
             writer.Write(CByte(val))
         ElseIf val >= SByte.MinValue AndAlso val <= SByte.MaxValue Then
-            writer.Write(Formats.INT_8)
+            writer.Write(MsgPackFormats.INT_8)
             writer.Write(CSByte(val))
         Else
-            writer.Write(Formats.INT_16)
+            writer.Write(MsgPackFormats.INT_16)
             Dim data = BitConverter.GetBytes(val)
             If BitConverter.IsLittleEndian Then Array.Reverse(data)
             writer.Write(data)
@@ -592,16 +592,16 @@ Public Module MsgPackIO
         If val <= FixedInteger.POSITIVE_MAX Then
             writer.Write(CByte(val))
         ElseIf val <= Byte.MaxValue Then
-            writer.Write(Formats.UINT_8)
+            writer.Write(MsgPackFormats.UINT_8)
             writer.Write(CByte(val))
         ElseIf val <= UShort.MaxValue Then
-            writer.Write(Formats.UINT_16)
+            writer.Write(MsgPackFormats.UINT_16)
             Dim outVal As UShort = val
             Dim data = BitConverter.GetBytes(outVal)
             If BitConverter.IsLittleEndian Then Array.Reverse(data)
             writer.Write(data)
         Else
-            writer.Write(Formats.UINT_32)
+            writer.Write(MsgPackFormats.UINT_32)
             Dim data = BitConverter.GetBytes(val)
             If BitConverter.IsLittleEndian Then Array.Reverse(data)
             writer.Write(data)
@@ -612,25 +612,25 @@ Public Module MsgPackIO
         If val >= 0 AndAlso val <= FixedInteger.POSITIVE_MAX Then
             writer.Write(CByte(val))
         ElseIf val >= 0 AndAlso val <= Byte.MaxValue Then
-            writer.Write(Formats.UINT_8)
+            writer.Write(MsgPackFormats.UINT_8)
             writer.Write(CByte(val))
         ElseIf val >= SByte.MinValue AndAlso val <= SByte.MaxValue Then
-            writer.Write(Formats.INT_8)
+            writer.Write(MsgPackFormats.INT_8)
             writer.Write(CSByte(val))
         ElseIf val >= Short.MinValue AndAlso val <= Short.MaxValue Then
-            writer.Write(Formats.INT_16)
+            writer.Write(MsgPackFormats.INT_16)
             Dim outVal As Short = val
             Dim data = BitConverter.GetBytes(outVal)
             If BitConverter.IsLittleEndian Then Array.Reverse(data)
             writer.Write(data)
         ElseIf val >= 0 AndAlso val <= UShort.MaxValue Then
-            writer.Write(Formats.UINT_16)
+            writer.Write(MsgPackFormats.UINT_16)
             Dim outVal As UShort = val
             Dim data = BitConverter.GetBytes(outVal)
             If BitConverter.IsLittleEndian Then Array.Reverse(data)
             writer.Write(data)
         Else
-            writer.Write(Formats.INT_32)
+            writer.Write(MsgPackFormats.INT_32)
             Dim data = BitConverter.GetBytes(val)
             If BitConverter.IsLittleEndian Then Array.Reverse(data)
             writer.Write(data)
@@ -641,22 +641,22 @@ Public Module MsgPackIO
         If val <= FixedInteger.POSITIVE_MAX Then
             writer.Write(CByte(val))
         ElseIf val <= Byte.MaxValue Then
-            writer.Write(Formats.UINT_8)
+            writer.Write(MsgPackFormats.UINT_8)
             writer.Write(CByte(val))
         ElseIf val <= UShort.MaxValue Then
-            writer.Write(Formats.UINT_16)
+            writer.Write(MsgPackFormats.UINT_16)
             Dim outVal As UShort = val
             Dim data = BitConverter.GetBytes(outVal)
             If BitConverter.IsLittleEndian Then Array.Reverse(data)
             writer.Write(data)
         ElseIf val <= UInteger.MaxValue Then
-            writer.Write(Formats.UINT_32)
+            writer.Write(MsgPackFormats.UINT_32)
             Dim outVal As UInteger = val
             Dim data = BitConverter.GetBytes(outVal)
             If BitConverter.IsLittleEndian Then Array.Reverse(data)
             writer.Write(data)
         Else
-            writer.Write(Formats.UINT_64)
+            writer.Write(MsgPackFormats.UINT_64)
             Dim data = BitConverter.GetBytes(val)
             If BitConverter.IsLittleEndian Then Array.Reverse(data)
             writer.Write(data)
@@ -667,37 +667,37 @@ Public Module MsgPackIO
         If val >= 0 AndAlso val <= FixedInteger.POSITIVE_MAX Then
             writer.Write(CByte(val))
         ElseIf val >= 0 AndAlso val <= Byte.MaxValue Then
-            writer.Write(Formats.UINT_8)
+            writer.Write(MsgPackFormats.UINT_8)
             writer.Write(CByte(val))
         ElseIf val >= SByte.MinValue AndAlso val <= SByte.MaxValue Then
-            writer.Write(Formats.INT_8)
+            writer.Write(MsgPackFormats.INT_8)
             writer.Write(CSByte(val))
         ElseIf val >= Short.MinValue AndAlso val <= Short.MaxValue Then
-            writer.Write(Formats.INT_16)
+            writer.Write(MsgPackFormats.INT_16)
             Dim outVal As Short = val
             Dim data = BitConverter.GetBytes(outVal)
             If BitConverter.IsLittleEndian Then Array.Reverse(data)
             writer.Write(data)
         ElseIf val >= 0 AndAlso val <= UShort.MaxValue Then
-            writer.Write(Formats.UINT_16)
+            writer.Write(MsgPackFormats.UINT_16)
             Dim outVal As UShort = val
             Dim data = BitConverter.GetBytes(outVal)
             If BitConverter.IsLittleEndian Then Array.Reverse(data)
             writer.Write(data)
         ElseIf val >= Integer.MinValue AndAlso val <= Integer.MaxValue Then
-            writer.Write(Formats.INT_32)
+            writer.Write(MsgPackFormats.INT_32)
             Dim outVal As Integer = val
             Dim data = BitConverter.GetBytes(outVal)
             If BitConverter.IsLittleEndian Then Array.Reverse(data)
             writer.Write(data)
         ElseIf val >= 0 AndAlso val <= UInteger.MaxValue Then
-            writer.Write(Formats.UINT_32)
+            writer.Write(MsgPackFormats.UINT_32)
             Dim outVal As UInteger = val
             Dim data = BitConverter.GetBytes(outVal)
             If BitConverter.IsLittleEndian Then Array.Reverse(data)
             writer.Write(data)
         Else
-            writer.Write(Formats.INT_64)
+            writer.Write(MsgPackFormats.INT_64)
             Dim data = BitConverter.GetBytes(val)
             If BitConverter.IsLittleEndian Then Array.Reverse(data)
             writer.Write(data)
@@ -715,16 +715,16 @@ Public Module MsgPackIO
                 Dim val As Byte = FixedString.MIN Or length
                 writer.Write(val)
             ElseIf length <= Byte.MaxValue Then
-                writer.Write(Formats.STR_8)
+                writer.Write(MsgPackFormats.STR_8)
                 writer.Write(CByte(length))
             ElseIf length <= UShort.MaxValue Then
-                writer.Write(Formats.STR_16)
+                writer.Write(MsgPackFormats.STR_16)
                 Dim outVal As UShort = length
                 Dim data = BitConverter.GetBytes(outVal)
                 If BitConverter.IsLittleEndian Then Array.Reverse(data)
                 writer.Write(data)
             Else
-                writer.Write(Formats.STR_32)
+                writer.Write(MsgPackFormats.STR_32)
                 Dim outVal = length
                 Dim data = BitConverter.GetBytes(outVal)
                 If BitConverter.IsLittleEndian Then Array.Reverse(data)
@@ -746,7 +746,7 @@ Public Module MsgPackIO
 
     Friend Sub SerializeValue(val As Object, writer As BinaryWriter, serializationMethod As SerializationMethod)
         If val Is Nothing Then
-            writer.Write(Formats.NIL)
+            writer.Write(MsgPackFormats.NIL)
         Else
             Dim t As Type = val.GetType()
             t = If(Nullable.GetUnderlyingType(t), t)
@@ -789,19 +789,19 @@ Public Module MsgPackIO
                 Dim array As Array = TryCast(val, Array)
 
                 If array Is Nothing Then
-                    writer.Write(Formats.NIL)
+                    writer.Write(MsgPackFormats.NIL)
                 Else
 
                     If array.Length <= 15 Then
                         Dim arrayVal As Byte = FixedArray.MIN + array.Length
                         writer.Write(arrayVal)
                     ElseIf array.Length <= UShort.MaxValue Then
-                        writer.Write(Formats.ARRAY_16)
+                        writer.Write(MsgPackFormats.ARRAY_16)
                         Dim data = BitConverter.GetBytes(CUShort(array.Length))
                         If BitConverter.IsLittleEndian Then Array.Reverse(data)
                         writer.Write(data)
                     Else
-                        writer.Write(Formats.ARRAY_32)
+                        writer.Write(MsgPackFormats.ARRAY_32)
                         Dim data = BitConverter.GetBytes(CUInt(array.Length))
                         If BitConverter.IsLittleEndian Then Array.Reverse(data)
                         writer.Write(data)
@@ -816,12 +816,12 @@ Public Module MsgPackIO
                     Dim arrayVal As Byte = FixedArray.MIN + list.Count
                     writer.Write(arrayVal)
                 ElseIf list.Count <= UShort.MaxValue Then
-                    writer.Write(Formats.ARRAY_16)
+                    writer.Write(MsgPackFormats.ARRAY_16)
                     Dim data = BitConverter.GetBytes(CUShort(list.Count))
                     If BitConverter.IsLittleEndian Then Array.Reverse(data)
                     writer.Write(data)
                 Else
-                    writer.Write(Formats.ARRAY_32)
+                    writer.Write(MsgPackFormats.ARRAY_32)
                     Dim data = BitConverter.GetBytes(CUInt(list.Count))
                     If BitConverter.IsLittleEndian Then Array.Reverse(data)
                     writer.Write(data)
@@ -835,12 +835,12 @@ Public Module MsgPackIO
                     Dim header As Byte = FixedMap.MIN + dictionary.Count
                     writer.Write(header)
                 ElseIf dictionary.Count <= UShort.MaxValue Then
-                    writer.Write(Formats.MAP_16)
+                    writer.Write(MsgPackFormats.MAP_16)
                     Dim data = BitConverter.GetBytes(CUShort(dictionary.Count))
                     If BitConverter.IsLittleEndian Then Array.Reverse(data)
                     writer.Write(data)
                 Else
-                    writer.Write(Formats.MAP_32)
+                    writer.Write(MsgPackFormats.MAP_32)
                     Dim data = BitConverter.GetBytes(CUInt(dictionary.Count))
                     If BitConverter.IsLittleEndian Then Array.Reverse(data)
                     writer.Write(data)
