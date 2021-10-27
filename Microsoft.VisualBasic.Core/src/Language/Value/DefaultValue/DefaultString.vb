@@ -126,6 +126,10 @@ Namespace Language.Default
             Return s Is Nothing OrElse String.IsNullOrEmpty(s)
         End Function
 
+        Public Shared Operator And(flag As Boolean, arg As DefaultString) As Boolean
+            Return flag And CBool(arg)
+        End Operator
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(str As DefaultString) As Boolean
             Return str.DefaultValue.ParseBoolean
