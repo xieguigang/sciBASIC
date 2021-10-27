@@ -209,6 +209,15 @@ Namespace CommandLine
             Return buffer
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="app">
+        ''' the ``*.dll/*.exe`` program file path, which is going to running under the ``dotnet`` command.
+        ''' </param>
+        ''' <param name="args"></param>
+        ''' <param name="[in]"></param>
+        ''' <returns></returns>
         Public Function CallDotNetCorePipeline(app As ConsoleApp, Optional args As String = "", Optional [in] As String = "") As MemoryStream
             Dim dll As String = app.Path.TrimSuffix & ".dll"
             Dim cli As String = $"{dll.CLIPath} {args}"
