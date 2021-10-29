@@ -42,36 +42,57 @@
 
 Namespace Constants
 
-    Public Enum MsgPackFormats As Byte
-        NIL = &HC0
-        FLOAT_32 = &HCA
-        FLOAT_64 = &HCB
-        [DOUBLE] = &HCB
-        UINT_8 = &HCC
-        UNSIGNED_INTEGER_8 = &HCC
-        UINT_16 = &HCD
-        UNSIGNED_INTEGER_16 = &HCD
-        UINT_32 = &HCE
-        UNSIGNED_INTEGER_32 = &HCE
-        UINT_64 = &HCF
-        UNSIGNED_INTEGER_64 = &HCF
-        INT_8 = &HD0
-        INTEGER_8 = &HD0
-        INT_16 = &HD1
-        INTEGER_16 = &HD1
-        INT_32 = &HD2
-        INTEGER_32 = &HD2
-        INT_64 = &HD3
-        INTEGER_64 = &HD3
-        STR_8 = &HD9
-        STRING_8 = &HD9
-        STR_16 = &HDA
-        STRING_16 = &HDA
-        STR_32 = &HDB
-        STRING_32 = &HDB
-        ARRAY_16 = &HDC
-        ARRAY_32 = &HDD
-        MAP_16 = &HDE
-        MAP_32 = &HDF
-    End Enum
+    ''' <summary>
+    ''' 枚举所有的基础类型常量
+    ''' </summary>
+    ''' <remarks>
+    ''' 20211029
+    ''' 
+    ''' 因为有些常量的值会出现重复，所以使用Enum枚举类型来表示会
+    ''' 产生符号冲突。在这里就只用普通的常量值来表示了
+    ''' </remarks>
+    Public NotInheritable Class MsgPackFormats
+
+        Public Const NIL As Byte = &HC0
+        Public Const FLOAT_32 As Byte = &HCA
+        Public Const FLOAT_64 As Byte = &HCB
+        Public Const [DOUBLE] As Byte = &HCB
+        Public Const UINT_8 As Byte = &HCC
+        Public Const UNSIGNED_INTEGER_8 As Byte = &HCC
+        Public Const UINT_16 As Byte = &HCD
+        Public Const UNSIGNED_INTEGER_16 As Byte = &HCD
+        Public Const UINT_32 As Byte = &HCE
+        Public Const UNSIGNED_INTEGER_32 As Byte = &HCE
+        Public Const UINT_64 As Byte = &HCF
+        Public Const UNSIGNED_INTEGER_64 As Byte = &HCF
+        Public Const INT_8 As Byte = &HD0
+        Public Const INTEGER_8 As Byte = &HD0
+        Public Const INT_16 As Byte = &HD1
+        Public Const INTEGER_16 As Byte = &HD1
+        Public Const INT_32 As Byte = &HD2
+        Public Const INTEGER_32 As Byte = &HD2
+        Public Const INT_64 As Byte = &HD3
+        Public Const INTEGER_64 As Byte = &HD3
+        Public Const STR_8 As Byte = &HD9
+        Public Const STRING_8 As Byte = &HD9
+        Public Const STR_16 As Byte = &HDA
+        Public Const STRING_16 As Byte = &HDA
+        Public Const STR_32 As Byte = &HDB
+        Public Const STRING_32 As Byte = &HDB
+        Public Const ARRAY_16 As Byte = &HDC
+        Public Const ARRAY_32 As Byte = &HDD
+        Public Const MAP_16 As Byte = &HDE
+        Public Const MAP_32 As Byte = &HDF
+
+        Public Shared Function GetEnums() As Dictionary(Of String, Byte)
+            Static enums As Dictionary(Of String, Byte) = GetType(MsgPackFormats) _
+                .GetFields _
+                .Where(Function(f) f.IsLiteral) _
+                .ToDictionary(Function(f) f.Name,
+                              Function(f)
+                                  Return CByte(f.GetValue(Nothing))
+                              End Function)
+            Return enums
+        End Function
+    End Class
 End Namespace
