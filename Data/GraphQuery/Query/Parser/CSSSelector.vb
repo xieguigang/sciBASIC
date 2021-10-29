@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::ef0bd4491259a67a7c2fc667218f2966, Data\GraphQuery\Query\Parser\CSSSelector.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class CSSSelector
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: getElementQueryOutput, ParseImpl, selectByClass, selectByList, selectByTagName
-    ' 
-    ' Structure Selector
-    ' 
-    '     Properties: isComposeCssQuery
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: RunComposeCssQuery
-    ' 
-    ' /********************************************************************************/
+' Class CSSSelector
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: getElementQueryOutput, ParseImpl, selectByClass, selectByList, selectByTagName
+' 
+' Structure Selector
+' 
+'     Properties: isComposeCssQuery
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: RunComposeCssQuery
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -147,7 +147,7 @@ Public Class CSSSelector : Inherits Parser
                 .HtmlElements = list
             }
         Else
-            Return GetElementByIndex(list, CInt(Val(selector.n)))
+            Return GetElementByIndex(list, selector.ParseIndex)
         End If
     End Function
 
@@ -173,7 +173,7 @@ Public Class CSSSelector : Inherits Parser
                 .HtmlElements = list
             }
         Else
-            Return GetElementByIndex(list, CInt(Val(selector.n)))
+            Return GetElementByIndex(list, selector.ParseIndex)
         End If
     End Function
 
@@ -202,6 +202,14 @@ Public Structure Selector
         Me.n = n
         Me.isArray = isArray
     End Sub
+
+    Public Function ParseIndex() As Integer?
+        If n.StringEmpty OrElse n = "*" Then
+            Return Nothing
+        Else
+            Return Integer.Parse(n)
+        End If
+    End Function
 
     Public Function RunComposeCssQuery(document As InnerPlantText, env As Engine) As InnerPlantText
         ' there is a whitespace that needs to be trimed

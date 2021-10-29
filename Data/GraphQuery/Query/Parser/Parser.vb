@@ -73,8 +73,12 @@ Public MustInherit Class Parser
 
     Protected MustOverride Function ParseImpl(document As InnerPlantText, isArray As Boolean, env As Engine) As InnerPlantText
 
-    Protected Shared Function GetElementByIndex(list As InnerPlantText(), i As Integer) As InnerPlantText
-        If i >= list.Count Then
+    Protected Shared Function GetElementByIndex(list As InnerPlantText(), i As Integer?) As InnerPlantText
+        If i Is Nothing Then
+            Return New HtmlElement With {
+                .HtmlElements = list
+            }
+        ElseIf i >= list.Length Then
             Return New InnerPlantText With {.InnerText = ""}
         Else
             Return list(i)

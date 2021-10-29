@@ -52,6 +52,26 @@ Namespace TextParser
 
     Module BaseInvoke
 
+        <ExportAPI("skip")>
+        Public Function skip(document As InnerPlantText, parameters As String(), isArray As Boolean) As InnerPlantText
+            If Not isArray Then
+                Throw New InvalidExpressionException("data should be an array!")
+            End If
+
+            Dim array As New HtmlElement With {.TagName = "skip"}
+            Dim n As Integer = Integer.Parse(parameters(Scan0))
+
+            If TypeOf document Is HtmlElement Then
+                For Each element In DirectCast(document, HtmlElement).HtmlElements.Skip(n)
+                    array.Add(element)
+                Next
+            Else
+                Throw New InvalidExpressionException
+            End If
+
+            Return array
+        End Function
+
         ''' <summary>
         ''' Extract the text of the current node
         ''' </summary>
