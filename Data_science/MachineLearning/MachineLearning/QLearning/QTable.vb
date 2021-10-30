@@ -48,7 +48,6 @@
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.MachineLearning.QLearning.DataModel
-Imports stdNum = System.Math
 
 Namespace QLearning
 
