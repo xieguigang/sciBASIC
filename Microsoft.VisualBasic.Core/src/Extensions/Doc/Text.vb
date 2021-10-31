@@ -472,11 +472,14 @@ Public Module TextDoc
     ''' <param name="path"></param>
     ''' <param name="encoding"></param>
     ''' <returns></returns>
-    ''' <remarks></remarks>
-    '''
-    <ExportAPI("Write.Text")>
+    ''' <remarks>
+    ''' 这个函数是以For循环的方式来兼容大型数据集的文件写入操作的
+    ''' </remarks>
     <Extension>
-    Public Function SaveTo(array As IEnumerable(Of String), path$, Optional encoding As Encoding = Nothing, Optional newLine As Char = ASCII.LF) As Boolean
+    Public Function SaveTo(array As IEnumerable(Of String), path$,
+                           Optional encoding As Encoding = Nothing,
+                           Optional newLine As Char = ASCII.LF) As Boolean
+
         If String.IsNullOrEmpty(path) Then
             Return False
         End If
