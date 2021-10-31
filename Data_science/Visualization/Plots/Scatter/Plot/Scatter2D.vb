@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::945320a0ab197c402ca508b92eda193a, Data_science\Visualization\Plots\Scatter\Plot\Scatter2D.vb"
+﻿#Region "Microsoft.VisualBasic::2b8b3091006060666c5b62a9ae599b56, Data_science\Visualization\Plots\Scatter\Plot\Scatter2D.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: GetDataScaler
+    '         Function: DrawScatter, GetDataScaler
     ' 
     '         Sub: PlotInternal
     ' 

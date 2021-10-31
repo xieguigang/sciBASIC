@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::40bc469e4c19256f242745a5cbba14f9, Data_science\DataMining\DataMining\Clustering\DBSCAN\Optics\Point.vb"
+﻿#Region "Microsoft.VisualBasic::2bb1e2c8219f1d5b4bbb8d0fef9d9e51, Data_science\DataMining\DataMining\Clustering\DBSCAN\Optics\Point.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.My.JavaScript

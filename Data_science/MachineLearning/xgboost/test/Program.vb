@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19daa3827ce3fc7438663ace3bc16b8e, Data_science\MachineLearning\xgboost\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::4cf37c3d73b6310aaeeccd2f94a24c0e, Data_science\MachineLearning\xgboost\test\Program.vb"
 
     ' Author:
     ' 
@@ -115,4 +115,3 @@ Module Program
         Return handler.getMatrix()
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5cc5b4c67f098b7d58b76e9ac7d9e886, Data_science\MachineLearning\xgboost\gbm\Dart.vb"
+﻿#Region "Microsoft.VisualBasic::51e494f95440a8a91646388a12f3faca, Data_science\MachineLearning\xgboost\gbm\Dart.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,6 @@
 
 #End Region
 
-
 Imports Microsoft.VisualBasic.MachineLearning.XGBoost.util
 Imports stdNum = System.Math
 
@@ -84,4 +83,3 @@ Namespace gbm
         End Function
     End Class
 End Namespace
-

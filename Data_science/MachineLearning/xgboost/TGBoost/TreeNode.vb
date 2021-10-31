@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a25bc9804ee4c4df45488471f82e5c8, Data_science\MachineLearning\xgboost\TGBoost\TreeNode.vb"
+﻿#Region "Microsoft.VisualBasic::26e484aa14744d4499745d7296e3a9a4, Data_science\MachineLearning\xgboost\TGBoost\TreeNode.vb"
 
     ' Author:
     ' 
@@ -241,4 +241,3 @@ Namespace train
         End Sub
     End Class
 End Namespace
-

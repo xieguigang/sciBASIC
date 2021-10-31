@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fcc24920893c6119dd628096309710b8, Data_science\MachineLearning\xgboost\Predictor.vb"
+﻿#Region "Microsoft.VisualBasic::0a1ce374d1ea9b01451624effe3b58ce, Data_science\MachineLearning\xgboost\Predictor.vb"
 
     ' Author:
     ' 
@@ -305,4 +305,3 @@ Public Class Predictor
         End Sub
     End Class
 End Class
-

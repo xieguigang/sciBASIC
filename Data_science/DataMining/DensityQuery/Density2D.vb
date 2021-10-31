@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5fab316bf6ac2a3ecec692672af049fc, Data_science\DataMining\DensityQuery\Density2D.vb"
+﻿#Region "Microsoft.VisualBasic::33d39955c45c07b29e34b41eb842dfbc, Data_science\DataMining\DensityQuery\Density2D.vb"
 
     ' Author:
     ' 
@@ -107,4 +107,3 @@ Public Module Density2D
         End If
     End Function
 End Module
-

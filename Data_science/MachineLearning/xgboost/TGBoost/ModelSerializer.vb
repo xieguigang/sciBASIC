@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f9afc732b2bf4797c4e3e13bcc92cf7, Data_science\MachineLearning\xgboost\TGBoost\ModelSerializer.vb"
+﻿#Region "Microsoft.VisualBasic::8abfee3f34d079c7c214ee3f82e262d2, Data_science\MachineLearning\xgboost\TGBoost\ModelSerializer.vb"
 
     ' Author:
     ' 
@@ -260,4 +260,3 @@ Namespace train
         End Function
     End Class
 End Namespace
-

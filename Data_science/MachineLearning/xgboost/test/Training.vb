@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a77cf02ab078799d493e82f8bfaa995b, Data_science\MachineLearning\xgboost\test\Training.vb"
+﻿#Region "Microsoft.VisualBasic::b85e8e814df08e4dcc1633f211dab3aa, Data_science\MachineLearning\xgboost\test\Training.vb"
 
     ' Author:
     ' 
@@ -113,4 +113,3 @@ Namespace train
         End Sub
     End Class
 End Namespace
-

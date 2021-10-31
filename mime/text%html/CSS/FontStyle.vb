@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c27e80044fcafd4db7ac40f2e07d917f, mime\text%html\CSS\FontStyle.vb"
+﻿#Region "Microsoft.VisualBasic::4746bf1d81d35aec978f3b0080caa86d, mime\text%html\CSS\FontStyle.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     '     Class CSSFont
     ' 
-    '         Properties: [variant], CSSValue, family, GDIObject, size
-    '                     style, weight
+    '         Properties: [variant], color, CSSValue, family, GDIObject
+    '                     size, style, weight
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: (+2 Overloads) GetFontStyle, GetStyle, parseInner, (+2 Overloads) ToString, TryParse

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21181c084c782d34e4176156fa036b1e, Data_science\DataMining\UMAP\KNN\KDTree\KDAccessor.vb"
+﻿#Region "Microsoft.VisualBasic::ebd13525e66a69595b4417d8928f7fd6, Data_science\DataMining\UMAP\KNN\KDTree\KDAccessor.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.GraphTheory.KdTree

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::23b47c5a75be194974dba74813af3af5, Data_science\Visualization\Plots\Scatter\Data\SerialData.vb"
+﻿#Region "Microsoft.VisualBasic::00e47b108d780ff7f2b2ddac3e8af21c, Data_science\Visualization\Plots\Scatter\Data\SerialData.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '     Properties: DataAnnotations, title
     ' 
-    '     Function: GetPen, GetPointByX, ToString
+    '     Function: BrushHandler, GetPen, GetPointByX, ToString
     ' 
     '     Sub: AddMarker
     ' 

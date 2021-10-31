@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6fe25ac79e8bef2b3851794cb1cedd15, Data_science\MachineLearning\XGBoostDataSet\Conversion.vb"
+﻿#Region "Microsoft.VisualBasic::c7e5dc03c7fd40029a75b1996b0c0869, Data_science\MachineLearning\XGBoostDataSet\Conversion.vb"
 
     ' Author:
     ' 
@@ -151,4 +151,3 @@ Public Module Conversion
         }
     End Function
 End Module
-

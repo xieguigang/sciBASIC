@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::493db5007f529973439efb200e1940e3, Data_science\Mathematica\Math\DataFittings\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::14d1ae2eafedade110753afe75fd54c4, Data_science\Mathematica\Math\DataFittings\test\Program.vb"
 
     ' Author:
     ' 
@@ -61,4 +61,3 @@ Module Program
         Pause()
     End Sub
 End Module
-

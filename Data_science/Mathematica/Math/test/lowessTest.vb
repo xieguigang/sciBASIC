@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf4eeca6ba65ccfab71c2b20888b31ce, Data_science\Mathematica\Math\test\lowessTest.vb"
+﻿#Region "Microsoft.VisualBasic::e26a06821fedf19d79f099f895b302ce, Data_science\Mathematica\Math\test\lowessTest.vb"
 
     ' Author:
     ' 
@@ -45,4 +45,3 @@ Module lowessTest
 
     End Sub
 End Module
-

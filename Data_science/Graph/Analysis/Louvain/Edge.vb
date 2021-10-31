@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bffddf8a4330dbd7f8536a8bb537af25, Data_science\Graph\Analysis\Louvain\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::7e0c689b978f381c65b0f5aad7b4f226, Data_science\Graph\Analysis\Louvain\Edge.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace Analysis.Louvain
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7540a6179aded8432de52376f8317f82, Microsoft.VisualBasic.Core\src\My\Framework\MemoryLoads.vb"
+﻿#Region "Microsoft.VisualBasic::423cdfaf16282bc77774dfcbc7c22cd3, Microsoft.VisualBasic.Core\src\My\Framework\MemoryLoads.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Enum MemoryLoads
     ' 
-    '         Heavy, Light
+    '         Heavy, Light, Max
     ' 
     '  
     ' 

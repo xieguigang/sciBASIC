@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2bad81f9721870823c36ddc47600950, Data_science\DataMining\DynamicProgramming\Knapsack\Item.vb"
+﻿#Region "Microsoft.VisualBasic::de902ae2bbe00312b9c74e03b83a78d3, Data_science\DataMining\DynamicProgramming\Knapsack\Item.vb"
 
     ' Author:
     ' 
@@ -65,4 +65,3 @@ Namespace Knapsack
         End Function
     End Class
 End Namespace
-

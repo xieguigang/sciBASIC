@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::902faaed3be39a86314cc25544ff86ce, Data_science\Mathematica\Math\test\matrixReaderTest.vb"
+﻿#Region "Microsoft.VisualBasic::a40fa59daadf651158d3eb085208fa81, Data_science\Mathematica\Math\test\matrixReaderTest.vb"
 
     ' Author:
     ' 
@@ -53,4 +53,3 @@ Module matrixReaderTest
         Pause()
     End Sub
 End Module
-

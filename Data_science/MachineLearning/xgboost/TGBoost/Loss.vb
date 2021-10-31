@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2185e62b6d1095ada711c065f0d01a44, Data_science\MachineLearning\xgboost\TGBoost\Loss.vb"
+﻿#Region "Microsoft.VisualBasic::2627f896ba46ee2b8beb9adb95d22b6e, Data_science\MachineLearning\xgboost\TGBoost\Loss.vb"
 
     ' Author:
     ' 
@@ -129,4 +129,3 @@ Namespace train
         End Function
     End Class
 End Namespace
-

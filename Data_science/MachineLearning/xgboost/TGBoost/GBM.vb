@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae5d0b4716f3ba71ad0eb98624a72adc, Data_science\MachineLearning\xgboost\TGBoost\GBM.vb"
+﻿#Region "Microsoft.VisualBasic::518705f47efbf6835e58a5c39d6873b9, Data_science\MachineLearning\xgboost\TGBoost\GBM.vb"
 
     ' Author:
     ' 
@@ -327,4 +327,3 @@ Namespace train
         End Function
     End Class
 End Namespace
-

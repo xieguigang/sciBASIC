@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3033d9e0410bc55b8dd124c1c890cad6, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Label.vb"
+﻿#Region "Microsoft.VisualBasic::3c8e68cd4ad2dca8dcd597fb82b27413, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Label.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: height, location, pinned, rectangle, text
     '                     width, X, Y
     ' 
-    '         Constructor: (+3 Overloads) Sub New
+    '         Constructor: (+4 Overloads) Sub New
     '         Function: ToString
     ' 
     ' 

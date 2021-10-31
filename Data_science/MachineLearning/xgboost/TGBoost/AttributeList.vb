@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2069afe62dff19d9fe5926e7b43e76ff, Data_science\MachineLearning\xgboost\TGBoost\AttributeList.vb"
+﻿#Region "Microsoft.VisualBasic::c26e2e13c90179c4b89a24bc0c69b84d, Data_science\MachineLearning\xgboost\TGBoost\AttributeList.vb"
 
     ' Author:
     ' 
@@ -141,4 +141,3 @@ Namespace train
         End Sub
     End Class
 End Namespace
-

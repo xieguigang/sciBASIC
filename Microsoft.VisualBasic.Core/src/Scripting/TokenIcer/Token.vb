@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2481ccc49e60b0081165d7a93dde3ab, Microsoft.VisualBasic.Core\src\Scripting\TokenIcer\Token.vb"
+﻿#Region "Microsoft.VisualBasic::b332caec6ef970ab66731a848fe4aa8c, Microsoft.VisualBasic.Core\src\Scripting\TokenIcer\Token.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: isNumeric, length, name, span, text
     ' 
     '         Constructor: (+3 Overloads) Sub New
-    '         Function: ToString
+    '         Function: ToString, Trim
     '         Operators: (+2 Overloads) <>, (+2 Overloads) =
     ' 
     ' 

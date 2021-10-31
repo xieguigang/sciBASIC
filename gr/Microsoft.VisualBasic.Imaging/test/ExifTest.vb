@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1c137dd150aae03237c7c55d93c209e0, gr\Microsoft.VisualBasic.Imaging\test\ExifTest.vb"
+﻿#Region "Microsoft.VisualBasic::e1f0969b36e43471e7d9e1b3d084daa6, gr\Microsoft.VisualBasic.Imaging\test\ExifTest.vb"
 
     ' Author:
     ' 
@@ -95,4 +95,3 @@
 '        Pause()
 '    End Sub
 'End Module
-

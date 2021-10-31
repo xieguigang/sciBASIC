@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bdf510e283a9abbf66d8d9a57053c1ff, Data_science\DataMining\DataMining\ComponentModel\Evaluation\Metric.vb"
+﻿#Region "Microsoft.VisualBasic::a53d7c541b2a5d0ad7cb56066f5632cf, Data_science\DataMining\DataMining\ComponentModel\Evaluation\Metric.vb"
 
     ' Author:
     ' 
@@ -200,4 +200,3 @@ Namespace ComponentModel.Evaluation
         End Class
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a99810209ec1266e38d252eead2f1528, Data_science\DataMining\UMAP\KNN\KNearestNeighbour.vb"
+﻿#Region "Microsoft.VisualBasic::265f66cd28164f4d96cc73ceb6364c8a, Data_science\DataMining\UMAP\KNN\KNearestNeighbour.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.DataMining.UMAP.Tree

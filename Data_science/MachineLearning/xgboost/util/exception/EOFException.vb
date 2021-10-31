@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac064e2a5a27af0091268c30ec374133, Data_science\MachineLearning\xgboost\util\exception\EOFException.vb"
+﻿#Region "Microsoft.VisualBasic::d72d88cbccfc137e36f10a52ac52b635, Data_science\MachineLearning\xgboost\util\exception\EOFException.vb"
 
     ' Author:
     ' 
@@ -63,4 +63,3 @@ Namespace util
         End Sub
     End Class
 End Namespace
-

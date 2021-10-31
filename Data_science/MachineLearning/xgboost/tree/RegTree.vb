@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec45da8cee42cb74614a690e3fce2a92, Data_science\MachineLearning\xgboost\tree\RegTree.vb"
+﻿#Region "Microsoft.VisualBasic::b40fb8dd20fd391aa9f932d3c7900caf, Data_science\MachineLearning\xgboost\tree\RegTree.vb"
 
     ' Author:
     ' 
@@ -152,4 +152,3 @@ Namespace tree
 
     End Class
 End Namespace
-

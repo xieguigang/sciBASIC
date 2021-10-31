@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9383720da4ebfd5ce68906e0d60784e, Data_science\MachineLearning\XGBoostDataSet\Tabular.vb"
+﻿#Region "Microsoft.VisualBasic::7ca658f2deacc8b73bdd16209377b528, Data_science\MachineLearning\XGBoostDataSet\Tabular.vb"
 
     ' Author:
     ' 
@@ -249,4 +249,3 @@ Public Module Tabular
 #End Region
 
 End Module
-

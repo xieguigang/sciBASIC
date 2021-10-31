@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a810b6c4ba107323a3ec2d0a908a1d7c, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Marshal\MarshalExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::8ba07e347942f1b505de3c4900f780fd, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Marshal\MarshalExtensions.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,10 @@
 
     ' Summaries:
 
-    ' Module MarshalExtensions
+    '     Module MarshalExtensions
     ' 
-    '     Function: (+2 Overloads) MarshalAs
+    '         Function: AllocHGlobal, (+2 Overloads) MarshalAs
+    ' 
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab9132e218e2866e1164c2498ff6c001, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\GeneralMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::e2a5bac2a6675bfe428f3a36bc40697b, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\GeneralMatrix.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Language.Vectorization
 

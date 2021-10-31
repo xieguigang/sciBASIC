@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87678d9429ebf8a76bdb9805d0cf3238, Data_science\MachineLearning\xgboost\gbm\GBTree.vb"
+﻿#Region "Microsoft.VisualBasic::8410467057d1bbc5a08d25f3776a9064, Data_science\MachineLearning\xgboost\gbm\GBTree.vb"
 
     ' Author:
     ' 
@@ -196,4 +196,3 @@ Namespace gbm
         End Class
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::290f9a8e55d27345f17ad1d3a7ead5dd, Data_science\Visualization\Plots\g\Axis\DataScaler\DataScaler.vb"
+﻿#Region "Microsoft.VisualBasic::887ce05baca4d4bf5ee6cbe037ef216f, Data_science\Visualization\Plots\g\Axis\DataScaler\DataScaler.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,8 @@
 
     '     Class DataScaler
     ' 
-    '         Properties: AxisTicks, X
+    '         Properties: AxisTicks, X, xmax, xmin, ymax
+    '                     ymin
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: (+3 Overloads) Translate, TranslateWidth, TranslateX

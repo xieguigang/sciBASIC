@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e22ccfa01d5d877e8fe3491ffb6554a, Data_science\MachineLearning\xgboost\spark\SparkModelParam.vb"
+﻿#Region "Microsoft.VisualBasic::1808c0a4191940be084129b134770b3a, Data_science\MachineLearning\xgboost\spark\SparkModelParam.vb"
 
     ' Author:
     ' 
@@ -84,4 +84,3 @@ Namespace spark
         End Sub
     End Class
 End Namespace
-

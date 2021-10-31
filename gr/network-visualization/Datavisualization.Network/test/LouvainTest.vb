@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9a472f70c4b67f180ff41a173669a91, gr\network-visualization\Datavisualization.Network\test\LouvainTest.vb"
+﻿#Region "Microsoft.VisualBasic::2c539dfde31316551d7a512c1ef272c5, gr\network-visualization\Datavisualization.Network\test\LouvainTest.vb"
 
     ' Author:
     ' 
@@ -82,4 +82,3 @@ Module LouvainTest
     End Sub
 
 End Module
-

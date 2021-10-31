@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::46971bce33669c31769eefbbe6eb3dfe, Data_science\MachineLearning\xgboost\util\ModelReader.vb"
+﻿#Region "Microsoft.VisualBasic::0d8ac4a3883a1480a7670b8fc8110ac2, Data_science\MachineLearning\xgboost\util\ModelReader.vb"
 
     ' Author:
     ' 
@@ -329,4 +329,3 @@ Namespace util
         End Sub
     End Class
 End Namespace
-

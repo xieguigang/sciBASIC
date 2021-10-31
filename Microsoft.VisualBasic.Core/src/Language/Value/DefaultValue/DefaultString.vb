@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d98a076bb727a0d7586af915108b5fd5, Microsoft.VisualBasic.Core\src\Language\Value\DefaultValue\DefaultString.vb"
+﻿#Region "Microsoft.VisualBasic::ec05834571a015d9aac7b6745d3bfe2e, Microsoft.VisualBasic.Core\src\Language\Value\DefaultValue\DefaultString.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '         Constructor: (+1 Overloads) Sub New
     '         Function: assertIsNothing, Base64Decode, LoadJson, LoadXml, ReadAllLines
     '                   ToString
-    '         Operators: (+2 Overloads) IsFalse, (+2 Overloads) IsTrue, (+2 Overloads) Not, (+8 Overloads) Or
+    '         Operators: (+2 Overloads) And, (+2 Overloads) IsFalse, (+2 Overloads) IsTrue, (+2 Overloads) Not, (+8 Overloads) Or
     ' 
     ' 
     ' /********************************************************************************/

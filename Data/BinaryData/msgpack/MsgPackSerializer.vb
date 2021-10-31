@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a3c36d68472bf285f0d4149f22d762a, Data\BinaryData\msgpack\MsgPackSerializer.vb"
+﻿#Region "Microsoft.VisualBasic::e42a191b871a939595a2df60a82018c7, Data\BinaryData\msgpack\MsgPackSerializer.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '     Constructor: (+2 Overloads) Sub New
     ' 
-    '     Function: (+5 Overloads) Deserialize, (+2 Overloads) DeserializeObject, DeserializeObjectType, GetInfo, GetSerializer
+    '     Function: (+8 Overloads) Deserialize, (+2 Overloads) DeserializeObject, DeserializeObjectType, GetInfo, GetSerializer
     '               IsGenericDictionary, IsGenericList, IsSerializableGenericCollection, (+2 Overloads) Serialize, (+2 Overloads) SerializeObject
     ' 
     '     Sub: (+2 Overloads) BuildMap, (+2 Overloads) Serialize, (+2 Overloads) SerializeObject

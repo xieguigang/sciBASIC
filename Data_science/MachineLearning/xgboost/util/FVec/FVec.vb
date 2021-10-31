@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d402dabd6499edbb9c9b29ce383d167e, Data_science\MachineLearning\xgboost\util\FVec\FVec.vb"
+﻿#Region "Microsoft.VisualBasic::2c3c8c0f39eaa7133a69d9bae7c9dc5a, Data_science\MachineLearning\xgboost\util\FVec\FVec.vb"
 
     ' Author:
     ' 
@@ -57,4 +57,3 @@ Namespace util
     End Interface
 
 End Namespace
-

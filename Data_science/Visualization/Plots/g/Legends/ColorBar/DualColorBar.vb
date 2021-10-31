@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73f3182b7e8713298416e78def853229, Data_science\Visualization\Plots\g\Legends\ColorBar\DualColorBar.vb"
+﻿#Region "Microsoft.VisualBasic::aabdc7afef0756977d75e8e894f20fed, Data_science\Visualization\Plots\g\Legends\ColorBar\DualColorBar.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices

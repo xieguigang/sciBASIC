@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9c8eb89bf5b255420eff5a032d32735, Data_science\MachineLearning\xgboost\gbm\GBLinear.vb"
+﻿#Region "Microsoft.VisualBasic::c758c7ac8aa41616a98265de5a9d9112, Data_science\MachineLearning\xgboost\gbm\GBLinear.vb"
 
     ' Author:
     ' 
@@ -146,4 +146,3 @@ Namespace gbm
         End Class
     End Class
 End Namespace
-

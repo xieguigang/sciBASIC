@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97fb91759e02f2dcc8dc4d8ec0df106e, Data_science\Mathematica\Math\DataFittings\Lowess\LowessFittings.vb"
+﻿#Region "Microsoft.VisualBasic::778bc3554a0ac39616dc79f52d2f3dba, Data_science\Mathematica\Math\DataFittings\Lowess\LowessFittings.vb"
 
     ' Author:
     ' 
@@ -340,4 +340,3 @@ Public Module LowessFittings
         Return ys
     End Function
 End Module
-
