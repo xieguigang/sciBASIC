@@ -1,43 +1,43 @@
 ﻿#Region "Microsoft.VisualBasic::654a80050f5a26a716f3e2c6e05dbe64, mime\text%html\Parser\CSS\Parser.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module CssParser
-    ' 
-    '         Function: BuildSelector, GetProperty, GetTagWithCSS, IndivisualTags, RemoveWhitespace
-    '                   RemoveWitespaceFormStartAndEnd
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module CssParser
+' 
+'         Function: BuildSelector, GetProperty, GetTagWithCSS, IndivisualTags, RemoveWhitespace
+'                   RemoveWitespaceFormStartAndEnd
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -97,9 +97,12 @@ Namespace Language.CSS
         ''' </summary>
         ''' <param name="CSS">CSS文本内容</param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 对于从html标签的style属性中解析出来的样式字符串，会被直接赋值命名为``*``。
+        ''' </remarks>
         Public Function GetTagWithCSS(CSS$, Optional selectorFilter$ = Nothing) As CSSFile
             Dim tagWithCSSList As New List(Of Selector)
-            Dim IndivisualTag As List(Of String) = IndivisualTags(CSS.SolveStream)
+            Dim IndivisualTag As List(Of String) = IndivisualTags(CSS.SolveStream).AsList
             Dim filter As Predicate(Of String)
 
             If selectorFilter.StringEmpty Then
@@ -119,7 +122,9 @@ Namespace Language.CSS
                         .GetBetween("{", "}") _
                         .GetProperty() _
                         .ToDictionary(Function(prop) prop.key,
-                                      Function(prop) prop.value)
+                                      Function(prop)
+                                          Return prop.value
+                                      End Function)
 
                     If filter(selector) Then
                         tagWithCSSList += New Selector With {
@@ -132,6 +137,20 @@ Namespace Language.CSS
 
             Return New CSSFile With {
                 .Selectors = tagWithCSSList.ToDictionary
+            }
+        End Function
+
+        Public Function ParseStyle(style As String) As Selector
+            Dim properties = Strings.Trim(style) _
+                .GetProperty() _
+                .ToDictionary(Function(prop) prop.key,
+                                Function(prop)
+                                    Return prop.value
+                                End Function)
+
+            Return New Selector With {
+                .Selector = "*",
+                .Properties = properties
             }
         End Function
 
@@ -150,8 +169,7 @@ Namespace Language.CSS
         ''' </summary>
         ''' <param name="input"></param>
         ''' <returns></returns>
-        Private Function IndivisualTags(input As String) As List(Of String)
-            Dim b As New List(Of String)()
+        Private Iterator Function IndivisualTags(input As String) As IEnumerable(Of String)
             Dim s As New StringBuilder(input)
 
             ' 首先需要移除掉CSS的注释文本
@@ -159,11 +177,14 @@ Namespace Language.CSS
                 Call s.Replace(block.Value, "")
             Next
 
-            For Each m As Match In r.Matches(s.ToString, IndivisualTagsPattern)
-                b += m.Value.StripBlank
-            Next
-
-            Return b
+            If input.Contains("{"c) AndAlso input.Contains("}"c) Then
+                For Each m As Match In r.Matches(s.ToString, IndivisualTagsPattern, RegexICSng, New TimeSpan(0, 0, 1))
+                    Yield m.Value.StripBlank
+                Next
+            Else
+                ' 直接从html tag之中解析出来的style值字符串？
+                Yield $"* {{ {input} }}"
+            End If
         End Function
 
         ''' <summary>
