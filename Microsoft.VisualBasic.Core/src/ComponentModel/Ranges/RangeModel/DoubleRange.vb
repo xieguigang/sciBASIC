@@ -314,7 +314,10 @@ Namespace ComponentModel.Ranges.Model
             If Length = 0 Then
                 Return {}
             Else
-                Return Enumerate(Length / n).ToArray
+                ' 因为double类型的精度问题
+                ' 有些时候返回来的元素数量可能不是n个？
+                ' 极有可能是n+1个？
+                Return Enumerate(Length / n).Take(n).ToArray
             End If
         End Function
 
