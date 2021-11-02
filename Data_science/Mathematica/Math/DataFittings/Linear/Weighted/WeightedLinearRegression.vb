@@ -101,18 +101,17 @@ Public Module WeightedLinearRegression
     ''' <param name="W">W[j]   = j-th weight value</param>
     ''' <returns></returns>
     Public Function Regress(Y#(), X#(,), W#()) As WeightedFit
-        Dim M As Integer = Y.Length
-        ' M = Number of data points
-        Dim N As Integer = X.Length \ M
-        ' N = Number of linear terms
-        Dim NDF As Integer = M - N
-        ' Degrees of freedom
+        Dim M As Integer = Y.Length     ' M = Number of data points
+        Dim N As Integer = X.Length \ M ' N = Number of linear terms
+        Dim NDF As Integer = M - N      ' Degrees of freedom
         Dim Ycalc = New Double(M - 1) {}
         Dim DY = New Double(M - 1) {}
+
         ' If not enough data, don't attempt regression
         If NDF < 1 Then
             Return Nothing
         End If
+        
         Dim V = New Double(N - 1, N - 1) {}
         Dim C = New Double(N - 1) {}
         Dim SEC = New Double(N - 1) {}

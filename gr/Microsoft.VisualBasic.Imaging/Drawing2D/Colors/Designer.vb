@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::39666bc09821ba13b267be37f04600c5, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Designer
-    ' 
-    '         Properties: AvailableInterpolates, Category31, ClusterColour, ColorBrewer, ConsoleColors
-    '                     MaterialPalette, Rainbow, TSF
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Colors, ConsoleColor, CubicSpline, FromConsoleColor, FromNames
-    '                   FromSchema, GetBrushes, (+2 Overloads) GetColors, getColorsInternal, internalFills
-    '                   IsColorNameList, rangeConstraint, SplitColorList
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Designer
+' 
+'         Properties: AvailableInterpolates, Category31, ClusterColour, ColorBrewer, ConsoleColors
+'                     MaterialPalette, Rainbow, TSF
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: Colors, ConsoleColor, CubicSpline, FromConsoleColor, FromNames
+'                   FromSchema, GetBrushes, (+2 Overloads) GetColors, getColorsInternal, internalFills
+'                   IsColorNameList, rangeConstraint, SplitColorList
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -417,36 +417,33 @@ Namespace Drawing2D.Colors
                 Return ColorBrewer(key.Name).GetColors(key.Value)
             End If
 
-            If term.TextEquals("material") Then
-                Return MaterialPalette
-            ElseIf term.TextEquals("console.colors") Then
-                Return ConsoleColors
-            ElseIf term.TextEquals("TSF") Then
-                Return TSF
-            ElseIf term.TextEquals("rainbow") Then
-                Return Rainbow
-            ElseIf term.TextEquals("dotnet.colors") Then
-                Return AllDotNetPrefixColors
-            ElseIf term.TextEquals("scibasic.chart()") Then
-                Return ChartColors
-            ElseIf term.TextEquals("scibasic.category31()") Then
-                Return Category31
-            ElseIf term.TextEquals(Designer.Clusters) Then
-                Return ClusterColour
-            ElseIf term.TextEquals(NameOf(BlackGreenRed)) Then
-                Return BlackGreenRed
-            End If
+            Select Case Strings.LCase(term).Trim
+                Case "material" : Return MaterialPalette
+                Case "console.colors" : Return ConsoleColors
+                Case "tsf" : Return TSF
+                Case "rainbow" : Return Rainbow
+                Case "dotnet.colors" : Return AllDotNetPrefixColors
+                Case "scibasic.chart()" : Return ChartColors
+                Case "scibasic.category31()" : Return Category31
+                Case "clusters" : Return ClusterColour
+                Case "blackgreenred" : Return BlackGreenRed
 
-            ' d3.js colors
-            If term.TextEquals("d3.scale.category10()") Then
-                Return d3js.category10
-            ElseIf term.TextEquals("d3.scale.category20()") Then
-                Return d3js.category20
-            ElseIf term.TextEquals("d3.scale.category20b()") Then
-                Return d3js.category20b
-            ElseIf term.TextEquals("d3.scale.category20c()") Then
-                Return d3js.category20c
-            End If
+                    ' d3.js colors
+                Case "d3.scale.category10()" : Return d3js.category10
+                Case "d3.scale.category20()" : Return d3js.category20
+                Case "d3.scale.category20b()" : Return d3js.category20b
+                Case "d3.scale.category20c()" : Return d3js.category20c
+
+                    ' viridis
+                Case "viridis" : Return Viridis.viridis.ToArray
+                Case "viridis:magma" : Return Viridis.magma.ToArray
+                Case "viridis:inferno" : Return Viridis.inferno.ToArray
+                Case "viridis:plasma" : Return Viridis.plasma.ToArray
+                Case "viridis:cividis" : Return Viridis.cividis.ToArray
+                Case "viridis:mako" : Return Viridis.mako.ToArray
+                Case "viridis:rocket" : Return Viridis.rocket.ToArray
+                Case "viridis:turbo" : Return Viridis.turbo.ToArray
+            End Select
 
             Return OfficeColorThemes.GetAccentColors(term)
         End Function
