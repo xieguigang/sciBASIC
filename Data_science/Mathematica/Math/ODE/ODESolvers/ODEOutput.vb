@@ -59,7 +59,17 @@ Public Class ODEOutput : Implements INamedValue
     Public Property Y As NumericVector
 
     <XmlText>
-    Public Property Description As String
+    Public Property description As String
+
+    ''' <summary>
+    ''' 最后一个结果值为积分的总和
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property sum As Double
+        Get
+            Return Y.vector.Last
+        End Get
+    End Property
 
     Public ReadOnly Property y0 As Double
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
