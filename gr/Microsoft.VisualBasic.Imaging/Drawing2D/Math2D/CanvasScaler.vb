@@ -47,6 +47,9 @@ Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Namespace Drawing2D.Math2D
 
+    ''' <summary>
+    ''' the scaler of the canvas size and rectangle
+    ''' </summary>
     Public Module CanvasScaler
 
         <Extension>

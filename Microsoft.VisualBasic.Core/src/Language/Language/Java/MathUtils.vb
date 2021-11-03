@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::b0b81c7bf726d3d5a37a601762bcb6d0, Microsoft.VisualBasic.Core\src\Language\Language\Java\MathUtils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module MathUtils
-    ' 
-    '         Properties: Seed
-    ' 
-    '         Function: getNormalized, (+2 Overloads) getTotal, hypot, nextBoolean, nextByte
-    '                   nextChar, nextDouble, nextExponential, nextFloat, nextGamma
-    '                   nextGaussian, (+2 Overloads) nextInt, nextInverseGaussian, nextLong, nextShort
-    '                   permuted, randomChoice, randomChoicePDF, randomLogDouble, sampleIndicesWithReplacement
-    '                   shuffled, uniform
-    ' 
-    '         Sub: nextBytes, permute, (+2 Overloads) shuffle
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module MathUtils
+' 
+'         Properties: Seed
+' 
+'         Function: getNormalized, (+2 Overloads) getTotal, hypot, nextBoolean, nextByte
+'                   nextChar, nextDouble, nextExponential, nextFloat, nextGamma
+'                   nextGaussian, (+2 Overloads) nextInt, nextInverseGaussian, nextLong, nextShort
+'                   permuted, randomChoice, randomChoicePDF, randomLogDouble, sampleIndicesWithReplacement
+'                   shuffled, uniform
+' 
+'         Sub: nextBytes, permute, (+2 Overloads) shuffle
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports sys = System.Math
+Imports stdNum = System.Math
 
 '
 ' * MathUtils.java
@@ -104,16 +104,17 @@ Namespace Language.Java
         ''' <param name="cf"></param>
         ''' <returns></returns>
         Public Function randomChoice(cf As Double()) As Integer
-
             Dim U As Double = random.nextDouble()
-
             Dim s As Integer
+
             If U <= cf(0) Then
                 s = 0
             Else
                 For s = 1 To cf.Length - 1
-                    If U <= cf(s) AndAlso U > cf(s - 1) Then Exit For
-                Next s
+                    If U <= cf(s) AndAlso U > cf(s - 1) Then
+                        Exit For
+                    End If
+                Next
             End If
 
             Return s
@@ -123,17 +124,20 @@ Namespace Language.Java
         '''            array of unnormalized probabilities </param>
         ''' <returns> a sample according to an unnormalized probability distribution </returns>
         Public Function randomChoicePDF(pdf As Double()) As Integer
-
             Dim U As Double = random.nextDouble() * getTotal(pdf)
+
             For i As Integer = 0 To pdf.Length - 1
-
                 U -= pdf(i)
-                If U < 0.0 Then Return i
 
-            Next i
+                If U < 0.0 Then
+                    Return i
+                End If
+            Next
+
             For i As Integer = 0 To pdf.Length - 1
                 Console.WriteLine(i & vbTab & pdf(i))
-            Next i
+            Next
+
             Throw New Exception("randomChoiceUnnormalized falls through -- negative components in input distribution?")
         End Function
 
@@ -258,7 +262,7 @@ Namespace Language.Java
 
         ''' <returns> log of random variable in [0,1] </returns>
         Public Function randomLogDouble() As Double
-            Return sys.Log(nextDouble())
+            Return stdNum.Log(nextDouble())
         End Function
 
         ''' <summary>
@@ -266,7 +270,7 @@ Namespace Language.Java
         ''' </summary>
         Public Function nextExponential(lambda As Double) As Double
             SyncLock random
-                Return -1.0 * sys.Log(1 - random.nextDouble()) / lambda
+                Return -1.0 * stdNum.Log(1 - random.nextDouble()) / lambda
             End SyncLock
         End Function
 
@@ -283,7 +287,7 @@ Namespace Language.Java
                 ' distribution with a mean of 0
                 ' and 1 standard deviation
                 Dim y As Double = v * v
-                Dim x As Double = mu + (mu * mu * y) / (2 * lambda) - (mu / (2 * lambda)) * sys.Sqrt(4 * mu * lambda * y + mu * mu * y * y)
+                Dim x As Double = mu + (mu * mu * y) / (2 * lambda) - (mu / (2 * lambda)) * stdNum.Sqrt(4 * mu * lambda * y + mu * mu * y * y)
                 Dim test As Double = MathUtils.nextDouble() ' sample from a uniform
                 ' distribution between 0
                 ' and 1
@@ -416,15 +420,17 @@ Namespace Language.Java
         ''' </summary>
         Public Function hypot(a As Double, b As Double) As Double
             Dim r As Double
-            If sys.Abs(a) > sys.Abs(b) Then
+
+            If stdNum.Abs(a) > stdNum.Abs(b) Then
                 r = b / a
-                r = sys.Abs(a) * sys.Sqrt(1 + r * r)
+                r = stdNum.Abs(a) * stdNum.Sqrt(1 + r * r)
             ElseIf b <> 0 Then
                 r = a / b
-                r = sys.Abs(b) * sys.Sqrt(1 + r * r)
+                r = stdNum.Abs(b) * stdNum.Sqrt(1 + r * r)
             Else
                 r = 0.0
             End If
+
             Return r
         End Function
     End Module

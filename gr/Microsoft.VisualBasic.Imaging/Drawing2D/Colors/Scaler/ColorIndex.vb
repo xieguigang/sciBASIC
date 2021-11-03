@@ -56,7 +56,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace Drawing2D.Colors
+Namespace Drawing2D.Colors.Scaler
 
     Public Class ColorIndex
 

@@ -205,7 +205,9 @@ Namespace Bzip2
                     actualCumulativeFrequency += mtfSymbolFrequencies(Threading.Interlocked.Increment(lowCostEnd))
                 End While
 
-                If lowCostEnd > lowCostStart AndAlso i <> 0 AndAlso i <> totalTables - 1 AndAlso (totalTables - i And 1) = 0 Then actualCumulativeFrequency -= mtfSymbolFrequencies(stdNum.Max(Threading.Interlocked.Decrement(lowCostEnd), lowCostEnd + 1))
+                If lowCostEnd > lowCostStart AndAlso i <> 0 AndAlso i <> totalTables - 1 AndAlso (totalTables - i And 1) = 0 Then
+                    actualCumulativeFrequency -= mtfSymbolFrequencies(stdNum.Max(Threading.Interlocked.Decrement(lowCostEnd), lowCostEnd + 1))
+                End If
 
                 For j = 0 To mtfAlphabetSize - 1
                     If j < lowCostStart OrElse j > lowCostEnd Then huffmanCodeLengths(i, j) = HUFFMAN_HIGH_SYMBOL_COST
