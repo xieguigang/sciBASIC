@@ -111,7 +111,7 @@ Namespace Plot3D.Impl
             End With
 
             ' 然后生成底部的网格
-            For Each line As Line In GridBottom.Grid(X, Y, (X(1) - X(0), Y(1) - Y(0)), Z.Min)
+            For Each line As Line In Grids.Grid1(X, Y, (X(1) - X(0), Y(1) - Y(0)), Z.Min)
                 Yield line
             Next
 
