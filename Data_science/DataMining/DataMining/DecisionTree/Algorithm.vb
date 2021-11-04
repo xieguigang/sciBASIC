@@ -1,48 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::9e11f43fcc9bb43099e6c0fa00c951c4, Data_science\DataMining\DataMining\DecisionTree\Algorithm.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Algorithm
-    ' 
-    '         Function: CalculateTableEntropy, CheckIfIsLeaf, CountKnownValues, CreateSmallerTable, GetAmountOfEdgesAndTotalPositivResults
-    '                   GetGainForAllAttributes, GetRootNode, Learn
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Algorithm
+' 
+'         Function: CalculateTableEntropy, CheckIfIsLeaf, CountKnownValues, CreateSmallerTable, GetAmountOfEdgesAndTotalPositivResults
+'                   GetGainForAllAttributes, GetRootNode, Learn
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.DecisionTree.Data
+Imports Microsoft.VisualBasic.Math.Information
 Imports stdNum = System.Math
 
 Namespace DecisionTree
@@ -196,12 +197,11 @@ Namespace DecisionTree
         Private Function CalculateTableEntropy(data As DataTable) As Double
             Dim totalRows As Integer = data.rows.Length
             Dim amountForDifferentValue = data.GetAmountOfEdgesAndTotalPositivResults(data.columns - 1)
-            Dim stepsForCalculation = amountForDifferentValue _
-                .[Select](Function(item) item(0, 0) / CDbl(totalRows)) _
-                .[Select](Function(division) -division * stdNum.Log(division, 2)) _
-                .ToList()
+            Dim H As Double = amountForDifferentValue _
+                .Select(Function(item) item(0, 0) / CDbl(totalRows)) _
+                .ShannonEntropy
 
-            Return stepsForCalculation.Sum()
+            Return H
         End Function
 
         <Extension>
