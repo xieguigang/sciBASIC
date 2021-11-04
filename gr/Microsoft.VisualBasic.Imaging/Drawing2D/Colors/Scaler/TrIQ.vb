@@ -16,6 +16,16 @@ Namespace Drawing2D.Colors.Scaler
         End Function
 
         <Extension>
+        Public Function FindThreshold(data As IEnumerable(Of Double), q As Double,
+                                      Optional N As Integer = 100,
+                                      Optional eps As Double = 0.1) As Double
+
+            Return CutBins _
+                .FixedWidthBins(data, N, Function(x) x) _
+                .FindThreshold(q, eps)
+        End Function
+
+        <Extension>
         Public Function FindThreshold(data As IEnumerable(Of DataBinBox(Of Double)), q As Double, Optional eps As Double = 0.1) As Double
             Dim sample As DataBinBox(Of Double)() = data.OrderBy(Function(b) b.Raw.First).ToArray
             Dim N As Integer = Aggregate point In sample Into Sum(point.Count)
