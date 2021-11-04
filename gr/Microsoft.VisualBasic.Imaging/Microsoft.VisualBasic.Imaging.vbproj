@@ -773,6 +773,9 @@
     <Compile Include="d3js\scale\linear.vb" />
     <Compile Include="d3js\scale\Extensions.vb" />
     <Compile Include="d3js\scale\ordinal.vb" />
+    <Compile Include="Drawing2D\Colors\Scaler\ColorIndex.vb" />
+    <Compile Include="Drawing2D\Colors\Scaler\TrIQ.vb" />
+    <Compile Include="Drawing2D\Colors\Viridis.vb" />
     <Compile Include="Drawing2D\Math2D\MarchingSquares\ContourLayer.vb" />
     <Compile Include="Drawing2D\Math2D\MarchingSquares\ContourTracing.vb" />
     <Compile Include="Drawing2D\Math2D\MarchingSquares\GeneralPath.vb" />
@@ -804,7 +807,6 @@
     <Compile Include="Drawing2D\Math2D\HullPolygonDraw.vb" />
     <Compile Include="Drawing2D\Math2D\Spline.vb" />
     <Compile Include="Drawing2D\Render2D\Path2D.vb" />
-    <Compile Include="Drawing2D\Colors\ColorIndex.vb" />
     <Compile Include="Drawing2D\Colors\Office\OfficeColorThemes.vb" />
     <Compile Include="Drawing2D\Colors\ColorBrewer.vb" />
     <Compile Include="Drawing2D\Colors\Designer.vb" />

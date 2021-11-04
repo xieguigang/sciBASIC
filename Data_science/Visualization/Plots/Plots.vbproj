@@ -692,6 +692,10 @@
     <Compile Include="BarPlot\Histogram\Histogram.vb" />
     <Compile Include="ImageData.vb" />
     <Compile Include="Fractions\PieChart.vb" />
+	
+	  <Compile Include="g\Legends\ColorBar\DualColorBar.vb" />
+	
+
     <Compile Include="PlotTypes.vb" />
     <Compile Include="BarPlot\BarPlot.vb" />
     <Compile Include="Scatter\Data\Annotation.vb" />

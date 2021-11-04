@@ -357,12 +357,12 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants\Formats.vb" />
     <Compile Include="Constants\FixedInteger.vb" />
     <Compile Include="Constants\FixedString.vb" />
     <Compile Include="Constants\Bool.vb" />
     <Compile Include="Constants\FixedArray.vb" />
     <Compile Include="Constants\FixedMap.vb" />
+    <Compile Include="Constants\MsgPackFormats.vb" />
     <Compile Include="Properties\AssemblyInfo.vb" />
     <Compile Include="ObjectExtensions.vb" />
     <Compile Include="MsgPackSerializer.vb" />
