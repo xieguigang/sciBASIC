@@ -287,69 +287,6 @@ Public Module Statistics
     End Function
 
     ''' <summary>
-    ''' Calculate entropy value.
-    ''' </summary>
-    ''' 
-    ''' <param name="values">Histogram array.</param>
-    ''' 
-    ''' <returns>Returns entropy value of the specified histagram array.</returns>
-    ''' 
-    ''' <remarks><para>The input array is treated as histogram, i.e. its
-    ''' indexes are treated as values of stochastic function, but
-    ''' array values are treated as "probabilities" (total amount of
-    ''' hits).</para>
-    ''' 
-    ''' <para>Sample usage:</para>
-    ''' <code>
-    ''' // create histogram array with 2 values of equal probabilities
-    ''' int[] histogram1 = new int[2] { 3, 3 };
-    ''' // calculate entropy
-    ''' double entropy1 = Statistics.Entropy( histogram1 );
-    ''' // output it (1.000)
-    ''' Console.WriteLine( "entropy1 = " + entropy1.ToString( "F3" ) );
-    ''' 
-    ''' // create histogram array with 4 values of equal probabilities
-    ''' int[] histogram2 = new int[4] { 1, 1, 1, 1 };
-    ''' // calculate entropy
-    ''' double entropy2 = Statistics.Entropy( histogram2 );
-    ''' // output it (2.000)
-    ''' Console.WriteLine( "entropy2 = " + entropy2.ToString( "F3" ) );
-    ''' 
-    ''' // create histogram array with 4 values of different probabilities
-    ''' int[] histogram3 = new int[4] { 1, 2, 3, 4 };
-    ''' // calculate entropy
-    ''' double entropy3 = Statistics.Entropy( histogram3 );
-    ''' // output it (1.846)
-    ''' Console.WriteLine( "entropy3 = " + entropy3.ToString( "F3" ) );
-    ''' </code>
-    ''' </remarks>
-    ''' 
-    Public Function Entropy(values As Integer()) As Double
-        Dim n As Integer = values.Length
-        Dim total As Integer = 0
-        Dim entropyVal As Double = 0
-        Dim p As Double
-
-        ' calculate total amount of hits
-        For i As Integer = 0 To n - 1
-            total += values(i)
-        Next
-
-        If total <> 0 Then
-            ' for all values
-            For i As Integer = 0 To n - 1
-                ' get item's probability
-                p = CDbl(values(i)) / total
-                ' calculate entropy
-                If p <> 0 Then
-                    entropyVal += (-p * stdNum.Log(p, 2))
-                End If
-            Next
-        End If
-        Return entropyVal
-    End Function
-
-    ''' <summary>
     ''' Calculate mode value.
     ''' </summary>
     ''' 

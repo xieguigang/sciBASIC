@@ -79,11 +79,41 @@ Namespace Math.Information
         End Function
 
         ''' <summary>
-        ''' 直接从一个概率向量之中计算出香农信息熵
-        ''' </summary>
-        ''' <param name="probs">Sum of this probability vector must equals to 1</param>
-        ''' <returns></returns>
+        ''' Calculate entropy value.
         ''' 
+        ''' (直接从一个概率向量之中计算出香农信息熵)
+        ''' </summary>
+        ''' <param name="probs">Sum of this probability vector must equals to 1, Histogram array.</param>
+        ''' <returns></returns>
+        ''' <remarks><para>The input array is treated as histogram, i.e. its
+        ''' indexes are treated as values of stochastic function, but
+        ''' array values are treated as "probabilities" (total amount of
+        ''' hits).</para>
+        ''' 
+        ''' <para>Sample usage:</para>
+        ''' <code>
+        ''' // create histogram array with 2 values of equal probabilities
+        ''' int[] histogram1 = new int[2] { 3, 3 };
+        ''' // calculate entropy
+        ''' double entropy1 = Statistics.Entropy( histogram1 );
+        ''' // output it (1.000)
+        ''' Console.WriteLine( "entropy1 = " + entropy1.ToString( "F3" ) );
+        ''' 
+        ''' // create histogram array with 4 values of equal probabilities
+        ''' int[] histogram2 = new int[4] { 1, 1, 1, 1 };
+        ''' // calculate entropy
+        ''' double entropy2 = Statistics.Entropy( histogram2 );
+        ''' // output it (2.000)
+        ''' Console.WriteLine( "entropy2 = " + entropy2.ToString( "F3" ) );
+        ''' 
+        ''' // create histogram array with 4 values of different probabilities
+        ''' int[] histogram3 = new int[4] { 1, 2, 3, 4 };
+        ''' // calculate entropy
+        ''' double entropy3 = Statistics.Entropy( histogram3 );
+        ''' // output it (1.846)
+        ''' Console.WriteLine( "entropy3 = " + entropy3.ToString( "F3" ) );
+        ''' </code>
+        ''' </remarks>
         <Extension>
         Public Function ShannonEntropy(probs As IEnumerable(Of Double)) As Double
             Dim entropy# = Aggregate prob As Double
