@@ -135,7 +135,7 @@ Namespace Distributions.BinBox
                     list += v(++i)
                 Loop
 
-                Yield New DataBinBox(Of T)(list, eval)
+                Yield New DataBinBox(Of T)(list, eval, lowerbound, upbound)
 
                 If i.Value = len Then
                     Exit Do
