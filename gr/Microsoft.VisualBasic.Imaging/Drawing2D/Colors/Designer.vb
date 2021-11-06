@@ -104,69 +104,13 @@ Namespace Drawing2D.Colors
         '''</summary>
         Public ReadOnly Property AvailableInterpolates As IReadOnlyDictionary(Of Color, Color())
         Public ReadOnly Property ColorBrewer As Dictionary(Of String, ColorBrewer)
-        Public ReadOnly Property Rainbow As Color() = {
-            Color.Red,
-            Color.Orange,
-            Color.Yellow,
-            Color.Green,
-            Color.Lime,
-            Color.Blue,
-            Color.Violet
-        }
 
         ''' <summary>
-        ''' 10 category colors for the data object cluster result
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property ClusterColour As Color() = {
-            Color.FromArgb(128, 200, 180),
-            Color.FromArgb(135, 70, 194),
-            Color.FromArgb(140, 210, 90),
-            Color.FromArgb(200, 80, 147),
-            Color.FromArgb(201, 169, 79),
-            Color.FromArgb(112, 127, 189),
-            Color.FromArgb(192, 82, 58),
-            Color.FromArgb(83, 99, 60),
-            Color.FromArgb(78, 45, 69),
-            Color.FromArgb(202, 161, 169)
-        }
-
-        ''' <summary>
-        ''' <see cref="Designer.GetColors(String)"/> schema name for color profile: <see cref="ClusterColour"/>.
+        ''' <see cref="Designer.GetColors(String)"/> schema name for color profile: <see cref="CustomDesigns.ClusterColour"/>.
         ''' </summary>
         Friend Const Clusters$ = NameOf(Clusters)
 
         ReadOnly BlackGreenRed As Color() = {Color.Black, Color.Green, Color.Red}
-
-        ''' <summary>
-        ''' From TSF launcher on Android
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property TSF As Color() = {
-            {247, 69, 58},
-            {230, 28, 99},
-            {156, 36, 173},
-            {107, 57, 181},
-            {66, 81, 181},
-            {33, 150, 238},
-            {8, 170, 247},
-            {0, 190, 214},
-            {0, 150, 132},
-            {74, 174, 82},
-            {132, 194, 74},
-            {206, 223, 58},
-            {255, 235, 58},
-            {255, 190, 0},
-            {255, 150, 0},
-            {255, 85, 33},
-            {115, 85, 66},
-            {156, 158, 156},
-            {99, 125, 140}
-        }.RowIterator _
-         .Select(Function(c)
-                     Return Color.FromArgb(c(0), c(1), c(2))
-                 End Function) _
-         .ToArray
 
         ''' <summary>
         ''' 16 console colors
@@ -424,12 +368,13 @@ Namespace Drawing2D.Colors
             Select Case Strings.LCase(term).Trim
                 Case "material" : Return MaterialPalette
                 Case "console.colors", "console" : Return ConsoleColors
-                Case "tsf" : Return TSF
-                Case "rainbow" : Return Rainbow
+                Case "tsf" : Return CustomDesigns.TSF
+                Case "halloween" : Return CustomDesigns.Halloween
+                Case "rainbow" : Return CustomDesigns.Rainbow
                 Case "dotnet.colors" : Return AllDotNetPrefixColors
                 Case "scibasic.chart()" : Return ChartColors
                 Case "scibasic.category31()" : Return Category31
-                Case "clusters" : Return ClusterColour
+                Case "clusters" : Return CustomDesigns.ClusterColour
                 Case "blackgreenred" : Return BlackGreenRed
 
                     ' d3.js colors

@@ -7,7 +7,7 @@ Namespace Drawing2D.Colors
         Private Sub New()
         End Sub
 
-        Private Shared Function fromHtml(ParamArray html As String()) As IEnumerable(Of Color)
+        Friend Shared Function fromHtml(ParamArray html As String()) As IEnumerable(Of Color)
             Return From value As String In html Select value.TranslateColor
         End Function
 
