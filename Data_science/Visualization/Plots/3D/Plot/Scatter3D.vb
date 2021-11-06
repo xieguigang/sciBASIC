@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::ce2544a5e72119eb8906f85cacab87be, Data_science\Visualization\Plots\3D\Plot\Scatter3D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Scatter3D
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: populateModels
-    ' 
-    '         Sub: PlotInternal
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Scatter3D
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: populateModels
+' 
+'         Sub: PlotInternal
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -99,7 +99,6 @@ Namespace Plot3D.Impl
                 .Select(Function(s) s.Points.Values) _
                 .IteratesALL _
                 .ToArray
-            Dim axisLabelFont As Font = CSSFont.TryParse(theme.axisLabelCSS).GDIObject(ppi)
 
             ' 首先需要获取得到XYZ值的范围
             Dim X, Y, Z As Vector
@@ -117,7 +116,7 @@ Namespace Plot3D.Impl
 
             For Each item As Element3D In AxisDraw.Axis(
                     xrange:=X, yrange:=Y, zrange:=Z,
-                    labelFont:=axisLabelFont,
+                    labelFontCss:=theme.axisLabelCSS,
                     labels:=(xlabel, ylabel, zlabel),
                     strokeCSS:=theme.axisStroke,
                     arrowFactor:=arrowFactor

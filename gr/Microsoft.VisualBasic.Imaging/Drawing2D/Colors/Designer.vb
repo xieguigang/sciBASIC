@@ -168,6 +168,10 @@ Namespace Drawing2D.Colors
                  End Function) _
          .ToArray
 
+        ''' <summary>
+        ''' 16 console colors
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property ConsoleColors As Color() = Enums(Of ConsoleColor) _
             .Select(Function(c) c.ToString) _
             .Select(Function(exp As String)
@@ -311,7 +315,7 @@ Namespace Drawing2D.Colors
          .ToArray
 
         ''' <summary>
-        ''' Google material design colors
+        ''' 20 Google material design colors
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property MaterialPalette As Color() = {
@@ -419,7 +423,7 @@ Namespace Drawing2D.Colors
 
             Select Case Strings.LCase(term).Trim
                 Case "material" : Return MaterialPalette
-                Case "console.colors" : Return ConsoleColors
+                Case "console.colors", "console" : Return ConsoleColors
                 Case "tsf" : Return TSF
                 Case "rainbow" : Return Rainbow
                 Case "dotnet.colors" : Return AllDotNetPrefixColors

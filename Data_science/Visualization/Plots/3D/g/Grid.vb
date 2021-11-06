@@ -46,28 +46,55 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D.Device
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports stdNum = System.Math
 
 Namespace Plot3D.Model
 
     Public Module Grids
 
-        Public Iterator Function Grid1(xrange As DoubleRange, yrange As DoubleRange, steps As (X!, Y!), Z#, Optional strokeCSS$ = Stroke.AxisGridStroke) As IEnumerable(Of Element3D)
+        Public Iterator Function Grid1(xrange As DoubleRange, yrange As DoubleRange, steps As (X!, Y!), Z#,
+                                       Optional showTicks As Boolean = True,
+                                       Optional strokeCSS$ = Stroke.AxisGridStroke,
+                                       Optional tickCSS$ = CSSFont.Win7LargerNormal) As IEnumerable(Of Element3D)
+
             Dim gridData As New List(Of Line)
             Dim a, b As Point3D
             Dim pen As Pen = Stroke.TryParse(strokeCSS).GDIObject
+            Dim tickFont As Font = CSSFont.TryParse(tickCSS).GDIObject(300)
+            Dim eps As Double = steps.X / 2
 
             For X As Double = xrange.Min To xrange.Max Step steps.X
                 a = New Point3D With {.X = X, .Y = yrange.Min, .Z = Z}
                 b = New Point3D With {.X = X, .Y = yrange.Max, .Z = Z}
+
+                If showTicks AndAlso stdNum.Abs(xrange.Min - X) > eps AndAlso stdNum.Abs(xrange.Max - X) > eps Then
+                    Yield New Label With {
+                        .FontCss = tickCSS,
+                        .Color = Brushes.Black,
+                        .Text = X.ToString("G2"),
+                        .Location = b
+                    }
+                End If
 
                 Yield New Line(a, b) With {
                     .Stroke = pen
                 }
             Next
 
+            eps = steps.Y / 2
+
             For Y As Double = yrange.Min To yrange.Max Step steps.Y
                 a = New Point3D With {.X = xrange.Min, .Y = Y, .Z = Z}
                 b = New Point3D With {.X = xrange.Max, .Y = Y, .Z = Z}
+
+                If showTicks AndAlso stdNum.Abs(yrange.Min - Y) > eps AndAlso stdNum.Abs(yrange.Max - Y) > eps Then
+                    Yield New Label With {
+                        .FontCss = tickCSS,
+                        .Color = Brushes.Black,
+                        .Text = Y.ToString("G2"),
+                        .Location = a
+                    }
+                End If
 
                 Yield New Line(a, b) With {
                     .Stroke = pen
@@ -75,10 +102,15 @@ Namespace Plot3D.Model
             Next
         End Function
 
-        Public Iterator Function Grid2(xrange As DoubleRange, zrange As DoubleRange, steps As (X!, Z!), Y#, Optional strokeCSS$ = Stroke.AxisGridStroke) As IEnumerable(Of Element3D)
+        Public Iterator Function Grid2(xrange As DoubleRange, zrange As DoubleRange, steps As (X!, Z!), Y#,
+                                       Optional showTicks As Boolean = True,
+                                       Optional strokeCSS$ = Stroke.AxisGridStroke,
+                                       Optional tickCSS$ = CSSFont.Win7LargerNormal) As IEnumerable(Of Element3D)
+
             Dim gridData As New List(Of Line)
             Dim a, b As Point3D
             Dim pen As Pen = Stroke.TryParse(strokeCSS).GDIObject
+            Dim eps As Double = steps.Z / 2
 
             For X As Double = xrange.Min To xrange.Max Step steps.X
                 a = New Point3D With {.X = X, .Z = zrange.Min, .Y = Y}
@@ -93,13 +125,26 @@ Namespace Plot3D.Model
                 a = New Point3D With {.X = xrange.Min, .Y = Y, .Z = z}
                 b = New Point3D With {.X = xrange.Max, .Y = Y, .Z = z}
 
+                If showTicks AndAlso stdNum.Abs(zrange.Min - z) > eps Then
+                    Yield New Label With {
+                        .FontCss = tickCSS,
+                        .Color = Brushes.Black,
+                        .Text = z.ToString("G2"),
+                        .Location = a
+                    }
+                End If
+
                 Yield New Line(a, b) With {
                     .Stroke = pen
                 }
             Next
         End Function
 
-        Public Iterator Function Grid3(yrange As DoubleRange, zrange As DoubleRange, steps As (Y!, Z!), X#, Optional strokeCSS$ = Stroke.AxisGridStroke) As IEnumerable(Of Element3D)
+        Public Iterator Function Grid3(yrange As DoubleRange, zrange As DoubleRange, steps As (Y!, Z!), X#,
+                                       Optional showTicks As Boolean = True,
+                                       Optional strokeCSS$ = Stroke.AxisGridStroke,
+                                       Optional tickCSS$ = CSSFont.Win7LargerNormal) As IEnumerable(Of Element3D)
+
             Dim a, b As Point3D
             Dim pen As Pen = Stroke.TryParse(strokeCSS).GDIObject
 

@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::1d340b6b36c80740384282a120e4cf5e, Data_science\Visualization\Plots\3D\g\Axis.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module AxisDraw
-    ' 
-    '         Function: Axis
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module AxisDraw
+' 
+'         Function: Axis
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -58,10 +58,10 @@ Namespace Plot3D.Model
         Public Function Axis(xrange As DoubleRange,
                              yrange As DoubleRange,
                              zrange As DoubleRange,
-                             labelFont As Font,
+                             labelFontCss As String,
                              labels As (X$, Y$, Z$),
                              Optional strokeCSS$ = Stroke.AxisStroke,
-                             Optional arrowFactor$ = "2,2") As Element3D()
+                             Optional arrowFactor$ = "1,2") As Element3D()
 
             ' 交汇于xmax, ymin, zmin
             Dim ZERO As New Point3D With {.X = xrange.Max, .Y = yrange.Min, .Z = zrange.Min}
@@ -87,9 +87,9 @@ Namespace Plot3D.Model
             Dim Yaxis As New Line(ZERO, Y) With {.Stroke = color}
             Dim Zaxis As New Line(ZERO, Z) With {.Stroke = color}
 
-            Dim labX As New Label With {.Location = X, .Font = labelFont, .Color = Brushes.Black, .Text = labels.X}
-            Dim labY As New Label With {.Location = Y, .Font = labelFont, .Color = Brushes.Black, .Text = labels.Y}
-            Dim labZ As New Label With {.Location = Z, .Font = labelFont, .Color = Brushes.Black, .Text = labels.Z}
+            Dim labX As New Label With {.Location = X, .FontCss = labelFontCss, .Color = Brushes.Black, .Text = labels.X}
+            Dim labY As New Label With {.Location = Y, .FontCss = labelFontCss, .Color = Brushes.Black, .Text = labels.Y}
+            Dim labZ As New Label With {.Location = New Point3D(Z.X, Z.Y, Z.Z + zrange.Length / 20), .FontCss = labelFontCss, .Color = Brushes.Black, .Text = labels.Z}
 
             Return New Element3D() {Xaxis, Yaxis, Zaxis, labX, labY, labZ}
         End Function
