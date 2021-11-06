@@ -22,7 +22,7 @@ Namespace Drawing2D.Colors
             Return Viridis.fromHtml(
                 "#6d458b", "#0491d0", "#88bb64", "#f2ce3f",
                 "#396b1c", "#fb5b44", "#361f32", "#DF2789",
-                "#8858BF", "#15DBFF", "#9CC95C", "#583B73"
+                "#8858BF", "#15DBFF", "#0000F9", "#583B73"
             )
         End Function
 
