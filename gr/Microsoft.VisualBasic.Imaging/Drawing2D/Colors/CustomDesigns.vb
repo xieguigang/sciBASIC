@@ -20,10 +20,10 @@ Namespace Drawing2D.Colors
 
         Public Shared Function Paper() As Color()
             Return Viridis.fromHtml(
-                "#6d458b", "#0491d0", "#88bb64", "#f2ce3f",
-                "#396b1c", "#fb5b44", "#361f32", "#DF2789",
-                "#8858BF", "#15DBFF", "#0000F9", "#583B73"
-            )
+                "#D02823", "#0491d0", "#88bb64", "#15DBFF",
+                "#583B73", "#f2ce3f", "#8858BF", "#CCFF33",
+                "#fb5b44", "#361f32", "#DF2789", "#396b1c"
+            ).ToArray
         End Function
 
         ''' <summary>
