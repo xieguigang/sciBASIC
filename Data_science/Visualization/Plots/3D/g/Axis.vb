@@ -44,6 +44,7 @@ Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D.Device
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
@@ -59,6 +60,7 @@ Namespace Plot3D.Model
                              yrange As DoubleRange,
                              zrange As DoubleRange,
                              labelFontCss As String,
+                             labelColorVal As String,
                              labels As (X$, Y$, Z$),
                              Optional strokeCSS$ = Stroke.AxisStroke,
                              Optional arrowFactor$ = "1,2") As Element3D()
@@ -86,10 +88,15 @@ Namespace Plot3D.Model
             Dim Xaxis As New Line(ZERO, X) With {.Stroke = color}
             Dim Yaxis As New Line(ZERO, Y) With {.Stroke = color}
             Dim Zaxis As New Line(ZERO, Z) With {.Stroke = color}
-
-            Dim labX As New Label With {.Location = X, .FontCss = labelFontCss, .Color = Brushes.Black, .Text = labels.X}
-            Dim labY As New Label With {.Location = Y, .FontCss = labelFontCss, .Color = Brushes.Black, .Text = labels.Y}
-            Dim labZ As New Label With {.Location = New Point3D(Z.X, Z.Y, Z.Z + zrange.Length / 20), .FontCss = labelFontCss, .Color = Brushes.Black, .Text = labels.Z}
+            Dim labelColor As Brush = labelColorVal.GetBrush
+            Dim labX As New Label With {.Location = X, .FontCss = labelFontCss, .Color = labelColor, .Text = labels.X}
+            Dim labY As New Label With {.Location = Y, .FontCss = labelFontCss, .Color = labelColor, .Text = labels.Y}
+            Dim labZ As New Label With {
+                .Location = New Point3D(Z.X, Z.Y, Z.Z + zrange.Length / 20),
+                .FontCss = labelFontCss,
+                .Color = labelColor,
+                .Text = labels.Z
+            }
 
             Return New Element3D() {Xaxis, Yaxis, Zaxis, labX, labY, labZ}
         End Function

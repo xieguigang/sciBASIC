@@ -1,53 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::71ebd4f25b92b5a6ccc5aa2c882394f3, Data_science\Visualization\Plots\3D\Device\RenderEngine.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module RenderEngine
-    ' 
-    '         Sub: drawLabels, RenderAs3DChart
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module RenderEngine
+' 
+'         Sub: drawLabels, RenderAs3DChart
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Namespace Plot3D.Device
 
@@ -63,16 +65,12 @@ Namespace Plot3D.Device
         ''' <param name="canvas"></param>
         ''' <param name="camera"></param>
         ''' <param name="region"></param>
-        ''' <param name="labelFont">Font style that will draw of the elements' label content.</param>
         <Extension>
         Public Sub RenderAs3DChart(elements As IEnumerable(Of Element3D),
                                    canvas As IGraphics,
                                    camera As Camera,
                                    region As GraphicsRegion,
-                                   labelFont As Font,
-                                   labelerItr%,
-                                   showLabel As Boolean,
-                                   labelColor As SolidBrush)
+                                   theme As Theme)
 
             ' 首先对模型执行rotate和project，然后再进行Z排序
             Dim models As Element3D() = elements.ToArray
@@ -98,6 +96,7 @@ Namespace Plot3D.Device
             Dim anchors As New List(Of d3js.Layout.Anchor)
             Dim location As PointF
             Dim labelSize As SizeF
+            Dim labelFont As Font = CSSFont.TryParse(theme.tagCSS).GDIObject(canvas.Dpi)
 
             For i As Integer = 0 To models.Length - 1
                 Dim index As Integer = orders(i)
@@ -124,15 +123,16 @@ Namespace Plot3D.Device
                 End If
             Next
 
-            If showLabel AndAlso labels > 0 Then
-                Call labels.ToArray.drawLabels(
-                    anchors:=anchors,
-                    canvas:=canvas,
-                    graphicsRegion:=region,
-                    Font:=labelFont,
-                    labelerItr:=labelerItr,
-                    labelColor:=labelColor
-                )
+            If theme.drawLabels AndAlso labels > 0 Then
+                Call labels.ToArray _
+                    .drawLabels(
+                        anchors:=anchors,
+                        canvas:=canvas,
+                        graphicsRegion:=region,
+                        Font:=labelFont,
+                        labelerItr:=100,
+                        labelColor:=theme.tagColor.GetBrush
+                    )
             End If
         End Sub
 

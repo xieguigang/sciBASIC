@@ -197,12 +197,17 @@ Namespace CSS
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function GetFontStyle(family$, style As FontStyle, size$) As String
-            Return $"font-style: {ToString(style)}; font-size: {size}; font-family: {family};"
+            Return $"font-style: {ToString(style)}; font-size: {size}; font-family: {family}; color: black;"
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function GetFontStyle(font As Font) As String
             Return GetFontStyle(font.Name, font.Style, font.Size & "px")
+        End Function
+
+        Public Function SetFontColor(newColor As String) As CSSFont
+            color = newColor
+            Return Me
         End Function
 
         Public Overloads Shared Function ToString(style As FontStyle) As String
@@ -267,9 +272,9 @@ Namespace CSS
             Dim styles As Dictionary(Of String, String) = tokens _
                 .Where(Function(s) Not s.StringEmpty) _
                 .Select(Function(s) s.GetTagValue(":", True)) _
-                .ToDictionary(Function(x) x.Name.Trim.ToLower,
-                              Function(x)
-                                  Return x.Value
+                .ToDictionary(Function(style) style.Name.Trim.ToLower,
+                              Function(style)
+                                  Return style.Value
                               End Function)
 
             If styles.ContainsKey("font-style") Then
@@ -295,6 +300,12 @@ Namespace CSS
             If styles.ContainsKey("font-variant") Then
                 hasValue = True
                 font.variant = styles("font-variant")
+            End If
+            If styles.ContainsKey("color") Then
+                hasValue = True
+                font.color = styles("color")
+            Else
+                font.color = "black"
             End If
 
             Return font
@@ -324,6 +335,9 @@ Namespace CSS
             End If
             If Not String.IsNullOrEmpty([variant]) Then
                 sb.Append($"font-variant: {[variant]};")
+            End If
+            If Not String.IsNullOrEmpty(color) Then
+                sb.Append($"color: {color};")
             End If
 
             Return sb.ToString

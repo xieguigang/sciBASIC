@@ -75,6 +75,8 @@ Namespace Graphic.Canvas
         ''' </summary>
         ''' <returns></returns>
         Public Property mainCSS As String = CSSFont.PlotTitle
+        Public Property mainTextColor As String = "black"
+
         ''' <summary>
         ''' 副标题字体样式
         ''' </summary>

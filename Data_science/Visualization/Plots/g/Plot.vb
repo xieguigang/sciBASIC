@@ -200,8 +200,13 @@ Namespace Graphic
                     .X = plotRegion.X + (plotRegion.Width - titleSize.Width) / 2,
                     .Y = plotRegion.Y - titleSize.Height * 1.125
                 }
+                Dim color As Brush = Brushes.Black
 
-                Call g.DrawString(main, fontOfTitle, Brushes.Black, position)
+                If Not theme.mainTextColor.StringEmpty Then
+                    color = theme.mainTextColor.GetBrush
+                End If
+
+                Call g.DrawString(main, fontOfTitle, color, position)
             End If
         End Sub
 

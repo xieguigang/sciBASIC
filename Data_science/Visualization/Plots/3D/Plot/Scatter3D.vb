@@ -119,7 +119,8 @@ Namespace Plot3D.Impl
                     labelFontCss:=theme.axisLabelCSS,
                     labels:=(xlabel, ylabel, zlabel),
                     strokeCSS:=theme.axisStroke,
-                    arrowFactor:=arrowFactor
+                    arrowFactor:=arrowFactor,
+                    labelColorVal:=theme.mainTextColor
                 )
 
                 Yield item
@@ -190,10 +191,7 @@ Namespace Plot3D.Impl
                 canvas:=g,
                 camera:=camera,
                 region:=canvas,
-                labelFont:=CSSFont.TryParse(theme.tagCSS).GDIObject(g.Dpi),
-                labelerItr:=0,
-                showLabel:=theme.drawLabels,
-                labelColor:=labelColor
+                theme:=theme
             )
 
             If theme.drawLegend Then

@@ -43,6 +43,7 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D.Device
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Html.CSS
@@ -62,6 +63,7 @@ Namespace Plot3D.Model
             Dim pen As Pen = Stroke.TryParse(strokeCSS).GDIObject
             Dim tickFont As Font = CSSFont.TryParse(tickCSS).GDIObject(300)
             Dim eps As Double = steps.X / 2
+            Dim tickColor As Brush = CSSFont.TryParse(tickCSS).color.GetBrush
 
             For X As Double = xrange.Min To xrange.Max Step steps.X
                 a = New Point3D With {.X = X, .Y = yrange.Min, .Z = Z}
@@ -70,7 +72,7 @@ Namespace Plot3D.Model
                 If showTicks AndAlso stdNum.Abs(xrange.Min - X) > eps AndAlso stdNum.Abs(xrange.Max - X) > eps Then
                     Yield New Label With {
                         .FontCss = tickCSS,
-                        .Color = Brushes.Black,
+                        .Color = tickColor,
                         .Text = X.ToString("G2"),
                         .Location = b
                     }
@@ -90,7 +92,7 @@ Namespace Plot3D.Model
                 If showTicks AndAlso stdNum.Abs(yrange.Min - Y) > eps AndAlso stdNum.Abs(yrange.Max - Y) > eps Then
                     Yield New Label With {
                         .FontCss = tickCSS,
-                        .Color = Brushes.Black,
+                        .Color = tickColor,
                         .Text = Y.ToString("G2"),
                         .Location = a
                     }
@@ -111,6 +113,7 @@ Namespace Plot3D.Model
             Dim a, b As Point3D
             Dim pen As Pen = Stroke.TryParse(strokeCSS).GDIObject
             Dim eps As Double = steps.Z / 2
+            Dim tickColor As Brush = CSSFont.TryParse(tickCSS).color.GetBrush
 
             For X As Double = xrange.Min To xrange.Max Step steps.X
                 a = New Point3D With {.X = X, .Z = zrange.Min, .Y = Y}
@@ -128,7 +131,7 @@ Namespace Plot3D.Model
                 If showTicks AndAlso stdNum.Abs(zrange.Min - z) > eps Then
                     Yield New Label With {
                         .FontCss = tickCSS,
-                        .Color = Brushes.Black,
+                        .Color = tickColor,
                         .Text = z.ToString("G2"),
                         .Location = a
                     }
