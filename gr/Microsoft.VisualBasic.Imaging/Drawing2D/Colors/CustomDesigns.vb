@@ -10,6 +10,22 @@ Namespace Drawing2D.Colors
             Return Viridis.fromHtml("#1C1C1C", "#F4831B", "#902EBB", "#63C328", "#EEEB27", "#D02823").ToArray
         End Function
 
+        Public Shared Function Unicorn() As Color()
+            Return Viridis.fromHtml("#5763CF", "#99FF94", "#FEF77C", "#F7A654", "#EF7779", "#B3498B").ToArray
+        End Function
+
+        Public Shared Function Vibrant() As Color()
+            Return Viridis.fromHtml("#7734EA", "#00A7EA", "#8AE800", "#FAF100", "#FFAA00", "#FF0061").ToArray
+        End Function
+
+        Public Shared Function Paper() As Color()
+            Return Viridis.fromHtml(
+                "#6d458b", "#0491d0", "#88bb64", "#f2ce3f",
+                "#396b1c", "#fb5b44", "#361f32", "#DF2789",
+                "#8858BF", "#15DBFF", "#9CC95C", "#583B73"
+            )
+        End Function
+
         ''' <summary>
         ''' From TSF launcher on Android
         ''' </summary>

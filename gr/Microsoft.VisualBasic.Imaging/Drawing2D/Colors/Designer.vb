@@ -370,7 +370,10 @@ Namespace Drawing2D.Colors
                 Case "console.colors", "console" : Return ConsoleColors
                 Case "tsf" : Return CustomDesigns.TSF
                 Case "halloween" : Return CustomDesigns.Halloween
+                Case "unicorn" : Return CustomDesigns.Unicorn
+                Case "vibrant" : Return CustomDesigns.Vibrant
                 Case "rainbow" : Return CustomDesigns.Rainbow
+                Case "paper" : Return CustomDesigns.Paper
                 Case "dotnet.colors" : Return AllDotNetPrefixColors
                 Case "scibasic.chart()" : Return ChartColors
                 Case "scibasic.category31()" : Return Category31
