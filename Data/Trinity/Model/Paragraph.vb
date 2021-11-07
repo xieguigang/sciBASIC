@@ -8,5 +8,9 @@
             Return sentences.JoinBy(". ")
         End Function
 
+        Public Shared Iterator Function Segmentation(text As String) As IEnumerable(Of Paragraph)
+
+        End Function
+
     End Class
 End Namespace
