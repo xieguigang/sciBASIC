@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::04b108d7554f7c64e427c7d428a8a0f4, Data\Trinity\Html\Html2Article.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class Html2Article
-    ' 
-    '     Properties: AppendMode, Depth, LimitCount
-    ' 
-    '     Function: FormatTag, GetArticle, GetPublishDate, GetTitle
-    ' 
-    '     Sub: GetContent
-    ' 
-    ' /********************************************************************************/
+' Class Html2Article
+' 
+'     Properties: AppendMode, Depth, LimitCount
+' 
+'     Function: FormatTag, GetArticle, GetPublishDate, GetTitle
+' 
+'     Sub: GetContent
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -78,18 +78,18 @@ Public Class Html2Article
     ''' 是否使用追加模式，默认为false
     ''' 使用追加模式后，会将符合过滤条件的所有文本提取出来
     ''' </summary>
-    Public Shared Property AppendMode() As Boolean = False
+    Public Property AppendMode() As Boolean = False
 
     ''' <summary>
     ''' 按行分析的深度，默认为6
     ''' </summary>
-    Public Shared Property Depth() As Integer = 6
+    Public Property Depth() As Integer = 6
 
     ''' <summary>
     ''' 字符限定数，当分析的文本数量达到限定数则认为进入正文内容
     ''' 默认180个字符数
     ''' </summary>
-    Public Shared Property LimitCount() As Integer = 180
+    Public Property LimitCount() As Integer = 180
 
 
     ' 确定文章正文头部时，向上查找，连续的空行到达_headEmptyLines，则停止查找
@@ -104,7 +104,7 @@ Public Class Html2Article
     ''' </summary>
     ''' <param name="html"></param>
     ''' <returns></returns>
-    Public Shared Function GetArticle(html As String) As Article
+    Public Function GetArticle(html As String) As Article
         ' 如果换行符的数量小于10，则认为html为压缩后的html
         ' 由于处理算法是按照行进行处理，需要为html标签添加换行符，便于处理
         If html.Count(Function(c) c = ControlChars.Lf) < 10 Then
@@ -115,6 +115,7 @@ Public Class Html2Article
         Dim body As String = ""
         Dim bodyFilter As String = "(?is)<body.*?</body>"
         Dim m As Match = Regex.Match(html, bodyFilter)
+
         If m.Success Then
             body = m.ToString()
         End If
@@ -139,10 +140,10 @@ Public Class Html2Article
         GetContent(body, content, contentWithTags)
 
         Dim article As New Article() With {
-            .Title = GetTitle(html),
-            .PublishDate = GetPublishDate(body),
-            .Content = content,
-            .ContentWithTags = contentWithTags
+            .title = GetTitle(html),
+            .publishDate = GetPublishDate(body),
+            .content = content,
+            .contentWithTags = contentWithTags
         }
 
         Return article
@@ -153,7 +154,7 @@ Public Class Html2Article
     ''' </summary>
     ''' <param name="match"></param>
     ''' <returns></returns>
-    Private Shared Function FormatTag(match As Match) As String
+    Private Function FormatTag(match As Match) As String
         Dim sb As New StringBuilder()
         For Each ch As Char In match.Value
             If ch = ControlChars.Cr OrElse ch = ControlChars.Lf Then
@@ -169,7 +170,7 @@ Public Class Html2Article
     ''' </summary>
     ''' <param name="html"></param>
     ''' <returns></returns>
-    Private Shared Function GetTitle(html As String) As String
+    Private Function GetTitle(html As String) As String
         Dim titleFilter As String = "<title>[\s\S]*?</title>"
         Dim h1Filter As String = "<h1.*?>.*?</h1>"
         Dim clearFilter As String = "<.*?>"
@@ -196,46 +197,57 @@ Public Class Html2Article
     ''' </summary>
     ''' <param name="html"></param>
     ''' <returns></returns>
-    Private Shared Function GetPublishDate(html As String) As DateTime
+    Private Function GetPublishDate(html As String) As DateTime
         ' 过滤html标签，防止标签对日期提取产生影响
         Dim text As String = Regex.Replace(html, "(?is)<.*?>", "")
         Dim match As Match = Regex.Match(text, "((\d{4}|\d{2})(\-|\/)\d{1,2}\3\d{1,2})(\s?\d{2}:\d{2})?|(\d{4}年\d{1,2}月\d{1,2}日)(\s?\d{2}:\d{2})?", RegexOptions.IgnoreCase)
 
-        Dim result As New DateTime(1900, 1, 1)
         If match.Success Then
-            Try
-                Dim dateStr As String = ""
-                For i As Integer = 0 To match.Groups.Count - 1
-                    dateStr = match.Groups(i).Value
-                    If Not [String].IsNullOrEmpty(dateStr) Then
-                        Exit For
-                    End If
-                Next
-                ' 对中文日期的处理
-                If dateStr.Contains("年") Then
-                    Dim sb As New StringBuilder()
-                    For Each ch As Char In dateStr
-                        If ch = "年"c OrElse ch = "月"c Then
-                            sb.Append("/")
-                            Continue For
-                        End If
-                        If ch = "日"c Then
-                            sb.Append(" "c)
-                            Continue For
-                        End If
-                        sb.Append(ch)
-                    Next
-                    dateStr = sb.ToString()
-                End If
-                result = Convert.ToDateTime(dateStr)
-            Catch ex As Exception
-                Console.WriteLine(ex)
-            End Try
-            If result.Year < 1900 Then
-                result = New DateTime(1900, 1, 1)
-            End If
+            Return ParseDateResult(match)
+        Else
+            Return New DateTime(1900, 1, 1)
         End If
-        Return result
+    End Function
+
+    Private Shared Function ParseDateResult(match As Match) As Date
+        Dim result As New DateTime(1900, 1, 1)
+        Dim dateStr As String = ""
+
+        Try
+            For i As Integer = 0 To match.Groups.Count - 1
+                dateStr = match.Groups(i).Value
+                If Not [String].IsNullOrEmpty(dateStr) Then
+                    Exit For
+                End If
+            Next
+
+            ' 对中文日期的处理
+            If dateStr.Contains("年") Then
+                Dim sb As New StringBuilder()
+                For Each ch As Char In dateStr
+                    If ch = "年"c OrElse ch = "月"c Then
+                        sb.Append("/")
+                        Continue For
+                    End If
+                    If ch = "日"c Then
+                        sb.Append(" "c)
+                        Continue For
+                    End If
+                    sb.Append(ch)
+                Next
+                dateStr = sb.ToString()
+            End If
+
+            result = Convert.ToDateTime(dateStr)
+        Catch ex As Exception
+            Console.WriteLine(ex)
+        End Try
+
+        If result.Year < 1900 Then
+            Return New DateTime(1900, 1, 1)
+        Else
+            Return result
+        End If
     End Function
 
     ''' <summary>
@@ -244,7 +256,7 @@ Public Class Html2Article
     ''' <param name="bodyText">只过滤了script和style标签的body文本内容</param>
     ''' <param name="content">返回文本正文，不包含标签</param>
     ''' <param name="contentWithTags">返回文本正文包含标签</param>
-    Private Shared Sub GetContent(bodyText As String, ByRef content As String, ByRef contentWithTags As String)
+    Private Sub GetContent(bodyText As String, ByRef content As String, ByRef contentWithTags As String)
         Dim orgLines As String() = Nothing
         ' 保存原始内容，按行存储
         Dim lines As String() = Nothing
