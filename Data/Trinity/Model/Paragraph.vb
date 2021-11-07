@@ -25,8 +25,14 @@ Namespace Model
         End Function
 
         Private Shared Function GetParagraph(text As String) As Paragraph
-            Dim sentence As String() = text.Split("."c)
+            Dim sentences As String() = text.Split("."c)
+            Dim sentenceList As Sentence() = sentences _
+                .Select(AddressOf Sentence.Parse) _
+                .ToArray
 
+            Return New Paragraph With {
+                .sentences = sentenceList
+            }
         End Function
 
     End Class
