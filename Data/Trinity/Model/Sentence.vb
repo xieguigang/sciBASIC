@@ -18,6 +18,44 @@
             End Get
         End Property
 
+        ''' <summary>
+        ''' exactly token matched
+        ''' </summary>
+        ''' <param name="token"></param>
+        ''' <returns></returns>
+        Public Function matchIndex(token As String) As Integer
+            Dim index As Integer = -1
+
+            For i As Integer = 0 To segments.Length - 1
+                index = segments(i).matchIndex(token)
+
+                If index > -1 Then
+                    Return i * 1000 + index
+                End If
+            Next
+
+            Return -1
+        End Function
+
+        ''' <summary>
+        ''' search for starts with [prefix]
+        ''' </summary>
+        ''' <param name="token"></param>
+        ''' <returns></returns>
+        Public Function searchIndex(token As String) As Integer
+            Dim index As Integer = -1
+
+            For i As Integer = 0 To segments.Length - 1
+                index = segments(i).searchIndex(token)
+
+                If index > -1 Then
+                    Return i * 1000 + index
+                End If
+            Next
+
+            Return -1
+        End Function
+
         Public Overrides Function ToString() As String
             Return segments.JoinBy("; ")
         End Function
