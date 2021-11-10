@@ -1,53 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::3db59065890de08eae250e48a3b71b40, Data\DataFrame\StorageProvider\ComponntModels\SchemaProvider.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class SchemaProvider
-    ' 
-    '         Properties: CollectionColumns, Columns, DeclaringType, EnumColumns, HasMetaAttributes
-    '                     KeyValuePairColumns, MetaAttributes, Raw
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: __columnType, (+2 Overloads) CacheOrdinal, CheckFieldConsistent, ContainsField, ContainsProperty
-    '                   CopyReadDataFromObject, CopyWriteDataToObject, (+2 Overloads) CreateObject, CreateObjectInternal, GetCollectionColumns
-    '                   GetColumns, GetEnumColumns, GetEnumerator, GetField, GetKeyValuePairColumn
-    '                   getMeta, GetMetaAttributeColumn, gets, getWriteProvider, IEnumerable_GetEnumerator
-    '                   ToString
-    ' 
-    '         Sub: Remove
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class SchemaProvider
+' 
+'         Properties: CollectionColumns, Columns, DeclaringType, EnumColumns, HasMetaAttributes
+'                     KeyValuePairColumns, MetaAttributes, Raw
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: __columnType, (+2 Overloads) CacheOrdinal, CheckFieldConsistent, ContainsField, ContainsProperty
+'                   CopyReadDataFromObject, CopyWriteDataToObject, (+2 Overloads) CreateObject, CreateObjectInternal, GetCollectionColumns
+'                   GetColumns, GetEnumColumns, GetEnumerator, GetField, GetKeyValuePairColumn
+'                   getMeta, GetMetaAttributeColumn, gets, getWriteProvider, IEnumerable_GetEnumerator
+'                   ToString
+' 
+'         Sub: Remove
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -85,7 +85,9 @@ Namespace StorageProvider.ComponentModels
                     _dictColumns = New Dictionary(Of String, Column)
                 Else
                     _dictColumns = value _
-                        .ToDictionary(Function(x) x.BindProperty.Name)
+                        .ToDictionary(Function(x)
+                                          Return x.BindProperty.Name
+                                      End Function)
 
                     For Each x In value
                         If Not _dictColumns.ContainsKey(x.Name) Then
@@ -283,17 +285,13 @@ Namespace StorageProvider.ComponentModels
         ''' <returns></returns>
         Public Function CopyReadDataFromObject() As SchemaProvider
             Return New SchemaProvider With {
-                .CollectionColumns = (From p In CollectionColumns Where p.CanReadDataFromObject Select p).ToArray,
-                .Columns = (From p In Columns Where p.CanReadDataFromObject Select p).ToArray,
-                .EnumColumns = (From p In EnumColumns Where p.CanReadDataFromObject Select p).ToArray,
-                .KeyValuePairColumns = (From p In KeyValuePairColumns Where p.CanReadDataFromObject Select p).ToArray,
+                .CollectionColumns = (From p As CollectionColumn In CollectionColumns Where p.CanReadDataFromObject Select p).ToArray,
+                .Columns = (From p As Column In Columns Where p.CanReadDataFromObject Select p).ToArray,
+                .EnumColumns = (From p As [Enum] In EnumColumns Where p.CanReadDataFromObject Select p).ToArray,
+                .KeyValuePairColumns = (From p As KeyValuePair In KeyValuePairColumns Where p.CanReadDataFromObject Select p).ToArray,
                 .rawType = rawType,
                 ._Raw = Me,
-                .MetaAttributes =
-                    If(MetaAttributes IsNot Nothing AndAlso
-                       MetaAttributes.CanReadDataFromObject,
-                       MetaAttributes,
-                       Nothing)
+                .MetaAttributes = getMeta(writeDataToObject:=False)
             }
         End Function
 
@@ -309,7 +307,7 @@ Namespace StorageProvider.ComponentModels
                 .EnumColumns = getWriteProvider(EnumColumns).ToArray,
                 .KeyValuePairColumns = getWriteProvider(KeyValuePairColumns).ToArray,
                 ._Raw = Me,
-                .MetaAttributes = getMeta(),
+                .MetaAttributes = getMeta(writeDataToObject:=True),
                 .rawType = DeclaringType
             }
         End Function
@@ -322,9 +320,15 @@ Namespace StorageProvider.ComponentModels
                    Select DirectCast(provider, T)
         End Function
 
-        Private Function getMeta() As MetaAttribute
-            If MetaAttributes IsNot Nothing AndAlso MetaAttributes.CanWriteDataToObject Then
-                Return MetaAttributes
+        Private Function getMeta(writeDataToObject As Boolean) As MetaAttribute
+            If MetaAttributes IsNot Nothing Then
+                If writeDataToObject AndAlso MetaAttributes.CanWriteDataToObject Then
+                    Return MetaAttributes
+                ElseIf (Not writeDataToObject) AndAlso MetaAttributes.CanReadDataFromObject Then
+                    Return MetaAttributes
+                Else
+                    Return Nothing
+                End If
             Else
                 Return Nothing
             End If

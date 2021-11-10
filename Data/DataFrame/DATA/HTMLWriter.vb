@@ -80,9 +80,10 @@ Namespace DATA
             Optional width$ = "",
             Optional removes$() = Nothing,
             Optional title$ = "",
-            Optional altClassName$ = Nothing) As String
+            Optional altClassName$ = Nothing,
+            Optional numFormat$ = "G5") As String
 
-            Return source.ToCsvDoc(False).html(
+            Return source.ToCsvDoc(False, numFormat:=numFormat).html(
                 [class]:=className,
                 id:=tableID,
                 width:=width,

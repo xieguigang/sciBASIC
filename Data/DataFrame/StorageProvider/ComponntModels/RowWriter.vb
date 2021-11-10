@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::29bddad057f601259afa0138d77bab9d, Data\DataFrame\StorageProvider\ComponntModels\RowWriter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class RowWriter
-    ' 
-    '         Properties: columns, metaRow, schemaProvider
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetRowNames, ToRow
-    '         Delegate Function
-    ' 
-    '             Properties: hasMeta, isMetaIndexed
-    ' 
-    '             Function: __buildRowMeta, __buildRowNullMeta, __meta, CacheIndex, GetMetaTitles
-    '                       ToString
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class RowWriter
+' 
+'         Properties: columns, metaRow, schemaProvider
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: GetRowNames, ToRow
+'         Delegate Function
+' 
+'             Properties: hasMeta, isMetaIndexed
+' 
+'             Function: __buildRowMeta, __buildRowNullMeta, __meta, CacheIndex, GetMetaTitles
+'                       ToString
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -174,8 +174,8 @@ Namespace StorageProvider.ComponentModels
         ''' </summary>
         ReadOnly _metaBlank As String
 
-        Public Function ToRow(obj As Object) As RowObject
-            Dim row As RowObject = __buildRow(obj)
+        Public Function ToRow(obj As Object, numFormat As String) As RowObject
+            Dim row As RowObject = __buildRow(obj, numFormat)
             Return row
         End Function
 
@@ -186,23 +186,35 @@ Namespace StorageProvider.ComponentModels
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>
-        Private Delegate Function IRowBuilder(obj As Object) As RowObject
+        Private Delegate Function IRowBuilder(obj As Object, numFormat As String) As RowObject
 
         ''' <summary>
         ''' 这里是没有动态属性的
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>
-        Private Function __buildRowNullMeta(obj As Object) As RowObject
+        Private Function __buildRowNullMeta(obj As Object, numFormat As String) As RowObject
             Dim row = LinqAPI.MakeList(Of String) _
  _
             () <= From colum As StorageProvider
                   In columns
                   Let value As Object = colum.BindProperty.GetValue(obj, Nothing)
-                  Let strData As String = colum.ToString(value)
+                  Let strData As String = castStr(value, colum, numFormat)
                   Select strData
 
             Return New RowObject(row)
+        End Function
+
+        Private Shared Function castStr(value As Object, colum As StorageProvider, numFormat As String) As String
+            If TypeOf value Is Double Then
+                If String.IsNullOrEmpty(numFormat) Then
+                    Return CDbl(value).ToString
+                Else
+                    Return CDbl(value).ToString(numFormat)
+                End If
+            Else
+                Return colum.ToString(value)
+            End If
         End Function
 
         Friend __cachedIndex As String()
@@ -275,11 +287,11 @@ Namespace StorageProvider.ComponentModels
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>
-        Private Function __buildRowMeta(obj As Object) As RowObject
+        Private Function __buildRowMeta(obj As Object, numFormat As String) As RowObject
             Dim row As List(Of String) = (From colum As StorageProvider
                                           In columns
                                           Let value As Object = colum.BindProperty.GetValue(obj, Nothing)
-                                          Let strData As String = colum.ToString(value)
+                                          Let strData As String = castStr(value, colum, numFormat)
                                           Select strData).AsList
             Dim metas As String() = __meta(obj)
             Call row.AddRange(metas)

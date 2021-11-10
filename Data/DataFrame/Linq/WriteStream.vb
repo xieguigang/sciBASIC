@@ -183,7 +183,7 @@ Namespace IO.Linq
                 () <= From line As T
                       In source.AsParallel
                       Where Not line Is Nothing  ' 忽略掉空值对象，否则会生成空行
-                      Let createdRow As RowObject = rowWriter.ToRow(line)
+                      Let createdRow As RowObject = rowWriter.ToRow(line, Nothing)
                       Select populateLine(createdRow)  ' 对象到数据的投影
 
             If LQuery.Length = 0 Then
@@ -214,7 +214,7 @@ Namespace IO.Linq
             If obj Is Nothing Then
                 Return False
             Else
-                _fileIO.WriteLine(populateLine(rowWriter.ToRow(obj)))
+                _fileIO.WriteLine(populateLine(rowWriter.ToRow(obj, Nothing)))
             End If
 
             Return True

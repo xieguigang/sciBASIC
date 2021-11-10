@@ -686,12 +686,14 @@ Public Module Extensions
                                                Optional strict As Boolean = False,
                                                Optional maps As Dictionary(Of String, String) = Nothing,
                                                Optional metaBlank$ = "",
-                                               Optional reorderKeys% = 0) As File
+                                               Optional reorderKeys% = 0,
+                                               Optional numFormat$ = Nothing) As File
         Return Reflector.Save(
             source, strict,
             maps:=maps,
             metaBlank:=metaBlank,
-            reorderKeys:=reorderKeys
+            reorderKeys:=reorderKeys,
+            numFormat:=numFormat
         )
     End Function
 

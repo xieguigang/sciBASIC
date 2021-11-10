@@ -256,7 +256,8 @@ Namespace StorageProvider.Reflection
                                Optional maps As Dictionary(Of String, String) = Nothing,
                                Optional parallel As Boolean = True,
                                Optional reorderKeys As Integer = 0,
-                               Optional layout As Dictionary(Of String, Integer) = Nothing) As IEnumerable(Of RowObject)
+                               Optional layout As Dictionary(Of String, Integer) = Nothing,
+                               Optional numFormat$ = Nothing) As IEnumerable(Of RowObject)
 
             ' 结束迭代器，防止Linq表达式重新计算
             Dim source As Object() = objSource.ToVector
@@ -301,7 +302,7 @@ Namespace StorageProvider.Reflection
                 Let createdRow As RowObject = If(
                     row Is Nothing,
                     New RowObject,
-                    rowWriter.ToRow(row))
+                    rowWriter.ToRow(row, numFormat))
                 Select createdRow
 
             If parallel Then
@@ -333,7 +334,8 @@ Namespace StorageProvider.Reflection
                                    Optional maps As Dictionary(Of String, String) = Nothing,
                                    Optional parallel As Boolean = True,
                                    Optional ByRef schemaOut As Dictionary(Of String, Type) = Nothing,
-                                   Optional reorderKeys As Integer = 0) As File
+                                   Optional reorderKeys As Integer = 0,
+                                   Optional numFormat$ = Nothing) As File
 
             Return Reflector.doSave(
                 source, GetType(T), strict,
@@ -341,7 +343,8 @@ Namespace StorageProvider.Reflection
                 metaBlank,
                 maps,
                 parallel,
-                reorderKeys:=reorderKeys
+                reorderKeys:=reorderKeys,
+                numFormat:=numFormat
             ).DataFrame
         End Function
 
