@@ -664,6 +664,7 @@
     <Compile Include="Model\Abstract\General.vb" />
     <Compile Include="Model\GridNetwork\Grid2D.vb" />
     <Compile Include="Model\GridNetwork\GridCell.vb" />
+    <Compile Include="Model\GridNetwork\IPoint2D.vb" />
     <Compile Include="Model\Tree\AbstractTree.vb" />
     <Compile Include="Model\Tree\KdTree\Analysis.vb" />
     <Compile Include="Model\Tree\KdTree\KdNodeHeapItem.vb" />
