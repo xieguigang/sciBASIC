@@ -96,7 +96,7 @@ Namespace Language
         ''' <returns></returns>
         <Extension>
         Public Function MaxIndex(Of T As IComparable)(source As IEnumerable(Of T)) As Integer
-            Dim i As Integer
+            Dim i As Integer = 0
             Dim max As T = source.First
             Dim maxInd As Integer = 0
 

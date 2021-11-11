@@ -77,7 +77,9 @@ Namespace Drawing2D.Math2D
                 Next
 
                 For xi As Integer = orderX.Min + 1 To endX
-                    If orderX.Any(Function(xii) stdnum.Abs(xi - xii) <= 0.05) Then
+                    Dim xiii As Integer = xi
+
+                    If orderX.Any(Function(xii) stdnum.Abs(xiii - xii) <= 0.05) Then
                         background = Not background
                     ElseIf Not background Then
                         Yield New PointF(xi, line.Key)

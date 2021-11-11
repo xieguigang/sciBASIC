@@ -80,10 +80,13 @@ Public Module PrimitiveParser
 #Region "text token pattern assert"
     ' 2019-04-17 正则表达式的执行效率过低
 
+    ''' <summary>
+    ''' NA literal is comes from the Rscript environment
+    ''' </summary>
     ReadOnly NaN As Index(Of String) = {
         "正无穷大", "负无穷大", "非数字",
         "Infinity", "-Infinity",
-        "NaN",
+        "NaN", "NA",
         "∞", "-∞"
     }
 

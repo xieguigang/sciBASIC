@@ -267,12 +267,14 @@ Namespace Scripting.Runtime
         ''' </summary>
         ''' <param name="s">
         ''' + numeric
-        ''' + NaN
+        ''' + NaN, NA
         ''' + p%
         ''' + a/b
         ''' </param>
         ''' <returns></returns>
-        ''' 
+        ''' <remarks>
+        ''' this function will mapping factor string ``NaN`` and ``NA`` as <see cref="System.Double.NaN"/>
+        ''' </remarks>
         <Extension>
         Public Function ParseNumeric(s As String) As Double
             s = Strings.Trim(s)
