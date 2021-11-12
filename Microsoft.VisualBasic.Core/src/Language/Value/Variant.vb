@@ -119,6 +119,8 @@ Namespace Language
         ''' this function will returns nothing if the value that holds in 
         ''' this object is nothing
         ''' </returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
         Public Function [TryCast](Of T)() As T
             If Value Is Nothing Then

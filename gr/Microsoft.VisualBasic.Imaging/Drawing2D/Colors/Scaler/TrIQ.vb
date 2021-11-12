@@ -28,12 +28,20 @@ Namespace Drawing2D.Colors.Scaler
         <Extension>
         Public Function FindThreshold(data As IEnumerable(Of DataBinBox(Of Double)), q As Double, Optional eps As Double = 0.1) As Double
             Dim sample As DataBinBox(Of Double)() = data.OrderBy(Function(b) b.Boundary.Min).ToArray
-            Dim N As Integer = Aggregate point In sample Into Sum(point.Count)
-            Dim minK As Integer
+            Dim N As Integer = Aggregate point As DataBinBox(Of Double)
+                               In sample
+                               Into Sum(point.Count)
+            Dim minK As Integer = 1
             Dim minD As Double = Double.MaxValue
 
             For k As Integer = 1 To sample.Length - 1
-                Dim d As Double = stdNum.Abs(sample.Take(k).CDF(N) - q)
+                Dim cdf As Double = sample.Take(k).CDF(N)
+
+                If cdf > q Then
+                    Exit For
+                End If
+
+                Dim d As Double = stdNum.Abs(cdf - q)
 
                 If d <= eps Then
                     Return sample(k).Boundary.Min
@@ -43,7 +51,7 @@ Namespace Drawing2D.Colors.Scaler
                 End If
             Next
 
-            Return sample(minK).Boundary.Min
+            Return sample(minK - 1).Boundary.Max
         End Function
 
         <Extension>
