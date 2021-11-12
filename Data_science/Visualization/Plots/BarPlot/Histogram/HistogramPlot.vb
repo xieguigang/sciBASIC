@@ -32,6 +32,37 @@ Namespace BarPlot.Histogram
             Me.groups = groups
         End Sub
 
+        Public Shared Sub DrawSample(g As IGraphics, region As Rectangle,
+                                     hist As HistProfile,
+                                     ann As NamedValue(Of Color),
+                                     scaler As DataScaler,
+                                     Optional alpha As Integer = 255,
+                                     Optional drawRect As Boolean = True)
+
+            Dim b As New SolidBrush(Color.FromArgb(alpha, ann.Value))
+
+            For Each block As HistogramData In hist.data
+                Dim pos As PointF = scaler.Translate(block.x1, block.y)
+                Dim sizeF As New SizeF With {
+                            .Width = scaler.TranslateX(block.x2) - scaler.TranslateX(block.x1),
+                            .Height = region.Bottom - scaler.TranslateY(block.y)
+                        }
+                Dim rect As New RectangleF With {
+                            .Location = pos,
+                            .Size = sizeF
+                        }
+
+                Call g.FillRectangle(b, rect)
+
+                If drawRect Then
+                    Call g.DrawRectangle(
+                                Pens.Black,
+                                rect.Left, rect.Top,
+                                rect.Width, rect.Height)
+                End If
+            Next
+        End Sub
+
         Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
             Dim region As Rectangle = canvas.PlotRegion
 
@@ -78,37 +109,15 @@ Namespace BarPlot.Histogram
                 Dim titleFont As Font = CSSFont.TryParse(theme.mainCSS).GDIObject(g.Dpi)
                 Dim titleSize As SizeF = g.MeasureString(main, titleFont)
                 Dim titlePos As New PointF With {
-                            .X = Region.Left + (Region.Width - titleSize.Width) / 2,
-                            .Y = Region.Top - titleSize.Height * 1.125
+                            .X = region.Left + (region.Width - titleSize.Width) / 2,
+                            .Y = region.Top - titleSize.Height * 1.125
                         }
 
                 Call g.DrawString(main, titleFont, Brushes.Black, titlePos)
             End If
 
             For Each hist As HistProfile In groups.Samples
-                Dim ann As NamedValue(Of Color) = annotations(hist.legend.title)
-                Dim b As New SolidBrush(Color.FromArgb(Alpha, ann.Value))
-
-                For Each block As HistogramData In hist.data
-                    Dim pos As PointF = scaler.Translate(block.x1, block.y)
-                    Dim sizeF As New SizeF With {
-                                .Width = scaler.TranslateX(block.x2) - scaler.TranslateX(block.x1),
-                                .Height = region.Bottom - scaler.TranslateY(block.y)
-                            }
-                    Dim rect As New RectangleF With {
-                                .Location = pos,
-                                .Size = sizeF
-                            }
-
-                    Call g.FillRectangle(b, rect)
-
-                    If drawRect Then
-                        Call g.DrawRectangle(
-                                    Pens.Black,
-                                    rect.Left, rect.Top,
-                                    rect.Width, rect.Height)
-                    End If
-                Next
+                Call DrawSample(g, region, hist, annotations(hist.legend.title), scaler, alpha, drawRect)
             Next
 
             If showTagChartLayer Then
