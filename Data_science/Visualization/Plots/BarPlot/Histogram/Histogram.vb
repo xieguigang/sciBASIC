@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::c50b4e81180d7f83f4af878655322baa, Data_science\Visualization\Plots\BarPlot\Histogram\Histogram.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Histogram
-    ' 
-    '         Function: (+2 Overloads) HistogramPlot, (+5 Overloads) Plot
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Histogram
+' 
+'         Function: (+2 Overloads) HistogramPlot, (+5 Overloads) Plot
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -47,6 +47,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.d3js.scale
@@ -206,122 +207,28 @@ Namespace BarPlot.Histogram
                              Optional title$ = Nothing,
                              Optional titleCss$ = CSSFont.PlotTitle) As GraphicsData
 
-            Dim margin As Padding = padding
-            Dim plotInternal =
-                Sub(ByRef g As IGraphics, region As GraphicsRegion)
-                    If groups.Samples.Length = 1 AndAlso groups.Samples.First.data.Length = 0 Then
-                        Call "No content data for plot histogram chart...".Warning
-                        Return
-                    End If
+            Dim theme As New Theme With {
+                .padding = padding,
+                .background = bg,
+                .axisLabelCSS = axisLabelFontStyle,
+                .mainCSS = titleCss,
+                .drawLegend = showLegend,
+                .legendBoxStroke = If(legendBorder Is Nothing, Nothing, legendBorder.ToString),
+                .drawGrid = showGrid
+            }
+            Dim app As New HistogramPlot(groups, alpha, drawRect, theme) With {
+                .xlabel = xlabel,
+                .ylabel = Ylabel,
+                .main = title,
+                .xAxis = xAxis,
+                .showTagChartLayer = showTagChartLayer
+            }
 
-                    Dim scalerData As New Scaling(groups, False)
-                    Dim annotations As Dictionary(Of NamedValue(Of Color)) = groups.Serials.ToDictionary
-                    Dim gSize As Size = region.Size
-                    Dim X, Y As d3js.scale.LinearScale
-                    Dim XTicks#() = groups.XRange.CreateAxisTicks
-                    Dim YTicks#() = groups.YRange.CreateAxisTicks
+            If Not legendPos.IsEmpty Then
+                theme.legendLayout = New Absolute(legendPos)
+            End If
 
-                    With region.PlotRegion
-                        If Not xAxis.StringEmpty Then
-                            XTicks = AxisProvider.TryParse(xAxis).AxisTicks
-                            X = XTicks.LinearScale.range(integers:={ .Left, .Right})
-                        Else
-                            X = d3js.scale.linear _
-                                .domain(XTicks) _
-                                .range(integers:={ .Left, .Right})
-                        End If
-
-                        ' Y 为什么是从零开始的？
-                        Y = d3js.scale.linear _
-                            .domain(YTicks) _
-                            .range(integers:={ .Bottom, .Top})
-                    End With
-
-                    Dim scaler As New DataScaler With {
-                        .X = X,
-                        .Y = Y,
-                        .region = region.PlotRegion,
-                        .AxisTicks = (XTicks, YTicks)
-                    }
-
-                    Call g.DrawAxis(
-                        region, scaler, showGrid, xlabel:=xlabel, ylabel:=Ylabel,
-                        htmlLabel:=False)
-
-                    If Not title.StringEmpty Then
-                        Dim titleFont As Font = CSSFont.TryParse(titleCss).GDIObject(g.Dpi)
-                        Dim titleSize As SizeF = g.MeasureString(title, titleFont)
-                        Dim titlePos As New PointF With {
-                            .X = region.PlotRegion.Left + (region.PlotRegion.Width - titleSize.Width) / 2,
-                            .Y = region.PlotRegion.Top - titleSize.Height * 1.125
-                        }
-
-                        Call g.DrawString(title, titleFont, Brushes.Black, titlePos)
-                    End If
-
-                    For Each hist As HistProfile In groups.Samples
-                        Dim ann As NamedValue(Of Color) = annotations(hist.legend.title)
-                        Dim b As New SolidBrush(Color.FromArgb(alpha, ann.Value))
-
-                        For Each block As HistogramData In hist.data
-                            Dim pos As PointF = scaler.Translate(block.x1, block.y)
-                            Dim sizeF As New SizeF With {
-                                .Width = scaler.TranslateX(block.x2) - scaler.TranslateX(block.x1),
-                                .Height = region.PlotRegion.Bottom - scaler.TranslateY(block.y)
-                            }
-                            Dim rect As New RectangleF With {
-                                .Location = pos,
-                                .Size = sizeF
-                            }
-
-                            Call g.FillRectangle(b, rect)
-
-                            If drawRect Then
-                                Call g.DrawRectangle(
-                                    Pens.Black,
-                                    rect.Left, rect.Top,
-                                    rect.Width, rect.Height)
-                            End If
-                        Next
-                    Next
-
-                    If showTagChartLayer Then
-                        Dim serials As New List(Of SerialData)
-
-                        For Each hist As SeqValue(Of HistProfile) In groups.Samples.SeqIterator
-                            serials += (+hist).GetLine(groups.Serials(hist).Value, 2, 5)
-                        Next
-
-                        Dim chart As GraphicsData = Scatter.Plot(
-                            serials,
-                            size:=size,
-                            padding:=margin,
-                            bg:="transparent",
-                            showGrid:=False,
-                            showLegend:=False,
-                            drawAxis:=False)
-
-                        ' 合并图层
-                        Call g.DrawImageUnscaled(chart, New Rectangle(New Point, gSize))
-                    End If
-
-                    If showLegend Then
-                        If legendPos.IsEmpty Then
-                            legendPos = New Point With {
-                                .X = CInt(gSize.Width * 0.7),
-                                .Y = margin.Top
-                            }
-                        End If
-
-                        Call g.DrawLegends(
-                            topLeft:=legendPos,
-                            legends:=groups.Samples.Select(Function(h) h.legend),
-                            regionBorder:=legendBorder
-                        )
-                    End If
-                End Sub
-
-            Return g.GraphicsPlots(size.SizeParser, margin, bg$, plotInternal)
+            Return app.Plot(size)
         End Function
 
         ''' <summary>

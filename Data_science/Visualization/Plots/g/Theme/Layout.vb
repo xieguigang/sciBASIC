@@ -132,6 +132,11 @@ Namespace Graphic.Canvas
         Sub New()
         End Sub
 
+        Sub New(location As Point)
+            x = location.X
+            y = location.Y
+        End Sub
+
         Sub New(location As PointF)
             x = location.X
             y = location.Y
