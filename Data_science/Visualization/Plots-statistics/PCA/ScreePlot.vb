@@ -89,8 +89,10 @@ Namespace PCA
                         .Y = Yscaler,
                         .region = rect
                     }
+                    Dim labelColor As Brush = CSSFont.TryParse(labelFontStyle).color.GetBrush
+                    Dim tickColor As Brush = CSSFont.TryParse(tickFontStyle).color.GetBrush
 
-                    Call g.DrawY(Stroke.TryParse(axisStrokeCSS), "Variances", scaler, -1, Y, YAxisLayoutStyles.Left, Nothing, labelFontStyle, CSSFont.TryParse(tickFontStyle).GDIObject(g.Dpi), htmlLabel:=False, tickFormat:="F2")
+                    Call g.DrawY(Stroke.TryParse(axisStrokeCSS), "Variances", scaler, -1, Y, YAxisLayoutStyles.Left, Nothing, labelFontStyle, labelColor, CSSFont.TryParse(tickFontStyle).GDIObject(g.Dpi), tickColor, htmlLabel:=False, tickFormat:="F2")
                 End Sub
 
             Return g.GraphicsPlots(

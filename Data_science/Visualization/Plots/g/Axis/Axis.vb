@@ -187,6 +187,7 @@ Namespace Graphic.Axis
             ' 填充网格要先于坐标轴的绘制操作进行，否则会将坐标轴给覆盖掉
             Dim rect As Rectangle = scaler.region
             Dim tickFont As Font = CSSFont.TryParse(tickFontStyle).GDIObject(g.Dpi)
+            Dim tickColor As Brush = CSSFont.TryParse(tickFontStyle).color.GetBrush
             Dim gridPenX As Pen = Stroke.TryParse(gridX)
             Dim gridPenY As Pen = Stroke.TryParse(gridY)
 
@@ -233,11 +234,12 @@ Namespace Graphic.Axis
             End If
 
             Dim pen As Pen = Stroke.TryParse(axisStroke).GDIObject
+            Dim labelColor As SolidBrush = CSSFont.TryParse(labelFontStyle).color.GetBrush
 
             If xlayout <> XAxisLayoutStyles.None Then
                 Call g.DrawX(pen, xlabel, scaler, xlayout, scaler.Y(0), offset,
-                             labelFontStyle,
-                             tickFont,
+                             labelFontStyle, labelColor,
+                             tickFont, tickColor,
                              htmlLabel:=htmlLabel,
                              tickFormat:=XtickFormat,
                              xRotate:=xlabelRotate
@@ -247,8 +249,8 @@ Namespace Graphic.Axis
                 Call g.DrawY(pen, ylabel,
                              scaler, scaler.X.Zero, scaler.AxisTicks.Y,
                              ylayout, offset,
-                             labelFontStyle,
-                             tickFont,
+                             labelFontStyle, labelColor,
+                             tickFont, tickColor,
                              htmlLabel:=htmlLabel,
                              tickFormat:=YtickFormat
                 )
@@ -266,6 +268,9 @@ Namespace Graphic.Axis
             With region
                 Dim rect As Rectangle = .Padding.GetCanvasRegion(.Size)
                 Dim gridPen As Pen = Stroke.TryParse(css:=gridStroke)
+                Dim labelColor = CSSFont.TryParse(labelFont).color.GetBrush
+                Dim tickColor = CSSFont.TryParse(tickFont).color.GetBrush
+                Dim tickFontStyle As Font = CSSFont.TryParse(tickFont).GDIObject(g.Dpi)
 
                 For Each tick As Double In scaler.AxisTicks.Y
                     Dim y = scaler.TranslateY(tick) + offset.Y
@@ -280,7 +285,7 @@ Namespace Graphic.Axis
                              scaler, scaler.X(0), scaler.AxisTicks.Y,
                              YAxisLayoutStyles.Left,
                              offset,
-                             labelFont, CSSFont.TryParse(tickFont).GDIObject(g.Dpi),
+                             labelFont, labelColor, tickFontStyle, tickColor,
                              False
                      )
             End With
@@ -312,8 +317,8 @@ Namespace Graphic.Axis
                                      scaler As YScaler,
                                      X0#, yTicks As Vector,
                                      layout As YAxisLayoutStyles, offset As Point,
-                                     labelFont$,
-                                     tickFont As Font,
+                                     labelFont$, labelColor As Brush,
+                                     tickFont As Font, tickColor As Brush,
                                      Optional showAxisLine As Boolean = True,
                                      Optional htmlLabel As Boolean = True,
                                      Optional tickFormat$ = "F2")
@@ -369,7 +374,7 @@ Namespace Graphic.Axis
                         maxYTickSize = sz.Width
                     End If
 
-                    g.DrawString(labelText, tickFont, Brushes.Black, p)
+                    g.DrawString(labelText, tickFont, tickColor, p)
                 Next
             End If
 
@@ -401,10 +406,10 @@ Namespace Graphic.Axis
                     ' Call $"[Y:={label}] {location.ToString}".__INFO_ECHO
                     If TypeOf g Is Graphics2D Then
                         With New GraphicsText(DirectCast(g, Graphics2D).Graphics)
-                            Call .DrawString(label, font, Brushes.Black, location, -90)
+                            Call .DrawString(label, font, labelColor, location, -90)
                         End With
                     Else
-                        Call g.DrawString(label, font, Brushes.Black, location)
+                        Call g.DrawString(label, font, labelColor, location)
                     End If
                 End If
             End If
@@ -494,7 +499,9 @@ Namespace Graphic.Axis
                                      scaler As DataScaler,
                                      layout As XAxisLayoutStyles, Y0#, offset As Point,
                                      labelFont$,
+                                     labelColor As Brush,
                                      tickFont As Font,
+                                     tickColor As Brush,
                                      Optional overridesTickLine% = -1,
                                      Optional noTicks As Boolean = False,
                                      Optional htmlLabel As Boolean = True,
@@ -531,8 +538,6 @@ Namespace Graphic.Axis
                 If TypeOf scaler.X Is LinearScale Then
                     ticks = scaler.AxisTicks.X _
                         .Select(Function(tick)
-                                    Dim tickLabel As String
-
                                     If stdNum.Abs(tick) <= 0.000001 Then
                                         Return (scaler.X(tick), "0")
                                     Else
@@ -559,12 +564,12 @@ Namespace Graphic.Axis
                         Dim text As New GraphicsText(g)
 
                         If xRotate > 0 Then
-                            Call text.DrawString(labelText, tickFont, Brushes.Black, New Point(x, ZERO.Y + d * 1.2), angle:=xRotate)
+                            Call text.DrawString(labelText, tickFont, tickColor, New Point(x, ZERO.Y + d * 1.2), angle:=xRotate)
                         Else
-                            Call text.DrawString(labelText, tickFont, Brushes.Black, New Point(x, ZERO.Y + sz.Height * stdNum.Sin(xRotate * 180 / stdNum.PI)), angle:=xRotate)
+                            Call text.DrawString(labelText, tickFont, tickColor, New Point(x, ZERO.Y + sz.Height * stdNum.Sin(xRotate * 180 / stdNum.PI)), angle:=xRotate)
                         End If
                     Else
-                        Call g.DrawString(labelText, tickFont, Brushes.Black, New Point(x - sz.Width / 2, ZERO.Y + d * 1.2))
+                        Call g.DrawString(labelText, tickFont, tickColor, New Point(x - sz.Width / 2, ZERO.Y + d * 1.2))
                     End If
                 Next
             End If
@@ -589,7 +594,7 @@ Namespace Graphic.Axis
                     }
 
                     ' Call $"[X:={label}] {point.ToString}".__INFO_ECHO
-                    Call g.DrawString(label, font, Brushes.Black, point)
+                    Call g.DrawString(label, font, labelColor, point)
                 End If
             End If
         End Sub

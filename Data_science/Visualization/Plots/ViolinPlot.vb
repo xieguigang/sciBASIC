@@ -174,9 +174,11 @@ Public Module ViolinPlot
             .ToArray
         Dim yticks = alldata.Range.CreateAxisTicks
         Dim yTickFont As Font = CSSFont.TryParse(ytickFontCSS).GDIObject(ppi)
+        Dim yTickColor As Brush = CSSFont.TryParse(ytickFontCSS).color.GetBrush
         Dim colors = Designer.GetColors(colorset, matrix.Length)
         Dim labelSize As SizeF
         Dim labelFont As Font = CSSFont.TryParse(yLabelFontCSS).GDIObject(ppi)
+        Dim labelColor As Brush = CSSFont.TryParse(yLabelFontCSS).color.GetBrush
         Dim labelPos As PointF
         Dim polygonStroke As Pen = Stroke.TryParse(strokeCSS)
         Dim titleFont As Font = CSSFont.TryParse(titleFontCSS).GDIObject(ppi)
@@ -190,7 +192,7 @@ Public Module ViolinPlot
                     .Y = Y
                 }
 
-                Call Axis.DrawY(g, Pens.Black, Ylabel, yScale, 0, yticks, YAxisLayoutStyles.Left, Nothing, yLabelFontCSS, yTickFont,
+                Call Axis.DrawY(g, Pens.Black, Ylabel, yScale, 0, yticks, YAxisLayoutStyles.Left, Nothing, yLabelFontCSS, labelColor, yTickFont, yTickColor,
                                 htmlLabel:=False,
                                 tickFormat:=yTickFormat
                 )
