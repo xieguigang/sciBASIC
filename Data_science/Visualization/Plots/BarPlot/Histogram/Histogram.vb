@@ -328,7 +328,9 @@ Namespace BarPlot.Histogram
         ''' 绘制频数
         ''' </summary>
         ''' <param name="data"></param>
-        ''' <param name="step!"></param>
+        ''' <param name="step">
+        ''' The step width value for create the input <paramref name="data"/> bin box.
+        ''' </param>
         ''' <param name="serialsTitle$"></param>
         ''' <param name="color$"></param>
         ''' <param name="bg$"></param>
@@ -351,8 +353,7 @@ Namespace BarPlot.Histogram
                                       Optional showLegend As Boolean = True) As GraphicsData
             Return data.ToArray _
                 .Hist([step]) _
-                .HistogramPlot([step]:=[step],
-                               serialsTitle:=serialsTitle,
+                .HistogramPlot(serialsTitle:=serialsTitle,
                                color:=color,
                                bg:=bg,
                                size:=size,
@@ -370,7 +371,6 @@ Namespace BarPlot.Histogram
         ''' 绘制频数
         ''' </summary>
         ''' <param name="data"></param>
-        ''' <param name="step">The step width value for create the input <paramref name="data"/> bin box.</param>
         ''' <param name="serialsTitle$"></param>
         ''' <param name="color$"></param>
         ''' <param name="bg$"></param>
@@ -379,7 +379,6 @@ Namespace BarPlot.Histogram
         ''' <returns></returns>
         <Extension>
         Public Function HistogramPlot(data As IEnumerable(Of DataBinBox(Of Double)),
-                                      Optional step! = 1,
                                       Optional serialsTitle$ = "histogram plot",
                                       Optional color$ = "lightblue",
                                       Optional bg$ = "white",
@@ -391,13 +390,14 @@ Namespace BarPlot.Histogram
                                       Optional yLabel$ = "Y",
                                       Optional xAxis$ = Nothing,
                                       Optional showLegend As Boolean = True) As GraphicsData
+
             Dim histLegend As New LegendObject With {
                 .color = color,
                 .fontstyle = CSSFont.Win7LargerBold,
                 .style = LegendStyles.Rectangle,
                 .title = serialsTitle
             }
-            Dim s As HistProfile = data.NewModel([step], histLegend)
+            Dim s As HistProfile = data.NewModel(histLegend)
             Dim group As New HistogramGroup With {
                 .Samples = {s},
                 .Serials = {s.SerialData}
