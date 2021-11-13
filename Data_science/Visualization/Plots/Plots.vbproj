@@ -640,6 +640,7 @@
     <Compile Include="BarPlot\Data\BiDirectionData.vb" />
     <Compile Include="BarPlot\Histogram\Extensions.vb" />
     <Compile Include="BarPlot\Data\BarPlotDataExtensions.vb" />
+    <Compile Include="BarPlot\Histogram\HistogramPlot.vb" />
     <Compile Include="BarPlot\LevelBarplot.vb" />
     <Compile Include="BarPlot\RectangleStyles.vb" />
     <Compile Include="BarPlot\StackedBarPlot.vb" />
@@ -692,10 +693,7 @@
     <Compile Include="BarPlot\Histogram\Histogram.vb" />
     <Compile Include="ImageData.vb" />
     <Compile Include="Fractions\PieChart.vb" />
-	
-	  <Compile Include="g\Legends\ColorBar\DualColorBar.vb" />
-	
-
+    <Compile Include="g\Legends\ColorBar\DualColorBar.vb" />
     <Compile Include="PlotTypes.vb" />
     <Compile Include="BarPlot\BarPlot.vb" />
     <Compile Include="Scatter\Data\Annotation.vb" />
