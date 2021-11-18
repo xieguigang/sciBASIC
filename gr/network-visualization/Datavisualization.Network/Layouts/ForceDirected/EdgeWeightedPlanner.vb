@@ -47,6 +47,9 @@ Imports stdNum = System.Math
 
 Namespace Layouts.ForceDirected
 
+    ''' <summary>
+    ''' 力导向+边权重：边权重越大，两个节点的引力越大
+    ''' </summary>
     Public Class EdgeWeightedPlanner : Inherits Planner
 
         ReadOnly absW As New Dictionary(Of String, Double)

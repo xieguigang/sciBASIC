@@ -54,6 +54,9 @@ Imports stdNum = System.Math
 
 Namespace Layouts.ForceDirected
 
+    ''' <summary>
+    ''' 力导向原始算法代码
+    ''' </summary>
     Public Class Planner
 
         Protected ReadOnly CANVAS_WIDTH As Integer = 1000
@@ -143,7 +146,7 @@ Namespace Layouts.ForceDirected
         End Sub
 
         ''' <summary>
-        ''' 节点之间的排斥力
+        ''' 计算出任意两个节点之间的排斥力
         ''' </summary>
         Protected Overridable Sub runRepulsive()
             Dim distX, distY, dist As Double
@@ -177,6 +180,9 @@ Namespace Layouts.ForceDirected
             Next
         End Sub
 
+        ''' <summary>
+        ''' 边连接两端的节点之间的吸引力
+        ''' </summary>
         Protected Overridable Sub runAttraction()
             Dim u, v As Node
             Dim distX, distY, dist As Double
