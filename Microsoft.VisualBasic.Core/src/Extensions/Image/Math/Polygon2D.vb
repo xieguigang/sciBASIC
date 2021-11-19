@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::4de07e65f1dab978dc1689516ebb7b26, Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Polygon2D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Polygon2D
-    ' 
-    '         Properties: length, xpoints, ypoints
-    ' 
-    '         Constructor: (+5 Overloads) Sub New
-    ' 
-    '         Function: boundingInside, checkInside, GenericEnumerator, GetArea, GetEnumerator
-    '                   GetRandomPoint, (+3 Overloads) inside
-    ' 
-    '         Sub: calculateBounds
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Polygon2D
+' 
+'         Properties: length, xpoints, ypoints
+' 
+'         Constructor: (+5 Overloads) Sub New
+' 
+'         Function: boundingInside, checkInside, GenericEnumerator, GetArea, GetEnumerator
+'                   GetRandomPoint, (+3 Overloads) inside
+' 
+'         Sub: calculateBounds
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -257,21 +257,31 @@ Namespace Imaging.Math2D
         ''' https://myengineeringworld.net/2014/06/shoelace-polygon-area-excel.html
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetArea() As Double
-            Dim Xs As Double() = xpoints
-            Dim Ys As Double() = ypoints
-            Dim area As Double
+            Return GetShoelaceArea(xpoints, ypoints)
+        End Function
+
+        ''' <summary>
+        ''' Calculates the area of a simple polygon using the shoelace algorithm.
+        ''' 
+        ''' https://myengineeringworld.net/2014/06/shoelace-polygon-area-excel.html
+        ''' </summary>
+        ''' <returns></returns>
+        Public Shared Function GetShoelaceArea(Xs As Double(), Ys As Double()) As Double
+            Dim area As Double = 0
 
             ' Check if the coordinates of the last points are equal to the coordinates of the first point.
             ' In other words, check if the polygon is closed and then apply the shoelace algorithm.
             If Xs(Xs.Length - 1) = Xs(0) And Ys(Ys.Length - 1) = Ys(0) Then
                 ' Polygon is closed (last point = first point).
-                For i = 0 To Xs.Length - 2
+                For i As Integer = 0 To Xs.Length - 2
                     area = area + (Xs(i + 1) + Xs(i)) * (Ys(i + 1) - Ys(i))
                 Next
             Else
                 ' The polygon is not considered closed.
-                For i = 0 To Xs.Length - 2
+                For i As Integer = 0 To Xs.Length - 2
                     area = area + (Xs(i + 1) + Xs(i)) * (Ys(i + 1) - Ys(i))
                 Next
 
