@@ -4,7 +4,7 @@ Namespace LDA
     Friend Class descOrder
         Implements IComparer(Of Double)
 
-        Public Function Compare(ByVal x As Double, ByVal y As Double) As Integer Implements IComparer(Of Double).Compare
+        Public Function Compare(x As Double, y As Double) As Integer Implements IComparer(Of Double).Compare
             Return y.CompareTo(x)
         End Function
     End Class
@@ -19,7 +19,7 @@ Namespace LDA
         ''' <param name="vocabulary"> </param>
         ''' <param name="limit"> limit of max words in a topic </param>
         ''' <returns> a map array </returns>
-        Public Shared Function translate(ByVal phi As Double()(), ByVal vocabulary As Vocabulary, ByVal limit As Integer) As IDictionary(Of String, Double)()
+        Public Shared Function translate(phi As Double()(), vocabulary As Vocabulary, limit As Integer) As IDictionary(Of String, Double)()
             Dim result As IDictionary(Of String, Double)() = New IDictionary(Of String, Double)(phi.Length - 1) {}
 
             limit = stdNum.Min(limit, phi(0).Length)
@@ -50,7 +50,7 @@ Namespace LDA
             Return result
         End Function
 
-        Public Shared Function translate(ByVal tp As Double(), ByVal phi As Double()(), ByVal vocabulary As Vocabulary, ByVal limit As Integer) As IDictionary(Of String, Double)
+        Public Shared Function translate(tp As Double(), phi As Double()(), vocabulary As Vocabulary, limit As Integer) As IDictionary(Of String, Double)
             Dim topicMapArray = translate(phi, vocabulary, limit)
             Dim p = -1.0
             Dim t = -1
@@ -69,7 +69,7 @@ Namespace LDA
         ''' <summary>
         ''' To print the result in a well formatted form </summary>
         ''' <param name="result"> </param>
-        Public Shared Sub explain(ByVal result As IDictionary(Of String, Double)())
+        Public Shared Sub explain(result As IDictionary(Of String, Double)())
             Dim i = 0
 
             For Each topicMap In result
@@ -79,7 +79,7 @@ Namespace LDA
             Next
         End Sub
 
-        Public Shared Sub explain(ByVal topicMap As IDictionary(Of String, Double))
+        Public Shared Sub explain(topicMap As IDictionary(Of String, Double))
             For Each entry In topicMap
                 Console.WriteLine(entry)
             Next

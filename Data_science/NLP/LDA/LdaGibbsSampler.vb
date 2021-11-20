@@ -144,7 +144,7 @@ Namespace LDA
         ''' </summary>
         ''' <param name="documents"> 文档 </param>
         ''' <param name="V">         vocabulary size 词表大小 </param> 
-        Public Sub New(ByVal documents As Integer()(), ByVal V As Integer)
+        Public Sub New(documents As Integer()(), V As Integer)
             Me.documents = documents
             Me.V = V
         End Sub
@@ -156,7 +156,7 @@ Namespace LDA
         ''' 随机初始化状态
         ''' </summary>
         ''' <param name="K"> number of topics K个主题 </param>
-        Public Overridable Sub initialState(ByVal K As Integer)
+        Public Overridable Sub initialState(K As Integer)
             Dim lM = documents.Length
 
             ' initialise count variables. 初始化计数器
@@ -189,7 +189,7 @@ Namespace LDA
             Next
         End Sub
 
-        Public Overridable Sub gibbs(ByVal K As Integer)
+        Public Overridable Sub gibbs(K As Integer)
             gibbs(K, 2.0, 0.5)
         End Sub
 
@@ -202,7 +202,7 @@ Namespace LDA
         ''' <param name="K">     number of topics 主题数 </param>
         ''' <param name="alpha"> symmetric prior parameter on document--topic associations 对称文档——主题先验概率？ </param>
         ''' <param name="beta">  symmetric prior parameter on topic--term associations 对称主题——词语先验概率？ </param> 
-        Public Overridable Sub gibbs(ByVal K As Integer, ByVal alpha As Double, ByVal beta As Double)
+        Public Overridable Sub gibbs(K As Integer, alpha As Double, beta As Double)
             Me.K = K
             Me.alpha = alpha
             Me.beta = beta
@@ -268,7 +268,7 @@ Namespace LDA
         ''' </summary>
         ''' <param name="m"> document </param>
         ''' <param name="n"> word </param> 
-        Private Function sampleFullConditional(ByVal m As Integer, ByVal n As Integer) As Integer
+        Private Function sampleFullConditional(m As Integer, n As Integer) As Integer
 
             ' remove z_i from the count variables  先将这个词从计数器中抹掉
             Dim topic = z(m)(n)
@@ -397,7 +397,7 @@ Namespace LDA
         ''' <param name="data"> vector of evidence </param>
         ''' <param name="fmax"> max frequency in display </param>
         ''' <return> the scaled histogram bin values </return>
-        Public Shared Sub hist(ByVal data As Double(), ByVal fmax As Integer)
+        Public Shared Sub hist(data As Double(), fmax As Integer)
             Dim lHist = New Double(data.Length - 1) {}
             ' scale maximum
             Dim hmax As Double = 0
@@ -444,7 +444,7 @@ Namespace LDA
         ''' <param name="burnIn">       number of burn-in iterations </param>
         ''' <param name="thinInterval"> update statistics interval </param>
         ''' <param name="sampleLag">    sample interval (-1 for just one sample at the end) </param>
-        Public Overridable Sub configure(ByVal iterations As Integer, ByVal burnIn As Integer, ByVal thinInterval As Integer, ByVal sampleLag As Integer)
+        Public Overridable Sub configure(iterations As Integer, burnIn As Integer, thinInterval As Integer, sampleLag As Integer)
             LdaGibbsSampler.ITERATIONS = iterations
             BURN_IN = burnIn
             THIN_INTERVAL = thinInterval
@@ -457,7 +457,7 @@ Namespace LDA
         ''' <param name="phi"> pre-trained phi matrix </param>
         ''' <param name="doc"> document </param>
         ''' <returns> a p array </returns>
-        Public Shared Function inference(ByVal alpha As Double, ByVal beta As Double, ByVal phi As Double()(), ByVal doc As Integer()) As Double()
+        Public Shared Function inference(alpha As Double, beta As Double, phi As Double()(), doc As Integer()) As Double()
             Dim lK = phi.Length
             Dim V = phi(0).Length
             ' init
@@ -541,7 +541,7 @@ Namespace LDA
             Return lTheta
         End Function
 
-        Public Shared Function inference(ByVal phi As Double()(), ByVal doc As Integer()) As Double()
+        Public Shared Function inference(phi As Double()(), doc As Integer()) As Double()
             Return inference(2.0, 0.5, phi, doc)
         End Function
 
@@ -554,7 +554,7 @@ Namespace LDA
         ''' <param name="d">   value </param>
         ''' <param name="max"> maximum value
         ''' @return </param>
-        Public Shared Function shadeDouble(ByVal d As Double, ByVal max As Double) As String
+        Public Shared Function shadeDouble(d As Double, max As Double) As String
             Dim a As Integer = stdNum.Floor(d * 10 / max + 0.5)
 
             If a > 10 OrElse a < 0 Then

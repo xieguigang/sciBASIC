@@ -12,23 +12,25 @@ Namespace LDA
     ''' @author hankcs
     ''' </summary>
     Public Class Corpus
-        Friend documentList As IList(Of Integer())
-        Friend vocabularyField As Vocabulary
+
+        ReadOnly documentList As IList(Of Integer())
+        ReadOnly vocabularyField As Vocabulary
 
         Public Sub New()
             documentList = New List(Of Integer())()
             vocabularyField = New Vocabulary()
         End Sub
 
-        Public Overridable Function addDocument(ByVal document As IList(Of String)) As Integer()
+        Public Overridable Function addDocument(document As IEnumerable(Of String)) As Integer()
             Dim doc = New Integer(document.Count - 1) {}
-            Dim i = 0
+            Dim i As i32 = 0
 
-            For Each word In document
-                doc(System.Math.Min(Threading.Interlocked.Increment(i), i - 1)) = vocabularyField.getId(word, True)
+            For Each word As String In document
+                doc(++i) = vocabularyField.getId(word, True)
             Next
 
-            documentList.Add(doc)
+            Call documentList.Add(doc)
+
             Return doc
         End Function
 
@@ -59,7 +61,7 @@ Namespace LDA
         ''' <param name="folderPath"> is a folder, which contains text documents. </param>
         ''' <returns> a corpus </returns>
         ''' <exception cref="IOException"> </exception>
-        Public Shared Function load(ByVal folderPath As String) As Corpus
+        Public Shared Function load(folderPath As String) As Corpus
             Dim corpus As Corpus = New Corpus()
 
             For Each filepath In folderPath.ListFiles()
@@ -104,7 +106,7 @@ Namespace LDA
             End Get
         End Property
 
-        Public Shared Function loadDocument(ByVal path As String, ByVal vocabulary As Vocabulary) As Integer()
+        Public Shared Function loadDocument(path As String, vocabulary As Vocabulary) As Integer()
             Dim br As StreamReader = New StreamReader(path)
             Dim line As New Value(Of String)
             Dim wordList As New List(Of Integer)()

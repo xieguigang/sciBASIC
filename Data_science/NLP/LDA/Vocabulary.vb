@@ -16,15 +16,15 @@ Namespace LDA
             id2wordMap = New String(1023) {}
         End Sub
 
-        Public Overridable Function getId(ByVal word As String) As Integer?
+        Public Overridable Function getId(word As String) As Integer?
             Return getId(word, False)
         End Function
 
-        Public Overridable Function getWord(ByVal id As Integer) As String
+        Public Overridable Function getWord(id As Integer) As String
             Return id2wordMap(id)
         End Function
 
-        Public Overridable Function getId(ByVal word As String, ByVal create As Boolean) As Integer?
+        Public Overridable Function getId(word As String, create As Boolean) As Integer?
             Dim id = word2idMap.GetValueOrNull(word)
 
             If Not create Then
@@ -45,7 +45,7 @@ Namespace LDA
             Return id
         End Function
 
-        Private Sub resize(ByVal n As Integer)
+        Private Sub resize(n As Integer)
             Dim nArray = New String(n - 1) {}
             Array.Copy(id2wordMap, 0, nArray, 0, id2wordMap.Length)
             id2wordMap = nArray
