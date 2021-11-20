@@ -5,7 +5,7 @@ Namespace LDA
     ''' <summary>
     ''' @author hankcs
     ''' </summary>
-    Public Class LdaUtil
+    Public Class LdaInterpreter
 
         ''' <summary>
         ''' To translate a LDA matrix to readable result </summary>
