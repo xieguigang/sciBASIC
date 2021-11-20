@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions.BinBox
 Imports stdNum = System.Math
 
@@ -23,6 +24,31 @@ Namespace Drawing2D.Colors.Scaler
             Return CutBins _
                 .FixedWidthBins(data, N, Function(x) x) _
                 .FindThreshold(q, eps)
+        End Function
+
+        ''' <summary>
+        ''' get the best value range for level scaler via TrIQ algorithm. 
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="q"></param>
+        ''' <param name="N"></param>
+        ''' <param name="eps"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function GetTrIQRange(data As IEnumerable(Of Double), q As Double,
+                                     Optional N As Integer = 100,
+                                     Optional eps As Double = 0.1) As DoubleRange
+
+            Dim raw As Double() = data.SafeQuery.ToArray
+
+            If raw.Length = 0 Then
+                Return New DoubleRange(0, 0)
+            End If
+
+            Dim max As Double = raw.FindThreshold(q, N, eps)
+            Dim range As New DoubleRange(raw.Min, max)
+
+            Return range
         End Function
 
         <Extension>

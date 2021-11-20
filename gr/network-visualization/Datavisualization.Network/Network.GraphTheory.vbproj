@@ -742,6 +742,7 @@
     <Compile Include="Layouts\EdgeBundling\Mingle\GraphKdNode.vb" />
     <Compile Include="Layouts\EdgeBundling\Mingle\InternalMath.vb" />
     <Compile Include="Layouts\EdgeBundling\Mingle\Options.vb" />
+    <Compile Include="Layouts\ForceDirected\DegreeWeightedPlanner.vb" />
     <Compile Include="Layouts\ForceDirected\EdgeWeightedPlanner.vb" />
     <Compile Include="Layouts\SpringEmbedder.vb" />
     <Compile Include="Layouts\Cola\Extensions.vb" />

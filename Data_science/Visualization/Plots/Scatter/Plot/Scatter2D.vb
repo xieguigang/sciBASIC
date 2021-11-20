@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::2b8b3091006060666c5b62a9ae599b56, Data_science\Visualization\Plots\Scatter\Plot\Scatter2D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Scatter2D
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: DrawScatter, GetDataScaler
-    ' 
-    '         Sub: PlotInternal
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Scatter2D
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: DrawScatter, GetDataScaler
+' 
+'         Sub: PlotInternal
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -84,6 +84,8 @@ Namespace Plots
 
         Friend xlim As Double = -1
         Friend ylim As Double = -1
+        Friend XaxisAbsoluteScalling As Boolean = False
+        Friend YaxisAbsoluteScalling As Boolean = False
 
         Public Sub New(data As IEnumerable(Of SerialData), theme As Theme,
                        Optional scatterReorder As Boolean = False,
@@ -103,15 +105,6 @@ Namespace Plots
         Public Function GetDataScaler(ByRef g As IGraphics, rect As GraphicsRegion) As DataScaler
             Dim XTicks#(), YTicks#()
 
-            '    With array.CreateAxisTicks(
-            '    preferPositive:=preferPositive,
-            '    scaleX:=If(XaxisAbsoluteScalling, 1, 1.25),
-            '    scaleY:=If(YaxisAbsoluteScalling, 1, 1.25)
-            ')
-
-            '        XTicks = .x
-            '        YTicks = .y
-            '    End With
             XTicks = array.Select(Function(s) s.pts).IteratesALL.Select(Function(p) CDbl(p.pt.X)).ToArray
             YTicks = array.Select(Function(s) s.pts).IteratesALL.Select(Function(p) CDbl(p.pt.Y)).ToArray
 
@@ -122,6 +115,12 @@ Namespace Plots
             End If
             If (Not ylim.IsNaNImaginary) AndAlso ylim > 0 Then
                 YTicks = YTicks.JoinIterates({ylim}).ToArray
+            End If
+            If XaxisAbsoluteScalling Then
+                XTicks = {0.0}.JoinIterates(XTicks).ToArray
+            End If
+            If YaxisAbsoluteScalling Then
+                YTicks = {0.0}.JoinIterates(YTicks).ToArray
             End If
 
             XTicks = XTicks.Range.CreateAxisTicks

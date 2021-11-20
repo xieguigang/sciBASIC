@@ -244,7 +244,9 @@ Public Module Scatter
                 .xlabel = Xlabel,
                 .ylabel = Ylabel,
                 .xlim = xlim,
-                .ylim = ylim
+                .ylim = ylim,
+                .XaxisAbsoluteScalling = XaxisAbsoluteScalling,
+                .YaxisAbsoluteScalling = YaxisAbsoluteScalling
             }
         End If
 
