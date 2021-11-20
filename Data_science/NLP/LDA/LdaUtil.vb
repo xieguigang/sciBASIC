@@ -1,18 +1,21 @@
-﻿Imports stdNum = System.Math
+﻿Imports System.Runtime.CompilerServices
+Imports stdNum = System.Math
 
 Namespace LDA
-    Friend Class descOrder
-        Implements IComparer(Of Double)
-
-        Public Function Compare(x As Double, y As Double) As Integer Implements IComparer(Of Double).Compare
-            Return y.CompareTo(x)
-        End Function
-    End Class
 
     ''' <summary>
     ''' @author hankcs
     ''' </summary>
     Public Class LdaUtil
+
+        Private Class descOrder : Implements IComparer(Of Double)
+
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Public Function Compare(x As Double, y As Double) As Integer Implements IComparer(Of Double).Compare
+                Return y.CompareTo(x)
+            End Function
+        End Class
+
         ''' <summary>
         ''' To translate a LDA matrix to readable result </summary>
         ''' <param name="phi"> the LDA model </param>
@@ -24,8 +27,8 @@ Namespace LDA
 
             limit = stdNum.Min(limit, phi(0).Length)
 
-            For k = 0 To phi.Length - 1
-                Dim rankMap As IDictionary(Of Double, String) = New SortedDictionary(Of Double, String)(New descOrder())
+            For k As Integer = 0 To phi.Length - 1
+                Dim rankMap As New SortedDictionary(Of Double, String)(New descOrder())
 
                 For ii As Integer = 0 To phi(k).Length - 1
                     rankMap(phi(k)(ii)) = vocabulary.getWord(ii)
