@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports stdNum = System.Math
 
@@ -32,6 +33,9 @@ Namespace LDA
     ''' 
     ''' @author heinrich
     ''' </summary>
+    ''' <remarks>
+    ''' https://github.com/hankcs/LDA4j
+    ''' </remarks>
     Public Class LdaGibbsSampler
 
         ''' <summary>
@@ -189,6 +193,7 @@ Namespace LDA
             Next
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Sub gibbs(K As Integer)
             gibbs(K, 2.0, 0.5)
         End Sub
@@ -218,17 +223,16 @@ Namespace LDA
             initialState(K)
             Console.WriteLine("Sampling " & ITERATIONS & " iterations with burn-in of " & BURN_IN & " uniquetempvar.")
 
-            For i = 0 To ITERATIONS - 1
+            For i As Integer = 0 To ITERATIONS - 1
 
                 ' for all z_i
-                For m = 0 To z.Length - 1
+                For m As Integer = 0 To z.Length - 1
 
-                    For n = 0 To z(m).Length - 1
+                    For n As Integer = 0 To z(m).Length - 1
 
                         ' (z_i = z[m][n])
                         ' sample from p(z_i|z_-i, w)
-                        Dim topic = sampleFullConditional(m, n)
-                        z(m)(n) = topic
+                        z(m)(n) = sampleFullConditional(m, n)
                     Next
                 Next
 
@@ -280,11 +284,11 @@ Namespace LDA
             ' do multinomial sampling via cumulative method: 通过多项式方法采样多项式分布
             Dim p = New Double(K - 1) {}
 
-            For K = 0 To Me.K - 1
+            For K As Integer = 0 To Me.K - 1
                 p(K) = (nw(documents(m)(n))(K) + beta) / (nwsum(K) + V * beta) * (nd(m)(K) + alpha) / (ndsum(m) + Me.K * alpha)
             Next
             ' cumulate multinomial parameters  累加多项式分布的参数
-            For K = 1 To p.Length - 1
+            For K As Integer = 1 To p.Length - 1
                 p(K) += p(K - 1)
             Next
             ' scaled sample because of unnormalised p[] 正则化
@@ -314,12 +318,12 @@ Namespace LDA
         Private Sub updateParams()
             For m = 0 To documents.Length - 1
 
-                For K = 0 To Me.K - 1
+                For K As Integer = 0 To Me.K - 1
                     thetasum(m)(K) += (nd(m)(K) + alpha) / (ndsum(m) + Me.K * alpha)
                 Next
             Next
 
-            For K = 0 To Me.K - 1
+            For K As Integer = 0 To Me.K - 1
 
                 For w = 0 To V - 1
                     phisum(K)(w) += (nw(w)(K) + beta) / (nwsum(K) + V * beta)
@@ -342,7 +346,7 @@ Namespace LDA
                 If SAMPLE_LAG > 0 Then
                     For m = 0 To documents.Length - 1
 
-                        For K = 0 To Me.K - 1
+                        For K As Integer = 0 To Me.K - 1
                             lTheta(m)(K) = thetasum(m)(K) / numstats
                         Next
                     Next
@@ -350,7 +354,7 @@ Namespace LDA
 
                     For m = 0 To documents.Length - 1
 
-                        For K = 0 To Me.K - 1
+                        For K As Integer = 0 To Me.K - 1
                             lTheta(m)(K) = (nd(m)(K) + alpha) / (ndsum(m) + Me.K * alpha)
                         Next
                     Next
@@ -371,7 +375,7 @@ Namespace LDA
                 Dim lPhi = MAT(Of Double)(K, V)
 
                 If SAMPLE_LAG > 0 Then
-                    For K = 0 To Me.K - 1
+                    For K As Integer = 0 To Me.K - 1
 
                         For w = 0 To V - 1
                             lPhi(K)(w) = phisum(K)(w) / numstats
@@ -379,7 +383,7 @@ Namespace LDA
                     Next
                 Else
 
-                    For K = 0 To Me.K - 1
+                    For K As Integer = 0 To Me.K - 1
 
                         For w = 0 To V - 1
                             lPhi(K)(w) = (nw(w)(K) + beta) / (nwsum(K) + V * beta)
@@ -471,10 +475,10 @@ Namespace LDA
             ' The z_i are are initialised to values in [1,K] to determine the
             ' initial state of the Markov chain.
 
-            Dim N = doc.Length
-            Dim z = New Integer(N - 1) {} ' z_i := 1到K之间的值，表示马氏链的初始状态
+            Dim Nl = doc.Length
+            Dim z = New Integer(Nl - 1) {} ' z_i := 1到K之间的值，表示马氏链的初始状态
 
-            For N = 0 To N - 1
+            For N As Integer = 0 To N - 1
                 Dim topic As Integer = randf.NextInteger(lK)
                 z(N) = topic
                 ' number of instances of word i assigned to topic j
@@ -485,11 +489,11 @@ Namespace LDA
                 nwsum(topic) += 1
             Next
             ' total number of words in document i
-            ndsum = N
+            ndsum = Nl
 
-            For i = 0 To ITERATIONS - 1
+            For i As Integer = 0 To ITERATIONS - 1
 
-                For N = 0 To z.Length - 1
+                For N As Integer = 0 To z.Length - 1
 
                     ' (z_i = z[m][n])
                     ' sample from p(z_i|z_-i, w)
@@ -541,6 +545,7 @@ Namespace LDA
             Return lTheta
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function inference(phi As Double()(), doc As Integer()) As Double()
             Return inference(2.0, 0.5, phi, doc)
         End Function

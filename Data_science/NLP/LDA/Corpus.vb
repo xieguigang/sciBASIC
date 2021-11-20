@@ -45,13 +45,14 @@ Namespace LDA
         End Property
 
         Public Overrides Function ToString() As String
-            Dim sb As StringBuilder = New StringBuilder()
+            Dim sb As New StringBuilder()
 
             For Each doc In documentList
                 sb.Append(doc.JoinBy(", ")).Append(vbLf)
             Next
 
-            sb.Append(vocabularyField)
+            Call sb.Append(vocabularyField)
+
             Return sb.ToString()
         End Function
 
