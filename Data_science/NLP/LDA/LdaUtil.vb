@@ -1,5 +1,4 @@
-﻿Imports System.Runtime.CompilerServices
-Imports stdNum = System.Math
+﻿Imports stdNum = System.Math
 
 Namespace LDA
 
@@ -7,14 +6,6 @@ Namespace LDA
     ''' @author hankcs
     ''' </summary>
     Public Class LdaUtil
-
-        Private Class descOrder : Implements IComparer(Of Double)
-
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Public Function Compare(x As Double, y As Double) As Integer Implements IComparer(Of Double).Compare
-                Return y.CompareTo(x)
-            End Function
-        End Class
 
         ''' <summary>
         ''' To translate a LDA matrix to readable result </summary>
@@ -28,26 +19,19 @@ Namespace LDA
             limit = stdNum.Min(limit, phi(0).Length)
 
             For k As Integer = 0 To phi.Length - 1
-                Dim rankMap As New SortedDictionary(Of Double, String)(New descOrder())
+                Dim rankMap As New Dictionary(Of Double, String)
 
                 For ii As Integer = 0 To phi(k).Length - 1
                     rankMap(phi(k)(ii)) = vocabulary.getWord(ii)
                 Next
 
-                Dim iterator As IEnumerator(Of KeyValuePair(Of Double, String)) = rankMap.GetEnumerator()
-                result(k) = New Dictionary(Of String, Double)()
-                Dim i = 0
-
-                While i < limit
-
-                    If Not iterator.MoveNext() Then
-                        Exit While
-                    End If
-
-                    Dim entry = iterator.Current
-                    result(k)(entry.Value) = entry.Key
-                    Threading.Interlocked.Increment(i)
-                End While
+                result(k) = rankMap _
+                    .OrderByDescending(Function(d) d.Key) _
+                    .Take(limit) _
+                    .ToDictionary(Function(d) d.Value,
+                                  Function(d)
+                                      Return d.Key
+                                  End Function)
             Next
 
             Return result
@@ -55,11 +39,10 @@ Namespace LDA
 
         Public Shared Function translate(tp As Double(), phi As Double()(), vocabulary As Vocabulary, limit As Integer) As IDictionary(Of String, Double)
             Dim topicMapArray = translate(phi, vocabulary, limit)
-            Dim p = -1.0
-            Dim t = -1
+            Dim p As Double = -1.0
+            Dim t As Integer = -1
 
-            For k = 0 To tp.Length - 1
-
+            For k As Integer = 0 To tp.Length - 1
                 If tp(k) > p Then
                     p = tp(k)
                     t = k
