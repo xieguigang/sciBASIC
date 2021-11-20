@@ -191,6 +191,10 @@ Namespace LDA
             Next
         End Sub
 
+        ''' <summary>
+        ''' with default cutoff alpha=2.0 and beta=0.5
+        ''' </summary>
+        ''' <param name="K"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Sub gibbs(K As Integer)
             gibbs(K, 2.0, 0.5)
