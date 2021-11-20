@@ -39,16 +39,15 @@ Namespace LDA
         End Sub
 
         Public Overridable Function addDocument(document As IEnumerable(Of String)) As Integer()
-            Dim doc = New Integer(document.Count - 1) {}
-            Dim i As i32 = 0
+            Dim doc As New List(Of Integer)
 
             For Each word As String In document
-                doc(++i) = vocabularyField.getId(word, True)
+                Call doc.Add(vocabularyField.getId(word, True))
             Next
 
-            Call documentList.Add(doc)
+            Call documentList.Add(doc.ToArray)
 
-            Return doc
+            Return documentList.Last
         End Function
 
         Public Overridable Function toArray() As Integer()()

@@ -13,8 +13,8 @@ Namespace LDA
         ''' <param name="vocabulary"> </param>
         ''' <param name="limit"> limit of max words in a topic </param>
         ''' <returns> a map array </returns>
-        Public Shared Function translate(phi As Double()(), vocabulary As Vocabulary, limit As Integer) As IDictionary(Of String, Double)()
-            Dim result As IDictionary(Of String, Double)() = New IDictionary(Of String, Double)(phi.Length - 1) {}
+        Public Shared Function translate(phi As Double()(), vocabulary As Vocabulary, limit As Integer) As Dictionary(Of String, Double)()
+            Dim result As Dictionary(Of String, Double)() = New Dictionary(Of String, Double)(phi.Length - 1) {}
 
             limit = stdNum.Min(limit, phi(0).Length)
 
@@ -37,7 +37,7 @@ Namespace LDA
             Return result
         End Function
 
-        Public Shared Function translate(tp As Double(), phi As Double()(), vocabulary As Vocabulary, limit As Integer) As IDictionary(Of String, Double)
+        Public Shared Function translate(tp As Double(), phi As Double()(), vocabulary As Vocabulary, limit As Integer) As Dictionary(Of String, Double)
             Dim topicMapArray = translate(phi, vocabulary, limit)
             Dim p As Double = -1.0
             Dim t As Integer = -1

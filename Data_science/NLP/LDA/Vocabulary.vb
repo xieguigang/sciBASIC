@@ -4,7 +4,7 @@ Imports System.Text
 Namespace LDA
 
     ''' <summary>
-    ''' a word set
+    ''' a word set mapping between the word and its index id value
     ''' 
     ''' @author hankcs
     ''' </summary>

@@ -392,5 +392,16 @@ Namespace ComponentModel.Collection
         Public Shared Operator IsFalse(index As Index(Of T)) As Boolean
             Return Not op_True(index)
         End Operator
+
+        ''' <summary>
+        ''' removes elements from <paramref name="list"/> based on a 
+        ''' given <paramref name="filter"/> element list.
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <param name="filter"></param>
+        ''' <returns></returns>
+        Public Shared Operator -(list As T(), filter As Index(Of T)) As T()
+            Return list.Where(Function(i) Not i Like filter).ToArray
+        End Operator
     End Class
 End Namespace

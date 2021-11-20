@@ -97,7 +97,6 @@ Namespace LDA
         ''' </summary>
         Friend ndsum As Integer()
 
-
         ''' <summary>
         ''' cumulative statistics of theta
         ''' theta的累积量

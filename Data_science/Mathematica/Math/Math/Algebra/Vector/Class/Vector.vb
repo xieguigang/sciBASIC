@@ -960,6 +960,14 @@ Namespace LinearAlgebra
             Return Abs(Me)
         End Function
 
+        ''' <summary>
+        ''' scale elements in current vector to another value <paramref name="range"/>.
+        ''' </summary>
+        ''' <param name="range"></param>
+        ''' <returns>
+        ''' a new data <see cref="Vector"/> which its element value is 
+        ''' in range of a given <paramref name="range"/>.
+        ''' </returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ScaleToRange(range As DoubleRange) As Vector
             Return Me.RangeTransform(range)
