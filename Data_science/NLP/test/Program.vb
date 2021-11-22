@@ -11,8 +11,8 @@ Module Program
         ldaGibbsSampler.gibbs(10)
         ' 4. The phi matrix Is a LDA model, you can use LdaUtil to explain it.
         Dim phi = ldaGibbsSampler.Phi()
-        Dim topicMap = LdaUtil.translate(phi, corpus.Vocabulary(), 10)
-        LdaUtil.explain(topicMap)
+        Dim topicMap = LdaInterpreter.translate(phi, corpus.Vocabulary(), 10)
+        LdaInterpreter.explain(topicMap)
 
         Pause()
     End Sub
