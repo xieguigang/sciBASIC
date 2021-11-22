@@ -13,6 +13,8 @@ Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "test", "NLP\test\test.vbpro
 EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "NLP.NET", "NLP\NLP.NET.vbproj", "{2971FE34-2612-43C2-85B6-E460434A8361}"
 EndProject
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "stats-netcore5", "Mathematica\Math\Math.Statistics\stats-netcore5.vbproj", "{1FB92433-020B-4AFE-A428-00949781CC87}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -143,6 +145,34 @@ Global
 		{2971FE34-2612-43C2-85B6-E460434A8361}.Rsharp_app_release|Any CPU.Build.0 = Release|Any CPU
 		{2971FE34-2612-43C2-85B6-E460434A8361}.Rsharp_app_release|x64.ActiveCfg = Release|x64
 		{2971FE34-2612-43C2-85B6-E460434A8361}.Rsharp_app_release|x64.Build.0 = Release|x64
+		{1FB92433-020B-4AFE-A428-00949781CC87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FB92433-020B-4AFE-A428-00949781CC87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FB92433-020B-4AFE-A428-00949781CC87}.Debug|x64.ActiveCfg = Debug|x64
+		{1FB92433-020B-4AFE-A428-00949781CC87}.Debug|x64.Build.0 = Debug|x64
+		{1FB92433-020B-4AFE-A428-00949781CC87}.LipidSearch|Any CPU.ActiveCfg = LipidSearch|Any CPU
+		{1FB92433-020B-4AFE-A428-00949781CC87}.LipidSearch|Any CPU.Build.0 = LipidSearch|Any CPU
+		{1FB92433-020B-4AFE-A428-00949781CC87}.LipidSearch|x64.ActiveCfg = LipidSearch|x64
+		{1FB92433-020B-4AFE-A428-00949781CC87}.LipidSearch|x64.Build.0 = LipidSearch|x64
+		{1FB92433-020B-4AFE-A428-00949781CC87}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
+		{1FB92433-020B-4AFE-A428-00949781CC87}.mzkit|Any CPU.Build.0 = mzkit|Any CPU
+		{1FB92433-020B-4AFE-A428-00949781CC87}.mzkit|x64.ActiveCfg = mzkit|x64
+		{1FB92433-020B-4AFE-A428-00949781CC87}.mzkit|x64.Build.0 = mzkit|x64
+		{1FB92433-020B-4AFE-A428-00949781CC87}.NPSearch|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FB92433-020B-4AFE-A428-00949781CC87}.NPSearch|Any CPU.Build.0 = Debug|Any CPU
+		{1FB92433-020B-4AFE-A428-00949781CC87}.NPSearch|x64.ActiveCfg = Debug|x64
+		{1FB92433-020B-4AFE-A428-00949781CC87}.NPSearch|x64.Build.0 = Debug|x64
+		{1FB92433-020B-4AFE-A428-00949781CC87}.PlantMAT|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FB92433-020B-4AFE-A428-00949781CC87}.PlantMAT|Any CPU.Build.0 = Debug|Any CPU
+		{1FB92433-020B-4AFE-A428-00949781CC87}.PlantMAT|x64.ActiveCfg = Debug|x64
+		{1FB92433-020B-4AFE-A428-00949781CC87}.PlantMAT|x64.Build.0 = Debug|x64
+		{1FB92433-020B-4AFE-A428-00949781CC87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FB92433-020B-4AFE-A428-00949781CC87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FB92433-020B-4AFE-A428-00949781CC87}.Release|x64.ActiveCfg = Release|x64
+		{1FB92433-020B-4AFE-A428-00949781CC87}.Release|x64.Build.0 = Release|x64
+		{1FB92433-020B-4AFE-A428-00949781CC87}.Rsharp_app_release|Any CPU.ActiveCfg = Rsharp_app_release|Any CPU
+		{1FB92433-020B-4AFE-A428-00949781CC87}.Rsharp_app_release|Any CPU.Build.0 = Rsharp_app_release|Any CPU
+		{1FB92433-020B-4AFE-A428-00949781CC87}.Rsharp_app_release|x64.ActiveCfg = Rsharp_app_release|x64
+		{1FB92433-020B-4AFE-A428-00949781CC87}.Rsharp_app_release|x64.Build.0 = Rsharp_app_release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -150,6 +180,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{2571184C-6183-4AB2-A4FC-BCA458061FCD} = {A39C78CD-89C5-437B-B95C-226D225365E6}
 		{F56D3ABE-30AB-4F8A-842B-3C4723EECE21} = {A39C78CD-89C5-437B-B95C-226D225365E6}
+		{1FB92433-020B-4AFE-A428-00949781CC87} = {A39C78CD-89C5-437B-B95C-226D225365E6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {427F8C3B-C3CF-48D8-95F7-46287F057389}
