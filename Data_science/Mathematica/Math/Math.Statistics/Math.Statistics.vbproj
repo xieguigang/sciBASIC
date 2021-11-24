@@ -583,9 +583,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HypothesisTesting\FishersExact\FishersExactPvalues.vb" />
     <Compile Include="HypothesisTesting\FishersExact\FisherTest.vb" />
     <Compile Include="HypothesisTesting\FishersExact\HyperState.vb" />
     <Compile Include="HypothesisTesting\FisherTest.vb" />
+    <Compile Include="HypothesisTesting\LogLikelihood.vb" />
     <Compile Include="HypothesisTesting\T-test\StudenttDistribution.vb" />
     <Compile Include="HypothesisTesting\T-test\TwoSampleResult.vb" />
     <Compile Include="HypothesisTesting\T-test\Topt.vb" />
