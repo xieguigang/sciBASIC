@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::8a8ba0ed0df30266239c43b858a92496, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\TempFileSystem.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class TempFileSystem
-    ' 
-    '         Function: __sysTEMP, CreateTempFilePath, GenerateTemp, GetAppSysTempFile, TempDir
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class TempFileSystem
+' 
+'         Function: __sysTEMP, CreateTempFilePath, GenerateTemp, GetAppSysTempFile, TempDir
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -69,11 +69,27 @@ Namespace ApplicationServices
         Public Shared Function CreateTempFilePath(tmpdir$, Optional ext$ = ".tmp", Optional sessionID$ = "", Optional prefix$ = Nothing) As String
             Dim tmp As String = tmpdir & "/" & App.GetNextUniqueName(prefix) & ext
 
-            tmp = GenerateTemp(tmp, sessionID)
-            tmp.DoCall(AddressOf FS.GetParentPath).DoCall(AddressOf FS.CreateDirectory)
-            tmp = FS.GetFileInfo(tmp).FullName.Replace("\", "/")
+            If tmp.EndsWith("/"c) OrElse tmp.EndsWith("\"c) Then
+                ' is a directory
+                tmp = GenerateTempDir(tmp, sessionID)
+                tmp.DoCall(AddressOf FS.CreateDirectory)
+                tmp = FS.GetDirectoryInfo(tmp).FullName.Replace("\", "/")
+            Else
+                tmp = GenerateTemp(tmp, sessionID)
+                tmp.DoCall(AddressOf FS.GetParentPath).DoCall(AddressOf FS.CreateDirectory)
+                tmp = FS.GetFileInfo(tmp).FullName.Replace("\", "/")
+            End If
 
             Return tmp
+        End Function
+
+        Private Shared Function GenerateTempDir(sysTemp$, sessionID$) As String
+            Dim dirt As String = FS.GetParentPath(sysTemp)
+            Dim name As String = sysTemp.DirectoryName
+
+            sysTemp = $"{dirt}/{App.AssemblyName}/{sessionID}/{name}"
+
+            Return sysTemp
         End Function
 
         ''' <summary>

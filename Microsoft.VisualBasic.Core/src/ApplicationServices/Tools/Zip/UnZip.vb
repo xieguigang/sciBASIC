@@ -146,13 +146,16 @@ Namespace ApplicationServices.Zip
         ''' Specifies how we are going to handle an existing file.
         ''' The default is IfNewer.
         ''' </param>
-        ''' 
+        ''' <returns>
+        ''' this function returns the parameter value of <paramref name="destinationDirectoryName"/>
+        ''' </returns>
         <ExportAPI("ExtractToDir")>
-        Public Sub ImprovedExtractToDirectory(<Parameter("Zip", "The name of the zip file to be extracted")> sourceArchiveFileName$,
-                                              <Parameter("Dir", "The directory to extract the zip file to")> destinationDirectoryName$,
-                                              <Parameter("Overwrite.HowTo", "Specifies how we are going to handle an existing file. The default is IfNewer.")>
-                                              Optional overwriteMethod As Overwrite = Overwrite.IfNewer,
-                                              Optional extractToFlat As Boolean = False)
+        <Extension>
+        Public Function ImprovedExtractToDirectory(<Parameter("Zip", "The name of the zip file to be extracted")> sourceArchiveFileName$,
+                                                   <Parameter("Dir", "The directory to extract the zip file to")> destinationDirectoryName$,
+                                                   <Parameter("Overwrite.HowTo", "Specifies how we are going to handle an existing file. The default is IfNewer.")>
+                                                   Optional overwriteMethod As Overwrite = Overwrite.IfNewer,
+                                                   Optional extractToFlat As Boolean = False) As String
             Dim rootDir As String = Nothing
 
             Using zip As Stream = sourceArchiveFileName.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
@@ -164,7 +167,9 @@ Namespace ApplicationServices.Zip
                     rootDir:=rootDir
                 )
             End Using
-        End Sub
+
+            Return destinationDirectoryName
+        End Function
 
         ''' <summary>
         ''' Unzips the specified file to the given folder in a safe
