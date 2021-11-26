@@ -6,8 +6,28 @@ Imports stdNum = System.Math
 
 Namespace Drawing2D.Colors.Scaler
 
+    ''' <summary>
+    ''' Contrast optimization of mass spectrometry imaging (MSI) data visualization by threshold intensity quantization (TrIQ)
+    ''' </summary>
     Public Module TrIQ
 
+        ''' <summary>
+        ''' T computation involves the cumulative distributive
+        ''' function p(k)(CDF), defined As
+        ''' 
+        ''' ```
+        ''' q ~ p(k) = sum(h(i)) / N
+        ''' ```
+        '''
+        ''' h(i) stands For the i bin's frequency within an image 
+        ''' histogram, N is the image’s pixel count. Given a target 
+        ''' probability q it Is possible to find the bin k whose 
+        ''' CDF closely resembles q. Then, the upper limit Of the 
+        ''' bin k In h will be used As the threshold value T.
+        ''' </summary>
+        ''' <param name="bin"></param>
+        ''' <param name="N"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function CDF(bin As IEnumerable(Of DataBinBox(Of Double)), N As Integer) As Double
             Dim sumHk As Double = Aggregate hi As DataBinBox(Of Double) In bin Into Sum(hi.Count)
@@ -16,6 +36,14 @@ Namespace Drawing2D.Colors.Scaler
             Return p
         End Function
 
+        ''' <summary>
+        ''' The Threshold Intensity Quantization addresses this issue by setting a new upper limit T
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="q"></param>
+        ''' <param name="N"></param>
+        ''' <param name="eps"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function FindThreshold(data As IEnumerable(Of Double), q As Double,
                                       Optional N As Integer = 100,
@@ -80,6 +108,46 @@ Namespace Drawing2D.Colors.Scaler
             Return sample(minK - 1).Boundary.Max
         End Function
 
+        ''' <summary>
+        ''' Quantization is a process for mapping a range 
+        ''' of analog intensity values To a Single discrete 
+        ''' value, known As a gray level.
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="n"></param>
+        ''' <param name="T"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' Quantization is a process For mapping a range of 
+        ''' analog intensity values To a Single discrete value, 
+        ''' known As a gray level. Zero-memory Is a widely 
+        ''' used quantization method. The zero-memory quantizer
+        ''' computes equally spaced intensity bins Of width w:
+        ''' 
+        ''' ```
+        ''' w = (max(f) - min(f)) / n
+        ''' ```
+        ''' 
+        ''' where n represents the number Of discrete values, 
+        ''' usually 256; min(f) And max(f) operators provide 
+        ''' minimum And maximum intensity values. Quantization 
+        ''' Is based On a comparison with the transition levels 
+        ''' tk:
+        ''' 
+        ''' ```
+        ''' tk = w + min(f), 2w + min(f), ..., nw + min(f)
+        ''' ```
+        ''' 
+        ''' Finally, the discrete mapped value Q Is obtained:
+        ''' 
+        ''' ```
+        ''' Q(f(x, y)) = {
+        '''     
+        '''     0,  f(x,y) &lt;= t1
+        '''     k,  tk &lt; f(x,y) &lt; tk+1
+        ''' }
+        ''' ```
+        ''' </remarks>
         <Extension>
         Public Function DiscreteLevels(data As IEnumerable(Of Double),
                                        Optional n As Integer = 30,
