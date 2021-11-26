@@ -55,7 +55,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Net.Http
 
-Namespace StoreProcedure
+Namespace ComponentModel.StoreProcedure
 
     ''' <summary>
     ''' The training dataset

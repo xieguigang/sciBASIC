@@ -50,7 +50,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
-Namespace StoreProcedure
+Namespace ComponentModel.StoreProcedure
 
     ''' <summary>
     ''' 进行所输入的样本数据的归一化的矩阵

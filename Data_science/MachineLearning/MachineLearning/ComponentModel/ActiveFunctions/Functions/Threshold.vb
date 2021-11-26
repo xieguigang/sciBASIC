@@ -54,7 +54,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 
-Namespace NeuralNetwork.Activations
+Namespace ComponentModel.Activations
 
     ''' <summary>
     ''' Threshold activation function.

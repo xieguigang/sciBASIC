@@ -53,7 +53,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
-Namespace NeuralNetwork.Activations
+Namespace ComponentModel.Activations
 
     ''' <summary>
     ''' Activation function interface.

@@ -47,7 +47,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions
 
-Namespace StoreProcedure
+Namespace ComponentModel.StoreProcedure
 
     Public Module Diagnostics
 

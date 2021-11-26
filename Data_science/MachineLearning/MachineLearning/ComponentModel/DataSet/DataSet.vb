@@ -52,7 +52,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace StoreProcedure
+Namespace ComponentModel.StoreProcedure
 
     ''' <summary>
     ''' A training dataset that stored in XML file.

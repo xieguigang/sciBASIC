@@ -48,7 +48,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
-Namespace StoreProcedure
+Namespace ComponentModel.StoreProcedure
 
     Public Class SampleList : Inherits ListOf(Of Sample)
 

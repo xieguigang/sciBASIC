@@ -47,7 +47,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
-Namespace NeuralNetwork.Activations
+Namespace ComponentModel.Activations
 
     Public Class ReLU : Inherits IActivationFunction
 
