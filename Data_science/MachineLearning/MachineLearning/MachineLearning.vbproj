@@ -733,7 +733,7 @@
     <Compile Include="NeuralNetwork\StoreProcedure\Models\Layers.vb" />
     <Compile Include="NeuralNetwork\StoreProcedure\Snapshot.vb" />
     <Compile Include="NeuralNetwork\StoreProcedure\Formats\Scattered.vb" />
-    <Compile Include="NeuralNetwork\StoreProcedure\Models\ActiveFunction.vb" />
+    <Compile Include="ComponentModel\ActiveFunctions\ActiveFunctionXml.vb" />
     <Compile Include="NeuralNetwork\StoreProcedure\NamespaceDoc.vb" />
     <Compile Include="NeuralNetwork\StoreProcedure\CreateSnapshot.vb" />
     <Compile Include="ComponentModel\DataSet\Sample.vb" />

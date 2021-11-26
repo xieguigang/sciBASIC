@@ -45,15 +45,8 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
-Imports Microsoft.VisualBasic.ApplicationServices.Terminal.Utility
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Protocols
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
-Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
-Imports Microsoft.VisualBasic.Text
-Imports stdNum = System.Math
 
 Namespace NeuralNetwork
 
