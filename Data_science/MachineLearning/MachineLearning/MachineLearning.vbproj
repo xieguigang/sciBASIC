@@ -680,8 +680,8 @@
     <Compile Include="Darwinism\GeneticAlgorithm\Population\Collection.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\ReplacementStrategy.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\EnvironmentDriver.vb" />
-    <Compile Include="DataSet\Diagnostics.vb" />
-    <Compile Include="DataSet\NamespaceDoc.vb" />
+    <Compile Include="ComponentModel\DataSet\Diagnostics.vb" />
+    <Compile Include="ComponentModel\DataSet\NamespaceDoc.vb" />
     <Compile Include="IterationReporter.vb" />
     <Compile Include="Darwinism\DifferentialEvolution.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\Fitness.vb" />
@@ -708,16 +708,16 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="NeuralNetwork\ActiveFunctions\Functions\BipolarSigmoid.vb" />
-    <Compile Include="NeuralNetwork\ActiveFunctions\Functions\Sinc.vb" />
-    <Compile Include="NeuralNetwork\ActiveFunctions\Functions\Softplus.vb" />
-    <Compile Include="NeuralNetwork\ActiveFunctions\Functions\HyperbolicTangent.vb" />
-    <Compile Include="NeuralNetwork\ActiveFunctions\LayerActives.vb" />
-    <Compile Include="NeuralNetwork\ActiveFunctions\IActivationFunction.vb" />
-    <Compile Include="NeuralNetwork\ActiveFunctions\Functions\ReLU.vb" />
-    <Compile Include="NeuralNetwork\ActiveFunctions\Functions\SigmoidFunction.vb" />
-    <Compile Include="NeuralNetwork\ActiveFunctions\Functions\Sigmoid.vb" />
-    <Compile Include="NeuralNetwork\ActiveFunctions\Functions\Threshold.vb" />
+    <Compile Include="ComponentModel\ActiveFunctions\Functions\BipolarSigmoid.vb" />
+    <Compile Include="ComponentModel\ActiveFunctions\Functions\Sinc.vb" />
+    <Compile Include="ComponentModel\ActiveFunctions\Functions\Softplus.vb" />
+    <Compile Include="ComponentModel\ActiveFunctions\Functions\HyperbolicTangent.vb" />
+    <Compile Include="NeuralNetwork\Models\LayerActives.vb" />
+    <Compile Include="ComponentModel\ActiveFunctions\IActivationFunction.vb" />
+    <Compile Include="ComponentModel\ActiveFunctions\Functions\ReLU.vb" />
+    <Compile Include="ComponentModel\ActiveFunctions\Functions\SigmoidFunction.vb" />
+    <Compile Include="ComponentModel\ActiveFunctions\Functions\Sigmoid.vb" />
+    <Compile Include="ComponentModel\ActiveFunctions\Functions\Threshold.vb" />
     <Compile Include="NeuralNetwork\Trainings\DarwinismHybrid\Accelerator.vb" />
     <Compile Include="NeuralNetwork\Trainings\ANNTrainer.vb" />
     <Compile Include="NeuralNetwork\Trainings\DarwinismHybrid\NetworkIndividual.vb" />
@@ -729,18 +729,18 @@
     <Compile Include="NeuralNetwork\Models\Layer.vb" />
     <Compile Include="NeuralNetwork\Importance.vb" />
     <Compile Include="NeuralNetwork\Models\Protocols\Dropout.vb" />
-    <Compile Include="DataSet\SampleList.vb" />
+    <Compile Include="ComponentModel\DataSet\SampleList.vb" />
     <Compile Include="NeuralNetwork\StoreProcedure\Models\Layers.vb" />
     <Compile Include="NeuralNetwork\StoreProcedure\Snapshot.vb" />
     <Compile Include="NeuralNetwork\StoreProcedure\Formats\Scattered.vb" />
     <Compile Include="NeuralNetwork\StoreProcedure\Models\ActiveFunction.vb" />
     <Compile Include="NeuralNetwork\StoreProcedure\NamespaceDoc.vb" />
     <Compile Include="NeuralNetwork\StoreProcedure\CreateSnapshot.vb" />
-    <Compile Include="DataSet\Sample.vb" />
-    <Compile Include="DataSet\NormalizeMatrix.vb" />
+    <Compile Include="ComponentModel\DataSet\Sample.vb" />
+    <Compile Include="ComponentModel\DataSet\NormalizeMatrix.vb" />
     <Compile Include="NeuralNetwork\StoreProcedure\Models\Neuron.vb" />
     <Compile Include="NeuralNetwork\StoreProcedure\Models\NeuralNetwork.vb" />
-    <Compile Include="DataSet\DataSet.vb" />
+    <Compile Include="ComponentModel\DataSet\DataSet.vb" />
     <Compile Include="NeuralNetwork\Trainings\Helpers.vb" />
     <Compile Include="NeuralNetwork\Models\Network.vb" />
     <Compile Include="NeuralNetwork\Models\Neuron.vb" />
@@ -833,7 +833,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="NeuralNetwork\ActiveFunctions\Copyright.txt" />
+    <Content Include="ComponentModel\ActiveFunctions\Copyright.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
