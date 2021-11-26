@@ -899,6 +899,7 @@
     <Compile Include="Algebra\PCA\Helper.vb" />
     <Compile Include="Algebra\Polynomial\Formula.vb" />
     <Compile Include="Algebra\Polynomial\MultivariatePolynomial.vb" />
+    <Compile Include="Algebra\Tensor.vb" />
     <Compile Include="Numerics\Framework\VariableObject.vb" />
     <Compile Include="Numerics\Framework\Iterator.vb" />
     <Compile Include="Algebra\LP\Extensions.vb" />

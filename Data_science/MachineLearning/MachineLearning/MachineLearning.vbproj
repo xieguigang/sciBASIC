@@ -679,14 +679,13 @@
     <Compile Include="CNN\Solver.vb" />
     <Compile Include="CNN\NamespaceDoc.vb" />
     <Compile Include="CNN\CeNiN.vb" />
-    <Compile Include="CNN\Conv.vb" />
+    <Compile Include="CNN\Convolution.vb" />
     <Compile Include="CNN\Input.vb" />
     <Compile Include="CNN\Layer.vb" />
     <Compile Include="CNN\Output.vb" />
     <Compile Include="CNN\Pool.vb" />
     <Compile Include="CNN\ReLU.vb" />
     <Compile Include="CNN\SoftMax.vb" />
-    <Compile Include="CNN\Tensor.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\Population\Delegates.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\Population\Collection.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\ReplacementStrategy.vb" />

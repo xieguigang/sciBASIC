@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Convolutional
 
@@ -71,7 +72,7 @@ Namespace Convolutional
                         Next
 
                         Dim inputTensorDims = currentLayer.outputDims
-                        Dim cLayer As Conv = New Conv(inputTensorDims, pad)
+                        Dim cLayer As Convolution = New Convolution(inputTensorDims, pad)
                         Dim dims = New Integer(3) {}
 
                         For i = 0 To 4 - 1
@@ -85,14 +86,14 @@ Namespace Convolutional
                         cLayer.weights = New Tensor(dims)
 
                         For i = 0 To cLayer.weights.TotalLength - 1
-                            cLayer.weights.memPtr(i) = br.ReadSingle()
+                            cLayer.weights.data(i) = br.ReadSingle()
                         Next
 
                         totalWeightCount += cLayer.weights.TotalLength
                         cLayer.biases = New Tensor(New Integer() {dims(3)})
 
                         For i = 0 To cLayer.biases.TotalLength - 1
-                            cLayer.biases.memPtr(i) = br.ReadSingle()
+                            cLayer.biases.data(i) = br.ReadSingle()
                         Next
 
                         totalBiasCount += cLayer.biases.TotalLength

@@ -1,14 +1,20 @@
 ﻿Imports System
 Imports System.Runtime.InteropServices
 
-Namespace Convolutional
+Namespace LinearAlgebra
+
     Public Class Tensor
 
         Private totalLengthField As Integer
         Private dims As Integer()
-        Public memPtr As Single()
+
+        ''' <summary>
+        ''' the tensor data
+        ''' </summary>
+        Public data As Single()
         Public consumedMem As Integer
-        Private dimProds As Integer()
+
+        Dim dimProds As Integer()
 
         Public ReadOnly Property TotalLength As Integer
             Get
@@ -31,10 +37,10 @@ Namespace Convolutional
 
             Me.consumedMem = totalLengthField * sizeofFloat
 
-            memPtr = New Single(totalLengthField - 1) {}
+            data = New Single(totalLengthField - 1) {}
 
             For i = 0 To totalLengthField - 1
-                memPtr(i) = 0.0F
+                data(i) = 0.0F
             Next
         End Sub
 
@@ -50,22 +56,22 @@ Namespace Convolutional
         Default Public Property Item(indexes As Integer) As Single
             Get
                 Dim ind = get1DInd(indexes)
-                Return memPtr(ind)
+                Return data(ind)
             End Get
             Set(value As Single)
                 Dim ind = get1DInd(indexes)
-                memPtr(ind) = value
+                data(ind) = value
             End Set
         End Property
 
         Default Public Property Item(indexes As Integer()) As Single
             Get
                 Dim ind = get1DInd(indexes)
-                Return memPtr(ind)
+                Return data(ind)
             End Get
             Set(value As Single)
                 Dim ind = get1DInd(indexes)
-                memPtr(ind) = value
+                data(ind) = value
             End Set
         End Property
 
@@ -111,7 +117,7 @@ Namespace Convolutional
             Dim t As Tensor = New Tensor(dims)
 
             For i = 0 To totalLengthField - 1
-                t.memPtr(i) = memPtr(i)
+                t.data(i) = data(i)
             Next
 
             Return t
@@ -121,7 +127,7 @@ Namespace Convolutional
             Dim t As Tensor = New Tensor(t1.dims)
 
             For i = 0 To t.totalLengthField - 1
-                t.memPtr(i) = t1.memPtr(i) * f
+                t.data(i) = t1.data(i) * f
             Next
 
             Return t
@@ -131,7 +137,7 @@ Namespace Convolutional
             Dim t As Tensor = New Tensor(t1.dims)
 
             For i = 0 To t.totalLengthField - 1
-                t.memPtr(i) = t1.memPtr(i) + f
+                t.data(i) = t1.data(i) + f
             Next
 
             Return t
@@ -147,7 +153,7 @@ Namespace Convolutional
             Dim t As Tensor = New Tensor(t1.dims)
 
             For i = 0 To t1.totalLengthField - 1
-                t.memPtr(i) = t1.memPtr(i) + t2.memPtr(i)
+                t.data(i) = t1.data(i) + t2.data(i)
             Next
 
             Return t
@@ -197,7 +203,7 @@ Namespace Convolutional
                 ind(1) = 0
 
                 While ind(1) < dim2
-                    t(ind) = t1.memPtr(ind(0)) + t2.memPtr(ind(1))
+                    t(ind) = t1.data(ind(0)) + t2.data(ind(1))
                     ind(1) += 1
                 End While
 
@@ -208,9 +214,9 @@ Namespace Convolutional
         End Function
 
         Public Sub Dispose()
-            If memPtr IsNot Nothing Then
-                Erase memPtr
-                memPtr = Nothing
+            If data IsNot Nothing Then
+                Erase data
+                data = Nothing
             End If
         End Sub
 

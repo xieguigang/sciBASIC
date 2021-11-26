@@ -1,4 +1,6 @@
 ﻿
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+
 Namespace Convolutional
     Public MustInherit Class Layer
 

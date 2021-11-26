@@ -1,9 +1,11 @@
 ﻿Imports System.Threading
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports stdNum = System.Math
 
 Namespace Convolutional
 
-    Public Class Conv : Inherits Layer
+    Public Class Convolution : Inherits Layer
 
         Public stride As Integer()
         Public weights As Tensor
@@ -32,11 +34,11 @@ Namespace Convolutional
             Dim mCountH = inputHeight - filterHeight + 1
             Dim mCountW = inputWidth - filterWidth + 1
             Dim possibleH As Tensor = New Tensor(New Integer() {outputDims(0), 1})
-            Dim j = 0
+            Dim j As i32 = 0
             Dim i = 0
 
             While i < mCountH
-                possibleH.memPtr(stdNum.Min(Threading.Interlocked.Increment(j), j - 1)) = i
+                possibleH.data(++j) = i
                 i += stride(0)
             End While
 
@@ -46,7 +48,7 @@ Namespace Convolutional
             i = 0
 
             While i < mCountW
-                possibleW.memPtr(stdNum.Min(Threading.Interlocked.Increment(j), j - 1)) = i
+                possibleW.data(++j) = i
                 i += stride(1)
             End While
 
@@ -56,13 +58,13 @@ Namespace Convolutional
             possibleH = New Tensor(New Integer() {filterHeight, 1})
 
             For i = 0 To filterHeight - 1
-                possibleH.memPtr(i) = i
+                possibleH.data(i) = i
             Next
 
             possibleW = New Tensor(New Integer() {1, filterWidth})
 
             For i = 0 To filterWidth - 1
-                possibleW.memPtr(i) = i
+                possibleW.data(i) = i
             Next
 
             Dim offsets = possibleW + possibleH * inputWidth
@@ -74,32 +76,15 @@ Namespace Convolutional
             startingIndexes.Dispose()
             offsets.Dispose()
             Dim outputH_W = outputDims(0) * outputDims(1)
-            Dim allInOne As Tensor = New Tensor(New Integer() {outputH_W, filterHeight * filterWidth * channelCount})
+            Dim allInOne As New Tensor(New Integer() {outputH_W, filterHeight * filterWidth * channelCount})
             Dim h_W = inputHeight * inputWidth
             Dim fH_fW = filterHeight * filterWidth
             Dim h_w_fH_fW = h_W * fH_fW
             Dim tmp As Integer
 
-            'int[] aiInd = new int[] { 0, 0 };
-            'int[] aioInd = new int[] { 0, 0 };
-            'for (int ch = 0; ch < channelCount; ch++)
-            '{
-            '    for (int k = 0; k < outputH_W; k++)
-            '    {
-            '        aioInd[0] = k;
-            '        aiInd[0] = k;
-            '        for (int m = 0; m < fH_fW; m++)
-            '        {
-            '            aioInd[1] = ch * fH_fW + m;
-            '            aiInd[1] = m;
-            '            tmp = (int)allIndexes[aiInd] + h_W * ch;
-            '            allInOne[aioInd] = inputTensor.memPtr[tmp];
-            '        }
-            '    }
-            '}
-
             ' A bit faster:
-            Dim aiInd, aioInd As Integer
+            Dim aiInd As i32
+            Dim aioInd As i32 = Scan0
 
             For ch = 0 To channelCount - 1
                 Dim fH_fW_ch = fH_fW * ch
@@ -110,8 +95,8 @@ Namespace Convolutional
                     aioInd = (fH_fW_ch + m) * outputH_W
 
                     For k = 0 To outputH_W - 1
-                        tmp = CInt(allIndexes.memPtr(stdNum.Min(Threading.Interlocked.Increment(aiInd), aiInd - 1))) + h_W_ch
-                        allInOne.memPtr(stdNum.Min(Threading.Interlocked.Increment(aioInd), aioInd - 1)) = inputTensor.memPtr(tmp)
+                        tmp = CInt(allIndexes.data(++aiInd)) + h_W_ch
+                        allInOne.data(++aioInd) = inputTensor.data(tmp)
                     Next
                 Next
             Next
@@ -122,27 +107,27 @@ Namespace Convolutional
             Dim x = allInOne.Dimensions(1)
             Dim y = filterCount
             Dim z = allInOne.Dimensions(0)
-            Dim po As ParallelOptions = New ParallelOptions()
+            Dim po As New ParallelOptions() With {.MaxDegreeOfParallelism = Environment.ProcessorCount}
 
-            po.MaxDegreeOfParallelism = Environment.ProcessorCount
-            Tasks.Parallel.For(0, y, po, Sub(f)
-                                             Dim aioInd_ As Integer
-                                             Dim outputInd_ As Integer
-                                             Dim weightsInd_ As Integer
+            Call Tasks.Parallel.For(0, y, po,
+                 Sub(f)
+                     Dim aioInd_ As Integer
+                     Dim outputInd_ As Integer
+                     Dim weightsInd_ As Integer
 
-                                             For g = 0 To z - 1
-                                                 Dim sum As Single = 0
+                     For g = 0 To z - 1
+                         Dim sum As Single = 0
 
-                                                 For h = 0 To x - 1
-                                                     aioInd_ = h * z + g
-                                                     weightsInd_ = f * x + h
-                                                     sum += weights.memPtr(weightsInd_) * allInOne.memPtr(aioInd_)
-                                                 Next
+                         For h = 0 To x - 1
+                             aioInd_ = h * z + g
+                             weightsInd_ = f * x + h
+                             sum += weights.data(weightsInd_) * allInOne.data(aioInd_)
+                         Next
 
-                                                 outputInd_ = f * z + g
-                                                 nextLayer.inputTensor.memPtr(outputInd_) = sum + biases.memPtr(f)
-                                             Next
-                                         End Sub)
+                         outputInd_ = f * z + g
+                         nextLayer.inputTensor.data(outputInd_) = sum + biases.data(f)
+                     Next
+                 End Sub)
 
             nextLayer.inputTensor.reshape(outputDims)
             allInOne.Dispose()

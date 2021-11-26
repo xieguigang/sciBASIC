@@ -14,14 +14,14 @@ Namespace Convolutional
             Dim max = Single.MinValue
 
             For i = 0 To inputTensor.TotalLength - 1
-                If inputTensor.memPtr(i) > max Then max = inputTensor.memPtr(i)
+                If inputTensor.data(i) > max Then max = inputTensor.data(i)
             Next
 
             Dim sum As Single = 0
-            Dim nLMR = MyBase.nextLayer.inputTensor.memPtr
+            Dim nLMR = MyBase.nextLayer.inputTensor.data
 
             For i = 0 To inputTensor.TotalLength - 1
-                nLMR(i) = CSng(stdNum.Exp(inputTensor.memPtr(i) - max))
+                nLMR(i) = CSng(stdNum.Exp(inputTensor.data(i) - max))
                 sum += nLMR(i)
             Next
 

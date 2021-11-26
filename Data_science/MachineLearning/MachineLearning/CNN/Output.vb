@@ -17,9 +17,9 @@ Namespace Convolutional
         End Sub
 
         Public Function getDecision() As String
-            If inputTensor.memPtr IsNot Nothing Then
+            If inputTensor.data IsNot Nothing Then
                 Array.Copy(classes, sortedClasses, classes.Length)
-                Array.ConstrainedCopy(inputTensor.memPtr, 0, probabilities, 0, classes.Length)
+                Array.ConstrainedCopy(inputTensor.data, 0, probabilities, 0, classes.Length)
                 Array.Sort(probabilities, sortedClasses)
                 Array.Reverse(probabilities)
                 Array.Reverse(sortedClasses)
