@@ -1,6 +1,7 @@
 ﻿
 Namespace Convolutional
     Public MustInherit Class Layer
+
         Public type As String
         Private inputTensorDimsField As Integer()
 
@@ -15,7 +16,7 @@ Namespace Convolutional
         Public inputTensor As Tensor = Nothing
         Public nextLayer As Layer
 
-        Public Sub writeNextLayerInput(ByVal indexes As Integer(), ByVal value As Single)
+        Public Sub writeNextLayerInput(indexes As Integer(), value As Single)
             If nextLayer.paddedWriting Then
                 Dim nInd As Integer() = CType(indexes.Clone(), Integer())
                 nInd(0) += nextLayer.pad(0)
@@ -26,12 +27,12 @@ Namespace Convolutional
             End If
         End Sub
 
-        Public Sub New(ByVal inputTensorDims As Integer())
+        Public Sub New(inputTensorDims As Integer())
             paddedWriting = False
             inputTensorDimsField = CType(inputTensorDims.Clone(), Integer())
         End Sub
 
-        Public Sub New(ByVal inputTensorDims As Integer(), ByVal pad As Integer())
+        Public Sub New(inputTensorDims As Integer(), pad As Integer())
             Me.pad = CType(pad.Clone(), Integer())
 
             If pad(0) > 0 OrElse pad(2) > 0 Then
@@ -66,7 +67,7 @@ Namespace Convolutional
             inputTensor = Nothing
         End Sub
 
-        Public Sub appendNext(ByVal nextLayer As Layer)
+        Public Sub appendNext(nextLayer As Layer)
             Me.nextLayer = nextLayer
         End Sub
     End Class

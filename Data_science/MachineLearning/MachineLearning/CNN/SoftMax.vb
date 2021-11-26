@@ -2,10 +2,9 @@
 Imports stdNum = System.Math
 
 Namespace Convolutional
-    Public Class SoftMax
-        Inherits Layer
+    Public Class SoftMax : Inherits Layer
 
-        Public Sub New(ByVal inputTensorDims As Integer())
+        Public Sub New(inputTensorDims As Integer())
             MyBase.New(inputTensorDims)
             type = "SoftMax"
         End Sub

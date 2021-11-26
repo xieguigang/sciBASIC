@@ -2,16 +2,16 @@
 Imports stdNum = System.Math
 
 Namespace Convolutional
-    Public Class Conv
-        Inherits Layer
+
+    Public Class Conv : Inherits Layer
 
         Public stride As Integer()
         Public weights As Tensor
         Public biases As Tensor
 
-        Public Sub New(ByVal inputTensorDims As Integer(), ByVal pad As Integer())
+        Public Sub New(inputTensorDims As Integer(), pad As Integer())
             MyBase.New(inputTensorDims, pad)
-            Type = "Convolution"
+            type = "Convolution"
             stride = New Integer(1) {}
         End Sub
 

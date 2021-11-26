@@ -2,14 +2,13 @@
 Imports System.Runtime.InteropServices
 
 Namespace Convolutional
-    Public Class Output
-        Inherits Layer
+    Public Class Output : Inherits Layer
 
         Public classes As String()
         Public sortedClasses As String()
         Public probabilities As Single()
 
-        Public Sub New(ByVal inputTensorDims As Integer(), ByVal classes As String())
+        Public Sub New(inputTensorDims As Integer(), classes As String())
             MyBase.New(inputTensorDims)
             type = "Output"
             Me.classes = classes

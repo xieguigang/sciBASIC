@@ -2,13 +2,12 @@
 Imports stdNum = System.Math
 
 Namespace Convolutional
-    Public Class Pool
-        Inherits Layer
+    Public Class Pool : Inherits Layer
 
         Public pool As Integer()
         Public stride As Integer()
 
-        Public Sub New(ByVal inputTensorDims As Integer(), ByVal pad As Integer())
+        Public Sub New(inputTensorDims As Integer(), pad As Integer())
             MyBase.New(inputTensorDims, pad)
             type = "Pool"
             pool = New Integer(1) {}

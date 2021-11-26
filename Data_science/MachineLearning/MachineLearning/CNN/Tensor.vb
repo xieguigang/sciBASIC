@@ -3,6 +3,7 @@ Imports System.Runtime.InteropServices
 
 Namespace Convolutional
     Public Class Tensor
+
         Private totalLengthField As Integer
         Private dims As Integer()
         Public memPtr As Single()
@@ -23,7 +24,7 @@ Namespace Convolutional
 
         Shared ReadOnly sizeofFloat As Integer = Marshal.SizeOf(CSng(1.0))
 
-        Public Sub New(ByVal dims As Integer())
+        Public Sub New(dims As Integer())
             totalLengthField = multAll(dims)
             Me.dims = CType(dims.Clone(), Integer())
             updateDimProds()
@@ -51,7 +52,7 @@ Namespace Convolutional
                 Dim ind = get1DInd(indexes)
                 Return memPtr(ind)
             End Get
-            Set(ByVal value As Single)
+            Set(value As Single)
                 Dim ind = get1DInd(indexes)
                 memPtr(ind) = value
             End Set
@@ -62,7 +63,7 @@ Namespace Convolutional
                 Dim ind = get1DInd(indexes)
                 Return memPtr(ind)
             End Get
-            Set(ByVal value As Single)
+            Set(value As Single)
                 Dim ind = get1DInd(indexes)
                 memPtr(ind) = value
             End Set
@@ -79,7 +80,7 @@ Namespace Convolutional
             Return ind
         End Function
 
-        Private Shared Function multAll(ByVal array As Integer()) As Integer
+        Private Shared Function multAll(array As Integer()) As Integer
             Dim mul = 1
 
             For i = 0 To array.Length - 1
@@ -89,14 +90,14 @@ Namespace Convolutional
             Return mul
         End Function
 
-        Public Function reshape(ByVal newDims As Integer()) As Boolean
+        Public Function reshape(newDims As Integer()) As Boolean
             If multAll(dims) <> multAll(newDims) Then Return False
             dims = CType(newDims.Clone(), Integer())
             updateDimProds()
             Return True
         End Function
 
-        Private Shared Function dimsEqual(ByVal t1 As Tensor, ByVal t2 As Tensor) As Boolean
+        Private Shared Function dimsEqual(t1 As Tensor, t2 As Tensor) As Boolean
             If t1.dims.Length <> t2.dims.Length Then Return False
 
             For i = 0 To t1.dims.Length - 1
@@ -116,7 +117,7 @@ Namespace Convolutional
             Return t
         End Function
 
-        Public Shared Operator *(ByVal t1 As Tensor, ByVal f As Single) As Tensor
+        Public Shared Operator *(t1 As Tensor, f As Single) As Tensor
             Dim t As Tensor = New Tensor(t1.dims)
 
             For i = 0 To t.totalLengthField - 1
@@ -126,7 +127,7 @@ Namespace Convolutional
             Return t
         End Operator
 
-        Public Shared Operator +(ByVal t1 As Tensor, ByVal f As Single) As Tensor
+        Public Shared Operator +(t1 As Tensor, f As Single) As Tensor
             Dim t As Tensor = New Tensor(t1.dims)
 
             For i = 0 To t.totalLengthField - 1
@@ -136,11 +137,11 @@ Namespace Convolutional
             Return t
         End Operator
 
-        Public Shared Operator -(ByVal t1 As Tensor, ByVal f As Single) As Tensor
+        Public Shared Operator -(t1 As Tensor, f As Single) As Tensor
             Return t1 + -f
         End Operator
 
-        Public Shared Operator +(ByVal t1 As Tensor, ByVal t2 As Tensor) As Tensor
+        Public Shared Operator +(t1 As Tensor, t2 As Tensor) As Tensor
             If t1.dims.Length = 2 AndAlso t2.dims.Length = 2 AndAlso (t1.dims(0) = 1 AndAlso t2.dims(1) = 1 OrElse t1.dims(1) = 1 AndAlso t2.dims(0) = 1) Then Return broadcastedAddition(t1, t2)
             If Not dimsEqual(t1, t2) Then Return Nothing
             Dim t As Tensor = New Tensor(t1.dims)
@@ -152,7 +153,7 @@ Namespace Convolutional
             Return t
         End Operator
 
-        Public Shared Operator *(ByVal t1 As Tensor, ByVal t2 As Tensor) As Tensor
+        Public Shared Operator *(t1 As Tensor, t2 As Tensor) As Tensor
             If t1.dims.Length <> 2 OrElse t2.dims.Length <> 2 OrElse t1.dims(1) <> t2.dims(0) Then
                 Return Nothing
             End If
@@ -185,7 +186,7 @@ Namespace Convolutional
             Return t
         End Operator
 
-        Private Shared Function broadcastedAddition(ByVal t1 As Tensor, ByVal t2 As Tensor) As Tensor
+        Private Shared Function broadcastedAddition(t1 As Tensor, t2 As Tensor) As Tensor
             Dim dim1 = t1.totalLengthField
             Dim dim2 = t2.totalLengthField
             Dim t As Tensor = New Tensor(New Integer() {dim1, dim2})

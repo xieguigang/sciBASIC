@@ -3,8 +3,8 @@ Imports System.Drawing.Imaging
 Imports System.Runtime.InteropServices
 
 Namespace Convolutional
-    Public Class Input
-        Inherits Layer
+
+    Public Class Input : Inherits Layer
 
         Public inputSize As Integer()
         Public avgPixel As Single()
@@ -22,9 +22,9 @@ Namespace Convolutional
             End Get
         End Property
 
-        Public Sub New(ByVal inputTensorDims As Integer())
+        Public Sub New(inputTensorDims As Integer())
             MyBase.New(New Integer() {0, 0, 0})
-            Type = "Input"
+            type = "Input"
             inputSize = CType(inputTensorDims.Clone(), Integer())
             avgPixel = New Single(2) {}
         End Sub
@@ -33,7 +33,7 @@ Namespace Convolutional
             outputDims = CType(inputSize.Clone(), Integer())
         End Sub
 
-        Private Function resizeBitmap(ByVal b As Bitmap, ByVal resizingMethod As ResizingMethod) As Bitmap
+        Private Function resizeBitmap(b As Bitmap, resizingMethod As ResizingMethod) As Bitmap
             Dim resizedBmp As Bitmap = New Bitmap(inputSize(1), inputSize(0), PixelFormat.Format24bppRgb)
             Dim gr = Graphics.FromImage(resizedBmp)
 
@@ -60,7 +60,7 @@ Namespace Convolutional
             Return resizedBmp
         End Function
 
-        Public Sub setInput(ByVal input As Bitmap, ByVal resizingMethod As ResizingMethod)
+        Public Sub setInput(input As Bitmap, resizingMethod As ResizingMethod)
             outputTensorMemAlloc()
             Dim iBitmap As Bitmap = CType(input.Clone(), Bitmap)
             resizedInputBmpField = resizeBitmap(iBitmap, resizingMethod)

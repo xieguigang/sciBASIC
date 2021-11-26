@@ -13,7 +13,7 @@ Namespace Convolutional
         Public inputLayer As Input
         Public outputLayer As Output
 
-        Public Sub New(ByVal path As String)
+        Public Sub New(path As String)
             Dim f As FileStream = Nothing
             Dim br As BinaryReader = Nothing
 

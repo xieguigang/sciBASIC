@@ -1,9 +1,8 @@
 ﻿
 Namespace Convolutional
-    Friend Class ReLU
-        Inherits Layer
+    Friend Class ReLU : Inherits Layer
 
-        Public Sub New(ByVal inputTensorDims As Integer())
+        Public Sub New(inputTensorDims As Integer())
             MyBase.New(inputTensorDims)
             type = "ReLU"
         End Sub
