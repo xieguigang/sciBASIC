@@ -55,7 +55,7 @@ Namespace Parallel
     Public Module ParallelExtension
 
         ''' <summary>
-        ''' Application.DoEvents() proxy in winform
+        ''' Application.DoEvents() proxy in winform, Processes all Windows messages currently in the message queue.
         ''' </summary>
         ''' <remarks>
         ''' this function will fixed the errors on centos linux system:

@@ -83,6 +83,9 @@ Namespace ApplicationServices
             End Get
         End Property
 
+        ''' <summary>
+        ''' Processes all Windows messages currently in the message queue.
+        ''' </summary>
         Public Shared Sub DoEvents()
 #If netcore5 = 0 Then
 #If UNIX = False Then

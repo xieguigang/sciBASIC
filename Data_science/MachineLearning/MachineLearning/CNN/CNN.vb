@@ -13,6 +13,10 @@ Namespace Convolutional
         Public inputLayer As Input
         Public outputLayer As Output
 
+        ''' <summary>
+        ''' read file and construct a CNN model
+        ''' </summary>
+        ''' <param name="path"></param>
         Public Sub New(path As String)
             Dim f As FileStream = Nothing
             Dim br As BinaryReader = Nothing
@@ -139,5 +143,11 @@ Namespace Convolutional
                 If f IsNot Nothing Then f.Close()
             End Try
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return layerCount & "+2 layers, " _
+                & totalWeightCount & " weights and " _
+                & totalBiasCount & " biases were loaded"
+        End Function
     End Class
 End Namespace
