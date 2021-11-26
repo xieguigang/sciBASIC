@@ -14,7 +14,7 @@ Namespace Convolutional
             Call MyBase.New(inputTensorDims)
         End Sub
 
-        Public Overrides Sub feedNext()
+        Public Overrides Function feedNext() As Layer
             outputTensorMemAlloc()
             Dim max = Single.MinValue
 
@@ -35,6 +35,8 @@ Namespace Convolutional
             Next
 
             disposeInputTensor()
-        End Sub
+
+            Return Me
+        End Function
     End Class
 End Namespace

@@ -38,7 +38,7 @@ Namespace Convolutional
             Return Me
         End Function
 
-        Public Overrides Sub feedNext()
+        Public Overrides Function feedNext() As Layer
             Dim bmpData As BitmapData = _ResizedInputBmp.LockBits(New Rectangle(0, 0, inputSize(1), inputSize(0)), ImageLockMode.ReadOnly, _ResizedInputBmp.PixelFormat)
             Dim stride = bmpData.Stride
             Dim emptyBytesCount = stride - bmpData.Width * 3
@@ -78,6 +78,8 @@ Namespace Convolutional
 
             _ResizedInputBmp.UnlockBits(bmpData)
             _ResizedInputBmp.Dispose()
-        End Sub
+
+            Return Me
+        End Function
     End Class
 End Namespace

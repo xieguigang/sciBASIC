@@ -27,7 +27,7 @@ Namespace Convolutional
             }
         End Sub
 
-        Public Overrides Sub feedNext()
+        Public Overrides Function feedNext() As Layer
             outputTensorMemAlloc()
             Dim inputHeight = InputTensorDims(0)
             Dim inputWidth = InputTensorDims(1)
@@ -75,6 +75,8 @@ Namespace Convolutional
             End While
 
             disposeInputTensor()
-        End Sub
+
+            Return Me
+        End Function
     End Class
 End Namespace

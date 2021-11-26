@@ -35,8 +35,8 @@ Namespace Convolutional
             Return sortedClasses(0)
         End Function
 
-        Public Overrides Sub feedNext()
-            Throw New NotImplementedException()
-        End Sub
+        Public Overrides Function feedNext() As Layer
+            Throw New InvalidOperationException("the output layer cann't be feed to next layer!")
+        End Function
     End Class
 End Namespace

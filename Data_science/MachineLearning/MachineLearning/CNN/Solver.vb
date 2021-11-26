@@ -3,6 +3,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.MachineLearning.Convolutional.ImageProcessor
 Imports stdNum = System.Math
 
 Namespace Convolutional
@@ -10,29 +11,33 @@ Namespace Convolutional
     Public Module Solver
 
         <Extension>
-        Public Function DetectObject(cnn As CeNiN, image As Bitmap, Optional dev As TextWriter = Nothing) As NamedValue(Of Double)()
-            Dim CurrentLayer As Layer = cnn.inputLayer.setInput(image, Input.ResizingMethod.ZeroPad)
+        Public Function DetectObject(cnn As CeNiN,
+                                     image As Bitmap,
+                                     Optional resize As ResizingMethod = ResizingMethod.ZeroPad,
+                                     Optional dev As TextWriter = Nothing) As NamedValue(Of Double)()
+
+            Dim currentLayer As Layer = cnn.inputLayer.setInput(image, resizingMethod:=resize)
             Dim i As Integer = 0
             Dim start As Long = App.NanoTime
 
             dev = dev Or App.StdOut
 
-            While CurrentLayer.nextLayer IsNot Nothing
+            While currentLayer.nextLayer IsNot Nothing
                 If i = 0 Then
                     dev.WriteLine("Loading bitmap data...")
                 Else
-                    dev.WriteLine("Layer " & i & " (" & CurrentLayer.type & ") ...")
+                    dev.WriteLine("Layer " & i & " (" & currentLayer.type & ") ...")
                 End If
 
-                Application.DoEvents()
-                CurrentLayer.feedNext()
-                CurrentLayer = CurrentLayer.nextLayer
+                Call Application.DoEvents()
+
+                currentLayer = currentLayer.feedNext().nextLayer
                 i += 1
 
                 Call dev.Flush()
             End While
 
-            Dim OutputLayer As Output = CType(CurrentLayer, Output)
+            Dim OutputLayer As Output = CType(currentLayer, Output)
 
             Call dev.WriteLine("Finished in " & TimeSpan.FromTicks(App.NanoTime - start).FormatTime & " seconds")
 

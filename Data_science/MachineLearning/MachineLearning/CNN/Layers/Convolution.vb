@@ -24,15 +24,15 @@ Namespace Convolutional
         End Sub
 
         Public Overloads Sub setOutputDims()
-            Dim newHeight = CInt(stdNum.Floor((InputTensorDims(0) - weights.Dimensions(0)) / stride(0))) + 1
-            Dim newWidth = CInt(stdNum.Floor((InputTensorDims(1) - weights.Dimensions(1)) / stride(1))) + 1
+            Dim newHeight = CInt(stdNum.Floor((inputTensorDims(0) - weights.Dimensions(0)) / stride(0))) + 1
+            Dim newWidth = CInt(stdNum.Floor((inputTensorDims(1) - weights.Dimensions(1)) / stride(1))) + 1
             outputDims = New Integer() {newHeight, newWidth, weights.Dimensions(3)}
         End Sub
 
-        Public Overrides Sub feedNext()
+        Public Overrides Function feedNext() As Layer
             outputTensorMemAlloc()
-            Dim inputHeight = InputTensorDims(0)
-            Dim inputWidth = InputTensorDims(1)
+            Dim inputHeight = inputTensorDims(0)
+            Dim inputWidth = inputTensorDims(1)
             Dim filterHeight = weights.Dimensions(0)
             Dim filterWidth = weights.Dimensions(1)
             Dim channelCount = weights.Dimensions(2)
@@ -138,6 +138,8 @@ Namespace Convolutional
             nextLayer.inputTensor.reshape(outputDims)
             allInOne.Dispose()
             disposeInputTensor()
-        End Sub
+
+            Return Me
+        End Function
     End Class
 End Namespace
