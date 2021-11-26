@@ -1,41 +1,41 @@
 ﻿#Region "Microsoft.VisualBasic::56cb342680df6d60cf3cf1bd7dc91a42, Data_science\MachineLearning\MLDebugger\ANN\FrameExports.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module FrameExports
-    ' 
-    '     Function: ExportErrorCurve, ExportValueFrames, GetTimeIndex, NormalizeSample
-    ' 
-    ' /********************************************************************************/
+' Module FrameExports
+' 
+'     Function: ExportErrorCurve, ExportValueFrames, GetTimeIndex, NormalizeSample
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -44,7 +44,7 @@ Imports Microsoft.VisualBasic.Data.IO.netCDF
 Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.Normalizer
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.MachineLearning.StoreProcedure
+Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
 Imports Basic = Microsoft.VisualBasic.Language.Runtime
 Imports DataFrame = Microsoft.VisualBasic.Data.csv.IO.DataFrame
 Imports Excel = Microsoft.VisualBasic.Data.csv.IO.DataSet
