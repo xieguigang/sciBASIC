@@ -195,7 +195,8 @@ Namespace Convolutional
         Public Overrides Function ToString() As String
             Return layerCount & "+2 layers, " _
                 & totalWeightCount & " weights and " _
-                & totalBiasCount & " biases were loaded"
+                & totalBiasCount & " biases were loaded" & vbCrLf & vbCrLf _
+                & outputLayer.ToString
         End Function
     End Class
 End Namespace
