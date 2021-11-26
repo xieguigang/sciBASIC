@@ -6,7 +6,8 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Namespace Convolutional
 
     ''' <summary>
-    ''' CeNiN (means "fetus" in Turkish) is a minimal implementation of feed-forward phase of deep Convolutional Neural Networks
+    ''' CeNiN (means "fetus" in Turkish) is a minimal implementation of feed-forward 
+    ''' phase of deep Convolutional Neural Networks
     ''' </summary>
     ''' <remarks>
     ''' https://github.com/atasoyhus/CeNiN
@@ -137,15 +138,15 @@ Namespace Convolutional
             While Not endOfFile
                 Dim layerT As String = br.ReadString()
 
-                If layerT.Equals("conv") Then
+                If layerT = "conv" Then
                     currentLayer = loadConvolutionLayer(currentLayer, br)
-                ElseIf layerT.Equals("relu") Then
+                ElseIf layerT = "relu" Then
                     Dim rLayer As ReLU = New ReLU(currentLayer.outputDims)
                     rLayer.setOutputDims()
                     currentLayer = rLayer
-                ElseIf layerT.Equals("pool") Then
+                ElseIf layerT = "pool" Then
                     currentLayer = loadPoolLayer(currentLayer, br)
-                ElseIf layerT.Equals("softmax") Then
+                ElseIf layerT = "softmax" Then
                     Dim classes = New String(br.ReadInt32() - 1) {}
 
                     classCount = classes.Length
@@ -163,7 +164,7 @@ Namespace Convolutional
                     layerList.Add(outputLayer)
 
                     Continue While
-                ElseIf layerT.Equals("EOF") Then
+                ElseIf layerT = "EOF" Then
                     Exit While
                 Else
                     Throw New Exception("The following layer is not implemented: " & layerT)

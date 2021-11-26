@@ -46,5 +46,9 @@
         Public Overrides Function feedNext() As Layer
             Return layerFeedNext()
         End Function
+
+        Public Overrides Function ToString() As String
+            Return $"{m_classes.Length} class tags: [{m_classes.Take(6).JoinBy("; ")}...]"
+        End Function
     End Class
 End Namespace
