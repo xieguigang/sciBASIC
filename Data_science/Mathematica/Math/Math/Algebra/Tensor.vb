@@ -30,16 +30,16 @@ Namespace LinearAlgebra
 
         Shared ReadOnly sizeofFloat As Integer = Marshal.SizeOf(CSng(1.0))
 
-        Public Sub New(dims As Integer())
-            totalLengthField = multAll(dims)
-            Me.dims = CType(dims.Clone(), Integer())
-            updateDimProds()
+        Public Sub New(dimSize As Integer())
+            totalLengthField = multAll(dimSize)
+            dims = CType(dimSize.Clone(), Integer())
 
-            Me.consumedMem = totalLengthField * sizeofFloat
+            Call updateDimProds()
 
+            consumedMem = totalLengthField * sizeofFloat
             data = New Single(totalLengthField - 1) {}
 
-            For i = 0 To totalLengthField - 1
+            For i As Integer = 0 To totalLengthField - 1
                 data(i) = 0.0F
             Next
         End Sub
@@ -82,8 +82,11 @@ Namespace LinearAlgebra
                 ind += dimProds(i) * indexes(i)
             Next
 
-            If ind >= totalLengthField Then Throw New IndexOutOfRangeException()
-            Return ind
+            If ind >= totalLengthField Then
+                Throw New IndexOutOfRangeException()
+            Else
+                Return ind
+            End If
         End Function
 
         Private Shared Function multAll(array As Integer()) As Integer
@@ -97,24 +100,33 @@ Namespace LinearAlgebra
         End Function
 
         Public Function reshape(newDims As Integer()) As Boolean
-            If multAll(dims) <> multAll(newDims) Then Return False
-            dims = CType(newDims.Clone(), Integer())
-            updateDimProds()
+            If multAll(dims) <> multAll(newDims) Then
+                Return False
+            Else
+                dims = CType(newDims.Clone(), Integer())
+            End If
+
+            Call updateDimProds()
+
             Return True
         End Function
 
         Private Shared Function dimsEqual(t1 As Tensor, t2 As Tensor) As Boolean
-            If t1.dims.Length <> t2.dims.Length Then Return False
+            If t1.dims.Length <> t2.dims.Length Then
+                Return False
+            End If
 
             For i = 0 To t1.dims.Length - 1
-                If t1.dims(i) <> t2.dims(i) Then Return False
+                If t1.dims(i) <> t2.dims(i) Then
+                    Return False
+                End If
             Next
 
             Return True
         End Function
 
         Public Function clone() As Tensor
-            Dim t As Tensor = New Tensor(dims)
+            Dim t As New Tensor(dims)
 
             For i = 0 To totalLengthField - 1
                 t.data(i) = data(i)
@@ -124,7 +136,7 @@ Namespace LinearAlgebra
         End Function
 
         Public Shared Operator *(t1 As Tensor, f As Single) As Tensor
-            Dim t As Tensor = New Tensor(t1.dims)
+            Dim t As New Tensor(t1.dims)
 
             For i = 0 To t.totalLengthField - 1
                 t.data(i) = t1.data(i) * f
@@ -134,7 +146,7 @@ Namespace LinearAlgebra
         End Operator
 
         Public Shared Operator +(t1 As Tensor, f As Single) As Tensor
-            Dim t As Tensor = New Tensor(t1.dims)
+            Dim t As New Tensor(t1.dims)
 
             For i = 0 To t.totalLengthField - 1
                 t.data(i) = t1.data(i) + f
@@ -148,9 +160,17 @@ Namespace LinearAlgebra
         End Operator
 
         Public Shared Operator +(t1 As Tensor, t2 As Tensor) As Tensor
-            If t1.dims.Length = 2 AndAlso t2.dims.Length = 2 AndAlso (t1.dims(0) = 1 AndAlso t2.dims(1) = 1 OrElse t1.dims(1) = 1 AndAlso t2.dims(0) = 1) Then Return broadcastedAddition(t1, t2)
-            If Not dimsEqual(t1, t2) Then Return Nothing
-            Dim t As Tensor = New Tensor(t1.dims)
+            If t1.dims.Length = 2 AndAlso
+                t2.dims.Length = 2 AndAlso
+                (t1.dims(0) = 1 AndAlso t2.dims(1) = 1 OrElse t1.dims(1) = 1 AndAlso t2.dims(0) = 1) Then
+                Return broadcastedAddition(t1, t2)
+            End If
+
+            If Not dimsEqual(t1, t2) Then
+                Return Nothing
+            End If
+
+            Dim t As New Tensor(t1.dims)
 
             For i = 0 To t1.totalLengthField - 1
                 t.data(i) = t1.data(i) + t2.data(i)
@@ -195,9 +215,8 @@ Namespace LinearAlgebra
         Private Shared Function broadcastedAddition(t1 As Tensor, t2 As Tensor) As Tensor
             Dim dim1 = t1.totalLengthField
             Dim dim2 = t2.totalLengthField
-            Dim t As Tensor = New Tensor(New Integer() {dim1, dim2})
+            Dim t As New Tensor(New Integer() {dim1, dim2})
             Dim ind = New Integer() {0, 0}
-            ind(0) = 0
 
             While ind(0) < dim1
                 ind(1) = 0

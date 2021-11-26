@@ -28,8 +28,13 @@ Namespace Convolutional
 
                     While inputInd(2) < channelCount
                         f = inputTensor(inputInd)
-                        If f < 0 Then f = 0
-                        writeNextLayerInput(inputInd, f)
+
+                        If f < 0 Then
+                            f = 0
+                        End If
+
+                        Call writeNextLayerInput(inputInd, f)
+
                         inputInd(2) += 1
                     End While
 
@@ -39,7 +44,7 @@ Namespace Convolutional
                 inputInd(0) += 1
             End While
 
-            disposeInputTensor()
+            Call disposeInputTensor()
 
             Return Me
         End Function

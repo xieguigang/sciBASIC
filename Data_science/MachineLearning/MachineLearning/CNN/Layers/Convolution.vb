@@ -59,6 +59,7 @@ Namespace Convolutional
             End While
 
             Dim startingIndexes = possibleW + possibleH * inputWidth
+
             possibleH.Dispose()
             possibleW.Dispose()
             possibleH = New Tensor(New Integer() {filterHeight, 1})
@@ -131,13 +132,17 @@ Namespace Convolutional
                          Next
 
                          outputInd_ = f * z + g
-                         nextLayer.inputTensor.data(outputInd_) = sum + biases.data(f)
+
+                         SyncLock nextLayer.inputTensor.data
+                             nextLayer.inputTensor.data(outputInd_) = sum + biases.data(f)
+                         End SyncLock
                      Next
                  End Sub)
 
-            nextLayer.inputTensor.reshape(outputDims)
-            allInOne.Dispose()
-            disposeInputTensor()
+            Call nextLayer.inputTensor.reshape(outputDims)
+            Call allInOne.Dispose()
+
+            Call disposeInputTensor()
 
             Return Me
         End Function

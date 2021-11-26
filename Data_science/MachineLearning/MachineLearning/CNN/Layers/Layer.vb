@@ -4,7 +4,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Convolutional
 
-    Public MustInherit Class Layer
+    Public MustInherit Class Layer : Implements IDisposable
 
         Public MustOverride ReadOnly Property type As LayerTypes
 
@@ -47,6 +47,7 @@ Namespace Convolutional
         End Sub
 
         Public outputDims As Integer()
+        Private disposedValue As Boolean
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub setOutputDims()
@@ -77,7 +78,10 @@ Namespace Convolutional
             nextLayer.inputTensorMemAlloc()
         End Sub
 
-        Public Sub disposeInputTensor()
+        ''' <summary>
+        ''' release the tensor memory
+        ''' </summary>
+        Protected Sub disposeInputTensor()
             inputTensor.Dispose()
             inputTensor = Nothing
         End Sub
@@ -85,6 +89,34 @@ Namespace Convolutional
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub appendNext(nextLayer As Layer)
             Me.nextLayer = nextLayer
+        End Sub
+
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                If disposing Then
+                    ' TODO: dispose managed state (managed objects)
+                    If Not inputTensor Is Nothing Then
+                        Call disposeInputTensor()
+                    End If
+                End If
+
+                ' TODO: free unmanaged resources (unmanaged objects) and override finalizer
+                ' TODO: set large fields to null
+                disposedValue = True
+            End If
+        End Sub
+
+        ' ' TODO: override finalizer only if 'Dispose(disposing As Boolean)' has code to free unmanaged resources
+        ' Protected Overrides Sub Finalize()
+        '     ' Do not change this code. Put cleanup code in 'Dispose(disposing As Boolean)' method
+        '     Dispose(disposing:=False)
+        '     MyBase.Finalize()
+        ' End Sub
+
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' Do not change this code. Put cleanup code in 'Dispose(disposing As Boolean)' method
+            Dispose(disposing:=True)
+            GC.SuppressFinalize(Me)
         End Sub
     End Class
 End Namespace

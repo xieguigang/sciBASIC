@@ -37,15 +37,16 @@ Namespace Convolutional
             Dim inputInd = New Integer() {0, 0, 0}
             Dim outputInd = New Integer() {0, 0, 0}
             Dim max As Single
-            inputInd(2) = 0
+            Dim i As Integer = 0
+            Dim j As Integer = 0
 
             While inputInd(2) < channelCount
                 outputInd(2) = inputInd(2)
-                Dim i = 0
+                i = 0
 
                 While i <= inputHeight - poolHeight
                     outputInd(0) = CInt(stdNum.Floor(i / stride(0)))
-                    Dim j = 0
+                    j = 0
 
                     While j <= inputWidth - poolWidth
                         outputInd(1) = CInt(stdNum.Floor(j / stride(1)))
@@ -56,15 +57,20 @@ Namespace Convolutional
                             inputInd(1) = j
 
                             While inputInd(1) < j + poolWidth
-                                Dim f = inputTensor(inputInd)
-                                If f > max Then max = f
+                                Dim f As Single = inputTensor(inputInd)
+
+                                If f > max Then
+                                    max = f
+                                End If
+
                                 inputInd(1) += 1
                             End While
 
                             inputInd(0) += 1
                         End While
 
-                        writeNextLayerInput(outputInd, max)
+                        Call writeNextLayerInput(outputInd, max)
+
                         j += stride(1)
                     End While
 
