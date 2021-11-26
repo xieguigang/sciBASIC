@@ -1,6 +1,7 @@
 ﻿Imports stdNum = System.Math
 
 Namespace Convolutional
+
     Public Class Pool : Inherits Layer
 
         Public pool As Integer()
@@ -21,17 +22,16 @@ Namespace Convolutional
 
         Public Overloads Sub setOutputDims()
             outputDims = New Integer(2) {
-                CInt(stdNum.Floor(InputTensorDims(0) / stride(0))),
-                CInt(stdNum.Floor(InputTensorDims(1) / stride(1))),
-                InputTensorDims(2)
+                CInt(stdNum.Floor(inputTensorDims(0) / stride(0))),
+                CInt(stdNum.Floor(inputTensorDims(1) / stride(1))),
+                inputTensorDims(2)
             }
         End Sub
 
-        Public Overrides Function feedNext() As Layer
-            outputTensorMemAlloc()
-            Dim inputHeight = InputTensorDims(0)
-            Dim inputWidth = InputTensorDims(1)
-            Dim channelCount = InputTensorDims(2)
+        Protected Overrides Function layerFeedNext() As Layer
+            Dim inputHeight = inputTensorDims(0)
+            Dim inputWidth = inputTensorDims(1)
+            Dim channelCount = inputTensorDims(2)
             Dim poolHeight = pool(0)
             Dim poolWidth = pool(1)
             Dim inputInd = New Integer() {0, 0, 0}

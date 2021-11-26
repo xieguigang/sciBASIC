@@ -1,4 +1,5 @@
 ﻿
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Convolutional
@@ -9,13 +10,14 @@ Namespace Convolutional
 
         Public ReadOnly Property inputTensorDims As Integer()
 
-        Public paddedWriting As Boolean
+        Protected _paddedWriting As Boolean
+
         Public pad As Integer()
         Public inputTensor As Tensor = Nothing
         Public nextLayer As Layer
 
         Public Sub writeNextLayerInput(indexes As Integer(), value As Single)
-            If nextLayer.paddedWriting Then
+            If nextLayer._paddedWriting Then
                 Dim nInd As Integer() = CType(indexes.Clone(), Integer())
                 nInd(0) += nextLayer.pad(0)
                 nInd(1) += nextLayer.pad(2)
@@ -26,7 +28,7 @@ Namespace Convolutional
         End Sub
 
         Public Sub New(inputTensorDims As Integer())
-            paddedWriting = False
+            _paddedWriting = False
             _inputTensorDims = CType(inputTensorDims.Clone(), Integer())
         End Sub
 
@@ -34,9 +36,9 @@ Namespace Convolutional
             Me.pad = CType(pad.Clone(), Integer())
 
             If pad(0) > 0 OrElse pad(2) > 0 Then
-                paddedWriting = True
+                _paddedWriting = True
             Else
-                paddedWriting = False
+                _paddedWriting = False
             End If
 
             _inputTensorDims = CType(inputTensorDims.Clone(), Integer())
@@ -46,22 +48,31 @@ Namespace Convolutional
 
         Public outputDims As Integer()
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub setOutputDims()
             outputDims = CType(_inputTensorDims.Clone(), Integer())
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' <see cref="outputTensorMemAlloc"/> has been called in 
+        ''' caller function <see cref="feedNext"/>.
         ''' </summary>
         ''' <returns>
         ''' this function should be returns itself
         ''' </returns>
-        Public MustOverride Function feedNext() As Layer
+        Protected MustOverride Function layerFeedNext() As Layer
 
+        Public Overridable Function feedNext() As Layer
+            Call outputTensorMemAlloc()
+            Return layerFeedNext()
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub inputTensorMemAlloc()
             inputTensor = New Tensor(_inputTensorDims)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub outputTensorMemAlloc()
             nextLayer.inputTensorMemAlloc()
         End Sub
@@ -71,6 +82,7 @@ Namespace Convolutional
             inputTensor = Nothing
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub appendNext(nextLayer As Layer)
             Me.nextLayer = nextLayer
         End Sub

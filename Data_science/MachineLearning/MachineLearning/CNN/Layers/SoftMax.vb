@@ -2,6 +2,7 @@
 Imports stdNum = System.Math
 
 Namespace Convolutional
+
     Public Class SoftMax : Inherits Layer
 
         Public Overrides ReadOnly Property type As LayerTypes
@@ -14,8 +15,7 @@ Namespace Convolutional
             Call MyBase.New(inputTensorDims)
         End Sub
 
-        Public Overrides Function feedNext() As Layer
-            outputTensorMemAlloc()
+        Protected Overrides Function layerFeedNext() As Layer
             Dim max = Single.MinValue
 
             For i = 0 To inputTensor.TotalLength - 1

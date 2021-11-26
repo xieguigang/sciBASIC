@@ -26,11 +26,11 @@ Namespace Convolutional
         Public Overloads Sub setOutputDims()
             Dim newHeight = CInt(stdNum.Floor((inputTensorDims(0) - weights.Dimensions(0)) / stride(0))) + 1
             Dim newWidth = CInt(stdNum.Floor((inputTensorDims(1) - weights.Dimensions(1)) / stride(1))) + 1
+
             outputDims = New Integer() {newHeight, newWidth, weights.Dimensions(3)}
         End Sub
 
-        Public Overrides Function feedNext() As Layer
-            outputTensorMemAlloc()
+        Protected Overrides Function layerFeedNext() As Layer
             Dim inputHeight = inputTensorDims(0)
             Dim inputWidth = inputTensorDims(1)
             Dim filterHeight = weights.Dimensions(0)

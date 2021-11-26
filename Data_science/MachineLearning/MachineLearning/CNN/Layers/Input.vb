@@ -1,10 +1,14 @@
 ﻿Imports System.Drawing
 Imports System.Drawing.Imaging
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.MachineLearning.Convolutional.ImageProcessor
 
 Namespace Convolutional
 
+    ''' <summary>
+    ''' the layer for image inputs
+    ''' </summary>
     Public Class Input : Inherits Layer
 
         Public inputSize As Integer()
@@ -16,7 +20,7 @@ Namespace Convolutional
             End Get
         End Property
 
-        Public ReadOnly Property ResizedInputBmp As Bitmap
+        Public ReadOnly Property resizedInputBmp As Bitmap
 
         Public Sub New(inputTensorDims As Integer())
             MyBase.New(New Integer() {0, 0, 0})
@@ -25,31 +29,44 @@ Namespace Convolutional
             avgPixel = New Single(2) {}
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Sub setOutputDims()
             outputDims = CType(inputSize.Clone(), Integer())
         End Sub
 
         Public Function setInput(input As Bitmap, resizingMethod As ResizingMethod) As Input
-            outputTensorMemAlloc()
-            Dim iBitmap As Bitmap = CType(input.Clone(), Bitmap)
-            _ResizedInputBmp = ImageProcessor.resizeBitmap(iBitmap, resizingMethod, inputSize)
-            iBitmap.Dispose()
+            Using iBitmap As Bitmap = CType(input.Clone(), Bitmap)
+                outputTensorMemAlloc()
+                _resizedInputBmp = ImageProcessor.resizeBitmap(iBitmap, resizingMethod, inputSize)
+            End Using
 
             Return Me
         End Function
 
-        Public Overrides Function feedNext() As Layer
-            Dim bmpData As BitmapData = _ResizedInputBmp.LockBits(New Rectangle(0, 0, inputSize(1), inputSize(0)), ImageLockMode.ReadOnly, _ResizedInputBmp.PixelFormat)
-            Dim stride = bmpData.Stride
-            Dim emptyBytesCount = stride - bmpData.Width * 3
-            Dim rowLengthWithoutEB = stride - emptyBytesCount
+        ''' <summary>
+        ''' do nothing in the image input layer
+        ''' </summary>
+        ''' <returns></returns>
+        Protected Overrides Function layerFeedNext() As Layer
+            Return Me
+        End Function
 
-            Dim dataPtr = bmpData.Scan0
-            Dim byteCount = stride * bmpData.Height
-            Dim i = 0
-            Dim pControl = 0
+        ''' <summary>
+        ''' load test bitmap image data
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides Function feedNext() As Layer
+            Dim fullImage As New Rectangle(0, 0, inputSize(1), inputSize(0))
+            Dim bmpData As BitmapData = _resizedInputBmp.LockBits(fullImage, ImageLockMode.ReadOnly, _resizedInputBmp.PixelFormat)
+            Dim stride As Integer = bmpData.Stride
+            Dim emptyBytesCount As Integer = stride - bmpData.Width * 3
+            Dim rowLengthWithoutEB As Integer = stride - emptyBytesCount
+            Dim dataPtr As IntPtr = bmpData.Scan0
+            Dim byteCount As Integer = stride * bmpData.Height
+            Dim i As Integer = 0
+            Dim pixel As Integer = 0
             Dim b, g, r As Integer
-            Dim ind = New Integer() {0, 0, 0}
+            Dim ind As Integer() = New Integer() {0, 0, 0}
 
             While i < byteCount
                 b = Marshal.ReadByte(dataPtr)
@@ -59,25 +76,25 @@ Namespace Convolutional
                 r = Marshal.ReadByte(dataPtr)
                 dataPtr += 1
                 ind(2) = 0
-                writeNextLayerInput(ind, r - avgPixel(0))
+                Call writeNextLayerInput(ind, r - avgPixel(0))
                 ind(2) = 1
-                writeNextLayerInput(ind, g - avgPixel(1))
+                Call writeNextLayerInput(ind, g - avgPixel(1))
                 ind(2) = 2
-                writeNextLayerInput(ind, b - avgPixel(2))
+                Call writeNextLayerInput(ind, b - avgPixel(2))
                 ind(1) += 1
-                pControl += 3
+                pixel += 3
                 i += 3
 
-                If pControl = rowLengthWithoutEB Then
-                    pControl = 0
+                If pixel = rowLengthWithoutEB Then
+                    pixel = 0
                     dataPtr += emptyBytesCount
                     ind(1) = 0
                     ind(0) += 1
                 End If
             End While
 
-            _ResizedInputBmp.UnlockBits(bmpData)
-            _ResizedInputBmp.Dispose()
+            Call _resizedInputBmp.UnlockBits(bmpData)
+            Call _resizedInputBmp.Dispose()
 
             Return Me
         End Function
