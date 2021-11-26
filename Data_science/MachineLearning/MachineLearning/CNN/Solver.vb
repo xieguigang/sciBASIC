@@ -45,13 +45,12 @@ Namespace Convolutional
             Dim HLine As String = New String("-"c, 100)
 
             Call dev.WriteLine(HLine, "")
+            Call dev.WriteLine("THE HIGHEST 3 PROBABILITIES: ", "")
 
-            For i = 2 To 0 Step -1
+            For i = 0 To 2
                 Call dev.WriteLine(" #" & (i + 1) & "   " & OutputLayer.sortedClasses(i) & " (" & stdNum.Round(OutputLayer.probabilities(i), 3) & ")", "")
             Next
 
-            Call dev.WriteLine(HLine, "")
-            Call dev.WriteLine("THE HIGHEST 3 PROBABILITIES: ", "")
             Call dev.WriteLine(HLine, "")
             Call dev.WriteLine("DECISION: " & Decision)
             Call dev.WriteLine(HLine, "")
