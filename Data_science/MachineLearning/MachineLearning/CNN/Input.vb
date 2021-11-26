@@ -60,12 +60,14 @@ Namespace Convolutional
             Return resizedBmp
         End Function
 
-        Public Sub setInput(input As Bitmap, resizingMethod As ResizingMethod)
+        Public Function setInput(input As Bitmap, resizingMethod As ResizingMethod) As Input
             outputTensorMemAlloc()
             Dim iBitmap As Bitmap = CType(input.Clone(), Bitmap)
             resizedInputBmpField = resizeBitmap(iBitmap, resizingMethod)
             iBitmap.Dispose()
-        End Sub
+
+            Return Me
+        End Function
 
         Public Overrides Sub feedNext()
             Dim bmpData As BitmapData = resizedInputBmpField.LockBits(New Rectangle(0, 0, inputSize(1), inputSize(0)), ImageLockMode.ReadOnly, resizedInputBmpField.PixelFormat)

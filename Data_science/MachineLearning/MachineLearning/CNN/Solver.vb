@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -9,41 +10,46 @@ Namespace Convolutional
     Public Module Solver
 
         <Extension>
-        Public Function DetectObject(cnn As CNN, image As Bitmap) As NamedValue(Of Double)()
-            cnn.inputLayer.setInput(image, Input.ResizingMethod.ZeroPad)
-            Dim CurrentLayer As Layer = cnn.inputLayer
+        Public Function DetectObject(cnn As CeNiN, image As Bitmap, Optional dev As TextWriter = Nothing) As NamedValue(Of Double)()
+            Dim CurrentLayer As Layer = cnn.inputLayer.setInput(image, Input.ResizingMethod.ZeroPad)
             Dim i As Integer = 0
             Dim start As Long = App.NanoTime
 
+            dev = dev Or App.StdOut
+
             While CurrentLayer.nextLayer IsNot Nothing
                 If i = 0 Then
-                    Console.WriteLine("Loading bitmap data...")
+                    dev.WriteLine("Loading bitmap data...")
                 Else
-                    Console.WriteLine("Layer " & i & " (" & CurrentLayer.type & ") ...")
+                    dev.WriteLine("Layer " & i & " (" & CurrentLayer.type & ") ...")
                 End If
 
                 Application.DoEvents()
                 CurrentLayer.feedNext()
                 CurrentLayer = CurrentLayer.nextLayer
                 i += 1
+
+                Call dev.Flush()
             End While
 
             Dim OutputLayer As Output = CType(CurrentLayer, Output)
-            Console.WriteLine("Finished in " & TimeSpan.FromTicks(App.NanoTime - start).FormatTime & " seconds")
+
+            Call dev.WriteLine("Finished in " & TimeSpan.FromTicks(App.NanoTime - start).FormatTime & " seconds")
 
             Dim Decision As String = OutputLayer.getDecision()
             Dim HLine As String = New String("-"c, 100)
-            Console.WriteLine(HLine, "")
+
+            Call dev.WriteLine(HLine, "")
 
             For i = 2 To 0 Step -1
-                Console.WriteLine(" #" & (i + 1) & "   " & OutputLayer.sortedClasses(i) & " (" & stdNum.Round(OutputLayer.probabilities(i), 3) & ")", "")
+                Call dev.WriteLine(" #" & (i + 1) & "   " & OutputLayer.sortedClasses(i) & " (" & stdNum.Round(OutputLayer.probabilities(i), 3) & ")", "")
             Next
 
-            Console.WriteLine(HLine, "")
-            Console.WriteLine("THE HIGHEST 3 PROBABILITIES: ", "")
-            Console.WriteLine(HLine, "")
-            Console.WriteLine("DECISION: " & Decision)
-            Console.WriteLine(HLine, "")
+            Call dev.WriteLine(HLine, "")
+            Call dev.WriteLine("THE HIGHEST 3 PROBABILITIES: ", "")
+            Call dev.WriteLine(HLine, "")
+            Call dev.WriteLine("DECISION: " & Decision)
+            Call dev.WriteLine(HLine, "")
 
             Return OutputLayer.sortedClasses _
                 .Select(Function(tag, j)

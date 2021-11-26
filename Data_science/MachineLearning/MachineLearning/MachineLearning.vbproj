@@ -678,7 +678,7 @@
   <ItemGroup>
     <Compile Include="CNN\Solver.vb" />
     <Compile Include="CNN\NamespaceDoc.vb" />
-    <Compile Include="CNN\CNN.vb" />
+    <Compile Include="CNN\CeNiN.vb" />
     <Compile Include="CNN\Conv.vb" />
     <Compile Include="CNN\Input.vb" />
     <Compile Include="CNN\Layer.vb" />

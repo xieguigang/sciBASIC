@@ -1,10 +1,18 @@
 ﻿Imports System.IO
 Imports System.Text
 
-
 Namespace Convolutional
-    Public Class CNN
-        Private Const CeNiN_FILE_HEADER As String = "CeNiN NEURAL NETWORK FILE"
+
+    ''' <summary>
+    ''' CeNiN (means "fetus" in Turkish) is a minimal implementation of feed-forward phase of deep Convolutional Neural Networks
+    ''' </summary>
+    ''' <remarks>
+    ''' https://github.com/atasoyhus/CeNiN
+    ''' </remarks>
+    Public Class CeNiN
+
+        Const CeNiN_FILE_HEADER As String = "CeNiN NEURAL NETWORK FILE"
+
         Public layerCount As Integer
         Public classCount As Integer
         Public totalWeightCount As Integer
@@ -25,7 +33,11 @@ Namespace Convolutional
                 f = New FileStream(path, FileMode.Open)
                 br = New BinaryReader(f, Encoding.ASCII, False)
                 Dim c = br.ReadChars(25)
-                If Not (New String(c)).Equals(CeNiN_FILE_HEADER) Then Throw New Exception("Invalid file header!")
+
+                If Not (New String(c)).Equals(CeNiN_FILE_HEADER) Then
+                    Throw New Exception("Invalid file header!")
+                End If
+
                 layerCount = br.ReadInt32()
                 Dim inputSize = New Integer(2) {}
 
