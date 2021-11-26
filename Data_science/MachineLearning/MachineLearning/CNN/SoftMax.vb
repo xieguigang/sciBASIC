@@ -4,9 +4,14 @@ Imports stdNum = System.Math
 Namespace Convolutional
     Public Class SoftMax : Inherits Layer
 
+        Public Overrides ReadOnly Property type As LayerTypes
+            Get
+                Return LayerTypes.SoftMax
+            End Get
+        End Property
+
         Public Sub New(inputTensorDims As Integer())
-            MyBase.New(inputTensorDims)
-            type = "SoftMax"
+            Call MyBase.New(inputTensorDims)
         End Sub
 
         Public Overrides Sub feedNext()

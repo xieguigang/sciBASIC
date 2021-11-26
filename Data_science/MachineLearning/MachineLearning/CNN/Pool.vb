@@ -1,5 +1,4 @@
-﻿Imports System
-Imports stdNum = System.Math
+﻿Imports stdNum = System.Math
 
 Namespace Convolutional
     Public Class Pool : Inherits Layer
@@ -7,9 +6,15 @@ Namespace Convolutional
         Public pool As Integer()
         Public stride As Integer()
 
+        Public Overrides ReadOnly Property type As LayerTypes
+            Get
+                Return LayerTypes.Pool
+            End Get
+        End Property
+
         Public Sub New(inputTensorDims As Integer(), pad As Integer())
-            MyBase.New(inputTensorDims, pad)
-            type = "Pool"
+            Call MyBase.New(inputTensorDims, pad)
+
             pool = New Integer(1) {}
             stride = New Integer(1) {}
         End Sub

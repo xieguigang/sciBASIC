@@ -676,6 +676,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CNN\LayerTypes.vb" />
     <Compile Include="CNN\Solver.vb" />
     <Compile Include="CNN\NamespaceDoc.vb" />
     <Compile Include="CNN\CeNiN.vb" />

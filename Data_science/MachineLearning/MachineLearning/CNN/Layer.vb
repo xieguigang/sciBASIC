@@ -4,7 +4,8 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Namespace Convolutional
     Public MustInherit Class Layer
 
-        Public type As String
+        Public MustOverride ReadOnly Property type As LayerTypes
+
         Private inputTensorDimsField As Integer()
 
         Public ReadOnly Property InputTensorDims As Integer()

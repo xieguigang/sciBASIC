@@ -9,6 +9,12 @@ Namespace Convolutional
         Public inputSize As Integer()
         Public avgPixel As Single()
 
+        Public Overrides ReadOnly Property type As LayerTypes
+            Get
+                Return LayerTypes.Input
+            End Get
+        End Property
+
         Public Enum ResizingMethod
             Stretch
             ZeroPad
@@ -24,7 +30,7 @@ Namespace Convolutional
 
         Public Sub New(inputTensorDims As Integer())
             MyBase.New(New Integer() {0, 0, 0})
-            type = "Input"
+
             inputSize = CType(inputTensorDims.Clone(), Integer())
             avgPixel = New Single(2) {}
         End Sub
