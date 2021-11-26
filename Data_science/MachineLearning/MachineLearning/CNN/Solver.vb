@@ -26,7 +26,7 @@ Namespace Convolutional
                 If i = 0 Then
                     dev.WriteLine("Loading bitmap data...")
                 Else
-                    dev.WriteLine("Layer " & i & " (" & currentLayer.type & ") ...")
+                    dev.WriteLine("Layer " & i & " (" & currentLayer.type.Description & ") ...")
                 End If
 
                 Call Application.DoEvents()
