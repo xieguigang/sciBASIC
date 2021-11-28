@@ -40,6 +40,8 @@ Namespace Convolutional
 
                 Call model.save(layer, wr)
             Next
+
+            wr.Write("EOF")
         End Sub
 
         <Extension>
@@ -55,7 +57,6 @@ Namespace Convolutional
                     Throw New InvalidDataException(layer.type.ToString)
             End Select
 
-            wr.Write("EOF")
             wr.Flush()
         End Sub
 
