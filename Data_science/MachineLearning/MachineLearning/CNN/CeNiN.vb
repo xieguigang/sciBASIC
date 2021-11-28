@@ -94,7 +94,7 @@ Namespace Convolutional
                 pad(i) = br.ReadByte()
             Next
 
-            Dim pLayer As Pool = New Pool(currentLayer.outputDims, pad)
+            Dim pLayer As New Pool(currentLayer.outputDims, pad)
 
             For i = 0 To 2 - 1
                 pLayer.pool(i) = br.ReadByte()

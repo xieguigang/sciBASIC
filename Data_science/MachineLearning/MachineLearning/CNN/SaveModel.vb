@@ -11,6 +11,7 @@ Namespace Convolutional
             Using writer As New BinaryWriter(file, Encoding.ASCII)
                 Try
                     Call model.save(writer)
+                    Call writer.Flush()
                 Catch ex As Exception
                     Call App.LogException(ex)
                     Return False
@@ -22,7 +23,7 @@ Namespace Convolutional
 
         <Extension>
         Private Sub save(model As CeNiN, wr As BinaryWriter)
-            Call wr.Write(CeNiN.CeNiN_FILE_HEADER)
+            Call wr.Write(Encoding.ASCII.GetBytes(CeNiN.CeNiN_FILE_HEADER))
             Call wr.Write(model.layerCount)
 
             For Each i As Integer In model.inputSize
@@ -33,7 +34,10 @@ Namespace Convolutional
             Next
 
             ' write for each layer
-            For Each layer As Layer In model.layers
+            For Each layer As Layer In From cv As Layer
+                                       In model.layers
+                                       Where Not (TypeOf cv Is Input OrElse TypeOf cv Is Output)
+
                 Call model.save(layer, wr)
             Next
         End Sub
@@ -50,21 +54,37 @@ Namespace Convolutional
                 Case Else
                     Throw New InvalidDataException(layer.type.ToString)
             End Select
+
+            wr.Write("EOF")
+            wr.Flush()
         End Sub
 
         <Extension>
         Private Sub save(model As CeNiN, layer As SoftMax, wr As BinaryWriter)
+            ' class count
+            Call wr.Write(model.classCount)
 
+            For Each name As String In model.outputLayer.m_classes
+                Call wr.Write(name)
+            Next
         End Sub
 
         <Extension>
         Private Sub save(model As CeNiN, layer As Pool, wr As BinaryWriter)
-
+            For Each pad As Integer In layer.pad
+                Call wr.Write(CByte(pad))
+            Next
+            For Each p As Integer In layer.pool
+                Call wr.Write(CByte(p))
+            Next
+            For Each s As Integer In layer.stride
+                Call wr.Write(CByte(s))
+            Next
         End Sub
 
         <Extension>
         Private Sub save(model As CeNiN, layer As ReLU, wr As BinaryWriter)
-
+            ' do nothing
         End Sub
 
         <Extension>

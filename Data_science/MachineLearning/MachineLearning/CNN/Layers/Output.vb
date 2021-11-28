@@ -2,7 +2,7 @@
 
     Public Class Output : Inherits Layer
 
-        ReadOnly m_classes As String()
+        Friend ReadOnly m_classes As String()
 
         Public ReadOnly Property sortedClasses As String()
         Public ReadOnly Property probabilities As Single()

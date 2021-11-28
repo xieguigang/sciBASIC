@@ -54,6 +54,10 @@ Namespace Convolutional
             outputDims = CType(_inputTensorDims.Clone(), Integer())
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return type.Description
+        End Function
+
         ''' <summary>
         ''' <see cref="outputTensorMemAlloc"/> has been called in 
         ''' caller function <see cref="feedNext"/>.
