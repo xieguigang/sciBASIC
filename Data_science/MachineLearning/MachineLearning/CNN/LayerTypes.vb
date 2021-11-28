@@ -1,11 +1,13 @@
-﻿Namespace Convolutional
+﻿Imports System.ComponentModel
+
+Namespace Convolutional
 
     Public Enum LayerTypes
-        Convolution
-        Input
-        Output
-        Pool
-        ReLU
-        SoftMax
+        <Description("conv")> Convolution
+        <Description("input")> Input
+        <Description("output")> Output
+        <Description("pool")> Pool
+        <Description("relu")> ReLU
+        <Description("softmax")> SoftMax
     End Enum
 End Namespace

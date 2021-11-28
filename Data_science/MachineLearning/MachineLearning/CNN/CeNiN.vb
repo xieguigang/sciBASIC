@@ -14,7 +14,7 @@ Namespace Convolutional
     ''' </remarks>
     Public Class CeNiN
 
-        Const CeNiN_FILE_HEADER As String = "CeNiN NEURAL NETWORK FILE"
+        Friend Const CeNiN_FILE_HEADER As String = "CeNiN NEURAL NETWORK FILE"
 
         Public layerCount As Integer
         Public classCount As Integer
@@ -23,6 +23,12 @@ Namespace Convolutional
         Public layers As Layer()
         Public inputLayer As Input
         Public outputLayer As Output
+
+        Public ReadOnly Property inputSize As Integer()
+            Get
+                Return inputLayer.inputSize
+            End Get
+        End Property
 
         Private Sub New()
         End Sub
@@ -51,7 +57,7 @@ Namespace Convolutional
             Next
 
             Dim inputTensorDims = currentLayer.outputDims
-            Dim cLayer As Convolution = New Convolution(inputTensorDims, pad)
+            Dim cLayer As New Convolution(inputTensorDims, pad)
             Dim dims = New Integer(3) {}
 
             For i = 0 To 4 - 1
