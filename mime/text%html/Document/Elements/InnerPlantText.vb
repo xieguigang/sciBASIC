@@ -81,7 +81,7 @@ Namespace Document
         End Sub
 
         Public Overrides Function ToString() As String
-            Return InnerText
+            Return InnerText Or EmptyString
         End Function
 
         Public Overridable Function GetHtmlText() As String

@@ -678,6 +678,7 @@
   <ItemGroup>
     <Compile Include="CNN\ImageProcessor.vb" />
     <Compile Include="CNN\LayerTypes.vb" />
+    <Compile Include="CNN\SaveModel.vb" />
     <Compile Include="CNN\Solver.vb" />
     <Compile Include="CNN\NamespaceDoc.vb" />
     <Compile Include="CNN\CeNiN.vb" />

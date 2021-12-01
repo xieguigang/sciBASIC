@@ -86,7 +86,7 @@ Namespace BSON
             Dim array As New JsonArray()
             Dim key As Value(Of String) = ""
 
-            While obj.ContainsKey(key = Convert.ToString(++i))
+            While obj.HasObjectKey(key = Convert.ToString(++i))
                 Call array.Add(obj(key))
             End While
 

@@ -62,7 +62,8 @@ Public Class XPathSelector : Inherits Parser
                     .Select(Function(n)
                                 Return DirectCast(DirectCast(n, HtmlElement), InnerPlantText)
                             End Function) _
-                    .ToArray
+                    .ToArray,
+                .Attributes = {AutoContext.Attribute}
             }
         Else
             query = engine.QuerySingle(document)

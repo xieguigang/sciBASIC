@@ -112,19 +112,24 @@ Public Module CollectionValueGetter
     End Function
 
     ''' <summary>
-    ''' This is a safely method for gets the value in a array, if the index was outside of the boundary, then the default value will be return.
+    ''' This is a safely method for gets the value in a array, if the index was 
+    ''' outside of the boundary, then the default value will be return.
     ''' (假若下标越界的话会返回默认值)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="array"></param>
     ''' <param name="index"></param>
-    ''' <param name="[default]">Default value for return when the array object is nothing or index outside of the boundary.</param>
+    ''' <param name="[default]">
+    ''' Default value for return when the array object is nothing or index outside of the boundary.
+    ''' </param>
     ''' <returns></returns>
-    <Extension> Public Function ElementAtOrDefault(Of T)(array As T(), index As Integer, Optional [default] As T = Nothing) As T
+    <Extension>
+    Public Function ElementAtOrDefault(Of T)(array As T(), index As Integer, Optional [default] As T = Nothing) As T
         If array.IsNullOrEmpty Then
             Return [default]
         End If
 
+        ' 负数值直接返回默认值
         If index < 0 OrElse index >= array.Length Then
             Return [default]
         End If

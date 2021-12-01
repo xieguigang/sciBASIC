@@ -139,12 +139,14 @@ Public Class CSSSelector : Inherits Parser
                 .TagName = selector.query,
                 .HtmlElements = DirectCast(document, HtmlElement) _
                     .GetDirectChilds(list) _
-                    .ToArray
+                    .ToArray,
+                .Attributes = {AutoContext.Attribute}
             }
         ElseIf selector.isArray AndAlso selector.n = "*" Then
             Return New HtmlElement With {
                 .TagName = selector.query,
-                .HtmlElements = list
+                .HtmlElements = list,
+                .Attributes = {AutoContext.Attribute}
             }
         Else
             Return GetElementByIndex(list, selector.ParseIndex)
@@ -165,12 +167,14 @@ Public Class CSSSelector : Inherits Parser
                 .TagName = selector.query,
                 .HtmlElements = DirectCast(document, HtmlElement) _
                     .GetDirectChilds(list) _
-                    .ToArray
+                    .ToArray,
+                .Attributes = {AutoContext.Attribute}
             }
         ElseIf selector.isArray AndAlso selector.n = "*" Then
             Return New HtmlElement With {
                 .TagName = selector.query,
-                .HtmlElements = list
+                .HtmlElements = list,
+                .Attributes = {AutoContext.Attribute}
             }
         Else
             Return GetElementByIndex(list, selector.ParseIndex)

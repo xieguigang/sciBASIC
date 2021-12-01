@@ -295,6 +295,7 @@
     <Compile Include="Language\Token.vb" />
     <Compile Include="Language\Tokens.vb" />
     <Compile Include="QueryParser.vb" />
+    <Compile Include="Query\AutoContext.vb" />
     <Compile Include="Query\Parser\AttributeSelector.vb" />
     <Compile Include="Query\Parser\FunctionParser.vb" />
     <Compile Include="Query\Parser\XPathSelector.vb" />
@@ -302,6 +303,7 @@
     <Compile Include="Query\Parser\Parser.vb" />
     <Compile Include="Query\Query.vb" />
     <Compile Include="Engine.vb" />
+    <Compile Include="TextParser\FunctionModel\CustomFunction.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -319,7 +321,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="TextParser\BaseInvoke.vb" />
-    <Compile Include="TextParser\ParserFunction.vb" />
+    <Compile Include="TextParser\FunctionModel\InternalInvoke.vb" />
+    <Compile Include="TextParser\FunctionModel\ParserFunction.vb" />
+    <Compile Include="TextParser\Html.vb" />
+    <Compile Include="TextParser\LINQ.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

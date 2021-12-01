@@ -83,6 +83,13 @@ Namespace Net.Http
             Next
         End Sub
 
+        Private Sub New()
+        End Sub
+
+        Public Shared Function Header404NotFound() As ResponseHeaders
+            Return New ResponseHeaders
+        End Function
+
         Public Function TryGetValue(header As HttpHeaderName) As String
             Return headers.TryGetValue(header)
         End Function

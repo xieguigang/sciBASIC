@@ -76,7 +76,8 @@ Public MustInherit Class Parser
     Protected Shared Function GetElementByIndex(list As InnerPlantText(), i As Integer?) As InnerPlantText
         If i Is Nothing Then
             Return New HtmlElement With {
-                .HtmlElements = list
+                .HtmlElements = list,
+                .Attributes = {AutoContext.Attribute}
             }
         ElseIf i >= list.Length Then
             Return New InnerPlantText With {.InnerText = ""}

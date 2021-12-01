@@ -59,7 +59,7 @@ Public Module ExtendedDictionary
         End If
 
         For Each key$ In defines.Keys
-            If model.ContainsKey(key$) Then
+            If model.HasObjectKey(key$) Then
                 Dim o As JsonElement = model(key)
                 Dim j$ = o.BuildJsonString(opts)
                 Dim entry As PropertyInfo = defines(key$)

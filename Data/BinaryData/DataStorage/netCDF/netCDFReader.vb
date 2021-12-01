@@ -264,6 +264,17 @@ Namespace netCDF
         ''' Retrieves the data for a given variable
         ''' </summary>
         ''' <param name="variableName">Name of the variable to search Or variable object</param>
+        ''' <param name="value">List with the variable values</param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub getDataVariable(variableName As String, ByRef value As ICDFDataVector)
+            value = getDataVariable(variableName)
+        End Sub
+
+        ''' <summary>
+        ''' Retrieves the data for a given variable
+        ''' </summary>
+        ''' <param name="variableName">Name of the variable to search Or variable object</param>
         ''' <returns>List with the variable values</returns>
         Public Function getDataVariable(variableName As String) As ICDFDataVector
             ' search the variable

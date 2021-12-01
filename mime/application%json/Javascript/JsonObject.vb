@@ -1,52 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::b42e318a14b082684f220ddf4cd297ac, mime\application%json\Javascript\JsonObject.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class JsonObject
-    ' 
-    '         Properties: isArray
-    ' 
-    '         Function: ContainsElement, ContainsKey, (+2 Overloads) CreateObject, GetEnumerator, IEnumerable_GetEnumerator
-    '                   Remove, Score, ToJsonArray, ToString
-    ' 
-    '         Sub: (+2 Overloads) Add, (+2 Overloads) Dispose, WriteBuffer
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class JsonObject
+' 
+'         Properties: isArray
+' 
+'         Function: ContainsElement, ContainsKey, (+2 Overloads) CreateObject, GetEnumerator, IEnumerable_GetEnumerator
+'                   Remove, Score, ToJsonArray, ToString
+' 
+'         Sub: (+2 Overloads) Add, (+2 Overloads) Dispose, WriteBuffer
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 
@@ -88,16 +89,34 @@ Namespace Javascript
         End Property
 #End Region
 
+        ''' <summary>
+        ''' get all member names in current json object
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property ObjectKeys As String()
+            Get
+                Return array.Keys.ToArray
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Does all of the member names in current json object is
+        ''' a number[array schema]?
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property isArray As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return array.Keys.All(Function(i) i.IsPattern("\d+"))
             End Get
         End Property
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(key As String, element As JsonElement)
             Call array.Add(key, element)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(key$, value As Object)
             Call array.Add(key, New JsonValue(value))
         End Sub
@@ -106,18 +125,31 @@ Namespace Javascript
         ''' write bson buffer
         ''' </summary>
         ''' <param name="buffer"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub WriteBuffer(buffer As FileStream)
             Call BSON.WriteBuffer(Me, buffer)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Remove(key As String) As Boolean
             Return array.Remove(key)
         End Function
 
-        Public Function ContainsKey(key As String) As Boolean
+        ''' <summary>
+        ''' Does the current json object has the required object member? 
+        ''' </summary>
+        ''' <param name="key">
+        ''' the object member name
+        ''' </param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function HasObjectKey(key As String) As Boolean
             Return array.ContainsKey(key)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ContainsElement(element As JsonElement) As Boolean
             Return array.ContainsValue(element)
         End Function
@@ -149,6 +181,8 @@ Namespace Javascript
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CreateObject(Of T)() As T
             Return CreateObject(type:=GetType(T))
         End Function
@@ -164,6 +198,7 @@ Namespace Javascript
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return "JsonObject::[" & array.Keys.JoinBy(", ") & "]"
         End Function
@@ -177,6 +212,7 @@ Namespace Javascript
             Next
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
             Yield GetEnumerator()
         End Function

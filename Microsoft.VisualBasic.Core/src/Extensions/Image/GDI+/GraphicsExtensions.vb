@@ -402,7 +402,7 @@ Namespace Imaging
                                   Optional base64 As Boolean = False,
                                   Optional throwEx As Boolean = True) As Image
             If base64 Then
-                Dim base64String = path.ReadAllText
+                Dim base64String = path.SolveStream
                 Dim img As Image = base64String.GetImage
                 Return img
             Else
