@@ -3,11 +3,11 @@
         Public Property Word As String
         Public Property Tag As String
 
-        Private Overloads Function Equals(ByVal other As PartOfSpeech) As Boolean
+        Private Overloads Function Equals(other As PartOfSpeech) As Boolean
             Return Equals(Word, other.Word) AndAlso Equals(Tag, other.Tag)
         End Function
 
-        Public Overrides Function Equals(ByVal obj As Object) As Boolean
+        Public Overrides Function Equals(obj As Object) As Boolean
             If ReferenceEquals(Nothing, obj) Then Return False
             If ReferenceEquals(Me, obj) Then Return True
 

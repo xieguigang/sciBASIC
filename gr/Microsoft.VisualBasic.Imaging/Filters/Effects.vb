@@ -49,7 +49,7 @@ Namespace Filters
     Public Module Effects
 
         <Extension>
-        Public Function Pencil(img As BitmapBuffer, Optional ByVal Sensitivity As Long = 25, Optional woodCarving As Boolean = False) As BitmapBuffer
+        Public Function Pencil(img As BitmapBuffer, Optional Sensitivity As Long = 25, Optional woodCarving As Boolean = False) As BitmapBuffer
             Dim M As Long
             Dim N As Long
             Dim Col As Long
@@ -190,7 +190,7 @@ Namespace Filters
         End Function
 
         <Extension>
-        Public Function Sharp(img As BitmapBuffer, Optional ByVal SharpDgree As Single = 0.3, Optional max As Double = 255) As BitmapBuffer
+        Public Function Sharp(img As BitmapBuffer, Optional SharpDgree As Single = 0.3, Optional max As Double = 255) As BitmapBuffer
             Dim OutPutWid = img.Width
             Dim OutPutHei = img.Height
             Dim Div1 As Single = 1 + SharpDgree

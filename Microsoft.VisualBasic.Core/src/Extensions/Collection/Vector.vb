@@ -64,7 +64,7 @@ Imports Microsoft.VisualBasic.My.JavaScript.Linq
 Public Module VectorExtensions
 
     <Extension>
-    Public Sub RotateLeft(Of T)(ByRef ArrayToRotate As T(), ByVal iPlacesToRotate As Integer)
+    Public Sub RotateLeft(Of T)(ByRef ArrayToRotate As T(), iPlacesToRotate As Integer)
         Dim kdd = ArrayToRotate.Take(iPlacesToRotate).ToArray
         Dim ddk = ArrayToRotate.Skip(iPlacesToRotate).ToArray
 
@@ -73,7 +73,7 @@ Public Module VectorExtensions
     End Sub
 
     <Extension>
-    Public Sub RotateRight(Of T)(ByRef ArrayToRotate As T(), ByVal iPlacesToRotate As Integer)
+    Public Sub RotateRight(Of T)(ByRef ArrayToRotate As T(), iPlacesToRotate As Integer)
         ArrayToRotate = ArrayToRotate.Reverse.ToArray
 
         Dim ddk = ArrayToRotate.Take(iPlacesToRotate).Reverse.ToArray
