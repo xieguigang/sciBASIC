@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::43905634d597a69a2976bbf23b1c81e2, Data\BinaryData\BinaryData\XDR\XdrEncoding.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module XdrEncoding
-    ' 
-    '         Function: DecodeDouble, DecodeInt32, DecodeInt64, DecodeSingle, DecodeUInt32
-    '                   DecodeUInt64, unsafeDouble, unsafeInteger, unsafeLong, unsafeSingle
-    ' 
-    '         Sub: EncodeDouble, EncodeInt32, EncodeInt64, EncodeSingle, EncodeUInt32
-    '              EncodeUInt64
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module XdrEncoding
+' 
+'         Function: DecodeDouble, DecodeInt32, DecodeInt64, DecodeSingle, DecodeUInt32
+'                   DecodeUInt64, unsafeDouble, unsafeInteger, unsafeLong, unsafeSingle
+' 
+'         Sub: EncodeDouble, EncodeInt32, EncodeInt64, EncodeSingle, EncodeUInt32
+'              EncodeUInt64
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -57,11 +57,15 @@ Namespace Xdr
                 ' Return 0
                 Throw New InvalidProgramException
             Else
-                Dim H18 = r.Read() << &H18
-                Dim H10 = r.Read() << &H10
-                Dim H8 = r.Read() << &H8
+                ' 20211203
+                ' default in VB.NET is byte shift
+                ' should be convert to integer at first
+                Dim H18 = CInt(r.Read) << &H18
+                Dim H10 = CInt(r.Read) << &H10
+                Dim H8 = CInt(r.Read) << &H8
+                Dim H0 = CInt(r.Read)
 
-                Return H18 Or H10 Or H8 Or r.Read()
+                Return H18 Or H10 Or H8 Or H0
             End If
         End Function
 
