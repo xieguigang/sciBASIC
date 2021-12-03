@@ -104,7 +104,14 @@ Namespace Xdr
         ''' http://tools.ietf.org/html/rfc4506#section-4.5
         ''' </summary>
         Public Function DecodeInt64(r As IByteReader) As Long
-            Return (CLng(r.Read()) << 56) Or (CLng(r.Read()) << 48) Or (CLng(r.Read()) << 40) Or (CLng(r.Read()) << 32) Or (CLng(r.Read()) << 24) Or (CLng(r.Read()) << 16) Or (CLng(r.Read()) << 8) Or CLng(r.Read())
+            Return (CLng(r.Read()) << 56) _
+                Or (CLng(r.Read()) << 48) _
+                Or (CLng(r.Read()) << 40) _
+                Or (CLng(r.Read()) << 32) _
+                Or (CLng(r.Read()) << 24) _
+                Or (CLng(r.Read()) << 16) _
+                Or (CLng(r.Read()) << 8) _
+                Or (CLng(r.Read()))
         End Function
 
         ''' <summary>
