@@ -60,7 +60,7 @@ Public Class DataValue
 
     <XmlAttribute("datatype", [Namespace]:=RDFEntity.XmlnsNamespace)>
     <DataMember(Name:="type")>
-    Public Property datatype As String
+    Public Property type As String
     <XmlText>
     Public Property value As String
 
