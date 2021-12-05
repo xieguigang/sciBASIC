@@ -1,47 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::40a0c00b75c77023ff8afc06eb7a0d09, mime\application%json\Parser\JsonParser.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class JsonParser
-    ' 
-    '     Properties: JSONvalue
-    ' 
-    '     Function: GetParserErrors, Open, OpenJSON, parse, parseArray
-    '               parseBoolean, parseKey, parseNull, parseNumber, parseObject
-    '               parseString, parseValue, StripString
-    ' 
-    '     Sub: ClearParserError, skipChar
-    ' 
-    ' /********************************************************************************/
+' Class JsonParser
+' 
+'     Properties: JSONvalue
+' 
+'     Function: GetParserErrors, Open, OpenJSON, parse, parseArray
+'               parseBoolean, parseKey, parseNull, parseNumber, parseObject
+'               parseString, parseValue, StripString
+' 
+'     Sub: ClearParserError, skipChar
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -155,12 +155,17 @@ Public Class JsonParser
 
         index += 1
 
+        Dim c As String
+
         Do
             skipChar(str, index)
-            If Mid(str, index, 1) = "}" Then
+
+            c = Mid(str, index, 1)
+
+            If c = "}" Then
                 index += 1
                 Exit Do
-            ElseIf Mid(str, index, 1) = "," Then
+            ElseIf c = "," Then
                 index += 1
                 skipChar(str, index)
             ElseIf index > Len(str) Then
@@ -199,12 +204,17 @@ eh:
 
         index += 1
 
+        Dim c As String
+
         Do
             skipChar(str, index)
-            If Mid(str, index, 1) = "]" Then
+
+            c = Mid(str, index, 1)
+
+            If c = "]" Then
                 index += 1
                 Exit Do
-            ElseIf Mid(str, index, 1) = "," Then
+            ElseIf c = "," Then
                 index += 1
                 skipChar(str, index)
             ElseIf index > Len(str) Then
@@ -231,8 +241,11 @@ eh:
     ''' <param name="index"></param>
     ''' <returns></returns>
     Private Function parseValue(ByRef str As String, ByRef index As Long) As JsonElement
-        skipChar(str, index)
-        Select Case Mid(str, index, 1)
+        Call skipChar(str, index)
+
+        Dim c As String = Mid(str, index, 1)
+
+        Select Case c
             Case "{"
                 Return parseObject(str, index)
             Case "["
@@ -450,16 +463,16 @@ eh:
                             Exit While
                         End If
                     End If
-                Case "'"
-                    squote = Not squote
-                    index += 1
-                    If Not squote Then
-                        skipChar(str, index)
-                        If Mid(str, index, 1) <> ":" Then
-                            psErrors &= "Invalid Key at position " & index & " : " & ret & vbCrLf
-                            Exit While
-                        End If
-                    End If
+                'Case "'"
+                '    squote = Not squote
+                '    index += 1
+                '    If Not squote Then
+                '        skipChar(str, index)
+                '        If Mid(str, index, 1) <> ":" Then
+                '            psErrors &= "Invalid Key at position " & index & " : " & ret & vbCrLf
+                '            Exit While
+                '        End If
+                '    End If
                 Case ":"
                     index += 1
                     If Not dquote AndAlso Not squote Then
