@@ -119,7 +119,7 @@ Namespace ApplicationServices.Development.NetCore5
         ''' <summary>
         ''' load assembly from a given file path
         ''' </summary>
-        ''' <param name="dllFile"></param>
+        ''' <param name="dllFile">full path</param>
         ''' <returns></returns>
         Public Shared Function LoadAssemblyOrCache(dllFile As String) As Assembly
             Dim dllFullName As String = dllFile.FileName
