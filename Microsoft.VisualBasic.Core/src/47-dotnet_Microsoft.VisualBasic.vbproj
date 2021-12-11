@@ -1698,6 +1698,8 @@
     <Compile Include="My\JavaScript\JavaScriptObject\Abstract.vb" />
     <Compile Include="My\JavaScript\JavaScriptObject\Descriptor.vb" />
     <Compile Include="My\JavaScript\JavaScriptObject\JavaScriptValue.vb" />
+    <Compile Include="Net\HTTP\JsonRPC\RpcResponse.vb" />
+    <Compile Include="Net\HTTP\JsonRPC\RpcRequest.vb" />
     <Compile Include="Net\HTTP\WebResponse.vb" />
     <Compile Include="Globals.vb" />
     <Compile Include="Extensions\Reflection\Marshal\Span1.vb" />
