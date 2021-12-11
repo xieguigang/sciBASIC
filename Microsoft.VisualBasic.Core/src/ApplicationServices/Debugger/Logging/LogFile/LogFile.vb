@@ -124,6 +124,18 @@ Namespace ApplicationServices.Debugging.Logging
             Me.split = split
         End Sub
 
+        Public Sub Trace(toString As Func(Of String, Byte(), String), format As String, ParamArray bytes As Byte())
+            Call Trace(toString(format, bytes))
+        End Sub
+
+        Public Sub Trace(format As String, ParamArray args As Object())
+            Call Me.log(MSG_TYPES.INF, String.Format(format, args))
+        End Sub
+
+        Public Sub Debug(format As String, ParamArray args As Object())
+            Call Me.log(MSG_TYPES.DEBUG, String.Format(format, args))
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub info(msg As String, <CallerMemberName> Optional obj$ = Nothing)
             Call WriteLine(msg, obj, MSG_TYPES.INF)

@@ -6,32 +6,35 @@
     <Platforms>AnyCPU;x64</Platforms>
     <AssemblyName>Microsoft.VisualBasic.Data.Wave</AssemblyName>
     <Configurations>Debug;Release;Rsharp_app_release</Configurations>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>roxygenNet-netcore5.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Wave.xml</DocumentationFile>
     <DefineConstants>netcore5=1</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <DocumentationFile>roxygenNet-netcore5.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Wave.xml</DocumentationFile>
     <DefineConstants>netcore5=1</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>roxygenNet-netcore5.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Wave.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
-    <DocumentationFile>roxygenNet-netcore5.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Wave.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <DocumentationFile>roxygenNet-netcore5.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Wave.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
-    <DocumentationFile>roxygenNet-netcore5.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Wave.xml</DocumentationFile>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
@@ -45,6 +48,13 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\..\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\..\..\..\..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
