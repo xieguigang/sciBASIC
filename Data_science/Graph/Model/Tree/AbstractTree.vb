@@ -109,7 +109,7 @@ Public Class AbstractTree(Of T As AbstractTree(Of T, K), K) : Inherits Vertex
         End Get
     End Property
 
-    Public ReadOnly Property QualifyName As String
+    Public Overridable ReadOnly Property QualifyName As String
         Get
             If Not Parent Is Nothing Then
                 Return Parent.QualifyName & qualDeli & label

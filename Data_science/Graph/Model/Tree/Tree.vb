@@ -82,4 +82,9 @@ Public Class Tree(Of T) : Inherits AbstractTree(Of Tree(Of T), String)
     Sub New(Optional qualDeli$ = ".")
         MyBase.New(qualDeli)
     End Sub
+
+    Public Function Add(child As Tree(Of T)) As Tree(Of T)
+        Call Childs.Add(child.label, child)
+        Return Me
+    End Function
 End Class
