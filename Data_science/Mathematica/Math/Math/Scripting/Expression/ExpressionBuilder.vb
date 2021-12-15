@@ -174,9 +174,13 @@ Namespace Scripting.MathExpression
             Dim index As i32 = Scan0
 
             If tokenBlocks(Scan0).Length = 1 AndAlso tokenBlocks(Scan0)(Scan0) = (MathTokens.Operator, {"-", "+"}) Then
-                ' insert a ZERO before
-                tokenBlocks.RemoveAt(Scan0)
-                tokenBlocks(0)(0).text = "-" & tokenBlocks(0)(0).text
+                If tokenBlocks(1).Length = 1 AndAlso tokenBlocks(1)(Scan0).isNumeric Then
+                    tokenBlocks.RemoveAt(Scan0)
+                    tokenBlocks(0)(0).text = "-" & tokenBlocks(0)(0).text
+                Else
+                    ' insert a ZERO before
+                    tokenBlocks.Insert(Scan0, {MathToken.ZERO})
+                End If
             End If
 
             For i As Integer = Scan0 To tokenBlocks.Count - 1

@@ -55,6 +55,16 @@ Namespace Scripting.MathExpression
 
     Public Class MathToken : Inherits CodeToken(Of MathTokens)
 
+        ''' <summary>
+        ''' get a new literal zero token
+        ''' </summary>
+        ''' <returns></returns>
+        Public Shared ReadOnly Property ZERO As MathToken
+            Get
+                Return New MathToken(MathTokens.Literal, "0")
+            End Get
+        End Property
+
         Sub New(name As MathTokens, text As String)
             Call MyBase.New(name, text)
         End Sub
