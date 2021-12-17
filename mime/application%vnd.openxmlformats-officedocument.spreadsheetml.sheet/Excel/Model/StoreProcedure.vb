@@ -82,7 +82,7 @@ Namespace Model
                     If .ByRef = -1 Then
                         [string] = col.v
                     Else
-                        [string] = strings.strings(.ByRef).t
+                        [string] = strings.strings(.ByRef).ToString
                     End If
                 End With
 

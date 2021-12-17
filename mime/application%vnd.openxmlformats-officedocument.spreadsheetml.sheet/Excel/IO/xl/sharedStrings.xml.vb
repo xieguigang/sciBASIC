@@ -106,8 +106,25 @@ Namespace XML.xl
         Public Property t As String
         Public Property phoneticPr As phoneticPr
 
+        ''' <summary>
+        ''' styled list
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlElement("r")>
+        Public Property styled As si()
+
+        ''' <summary>
+        ''' get string value of current shared string object.
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
-            Return t
+            If styled.IsNullOrEmpty Then
+                Return t
+            Else
+                Return styled _
+                    .Select(Function(str) str.ToString) _
+                    .JoinBy("")
+            End If
         End Function
     End Class
 

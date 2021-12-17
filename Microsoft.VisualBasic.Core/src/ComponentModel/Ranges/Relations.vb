@@ -47,9 +47,22 @@
 Namespace ComponentModel.Ranges
 
     Public Enum Relations As Byte
+
+        ''' <summary>
+        ''' a &lt;> b
+        ''' </summary>
         Irrelevant = 0
+        ''' <summary>
+        ''' a = b
+        ''' </summary>
         Equals
+        ''' <summary>
+        ''' a = {b} (a including b, b is one of the element in range a)
+        ''' </summary>
         Include
+        ''' <summary>
+        ''' b = {a} (a is included by b, a is one of the element in range b)
+        ''' </summary>
         IncludeBy
     End Enum
 End Namespace
