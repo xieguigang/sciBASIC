@@ -103,8 +103,17 @@ Public Class Tree(Of T) : Inherits AbstractTree(Of Tree(Of T), String)
         End If
     End Function
 
+    ''' <summary>
+    ''' add target <paramref name="child"/> node into current childs 
+    ''' collection and the assign the target <paramref name="child"/> 
+    ''' parent to current node.
+    ''' </summary>
+    ''' <param name="child"></param>
+    ''' <returns></returns>
     Public Function Add(child As Tree(Of T)) As Tree(Of T)
-        Call Childs.Add(child.label, child)
+        Childs.Add(child.label, child)
+        child.Parent = Me
+
         Return Me
     End Function
 End Class
