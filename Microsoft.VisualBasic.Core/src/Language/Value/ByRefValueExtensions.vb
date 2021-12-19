@@ -46,10 +46,24 @@ Imports ByRefString = Microsoft.VisualBasic.Language.Value(Of String)
 
 Namespace Language.Values
 
+    <HideModuleName>
     Public Module ByRefValueExtensions
 
+        ''' <summary>
+        ''' Splits a string into substrings that are based on the 
+        ''' characters in the separator array.
+        ''' </summary>
+        ''' <param name="s"></param>
+        ''' <param name="delimiter">
+        ''' A character array that delimits the substrings in this string, 
+        ''' an empty array that contains no delimiters, Or null.
+        ''' </param>
+        ''' <returns>An array whose elements contain the substrings from this 
+        ''' instance that are delimited by one Or more characters in separator. 
+        ''' For more information, see the Remarks section.</returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function Split(s As ByRefString, ParamArray delimiter As Char()) As String()
+        <Extension>
+        Public Function Split(s As ByRefString, ParamArray delimiter As Char()) As String()
             Return s.Value.Split(delimiter)
         End Function
 
