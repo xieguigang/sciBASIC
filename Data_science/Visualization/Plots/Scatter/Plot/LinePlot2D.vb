@@ -86,6 +86,93 @@ Namespace Plots
             Me.fillPie = fillPie
         End Sub
 
+        Public Shared Sub DrawLine(g As IGraphics,
+                                   rect As GraphicsRegion,
+                                   scaler As DataScaler,
+                                   line As SerialData,
+                                   interplot As Splines,
+                                   Optional fill As Boolean = False,
+                                   Optional fillPie As Boolean = False)
+
+            Dim pen As Pen = line.GetPen
+            Dim br As New SolidBrush(line.color)
+            Dim fillBrush As New SolidBrush(Color.FromArgb(100, baseColor:=line.color))
+            Dim d! = line.pointSize
+            Dim r As Single = line.pointSize / 2
+            Dim bottom! = rect.PlotRegion.Bottom
+            Dim getPointBrush = Function(pt As PointData)
+                                    If pt.color.StringEmpty Then
+                                        Return br
+                                    Else
+                                        Return pt.color.GetBrush
+                                    End If
+                                End Function
+            Dim polygon As New List(Of PointF)
+
+            Dim pt1, pt2 As PointF
+            Dim pts As SlideWindow(Of PointData)() = line.pts _
+                .getSplinePoints(spline:=interplot) _
+                .SlideWindows(2) _
+                .ToArray
+
+            For Each pt As SlideWindow(Of PointData) In pts
+                Dim a As PointData = pt.First
+                Dim b As PointData = pt.Last
+
+                pt1 = scaler.Translate(a)
+                pt2 = scaler.Translate(b)
+
+                polygon.Add(pt1)
+                polygon.Add(pt2)
+
+                Call g.DrawLine(pen, pt1, pt2)
+
+                If fill Then
+                    Dim path As New GraphicsPath
+                    Dim ptc As New PointF(pt2.X, bottom) ' c
+                    Dim ptd As New PointF(pt1.X, bottom) ' d
+
+
+                    '   /-b
+                    ' a-  |
+                    ' |   |
+                    ' |   |
+                    ' d---c
+
+                    path.AddLine(pt1, pt2)
+                    path.AddLine(pt2, ptc)
+                    path.AddLine(ptc, ptd)
+                    path.AddLine(ptd, pt1)
+                    path.CloseFigure()
+
+                    Call g.FillPath(fillBrush, path)
+                End If
+
+                If fillPie Then
+                    Call g.FillPie(getPointBrush(a), pt1.X - r, pt1.Y - r, d, d, 0, 360)
+                    Call g.FillPie(getPointBrush(b), pt2.X - r, pt2.Y - r, d, d, 0, 360)
+                End If
+
+                ' 绘制误差线
+                ' 首先计算出误差的长度，然后可pt1,pt2的Y相加减即可得到新的位置
+                ' 最后划线即可
+                'If a.errPlus > 0 Then
+                '    Call g.drawErrorLine(scaler, pt1, a.errPlus + a.pt.Y, width, br)
+                'End If
+                'If a.errMinus > 0 Then
+                '    Call g.drawErrorLine(scaler, pt1, a.pt.Y - a.errMinus, width, br)
+                'End If
+                'If b.errPlus > 0 Then
+                '    Call g.drawErrorLine(scaler, pt2, b.errPlus + b.pt.Y, width, br)
+                'End If
+                'If b.errMinus > 0 Then
+                '    Call g.drawErrorLine(scaler, pt2, b.pt.Y - b.errMinus, width, br)
+                'End If
+
+                Call Parallel.DoEvents()
+            Next
+        End Sub
+
         Protected Overrides Sub PlotInternal(ByRef g As IGraphics, rect As GraphicsRegion)
             Dim canvas As IGraphics = g
             Dim region As Rectangle = rect.PlotRegion
@@ -114,83 +201,7 @@ Namespace Plots
             Dim annotations As New Dictionary(Of String, (raw As SerialData, line As SerialData))
 
             For Each line As SerialData In array
-                Dim pen As Pen = line.GetPen
-                Dim br As New SolidBrush(line.color)
-                Dim fillBrush As New SolidBrush(Color.FromArgb(100, baseColor:=line.color))
-                Dim d! = line.pointSize
-                Dim r As Single = line.pointSize / 2
-                Dim bottom! = rect.PlotRegion.Bottom
-                Dim getPointBrush = Function(pt As PointData)
-                                        If pt.color.StringEmpty Then
-                                            Return br
-                                        Else
-                                            Return pt.color.GetBrush
-                                        End If
-                                    End Function
-                Dim polygon As New List(Of PointF)
-
-                Dim pt1, pt2 As PointF
-                Dim pts As SlideWindow(Of PointData)() = line.pts _
-                    .getSplinePoints(spline:=interplot) _
-                    .SlideWindows(2) _
-                    .ToArray
-
-                For Each pt As SlideWindow(Of PointData) In pts
-                    Dim a As PointData = pt.First
-                    Dim b As PointData = pt.Last
-
-                    pt1 = scaler.Translate(a)
-                    pt2 = scaler.Translate(b)
-
-                    polygon.Add(pt1)
-                    polygon.Add(pt2)
-
-                    Call g.DrawLine(pen, pt1, pt2)
-
-                    If fill Then
-                        Dim path As New GraphicsPath
-                        Dim ptc As New PointF(pt2.X, bottom) ' c
-                        Dim ptd As New PointF(pt1.X, bottom) ' d
-
-
-                        '   /-b
-                        ' a-  |
-                        ' |   |
-                        ' |   |
-                        ' d---c
-
-                        path.AddLine(pt1, pt2)
-                        path.AddLine(pt2, ptc)
-                        path.AddLine(ptc, ptd)
-                        path.AddLine(ptd, pt1)
-                        path.CloseFigure()
-
-                        Call g.FillPath(fillBrush, path)
-                    End If
-
-                    If fillPie Then
-                        Call g.FillPie(getPointBrush(a), pt1.X - r, pt1.Y - r, d, d, 0, 360)
-                        Call g.FillPie(getPointBrush(b), pt2.X - r, pt2.Y - r, d, d, 0, 360)
-                    End If
-
-                    ' 绘制误差线
-                    ' 首先计算出误差的长度，然后可pt1,pt2的Y相加减即可得到新的位置
-                    ' 最后划线即可
-                    If a.errPlus > 0 Then
-                        Call g.drawErrorLine(scaler, pt1, a.errPlus + a.pt.Y, width, br)
-                    End If
-                    If a.errMinus > 0 Then
-                        Call g.drawErrorLine(scaler, pt1, a.pt.Y - a.errMinus, width, br)
-                    End If
-                    If b.errPlus > 0 Then
-                        Call g.drawErrorLine(scaler, pt2, b.errPlus + b.pt.Y, width, br)
-                    End If
-                    If b.errMinus > 0 Then
-                        Call g.drawErrorLine(scaler, pt2, b.pt.Y - b.errMinus, width, br)
-                    End If
-
-                    Call Parallel.DoEvents()
-                Next
+                Call DrawLine(g, rect, scaler, line, interplot, fill, fillPie)
 
                 If Not line.DataAnnotations.IsNullOrEmpty Then
                     Dim raw = array.Where(Function(s) s.title = line.title).First
