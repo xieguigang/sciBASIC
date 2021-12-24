@@ -51,7 +51,7 @@ Namespace Drawing2D.Colors
 
     Public Class ColorMapLegend
 
-        Public Property designer As SolidBrush()
+        Public ReadOnly Property designer As SolidBrush()
         Public Property title As String
         Public Property titleFont As Font
         Public Property ticks As Double()

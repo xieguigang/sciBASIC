@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::dff06648745a39fa7974652c87d9434a, Data_science\Visualization\Plots\Scatter\Plot\LinePlot2D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class LinePlot2D
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: CreateScaler
-    ' 
-    '         Sub: PlotInternal
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class LinePlot2D
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: CreateScaler
+' 
+'         Sub: PlotInternal
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -61,6 +61,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Interpolation
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Plots
 
@@ -94,7 +95,7 @@ Namespace Plots
                                    Optional fill As Boolean = False,
                                    Optional fillPie As Boolean = False)
 
-            Dim pen As Pen = line.GetPen
+            Dim defaultPen As Pen = line.GetPen
             Dim br As New SolidBrush(line.color)
             Dim fillBrush As New SolidBrush(Color.FromArgb(100, baseColor:=line.color))
             Dim d! = line.pointSize
@@ -114,10 +115,24 @@ Namespace Plots
                 .getSplinePoints(spline:=interplot) _
                 .SlideWindows(2) _
                 .ToArray
+            Dim color1 As Color
+            Dim color2 As Color
+            Dim color3 As Vector
 
             For Each pt As SlideWindow(Of PointData) In pts
                 Dim a As PointData = pt.First
                 Dim b As PointData = pt.Last
+                Dim pen As Pen = defaultPen
+
+                If Not (a.color.StringEmpty AndAlso b.color.StringEmpty) Then
+                    color1 = a.color.TranslateColor
+                    color2 = b.color.TranslateColor
+                    color3 = (color1.ToVector + color2.ToVector) / 2
+
+                    pen = New Pen(color3.ArgbColor, defaultPen.Width) With {
+                        .DashStyle = defaultPen.DashStyle
+                    }
+                End If
 
                 pt1 = scaler.Translate(a)
                 pt2 = scaler.Translate(b)
