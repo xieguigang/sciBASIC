@@ -266,7 +266,8 @@ Namespace Linq
         ''' <returns>An array consist of source with n elements.</returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function Repeats(Of T)(source As T, times%) As T()
+        <Extension>
+        Public Function Repeats(Of T)(source As T, times%) As T()
             Return times.Sequence.Select(Function(x) source).ToArray
         End Function
 

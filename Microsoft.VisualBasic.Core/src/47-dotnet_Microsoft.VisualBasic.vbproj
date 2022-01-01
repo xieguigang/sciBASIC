@@ -1634,6 +1634,11 @@
     <Compile Include="ApplicationServices\Parallel\RequestStream.vb" />
     <Compile Include="ApplicationServices\Terminal\MarkdownRender\Theme.vb" />
     <Compile Include="ApplicationServices\Terminal\MarkdownRender\MarkdownRender.vb" />
+    <Compile Include="ApplicationServices\Terminal\TablePrinter\CharMapDefinition.vb" />
+    <Compile Include="ApplicationServices\Terminal\TablePrinter\ConsoleColorNullable.vb" />
+    <Compile Include="ApplicationServices\Terminal\TablePrinter\ConsoleTableBaseData.vb" />
+    <Compile Include="ApplicationServices\Terminal\TablePrinter\ConsoleTableBuilder.vb" />
+    <Compile Include="ApplicationServices\Terminal\TablePrinter\ConsoleTableBuilderExtensions.vb" />
     <Compile Include="ApplicationServices\Terminal\Utility\UnixMan\UnixManPage.vb" />
     <Compile Include="ApplicationServices\Terminal\Utility\UnixMan\IndexedManual.vb" />
     <Compile Include="ApplicationServices\Terminal\Utility\UserTaskCancelAction.vb" />
@@ -1676,6 +1681,7 @@
     <Compile Include="ComponentModel\System.Collections.Generic\BinaryHeap.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\ChangesWatcher.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\JoinElement.vb" />
+    <Compile Include="ComponentModel\ValuePair\IDataIndex.vb" />
     <Compile Include="Data\NamespaceDoc.vb" />
     <Compile Include="Data\Repository\RepositoryFileSystem.vb" />
     <Compile Include="Data\Trinity\WordSimilarityIndex.vb" />
@@ -1690,6 +1696,7 @@
     <Compile Include="Extensions\Image\IStyleSelector.vb" />
     <Compile Include="Extensions\Image\Math\Intersections.vb" />
     <Compile Include="Extensions\Image\Math\QuadrantRegions.vb" />
+    <Compile Include="Extensions\Math\Information\EntropyScore.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\SampleObservation.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\Min.vb" />
     <Compile Include="Language\Value\TripleVariant.vb" />
@@ -1702,6 +1709,12 @@
     <Compile Include="Net\HTTP\JsonRPC\RpcRequest.vb" />
     <Compile Include="Net\HTTP\WebResponse.vb" />
     <Compile Include="Globals.vb" />
+    <Compile Include="ApplicationServices\Terminal\TablePrinter\Flags\CharMapPositions.vb" />
+    <Compile Include="ApplicationServices\Terminal\TablePrinter\Flags\ConsoleTableBuilderFormat.vb" />
+    <Compile Include="ApplicationServices\Terminal\TablePrinter\Flags\HeaderCharMapPositions.vb" />
+    <Compile Include="ApplicationServices\Terminal\TablePrinter\Flags\MetaRowPositions.vb" />
+    <Compile Include="ApplicationServices\Terminal\TablePrinter\Flags\TableAligntment.vb" />
+    <Compile Include="ApplicationServices\Terminal\TablePrinter\Flags\TextAligntment.vb" />
     <Compile Include="Extensions\Reflection\Marshal\Span1.vb" />
     <Compile Include="Extensions\Reflection\Marshal\Span.vb" />
     <Compile Include="Extensions\Reflection\ScriptMeta.vb" />
