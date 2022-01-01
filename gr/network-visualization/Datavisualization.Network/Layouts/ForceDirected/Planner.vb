@@ -106,6 +106,9 @@ Namespace Layouts.ForceDirected
                 .ToArray
         End Sub
 
+        ''' <summary>
+        ''' run a step of the current layout algorithm 
+        ''' </summary>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Collide()
             Call reset()
