@@ -65,6 +65,12 @@ Friend Class LayoutLabel
         End Get
     End Property
 
+    Public ReadOnly Property hasGDIData As Boolean
+        Get
+            Return (Not label.text.StringEmpty) AndAlso Not style Is Nothing
+        End Get
+    End Property
+
     Public Function GetTextAnchor() As Point
         Return label.GetTextAnchor(anchor)
     End Function

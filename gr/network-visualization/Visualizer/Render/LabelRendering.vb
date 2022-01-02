@@ -55,7 +55,7 @@ Friend Class LabelRendering
         Me.getLabelColor = getLabelColor
     End Sub
 
-    Public Sub drawLabels(g As IGraphics, labelList As IEnumerable(Of LayoutLabel))
+    Public Sub renderLabels(g As IGraphics, labelList As IEnumerable(Of LayoutLabel))
         Dim labels As New List(Of LayoutLabel)(labelList)
         Dim defaultLabelColor As New SolidBrush(defaultLabelColorValue.TranslateColor)
         Dim labelTextStroke As Pen = Stroke.TryParse(labelTextStrokeCSS)
@@ -102,7 +102,7 @@ Friend Class LabelRendering
 
             If iteration > 0 Then
                 If label.offsetDistance >= stdNum.Max(g.Size.Width, g.Size.Height) * 0.01 Then
-                    Call g.DrawLine(New Pen(Brushes.Gray, 10) With {.DashStyle = DashStyle.Dot}, label.anchor, label.GetTextAnchor)
+                    Call g.DrawLine(New Pen(Brushes.Gray, 3) With {.DashStyle = DashStyle.Dot}, label.anchor, label.GetTextAnchor)
                 End If
             End If
 

@@ -64,6 +64,8 @@ Namespace Styling
                 Return New UnifyNumber(expression)
             ElseIf IsMapExpression(expression) Then
                 Return expression.mappingSize
+            ElseIf expression.TextEquals("system.object") Then
+                Return New UnifyNumber(12)
             Else
                 Return New PassthroughNumber(expression)
             End If

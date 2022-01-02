@@ -353,7 +353,7 @@ Public Module NetworkVisualizer
                 End If
 
                 If displayId AndAlso labels > 0 Then
-                    Call renderLabel.drawLabels(g, labels)
+                    Call renderLabel.renderLabels(g, labels)
                 End If
 
                 Call "Network canvas rendering job done!".__DEBUG_ECHO
