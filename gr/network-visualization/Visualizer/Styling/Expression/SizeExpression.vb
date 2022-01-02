@@ -60,7 +60,7 @@ Namespace Styling
         ''' </param>
         ''' <returns></returns>
         Public Function Evaluate(expression As String) As IGetSize
-            If expression.MatchPattern(Casting.RegexpDouble) Then
+            If expression.IsPattern(Casting.RegexpDouble) Then
                 Return New UnifyNumber(expression)
             ElseIf IsMapExpression(expression) Then
                 Return expression.mappingSize

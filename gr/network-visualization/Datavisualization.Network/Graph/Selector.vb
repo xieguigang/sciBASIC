@@ -75,6 +75,8 @@ Namespace Graph
         Public Function SelectNodeValue(property$, Optional ByRef type As Type = Nothing) As Func(Of Node, Object)
             If [property] = "group" Then
                 Return Function(model) model.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)
+            ElseIf [property] = "degree" Then
+                Return Function(model) model.degree.In + model.degree.Out
             Else
                 Return [property].GenericSelector(Of NodeData, Node)(type)
             End If
