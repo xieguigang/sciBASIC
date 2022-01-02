@@ -59,27 +59,8 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Styling
-
-    ''' <summary>
-    ''' 从graph的属性值到相应的图形属性(节点大小，颜色，字体，形状)的映射操作类型
-    ''' </summary>
-    Public Enum MapperTypes
-        ''' <summary>
-        ''' 连续的数值型的映射
-        ''' </summary>
-        Continuous
-        ''' <summary>
-        ''' 离散的分类映射
-        ''' </summary>
-        Discrete
-        ''' <summary>
-        ''' 直接映射
-        ''' </summary>
-        Passthrough
-    End Enum
 
     Public Module SyntaxExtensions
 
@@ -134,8 +115,13 @@ Namespace Styling
         ''' <param name="nodes"></param>
         ''' <param name="eval"></param>
         ''' <param name="range">将节点的大小映射到这个半径大小的区间之内</param>
-        ''' <returns>``[节点值，目标区间值]``， 这个函数返回来的序列之中的元素的顺序是和函数参数所输入的节点序列之中的元素顺序是一致的</returns>
-        <Extension> Public Function RangeTransform(Of T As Class)(nodes As IEnumerable(Of T), eval As Func(Of T, Double), range As DoubleRange) As Map(Of T, Double)()
+        ''' <returns>
+        ''' ``[节点值，目标区间值]``， 这个函数返回来的序列之中的元素的顺序
+        ''' 是和函数参数所输入的节点序列之中的元素顺序是一致的
+        ''' </returns>
+        <Extension> Public Function RangeTransform(Of T As Class)(nodes As IEnumerable(Of T),
+                                                                  eval As Func(Of T, Double),
+                                                                  range As DoubleRange) As Map(Of T, Double)()
             Dim array As T() = nodes.ToArray
             Dim degrees#() = array.Select(eval).ToArray
             Dim size#() = degrees.RangeTransform([to]:=range)
@@ -153,29 +139,4 @@ Namespace Styling
             Return out
         End Function
     End Module
-
-    Public Structure MapExpression
-
-        Dim propertyName As String
-        Dim type As MapperTypes
-        Dim values As String()
-
-        Public ReadOnly Property AsDictionary As Dictionary(Of String, String)
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return values _
-                    .Select(Function(s) s.GetTagValue("=", trim:=True)) _
-                    .ToDictionary(Function(t) t.Name,
-                                  Function(t) t.Value)
-            End Get
-        End Property
-
-        Public Overrides Function ToString() As String
-            If type = MapperTypes.Continuous Then
-                Return $"Dim '{propertyName}' = [{values.JoinBy(", ")}]"
-            Else
-                Return $"Dim '{propertyName}' = {Me.AsDictionary.GetJson}"
-            End If
-        End Function
-    End Structure
 End Namespace

@@ -80,7 +80,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports stdNum = System.Math
 
-<Assembly: InternalsVisibleTo("ggplot")>
+<Assembly: InternalsVisibleTo("ggraph")>
 
 ''' <summary>
 ''' Image drawing of a network model

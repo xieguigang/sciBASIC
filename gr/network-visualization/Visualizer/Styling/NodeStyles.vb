@@ -52,7 +52,10 @@ Namespace Styling
 
     Public Module NodeStyles
 
-        Public Function NodeDegreeSize(nodes As IEnumerable(Of Node), sizeRange As DoubleRange, Optional degree$ = NamesOf.REFLECTION_ID_MAPPING_DEGREE) As Func(Of Node, Single)
+        Public Function NodeDegreeSize(nodes As IEnumerable(Of Node),
+                                       sizeRange As DoubleRange,
+                                       Optional degree$ = NamesOf.REFLECTION_ID_MAPPING_DEGREE) As Func(Of Node, Single)
+
             Dim maps = nodes.DegreeAsSize(sizeRange, degree)
             Dim defaultSize As [Default](Of Double) = sizeRange.Min
 
@@ -72,14 +75,19 @@ Namespace Styling
         Public Function DegreeAsSize(nodes As IEnumerable(Of Node),
                                      getDegree As Func(Of Node, Double),
                                      sizeRange As DoubleRange) As Map(Of Node, Double)()
+
             Return nodes.RangeTransform(getDegree, sizeRange)
         End Function
 
         <Extension>
-        Public Function DegreeAsSize(nodes As IEnumerable(Of Node), sizeRange As DoubleRange, Optional degree$ = NamesOf.REFLECTION_ID_MAPPING_DEGREE) As Map(Of Node, Double)()
+        Public Function DegreeAsSize(nodes As IEnumerable(Of Node),
+                                     sizeRange As DoubleRange,
+                                     Optional degree$ = NamesOf.REFLECTION_ID_MAPPING_DEGREE) As Map(Of Node, Double)()
+
             Dim valDegree = Function(node As Node)
                                 Return node.data(degree).ParseDouble
                             End Function
+
             Return nodes.DegreeAsSize(
                 getDegree:=valDegree,
                 sizeRange:=sizeRange
