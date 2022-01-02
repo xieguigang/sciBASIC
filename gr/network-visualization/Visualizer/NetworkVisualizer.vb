@@ -346,7 +346,7 @@ Public Module NetworkVisualizer
                 ' 所有的节点的标签文本
 
                 ' 在这里进行节点的绘制
-                labels += renderNode.drawVertexNodes(drawPoints:=drawPoints, g:=g)
+                labels += renderNode.RenderingVertexNodes(drawPoints:=drawPoints, g:=g)
 
                 If displayId AndAlso labels = 0 Then
                     Call "There is no node label data could be draw currently, please check your data....".Warning

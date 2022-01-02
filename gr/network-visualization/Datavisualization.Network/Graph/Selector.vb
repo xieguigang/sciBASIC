@@ -1,47 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::078f03853347ff16157411cc058840d7, gr\network-visualization\Datavisualization.Network\Graph\Selector.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Selector
-    ' 
-    '         Function: GenericSelector, SelectEdgeValue, SelectNodeValue
-    '         Interface IGraphValueContainer
-    ' 
-    '             Properties: data
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Selector
+' 
+'         Function: GenericSelector, SelectEdgeValue, SelectNodeValue
+'         Interface IGraphValueContainer
+' 
+'             Properties: data
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -49,6 +49,7 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.DataFramework
+Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 
 Namespace Graph
 
@@ -72,7 +73,11 @@ Namespace Graph
         ''' <returns></returns>
         <Extension>
         Public Function SelectNodeValue(property$, Optional ByRef type As Type = Nothing) As Func(Of Node, Object)
-            Return [property].GenericSelector(Of NodeData, Node)(type)
+            If [property] = "group" Then
+                Return Function(model) model.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)
+            Else
+                Return [property].GenericSelector(Of NodeData, Node)(type)
+            End If
         End Function
 
         ''' <summary>

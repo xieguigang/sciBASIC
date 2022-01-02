@@ -69,7 +69,7 @@ Friend Class NodeRendering
         Me.nodeWidget = nodeWidget
     End Sub
 
-    Public Iterator Function drawVertexNodes(g As IGraphics, drawPoints As Node()) As IEnumerable(Of LayoutLabel)
+    Public Iterator Function RenderingVertexNodes(g As IGraphics, drawPoints As Node()) As IEnumerable(Of LayoutLabel)
         Call "Rendering nodes...".__DEBUG_ECHO
 
         For Each n As Node In drawPoints

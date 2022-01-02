@@ -1,11 +1,13 @@
 ﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.MIME.Html.Language.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports any = Microsoft.VisualBasic.Scripting
 
 Namespace Styling.FillBrushes
 
@@ -17,14 +19,36 @@ Namespace Styling.FillBrushes
 
     Public Class DiscreteSequenceBrush : Implements IGetBrush
 
-        ReadOnly colors As LoopArray(Of Brush)
+        ReadOnly pattern As String
+        ReadOnly selector As Func(Of Node, Object)
 
         Sub New(map As MapExpression)
-
+            pattern = map.values(Scan0)
+            selector = map.propertyName.SelectNodeValue
         End Sub
 
-        Public Function GetBrush(nodes As IEnumerable(Of Node)) As IEnumerable(Of Map(Of Node, Brush)) Implements IGetBrush.GetBrush
-            Throw New NotImplementedException()
+        Public Iterator Function GetBrush(nodes As IEnumerable(Of Node)) As IEnumerable(Of Map(Of Node, Brush)) Implements IGetBrush.GetBrush
+            Dim allNodes As Node() = nodes.ToArray
+            Dim allTypes As Index(Of String) = allNodes _
+                .Select(selector) _
+                .Select(AddressOf any.ToString) _
+                .Distinct _
+                .Indexing
+            Dim allColors As Brush() = Designer.GetColors(pattern) _
+                .Select(Function(c)
+                            Return New SolidBrush(c)
+                        End Function) _
+                .ToArray
+            Dim i As Integer
+
+            For Each node As Node In allNodes
+                i = allTypes.IndexOf(any.ToString(selector(node)))
+
+                Yield New Map(Of Node, Brush) With {
+                    .Key = node,
+                    .Maps = allColors(i)
+                }
+            Next
         End Function
     End Class
 

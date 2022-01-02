@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::4a4d7a4b922bfb87ed9d0291d9f01bff, gr\network-visualization\Visualizer\Styling\NodeStyles.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module NodeStyles
-    ' 
-    '         Function: (+2 Overloads) DegreeAsSize, NodeDegreeSize
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module NodeStyles
+' 
+'         Function: (+2 Overloads) DegreeAsSize, NodeDegreeSize
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -46,6 +46,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Data.visualize.Network.Styling.FillBrushes
 Imports Microsoft.VisualBasic.Language.Default
 
 Namespace Styling
@@ -92,6 +93,17 @@ Namespace Styling
                 getDegree:=valDegree,
                 sizeRange:=sizeRange
             )
+        End Function
+
+        <Extension>
+        Public Function SetNodeFill(g As NetworkGraph, fill As IGetBrush) As NetworkGraph
+            Dim fills = fill.GetBrush(g.vertex).ToArray
+
+            For Each mapStyle In fills
+                mapStyle.Key.data.color = mapStyle.Maps
+            Next
+
+            Return g
         End Function
     End Module
 End Namespace
