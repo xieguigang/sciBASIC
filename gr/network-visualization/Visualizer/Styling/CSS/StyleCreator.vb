@@ -50,22 +50,13 @@
 #End Region
 
 Imports System.Drawing
-Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Styling.FillBrushes
+Imports Microsoft.VisualBasic.Data.visualize.Network.Styling.Numeric
 Imports Microsoft.VisualBasic.Scripting.Expressions
 Imports Microsoft.VisualBasic.Serialization
 
 Namespace Styling.CSS
-
-    ''' <summary>
-    ''' 这个函数描述了这样的一个过程：
-    ''' 
-    ''' 对一个节点集合进行成员的枚举，然后将每一个成员映射为一个大小数值，并返回这些映射集合
-    ''' </summary>
-    ''' <param name="node"></param>
-    ''' <returns></returns>
-    Public Delegate Function GetSize(node As IEnumerable(Of Node)) As IEnumerable(Of Map(Of Node, Single))
 
     Public Structure StyleCreator
 
@@ -88,7 +79,7 @@ Namespace Styling.CSS
         ''' <summary>
         ''' 主要是针对于节点对象的大小直径的获取函数
         ''' </summary>
-        Dim size As GetSize
+        Dim size As IGetSize
 
         ''' <summary>
         ''' 从对象之中得到标签字符串的方法函数指针

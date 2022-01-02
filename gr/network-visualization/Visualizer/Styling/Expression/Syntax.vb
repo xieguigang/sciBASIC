@@ -119,9 +119,10 @@ Namespace Styling
         ''' ``[节点值，目标区间值]``， 这个函数返回来的序列之中的元素的顺序
         ''' 是和函数参数所输入的节点序列之中的元素顺序是一致的
         ''' </returns>
-        <Extension> Public Function RangeTransform(Of T As Class)(nodes As IEnumerable(Of T),
-                                                                  eval As Func(Of T, Double),
-                                                                  range As DoubleRange) As Map(Of T, Double)()
+        <Extension>
+        Public Function RangeTransform(Of T As Class)(nodes As IEnumerable(Of T),
+                                                      eval As Func(Of T, Double),
+                                                      range As DoubleRange) As Map(Of T, Double)()
             Dim array As T() = nodes.ToArray
             Dim degrees#() = array.Select(eval).ToArray
             Dim size#() = degrees.RangeTransform([to]:=range)
