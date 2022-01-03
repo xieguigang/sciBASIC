@@ -625,9 +625,9 @@
       <Project>{6140aed7-e317-46dd-9c15-7fe400795992}</Project>
       <Name>DataFrame</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Mathematica\Math\Math\math-core.vbproj">
+    <ProjectReference Include="..\..\Mathematica\Math\Math\Math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
-      <Name>math-core</Name>
+      <Name>Math-core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Plots\Plots.vbproj">
       <Project>{17f8e821-0a01-4975-9caa-ac95251226d5}</Project>
