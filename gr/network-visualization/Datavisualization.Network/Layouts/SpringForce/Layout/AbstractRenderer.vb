@@ -104,12 +104,12 @@ Namespace Layouts.SpringForce
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="iTimeStep"><see cref="IForceDirected.Calculate"/></param>
+        ''' <param name="iTimeStep"><see cref="IForceDirected.Collide(Double)"/></param>
         ''' <param name="physicsUpdate"></param>
         Public Sub Draw(iTimeStep As Double, Optional physicsUpdate As Boolean = True) Implements IRenderer.Draw
             If physicsUpdate Then
                 ' 计算力的变化
-                Call forceDirected.Calculate(iTimeStep)
+                Call forceDirected.Collide(iTimeStep)
             End If
 
             ' 清理画板

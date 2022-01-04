@@ -99,7 +99,7 @@ Namespace Layouts.SpringForce.Interfaces
     Public Delegate Sub EdgeAction(edge As Edge, spring As Spring)
     Public Delegate Sub NodeAction(edge As Node, point As LayoutPoint)
 
-    Public Interface IForceDirected
+    Public Interface IForceDirected : Inherits IPlanner
 
         ReadOnly Property graph() As NetworkGraph
         ReadOnly Property Stiffness() As Double
@@ -112,11 +112,6 @@ Namespace Layouts.SpringForce.Interfaces
 
         Sub Clear()
 
-        ''' <summary>
-        ''' Calculates the physics updates.
-        ''' </summary>
-        ''' <param name="iTimeStep"></param>
-        Sub Calculate(iTimeStep As Double)
         Sub EachEdge(del As EdgeAction)
         Sub SetPhysics(Stiffness As Double, Repulsion As Double, Damping As Double)
 

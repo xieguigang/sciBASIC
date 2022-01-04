@@ -82,7 +82,7 @@ Namespace Graphic
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Plot(Optional size$ = Resolution2K.Size, Optional ppi As Integer = 300, Optional driver As Drivers = Drivers.Default) As GraphicsData
+        Public Overridable Function Plot(Optional size$ = Resolution2K.Size, Optional ppi As Integer = 300, Optional driver As Drivers = Drivers.Default) As GraphicsData
             Return g.GraphicsPlots(
                 size:=size.SizeParser,
                 padding:=theme.padding,
