@@ -189,6 +189,11 @@ Namespace CSS
         Sub New()
         End Sub
 
+        Sub New(font As Font, fontSize As Single)
+            Call Me.New(font)
+            size = fontSize
+        End Sub
+
         Sub New(font As Font)
             family = font.Name
             style = font.Style
