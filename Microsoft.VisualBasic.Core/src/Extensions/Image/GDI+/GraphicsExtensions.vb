@@ -99,23 +99,6 @@ Namespace Imaging
             End With
         End Function
 
-        ''' <summary>
-        ''' fix for dpi bugs on unix mono platform when create a font object.
-        ''' 
-        ''' https://github.com/dotnet/runtime/issues/28361
-        ''' </summary>
-        ''' <param name="pointSize"></param>
-        ''' <param name="dpiResolution"></param>
-        ''' <returns></returns>
-        Public Function PointSizeScale(pointSize As Single, dpiResolution As Single) As Single
-            If Environment.OSVersion.Platform <> PlatformID.Win32NT Then
-                ' fix for running on unix mono/dotnet core 
-                Return If(App.IsMicrosoftPlatform, pointSize, pointSize * dpiResolution / 96)
-            Else
-                Return pointSize
-            End If
-        End Function
-
         <Extension>
         Public Function GetStringPath(s$, dpi!, rect As RectangleF, font As Font, format As StringFormat) As GraphicsPath
             Dim path As New GraphicsPath()
@@ -126,7 +109,8 @@ Namespace Imaging
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function PointF(polygon As IEnumerable(Of Point)) As IEnumerable(Of PointF)
+        <Extension>
+        Public Function PointF(polygon As IEnumerable(Of Point)) As IEnumerable(Of PointF)
             Return polygon.Select(Function(pt) New PointF(pt.X, pt.Y))
         End Function
 
@@ -142,11 +126,13 @@ Namespace Imaging
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function ToPoints(ps As IEnumerable(Of PointF)) As Point()
+        <Extension>
+        Public Function ToPoints(ps As IEnumerable(Of PointF)) As Point()
             Return ps.Select(Function(x) New Point(x.X, x.Y)).ToArray
         End Function
 
-        <Extension> Public Function SaveIcon(ico As Icon, path$) As Boolean
+        <Extension>
+        Public Function SaveIcon(ico As Icon, path$) As Boolean
             Call path.ParentPath.MakeDir
 
             Try

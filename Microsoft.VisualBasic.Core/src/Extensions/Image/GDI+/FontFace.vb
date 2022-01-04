@@ -108,6 +108,23 @@ Namespace Imaging
         End Sub
 
         ''' <summary>
+        ''' fix for dpi bugs on unix mono platform when create a font object.
+        ''' 
+        ''' https://github.com/dotnet/runtime/issues/28361
+        ''' </summary>
+        ''' <param name="pointSize"></param>
+        ''' <param name="dpiResolution"></param>
+        ''' <returns></returns>
+        Public Shared Function PointSizeScale(pointSize As Single, dpiResolution As Single) As Single
+            If Environment.OSVersion.Platform <> PlatformID.Win32NT Then
+                ' fix for running on unix mono/dotnet core 
+                Return If(App.IsMicrosoftPlatform, pointSize, pointSize * dpiResolution / 96)
+            Else
+                Return pointSize
+            End If
+        End Function
+
+        ''' <summary>
         ''' 检查当前的操作系统之中是否安装有指定名称的字体
         ''' </summary>
         ''' <param name="name"></param>
