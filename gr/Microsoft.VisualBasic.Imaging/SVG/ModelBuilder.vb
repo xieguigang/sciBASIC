@@ -67,7 +67,8 @@ Namespace SVG
             Dim y1 = y + rY * stdNum.Sin(stdNum.PI * startAngle / 180)
             Dim x2 = x + rX * stdNum.Cos(stdNum.PI * endAngle / 180)
             Dim y2 = y + rY * stdNum.Sin(stdNum.PI * endAngle / 180)
-            Dim d = $"M{x},{y}  L{x1},{y1}  A{rX},{rY} 0 0,1 {x2},{y2} z" ' 1 means clockwise
+            ' Dim d = $"M{x},{y}  L{x1},{y1}  A{rX},{rY} 0 0,1 {x2},{y2} z" ' 1 means clockwise
+            Dim d As String = $"M {x},{y} a {rX} {rY} 0 1 1 0 1 z"
 
             Return New path With {
                 .d = d

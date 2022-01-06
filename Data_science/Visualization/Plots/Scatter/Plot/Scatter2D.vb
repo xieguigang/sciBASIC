@@ -61,6 +61,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Namespace Plots
 
@@ -183,7 +184,8 @@ Namespace Plots
                                                     fillPie As Boolean,
                                                     shape As LegendStyles,
                                                     pointSize As Single,
-                                                    getPointBrush As Func(Of PointData, Brush)) As IEnumerable(Of PointF)
+                                                    getPointBrush As Func(Of PointData, Brush),
+                                                    strokeCss As Stroke) As IEnumerable(Of PointF)
             Dim r As Single = pointSize / 2
             Dim d As Single = pointSize
             Dim shapeSize As New Size(d, d)
@@ -203,7 +205,7 @@ Namespace Plots
                             ' do nothing
                     End Select
 
-                    g.DrawLegendShape(pt1, shapeSize, shape, getPointBrush(pt))
+                    g.DrawLegendShape(pt1, shapeSize, shape, getPointBrush(pt), border:=strokeCss)
                 End If
 
                 Call Parallel.DoEvents()
@@ -255,7 +257,8 @@ Namespace Plots
                     fillPie:=fillPie,
                     shape:=line.shape,
                     pointSize:=line.pointSize,
-                    getPointBrush:=line.BrushHandler
+                    getPointBrush:=line.BrushHandler,
+                    Nothing
                 ) _
                 .ToArray
 
