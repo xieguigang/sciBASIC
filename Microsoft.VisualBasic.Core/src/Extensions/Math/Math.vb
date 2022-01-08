@@ -198,9 +198,15 @@ Namespace Math
         Public Iterator Function seq([from] As Value(Of Double), [to] As Double, Optional by As Double = 0.1) As IEnumerable(Of Double)
             Yield from
 
-            Do While (from = from.Value + by) <= [to]
-                Yield from
-            Loop
+            If by > 0 Then
+                Do While (from = from.Value + by) <= [to]
+                    Yield from
+                Loop
+            Else
+                Do While (from = from.Value + by) >= [to]
+                    Yield from
+                Loop
+            End If
         End Function
 
         <Extension>
