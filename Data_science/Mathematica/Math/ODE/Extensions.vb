@@ -51,6 +51,19 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 <HideModuleName>
 Public Module Extensions
 
+    <Extension>
+    Public Function ECDF(v As IEnumerable(Of Double), range As Integer(),
+                         Optional resolution As Integer = 50000,
+                         Optional p0 As Double = 0) As Func(Of Double, Double)
+
+        Dim x As Double() = Nothing
+        Dim y As Double() = Nothing
+
+        Call CDF(AddressOf New ECDF(v, range).eval, New DoubleRange(range), resolution, p0, x, y)
+
+        Return AddressOf New ECDF(y, x).eval
+    End Function
+
     ''' <summary>
     ''' Cumulative Distribution Function via solve ODE
     ''' </summary>
@@ -86,7 +99,8 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="system"></param>
     ''' <returns></returns>
-    <Extension> Public Function Solve(system As IEnumerable(Of NonlinearVar), dt As (from#, to#, step#)) As ODEsOut
+    <Extension>
+    Public Function Solve(system As IEnumerable(Of NonlinearVar), dt As (from#, to#, step#)) As ODEsOut
         Dim vector As NonlinearVar() = system.ToArray
         Dim df = Sub(dx#, ByRef dy As Vector)
                      For Each x As NonlinearVar In vector

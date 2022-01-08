@@ -906,14 +906,18 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
 
         Public Overridable Function ArrayRightDivide(B As GeneralMatrix) As GeneralMatrix
-            CheckMatrixDimensions(B)
+            Call CheckMatrixDimensions(B)
+
             Dim X As New NumericMatrix(m, n)
             Dim C As Double()() = X.Array
+
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
+                    ' A / B
                     C(i)(j) = buffer(i)(j) / B(i, j)
                 Next
             Next
+
             Return X
         End Function
 
@@ -1101,6 +1105,10 @@ Namespace LinearAlgebra.Matrix
             Return m1.Multiply(m2)
         End Operator
 
+        Public Shared Operator /(m1 As NumericMatrix, m2 As NumericMatrix) As NumericMatrix
+            Return m1.ArrayRightDivide(m2)
+        End Operator
+
         ''' <summary>
         ''' Multiplication of matrices
         ''' </summary>
@@ -1263,10 +1271,12 @@ Namespace LinearAlgebra.Matrix
 #Region "Private Methods"
 
         ''' <summary>Check if size(A) == size(B) *</summary>
-
+        ''' <remarks>
+        ''' m == m andalso n == n
+        ''' </remarks>
         Private Sub CheckMatrixDimensions(B As GeneralMatrix)
             If B.RowDimension <> m OrElse B.ColumnDimension <> n Then
-                Throw New System.ArgumentException("GeneralMatrix dimensions must agree.")
+                Throw New ArgumentException("GeneralMatrix dimensions must agree.")
             End If
         End Sub
 #End Region

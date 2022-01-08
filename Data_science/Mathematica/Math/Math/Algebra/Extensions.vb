@@ -58,6 +58,11 @@ Namespace LinearAlgebra
     <HideModuleName>
     Public Module HelperExtensions
 
+        <Extension>
+        Public Function AsMatrix(d As IEnumerable(Of Double())) As NumericMatrix
+            Return New NumericMatrix(d.ToArray)
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function IsNaNImaginary(v As IEnumerable(Of Double)) As BooleanVector

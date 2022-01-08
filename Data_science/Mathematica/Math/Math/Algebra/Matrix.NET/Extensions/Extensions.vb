@@ -53,6 +53,12 @@ Namespace LinearAlgebra.Matrix
     <HideModuleName>
     Public Module Extensions
 
+        ''' <summary>
+        ''' get a specific column data as vector
+        ''' </summary>
+        ''' <param name="matrix"></param>
+        ''' <param name="i%"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function ColumnVector(matrix As GeneralMatrix, i%) As Vector
             Return New Vector(matrix({i}).ArrayPack.Select(Function(r) r(Scan0)))
