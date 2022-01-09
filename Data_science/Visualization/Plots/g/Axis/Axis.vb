@@ -421,7 +421,8 @@ Namespace Graphic.Axis
         ''' <param name="label$"></param>
         ''' <param name="css$"></param>
         ''' <returns></returns>
-        <Extension> Private Function __plotLabel(label$, css$, Optional throwEx As Boolean = True) As Image
+        <Extension>
+        Friend Function __plotLabel(label$, css$, Optional throwEx As Boolean = True) As Image
             Try
                 Return TextRender.DrawHtmlText(label, css)
             Catch ex As Exception
@@ -494,109 +495,22 @@ Namespace Graphic.Axis
         ''' <param name="htmlLabel">
         ''' Parameter <paramref name="label"/> is using html text format, function will using html renderer to draw this label
         ''' </param>
-        <Extension> Public Sub DrawX(ByRef g As IGraphics,
-                                     pen As Pen, label$,
-                                     scaler As DataScaler,
-                                     layout As XAxisLayoutStyles, Y0#, offset As Point,
-                                     labelFont$,
-                                     labelColor As Brush,
-                                     tickFont As Font,
-                                     tickColor As Brush,
-                                     Optional overridesTickLine% = -1,
-                                     Optional noTicks As Boolean = False,
-                                     Optional htmlLabel As Boolean = True,
-                                     Optional tickFormat$ = "F2",
-                                     Optional xRotate As Double = 0)
+        <Extension>
+        Public Sub DrawX(ByRef g As IGraphics,
+                         pen As Pen, label$,
+                         scaler As DataScaler,
+                         layout As XAxisLayoutStyles, Y0#, offset As Point,
+                         labelFont$,
+                         labelColor As Brush,
+                         tickFont As Font,
+                         tickColor As Brush,
+                         Optional overridesTickLine% = -1,
+                         Optional noTicks As Boolean = False,
+                         Optional htmlLabel As Boolean = True,
+                         Optional tickFormat$ = "F2",
+                         Optional xRotate As Double = 0)
 
-            Dim Y% = scaler.region.Top + offset.Y
-            Dim size = scaler.region.Size
-
-            Select Case layout
-                Case XAxisLayoutStyles.Centra
-                    Y += size.Height / 2 + offset.Y
-                Case XAxisLayoutStyles.Top
-                    Y += 0
-                Case XAxisLayoutStyles.ZERO
-                    Y = Y0 + offset.Y
-                Case Else
-                    Y += size.Height
-            End Select
-
-            ' 坐标轴原点
-            Dim ZERO As New Point(scaler.region.Left + offset.X, Y)
-            ' X轴
-            Dim right As New Point(ZERO.X + size.Width, Y)
-            Dim d! = If(overridesTickLine <= 0, 10, overridesTickLine)
-
-            ' X轴
-            Call g.DrawLine(pen, ZERO, right)
-
-            If Not noTicks AndAlso Not scaler.AxisTicks.X.IsNullOrEmpty Then
-                ' 绘制坐标轴标签
-                Dim ticks As (x#, label$)()
-
-                If TypeOf scaler.X Is LinearScale Then
-                    ticks = scaler.AxisTicks.X _
-                        .Select(Function(tick)
-                                    If stdNum.Abs(tick) <= 0.000001 Then
-                                        Return (scaler.X(tick), "0")
-                                    Else
-                                        Return (scaler.X(tick), (tick).ToString(tickFormat))
-                                    End If
-                                End Function) _
-                        .ToArray
-                Else
-                    ticks = DirectCast(scaler.X, OrdinalScale) _
-                        .getTerms _
-                        .Select(Function(tick) (scaler.X(tick.value), tick.value)) _
-                        .ToArray
-                End If
-
-                For Each tick As (X#, label$) In ticks
-                    Dim x As Single = tick.X + offset.X
-                    Dim axisX As New PointF(x, ZERO.Y)
-                    Dim labelText = tick.label
-                    Dim sz As SizeF = g.MeasureString(labelText, tickFont)
-
-                    Call g.DrawLine(pen, axisX, New PointF(x, ZERO.Y + d!))
-
-                    If xRotate <> 0 AndAlso TypeOf g Is Graphics2D Then
-                        Dim text As New GraphicsText(g)
-
-                        If xRotate > 0 Then
-                            Call text.DrawString(labelText, tickFont, tickColor, New Point(x, ZERO.Y + d * 1.2), angle:=xRotate)
-                        Else
-                            Call text.DrawString(labelText, tickFont, tickColor, New Point(x, ZERO.Y + sz.Height * stdNum.Sin(xRotate * 180 / stdNum.PI)), angle:=xRotate)
-                        End If
-                    Else
-                        Call g.DrawString(labelText, tickFont, tickColor, New Point(x - sz.Width / 2, ZERO.Y + d * 1.2))
-                    End If
-                Next
-            End If
-
-            If Not label.StripHTMLTags(stripBlank:=True).StringEmpty Then
-                If htmlLabel Then
-                    Dim labelImage As Image = label.__plotLabel(labelFont, False)
-                    Dim point As New Point With {
-                        .X = (size.Width - labelImage.Width) / 2 + scaler.region.Left,
-                        .Y = scaler.region.Top + size.Height + tickFont.Height + d * 4
-                    }
-
-                    Call g.DrawImageUnscaled(labelImage, point)
-                Else
-                    Dim font As Font = CSSFont.TryParse(labelFont).GDIObject(g.Dpi)
-                    Dim fSize As SizeF = g.MeasureString(label, font)
-                    Dim y1 As Double = scaler.region.Bottom + tickFont.Height + d * 5
-                    Dim y2 As Double = scaler.region.Bottom + ((g.Size.Height - scaler.region.Bottom) - fSize.Height) / 2
-                    Dim point As New PointF With {
-                        .X = (size.Width - fSize.Width) / 2 + scaler.region.Left,
-                        .Y = stdNum.Max(y1, y2)
-                    }
-
-                    ' Call $"[X:={label}] {point.ToString}".__INFO_ECHO
-                    Call g.DrawString(label, font, labelColor, point)
-                End If
-            End If
+            Call New XAxis(scaler, pen, overridesTickLine, noTicks, tickFormat, tickFont, tickColor, label, labelFont, labelColor, htmlLabel, xRotate).Draw(g, layout, Y0, offset)
         End Sub
     End Module
 End Namespace
