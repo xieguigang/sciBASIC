@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::768f79291df9adec54f8d374bb657d8a, Data_science\Visualization\Plots\g\Plot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Plot
-    ' 
-    '         Properties: legendTitle, main, xlabel, ylabel, zlabel
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: EvaluateLayout, Plot
-    ' 
-    '         Sub: DrawLegends, DrawMainTitle, (+2 Overloads) Plot
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Plot
+' 
+'         Properties: legendTitle, main, xlabel, ylabel, zlabel
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: EvaluateLayout, Plot
+' 
+'         Sub: DrawLegends, DrawMainTitle, (+2 Overloads) Plot
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -81,8 +81,19 @@ Namespace Graphic
             Me.theme = theme
         End Sub
 
+        Public Overloads Function Plot(size As SizeF, Optional dpi As Integer = 300, Optional driver As Drivers = Drivers.Default) As GraphicsData
+            Return g.GraphicsPlots(
+                size:=size.ToSize,
+                padding:=theme.padding,
+                bg:=theme.background,
+                plotAPI:=AddressOf PlotInternal,
+                driver:=driver,
+                dpi:=$"{dpi},{dpi}"
+            )
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overridable Function Plot(Optional size$ = Resolution2K.Size, Optional ppi As Integer = 300, Optional driver As Drivers = Drivers.Default) As GraphicsData
+        Public Overridable Overloads Function Plot(Optional size$ = Resolution2K.Size, Optional ppi As Integer = 300, Optional driver As Drivers = Drivers.Default) As GraphicsData
             Return g.GraphicsPlots(
                 size:=size.SizeParser,
                 padding:=theme.padding,
@@ -102,12 +113,12 @@ Namespace Graphic
         ''' </param>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub Plot(ByRef g As IGraphics, layout As Rectangle)
+        Public Overloads Sub Plot(ByRef g As IGraphics, layout As Rectangle)
             Call PlotInternal(g, EvaluateLayout(g, layout))
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub Plot(ByRef g As IGraphics, canvas As GraphicsRegion)
+        Public Overloads Sub Plot(ByRef g As IGraphics, canvas As GraphicsRegion)
             Call PlotInternal(g, canvas)
         End Sub
 

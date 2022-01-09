@@ -55,6 +55,37 @@ Namespace Graphic.Axis
             Me.labelColor = labelColor
         End Sub
 
+        Sub New(plotRegion As Rectangle,
+                scaler As Scaler,
+                ticks As Vector,
+                pen As Pen,
+                overridesTickLine As Double,
+                noTicks As Boolean,
+                tickFormat As String,
+                tickfont As Font,
+                tickColor As Brush,
+                label As String,
+                labelFont As String,
+                labelColor As Brush,
+                htmlLabel As Boolean,
+                xRotate As Double)
+
+            Me.plotRegion = plotRegion
+            Me.scaler = scaler
+            Me.overridesTickLine = overridesTickLine
+            Me.pen = pen
+            Me.noTicks = noTicks
+            Me.axisTicks = ticks
+            Me.tickFormat = tickFormat
+            Me.tickFont = tickfont
+            Me.tickColor = tickColor
+            Me.label = label
+            Me.labelFont = labelFont
+            Me.htmlLabel = htmlLabel
+            Me.xRotate = xRotate
+            Me.labelColor = labelColor
+        End Sub
+
         Public Sub Draw(g As IGraphics, layout As XAxisLayoutStyles, y0 As Double, offset As PointF)
             Dim Y% = plotRegion.Top + offset.Y
             Dim size As Size = plotRegion.Size
