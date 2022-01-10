@@ -95,7 +95,8 @@ Namespace Render
         ''' <param name="html">HTML source</param>
         ''' <param name="location">Point to start drawing</param>
         ''' <param name="width">Width to fit HTML drawing</param>
-        <Extension> Public Sub Render(g As Graphics, html As String, location As PointF, width As Single)
+        <Extension>
+        Public Sub Render(g As Graphics, html As String, location As PointF, width As Single)
             Call Render(g, html, New RectangleF(location, New SizeF(width, 0)), False)
         End Sub
 
@@ -106,7 +107,8 @@ Namespace Render
         ''' <param name="html">HTML source</param>
         ''' <param name="area">Area where HTML should be drawn</param>
         ''' <param name="clip">If true, it will only paint on the specified area</param>
-        <Extension> Public Sub Render(g As Graphics, html As String, area As RectangleF, clip As Boolean)
+        <Extension>
+        Public Sub Render(g As Graphics, html As String, area As RectangleF, clip As Boolean)
             Dim container As New InitialContainer(html)
             Dim prevClip As Region = g.Clip
 

@@ -166,7 +166,7 @@ Namespace Graphic
                 If theme.legendSplitSize > 0 AndAlso legends.Length > theme.legendSplitSize Then
                     legendParts = legends.Split(theme.legendSplitSize)
                     legendPos = New PointF With {
-                        .X = region.Width - (lsize.Width + maxWidth + 5) * (legendParts.Length - 1),
+                        .X = region.Right + lsize.Width,
                         .Y = region.Top + lFont.Height
                     }
                 Else

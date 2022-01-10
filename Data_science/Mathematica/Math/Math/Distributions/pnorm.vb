@@ -70,12 +70,11 @@ Namespace Distributions
         ''' ``Z-score`` 标准化的过程几乎就是一个除0的过程，结果不可预料。
         ''' </remarks>
         Public Function Z#(x#, μ#, σ#)
-            Dim answer As Double = (x - μ) / σ
-            Return answer
+            Return (x - μ) / σ
         End Function
 
         ''' <summary>
-        ''' ## Standard score
+        ''' ## Standard score(z-score)
         ''' 
         ''' In statistics, the standard score is the signed number of standard deviations by which the value of 
         ''' an observation or data point is above the mean value of what is being observed or measured. Observed 
@@ -92,7 +91,8 @@ Namespace Distributions
         ''' <remarks>
         ''' http://blog.163.com/huai_jing@126/blog/static/171861983201321074124426/
         ''' </remarks>
-        <Extension> Public Function Z(x As Vector) As Vector
+        <Extension>
+        Public Function Z(x As Vector) As Vector
             Dim μ# = x.Average ' μ is the mean of the population.
             Dim σ# = x.SD   ' σ is the standard deviation of the population.
             Dim x1 As Vector = (x - μ) / σ

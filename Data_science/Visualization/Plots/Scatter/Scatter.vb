@@ -246,7 +246,8 @@ Public Module Scatter
                 .xlim = xlim,
                 .ylim = ylim,
                 .XaxisAbsoluteScalling = XaxisAbsoluteScalling,
-                .YaxisAbsoluteScalling = YaxisAbsoluteScalling
+                .YaxisAbsoluteScalling = YaxisAbsoluteScalling,
+                .main = title
             }
         End If
 
