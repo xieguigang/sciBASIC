@@ -744,6 +744,7 @@
     <Compile Include="Layouts\EdgeBundling\Mingle\Options.vb" />
     <Compile Include="Layouts\ForceDirected\DegreeWeightedPlanner.vb" />
     <Compile Include="Layouts\ForceDirected\EdgeWeightedPlanner.vb" />
+    <Compile Include="Layouts\IPlanner.vb" />
     <Compile Include="Layouts\SpringEmbedder.vb" />
     <Compile Include="Layouts\Cola\Extensions.vb" />
     <Compile Include="Layouts\Cola\Geom\geom.vb" />

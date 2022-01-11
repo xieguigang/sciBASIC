@@ -701,6 +701,10 @@
     <Compile Include="Scatter\Data\PointData.vb" />
     <Compile Include="Scatter\Heatmap.vb" />
     <Compile Include="Scatter\Scatter.vb" />
+	
+	  <Compile Include="E:\GCModeller\src\runtime\sciBASIC#\Data_science\Visualization\Plots\g\Axis\Components\XAxis.vb" />
+	
+	
     <Compile Include="g\Scaling.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
