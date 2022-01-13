@@ -1,67 +1,67 @@
 ﻿#Region "Microsoft.VisualBasic::2b78908f372006a0a22c9656e6e98638, Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\Correlations.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Correlations
-    ' 
-    '         Properties: PearsonDefault
-    ' 
-    '         Function: (+2 Overloads) GetPearson, JaccardIndex, JSD, kendallTauBeta, KLD
-    '                   KLDi, rankKendallTauBeta, SW
-    '         Structure Pearson
-    ' 
-    '             Properties: P
-    ' 
-    '             Function: Measure, RankPearson, ToString
-    ' 
-    '         Delegate Function
-    ' 
-    '             Function: __getOrder, CorrelationMatrix, Spearman
-    ' 
-    '             Sub: throwNotAgree
-    '         Structure spcc
-    ' 
-    ' 
-    '             Structure __spccInner
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Correlations
+' 
+'         Properties: PearsonDefault
+' 
+'         Function: (+2 Overloads) GetPearson, JaccardIndex, JSD, kendallTauBeta, KLD
+'                   KLDi, rankKendallTauBeta, SW
+'         Structure Pearson
+' 
+'             Properties: P
+' 
+'             Function: Measure, RankPearson, ToString
+' 
+'         Delegate Function
+' 
+'             Function: __getOrder, CorrelationMatrix, Spearman
+' 
+'             Sub: throwNotAgree
+'         Structure spcc
+' 
+' 
+'             Structure __spccInner
+' 
+' 
+' 
+' 
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -410,13 +410,14 @@ Namespace Math.Correlations
         ''' <param name="x#"></param>
         ''' <param name="y#"></param>
         ''' <returns></returns>
-        <ExportAPI("Pearson")> Public Function GetPearson(x#(), y#()) As Double
-            Dim j As Integer, n As Integer = x.Length
+        <ExportAPI("Pearson")>
+        Public Function GetPearson(x#(), y#()) As Double
+            Dim n As Integer = x.Length
             Dim yt As Double, xt As Double
             Dim syy As Double = 0.0, sxy As Double = 0.0, sxx As Double = 0.0
             Dim ay As Double = 0.0, ax As Double = 0.0
 
-            For j = 0 To n - 1
+            For j As Integer = 0 To n - 1
                 ' finds the mean
                 ax += x(j)
                 ay += y(j)
@@ -425,7 +426,7 @@ Namespace Math.Correlations
             ax /= n
             ay /= n
 
-            For j = 0 To n - 1
+            For j As Integer = 0 To n - 1
                 ' compute correlation coefficient
                 xt = x(j) - ax
                 yt = y(j) - ay
@@ -477,12 +478,13 @@ Namespace Math.Correlations
 
             ' size n
             Dim n As Integer = X.Length
-            Dim Xx As spcc() = __getOrder(X)
-            Dim Yy As spcc() = __getOrder(Y)
+            Dim Xx As RankOrder(Of Double)() = rankingOrder(X)
+            Dim Yy As RankOrder(Of Double)() = rankingOrder(Y)
 
             Dim deltaSum# = Aggregate i As Integer
                             In n.Sequence
                             Into Sum((Xx(i).rank - Yy(i).rank) ^ 2)
+
             Dim spcc = 1 - 6 * deltaSum / (n ^ 3 - n)
 
             Return spcc
@@ -490,68 +492,45 @@ Namespace Math.Correlations
 
         Const UnableMeasures$ = "Samples number just equals 1, the function unable to measure the correlation!!!"
 
-        Private Function __getOrder(samples#()) As spcc()
-            Dim dat = (From i As Integer
-                       In samples.Sequence
-                       Select spcc = New spcc.__spccInner With {  ' 原有的顺序
-                           .i = i,
-                           .val = samples(i)
-                       }
-                       Order By spcc.val Ascending).ToArray  ' 从小到大排序
-            Dim buf = (From p As Integer  ' rank
-                       In dat.Sequence
-                       Select spcc = New spcc With {
-                           .rank = p,
-                           .data = dat(p)
-                       }
-                       Group spcc By spcc.data.val Into Group) _
-                        .ToDictionary(Function(x) x.val,
-                                      Function(x) x.Group.ToArray)
+        Private Function rankingOrder(samples#()) As RankOrder(Of Double)()
+            ' 从小到大排序
+            Dim dat = (From i As RankOrder(Of Double)
+                       In RankOrder(Of Double).Input(samples)
+                       Order By i.value Ascending).ToArray
+            Dim buf = RankOrder(Of Double).Ranking(dat) _
+                .GroupBy(Function(spcc) spcc.value) _
+                .ToDictionary(Function(x) x.Key,
+                              Function(x)
+                                  Return x.ToArray
+                              End Function)
 
-            Dim rankList As New List(Of spcc)
+            Dim rankList As New List(Of RankOrder(Of Double))
 
-            For Each item As spcc() In buf.Values
+            For Each item As RankOrder(Of Double)() In buf.Values
                 If item.Length = 1 Then
                     Call rankList.Add(item(Scan0))
                 Else
                     Dim rank As Double = item.Select(Function(x) x.rank).Average
-                    Dim array As spcc() = item.Select(
-                        Function(x) New spcc With {
-                            .rank = rank,
-                            .data = x.data
-                        }).ToArray
+                    Dim array As RankOrder(Of Double)() = item _
+                        .Select(Function(x)
+                                    Return New RankOrder(Of Double) With {
+                                        .rank = rank,
+                                        .i = x.i,
+                                        .value = x.value
+                                    }
+                                End Function) _
+                        .ToArray
+
                     Call rankList.AddRange(array)
                 End If
             Next
 
             ' 重新按照原有的顺序返回
-            Return (From x As spcc
+            Return (From x As RankOrder(Of Double)
                     In rankList
                     Select x
-                    Order By x.data.i Ascending).ToArray
+                    Order By x.i Ascending).ToArray
         End Function
-
-        ''' <summary>
-        ''' 计算所需要的临时变量类型
-        ''' </summary>
-        Private Structure spcc
-            ''' <summary>
-            ''' 排序之后得到的位置
-            ''' </summary>
-            Public rank As Double
-            ''' <summary>
-            ''' 原始数据
-            ''' </summary>
-            Public data As __spccInner
-
-            Public Structure __spccInner
-                ''' <summary>
-                ''' 在序列之中原有的位置
-                ''' </summary>
-                Public i As Integer
-                Public val As Double
-            End Structure
-        End Structure
 
         ''' <summary>
         ''' 输入的数据为一个对象属性的集合，默认的<paramref name="compute"/>计算方法为<see cref="GetPearson"/>

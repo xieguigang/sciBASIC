@@ -82,6 +82,10 @@ Namespace Distributions.BinBox
             Dim max# = eval(v.Last)
             Dim width# = (max - min) / k
 
+            If width = 0.0 Then
+                Return {}
+            End If
+
             Return FixedWidthBins(v, width, eval, min, max)
         End Function
 

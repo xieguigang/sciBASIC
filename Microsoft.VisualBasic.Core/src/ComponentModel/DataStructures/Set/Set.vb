@@ -85,10 +85,12 @@ Namespace ComponentModel.DataStructures
         ''' Default constructor.
         ''' </summary>
         Public Sub New(Optional equals As Func(Of Object, Object, Boolean) = Nothing)
-            _equals = equals
-        End Sub
+            If equals Is Nothing Then
+                _equals = Function(a, b) a = b
+            Else
+                _equals = equals
+            End If
 
-        Protected Sub New()
             _behaviour = BadBehaviourResponses.BeAggressive
         End Sub
 
@@ -98,8 +100,9 @@ Namespace ComponentModel.DataStructures
         ''' </summary>
         ''' <param name="sources">The source array of <see cref="[Set]">Set</see> objects.</param>
         Public Sub New(sources As [Set](), Optional equals As Func(Of Object, Object, Boolean) = Nothing)
+            Call Me.New(equals)
+
             _behaviour = BadBehaviourResponses.BeCool
-            _equals = equals
 
             For Each initialSet As [Set] In sources
                 For Each o As Object In initialSet
@@ -111,8 +114,9 @@ Namespace ComponentModel.DataStructures
         End Sub
 
         Sub New(source As IEnumerable, Optional equals As Func(Of Object, Object, Boolean) = Nothing)
+            Call Me.New(equals)
+
             _behaviour = BadBehaviourResponses.BeCool
-            _equals = equals
 
             For Each o As Object In source
                 Call Me.Add(o)

@@ -88,6 +88,10 @@ Namespace Drawing2D.Colors.Scaler
             Dim minK As Integer = 1
             Dim minD As Double = Double.MaxValue
 
+            If sample.Length = 0 Then
+                Return 0
+            End If
+
             For k As Integer = 1 To sample.Length - 1
                 Dim cdf As Double = sample.Take(k).CDF(N)
 

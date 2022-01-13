@@ -107,6 +107,7 @@ Namespace CommandLine.InteropService
         ''' <param name="app"></param>
         Sub New(app As String)
             _executableAssembly = app
+            _executableDll = app.ChangeSuffix("dll")
         End Sub
 
         ''' <summary>
@@ -114,11 +115,19 @@ Namespace CommandLine.InteropService
         ''' </summary>
         ''' <remarks></remarks>
         Protected Friend _executableAssembly As String
+        ''' <summary>
+        ''' .NET Core dll corresponding to run <see cref="_executableAssembly"/>.
+        ''' </summary>
+        Protected Friend _executableDll As String
 
         Dim lastProc As IIORedirectAbstract
 
         Public Function RunDotNetApp(args$) As IIORedirectAbstract
+#If netcore5 = 1 Then
+            lastProc = App.Shell(_executableDll, args, CLR:=True)
+#Else
             lastProc = App.Shell(_executableAssembly, args, CLR:=True)
+#End If
             Return lastProc
         End Function
 
@@ -166,7 +175,11 @@ Namespace CommandLine.InteropService
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function RunProgram(args$, Optional stdin$ = Nothing) As IIORedirectAbstract
+#If netcore5 = 1 Then
+            Return App.Shell(_executableDll, args, CLR:=False, stdin:=stdin)
+#Else
             Return App.Shell(_executableAssembly, args, CLR:=False, stdin:=stdin)
+#End If
         End Function
 
         Public Overrides Function ToString() As String
