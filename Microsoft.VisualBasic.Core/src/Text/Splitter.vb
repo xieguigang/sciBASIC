@@ -109,7 +109,8 @@ Namespace Text
         Public Shared Function Split(s$, delimiter$, isSingle As Boolean,
                                      Optional count% = Integer.MaxValue,
                                      Optional compare As CompareMethod = CompareMethod.Binary) As String()
-            If s.StringEmpty(whitespaceAsEmpty:=False) Then
+
+            If s Is Nothing OrElse s.StringEmpty(whitespaceAsEmpty:=False) Then
                 Return {}
             Else
                 Return New Splitter().__split(s, delimiter, isSingle, count, compare)

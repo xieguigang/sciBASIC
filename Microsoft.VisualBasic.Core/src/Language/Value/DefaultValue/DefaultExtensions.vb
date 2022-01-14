@@ -1,47 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::4091dd747b2b333e672287cd8d132f88, Microsoft.VisualBasic.Core\src\Language\Value\DefaultValue\DefaultExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module DefaultExtensions
-    ' 
-    '         Function: BaseName, FileExists, NormalizePathString, Replace, Split
-    '                   ToLower, TrimSuffix
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module DefaultExtensions
+' 
+'         Function: BaseName, FileExists, NormalizePathString, Replace, Split
+'                   ToLower, TrimSuffix
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Text
 
 Namespace Language.Default
@@ -65,10 +66,40 @@ Namespace Language.Default
             End If
         End Function
 
+        ''' <summary>
+        ''' Returns a zero-based, one-dimensional array containing a specified number of
+        ''' substrings.
+        ''' </summary>
+        ''' <param name="str">Required. String expression containing substrings And delimiters.</param>
+        ''' <param name="deli">
+        ''' Optional. Any single character used to identify substring limits. If Delimiter
+        ''' Is omitted, the space character (" ") Is assumed to be the delimiter.
+        ''' </param>
+        ''' <param name="ignoreCase"></param>
+        ''' <param name="regexp"></param>
+        ''' <returns>
+        ''' String array. If Expression Is a zero-length string (""), 
+        ''' Split returns a single-element array containing a zero-length 
+        ''' string. If Delimiter Is a zero-length string, Or if it does 
+        ''' Not appear anywhere in Expression, Split returns a single-element
+        ''' array containing the entire Expression string.
+        ''' </returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function Split(str As DefaultString, deli$, Optional ignoreCase As Boolean = False) As String()
-            Return Splitter.Split(str.DefaultValue, deli, True, compare:=StringHelpers.IgnoreCase(flag:=ignoreCase))
+        Public Function Split(str As DefaultString,
+                              Optional deli$ = " ",
+                              Optional ignoreCase As Boolean = False,
+                              Optional regexp As Boolean = False) As String()
+            If regexp Then
+                Return str _
+                    .DefaultValue _
+                    .StringSplit(
+                        pattern:=deli,
+                        opt:=If(ignoreCase, RegexICSng, RegexOptions.Singleline)
+                    )
+            Else
+                Return Splitter.Split(str.DefaultValue, deli, True, compare:=StringHelpers.IgnoreCase(flag:=ignoreCase))
+            End If
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
