@@ -1660,6 +1660,8 @@
     <Compile Include="CommandLine\Reflection\Attributes\ExampleAttribute.vb" />
     <Compile Include="CommandLine\Reflection\Attributes\UsageAttribute.vb" />
     <Compile Include="CommandLine\Reflection\ExportApiInformation.vb" />
+    <Compile Include="ComponentModel\Algorithm\base\Combination\CombinationExtensions.vb" />
+    <Compile Include="ComponentModel\Algorithm\base\Combination\Permutation.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLTree\AVLClusterTree.vb" />
     <Compile Include="ComponentModel\Algorithm\BinarySearchFunction.vb" />
     <Compile Include="ComponentModel\Algorithm\QuickSortFunction.vb" />
@@ -1696,6 +1698,7 @@
     <Compile Include="Extensions\Image\IStyleSelector.vb" />
     <Compile Include="Extensions\Image\Math\Intersections.vb" />
     <Compile Include="Extensions\Image\Math\QuadrantRegions.vb" />
+    <Compile Include="Extensions\Math\Correlations\RankOrder.vb" />
     <Compile Include="Extensions\Math\Information\EntropyScore.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\SampleObservation.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\Min.vb" />
