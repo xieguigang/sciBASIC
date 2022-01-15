@@ -115,6 +115,12 @@ Namespace Graph
         Public Property pinned As Boolean
         Public Property visited As Boolean
 
+        Public ReadOnly Property text As String
+            Get
+                Return data.label
+            End Get
+        End Property
+
         ''' <summary>
         ''' 在这里是用的是unique id进行初始化，对于Display title则可以在<see cref="NodeData.label"/>属性上面设置
         ''' </summary>

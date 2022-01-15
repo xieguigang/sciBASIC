@@ -61,7 +61,7 @@ Namespace Parallel.Tasks
     ''' <returns></returns>
     Public Delegate Function IBackgroundTask(Of T)() As T
 
-    Friend Class backgroundTask(Of T) : Inherits IParallelTask
+    Friend Class BackgroundTask(Of T) : Inherits IParallelTask
 
         ''' <summary>
         ''' 获取得到任务线程执行的输出结果
@@ -98,12 +98,15 @@ Namespace Parallel.Tasks
         ''' 取消当前的任务的执行，在线程内部产生的异常可以在<see cref="ExecuteException"/>获取得到
         ''' </summary>
         Public Sub Abort()
+#Disable Warning
             Call _taskThread.Abort()
+#Enable Warning
+
             TaskComplete = False
             _RunningTask = False
         End Sub
 
-        Public Function Start() As backgroundTask(Of T)
+        Public Function Start() As BackgroundTask(Of T)
             If Not TaskRunning Then
                 _taskThread.Start()
                 TaskComplete = False
