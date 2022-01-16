@@ -65,6 +65,7 @@ Namespace ApplicationServices.Debugging.Diagnostics
         ''' <returns></returns>
         Public Property Line As String
 
+        <DebuggerStepThrough>
         Sub New()
         End Sub
 

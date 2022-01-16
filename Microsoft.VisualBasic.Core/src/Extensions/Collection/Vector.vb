@@ -205,7 +205,8 @@ Public Module VectorExtensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="vector"></param>
     ''' <param name="values"></param>
-    <Extension> Public Sub Add(Of T)(ByRef vector As T(), values As IEnumerable(Of T))
+    <Extension>
+    Public Sub Add(Of T)(ByRef vector As T(), values As IEnumerable(Of T))
         Dim data = values.SafeQuery.ToArray
         Dim appendBuffer As T() = New T(vector.Length + data.Length - 1) {}
 
@@ -227,7 +228,8 @@ Public Module VectorExtensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="vector"></param>
     ''' <param name="value"></param>
-    <Extension> Public Sub Add(Of T)(ByRef vector As T(), ParamArray value As T())
+    <Extension>
+    Public Sub Add(Of T)(ByRef vector As T(), ParamArray value As T())
         If value.IsNullOrEmpty Then
             Return
         End If
@@ -248,7 +250,8 @@ Public Module VectorExtensions
     ''' <param name="buffer"></param>
     ''' <param name="value"></param>
     ''' <returns></returns>
-    <Extension> Public Function Append(Of T)(buffer As T(), value As IEnumerable(Of T)) As T()
+    <Extension>
+    Public Function Append(Of T)(buffer As T(), value As IEnumerable(Of T)) As T()
         If buffer Is Nothing Then
             Return value.ToArray
         End If
@@ -265,7 +268,8 @@ Public Module VectorExtensions
     ''' <param name="value"></param>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Sub Add(Of T)(ByRef array As T(), value As List(Of T))
+    <Extension>
+    Public Sub Add(Of T)(ByRef array As T(), value As List(Of T))
         Call Add(Of T)(array, value.ToArray)
     End Sub
 
@@ -429,7 +433,8 @@ Public Module VectorExtensions
     ''' <param name="index%"></param>
     ''' <param name="count%"></param>
     ''' <returns></returns>
-    <Extension> Public Iterator Function GetRange(Of T)(vector As T(), index%, count%) As IEnumerable(Of T)
+    <Extension>
+    Public Iterator Function GetRange(Of T)(vector As T(), index%, count%) As IEnumerable(Of T)
         Dim ends% = index + count - 1
 
         For i As Integer = index To ends
@@ -602,7 +607,8 @@ Public Module VectorExtensions
     ''' <param name="start">0 base</param>
     ''' <param name="length"></param>
     ''' <returns></returns>
-    <Extension> Public Function Midv(Of T)(source As IEnumerable(Of T), start%, length%) As T()
+    <Extension>
+    Public Function Midv(Of T)(source As IEnumerable(Of T), start%, length%) As T()
         If source Is Nothing Then
             Return New T() {}
         ElseIf source.Count < length Then
@@ -627,7 +633,8 @@ Public Module VectorExtensions
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns></returns>
-    <Extension> Public Function LoadAsNumericVector(path As String) As Double()
+    <Extension>
+    Public Function LoadAsNumericVector(path As String) As Double()
         Dim array As String() = IO.File.ReadAllLines(path)
         Dim n As Double() = array.Select(AddressOf Val).ToArray
         Return n
@@ -645,7 +652,9 @@ Public Module VectorExtensions
     ''' <param name="deliPosition">是否还应该在分区的结果之中包含有分隔符对象？默认不包含</param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function Split(Of T)(source As IEnumerable(Of T), delimiter As Predicate(Of T), Optional deliPosition As DelimiterLocation = DelimiterLocation.NotIncludes) As IEnumerable(Of T())
+    Public Iterator Function Split(Of T)(source As IEnumerable(Of T),
+                                         delimiter As Predicate(Of T),
+                                         Optional deliPosition As DelimiterLocation = DelimiterLocation.NotIncludes) As IEnumerable(Of T())
         Dim tmp As New List(Of T)
 
         For Each x As T In source.SafeQuery
