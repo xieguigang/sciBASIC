@@ -206,10 +206,10 @@ Namespace Math
         ''' </summary>
         ''' <param name="source"></param>
         ''' <returns></returns>
-        <Extension> Public Iterator Function GroupBy(Of T)(source As IEnumerable(Of T),
-                                                           evaluate As Func(Of T, Double),
-                                                           equals As GenericLambda(Of Double).IEquals) As IEnumerable(Of NamedCollection(Of T))
-
+        <Extension>
+        Public Iterator Function GroupBy(Of T)(source As IEnumerable(Of T),
+                                               evaluate As Func(Of T, Double),
+                                               equals As GenericLambda(Of Double).IEquals) As IEnumerable(Of NamedCollection(Of T))
 #If NET_48 = 1 Or netcore5 = 1 Then
 
             ' 先进行预处理：求值然后进行排序

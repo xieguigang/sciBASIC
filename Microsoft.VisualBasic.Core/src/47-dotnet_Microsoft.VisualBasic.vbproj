@@ -1632,6 +1632,7 @@
     <Compile Include="ApplicationServices\FileSystem\TempFileSystem.vb" />
     <Compile Include="ApplicationServices\Parallel\DuplexPipe.vb" />
     <Compile Include="ApplicationServices\Parallel\RequestStream.vb" />
+    <Compile Include="ApplicationServices\Parallel\Tasks\BackgroundTask.vb" />
     <Compile Include="ApplicationServices\Terminal\MarkdownRender\Theme.vb" />
     <Compile Include="ApplicationServices\Terminal\MarkdownRender\MarkdownRender.vb" />
     <Compile Include="ApplicationServices\Terminal\TablePrinter\CharMapDefinition.vb" />
@@ -2119,7 +2120,6 @@
     <None Include="ApplicationServices\Parallel\Threads\LQuerySchedule\ParallelLinq.md" />
     <Compile Include="Language\Language\UnixBash\PS1.vb" />
     <Compile Include="ApplicationServices\Parallel\Tasks\IParallelTask.vb" />
-    <Compile Include="ApplicationServices\Parallel\Tasks\__backgroundTask%28Of T%29.vb" />
     <Compile Include="ApplicationServices\Parallel\Threads\ThreadQueue.vb" />
     <Compile Include="ApplicationServices\Parallel\Threads\LQuerySchedule\Models.vb" />
     <Compile Include="ApplicationServices\Parallel\Threads\LQuerySchedule\TaskPartitions.vb" />
