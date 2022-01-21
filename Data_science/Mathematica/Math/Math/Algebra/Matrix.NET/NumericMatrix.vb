@@ -196,7 +196,12 @@ Namespace LinearAlgebra.Matrix
             End If
 
             m = A.Length
-            n = A(0).Length
+
+            If m = 0 Then
+                n = 0
+            Else
+                n = A(0).Length
+            End If
 
             For i As Integer = 0 To m - 1
                 If A(i).Length <> n Then
