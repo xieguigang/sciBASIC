@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::94719152a098083183a484812c6f9ecc, Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsMedian.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module EnumerableStatsMedian
-    ' 
-    '         Function: (+20 Overloads) Median
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module EnumerableStatsMedian
+' 
+'         Function: (+20 Overloads) Median
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -116,21 +116,23 @@ Namespace Math.Statistics.Linq
         ''' <summary>
         ''' Computes the Median of a sequence of <see cref="Double"/> values.
         ''' </summary>
-        ''' <param name="source">A sequence of <see cref="Double"/> values to calculate the Median of.</param>
+        ''' <param name="source">
+        ''' A sequence of <see cref="Double"/> values to calculate the Median of.
+        ''' </param>
         ''' <returns>The Median of the sequence of values.</returns>
         <Extension>
         Public Function Median(source As IEnumerable(Of Double)) As Double
-            Dim sortedList = From number In source Order By number Select number
-            Dim count As Integer = sortedList.Count()
+            Dim sortedList = (From number As Double In source Order By number Select number).ToArray
+            Dim count As Integer = sortedList.Length
             Dim itemIndex As Integer = count \ 2
 
             If count Mod 2 = 0 Then
                 ' Even number of items.
-                Return (sortedList.ElementAt(itemIndex) + sortedList.ElementAt(itemIndex - 1)) / 2
+                Return (sortedList(itemIndex) + sortedList(itemIndex - 1)) / 2
+            Else
+                ' Odd number of items.
+                Return sortedList(itemIndex)
             End If
-
-            ' Odd number of items.
-            Return sortedList.ElementAt(itemIndex)
         End Function
 
         '

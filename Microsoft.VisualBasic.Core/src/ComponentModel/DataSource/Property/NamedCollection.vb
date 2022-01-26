@@ -118,6 +118,9 @@ Namespace ComponentModel.DataSourceModel
         ''' 当前的这个命名的目标集合对象是否是空对象？
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' has no <see cref="name"/> andalso no <see cref="value"/>
+        ''' </remarks>
         Public ReadOnly Property IsEmpty As Boolean Implements IsEmpty.IsEmpty
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
