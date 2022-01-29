@@ -162,18 +162,13 @@ Namespace Graphic
                 Dim lFont As Font = CSSFont.TryParse(legends.First.fontstyle).GDIObject(g.Dpi)
 
                 maxWidth! = g.MeasureString(maxLen, lFont).Width
+                legendPos = New PointF With {
+                    .X = region.Right + lsize.Width,
+                    .Y = region.Top + lFont.Height
+                }
 
                 If theme.legendSplitSize > 0 AndAlso legends.Length > theme.legendSplitSize Then
                     legendParts = legends.Split(theme.legendSplitSize)
-                    legendPos = New PointF With {
-                        .X = region.Right + lsize.Width,
-                        .Y = region.Top + lFont.Height
-                    }
-                Else
-                    legendPos = New PointF With {
-                        .X = region.Size.Width - lsize.Width / 4 - maxWidth,
-                        .Y = region.Top + lFont.Height
-                    }
                 End If
             Else
                 legendPos = theme.legendLayout.GetLocation(canvas, Nothing)

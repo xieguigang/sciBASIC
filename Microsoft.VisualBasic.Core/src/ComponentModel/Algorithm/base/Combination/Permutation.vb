@@ -25,11 +25,11 @@
         End Sub
 
         Private Sub FindIndices()
-            Me.K = -1
             Dim k = 0
 
-            While k + 1 < dataField.Length
+            Me.K = -1
 
+            While k + 1 < dataField.Length
                 If dataField(k).CompareTo(dataField(k + 1)) < 0 Then
                     Me.K = k
                 End If

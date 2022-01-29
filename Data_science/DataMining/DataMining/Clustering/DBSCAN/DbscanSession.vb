@@ -86,7 +86,7 @@ Namespace DBSCAN
             Me.minPts = minPts
             Me.dbscan = dbscan
 
-            Call Console.WriteLine($"max stack size for expands cluster is {maxStackSize}")
+            Call dbscan.println($"max stack size for expands cluster is {maxStackSize}")
         End Sub
 
         Public Function isNoise(id As String) As Boolean
@@ -119,10 +119,10 @@ Namespace DBSCAN
                                       Return i.Value
                                   End Function)
 
-                Call Console.WriteLine($"Density cutoff for dbscan is: {densityCut}!")
-                Call Console.WriteLine($"There are {orderDensity.Where(Function(d) d < densityCut).Count}/{densityList.Count} lower than this threshold value.")
+                Call dbscan.println($"Density cutoff for dbscan is: {densityCut}!")
+                Call dbscan.println($"There are {orderDensity.Where(Function(d) d < densityCut).Count}/{densityList.Count} lower than this threshold value.")
             Else
-                Call Console.WriteLine("No density cutoff of your sample data.")
+                Call dbscan.println("No density cutoff of your sample data.")
             End If
 
             Return Me

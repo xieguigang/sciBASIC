@@ -775,6 +775,7 @@
     <Compile Include="d3js\scale\ordinal.vb" />
     <Compile Include="Drawing2D\Colors\ColorMapLegend.vb" />
     <Compile Include="Drawing2D\Colors\CustomDesigns.vb" />
+    <Compile Include="Drawing2D\Colors\ScalerPalette.vb" />
     <Compile Include="Drawing2D\Colors\Scaler\ColorIndex.vb" />
     <Compile Include="Drawing2D\Colors\Scaler\TrIQ.vb" />
     <Compile Include="Drawing2D\Colors\Viridis.vb" />

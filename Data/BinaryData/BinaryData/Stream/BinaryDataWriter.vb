@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::6093adb9d3e359702292ab0f1bfd0bc4, Data\BinaryData\BinaryData\Stream\BinaryDataWriter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class BinaryDataWriter
-    ' 
-    '     Properties: ByteOrder, Encoding, Position, RerouteInt32ToUnsigned
-    ' 
-    '     Constructor: (+5 Overloads) Sub New
-    ' 
-    '     Function: DecimalToBytes, ReserveOffset, (+2 Overloads) Seek, (+2 Overloads) TemporarySeek, ToString
-    '               (+2 Overloads) Write, WriteByteLengthPrefixString, WriteDwordLengthPrefixString, WriteNoPrefixOrTerminationString, WriteWordLengthPrefixString
-    '               WriteZeroTerminatedString
-    ' 
-    '     Sub: Align, Finalize, (+20 Overloads) Write, WriteMultiple, WriteReversed
-    ' 
-    ' /********************************************************************************/
+' Class BinaryDataWriter
+' 
+'     Properties: ByteOrder, Encoding, Position, RerouteInt32ToUnsigned
+' 
+'     Constructor: (+5 Overloads) Sub New
+' 
+'     Function: DecimalToBytes, ReserveOffset, (+2 Overloads) Seek, (+2 Overloads) TemporarySeek, ToString
+'               (+2 Overloads) Write, WriteByteLengthPrefixString, WriteDwordLengthPrefixString, WriteNoPrefixOrTerminationString, WriteWordLengthPrefixString
+'               WriteZeroTerminatedString
+' 
+'     Sub: Align, Finalize, (+20 Overloads) Write, WriteMultiple, WriteReversed
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -56,8 +56,8 @@ Imports Microsoft.VisualBasic.Text
 ''' <summary>
 ''' Represents an extended <see cref="BinaryWriter"/> supporting special file format data types.
 ''' </summary>
-Public Class BinaryDataWriter
-    Inherits BinaryWriter
+Public Class BinaryDataWriter : Inherits BinaryWriter
+    Implements IByteWriter
 
     Dim _byteOrder As ByteOrder
     Dim _needsReversion As Boolean
@@ -237,6 +237,16 @@ Public Class BinaryDataWriter
     Public Function TemporarySeek(offset As Long, origin As SeekOrigin) As SeekTask
         Return New SeekTask(BaseStream, offset, origin)
     End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Overrides Sub Write(buffer As Byte()) Implements IByteWriter.Write
+        Call MyBase.Write(buffer)
+    End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Overrides Sub Write(b As Byte) Implements IByteWriter.Write
+        Call MyBase.Write(b)
+    End Sub
 
     ''' <summary>
     ''' Writes a <see cref="DateTime"/> to this stream. The <see cref="DateTime"/> will be available in the

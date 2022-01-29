@@ -59,6 +59,7 @@ Namespace DBSCAN
 
         Friend ReadOnly _metricFunc As Func(Of T, T, Double)
         Friend ReadOnly _full As Boolean
+        Friend ReadOnly println As Action(Of Object)
 
         ''' <summary>
         ''' Takes metric function to compute distances between dataset items T
@@ -68,9 +69,18 @@ Namespace DBSCAN
         ''' A logical option for indicates that evaluate all neighbor points 
         ''' or not for test and create cluster members
         ''' </param>
-        Public Sub New(metricFunc As Func(Of T, T, Double), Optional full As Boolean = True)
+        Public Sub New(metricFunc As Func(Of T, T, Double),
+                       Optional full As Boolean = True,
+                       Optional println As Action(Of Object) = Nothing)
+
             _metricFunc = metricFunc
             _full = full
+
+            If println Is Nothing Then
+                Me.println = Sub(any) Console.WriteLine(any.ToString)
+            Else
+                Me.println = println
+            End If
         End Sub
 
         ''' <summary>
@@ -143,7 +153,7 @@ Namespace DBSCAN
 
                 If ++j = d Then
                     j = 0
-                    Call Console.WriteLine($" [{i}/{size}] query {p.ID}...{CInt(100 * i / size)}%")
+                    println($" [{i}/{size}] query {p.ID}...{CInt(100 * i / size)}%")
                 End If
 
                 If p.IsVisited AndAlso Not (p.ClusterId = ClusterIDs.Unclassified OrElse p.ClusterId = ClusterIDs.Noise) Then

@@ -87,11 +87,18 @@ Namespace CommandLine.Reflection
         <Obsolete> Public Property Example As String Implements IExportAPI.Example
 
         ''' <summary>
-        ''' You are going to define a available export api for you application to another language or scripting program environment.
+        ''' You are going to define a available export api 
+        ''' for you application to another language or 
+        ''' scripting program environment.
         ''' (定义一个命令行程序之中可以使用的命令)
         ''' </summary>
-        ''' <param name="Name">The name of the commandline object or you define the exported API name here.(这个命令的名称)</param>
+        ''' <param name="Name">
+        ''' The name of the commandline object or you define 
+        ''' the exported API name here.(这个命令的名称)
+        ''' </param>
         ''' <remarks></remarks>
+        ''' 
+        <DebuggerStepThrough>
         Sub New(Name As String)
             _Name = Name
         End Sub
