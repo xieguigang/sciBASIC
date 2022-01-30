@@ -1,55 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::5b72a20dba4f681b752abf8be400171d, Data\BinaryData\BinaryData\BitSet.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class BitSet
-    ' 
-    '     Properties: Count, IsSynchronized, SyncRoot
-    ' 
-    '     Constructor: (+13 Overloads) Sub New
-    ' 
-    '     Function: [And], [Get], [Not], [Or], [Set]
-    '               [Xor], (+2 Overloads) Append, BinaryBitwiseOp, Clone, Concatenate
-    '               Duplicate, Equals, FromBinaryString, FromHexString, GetBits
-    '               GetEnumerator, GetHashCode, Repeat, RequiredSize, Reverse
-    '               SetAll, SetBits, SplitEvery, ToArray, ToBinaryString
-    '               ToBytes, ToHexString, ToInteger, ToString, ValueOf
-    ' 
-    '     Sub: CopyTo, Extend, (+2 Overloads) InitializeFrom
-    ' 
-    '     Operators: +, <<, <>, =, >>
-    '                (+2 Overloads) And, (+2 Overloads) Not, (+2 Overloads) Or, (+2 Overloads) Xor
-    ' 
-    ' /********************************************************************************/
+' Class BitSet
+' 
+'     Properties: Count, IsSynchronized, SyncRoot
+' 
+'     Constructor: (+13 Overloads) Sub New
+' 
+'     Function: [And], [Get], [Not], [Or], [Set]
+'               [Xor], (+2 Overloads) Append, BinaryBitwiseOp, Clone, Concatenate
+'               Duplicate, Equals, FromBinaryString, FromHexString, GetBits
+'               GetEnumerator, GetHashCode, Repeat, RequiredSize, Reverse
+'               SetAll, SetBits, SplitEvery, ToArray, ToBinaryString
+'               ToBytes, ToHexString, ToInteger, ToString, ValueOf
+' 
+'     Sub: CopyTo, Extend, (+2 Overloads) InitializeFrom
+' 
+'     Operators: +, <<, <>, =, >>
+'                (+2 Overloads) And, (+2 Overloads) Not, (+2 Overloads) Or, (+2 Overloads) Xor
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -127,6 +127,7 @@ Public Class BitSet
 
             Dim byteIndex As Integer = index >> 5
             Dim bitIndex As Integer = index And &H1F
+
             If Value Then
                 bits(byteIndex) = bits(byteIndex) Or (ONE >> bitIndex)
             Else
@@ -159,9 +160,19 @@ Public Class BitSet
         Next
     End Sub
 
+    ''' <summary>
+    ''' create bits vector data from a given 32 bits integer
+    ''' </summary>
+    ''' <param name="v"></param>
     Public Sub New(v As Integer)
         Dim bytes As ICollection(Of Byte) = EndianFixer(BitConverter.GetBytes(v)).ToList()
-        InitializeFrom(bytes)
+
+        Call InitializeFrom(bytes)
+    End Sub
+
+    Sub New(v As Short)
+        Dim bytes As ICollection(Of Byte) = EndianFixer(BitConverter.GetBytes(v)).ToList()
+        Call InitializeFrom(bytes)
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -468,7 +479,28 @@ Public Class BitSet
         Return Me
     End Function
 
-    Public Function SetBits(bits As ICollection(Of Boolean), Optional destStartBit As Integer = 0, Optional srcStartBit As Integer = 0, Optional numBits As Integer = -1, Optional allowExtend As Boolean = False) As BitSet
+    Public Function SetBits(i16 As Short, Optional start As Integer = Scan0) As BitSet
+        Dim bits16 As New BitSet(i16)
+        Return SetBits(bits16.ToArray, start, Scan0)
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="bits"></param>
+    ''' <param name="destStartBit"></param>
+    ''' <param name="srcStartBit"></param>
+    ''' <param name="numBits">
+    ''' negative value means set all <paramref name="bits"/>.
+    ''' </param>
+    ''' <param name="allowExtend"></param>
+    ''' <returns></returns>
+    Public Function SetBits(bits As ICollection(Of Boolean),
+                            Optional destStartBit As Integer = 0,
+                            Optional srcStartBit As Integer = 0,
+                            Optional numBits As Integer = -1,
+                            Optional allowExtend As Boolean = False) As BitSet
+
         If bits Is Nothing Then
             Throw New ArgumentNullException("setBits")
         End If
@@ -537,10 +569,18 @@ Public Class BitSet
     Shared ReadOnly TWO As BigInteger = 2
 
     ''' <summary>
+    ''' create a 32 bit integer
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function ToInteger() As Integer
+        Return ToInteger(Scan0, 32)
+    End Function
+
+    ''' <summary>
     ''' bits to integer
     ''' </summary>
-    ''' <param name="start%"></param>
-    ''' <param name="length%"></param>
+    ''' <param name="start"></param>
+    ''' <param name="length"></param>
     ''' <returns></returns>
     Public Function ToInteger(start%, length%) As Integer
         If length <= 0 Then
