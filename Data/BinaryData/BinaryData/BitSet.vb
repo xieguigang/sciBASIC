@@ -170,6 +170,11 @@ Public Class BitSet
         Call InitializeFrom(bytes)
     End Sub
 
+    Sub New(b As Byte)
+        Dim bytes As ICollection(Of Byte) = EndianFixer({b}).ToList()
+        Call InitializeFrom(bytes)
+    End Sub
+
     Sub New(v As Short)
         Dim bytes As ICollection(Of Byte) = EndianFixer(BitConverter.GetBytes(v)).ToList()
         Call InitializeFrom(bytes)
@@ -477,6 +482,11 @@ Public Class BitSet
             Me(i) = v
         Next
         Return Me
+    End Function
+
+    Public Function SetBits(b8 As Byte, Optional start As Integer = Scan0) As BitSet
+        Dim bits8 As New BitSet(b8)
+        Return SetBits(bits8.ToArray, start, Scan0)
     End Function
 
     Public Function SetBits(i16 As Short, Optional start As Integer = Scan0) As BitSet
