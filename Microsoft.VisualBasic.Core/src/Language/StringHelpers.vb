@@ -55,6 +55,15 @@ Namespace Language
     ''' </summary>
     Public Module FormatHelpers
 
+        <Extension>
+        Public Function Trim(str As Value(Of String), c As Char()) As String
+            If str Is Nothing OrElse str.Value Is Nothing Then
+                Return ""
+            Else
+                Return str.Value.Trim(c)
+            End If
+        End Function
+
         ''' <summary>
         ''' ``<see cref="sprintf"/>`` extensions
         ''' </summary>
