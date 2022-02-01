@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::497315c756a0f8b0308e302819717da3, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Logging\LogFile\LogFile.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class LogFile
-    ' 
-    '         Properties: fileName, filePath, MimeType, NowTimeNormalizedString
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: SaveLog, SystemInfo, ToString
-    ' 
-    '         Sub: (+2 Overloads) Dispose, info, log, (+2 Overloads) LogException, Save
-    '              (+4 Overloads) WriteLine
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class LogFile
+' 
+'         Properties: fileName, filePath, MimeType, NowTimeNormalizedString
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: SaveLog, SystemInfo, ToString
+' 
+'         Sub: (+2 Overloads) Dispose, info, log, (+2 Overloads) LogException, Save
+'              (+4 Overloads) WriteLine
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -114,15 +114,23 @@ Namespace ApplicationServices.Debugging.Logging
                        Optional append As Boolean = True,
                        Optional split As LoggingDriver = Nothing)
 
-            Dim file As New FileStream(path, If(append, FileMode.Append, FileMode.Truncate))
-
-            Me.buffer = New StreamWriter(file, Encoding.UTF8, bufferSize) With {
+            Me.buffer = New StreamWriter(openFile(path, append), Encoding.UTF8, bufferSize) With {
                 .AutoFlush = autoFlush
             }
             Me.buffer.WriteLine($"//{vbTab}[{Now.ToString}]{vbTab}{New String("=", 25)}  START WRITE LOGGING SECTION  {New String("=", 25)}" & vbCrLf)
             Me.filePath = FileIO.FileSystem.GetFileInfo(path).FullName
             Me.split = split
         End Sub
+
+        Private Shared Function openFile(path As String, append As Boolean) As FileStream
+            If Not append Then
+                Call "".SaveTo(path)
+            ElseIf Not path.FileExists Then
+                Call "".SaveTo(path)
+            End If
+
+            Return New FileStream(path, If(append, FileMode.Append, FileMode.Truncate))
+        End Function
 
         Public Sub Trace(toString As Func(Of String, Byte(), String), format As String, ParamArray bytes As Byte())
             Call Trace(toString(format, bytes))
