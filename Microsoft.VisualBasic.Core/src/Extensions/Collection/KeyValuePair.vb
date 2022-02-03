@@ -344,10 +344,15 @@ Namespace ComponentModel.Collection
         ''' <param name="default">
         ''' Use this as default value is key is not exists
         ''' </param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' <paramref name="default"/> value will be returned if the 
+        ''' specific key is not exists in the given <paramref name="table"/>
+        ''' </returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Iterator Function Takes(Of T)(table As IDictionary(Of String, T), keys As IEnumerable(Of String), Optional [default] As T = Nothing) As IEnumerable(Of T)
+        Public Iterator Function Takes(Of T)(table As IDictionary(Of String, T),
+                                             keys As IEnumerable(Of String),
+                                             Optional [default] As T = Nothing) As IEnumerable(Of T)
             For Each key As String In keys
                 If table.ContainsKey(key) Then
                     Yield table(key)
