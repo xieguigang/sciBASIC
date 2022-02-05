@@ -261,6 +261,7 @@ Namespace Language.Default
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Shared Widening Operator CType(obj As T) As [Default](Of T)
             Return New [Default](Of T) With {
                 .value = obj,
