@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::2f976114354323b662d48a1209cad684, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\GeneralPath.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class GeneralPath
-    ' 
-    '         Properties: dimension, level
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: AddPolygon, GetContour, GetPolygons, ToString
-    ' 
-    '         Sub: ClosePath, Discard, Draw, Fill, LineTo
-    '              MoveTo
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class GeneralPath
+' 
+'         Properties: dimension, level
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: AddPolygon, GetContour, GetPolygons, ToString
+' 
+'         Sub: ClosePath, Discard, Draw, Fill, LineTo
+'              MoveTo
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -115,15 +115,40 @@ Namespace Drawing2D.Math2D.MarchingSquares
         End Function
 
         Public Sub Fill(canvas As IGraphics, color As Brush, scaleX As d3js.scale.LinearScale, scaleY As d3js.scale.LinearScale)
+            Dim i As Integer = 0
+
             For Each polygon In GetPolygons(scaleX, scaleY)
-                Call canvas.FillPolygon(color, polygon)
+                If polygon.Length < 3 Then
+                    i += 1
+                Else
+                    Call canvas.FillPolygon(color, polygon)
+                End If
             Next
+
+            If i > 0 Then
+                Call warning(i)
+            End If
+        End Sub
+
+        Private Sub warning(count As Integer)
+            Call $"missing {count} polygon!".Warning
         End Sub
 
         Public Sub Draw(canvas As IGraphics, border As Pen, scaleX As d3js.scale.LinearScale, scaleY As d3js.scale.LinearScale)
+            Dim i As Integer = 0
+
             For Each polygon In GetPolygons(scaleX, scaleY)
-                Call canvas.DrawPolygon(border, polygon)
+                If polygon.Length < 3 Then
+                    ' do warning?
+                    i += 1
+                Else
+                    Call canvas.DrawPolygon(border, polygon)
+                End If
             Next
+
+            If i > 0 Then
+                Call warning(i)
+            End If
         End Sub
 
         ''' <summary>
