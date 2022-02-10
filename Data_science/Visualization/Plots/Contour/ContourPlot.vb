@@ -64,11 +64,11 @@ Namespace Contour
         Friend xlim As Double = Double.NaN
         Friend ylim As Double = Double.NaN
 
-        Public Sub New(sample As IEnumerable(Of MeasureData), theme As Theme)
+        Public Sub New(sample As IEnumerable(Of MeasureData), interpolateFill As Boolean, theme As Theme)
             MyBase.New(theme)
 
             contours = ContourLayer _
-                .GetContours(sample) _
+                .GetContours(sample, interpolateFill:=interpolateFill) _
                 .ToArray
         End Sub
 

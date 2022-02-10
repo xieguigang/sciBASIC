@@ -180,6 +180,13 @@ Namespace Drawing2D.Math2D.MarchingSquares
                 .OrderBy(Function(j) j.i)
         End Function
 
+        ''' <summary>
+        ''' 进行数据插值
+        ''' </summary>
+        ''' <param name="i"></param>
+        ''' <param name="j"></param>
+        ''' <param name="interpolateFill"></param>
+        ''' <returns></returns>
         Private Function interpolate(i As Integer, j As Integer, interpolateFill As Boolean) As SeqValue(Of Double)
             Dim value As Single = 0
             Dim find As Boolean = False
@@ -193,6 +200,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
                 End If
             Next
 
+            ' 20220210 进行矩阵插值似乎会导致绘制的图形非常失真？
             If interpolateFill AndAlso Not find Then
                 Dim lD As Double = 0
                 Dim DV As Double = 0

@@ -60,9 +60,10 @@ Namespace Contour
                              Optional legendTitleCSS$ = CSSFont.Win7LargeBold,
                              Optional tickCSS$ = CSSFont.Win10NormalLarger,
                              Optional tickAxisStroke$ = Stroke.ScatterLineStroke,
+                             Optional interpolateFill As Boolean = True,
                              Optional ppi% = 300) As GraphicsData
 
-            Dim contours As GeneralPath() = ContourLayer.GetContours(sample).ToArray
+            Dim contours As GeneralPath() = ContourLayer.GetContours(sample, interpolateFill:=interpolateFill).ToArray
             Dim theme As New Theme With {
                 .padding = padding,
                 .background = bg,

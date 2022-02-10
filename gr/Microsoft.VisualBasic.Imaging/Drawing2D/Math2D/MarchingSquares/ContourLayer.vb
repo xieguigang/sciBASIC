@@ -59,8 +59,10 @@ Namespace Drawing2D.Math2D.MarchingSquares
         Public Property shapes As Polygon2D()
         Public Property dimension As Integer()
 
-        Public Shared Iterator Function GetContours(sample As IEnumerable(Of MeasureData), Optional epsilon As Double = 0.00001) As IEnumerable(Of GeneralPath)
-            Dim matrix As New MapMatrix(sample)
+        Public Shared Iterator Function GetContours(sample As IEnumerable(Of MeasureData),
+                                                    Optional epsilon As Double = 0.00001,
+                                                    Optional interpolateFill As Boolean = True) As IEnumerable(Of GeneralPath)
+            Dim matrix As New MapMatrix(sample, interpolateFill:=interpolateFill)
             Dim level_cutoff As Double() = matrix.GetPercentages
             Dim data As Double()() = matrix _
                 .GetMatrixInterpolation _

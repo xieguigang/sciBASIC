@@ -47,6 +47,7 @@
 
 #End Region
 
+Imports System.Diagnostics
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
