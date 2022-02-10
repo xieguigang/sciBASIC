@@ -1,5 +1,6 @@
 ﻿
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Math.Correlations
 
@@ -20,6 +21,10 @@ Namespace Math.Correlations
         ''' </summary>
         Public value As T
 
+        Public Overrides Function ToString() As String
+            Return $"[{i + 1}] rank={rank}, value:{value.GetJson}"
+        End Function
+
         Public Shared Iterator Function Input(data As IEnumerable(Of T)) As IEnumerable(Of RankOrder(Of T))
             Dim i As i32 = Scan0
 
@@ -32,6 +37,14 @@ Namespace Math.Correlations
             Next
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="desc"></param>
+        ''' <returns>
+        ''' i -> new order in new sequence after data sort
+        ''' </returns>
         Public Shared Function Ranking(data As IEnumerable(Of RankOrder(Of T)), Optional desc As Boolean = False) As RankOrder(Of T)()
             Dim orders As RankOrder(Of T)()
 

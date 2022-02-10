@@ -180,62 +180,32 @@ Namespace netCDF
             Select Case type
                 Case CDFDataTypes.BYTE : Return Function(buffer) buffer(Scan0)
                 Case CDFDataTypes.CHAR : Return Function(buffer) Encoding.UTF8.GetString(buffer)
+
                 Case CDFDataTypes.BOOLEAN
                     ' 20210212 bytes flags for maps boolean
                     Return Function(buffer) buffer(Scan0) <> 0
-                Case CDFDataTypes.DOUBLE
-                    If reverse Then
-                        Return Function(buffer)
-                                   Array.Reverse(buffer)
-                                   Return BitConverter.ToDouble(buffer, Scan0)
-                               End Function
-                    Else
-                        Return Function(buffer) BitConverter.ToDouble(buffer, Scan0)
-                    End If
-                Case CDFDataTypes.FLOAT
-                    If reverse Then
-                        Return Function(buffer)
-                                   Array.Reverse(buffer)
-                                   Return BitConverter.ToSingle(buffer, Scan0)
-                               End Function
-                    Else
-                        Return Function(buffer) BitConverter.ToSingle(buffer, Scan0)
-                    End If
 
-                Case CDFDataTypes.INT
-                    If reverse Then
-                        Return Function(buffer)
-                                   Array.Reverse(buffer)
-                                   Return BitConverter.ToInt32(buffer, Scan0)
-                               End Function
-                    Else
-                        Return Function(buffer) BitConverter.ToInt32(buffer, Scan0)
-                    End If
-
-                Case CDFDataTypes.LONG
-                    If reverse Then
-                        Return Function(buffer)
-                                   Array.Reverse(buffer)
-                                   Return BitConverter.ToInt64(buffer, Scan0)
-                               End Function
-                    Else
-                        Return Function(buffer) BitConverter.ToInt64(buffer, Scan0)
-                    End If
-
-                Case CDFDataTypes.SHORT
-                    If reverse Then
-                        Return Function(buffer)
-                                   Array.Reverse(buffer)
-                                   Return BitConverter.ToInt16(buffer, Scan0)
-                               End Function
-                    Else
-                        Return Function(buffer) BitConverter.ToInt16(buffer, Scan0)
-                    End If
+                Case CDFDataTypes.DOUBLE : Return CastNumber(Of Double)(reverse, AddressOf BitConverter.ToDouble)
+                Case CDFDataTypes.FLOAT : Return CastNumber(Of Single)(reverse, AddressOf BitConverter.ToSingle)
+                Case CDFDataTypes.INT : Return CastNumber(Of Integer)(reverse, AddressOf BitConverter.ToInt32)
+                Case CDFDataTypes.LONG : Return CastNumber(Of Long)(reverse, AddressOf BitConverter.ToInt64)
+                Case CDFDataTypes.SHORT : Return CastNumber(Of Short)(reverse, AddressOf BitConverter.ToInt16)
 
                 Case Else
                     ' istanbul ignore next
                     Return Utils.notNetcdf(True, $"non valid type {type}")
             End Select
+        End Function
+
+        Private Function CastNumber(Of T)(reverse As Boolean, bitConvert As Func(Of Byte(), Integer, T)) As Func(Of Byte(), Object)
+            If reverse Then
+                Return Function(buffer)
+                           Call Array.Reverse(buffer)
+                           Return bitConvert(buffer, Scan0)
+                       End Function
+            Else
+                Return Function(buffer) bitConvert(buffer, Scan0)
+            End If
         End Function
 
         ''' <summary>

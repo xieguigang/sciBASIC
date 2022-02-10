@@ -88,6 +88,23 @@ Namespace netCDF.Components
             End Set
         End Property
 
+        ''' <summary>
+        ''' get vector parts by range
+        ''' </summary>
+        ''' <param name="rangeMin">the start index</param>
+        ''' <param name="rangeMax">the ends index</param>
+        ''' <returns></returns>
+        Default Public Overloads ReadOnly Property Item(rangeMin As Integer, rangeMax As Integer) As T()
+            Get
+                Dim size As Integer = rangeMax - rangeMin
+                Dim vec As T() = New T(size - 1) {}
+
+                Call System.Array.ConstrainedCopy(buffer, rangeMin, vec, Scan0, size)
+
+                Return vec
+            End Get
+        End Property
+
         Public Overrides Function ToString() As String
             Dim stringify$
 
