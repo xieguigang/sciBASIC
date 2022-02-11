@@ -155,10 +155,10 @@ Namespace Contour.HeatMap
             Dim yTicks = data.Select(Function(d) d.y).Range.CreateAxisTicks
             Dim rect As Rectangle = canvas.PlotRegion
             Dim x = d3js.scale.linear() _
-                .domain(xTicks) _
+                .domain(values:=xTicks) _
                 .range(integers:={rect.Left, rect.Right})
             Dim y = d3js.scale.linear() _
-                .domain(yTicks) _
+                .domain(values:=yTicks) _
                 .range(integers:={rect.Top, rect.Bottom})
             Dim colorDatas As SolidBrush() = Nothing
             Dim getColors = GetColor(data.Select(Function(o) o.z).ToArray, colorDatas)

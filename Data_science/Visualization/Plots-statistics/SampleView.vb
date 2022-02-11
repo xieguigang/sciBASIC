@@ -130,8 +130,8 @@ Public Module SampleView
                 Dim rect = region.PlotRegion
                 Dim up As New Rectangle(rect.Location, New Size(rect.Width, rect.Height / 2))
 
-                X = d3js.scale.linear.domain(XTicks).range(integers:={up.Left, up.Right})
-                Y = d3js.scale.linear.domain(YTicks).range(integers:={up.Top, up.Bottom})
+                X = d3js.scale.linear.domain(values:=XTicks).range(integers:={up.Left, up.Right})
+                Y = d3js.scale.linear.domain(values:=YTicks).range(integers:={up.Top, up.Bottom})
 
                 Dim scaler As New DataScaler With {
                     .X = X,
@@ -165,8 +165,8 @@ Public Module SampleView
 
                 XTicks = ptX.Range.CreateAxisTicks
                 YTicks = ptY.Range.CreateAxisTicks
-                X = d3js.scale.linear.domain(XTicks).range(integers:={down.Left, down.Right})
-                Y = d3js.scale.linear.domain(YTicks).range(integers:={down.Top, down.Bottom})
+                X = d3js.scale.linear.domain(values:=XTicks).range(integers:={down.Left, down.Right})
+                Y = d3js.scale.linear.domain(values:=YTicks).range(integers:={down.Top, down.Bottom})
 
                 scaler = New DataScaler(rev:=True) With {
                     .X = X,

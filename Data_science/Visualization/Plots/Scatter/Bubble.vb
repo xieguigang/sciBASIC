@@ -175,8 +175,8 @@ Public Class Bubble : Inherits Plot
         End If
 
         With canvas.PlotRegion
-            x = d3js.scale.linear.domain(xTicks).range(integers:={ .Left, .Right})
-            y = d3js.scale.linear.domain(yTicks).range(integers:={ .Top, .Bottom})
+            x = d3js.scale.linear.domain(values:=xTicks).range(integers:={ .Left, .Right})
+            y = d3js.scale.linear.domain(values:=yTicks).range(integers:={ .Top, .Bottom})
         End With
 
         Dim device = g

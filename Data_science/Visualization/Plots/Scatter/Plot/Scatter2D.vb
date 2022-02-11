@@ -161,13 +161,13 @@ Namespace Plots
             Else
                 X = d3js.scale _
                     .linear _
-                    .domain(XTicks) _
+                    .domain(values:=XTicks) _
                     .range(integers:={region.Left, region.Right})
             End If
 
             Y = d3js.scale _
                 .linear _
-                .domain(YTicks) _
+                .domain(values:=YTicks) _
                 .range(integers:={region.Bottom, region.Top})
 
             Return New DataScaler With {

@@ -150,8 +150,8 @@ Public Module RegressionPlot
                     Return
                 End If
 
-                Dim X = d3js.scale.linear.domain(xTicks).range(integers:={rect.Left, rect.Right})
-                Dim Y = d3js.scale.linear.domain(yTicks).range(integers:={rect.Top, rect.Bottom})
+                Dim X = d3js.scale.linear.domain(values:=xTicks).range(integers:={rect.Left, rect.Right})
+                Dim Y = d3js.scale.linear.domain(values:=yTicks).range(integers:={rect.Top, rect.Bottom})
                 Dim scaler As New DataScaler With {
                     .X = X,
                     .Y = Y,

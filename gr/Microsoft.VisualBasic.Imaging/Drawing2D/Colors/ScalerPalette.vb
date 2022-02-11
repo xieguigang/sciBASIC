@@ -2,6 +2,9 @@
 
 Namespace Drawing2D.Colors
 
+    ''' <summary>
+    ''' color set for visualize linear scale data color mapping
+    ''' </summary>
     Public Enum ScalerPalette
 
         ''' <summary>

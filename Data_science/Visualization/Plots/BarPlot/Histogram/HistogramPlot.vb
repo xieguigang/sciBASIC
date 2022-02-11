@@ -84,13 +84,13 @@ Namespace BarPlot.Histogram
                     X = XTicks.LinearScale.range(integers:={ .Left, .Right})
                 Else
                     X = d3js.scale.linear _
-                                .domain(XTicks) _
+                                .domain(values:=XTicks) _
                                 .range(integers:={ .Left, .Right})
                 End If
 
                 ' Y 为什么是从零开始的？
                 Y = d3js.scale.linear _
-                            .domain(YTicks) _
+                            .domain(values:=YTicks) _
                             .range(integers:={ .Bottom, .Top})
             End With
 

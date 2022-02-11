@@ -308,11 +308,11 @@ Namespace Plots
                 Else
                     X = d3js.scale _
                         .linear _
-                        .domain(XTicks) _
+                        .domain(values:=XTicks) _
                         .range(integers:={region.Left, region.Right})
                 End If
 
-                Y = d3js.scale.linear.domain(YTicks).range(integers:={region.Bottom, region.Top})
+                Y = d3js.scale.linear.domain(values:=YTicks).range(integers:={region.Bottom, region.Top})
             End If
 
             Return New DataScaler With {

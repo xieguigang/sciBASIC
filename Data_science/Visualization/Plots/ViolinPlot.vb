@@ -186,7 +186,7 @@ Public Module ViolinPlot
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim plotRegion As Rectangle = region.PlotRegion
-                Dim Y = d3js.scale.linear.domain(yticks).range(integers:={plotRegion.Top, plotRegion.Bottom})
+                Dim Y = d3js.scale.linear.domain(values:=yticks).range(integers:={plotRegion.Top, plotRegion.Bottom})
                 Dim yScale As New YScaler(False) With {
                     .region = plotRegion,
                     .Y = Y

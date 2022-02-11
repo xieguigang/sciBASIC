@@ -144,7 +144,7 @@ Namespace BarPlot
                     Dim widthScaler = d3js _
                         .scale _
                         .linear _
-                        .domain(ticks) _
+                        .domain(values:=ticks) _
                         .range(integers:={0, chartBox.Width})
                     Dim width As Integer
                     Dim dy As Integer = chartBox.Height / (data.Length + 1)

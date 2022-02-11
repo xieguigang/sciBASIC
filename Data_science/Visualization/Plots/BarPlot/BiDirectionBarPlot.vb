@@ -82,7 +82,7 @@ Namespace BarPlot
             Dim boxWidth As Double = rect.Right - boxLeft
             Dim center As Double = boxLeft + boxWidth / 2
             Dim dataValues = data.samples.Select(Function(d) d.data).IteratesALL.Range(scale:=1.125)
-            Dim scale = d3js.scale.linear().domain({0, dataValues.Max * 1.125}).range({0.0, boxWidth / 2})
+            Dim scale = d3js.scale.linear().domain(values:={0, dataValues.Max * 1.125}).range({0.0, boxWidth / 2})
 
             rect = New Rectangle(boxLeft, rect.Top, rect.Width - (boxLeft - rect.Left), rect.Height)
 

@@ -115,8 +115,8 @@ Namespace Plots
             Dim xTicks As Double() = polygons.Select(Function(p) p.pts.Select(Function(pi) CDbl(pi.pt.X))).IteratesALL.CreateAxisTicks
             Dim yTicks As Double() = polygons.Select(Function(p) p.pts.Select(Function(pi) CDbl(pi.pt.Y))).IteratesALL.CreateAxisTicks
             Dim rect = canvas.PlotRegion
-            Dim xscale = d3js.scale.linear.domain(xTicks).range(New Double() {rect.Left, rect.Right})
-            Dim yscale = d3js.scale.linear.domain(yTicks).range(New Double() {rect.Top, rect.Bottom})
+            Dim xscale = d3js.scale.linear.domain(values:=xTicks).range(New Double() {rect.Left, rect.Right})
+            Dim yscale = d3js.scale.linear.domain(values:=yTicks).range(New Double() {rect.Top, rect.Bottom})
             Dim shape As PointF()
             Dim scale As New DataScaler() With {
                 .AxisTicks = (xTicks.AsVector, yTicks.AsVector),

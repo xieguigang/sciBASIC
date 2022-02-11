@@ -97,7 +97,7 @@ Public Class DendrogramPanelV2 : Inherits DendrogramPanel
 
         Dim scaleX As d3js.scale.LinearScale = d3js.scale _
             .linear() _
-            .domain(axisTicks) _
+            .domain(values:=axisTicks) _
             .range(integers:={plotRegion.Left, plotRegion.Right})
 
         ' 绘制距离标尺

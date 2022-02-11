@@ -81,9 +81,24 @@ Namespace Graphic.Axis
                                         Optional w_steps# = 0.8,
                                         Optional w_min# = 0.1,
                                         Optional w_max# = 0.1) As Double()
+
+            Static smallNumber As New DoubleRange(1.0E-300, 0.00001)
+
             With range
                 If .Min.IsNaNImaginary AndAlso .Max.IsNaNImaginary Then
                     Return {0, 1}
+                ElseIf smallNumber.IsInside(.Min) AndAlso smallNumber.IsInside(.Max) Then
+                    Dim v As New Vector({ .Min, .Max})
+                    Dim factor As Double = 1 / v.Min
+
+                    v = v * factor
+                    range = v.Range
+
+                    Dim ticksScaled = AxisScalling.CreateAxisTicks(range.Min, range.Max, ticks, decimalDigits, w_steps, w_max, w_min)
+
+                    ticksScaled = (ticksScaled.AsVector / factor).Array
+
+                    Return ticksScaled
                 Else
                     Return AxisScalling.CreateAxisTicks(.Min, .Max, ticks, decimalDigits, w_steps, w_max, w_min)
                 End If

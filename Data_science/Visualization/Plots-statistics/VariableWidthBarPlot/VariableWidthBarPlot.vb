@@ -90,8 +90,8 @@ Public Module VariableWidthBarPlot
                 Dim plotRect As Rectangle = region.PlotRegion
                 Dim scaler As New DataScaler With {
                     .region = plotRect,
-                    .X = d3js.scale.linear.domain(X).range(integers:={plotRect.Left, plotRect.Right}),
-                    .Y = d3js.scale.linear.domain(Y).range(integers:={plotRect.Top, plotRect.Bottom})
+                    .X = d3js.scale.linear.domain(values:=X).range(integers:={plotRect.Left, plotRect.Right}),
+                    .Y = d3js.scale.linear.domain(values:=Y).range(integers:={plotRect.Top, plotRect.Bottom})
                 }
 
                 ' 绘制出坐标轴

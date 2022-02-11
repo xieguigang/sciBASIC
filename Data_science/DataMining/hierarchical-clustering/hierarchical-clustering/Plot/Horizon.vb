@@ -78,7 +78,7 @@ Public Class Horizon : Inherits DendrogramPanelV2
 
         Dim scaleY As d3js.scale.LinearScale = d3js.scale _
             .linear() _
-            .domain(axisTicks) _
+            .domain(values:=axisTicks) _
             .range(integers:={plotRegion.Top, plotRegion.Bottom})
 
         ' 绘制距离标尺
