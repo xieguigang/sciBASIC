@@ -297,6 +297,11 @@ Namespace Text
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function IsNonPrinting(c As Char) As Boolean
+            Return IsNonPrinting(CByte(AscW(c)))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsNonPrinting(b As Byte) As Boolean
             Return b = 0 OrElse b Like nonPrintingBytes
         End Function

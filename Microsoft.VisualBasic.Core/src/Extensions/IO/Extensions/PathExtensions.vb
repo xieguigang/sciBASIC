@@ -914,8 +914,18 @@ Public Module PathExtensions
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("File.FullPath")>
     <Extension>
-    Public Function GetFullPath(file As String) As String
-        Dim fullName As String = FileIO.FileSystem.GetFileInfo(file).FullName
+    Public Function GetFullPath(file As String, Optional throwEx As Boolean = True) As String
+        Dim fullName As String
+
+        Try
+            fullName = FileIO.FileSystem.GetFileInfo(file).FullName
+        Catch ex As Exception When throwEx
+            Throw
+        Catch ex As Exception
+            Call $"invalid file path [{file}]!".Warning
+            Return ""
+        End Try
+
         Dim UNCprefix As String = fullName.Match("\\\\\d+(\.\d+)+")
 
         If (Not UNCprefix.StringEmpty) AndAlso fullName.StartsWith(UNCprefix) Then

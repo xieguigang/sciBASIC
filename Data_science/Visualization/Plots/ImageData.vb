@@ -83,7 +83,11 @@ Public Module ImageDataExtensions
     End Function
 
     <Extension>
-    Public Function Image2DMap(img As Image, Optional steps% = 1) As GraphicsData
+    Public Function Image2DMap(img As Image,
+                               Optional scaleName As String = "Jet",
+                               Optional mapLevels% = 25,
+                               Optional steps% = 1) As GraphicsData
+
         Dim color = img.PointZProvider
         Dim xrange As DoubleRange = DoubleRange.TryParse($"0 -> {img.Width}")
         Dim yrange As DoubleRange = DoubleRange.TryParse($"0 -> {img.Height}")
@@ -91,8 +95,9 @@ Public Module ImageDataExtensions
         Return Contour.HeatMap.Plot(
             color, xrange, yrange,
             xsteps:=steps, ysteps:=steps, unit:=1,
-            colorMap:="Jet",
-            legendTitle:="GrayScale Heatmap")
+            colorMap:=scaleName,
+            legendTitle:="GrayScale Heatmap"
+        )
     End Function
 
     <Extension>

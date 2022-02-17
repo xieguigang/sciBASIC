@@ -87,9 +87,11 @@ Public Module IOExtensions
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function FlushStream(stream As Stream, path$) As Boolean
-        Dim buffer As Byte() = New Byte(stream.Length - 1) {}
-        Call stream.Read(buffer, Scan0, stream.Length)
-        Return buffer.FlushStream(path)
+        Using writer As Stream = path.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+            Call stream.CopyTo(writer)
+            Call writer.Flush()
+            Call writer.Close()
+        End Using
     End Function
 
     ''' <summary>

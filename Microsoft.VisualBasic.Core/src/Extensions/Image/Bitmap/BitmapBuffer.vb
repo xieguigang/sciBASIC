@@ -266,6 +266,12 @@ Namespace Imaging.BitmapImage
             Return BitmapBuffer.FromBitmap(New Bitmap(res))
         End Function
 
+        ''' <summary>
+        ''' 使用这个函数进行写数据的话，会修改到原图
+        ''' </summary>
+        ''' <param name="curBitmap"></param>
+        ''' <param name="mode"></param>
+        ''' <returns></returns>
         Public Shared Function FromBitmap(curBitmap As Bitmap, Optional mode As ImageLockMode = ImageLockMode.ReadWrite) As BitmapBuffer
             ' Lock the bitmap's bits.  
             Dim rect As New Rectangle(0, 0, curBitmap.Width, curBitmap.Height)
