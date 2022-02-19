@@ -104,7 +104,7 @@ Module SVGTest
     End Sub
 
     Sub Test()
-        Dim svg As New GraphicsSVG(600, 1000)
+        Dim svg As New GraphicsSVG(600, 1000, 300, 300)
         Call svg.Clear(Color.DeepSkyBlue)
 
         Call svg.DrawLine(Pens.Red, New Point(100, 100), New Point(300, 500))
