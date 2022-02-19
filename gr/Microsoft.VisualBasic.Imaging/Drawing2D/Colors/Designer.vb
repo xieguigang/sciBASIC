@@ -332,7 +332,11 @@ Namespace Drawing2D.Colors
         End Function
 
         ''' <summary>
-        ''' 对于无效的键名称，默认是返回<see cref="Office2016"/>，请注意，如果是所有的.net的颜色的话，这里面还会包含有白色，所以还需要手工去除掉白色
+        ''' a unify method for get color maps.
+        ''' 
+        ''' (对于无效的键名称，默认是返回<see cref="Office2016"/>，请注意，
+        ''' 如果是所有的.net的颜色的话，这里面还会包含有白色，所以还需要手工
+        ''' 去除掉白色)
         ''' </summary>
         ''' <param name="exp$">
         ''' <see cref="DesignerExpression"/>.
@@ -361,6 +365,11 @@ Namespace Drawing2D.Colors
             colorRegistry(colorName) = colors
         End Sub
 
+        ''' <summary>
+        ''' a unify method for get color maps
+        ''' </summary>
+        ''' <param name="term$"></param>
+        ''' <returns></returns>
         Private Function getColorsInternal(term$) As Color()
             If Array.IndexOf(allColorMapNames, term.ToLower) > -1 Then
                 Return New ColorMap(20, 255).ColorSequence(term)
