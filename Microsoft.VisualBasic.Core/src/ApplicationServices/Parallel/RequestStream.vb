@@ -151,13 +151,15 @@ Namespace Parallel
         End Sub
 
         ''' <summary>
-        ''' The default text encoding is <see cref="System.Text.Encoding.UTF8"/>
+        ''' The default text encoding is <see cref="Encoding.UTF8"/>
         ''' </summary>
-        ''' <param name="ProtocolCategory"></param>
-        ''' <param name="Protocol"></param>
-        ''' <param name="str">Protocol request argument parameters</param>
-        Sub New(ProtocolCategory As Long, Protocol As Long, str As String)
-            Call Me.New(ProtocolCategory, Protocol, UTF8WithoutBOM.GetBytes(str))
+        ''' <param name="protocolCategory"></param>
+        ''' <param name="protocol"></param>
+        ''' <param name="strData">Protocol request argument parameters</param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(protocolCategory As Long, protocol As Long, strData As String)
+            Call Me.New(protocolCategory, protocol, UTF8WithoutBOM.GetBytes(strData))
         End Sub
 
         Sub New(ProtocolCategory As Long, Protocol As Long, str As String, encoding As Encoding)

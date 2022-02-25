@@ -106,7 +106,7 @@ Public Module AVI
                     DirectCast(renderer, Renderer3D).rotate = r
                 End If
 
-                Call engine.Calculate(0.05F)
+                Call engine.Collide(0.05F)
                 Call renderer.Draw(0.05F, physicsUpdate:=False)
 
                 Call avi.addFrame(canvas.ImageResource)

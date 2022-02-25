@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::97e4d6dc1231e966f57a687046f1e567, gr\network-visualization\NetworkCanvas\Canvas.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class Canvas
-    ' 
-    '     Properties: AutoRotate, DynamicsRadius, FdgArgs, Graph, ShowLabel
-    '                 ViewDistance
-    ' 
-    '     Sub: [Stop], Canvas_Disposed, Canvas_Load, Canvas_Paint, doPaint
-    '          doPhysicsUpdates, Run, SetFDGParams, SetRotate, setupGraph
-    '          WriteLayout
-    ' 
-    ' /********************************************************************************/
+' Class Canvas
+' 
+'     Properties: AutoRotate, DynamicsRadius, FdgArgs, Graph, ShowLabel
+'                 ViewDistance
+' 
+'     Sub: [Stop], Canvas_Disposed, Canvas_Load, Canvas_Paint, doPaint
+'          doPhysicsUpdates, Run, SetFDGParams, SetRotate, setupGraph
+'          WriteLayout
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -70,7 +70,9 @@ Public Class Canvas
             Return net
         End Get
         Set(value As NetworkGraph)
-            Call setupGraph(value, space3D)
+            If Not value Is Nothing Then
+                Call setupGraph(value, space3D)
+            End If
         End Set
     End Property
 
@@ -179,7 +181,9 @@ Public Class Canvas
             Return DirectCast(fdgRenderer, IGraphicsEngine).ShowLabels
         End Get
         Set(value As Boolean)
-            DirectCast(fdgRenderer, IGraphicsEngine).ShowLabels = value
+            If Not fdgRenderer Is Nothing Then
+                DirectCast(fdgRenderer, IGraphicsEngine).ShowLabels = value
+            End If
         End Set
     End Property
 
@@ -198,7 +202,7 @@ Public Class Canvas
     Private Sub doPhysicsUpdates()
         SyncLock fdgRenderer
             If Not fdgRenderer Is Nothing Then
-                Call fdgRenderer.PhysicsEngine.Calculate(0.05F)
+                Call fdgRenderer.PhysicsEngine.Collide(0.05F)
             End If
         End SyncLock
     End Sub
@@ -219,6 +223,8 @@ Public Class Canvas
             ' 所以需要判断一下
             Graph = New NetworkGraph
         End If
+
+        On Error Resume Next
 
         timer.ErrHandle = AddressOf App.LogException
         timer.Start()
