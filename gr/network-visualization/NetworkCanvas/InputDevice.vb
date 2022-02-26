@@ -46,6 +46,9 @@
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 
+''' <summary>
+''' 使用鼠标左键进行拖拽
+''' </summary>
 Public Class InputDevice : Implements IDisposable
 
     Protected WithEvents Canvas As Canvas
@@ -55,7 +58,8 @@ Public Class InputDevice : Implements IDisposable
     End Sub
 
     Protected Overridable Sub Canvas_MouseMove(sender As Object, e As MouseEventArgs) Handles Canvas.MouseMove
-        If Not drag Then   ' 设置tooltip
+        If Not drag Then
+            ' 设置tooltip
             Return
         End If
 
@@ -67,13 +71,29 @@ Public Class InputDevice : Implements IDisposable
             dragNode.pinned = True
             Canvas.fdgPhysics.GetPoint(dragNode).position = vec
         Else
-            dragNode = __getNode(e.Location)
+            dragNode = getNode(e.Location)
         End If
     End Sub
 
     Protected dragNode As Node
 
-    Protected Overridable Function __getNode(p As Point) As Node
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="p">
+    ''' a location which is screen to control
+    ''' </param>
+    ''' <returns></returns>
+    Public Function GetPointedNode(p As Point) As Node
+        Return getNode(p)
+    End Function
+
+    ''' <summary>
+    ''' get target node which is pointed by the mouse
+    ''' </summary>
+    ''' <param name="p"></param>
+    ''' <returns></returns>
+    Protected Overridable Function getNode(p As Point) As Node
         For Each node As Node In Canvas.Graph.vertex
             Dim r As Single = node.data.size(0)
             Dim v As FDGVector2 = TryCast(Canvas.fdgPhysics.GetPoint(node).position, FDGVector2)
@@ -92,12 +112,15 @@ Public Class InputDevice : Implements IDisposable
     Protected drag As Boolean
 
     Protected Overridable Sub Canvas_MouseDown(sender As Object, e As MouseEventArgs) Handles Canvas.MouseDown
-        drag = True
-        dragNode = __getNode(e.Location)
+        If e.Button = MouseButtons.Left Then
+            drag = True
+            dragNode = getNode(e.Location)
+        End If
     End Sub
 
     Protected Overridable Sub Canvas_MouseUp(sender As Object, e As MouseEventArgs) Handles Canvas.MouseUp
         drag = False
+
         If dragNode IsNot Nothing Then
             dragNode.pinned = False
             dragNode = Nothing

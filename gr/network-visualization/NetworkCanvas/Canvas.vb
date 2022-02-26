@@ -200,6 +200,14 @@ Public Class Canvas
         End If
     End Sub
 
+    ''' <summary>
+    ''' get target node object which is pointed by the mouse pointer
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function GetTargetNode(p As Point) As Node
+        Return inputs.GetPointedNode(p)
+    End Function
+
     Public Function GetSnapshot() As Bitmap
         Dim bitmap As New Bitmap(Width, Height)
         Call Me.DrawToBitmap(bitmap, New Rectangle(0, 0, bitmap.Width, bitmap.Height))
