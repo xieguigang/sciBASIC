@@ -215,7 +215,7 @@ Public Class Renderer : Inherits AbstractRenderer
                 center = New Point(
                     CInt(center.X - sz.Width / 2),
                     CInt(center.Y - sz.Height / 2))
-                Call canvas.DrawString(n.ID, Font, Brushes.Gray, center)
+                Call canvas.DrawString(n.ID, Font, Brushes.Black, center)
             End If
         End SyncLock
     End Sub
