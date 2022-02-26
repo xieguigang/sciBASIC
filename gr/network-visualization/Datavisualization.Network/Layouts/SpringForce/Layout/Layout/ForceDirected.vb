@@ -166,7 +166,11 @@ Namespace Layouts.SpringForce
                 Return New Spring(existingSpring.point2, existingSpring.point1, 0F, 0F)
             End If
 
-            edgeSprings(iedge.ID) = New Spring(GetPoint(iedge.U), GetPoint(iedge.V), length, stiffness)
+            Dim U = GetPoint(iedge.U)
+            Dim V = GetPoint(iedge.V)
+            Dim link As New Spring(U, V, length, stiffness)
+
+            Call edgeSprings.Add(iedge.ID, link)
 
             Return edgeSprings(iedge.ID)
         End Function
