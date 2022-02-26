@@ -86,13 +86,17 @@ Public Class Renderer : Inherits AbstractRenderer
         Me.regionProvider = regionProvider
 
         ' using cache
-        Dim ws As New Dictionary(Of Edge, Single)
+        Dim ws As New Dictionary(Of Edge, Pen)
         Dim nr As New Dictionary(Of Node, Single)
 
         For Each edge As Edge In iForceDirected.graph.graphEdges
-            Dim w As Single = CSng(5.0! * edge.weight)
-            w = If(w < 3.0!, 3.0!, w)
-            Call ws.Add(edge, w)
+            If edge.data.style Is Nothing Then
+                Dim w As Single = CSng(5.0! * edge.weight)
+                w = If(w < 3.0!, 3.0!, w)
+                Call ws.Add(edge, New Pen(Color.LightGray, w))
+            Else
+                Call ws.Add(edge, edge.data.style)
+            End If
         Next
         For Each n As Node In iForceDirected.graph.vertex
             Dim r As Single = If(n.data.size.IsNullOrEmpty, 0, n.data.size(0))
@@ -109,7 +113,7 @@ Public Class Renderer : Inherits AbstractRenderer
             Call nr.Add(n, r)
         Next
 
-        widthHash = ws
+        edgeStyles = ws
         radiushash = nr
     End Sub
 
@@ -169,7 +173,7 @@ Public Class Renderer : Inherits AbstractRenderer
     ''' <summary>
     ''' The edge drawing width cache
     ''' </summary>
-    Protected widthHash As IReadOnlyDictionary(Of Edge, Single)
+    Protected edgeStyles As IReadOnlyDictionary(Of Edge, Pen)
     ''' <summary>
     ''' The node drawing radius cache
     ''' </summary>
@@ -182,11 +186,8 @@ Public Class Renderer : Inherits AbstractRenderer
         Dim canvas As Graphics = graphicsProvider()
 
         SyncLock canvas
-            Dim w As Single = widthHash(iEdge)
-            Dim LineColor As New Pen(Color.Gray, w)
-
             Call canvas.DrawLine(
-                LineColor,
+                edgeStyles(iEdge),
                 pos1.X,
                 pos1.Y,
                 pos2.X,
