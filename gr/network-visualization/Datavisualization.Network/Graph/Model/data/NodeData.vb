@@ -149,6 +149,14 @@ Namespace Graph
             }
         End Function
 
+        Public Function SafeGetRadius() As Single
+            If size.IsNullOrEmpty Then
+                Return 0
+            Else
+                Return size(0)
+            End If
+        End Function
+
         Public Overrides Function ToString() As String
             Return initialPostion.ToString
         End Function

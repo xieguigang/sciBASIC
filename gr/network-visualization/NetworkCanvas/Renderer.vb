@@ -102,6 +102,8 @@ Public Class Renderer : Inherits AbstractRenderer
                     n.data.neighborhoods * 9,
                     n.data.neighborhoods * 7)
                 r = If(r = 0, 20, r)
+
+                n.data.size = {r}
             End If
 
             Call nr.Add(n, r)
