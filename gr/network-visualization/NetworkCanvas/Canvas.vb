@@ -232,6 +232,14 @@ Public Class Canvas
         physicsEngine.Start()
     End Sub
 
+    Public Sub SetPhysical(status As Boolean)
+        If status Then
+            physicsEngine.Start()
+        Else
+            physicsEngine.Stop()
+        End If
+    End Sub
+
     Public Sub [Stop]()
         Call timer.Stop()
         Call physicsEngine.Stop()
