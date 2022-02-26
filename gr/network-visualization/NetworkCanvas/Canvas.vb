@@ -129,7 +129,8 @@ Public Class Canvas
         Call fdgPhysics.SetPhysics(
             value.Stiffness,
             value.Repulsion,
-            value.Damping)
+            value.Damping
+        )
     End Sub
 
     ''' <summary>
@@ -198,6 +199,12 @@ Public Class Canvas
             Call SetRotate(r)
         End If
     End Sub
+
+    Public Function GetSnapshot() As Bitmap
+        Dim bitmap As New Bitmap(Width, Height)
+        Call Me.DrawToBitmap(bitmap, New Rectangle(0, 0, bitmap.Width, bitmap.Height))
+        Return bitmap
+    End Function
 
     Private Sub doPhysicsUpdates()
         SyncLock fdgRenderer
