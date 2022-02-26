@@ -94,11 +94,8 @@ Public Class Renderer3D : Inherits Renderer
         Dim canvas As Graphics = graphicsProvider()
 
         SyncLock canvas
-            Dim w As Single = edgeStyles(iEdge)
-            Dim LineColor As New Pen(Color.Gray, w)
-
             Call canvas.DrawLine(
-                LineColor,
+                edgeStyles(iEdge),
                 pos1.X,
                 pos1.Y,
                 pos2.X,
