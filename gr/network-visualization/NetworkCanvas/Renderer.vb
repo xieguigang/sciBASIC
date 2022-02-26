@@ -95,7 +95,7 @@ Public Class Renderer : Inherits AbstractRenderer
             Call ws.Add(edge, w)
         Next
         For Each n As Node In iForceDirected.graph.vertex
-            Dim r As Single = n.data.size(0)
+            Dim r As Single = If(n.data.size.IsNullOrEmpty, 0, n.data.size(0))
 
             If r = 0! Then
                 r = If(n.data.neighborhoods < 30,
