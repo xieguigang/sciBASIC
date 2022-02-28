@@ -262,6 +262,7 @@ Namespace Drawing2D
                                       Optional dpi$ = "100,100") As GraphicsData
 
             Dim driverUsed As Drivers = g.__getDriver(developerValue:=driver)
+            Dim dpiXY As Size = dpi.SizeParser
 
             size = size Or defaultSize
             padding = padding Or defaultPaddingValue
@@ -273,7 +274,6 @@ Namespace Drawing2D
 
             Select Case driverUsed
                 Case Drivers.SVG
-                    Dim dpiXY As Size = dpi.SizeParser
                     Dim svg As New GraphicsSVG(size, dpiXY.Width, dpiXY.Height)
 
                     Call svg.Clear(bg.TranslateColor)
@@ -287,7 +287,7 @@ Namespace Drawing2D
                 Case Drivers.WMF
                     Dim wmfstream As New MemoryStream
 
-                    Using wmf As New Wmf(size, wmfstream, bg)
+                    Using wmf As New Wmf(size, wmfstream, bg, dpi:=dpiXY)
                         Call plotAPI(wmf, region)
                         Call wmf.Flush()
                     End Using

@@ -120,17 +120,22 @@ Namespace Imaging
             wmfFile = save
         End Sub
 
-        Sub New(size As Size, save As Stream, Optional backgroundColor$ = NameOf(Color.Transparent))
+        Sub New(size As Size, save As Stream, Optional backgroundColor$ = NameOf(Color.Transparent), Optional dpi As Size = Nothing)
             Call Me.New(
                 bitmap:=New Bitmap(size.Width, size.Height),
                 stream:=save,
-                backgroundColor:=backgroundColor
+                backgroundColor:=backgroundColor,
+                dpi:=dpi
             )
         End Sub
 
-        Sub New(bitmap As Bitmap, stream As Stream, Optional backgroundColor$ = NameOf(Color.Transparent))
+        Sub New(bitmap As Bitmap, stream As Stream, Optional backgroundColor$ = NameOf(Color.Transparent), Optional dpi As Size = Nothing)
             Dim size As Size = bitmap.Size
             Dim bounds As New RectangleF(0, 0, size.Width, size.Height)
+
+            If Not (dpi.Width = 0 OrElse dpi.Height = 0) Then
+                Call bitmap.SetResolution(dpi.Width, dpi.Height)
+            End If
 
             ' Make a Graphics object so we can use its hDC as a reference.
             Dim gSource = Graphics.FromImage(bitmap)
