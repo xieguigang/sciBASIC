@@ -172,6 +172,11 @@ Namespace Imaging
             Call initg(vectorMetafile)
         End Sub
 
+        Public Overrides Sub Flush()
+            Call MyBase.Flush()
+            Call stream.Flush()
+        End Sub
+
         ''' <summary>
         ''' Close the metafile and free resources.
         ''' </summary>

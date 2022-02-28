@@ -4114,13 +4114,15 @@ Namespace Imaging
         Public Overrides Sub FillRegion(brush As Brush, region As Region)
 
         End Sub
-        '
-        ' Summary:
-        '     Forces execution of all pending graphics operations and returns immediately without
-        '     waiting for the operations to finish.
-        Public Overrides Sub Flush()
 
+        ''' <summary>
+        ''' Forces execution of all pending graphics operations and returns immediately without
+        ''' waiting for the operations to finish.
+        ''' </summary>
+        Public Overrides Sub Flush()
+            Call Graphics.Flush()
         End Sub
+
         '
         ' Summary:
         '     Forces execution of all pending graphics operations with the method waiting or

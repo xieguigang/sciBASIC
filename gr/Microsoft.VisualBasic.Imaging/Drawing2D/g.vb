@@ -284,10 +284,14 @@ Namespace Drawing2D
 
                     Throw New NotImplementedException
                 Case Drivers.WMF
-                    Using wmf As New Wmf(size, WmfData.wmfTmp, bg)
+                    Dim wmfstream As String = WmfData.wmfTmp
+
+                    Using wmf As New Wmf(size, wmfstream, bg)
                         Call plotAPI(wmf, region)
-                        Return New WmfData(wmf.wmfFile, size, padding)
+                        Call wmf.Flush()
                     End Using
+
+                    Return New WmfData(wmfstream, size, padding)
                 Case Else
                     ' using gdi+ graphics driver
                     ' 在这里使用透明色进行填充，防止当bg参数为透明参数的时候被CreateGDIDevice默认填充为白色
