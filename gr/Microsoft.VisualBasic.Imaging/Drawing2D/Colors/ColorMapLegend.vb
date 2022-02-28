@@ -92,5 +92,9 @@ Namespace Drawing2D.Colors
                 Return g.ImageResource
             End Using
         End Function
+
+        Public Overrides Function ToString() As String
+            Return title
+        End Function
     End Class
 End Namespace
