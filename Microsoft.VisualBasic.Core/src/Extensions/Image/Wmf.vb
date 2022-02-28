@@ -84,6 +84,7 @@ Namespace Imaging
         ReadOnly vectorMetafile As Metafile
         ReadOnly hdc As IntPtr
         ReadOnly bounds As Size
+        ReadOnly stream As Stream
 
         ''' <summary>
         ''' The file path of the target wmf image file.
@@ -131,7 +132,8 @@ Namespace Imaging
             Me.bounds = bounds.Size.ToSize
 
             ' Make the Metafile, using the reference hDC.
-            vectorMetafile = New Metafile(stream, hdc, bounds, MetafileFrameUnit.Pixel)
+            Me.vectorMetafile = New Metafile(stream, hdc, bounds, MetafileFrameUnit.Pixel)
+            Me.stream = stream
 
             Call gSource.ReleaseHdc(hdc)
             ' Make a Graphics object and draw.
@@ -163,7 +165,8 @@ Namespace Imaging
             Me.bounds = bounds.Size.ToSize
 
             ' Make the Metafile, using the reference hDC.
-            vectorMetafile = New Metafile(stream, hdc, bounds, MetafileFrameUnit.Pixel)
+            Me.vectorMetafile = New Metafile(stream, hdc, bounds, MetafileFrameUnit.Pixel)
+            Me.stream = stream
 
             Call gSource.ReleaseHdc(hdc)
             Call initg(vectorMetafile)
@@ -175,6 +178,8 @@ Namespace Imaging
         Private Sub releaseInternal()
             Call Graphics.Dispose()
             Call vectorMetafile.Dispose()
+            Call stream.Flush()
+            Call stream.Close()
         End Sub
 
         Public Overrides Sub Dispose()
