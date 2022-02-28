@@ -534,7 +534,8 @@ Public Module Scatter
                          Optional lineWidth! = 5.0!,
                          Optional ptSize! = 15.0!,
                          Optional lineType As DashStyle = DashStyle.Solid,
-                         Optional gridFill$ = "rgb(250,250,250)") As GraphicsData
+                         Optional gridFill$ = "rgb(250,250,250)",
+                         Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim s As SerialData = points.FromPoints(
             lineColor:=lineColor$,
@@ -544,7 +545,7 @@ Public Module Scatter
             lineType:=lineType
         )
 
-        Return Bubble.Plot({s}, size:=$"{size.Width},{size.Height}", padding:=padding, bg:=bg, gridFill:=gridFill)
+        Return Bubble.Plot({s}, size:=$"{size.Width},{size.Height}", padding:=padding, bg:=bg, gridFill:=gridFill, driver:=driver)
     End Function
 
     <Extension>

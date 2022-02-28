@@ -111,7 +111,8 @@ Public Class Bubble : Inherits Plot
                                           Optional legendTitleFontCSS$ = CSSFont.PlotSubTitle,
                                           Optional legendAnchor As PointF = Nothing,
                                           Optional ylayout As YAxisLayoutStyles = YAxisLayoutStyles.Left,
-                                          Optional gridFill$ = "rgb(250,250,250)") As GraphicsData
+                                          Optional gridFill$ = "rgb(250,250,250)",
+                                          Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim theme As New Theme With {
             .background = bg,
@@ -139,7 +140,7 @@ Public Class Bubble : Inherits Plot
             .ylabel = ylabel,
             .main = title,
             .strokeColorAsMainColor = strokeColorAsMainColor
-        }.Plot(size)
+        }.Plot(size, driver:=driver)
     End Function
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
