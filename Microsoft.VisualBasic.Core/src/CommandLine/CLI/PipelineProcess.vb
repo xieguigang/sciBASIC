@@ -158,7 +158,10 @@ Namespace CommandLine
         ''' 
         ''' parameter value set to TRUE means not UseShellExecute
         ''' </param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' the target process object is already has been 
+        ''' started in this function.
+        ''' </returns>
         Public Function CreatePipeline(app As String, args As String, Optional it As Boolean = True) As Process
             Dim p As New Process
             p.StartInfo = New ProcessStartInfo
