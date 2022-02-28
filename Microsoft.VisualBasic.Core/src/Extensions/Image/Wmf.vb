@@ -1,51 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::4feabaa86eedc60c605335b5f779bdc9, Microsoft.VisualBasic.Core\src\Extensions\Image\Wmf.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Wmf
-    ' 
-    '         Properties: Size, wmfFile
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: Dispose, DrawCircle, releaseInternal
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Wmf
+' 
+'         Properties: Size, wmfFile
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Sub: Dispose, DrawCircle, releaseInternal
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
+Imports System.IO
 
 Namespace Imaging
 
@@ -109,7 +110,17 @@ Namespace Imaging
         ''' <param name="save$"></param>
         ''' <param name="backgroundColor$"></param>
         Sub New(size As Size, save$, Optional backgroundColor$ = NameOf(Color.Transparent))
-            Dim bitmap As New Bitmap(size.Width, size.Height)
+            Call Me.New(
+                bitmap:=New Bitmap(size.Width, size.Height),
+                stream:=save.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False),
+                backgroundColor:=backgroundColor
+            )
+
+            wmfFile = save
+        End Sub
+
+        Sub New(bitmap As Bitmap, stream As Stream, Optional backgroundColor$ = NameOf(Color.Transparent))
+            Dim size As Size = bitmap.Size
             Dim bounds As New RectangleF(0, 0, size.Width, size.Height)
 
             ' Make a Graphics object so we can use its hDC as a reference.
@@ -120,10 +131,15 @@ Namespace Imaging
             Me.bounds = bounds.Size.ToSize
 
             ' Make the Metafile, using the reference hDC.
-            save.ParentPath.MakeDir
-            vectorMetafile = New Metafile(save, hdc, bounds, MetafileFrameUnit.Pixel)
-            gSource.ReleaseHdc(hdc)
+            vectorMetafile = New Metafile(stream, hdc, bounds, MetafileFrameUnit.Pixel)
 
+            Call gSource.ReleaseHdc(hdc)
+            ' Make a Graphics object and draw.
+            Call initg(vectorMetafile)
+            Call g.Clear(backgroundColor.TranslateColor)
+        End Sub
+
+        Private Sub initg(vectorMetafile As Metafile)
             ' Make a Graphics object and draw.
             g = Graphics.FromImage(vectorMetafile)
             g.SmoothingMode = SmoothingMode.HighQuality
@@ -133,9 +149,24 @@ Namespace Imaging
             g.InterpolationMode = InterpolationMode.HighQualityBicubic
             g.PixelOffsetMode = PixelOffsetMode.HighQuality
             g.TextRenderingHint = Drawing.Text.TextRenderingHint.ClearTypeGridFit
-            g.Clear(backgroundColor.TranslateColor)
+        End Sub
 
-            wmfFile = save
+        Sub New(gr As Graphics2D, stream As Stream)
+            Dim gSource As Graphics = gr.Graphics
+            Dim size As Size = gr.Size
+            Dim bounds As New RectangleF(0, 0, size.Width, size.Height)
+
+            ' Make a Graphics object so we can use its hDC as a reference.
+            Dim hdc As IntPtr = gSource.GetHdc()
+
+            Me.hdc = hdc
+            Me.bounds = bounds.Size.ToSize
+
+            ' Make the Metafile, using the reference hDC.
+            vectorMetafile = New Metafile(stream, hdc, bounds, MetafileFrameUnit.Pixel)
+
+            Call gSource.ReleaseHdc(hdc)
+            Call initg(vectorMetafile)
         End Sub
 
         ''' <summary>
