@@ -62,6 +62,7 @@
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Text
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
@@ -284,7 +285,7 @@ Namespace Drawing2D
 
                     Throw New NotImplementedException
                 Case Drivers.WMF
-                    Dim wmfstream As String = WmfData.wmfTmp
+                    Dim wmfstream As New MemoryStream
 
                     Using wmf As New Wmf(size, wmfstream, bg)
                         Call plotAPI(wmf, region)

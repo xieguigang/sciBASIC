@@ -120,6 +120,14 @@ Namespace Imaging
             wmfFile = save
         End Sub
 
+        Sub New(size As Size, save As Stream, Optional backgroundColor$ = NameOf(Color.Transparent))
+            Call Me.New(
+                bitmap:=New Bitmap(size.Width, size.Height),
+                stream:=save,
+                backgroundColor:=backgroundColor
+            )
+        End Sub
+
         Sub New(bitmap As Bitmap, stream As Stream, Optional backgroundColor$ = NameOf(Color.Transparent))
             Dim size As Size = bitmap.Size
             Dim bounds As New RectangleF(0, 0, size.Width, size.Height)
@@ -184,7 +192,6 @@ Namespace Imaging
             Call Graphics.Dispose()
             Call vectorMetafile.Dispose()
             Call stream.Flush()
-            Call stream.Close()
         End Sub
 
         Public Overrides Sub Dispose()

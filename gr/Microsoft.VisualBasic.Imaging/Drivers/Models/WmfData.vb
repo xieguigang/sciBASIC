@@ -62,7 +62,7 @@ Namespace Driver
             End Get
         End Property
 
-        ReadOnly tempfile As String
+        ReadOnly buffer As MemoryStream
 
         Public Sub New(img As Object, size As Size, padding As Padding)
             MyBase.New(img, size, padding)
@@ -71,38 +71,30 @@ Namespace Driver
             ' which its file path is generated from function 
             ' wmfTmp
             ' in graphics plot helper api
-            If Not TypeOf img Is String Then
-                Throw New InvalidDataException("The input img data should be a temporary wmf meta file path!")
+            If Not TypeOf img Is Stream Then
+                Throw New InvalidDataException("The input img data should be a temporary wmf meta file stream!")
             Else
-                tempfile = img
-            End If
-
-            If tempfile.FileLength <= 0 Then
-                Throw New InvalidDataException("The input img data is nothing or file unavailable currently!")
+                buffer = img
+                buffer.Seek(Scan0, SeekOrigin.Begin)
             End If
         End Sub
 
         Public Overrides Function GetDataURI() As DataURI
-            Using file As Stream = tempfile.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-                Return New DataURI(file, content_type)
-            End Using
+            Dim uri As New DataURI(buffer, content_type)
+            Call buffer.Seek(Scan0, SeekOrigin.Begin)
+            Return uri
         End Function
 
         Public Overrides Function Save(path As String) As Boolean
-            Return tempfile.FileCopy(path)
+            Return buffer.FlushStream(path)
         End Function
 
         Public Overrides Function Save(out As Stream) As Boolean
-            Using reader As FileStream = tempfile.Open(FileMode.Open, doClear:=False)
-                Call out.Seek(Scan0, SeekOrigin.Begin)
-                Call reader.CopyTo(out)
-            End Using
+            Call out.Seek(Scan0, SeekOrigin.Begin)
+            Call buffer.CopyTo(out)
+            Call buffer.Seek(Scan0, SeekOrigin.Begin)
 
             Return True
-        End Function
-
-        Friend Shared Function wmfTmp() As String
-            Return TempFileSystem.GetAppSysTempFile(".wmf", App.PID, RandomASCIIString(10, skipSymbols:=True))
         End Function
 
         Public Overloads Function Save(stream As Stream, format As ImageFormat) As Boolean Implements SaveGdiBitmap.Save
