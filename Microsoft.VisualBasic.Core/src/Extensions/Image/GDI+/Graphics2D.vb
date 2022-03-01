@@ -262,6 +262,10 @@ Namespace Imaging
         End Sub
 
         Public Overloads Function Save(stream As Stream, format As ImageFormat) As Boolean Implements SaveGdiBitmap.Save
+            If format Is Nothing Then
+                format = ImageFormat.Png
+            End If
+
             Call ImageResource.Save(stream, format)
             Call stream.Flush()
 
