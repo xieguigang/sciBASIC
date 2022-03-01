@@ -486,8 +486,7 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
     End Sub
 
     Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, point As PointF)
-        Dim pdfFont As PdfFont = PdfFont.CreatePdfFont(page.Document, font.Name, font.Style)
-        Call g.DrawText(pdfFont, font.Size, point.X, height - point.Y, s)
+        Call DrawString(s, font, brush, point.X, point.Y)
     End Sub
 
     Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, layoutRectangle As RectangleF)
@@ -503,7 +502,11 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
     End Sub
 
     Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, x As Single, y As Single)
-        Throw New NotImplementedException()
+        Dim pdfFont As PdfFont = PdfFont.CreatePdfFont(page.Document, font.Name, font.Style)
+        Dim color As Color = DirectCast(brush, SolidBrush).Color
+
+        Call g.SetColorNonStroking(color)
+        Call g.DrawText(pdfFont, font.Size, x, height - y, s)
     End Sub
 
     Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, x As Single, y As Single, format As StringFormat)
@@ -696,7 +699,7 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
 
     Public Overrides Sub FillEllipse(brush As Brush, rect As RectangleF)
         Dim x As Double = rect.X + rect.Width / 2
-        Dim y As Double = rect.Y - rect.Height / 2
+        Dim y As Double = Me.height - (rect.Y + rect.Height / 2)
 
         g.SetColorNonStroking(DirectCast(brush, SolidBrush).Color)
         g.DrawOval(x, y, rect.Width, rect.Height, PaintOp.Fill)
@@ -716,7 +719,7 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
 
     Public Overrides Sub FillPie(brush As Brush, rect As Rectangle, startAngle As Single, sweepAngle As Single)
         Dim x As Double = rect.X + rect.Width / 2
-        Dim y As Double = rect.Y - rect.Height / 2
+        Dim y As Double = Me.height - (rect.Y + rect.Height / 2)
 
         g.SetColorNonStroking(DirectCast(brush, SolidBrush).Color)
         g.DrawOval(x, y, rect.Width, rect.Height, PaintOp.Fill)
