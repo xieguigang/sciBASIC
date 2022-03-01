@@ -57,7 +57,7 @@ Namespace PdfReader
         Private _single As PdfIndirectObject
         Private _gens As Dictionary(Of Integer, PdfIndirectObject)
 
-        Public Sub New(ByVal parent As PdfObject, ByVal id As Integer)
+        Public Sub New(parent As PdfObject, id As Integer)
             MyBase.New(parent)
             Me.Id = id
         End Sub
@@ -66,7 +66,7 @@ Namespace PdfReader
             Get
                 Return _Id
             End Get
-            Private Set(ByVal value As Integer)
+            Private Set(value As Integer)
                 _Id = value
             End Set
         End Property
@@ -78,7 +78,7 @@ Namespace PdfReader
             End Get
         End Property
 
-        Public Function ContainsGen(ByVal gen As Integer) As Boolean
+        Public Function ContainsGen(gen As Integer) As Boolean
             If _gens Is Nothing Then
                 If _single Is Nothing Then
                     Return False
@@ -126,7 +126,7 @@ Namespace PdfReader
             Return _gens.GetEnumerator()
         End Function
 
-        Default Public ReadOnly Property Item(ByVal gen As Integer) As PdfIndirectObject
+        Default Public ReadOnly Property Item(gen As Integer) As PdfIndirectObject
             Get
 
                 If _gens Is Nothing Then
@@ -141,7 +141,7 @@ Namespace PdfReader
             End Get
         End Property
 
-        Public Sub ResolveAllReferences(ByVal document As PdfDocument)
+        Public Sub ResolveAllReferences(document As PdfDocument)
             If _gens Is Nothing Then
                 If _single IsNot Nothing AndAlso _single.Child Is Nothing Then document.ResolveReference(_single)
             Else
@@ -152,7 +152,7 @@ Namespace PdfReader
             End If
         End Sub
 
-        Public Sub ResolveAllReferences(ByVal parser As Parser, ByVal document As PdfDocument)
+        Public Sub ResolveAllReferences(parser As Parser, document As PdfDocument)
             If _gens Is Nothing Then
                 If _single IsNot Nothing AndAlso _single.Child Is Nothing Then document.ResolveReference(parser, _single)
             Else
@@ -163,7 +163,7 @@ Namespace PdfReader
             End If
         End Sub
 
-        Public Sub AddXRef(ByVal xref As TokenXRefEntry)
+        Public Sub AddXRef(xref As TokenXRefEntry)
             Dim indirect As PdfIndirectObject = New PdfIndirectObject(Me, xref)
 
             If _gens Is Nothing Then

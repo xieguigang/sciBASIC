@@ -142,7 +142,7 @@ Public Class PdfObject
         Get
             Return _Document
         End Get
-        Friend Set(ByVal value As PdfDocument)
+        Friend Set(value As PdfDocument)
             _Document = value
         End Set
     End Property
@@ -151,7 +151,7 @@ Public Class PdfObject
         Get
             Return _ScaleFactor
         End Get
-        Friend Set(ByVal value As Double)
+        Friend Set(value As Double)
             _ScaleFactor = value
         End Set
     End Property
@@ -175,7 +175,7 @@ Public Class PdfObject
     ' Note: access is internal. Used by derived classes only
     
 
-    Friend Sub New(ByVal Document As PdfDocument, ByVal Optional Type As ObjectType = ObjectType.Dictionary, ByVal Optional PdfDictType As String = Nothing)    ' object type (i.e. /Catalog, /Pages, /Font, /XObject, /OCG)
+    Friend Sub New(Document As PdfDocument, Optional Type As ObjectType = ObjectType.Dictionary, Optional PdfDictType As String = Nothing)    ' object type (i.e. /Catalog, /Pages, /Font, /XObject, /OCG)
         ' save link to main document object
         Me.Document = Document
 
@@ -215,7 +215,7 @@ Public Class PdfObject
     ''' Used by PdfContents to maintain resource objects in sorted order.
     ''' </remarks>
     
-    Public Function CompareTo(ByVal Other As PdfObject) As Integer Implements IComparable(Of PdfObject).CompareTo       ' the second object
+    Public Function CompareTo(Other As PdfObject) As Integer Implements IComparable(Of PdfObject).CompareTo       ' the second object
         Return String.Compare(ResourceCode, Other.ResourceCode)
     End Function
 
@@ -224,7 +224,7 @@ Public Class PdfObject
     ' The result is rounded to 6 decimal places and converted to Single.
     
 
-    Friend Function ToPt(ByVal Value As Double) As Single       ' coordinate value in user unit of measure
+    Friend Function ToPt(Value As Double) As Single       ' coordinate value in user unit of measure
         Dim ReturnValue = ScaleFactor * Value
         If stdNum.Abs(ReturnValue) < 0.0001 Then ReturnValue = 0
         Return ReturnValue
@@ -235,12 +235,12 @@ Public Class PdfObject
     ' The value is rounded to 6 decimal places and converted to Single
     
 
-    Friend Function Round(ByVal Value As Double) As Single      ' a number to be saved in contents
+    Friend Function Round(Value As Double) As Single      ' a number to be saved in contents
         If stdNum.Abs(Value) < 0.0001 Then Value = 0
         Return Value
     End Function
 
-    Friend Sub ObjectValueAppend(ByVal Str As String)
+    Friend Sub ObjectValueAppend(Str As String)
         ' convert content from string to binary
         For Each Chr As Char In Str
             ObjectValueList.Add(Microsoft.VisualBasic.AscW(Chr))
@@ -249,7 +249,7 @@ Public Class PdfObject
         Return
     End Sub
 
-    Friend Sub ObjectValueFormat(ByVal FormatStr As String, ParamArray List As Object())
+    Friend Sub ObjectValueFormat(FormatStr As String, ParamArray List As Object())
         ' format input arguments
         Dim Str = String.Format(PeriodDecSep, FormatStr, List)
 
@@ -269,7 +269,7 @@ Public Class PdfObject
     ' Return value is resource dictionary string.
     
 
-    Friend Function BuildResourcesDictionary(ByVal ResObjects As List(Of PdfObject), ByVal AddProcSet As Boolean) As String     ' list of resource objects for this contents
+    Friend Function BuildResourcesDictionary(ResObjects As List(Of PdfObject), AddProcSet As Boolean) As String     ' list of resource objects for this contents
         ' for page contents we need /ProcSet 
         ' resource object list is empty
         ' if there are no resources an empty dictionary must be returned
@@ -386,7 +386,7 @@ Public Class PdfObject
     ' Compress byte array
     
 
-    Friend Function CompressStream(ByVal InputBuf As Byte()) As Byte()
+    Friend Function CompressStream(InputBuf As Byte()) As Byte()
         ' input length
         Dim InputLen = InputBuf.Length
 
@@ -444,7 +444,7 @@ Public Class PdfObject
     ' Accumulate Adler Checksum
     '
 
-    Private Function Adler32Checksum(ByVal Buffer As Byte()) As UInteger
+    Private Function Adler32Checksum(Buffer As Byte()) As UInteger
         Const Adler32Base As UInteger = 65521
 
         ' split current Adler checksum into two 

@@ -95,7 +95,7 @@ Imports System.Text
         ''' Page size is taken from PdfDocument
         ''' </remarks>
         
-        Public Sub New(ByVal Document As PdfDocument)
+        Public Sub New(Document As PdfDocument)
             MyBase.New(Document, ObjectType.Dictionary, "/Page")
             Width = Document.PageSize.Width
             Height = Document.PageSize.Height
@@ -114,7 +114,7 @@ Imports System.Text
         ''' </remarks>
         
 
-        Public Sub New(ByVal Document As PdfDocument, ByVal PageSize As SizeD)
+        Public Sub New(Document As PdfDocument, PageSize As SizeD)
             MyBase.New(Document, ObjectType.Dictionary, "/Page")
             Width = ScaleFactor * PageSize.Width
             Height = ScaleFactor * PageSize.Height
@@ -133,7 +133,7 @@ Imports System.Text
         ''' PaperType and orientation override the default page size.
         ''' </remarks>
         
-        Public Sub New(ByVal Document As PdfDocument, ByVal PaperType As PaperType, ByVal Landscape As Boolean)
+        Public Sub New(Document As PdfDocument, PaperType As PaperType, Landscape As Boolean)
             MyBase.New(Document, ObjectType.Dictionary, "/Page")
             ' get standard paper size
             Width = PdfDocument.PaperTypeSize(PaperType).Width
@@ -162,7 +162,7 @@ Imports System.Text
         ''' Width and Height override the default page size
         ''' </remarks>
         
-        Public Sub New(ByVal Document As PdfDocument, ByVal Width As Double, ByVal Height As Double)
+        Public Sub New(Document As PdfDocument, Width As Double, Height As Double)
             MyBase.New(Document, ObjectType.Dictionary, "/Page")
             Me.Width = ScaleFactor * Width
             Me.Height = ScaleFactor * Height
@@ -174,7 +174,7 @@ Imports System.Text
         ''' Clone Constructor
         ''' </summary>
         ''' <param name="Page">Existing page object</param>
-        Public Sub New(ByVal Page As PdfPage)
+        Public Sub New(Page As PdfPage)
             MyBase.New(Page.Document, ObjectType.Dictionary, "/Page")
             Width = Page.Width
             Height = Page.Height
@@ -216,7 +216,7 @@ Imports System.Text
         ''' </summary>
         ''' <param name="Contents">Contents object</param>
         
-        Public Sub AddContents(ByVal Contents As PdfContents)
+        Public Sub AddContents(Contents As PdfContents)
             ' set page contents flag
             Contents.PageContents = True
 
@@ -242,7 +242,7 @@ Imports System.Text
         ''' <param name="AnnotRect">Annotation rectangle</param>
         ''' <param name="AnnotAction">Annotation action derived class</param>
         ''' <returns>PdfAnnotation object</returns>
-        Public Function AddAnnotation(ByVal AnnotRect As PdfRectangle, ByVal AnnotAction As AnnotAction) As PdfAnnotation
+        Public Function AddAnnotation(AnnotRect As PdfRectangle, AnnotAction As AnnotAction) As PdfAnnotation
             If AnnotAction.GetType() Is GetType(AnnotLinkAction) Then
                 Return AddLinkAction(CType(AnnotAction, AnnotLinkAction).LocMarkerName, AnnotRect)
             End If
@@ -250,7 +250,7 @@ Imports System.Text
             Return New PdfAnnotation(Me, AnnotRect, AnnotAction)
         End Function
 
-        Friend Sub AddAnnotInternal(ByVal AnnotRect As PdfRectangle, ByVal AnnotAction As AnnotAction)
+        Friend Sub AddAnnotInternal(AnnotRect As PdfRectangle, AnnotAction As AnnotAction)
             If AnnotAction.GetType() Is GetType(AnnotLinkAction) Then
                 AddLinkAction(CType(AnnotAction, AnnotLinkAction).LocMarkerName, AnnotRect)
             Else
@@ -282,7 +282,7 @@ Imports System.Text
         ''' </para>
         ''' </remarks>
         
-        Public Function AddWebLink(ByVal LeftAbsPos As Double, ByVal BottomAbsPos As Double, ByVal RightAbsPos As Double, ByVal TopAbsPos As Double, ByVal WebLinkStr As String) As PdfAnnotation
+        Public Function AddWebLink(LeftAbsPos As Double, BottomAbsPos As Double, RightAbsPos As Double, TopAbsPos As Double, WebLinkStr As String) As PdfAnnotation
             If String.IsNullOrWhiteSpace(WebLinkStr) Then Return Nothing
             Return AddWebLink(New PdfRectangle(LeftAbsPos, BottomAbsPos, RightAbsPos, TopAbsPos), WebLinkStr)
         End Function
@@ -305,7 +305,7 @@ Imports System.Text
         ''' </para>
         ''' </remarks>
         
-        Public Function AddWebLink(ByVal AnnotRect As PdfRectangle, ByVal WebLinkStr As String) As PdfAnnotation
+        Public Function AddWebLink(AnnotRect As PdfRectangle, WebLinkStr As String) As PdfAnnotation
             If String.IsNullOrWhiteSpace(WebLinkStr) Then Return Nothing
             Return New PdfAnnotation(Me, AnnotRect, New AnnotWebLink(WebLinkStr))
         End Function
@@ -317,7 +317,7 @@ Imports System.Text
         ''' <param name="Scope">Location marker scope</param>
         ''' <param name="FitArg">PDF reader display control</param>
         ''' <param name="SideArg">Optional dimensions for FitArg control</param>
-        Public Sub AddLocationMarker(ByVal LocMarkerName As String, ByVal Scope As LocMarkerScope, ByVal FitArg As DestFit, ParamArray SideArg As Double())
+        Public Sub AddLocationMarker(LocMarkerName As String, Scope As LocMarkerScope, FitArg As DestFit, ParamArray SideArg As Double())
             LocationMarker.Create(LocMarkerName, Me, Scope, FitArg, SideArg)
             Return
         End Sub
@@ -328,7 +328,7 @@ Imports System.Text
         ''' <param name="LocMarkerName">Destination name</param>
         ''' <param name="AnnotRect">Annotation rectangle</param>
         ''' <returns>PdfAnnotation object</returns>
-        Public Function AddLinkAction(ByVal LocMarkerName As String, ByVal AnnotRect As PdfRectangle) As PdfAnnotation
+        Public Function AddLinkAction(LocMarkerName As String, AnnotRect As PdfRectangle) As PdfAnnotation
             Return New PdfAnnotation(Me, AnnotRect, New AnnotLinkAction(LocMarkerName))
         End Function
 
@@ -338,7 +338,7 @@ Imports System.Text
         ''' <param name="AnnotRect">Annotation rectangle</param>
         ''' <param name="DisplayMedia">Display media object</param>
         ''' <returns>PdfAnnotation</returns>
-        Public Function AddScreenAction(ByVal AnnotRect As PdfRectangle, ByVal DisplayMedia As PdfDisplayMedia) As PdfAnnotation
+        Public Function AddScreenAction(AnnotRect As PdfRectangle, DisplayMedia As PdfDisplayMedia) As PdfAnnotation
             Return New PdfAnnotation(Me, AnnotRect, New AnnotDisplayMedia(DisplayMedia))
         End Function
 
@@ -351,7 +351,7 @@ Imports System.Text
         ''' <returns>PdfAnnotation</returns>
         ''' <remarks>The AnnotRect is the icon rectangle area. To access the file
         ''' the user has to right click on the icon.</remarks>
-        Public Function AddFileAttachment(ByVal AnnotRect As PdfRectangle, ByVal EmbeddedFile As PdfEmbeddedFile, ByVal Icon As FileAttachIcon) As PdfAnnotation
+        Public Function AddFileAttachment(AnnotRect As PdfRectangle, EmbeddedFile As PdfEmbeddedFile, Icon As FileAttachIcon) As PdfAnnotation
             Return New PdfAnnotation(Me, AnnotRect, New AnnotFileAttachment(EmbeddedFile, Icon))
         End Function
 
@@ -363,7 +363,7 @@ Imports System.Text
         ''' <returns>PdfAnnotation</returns>
         ''' <remarks>The AnnotRect is any area on the page. When the user right click this
         ''' area a floating menu will be displayed.</remarks>
-        Public Function AddFileAttachment(ByVal AnnotRect As PdfRectangle, ByVal EmbeddedFile As PdfEmbeddedFile) As PdfAnnotation
+        Public Function AddFileAttachment(AnnotRect As PdfRectangle, EmbeddedFile As PdfEmbeddedFile) As PdfAnnotation
             Return New PdfAnnotation(Me, AnnotRect, New AnnotFileAttachment(EmbeddedFile, FileAttachIcon.NoIcon))
         End Function
 
@@ -375,7 +375,7 @@ Imports System.Text
         ''' <param name="Note">Sticky note text string</param>
         ''' <param name="Icon">Sticky note icon enumeration</param>
         ''' <returns>PdfAnnotation</returns>
-        Public Function AddStickyNote(ByVal AbsLeft As Double, ByVal AbsTop As Double, ByVal Note As String, ByVal Icon As StickyNoteIcon) As PdfAnnotation
+        Public Function AddStickyNote(AbsLeft As Double, AbsTop As Double, Note As String, Icon As StickyNoteIcon) As PdfAnnotation
             Return New PdfAnnotation(Me, New PdfRectangle(AbsLeft, AbsTop, AbsLeft, AbsTop), New AnnotStickyNote(Note, Icon))
         End Function
 

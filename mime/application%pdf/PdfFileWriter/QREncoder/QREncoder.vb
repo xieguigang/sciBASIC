@@ -241,7 +241,7 @@ Public Class QREncoder
         Get
             Return _QRCodeMatrix
         End Get
-        Friend Set(ByVal value As Boolean(,))
+        Friend Set(value As Boolean(,))
             _QRCodeMatrix = value
         End Set
     End Property
@@ -253,7 +253,7 @@ Public Class QREncoder
         Get
             Return _QRCodeVersion
         End Get
-        Friend Set(ByVal value As Integer)
+        Friend Set(value As Integer)
             _QRCodeVersion = value
         End Set
     End Property
@@ -265,7 +265,7 @@ Public Class QREncoder
         Get
             Return _QRCodeDimension
         End Get
-        Friend Set(ByVal value As Integer)
+        Friend Set(value As Integer)
             _QRCodeDimension = value
         End Set
     End Property
@@ -274,7 +274,7 @@ Public Class QREncoder
         Get
             Return _QRCodeImageDimension
         End Get
-        Friend Set(ByVal value As Integer)
+        Friend Set(value As Integer)
             _QRCodeImageDimension = value
         End Set
     End Property
@@ -307,7 +307,7 @@ Public Class QREncoder
         Get
             Return _ErrorCorrection
         End Get
-        Set(ByVal value As ErrorCorrection)
+        Set(value As ErrorCorrection)
             ' test error correction
             If value < ErrorCorrection.L OrElse value > ErrorCorrection.H Then
                 Throw New ArgumentException("Error correction is invalid. Must be L, M, Q or H. Default is M")
@@ -328,7 +328,7 @@ Public Class QREncoder
         Get
             Return _ModuleSize
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             If value < 1 OrElse value > 100 Then Throw New ArgumentException("Module size error. Default is 2.")
             _ModuleSize = value
 
@@ -351,7 +351,7 @@ Public Class QREncoder
         Get
             Return _QuietZone
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             If value < 4 * _ModuleSize OrElse value > 400 Then Throw New ArgumentException("Quiet zone must be at least 4 times the module size. Default is 8.")
             _QuietZone = value
 
@@ -367,7 +367,7 @@ Public Class QREncoder
     ''' Encode one string into QRCode boolean matrix
     ''' </summary>
     ''' <param name="StringDataSegment">string data segment</param>
-    Public Sub Encode(ByVal StringDataSegment As String)
+    Public Sub Encode(StringDataSegment As String)
         ' empty
         If String.IsNullOrEmpty(StringDataSegment) Then Throw New ArgumentNullException("String data segment is null or missing")
 
@@ -383,7 +383,7 @@ Public Class QREncoder
     ''' Encode array of strings into QRCode boolean matrix
     ''' </summary>
     ''' <param name="StringDataSegments">string data segments</param>
-    Public Sub Encode(ByVal StringDataSegments As String())
+    Public Sub Encode(StringDataSegments As String())
         ' empty
         If StringDataSegments Is Nothing OrElse StringDataSegments.Length = 0 Then Throw New ArgumentNullException("String data segments are null or empty")
 
@@ -412,7 +412,7 @@ Public Class QREncoder
     ''' </summary>
     ''' <param name="SingleDataSeg">Data segment byte array</param>
     ''' <remarks>QR Code boolean matrix</remarks>
-    Public Sub Encode(ByVal SingleDataSeg As Byte())
+    Public Sub Encode(SingleDataSeg As Byte())
         ' test data segments array
         If SingleDataSeg Is Nothing OrElse SingleDataSeg.Length = 0 Then Throw New ArgumentNullException("Single data segment argument is null or empty")
 
@@ -426,7 +426,7 @@ Public Class QREncoder
     ''' </summary>
     ''' <param name="DataSegArray">Data array of byte arrays</param>
     ''' <remarks>QR Code boolean matrix</remarks>
-    Public Sub Encode(ByVal DataSegArray As Byte()())
+    Public Sub Encode(DataSegArray As Byte()())
         ' test data segments array
         If DataSegArray Is Nothing OrElse DataSegArray.Length = 0 Then Throw New ArgumentNullException("Data segments argument is null or empty")
 
@@ -701,7 +701,7 @@ Public Class QREncoder
     
     ' Save data to codeword array
     
-    Friend Sub SaveBitsToCodewordsArray(ByVal Data As Integer, ByVal Bits As Integer)
+    Friend Sub SaveBitsToCodewordsArray(Data As Integer, Bits As Integer)
         BitBuffer = BitBuffer Or CUInt(Data) << 32 - BitBufferLen - Bits
         BitBufferLen += Bits
 
@@ -767,7 +767,7 @@ Public Class QREncoder
     ' Polynomial division for error correction
     
 
-    Friend Shared Sub PolynominalDivision(ByVal Polynomial As Byte(), ByVal PolyLength As Integer, ByVal Generator As Byte(), ByVal ErrCorrCodewords As Integer)
+    Friend Shared Sub PolynominalDivision(Polynomial As Byte(), PolyLength As Integer, Generator As Byte(), ErrCorrCodewords As Integer)
         Dim DataCodewords = PolyLength - ErrCorrCodewords
 
         ' error correction polynomial division
@@ -1140,14 +1140,14 @@ Public Class QREncoder
     
     ' Test horizontal dark light pattern
     
-    Friend Function TestHorizontalDarkLight(ByVal Row As Integer, ByVal Col As Integer) As Boolean
+    Friend Function TestHorizontalDarkLight(Row As Integer, Col As Integer) As Boolean
         Return (MaskMatrix(Row, Col) And Not MaskMatrix(Row, Col + 1) And MaskMatrix(Row, Col + 2) And MaskMatrix(Row, Col + 3) And MaskMatrix(Row, Col + 4) And Not MaskMatrix(Row, Col + 5) And MaskMatrix(Row, Col + 6) And 1) <> 0
     End Function
 
     
     ' Test vertical dark light pattern
     
-    Friend Function TestVerticalDarkLight(ByVal Row As Integer, ByVal Col As Integer) As Boolean
+    Friend Function TestVerticalDarkLight(Row As Integer, Col As Integer) As Boolean
         Return (MaskMatrix(Row, Col) And Not MaskMatrix(Row + 1, Col) And MaskMatrix(Row + 2, Col) And MaskMatrix(Row + 3, Col) And MaskMatrix(Row + 4, Col) And Not MaskMatrix(Row + 5, Col) And MaskMatrix(Row + 6, Col) And 1) <> 0
     End Function
 
@@ -1224,7 +1224,7 @@ Public Class QREncoder
     ' Set encoded data bits length
     
 
-    Friend Function DataLengthBits(ByVal EncodingMode As EncodingMode) As Integer
+    Friend Function DataLengthBits(EncodingMode As EncodingMode) As Integer
         ' Data length bits
         Select Case EncodingMode
             ' numeric mode
@@ -1368,7 +1368,7 @@ Public Class QREncoder
     ' Apply Mask
     
 
-    Friend Sub ApplyMask(ByVal Mask As Integer)
+    Friend Sub ApplyMask(Mask As Integer)
         MaskMatrix = CType(BaseMatrix.Clone(), Byte(,))
 
         Select Case Mask

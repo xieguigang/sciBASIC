@@ -60,11 +60,11 @@ Namespace PdfReader
         Private _outlineRoot As PdfOutlineLevel
         Private _structTreeRoot As PdfStructTreeRoot
 
-        Public Sub New(ByVal parent As PdfObject, ByVal dictionary As ParseDictionary)
+        Public Sub New(parent As PdfObject, dictionary As ParseDictionary)
             MyBase.New(parent, dictionary)
         End Sub
 
-        Public Overrides Sub Visit(ByVal visitor As IPdfObjectVisitor)
+        Public Overrides Sub Visit(visitor As IPdfObjectVisitor)
             visitor.Visit(Me)
         End Sub
 

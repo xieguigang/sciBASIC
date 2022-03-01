@@ -48,7 +48,7 @@ Namespace PdfReader
 
         Private _Id As Integer, _Gen As Integer
 
-        Public Sub New(ByVal id As TokenInteger, ByVal gen As TokenInteger)
+        Public Sub New(id As TokenInteger, gen As TokenInteger)
             Me.Id = id.Value
             Me.Gen = gen.Value
         End Sub
@@ -57,7 +57,7 @@ Namespace PdfReader
             Get
                 Return _Id
             End Get
-            Private Set(ByVal value As Integer)
+            Private Set(value As Integer)
                 _Id = value
             End Set
         End Property
@@ -66,7 +66,7 @@ Namespace PdfReader
             Get
                 Return _Gen
             End Get
-            Private Set(ByVal value As Integer)
+            Private Set(value As Integer)
                 _Gen = value
             End Set
         End Property

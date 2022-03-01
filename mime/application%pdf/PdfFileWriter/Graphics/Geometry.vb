@@ -109,7 +109,7 @@ Public Class PointD
     ''' PointD copy constructor
     ''' </summary>
     ''' <param name="Other">Other point</param>
-    Public Sub New(ByVal Other As PointD)
+    Public Sub New(Other As PointD)
         X = Other.X
         Y = Other.Y
         Return
@@ -120,7 +120,7 @@ Public Class PointD
     ''' </summary>
     ''' <param name="X">X</param>
     ''' <param name="Y">Y</param>
-    Public Sub New(ByVal X As Double, ByVal Y As Double)
+    Public Sub New(X As Double, Y As Double)
         Me.X = X
         Me.Y = Y
         Return
@@ -132,7 +132,7 @@ Public Class PointD
     ''' <param name="Center">Center point</param>
     ''' <param name="Radius">Radius</param>
     ''' <param name="Alpha">Angle</param>
-    Public Sub New(ByVal Center As PointD, ByVal Radius As Double, ByVal Alpha As Double)
+    Public Sub New(Center As PointD, Radius As Double, Alpha As Double)
         X = Center.X + Radius * stdNum.Cos(Alpha)
         Y = Center.Y + Radius * stdNum.Sin(Alpha)
         Return
@@ -145,7 +145,7 @@ Public Class PointD
     ''' <param name="CenterY">Center Y</param>
     ''' <param name="Radius">Radius</param>
     ''' <param name="Alpha">Angle</param>
-    Public Sub New(ByVal CenterX As Double, ByVal CenterY As Double, ByVal Radius As Double, ByVal Alpha As Double)
+    Public Sub New(CenterX As Double, CenterY As Double, Radius As Double, Alpha As Double)
         X = CenterX + Radius * stdNum.Cos(Alpha)
         Y = CenterY + Radius * stdNum.Sin(Alpha)
         Return
@@ -156,7 +156,7 @@ Public Class PointD
     ''' </summary>
     ''' <param name="L1">Line 1</param>
     ''' <param name="L2">Line 2</param>
-    Public Sub New(ByVal L1 As LineD, ByVal L2 As LineD)
+    Public Sub New(L1 As LineD, L2 As LineD)
         Dim Denom = L1.DX * L2.DY - L1.DY * L2.DX
 
         If Denom = 0.0 Then
@@ -198,7 +198,7 @@ Public Class SizeD
     ''' </summary>
     ''' <param name="Width">Width</param>
     ''' <param name="Height">Height</param>
-    Public Sub New(ByVal Width As Double, ByVal Height As Double)
+    Public Sub New(Width As Double, Height As Double)
         Me.Width = Width
         Me.Height = Height
         Return
@@ -224,7 +224,7 @@ Public Class LineD
     ''' </summary>
     ''' <param name="P1">Point 1</param>
     ''' <param name="P2">Point 2</param>
-    Public Sub New(ByVal P1 As PointD, ByVal P2 As PointD)
+    Public Sub New(P1 As PointD, P2 As PointD)
         Me.P1 = P1
         Me.P2 = P2
         Return
@@ -237,7 +237,7 @@ Public Class LineD
     ''' <param name="Y1">Point1 Y</param>
     ''' <param name="X2">Point2 X</param>
     ''' <param name="Y2">Point2 Y</param>
-    Public Sub New(ByVal X1 As Double, ByVal Y1 As Double, ByVal X2 As Double, ByVal Y2 As Double)
+    Public Sub New(X1 As Double, Y1 As Double, X2 As Double, Y2 As Double)
         P1 = New PointD(X1, Y1)
         P2 = New PointD(X2, Y2)
         Return
@@ -313,7 +313,7 @@ Public Class BezierD
     ''' <param name="P2">P2</param>
     ''' <param name="P3">P3</param>
     ''' <param name="P4">P4</param>
-    Public Sub New(ByVal P1 As PointD, ByVal P2 As PointD, ByVal P3 As PointD, ByVal P4 As PointD)
+    Public Sub New(P1 As PointD, P2 As PointD, P3 As PointD, P4 As PointD)
         Me.P1 = P1
         Me.P2 = P2
         Me.P3 = P3
@@ -332,7 +332,7 @@ Public Class BezierD
     ''' <param name="Y3">P3-Y</param>
     ''' <param name="X4">P4-X</param>
     ''' <param name="Y4">P4-Y</param>
-    Public Sub New(ByVal X1 As Double, ByVal Y1 As Double, ByVal X2 As Double, ByVal Y2 As Double, ByVal X3 As Double, ByVal Y3 As Double, ByVal X4 As Double, ByVal Y4 As Double)
+    Public Sub New(X1 As Double, Y1 As Double, X2 As Double, Y2 As Double, X3 As Double, Y3 As Double, X4 As Double, Y4 As Double)
         P1 = New PointD(X1, Y1)
         P2 = New PointD(X2, Y2)
         P3 = New PointD(X3, Y3)
@@ -349,7 +349,7 @@ Public Class BezierD
     ''' <param name="Factor3">Factor3</param>
     ''' <param name="Alpha3">Alpha3</param>
     ''' <param name="P4">P4</param>
-    Public Sub New(ByVal P1 As PointD, ByVal Factor2 As Double, ByVal Alpha2 As Double, ByVal Factor3 As Double, ByVal Alpha3 As Double, ByVal P4 As PointD)
+    Public Sub New(P1 As PointD, Factor2 As Double, Alpha2 As Double, Factor3 As Double, Alpha3 As Double, P4 As PointD)
         ' save two end points
         Me.P1 = P1
         Me.P4 = P4
@@ -377,7 +377,7 @@ Public Class BezierD
     ''' <param name="QP1">Quadratic Bezier point 1</param>
     ''' <param name="QP2">Quadratic Bezier point 2</param>
     ''' <param name="QP3">Quadratic Bezier point 3</param>
-    Public Sub New(ByVal QP1 As PointD, ByVal QP2 As PointD, ByVal QP3 As PointD)
+    Public Sub New(QP1 As PointD, QP2 As PointD, QP3 As PointD)
         '	Any quadratic spline can be expressed as a cubic (where the cubic term is zero).
         '	The end points of the cubic will be the same as the quadratic's.
         '	CP1 = QP1
@@ -399,7 +399,7 @@ Public Class BezierD
     ''' <param name="Y">Center Y</param>
     ''' <param name="Radius">Radius</param>
     ''' <returns>Bezier curve</returns>
-    Public Shared Function CircleFirstQuarter(ByVal X As Double, ByVal Y As Double, ByVal Radius As Double) As BezierD
+    Public Shared Function CircleFirstQuarter(X As Double, Y As Double, Radius As Double) As BezierD
         Return New BezierD(X + Radius, Y, X + Radius, Y + CircleFactor * Radius, X + CircleFactor * Radius, Y + Radius, X, Y + Radius)
     End Function
 
@@ -410,7 +410,7 @@ Public Class BezierD
     ''' <param name="Y">Center Y</param>
     ''' <param name="Radius">Radius</param>
     ''' <returns>Bezier curve</returns>
-    Public Shared Function CircleSecondQuarter(ByVal X As Double, ByVal Y As Double, ByVal Radius As Double) As BezierD
+    Public Shared Function CircleSecondQuarter(X As Double, Y As Double, Radius As Double) As BezierD
         Return New BezierD(X, Y + Radius, X - CircleFactor * Radius, Y + Radius, X - Radius, Y + CircleFactor * Radius, X - Radius, Y)
     End Function
 
@@ -421,7 +421,7 @@ Public Class BezierD
     ''' <param name="Y">Center Y</param>
     ''' <param name="Radius">Radius</param>
     ''' <returns>Bezier curve</returns>
-    Public Shared Function CircleThirdQuarter(ByVal X As Double, ByVal Y As Double, ByVal Radius As Double) As BezierD
+    Public Shared Function CircleThirdQuarter(X As Double, Y As Double, Radius As Double) As BezierD
         Return New BezierD(X - Radius, Y, X - Radius, Y - CircleFactor * Radius, X - CircleFactor * Radius, Y - Radius, X, Y - Radius)
     End Function
 
@@ -432,7 +432,7 @@ Public Class BezierD
     ''' <param name="Y">Center Y</param>
     ''' <param name="Radius">Radius</param>
     ''' <returns>Bezier curve</returns>
-    Public Shared Function CircleFourthQuarter(ByVal X As Double, ByVal Y As Double, ByVal Radius As Double) As BezierD
+    Public Shared Function CircleFourthQuarter(X As Double, Y As Double, Radius As Double) As BezierD
         Return New BezierD(X, Y - Radius, X + CircleFactor * Radius, Y - Radius, X + Radius, Y - CircleFactor * Radius, X + Radius, Y)
     End Function
 
@@ -444,7 +444,7 @@ Public Class BezierD
     ''' <param name="Width">Width</param>
     ''' <param name="Height">Height</param>
     ''' <returns>Bezier curve</returns>
-    Public Shared Function OvalFirstQuarter(ByVal X As Double, ByVal Y As Double, ByVal Width As Double, ByVal Height As Double) As BezierD
+    Public Shared Function OvalFirstQuarter(X As Double, Y As Double, Width As Double, Height As Double) As BezierD
         Return New BezierD(X + Width, Y, X + Width, Y + CircleFactor * Height, X + CircleFactor * Width, Y + Height, X, Y + Height)
     End Function
 
@@ -456,7 +456,7 @@ Public Class BezierD
     ''' <param name="Width">Width</param>
     ''' <param name="Height">Height</param>
     ''' <returns>Bezier curve</returns>
-    Public Shared Function OvalSecondQuarter(ByVal X As Double, ByVal Y As Double, ByVal Width As Double, ByVal Height As Double) As BezierD
+    Public Shared Function OvalSecondQuarter(X As Double, Y As Double, Width As Double, Height As Double) As BezierD
         Return New BezierD(X, Y + Height, X - CircleFactor * Width, Y + Height, X - Width, Y + CircleFactor * Height, X - Width, Y)
     End Function
 
@@ -468,7 +468,7 @@ Public Class BezierD
     ''' <param name="Width">Width</param>
     ''' <param name="Height">Height</param>
     ''' <returns>Bezier curve</returns>
-    Public Shared Function OvalThirdQuarter(ByVal X As Double, ByVal Y As Double, ByVal Width As Double, ByVal Height As Double) As BezierD
+    Public Shared Function OvalThirdQuarter(X As Double, Y As Double, Width As Double, Height As Double) As BezierD
         Return New BezierD(X - Width, Y, X - Width, Y - CircleFactor * Height, X - CircleFactor * Width, Y - Height, X, Y - Height)
     End Function
 
@@ -480,7 +480,7 @@ Public Class BezierD
     ''' <param name="Width">Width</param>
     ''' <param name="Height">Height</param>
     ''' <returns>Bezier curve</returns>
-    Public Shared Function OvalFourthQuarter(ByVal X As Double, ByVal Y As Double, ByVal Width As Double, ByVal Height As Double) As BezierD
+    Public Shared Function OvalFourthQuarter(X As Double, Y As Double, Width As Double, Height As Double) As BezierD
         Return New BezierD(X, Y - Height, X + CircleFactor * Width, Y - Height, X + Width, Y - CircleFactor * Height, X + Width, Y)
     End Function
 End Class

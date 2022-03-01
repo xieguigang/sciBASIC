@@ -56,7 +56,7 @@ Namespace PdfReader
             End Get
         End Property
 
-        Public Sub New(ByVal parent As PdfObject, ByVal name As ParseName)
+        Public Sub New(parent As PdfObject, name As ParseName)
             MyBase.New(parent, name)
         End Sub
 
@@ -64,7 +64,7 @@ Namespace PdfReader
             Return Value.ToString()
         End Function
 
-        Public Overrides Sub Visit(ByVal visitor As IPdfObjectVisitor)
+        Public Overrides Sub Visit(visitor As IPdfObjectVisitor)
             visitor.Visit(Me)
         End Sub
 

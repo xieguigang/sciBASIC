@@ -50,7 +50,7 @@ Namespace PdfReader
     Public Class PdfInteger
         Inherits PdfObject
 
-        Public Sub New(ByVal parent As PdfObject, ByVal [integer] As ParseInteger)
+        Public Sub New(parent As PdfObject, [integer] As ParseInteger)
             MyBase.New(parent, [integer])
         End Sub
 
@@ -58,7 +58,7 @@ Namespace PdfReader
             Return Value.ToString()
         End Function
 
-        Public Overrides Sub Visit(ByVal visitor As IPdfObjectVisitor)
+        Public Overrides Sub Visit(visitor As IPdfObjectVisitor)
             visitor.Visit(Me)
         End Sub
 

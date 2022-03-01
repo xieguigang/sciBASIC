@@ -56,7 +56,7 @@ Namespace PdfReader
 
         Private _LowerLeftX As Single, _LowerLeftY As Single, _UpperRightX As Single, _UpperRightY As Single
 
-        Public Sub New(ByVal parent As PdfObject, ByVal array As ParseArray)
+        Public Sub New(parent As PdfObject, array As ParseArray)
             MyBase.New(parent, array)
             ' Extract raw values
             Dim lx = ObjectToFloat(array.Objects(0))
@@ -75,7 +75,7 @@ Namespace PdfReader
             Return $"({LowerLeftX},{LowerLeftY}) -> ({UpperRightX},{UpperRightY})"
         End Function
 
-        Public Overrides Sub Visit(ByVal visitor As IPdfObjectVisitor)
+        Public Overrides Sub Visit(visitor As IPdfObjectVisitor)
             visitor.Visit(Me)
         End Sub
 
@@ -83,7 +83,7 @@ Namespace PdfReader
             Get
                 Return _LowerLeftX
             End Get
-            Private Set(ByVal value As Single)
+            Private Set(value As Single)
                 _LowerLeftX = value
             End Set
         End Property
@@ -92,7 +92,7 @@ Namespace PdfReader
             Get
                 Return _LowerLeftY
             End Get
-            Private Set(ByVal value As Single)
+            Private Set(value As Single)
                 _LowerLeftY = value
             End Set
         End Property
@@ -101,7 +101,7 @@ Namespace PdfReader
             Get
                 Return _UpperRightX
             End Get
-            Private Set(ByVal value As Single)
+            Private Set(value As Single)
                 _UpperRightX = value
             End Set
         End Property
@@ -110,7 +110,7 @@ Namespace PdfReader
             Get
                 Return _UpperRightY
             End Get
-            Private Set(ByVal value As Single)
+            Private Set(value As Single)
                 _UpperRightY = value
             End Set
         End Property
@@ -127,7 +127,7 @@ Namespace PdfReader
             End Get
         End Property
 
-        Private Function ObjectToFloat(ByVal obj As ParseObjectBase) As Single
+        Private Function ObjectToFloat(obj As ParseObjectBase) As Single
             ' Might be an integer if the value has no fractional part
             If TypeOf obj Is ParseInteger Then
                 Return TryCast(obj, ParseInteger).Value

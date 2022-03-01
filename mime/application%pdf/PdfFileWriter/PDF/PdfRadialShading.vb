@@ -101,7 +101,7 @@ Public Class PdfRadialShading
     ''' <param name="BBoxHeight">Bounding box height</param>
     ''' <param name="ShadingFunction">Shading function</param>
 
-    Public Sub New(ByVal Document As PdfDocument, ByVal BBoxLeft As Double, ByVal BBoxBottom As Double, ByVal BBoxWidth As Double, ByVal BBoxHeight As Double, ByVal ShadingFunction As PdfShadingFunction)
+    Public Sub New(Document As PdfDocument, BBoxLeft As Double, BBoxBottom As Double, BBoxWidth As Double, BBoxHeight As Double, ShadingFunction As PdfShadingFunction)
         MyBase.New(Document)
         ' create resource code
         ResourceCode = Document.GenerateResourceNumber("S"c)
@@ -137,7 +137,7 @@ Public Class PdfRadialShading
     ''' </summary>
     ''' <param name="Document">Parent PDF document object.</param>
     ''' <param name="ShadingFunction">Shading function.</param>
-    Public Sub New(ByVal Document As PdfDocument, ByVal ShadingFunction As PdfShadingFunction)
+    Public Sub New(Document As PdfDocument, ShadingFunction As PdfShadingFunction)
         Me.New(Document, 0.0, 0.0, 1.0, 1.0, ShadingFunction)
     End Sub
 
@@ -148,7 +148,7 @@ Public Class PdfRadialShading
     ''' <param name="BBoxBottom">Bounding box bottom</param>
     ''' <param name="BBoxWidth">Bounding box width</param>
     ''' <param name="BBoxHeight">Bounding box height</param>
-    Public Sub SetBoundingBox(ByVal BBoxLeft As Double, ByVal BBoxBottom As Double, ByVal BBoxWidth As Double, ByVal BBoxHeight As Double)
+    Public Sub SetBoundingBox(BBoxLeft As Double, BBoxBottom As Double, BBoxWidth As Double, BBoxHeight As Double)
         ' bounding box
         Me.BBoxLeft = BBoxLeft
         Me.BBoxBottom = BBoxBottom
@@ -167,7 +167,7 @@ Public Class PdfRadialShading
     ''' <param name="EndCenterY">End circle center y position</param>
     ''' <param name="EndRadius">End circle center radius</param>
     ''' <param name="Mapping">Mapping mode (relative absolute)</param>
-    Public Sub SetGradientDirection(ByVal StartCenterX As Double, ByVal StartCenterY As Double, ByVal StartRadius As Double, ByVal EndCenterX As Double, ByVal EndCenterY As Double, ByVal EndRadius As Double, ByVal Mapping As MappingMode)
+    Public Sub SetGradientDirection(StartCenterX As Double, StartCenterY As Double, StartRadius As Double, EndCenterX As Double, EndCenterY As Double, EndRadius As Double, Mapping As MappingMode)
         Me.StartCenterX = StartCenterX
         Me.StartCenterY = StartCenterY
         Me.StartRadius = StartRadius
@@ -184,7 +184,7 @@ Public Class PdfRadialShading
     ''' </summary>
     ''' <param name="Value">Anti-alias true or false</param>
 
-    Public Sub AntiAlias(ByVal Value As Boolean)
+    Public Sub AntiAlias(Value As Boolean)
         Dictionary.AddBoolean("/AntiAlias", Value)
         Return
     End Sub
@@ -196,7 +196,7 @@ Public Class PdfRadialShading
     ''' <param name="Before">Before (true or false)</param>
     ''' <param name="After">After (true or false)</param>
 
-    Public Sub ExtendShading(ByVal Before As Boolean, ByVal After As Boolean)
+    Public Sub ExtendShading(Before As Boolean, After As Boolean)
         ExtendShadingBefore = Before
         ExtendShadingAfter = After
         Return

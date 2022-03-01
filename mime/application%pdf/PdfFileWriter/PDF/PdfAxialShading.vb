@@ -121,7 +121,7 @@ Public Enum MappingMode
         ''' <param name="BBoxHeight">Bounding box height</param>
         ''' <param name="ShadingFunction">Shading function</param>
         
-        Public Sub New(ByVal Document As PdfDocument, ByVal BBoxLeft As Double, ByVal BBoxBottom As Double, ByVal BBoxWidth As Double, ByVal BBoxHeight As Double, ByVal ShadingFunction As PdfShadingFunction)
+        Public Sub New(Document As PdfDocument, BBoxLeft As Double, BBoxBottom As Double, BBoxWidth As Double, BBoxHeight As Double, ShadingFunction As PdfShadingFunction)
             MyBase.New(Document)
             ' create resource code
             ResourceCode = Document.GenerateResourceNumber("S"c)
@@ -155,7 +155,7 @@ Public Enum MappingMode
         ''' </summary>
         ''' <param name="Document">Parent PDF document object</param>
         ''' <param name="ShadingFunction">Shading function</param>
-        Public Sub New(ByVal Document As PdfDocument, ByVal ShadingFunction As PdfShadingFunction)
+        Public Sub New(Document As PdfDocument, ShadingFunction As PdfShadingFunction)
             Me.New(Document, 0.0, 0.0, 1.0, 1.0, ShadingFunction)
         End Sub
 
@@ -166,7 +166,7 @@ Public Enum MappingMode
     ''' <param name="BBoxBottom">Bounding box bottom</param>
     ''' <param name="BBoxWidth">Bounding box width</param>
     ''' <param name="BBoxHeight">Bounding box height</param>
-    Public Sub SetBoundingBox(ByVal BBoxLeft As Double, ByVal BBoxBottom As Double, ByVal BBoxWidth As Double, ByVal BBoxHeight As Double)
+    Public Sub SetBoundingBox(BBoxLeft As Double, BBoxBottom As Double, BBoxWidth As Double, BBoxHeight As Double)
             ' bounding box
             Me.BBoxLeft = BBoxLeft
             Me.BBoxBottom = BBoxBottom
@@ -183,7 +183,7 @@ Public Enum MappingMode
         ''' <param name="EndPointX">End point x</param>
         ''' <param name="EndPointY">End point y</param>
         ''' <param name="Mapping">Mapping mode (Relative or Absolute)</param>
-        Public Sub SetAxisDirection(ByVal StartPointX As Double, ByVal StartPointY As Double, ByVal EndPointX As Double, ByVal EndPointY As Double, ByVal Mapping As MappingMode)
+        Public Sub SetAxisDirection(StartPointX As Double, StartPointY As Double, EndPointX As Double, EndPointY As Double, Mapping As MappingMode)
             Me.StartPointX = StartPointX
             Me.StartPointY = StartPointY
             Me.EndPointX = EndPointX
@@ -198,7 +198,7 @@ Public Enum MappingMode
         ''' </summary>
         ''' <param name="Value">Anti-alias true or false</param>
         
-        Public Sub AntiAlias(ByVal Value As Boolean)
+        Public Sub AntiAlias(Value As Boolean)
             Dictionary.AddBoolean("/AntiAlias", Value)
             Return
         End Sub
@@ -210,7 +210,7 @@ Public Enum MappingMode
         ''' <param name="Before">Before (true or false)</param>
         ''' <param name="After">After (true or false)</param>
         
-        Public Sub ExtendShading(ByVal Before As Boolean, ByVal After As Boolean)
+        Public Sub ExtendShading(Before As Boolean, After As Boolean)
             ExtendShadingBefore = Before
             ExtendShadingAfter = After
             Return

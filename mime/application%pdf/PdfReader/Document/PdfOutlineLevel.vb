@@ -51,7 +51,7 @@ Namespace PdfReader
 
         Private _Items As System.Collections.Generic.List(Of PdfReader.PdfOutlineItem)
 
-        Public Sub New(ByVal parent As PdfObject, ByVal dictionary As PdfDictionary)
+        Public Sub New(parent As PdfObject, dictionary As PdfDictionary)
             MyBase.New(parent)
             Items = New List(Of PdfOutlineItem)()
 
@@ -65,7 +65,7 @@ Namespace PdfReader
             End If
         End Sub
 
-        Public Overrides Sub Visit(ByVal visitor As IPdfObjectVisitor)
+        Public Overrides Sub Visit(visitor As IPdfObjectVisitor)
             visitor.Visit(Me)
         End Sub
 
@@ -79,7 +79,7 @@ Namespace PdfReader
             Get
                 Return _Items
             End Get
-            Private Set(ByVal value As List(Of PdfOutlineItem))
+            Private Set(value As List(Of PdfOutlineItem))
                 _Items = value
             End Set
         End Property

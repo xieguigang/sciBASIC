@@ -47,11 +47,11 @@ Namespace PdfReader
     Public Class PdfObjectReference
         Inherits PdfObject
 
-        Public Sub New(ByVal parent As PdfObject, ByVal reference As ParseObjectReference)
+        Public Sub New(parent As PdfObject, reference As ParseObjectReference)
             MyBase.New(parent, reference)
         End Sub
 
-        Public Overrides Sub Visit(ByVal visitor As IPdfObjectVisitor)
+        Public Overrides Sub Visit(visitor As IPdfObjectVisitor)
             visitor.Visit(Me)
         End Sub
 

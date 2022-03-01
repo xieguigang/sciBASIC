@@ -269,7 +269,7 @@ Imports System.Runtime.InteropServices
             Get
                 Return _Index
             End Get
-            Friend Set(ByVal value As Integer)
+            Friend Set(value As Integer)
                 _Index = value
             End Set
         End Property
@@ -278,7 +278,7 @@ Imports System.Runtime.InteropServices
             Get
                 Return _Header
             End Get
-            Friend Set(ByVal value As Boolean)
+            Friend Set(value As Boolean)
                 _Header = value
             End Set
         End Property
@@ -302,7 +302,7 @@ Imports System.Runtime.InteropServices
             Get
                 Return _Type
             End Get
-            Friend Set(ByVal value As CellType)
+            Friend Set(value As CellType)
                 _Type = value
             End Set
         End Property
@@ -331,7 +331,7 @@ Imports System.Runtime.InteropServices
             Get
                 Return _FormattedText
             End Get
-            Friend Set(ByVal value As String)
+            Friend Set(value As String)
                 _FormattedText = value
             End Set
         End Property
@@ -340,7 +340,7 @@ Imports System.Runtime.InteropServices
             Get
                 Return _TextBox
             End Get
-            Friend Set(ByVal value As TextBox)
+            Friend Set(value As TextBox)
                 _TextBox = value
             End Set
         End Property
@@ -349,7 +349,7 @@ Imports System.Runtime.InteropServices
             Get
                 Return _TextBoxHeight
             End Get
-            Friend Set(ByVal value As Double)
+            Friend Set(value As Double)
                 _TextBoxHeight = value
             End Set
         End Property
@@ -358,7 +358,7 @@ Imports System.Runtime.InteropServices
             Get
                 Return _Image
             End Get
-            Friend Set(ByVal value As PdfImage)
+            Friend Set(value As PdfImage)
                 _Image = value
             End Set
         End Property
@@ -387,7 +387,7 @@ Imports System.Runtime.InteropServices
             Get
                 Return _Barcode
             End Get
-            Friend Set(ByVal value As Barcode)
+            Friend Set(value As Barcode)
                 _Barcode = value
             End Set
         End Property
@@ -404,7 +404,7 @@ Imports System.Runtime.InteropServices
         ''' </para>
         ''' </remarks>
         Public WriteOnly Property WebLink As String
-            Set(ByVal value As String)
+            Set(value As String)
                 AnnotAction = New AnnotWebLink(value)
             End Set
         End Property
@@ -428,7 +428,7 @@ Imports System.Runtime.InteropServices
             Get
                 Return _FrameLeft
             End Get
-            Friend Set(ByVal value As Double)
+            Friend Set(value As Double)
                 _FrameLeft = value
             End Set
         End Property
@@ -437,7 +437,7 @@ Imports System.Runtime.InteropServices
             Get
                 Return _FrameWidth
             End Get
-            Friend Set(ByVal value As Double)
+            Friend Set(value As Double)
                 _FrameWidth = value
             End Set
         End Property
@@ -446,7 +446,7 @@ Imports System.Runtime.InteropServices
             Get
                 Return _ClientLeft
             End Get
-            Friend Set(ByVal value As Double)
+            Friend Set(value As Double)
                 _ClientLeft = value
             End Set
         End Property
@@ -455,7 +455,7 @@ Imports System.Runtime.InteropServices
             Get
                 Return _ClientBottom
             End Get
-            Friend Set(ByVal value As Double)
+            Friend Set(value As Double)
                 _ClientBottom = value
             End Set
         End Property
@@ -464,7 +464,7 @@ Imports System.Runtime.InteropServices
             Get
                 Return _ClientRight
             End Get
-            Friend Set(ByVal value As Double)
+            Friend Set(value As Double)
                 _ClientRight = value
             End Set
         End Property
@@ -473,7 +473,7 @@ Imports System.Runtime.InteropServices
             Get
                 Return _ClientTop
             End Get
-            Friend Set(ByVal value As Double)
+            Friend Set(value As Double)
                 _ClientTop = value
             End Set
         End Property
@@ -501,7 +501,7 @@ Imports System.Runtime.InteropServices
             Get
                 Return _Parent
             End Get
-            Friend Set(ByVal value As PdfTable)
+            Friend Set(value As PdfTable)
                 _Parent = value
             End Set
         End Property
@@ -512,7 +512,7 @@ Imports System.Runtime.InteropServices
 
         ' internal constructor
         ' PdfTable creates two PdfTableCell arrays.
-        Friend Sub New(ByVal Parent As PdfTable, ByVal Index As Integer, ByVal Header As Boolean)
+        Friend Sub New(Parent As PdfTable, Index As Integer, Header As Boolean)
             Me.Parent = Parent
             Me.Index = Index
             Me.Header = Header
@@ -806,7 +806,7 @@ Imports System.Runtime.InteropServices
         
         ' Calculate left side
         
-        Private Function LeftPos(ByVal Width As Double) As Double
+        Private Function LeftPos(Width As Double) As Double
             If (Style.Alignment And (ContentAlignment.TopLeft Or ContentAlignment.MiddleLeft Or ContentAlignment.BottomLeft)) <> 0 Then Return ClientLeft
             If (Style.Alignment And (ContentAlignment.TopCenter Or ContentAlignment.MiddleCenter Or ContentAlignment.BottomCenter)) <> 0 Then Return 0.5 * (ClientLeft + ClientRight - Width)
             If (Style.Alignment And (ContentAlignment.TopRight Or ContentAlignment.MiddleRight Or ContentAlignment.BottomRight)) <> 0 Then Return ClientRight - Width
@@ -826,7 +826,7 @@ Imports System.Runtime.InteropServices
         
         ' Calculate top side
         
-        Private Function TopPos(ByVal Height As Double) As Double
+        Private Function TopPos(Height As Double) As Double
             If (Style.Alignment And (ContentAlignment.TopLeft Or ContentAlignment.TopCenter Or ContentAlignment.TopRight)) <> 0 Then Return ClientTop
             If (Style.Alignment And (ContentAlignment.MiddleLeft Or ContentAlignment.MiddleCenter Or ContentAlignment.MiddleRight)) <> 0 Then Return 0.5 * (ClientTop + ClientBottom + Height)
             If (Style.Alignment And (ContentAlignment.BottomLeft Or ContentAlignment.BottomCenter Or ContentAlignment.BottomRight)) <> 0 Then Return ClientBottom + Height

@@ -503,7 +503,7 @@ Public Class PdfContents
     ''' </summary>
     ''' <param name="Page">Page parent</param>
     
-    Public Sub New(ByVal Page As PdfPage)
+    Public Sub New(Page As PdfPage)
         MyBase.New(Page.Document, ObjectType.Stream)
         ' set page contents flag
         PageContents = True
@@ -524,14 +524,14 @@ Public Class PdfContents
     ''' This contents object must be explicitly attached to a page object
     ''' </remarks>
     
-    Public Sub New(ByVal Document As PdfDocument)
+    Public Sub New(Document As PdfDocument)
         MyBase.New(Document, ObjectType.Stream)
     End Sub
 
     
     ' Constructor for XObject or Pattern
     
-    Friend Sub New(ByVal Document As PdfDocument, ByVal PdfObjectType As String)
+    Friend Sub New(Document As PdfDocument, PdfObjectType As String)
         MyBase.New(Document, ObjectType.Stream, PdfObjectType)
     End Sub
 
@@ -559,7 +559,7 @@ Public Class PdfContents
     ''' Layer start
     ''' </summary>
     ''' <param name="Layer">Layer object</param>
-    Public Sub LayerStart(ByVal Layer As PdfLayer)
+    Public Sub LayerStart(Layer As PdfLayer)
         ' add to list of resources
         AddToUsedResources(Layer)
 
@@ -584,7 +584,7 @@ Public Class PdfContents
     ''' <param name="PP">Paint operator</param>
     ''' <returns>Paint operator string</returns>
     
-    Public Function PaintOpStr(ByVal PP As PaintOp) As String
+    Public Function PaintOpStr(PP As PaintOp) As String
         ' apply paint operator
         Return PaintStr(PP)
     End Function
@@ -595,7 +595,7 @@ Public Class PdfContents
     ''' </summary>
     ''' <param name="PP">Paint operator</param>
     
-    Public Sub SetPaintOp(ByVal PP As PaintOp)
+    Public Sub SetPaintOp(PP As PaintOp)
         ' apply paint operator
         If PP <> PaintOp.NoOperator Then MyBase.ObjectValueFormat("{0}" & Microsoft.VisualBasic.Constants.vbLf, PaintStr(CInt(PP)))
         Return
@@ -610,7 +610,7 @@ Public Class PdfContents
     ''' Set line width for future path operations
     ''' </remarks>
     
-    Public Sub SetLineWidth(ByVal Width As Double)
+    Public Sub SetLineWidth(Width As Double)
         MyBase.ObjectValueFormat("{0} w" & Microsoft.VisualBasic.Constants.vbLf, ToPt(Width))
         Return
     End Sub
@@ -621,7 +621,7 @@ Public Class PdfContents
     ''' </summary>
     ''' <param name="LineCap">Line cap enumeration</param>
     
-    Public Sub SetLineCap(ByVal LineCap As PdfLineCap)
+    Public Sub SetLineCap(LineCap As PdfLineCap)
         MyBase.ObjectValueFormat("{0} J" & Microsoft.VisualBasic.Constants.vbLf, CInt(LineCap))
         Return
     End Sub
@@ -632,7 +632,7 @@ Public Class PdfContents
     ''' </summary>
     ''' <param name="LineJoin">Set line join enumeration</param>
     
-    Public Sub SetLineJoin(ByVal LineJoin As PdfLineJoin)
+    Public Sub SetLineJoin(LineJoin As PdfLineJoin)
         MyBase.ObjectValueFormat("{0} j" & Microsoft.VisualBasic.Constants.vbLf, CInt(LineJoin))
         Return
     End Sub
@@ -643,7 +643,7 @@ Public Class PdfContents
     ''' </summary>
     ''' <param name="MiterLimit">Miter limit</param>
     
-    Public Sub SetMiterLimit(ByVal MiterLimit As Double)        ' default 10.0
+    Public Sub SetMiterLimit(MiterLimit As Double)        ' default 10.0
         MyBase.ObjectValueFormat("{0} M" & Microsoft.VisualBasic.Constants.vbLf, Round(MiterLimit))
         Return
     End Sub
@@ -655,7 +655,7 @@ Public Class PdfContents
     ''' <param name="DashArray">Dash array</param>
     ''' <param name="DashPhase">Dash phase</param>
     
-    Public Sub SetDashLine(ByVal DashArray As Double(), ByVal DashPhase As Double)      ' default []
+    Public Sub SetDashLine(DashArray As Double(), DashPhase As Double)      ' default []
         ' default 0
         ' restore default condition of solid line
         If DashArray Is Nothing OrElse DashArray.Length = 0 Then
@@ -683,7 +683,7 @@ Public Class PdfContents
     ''' Gray level must be 0.0 (black) to 1.0 (white).
     ''' </remarks>
     
-    Public Sub GrayLevelNonStroking(ByVal GrayLevel As Double)
+    Public Sub GrayLevelNonStroking(GrayLevel As Double)
         MyBase.ObjectValueFormat("{0} g" & Microsoft.VisualBasic.Constants.vbLf, Round(GrayLevel))
         Return
     End Sub
@@ -697,7 +697,7 @@ Public Class PdfContents
     ''' Gray level must be 0.0 (black) to 1.0 (white).
     ''' </remarks>
     
-    Public Sub GrayLevelStroking(ByVal GrayLevel As Double)
+    Public Sub GrayLevelStroking(GrayLevel As Double)
         MyBase.ObjectValueFormat("{0} G" & Microsoft.VisualBasic.Constants.vbLf, Round(GrayLevel))
         Return
     End Sub
@@ -709,7 +709,7 @@ Public Class PdfContents
     ''' <param name="Color">Color</param>
     ''' <remarks>Set red, green and blue components. Alpha is ignored</remarks>
     
-    Public Sub SetColorNonStroking(ByVal Color As Color)
+    Public Sub SetColorNonStroking(Color As Color)
         MyBase.ObjectValueFormat("{0} {1} {2} rg" & Microsoft.VisualBasic.Constants.vbLf, Round(Color.R / 255.0), Round(Color.G / 255.0), Round(Color.B / 255.0))
         Return
     End Sub
@@ -721,7 +721,7 @@ Public Class PdfContents
     ''' <param name="Color">Color</param>
     ''' <remarks>Set red, green and blue components. Alpha is ignored</remarks>
     
-    Public Sub SetColorStroking(ByVal Color As Color)
+    Public Sub SetColorStroking(Color As Color)
         MyBase.ObjectValueFormat("{0} {1} {2} RG" & Microsoft.VisualBasic.Constants.vbLf, Round(Color.R / 255.0), Round(Color.G / 255.0), Round(Color.B / 255.0))
         Return
     End Sub
@@ -733,7 +733,7 @@ Public Class PdfContents
     ''' <param name="Color">Color value</param>
     ''' <remarks>Set alpha component. Ignore red, green and blue.</remarks>
     
-    Public Sub SetAlphaStroking(ByVal Color As Color)
+    Public Sub SetAlphaStroking(Color As Color)
         SetAlphaStroking(Color.A / 255.0)
         Return
     End Sub
@@ -744,7 +744,7 @@ Public Class PdfContents
     ''' </summary>
     ''' <param name="Alpha">Opacity value 0.0=transparent to 1.0=Opaque</param>
     
-    Public Sub SetAlphaStroking(ByVal Alpha As Double)
+    Public Sub SetAlphaStroking(Alpha As Double)
         Dim AlphaStr As String
 
         If Alpha < 0.001 Then
@@ -768,7 +768,7 @@ Public Class PdfContents
     ''' <param name="Color">Color value</param>
     ''' <remarks>Set alpha component. Ignore red, green and blue.</remarks>
     
-    Public Sub SetAlphaNonStroking(ByVal Color As Color)
+    Public Sub SetAlphaNonStroking(Color As Color)
         SetAlphaNonStroking(Color.A / 255.0)
         Return
     End Sub
@@ -779,7 +779,7 @@ Public Class PdfContents
     ''' </summary>
     ''' <param name="Alpha">Opacity value 0.0=transparent to 1.0=Opaque</param>
     
-    Public Sub SetAlphaNonStroking(ByVal Alpha As Double)
+    Public Sub SetAlphaNonStroking(Alpha As Double)
         Dim AlphaStr As String
 
         If Alpha < 0.001 Then
@@ -802,7 +802,7 @@ Public Class PdfContents
     ''' </summary>
     ''' <param name="Blend">Blend method enumeration</param>
     
-    Public Sub SetBlendMode(ByVal Blend As BlendMode)
+    Public Sub SetBlendMode(Blend As BlendMode)
         Dim ExtGState As PdfExtGState = PdfExtGState.CreateExtGState(Document, "/BM", "/" & Blend.ToString())
         AddToUsedResources(ExtGState)
         MyBase.ObjectValueFormat("{0} gs" & Microsoft.VisualBasic.Constants.vbLf, ExtGState.ResourceCode)
@@ -815,7 +815,7 @@ Public Class PdfContents
     ''' </summary>
     ''' <param name="Pattern">Pattern resource</param>
     
-    Public Sub SetPatternNonStroking(ByVal Pattern As PdfTilingPattern)
+    Public Sub SetPatternNonStroking(Pattern As PdfTilingPattern)
         AddToUsedResources(Pattern)
         MyBase.ObjectValueFormat("/Pattern cs {0} scn" & Microsoft.VisualBasic.Constants.vbLf, Pattern.ResourceCode)
         Return
@@ -827,7 +827,7 @@ Public Class PdfContents
     ''' </summary>
     ''' <param name="Pattern">Pattern resource</param>
     
-    Public Sub SetPatternStroking(ByVal Pattern As PdfContents)
+    Public Sub SetPatternStroking(Pattern As PdfContents)
         AddToUsedResources(Pattern)
         MyBase.ObjectValueFormat("/Pattern CS {0} SCN" & Microsoft.VisualBasic.Constants.vbLf, Pattern.ResourceCode)
         Return
@@ -839,7 +839,7 @@ Public Class PdfContents
     ''' </summary>
     ''' <param name="Shading">Axial shading resource</param>
     
-    Public Sub DrawShading(ByVal Shading As PdfAxialShading)
+    Public Sub DrawShading(Shading As PdfAxialShading)
         AddToUsedResources(Shading)
         MyBase.ObjectValueFormat("{0} sh" & Microsoft.VisualBasic.Constants.vbLf, Shading.ResourceCode)
         Return
@@ -851,7 +851,7 @@ Public Class PdfContents
     ''' </summary>
     ''' <param name="Shading">Radial shading resource</param>
     
-    Public Sub DrawShading(ByVal Shading As PdfRadialShading)
+    Public Sub DrawShading(Shading As PdfRadialShading)
         AddToUsedResources(Shading)
         MyBase.ObjectValueFormat("{0} sh" & Microsoft.VisualBasic.Constants.vbLf, Shading.ResourceCode)
         Return
@@ -872,7 +872,7 @@ Public Class PdfContents
     ''' Ypage = b * Xuser + d * Yuser + f
     ''' </remarks>	
     
-    Public Sub SetTransMatrix(ByVal a As Double, ByVal b As Double, ByVal c As Double, ByVal d As Double, ByVal e As Double, ByVal f As Double) ' ScaleX * Cos(Rotate)
+    Public Sub SetTransMatrix(a As Double, b As Double, c As Double, d As Double, e As Double, f As Double) ' ScaleX * Cos(Rotate)
         ' ScaleX * Sin(Rotate)
         ' ScaleY * (-Sin(Rotate))
         ' ScaleY * Cos(Rotate)
@@ -886,7 +886,7 @@ Public Class PdfContents
     ''' </summary>
     ''' <param name="Orig">New origin</param>
     
-    Public Sub Translate(ByVal Orig As PointD)
+    Public Sub Translate(Orig As PointD)
         Translate(Orig.X, Orig.Y)
         Return
     End Sub
@@ -898,7 +898,7 @@ Public Class PdfContents
     ''' <param name="OriginX">Origin X</param>
     ''' <param name="OriginY">Origin Y</param>
     
-    Public Sub Translate(ByVal OriginX As Double, ByVal OriginY As Double)
+    Public Sub Translate(OriginX As Double, OriginY As Double)
         MyBase.ObjectValueFormat("1 0 0 1 {0} {1} cm" & Microsoft.VisualBasic.Constants.vbLf, ToPt(OriginX), ToPt(OriginY))
         Return
     End Sub
@@ -909,7 +909,7 @@ Public Class PdfContents
     ''' </summary>
     ''' <param name="pScale">New scale</param>
     
-    Public Sub Scale(ByVal pScale As Double)
+    Public Sub Scale(pScale As Double)
         MyBase.ObjectValueFormat("{0} 0 0 {0} 0 0 cm" & Microsoft.VisualBasic.Constants.vbLf, Round(pScale))
         Return
     End Sub
@@ -921,7 +921,7 @@ Public Class PdfContents
     ''' <param name="Orig">Origin point</param>
     ''' <param name="Scale">Scale</param>
     
-    Public Sub TranslateScale(ByVal Orig As PointD, ByVal Scale As Double)
+    Public Sub TranslateScale(Orig As PointD, Scale As Double)
         TranslateScale(Orig.X, Orig.Y, Scale)
         Return
     End Sub
@@ -934,7 +934,7 @@ Public Class PdfContents
     ''' <param name="OriginY">Origin Y</param>
     ''' <param name="Scale">Scale</param>
     
-    Public Sub TranslateScale(ByVal OriginX As Double, ByVal OriginY As Double, ByVal Scale As Double)
+    Public Sub TranslateScale(OriginX As Double, OriginY As Double, Scale As Double)
         MyBase.ObjectValueFormat("{2} 0 0 {2} {0} {1} cm" & Microsoft.VisualBasic.Constants.vbLf, ToPt(OriginX), ToPt(OriginY), Round(Scale))
         Return
     End Sub
@@ -947,7 +947,7 @@ Public Class PdfContents
     ''' <param name="ScaleX">Horizontal scale</param>
     ''' <param name="ScaleY">Vertical scale</param>
     
-    Public Sub TranslateScale(ByVal Orig As PointD, ByVal ScaleX As Double, ByVal ScaleY As Double)
+    Public Sub TranslateScale(Orig As PointD, ScaleX As Double, ScaleY As Double)
         TranslateScale(Orig.X, Orig.Y, ScaleX, ScaleY)
         Return
     End Sub
@@ -961,7 +961,7 @@ Public Class PdfContents
     ''' <param name="ScaleX">Horizontal scale</param>
     ''' <param name="ScaleY">Vertical scale</param>
     
-    Public Sub TranslateScale(ByVal OriginX As Double, ByVal OriginY As Double, ByVal ScaleX As Double, ByVal ScaleY As Double)
+    Public Sub TranslateScale(OriginX As Double, OriginY As Double, ScaleX As Double, ScaleY As Double)
         MyBase.ObjectValueFormat("{2} 0 0 {3} {0} {1} cm" & Microsoft.VisualBasic.Constants.vbLf, ToPt(OriginX), ToPt(OriginY), Round(ScaleX), Round(ScaleY))
         Return
     End Sub
@@ -974,7 +974,7 @@ Public Class PdfContents
     ''' <param name="Scale">Scale</param>
     ''' <param name="Rotate">Rotate (radians)</param>
     
-    Public Sub TranslateScaleRotate(ByVal Orig As PointD, ByVal Scale As Double, ByVal Rotate As Double)        ' radians
+    Public Sub TranslateScaleRotate(Orig As PointD, Scale As Double, Rotate As Double)        ' radians
         TranslateScaleRotate(Orig.X, Orig.Y, Scale, Rotate)
         Return
     End Sub
@@ -988,7 +988,7 @@ Public Class PdfContents
     ''' <param name="Scale">Scale</param>
     ''' <param name="Rotate">Rotate (radians)</param>
     
-    Public Sub TranslateScaleRotate(ByVal OriginX As Double, ByVal OriginY As Double, ByVal Scale As Double, ByVal Rotate As Double)
+    Public Sub TranslateScaleRotate(OriginX As Double, OriginY As Double, Scale As Double, Rotate As Double)
         MyBase.ObjectValueFormat("{2} {3} {4} {2} {0} {1} cm" & Microsoft.VisualBasic.Constants.vbLf, ToPt(OriginX), ToPt(OriginY), Round(Scale * stdNum.Cos(Rotate)), Round(Scale * stdNum.Sin(Rotate)), Round(Scale * stdNum.Sin(-Rotate)))
         Return
     End Sub
@@ -1003,7 +1003,7 @@ Public Class PdfContents
     ''' <param name="ScaleY">Vertical scale</param>
     ''' <param name="Rotate">Rotate (radians)</param>
     
-    Public Sub TranslateScaleRotate(ByVal OriginX As Double, ByVal OriginY As Double, ByVal ScaleX As Double, ByVal ScaleY As Double, ByVal Rotate As Double)
+    Public Sub TranslateScaleRotate(OriginX As Double, OriginY As Double, ScaleX As Double, ScaleY As Double, Rotate As Double)
         MyBase.ObjectValueFormat("{2} {3} {4} {5} {0} {1} cm" & Microsoft.VisualBasic.Constants.vbLf, ToPt(OriginX), ToPt(OriginY), Round(ScaleX * stdNum.Cos(Rotate)), Round(ScaleY * stdNum.Sin(Rotate)), Round(ScaleX * stdNum.Sin(-Rotate)), Round(ScaleY * stdNum.Cos(Rotate)))
         Return
     End Sub
@@ -1014,7 +1014,7 @@ Public Class PdfContents
     ''' </summary>
     ''' <param name="Point">New point</param>
     
-    Public Sub MoveTo(ByVal Point As PointD)
+    Public Sub MoveTo(Point As PointD)
         MoveTo(Point.X, Point.Y)
         Return
     End Sub
@@ -1026,7 +1026,7 @@ Public Class PdfContents
     ''' <param name="X">New X position</param>
     ''' <param name="Y">New Y position</param>
     
-    Public Sub MoveTo(ByVal X As Double, ByVal Y As Double)
+    Public Sub MoveTo(X As Double, Y As Double)
         MyBase.ObjectValueFormat("{0} {1} m" & Microsoft.VisualBasic.Constants.vbLf, ToPt(X), ToPt(Y))
         Return
     End Sub
@@ -1037,7 +1037,7 @@ Public Class PdfContents
     ''' </summary>
     ''' <param name="Point">New point</param>
     
-    Public Sub LineTo(ByVal Point As PointD)
+    Public Sub LineTo(Point As PointD)
         LineTo(Point.X, Point.Y)
         Return
     End Sub
@@ -1049,7 +1049,7 @@ Public Class PdfContents
     ''' <param name="X">New X position</param>
     ''' <param name="Y">New Y position</param>
     
-    Public Sub LineTo(ByVal X As Double, ByVal Y As Double)
+    Public Sub LineTo(X As Double, Y As Double)
         MyBase.ObjectValueFormat("{0} {1} l" & Microsoft.VisualBasic.Constants.vbLf, ToPt(X), ToPt(Y))
         Return
     End Sub
@@ -1061,7 +1061,7 @@ Public Class PdfContents
     ''' <param name="Bezier">Bezier object</param>
     ''' <param name="Point1Action">Point1 action</param>
     
-    Public Sub DrawBezier(ByVal Bezier As BezierD, ByVal Point1Action As BezierPointOne)
+    Public Sub DrawBezier(Bezier As BezierD, Point1Action As BezierPointOne)
         Select Case Point1Action
             Case BezierPointOne.MoveTo
                 MoveTo(Bezier.P1.X, Bezier.P1.Y)
@@ -1081,7 +1081,7 @@ Public Class PdfContents
     ''' <param name="P2">Point 2</param>
     ''' <param name="P3">Point 3</param>
     
-    Public Sub DrawBezier(ByVal P1 As PointD, ByVal P2 As PointD, ByVal P3 As PointD)
+    Public Sub DrawBezier(P1 As PointD, P2 As PointD, P3 As PointD)
         DrawBezier(P1.X, P1.Y, P2.X, P2.Y, P3.X, P3.Y)
         Return
     End Sub
@@ -1097,7 +1097,7 @@ Public Class PdfContents
     ''' <param name="X3">Point 3 X</param>
     ''' <param name="Y3">Point 3 Y</param>
     
-    Public Sub DrawBezier(ByVal X1 As Double, ByVal Y1 As Double, ByVal X2 As Double, ByVal Y2 As Double, ByVal X3 As Double, ByVal Y3 As Double)
+    Public Sub DrawBezier(X1 As Double, Y1 As Double, X2 As Double, Y2 As Double, X3 As Double, Y3 As Double)
         MyBase.ObjectValueFormat("{0} {1} {2} {3} {4} {5} c" & Microsoft.VisualBasic.Constants.vbLf, ToPt(X1), ToPt(Y1), ToPt(X2), ToPt(Y2), ToPt(X3), ToPt(Y3))
         Return
     End Sub
@@ -1109,7 +1109,7 @@ Public Class PdfContents
     ''' <param name="P2">Point 2</param>
     ''' <param name="P3">Point 3</param>
     
-    Public Sub DrawBezierNoP1(ByVal P2 As PointD, ByVal P3 As PointD)
+    Public Sub DrawBezierNoP1(P2 As PointD, P3 As PointD)
         DrawBezierNoP1(P2.X, P2.Y, P3.X, P3.Y)
         Return
     End Sub
@@ -1123,7 +1123,7 @@ Public Class PdfContents
     ''' <param name="X3">Point 3 X</param>
     ''' <param name="Y3">Point 3 Y</param>
     
-    Public Sub DrawBezierNoP1(ByVal X2 As Double, ByVal Y2 As Double, ByVal X3 As Double, ByVal Y3 As Double)
+    Public Sub DrawBezierNoP1(X2 As Double, Y2 As Double, X3 As Double, Y3 As Double)
         MyBase.ObjectValueFormat("{0} {1} {2} {3} v" & Microsoft.VisualBasic.Constants.vbLf, ToPt(X2), ToPt(Y2), ToPt(X3), ToPt(Y3))
         Return
     End Sub
@@ -1135,7 +1135,7 @@ Public Class PdfContents
     ''' <param name="P1">Point 1</param>
     ''' <param name="P3">Point 3</param>
     
-    Public Sub DrawBezierNoP2(ByVal P1 As PointD, ByVal P3 As PointD)
+    Public Sub DrawBezierNoP2(P1 As PointD, P3 As PointD)
         DrawBezierNoP2(P1.X, P1.Y, P3.X, P3.Y)
         Return
     End Sub
@@ -1149,7 +1149,7 @@ Public Class PdfContents
     ''' <param name="X3">Point 3 X</param>
     ''' <param name="Y3">Point 3 Y</param>
     
-    Public Sub DrawBezierNoP2(ByVal X1 As Double, ByVal Y1 As Double, ByVal X3 As Double, ByVal Y3 As Double)
+    Public Sub DrawBezierNoP2(X1 As Double, Y1 As Double, X3 As Double, Y3 As Double)
         MyBase.ObjectValueFormat("{0} {1} {2} {3} y" & Microsoft.VisualBasic.Constants.vbLf, ToPt(X1), ToPt(Y1), ToPt(X3), ToPt(Y3))
         Return
     End Sub
@@ -1165,7 +1165,7 @@ Public Class PdfContents
     ''' <param name="Type">Arc type enumeration</param>
     ''' <param name="OutputStartPoint">Output start point</param>
     
-    Public Sub DrawArc(ByVal ArcStart As PointD, ByVal ArcEnd As PointD, ByVal Radius As SizeD, ByVal Rotate As Double, ByVal Type As ArcType, ByVal OutputStartPoint As BezierPointOne)
+    Public Sub DrawArc(ArcStart As PointD, ArcEnd As PointD, Radius As SizeD, Rotate As Double, Type As ArcType, OutputStartPoint As BezierPointOne)
         ' starting point
         Select Case OutputStartPoint
             Case BezierPointOne.MoveTo
@@ -1193,7 +1193,7 @@ Public Class PdfContents
     ''' </summary>
     ''' <param name="Line">Line object</param>
     
-    Public Sub DrawLine(ByVal Line As LineD)
+    Public Sub DrawLine(Line As LineD)
         DrawLine(Line.P1.X, Line.P1.Y, Line.P2.X, Line.P2.Y)
         Return
     End Sub
@@ -1205,7 +1205,7 @@ Public Class PdfContents
     ''' <param name="P1">Point 1</param>
     ''' <param name="P2">Point 2</param>
     
-    Public Sub DrawLine(ByVal P1 As PointD, ByVal P2 As PointD)
+    Public Sub DrawLine(P1 As PointD, P2 As PointD)
         DrawLine(P1.X, P1.Y, P2.X, P2.Y)
         Return
     End Sub
@@ -1219,7 +1219,7 @@ Public Class PdfContents
     ''' <param name="X2">Point 2 X</param>
     ''' <param name="Y2">Point 2 X</param>
     
-    Public Sub DrawLine(ByVal X1 As Double, ByVal Y1 As Double, ByVal X2 As Double, ByVal Y2 As Double)
+    Public Sub DrawLine(X1 As Double, Y1 As Double, X2 As Double, Y2 As Double)
         MyBase.ObjectValueFormat("{0} {1} m {2} {3} l S" & Microsoft.VisualBasic.Constants.vbLf, ToPt(X1), ToPt(Y1), ToPt(X2), ToPt(Y2))
         Return
     End Sub
@@ -1231,7 +1231,7 @@ Public Class PdfContents
     ''' <param name="Line">Line</param>
     ''' <param name="LineWidth">Line width</param>
     
-    Public Sub DrawLine(ByVal Line As LineD, ByVal LineWidth As Double)
+    Public Sub DrawLine(Line As LineD, LineWidth As Double)
         DrawLine(Line.P1.X, Line.P1.Y, Line.P2.X, Line.P2.Y, LineWidth)
         Return
     End Sub
@@ -1244,7 +1244,7 @@ Public Class PdfContents
     ''' <param name="P2">Point 2</param>
     ''' <param name="LineWidth">Line width</param>
     
-    Public Sub DrawLine(ByVal P1 As PointD, ByVal P2 As PointD, ByVal LineWidth As Double)
+    Public Sub DrawLine(P1 As PointD, P2 As PointD, LineWidth As Double)
         DrawLine(P1.X, P1.Y, P2.X, P2.Y, LineWidth)
         Return
     End Sub
@@ -1259,7 +1259,7 @@ Public Class PdfContents
     ''' <param name="Y2">Point 2 X</param>
     ''' <param name="LineWidth">Line width</param>
     
-    Public Sub DrawLine(ByVal X1 As Double, ByVal Y1 As Double, ByVal X2 As Double, ByVal Y2 As Double, ByVal LineWidth As Double)
+    Public Sub DrawLine(X1 As Double, Y1 As Double, X2 As Double, Y2 As Double, LineWidth As Double)
         MyBase.ObjectValueFormat("q {0} w {1} {2} m {3} {4} l S Q" & Microsoft.VisualBasic.Constants.vbLf, ToPt(LineWidth), ToPt(X1), ToPt(Y1), ToPt(X2), ToPt(Y2))
         Return
     End Sub
@@ -1272,7 +1272,7 @@ Public Class PdfContents
     ''' <param name="X2">Point 2 X</param>
     ''' <param name="Y2">Point 2 X</param>
     ''' <param name="BorderStyle">PdfTableBorderStyle</param>
-    Public Sub DrawLine(ByVal X1 As Double, ByVal Y1 As Double, ByVal X2 As Double, ByVal Y2 As Double, ByVal BorderStyle As PdfTableBorderStyle)
+    Public Sub DrawLine(X1 As Double, Y1 As Double, X2 As Double, Y2 As Double, BorderStyle As PdfTableBorderStyle)
         If BorderStyle.Display Then
             MyBase.ObjectValueFormat("q {0} w {1} {2} {3} RG 0 J {4} {5} m {6} {7} l S Q" & Microsoft.VisualBasic.Constants.vbLf, ToPt(BorderStyle.Width), Round(CDbl(BorderStyle.Color.R) / 255.0), Round(CDbl(BorderStyle.Color.G) / 255.0), Round(CDbl(BorderStyle.Color.B) / 255.0), ToPt(X1), ToPt(Y1), ToPt(X2), ToPt(Y2))
         End If
@@ -1288,7 +1288,7 @@ Public Class PdfContents
     ''' <param name="Size">Size</param>
     ''' <param name="PP">Paint operator</param>
     
-    Public Sub DrawRectangle(ByVal Origin As PointD, ByVal Size As SizeD, ByVal PP As PaintOp)
+    Public Sub DrawRectangle(Origin As PointD, Size As SizeD, PP As PaintOp)
         DrawRectangle(Origin.X, Origin.Y, Size.Width, Size.Height, PP)
         Return
     End Sub
@@ -1303,7 +1303,7 @@ Public Class PdfContents
     ''' <param name="Height">Height</param>
     ''' <param name="PP">Paint operator</param>
     
-    Public Sub DrawRectangle(ByVal OriginX As Double, ByVal OriginY As Double, ByVal Width As Double, ByVal Height As Double, ByVal PP As PaintOp)
+    Public Sub DrawRectangle(OriginX As Double, OriginY As Double, Width As Double, Height As Double, PP As PaintOp)
         ' draw rectangle
         MyBase.ObjectValueFormat("{0} {1} {2} {3} re {4}" & Microsoft.VisualBasic.Constants.vbLf, ToPt(OriginX), ToPt(OriginY), ToPt(Width), ToPt(Height), PaintOpStr(PP))
         Return
@@ -1317,7 +1317,7 @@ Public Class PdfContents
     ''' <param name="Size">Size</param>
     ''' <param name="PP">Paint operator</param>
     
-    Public Sub DrawOval(ByVal Origin As PointD, ByVal Size As SizeD, ByVal PP As PaintOp)
+    Public Sub DrawOval(Origin As PointD, Size As SizeD, PP As PaintOp)
         DrawOval(Origin.X, Origin.Y, Size.Width, Size.Height, PP)
         Return
     End Sub
@@ -1332,7 +1332,7 @@ Public Class PdfContents
     ''' <param name="Height">Height</param>
     ''' <param name="PP">Paint operator</param>
     
-    Public Sub DrawOval(ByVal OriginX As Double, ByVal OriginY As Double, ByVal Width As Double, ByVal Height As Double, ByVal PP As PaintOp)
+    Public Sub DrawOval(OriginX As Double, OriginY As Double, Width As Double, Height As Double, PP As PaintOp)
         Width /= 2
         Height /= 2
         OriginX += Width
@@ -1357,7 +1357,7 @@ Public Class PdfContents
     ''' </para>
     ''' </remarks>
     
-    Public Sub DrawHeart(ByVal CenterLine As LineD, ByVal PP As PaintOp)
+    Public Sub DrawHeart(CenterLine As LineD, PP As PaintOp)
         ' PI / 1.5 = 120 deg and PI / 2 = 90 deg
         DrawDoubleBezierPath(CenterLine, 1.0, stdNum.PI / 1.5, 1.0, 0.5 * stdNum.PI, PP)
         Return
@@ -1378,7 +1378,7 @@ Public Class PdfContents
     ''' </para>
     ''' </remarks>
     
-    Public Sub DrawHeart(ByVal CenterLineTopX As Double, ByVal CenterLineTopY As Double, ByVal CenterLineBottomX As Double, ByVal CenterLineBottomY As Double, ByVal PP As PaintOp)
+    Public Sub DrawHeart(CenterLineTopX As Double, CenterLineTopY As Double, CenterLineBottomX As Double, CenterLineBottomY As Double, PP As PaintOp)
         DrawHeart(New LineD(CenterLineTopX, CenterLineTopY, CenterLineBottomX, CenterLineBottomY), PP)
         Return
     End Sub
@@ -1394,7 +1394,7 @@ Public Class PdfContents
     ''' <param name="Alpha2">Alpha 2</param>
     ''' <param name="PP">Paint operator</param>
     
-    Public Sub DrawDoubleBezierPath(ByVal CenterLine As LineD, ByVal Factor1 As Double, ByVal Alpha1 As Double, ByVal Factor2 As Double, ByVal Alpha2 As Double, ByVal PP As PaintOp)
+    Public Sub DrawDoubleBezierPath(CenterLine As LineD, Factor1 As Double, Alpha1 As Double, Factor2 As Double, Alpha2 As Double, PP As PaintOp)
         ' two symmetric Bezier curves
         DrawBezier(New BezierD(CenterLine.P1, Factor1, -0.5 * Alpha1, Factor2, -0.5 * Alpha2, CenterLine.P2), BezierPointOne.MoveTo)
         DrawBezier(New BezierD(CenterLine.P2, Factor2, stdNum.PI + 0.5 * Alpha2, Factor1, stdNum.PI + 0.5 * Alpha1, CenterLine.P1), BezierPointOne.Ignore)
@@ -1413,7 +1413,7 @@ Public Class PdfContents
     ''' <param name="Radius">Radius</param>
     ''' <param name="PP">Paint operator</param>
     
-    Public Sub DrawRoundedRectangle(ByVal Origin As PointD, ByVal Size As SizeD, ByVal Radius As Double, ByVal PP As PaintOp)
+    Public Sub DrawRoundedRectangle(Origin As PointD, Size As SizeD, Radius As Double, PP As PaintOp)
         DrawRoundedRectangle(Origin.X, Origin.Y, Size.Width, Size.Height, Radius, PP)
         Return
     End Sub
@@ -1429,7 +1429,7 @@ Public Class PdfContents
     ''' <param name="Radius">Radius</param>
     ''' <param name="PP">Paint operator</param>
     
-    Public Sub DrawRoundedRectangle(ByVal OriginX As Double, ByVal OriginY As Double, ByVal Width As Double, ByVal Height As Double, ByVal Radius As Double, ByVal PP As PaintOp)
+    Public Sub DrawRoundedRectangle(OriginX As Double, OriginY As Double, Width As Double, Height As Double, Radius As Double, PP As PaintOp)
         ' make sure radius is not too big
         If Radius > 0.5 * Width Then Radius = 0.5 * Width
         If Radius > 0.5 * Height Then Radius = 0.5 * Height
@@ -1457,7 +1457,7 @@ Public Class PdfContents
     ''' <param name="Radius">Radius</param>
     ''' <param name="PP">Paint operator</param>
     
-    Public Sub DrawInwardCornerRectangle(ByVal OriginX As Double, ByVal OriginY As Double, ByVal Width As Double, ByVal Height As Double, ByVal Radius As Double, ByVal PP As PaintOp)
+    Public Sub DrawInwardCornerRectangle(OriginX As Double, OriginY As Double, Width As Double, Height As Double, Radius As Double, PP As PaintOp)
         ' make sure radius is not too big
         If Radius > 0.5 * Width Then Radius = 0.5 * Width
         If Radius > 0.5 * Height Then Radius = 0.5 * Height
@@ -1481,7 +1481,7 @@ Public Class PdfContents
     ''' <param name="PathArray">Path array (min 2 points)</param>
     ''' <param name="PP">Paint operator</param>
     
-    Public Sub DrawPolygon(ByVal PathArray As PointF(), ByVal PP As PaintOp)
+    Public Sub DrawPolygon(PathArray As PointF(), PP As PaintOp)
         ' program error
         If PathArray.Length < 2 Then Throw New ApplicationException("Draw polygon error: path array must have at least two points")
 
@@ -1505,7 +1505,7 @@ Public Class PdfContents
     ''' <param name="PathArray">Path array of X and Y values (min 4 and even)</param>
     ''' <param name="PP">Paint operator</param>
     
-    Public Sub DrawPolygon(ByVal PathArray As Single(), ByVal PP As PaintOp)    ' pairs of x and y values
+    Public Sub DrawPolygon(PathArray As Single(), PP As PaintOp)    ' pairs of x and y values
         ' program error
         If PathArray.Length < 4 Then Throw New ApplicationException("Draw polygon error: path array must have at least 4 items")
 
@@ -1536,7 +1536,7 @@ Public Class PdfContents
     ''' <param name="Sides">Number of sides</param>
     ''' <param name="PP">Paint operator</param>
     
-    Public Sub DrawRegularPolygon(ByVal CenterX As Double, ByVal CenterY As Double, ByVal Radius As Double, ByVal Alpha As Double, ByVal Sides As Integer, ByVal PP As PaintOp)
+    Public Sub DrawRegularPolygon(CenterX As Double, CenterY As Double, Radius As Double, Alpha As Double, Sides As Integer, PP As PaintOp)
         DrawRegularPolygon(New PointD(CenterX, CenterY), Radius, Alpha, Sides, PP)
         Return
     End Sub
@@ -1551,7 +1551,7 @@ Public Class PdfContents
     ''' <param name="Sides">Number of sides</param>
     ''' <param name="PP">Paint operator</param>
     
-    Public Sub DrawRegularPolygon(ByVal Center As PointD, ByVal Radius As Double, ByVal Alpha As Double, ByVal Sides As Integer, ByVal PP As PaintOp)
+    Public Sub DrawRegularPolygon(Center As PointD, Radius As Double, Alpha As Double, Sides As Integer, PP As PaintOp)
         ' validate sides
         If Sides < 3 Then
             Throw New ApplicationException("Draw regular polygon. Number of sides must be 3 or more")
@@ -1584,7 +1584,7 @@ Public Class PdfContents
     ''' <param name="Sides">Number of sides</param>
     ''' <param name="PP">Paint operator</param>
     
-    Public Sub DrawStar(ByVal CenterX As Double, ByVal CenterY As Double, ByVal Radius As Double, ByVal Alpha As Double, ByVal Sides As Integer, ByVal PP As PaintOp)
+    Public Sub DrawStar(CenterX As Double, CenterY As Double, Radius As Double, Alpha As Double, Sides As Integer, PP As PaintOp)
         DrawStar(New PointD(CenterX, CenterY), Radius, Alpha, Sides, PP)
         Return
     End Sub
@@ -1599,7 +1599,7 @@ Public Class PdfContents
     ''' <param name="Sides">Number of sides</param>
     ''' <param name="PP">Paint operator</param>
     
-    Public Sub DrawStar(ByVal Center As PointD, ByVal Radius As Double, ByVal Alpha As Double, ByVal Sides As Integer, ByVal PP As PaintOp)
+    Public Sub DrawStar(Center As PointD, Radius As Double, Alpha As Double, Sides As Integer, PP As PaintOp)
         ' inner radius
         Dim Radius1 As Double = 0
 
@@ -1639,7 +1639,7 @@ Public Class PdfContents
     ''' <param name="Sides">Number of sides</param>
     ''' <param name="PP">Paint operator</param>
     
-    Public Sub DrawStar(ByVal CenterX As Double, ByVal CenterY As Double, ByVal Radius1 As Double, ByVal Radius2 As Double, ByVal Alpha As Double, ByVal Sides As Integer, ByVal PP As PaintOp)
+    Public Sub DrawStar(CenterX As Double, CenterY As Double, Radius1 As Double, Radius2 As Double, Alpha As Double, Sides As Integer, PP As PaintOp)
         DrawStar(New PointD(CenterX, CenterY), Radius1, Radius2, Alpha, Sides, PP)
         Return
     End Sub
@@ -1655,7 +1655,7 @@ Public Class PdfContents
     ''' <param name="Sides">Number of sides</param>
     ''' <param name="PP">Paint operator</param>
     
-    Public Sub DrawStar(ByVal Center As PointD, ByVal Radius1 As Double, ByVal Radius2 As Double, ByVal Alpha As Double, ByVal Sides As Integer, ByVal PP As PaintOp)
+    Public Sub DrawStar(Center As PointD, Radius1 As Double, Radius2 As Double, Alpha As Double, Sides As Integer, PP As PaintOp)
         ' validate sides
         If Sides < 3 Then Throw New ApplicationException("Draw star. Number of sides must be 3 or more")
 
@@ -1706,7 +1706,7 @@ Public Class PdfContents
     ''' <param name="PosX">Position X</param>
     ''' <param name="PosY">Position Y</param>
     
-    Public Sub SetTextPosition(ByVal PosX As Double, ByVal PosY As Double)
+    Public Sub SetTextPosition(PosX As Double, PosY As Double)
         MyBase.ObjectValueFormat("{0} {1} Td" & Microsoft.VisualBasic.Constants.vbLf, ToPt(PosX), ToPt(PosY))
         Return
     End Sub
@@ -1717,7 +1717,7 @@ Public Class PdfContents
     ''' </summary>
     ''' <param name="TR">Text rendering mode enumeration</param>
     
-    Public Sub SetTextRenderingMode(ByVal TR As TextRendering)
+    Public Sub SetTextRenderingMode(TR As TextRendering)
         MyBase.ObjectValueFormat("{0} Tr" & Microsoft.VisualBasic.Constants.vbLf, CInt(TR))
         Return
     End Sub
@@ -1728,7 +1728,7 @@ Public Class PdfContents
     ''' </summary>
     ''' <param name="ExtraSpacing">Character extra spacing</param>
     
-    Public Sub SetCharacterSpacing(ByVal ExtraSpacing As Double)
+    Public Sub SetCharacterSpacing(ExtraSpacing As Double)
         MyBase.ObjectValueFormat("{0} Tc" & Microsoft.VisualBasic.Constants.vbLf, ToPt(ExtraSpacing))
         Return
     End Sub
@@ -1739,7 +1739,7 @@ Public Class PdfContents
     ''' </summary>
     ''' <param name="Spacing">Word extra spacing</param>
     
-    Public Sub SetWordSpacing(ByVal Spacing As Double)
+    Public Sub SetWordSpacing(Spacing As Double)
         MyBase.ObjectValueFormat("{0} Tw" & Microsoft.VisualBasic.Constants.vbLf, ToPt(Spacing))
         Return
     End Sub
@@ -1751,7 +1751,7 @@ Public Class PdfContents
     ''' <param name="Text">Input string</param>
     ''' <returns>Output string</returns>
     
-    Public Function ReverseString(ByVal Text As String) As String
+    Public Function ReverseString(Text As String) As String
         Dim RevText As Char() = Text.ToCharArray()
         Array.Reverse(RevText)
         Return New String(RevText)
@@ -1770,7 +1770,7 @@ Public Class PdfContents
     ''' EndTextMode and SetTextPosition.
     ''' </remarks>
     
-    Public Function DrawText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal Text As String) As Double           ' font object
+    Public Function DrawText(Font As PdfFont, FontSize As Double, Text As String) As Double           ' font object
         ' in points
         ' text is null or empty
         If String.IsNullOrEmpty(Text) Then Return 0
@@ -1782,7 +1782,7 @@ Public Class PdfContents
         Return DrawTextInternal(Font, FontSize, Text)
     End Function
 
-    Friend Function DrawTextInternal(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal Text As String) As Double           ' font object
+    Friend Function DrawTextInternal(Font As PdfFont, FontSize As Double, Text As String) As Double           ' font object
         Dim FontResCode As Byte() = Nothing
         Dim FontResGlyph As Byte() = Nothing
 
@@ -1859,7 +1859,7 @@ Public Class PdfContents
         Return Font.FontDesignToUserUnits(FontSize, Width)
     End Function
 
-    Friend Sub OutputOneByte(ByVal CharCode As Integer)
+    Friend Sub OutputOneByte(CharCode As Integer)
         Select Case CharCode
             Case 13
                 ObjectValueList.Add(Microsoft.VisualBasic.AscW("\"c))
@@ -1887,7 +1887,7 @@ Public Class PdfContents
         End Select
     End Sub
 
-    Friend Function CreateFontResStr(ByVal ResCode As String, ByVal SizeStr As String) As Byte()
+    Friend Function CreateFontResStr(ResCode As String, SizeStr As String) As Byte()
         Dim FontRes = New Byte(ResCode.Length + SizeStr.Length + 4 - 1) {}
         Dim Index As i32 = 0
 
@@ -1918,7 +1918,7 @@ Public Class PdfContents
     ''' <param name="Text">Text</param>
     ''' <returns>Text width</returns>
     
-    Public Function DrawText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal PosX As Double, ByVal PosY As Double, ByVal Text As String) As Double       ' in points
+    Public Function DrawText(Font As PdfFont, FontSize As Double, PosX As Double, PosY As Double, Text As String) As Double       ' in points
         Return DrawText(Font, FontSize, PosX, PosY, TextJustify.Left, Text)
     End Function
 
@@ -1934,7 +1934,7 @@ Public Class PdfContents
     ''' <param name="Text">Text</param>
     ''' <returns>Text width</returns>
     
-    Public Function DrawText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal PosX As Double, ByVal PosY As Double, ByVal Justify As TextJustify, ByVal Text As String) As Double     ' in points
+    Public Function DrawText(Font As PdfFont, FontSize As Double, PosX As Double, PosY As Double, Justify As TextJustify, Text As String) As Double     ' in points
         ' text is null or empty
         If String.IsNullOrEmpty(Text) Then Return 0
 
@@ -1974,7 +1974,7 @@ Public Class PdfContents
     ''' <param name="Text">Text</param>
     ''' <returns>Text width</returns>
     
-    Public Function DrawText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal PosX As Double, ByVal PosY As Double, ByVal DrawStyle As DrawStyle, ByVal Text As String) As Double     ' in points
+    Public Function DrawText(Font As PdfFont, FontSize As Double, PosX As Double, PosY As Double, DrawStyle As DrawStyle, Text As String) As Double     ' in points
         Return DrawText(Font, FontSize, PosX, PosY, TextJustify.Left, DrawStyle, Color.Empty, Text)
     End Function
 
@@ -1990,7 +1990,7 @@ Public Class PdfContents
     ''' <param name="Text">Text</param>
     ''' <returns>Text width</returns>
     
-    Public Function DrawText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal PosX As Double, ByVal PosY As Double, ByVal TextColor As Color, ByVal Text As String) As Double     ' in points
+    Public Function DrawText(Font As PdfFont, FontSize As Double, PosX As Double, PosY As Double, TextColor As Color, Text As String) As Double     ' in points
         Return DrawText(Font, FontSize, PosX, PosY, TextJustify.Left, DrawStyle.Normal, TextColor, Text)
     End Function
 
@@ -2009,7 +2009,7 @@ Public Class PdfContents
     ''' <param name="TextColor">Color</param>
     ''' <param name="Text">Text</param>
     ''' <returns>Text width</returns>
-    Public Function DrawText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal PosX As Double, ByVal PosY As Double, ByVal Justify As TextJustify, ByVal DrawStyle As DrawStyle, ByVal TextColor As Color, ByVal Text As String) As Double     ' in points
+    Public Function DrawText(Font As PdfFont, FontSize As Double, PosX As Double, PosY As Double, Justify As TextJustify, DrawStyle As DrawStyle, TextColor As Color, Text As String) As Double     ' in points
         ' text is null or empty
         If String.IsNullOrEmpty(Text) Then Return 0
 
@@ -2107,7 +2107,7 @@ Public Class PdfContents
     ''' The adjustment is a negative number.
     ''' </remarks>
     
-    Public Function DrawText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal PosX As Double, ByVal PosY As Double, ByVal KerningArray As KerningAdjust()) As Double      ' in points
+    Public Function DrawText(Font As PdfFont, FontSize As Double, PosX As Double, PosY As Double, KerningArray As KerningAdjust()) As Double      ' in points
         ' text is null or empty
         If KerningArray Is Nothing OrElse KerningArray.Length = 0 Then Return 0
 
@@ -2128,7 +2128,7 @@ Public Class PdfContents
         Return Width
     End Function
 
-    Friend Function DrawTextWithKerning(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal KerningArray As KerningAdjust()) As Double           ' font object
+    Friend Function DrawTextWithKerning(Font As PdfFont, FontSize As Double, KerningArray As KerningAdjust()) As Double           ' font object
         Dim FontResCode As Byte() = Nothing
         Dim FontResGlyph As Byte() = Nothing
 
@@ -2244,7 +2244,7 @@ Public Class PdfContents
     ''' <param name="Text">Text</param>
     ''' <returns>Text width</returns>
     
-    Public Function DrawTextWithKerning(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal PosX As Double, ByVal PosY As Double, ByVal Text As String) As Double        ' in points
+    Public Function DrawTextWithKerning(Font As PdfFont, FontSize As Double, PosX As Double, PosY As Double, Text As String) As Double        ' in points
         ' text is null or empty
         If String.IsNullOrEmpty(Text) Then Return 0
 
@@ -2273,7 +2273,7 @@ Public Class PdfContents
     ''' <param name="Text">Text</param>
     ''' <returns>Text width</returns>
     
-    Public Function DrawText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal PosX As Double, ByVal PosY As Double, ByVal Justify As TextJustify, ByVal OutlineWidth As Double, ByVal StrokingColor As Color, ByVal NonStokingColor As Color, ByVal Text As String) As Double     ' in points
+    Public Function DrawText(Font As PdfFont, FontSize As Double, PosX As Double, PosY As Double, Justify As TextJustify, OutlineWidth As Double, StrokingColor As Color, NonStokingColor As Color, Text As String) As Double     ' in points
         ' text is null or empty
         If String.IsNullOrEmpty(Text) Then Return 0
 
@@ -2355,7 +2355,7 @@ Public Class PdfContents
     ''' 	bottom left corner of the paper.
     ''' </remarks>
     
-    Public Function DrawTextWithAnnotation(ByVal Page As PdfPage, ByVal Font As PdfFont, ByVal FontSize As Double, ByVal TextAbsPosX As Double, ByVal TextAbsPosY As Double, ByVal Text As String, ByVal AnnotAction As AnnotAction) As Double      ' in points
+    Public Function DrawTextWithAnnotation(Page As PdfPage, Font As PdfFont, FontSize As Double, TextAbsPosX As Double, TextAbsPosY As Double, Text As String, AnnotAction As AnnotAction) As Double      ' in points
         Return DrawTextWithAnnotation(Page, Font, FontSize, TextAbsPosX, TextAbsPosY, TextJustify.Left, DrawStyle.Underline, Color.DarkBlue, Text, AnnotAction)
     End Function
 
@@ -2377,7 +2377,7 @@ Public Class PdfContents
     ''' 	Text will be drawn left justified, underlined and in dark blue.
     ''' </remarks>
     
-    Public Function DrawWebLink(ByVal Page As PdfPage, ByVal Font As PdfFont, ByVal FontSize As Double, ByVal TextAbsPosX As Double, ByVal TextAbsPosY As Double, ByVal Text As String, ByVal WebLinkStr As String) As Double       ' in points
+    Public Function DrawWebLink(Page As PdfPage, Font As PdfFont, FontSize As Double, TextAbsPosX As Double, TextAbsPosY As Double, Text As String, WebLinkStr As String) As Double       ' in points
         Return DrawTextWithAnnotation(Page, Font, FontSize, TextAbsPosX, TextAbsPosY, TextJustify.Left, DrawStyle.Underline, Color.DarkBlue, Text, New AnnotWebLink(WebLinkStr))
     End Function
 
@@ -2401,7 +2401,7 @@ Public Class PdfContents
     ''' 	bottom left corner of the paper.
     ''' </remarks>
     
-    Public Function DrawWebLink(ByVal Page As PdfPage, ByVal Font As PdfFont, ByVal FontSize As Double, ByVal TextAbsPosX As Double, ByVal TextAbsPosY As Double, ByVal Justify As TextJustify, ByVal DrawStyle As DrawStyle, ByVal TextColor As Color, ByVal Text As String, ByVal WebLinkStr As String) As Double     ' in points
+    Public Function DrawWebLink(Page As PdfPage, Font As PdfFont, FontSize As Double, TextAbsPosX As Double, TextAbsPosY As Double, Justify As TextJustify, DrawStyle As DrawStyle, TextColor As Color, Text As String, WebLinkStr As String) As Double     ' in points
         Return DrawTextWithAnnotation(Page, Font, FontSize, TextAbsPosX, TextAbsPosY, Justify, DrawStyle, TextColor, Text, New AnnotWebLink(WebLinkStr))
     End Function
 
@@ -2425,7 +2425,7 @@ Public Class PdfContents
     ''' 	bottom left corner of the paper.
     ''' </remarks>
     
-    Public Function DrawTextWithAnnotation(ByVal Page As PdfPage, ByVal Font As PdfFont, ByVal FontSize As Double, ByVal TextAbsPosX As Double, ByVal TextAbsPosY As Double, ByVal Justify As TextJustify, ByVal DrawStyle As DrawStyle, ByVal TextColor As Color, ByVal Text As String, ByVal AnnotAction As AnnotAction) As Double        ' in points
+    Public Function DrawTextWithAnnotation(Page As PdfPage, Font As PdfFont, FontSize As Double, TextAbsPosX As Double, TextAbsPosY As Double, Justify As TextJustify, DrawStyle As DrawStyle, TextColor As Color, Text As String, AnnotAction As AnnotAction) As Double        ' in points
         Dim Width = DrawText(Font, FontSize, TextAbsPosX, TextAbsPosY, Justify, DrawStyle, TextColor, Text)
         If Width = 0.0 Then Return 0.0
 
@@ -2489,7 +2489,7 @@ Public Class PdfContents
     ''' </para>
     ''' </remarks>
     
-    Public Function DrawText(ByVal PosX As Double, ByRef PosYTop As Double, ByVal PosYBottom As Double, ByVal LineNo As Integer, ByVal TextBox As TextBox, ByVal Optional Page As PdfPage = Nothing) As Integer
+    Public Function DrawText(PosX As Double, ByRef PosYTop As Double, PosYBottom As Double, LineNo As Integer, TextBox As TextBox, Optional Page As PdfPage = Nothing) As Integer
         Return DrawText(PosX, PosYTop, PosYBottom, LineNo, 0.0, 0.0, TextBoxJustify.Left, TextBox, Page)
     End Function
 
@@ -2546,7 +2546,7 @@ Public Class PdfContents
     ''' </para>
     ''' </remarks>
     
-    Public Function DrawText(ByVal PosX As Double, ByRef PosYTop As Double, ByVal PosYBottom As Double, ByVal LineNo As Integer, ByVal LineExtraSpace As Double, ByVal ParagraphExtraSpace As Double, ByVal Justify As TextBoxJustify, ByVal TextBox As TextBox, ByVal Optional Page As PdfPage = Nothing) As Integer
+    Public Function DrawText(PosX As Double, ByRef PosYTop As Double, PosYBottom As Double, LineNo As Integer, LineExtraSpace As Double, ParagraphExtraSpace As Double, Justify As TextBoxJustify, TextBox As TextBox, Optional Page As PdfPage = Nothing) As Integer
         TextBox.Terminate()
 
         While LineNo < TextBox.LineCount
@@ -2596,7 +2596,7 @@ Public Class PdfContents
     ' Draw text within text box left justified
     
 
-    Private Function DrawText(ByVal PosX As Double, ByVal PosY As Double, ByVal Line As TextBoxLine, ByVal Page As PdfPage) As Double
+    Private Function DrawText(PosX As Double, PosY As Double, Line As TextBoxLine, Page As PdfPage) As Double
         Dim SegPosX = PosX
 
         For Each Seg In Line.SegArray
@@ -2618,7 +2618,7 @@ Public Class PdfContents
     ' Draw text within text box center or right justified
     
 
-    Private Function DrawText(ByVal PosX As Double, ByVal PosY As Double, ByVal Width As Double, ByVal Justify As TextBoxJustify, ByVal Line As TextBoxLine, ByVal Page As PdfPage) As Double
+    Private Function DrawText(PosX As Double, PosY As Double, Width As Double, Justify As TextBoxJustify, Line As TextBoxLine, Page As PdfPage) As Double
         Dim LineWidth As Double = 0
 
         For Each Seg In Line.SegArray
@@ -2652,7 +2652,7 @@ Public Class PdfContents
     ' Draw text justify to width within text box
     
 
-    Private Function DrawText(ByVal PosX As Double, ByVal PosY As Double, ByVal Width As Double, ByVal Line As TextBoxLine, ByVal Page As PdfPage) As Double
+    Private Function DrawText(PosX As Double, PosY As Double, Width As Double, Line As TextBoxLine, Page As PdfPage) As Double
         Dim WordSpacing As Double = Nothing, CharSpacing As Double = Nothing
         If Not TextFitToWidth(Width, WordSpacing, CharSpacing, Line) Then Return DrawText(PosX, PosY, Line, Page)
         SaveGraphicsState()
@@ -2680,7 +2680,7 @@ Public Class PdfContents
     ' Stretch text to given width
     
 
-    Private Function TextFitToWidth(ByVal ReqWidth As Double, <Out> ByRef WordSpacing As Double, <Out> ByRef CharSpacing As Double, ByVal Line As TextBoxLine) As Boolean
+    Private Function TextFitToWidth(ReqWidth As Double, <Out> ByRef WordSpacing As Double, <Out> ByRef CharSpacing As Double, Line As TextBoxLine) As Boolean
         WordSpacing = 0
         CharSpacing = 0
         Dim CharCount = 0
@@ -2745,7 +2745,7 @@ Public Class PdfContents
     ''' <param name="PosY">Position Y</param>
     ''' <param name="Text">Text</param>
     
-    Public Sub ClipText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal PosX As Double, ByVal PosY As Double, ByVal Text As String)      ' in points
+    Public Sub ClipText(Font As PdfFont, FontSize As Double, PosX As Double, PosY As Double, Text As String)      ' in points
         ' text is null or empty
         If String.IsNullOrEmpty(Text) Then Return
 
@@ -2808,7 +2808,7 @@ Public Class PdfContents
     ''' </para>
     ''' </remarks>
     
-    Public Function DrawBarcode(ByVal PosX As Double, ByVal PosY As Double, ByVal BarWidth As Double, ByVal BarHeight As Double, ByVal Barcode As Barcode, ByVal Optional TextFont As PdfFont = Nothing, ByVal Optional FontSize As Double = 0.0) As Double
+    Public Function DrawBarcode(PosX As Double, PosY As Double, BarWidth As Double, BarHeight As Double, Barcode As Barcode, Optional TextFont As PdfFont = Nothing, Optional FontSize As Double = 0.0) As Double
         Return DrawBarcode(PosX, PosY, TextJustify.Left, BarWidth, BarHeight, Color.Black, Barcode, TextFont, FontSize)
     End Function
 
@@ -2860,7 +2860,7 @@ Public Class PdfContents
     ''' </para>
     ''' </remarks>
     
-    Public Function DrawBarcode(ByVal PosX As Double, ByVal PosY As Double, ByVal Justify As TextJustify, ByVal BarWidth As Double, ByVal BarcodeHeight As Double, ByVal Barcode As Barcode, ByVal Optional TextFont As PdfFont = Nothing, ByVal Optional FontSize As Double = 0.0) As Double
+    Public Function DrawBarcode(PosX As Double, PosY As Double, Justify As TextJustify, BarWidth As Double, BarcodeHeight As Double, Barcode As Barcode, Optional TextFont As PdfFont = Nothing, Optional FontSize As Double = 0.0) As Double
         Return DrawBarcode(PosX, PosY, Justify, BarWidth, BarcodeHeight, Color.Black, Barcode, TextFont, FontSize)
     End Function
 
@@ -2917,7 +2917,7 @@ Public Class PdfContents
     ''' </para>
     ''' </remarks>
     
-    Public Function DrawBarcode(ByVal PosX As Double, ByVal PosY As Double, ByVal Justify As TextJustify, ByVal BarWidth As Double, ByVal BarHeight As Double, ByVal BarColor As Color, ByVal Barcode As Barcode, ByVal Optional TextFont As PdfFont = Nothing, ByVal Optional FontSize As Double = 0.0) As Double
+    Public Function DrawBarcode(PosX As Double, PosY As Double, Justify As TextJustify, BarWidth As Double, BarHeight As Double, BarColor As Color, Barcode As Barcode, Optional TextFont As PdfFont = Nothing, Optional FontSize As Double = 0.0) As Double
         ' save graphics state
         SaveGraphicsState()
 
@@ -3012,7 +3012,7 @@ Public Class PdfContents
     ' Draw barcode text
     
 
-    Private Sub DrawBarcodeText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal CenterPos As Double, ByVal TopPos As Double, ByVal Justify As TextJustify, ByVal Text As String)
+    Private Sub DrawBarcodeText(Font As PdfFont, FontSize As Double, CenterPos As Double, TopPos As Double, Justify As TextJustify, Text As String)
         ' test for non printable characters
         Dim Index As Integer
         Index = 0
@@ -3052,7 +3052,7 @@ Public Class PdfContents
     ''' and positioning.
     ''' </remarks>
     
-    Public Sub DrawImage(ByVal Image As PdfImage, ByVal OriginX As Double, ByVal OriginY As Double, ByVal Width As Double)
+    Public Sub DrawImage(Image As PdfImage, OriginX As Double, OriginY As Double, Width As Double)
         ' add image code to current list of resources
         AddToUsedResources(Image)
 
@@ -3077,7 +3077,7 @@ Public Class PdfContents
     ''' and positioning.
     ''' </remarks>
     
-    Public Sub DrawImage(ByVal Image As PdfImage, ByVal OriginX As Double, ByVal OriginY As Double, ByVal Width As Double, ByVal Height As Double)
+    Public Sub DrawImage(Image As PdfImage, OriginX As Double, OriginY As Double, Width As Double, Height As Double)
         ' add image code to current list of resources
         AddToUsedResources(Image)
 
@@ -3095,7 +3095,7 @@ Public Class PdfContents
     ''' is as per X object.
     ''' </remarks>
 
-    Public Sub DrawXObject(ByVal XObject As PdfXObject)
+    Public Sub DrawXObject(XObject As PdfXObject)
         ' add image code to current list of resources
         AddToUsedResources(XObject)
 
@@ -3115,7 +3115,7 @@ Public Class PdfContents
     ''' X object Size is as per X object.
     ''' </remarks>
     
-    Public Sub DrawXObject(ByVal XObject As PdfXObject, ByVal OriginX As Double, ByVal OriginY As Double)
+    Public Sub DrawXObject(XObject As PdfXObject, OriginX As Double, OriginY As Double)
         SaveGraphicsState()
         Translate(OriginX, OriginY)
         DrawXObject(XObject)
@@ -3133,7 +3133,7 @@ Public Class PdfContents
     ''' <param name="ScaleX">Horizontal scale factor</param>
     ''' <param name="ScaleY">Vertical scale factor</param>
     
-    Public Sub DrawXObject(ByVal XObject As PdfXObject, ByVal OriginX As Double, ByVal OriginY As Double, ByVal ScaleX As Double, ByVal ScaleY As Double)
+    Public Sub DrawXObject(XObject As PdfXObject, OriginX As Double, OriginY As Double, ScaleX As Double, ScaleY As Double)
         SaveGraphicsState()
         TranslateScale(OriginX, OriginY, ScaleX, ScaleY)
         DrawXObject(XObject)
@@ -3152,7 +3152,7 @@ Public Class PdfContents
     ''' <param name="ScaleY">Vertical scale factor</param>
     ''' <param name="Alpha">Rotation angle</param>
     
-    Public Sub DrawXObject(ByVal XObject As PdfXObject, ByVal OriginX As Double, ByVal OriginY As Double, ByVal ScaleX As Double, ByVal ScaleY As Double, ByVal Alpha As Double)
+    Public Sub DrawXObject(XObject As PdfXObject, OriginX As Double, OriginY As Double, ScaleX As Double, ScaleY As Double, Alpha As Double)
         SaveGraphicsState()
         TranslateScaleRotate(OriginX, OriginY, ScaleX, ScaleY, Alpha)
         DrawXObject(XObject)
@@ -3164,7 +3164,7 @@ Public Class PdfContents
     ' Add resource to list of used resources
     
 
-    Friend Sub AddToUsedResources(ByVal ResObject As PdfObject)
+    Friend Sub AddToUsedResources(ResObject As PdfObject)
         If ResObjects Is Nothing Then ResObjects = New List(Of PdfObject)()
         Dim Index = ResObjects.BinarySearch(ResObject)
         If Index < 0 Then ResObjects.Insert(Not Index, ResObject)
@@ -3175,7 +3175,7 @@ Public Class PdfContents
     ''' Commit object to PDF file
     ''' </summary>
     ''' <param name="GCCollect">Activate Garbage Collector</param>
-    Public Sub CommitToPdfFile(ByVal GCCollect As Boolean)
+    Public Sub CommitToPdfFile(GCCollect As Boolean)
         ' make sure object was not written before
         If FilePosition = 0 Then
             ' call PdfObject routine
@@ -3209,7 +3209,7 @@ Public Class PdfContents
     ''' </summary>
     ''' <param name="PP">Paint operator from custom string</param>
     
-    Public Sub SetPaintOp(ByVal PP As String)
+    Public Sub SetPaintOp(PP As String)
         ' apply paint operator
         MyBase.ObjectValueFormat("{0}" & Microsoft.VisualBasic.Constants.vbLf, PP)
         Return

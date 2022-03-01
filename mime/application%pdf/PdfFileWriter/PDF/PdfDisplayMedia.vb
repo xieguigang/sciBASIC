@@ -359,7 +359,7 @@ Public Class PdfDisplayMedia
         Get
             Return _MediaFile
         End Get
-        Private Set(ByVal value As PdfEmbeddedFile)
+        Private Set(value As PdfEmbeddedFile)
             _MediaFile = value
         End Set
     End Property
@@ -383,7 +383,7 @@ Public Class PdfDisplayMedia
     ''' to mime type. If conversion is not available application exception will be raised.
     ''' </para>
     ''' </remarks>
-    Public Sub New(ByVal MediaFile As PdfEmbeddedFile, ByVal Optional MimeType As String = Nothing)
+    Public Sub New(MediaFile As PdfEmbeddedFile, Optional MimeType As String = Nothing)
         MyBase.New(MediaFile.Document)
         ' save media file
         Me.MediaFile = MediaFile
@@ -462,7 +462,7 @@ Public Class PdfDisplayMedia
     ''' Display media player controls
     ''' </summary>
     ''' <param name="Display">Display/no display command</param>
-    Public Sub DisplayControls(ByVal Display As Boolean)
+    Public Sub DisplayControls(Display As Boolean)
         MediaPlayBE.AddBoolean("/C", Display)
         Return
     End Sub
@@ -483,7 +483,7 @@ Public Class PdfDisplayMedia
     ''' 	define how non integers are treated.
     ''' 	</para>
     ''' </remarks>
-    Public Sub RepeatCount(ByVal Count As Single)
+    Public Sub RepeatCount(Count As Single)
         MediaPlayBE.AddReal("/RC", Count)
         Return
     End Sub
@@ -503,7 +503,7 @@ Public Class PdfDisplayMedia
     ''' All optional arguments are applicable to floating window only.
     ''' </para>
     ''' </remarks>
-    Public Sub SetMediaWindow(ByVal MediaWindow As MediaWindow, ByVal Optional Width As Integer = 0, ByVal Optional Height As Integer = 0, ByVal Optional Position As WindowPosition = WindowPosition.Center, ByVal Optional TitleBar As WindowTitleBar = WindowTitleBar.TitleBarWithCloseButton, ByVal Optional Resize As WindowResize = WindowResize.KeepAspectRatio, ByVal Optional Title As String = Nothing)
+    Public Sub SetMediaWindow(MediaWindow As MediaWindow, Optional Width As Integer = 0, Optional Height As Integer = 0, Optional Position As WindowPosition = WindowPosition.Center, Optional TitleBar As WindowTitleBar = WindowTitleBar.TitleBarWithCloseButton, Optional Resize As WindowResize = WindowResize.KeepAspectRatio, Optional Title As String = Nothing)
         ' set media play window code
         MediaScreenParamBE.AddInteger("/W", MediaWindow)
 
@@ -541,7 +541,7 @@ Public Class PdfDisplayMedia
     ''' Scale media
     ''' </summary>
     ''' <param name="ScaleCode">Scale media code</param>
-    Public Sub ScaleMedia(ByVal ScaleCode As ScaleMediaCode)
+    Public Sub ScaleMedia(ScaleCode As ScaleMediaCode)
         ' media scale and position within annotation rectangle
         ' Value 0 to 5 How to scale the media to fit annotation area page 770 T 9.15
         MediaPlayBE.AddInteger("/F", ScaleCode)
@@ -552,7 +552,7 @@ Public Class PdfDisplayMedia
     ''' Initial media operation
     ''' </summary>
     ''' <param name="OperationCode">Media operation code enumeration</param>
-    Public Sub InitialMediaOperation(ByVal OperationCode As MediaOperation)
+    Public Sub InitialMediaOperation(OperationCode As MediaOperation)
         ' Operation to perform when rendition action is triggered.
         ' Page 669 T 8.64 S 8.5
         Dictionary.AddInteger("/OP", OperationCode)
@@ -567,7 +567,7 @@ Public Class PdfDisplayMedia
     ''' The PDF reader must save the media file to a temporary file
     ''' in order for the player to play it.
     ''' </para></remarks>
-    Public Sub MediaTempFilePermission(ByVal Permission As TempFilePermission)
+    Public Sub MediaTempFilePermission(Permission As TempFilePermission)
         ' allow reader to always create temporary file (other options do not work)
         ' Media clip dictionary T 9.10 page 766
         TempFilePermissions.AddPdfString("/TF", Permission.ToString())

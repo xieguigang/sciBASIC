@@ -289,7 +289,7 @@ Imports System.Globalization
         ''' PDF table style default constructor.
         ''' </summary>
         ''' <param name="Font">Font</param>
-        Public Sub New(ByVal Optional Font As PdfFont = Nothing)
+        Public Sub New(Optional Font As PdfFont = Nothing)
             Alignment = ContentAlignment.TopLeft
             BackgroundColor = Color.Empty
             TextBoxLineBreakFactor = 0.5
@@ -306,7 +306,7 @@ Imports System.Globalization
         ''' PDF table style constructor based on table's default cell style.
         ''' </summary>
         ''' <param name="Table">Table</param>
-        Public Sub New(ByVal Table As PdfTable)
+        Public Sub New(Table As PdfTable)
             Copy(Table.DefaultCellStyle)
             Return
         End Sub
@@ -315,7 +315,7 @@ Imports System.Globalization
         ''' PDF table style constructor as a copy of another style.
         ''' </summary>
         ''' <param name="Other">Copy constructor.</param>
-        Public Sub New(ByVal Other As PdfTableStyle)
+        Public Sub New(Other As PdfTableStyle)
             Copy(Other)
             Return
         End Sub
@@ -326,7 +326,7 @@ Imports System.Globalization
         ''' </summary>
         ''' <param name="SourceStyle">Source style</param>
         
-        Public Sub Copy(ByVal SourceStyle As PdfTableStyle)
+        Public Sub Copy(SourceStyle As PdfTableStyle)
             Alignment = SourceStyle.Alignment
             BackgroundColor = SourceStyle.BackgroundColor
             BarcodeBarWidth = SourceStyle.BarcodeBarWidth

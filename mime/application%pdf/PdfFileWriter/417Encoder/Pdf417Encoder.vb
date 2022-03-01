@@ -326,7 +326,7 @@ Public Class Pdf417Encoder
         Get
             Return _EncodingControl
         End Get
-        Set(ByVal value As EncodingControl)
+        Set(value As EncodingControl)
             ' test symbol encoding
             If value <> EncodingControl.Auto AndAlso value <> EncodingControl.ByteOnly AndAlso value <> EncodingControl.TextAndByte Then Throw New ArgumentException("PDF417 Encoding control must be Auto," & Microsoft.VisualBasic.Constants.vbCrLf & "ByteOnly or TextAndByte. Default is Auto.")
 
@@ -345,7 +345,7 @@ Public Class Pdf417Encoder
         Get
             Return _ErrorCorrection
         End Get
-        Set(ByVal value As ErrorCorrectionLevel)
+        Set(value As ErrorCorrectionLevel)
             ' test error correction
             If value < ErrorCorrectionLevel.Level_0 OrElse value > ErrorCorrectionLevel.AutoHigh Then
                 Throw New ArgumentException("PDF417 Error correction request is invalid." & Microsoft.VisualBasic.Constants.vbCrLf & "Default is Auto normal.")
@@ -366,7 +366,7 @@ Public Class Pdf417Encoder
         Get
             Return _BarWidthPix
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             If value < 1 OrElse value > 100 Then
                 Throw New ArgumentException("PDF417 Narrow bar width must be one or more" & Microsoft.VisualBasic.Constants.vbCrLf & "Default is two.")
             End If
@@ -394,7 +394,7 @@ Public Class Pdf417Encoder
         Get
             Return _RowHeightPix
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             If value < 3 * _BarWidthPix OrElse value > 300 Then
                 Throw New ArgumentException("PDF417 Row height must be at least 3 times the narrow bar width." & Microsoft.VisualBasic.Constants.vbCrLf & "Default is six.")
             End If
@@ -416,7 +416,7 @@ Public Class Pdf417Encoder
         Get
             Return _QuietZonePix
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             If value < 2 * _BarWidthPix OrElse value > 200 Then
                 Throw New ArgumentException("PDF417 Quiet zone must be at least 2 times the narrow bar width." & Microsoft.VisualBasic.Constants.vbCrLf & "Default is four.")
             End If
@@ -438,7 +438,7 @@ Public Class Pdf417Encoder
         Get
             Return _DefaultDataColumns
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             If value < DataColumnsMin OrElse value > DataColumnsMax Then
                 Throw New ArgumentException("PDF417 Default data columns must be 1 to 30." & Microsoft.VisualBasic.Constants.vbCrLf & "Default is three.")
             End If
@@ -457,7 +457,7 @@ Public Class Pdf417Encoder
         Get
             Return _GlobalLabelIDCharacterSet
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
 
             If String.IsNullOrWhiteSpace(value) Then
                 _GlobalLabelIDCharacterSet = Nothing
@@ -486,7 +486,7 @@ Public Class Pdf417Encoder
         Get
             Return _GlobalLabelIDUserDefined
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             If value <> 0 AndAlso (value < 810900 OrElse value > 811799) Then Throw New ArgumentException("PDF417 Global label identifier user defined value." & Microsoft.VisualBasic.Constants.vbCrLf & "Must be 810900 to 811799 or zero" & Microsoft.VisualBasic.Constants.vbCrLf & "Default is not used or zero value")
             _GlobalLabelIDUserDefined = value
             Return
@@ -502,7 +502,7 @@ Public Class Pdf417Encoder
         Get
             Return _GlobalLabelIDGeneralPurpose
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             If value <> 0 AndAlso (value < 900 OrElse value > 810899) Then Throw New ArgumentException("PDF417 Global label identifier general purpose value." & Microsoft.VisualBasic.Constants.vbCrLf & "Must be 900 to 810899 or zero" & Microsoft.VisualBasic.Constants.vbCrLf & "Default is not used or zero value")
             _GlobalLabelIDGeneralPurpose = value
             Return
@@ -515,7 +515,7 @@ Public Class Pdf417Encoder
     ''' Encode unicode string
     ''' </summary>
     ''' <param name="StringData">Input text string</param>
-    Public Sub Encode(ByVal StringData As String)
+    Public Sub Encode(StringData As String)
         ' argument error
         If String.IsNullOrEmpty(StringData) Then Throw New ArgumentException("PDF417 Input barcode data string is null or empty.")
 
@@ -536,7 +536,7 @@ Public Class Pdf417Encoder
     ''' Encode binary bytes array
     ''' </summary>
     ''' <param name="BinaryData">Input binary byte array</param>
-    Public Sub Encode(ByVal BinaryData As Byte())
+    Public Sub Encode(BinaryData As Byte())
         ' reset barcode matrix
         Pdf417BarcodeMatrix = Nothing
         Me.DataRows = 0
@@ -612,7 +612,7 @@ Public Class Pdf417Encoder
     ''' </summary>
     ''' <param name="Ratio">Requested width to height ratio</param>
     ''' <returns>Success or failure result</returns>
-    Public Function WidthToHeightRatio(ByVal Ratio As Double) As Boolean
+    Public Function WidthToHeightRatio(Ratio As Double) As Boolean
         Try
             ' total of data and error correction but no padding
             Dim Total = DataCodewords.Count + ErrorCorrectionLength
@@ -643,7 +643,7 @@ Public Class Pdf417Encoder
     ''' </summary>
     ''' <param name="dataColumns">Data columns</param>
     ''' <returns>Success or failure result</returns>
-    Public Function SetDataColumns(ByVal dataColumns As Integer) As Boolean
+    Public Function SetDataColumns(dataColumns As Integer) As Boolean
         Try
             ' columns outside valid range
             If dataColumns < DataColumnsMin OrElse dataColumns > DataColumnsMax Then Return False
@@ -666,7 +666,7 @@ Public Class Pdf417Encoder
     ''' </summary>
     ''' <param name="dataRows">Data rowss</param>
     ''' <returns>Success or failure result</returns>
-    Public Function SetDataRows(ByVal dataRows As Integer) As Boolean
+    Public Function SetDataRows(dataRows As Integer) As Boolean
         Try
             ' rows outside valid range
             If dataRows < DataRowsMin OrElse dataRows > DataRowsMax Then Return False
@@ -683,7 +683,7 @@ Public Class Pdf417Encoder
         End Try
     End Function
 
-    Private Sub SetDataRowsAndColumns(ByVal dataRows As Integer, ByVal dataColumns As Integer)
+    Private Sub SetDataRowsAndColumns(dataRows As Integer, dataColumns As Integer)
         ' test for change
         If dataColumns <> Me.DataColumns OrElse dataRows <> Me.DataRows Then
             ' set rows and columns
@@ -1002,7 +1002,7 @@ Public Class Pdf417Encoder
     End Function
 
     ' count punctuation marks at the data pointer position
-    Private Function CountPunctuation(ByVal CurrentTextCount As Integer) As Integer
+    Private Function CountPunctuation(CurrentTextCount As Integer) As Integer
         Dim Count = 0
 
         While CurrentTextCount > 0
@@ -1046,7 +1046,7 @@ Public Class Pdf417Encoder
     End Function
 
     ' encode numeric data segment
-    Private Sub EncodeNumericSegment(ByVal TotalCount As Integer)
+    Private Sub EncodeNumericSegment(TotalCount As Integer)
         ' set numeric mode
         DataCodewords.Add(SwitchToNumericMode)
         _EncodingMode = EncodingMode.Numeric
@@ -1089,7 +1089,7 @@ Public Class Pdf417Encoder
     End Sub
 
     ' encode text segment
-    Private Sub EncodeTextSegment(ByVal TotalCount As Integer)
+    Private Sub EncodeTextSegment(TotalCount As Integer)
         ' note first time this is the default
         If _EncodingMode <> EncodingMode.Text Then
             DataCodewords.Add(SwitchToTextMode)
@@ -1277,7 +1277,7 @@ _Select0_CasePdfFileWriter_Pdf417Encoder_TextEncodingMode_Upper:
     End Sub
 
     ' encode byte segment
-    Private Sub EncodeByteSegment(ByVal Count As Integer)
+    Private Sub EncodeByteSegment(Count As Integer)
         ' special case one time shift
         If Count = 1 AndAlso _EncodingMode = EncodingMode.Text Then
             DataCodewords.Add(ShiftToByteMode)
@@ -1319,7 +1319,7 @@ _Select0_CasePdfFileWriter_Pdf417Encoder_TextEncodingMode_Upper:
     End Sub
 
     ' calculate error correction codewords
-    Private Sub CalculateErrorCorrection(ByVal Codewords As Integer())
+    Private Sub CalculateErrorCorrection(Codewords As Integer())
         ' shortcut for the selected error correction table
         Dim ErrCorrTable = ErrorCorrectionTables(ErrorCorrectionLevel)
 
@@ -1357,7 +1357,7 @@ _Select0_CasePdfFileWriter_Pdf417Encoder_TextEncodingMode_Upper:
     End Sub
 
     ' convert one codeword to barcode modules
-    Private Sub CodewordToModules(ByVal Row As Integer, ByVal Col As Integer, ByVal Codeword As Integer, ByVal Matrix As Boolean(,))
+    Private Sub CodewordToModules(Row As Integer, Col As Integer, Codeword As Integer, Matrix As Boolean(,))
         ' leading black module
         Matrix(Row, Col) = True
 

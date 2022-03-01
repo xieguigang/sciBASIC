@@ -203,7 +203,7 @@ Imports System.Collections.Generic
         Friend DestStr As String
 
         ' Do not call this constructor from your code
-        Private Sub New(ByVal LocMarkerName As String, ByVal LoctionMarkerPage As PdfPage, ByVal Scope As LocMarkerScope, ByVal FitArg As DestFit, ParamArray SideArg As Double())
+        Private Sub New(LocMarkerName As String, LoctionMarkerPage As PdfPage, Scope As LocMarkerScope, FitArg As DestFit, ParamArray SideArg As Double())
             If SideArg.Length <> FitArguments(FitArg) Then Throw New ApplicationException("AddDestination invalid number of arguments")
             Me.LocMarkerName = LocMarkerName
             Me.Scope = Scope
@@ -219,7 +219,7 @@ Imports System.Collections.Generic
             Return
         End Sub
 
-        Friend Sub New(ByVal LocMarkerName As String)
+        Friend Sub New(LocMarkerName As String)
             Me.LocMarkerName = LocMarkerName
             Return
         End Sub
@@ -232,7 +232,7 @@ Imports System.Collections.Generic
         ''' <param name="Scope">Location marker scope</param>
         ''' <param name="FitArg">Fit enumeration</param>
         ''' <param name="SideArg">Fit optional arguments</param>
-        Public Shared Sub Create(ByVal LocMarkerName As String, ByVal LocMarkerPage As PdfPage, ByVal Scope As LocMarkerScope, ByVal FitArg As DestFit, ParamArray SideArg As Double())
+        Public Shared Sub Create(LocMarkerName As String, LocMarkerPage As PdfPage, Scope As LocMarkerScope, FitArg As DestFit, ParamArray SideArg As Double())
             If LocMarkerPage.Document.LocMarkerArray Is Nothing Then LocMarkerPage.Document.LocMarkerArray = New List(Of LocationMarker)()
             Dim Index As Integer = LocMarkerPage.Document.LocMarkerArray.BinarySearch(New LocationMarker(LocMarkerName))
             If Index >= 0 Then Throw New ApplicationException("Duplicate location marker")
@@ -240,7 +240,7 @@ Imports System.Collections.Generic
             Return
         End Sub
 
-        Public Function CompareTo(ByVal Other As LocationMarker) As Integer Implements IComparable(Of LocationMarker).CompareTo
+        Public Function CompareTo(Other As LocationMarker) As Integer Implements IComparable(Of LocationMarker).CompareTo
             Return String.CompareOrdinal(LocMarkerName, Other.LocMarkerName)
         End Function
     End Class

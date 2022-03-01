@@ -55,7 +55,7 @@ Namespace PdfReader
 
         Private _Streams As List(Of PdfStream)
 
-        Public Sub New(ByVal parent As PdfObject, ByVal obj As PdfObject)
+        Public Sub New(parent As PdfObject, obj As PdfObject)
             MyBase.New(parent)
             Streams = New List(Of PdfStream)()
             ResolveToStreams(obj)
@@ -65,12 +65,12 @@ Namespace PdfReader
             Get
                 Return _Streams
             End Get
-            Private Set(ByVal value As List(Of PdfStream))
+            Private Set(value As List(Of PdfStream))
                 _Streams = value
             End Set
         End Property
 
-        Public Overrides Sub Visit(ByVal visitor As IPdfObjectVisitor)
+        Public Overrides Sub Visit(visitor As IPdfObjectVisitor)
             visitor.Visit(Me)
         End Sub
 
@@ -78,7 +78,7 @@ Namespace PdfReader
             Return New PdfContentsParser(Me)
         End Function
 
-        Private Sub ResolveToStreams(ByVal obj As PdfObject)
+        Private Sub ResolveToStreams(obj As PdfObject)
             Dim stream As New Value(Of PdfStream)
             Dim reference As New Value(Of PdfObjectReference)
             Dim array As New Value(Of PdfArray)

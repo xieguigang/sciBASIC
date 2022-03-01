@@ -66,7 +66,7 @@ Namespace PdfReader
             Next
         End Sub
 
-        Public Sub New(ByVal keyword As ParseKeyword)
+        Public Sub New(keyword As ParseKeyword)
             Value = keyword
         End Sub
 
@@ -74,12 +74,12 @@ Namespace PdfReader
             Get
                 Return _Value
             End Get
-            Private Set(ByVal value As ParseKeyword)
+            Private Set(value As ParseKeyword)
                 _Value = value
             End Set
         End Property
 
-        Public Shared Function GetToken(ByVal keyword As String) As TokenKeyword
+        Public Shared Function GetToken(keyword As String) As TokenKeyword
             Dim tokenKeyword As TokenKeyword = Nothing
             _lookup.TryGetValue(keyword, tokenKeyword)
             Return tokenKeyword

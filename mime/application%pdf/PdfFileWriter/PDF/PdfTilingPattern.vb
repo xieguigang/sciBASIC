@@ -121,7 +121,7 @@ Imports System.Drawing
         ''' This program support only color tiling pattern: PaintType = 1.
         ''' </remarks>
         
-        Public Sub New(ByVal Document As PdfDocument)
+        Public Sub New(Document As PdfDocument)
             MyBase.New(Document, "/Pattern")
             ' create resource code
             ResourceCode = Document.GenerateResourceNumber("P"c)
@@ -142,7 +142,7 @@ Imports System.Drawing
         ''' </summary>
         ''' <param name="TilingType">Tiling type</param>
         
-        Public Sub SetTilingType(ByVal TilingType As TilingType)
+        Public Sub SetTilingType(TilingType As TilingType)
             ' by default the constructor set tiling type to 1 = constant
             Dictionary.AddInteger("/TilingType", TilingType)
             Return
@@ -157,7 +157,7 @@ Imports System.Drawing
         ''' Set square bounding box and equal step
         ''' </remarks>
         
-        Public Sub SetTileBox(ByVal Side As Double)
+        Public Sub SetTileBox(Side As Double)
             SetTileBox(Side, Side, Side, Side)
             Return
         End Sub
@@ -172,7 +172,7 @@ Imports System.Drawing
         ''' Set rectangle bounding box and equal step.
         ''' </remarks>
         
-        Public Sub SetTileBox(ByVal Width As Double, ByVal Height As Double)
+        Public Sub SetTileBox(Width As Double, Height As Double)
             SetTileBox(Width, Height, Width, Height)
             Return
         End Sub
@@ -189,7 +189,7 @@ Imports System.Drawing
         ''' Set rectangle bounding box and independent step size.
         ''' </remarks>
         
-        Public Sub SetTileBox(ByVal Width As Double, ByVal Height As Double, ByVal StepX As Double, ByVal StepY As Double)
+        Public Sub SetTileBox(Width As Double, Height As Double, StepX As Double, StepY As Double)
             ' by default XStep == Width
             Dictionary.AddFormat("/BBox", "[0 0 {0} {1}]", ToPt(Width), ToPt(Height))
             Dictionary.AddReal("/XStep", ToPt(StepX))
@@ -207,7 +207,7 @@ Imports System.Drawing
         ''' with a new one [Scale 0 0 Scale 0 0].
         ''' </remarks>
         
-        Public Sub SetScale(ByVal Scale As Double)
+        Public Sub SetScale(Scale As Double)
             ' add items to dictionary
             Dictionary.AddFormat("/Matrix", "[{0} 0 0 {0} 0 0]", Round(Scale))
             Return
@@ -224,7 +224,7 @@ Imports System.Drawing
         ''' with a new one [ScaleX 0 0 ScaleY 0 0].
         ''' </remarks>
         
-        Public Sub SetScale(ByVal ScaleX As Double, ByVal ScaleY As Double)
+        Public Sub SetScale(ScaleX As Double, ScaleY As Double)
             ' add items to dictionary
             Dictionary.AddFormat("/Matrix", "[{0} 0 0 {1} 0 0]", Round(ScaleX), Round(ScaleY))
             Return
@@ -243,7 +243,7 @@ Imports System.Drawing
         ''' with a new one [ScaleX 0 0 ScaleY OriginX OriginY].
         ''' </remarks>
         
-        Public Sub SetScaleAndOrigin(ByVal OriginX As Double, ByVal OriginY As Double, ByVal ScaleX As Double, ByVal ScaleY As Double)
+        Public Sub SetScaleAndOrigin(OriginX As Double, OriginY As Double, ScaleX As Double, ScaleY As Double)
             ' add items to dictionary
             Dictionary.AddFormat("/Matrix", "[{0} 0 0 {1} {2} {3}]", Round(ScaleX), Round(ScaleY), ToPt(OriginX), ToPt(OriginY))
             Return
@@ -264,7 +264,7 @@ Imports System.Drawing
         ''' Ypage = b * Xuser + d * Yuser + f
         ''' </remarks>
         
-        Public Sub SetPatternMatrix(ByVal a As Double, ByVal b As Double, ByVal c As Double, ByVal d As Double, ByVal e As Double, ByVal f As Double)
+        Public Sub SetPatternMatrix(a As Double, b As Double, c As Double, d As Double, e As Double, f As Double)
             ' create full pattern transformation matrix
             Dictionary.AddFormat("/Matrix", "[{0} {1} {2} {3} {4} {5}]", Round(a), Round(b), Round(c), Round(d), ToPt(e), ToPt(f))
             Return
@@ -300,7 +300,7 @@ Imports System.Drawing
         ''' </para>
         ''' </remarks>
         
-        Public Shared Function SetBrickPattern(ByVal Document As PdfDocument, ByVal Scale As Double, ByVal Stroking As Color, ByVal NonStroking As Color) As PdfTilingPattern
+        Public Shared Function SetBrickPattern(Document As PdfDocument, Scale As Double, Stroking As Color, NonStroking As Color) As PdfTilingPattern
             Dim Pattern As PdfTilingPattern = New PdfTilingPattern(Document)
             Pattern.SetScale(Scale)
             Pattern.SaveGraphicsState()
@@ -333,7 +333,7 @@ Imports System.Drawing
         ''' </para>
         ''' </remarks>
         
-        Public Shared Function SetWeavePattern(ByVal Document As PdfDocument, ByVal Scale As Double, ByVal Background As Color, ByVal Horizontal As Color, ByVal Vertical As Color) As PdfTilingPattern
+        Public Shared Function SetWeavePattern(Document As PdfDocument, Scale As Double, Background As Color, Horizontal As Color, Vertical As Color) As PdfTilingPattern
             Const RectSide1 = 4.0 / 6.0
             Const RectSide2 = 2.0 / 6.0
             Const LineWidth = 0.2 / 6.0

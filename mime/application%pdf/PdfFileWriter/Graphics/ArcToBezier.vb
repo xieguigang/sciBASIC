@@ -129,7 +129,7 @@ Public Module ArcToBezier
     ''' <param name="Type">Arc type enumeration</param>
     ''' <returns>Array of points.</returns>
 
-    Public Function CreateArc(ByVal ArcStart As PointD, ByVal ArcEnd As PointD, ByVal Radius As SizeD, ByVal Rotate As Double, ByVal Type As ArcType) As PointD()
+    Public Function CreateArc(ArcStart As PointD, ArcEnd As PointD, Radius As SizeD, Rotate As Double, Type As ArcType) As PointD()
         Dim SegArray As PointD()
         Dim ScaleX = Radius.Width / Radius.Height
 
@@ -175,7 +175,7 @@ Public Module ArcToBezier
     ''' <param name="Radius">Arc radius</param>
     ''' <param name="Type">Arc type</param>
     ''' <returns>Array of points.</returns>
-    Friend Function CircularArc(ByVal ArcStart As PointD, ByVal ArcEnd As PointD, ByVal Radius As Double, ByVal Type As ArcType) As PointD()
+    Friend Function CircularArc(ArcStart As PointD, ArcEnd As PointD, Radius As Double, Type As ArcType) As PointD()
         ' chord line from start point to end point
         Dim ChordDeltaX = ArcEnd.X - ArcStart.X
         Dim ChordDeltaY = ArcEnd.Y - ArcStart.Y

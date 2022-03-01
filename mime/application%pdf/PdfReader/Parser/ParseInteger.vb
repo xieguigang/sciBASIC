@@ -48,7 +48,7 @@ Namespace PdfReader
 
         Private _Value As Integer
 
-        Public Sub New(ByVal token As TokenInteger)
+        Public Sub New(token As TokenInteger)
             Value = token.Value
         End Sub
 
@@ -56,7 +56,7 @@ Namespace PdfReader
             Get
                 Return _Value
             End Get
-            Private Set(ByVal value As Integer)
+            Private Set(value As Integer)
                 _Value = value
             End Set
         End Property

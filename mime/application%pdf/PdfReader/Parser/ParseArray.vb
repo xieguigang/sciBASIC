@@ -48,7 +48,7 @@ Namespace PdfReader
     Public Class ParseArray
         Inherits ParseObjectBase
 
-        Public Sub New(ByVal objects As List(Of ParseObjectBase))
+        Public Sub New(objects As List(Of ParseObjectBase))
             Me.Objects = objects
         End Sub
 

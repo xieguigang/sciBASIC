@@ -63,7 +63,7 @@ Namespace PdfReader
             Me.New(Nothing)
         End Sub
 
-        Public Sub New(ByVal obj As PdfObject)
+        Public Sub New(obj As PdfObject)
             _obj = obj
         End Sub
 
@@ -84,7 +84,7 @@ Namespace PdfReader
         Public Property Resolve As Boolean
         Public Property StreamContent As Boolean
 
-        Public Sub Visit(ByVal array As PdfArray) Implements IPdfObjectVisitor.Visit
+        Public Sub Visit(array As PdfArray) Implements IPdfObjectVisitor.Visit
             Append("[")
             Dim first = True
 
@@ -102,11 +102,11 @@ Namespace PdfReader
             Append("]")
         End Sub
 
-        Public Sub Visit(ByVal [boolean] As PdfBoolean) Implements IPdfObjectVisitor.Visit
+        Public Sub Visit([boolean] As PdfBoolean) Implements IPdfObjectVisitor.Visit
             Append([boolean])
         End Sub
 
-        Public Sub Visit(ByVal catalog As PdfCatalog) Implements IPdfObjectVisitor.Visit
+        Public Sub Visit(catalog As PdfCatalog) Implements IPdfObjectVisitor.Visit
             PushNextLevel()
             Append("Catalog")
             CurrentLevelNewLine()
@@ -140,7 +140,7 @@ Namespace PdfReader
             PopLevel()
         End Sub
 
-        Public Sub Visit(ByVal contents As PdfContents) Implements IPdfObjectVisitor.Visit
+        Public Sub Visit(contents As PdfContents) Implements IPdfObjectVisitor.Visit
             If contents.Streams.Count > 1 Then
                 PushNextLevel()
                 Append("Multiple Streams")
@@ -156,11 +156,11 @@ Namespace PdfReader
             End If
         End Sub
 
-        Public Sub Visit(ByVal dateTime As PdfDateTime) Implements IPdfObjectVisitor.Visit
+        Public Sub Visit(dateTime As PdfDateTime) Implements IPdfObjectVisitor.Visit
             Append(dateTime)
         End Sub
 
-        Public Sub Visit(ByVal dictionary As PdfDictionary) Implements IPdfObjectVisitor.Visit
+        Public Sub Visit(dictionary As PdfDictionary) Implements IPdfObjectVisitor.Visit
             PushNextLevel()
             Append("<<")
             Dim index = 0
@@ -177,7 +177,7 @@ Namespace PdfReader
             PopLevel()
         End Sub
 
-        Public Sub Visit(ByVal document As PdfDocument) Implements IPdfObjectVisitor.Visit
+        Public Sub Visit(document As PdfDocument) Implements IPdfObjectVisitor.Visit
             Me.Document = document
             PushNextLevel()
             Append("Document")
@@ -188,11 +188,11 @@ Namespace PdfReader
             CurrentLevelNewLine()
         End Sub
 
-        Public Sub Visit(ByVal identifier As PdfIdentifier) Implements IPdfObjectVisitor.Visit
+        Public Sub Visit(identifier As PdfIdentifier) Implements IPdfObjectVisitor.Visit
             Append(identifier)
         End Sub
 
-        Public Sub Visit(ByVal indirectObject As PdfIndirectObject) Implements IPdfObjectVisitor.Visit
+        Public Sub Visit(indirectObject As PdfIndirectObject) Implements IPdfObjectVisitor.Visit
             PushLevel()
             Append($"Id:{indirectObject.Id} Gen:{indirectObject.Gen} Offset:{indirectObject.Offset}")
             VisitNotNull(indirectObject.Child)
@@ -200,7 +200,7 @@ Namespace PdfReader
             PopLevel()
         End Sub
 
-        Public Sub Visit(ByVal info As PdfInfo) Implements IPdfObjectVisitor.Visit
+        Public Sub Visit(info As PdfInfo) Implements IPdfObjectVisitor.Visit
             PushNextLevel()
             Append("Info")
             VisitNotNull(info.Title, "Title")
@@ -215,31 +215,31 @@ Namespace PdfReader
             PopLevel()
         End Sub
 
-        Public Sub Visit(ByVal [integer] As PdfInteger) Implements IPdfObjectVisitor.Visit
+        Public Sub Visit([integer] As PdfInteger) Implements IPdfObjectVisitor.Visit
             Append([integer])
         End Sub
 
-        Public Sub Visit(ByVal name As PdfName) Implements IPdfObjectVisitor.Visit
+        Public Sub Visit(name As PdfName) Implements IPdfObjectVisitor.Visit
             Append($"/{name}")
         End Sub
 
-        Public Sub Visit(ByVal nameTree As PdfNameTree) Implements IPdfObjectVisitor.Visit
+        Public Sub Visit(nameTree As PdfNameTree) Implements IPdfObjectVisitor.Visit
             Append($"NameTree {nameTree.LimitMin} -> {nameTree.LimitMax}")
         End Sub
 
-        Public Sub Visit(ByVal nul As PdfNull) Implements IPdfObjectVisitor.Visit
+        Public Sub Visit(nul As PdfNull) Implements IPdfObjectVisitor.Visit
             Append(nul)
         End Sub
 
-        Public Sub Visit(ByVal numberTree As PdfNumberTree) Implements IPdfObjectVisitor.Visit
+        Public Sub Visit(numberTree As PdfNumberTree) Implements IPdfObjectVisitor.Visit
             Append($"NumberTree {numberTree.LimitMin} -> {numberTree.LimitMax}")
         End Sub
 
-        Public Sub Visit(ByVal obj As PdfObject) Implements IPdfObjectVisitor.Visit
+        Public Sub Visit(obj As PdfObject) Implements IPdfObjectVisitor.Visit
             Append(obj.ToString())
         End Sub
 
-        Public Sub Visit(ByVal reference As PdfObjectReference) Implements IPdfObjectVisitor.Visit
+        Public Sub Visit(reference As PdfObjectReference) Implements IPdfObjectVisitor.Visit
             Append($"{reference.Id} {reference.Gen} R")
 
             If Resolve AndAlso Document IsNot Nothing Then
@@ -252,7 +252,7 @@ Namespace PdfReader
             End If
         End Sub
 
-        Public Sub Visit(ByVal outlineItem As PdfOutlineItem) Implements IPdfObjectVisitor.Visit
+        Public Sub Visit(outlineItem As PdfOutlineItem) Implements IPdfObjectVisitor.Visit
             PushNextLevel()
             Append("Item")
             VisitNotNull(outlineItem.Title, "Title")
@@ -270,7 +270,7 @@ Namespace PdfReader
             PopLevel()
         End Sub
 
-        Public Sub Visit(ByVal outlineLevel As PdfOutlineLevel) Implements IPdfObjectVisitor.Visit
+        Public Sub Visit(outlineLevel As PdfOutlineLevel) Implements IPdfObjectVisitor.Visit
             PushNextLevel()
             Append("Level")
 
@@ -282,7 +282,7 @@ Namespace PdfReader
             PopLevel()
         End Sub
 
-        Public Sub Visit(ByVal page As PdfPage) Implements IPdfObjectVisitor.Visit
+        Public Sub Visit(page As PdfPage) Implements IPdfObjectVisitor.Visit
             PushNextLevel()
             Append("Page")
             VisitNotNull(page.LastModified, "LastModified")
@@ -316,7 +316,7 @@ Namespace PdfReader
             PopLevel()
         End Sub
 
-        Public Sub Visit(ByVal pages As PdfPages) Implements IPdfObjectVisitor.Visit
+        Public Sub Visit(pages As PdfPages) Implements IPdfObjectVisitor.Visit
             PushNextLevel()
             Append("Pages")
 
@@ -328,15 +328,15 @@ Namespace PdfReader
             PopLevel()
         End Sub
 
-        Public Sub Visit(ByVal real As PdfReal) Implements IPdfObjectVisitor.Visit
+        Public Sub Visit(real As PdfReal) Implements IPdfObjectVisitor.Visit
             Append(real)
         End Sub
 
-        Public Sub Visit(ByVal rectangle As PdfRectangle) Implements IPdfObjectVisitor.Visit
+        Public Sub Visit(rectangle As PdfRectangle) Implements IPdfObjectVisitor.Visit
             Append(rectangle)
         End Sub
 
-        Public Sub Visit(ByVal stream As PdfStream) Implements IPdfObjectVisitor.Visit
+        Public Sub Visit(stream As PdfStream) Implements IPdfObjectVisitor.Visit
             PushLevel()
             stream.Dictionary.Visit(Me)
 
@@ -380,22 +380,22 @@ Namespace PdfReader
             PopLevel()
         End Sub
 
-        Public Sub Visit(ByVal str As PdfString) Implements IPdfObjectVisitor.Visit
+        Public Sub Visit(str As PdfString) Implements IPdfObjectVisitor.Visit
             Append($"'{str}'")
         End Sub
 
-        Public Sub Visit(ByVal version As PdfVersion) Implements IPdfObjectVisitor.Visit
+        Public Sub Visit(version As PdfVersion) Implements IPdfObjectVisitor.Visit
             Append($"{version}")
         End Sub
 
-        Private Sub VisitNotNull(ByVal obj As PdfObject, ByVal Optional newLine As Boolean = True)
+        Private Sub VisitNotNull(obj As PdfObject, Optional newLine As Boolean = True)
             If obj IsNot Nothing Then
                 If newLine Then CurrentLevelNewLine()
                 obj.Visit(Me)
             End If
         End Sub
 
-        Private Sub VisitNotNull(ByVal obj As PdfObject, ByVal name As String, ByVal Optional newLine As Boolean = True)
+        Private Sub VisitNotNull(obj As PdfObject, name As String, Optional newLine As Boolean = True)
             If obj IsNot Nothing Then
                 If newLine Then CurrentLevelNewLine()
                 Append($"{name} ")
@@ -415,13 +415,13 @@ Namespace PdfReader
             _index = _indents.Pop()
         End Sub
 
-        Private Sub Append(ByVal obj As Object)
+        Private Sub Append(obj As Object)
             Dim str As String = obj.ToString()
             _sb.Append(str)
             _index += str.Length
         End Sub
 
-        Private Sub AppendObject(ByVal name As String, ByVal obj As Object)
+        Private Sub AppendObject(name As String, obj As Object)
             If obj IsNot Nothing Then
                 CurrentLevelNewLine()
                 Append($"{name} {obj.ToString()}")

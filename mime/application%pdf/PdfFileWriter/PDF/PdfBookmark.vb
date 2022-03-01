@@ -127,7 +127,7 @@ Imports System.Drawing
         ' This constructor is called one time only
         
 
-        Friend Sub New(ByVal Document As PdfDocument)
+        Friend Sub New(Document As PdfDocument)
             MyBase.New(Document)
             ' open first level bookmarks
             OpenEntries = True
@@ -143,7 +143,7 @@ Imports System.Drawing
         ' This constructor is called for each bookmark
         
 
-        Private Sub New(ByVal Document As PdfDocument, ByVal OpenEntries As Boolean)
+        Private Sub New(Document As PdfDocument, OpenEntries As Boolean)
             MyBase.New(Document)
             ' open first level bookmarks
             Me.OpenEntries = OpenEntries
@@ -165,7 +165,7 @@ Imports System.Drawing
         ''' to this parent
         ''' </remarks>
         
-        Public Function AddBookmark(ByVal Title As String, ByVal Page As PdfPage, ByVal YPos As Double, ByVal OpenEntries As Boolean) As PdfBookmark            ' bookmark title
+        Public Function AddBookmark(Title As String, Page As PdfPage, YPos As Double, OpenEntries As Boolean) As PdfBookmark            ' bookmark title
             ' bookmark page
             ' bookmark vertical position relative to bottom left corner of the page
             ' true is display children. false hide children
@@ -189,7 +189,7 @@ Imports System.Drawing
         ''' to this parent
         ''' </remarks>
         
-        Public Function AddBookmark(ByVal Title As String, ByVal Page As PdfPage, ByVal YPos As Double, ByVal Paint As Color, ByVal TextStyle As TextStyle, ByVal OpenEntries As Boolean) As PdfBookmark            ' bookmark title
+        Public Function AddBookmark(Title As String, Page As PdfPage, YPos As Double, Paint As Color, TextStyle As TextStyle, OpenEntries As Boolean) As PdfBookmark            ' bookmark title
             ' bookmark page
             ' bookmark vertical position relative to bottom left corner of the page
             ' bookmark color
@@ -215,7 +215,7 @@ Imports System.Drawing
         ''' to this parent
         ''' </remarks>
         
-        Public Function AddBookmark(ByVal Title As String, ByVal Page As PdfPage, ByVal XPos As Double, ByVal YPos As Double, ByVal Zoom As Double, ByVal OpenEntries As Boolean) As PdfBookmark            ' bookmark title
+        Public Function AddBookmark(Title As String, Page As PdfPage, XPos As Double, YPos As Double, Zoom As Double, OpenEntries As Boolean) As PdfBookmark            ' bookmark title
             ' bookmark page
             ' bookmark horizontal position relative to bottom left corner of the page
             ' bookmark vertical position relative to bottom left corner of the page
@@ -243,7 +243,7 @@ Imports System.Drawing
         ''' to this parent
         ''' </remarks>
         
-        Public Function AddBookmark(ByVal Title As String, ByVal Page As PdfPage, ByVal XPos As Double, ByVal YPos As Double, ByVal Zoom As Double, ByVal Paint As Color, ByVal TextStyle As TextStyle, ByVal OpenEntries As Boolean) As PdfBookmark            ' bookmark title
+        Public Function AddBookmark(Title As String, Page As PdfPage, XPos As Double, YPos As Double, Zoom As Double, Paint As Color, TextStyle As TextStyle, OpenEntries As Boolean) As PdfBookmark            ' bookmark title
             ' bookmark page
             ' bookmark horizontal position relative to bottom left corner of the page
             ' bookmark vertical position relative to bottom left corner of the page

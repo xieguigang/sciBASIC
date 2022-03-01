@@ -83,7 +83,7 @@ Public Module ImageSizePos
     ''' <param name="DrawArea">Drawing area rectangle</param>
     ''' <param name="Alignment">Content alignment.</param>
     ''' <returns>Adjusted drawing area rectangle</returns>
-    Public Function ImageArea(ByVal ImageWidthPix As Integer, ByVal ImageHeightPix As Integer, ByVal DrawArea As PdfRectangle, ByVal Alignment As ContentAlignment) As PdfRectangle
+    Public Function ImageArea(ImageWidthPix As Integer, ImageHeightPix As Integer, DrawArea As PdfRectangle, Alignment As ContentAlignment) As PdfRectangle
         Return ImageArea(ImageWidthPix, ImageHeightPix, DrawArea.Left, DrawArea.Bottom, DrawArea.Width, DrawArea.Height, Alignment)
     End Function
 
@@ -98,7 +98,7 @@ Public Module ImageSizePos
     ''' <param name="DrawAreaHeight">Drawing area height.</param>
     ''' <param name="Alignment">Content alignment.</param>
     ''' <returns>Adjusted drawing area rectangle</returns>
-    Public Function ImageArea(ByVal ImageWidthPix As Integer, ByVal ImageHeightPix As Integer, ByVal DrawAreaLeft As Double, ByVal DrawAreaBottom As Double, ByVal DrawAreaWidth As Double, ByVal DrawAreaHeight As Double, ByVal Alignment As ContentAlignment) As PdfRectangle
+    Public Function ImageArea(ImageWidthPix As Integer, ImageHeightPix As Integer, DrawAreaLeft As Double, DrawAreaBottom As Double, DrawAreaWidth As Double, DrawAreaHeight As Double, Alignment As ContentAlignment) As PdfRectangle
         Dim DeltaX As Double = 0
         Dim DeltaY As Double = 0
         Dim Width As Double
@@ -143,7 +143,7 @@ Public Module ImageSizePos
     ''' <param name="DrawAreaWidth">Drawing area width.</param>
     ''' <param name="DrawAreaHeight">Drawing area height.</param>
     ''' <returns>Image size in user units.</returns>
-    Public Function ImageSize(ByVal ImageWidthPix As Integer, ByVal ImageHeightPix As Integer, ByVal DrawAreaWidth As Double, ByVal DrawAreaHeight As Double) As SizeD
+    Public Function ImageSize(ImageWidthPix As Integer, ImageHeightPix As Integer, DrawAreaWidth As Double, DrawAreaHeight As Double) As SizeD
         Dim OutputSize As SizeD = New SizeD()
         OutputSize.Height = DrawAreaWidth * ImageHeightPix / ImageWidthPix
 

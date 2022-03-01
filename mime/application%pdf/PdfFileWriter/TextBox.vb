@@ -116,7 +116,7 @@ Imports System.Runtime.InteropServices
         Get
             Return _Ascent
         End Get
-        Friend Set(ByVal value As Double)
+        Friend Set(value As Double)
             _Ascent = value
         End Set
     End Property
@@ -125,7 +125,7 @@ Imports System.Runtime.InteropServices
         Get
             Return _Descent
         End Get
-        Friend Set(ByVal value As Double)
+        Friend Set(value As Double)
             _Descent = value
         End Set
     End Property
@@ -134,7 +134,7 @@ Imports System.Runtime.InteropServices
         Get
             Return _EndOfParagraph
         End Get
-        Friend Set(ByVal value As Boolean)
+        Friend Set(value As Boolean)
             _EndOfParagraph = value
         End Set
     End Property
@@ -143,7 +143,7 @@ Imports System.Runtime.InteropServices
         Get
             Return _SegArray
         End Get
-        Friend Set(ByVal value As TextBoxSeg())
+        Friend Set(value As TextBoxSeg())
             _SegArray = value
         End Set
     End Property
@@ -164,7 +164,7 @@ Imports System.Runtime.InteropServices
     ''' <param name="Descent">Line descent.</param>
     ''' <param name="EndOfParagraph">Line is end of paragraph.</param>
     ''' <param name="SegArray">Segments' array.</param>
-    Public Sub New(ByVal Ascent As Double, ByVal Descent As Double, ByVal EndOfParagraph As Boolean, ByVal SegArray As TextBoxSeg())
+    Public Sub New(Ascent As Double, Descent As Double, EndOfParagraph As Boolean, SegArray As TextBoxSeg())
         Me.Ascent = Ascent
         Me.Descent = Descent
         Me.EndOfParagraph = EndOfParagraph
@@ -214,7 +214,7 @@ Public Class TextBoxSeg
             Get
                 Return _Font
             End Get
-            Friend Set(ByVal value As PdfFont)
+            Friend Set(value As PdfFont)
                 _Font = value
             End Set
         End Property
@@ -223,7 +223,7 @@ Public Class TextBoxSeg
             Get
                 Return _FontSize
             End Get
-            Friend Set(ByVal value As Double)
+            Friend Set(value As Double)
                 _FontSize = value
             End Set
         End Property
@@ -232,7 +232,7 @@ Public Class TextBoxSeg
             Get
                 Return _DrawStyle
             End Get
-            Friend Set(ByVal value As DrawStyle)
+            Friend Set(value As DrawStyle)
                 _DrawStyle = value
             End Set
         End Property
@@ -241,7 +241,7 @@ Public Class TextBoxSeg
             Get
                 Return _FontColor
             End Get
-            Friend Set(ByVal value As Color)
+            Friend Set(value As Color)
                 _FontColor = value
             End Set
         End Property
@@ -250,7 +250,7 @@ Public Class TextBoxSeg
             Get
                 Return _SegWidth
             End Get
-            Friend Set(ByVal value As Double)
+            Friend Set(value As Double)
                 _SegWidth = value
             End Set
         End Property
@@ -259,7 +259,7 @@ Public Class TextBoxSeg
             Get
                 Return _SpaceCount
             End Get
-            Friend Set(ByVal value As Integer)
+            Friend Set(value As Integer)
                 _SpaceCount = value
             End Set
         End Property
@@ -268,7 +268,7 @@ Public Class TextBoxSeg
             Get
                 Return _Text
             End Get
-            Friend Set(ByVal value As String)
+            Friend Set(value As String)
                 _Text = value
             End Set
         End Property
@@ -277,7 +277,7 @@ Public Class TextBoxSeg
             Get
                 Return _AnnotAction
             End Get
-            Friend Set(ByVal value As AnnotAction)
+            Friend Set(value As AnnotAction)
                 _AnnotAction = value
             End Set
         End Property
@@ -290,7 +290,7 @@ Public Class TextBoxSeg
         ''' <param name="DrawStyle">Segment drawing style.</param>
         ''' <param name="FontColor">Segment color.</param>
         ''' <param name="AnnotAction">Segment annotation action.</param>
-        Public Sub New(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal DrawStyle As DrawStyle, ByVal FontColor As Color, ByVal AnnotAction As AnnotAction)
+        Public Sub New(Font As PdfFont, FontSize As Double, DrawStyle As DrawStyle, FontColor As Color, AnnotAction As AnnotAction)
             Me.Font = Font
             Me.FontSize = FontSize
             Me.DrawStyle = DrawStyle
@@ -304,7 +304,7 @@ Public Class TextBoxSeg
         ''' TextBox segment copy constructor.
         ''' </summary>
         ''' <param name="CopySeg">Source TextBox segment.</param>
-        Friend Sub New(ByVal CopySeg As TextBoxSeg)
+        Friend Sub New(CopySeg As TextBoxSeg)
             Font = CopySeg.Font
             FontSize = CopySeg.FontSize
             DrawStyle = CopySeg.DrawStyle
@@ -323,7 +323,7 @@ Public Class TextBoxSeg
         ''' <param name="FontColor">Segment color.</param>
         ''' <param name="AnnotAction">Segment annotation action.</param>
         ''' <returns>Result</returns>
-        Friend Function IsEqual(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal DrawStyle As DrawStyle, ByVal FontColor As Color, ByVal AnnotAction As AnnotAction) As Boolean
+        Friend Function IsEqual(Font As PdfFont, FontSize As Double, DrawStyle As DrawStyle, FontColor As Color, AnnotAction As AnnotAction) As Boolean
             ' test all but annotation action
             Return Me.Font Is Font AndAlso Me.FontSize = FontSize AndAlso Me.DrawStyle = DrawStyle AndAlso Me.FontColor = FontColor AndAlso AnnotAction.IsEqual(Me.AnnotAction, AnnotAction)
         End Function
@@ -351,7 +351,7 @@ Public Class TextBoxSeg
             Get
                 Return _BoxWidth
             End Get
-            Friend Set(ByVal value As Double)
+            Friend Set(value As Double)
                 _BoxWidth = value
             End Set
         End Property
@@ -363,7 +363,7 @@ Public Class TextBoxSeg
             Get
                 Return _BoxHeight
             End Get
-            Friend Set(ByVal value As Double)
+            Friend Set(value As Double)
                 _BoxHeight = value
             End Set
         End Property
@@ -384,7 +384,7 @@ Public Class TextBoxSeg
             Get
                 Return _ParagraphCount
             End Get
-            Friend Set(ByVal value As Integer)
+            Friend Set(value As Integer)
                 _ParagraphCount = value
             End Set
         End Property
@@ -393,7 +393,7 @@ Public Class TextBoxSeg
             Get
                 Return _FirstLineIndent
             End Get
-            Friend Set(ByVal value As Double)
+            Friend Set(value As Double)
                 _FirstLineIndent = value
             End Set
         End Property
@@ -414,7 +414,7 @@ Public Class TextBoxSeg
         ''' <param name="BoxWidth">Box width.</param>
         ''' <param name="FirstLineIndent">First line is indented.</param>
         ''' <param name="LineBreakFactor">Line break factor.</param>
-        Public Sub New(ByVal BoxWidth As Double, ByVal Optional FirstLineIndent As Double = 0.0, ByVal Optional LineBreakFactor As Double = 0.5)
+        Public Sub New(BoxWidth As Double, Optional FirstLineIndent As Double = 0.0, Optional LineBreakFactor As Double = 0.5)
             If BoxWidth <= 0.0 Then Throw New ApplicationException("Box width must be greater than zero")
             Me.BoxWidth = BoxWidth
             Me.FirstLineIndent = FirstLineIndent
@@ -448,7 +448,7 @@ Public Class TextBoxSeg
         ''' </summary>
         ''' <param name="Index">Index</param>
         ''' <returns>TextBoxLine</returns>
-        Default Public ReadOnly Property Item(ByVal Index As Integer) As TextBoxLine
+        Default Public ReadOnly Property Item(Index As Integer) As TextBoxLine
             Get
                 Return LineArray(Index)
             End Get
@@ -460,7 +460,7 @@ Public Class TextBoxSeg
         ''' <param name="LineExtraSpace">Extra line space.</param>
         ''' <param name="ParagraphExtraSpace">Extra paragraph space.</param>
         ''' <returns>Height</returns>
-        Public Function BoxHeightExtra(ByVal LineExtraSpace As Double, ByVal ParagraphExtraSpace As Double) As Double
+        Public Function BoxHeightExtra(LineExtraSpace As Double, ParagraphExtraSpace As Double) As Double
             Dim Height = BoxHeight
             If LineArray.Count > 1 AndAlso LineExtraSpace <> 0.0 Then Height += LineExtraSpace * (LineArray.Count - 1)
             If ParagraphCount > 1 AndAlso ParagraphExtraSpace <> 0.0 Then Height += ParagraphExtraSpace * (ParagraphCount - 1)
@@ -474,7 +474,7 @@ Public Class TextBoxSeg
         ''' <param name="LineExtraSpace">Extra line space.</param>
         ''' <param name="ParagraphExtraSpace">Extra paragraph space.</param>
         ''' <returns>Height</returns>
-        Public Function BoxHeightExtra(ByVal LineCount As Integer, ByVal LineExtraSpace As Double, ByVal ParagraphExtraSpace As Double) As Double
+        Public Function BoxHeightExtra(LineCount As Integer, LineExtraSpace As Double, ParagraphExtraSpace As Double) As Double
             ' textbox is empty
             If LineArray.Count = 0 Then Return 0.0
 
@@ -512,7 +512,7 @@ Public Class TextBoxSeg
         ''' LineStart will be adjusted forward to skip blank lines. LineEnd 
         ''' will be one after a non blank line. 
         ''' </remarks>
-        Public Function BoxHeightExtra(ByRef LineStart As Integer, <Out> ByRef LineEnd As Integer, ByVal RequestHeight As Double, ByVal LineExtraSpace As Double, ByVal ParagraphExtraSpace As Double) As Double
+        Public Function BoxHeightExtra(ByRef LineStart As Integer, <Out> ByRef LineEnd As Integer, RequestHeight As Double, LineExtraSpace As Double, ParagraphExtraSpace As Double) As Double
             ' skip blank lines
             While LineStart < LineArray.Count
                 Dim Line = LineArray(LineStart)
@@ -600,7 +600,7 @@ Public Class TextBoxSeg
         ''' <param name="Font">Font</param>
         ''' <param name="FontSize">Font size</param>
         ''' <param name="Text">Text</param>
-        Public Sub AddText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal Text As String)
+        Public Sub AddText(Font As PdfFont, FontSize As Double, Text As String)
             AddText(Font, FontSize, DrawStyle.Normal, Color.Black, Text, CType(Nothing, AnnotAction))
             Return
         End Sub
@@ -612,7 +612,7 @@ Public Class TextBoxSeg
         ''' <param name="FontSize">Font size</param>
         ''' <param name="Text">Text</param>
         ''' <param name="AnnotAction">Annotation action</param>
-        Public Sub AddText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal Text As String, ByVal AnnotAction As AnnotAction)
+        Public Sub AddText(Font As PdfFont, FontSize As Double, Text As String, AnnotAction As AnnotAction)
             AddText(Font, FontSize, DrawStyle.Underline, Color.Blue, Text, AnnotAction)
             Return
         End Sub
@@ -624,7 +624,7 @@ Public Class TextBoxSeg
         ''' <param name="FontSize">Font size</param>
         ''' <param name="Text">Text</param>
         ''' <param name="WebLinkStr">Web link</param>
-        Public Sub AddText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal Text As String, ByVal WebLinkStr As String)
+        Public Sub AddText(Font As PdfFont, FontSize As Double, Text As String, WebLinkStr As String)
             AddText(Font, FontSize, DrawStyle.Underline, Color.Blue, Text, New AnnotWebLink(WebLinkStr))
             Return
         End Sub
@@ -636,7 +636,7 @@ Public Class TextBoxSeg
         ''' <param name="FontSize">Font size</param>
         ''' <param name="DrawStyle">Drawing style</param>
         ''' <param name="Text">Text</param>
-        Public Sub AddText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal DrawStyle As DrawStyle, ByVal Text As String)
+        Public Sub AddText(Font As PdfFont, FontSize As Double, DrawStyle As DrawStyle, Text As String)
             AddText(Font, FontSize, DrawStyle, Color.Empty, Text, CType(Nothing, AnnotAction))
             Return
         End Sub
@@ -648,7 +648,7 @@ Public Class TextBoxSeg
         ''' <param name="FontSize">Font size</param>
         ''' <param name="FontColor">Text color</param>
         ''' <param name="Text">Text</param>
-        Public Sub AddText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal FontColor As Color, ByVal Text As String)
+        Public Sub AddText(Font As PdfFont, FontSize As Double, FontColor As Color, Text As String)
             AddText(Font, FontSize, DrawStyle.Normal, FontColor, Text, CType(Nothing, AnnotAction))
             Return
         End Sub
@@ -661,7 +661,7 @@ Public Class TextBoxSeg
         ''' <param name="DrawStyle">Drawing style</param>
         ''' <param name="FontColor">Text color</param>
         ''' <param name="Text">Web link (URL)</param>
-        Public Sub AddText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal DrawStyle As DrawStyle, ByVal FontColor As Color, ByVal Text As String)
+        Public Sub AddText(Font As PdfFont, FontSize As Double, DrawStyle As DrawStyle, FontColor As Color, Text As String)
             AddText(Font, FontSize, DrawStyle, FontColor, Text, CType(Nothing, AnnotAction))
         End Sub
 
@@ -674,7 +674,7 @@ Public Class TextBoxSeg
         ''' <param name="FontColor">Text color</param>
         ''' <param name="Text">Text</param>
         ''' <param name="WebLinkStr">Web link (URL)</param>
-        Public Sub AddText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal DrawStyle As DrawStyle, ByVal FontColor As Color, ByVal Text As String, ByVal WebLinkStr As String)
+        Public Sub AddText(Font As PdfFont, FontSize As Double, DrawStyle As DrawStyle, FontColor As Color, Text As String, WebLinkStr As String)
             AddText(Font, FontSize, DrawStyle, FontColor, Text, New AnnotWebLink(WebLinkStr))
         End Sub
 
@@ -687,7 +687,7 @@ Public Class TextBoxSeg
         ''' <param name="FontColor">Text color</param>
         ''' <param name="Text">Text</param>
         ''' <param name="AnnotAction">Web link</param>
-        Public Sub AddText(ByVal Font As PdfFont, ByVal FontSize As Double, ByVal DrawStyle As DrawStyle, ByVal FontColor As Color, ByVal Text As String, ByVal AnnotAction As AnnotAction)
+        Public Sub AddText(Font As PdfFont, FontSize As Double, DrawStyle As DrawStyle, FontColor As Color, Text As String, AnnotAction As AnnotAction)
             ' text is null or empty
             If String.IsNullOrEmpty(Text) Then Return
 
@@ -833,7 +833,7 @@ Public Class TextBoxSeg
             Return
         End Sub
 
-        Private Sub AddLine(ByVal EndOfParagraph As Boolean)
+        Private Sub AddLine(EndOfParagraph As Boolean)
             ' end of paragraph
             If EndOfParagraph Then BreakSegIndex = SegArray.Count
 

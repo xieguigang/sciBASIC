@@ -51,7 +51,7 @@ Namespace PdfReader
 
         Private _Raw As String
 
-        Public Sub New(ByVal raw As String)
+        Public Sub New(raw As String)
             Me.Raw = raw
         End Sub
 
@@ -59,16 +59,16 @@ Namespace PdfReader
             Get
                 Return _Raw
             End Get
-            Private Set(ByVal value As String)
+            Private Set(value As String)
                 _Raw = value
             End Set
         End Property
 
         Public MustOverride ReadOnly Property Resolved As String
         Public MustOverride ReadOnly Property ResolvedAsBytes As Byte()
-        Public MustOverride Function BytesToString(ByVal raw As Byte()) As String
+        Public MustOverride Function BytesToString(raw As Byte()) As String
 
-        Protected Function EncodedBytesToString(ByVal bytes As Byte()) As String
+        Protected Function EncodedBytesToString(bytes As Byte()) As String
             ' Check for the UTF16 Byte Order Mark (little endian or big endian versions)
             If bytes.Length > 2 AndAlso bytes(0) = &HFE AndAlso bytes(1) = &HFF Then
                 Return GetStringLiteralUTF16(bytes, True)
@@ -80,7 +80,7 @@ Namespace PdfReader
             End If
         End Function
 
-        Private Function GetStringLiteralUTF16(ByVal bytes As Byte(), ByVal bigEndian As Boolean) As String
+        Private Function GetStringLiteralUTF16(bytes As Byte(), bigEndian As Boolean) As String
             Dim index = 0
             Dim last = bytes.Length - 1
 

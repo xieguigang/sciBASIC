@@ -85,7 +85,7 @@ Public Class PdfShadingFunction
     ''' <param name="Document">Document object parent of this function.</param>
     ''' <param name="ColorArray">Array of colors.</param>
 
-    Public Sub New(ByVal Document As PdfDocument, ByVal ColorArray As Color())      ' PDF document object
+    Public Sub New(Document As PdfDocument, ColorArray As Color())      ' PDF document object
         ' Array of colors. Minimum 2.
         MyBase.New(Document, ObjectType.Stream)
         ' build dictionary
@@ -101,7 +101,7 @@ Public Class PdfShadingFunction
         Return
     End Sub
 
-    Private Sub Constructorhelper(ByVal Length As Integer)
+    Private Sub Constructorhelper(Length As Integer)
         ' test for error
         If Length < 2 Then
             Throw New Exception("Shading function color array must have two or more items")

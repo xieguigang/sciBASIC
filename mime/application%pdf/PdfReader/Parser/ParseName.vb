@@ -54,7 +54,7 @@ Namespace PdfReader
         Private Shared _lookup As ConcurrentDictionary(Of String, ParseName) = New ConcurrentDictionary(Of String, ParseName)()
         Private Shared _nullUpdate As Func(Of String, ParseName, ParseName) = Function(x, y) y
 
-        Public Sub New(ByVal value As String)
+        Public Sub New(value As String)
             Me.Value = value
         End Sub
 
@@ -62,12 +62,12 @@ Namespace PdfReader
             Get
                 Return _Value
             End Get
-            Private Set(ByVal value As String)
+            Private Set(value As String)
                 _Value = value
             End Set
         End Property
 
-        Public Shared Function GetParse(ByVal name As String) As ParseName
+        Public Shared Function GetParse(name As String) As ParseName
             Dim parseName As ParseName = Nothing
 
             If Not _lookup.TryGetValue(name, parseName) Then

@@ -81,7 +81,7 @@ Imports System.Text
         ''' PDF binary writer constructor
         ''' </summary>
         ''' <param name="Stream">File or memory stream</param>
-        Public Sub New(ByVal Stream As Stream)
+        Public Sub New(Stream As Stream)
             MyBase.New(Stream, Encoding.UTF8)
         End Sub
 
@@ -92,7 +92,7 @@ Imports System.Text
         ''' <remarks>
         ''' Convert each character from two bytes to one byte.
         ''' </remarks>
-        Public Sub WriteString(ByVal Str As String)
+        Public Sub WriteString(Str As String)
             ' byte array
             Dim ByteArray = New Byte(Str.Length - 1) {}
 
@@ -114,7 +114,7 @@ Imports System.Text
         ''' <remarks>
         ''' Convert each character from two bytes to one byte.
         ''' </remarks>
-        Public Sub WriteString(ByVal Str As StringBuilder)
+        Public Sub WriteString(Str As StringBuilder)
             ' byte array
             Dim ByteArray = New Byte(Str.Length - 1) {}
 
@@ -134,7 +134,7 @@ Imports System.Text
         ''' </summary>
         ''' <param name="FormatStr">Standard format string</param>
         ''' <param name="List">Array of objects</param>
-        Public Sub WriteFormat(ByVal FormatStr As String, ParamArray List As Object())
+        Public Sub WriteFormat(FormatStr As String, ParamArray List As Object())
             Dim Str = String.Format(FormatStr, List)
 
             ' byte array

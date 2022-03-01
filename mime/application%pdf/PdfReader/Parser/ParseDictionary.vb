@@ -57,7 +57,7 @@ Namespace PdfReader
         Private _values As List(Of ParseObjectBase)
         Private _dictionary As Dictionary(Of String, ParseObjectBase)
 
-        Public Sub New(ByVal names As List(Of String), ByVal values As List(Of ParseObjectBase))
+        Public Sub New(names As List(Of String), values As List(Of ParseObjectBase))
             _names = names
             _values = values
         End Sub
@@ -68,7 +68,7 @@ Namespace PdfReader
             End Get
         End Property
 
-        Public Function ContainsName(ByVal name As String) As Boolean
+        Public Function ContainsName(name As String) As Boolean
             BuildDictionary()
             Return _dictionary.ContainsKey(name)
         End Function
@@ -92,18 +92,18 @@ Namespace PdfReader
             Return _dictionary.GetEnumerator()
         End Function
 
-        Default Public Property Item(ByVal name As String) As ParseObjectBase
+        Default Public Property Item(name As String) As ParseObjectBase
             Get
                 BuildDictionary()
                 Return _dictionary(name)
             End Get
-            Set(ByVal value As ParseObjectBase)
+            Set(value As ParseObjectBase)
                 BuildDictionary()
                 _dictionary(name) = value
             End Set
         End Property
 
-        Public Function OptionalValue(Of T As ParseObjectBase)(ByVal name As String) As T
+        Public Function OptionalValue(Of T As ParseObjectBase)(name As String) As T
             BuildDictionary()
             Dim entry As ParseObjectBase = Nothing
 
@@ -118,7 +118,7 @@ Namespace PdfReader
             Return Nothing
         End Function
 
-        Public Function MandatoryValue(Of T As ParseObjectBase)(ByVal name As String) As T
+        Public Function MandatoryValue(Of T As ParseObjectBase)(name As String) As T
             BuildDictionary()
             Dim entry As ParseObjectBase = Nothing
 

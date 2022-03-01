@@ -54,7 +54,7 @@ Namespace PdfReader
         Private _IdTree As PdfNameTree
         Private _parentTree As PdfNumberTree
 
-        Public Sub New(ByVal parent As PdfObject, ByVal dictionary As ParseDictionary)
+        Public Sub New(parent As PdfObject, dictionary As ParseDictionary)
             MyBase.New(parent, dictionary)
         End Sub
 

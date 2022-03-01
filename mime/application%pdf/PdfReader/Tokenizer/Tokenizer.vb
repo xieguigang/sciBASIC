@@ -169,7 +169,7 @@ Namespace PdfReader
             Next
         End Sub
 
-        Public Sub New(ByVal stream As Stream)
+        Public Sub New(stream As Stream)
             ' Must have an actual stream reference
             If stream Is Nothing Then
                 Throw New ArgumentNullException("stream")
@@ -200,7 +200,7 @@ Namespace PdfReader
                     Return Stream.Position
                 End If
             End Get
-            Set(ByVal value As Long)
+            Set(value As Long)
                 ' Clear any cached bytes
                 _reader = Nothing
                 _line = Nothing
@@ -210,7 +210,7 @@ Namespace PdfReader
             End Set
         End Property
 
-        Public Sub PushToken(ByVal token As TokenObject)
+        Public Sub PushToken(token As TokenObject)
             _stack.Push(token)
         End Sub
 
@@ -251,11 +251,11 @@ Namespace PdfReader
             End If
         End Function
 
-        Public Function GetBytes(ByVal length As Integer) As Byte()
+        Public Function GetBytes(length As Integer) As Byte()
             Return Reader.GetBytes(length)
         End Function
 
-        Public Function GetXRefEntry(ByVal id As Integer) As TokenObject
+        Public Function GetXRefEntry(id As Integer) As TokenObject
             ' Ignore zero or more whitespace characters
             SkipWhitespace()
             If _length - _index < 18 Then Return New TokenError(_position, $"Cross-reference entry data is {_length - _index} bytes instead of the expected 18.")
@@ -315,7 +315,7 @@ Namespace PdfReader
             Return ConvertDecimalToLong(bytes, [end] + 1, index - [end])
         End Function
 
-        Protected Overridable Sub Dispose(ByVal disposing As Boolean)
+        Protected Overridable Sub Dispose(disposing As Boolean)
             If Not _disposed Then
                 If disposing Then
                     _reader = Nothing
@@ -345,7 +345,7 @@ Namespace PdfReader
             End Get
         End Property
 
-        Private Function ConvertDecimalToInteger(ByVal start As Integer, ByVal length As Integer) As Integer
+        Private Function ConvertDecimalToInteger(start As Integer, length As Integer) As Integer
             Dim ret = 0
             Dim index = _index + start
 
@@ -357,7 +357,7 @@ Namespace PdfReader
             Return ret
         End Function
 
-        Private Function ConvertDecimalToLong(ByVal bytes As Byte(), ByVal start As Integer, ByVal length As Integer) As Long
+        Private Function ConvertDecimalToLong(bytes As Byte(), start As Integer, length As Integer) As Long
             Dim ret As Long = 0
             Dim index = start
 
@@ -696,7 +696,7 @@ Namespace PdfReader
             End While
         End Function
 
-        Private Function GetStringLiteralUTF16(ByVal position As Long, ByVal bigEndian As Boolean) As TokenObject
+        Private Function GetStringLiteralUTF16(position As Long, bigEndian As Boolean) As TokenObject
             Dim first = _index
             Dim temp As Byte
 

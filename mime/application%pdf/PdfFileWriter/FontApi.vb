@@ -185,7 +185,7 @@ Public Class CharInfo
         Get
             Return _CharCode
         End Get
-        Friend Set(ByVal value As Integer)
+        Friend Set(value As Integer)
             _CharCode = value
         End Set
     End Property
@@ -194,7 +194,7 @@ Public Class CharInfo
         Get
             Return _GlyphIndex
         End Get
-        Friend Set(ByVal value As Integer)
+        Friend Set(value As Integer)
             _GlyphIndex = value
         End Set
     End Property
@@ -203,7 +203,7 @@ Public Class CharInfo
         Get
             Return _ActiveChar
         End Get
-        Friend Set(ByVal value As Boolean)
+        Friend Set(value As Boolean)
             _ActiveChar = value
         End Set
     End Property
@@ -212,7 +212,7 @@ Public Class CharInfo
         Get
             Return _Type0Font
         End Get
-        Friend Set(ByVal value As Boolean)
+        Friend Set(value As Boolean)
             _Type0Font = value
         End Set
     End Property
@@ -221,7 +221,7 @@ Public Class CharInfo
         Get
             Return _DesignBBoxLeft
         End Get
-        Friend Set(ByVal value As Integer)
+        Friend Set(value As Integer)
             _DesignBBoxLeft = value
         End Set
     End Property
@@ -230,7 +230,7 @@ Public Class CharInfo
         Get
             Return _DesignBBoxBottom
         End Get
-        Friend Set(ByVal value As Integer)
+        Friend Set(value As Integer)
             _DesignBBoxBottom = value
         End Set
     End Property
@@ -239,7 +239,7 @@ Public Class CharInfo
         Get
             Return _DesignBBoxRight
         End Get
-        Friend Set(ByVal value As Integer)
+        Friend Set(value As Integer)
             _DesignBBoxRight = value
         End Set
     End Property
@@ -248,7 +248,7 @@ Public Class CharInfo
         Get
             Return _DesignBBoxTop
         End Get
-        Friend Set(ByVal value As Integer)
+        Friend Set(value As Integer)
             _DesignBBoxTop = value
         End Set
     End Property
@@ -257,7 +257,7 @@ Public Class CharInfo
         Get
             Return _DesignWidth
         End Get
-        Friend Set(ByVal value As Integer)
+        Friend Set(value As Integer)
             _DesignWidth = value
         End Set
     End Property
@@ -275,7 +275,7 @@ Public Class CharInfo
     ' constructor
     
 
-    Friend Sub New(ByVal CharCode As Integer, ByVal GlyphIndex As Integer, ByVal DC As FontApi)
+    Friend Sub New(CharCode As Integer, GlyphIndex As Integer, DC As FontApi)
         ' save char code and glyph index
         Me.CharCode = CharCode
         Me.GlyphIndex = GlyphIndex
@@ -300,7 +300,7 @@ Public Class CharInfo
     ' constructor for search and sort
     
 
-    Friend Sub New(ByVal GlyphIndex As Integer)
+    Friend Sub New(GlyphIndex As Integer)
         ' save char code and glyph index
         Me.GlyphIndex = GlyphIndex
         Return
@@ -311,7 +311,7 @@ Public Class CharInfo
     ''' </summary>
     ''' <param name="Other">Other CharInfo</param>
     ''' <returns>Compare result</returns>
-    Public Function CompareTo(ByVal Other As CharInfo) As Integer Implements IComparable(Of CharInfo).CompareTo
+    Public Function CompareTo(Other As CharInfo) As Integer Implements IComparable(Of CharInfo).CompareTo
         Return GlyphIndex - Other.GlyphIndex
     End Function
 End Class
@@ -323,7 +323,7 @@ End Class
 Friend Class SortByNewIndex
     Implements IComparer(Of CharInfo)
 
-    Public Function Compare(ByVal CharOne As CharInfo, ByVal CharTwo As CharInfo) As Integer Implements IComparer(Of CharInfo).Compare
+    Public Function Compare(CharOne As CharInfo, CharTwo As CharInfo) As Integer Implements IComparer(Of CharInfo).Compare
         Return CharOne.NewGlyphIndex - CharTwo.NewGlyphIndex
     End Function
 End Class
@@ -358,7 +358,7 @@ Public Class FontBox
         Get
             Return _Left
         End Get
-        Private Set(ByVal value As Integer)
+        Private Set(value As Integer)
             _Left = value
         End Set
     End Property
@@ -367,7 +367,7 @@ Public Class FontBox
         Get
             Return _Top
         End Get
-        Private Set(ByVal value As Integer)
+        Private Set(value As Integer)
             _Top = value
         End Set
     End Property
@@ -376,7 +376,7 @@ Public Class FontBox
         Get
             Return _Right
         End Get
-        Private Set(ByVal value As Integer)
+        Private Set(value As Integer)
             _Right = value
         End Set
     End Property
@@ -385,12 +385,12 @@ Public Class FontBox
         Get
             Return _Bottom
         End Get
-        Private Set(ByVal value As Integer)
+        Private Set(value As Integer)
             _Bottom = value
         End Set
     End Property
 
-    Friend Sub New(ByVal DC As FontApi)
+    Friend Sub New(DC As FontApi)
         Left = DC.ReadInt32()
         Top = DC.ReadInt32()
         Right = DC.ReadInt32()
@@ -456,7 +456,7 @@ Public Class WinPanose
         Get
             Return _bFamilyType
         End Get
-        Private Set(ByVal value As Byte)
+        Private Set(value As Byte)
             _bFamilyType = value
         End Set
     End Property
@@ -465,7 +465,7 @@ Public Class WinPanose
         Get
             Return _bSerifStyle
         End Get
-        Private Set(ByVal value As Byte)
+        Private Set(value As Byte)
             _bSerifStyle = value
         End Set
     End Property
@@ -474,7 +474,7 @@ Public Class WinPanose
         Get
             Return _bWeight
         End Get
-        Private Set(ByVal value As Byte)
+        Private Set(value As Byte)
             _bWeight = value
         End Set
     End Property
@@ -483,7 +483,7 @@ Public Class WinPanose
         Get
             Return _bProportion
         End Get
-        Private Set(ByVal value As Byte)
+        Private Set(value As Byte)
             _bProportion = value
         End Set
     End Property
@@ -492,7 +492,7 @@ Public Class WinPanose
         Get
             Return _bContrast
         End Get
-        Private Set(ByVal value As Byte)
+        Private Set(value As Byte)
             _bContrast = value
         End Set
     End Property
@@ -501,7 +501,7 @@ Public Class WinPanose
         Get
             Return _bStrokeVariation
         End Get
-        Private Set(ByVal value As Byte)
+        Private Set(value As Byte)
             _bStrokeVariation = value
         End Set
     End Property
@@ -510,7 +510,7 @@ Public Class WinPanose
         Get
             Return _bArmStyle
         End Get
-        Private Set(ByVal value As Byte)
+        Private Set(value As Byte)
             _bArmStyle = value
         End Set
     End Property
@@ -519,7 +519,7 @@ Public Class WinPanose
         Get
             Return _bLetterform
         End Get
-        Private Set(ByVal value As Byte)
+        Private Set(value As Byte)
             _bLetterform = value
         End Set
     End Property
@@ -528,7 +528,7 @@ Public Class WinPanose
         Get
             Return _bMidline
         End Get
-        Private Set(ByVal value As Byte)
+        Private Set(value As Byte)
             _bMidline = value
         End Set
     End Property
@@ -537,12 +537,12 @@ Public Class WinPanose
         Get
             Return _bXHeight
         End Get
-        Private Set(ByVal value As Byte)
+        Private Set(value As Byte)
             _bXHeight = value
         End Set
     End Property
 
-    Friend Sub New(ByVal DC As FontApi)
+    Friend Sub New(DC As FontApi)
         bFamilyType = DC.ReadByte()
         bSerifStyle = DC.ReadByte()
         bWeight = DC.ReadByte()
@@ -581,7 +581,7 @@ Public Class WinKerningPair
         Get
             Return _First
         End Get
-        Private Set(ByVal value As Char)
+        Private Set(value As Char)
             _First = value
         End Set
     End Property
@@ -590,7 +590,7 @@ Public Class WinKerningPair
         Get
             Return _Second
         End Get
-        Private Set(ByVal value As Char)
+        Private Set(value As Char)
             _Second = value
         End Set
     End Property
@@ -599,12 +599,12 @@ Public Class WinKerningPair
         Get
             Return _KernAmount
         End Get
-        Private Set(ByVal value As Integer)
+        Private Set(value As Integer)
             _KernAmount = value
         End Set
     End Property
 
-    Friend Sub New(ByVal DC As FontApi)
+    Friend Sub New(DC As FontApi)
         First = DC.ReadChar()
         Second = DC.ReadChar()
         KernAmount = DC.ReadInt32()
@@ -616,7 +616,7 @@ Public Class WinKerningPair
     ''' </summary>
     ''' <param name="First">First character</param>
     ''' <param name="Second">Second character</param>
-    Public Sub New(ByVal First As Char, ByVal Second As Char)
+    Public Sub New(First As Char, Second As Char)
         Me.First = First
         Me.Second = Second
         Return
@@ -627,7 +627,7 @@ Public Class WinKerningPair
     ''' </summary>
     ''' <param name="Other">Other pair</param>
     ''' <returns>Compare result</returns>
-    Public Function CompareTo(ByVal Other As WinKerningPair) As Integer Implements IComparable(Of WinKerningPair).CompareTo
+    Public Function CompareTo(Other As WinKerningPair) As Integer Implements IComparable(Of WinKerningPair).CompareTo
         Return If(First <> Other.First, AscW(First) - AscW(Other.First), AscW(Second) - AscW(Other.Second))
     End Function
 End Class
@@ -729,7 +729,7 @@ Public Class WinTextMetric
         Get
             Return _tmHeight
         End Get
-        Private Set(ByVal value As Integer)
+        Private Set(value As Integer)
             _tmHeight = value
         End Set
     End Property
@@ -738,7 +738,7 @@ Public Class WinTextMetric
         Get
             Return _tmAscent
         End Get
-        Private Set(ByVal value As Integer)
+        Private Set(value As Integer)
             _tmAscent = value
         End Set
     End Property
@@ -747,7 +747,7 @@ Public Class WinTextMetric
         Get
             Return _tmDescent
         End Get
-        Private Set(ByVal value As Integer)
+        Private Set(value As Integer)
             _tmDescent = value
         End Set
     End Property
@@ -756,7 +756,7 @@ Public Class WinTextMetric
         Get
             Return _tmInternalLeading
         End Get
-        Private Set(ByVal value As Integer)
+        Private Set(value As Integer)
             _tmInternalLeading = value
         End Set
     End Property
@@ -765,7 +765,7 @@ Public Class WinTextMetric
         Get
             Return _tmExternalLeading
         End Get
-        Private Set(ByVal value As Integer)
+        Private Set(value As Integer)
             _tmExternalLeading = value
         End Set
     End Property
@@ -774,7 +774,7 @@ Public Class WinTextMetric
         Get
             Return _tmAveCharWidth
         End Get
-        Private Set(ByVal value As Integer)
+        Private Set(value As Integer)
             _tmAveCharWidth = value
         End Set
     End Property
@@ -783,7 +783,7 @@ Public Class WinTextMetric
         Get
             Return _tmMaxCharWidth
         End Get
-        Private Set(ByVal value As Integer)
+        Private Set(value As Integer)
             _tmMaxCharWidth = value
         End Set
     End Property
@@ -792,7 +792,7 @@ Public Class WinTextMetric
         Get
             Return _tmWeight
         End Get
-        Private Set(ByVal value As Integer)
+        Private Set(value As Integer)
             _tmWeight = value
         End Set
     End Property
@@ -801,7 +801,7 @@ Public Class WinTextMetric
         Get
             Return _tmOverhang
         End Get
-        Private Set(ByVal value As Integer)
+        Private Set(value As Integer)
             _tmOverhang = value
         End Set
     End Property
@@ -810,7 +810,7 @@ Public Class WinTextMetric
         Get
             Return _tmDigitizedAspectX
         End Get
-        Private Set(ByVal value As Integer)
+        Private Set(value As Integer)
             _tmDigitizedAspectX = value
         End Set
     End Property
@@ -819,7 +819,7 @@ Public Class WinTextMetric
         Get
             Return _tmDigitizedAspectY
         End Get
-        Private Set(ByVal value As Integer)
+        Private Set(value As Integer)
             _tmDigitizedAspectY = value
         End Set
     End Property
@@ -828,7 +828,7 @@ Public Class WinTextMetric
         Get
             Return _tmFirstChar
         End Get
-        Private Set(ByVal value As UShort)
+        Private Set(value As UShort)
             _tmFirstChar = value
         End Set
     End Property
@@ -837,7 +837,7 @@ Public Class WinTextMetric
         Get
             Return _tmLastChar
         End Get
-        Private Set(ByVal value As UShort)
+        Private Set(value As UShort)
             _tmLastChar = value
         End Set
     End Property
@@ -846,7 +846,7 @@ Public Class WinTextMetric
         Get
             Return _tmDefaultChar
         End Get
-        Private Set(ByVal value As UShort)
+        Private Set(value As UShort)
             _tmDefaultChar = value
         End Set
     End Property
@@ -855,7 +855,7 @@ Public Class WinTextMetric
         Get
             Return _tmBreakChar
         End Get
-        Private Set(ByVal value As UShort)
+        Private Set(value As UShort)
             _tmBreakChar = value
         End Set
     End Property
@@ -864,7 +864,7 @@ Public Class WinTextMetric
         Get
             Return _tmItalic
         End Get
-        Private Set(ByVal value As Byte)
+        Private Set(value As Byte)
             _tmItalic = value
         End Set
     End Property
@@ -873,7 +873,7 @@ Public Class WinTextMetric
         Get
             Return _tmUnderlined
         End Get
-        Private Set(ByVal value As Byte)
+        Private Set(value As Byte)
             _tmUnderlined = value
         End Set
     End Property
@@ -882,7 +882,7 @@ Public Class WinTextMetric
         Get
             Return _tmStruckOut
         End Get
-        Private Set(ByVal value As Byte)
+        Private Set(value As Byte)
             _tmStruckOut = value
         End Set
     End Property
@@ -891,7 +891,7 @@ Public Class WinTextMetric
         Get
             Return _tmPitchAndFamily
         End Get
-        Private Set(ByVal value As Byte)
+        Private Set(value As Byte)
             _tmPitchAndFamily = value
         End Set
     End Property
@@ -900,12 +900,12 @@ Public Class WinTextMetric
         Get
             Return _tmCharSet
         End Get
-        Private Set(ByVal value As Byte)
+        Private Set(value As Byte)
             _tmCharSet = value
         End Set
     End Property
 
-    Friend Sub New(ByVal DC As FontApi)
+    Friend Sub New(DC As FontApi)
         tmHeight = DC.ReadInt32()
         tmAscent = DC.ReadInt32()
         tmDescent = DC.ReadInt32()
@@ -957,7 +957,7 @@ Public Class WinOutlineTextMetric
         Get
             Return _otmSize
         End Get
-        Private Set(ByVal value As UInteger)
+        Private Set(value As UInteger)
             _otmSize = value
         End Set
     End Property
@@ -969,7 +969,7 @@ Public Class WinOutlineTextMetric
         Get
             Return _otmTextMetric
         End Get
-        Private Set(ByVal value As WinTextMetric)
+        Private Set(value As WinTextMetric)
             _otmTextMetric = value
         End Set
     End Property
@@ -981,7 +981,7 @@ Public Class WinOutlineTextMetric
         Get
             Return _otmPanoseNumber
         End Get
-        Private Set(ByVal value As WinPanose)
+        Private Set(value As WinPanose)
             _otmPanoseNumber = value
         End Set
     End Property
@@ -993,7 +993,7 @@ Public Class WinOutlineTextMetric
         Get
             Return _otmfsSelection
         End Get
-        Private Set(ByVal value As UInteger)
+        Private Set(value As UInteger)
             _otmfsSelection = value
         End Set
     End Property
@@ -1099,7 +1099,7 @@ Public Class WinOutlineTextMetric
         Get
             Return _otmfsType
         End Get
-        Private Set(ByVal value As UInteger)
+        Private Set(value As UInteger)
             _otmfsType = value
         End Set
     End Property
@@ -1111,7 +1111,7 @@ Public Class WinOutlineTextMetric
         Get
             Return _otmsCharSlopeRise
         End Get
-        Private Set(ByVal value As Integer)
+        Private Set(value As Integer)
             _otmsCharSlopeRise = value
         End Set
     End Property
@@ -1123,7 +1123,7 @@ Public Class WinOutlineTextMetric
         Get
             Return _otmsCharSlopeRun
         End Get
-        Private Set(ByVal value As Integer)
+        Private Set(value As Integer)
             _otmsCharSlopeRun = value
         End Set
     End Property
@@ -1135,7 +1135,7 @@ Public Class WinOutlineTextMetric
         Get
             Return _otmItalicAngle
         End Get
-        Private Set(ByVal value As Integer)
+        Private Set(value As Integer)
             _otmItalicAngle = value
         End Set
     End Property
@@ -1147,7 +1147,7 @@ Public Class WinOutlineTextMetric
         Get
             Return _otmEMSquare
         End Get
-        Private Set(ByVal value As UInteger)
+        Private Set(value As UInteger)
             _otmEMSquare = value
         End Set
     End Property
@@ -1156,7 +1156,7 @@ Public Class WinOutlineTextMetric
         Get
             Return _otmAscent
         End Get
-        Private Set(ByVal value As Integer)
+        Private Set(value As Integer)
             _otmAscent = value
         End Set
     End Property
@@ -1165,7 +1165,7 @@ Public Class WinOutlineTextMetric
         Get
             Return _otmDescent
         End Get
-        Private Set(ByVal value As Integer)
+        Private Set(value As Integer)
             _otmDescent = value
         End Set
     End Property
@@ -1174,7 +1174,7 @@ Public Class WinOutlineTextMetric
         Get
             Return _otmLineGap
         End Get
-        Private Set(ByVal value As UInteger)
+        Private Set(value As UInteger)
             _otmLineGap = value
         End Set
     End Property
@@ -1183,7 +1183,7 @@ Public Class WinOutlineTextMetric
         Get
             Return _otmsCapEmHeight
         End Get
-        Private Set(ByVal value As UInteger)
+        Private Set(value As UInteger)
             _otmsCapEmHeight = value
         End Set
     End Property
@@ -1192,7 +1192,7 @@ Public Class WinOutlineTextMetric
         Get
             Return _otmsXHeight
         End Get
-        Private Set(ByVal value As UInteger)
+        Private Set(value As UInteger)
             _otmsXHeight = value
         End Set
     End Property
@@ -1201,7 +1201,7 @@ Public Class WinOutlineTextMetric
         Get
             Return _otmrcFontBox
         End Get
-        Private Set(ByVal value As FontBox)
+        Private Set(value As FontBox)
             _otmrcFontBox = value
         End Set
     End Property
@@ -1210,7 +1210,7 @@ Public Class WinOutlineTextMetric
         Get
             Return _otmMacAscent
         End Get
-        Private Set(ByVal value As Integer)
+        Private Set(value As Integer)
             _otmMacAscent = value
         End Set
     End Property
@@ -1219,7 +1219,7 @@ Public Class WinOutlineTextMetric
         Get
             Return _otmMacDescent
         End Get
-        Private Set(ByVal value As Integer)
+        Private Set(value As Integer)
             _otmMacDescent = value
         End Set
     End Property
@@ -1228,7 +1228,7 @@ Public Class WinOutlineTextMetric
         Get
             Return _otmMacLineGap
         End Get
-        Private Set(ByVal value As UInteger)
+        Private Set(value As UInteger)
             _otmMacLineGap = value
         End Set
     End Property
@@ -1237,7 +1237,7 @@ Public Class WinOutlineTextMetric
         Get
             Return _otmusMinimumPPEM
         End Get
-        Private Set(ByVal value As UInteger)
+        Private Set(value As UInteger)
             _otmusMinimumPPEM = value
         End Set
     End Property
@@ -1246,7 +1246,7 @@ Public Class WinOutlineTextMetric
         Get
             Return _otmptSubscriptSize
         End Get
-        Private Set(ByVal value As Point)
+        Private Set(value As Point)
             _otmptSubscriptSize = value
         End Set
     End Property
@@ -1255,7 +1255,7 @@ Public Class WinOutlineTextMetric
         Get
             Return _otmptSubscriptOffset
         End Get
-        Private Set(ByVal value As Point)
+        Private Set(value As Point)
             _otmptSubscriptOffset = value
         End Set
     End Property
@@ -1264,7 +1264,7 @@ Public Class WinOutlineTextMetric
         Get
             Return _otmptSuperscriptSize
         End Get
-        Private Set(ByVal value As Point)
+        Private Set(value As Point)
             _otmptSuperscriptSize = value
         End Set
     End Property
@@ -1273,7 +1273,7 @@ Public Class WinOutlineTextMetric
         Get
             Return _otmptSuperscriptOffset
         End Get
-        Private Set(ByVal value As Point)
+        Private Set(value As Point)
             _otmptSuperscriptOffset = value
         End Set
     End Property
@@ -1282,7 +1282,7 @@ Public Class WinOutlineTextMetric
         Get
             Return _otmsStrikeoutSize
         End Get
-        Private Set(ByVal value As UInteger)
+        Private Set(value As UInteger)
             _otmsStrikeoutSize = value
         End Set
     End Property
@@ -1291,7 +1291,7 @@ Public Class WinOutlineTextMetric
         Get
             Return _otmsStrikeoutPosition
         End Get
-        Private Set(ByVal value As Integer)
+        Private Set(value As Integer)
             _otmsStrikeoutPosition = value
         End Set
     End Property
@@ -1300,7 +1300,7 @@ Public Class WinOutlineTextMetric
         Get
             Return _otmsUnderscoreSize
         End Get
-        Private Set(ByVal value As Integer)
+        Private Set(value As Integer)
             _otmsUnderscoreSize = value
         End Set
     End Property
@@ -1309,7 +1309,7 @@ Public Class WinOutlineTextMetric
         Get
             Return _otmsUnderscorePosition
         End Get
-        Private Set(ByVal value As Integer)
+        Private Set(value As Integer)
             _otmsUnderscorePosition = value
         End Set
     End Property
@@ -1318,7 +1318,7 @@ Public Class WinOutlineTextMetric
         Get
             Return _otmpFamilyName
         End Get
-        Private Set(ByVal value As String)
+        Private Set(value As String)
             _otmpFamilyName = value
         End Set
     End Property
@@ -1327,7 +1327,7 @@ Public Class WinOutlineTextMetric
         Get
             Return _otmpFaceName
         End Get
-        Private Set(ByVal value As String)
+        Private Set(value As String)
             _otmpFaceName = value
         End Set
     End Property
@@ -1336,7 +1336,7 @@ Public Class WinOutlineTextMetric
         Get
             Return _otmpStyleName
         End Get
-        Private Set(ByVal value As String)
+        Private Set(value As String)
             _otmpStyleName = value
         End Set
     End Property
@@ -1345,12 +1345,12 @@ Public Class WinOutlineTextMetric
         Get
             Return _otmpFullName
         End Get
-        Private Set(ByVal value As String)
+        Private Set(value As String)
             _otmpFullName = value
         End Set
     End Property
 
-    Friend Sub New(ByVal DC As FontApi)
+    Friend Sub New(DC As FontApi)
         otmSize = DC.ReadUInt32()
         otmTextMetric = New WinTextMetric(DC)
         DC.Align4()
@@ -1411,7 +1411,7 @@ Public Class FontApi
     
 
     <DllImport("gdi32.dll", CharSet:=CharSet.Auto, CallingConvention:=CallingConvention.StdCall, SetLastError:=True)>
-    Private Shared Function SelectObject(ByVal GDIHandle As IntPtr, ByVal FontHandle As IntPtr) As IntPtr
+    Private Shared Function SelectObject(GDIHandle As IntPtr, FontHandle As IntPtr) As IntPtr
     End Function
 
     ''' <summary>
@@ -1419,7 +1419,7 @@ Public Class FontApi
     ''' </summary>
     ''' <param name="DesignFont">Design font</param>
     ''' <param name="DesignHeight">Design height</param>
-    Public Sub New(ByVal DesignFont As Font, ByVal DesignHeight As Integer)
+    Public Sub New(DesignFont As Font, DesignHeight As Integer)
         ' save design height
         Me.DesignHeight = DesignHeight
 
@@ -1447,7 +1447,7 @@ Public Class FontApi
     Private Const GGO_GLYPH_INDEX As UInteger = 128
 
     <DllImport("gdi32.dll", CharSet:=CharSet.Auto, CallingConvention:=CallingConvention.StdCall, SetLastError:=True)>
-    Private Shared Function GetGlyphOutline(ByVal GDIHandle As IntPtr, ByVal CharIndex As Integer, ByVal GgoFormat As UInteger, ByVal GlyphMetrics As IntPtr, ByVal Zero As UInteger, ByVal Null As IntPtr, ByVal TransMatrix As IntPtr) As Integer
+    Private Shared Function GetGlyphOutline(GDIHandle As IntPtr, CharIndex As Integer, GgoFormat As UInteger, GlyphMetrics As IntPtr, Zero As UInteger, Null As IntPtr, TransMatrix As IntPtr) As Integer
     End Function
 
     ''' <summary>
@@ -1455,7 +1455,7 @@ Public Class FontApi
     ''' </summary>
     ''' <param name="CharCode">Character code</param>
     ''' <returns>Character info class</returns>
-    Public Function GetGlyphMetricsApiByCode(ByVal CharCode As Integer) As CharInfo
+    Public Function GetGlyphMetricsApiByCode(CharCode As Integer) As CharInfo
         ' get glyph index for char code
         Dim GlyphIndexArray = GetGlyphIndicesApi(CharCode, CharCode)
 
@@ -1472,7 +1472,7 @@ Public Class FontApi
     ''' </summary>
     ''' <param name="GlyphIndex">Character code</param>
     ''' <returns>Character info class</returns>
-    Public Function GetGlyphMetricsApiByGlyphIndex(ByVal GlyphIndex As Integer) As CharInfo
+    Public Function GetGlyphMetricsApiByGlyphIndex(GlyphIndex As Integer) As CharInfo
         ' build unit matrix
         Dim UnitMatrix As IntPtr = BuildUnitMarix()
 
@@ -1500,7 +1500,7 @@ Public Class FontApi
     ''' </summary>
     ''' <param name="CharValue">Character code</param>
     ''' <returns>Array of character infos</returns>
-    Public Function GetGlyphMetricsApi(ByVal CharValue As Integer) As CharInfo()
+    Public Function GetGlyphMetricsApi(CharValue As Integer) As CharInfo()
         ' first character of the 256 block
         Dim FirstChar = CharValue And &HFF00
 
@@ -1563,7 +1563,7 @@ Public Class FontApi
     
 
     <DllImport("gdi32.dll", CharSet:=CharSet.Auto, CallingConvention:=CallingConvention.StdCall, SetLastError:=True)>
-    Private Shared Function GetKerningPairs(ByVal GDIHandle As IntPtr, ByVal NumberOfPairs As UInteger, ByVal PairArray As IntPtr) As UInteger
+    Private Shared Function GetKerningPairs(GDIHandle As IntPtr, NumberOfPairs As UInteger, PairArray As IntPtr) As UInteger
     End Function
 
     ''' <summary>
@@ -1572,7 +1572,7 @@ Public Class FontApi
     ''' <param name="FirstChar">First character</param>
     ''' <param name="LastChar">Last character</param>
     ''' <returns>Array of kerning pairs</returns>
-    Public Function GetKerningPairsApi(ByVal FirstChar As Integer, ByVal LastChar As Integer) As WinKerningPair()
+    Public Function GetKerningPairsApi(FirstChar As Integer, LastChar As Integer) As WinKerningPair()
         ' get number of pairs
         Dim Pairs As Integer = GetKerningPairs(GDIHandle, 0, IntPtr.Zero)
         If Pairs = 0 Then Return Nothing
@@ -1612,7 +1612,7 @@ Public Class FontApi
     
 
     <DllImport("gdi32.dll", CharSet:=CharSet.Auto, CallingConvention:=CallingConvention.StdCall, SetLastError:=True)>
-    Private Shared Function GetOutlineTextMetrics(ByVal GDIHandle As IntPtr, ByVal BufferLength As Integer, ByVal Buffer As IntPtr) As Integer
+    Private Shared Function GetOutlineTextMetrics(GDIHandle As IntPtr, BufferLength As Integer, Buffer As IntPtr) As Integer
     End Function
 
     ''' <summary>
@@ -1645,7 +1645,7 @@ Public Class FontApi
     
 
     <DllImport("gdi32.dll", CharSet:=CharSet.Auto, CallingConvention:=CallingConvention.StdCall, SetLastError:=True)>
-    Private Shared Function GetTextMetrics(ByVal GDIHandle As IntPtr, ByVal Buffer As IntPtr) As Integer
+    Private Shared Function GetTextMetrics(GDIHandle As IntPtr, Buffer As IntPtr) As Integer
     End Function
 
     ''' <summary>
@@ -1674,7 +1674,7 @@ Public Class FontApi
     
 
     <DllImport("gdi32.dll", CharSet:=CharSet.Auto, CallingConvention:=CallingConvention.StdCall, SetLastError:=True)>
-    Private Shared Function GetFontData(ByVal DeviceContextHandle As IntPtr, ByVal Table As UInteger, ByVal Offset As UInteger, ByVal Buffer As IntPtr, ByVal BufferLength As UInteger) As UInteger
+    Private Shared Function GetFontData(DeviceContextHandle As IntPtr, Table As UInteger, Offset As UInteger, Buffer As IntPtr, BufferLength As UInteger) As UInteger
     End Function
 
     ''' <summary>
@@ -1684,7 +1684,7 @@ Public Class FontApi
     ''' <param name="Offset">Table offset</param>
     ''' <param name="BufSize">Table size</param>
     ''' <returns>Table info as byte array</returns>
-    Public Function GetFontDataApi(ByVal TableTag As UInteger, ByVal Offset As Integer, ByVal BufSize As Integer) As Byte()
+    Public Function GetFontDataApi(TableTag As UInteger, Offset As Integer, BufSize As Integer) As Byte()
         ' empty table
         If BufSize = 0 Then Return Nothing
 
@@ -1714,7 +1714,7 @@ Public Class FontApi
     
 
     <DllImport("gdi32.dll", CharSet:=CharSet.Auto, CallingConvention:=CallingConvention.StdCall, SetLastError:=True)>
-    Private Shared Function GetGlyphIndices(ByVal GDIHandle As IntPtr, ByVal CharBuffer As IntPtr, ByVal CharCount As Integer, ByVal GlyphArray As IntPtr, ByVal GlyphOptions As UInteger) As Integer
+    Private Shared Function GetGlyphIndices(GDIHandle As IntPtr, CharBuffer As IntPtr, CharCount As Integer, GlyphArray As IntPtr, GlyphOptions As UInteger) As Integer
     End Function
 
     ''' <summary>
@@ -1723,7 +1723,7 @@ Public Class FontApi
     ''' <param name="FirstChar">First character</param>
     ''' <param name="LastChar">Last character</param>
     ''' <returns>Array of glyph indices.</returns>
-    Public Function GetGlyphIndicesApi(ByVal FirstChar As Integer, ByVal LastChar As Integer) As Integer()
+    Public Function GetGlyphIndicesApi(FirstChar As Integer, LastChar As Integer) As Integer()
         ' character count
         Dim CharCount = LastChar - FirstChar + 1
 
@@ -1765,7 +1765,7 @@ Public Class FontApi
     ' Allocate API result buffer
     
 
-    Private Sub AllocateBuffer(ByVal Size As Integer)
+    Private Sub AllocateBuffer(Size As Integer)
         ' allocate memory for result
         Buffer = Marshal.AllocHGlobal(Size)
         BufPtr = 0
@@ -1842,7 +1842,7 @@ Public Class FontApi
     ' Read short array from result buffer
     
 
-    Friend Function ReadInt16Array(ByVal Size As Integer) As Short()
+    Friend Function ReadInt16Array(Size As Integer) As Short()
         ' create active characters array
         Dim Result = New Short(Size - 1) {}
         Marshal.Copy(Buffer, Result, 0, Size)
@@ -1863,7 +1863,7 @@ Public Class FontApi
     ' Read int array from result buffer
     
 
-    Friend Function ReadInt32Array(ByVal Size As Integer) As Integer()
+    Friend Function ReadInt32Array(Size As Integer) As Integer()
         ' create active characters array
         Dim Result = New Integer(Size - 1) {}
         Marshal.Copy(Buffer, Result, 0, Size)
@@ -1904,10 +1904,10 @@ Public Class FontApi
     
 
     <DllImport("Kernel32.dll", CharSet:=CharSet.Auto, CallingConvention:=CallingConvention.StdCall, SetLastError:=True)>
-    Private Shared Function FormatMessage(ByVal dwFlags As UInteger, ByVal lpSource As IntPtr, ByVal dwMessageId As UInteger, ByVal dwLanguageId As UInteger, ByVal lpBuffer As IntPtr, ByVal nSize As UInteger, ByVal Arguments As IntPtr) As UInteger
+    Private Shared Function FormatMessage(dwFlags As UInteger, lpSource As IntPtr, dwMessageId As UInteger, dwLanguageId As UInteger, lpBuffer As IntPtr, nSize As UInteger, Arguments As IntPtr) As UInteger
     End Function
 
-    Friend Sub ThrowSystemErrorException(ByVal AppMsg As String)
+    Friend Sub ThrowSystemErrorException(AppMsg As String)
         Const FORMAT_MESSAGE_FROM_SYSTEM As UInteger = &H1000
 
         ' error message
@@ -1968,7 +1968,7 @@ Public Class FontApi
     
 
     <DllImport("gdi32.dll", CharSet:=CharSet.Auto, CallingConvention:=CallingConvention.StdCall, SetLastError:=True)>
-    Private Shared Function DeleteObject(ByVal Handle As IntPtr) As IntPtr
+    Private Shared Function DeleteObject(Handle As IntPtr) As IntPtr
     End Function
 
     ''' <summary>

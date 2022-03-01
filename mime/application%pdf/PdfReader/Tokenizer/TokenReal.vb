@@ -48,7 +48,7 @@ Namespace PdfReader
 
         Private _Value As Single
 
-        Public Sub New(ByVal real As Single)
+        Public Sub New(real As Single)
             Value = real
         End Sub
 
@@ -56,7 +56,7 @@ Namespace PdfReader
             Get
                 Return _Value
             End Get
-            Private Set(ByVal value As Single)
+            Private Set(value As Single)
                 _Value = value
             End Set
         End Property

@@ -49,7 +49,7 @@ Namespace PdfReader
     Public Class TokenStringHex
         Inherits TokenString
 
-        Public Sub New(ByVal raw As String)
+        Public Sub New(raw As String)
             MyBase.New(raw)
         End Sub
 
@@ -79,7 +79,7 @@ Namespace PdfReader
             End Get
         End Property
 
-        Public Overrides Function BytesToString(ByVal bytes As Byte()) As String
+        Public Overrides Function BytesToString(bytes As Byte()) As String
             Return EncodedBytesToString(bytes)
         End Function
     End Class

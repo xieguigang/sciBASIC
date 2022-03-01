@@ -49,7 +49,7 @@ Namespace PdfReader
     Public Class TokenStringLiteral
         Inherits TokenString
 
-        Public Sub New(ByVal raw As String)
+        Public Sub New(raw As String)
             MyBase.New(raw)
         End Sub
 
@@ -65,11 +65,11 @@ Namespace PdfReader
             End Get
         End Property
 
-        Public Overrides Function BytesToString(ByVal bytes As Byte()) As String
+        Public Overrides Function BytesToString(bytes As Byte()) As String
             Return RawStringToResolved(Encoding.ASCII.GetString(bytes))
         End Function
 
-        Private Function RawStringToResolved(ByVal raw As String) As String
+        Private Function RawStringToResolved(raw As String) As String
             Dim sb As StringBuilder = New StringBuilder()
             Dim last = raw.Length
             Dim first = 0

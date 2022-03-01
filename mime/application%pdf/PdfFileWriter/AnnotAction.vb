@@ -197,21 +197,21 @@ Public Enum FileAttachIcon
             Get
                 Return _Subtype
             End Get
-            Friend Set(ByVal value As String)
+            Friend Set(value As String)
                 _Subtype = value
             End Set
         End Property
 
-        Friend Sub New(ByVal Subtype As String)
+        Friend Sub New(Subtype As String)
             Me.Subtype = Subtype
             Return
         End Sub
 
-        Friend Overridable Function IsEqual(ByVal Other As AnnotAction) As Boolean
+        Friend Overridable Function IsEqual(Other As AnnotAction) As Boolean
             Throw New ApplicationException("AnnotAction IsEqual not implemented")
         End Function
 
-        Friend Shared Function IsEqual(ByVal One As AnnotAction, ByVal Two As AnnotAction) As Boolean
+        Friend Shared Function IsEqual(One As AnnotAction, Two As AnnotAction) As Boolean
             If One Is Nothing AndAlso Two Is Nothing Then Return True
             If One Is Nothing AndAlso Two IsNot Nothing OrElse One IsNot Nothing AndAlso Two Is Nothing OrElse One.GetType() IsNot Two.GetType() Then Return False
             Return One.IsEqual(Two)
@@ -232,13 +232,13 @@ Public Enum FileAttachIcon
         ''' Web link constructor
         ''' </summary>
         ''' <param name="WebLinkStr">Web link string</param>
-        Public Sub New(ByVal WebLinkStr As String)
+        Public Sub New(WebLinkStr As String)
             MyBase.New("/Link")
             Me.WebLinkStr = WebLinkStr
             Return
         End Sub
 
-        Friend Overrides Function IsEqual(ByVal Other As AnnotAction) As Boolean
+        Friend Overrides Function IsEqual(Other As AnnotAction) As Boolean
             Return Equals(WebLinkStr, CType(Other, AnnotWebLink).WebLinkStr)
         End Function
     End Class
@@ -257,13 +257,13 @@ Public Enum FileAttachIcon
         ''' Go to annotation action constructor
         ''' </summary>
         ''' <param name="LocMarkerName">Location marker name</param>
-        Public Sub New(ByVal LocMarkerName As String)
+        Public Sub New(LocMarkerName As String)
             MyBase.New("/Link")
             Me.LocMarkerName = LocMarkerName
             Return
         End Sub
 
-        Friend Overrides Function IsEqual(ByVal Other As AnnotAction) As Boolean
+        Friend Overrides Function IsEqual(Other As AnnotAction) As Boolean
             Return Equals(LocMarkerName, CType(Other, AnnotLinkAction).LocMarkerName)
         End Function
     End Class
@@ -282,13 +282,13 @@ Public Enum FileAttachIcon
         ''' Display media annotation action constructor
         ''' </summary>
         ''' <param name="DisplayMedia">PdfDisplayMedia</param>
-        Public Sub New(ByVal DisplayMedia As PdfDisplayMedia)
+        Public Sub New(DisplayMedia As PdfDisplayMedia)
             MyBase.New("/Screen")
             Me.DisplayMedia = DisplayMedia
             Return
         End Sub
 
-        Friend Overrides Function IsEqual(ByVal Other As AnnotAction) As Boolean
+        Friend Overrides Function IsEqual(Other As AnnotAction) As Boolean
             Return Equals(DisplayMedia.MediaFile.FileName, CType(Other, AnnotDisplayMedia).DisplayMedia.MediaFile.FileName)
         End Function
     End Class
@@ -313,7 +313,7 @@ Public Enum FileAttachIcon
         ''' </summary>
         ''' <param name="EmbeddedFile">Embedded file</param>
         ''' <param name="Icon">Icon enumeration</param>
-        Public Sub New(ByVal EmbeddedFile As PdfEmbeddedFile, ByVal Icon As FileAttachIcon)
+        Public Sub New(EmbeddedFile As PdfEmbeddedFile, Icon As FileAttachIcon)
             MyBase.New("/FileAttachment")
             Me.EmbeddedFile = EmbeddedFile
             Me.Icon = Icon
@@ -324,14 +324,14 @@ Public Enum FileAttachIcon
         ''' File attachement constructor (no icon)
         ''' </summary>
         ''' <param name="EmbeddedFile">Embedded file</param>
-        Public Sub New(ByVal EmbeddedFile As PdfEmbeddedFile)
+        Public Sub New(EmbeddedFile As PdfEmbeddedFile)
             MyBase.New("/FileAttachment")
             Me.EmbeddedFile = EmbeddedFile
             Icon = FileAttachIcon.NoIcon
             Return
         End Sub
 
-        Friend Overrides Function IsEqual(ByVal Other As AnnotAction) As Boolean
+        Friend Overrides Function IsEqual(Other As AnnotAction) As Boolean
             Dim FileAttach = CType(Other, AnnotFileAttachment)
             Return Equals(EmbeddedFile.FileName, FileAttach.EmbeddedFile.FileName) AndAlso Icon = FileAttach.Icon
         End Function
@@ -351,14 +351,14 @@ Public Enum FileAttachIcon
         ''' </summary>
         ''' <param name="Note">Sticky note text</param>
         ''' <param name="Icon">Sticky note icon</param>
-        Public Sub New(ByVal Note As String, ByVal Icon As StickyNoteIcon)
+        Public Sub New(Note As String, Icon As StickyNoteIcon)
             MyBase.New("/Text")
             Me.Note = Note
             Me.Icon = Icon
             Return
         End Sub
 
-        Friend Overrides Function IsEqual(ByVal Other As AnnotAction) As Boolean
+        Friend Overrides Function IsEqual(Other As AnnotAction) As Boolean
             Dim StickyNote = CType(Other, AnnotStickyNote)
             Return Equals(Note, StickyNote.Note) AndAlso Icon = StickyNote.Icon
         End Function

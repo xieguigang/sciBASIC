@@ -49,14 +49,14 @@ Namespace PdfReader
 
         Private _Id As Integer, _Gen As Integer, _Offset As Long
 
-        Public Sub New(ByVal parent As PdfObject, ByVal xref As TokenXRefEntry)
+        Public Sub New(parent As PdfObject, xref As TokenXRefEntry)
             MyBase.New(parent)
             Id = xref.Id
             Gen = xref.Gen
             Offset = xref.Offset
         End Sub
 
-        Public Overrides Sub Visit(ByVal visitor As IPdfObjectVisitor)
+        Public Overrides Sub Visit(visitor As IPdfObjectVisitor)
             visitor.Visit(Me)
         End Sub
 
@@ -64,7 +64,7 @@ Namespace PdfReader
             Get
                 Return _Id
             End Get
-            Private Set(ByVal value As Integer)
+            Private Set(value As Integer)
                 _Id = value
             End Set
         End Property
@@ -73,7 +73,7 @@ Namespace PdfReader
             Get
                 Return _Gen
             End Get
-            Private Set(ByVal value As Integer)
+            Private Set(value As Integer)
                 _Gen = value
             End Set
         End Property
@@ -82,7 +82,7 @@ Namespace PdfReader
             Get
                 Return _Offset
             End Get
-            Private Set(ByVal value As Long)
+            Private Set(value As Long)
                 _Offset = value
             End Set
         End Property

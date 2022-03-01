@@ -96,7 +96,7 @@ Namespace PdfReader
             DecryptHandler = New PdfDecryptNone(Me)
         End Sub
 
-        Public Overrides Sub Visit(ByVal visitor As IPdfObjectVisitor)
+        Public Overrides Sub Visit(visitor As IPdfObjectVisitor)
             visitor.Visit(Me)
         End Sub
 
@@ -104,7 +104,7 @@ Namespace PdfReader
             Get
                 Return _Version
             End Get
-            Private Set(ByVal value As PdfVersion)
+            Private Set(value As PdfVersion)
                 _Version = value
             End Set
         End Property
@@ -113,7 +113,7 @@ Namespace PdfReader
             Get
                 Return _IndirectObjects
             End Get
-            Private Set(ByVal value As PdfIndirectObjects)
+            Private Set(value As PdfIndirectObjects)
                 _IndirectObjects = value
             End Set
         End Property
@@ -122,12 +122,12 @@ Namespace PdfReader
             Get
                 Return _DecryptHandler
             End Get
-            Private Set(ByVal value As PdfDecrypt)
+            Private Set(value As PdfDecrypt)
                 _DecryptHandler = value
             End Set
         End Property
 
-        Public Sub Load(ByVal filename As String, ByVal Optional immediate As Boolean = False)
+        Public Sub Load(filename As String, Optional immediate As Boolean = False)
             If _open Then Throw New ApplicationException("Document already has a stream open.")
 
             If immediate Then
@@ -140,7 +140,7 @@ Namespace PdfReader
             End If
         End Sub
 
-        Public Sub Load(ByVal stream As Stream, ByVal Optional immediate As Boolean = False, ByVal Optional bytes As Byte() = Nothing)
+        Public Sub Load(stream As Stream, Optional immediate As Boolean = False, Optional bytes As Byte() = Nothing)
             If _open Then Throw New ApplicationException("Document already has a stream open.")
             _stream = stream
             _parser = New Parser(_stream)
@@ -275,19 +275,19 @@ Namespace PdfReader
             End Get
         End Property
 
-        Public Function ResolveReference(ByVal reference As PdfObjectReference) As PdfObject
+        Public Function ResolveReference(reference As PdfObjectReference) As PdfObject
             Return ResolveReference(reference.Id, reference.Gen)
         End Function
 
-        Public Function ResolveReference(ByVal id As Integer, ByVal gen As Integer) As PdfObject
+        Public Function ResolveReference(id As Integer, gen As Integer) As PdfObject
             Return ResolveReference(IndirectObjects(id, gen))
         End Function
 
-        Public Function ResolveReference(ByVal indirect As PdfIndirectObject) As PdfObject
+        Public Function ResolveReference(indirect As PdfIndirectObject) As PdfObject
             Return ResolveReference(_parser, indirect)
         End Function
 
-        Public Function ResolveReference(ByVal parser As Parser, ByVal indirect As PdfIndirectObject) As PdfObject
+        Public Function ResolveReference(parser As Parser, indirect As PdfIndirectObject) As PdfObject
             If indirect IsNot Nothing Then
                 If indirect.Child Is Nothing Then
                     Dim parseIndirectObject = parser.ParseIndirectObject(indirect.Offset)
@@ -300,11 +300,11 @@ Namespace PdfReader
             Return Nothing
         End Function
 
-        Private Sub Parser_ResolveReference(ByVal sender As Object, ByVal e As ParseResolveEventArgs)
+        Private Sub Parser_ResolveReference(sender As Object, e As ParseResolveEventArgs)
             e.Object = ResolveReference(e.Id, e.Gen).ParseObject
         End Sub
 
-        Private Sub BackgroundResolveReference(ByVal state As Object)
+        Private Sub BackgroundResolveReference(state As Object)
             Dim args = CType(state, BackgroundArgs)
 
             Try

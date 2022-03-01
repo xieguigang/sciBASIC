@@ -106,7 +106,7 @@ Public Class PdfImageControl
         Get
             Return _ImageQuality
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             ' set image quality
             If value <> DefaultQuality AndAlso (value < 0 OrElse value > 100) Then Throw New ApplicationException("PdfImageControl.ImageQuality must be DefaultQuality or 0 to 100")
             _ImageQuality = value
@@ -121,7 +121,7 @@ Public Class PdfImageControl
         Get
             Return _GrayToBWCutoff
         End Get
-        Set(ByVal value As Integer)
+        Set(value As Integer)
             If value < 1 OrElse value > 99 Then Throw New ApplicationException("PdfImageControl.GrayToBWCutoff must be 1 to 99")
             _GrayToBWCutoff = value
         End Set

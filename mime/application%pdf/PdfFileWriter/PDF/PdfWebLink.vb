@@ -87,7 +87,7 @@ Imports System.Collections.Generic
         Friend WebLinkStr As String
 
         ' for search only
-        Private Sub New(ByVal WebLinkStr As String)
+        Private Sub New(WebLinkStr As String)
             ' save string
             Me.WebLinkStr = WebLinkStr
 
@@ -96,7 +96,7 @@ Imports System.Collections.Generic
         End Sub
 
         ' create new web link
-        Private Sub New(ByVal Document As PdfDocument, ByVal WebLinkStr As String)
+        Private Sub New(Document As PdfDocument, WebLinkStr As String)
             MyBase.New(Document)
             ' save string
             Me.WebLinkStr = WebLinkStr
@@ -125,7 +125,7 @@ Imports System.Collections.Generic
         ''' existing object if it is a duplicate.
         ''' </para>
         ''' </remarks>
-        Public Shared Function AddWebLink(ByVal Document As PdfDocument, ByVal WebLinkStr As String) As PdfWebLink
+        Public Shared Function AddWebLink(Document As PdfDocument, WebLinkStr As String) As PdfWebLink
             ' first time
             If Document.WebLinkArray Is Nothing Then Document.WebLinkArray = New List(Of PdfWebLink)()
 
@@ -150,7 +150,7 @@ Imports System.Collections.Generic
     ''' </summary>
     ''' <param name="Other">Other object.</param>
     ''' <returns>Compare result.</returns>
-    Public Overloads Function CompareTo(ByVal Other As PdfWebLink) As Integer Implements IComparable(Of PdfWebLink).CompareTo
+    Public Overloads Function CompareTo(Other As PdfWebLink) As Integer Implements IComparable(Of PdfWebLink).CompareTo
         Return String.Compare(WebLinkStr, Other.WebLinkStr)
     End Function
 End Class

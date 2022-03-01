@@ -48,11 +48,11 @@ Namespace PdfReader
 
         Private _Value As Single
 
-        Public Sub New(ByVal token As TokenReal)
+        Public Sub New(token As TokenReal)
             Me.New(token.Value)
         End Sub
 
-        Public Sub New(ByVal value As Single)
+        Public Sub New(value As Single)
             Me.Value = value
         End Sub
 
@@ -60,7 +60,7 @@ Namespace PdfReader
             Get
                 Return _Value
             End Get
-            Private Set(ByVal value As Single)
+            Private Set(value As Single)
                 _Value = value
             End Set
         End Property

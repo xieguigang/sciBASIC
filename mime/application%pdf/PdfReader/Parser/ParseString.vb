@@ -47,7 +47,7 @@ Namespace PdfReader
     Public Class ParseString
         Inherits ParseObjectBase
 
-        Public Sub New(ByVal token As TokenString)
+        Public Sub New(token As TokenString)
             Me.Token = token
         End Sub
 
@@ -63,7 +63,7 @@ Namespace PdfReader
             End Get
         End Property
 
-        Public Function BytesToString(ByVal bytes As Byte()) As String
+        Public Function BytesToString(bytes As Byte()) As String
             Return Token.BytesToString(bytes)
         End Function
 

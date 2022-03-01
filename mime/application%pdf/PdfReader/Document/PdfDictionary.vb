@@ -57,11 +57,11 @@ Namespace PdfReader
 
         Private _wrapped As Dictionary(Of String, PdfObject)
 
-        Public Sub New(ByVal parent As PdfObject, ByVal dictionary As ParseDictionary)
+        Public Sub New(parent As PdfObject, dictionary As ParseDictionary)
             MyBase.New(parent, dictionary)
         End Sub
 
-        Public Overrides Sub Visit(ByVal visitor As IPdfObjectVisitor)
+        Public Overrides Sub Visit(visitor As IPdfObjectVisitor)
             visitor.Visit(Me)
         End Sub
 
@@ -77,7 +77,7 @@ Namespace PdfReader
             End Get
         End Property
 
-        Public Function ContainsName(ByVal name As String) As Boolean
+        Public Function ContainsName(name As String) As Boolean
             Return ParseDictionary.ContainsName(name)
         End Function
 
@@ -100,14 +100,14 @@ Namespace PdfReader
             Return _wrapped.GetEnumerator()
         End Function
 
-        Default Public ReadOnly Property Item(ByVal name As String) As PdfObject
+        Default Public ReadOnly Property Item(name As String) As PdfObject
             Get
                 WrapName(name)
                 Return _wrapped(name)
             End Get
         End Property
 
-        Public Function OptionalValue(Of T As PdfObject)(ByVal name As String) As T
+        Public Function OptionalValue(Of T As PdfObject)(name As String) As T
             Dim entry As PdfObject = Nothing
 
             If ParseDictionary.ContainsName(name) Then
@@ -125,7 +125,7 @@ Namespace PdfReader
             Return Nothing
         End Function
 
-        Public Function OptionalValueRef(Of T As PdfObject)(ByVal name As String) As T
+        Public Function OptionalValueRef(Of T As PdfObject)(name As String) As T
             Dim entry As PdfObject = Nothing
             Dim reference As New Value(Of PdfObjectReference)
 
@@ -160,13 +160,13 @@ Namespace PdfReader
             Return Nothing
         End Function
 
-        Public Function OptionalDateTime(ByVal name As String) As PdfDateTime
+        Public Function OptionalDateTime(name As String) As PdfDateTime
             Dim str = OptionalValue(Of PdfString)(name)
             If str IsNot Nothing Then Return New PdfDateTime(Me, str)
             Return Nothing
         End Function
 
-        Public Function MandatoryValue(Of T As PdfObject)(ByVal name As String) As T
+        Public Function MandatoryValue(Of T As PdfObject)(name As String) As T
             Dim entry As PdfObject = Nothing
 
             If ParseDictionary.ContainsName(name) Then
@@ -186,7 +186,7 @@ Namespace PdfReader
             End If
         End Function
 
-        Public Function MandatoryValueRef(Of T As PdfObject)(ByVal name As String) As T
+        Public Function MandatoryValueRef(Of T As PdfObject)(name As String) As T
             Dim entry As PdfObject = Nothing
             Dim reference As New Value(Of PdfObjectReference)
 
@@ -210,7 +210,7 @@ Namespace PdfReader
             End If
         End Function
 
-        Private Sub WrapName(ByVal name As String)
+        Private Sub WrapName(name As String)
             If _wrapped Is Nothing Then _wrapped = New Dictionary(Of String, PdfObject)()
             If Not _wrapped.ContainsKey(name) Then _wrapped.Add(name, WrapObject(ParseDictionary(name)))
         End Sub

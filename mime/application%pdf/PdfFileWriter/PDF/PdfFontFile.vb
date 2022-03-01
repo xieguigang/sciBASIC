@@ -139,7 +139,7 @@ Friend Class PdfFontFile
         prep
     End Enum
 
-    Friend Sub New(ByVal PdfFont As PdfFont, ByVal FirstChar As Integer, ByVal LastChar As Integer)
+    Friend Sub New(PdfFont As PdfFont, FirstChar As Integer, LastChar As Integer)
         MyBase.New(PdfFont.Document, ObjectType.Stream)
         ' save input arguments
         Me.PdfFont = PdfFont
@@ -487,7 +487,7 @@ Friend Class PdfFontFile
     ' Select best sub-table in "cmap" table
     
 
-    Private Function SelectcmapSubTable(ByVal SubTblArray As cmapSubTbl()) As cmapSubTbl
+    Private Function SelectcmapSubTable(SubTblArray As cmapSubTbl()) As cmapSubTbl
         ' search for platform ID = 3 Windows, encoding ID = 0 or 1 Unicode and format 4
         Dim SearchSubTbl As cmapSubTbl = New cmapSubTbl(3, If(SymbolicFont, 0, 1), 4)
         Dim Index = Array.BinarySearch(SubTblArray, SearchSubTbl)
@@ -702,7 +702,7 @@ Friend Class PdfFontFile
     ' create a glyph data list
     
 
-    Private Function CreateGlyphDataList(ByVal CompList As List(Of Integer)) As List(Of CharInfo)
+    Private Function CreateGlyphDataList(CompList As List(Of Integer)) As List(Of CharInfo)
         ' create a glyph data list
         Dim GlyphList As List(Of CharInfo) = New List(Of CharInfo)()
 
@@ -724,7 +724,7 @@ Friend Class PdfFontFile
     ' add additional glyphs from the composite glyphs to the list
     
 
-    Private Sub AddCompositeGlyphs(ByVal GlyphList As List(Of CharInfo), ByVal ExtraList As List(Of Integer))
+    Private Sub AddCompositeGlyphs(GlyphList As List(Of CharInfo), ExtraList As List(Of Integer))
         ' create a temp list of components of composite glyphs
         Dim CompList As List(Of Integer) = New List(Of Integer)()
 
@@ -758,7 +758,7 @@ Friend Class PdfFontFile
     ' add additional glyphs to the list
     
 
-    Private Sub AddGlyph(ByVal CharInfo As CharInfo, ByVal GlyphList As List(Of CharInfo), ByVal CompList As List(Of Integer))
+    Private Sub AddGlyph(CharInfo As CharInfo, GlyphList As List(Of CharInfo), CompList As List(Of Integer))
         ' find glyph location and length within this table
         Dim GlyphLoc = locaTable(CharInfo.GlyphIndex)
         Dim GlyphLen = locaTable(CharInfo.GlyphIndex + 1) - GlyphLoc
@@ -807,7 +807,7 @@ Friend Class PdfFontFile
     ' Read one composite glyph from "glyf" table
     
 
-    Private Sub GetCompositeGlyph(ByVal MainList As List(Of CharInfo), ByVal CompList As List(Of Integer))
+    Private Sub GetCompositeGlyph(MainList As List(Of CharInfo), CompList As List(Of Integer))
         ' the glyph is not in main or composit lists, add it to the composit list
         Dim Index As i32 = 0
 
@@ -1428,7 +1428,7 @@ Friend Class PdfFontFile
     ' Write short to byte list big endian style
     
 
-    Private Sub WriteInt16BigEndian(ByVal Value As Integer)
+    Private Sub WriteInt16BigEndian(Value As Integer)
         Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1)) = CByte(Value >> 8)
         Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1)) = CByte(Value)
         Return
@@ -1438,7 +1438,7 @@ Friend Class PdfFontFile
     ' Write short or ushort to byte list big endian style
     
 
-    Private Sub WriteUInt16BigEndian(ByVal Value As UInteger)
+    Private Sub WriteUInt16BigEndian(Value As UInteger)
         Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1)) = CByte(Value >> 8)
         Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1)) = CByte(Value)
         Return
@@ -1448,7 +1448,7 @@ Friend Class PdfFontFile
     ' Write int or uint to byte list big endian style
     
 
-    Private Sub WriteUInt32BigEndian(ByVal Value As UInteger)
+    Private Sub WriteUInt32BigEndian(Value As UInteger)
         Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1)) = CByte(Value >> 24)
         Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1)) = CByte(Value >> 16)
         Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1)) = CByte(Value >> 8)
@@ -1460,7 +1460,7 @@ Friend Class PdfFontFile
     ' Write long or ulong to byte list big endian style
     
 
-    Private Sub WriteInt64BigEndian(ByVal Value As Long)
+    Private Sub WriteInt64BigEndian(Value As Long)
         Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1)) = CByte(Value >> 56)
         Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1)) = CByte(Value >> 48)
         Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1)) = CByte(Value >> 40)
@@ -1476,7 +1476,7 @@ Friend Class PdfFontFile
     ' Calculate table checksum
     
 
-    Private Function TableChecksum(ByVal Table As Byte()) As UInteger
+    Private Function TableChecksum(Table As Byte()) As UInteger
         Dim ChkSum As UInteger = 0
 
         For Ptr = 0 To Table.Length - 1
@@ -1490,7 +1490,7 @@ Friend Class PdfFontFile
     ' convert table tag from binary to string
     
 
-    Private Shared Function TagBinToStr(ByVal BinTag As UInteger) As String
+    Private Shared Function TagBinToStr(BinTag As UInteger) As String
         Dim StrTag As StringBuilder = New StringBuilder("????")
 
         For Index = 0 To 4 - 1

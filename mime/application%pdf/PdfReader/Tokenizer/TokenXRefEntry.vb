@@ -48,7 +48,7 @@ Namespace PdfReader
 
         Private _Id As Integer, _Gen As Integer, _Offset As Long, _Used As Boolean
 
-        Public Sub New(ByVal id As Integer, ByVal gen As Integer, ByVal offset As Long, ByVal used As Boolean)
+        Public Sub New(id As Integer, gen As Integer, offset As Long, used As Boolean)
             Me.Id = id
             Me.Gen = gen
             Me.Offset = offset
@@ -59,7 +59,7 @@ Namespace PdfReader
             Get
                 Return _Id
             End Get
-            Private Set(ByVal value As Integer)
+            Private Set(value As Integer)
                 _Id = value
             End Set
         End Property
@@ -68,7 +68,7 @@ Namespace PdfReader
             Get
                 Return _Gen
             End Get
-            Private Set(ByVal value As Integer)
+            Private Set(value As Integer)
                 _Gen = value
             End Set
         End Property
@@ -77,7 +77,7 @@ Namespace PdfReader
             Get
                 Return _Offset
             End Get
-            Private Set(ByVal value As Long)
+            Private Set(value As Long)
                 _Offset = value
             End Set
         End Property
@@ -86,7 +86,7 @@ Namespace PdfReader
             Get
                 Return _Used
             End Get
-            Private Set(ByVal value As Boolean)
+            Private Set(value As Boolean)
                 _Used = value
             End Set
         End Property

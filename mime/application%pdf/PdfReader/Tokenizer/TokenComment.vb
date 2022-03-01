@@ -48,7 +48,7 @@ Namespace PdfReader
 
         Private _Value As String
 
-        Public Sub New(ByVal comment As String)
+        Public Sub New(comment As String)
             Value = comment
         End Sub
 
@@ -56,7 +56,7 @@ Namespace PdfReader
             Get
                 Return _Value
             End Get
-            Private Set(ByVal value As String)
+            Private Set(value As String)
                 _Value = value
             End Set
         End Property

@@ -55,7 +55,7 @@ Namespace PdfReader
         Private _index As Integer = 0
         Private _parser As Parser
 
-        Public Sub New(ByVal parent As PdfContents)
+        Public Sub New(parent As PdfContents)
             MyBase.New(parent)
         End Sub
 

@@ -57,7 +57,7 @@ Namespace PdfReader
         Private _boundValues As Single()
         Private _encodeValues As Single()
 
-        Public Sub New(ByVal parent As PdfObject, ByVal dictionary As PdfDictionary)
+        Public Sub New(parent As PdfObject, dictionary As PdfDictionary)
             MyBase.New(parent, dictionary)
         End Sub
 
@@ -79,7 +79,7 @@ Namespace PdfReader
             End Get
         End Property
 
-        Public Overrides Function [Call](ByVal inputs As Single()) As Single()
+        Public Overrides Function [Call](inputs As Single()) As Single()
             If inputs.Length <> 1 Then Throw New ArgumentOutOfRangeException($"Provided with '{inputs.Length}' values but Function Type 3 is defined to take 1 value.")
 
             ' Find the function that handles values below the Bounds value

@@ -370,7 +370,7 @@ Public Module NFI
         Get
             Return _PeriodDecSep
         End Get
-        Private Set(ByVal value As NumberFormatInfo)
+        Private Set(value As NumberFormatInfo)
             _PeriodDecSep = value
         End Set
     End Property
@@ -452,7 +452,7 @@ Public Class PdfDocument
         Get
             Return _ScaleFactor
         End Get
-        Friend Set(ByVal value As Double)
+        Friend Set(value As Double)
             _ScaleFactor = value
         End Set
     End Property
@@ -461,7 +461,7 @@ Public Class PdfDocument
         Get
             Return _Epsilon
         End Get
-        Friend Set(ByVal value As Double)
+        Friend Set(value As Double)
             _Epsilon = value
         End Set
     End Property
@@ -488,7 +488,7 @@ Public Class PdfDocument
     ''' </summary>
     ''' <param name="Index">Page index (zero based)</param>
     ''' <returns>PdfPage object</returns>
-    Public Function GetPage(ByVal Index As Integer) As PdfPage
+    Public Function GetPage(Index As Integer) As PdfPage
         If Index < 0 OrElse Index >= PageArray.Count Then Throw New ApplicationException("GetPage invalid argument")
         Return PageArray(Index)
     End Function
@@ -555,7 +555,7 @@ Public Class PdfDocument
     ''' <para>The PDF document will be saved in a file named FileName.</para>
     ''' </remarks>
     
-    Public Sub New(ByVal FileName As String)
+    Public Sub New(FileName As String)
         ' constructor helper
         ConstructorHelper(8.5 * 72.0, 11.0 * 72.0, 1.0, FileName, Nothing)
         Return
@@ -578,7 +578,7 @@ Public Class PdfDocument
     ''' is called.</para>
     ''' </remarks>
     
-    Public Sub New(ByVal Stream As Stream)
+    Public Sub New(Stream As Stream)
         ' constructor helper
         ConstructorHelper(8.5 * 72.0, 11.0 * 72.0, 1.0, Nothing, Stream)
         Return
@@ -602,7 +602,7 @@ Public Class PdfDocument
     ''' <para>The PDF document will be saved in a file named FileName.</para>
     ''' </remarks>
     
-    Public Sub New(ByVal Width As Double, ByVal Height As Double, ByVal ScaleFactor As Double, ByVal FileName As String)            ' page width
+    Public Sub New(Width As Double, Height As Double, ScaleFactor As Double, FileName As String)            ' page width
         ' page height
         ' scale factor from user units to points (i.e. 72.0 for inch)
         ' constructor helper
@@ -631,7 +631,7 @@ Public Class PdfDocument
     ''' is called.</para>
     ''' </remarks>
     
-    Public Sub New(ByVal Width As Double, ByVal Height As Double, ByVal ScaleFactor As Double, ByVal Stream As Stream)          ' page width
+    Public Sub New(Width As Double, Height As Double, ScaleFactor As Double, Stream As Stream)          ' page width
         ' page height
         ' scale factor from user units to points (i.e. 72.0 for inch)
         ' constructor helper
@@ -656,7 +656,7 @@ Public Class PdfDocument
     ''' <para>The PDF document will be saved in a file named FileName.</para>
     ''' </remarks>
     
-    Public Sub New(ByVal Width As Double, ByVal Height As Double, ByVal UnitOfMeasure As UnitOfMeasure, ByVal FileName As String)           ' page width
+    Public Sub New(Width As Double, Height As Double, UnitOfMeasure As UnitOfMeasure, FileName As String)           ' page width
         ' page height
         ' unit of measure: Point, Inch, cm, mm, m
         ' constructor helper
@@ -685,7 +685,7 @@ Public Class PdfDocument
     ''' is called.</para>
     ''' </remarks>
     
-    Public Sub New(ByVal Width As Double, ByVal Height As Double, ByVal UnitOfMeasure As UnitOfMeasure, ByVal Stream As Stream)         ' page width
+    Public Sub New(Width As Double, Height As Double, UnitOfMeasure As UnitOfMeasure, Stream As Stream)         ' page width
         ' page height
         ' unit of measure: Point, Inch, cm, mm, m
         ' constructor helper
@@ -710,7 +710,7 @@ Public Class PdfDocument
     ''' <para>The PDF document will be saved in a file named FileName.</para>
     ''' </remarks>
     
-    Public Sub New(ByVal PaperType As PaperType, ByVal Landscape As Boolean, ByVal UnitOfMeasure As UnitOfMeasure, ByVal FileName As String)    ' unit of measure: Point, Inch, cm, mm, m
+    Public Sub New(PaperType As PaperType, Landscape As Boolean, UnitOfMeasure As UnitOfMeasure, FileName As String)    ' unit of measure: Point, Inch, cm, mm, m
         ' set scale factor (user units to points)
         Dim Scale = UnitInPoints(UnitOfMeasure)
         Dim Width = PaperTypeSize(PaperType).Width
@@ -745,7 +745,7 @@ Public Class PdfDocument
     ''' is called.</para>
     ''' </remarks>
     
-    Public Sub New(ByVal PaperType As PaperType, ByVal Landscape As Boolean, ByVal UnitOfMeasure As UnitOfMeasure, ByVal Stream As Stream)  ' unit of measure: Point, Inch, cm, mm, m
+    Public Sub New(PaperType As PaperType, Landscape As Boolean, UnitOfMeasure As UnitOfMeasure, Stream As Stream)  ' unit of measure: Point, Inch, cm, mm, m
         ' set scale factor (user units to points)
         Dim Scale = UnitInPoints(UnitOfMeasure)
         Dim Width = PaperTypeSize(PaperType).Width
@@ -765,7 +765,7 @@ Public Class PdfDocument
     ' Initial Object Array
     
 
-    Private Sub ConstructorHelper(ByVal Width As Double, ByVal Height As Double, ByVal ScaleFactor As Double, ByVal FileName As String, ByVal OutputStream As Stream)           ' page width
+    Private Sub ConstructorHelper(Width As Double, Height As Double, ScaleFactor As Double, FileName As String, OutputStream As Stream)           ' page width
         ' page height
         ' scale factor from user units to points (i.e. 72.0 for inch)
         ' set scale factor (user units to points)
@@ -854,7 +854,7 @@ Public Class PdfDocument
     ''' default user password. Permissions flags are set as per argument.
     ''' </remarks>
     
-    Public Sub SetEncryption(ByVal Permissions As Permission)
+    Public Sub SetEncryption(Permissions As Permission)
         SetEncryption(Nothing, Nothing, Permissions, EncryptionType.Aes128)
         Return
     End Sub
@@ -875,7 +875,7 @@ Public Class PdfDocument
     ''' Permissions flags are set as per argument.
     ''' </remarks>
     
-    Public Sub SetEncryption(ByVal UserPassword As String, ByVal Permissions As Permission)
+    Public Sub SetEncryption(UserPassword As String, Permissions As Permission)
         SetEncryption(UserPassword, Nothing, Permissions, EncryptionType.Aes128)
         Return
     End Sub
@@ -899,7 +899,7 @@ Public Class PdfDocument
     ''' or the owner password. Permissions flags are set as per argument.
     ''' </remarks>
     
-    Public Sub SetEncryption(ByVal UserPassword As String, ByVal OwnerPassword As String, ByVal Permissions As Permission, ByVal Optional EncryptionType As EncryptionType = EncryptionType.Aes128)
+    Public Sub SetEncryption(UserPassword As String, OwnerPassword As String, Permissions As Permission, Optional EncryptionType As EncryptionType = EncryptionType.Aes128)
         ' encryption can be set only once
         If Encryption IsNot Nothing Then Throw New ApplicationException("Encryption is already set")
 
@@ -929,7 +929,7 @@ Public Class PdfDocument
     ''' </summary>
     ''' <param name="SourceIndex">Page's current position</param>
     ''' <param name="DestinationIndex">Page's new position</param>
-    Public Sub MovePage(ByVal SourceIndex As Integer, ByVal DestinationIndex As Integer)
+    Public Sub MovePage(SourceIndex As Integer, DestinationIndex As Integer)
         If SourceIndex < 0 OrElse SourceIndex >= PageCount OrElse DestinationIndex < 0 OrElse DestinationIndex > PageCount Then Throw New ApplicationException("Move page invalid argument")
 
         ' there is only one page or no move
@@ -1078,7 +1078,7 @@ Public Class PdfDocument
     ' used for document id and encryption
     
 
-    Friend Function ByteArrayToPdfHexString(ByVal ByteArray As Byte()) As String
+    Friend Function ByteArrayToPdfHexString(ByteArray As Byte()) As String
         ' convert to hex string
         Dim HexText As StringBuilder = New StringBuilder("<")
 
@@ -1094,7 +1094,7 @@ Public Class PdfDocument
     ' C# string text to PDF strings only
     
 
-    Friend Function TextToPdfString(ByVal Text As String, ByVal Parent As PdfObject) As String
+    Friend Function TextToPdfString(Text As String, Parent As PdfObject) As String
         ' convert C# string to byte array
         Dim ByteArray = TextToByteArray(Text)
 
@@ -1110,7 +1110,7 @@ Public Class PdfDocument
     ' This method is used for PDF strings only
     
 
-    Friend Function TextToByteArray(ByVal Text As String) As Byte()
+    Friend Function TextToByteArray(Text As String) As Byte()
         ' scan input text for Unicode characters and for non printing characters
         Dim Unicode = False
 
@@ -1161,7 +1161,7 @@ Public Class PdfDocument
     ' This method is used for PDF strings only
     
 
-    Friend Function ByteArrayToPdfString(ByVal ByteArray As Byte()) As String
+    Friend Function ByteArrayToPdfString(ByteArray As Byte()) As String
         ' create output string with open and closing parenthesis
         Dim Str As StringBuilder = New StringBuilder("(")
 
@@ -1188,7 +1188,7 @@ Public Class PdfDocument
     ' Create random byte array
     
 
-    Friend Shared Function RandomByteArray(ByVal Length As Integer) As Byte()
+    Friend Shared Function RandomByteArray(Length As Integer) As Byte()
         Dim ByteArray = New Byte(Length - 1) {}
 
         Using RandNumGen As RNGCryptoServiceProvider = New RNGCryptoServiceProvider()
@@ -1202,7 +1202,7 @@ Public Class PdfDocument
     ' Generate unique resource number
     
 
-    Friend Function GenerateResourceNumber(ByVal Code As Char) As String        ' one letter code for each type of resource
+    Friend Function GenerateResourceNumber(Code As Char) As String        ' one letter code for each type of resource
         ' create resource code
         Return String.Format("/{0}{1}", Code, Threading.Interlocked.Increment(ResCodeNo(PdfObject.ResCodeLetter.IndexOf(Code))))
     End Function

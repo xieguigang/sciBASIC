@@ -53,7 +53,7 @@ Namespace PdfReader
 
         Private _elements As List(Of PdfStructTreeElement)
 
-        Public Sub New(ByVal dictionary As PdfDictionary)
+        Public Sub New(dictionary As PdfDictionary)
             MyBase.New(dictionary.Parent, dictionary.ParseDictionary)
         End Sub
 

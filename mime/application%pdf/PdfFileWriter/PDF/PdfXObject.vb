@@ -81,7 +81,7 @@
             Get
                 Return New PdfRectangle(BBox)
             End Get
-            Set(ByVal value As PdfRectangle)
+            Set(value As PdfRectangle)
                 BBox = value
                 Dictionary.AddRectangle("/BBox", BBox)
             End Set
@@ -94,7 +94,7 @@
             Get
                 Return BBox.Left
             End Get
-            Set(ByVal value As Double)
+            Set(value As Double)
                 BBox.Left = value
                 Dictionary.AddRectangle("/BBox", BBox)
             End Set
@@ -107,7 +107,7 @@
             Get
                 Return BBox.Bottom
             End Get
-            Set(ByVal value As Double)
+            Set(value As Double)
                 BBox.Bottom = value
                 Dictionary.AddRectangle("/BBox", BBox)
             End Set
@@ -120,7 +120,7 @@
             Get
                 Return BBox.Right
             End Get
-            Set(ByVal value As Double)
+            Set(value As Double)
                 BBox.Right = value
                 Dictionary.AddRectangle("/BBox", BBox)
             End Set
@@ -133,7 +133,7 @@
             Get
                 Return BBox.Top
             End Get
-            Set(ByVal value As Double)
+            Set(value As Double)
                 BBox.Top = value
                 Dictionary.AddRectangle("/BBox", BBox)
             End Set
@@ -148,7 +148,7 @@
         ''' <param name="Document">PDF document</param>
         ''' <param name="Width">X Object width</param>
         ''' <param name="Height">X Object height</param>
-        Public Sub New(ByVal Document As PdfDocument, ByVal Optional Width As Double = 1.0, ByVal Optional Height As Double = 1.0)
+        Public Sub New(Document As PdfDocument, Optional Width As Double = 1.0, Optional Height As Double = 1.0)
             MyBase.New(Document, "/XObject")
             ' create resource code
             ResourceCode = Document.GenerateResourceNumber("X"c)
@@ -168,7 +168,7 @@
         ''' Layer control
         ''' </summary>
         ''' <param name="Layer">PdfLayer object</param>
-        Public Sub LayerControl(ByVal Layer As PdfObject)
+        Public Sub LayerControl(Layer As PdfObject)
             Dictionary.AddIndirectReference("/OC", Layer)
             Return
         End Sub

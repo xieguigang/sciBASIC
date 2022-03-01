@@ -52,7 +52,7 @@ Namespace PdfReader
 
         Private _Children As System.Collections.Generic.List(Of PdfReader.PdfPageInherit)
 
-        Public Sub New(ByVal dictionary As PdfDictionary)
+        Public Sub New(dictionary As PdfDictionary)
             MyBase.New(dictionary.Parent, dictionary.ParseDictionary)
             Children = New List(Of PdfPageInherit)()
 
@@ -70,11 +70,11 @@ Namespace PdfReader
             Next
         End Sub
 
-        Public Overrides Sub Visit(ByVal visitor As IPdfObjectVisitor)
+        Public Overrides Sub Visit(visitor As IPdfObjectVisitor)
             visitor.Visit(Me)
         End Sub
 
-        Public Overrides Sub FindLeafPages(ByVal pages As List(Of PdfPage))
+        Public Overrides Sub FindLeafPages(pages As List(Of PdfPage))
             For Each child In Children
                 child.FindLeafPages(pages)
             Next
@@ -84,7 +84,7 @@ Namespace PdfReader
             Get
                 Return _Children
             End Get
-            Private Set(ByVal value As List(Of PdfPageInherit))
+            Private Set(value As List(Of PdfPageInherit))
                 _Children = value
             End Set
         End Property

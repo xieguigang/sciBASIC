@@ -52,7 +52,7 @@ Namespace PdfReader
 
         Private _Major As Integer, _Minor As Integer
 
-        Public Sub New(ByVal parent As PdfObject, ByVal major As Integer, ByVal minor As Integer)
+        Public Sub New(parent As PdfObject, major As Integer, minor As Integer)
             MyBase.New(parent)
             Me.Major = major
             Me.Minor = minor
@@ -62,7 +62,7 @@ Namespace PdfReader
             Return $"{Major}.{Minor}"
         End Function
 
-        Public Overrides Sub Visit(ByVal visitor As IPdfObjectVisitor)
+        Public Overrides Sub Visit(visitor As IPdfObjectVisitor)
             visitor.Visit(Me)
         End Sub
 
@@ -70,7 +70,7 @@ Namespace PdfReader
             Get
                 Return _Major
             End Get
-            Private Set(ByVal value As Integer)
+            Private Set(value As Integer)
                 _Major = value
             End Set
         End Property
@@ -79,7 +79,7 @@ Namespace PdfReader
             Get
                 Return _Minor
             End Get
-            Private Set(ByVal value As Integer)
+            Private Set(value As Integer)
                 _Minor = value
             End Set
         End Property

@@ -103,7 +103,7 @@ Imports System.Drawing
 ''' drawing on the page before the header and the first row are drawn. 
 ''' 	For example, drawing a title above the table.
 ''' 	</remarks>
-Public Delegate Sub PdfTableStart(ByVal Table As PdfTable, ByVal TableStartPos As Double)
+Public Delegate Sub PdfTableStart(Table As PdfTable, TableStartPos As Double)
 
 ''' <summary>
 ''' PDF table end event handler delegate
@@ -115,7 +115,7 @@ Public Delegate Sub PdfTableStart(ByVal Table As PdfTable, ByVal TableStartPos A
 ''' drawing on the page after the last row was drawn. 
 ''' 	For example, drawing comment below the table.
 ''' 	</remarks>
-Public Delegate Sub PdfTableEnd(ByVal Table As PdfTable, ByVal TableEndPos As Double)
+Public Delegate Sub PdfTableEnd(Table As PdfTable, TableEndPos As Double)
 
 ''' <summary>
 ''' PDF table custom draw cell event handler delegate
@@ -127,7 +127,7 @@ Public Delegate Sub PdfTableEnd(ByVal Table As PdfTable, ByVal TableEndPos As Do
 ''' <para>True if the event handler drew the cell.</para>
 ''' <para>False if the event handler did not draw the cell.</para>
 ''' </remarks>
-Public Delegate Function PdfTableCustomDrawCell(ByVal Table As PdfTable, ByVal Cell As PdfTableCell) As Boolean
+Public Delegate Function PdfTableCustomDrawCell(Table As PdfTable, Cell As PdfTableCell) As Boolean
 
 ''' <summary>
 ''' PDF data table drawing class
@@ -333,7 +333,7 @@ Public Class PdfTable
         Get
             Return _DefaultCellStyle
         End Get
-        Friend Set(ByVal value As PdfTableStyle)
+        Friend Set(value As PdfTableStyle)
             _DefaultCellStyle = value
         End Set
     End Property
@@ -342,7 +342,7 @@ Public Class PdfTable
         Get
             Return _DefaultHeaderStyle
         End Get
-        Friend Set(ByVal value As PdfTableStyle)
+        Friend Set(value As PdfTableStyle)
             _DefaultHeaderStyle = value
         End Set
     End Property
@@ -351,7 +351,7 @@ Public Class PdfTable
         Get
             Return _Document
         End Get
-        Friend Set(ByVal value As PdfDocument)
+        Friend Set(value As PdfDocument)
             _Document = value
         End Set
     End Property
@@ -375,7 +375,7 @@ Public Class PdfTable
         Get
             Return _HeaderHeight
         End Get
-        Friend Set(ByVal value As Double)
+        Friend Set(value As Double)
             _HeaderHeight = value
         End Set
     End Property
@@ -414,7 +414,7 @@ Public Class PdfTable
         Get
             Return _Page
         End Get
-        Friend Set(ByVal value As PdfPage)
+        Friend Set(value As PdfPage)
             _Page = value
         End Set
     End Property
@@ -423,7 +423,7 @@ Public Class PdfTable
         Get
             Return _TablePageNumber
         End Get
-        Friend Set(ByVal value As Integer)
+        Friend Set(value As Integer)
             _TablePageNumber = value
         End Set
     End Property
@@ -432,7 +432,7 @@ Public Class PdfTable
         Get
             Return _RowBottomPosition
         End Get
-        Friend Set(ByVal value As Double)
+        Friend Set(value As Double)
             _RowBottomPosition = value
         End Set
     End Property
@@ -441,7 +441,7 @@ Public Class PdfTable
         Get
             Return _RowHeight
         End Get
-        Friend Set(ByVal value As Double)
+        Friend Set(value As Double)
             _RowHeight = value
         End Set
     End Property
@@ -450,7 +450,7 @@ Public Class PdfTable
         Get
             Return _RowNumber
         End Get
-        Friend Set(ByVal value As Integer)
+        Friend Set(value As Integer)
             _RowNumber = value
         End Set
     End Property
@@ -493,7 +493,7 @@ Public Class PdfTable
         Get
             Return _RowTopPosition
         End Get
-        Set(ByVal value As Double)
+        Set(value As Double)
             If Active Then Throw New ApplicationException("PdfTable: Row position must be defined at initialization.")
             _RowTopPosition = value
         End Set
@@ -519,7 +519,7 @@ Public Class PdfTable
         Get
             Return New PdfRectangle(_TableArea)
         End Get
-        Set(ByVal value As PdfRectangle)
+        Set(value As PdfRectangle)
             If Active Then Throw New ApplicationException("PdfTable: Table area must be defined at initialization.")
             _TableArea = value
         End Set
@@ -531,7 +531,7 @@ Public Class PdfTable
         Get
             Return _Borders
         End Get
-        Friend Set(ByVal value As PdfTableBorder)
+        Friend Set(value As PdfTableBorder)
             _Borders = value
         End Set
     End Property
@@ -599,7 +599,7 @@ Public Class PdfTable
     ''' <param name="Contents">Current PdfContents.</param>
     ''' <param name="Font">Table's default font.</param>
     ''' <param name="FontSize">Table's default font size.</param>
-    Public Sub New(ByVal Page As PdfPage, ByVal Contents As PdfContents, ByVal Optional Font As PdfFont = Nothing, ByVal Optional FontSize As Double = 9.0)
+    Public Sub New(Page As PdfPage, Contents As PdfContents, Optional Font As PdfFont = Nothing, Optional FontSize As Double = 9.0)
         ' save arguments
         Document = Page.Document
         Me.Page = Page
@@ -810,7 +810,7 @@ Public Class PdfTable
     ''' current row must be set. If the NewPage argument is set to true,
     ''' the software will print the row at the top of a new page.
     ''' </remarks>
-    Public Sub DrawRow(ByVal Optional NewPage As Boolean = False)
+    Public Sub DrawRow(Optional NewPage As Boolean = False)
         ' we are about to draw the first row
         If Not DrawingActive Then
             ' one time PdfTable initialization

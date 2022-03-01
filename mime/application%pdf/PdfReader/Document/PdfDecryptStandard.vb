@@ -56,7 +56,7 @@ Namespace PdfReader
         Private _md5 As MD5 = Cryptography.MD5.Create()
         Private _encryptionKey As Byte()
 
-        Public Sub New(ByVal parent As PdfObject, ByVal trailer As PdfDictionary, ByVal encrypt As PdfDictionary)
+        Public Sub New(parent As PdfObject, trailer As PdfDictionary, encrypt As PdfDictionary)
             MyBase.New(parent)
             ' Extract the first document identifier from the trailer
             Dim ids = trailer.MandatoryValue(Of PdfArray)("ID")
@@ -89,23 +89,23 @@ Namespace PdfReader
             End If
         End Sub
 
-        Public Overrides Function DecodeString(ByVal obj As PdfString) As String
+        Public Overrides Function DecodeString(obj As PdfString) As String
             Return obj.ParseString.BytesToString(DecodeBytes(obj, obj.ParseString.ValueAsBytes))
         End Function
 
-        Public Overrides Function DecodeStringAsBytes(ByVal obj As PdfString) As Byte()
+        Public Overrides Function DecodeStringAsBytes(obj As PdfString) As Byte()
             Return DecodeBytes(obj, obj.ParseString.ValueAsBytes)
         End Function
 
-        Public Overrides Function DecodeStream(ByVal stream As PdfStream) As String
+        Public Overrides Function DecodeStream(stream As PdfStream) As String
             Return Encoding.ASCII.GetString(stream.ParseStream.DecodeBytes(DecodeBytes(stream, stream.ParseStream.StreamBytes)))
         End Function
 
-        Public Overrides Function DecodeStreamAsBytes(ByVal stream As PdfStream) As Byte()
+        Public Overrides Function DecodeStreamAsBytes(stream As PdfStream) As Byte()
             Return stream.ParseStream.DecodeBytes(DecodeBytes(stream, stream.ParseStream.StreamBytes))
         End Function
 
-        Private Function DecodeBytes(ByVal obj As PdfObject, ByVal bytes As Byte()) As Byte()
+        Private Function DecodeBytes(obj As PdfObject, bytes As Byte()) As Byte()
             Dim indirectObject As PdfIndirectObject = obj.TypedParent(Of PdfIndirectObject)()
             If indirectObject Is Nothing Then Throw New ApplicationException($"Cannot decrypt a string that is not inside an indirect object.")
 
@@ -134,7 +134,7 @@ Namespace PdfReader
             Return Transform(rc4Key, bytes)
         End Function
 
-        Private Function ComputeEncryptionKey(ByVal keyLength As Integer, ByVal documentId As Byte(), ByVal ownerPasswordValue As Byte(), ByVal ownerKey As Byte(), ByVal permissions As Integer) As Byte()
+        Private Function ComputeEncryptionKey(keyLength As Integer, documentId As Byte(), ownerPasswordValue As Byte(), ownerKey As Byte(), permissions As Integer) As Byte()
             ' Algorithm 3.2, Computing an encryption key
 
             ' (1, 2, 3, 4, 5) Appends all required data that needs to be MD5 hashed
@@ -163,7 +163,7 @@ Namespace PdfReader
             Return block
         End Function
 
-        Private Function ComputeOwnerPasswordValue(ByVal keyLength As Integer, ByVal ownerKey As Byte()) As Byte()
+        Private Function ComputeOwnerPasswordValue(keyLength As Integer, ownerKey As Byte()) As Byte()
             ' Algorithm 3.3, Computing the encryption dictionary's O (owner password) value
 
             ' (1) Pad the owner password (use the pad because we do not care about a users password)
@@ -204,7 +204,7 @@ Namespace PdfReader
             Return ownerKey
         End Function
 
-        Private Function ComputeUserPasswordValue(ByVal keyLength As Integer, ByVal documentId As Byte(), ByVal encryptionKey As Byte()) As Byte()
+        Private Function ComputeUserPasswordValue(keyLength As Integer, documentId As Byte(), encryptionKey As Byte()) As Byte()
             ' Algorithm 3.5, Computing the encryption dictionary's U (user password) value
 
             ' (2, 3) Join the fixed padding and the document identifier
@@ -235,7 +235,7 @@ Namespace PdfReader
             Return userKey
         End Function
 
-        Private Function CompareArray(ByVal l As Byte(), ByVal r As Byte(), ByVal length As Integer) As Boolean
+        Private Function CompareArray(l As Byte(), r As Byte(), length As Integer) As Boolean
             For i = 0 To length - 1
                 If l(i) <> r(i) Then Return False
             Next

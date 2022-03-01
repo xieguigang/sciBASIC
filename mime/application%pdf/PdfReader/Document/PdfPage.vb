@@ -56,15 +56,15 @@ Namespace PdfReader
 
         Private _contents As PdfContents
 
-        Public Sub New(ByVal dictionary As PdfDictionary)
+        Public Sub New(dictionary As PdfDictionary)
             MyBase.New(dictionary.Parent, dictionary.ParseDictionary)
         End Sub
 
-        Public Overrides Sub Visit(ByVal visitor As IPdfObjectVisitor)
+        Public Overrides Sub Visit(visitor As IPdfObjectVisitor)
             visitor.Visit(Me)
         End Sub
 
-        Public Overrides Sub FindLeafPages(ByVal pages As List(Of PdfPage))
+        Public Overrides Sub FindLeafPages(pages As List(Of PdfPage))
             pages.Add(Me)
         End Sub
 

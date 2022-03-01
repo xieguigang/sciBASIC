@@ -48,7 +48,7 @@ Namespace PdfReader
 
         Private _Position As Long, _Message As String
 
-        Public Sub New(ByVal position As Long, ByVal message As String)
+        Public Sub New(position As Long, message As String)
             Me.Position = position
             Me.Message = message
         End Sub
@@ -57,7 +57,7 @@ Namespace PdfReader
             Get
                 Return _Position
             End Get
-            Private Set(ByVal value As Long)
+            Private Set(value As Long)
                 _Position = value
             End Set
         End Property
@@ -66,7 +66,7 @@ Namespace PdfReader
             Get
                 Return _Message
             End Get
-            Private Set(ByVal value As String)
+            Private Set(value As String)
                 _Message = value
             End Set
         End Property

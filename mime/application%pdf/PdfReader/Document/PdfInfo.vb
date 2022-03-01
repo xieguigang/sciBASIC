@@ -48,11 +48,11 @@ Namespace PdfReader
     Public Class PdfInfo
         Inherits PdfDictionary
 
-        Public Sub New(ByVal parent As PdfObject, ByVal parse As ParseDictionary)
+        Public Sub New(parent As PdfObject, parse As ParseDictionary)
             MyBase.New(parent, parse)
         End Sub
 
-        Public Overrides Sub Visit(ByVal visitor As IPdfObjectVisitor)
+        Public Overrides Sub Visit(visitor As IPdfObjectVisitor)
             visitor.Visit(Me)
         End Sub
 

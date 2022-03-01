@@ -57,11 +57,11 @@ Namespace PdfReader
 
         Private _wrapped As List(Of PdfObject)
 
-        Public Sub New(ByVal parent As PdfObject, ByVal array As ParseArray)
+        Public Sub New(parent As PdfObject, array As ParseArray)
             MyBase.New(parent, array)
         End Sub
 
-        Public Overrides Sub Visit(ByVal visitor As IPdfObjectVisitor)
+        Public Overrides Sub Visit(visitor As IPdfObjectVisitor)
             visitor.Visit(Me)
         End Sub
 

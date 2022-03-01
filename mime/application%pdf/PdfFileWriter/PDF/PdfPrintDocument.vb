@@ -114,7 +114,7 @@ Imports System.Drawing.Printing
             Get
                 Return _ImageQuality
             End Get
-            Set(ByVal value As Integer)
+            Set(value As Integer)
                 ' set image quality
                 If value <> PdfImage.DefaultQuality AndAlso (value < 0 OrElse value > 100) Then Throw New ApplicationException("PdfImageControl.ImageQuality must be PdfImage.DefaultQuality or 0 to 100")
                 _ImageQuality = value
@@ -131,7 +131,7 @@ Imports System.Drawing.Printing
             Get
                 Return _GrayToBWCutoff
             End Get
-            Set(ByVal value As Integer)
+            Set(value As Integer)
                 If value < 1 OrElse value > 99 Then Throw New ApplicationException("PdfImageControl.GrayToBWCutoff must be 1 to 99")
                 _GrayToBWCutoff = value
             End Set
@@ -150,7 +150,7 @@ Imports System.Drawing.Printing
         ''' </summary>
         ''' <param name="Document">Current PDF document</param>
         
-        Public Sub New(ByVal Document As PdfDocument)
+        Public Sub New(Document As PdfDocument)
             ' save document
             Me.Document = Document
 
@@ -182,7 +182,7 @@ Imports System.Drawing.Printing
         ''' </summary>
         
         Public Property DocumentInColor As Boolean
-            Set(ByVal value As Boolean)
+            Set(value As Boolean)
                 DefaultPageSettings.Color = value
                 Return
             End Set
@@ -211,7 +211,7 @@ Imports System.Drawing.Printing
         ''' <param name="RightMargin">Right margin</param>
         ''' <param name="BottomMargin">Bottom margin</param>
         
-        Public Sub SetMargins(ByVal LeftMargin As Double, ByVal TopMargin As Double, ByVal RightMargin As Double, ByVal BottomMargin As Double)
+        Public Sub SetMargins(LeftMargin As Double, TopMargin As Double, RightMargin As Double, BottomMargin As Double)
             Dim Margins = DefaultPageSettings.Margins
             Margins.Left = CInt(LeftMargin * Document.ScaleFactor / 0.72 + 0.5)
             Margins.Top = CInt(TopMargin * Document.ScaleFactor / 0.72 + 0.5)

@@ -158,7 +158,7 @@ Imports System
         Friend Data As Byte()       ' table data in big endian format
 
         ' constructor
-        Friend Sub New(ByVal Tag As UInteger)
+        Friend Sub New(Tag As UInteger)
             Me.Tag = Tag
             Return
         End Sub
@@ -186,7 +186,7 @@ Imports System
         End Sub
 
         ' search constructor
-        Friend Sub New(ByVal PlatformID As UShort, ByVal EncodingID As UShort, ByVal Format As UShort)
+        Friend Sub New(PlatformID As UShort, EncodingID As UShort, Format As UShort)
             Me.PlatformID = PlatformID
             Me.EncodingID = EncodingID
             Me.Format = Format
@@ -194,7 +194,7 @@ Imports System
         End Sub
 
         ' compare two sub-tables for sort and binary search
-        Public Function CompareTo(ByVal Other As cmapSubTbl) As Integer Implements IComparable(Of cmapSubTbl).CompareTo
+        Public Function CompareTo(Other As cmapSubTbl) As Integer Implements IComparable(Of cmapSubTbl).CompareTo
             If PlatformID <> Other.PlatformID Then Return PlatformID - Other.PlatformID
             If EncodingID <> Other.EncodingID Then Return EncodingID - Other.EncodingID
             Return Format - Other.Format
@@ -256,7 +256,7 @@ Imports System
         Friend IDRangeOffset As UShort          ' Offsets (in byte) into glyphIdArray or 0. Array length=segCount
 
         ' search constructor
-        Friend Sub New(ByVal StartChar As Integer, ByVal EndChar As Integer, ByVal IDDelta As Integer, ByVal IDRangeOffset As Integer)
+        Friend Sub New(StartChar As Integer, EndChar As Integer, IDDelta As Integer, IDRangeOffset As Integer)
             Me.StartChar = CUShort(StartChar)
             Me.EndChar = CUShort(EndChar)
             Me.IDDelta = CShort(IDDelta)
@@ -265,13 +265,13 @@ Imports System
         End Sub
 
         ' search constructor
-        Friend Sub New(ByVal EndCount As Integer)
+        Friend Sub New(EndCount As Integer)
             EndChar = CUShort(EndCount)
             Return
         End Sub
 
         ' compare two records for sort and binary search
-        Public Function CompareTo(ByVal Other As cmapSeg) As Integer Implements IComparable(Of cmapSeg).CompareTo
+        Public Function CompareTo(Other As cmapSeg) As Integer Implements IComparable(Of cmapSeg).CompareTo
             Return EndChar - Other.EndChar
         End Function
     End Class

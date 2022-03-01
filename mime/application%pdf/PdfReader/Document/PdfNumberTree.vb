@@ -55,7 +55,7 @@ Namespace PdfReader
         Private _children As List(Of PdfNumberTree)
         Private _nums As Dictionary(Of Integer, PdfObject)
 
-        Public Sub New(ByVal dictionary As PdfDictionary, ByVal Optional root As Boolean = True)
+        Public Sub New(dictionary As PdfDictionary, Optional root As Boolean = True)
             MyBase.New(dictionary.Parent)
             _dictionary = dictionary
             _root = root
@@ -69,7 +69,7 @@ Namespace PdfReader
             End If
         End Sub
 
-        Public Overrides Sub Visit(ByVal visitor As IPdfObjectVisitor)
+        Public Overrides Sub Visit(visitor As IPdfObjectVisitor)
             visitor.Visit(Me)
         End Sub
 
@@ -77,7 +77,7 @@ Namespace PdfReader
             Get
                 Return _LimitMin
             End Get
-            Private Set(ByVal value As Integer)
+            Private Set(value As Integer)
                 _LimitMin = value
             End Set
         End Property
@@ -86,12 +86,12 @@ Namespace PdfReader
             Get
                 Return _LimitMax
             End Get
-            Private Set(ByVal value As Integer)
+            Private Set(value As Integer)
                 _LimitMax = value
             End Set
         End Property
 
-        Default Public ReadOnly Property Item(ByVal number As Integer) As PdfObject
+        Default Public ReadOnly Property Item(number As Integer) As PdfObject
             Get
                 Dim ret As PdfObject = Nothing
 

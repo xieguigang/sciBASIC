@@ -48,7 +48,7 @@ Namespace PdfReader
 
         Private _Value As Boolean
 
-        Public Sub New(ByVal value As Boolean)
+        Public Sub New(value As Boolean)
             Me.Value = value
         End Sub
 
@@ -56,7 +56,7 @@ Namespace PdfReader
             Get
                 Return _Value
             End Get
-            Private Set(ByVal value As Boolean)
+            Private Set(value As Boolean)
                 _Value = value
             End Set
         End Property

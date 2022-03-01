@@ -50,7 +50,7 @@ Namespace PdfReader
     Public Class PdfReal
         Inherits PdfObject
 
-        Public Sub New(ByVal parent As PdfObject, ByVal real As ParseReal)
+        Public Sub New(parent As PdfObject, real As ParseReal)
             MyBase.New(parent, real)
         End Sub
 
@@ -58,7 +58,7 @@ Namespace PdfReader
             Return Value.ToString()
         End Function
 
-        Public Overrides Sub Visit(ByVal visitor As IPdfObjectVisitor)
+        Public Overrides Sub Visit(visitor As IPdfObjectVisitor)
             visitor.Visit(Me)
         End Sub
 

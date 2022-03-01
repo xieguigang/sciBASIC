@@ -106,7 +106,7 @@ Public Class PdfTableBorderStyle
         Get
             Return _Display
         End Get
-        Friend Set(ByVal value As Boolean)
+        Friend Set(value As Boolean)
             _Display = value
         End Set
     End Property
@@ -115,7 +115,7 @@ Public Class PdfTableBorderStyle
         Get
             Return _Width
         End Get
-        Friend Set(ByVal value As Double)
+        Friend Set(value As Double)
             _Width = value
         End Set
     End Property
@@ -124,7 +124,7 @@ Public Class PdfTableBorderStyle
         Get
             Return _Color
         End Get
-        Friend Set(ByVal value As Color)
+        Friend Set(value As Color)
             _Color = value
         End Set
     End Property
@@ -150,7 +150,7 @@ Public Class PdfTableBorderStyle
     ''' PdfTableBorderStyle constructor
     ''' </summary>
     ''' <param name="Width">Border line width</param>
-    Public Sub New(ByVal Width As Double)
+    Public Sub New(Width As Double)
         Display = True
         Me.Width = Width
         Color = Color.Black
@@ -162,7 +162,7 @@ Public Class PdfTableBorderStyle
     ''' </summary>
     ''' <param name="Width">Border line width</param>
     ''' <param name="Color">Border line color</param>
-    Public Sub New(ByVal Width As Double, ByVal Color As Color)
+    Public Sub New(Width As Double, Color As Color)
         Display = True
         Me.Width = Width
         Me.Color = Color
@@ -188,7 +188,7 @@ Public Class PdfTableBorderStyle
     ''' </summary>
     ''' <param name="Width">Line width in user units</param>
     ''' <param name="Color">Line color</param>
-    Friend Sub [Set](ByVal Width As Double, ByVal Color As Color)
+    Friend Sub [Set](Width As Double, Color As Color)
         Display = True
         Me.Width = Width
         Me.Color = Color
@@ -199,7 +199,7 @@ Public Class PdfTableBorderStyle
     ''' Copy border line style
     ''' </summary>
     ''' <param name="Other">Border line template</param>
-    Friend Sub Copy(ByVal Other As PdfTableBorderStyle)
+    Friend Sub Copy(Other As PdfTableBorderStyle)
         Display = Other.Display
         Width = Other.Width
         Color = Other.Color
@@ -266,7 +266,7 @@ Public Class PdfTableBorder
         Get
             Return _TopBorder
         End Get
-        Friend Set(ByVal value As PdfTableBorderStyle)
+        Friend Set(value As PdfTableBorderStyle)
             _TopBorder = value
         End Set
     End Property
@@ -284,7 +284,7 @@ Public Class PdfTableBorder
     ''' Set top border line
     ''' </summary>
     ''' <param name="Width">Line width</param>
-    Public Sub SetTopBorder(ByVal Width As Double)
+    Public Sub SetTopBorder(Width As Double)
         TestInit()
         TopBorder.Set(Width, Color.Black)
         Return
@@ -295,7 +295,7 @@ Public Class PdfTableBorder
     ''' </summary>
     ''' <param name="Width">Line width</param>
     ''' <param name="Color">LineColor</param>
-    Public Sub SetTopBorder(ByVal Width As Double, ByVal Color As Color)
+    Public Sub SetTopBorder(Width As Double, Color As Color)
         TestInit()
         TopBorder.Set(Width, Color)
         Return
@@ -305,7 +305,7 @@ Public Class PdfTableBorder
         Get
             Return _BottomBorder
         End Get
-        Friend Set(ByVal value As PdfTableBorderStyle)
+        Friend Set(value As PdfTableBorderStyle)
             _BottomBorder = value
         End Set
     End Property
@@ -323,7 +323,7 @@ Public Class PdfTableBorder
     ''' Set bottom border line
     ''' </summary>
     ''' <param name="Width">Line width</param>
-    Public Sub SetBottomBorder(ByVal Width As Double)
+    Public Sub SetBottomBorder(Width As Double)
         TestInit()
         BottomBorder.Set(Width, Color.Black)
         Return
@@ -334,7 +334,7 @@ Public Class PdfTableBorder
     ''' </summary>
     ''' <param name="Width">Line width</param>
     ''' <param name="Color">LineColor</param>
-    Public Sub SetBottomBorder(ByVal Width As Double, ByVal Color As Color)
+    Public Sub SetBottomBorder(Width As Double, Color As Color)
         TestInit()
         BottomBorder.Set(Width, Color)
         Return
@@ -344,7 +344,7 @@ Public Class PdfTableBorder
         Get
             Return _HeaderHorBorder
         End Get
-        Friend Set(ByVal value As PdfTableBorderStyle)
+        Friend Set(value As PdfTableBorderStyle)
             _HeaderHorBorder = value
         End Set
     End Property
@@ -362,7 +362,7 @@ Public Class PdfTableBorder
     ''' Set header horizontal border line
     ''' </summary>
     ''' <param name="Width">Line width</param>
-    Public Sub SetHeaderHorBorder(ByVal Width As Double)
+    Public Sub SetHeaderHorBorder(Width As Double)
         TestInit()
         HeaderHorBorder.Set(Width, Color.Black)
         Return
@@ -373,7 +373,7 @@ Public Class PdfTableBorder
     ''' </summary>
     ''' <param name="Width">Line width</param>
     ''' <param name="Color">LineColor</param>
-    Public Sub SetHeaderHorBorder(ByVal Width As Double, ByVal Color As Color)
+    Public Sub SetHeaderHorBorder(Width As Double, Color As Color)
         TestInit()
         HeaderHorBorder.Set(Width, Color)
         Return
@@ -383,7 +383,7 @@ Public Class PdfTableBorder
         Get
             Return _CellHorBorder
         End Get
-        Friend Set(ByVal value As PdfTableBorderStyle)
+        Friend Set(value As PdfTableBorderStyle)
             _CellHorBorder = value
         End Set
     End Property
@@ -401,7 +401,7 @@ Public Class PdfTableBorder
     ''' Set cell horizontal border line
     ''' </summary>
     ''' <param name="Width">Line width</param>
-    Public Sub SetCellHorBorder(ByVal Width As Double)
+    Public Sub SetCellHorBorder(Width As Double)
         TestInit()
         CellHorBorder.Set(Width, Color.Black)
         Return
@@ -412,7 +412,7 @@ Public Class PdfTableBorder
     ''' </summary>
     ''' <param name="Width">Line width</param>
     ''' <param name="Color">LineColor</param>
-    Public Sub SetCellHorBorder(ByVal Width As Double, ByVal Color As Color)
+    Public Sub SetCellHorBorder(Width As Double, Color As Color)
         TestInit()
         CellHorBorder.Set(Width, Color)
         Return
@@ -422,7 +422,7 @@ Public Class PdfTableBorder
         Get
             Return _HeaderVertBorder
         End Get
-        Friend Set(ByVal value As PdfTableBorderStyle())
+        Friend Set(value As PdfTableBorderStyle())
             _HeaderVertBorder = value
         End Set
     End Property
@@ -431,7 +431,7 @@ Public Class PdfTableBorder
     ''' Clear header vertical border line
     ''' </summary>
     ''' <param name="Index">Border line index</param>
-    Public Sub ClearHeaderVertBorder(ByVal Index As Integer)
+    Public Sub ClearHeaderVertBorder(Index As Integer)
         TestInit()
         HeaderVertBorder(Index).Clear()
         Return
@@ -442,7 +442,7 @@ Public Class PdfTableBorder
     ''' </summary>
     ''' <param name="Index">Border line index</param>
     ''' <param name="Width">Line width</param>
-    Public Sub SetHeaderVertBorder(ByVal Index As Integer, ByVal Width As Double)
+    Public Sub SetHeaderVertBorder(Index As Integer, Width As Double)
         TestInit()
         HeaderVertBorder(Index).Set(Width, Color.Black)
         Return
@@ -454,7 +454,7 @@ Public Class PdfTableBorder
     ''' <param name="Index">Border line index</param>
     ''' <param name="Width">Line width</param>
     ''' <param name="Color">LineColor</param>
-    Public Sub SetHeaderVertBorder(ByVal Index As Integer, ByVal Width As Double, ByVal Color As Color)
+    Public Sub SetHeaderVertBorder(Index As Integer, Width As Double, Color As Color)
         TestInit()
         HeaderVertBorder(Index).Set(Width, Color)
         Return
@@ -464,7 +464,7 @@ Public Class PdfTableBorder
         Get
             Return _HeaderVertBorderActive
         End Get
-        Friend Set(ByVal value As Boolean)
+        Friend Set(value As Boolean)
             _HeaderVertBorderActive = value
         End Set
     End Property
@@ -473,7 +473,7 @@ Public Class PdfTableBorder
         Get
             Return _CellVertBorder
         End Get
-        Friend Set(ByVal value As PdfTableBorderStyle())
+        Friend Set(value As PdfTableBorderStyle())
             _CellVertBorder = value
         End Set
     End Property
@@ -482,7 +482,7 @@ Public Class PdfTableBorder
     ''' Clear cell vertical border line
     ''' </summary>
     ''' <param name="Index">Border line index</param>
-    Public Sub ClearCellVertBorder(ByVal Index As Integer)
+    Public Sub ClearCellVertBorder(Index As Integer)
         TestInit()
         CellVertBorder(Index).Clear()
         Return
@@ -493,7 +493,7 @@ Public Class PdfTableBorder
     ''' </summary>
     ''' <param name="Index">Border line index</param>
     ''' <param name="Width">Line width</param>
-    Public Sub SetCellVertBorder(ByVal Index As Integer, ByVal Width As Double)
+    Public Sub SetCellVertBorder(Index As Integer, Width As Double)
         TestInit()
         CellVertBorder(Index).Set(Width, Color.Black)
         Return
@@ -505,7 +505,7 @@ Public Class PdfTableBorder
     ''' <param name="Index">Border line index</param>
     ''' <param name="Width">Line width</param>
     ''' <param name="Color">LineColor</param>
-    Public Sub SetCellVertBorder(ByVal Index As Integer, ByVal Width As Double, ByVal Color As Color)
+    Public Sub SetCellVertBorder(Index As Integer, Width As Double, Color As Color)
         TestInit()
         CellVertBorder(Index).Set(Width, Color)
         Return
@@ -515,7 +515,7 @@ Public Class PdfTableBorder
         Get
             Return _CellVertBorderActive
         End Get
-        Friend Set(ByVal value As Boolean)
+        Friend Set(value As Boolean)
             _CellVertBorderActive = value
         End Set
     End Property
@@ -525,7 +525,7 @@ Public Class PdfTableBorder
     Friend Columns As Integer
     Friend VertBorderHalfWidth As Double()
 
-    Friend Sub New(ByVal Parent As PdfTable)
+    Friend Sub New(Parent As PdfTable)
         ' save PdfTable parent and document
         Me.Parent = Parent
         Document = Parent.Document
@@ -599,7 +599,7 @@ Public Class PdfTableBorder
     ''' Set all borders to the same line width
     ''' </summary>
     ''' <param name="Width">Border line width</param>
-    Public Sub SetAllBorders(ByVal Width As Double)
+    Public Sub SetAllBorders(Width As Double)
         SetAllBorders(Width, Color.Black, Width, Color.Black)
         Return
     End Sub
@@ -609,7 +609,7 @@ Public Class PdfTableBorder
     ''' </summary>
     ''' <param name="Width">Border line width</param>
     ''' <param name="Color">Border line color</param>
-    Public Sub SetAllBorders(ByVal Width As Double, ByVal Color As Color)
+    Public Sub SetAllBorders(Width As Double, Color As Color)
         SetAllBorders(Width, Color, Width, Color)
         Return
     End Sub
@@ -619,7 +619,7 @@ Public Class PdfTableBorder
     ''' </summary>
     ''' <param name="FrameWidth">Frame border line width</param>
     ''' <param name="GridWidth">Grid borders line width</param>
-    Public Sub SetAllBorders(ByVal FrameWidth As Double, ByVal GridWidth As Double)
+    Public Sub SetAllBorders(FrameWidth As Double, GridWidth As Double)
         SetAllBorders(FrameWidth, Color.Black, GridWidth, Color.Black)
         Return
     End Sub
@@ -631,7 +631,7 @@ Public Class PdfTableBorder
     ''' <param name="FrameColor">Frame border color</param>
     ''' <param name="GridWidth">Grid borders line width</param>
     ''' <param name="GridColor">Grid line color</param>
-    Public Sub SetAllBorders(ByVal FrameWidth As Double, ByVal FrameColor As Color, ByVal GridWidth As Double, ByVal GridColor As Color)
+    Public Sub SetAllBorders(FrameWidth As Double, FrameColor As Color, GridWidth As Double, GridColor As Color)
         ' set is not allowed
         If Parent.Active OrElse TopBorder Is Nothing Then Throw New ApplicationException("Set borders after SetColumnWidth and before table is active.")
 
@@ -659,7 +659,7 @@ Public Class PdfTableBorder
     ''' Set frame border lines
     ''' </summary>
     ''' <param name="FrameWidth">Frame line width</param>
-    Public Sub SetFrame(ByVal FrameWidth As Double)
+    Public Sub SetFrame(FrameWidth As Double)
         SetFrame(FrameWidth, Color.Black)
         Return
     End Sub
@@ -669,7 +669,7 @@ Public Class PdfTableBorder
     ''' </summary>
     ''' <param name="FrameWidth">Frame line width</param>
     ''' <param name="FrameColor">Frame line color</param>
-    Public Sub SetFrame(ByVal FrameWidth As Double, ByVal FrameColor As Color)
+    Public Sub SetFrame(FrameWidth As Double, FrameColor As Color)
         ' set is not allowed
         If Parent.Active OrElse TopBorder Is Nothing Then Throw New ApplicationException("Set borders after SetColumnWidth and before table is active.")
 

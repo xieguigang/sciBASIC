@@ -65,7 +65,7 @@ Namespace PdfReader
         Private _disposed As Boolean
         Public Event ResolveReference As EventHandler(Of ParseResolveEventArgs)
 
-        Public Sub New(ByVal stream As Stream, ByVal Optional allowIdentifiers As Boolean = False)
+        Public Sub New(stream As Stream, Optional allowIdentifiers As Boolean = False)
             Tokenizer = New Tokenizer(stream) With {
                 .AllowIdentifiers = allowIdentifiers
             }
@@ -93,7 +93,7 @@ Namespace PdfReader
             Return Tokenizer.GetXRefOffset()
         End Function
 
-        Public Function ParseXRef(ByVal position As Long) As List(Of TokenXRefEntry)
+        Public Function ParseXRef(position As Long) As List(Of TokenXRefEntry)
             Tokenizer.Position = position
             Return ParseXRef()
         End Function
@@ -146,7 +146,7 @@ Namespace PdfReader
             Return entries
         End Function
 
-        Public Sub ParseXRefSections(ByVal entries As List(Of TokenXRefEntry))
+        Public Sub ParseXRefSections(entries As List(Of TokenXRefEntry))
             While True
                 Dim t As TokenObject = Tokenizer.GetToken()
                 ThrowOnError(t)
@@ -192,7 +192,7 @@ Namespace PdfReader
             Return CType(obj, ParseDictionary)
         End Function
 
-        Public Function ParseIndirectObject(ByVal position As Long) As ParseIndirectObject
+        Public Function ParseIndirectObject(position As Long) As ParseIndirectObject
             Dim restore = Tokenizer.Position
 
             ' Set correct position for parsing the randomly positioned object
@@ -282,7 +282,7 @@ Namespace PdfReader
             End If
         End Function
 
-        Public Function ParseObject(ByVal Optional allowEmpty As Boolean = False) As ParseObjectBase
+        Public Function ParseObject(Optional allowEmpty As Boolean = False) As ParseObjectBase
             Tokenizer.IgnoreComments = True
             Dim t As TokenObject = Tokenizer.GetToken()
 
@@ -389,7 +389,7 @@ Namespace PdfReader
             Return Nothing
         End Function
 
-        Protected Overridable Function OnResolveReference(ByVal reference As ParseObjectReference) As ParseObjectBase
+        Protected Overridable Function OnResolveReference(reference As ParseObjectReference) As ParseObjectBase
             Dim args As ParseResolveEventArgs = New ParseResolveEventArgs() With {
                 .Id = reference.Id,
                 .Gen = reference.Gen
@@ -398,7 +398,7 @@ Namespace PdfReader
             Return args.Object
         End Function
 
-        Protected Overridable Sub Dispose(ByVal disposing As Boolean)
+        Protected Overridable Sub Dispose(disposing As Boolean)
             If Not _disposed Then
                 If disposing Then
                     Tokenizer.Dispose()
@@ -409,7 +409,7 @@ Namespace PdfReader
             End If
         End Sub
 
-        Private Function ThrowIfNot(Of tT As TokenObject)(ByVal t As TokenObject) As tT
+        Private Function ThrowIfNot(Of tT As TokenObject)(t As TokenObject) As tT
             If TypeOf t Is TokenError Then
                 Throw New ApplicationException(t.ToString())
             ElseIf TypeOf t Is TokenEmpty Then
@@ -421,11 +421,11 @@ Namespace PdfReader
             Return t
         End Function
 
-        Private Sub ThrowOnError(ByVal t As TokenObject)
+        Private Sub ThrowOnError(t As TokenObject)
             If TypeOf t Is TokenError Then Throw New ApplicationException(t.ToString())
         End Sub
 
-        Private Sub ThrowOnEmptyOrError(ByVal t As TokenObject)
+        Private Sub ThrowOnEmptyOrError(t As TokenObject)
             If TypeOf t Is TokenError Then
                 Throw New ApplicationException(t.ToString())
             ElseIf TypeOf t Is TokenEmpty Then
