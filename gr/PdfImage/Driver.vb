@@ -23,7 +23,7 @@ Public Module Driver
         Dim localTime = DateTime.Now
 
         info.Title("Article Example")
-        info.Author("Uzi Granot Granotech Limited")
+        info.Author(Environment.UserName)
         info.Keywords("PDF, .NET, C#, Library, Document Creator")
         info.Subject("PDF File Writer C# Class Library (Version 1.15.0)")
         info.CreationDate(localTime)

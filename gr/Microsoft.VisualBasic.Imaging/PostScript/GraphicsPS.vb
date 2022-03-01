@@ -69,9 +69,6 @@ Namespace PostScript
 
     Public Class GraphicsPS : Inherits MockGDIPlusGraphics
 
-        Public Overrides ReadOnly Property Size As Size
-        Public Overrides ReadOnly Property DpiX As Single
-        Public Overrides ReadOnly Property DpiY As Single
         Public Overrides Property InterpolationMode As InterpolationMode
 
         Public Overrides Property CompositingMode As CompositingMode
@@ -107,8 +104,9 @@ Namespace PostScript
         Dim fp As StreamWriter
         Dim originx, originy As Single
 
-        Sub New(size As Size)
-            Me.Size = size
+        Sub New(size As Size, dpi As Size)
+            Call MyBase.New(size, dpi)
+
             Me.fp = New StreamWriter(buffer)
 
             fprintf(fp, "%%!PS-Adobe-3.0 EPSF-3.0\n")

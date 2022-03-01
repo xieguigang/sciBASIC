@@ -11,6 +11,22 @@ Namespace Driver
         ''' </summary>
         ReadOnly gdi As Graphics = Graphics.FromImage(New Bitmap(10, 10))
 
+        Public Overrides ReadOnly Property Size As Size
+        Public Overrides ReadOnly Property DpiX As Single
+        Public Overrides ReadOnly Property DpiY As Single
+
+        Sub New(size As Size, dpi As Size)
+            Me.DpiX = dpi.Width
+            Me.DpiY = dpi.Height
+            Me.Size = size
+        End Sub
+
+        Sub New(size As Size, dpiX As Single, dpiY As Single)
+            Me.DpiX = dpiX
+            Me.DpiY = dpiY
+            Me.Size = size
+        End Sub
+
         Private Shared Function FontScale(font As Font) As Font
             Return New Font(font, font.Size * 2)
         End Function
@@ -56,7 +72,13 @@ Namespace Driver
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat, ByRef charactersFitted As Integer, ByRef linesFilled As Integer) As SizeF
+        Public Overrides Function MeasureString(text As String,
+                                                font As Font,
+                                                layoutArea As SizeF,
+                                                stringFormat As StringFormat,
+                                                ByRef charactersFitted As Integer,
+                                                ByRef linesFilled As Integer) As SizeF
+
             Return gdi.MeasureString(text, FontScale(font), layoutArea, stringFormat, charactersFitted, linesFilled)
         End Function
     End Class

@@ -288,7 +288,7 @@ Namespace Drawing2D
 
                     Return New SVGData(svg, size, padding)
                 Case Drivers.PS
-                    Dim ps As New GraphicsPS(size)
+                    Dim ps As New GraphicsPS(size, dpiXY)
 
                     Throw New NotImplementedException
                 Case Drivers.WMF

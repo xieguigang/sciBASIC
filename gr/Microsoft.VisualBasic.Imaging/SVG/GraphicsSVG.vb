@@ -94,27 +94,20 @@ Namespace SVG
             End Get
         End Property
 
-        Public Overrides ReadOnly Property DpiX As Single
-        Public Overrides ReadOnly Property DpiY As Single
-
         Public Sub New(size As Size, dpiX As Integer, dpiY As Integer)
+            Call MyBase.New(size, dpiX, dpiY)
             Me.__svgData = New SVGDataLayers With {
                 .Size = size
             }
-            Me.DpiX = dpiX
-            Me.DpiY = dpiY
         End Sub
 
         Friend Sub New(svg As SVGDataLayers, dpiX As Integer, dpiY As Integer)
+            Call Me.New(svg.Size, dpiX, dpiY)
             Me.__svgData = svg
-            Me.DpiX = dpiX
-            Me.DpiY = dpiY
         End Sub
 
         Public Sub New(width%, height%, dpiX As Integer, dpiY As Integer)
             Me.New(New Size(width, height), dpiX, dpiY)
-            Me.DpiX = dpiX
-            Me.DpiY = dpiY
         End Sub
 
         Public Overrides Property InterpolationMode As InterpolationMode

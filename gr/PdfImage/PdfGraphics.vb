@@ -18,12 +18,11 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
     ''' </summary>
     ReadOnly height As Integer
 
-    Public Overrides ReadOnly Property Size As Size
-
     Sub New(size As Size, page As PdfPage, buffer As Stream)
+        Call MyBase.New(size, New Size(300, 300))
+
         Me.buffer = buffer
         Me.page = page
-        Me.Size = size
         Me.g = New PdfContents(page)
         Me.height = size.Height
     End Sub
@@ -44,18 +43,6 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
         Set(value As CompositingQuality)
             Throw New NotImplementedException()
         End Set
-    End Property
-
-    Public Overrides ReadOnly Property DpiX As Single
-        Get
-            Throw New NotImplementedException()
-        End Get
-    End Property
-
-    Public Overrides ReadOnly Property DpiY As Single
-        Get
-            Throw New NotImplementedException()
-        End Get
     End Property
 
     Public Overrides Property InterpolationMode As InterpolationMode
