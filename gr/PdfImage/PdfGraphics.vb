@@ -739,7 +739,7 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
     End Sub
 
     Public Overrides Sub FillRectangle(brush As Brush, rect As Rectangle)
-        Throw New NotImplementedException()
+        Call FillRectangle(brush, New RectangleF(rect.X, rect.Y, rect.Width, rect.Height))
     End Sub
 
     Public Overrides Sub FillRectangle(brush As Brush, rect As RectangleF)

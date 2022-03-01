@@ -341,7 +341,8 @@ Namespace Graphic.Axis
             Dim ZERO As New Point(X, scaler.TranslateY(yTicks.Min) + offset.Y) ' 坐标轴原点，需要在这里修改layout
 
             If showAxisLine Then
-                Call g.DrawLine(pen, ZERO, top)     ' y轴
+                ' y轴
+                Call g.DrawLine(pen, ZERO, top)
             End If
 
             Dim maxYTickSize!
