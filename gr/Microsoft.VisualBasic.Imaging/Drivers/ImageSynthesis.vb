@@ -49,27 +49,21 @@ Imports Microsoft.VisualBasic.Imaging.SVG
 Namespace Driver
 
     ''' <summary>
-    ''' Makes the ``DrawImage`` function compatible with old gdi+ interface
+    ''' Makes the ``DrawImage`` function compatible 
+    ''' with old gdi+ interface
     ''' </summary>
     Public Module ImageSynthesis
 
-        '
-        ' Summary:
-        '     Draws the specified System.Drawing.Image, using its original physical size, at
-        '     the specified location.
-        '
-        ' Parameters:
-        '   image:
-        '     System.Drawing.Image to draw.
-        '
-        '   point:
-        '     System.Drawing.Point structure that represents the location of the upper-left
-        '     corner of the drawn image.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     image is null.
-        <Extension> Public Sub DrawImage(g As IGraphics, image As GraphicsData, point As Point)
+        ''' <summary>
+        ''' Draws the specified System.Drawing.Image, using its original physical size, at
+        ''' the specified location.
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="image">System.Drawing.Image to draw.</param>
+        ''' <param name="point">System.Drawing.Point structure that represents the location of the upper-left
+        ''' corner of the drawn image.</param>
+        <Extension>
+        Public Sub DrawImage(g As IGraphics, image As GraphicsData, point As Point)
             Call g.DrawImage(image, point.PointF)
         End Sub
         '
@@ -105,45 +99,34 @@ Namespace Driver
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        <Extension> Public Sub DrawImage(g As IGraphics, image As GraphicsData, destPoints() As PointF)
+        <Extension>
+        Public Sub DrawImage(g As IGraphics, image As GraphicsData, destPoints() As PointF)
 
         End Sub
-        '
-        ' Summary:
-        '     Draws the specified System.Drawing.Image at the specified location and with the
-        '     specified size.
-        '
-        ' Parameters:
-        '   image:
-        '     System.Drawing.Image to draw.
-        '
-        '   rect:
-        '     System.Drawing.Rectangle structure that specifies the location and size of the
-        '     drawn image.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     image is null.
-        <Extension> Public Sub DrawImage(g As IGraphics, image As GraphicsData, rect As Rectangle)
+
+        ''' <summary>
+        ''' Draws the specified System.Drawing.Image at the specified location and with the
+        ''' specified size.
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="image">System.Drawing.Image to draw.</param>
+        ''' <param name="rect">System.Drawing.Rectangle structure that specifies the location and size of the
+        ''' drawn image.</param>
+        <Extension>
+        Public Sub DrawImage(g As IGraphics, image As GraphicsData, rect As Rectangle)
             Call g.DrawImage(image, New RectangleF(rect.Location.PointF, New SizeF(rect.Size.Width, rect.Size.Height)))
         End Sub
-        '
-        ' Summary:
-        '     Draws the specified System.Drawing.Image, using its original physical size, at
-        '     the specified location.
-        '
-        ' Parameters:
-        '   image:
-        '     System.Drawing.Image to draw.
-        '
-        '   point:
-        '     System.Drawing.PointF structure that represents the upper-left corner of the
-        '     drawn image.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     image is null.
-        <Extension> Public Sub DrawImage(g As IGraphics, image As GraphicsData, point As PointF)
+
+        ''' <summary>
+        ''' Draws the specified System.Drawing.Image, using its original physical size, at
+        ''' the specified location.
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="image">System.Drawing.Image to draw.</param>
+        ''' <param name="point">System.Drawing.PointF structure that represents the upper-left corner of the
+        ''' drawn image.</param>
+        <Extension>
+        Public Sub DrawImage(g As IGraphics, image As GraphicsData, point As PointF)
             If TypeOf g Is GraphicsSVG Then
                 Dim svg As GraphicsSVG = DirectCast(g, GraphicsSVG)
 
@@ -170,23 +153,17 @@ Namespace Driver
                 End If
             End If
         End Sub
-        '
-        ' Summary:
-        '     Draws the specified System.Drawing.Image at the specified location and with the
-        '     specified size.
-        '
-        ' Parameters:
-        '   image:
-        '     System.Drawing.Image to draw.
-        '
-        '   rect:
-        '     System.Drawing.RectangleF structure that specifies the location and size of the
-        '     drawn image.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     image is null.
-        <Extension> Public Sub DrawImage(g As IGraphics, image As GraphicsData, rect As RectangleF)
+
+        ''' <summary>
+        ''' Draws the specified System.Drawing.Image at the specified location and with the
+        ''' specified size.
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="image">System.Drawing.Image to draw.</param>
+        ''' <param name="rect">System.Drawing.RectangleF structure that specifies the location and size of the
+        ''' drawn image.</param>
+        <Extension>
+        Public Sub DrawImage(g As IGraphics, image As GraphicsData, rect As RectangleF)
             If TypeOf g Is GraphicsSVG Then
                 Dim svg As GraphicsSVG = DirectCast(g, GraphicsSVG)
                 Dim point As PointF = rect.Location
@@ -203,7 +180,7 @@ Namespace Driver
                     ' 还需要根据原始的大小与现在的rect参数之中的大小进行缩放合成
                     Dim imageData As SVGDataLayers = DirectCast(image, SVGData).SVG
                     '在这里还需要根据位置计算出位移
-                    Call svg.__svgData.Add(imageData + Point)
+                    Call svg.__svgData.Add(imageData + point)
                 End If
             Else
                 If image.Driver = Drivers.SVG Then
@@ -214,25 +191,17 @@ Namespace Driver
                 End If
             End If
         End Sub
-        '
-        ' Summary:
-        '     Draws the specified image, using its original physical size, at the location
-        '     specified by a coordinate pair.
-        '
-        ' Parameters:
-        '   image:
-        '     System.Drawing.Image to draw.
-        '
-        '   x:
-        '     The x-coordinate of the upper-left corner of the drawn image.
-        '
-        '   y:
-        '     The y-coordinate of the upper-left corner of the drawn image.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     image is null.
-        <Extension> Public Sub DrawImage(g As IGraphics, image As GraphicsData, x As Integer, y As Integer)
+
+        ''' <summary>
+        ''' Draws the specified image, using its original physical size, at the location
+        ''' specified by a coordinate pair.
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="image">System.Drawing.Image to draw.</param>
+        ''' <param name="x">The x-coordinate of the upper-left corner of the drawn image.</param>
+        ''' <param name="y">The y-coordinate of the upper-left corner of the drawn image.</param>
+        <Extension>
+        Public Sub DrawImage(g As IGraphics, image As GraphicsData, x As Integer, y As Integer)
             Call g.DrawImage(image, New PointF(x, y))
         End Sub
         '
