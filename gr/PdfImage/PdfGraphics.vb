@@ -281,7 +281,10 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
     End Sub
 
     Public Overrides Sub DrawImage(image As Image, rect As Rectangle)
-        Throw New NotImplementedException()
+        Dim element As New MIME.application.pdf.PdfImage(page.Document)
+
+        Call element.LoadImage(image)
+        Call g.DrawImage(element, rect.X, height - rect.Y, rect.Width)
     End Sub
 
     Public Overrides Sub DrawImage(image As Image, point As PointF)

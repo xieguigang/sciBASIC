@@ -130,10 +130,6 @@ Public Class PdfImage
     Implements IDisposable
 
     ''' <summary>
-    ''' Gets image width in pixels
-    ''' </summary>
-
-    ''' <summary>
     ''' Gets image height in pixels
     ''' </summary>
     Private _WidthPix As Integer, _HeightPix As Integer
@@ -237,6 +233,10 @@ Public Class PdfImage
     End Property    ' in pixels
 
     Friend ImageRect As Rectangle
+
+    ''' <summary>
+    ''' Gets image width in pixels
+    ''' </summary>
     Friend Picture As Bitmap
     Friend DisposePicture As Boolean
     Friend DisposeImage As Boolean
