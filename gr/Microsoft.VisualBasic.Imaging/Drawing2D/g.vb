@@ -74,6 +74,8 @@ Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.My.FrameworkInternal
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
+<Assembly: InternalsVisibleTo("Microsoft.VisualBasic.Imaging.PDF")>
+
 Namespace Drawing2D
 
     ''' <summary>
@@ -112,6 +114,9 @@ Namespace Drawing2D
 
         Friend Const GraphicDriverEnvironmentConfigName$ = "graphic_driver"
 
+        Friend pdfDriver As Func(Of Size, IGraphics)
+        Friend getPdfImage As Func(Of IGraphics, Size, Padding, GraphicsData)
+
         ''' <summary>
         ''' 在这个模块的构造函数之中，程序会自动根据命令行所设置的环境参数来设置默认的图形引擎
         ''' 
@@ -135,6 +140,7 @@ Namespace Drawing2D
                 Case "gdi" : Return Drivers.GDI
                 Case "ps" : Return Drivers.PS
                 Case "wmf" : Return Drivers.WMF
+                Case "pdf" : Return Drivers.PDF
                 Case Else
                     Return Drivers.Default
             End Select
@@ -163,6 +169,7 @@ Namespace Drawing2D
                         Return "png"
                     Case Drivers.PS : Return "ps"
                     Case Drivers.WMF : Return "wmf"
+                    Case Drivers.PDF : Return "pdf"
                     Case Else
                         Throw New NotImplementedException(ActiveDriver.Description)
                 End Select
@@ -293,6 +300,16 @@ Namespace Drawing2D
                     End Using
 
                     Return New WmfData(wmfstream, size, padding)
+
+                Case Drivers.PDF
+
+                    Dim g As IGraphics = pdfDriver(size)
+
+                    Call plotAPI(g, region)
+                    Call g.Flush()
+
+                    Return getPdfImage(g, size, padding)
+
                 Case Else
                     ' using gdi+ graphics driver
                     ' 在这里使用透明色进行填充，防止当bg参数为透明参数的时候被CreateGDIDevice默认填充为白色

@@ -63,7 +63,7 @@
 
 #End Region
 
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 '
 '	PdfFileWriter
 '	PDF File Write C# Class Library.
@@ -86,7 +86,7 @@
 '
 '	For version history please refer to PdfDocument.cs
 '
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 
 Imports System
 Imports System.Collections.Generic
@@ -96,9 +96,9 @@ Imports System.Text
 Imports i32 = Microsoft.VisualBasic.Language.i32
 Imports stdNum = System.Math
 
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 ' Resource code enumeration
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 
 Friend Enum ResCode
     ' must be in this order
@@ -117,7 +117,7 @@ Friend Enum ObjectType
     Stream
 End Enum
 
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
 ''' <summary>
 ''' PDF indirect object base class
 ''' </summary>
@@ -125,7 +125,7 @@ End Enum
 ''' PDF indirect object base class.
 ''' User program cannot call it directly.
 ''' </remarks>
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
 Public Class PdfObject
     Implements IComparable(Of PdfObject)
     ''' <summary>
@@ -170,10 +170,10 @@ Public Class PdfObject
     Friend Sub New()
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Constructor for objects with /Type in their dictionary
     ' Note: access is internal. Used by derived classes only
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Friend Sub New(ByVal Document As PdfDocument, ByVal Optional Type As ObjectType = ObjectType.Dictionary, ByVal Optional PdfDictType As String = Nothing)    ' object type (i.e. /Catalog, /Pages, /Font, /XObject, /OCG)
         ' save link to main document object
@@ -205,7 +205,7 @@ Public Class PdfObject
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ''' <summary>
     ''' Compare the resource codes of two PDF objects.
     ''' </summary>
@@ -214,15 +214,15 @@ Public Class PdfObject
     ''' <remarks>
     ''' Used by PdfContents to maintain resource objects in sorted order.
     ''' </remarks>
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     Public Function CompareTo(ByVal Other As PdfObject) As Integer Implements IComparable(Of PdfObject).CompareTo       ' the second object
         Return String.Compare(ResourceCode, Other.ResourceCode)
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Convert user coordinates or line width to points.
     ' The result is rounded to 6 decimal places and converted to Single.
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Friend Function ToPt(ByVal Value As Double) As Single       ' coordinate value in user unit of measure
         Dim ReturnValue = ScaleFactor * Value
@@ -230,10 +230,10 @@ Public Class PdfObject
         Return ReturnValue
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Round unscaled numbers.
     ' The value is rounded to 6 decimal places and converted to Single
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Friend Function Round(ByVal Value As Double) As Single      ' a number to be saved in contents
         If stdNum.Abs(Value) < 0.0001 Then Value = 0
@@ -261,13 +261,13 @@ Public Class PdfObject
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Convert resource dictionary to one String.
     ' This method is called at the last step of document creation
     ' from within PdfDocument.CreateFile(FileName).
     ' it is relevant to page contents, X objects and tiled pattern
     ' Return value is resource dictionary string.
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Friend Function BuildResourcesDictionary(ByVal ResObjects As List(Of PdfObject), ByVal AddProcSet As Boolean) As String     ' list of resource objects for this contents
         ' for page contents we need /ProcSet 
@@ -314,12 +314,12 @@ Public Class PdfObject
         Return Resources.ToString()
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Write object to PDF file
     ' Called by PdfDocument.CreateFile(FileName) method
     ' to output one indirect PDF object.
     ' It is a virtual method. Derived classes can overwrite it.
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Friend Overridable Sub WriteObjectToPdfFile()
         ' save file position for this object
@@ -382,9 +382,9 @@ Public Class PdfObject
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Compress byte array
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Friend Function CompressStream(ByVal InputBuf As Byte()) As Byte()
         ' input length
@@ -440,9 +440,9 @@ Public Class PdfObject
         Return OutputBuf
     End Function
 
-    ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    '
     ' Accumulate Adler Checksum
-    ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    '
 
     Private Function Adler32Checksum(ByVal Buffer As Byte()) As UInteger
         Const Adler32Base As UInteger = 65521

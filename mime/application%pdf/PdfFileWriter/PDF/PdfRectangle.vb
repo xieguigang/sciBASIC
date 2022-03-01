@@ -42,7 +42,7 @@
 
 #End Region
 
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 '
 '	PdfFileWriter
 '	PDF File Write C# Class Library.
@@ -65,11 +65,11 @@
 '
 '	For version history please refer to PdfDocument.cs
 '
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 
 
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ''' <summary>
     ''' PDF rectangle in double precision class
     ''' </summary>
@@ -78,7 +78,7 @@
     ''' PDF rectangle is left, bottom, right and top.
     ''' PDF numeric precision is double and Microsoft is Single.
     ''' </remarks>
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     Public Class PdfRectangle
         ''' <summary>
         ''' Gets or sets Left side.

@@ -46,7 +46,7 @@
 
 #End Region
 
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 '
 '	PdfFileWriter
 '	PDF File Write C# Class Library.
@@ -69,7 +69,7 @@
 '
 '	For version history please refer to PdfDocument.cs
 '
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 
 Imports System
 Imports System.Drawing
@@ -320,12 +320,12 @@ Imports System.Globalization
             Return
         End Sub
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ''' <summary>
         ''' Copy one style to another 
         ''' </summary>
         ''' <param name="SourceStyle">Source style</param>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Public Sub Copy(ByVal SourceStyle As PdfTableStyle)
             Alignment = SourceStyle.Alignment
             BackgroundColor = SourceStyle.BackgroundColor

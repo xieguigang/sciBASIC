@@ -701,10 +701,7 @@
     <Compile Include="Scatter\Data\PointData.vb" />
     <Compile Include="Scatter\Heatmap.vb" />
     <Compile Include="Scatter\Scatter.vb" />
-	
-	  <Compile Include="g\Axis\Components\XAxis.vb" />
-	
-	
+    <Compile Include="g\Axis\Components\XAxis.vb" />
     <Compile Include="g\Scaling.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -759,9 +756,9 @@
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
       <Name>MIME-htmls</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Mathematica\Math\Math\Math-core.vbproj">
+    <ProjectReference Include="..\..\Mathematica\Math\Math\math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
-      <Name>Math-core</Name>
+      <Name>math-core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

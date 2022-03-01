@@ -44,7 +44,7 @@
 
 #End Region
 
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 '
 '	PdfFileWriter
 '	PDF File Write C# Class Library.
@@ -67,7 +67,7 @@
 '
 '	For version history please refer to PdfDocument.cs
 '
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 
 Imports System.Collections.Generic
 Imports System.Text
@@ -86,7 +86,7 @@ Imports System.Text
         Friend Height As Double     ' in points
         Friend ContentsArray As List(Of PdfContents)
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ''' <summary>
         ''' Default constructor
         ''' </summary>
@@ -94,7 +94,7 @@ Imports System.Text
         ''' <remarks>
         ''' Page size is taken from PdfDocument
         ''' </remarks>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Public Sub New(ByVal Document As PdfDocument)
             MyBase.New(Document, ObjectType.Dictionary, "/Page")
             Width = Document.PageSize.Width
@@ -103,7 +103,7 @@ Imports System.Text
             Return
         End Sub
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ''' <summary>
         ''' Constructor
         ''' </summary>
@@ -112,7 +112,7 @@ Imports System.Text
         ''' <remarks>
         ''' PageSize override the default page size
         ''' </remarks>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
 
         Public Sub New(ByVal Document As PdfDocument, ByVal PageSize As SizeD)
             MyBase.New(Document, ObjectType.Dictionary, "/Page")
@@ -122,7 +122,7 @@ Imports System.Text
             Return
         End Sub
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ''' <summary>
         ''' Constructor
         ''' </summary>
@@ -132,7 +132,7 @@ Imports System.Text
         ''' <remarks>
         ''' PaperType and orientation override the default page size.
         ''' </remarks>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Public Sub New(ByVal Document As PdfDocument, ByVal PaperType As PaperType, ByVal Landscape As Boolean)
             MyBase.New(Document, ObjectType.Dictionary, "/Page")
             ' get standard paper size
@@ -151,7 +151,7 @@ Imports System.Text
             Return
         End Sub
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ''' <summary>
         ''' Constructor
         ''' </summary>
@@ -161,7 +161,7 @@ Imports System.Text
         ''' <remarks>
         ''' Width and Height override the default page size
         ''' </remarks>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Public Sub New(ByVal Document As PdfDocument, ByVal Width As Double, ByVal Height As Double)
             MyBase.New(Document, ObjectType.Dictionary, "/Page")
             Me.Width = ScaleFactor * Width
@@ -182,9 +182,9 @@ Imports System.Text
             Return
         End Sub
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ' Constructor common method
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
 
         Private Sub ConstructorHelper()
             ' add page to parent array of pages
@@ -210,12 +210,12 @@ Imports System.Text
             Return New SizeD(Width / ScaleFactor, Height / ScaleFactor)
         End Function
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ''' <summary>
         ''' Add existing contents to page
         ''' </summary>
         ''' <param name="Contents">Contents object</param>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Public Sub AddContents(ByVal Contents As PdfContents)
             ' set page contents flag
             Contents.PageContents = True
@@ -261,7 +261,7 @@ Imports System.Text
             Return
         End Sub
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ''' <summary>
         ''' Add weblink to this page
         ''' </summary>
@@ -281,13 +281,13 @@ Imports System.Text
         ''' For more information go to <a href="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#WeblinkSupport">2.7 Web Link Support</a>
         ''' </para>
         ''' </remarks>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Public Function AddWebLink(ByVal LeftAbsPos As Double, ByVal BottomAbsPos As Double, ByVal RightAbsPos As Double, ByVal TopAbsPos As Double, ByVal WebLinkStr As String) As PdfAnnotation
             If String.IsNullOrWhiteSpace(WebLinkStr) Then Return Nothing
             Return AddWebLink(New PdfRectangle(LeftAbsPos, BottomAbsPos, RightAbsPos, TopAbsPos), WebLinkStr)
         End Function
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ''' <summary>
         ''' Add weblink to this page
         ''' </summary>
@@ -304,7 +304,7 @@ Imports System.Text
         ''' For more information go to <a href="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#WeblinkSupport">2.7 Web Link Support</a>
         ''' </para>
         ''' </remarks>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Public Function AddWebLink(ByVal AnnotRect As PdfRectangle, ByVal WebLinkStr As String) As PdfAnnotation
             If String.IsNullOrWhiteSpace(WebLinkStr) Then Return Nothing
             Return New PdfAnnotation(Me, AnnotRect, New AnnotWebLink(WebLinkStr))
@@ -379,9 +379,9 @@ Imports System.Text
             Return New PdfAnnotation(Me, New PdfRectangle(AbsLeft, AbsTop, AbsLeft, AbsTop), New AnnotStickyNote(Note, Icon))
         End Function
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ' Write object to PDF file
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
 
         Friend Overrides Sub WriteObjectToPdfFile()
             ' we have at least one contents object

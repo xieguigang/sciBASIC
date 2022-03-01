@@ -461,9 +461,9 @@
       <Project>{203bc68f-a0cd-443a-ab62-4af4110f752f}</Project>
       <Name>GraphTheory</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Mathematica\Math\Math\Math-core.vbproj">
+    <ProjectReference Include="..\..\Mathematica\Math\Math\math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
-      <Name>Math-core</Name>
+      <Name>math-core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Mathematica\Math\Randomizer\Randomizer.vbproj">
       <Project>{4e06139a-d524-417f-a980-db3bf534cbdc}</Project>

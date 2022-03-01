@@ -61,7 +61,7 @@
 
 #End Region
 
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 '
 '	PdfFileWriter
 '	PDF File Write C# Class Library.
@@ -84,16 +84,16 @@
 '
 '	For version history please refer to PdfDocument.cs
 '
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 
 Imports System
 Imports stdNum = System.Math
 
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 ''' <summary>
 ''' Point in double precision class
 ''' </summary>
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 Public Class PointD
     ''' <summary>
     ''' Gets or sets X
@@ -173,11 +173,9 @@ Public Class PointD
     End Sub
 End Class
 
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 ''' <summary>
 ''' Size in double precision class
 ''' </summary>
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 Public Class SizeD
     ''' <summary>
     ''' Width
@@ -207,11 +205,9 @@ Public Class SizeD
     End Sub
 End Class
 
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 ''' <summary>
 ''' Line in double precision class
 ''' </summary>
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 Public Class LineD
     ''' <summary>
     ''' Gets or sets point 1
@@ -275,9 +271,9 @@ Public Class LineD
     End Property
 End Class
 
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 ' Bezier in double precision
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 
 ''' <summary>
 ''' Bezier curve class

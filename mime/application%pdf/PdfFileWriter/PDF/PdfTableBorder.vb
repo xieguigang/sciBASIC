@@ -56,7 +56,7 @@
 
 #End Region
 
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 '
 '	PdfFileWriter
 '	PDF File Write C# Class Library.
@@ -79,7 +79,7 @@
 '
 '	For version history please refer to PdfDocument.cs
 '
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 
 Imports System
 Imports System.Drawing
@@ -167,6 +167,10 @@ Public Class PdfTableBorderStyle
         Me.Width = Width
         Me.Color = Color
         Return
+    End Sub
+
+    Sub New(pen As Pen)
+        Call Me.New(pen.Width, pen.Color)
     End Sub
 
     ''' <summary>

@@ -58,7 +58,7 @@
 
 #End Region
 
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 '
 '	PdfFileWriter
 '	PDF File Write C# Class Library.
@@ -81,7 +81,7 @@
 '
 '	For version history please refer to PdfDocument.cs
 '
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 
 Imports System
 Imports System.Collections.Generic
@@ -164,9 +164,9 @@ Friend Class PdfFontFile
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Create font file
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Function CreateFontFile() As Byte()
         ' get file signature
@@ -231,9 +231,9 @@ Friend Class PdfFontFile
         Return Buffer
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Get Font Data File header and table records
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Sub GetFontFileHeaderApi()
         ' read font file header
@@ -299,9 +299,9 @@ Friend Class PdfFontFile
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Read "head" table
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Sub GetheadTable()
         ' set buffer for decoding
@@ -332,9 +332,9 @@ Friend Class PdfFontFile
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Read "hhea" table
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Sub GethheaTable()
         ' set buffer for decoding
@@ -365,9 +365,9 @@ Friend Class PdfFontFile
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Read "maxp" table
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Sub GetmaxpTable()
         ' set buffer for decoding
@@ -394,9 +394,9 @@ Friend Class PdfFontFile
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Read "cmap" table
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Sub GetcmapTable()
         ' set buffer for decoding
@@ -483,9 +483,9 @@ Friend Class PdfFontFile
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Select best sub-table in "cmap" table
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Function SelectcmapSubTable(ByVal SubTblArray As cmapSubTbl()) As cmapSubTbl
         ' search for platform ID = 3 Windows, encoding ID = 0 or 1 Unicode and format 4
@@ -502,9 +502,9 @@ Friend Class PdfFontFile
         Throw New ApplicationException("Required cmap sub-table is missing")
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Read "hmtx" table
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Sub GethmtxTable()
         ' set buffer for decoding
@@ -528,9 +528,9 @@ Friend Class PdfFontFile
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Read "loca" table
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Sub GetlocaTable()
         ' set buffer for decoding
@@ -561,9 +561,9 @@ Friend Class PdfFontFile
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Build glyph array for character range
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Sub BuildGlyphArray()
         ' create character code to glyph code array
@@ -635,9 +635,9 @@ Friend Class PdfFontFile
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Build glyph array for character range
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Sub BuildGlyphArray1()
         ' reset bounding box in head table
@@ -698,9 +698,9 @@ Friend Class PdfFontFile
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' create a glyph data list
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Function CreateGlyphDataList(ByVal CompList As List(Of Integer)) As List(Of CharInfo)
         ' create a glyph data list
@@ -720,9 +720,9 @@ Friend Class PdfFontFile
         Return GlyphList
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' add additional glyphs from the composite glyphs to the list
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Sub AddCompositeGlyphs(ByVal GlyphList As List(Of CharInfo), ByVal ExtraList As List(Of Integer))
         ' create a temp list of components of composite glyphs
@@ -754,9 +754,9 @@ Friend Class PdfFontFile
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' add additional glyphs to the list
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Sub AddGlyph(ByVal CharInfo As CharInfo, ByVal GlyphList As List(Of CharInfo), ByVal CompList As List(Of Integer))
         ' find glyph location and length within this table
@@ -803,9 +803,9 @@ Friend Class PdfFontFile
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Read one composite glyph from "glyf" table
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Sub GetCompositeGlyph(ByVal MainList As List(Of CharInfo), ByVal CompList As List(Of Integer))
         ' the glyph is not in main or composit lists, add it to the composit list
@@ -851,9 +851,9 @@ Friend Class PdfFontFile
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Read one composite glyph from "glyf" table
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Sub ReplaceGlyphCode()
         ' loop looking for composite glyphs
@@ -907,9 +907,9 @@ Friend Class PdfFontFile
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Calculate "glyf" table checksum
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Sub CalculateGlyphChksum()
         Dim Checksum As UInteger = 0
@@ -933,9 +933,9 @@ Friend Class PdfFontFile
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' build new glyph data file location table
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Sub BuildLocaTable()
         ' create location array
@@ -995,9 +995,9 @@ Friend Class PdfFontFile
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' build new cmap table
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Sub BuildCharMapTable()
         ' create a new cmap sub table
@@ -1097,9 +1097,9 @@ Friend Class PdfFontFile
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Build new hmtx table
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Sub BuildhmtxTable()
         ' number of advance width and left bearing pairs
@@ -1148,10 +1148,10 @@ Friend Class PdfFontFile
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' build new header table
     ' must be after BuildGlyphLocationTable()
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Sub BuildHeadTable()
         ' allocate buffer for head table
@@ -1187,9 +1187,9 @@ Friend Class PdfFontFile
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Build new "hhea" table
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Sub BuildHheaTable()
         ' allocate buffer
@@ -1225,9 +1225,9 @@ Friend Class PdfFontFile
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Read "maxp" table
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Sub BuildMaxpTable()
         ' allocate buffer
@@ -1261,9 +1261,9 @@ Friend Class PdfFontFile
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' build new font program tables
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Sub BuildFontProgramTables()
         ' recalculate checksum
@@ -1274,9 +1274,9 @@ Friend Class PdfFontFile
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' build new font file
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Function BuildEmbeddedFile() As Byte()
         ' cmap is not required for type0 fonts
@@ -1392,41 +1392,41 @@ Friend Class PdfFontFile
         Return Buffer
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Read short from byte array big endian style
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Function ReadInt16BigEndian() As Short
         Return Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1)) << 8 Or Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Read ushort from byte array big endian style
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Function ReadUInt16BigEndian() As UShort
         Return CUInt(Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))) << 8 Or Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Read uint from byte array big endian style
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Function ReadUInt32BigEndian() As UInteger
         Return CUInt(Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))) << 24 Or CUInt(Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))) << 16 Or CUInt(Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))) << 8 Or Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Read long from byte array big endian style
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Function ReadInt64BigEndian() As Long
         Return CUInt(Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))) << 56 Or CUInt(Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))) << 48 Or CUInt(Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))) << 40 Or CUInt(Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))) << 32 Or CUInt(Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))) << 24 Or CUInt(Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))) << 16 Or CUInt(Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))) << 8 Or Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Write short to byte list big endian style
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Sub WriteInt16BigEndian(ByVal Value As Integer)
         Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1)) = CByte(Value >> 8)
@@ -1434,9 +1434,9 @@ Friend Class PdfFontFile
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Write short or ushort to byte list big endian style
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Sub WriteUInt16BigEndian(ByVal Value As UInteger)
         Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1)) = CByte(Value >> 8)
@@ -1444,9 +1444,9 @@ Friend Class PdfFontFile
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Write int or uint to byte list big endian style
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Sub WriteUInt32BigEndian(ByVal Value As UInteger)
         Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1)) = CByte(Value >> 24)
@@ -1456,9 +1456,9 @@ Friend Class PdfFontFile
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Write long or ulong to byte list big endian style
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Sub WriteInt64BigEndian(ByVal Value As Long)
         Buffer(stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1)) = CByte(Value >> 56)
@@ -1472,9 +1472,9 @@ Friend Class PdfFontFile
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Calculate table checksum
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Function TableChecksum(ByVal Table As Byte()) As UInteger
         Dim ChkSum As UInteger = 0
@@ -1486,9 +1486,9 @@ Friend Class PdfFontFile
         Return ChkSum
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' convert table tag from binary to string
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Shared Function TagBinToStr(ByVal BinTag As UInteger) As String
         Dim StrTag As StringBuilder = New StringBuilder("????")

@@ -83,7 +83,7 @@
 
 #End Region
 
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 '
 '	PDF417 Barcode Encoder
 '
@@ -117,7 +117,7 @@
 '		Remove icones from form windows to solve VS 2019 security
 '	Version 2.0 2019/05/07
 '		Add support for .NET framework and .NET standard
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 
 Imports System
 Imports System.Collections.Generic
@@ -347,7 +347,9 @@ Public Class Pdf417Encoder
         End Get
         Set(ByVal value As ErrorCorrectionLevel)
             ' test error correction
-            If value < ErrorCorrectionLevel.Level_0 OrElse value > ErrorCorrectionLevel.AutoHigh Then Throw New ArgumentException("PDF417 Error correction request is invalid." & Microsoft.VisualBasic.Constants.vbCrLf & "Default is Auto normal.")
+            If value < ErrorCorrectionLevel.Level_0 OrElse value > ErrorCorrectionLevel.AutoHigh Then
+                Throw New ArgumentException("PDF417 Error correction request is invalid." & Microsoft.VisualBasic.Constants.vbCrLf & "Default is Auto normal.")
+            End If
 
             ' save error correction level
             _ErrorCorrection = value
@@ -365,7 +367,10 @@ Public Class Pdf417Encoder
             Return _BarWidthPix
         End Get
         Set(ByVal value As Integer)
-            If value < 1 OrElse value > 100 Then Throw New ArgumentException("PDF417 Narrow bar width must be one or more" & Microsoft.VisualBasic.Constants.vbCrLf & "Default is two.")
+            If value < 1 OrElse value > 100 Then
+                Throw New ArgumentException("PDF417 Narrow bar width must be one or more" & Microsoft.VisualBasic.Constants.vbCrLf & "Default is two.")
+            End If
+
             _BarWidthPix = value
 
             ' row height must be at least 3 times the width of narrow bar
@@ -390,7 +395,10 @@ Public Class Pdf417Encoder
             Return _RowHeightPix
         End Get
         Set(ByVal value As Integer)
-            If value < 3 * _BarWidthPix OrElse value > 300 Then Throw New ArgumentException("PDF417 Row height must be at least 3 times the narrow bar width." & Microsoft.VisualBasic.Constants.vbCrLf & "Default is six.")
+            If value < 3 * _BarWidthPix OrElse value > 300 Then
+                Throw New ArgumentException("PDF417 Row height must be at least 3 times the narrow bar width." & Microsoft.VisualBasic.Constants.vbCrLf & "Default is six.")
+            End If
+
             _RowHeightPix = value
 
             ' set image width and height
@@ -409,7 +417,10 @@ Public Class Pdf417Encoder
             Return _QuietZonePix
         End Get
         Set(ByVal value As Integer)
-            If value < 2 * _BarWidthPix OrElse value > 200 Then Throw New ArgumentException("PDF417 Quiet zone must be at least 2 times the narrow bar width." & Microsoft.VisualBasic.Constants.vbCrLf & "Default is four.")
+            If value < 2 * _BarWidthPix OrElse value > 200 Then
+                Throw New ArgumentException("PDF417 Quiet zone must be at least 2 times the narrow bar width." & Microsoft.VisualBasic.Constants.vbCrLf & "Default is four.")
+            End If
+
             _QuietZonePix = value
 
             ' set image width and height
@@ -428,7 +439,10 @@ Public Class Pdf417Encoder
             Return _DefaultDataColumns
         End Get
         Set(ByVal value As Integer)
-            If value < DataColumnsMin OrElse value > DataColumnsMax Then Throw New ArgumentException("PDF417 Default data columns must be 1 to 30." & Microsoft.VisualBasic.Constants.vbCrLf & "Default is three.")
+            If value < DataColumnsMin OrElse value > DataColumnsMax Then
+                Throw New ArgumentException("PDF417 Default data columns must be 1 to 30." & Microsoft.VisualBasic.Constants.vbCrLf & "Default is three.")
+            End If
+
             _DefaultDataColumns = value
             Return
         End Set

@@ -39,7 +39,7 @@
 
 #End Region
 
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 '
 '	QR Code Encoder Library
 '
@@ -72,7 +72,7 @@
 '	The Article accompanying the Work may not be distributed or republished
 '	without the Author's consent
 '
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 
 'namespace QRCodeEncoderLibrary
 

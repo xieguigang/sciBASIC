@@ -57,7 +57,7 @@
 
 #End Region
 
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 '
 '	PdfFileWriter
 '	PDF File Write C# Class Library.
@@ -80,18 +80,18 @@
 '
 '	For version history please refer to PdfDocument.cs
 '
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 
 Imports System
 Imports System.Drawing
 Imports System.Runtime.InteropServices
 
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ''' <summary>
     ''' Cell type enumeration
     ''' </summary>
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     Public Enum CellType
         ''' <summary>
         ''' Cell's value is null.
@@ -119,7 +119,7 @@ Imports System.Runtime.InteropServices
         Barcode
     End Enum
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ''' <summary>
     ''' PDF table cell class
     ''' </summary>
@@ -131,7 +131,7 @@ Imports System.Runtime.InteropServices
     ''' For more information go to <a href="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#DataTableSupport">2.12 Data Table Support</a>
     ''' </para>
     ''' </remarks>
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     Public Class PdfTableCell
         ''' <summary>
         ''' Gets cell's index position within Table.Cell array.
@@ -539,9 +539,9 @@ Imports System.Runtime.InteropServices
             Return CType(Value, TextBox)
         End Function
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ' Draw Cell Initialization
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Friend Sub DrawCellInitialization()
             ' calculate left and right client space
             ClientLeft = FrameLeft + Style.Margin.Left
@@ -725,9 +725,9 @@ Imports System.Runtime.InteropServices
             Return
         End Sub
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ' Draw Cell
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
 
         Friend Sub DrawCell()
             ' draw background color
@@ -780,9 +780,9 @@ Imports System.Runtime.InteropServices
             Return
         End Sub
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ' Calculate text horizontal position
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Private Function TextHorPos(<Out> ByRef Justify As TextJustify) As Double
             If (Style.Alignment And (ContentAlignment.TopLeft Or ContentAlignment.MiddleLeft Or ContentAlignment.BottomLeft)) <> 0 Then
                 Justify = TextJustify.Left
@@ -803,9 +803,9 @@ Imports System.Runtime.InteropServices
             Return ClientLeft
         End Function
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ' Calculate left side
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Private Function LeftPos(ByVal Width As Double) As Double
             If (Style.Alignment And (ContentAlignment.TopLeft Or ContentAlignment.MiddleLeft Or ContentAlignment.BottomLeft)) <> 0 Then Return ClientLeft
             If (Style.Alignment And (ContentAlignment.TopCenter Or ContentAlignment.MiddleCenter Or ContentAlignment.BottomCenter)) <> 0 Then Return 0.5 * (ClientLeft + ClientRight - Width)
@@ -813,9 +813,9 @@ Imports System.Runtime.InteropServices
             Return ClientLeft
         End Function
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ' Calculate text vertical position
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Private Function TextVerPos() As Double
             If (Style.Alignment And (ContentAlignment.TopLeft Or ContentAlignment.TopCenter Or ContentAlignment.TopRight)) <> 0 Then Return ClientTop - Style.FontAscent
             If (Style.Alignment And (ContentAlignment.BottomLeft Or ContentAlignment.BottomCenter Or ContentAlignment.BottomRight)) <> 0 Then Return ClientBottom + Style.FontDescent
@@ -823,9 +823,9 @@ Imports System.Runtime.InteropServices
             Return ClientTop - Style.FontAscent
         End Function
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ' Calculate top side
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Private Function TopPos(ByVal Height As Double) As Double
             If (Style.Alignment And (ContentAlignment.TopLeft Or ContentAlignment.TopCenter Or ContentAlignment.TopRight)) <> 0 Then Return ClientTop
             If (Style.Alignment And (ContentAlignment.MiddleLeft Or ContentAlignment.MiddleCenter Or ContentAlignment.MiddleRight)) <> 0 Then Return 0.5 * (ClientTop + ClientBottom + Height)
@@ -833,9 +833,9 @@ Imports System.Runtime.InteropServices
             Return ClientTop
         End Function
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ' Reset cell after the current row was drawn
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Friend Sub Reset()
             Value = Nothing
             AnnotAction = Nothing

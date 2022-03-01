@@ -51,7 +51,7 @@
 
 #End Region
 
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 '
 '	PdfFileWriter
 '	PDF File Write C# Class Library.
@@ -74,7 +74,7 @@
 '
 '	For version history please refer to PdfDocument.cs
 '
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 
 Imports System.Drawing
 
@@ -112,7 +112,7 @@ Imports System.Drawing
     ''' </remarks>
     Public Class PdfTilingPattern
         Inherits PdfContents
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ''' <summary>
         ''' PDF Tiling pattern constructor.
         ''' </summary>
@@ -120,7 +120,7 @@ Imports System.Drawing
         ''' <remarks>
         ''' This program support only color tiling pattern: PaintType = 1.
         ''' </remarks>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Public Sub New(ByVal Document As PdfDocument)
             MyBase.New(Document, "/Pattern")
             ' create resource code
@@ -136,19 +136,19 @@ Imports System.Drawing
             Return
         End Sub
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ''' <summary>
         ''' Set tiling type
         ''' </summary>
         ''' <param name="TilingType">Tiling type</param>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Public Sub SetTilingType(ByVal TilingType As TilingType)
             ' by default the constructor set tiling type to 1 = constant
             Dictionary.AddInteger("/TilingType", TilingType)
             Return
         End Sub
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ''' <summary>
         ''' Set tile box
         ''' </summary>
@@ -156,13 +156,13 @@ Imports System.Drawing
         ''' <remarks>
         ''' Set square bounding box and equal step
         ''' </remarks>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Public Sub SetTileBox(ByVal Side As Double)
             SetTileBox(Side, Side, Side, Side)
             Return
         End Sub
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ''' <summary>
         ''' Set tile box
         ''' </summary>
@@ -171,13 +171,13 @@ Imports System.Drawing
         ''' <remarks>
         ''' Set rectangle bounding box and equal step.
         ''' </remarks>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Public Sub SetTileBox(ByVal Width As Double, ByVal Height As Double)
             SetTileBox(Width, Height, Width, Height)
             Return
         End Sub
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ''' <summary>
         ''' Set bounding box and step 
         ''' </summary>
@@ -188,7 +188,7 @@ Imports System.Drawing
         ''' <remarks>
         ''' Set rectangle bounding box and independent step size.
         ''' </remarks>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Public Sub SetTileBox(ByVal Width As Double, ByVal Height As Double, ByVal StepX As Double, ByVal StepY As Double)
             ' by default XStep == Width
             Dictionary.AddFormat("/BBox", "[0 0 {0} {1}]", ToPt(Width), ToPt(Height))
@@ -197,7 +197,7 @@ Imports System.Drawing
             Return
         End Sub
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ''' <summary>
         ''' Set scale
         ''' </summary>
@@ -206,14 +206,14 @@ Imports System.Drawing
         ''' Warning: the program replaces the transformation matrix
         ''' with a new one [Scale 0 0 Scale 0 0].
         ''' </remarks>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Public Sub SetScale(ByVal Scale As Double)
             ' add items to dictionary
             Dictionary.AddFormat("/Matrix", "[{0} 0 0 {0} 0 0]", Round(Scale))
             Return
         End Sub
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ''' <summary>
         ''' Set scale
         ''' </summary>
@@ -223,14 +223,14 @@ Imports System.Drawing
         ''' Warning: the program replaces the transformation matrix
         ''' with a new one [ScaleX 0 0 ScaleY 0 0].
         ''' </remarks>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Public Sub SetScale(ByVal ScaleX As Double, ByVal ScaleY As Double)
             ' add items to dictionary
             Dictionary.AddFormat("/Matrix", "[{0} 0 0 {1} 0 0]", Round(ScaleX), Round(ScaleY))
             Return
         End Sub
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ''' <summary>
         ''' Set scale and origin
         ''' </summary>
@@ -242,14 +242,14 @@ Imports System.Drawing
         ''' Warning: the program replaces the transformation matrix
         ''' with a new one [ScaleX 0 0 ScaleY OriginX OriginY].
         ''' </remarks>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Public Sub SetScaleAndOrigin(ByVal OriginX As Double, ByVal OriginY As Double, ByVal ScaleX As Double, ByVal ScaleY As Double)
             ' add items to dictionary
             Dictionary.AddFormat("/Matrix", "[{0} 0 0 {1} {2} {3}]", Round(ScaleX), Round(ScaleY), ToPt(OriginX), ToPt(OriginY))
             Return
         End Sub
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ''' <summary>
         ''' Set pattern transformation matrix
         ''' </summary>
@@ -263,14 +263,14 @@ Imports System.Drawing
         ''' Xpage = a * Xuser + c * Yuser + e
         ''' Ypage = b * Xuser + d * Yuser + f
         ''' </remarks>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Public Sub SetPatternMatrix(ByVal a As Double, ByVal b As Double, ByVal c As Double, ByVal d As Double, ByVal e As Double, ByVal f As Double)
             ' create full pattern transformation matrix
             Dictionary.AddFormat("/Matrix", "[{0} {1} {2} {3} {4} {5}]", Round(a), Round(b), Round(c), Round(d), ToPt(e), ToPt(f))
             Return
         End Sub
 
-        ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''' 
+         
         ''' <summary>
         ''' Create new PdfTilingPattern class with brick pattern.
         ''' </summary>
@@ -299,7 +299,7 @@ Imports System.Drawing
         ''' Nonstroking color is the brick color.
         ''' </para>
         ''' </remarks>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Public Shared Function SetBrickPattern(ByVal Document As PdfDocument, ByVal Scale As Double, ByVal Stroking As Color, ByVal NonStroking As Color) As PdfTilingPattern
             Dim Pattern As PdfTilingPattern = New PdfTilingPattern(Document)
             Pattern.SetScale(Scale)
@@ -314,7 +314,7 @@ Imports System.Drawing
             Return Pattern
         End Function
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ''' <summary>
         ''' Create new PdfTilingPattern class with weave pattern.
         ''' </summary>
@@ -332,7 +332,7 @@ Imports System.Drawing
         ''' It is made of horizontal and vertical rectangles.
         ''' </para>
         ''' </remarks>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Public Shared Function SetWeavePattern(ByVal Document As PdfDocument, ByVal Scale As Double, ByVal Background As Color, ByVal Horizontal As Color, ByVal Vertical As Color) As PdfTilingPattern
             Const RectSide1 = 4.0 / 6.0
             Const RectSide2 = 2.0 / 6.0

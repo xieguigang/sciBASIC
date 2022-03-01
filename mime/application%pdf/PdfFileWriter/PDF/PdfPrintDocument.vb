@@ -43,7 +43,7 @@
 
 #End Region
 
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 '
 '	PdfFileWriter
 '	PDF File Write C# Class Library.
@@ -67,7 +67,7 @@
 '
 '	For version history please refer to PdfDocument.cs
 '
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 
 Imports System
 Imports System.Drawing
@@ -144,12 +144,12 @@ Imports System.Drawing.Printing
         ''' </summary>
         Protected Document As PdfDocument
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ''' <summary>
         ''' PDF print document constructor
         ''' </summary>
         ''' <param name="Document">Current PDF document</param>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Public Sub New(ByVal Document As PdfDocument)
             ' save document
             Me.Document = Document
@@ -176,11 +176,11 @@ Imports System.Drawing.Printing
             Return
         End Sub
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ''' <summary>
         ''' Gets or sets DocumentInColor flag.
         ''' </summary>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Public Property DocumentInColor As Boolean
             Set(ByVal value As Boolean)
                 DefaultPageSettings.Color = value
@@ -191,18 +191,18 @@ Imports System.Drawing.Printing
             End Get
         End Property
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ''' <summary>
         ''' Gets margins in 100th of an inch
         ''' </summary>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Public ReadOnly Property GetMargins As Margins
             Get
                 Return DefaultPageSettings.Margins
             End Get
         End Property
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ''' <summary>
         ''' Sets margins in user units.
         ''' </summary>
@@ -210,7 +210,7 @@ Imports System.Drawing.Printing
         ''' <param name="TopMargin">Top margin</param>
         ''' <param name="RightMargin">Right margin</param>
         ''' <param name="BottomMargin">Bottom margin</param>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Public Sub SetMargins(ByVal LeftMargin As Double, ByVal TopMargin As Double, ByVal RightMargin As Double, ByVal BottomMargin As Double)
             Dim Margins = DefaultPageSettings.Margins
             Margins.Left = CInt(LeftMargin * Document.ScaleFactor / 0.72 + 0.5)
@@ -220,7 +220,7 @@ Imports System.Drawing.Printing
             Return
         End Sub
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ''' <summary>
         ''' Add pages to PDF document
         ''' </summary>
@@ -229,7 +229,7 @@ Imports System.Drawing.Printing
         ''' next it will call multiple times PrintPage method and finally
         ''' it will call EndPrint method. 
         ''' </remarks>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Public Sub AddPagesToPdfDocument()
             ' print the document by calling BeginPrint, PrintPage multiple times and finally EndPrint
             Print()

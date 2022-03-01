@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::33fd1180e5a4d978ca0883154f14745e, mime\application%pdf\PdfFileWriter\PDF\PdfAxialShading.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Enum MappingMode
-    ' 
-    '         Absolute, Relative
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Class PdfAxialShading
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Sub: AntiAlias, ExtendShading, SetAxisDirection, SetBoundingBox, WriteObjectToPdfFile
-    ' 
-    ' /********************************************************************************/
+'     Enum MappingMode
+' 
+'         Absolute, Relative
+' 
+'  
+' 
+' 
+' 
+'     Class PdfAxialShading
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Sub: AntiAlias, ExtendShading, SetAxisDirection, SetBoundingBox, WriteObjectToPdfFile
+' 
+' /********************************************************************************/
 
 #End Region
 
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 '
 '	PdfFileWriter
 '	PDF File Write C# Class Library.
@@ -71,15 +71,12 @@
 '
 '	For version history please refer to PdfDocument.cs
 '
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 
-Imports SysMedia = System.Windows.Media
-
-
-    ''' <summary>
-    ''' Mapping mode for axial and radial shading
-    ''' </summary>
-    Public Enum MappingMode
+''' <summary>
+''' Mapping mode for axial and radial shading
+''' </summary>
+Public Enum MappingMode
         ''' <summary>
         ''' Relative to bounding box
         ''' </summary>
@@ -90,14 +87,14 @@ Imports SysMedia = System.Windows.Media
         Absolute
     End Enum
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ''' <summary>
     ''' PDF axial shading resource class
     ''' </summary>
     ''' <remarks>
     ''' Derived class from PdfObject
     ''' </remarks>
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     Public Class PdfAxialShading
         Inherits PdfObject
 
@@ -113,7 +110,7 @@ Imports SysMedia = System.Windows.Media
         Private ExtendShadingBefore As Boolean = True
         Private ExtendShadingAfter As Boolean = True
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ''' <summary>
         ''' PDF axial shading constructor.
         ''' </summary>
@@ -123,7 +120,7 @@ Imports SysMedia = System.Windows.Media
         ''' <param name="BBoxWidth">Bounding box width</param>
         ''' <param name="BBoxHeight">Bounding box height</param>
         ''' <param name="ShadingFunction">Shading function</param>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Public Sub New(ByVal Document As PdfDocument, ByVal BBoxLeft As Double, ByVal BBoxBottom As Double, ByVal BBoxWidth As Double, ByVal BBoxHeight As Double, ByVal ShadingFunction As PdfShadingFunction)
             MyBase.New(Document)
             ' create resource code
@@ -162,25 +159,14 @@ Imports SysMedia = System.Windows.Media
             Me.New(Document, 0.0, 0.0, 1.0, 1.0, ShadingFunction)
         End Sub
 
-        ''' <summary>
-        ''' PDF axial shading constructor for unit bounding box
-        ''' </summary>
-        ''' <param name="Document">Parent PDF document object</param>
-        ''' <param name="MediaBrush">System.Windows.Media brush</param>
-        Public Sub New(ByVal Document As PdfDocument, ByVal MediaBrush As SysMedia.LinearGradientBrush)
-            Me.New(Document, 0.0, 0.0, 1.0, 1.0, New PdfShadingFunction(Document, MediaBrush))
-            SetAxisDirection(MediaBrush.StartPoint.X, MediaBrush.StartPoint.Y, MediaBrush.EndPoint.X, MediaBrush.EndPoint.Y, If(MediaBrush.MappingMode = SysMedia.BrushMappingMode.RelativeToBoundingBox, MappingMode.Relative, MappingMode.Absolute))
-            Return
-        End Sub
-
-        ''' <summary>
-        ''' Set bounding box
-        ''' </summary>
-        ''' <param name="BBoxLeft">Bounding box left</param>
-        ''' <param name="BBoxBottom">Bounding box bottom</param>
-        ''' <param name="BBoxWidth">Bounding box width</param>
-        ''' <param name="BBoxHeight">Bounding box height</param>
-        Public Sub SetBoundingBox(ByVal BBoxLeft As Double, ByVal BBoxBottom As Double, ByVal BBoxWidth As Double, ByVal BBoxHeight As Double)
+    ''' <summary>
+    ''' Set bounding box
+    ''' </summary>
+    ''' <param name="BBoxLeft">Bounding box left</param>
+    ''' <param name="BBoxBottom">Bounding box bottom</param>
+    ''' <param name="BBoxWidth">Bounding box width</param>
+    ''' <param name="BBoxHeight">Bounding box height</param>
+    Public Sub SetBoundingBox(ByVal BBoxLeft As Double, ByVal BBoxBottom As Double, ByVal BBoxWidth As Double, ByVal BBoxHeight As Double)
             ' bounding box
             Me.BBoxLeft = BBoxLeft
             Me.BBoxBottom = BBoxBottom
@@ -206,33 +192,33 @@ Imports SysMedia = System.Windows.Media
             Return
         End Sub
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ''' <summary>
         ''' Sets anti-alias parameter
         ''' </summary>
         ''' <param name="Value">Anti-alias true or false</param>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Public Sub AntiAlias(ByVal Value As Boolean)
             Dictionary.AddBoolean("/AntiAlias", Value)
             Return
         End Sub
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ''' <summary>
         ''' Extend shading beyond axis
         ''' </summary>
         ''' <param name="Before">Before (true or false)</param>
         ''' <param name="After">After (true or false)</param>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Public Sub ExtendShading(ByVal Before As Boolean, ByVal After As Boolean)
             ExtendShadingBefore = Before
             ExtendShadingAfter = After
             Return
         End Sub
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ' Write object to PDF file
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
 
         Friend Overrides Sub WriteObjectToPdfFile()
             ' bounding box

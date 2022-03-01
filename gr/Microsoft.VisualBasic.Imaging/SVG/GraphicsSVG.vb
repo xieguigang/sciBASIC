@@ -74,12 +74,7 @@ Namespace SVG
     ''' <summary>
     ''' SVG graphics generator
     ''' </summary>
-    Public Class GraphicsSVG : Inherits IGraphics
-
-        ''' <summary>
-        ''' 主要是需要进行字体的大小计算所需要使用的一个内部gdi+对象
-        ''' </summary>
-        Friend ReadOnly internalGraphicsHelper As Graphics = Graphics.FromImage(New Bitmap(10, 10))
+    Public Class GraphicsSVG : Inherits MockGDIPlusGraphics
 
         ''' <summary>
         ''' SVG图型的数据结构以及渲染是树形的，但是利用程序代码进行SVG数据的生成却是线性的
@@ -1189,50 +1184,6 @@ Namespace SVG
 
         Public Overrides Function IsVisible(x As Single, y As Single, width As Single, height As Single) As Boolean
             Throw New NotImplementedException()
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Function MeasureCharacterRanges(text As String, font As Font, layoutRect As RectangleF, stringFormat As StringFormat) As Region()
-            Return internalGraphicsHelper.MeasureCharacterRanges(text, font, layoutRect, stringFormat)
-        End Function
-
-        Private Shared Function svgFontScale(font As Font) As Font
-            Return New Font(font, font.Size * 2)
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Function MeasureString(text As String, font As Font) As SizeF
-            Return internalGraphicsHelper.MeasureString(text, svgFontScale(font))
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Function MeasureString(text As String, font As Font, width As Integer) As SizeF
-            Return internalGraphicsHelper.MeasureString(text, svgFontScale(font), width)
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF) As SizeF
-            Return internalGraphicsHelper.MeasureString(text, svgFontScale(font), layoutArea)
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Function MeasureString(text As String, font As Font, width As Integer, format As StringFormat) As SizeF
-            Return internalGraphicsHelper.MeasureString(text, svgFontScale(font), width, format)
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Function MeasureString(text As String, font As Font, origin As PointF, stringFormat As StringFormat) As SizeF
-            Return internalGraphicsHelper.MeasureString(text, svgFontScale(font), origin, stringFormat)
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat) As SizeF
-            Return internalGraphicsHelper.MeasureString(text, svgFontScale(font), layoutArea, stringFormat)
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat, ByRef charactersFitted As Integer, ByRef linesFilled As Integer) As SizeF
-            Return internalGraphicsHelper.MeasureString(text, svgFontScale(font), layoutArea, stringFormat, charactersFitted, linesFilled)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

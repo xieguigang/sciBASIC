@@ -42,7 +42,7 @@
 
 #End Region
 
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 '
 '	PdfFileWriter
 '	PDF File Write C# Class Library.
@@ -65,7 +65,7 @@
 '
 '	For version history please refer to PdfDocument.cs
 '
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 
 Imports System.Collections.Generic
 
@@ -216,9 +216,9 @@ Imports System.Collections.Generic
             Return
         End Sub
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ' Write object to PDF file
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Friend Overrides Sub WriteObjectToPdfFile()
             ' layer control
             If LayerControl IsNot Nothing Then Dictionary.AddIndirectReference("/OC", LayerControl)

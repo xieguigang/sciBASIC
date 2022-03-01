@@ -40,7 +40,7 @@
 
 #End Region
 
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 '
 '	PdfFileWriter
 '	PDF File Write C# Class Library.
@@ -63,7 +63,7 @@
 '
 '	For version history please refer to PdfDocument.cs
 '
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 
 Imports System
 Imports System.Collections.Generic
@@ -120,14 +120,14 @@ Imports System.Collections.Generic
             Return ExtGState
         End Function
 
-        ''' <summary>
-        ''' Compare two PdfExtGState objects.
-        ''' </summary>
-        ''' <param name="Other">Other object.</param>
-        ''' <returns>Compare result.</returns>
-        Public Function CompareTo(ByVal Other As PdfExtGState) As Integer Implements IComparable(Of PdfExtGState).CompareTo
-            Dim Cmp = String.Compare(Key, Other.Key)
-            If Cmp <> 0 Then Return Cmp
-            Return String.Compare(Value, Other.Value)
-        End Function
-    End Class
+    ''' <summary>
+    ''' Compare two PdfExtGState objects.
+    ''' </summary>
+    ''' <param name="Other">Other object.</param>
+    ''' <returns>Compare result.</returns>
+    Public Overloads Function CompareTo(ByVal Other As PdfExtGState) As Integer Implements IComparable(Of PdfExtGState).CompareTo
+        Dim Cmp = String.Compare(Key, Other.Key)
+        If Cmp <> 0 Then Return Cmp
+        Return String.Compare(Value, Other.Value)
+    End Function
+End Class

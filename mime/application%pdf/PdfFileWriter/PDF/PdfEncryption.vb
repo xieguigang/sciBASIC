@@ -58,7 +58,7 @@
 
 #End Region
 
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 '
 '	PdfFileWriter
 '	PDF File Write C# Class Library.
@@ -81,7 +81,7 @@
 '
 '	For version history please refer to PdfDocument.cs
 '
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 
 Imports System
 Imports System.IO
@@ -160,7 +160,7 @@ Public Enum Permission
     All = &HF3C         ' bits 3, 4, 5, 6, 9, 10, 11, 12
 End Enum
 
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
 ''' <summary>
 ''' PDF encryption class
 ''' </summary>
@@ -169,7 +169,7 @@ End Enum
 ''' For more information go to <a href="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#EncryptionSupport">2.6 Encryption Support</a>
 ''' </para>
 ''' </remarks>
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
 Public Class PdfEncryption
     Inherits PdfObject
     Implements IDisposable
@@ -193,9 +193,9 @@ Public Class PdfEncryption
     Private Shared ReadOnly PasswordPad As Byte() = {&H28, &HBF, &H4E, &H5E, &H4E, &H75, &H8A, &H41, &H64, &H0, &H4E, &H56, &HFF, &HFA, &H1, &H8, &H2E, &H2E, &H0, &HB6, &HD0, &H68, &H3E, &H80, &H2F, &HC, &HA9, &HFE, &H64, &H53, &H69, &H7A}
     Private Shared ReadOnly Salt As Byte() = {&H73, &H41, &H6C, &H54}
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Encryption Constructor
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Friend Sub New(ByVal Document As PdfDocument, ByVal UserPassword As String, ByVal OwnerPassword As String, ByVal UserPermissions As Permission, ByVal EncryptionType As EncryptionType)
         MyBase.New(Document)
@@ -248,9 +248,9 @@ Public Class PdfEncryption
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Encrypt byte array
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Friend Function EncryptByteArray(ByVal ObjectNumber As Integer, ByVal PlainText As Byte()) As Byte()
         ' create encryption key
@@ -298,9 +298,9 @@ Public Class PdfEncryption
         Return CipherText
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Process Password
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Function ProcessPassword(ByVal StringPassword As String) As Byte()
         ' no user password
@@ -323,9 +323,9 @@ Public Class PdfEncryption
         Return BinaryPassword
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Create owner key
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Function CreateOwnerKey(ByVal UserBinaryPassword As Byte(), ByVal OwnerBinaryPassword As Byte()) As Byte()
         ' create hash array for owner password
@@ -352,9 +352,9 @@ Public Class PdfEncryption
         Return OwnerKey
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Create master key
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Sub CreateMasterKey(ByVal UserBinaryPassword As Byte(), ByVal OwnerKey As Byte())
         ' input byte array for MD5 hash function
@@ -380,9 +380,9 @@ Public Class PdfEncryption
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Create user key
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Function CreateUserKey() As Byte()
         ' input byte array for MD5 hash function
@@ -405,9 +405,9 @@ Public Class PdfEncryption
         Return UserKey
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Create encryption key
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Function CreateEncryptionKey(ByVal ObjectNumber As Integer) As Byte()
         Dim HashInput = New Byte(MasterKey.Length + 5 + If(EncryptionType = EncryptionType.Aes128, Salt.Length, 0) - 1) {}
@@ -425,9 +425,9 @@ Public Class PdfEncryption
         Return EncryptionKey
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' RC4 Encryption
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Sub EncryptRC4(ByVal Key As Byte(), ByVal Data As Byte())
         Dim State = New Byte(255) {}
@@ -462,11 +462,11 @@ Public Class PdfEncryption
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ''' <summary>
     ''' Dispose unmanaged resources
     ''' </summary>
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     Public Sub Dispose() Implements IDisposable.Dispose
         If AES IsNot Nothing Then
             AES.Clear()

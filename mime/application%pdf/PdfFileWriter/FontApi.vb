@@ -101,7 +101,7 @@
 
 #End Region
 
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 '
 '	PdfFileWriter
 '	PDF File Write C# Class Library.
@@ -124,7 +124,7 @@
 '
 '	For version history please refer to PdfDocument.cs
 '
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 
 Imports System
 Imports System.Collections.Generic
@@ -271,9 +271,9 @@ Public Class CharInfo
     Friend GlyphData As Byte()
     Friend Composite As Boolean
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' constructor
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Friend Sub New(ByVal CharCode As Integer, ByVal GlyphIndex As Integer, ByVal DC As FontApi)
         ' save char code and glyph index
@@ -296,9 +296,9 @@ Public Class CharInfo
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' constructor for search and sort
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Friend Sub New(ByVal GlyphIndex As Integer)
         ' save char code and glyph index
@@ -316,9 +316,9 @@ Public Class CharInfo
     End Function
 End Class
 
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
 ' IComparer class for new glyph index sort
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
 
 Friend Class SortByNewIndex
     Implements IComparer(Of CharInfo)
@@ -328,14 +328,14 @@ Friend Class SortByNewIndex
     End Function
 End Class
 
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
 ''' <summary>
 ''' Font box class
 ''' </summary>
 ''' <remarks>
 ''' FontBox class is part of OUTLINETEXTMETRIC structure
 ''' </remarks>
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
 Public Class FontBox
     ''' <summary>
     ''' Gets left side.
@@ -399,7 +399,7 @@ Public Class FontBox
     End Sub
 End Class
 
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
 ''' <summary>
 ''' Panose class
 ''' </summary>
@@ -409,7 +409,7 @@ End Class
 ''' used to associate the font with other fonts of similar
 ''' appearance but different names.
 ''' </remarks>
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
 Public Class WinPanose
     ''' <summary>
     ''' Panose family type
@@ -557,11 +557,11 @@ Public Class WinPanose
     End Sub
 End Class
 
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
 ''' <summary>
 ''' Kerning pair class
 ''' </summary>
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
 Public Class WinKerningPair
     Implements IComparable(Of WinKerningPair)
     ''' <summary>
@@ -632,7 +632,7 @@ Public Class WinKerningPair
     End Function
 End Class
 
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
 ''' <summary>
 ''' TextMetric class
 ''' </summary>
@@ -642,7 +642,7 @@ End Class
 ''' that is, they depend on the current mapping mode of the
 ''' display context.
 ''' </remarks>
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
 Public Class WinTextMetric
     ''' <summary>
     ''' TextMetric height
@@ -930,7 +930,7 @@ Public Class WinTextMetric
     End Sub
 End Class
 
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
 ''' <summary>
 ''' Outline text metric class
 ''' </summary>
@@ -938,7 +938,7 @@ End Class
 ''' The OUTLINETEXTMETRIC structure contains metrics describing
 ''' a TrueType font.
 ''' </remarks>
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
 Public Class WinOutlineTextMetric
 
 
@@ -1406,9 +1406,9 @@ Public Class FontApi
     Private BufPtr As Integer
     Private DesignHeight As Integer
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Device context constructor
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     <DllImport("gdi32.dll", CharSet:=CharSet.Auto, CallingConvention:=CallingConvention.StdCall, SetLastError:=True)>
     Private Shared Function SelectObject(ByVal GDIHandle As IntPtr, ByVal FontHandle As IntPtr) As IntPtr
@@ -1436,9 +1436,9 @@ Public Class FontApi
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Gets single glyph metric
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Const GGO_METRICS As UInteger = 0
     Private Const GGO_BITMAP As UInteger = 1
@@ -1558,9 +1558,9 @@ Public Class FontApi
         Return CharInfoArray
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Get kerning pairs array
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     <DllImport("gdi32.dll", CharSet:=CharSet.Auto, CallingConvention:=CallingConvention.StdCall, SetLastError:=True)>
     Private Shared Function GetKerningPairs(ByVal GDIHandle As IntPtr, ByVal NumberOfPairs As UInteger, ByVal PairArray As IntPtr) As UInteger
@@ -1607,9 +1607,9 @@ Public Class FontApi
         Return TempList.ToArray()
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Get OUTLINETEXTMETRICW structure
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     <DllImport("gdi32.dll", CharSet:=CharSet.Auto, CallingConvention:=CallingConvention.StdCall, SetLastError:=True)>
     Private Shared Function GetOutlineTextMetrics(ByVal GDIHandle As IntPtr, ByVal BufferLength As Integer, ByVal Buffer As IntPtr) As Integer
@@ -1640,9 +1640,9 @@ Public Class FontApi
         Return WOTM
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Get TEXTMETRICW structure
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     <DllImport("gdi32.dll", CharSet:=CharSet.Auto, CallingConvention:=CallingConvention.StdCall, SetLastError:=True)>
     Private Shared Function GetTextMetrics(ByVal GDIHandle As IntPtr, ByVal Buffer As IntPtr) As Integer
@@ -1669,9 +1669,9 @@ Public Class FontApi
         Return WTM
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Get font data tables
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     <DllImport("gdi32.dll", CharSet:=CharSet.Auto, CallingConvention:=CallingConvention.StdCall, SetLastError:=True)>
     Private Shared Function GetFontData(ByVal DeviceContextHandle As IntPtr, ByVal Table As UInteger, ByVal Offset As UInteger, ByVal Buffer As IntPtr, ByVal BufferLength As UInteger) As UInteger
@@ -1709,9 +1709,9 @@ Public Class FontApi
         Return DataBuffer
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Get glyph indices array
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     <DllImport("gdi32.dll", CharSet:=CharSet.Auto, CallingConvention:=CallingConvention.StdCall, SetLastError:=True)>
     Private Shared Function GetGlyphIndices(ByVal GDIHandle As IntPtr, ByVal CharBuffer As IntPtr, ByVal CharCount As Integer, ByVal GlyphArray As IntPtr, ByVal GlyphOptions As UInteger) As Integer
@@ -1761,9 +1761,9 @@ Public Class FontApi
         Return GlyphIndex32
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Allocate API result buffer
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Sub AllocateBuffer(ByVal Size As Integer)
         ' allocate memory for result
@@ -1772,9 +1772,9 @@ Public Class FontApi
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Free API result buffer
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Sub FreeBuffer()
         ' free buffer
@@ -1783,34 +1783,34 @@ Public Class FontApi
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Align buffer pointer to 4 bytes boundry
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Friend Sub Align4()
         BufPtr = BufPtr + 3 And Not 3
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Read point (x, y) from data buffer
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Friend Function ReadWinPoint() As Point
         Return New Point(ReadInt32(), ReadInt32())
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Read byte from data buffer
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Friend Function ReadByte() As Byte
         Return Marshal.ReadByte(Buffer, stdNum.Min(Threading.Interlocked.Increment(BufPtr), BufPtr - 1))
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Read character from data buffer
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Friend Function ReadChar() As Char
         Dim Value As Char = Microsoft.VisualBasic.ChrW(Marshal.ReadInt16(Buffer, BufPtr))
@@ -1818,9 +1818,9 @@ Public Class FontApi
         Return Value
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Read short integer from data buffer
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Friend Function ReadInt16() As Short
         Dim Value = Marshal.ReadInt16(Buffer, BufPtr)
@@ -1828,9 +1828,9 @@ Public Class FontApi
         Return Value
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Read unsigned short integer from data buffer
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Friend Function ReadUInt16() As UShort
         Dim Value As UShort = Marshal.ReadInt16(Buffer, BufPtr)
@@ -1838,9 +1838,9 @@ Public Class FontApi
         Return Value
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Read short array from result buffer
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Friend Function ReadInt16Array(ByVal Size As Integer) As Short()
         ' create active characters array
@@ -1849,9 +1849,9 @@ Public Class FontApi
         Return Result
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Read integers from data buffer
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Friend Function ReadInt32() As Integer
         Dim Value = Marshal.ReadInt32(Buffer, BufPtr)
@@ -1859,9 +1859,9 @@ Public Class FontApi
         Return Value
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Read int array from result buffer
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Friend Function ReadInt32Array(ByVal Size As Integer) As Integer()
         ' create active characters array
@@ -1870,9 +1870,9 @@ Public Class FontApi
         Return Result
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Read unsigned integers from data buffer
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Friend Function ReadUInt32() As UInteger
         Dim Value As UInteger = Marshal.ReadInt32(Buffer, BufPtr)
@@ -1880,9 +1880,9 @@ Public Class FontApi
         Return Value
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Read string (null terminated) from data buffer
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Friend Function ReadString() As String
         Dim Ptr = Marshal.ReadInt32(Buffer, BufPtr)
@@ -1899,9 +1899,9 @@ Public Class FontApi
         Return Str.ToString()
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Throw exception showing last system error
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     <DllImport("Kernel32.dll", CharSet:=CharSet.Auto, CallingConvention:=CallingConvention.StdCall, SetLastError:=True)>
     Private Shared Function FormatMessage(ByVal dwFlags As UInteger, ByVal lpSource As IntPtr, ByVal dwMessageId As UInteger, ByVal dwLanguageId As UInteger, ByVal lpBuffer As IntPtr, ByVal nSize As UInteger, ByVal Arguments As IntPtr) As UInteger
@@ -1947,9 +1947,9 @@ Public Class FontApi
         Throw New ApplicationException(ErrMsg.ToString())
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Build unit matrix in unmanaged memory
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Private Function BuildUnitMarix() As IntPtr
         ' allocate buffer for transformation matrix
@@ -1963,9 +1963,9 @@ Public Class FontApi
         Return UnitMatrix
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Dispose
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     <DllImport("gdi32.dll", CharSet:=CharSet.Auto, CallingConvention:=CallingConvention.StdCall, SetLastError:=True)>
     Private Shared Function DeleteObject(ByVal Handle As IntPtr) As IntPtr

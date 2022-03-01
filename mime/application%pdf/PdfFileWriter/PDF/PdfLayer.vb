@@ -153,14 +153,14 @@ Imports System
             Return
         End Sub
 
-        ''' <summary>
-        ''' CompareTo for IComparabler
-        ''' </summary>
-        ''' <param name="Other">Other layer</param>
-        ''' <returns>Compare result</returns>
-        Public Function CompareTo(ByVal Other As PdfLayer) As Integer Implements IComparable(Of PdfLayer).CompareTo
-            Dim Cmp = String.Compare(RadioButton, Other.RadioButton)
-            If Cmp <> 0 Then Return Cmp
-            Return ObjectNumber - Other.ObjectNumber
-        End Function
-    End Class
+    ''' <summary>
+    ''' CompareTo for IComparabler
+    ''' </summary>
+    ''' <param name="Other">Other layer</param>
+    ''' <returns>Compare result</returns>
+    Public Overloads Function CompareTo(ByVal Other As PdfLayer) As Integer Implements IComparable(Of PdfLayer).CompareTo
+        Dim Cmp = String.Compare(RadioButton, Other.RadioButton)
+        If Cmp <> 0 Then Return Cmp
+        Return ObjectNumber - Other.ObjectNumber
+    End Function
+End Class

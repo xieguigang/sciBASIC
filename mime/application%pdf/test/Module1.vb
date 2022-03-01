@@ -138,10 +138,10 @@ Module Module1
             'Contents.SaveGraphicsState()
 
             '' create chart
-            'Dim PieChart = PdfChart.CreateChart(Document, 1.8, 1.5, 300.0)
+            Dim PieChart = PdfChart.CreateChart(Document, 1.8, 1.5, 300.0)
 
             '' create PdfChart object with Chart object
-            'Dim PiePdfChart = New PdfChart(Document, PieChart)
+            Dim PiePdfChart = New PdfChart(Document, PieChart)
             'PiePdfChart.SaveAs = SaveImageAs.IndexedImage
 
 
@@ -192,7 +192,7 @@ Module Module1
             'Series1.Points.Add(18.0)
             'Series1.Points(3).LegendText = "Grape"
 
-            'Contents.DrawChart(PiePdfChart, 5.6, 5.0)
+            Contents.DrawChart(PiePdfChart, 5.6, 5.0)
 
             '' restore graphics state
             'Contents.RestoreGraphicsState()

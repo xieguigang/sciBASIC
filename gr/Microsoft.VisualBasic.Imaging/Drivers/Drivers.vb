@@ -74,5 +74,6 @@ Namespace Driver
         ''' Windows meta file: <see cref="Imaging.Wmf"/>
         ''' </summary>
         WMF
+        PDF
     End Enum
 End Namespace

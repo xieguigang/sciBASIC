@@ -74,7 +74,7 @@
 
 #End Region
 
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 '
 '	PdfFileWriter
 '	PDF File Write C# Class Library.
@@ -97,14 +97,14 @@
 '
 '	For version history please refer to PdfDocument.cs
 '
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 
 Imports System
 
 
-    ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    '
     ' Font file header
-    ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    '
 
     Friend Class FontFileHeader
         Friend FileVersion As UInteger      ' 0x00010000 for version 1.0.
@@ -146,9 +146,9 @@ Imports System
         End Property
     End Class
 
-    ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    '
     ' Font file table record
-    ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    '
 
     Friend Class TableRecord
         Friend Tag As UInteger          ' 4 -byte identifier
@@ -164,9 +164,9 @@ Imports System
         End Sub
     End Class
 
-    ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    '
     ' 'cmap' encoding sub-table
-    ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    '
 
     Friend Class cmapSubTbl
         Implements IComparable(Of cmapSubTbl)
@@ -243,9 +243,9 @@ Imports System
         End Property
     End Class
 
-    ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    '
     ' 'cmap' format 4 encoding sub-table segment record
-    ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    '
 
     Friend Class cmapSeg
         Implements IComparable(Of cmapSeg)
@@ -276,9 +276,9 @@ Imports System
         End Function
     End Class
 
-    ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    '
     ' 'head' font file header table
-    ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    '
 
     Friend Class headTable
         Friend TableVersion As UInteger         ' 0x00010000 for version 1.0.
@@ -327,9 +327,9 @@ Imports System
         Friend glyphDataFormat As Short     ' 0 for current format.
     End Class
 
-    ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    '
     ' 'head' horizontal header table
-    ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    '
 
     Friend Class hheaTable
         Friend TableVersion As UInteger         ' 0x00010000 for version 1.0.
@@ -353,9 +353,9 @@ Imports System
         Friend numberOfHMetrics As UShort       ' Number of hMetric entries in 'hmtx' table
     End Class
 
-    ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    '
     ' 'maxp' font maximum values
-    ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    '
 
     Friend Class maxpTable
         Friend TableVersion As UInteger         ' 0x00010000 for version 1.0.
@@ -376,9 +376,9 @@ Imports System
         Friend maxComponentDepth As UShort      ' Maximum levels of recursion; 1 for simple components.
     End Class
 
-    ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    '
     ' Glyph table support
-    ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    '
 
     ' glyph flags for comosite glyphs
     Friend Enum CompFlag

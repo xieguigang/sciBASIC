@@ -55,7 +55,7 @@
 
 #End Region
 
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 '
 '	PdfFileWriter
 '	PDF File Write C# Class Library.
@@ -78,7 +78,7 @@
 '
 '	For version history please refer to PdfDocument.cs
 '
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 
 Imports System
 Imports System.Collections.Generic
@@ -350,9 +350,9 @@ Public Class PdfImage
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Load image from disk file into Image class
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     Friend Function LoadImageFromFile(ByVal ImageFileName As String) As Image
         ' test exitance
         If Not File.Exists(ImageFileName) Then Throw New ApplicationException("Image file " & ImageFileName & " does not exist")
@@ -387,10 +387,10 @@ Public Class PdfImage
         Return Image
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Create Image rectangle
     ' some images have origin not at top left corner
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     Friend Sub ImageRectangle(ByVal Image As Image)
         ' image rectangle
         ImageRect = New Rectangle(0, 0, Image.Width, Image.Height)
@@ -413,10 +413,10 @@ Public Class PdfImage
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Set image size in pixels
     ' If crop is active adjust image size to crop rectangle
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Friend Sub ImageSizeInPixels(ByVal Image As Image)
         ' crop rectangle is given in percent width or height
@@ -451,9 +451,9 @@ Public Class PdfImage
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Convert image to bitmap
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Friend Sub ConvertImageToBitmap(ByVal Image As Image)
         ' destination rectangle
@@ -558,9 +558,9 @@ Public Class PdfImage
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Write object to PDF file
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     Friend Overrides Sub WriteObjectToPdfFile()
         ' add items to dictionary
         Dictionary.AddInteger("/Width", WidthPix)
@@ -608,9 +608,9 @@ _Select0_CasePdfFileWriter_SaveImageAs_Jpeg:
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Convert .net bitmap image to PDF indexed bitmap image
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Friend Sub PictureToJpeg()
         ' create memory stream
@@ -648,9 +648,9 @@ _Select0_CasePdfFileWriter_SaveImageAs_Jpeg:
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Convert .net bitmap image to PDF indexed bitmap image
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Friend Function PictureToIndexedImage() As Boolean
         ' if Picture Bitmap cannot be converted to RGB array, return with false
@@ -845,9 +845,9 @@ _Select0_CasePdfFileWriter_SaveImageAs_Jpeg:
         Return True
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Convert .net bitmap image to PDF indexed bitmap image
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Friend Function PictureToGrayImage() As Boolean
         ' if Picture Bitmap cannot be converted to RGB array, return with false
@@ -903,9 +903,9 @@ _Select0_CasePdfFileWriter_SaveImageAs_Jpeg:
         Return True
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Convert .net bitmap image to PDF indexed bitmap image
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
 
     Friend Function PictureToBWImage() As Boolean
         ' if Picture Bitmap cannot be converted to RGB array, return with false
@@ -964,9 +964,9 @@ _Select0_CasePdfFileWriter_SaveImageAs_Jpeg:
         Return True
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Convert .net bitmap image to PDF indexed bitmap image
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     Friend Sub BooleanToBWImage()
         ' each row must be multiple of bytes
         Dim WidthBytes As Integer = (WidthPix + 7) / 8
@@ -993,9 +993,9 @@ _Select0_CasePdfFileWriter_SaveImageAs_Jpeg:
         Return
     End Sub
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ' Write object to PDF file
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     Private Function GetEncoderInfo(ByVal mimeType As String) As ImageCodecInfo
         Dim EncoderArray As ImageCodecInfo() = ImageCodecInfo.GetImageEncoders()
 
@@ -1006,7 +1006,7 @@ _Select0_CasePdfFileWriter_SaveImageAs_Jpeg:
         Throw New ApplicationException("GetEncoderInfo: image/jpeg encoder does not exist")
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ''' <summary>
     ''' Calculates image size to preserve aspect ratio.
     ''' </summary>
@@ -1015,12 +1015,12 @@ _Select0_CasePdfFileWriter_SaveImageAs_Jpeg:
     ''' <remarks>
     ''' Calculates best fit to preserve aspect ratio.
     ''' </remarks>
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     Public Function ImageSize(ByVal InputSize As SizeD) As SizeD
         Return ImageSizePos.ImageSize(WidthPix, HeightPix, InputSize.Width, InputSize.Height)
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ''' <summary>
     ''' Calculates image size to preserve aspect ratio.
     ''' </summary>
@@ -1030,12 +1030,12 @@ _Select0_CasePdfFileWriter_SaveImageAs_Jpeg:
     ''' <remarks>
     ''' Calculates best fit to preserve aspect ratio.
     ''' </remarks>
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     Public Function ImageSize(ByVal Width As Double, ByVal Height As Double) As SizeD
         Return ImageSizePos.ImageSize(WidthPix, HeightPix, Width, Height)
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ''' <summary>
     ''' Calculates image size to preserve aspect ratio and sets position.
     ''' </summary>
@@ -1046,12 +1046,12 @@ _Select0_CasePdfFileWriter_SaveImageAs_Jpeg:
     ''' Calculates best fit to preserve aspect ratio and adjust
     ''' position according to content alignment argument.
     ''' </remarks>
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     Public Function ImageSizePosition(ByVal InputSize As SizeD, ByVal Alignment As ContentAlignment) As PdfRectangle
         Return ImageArea(WidthPix, HeightPix, 0.0, 0.0, InputSize.Width, InputSize.Height, Alignment)
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ''' <summary>
     ''' Calculates image size to preserve aspect ratio and sets position.
     ''' </summary>
@@ -1063,16 +1063,16 @@ _Select0_CasePdfFileWriter_SaveImageAs_Jpeg:
     ''' Calculates best fit to preserve aspect ratio and adjust
     ''' position according to content alignment argument.
     ''' </remarks>
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     Public Function ImageSizePosition(ByVal Width As Double, ByVal Height As Double, ByVal Alignment As ContentAlignment) As PdfRectangle
         Return ImageArea(WidthPix, HeightPix, 0.0, 0.0, Width, Height, Alignment)
     End Function
 
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     ''' <summary>
     ''' Dispose unmanaged resources
     ''' </summary>
-    '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
     Public Sub Dispose() Implements IDisposable.Dispose
         ' release bitmap
         If DisposePicture AndAlso Picture IsNot Nothing Then

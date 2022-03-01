@@ -864,6 +864,7 @@
     <Compile Include="Drawing3D\Math3D\Projection.vb" />
     <Compile Include="Drawing3D\Math3D\Matrix.vb" />
     <Compile Include="Drawing3D\Math3D\Vector3D.vb" />
+    <Compile Include="Drivers\MockGDIPlusGraphics.vb" />
     <Compile Include="Drivers\CSS\Driver.vb" />
     <Compile Include="Drivers\CSS\RuntimeInvoker.vb" />
     <Compile Include="Drivers\Exif\JpegMetadata.vb" />
@@ -876,6 +877,7 @@
     <Compile Include="Drivers\Models\GraphicsData.vb" />
     <Compile Include="Drivers\Drivers.vb" />
     <Compile Include="Drivers\ImageSynthesis.vb" />
+    <Compile Include="Drivers\CreateGraphicsDriver.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="Filters\Matrix.vb" />
     <Compile Include="Filters\GaussBlur.vb" />
@@ -944,9 +946,9 @@
     <None Include="Resources\DefaultTexture.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Data_science\Mathematica\Math\Math\Math-core.vbproj">
+    <ProjectReference Include="..\..\Data_science\Mathematica\Math\Math\math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
-      <Name>Math-core</Name>
+      <Name>math-core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>

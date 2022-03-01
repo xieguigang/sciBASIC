@@ -51,7 +51,7 @@
 
 #End Region
 
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 '
 '	PdfFileWriter
 '	PDF File Write C# Class Library.
@@ -74,7 +74,7 @@
 '
 '	For version history please refer to PdfDocument.cs
 '
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+'
 
 Imports System.Drawing
 
@@ -121,11 +121,11 @@ Imports System.Drawing
             BoldItalic = 3
         End Enum
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ' Bookmarks (Document Outline) Root Constructor
         ' Must be called from PdfDocument.GetBookmarksRoot() method
         ' This constructor is called one time only
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
 
         Friend Sub New(ByVal Document As PdfDocument)
             MyBase.New(Document)
@@ -137,11 +137,11 @@ Imports System.Drawing
             Return
         End Sub
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ' Create bookmark item
         ' Must be called from AddBookmark method below
         ' This constructor is called for each bookmark
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
 
         Private Sub New(ByVal Document As PdfDocument, ByVal OpenEntries As Boolean)
             MyBase.New(Document)
@@ -150,7 +150,7 @@ Imports System.Drawing
             Return
         End Sub
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ''' <summary>
         ''' Add child bookmark
         ''' </summary>
@@ -164,7 +164,7 @@ Imports System.Drawing
         ''' This method creates a new child bookmark item attached
         ''' to this parent
         ''' </remarks>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Public Function AddBookmark(ByVal Title As String, ByVal Page As PdfPage, ByVal YPos As Double, ByVal OpenEntries As Boolean) As PdfBookmark            ' bookmark title
             ' bookmark page
             ' bookmark vertical position relative to bottom left corner of the page
@@ -172,7 +172,7 @@ Imports System.Drawing
             Return AddBookmark(Title, Page, 0.0, YPos, 0.0, Color.Empty, TextStyle.Normal, OpenEntries)
         End Function
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ''' <summary>
         ''' Add child bookmark
         ''' </summary>
@@ -188,7 +188,7 @@ Imports System.Drawing
         ''' This method creates a new child bookmark item attached
         ''' to this parent
         ''' </remarks>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Public Function AddBookmark(ByVal Title As String, ByVal Page As PdfPage, ByVal YPos As Double, ByVal Paint As Color, ByVal TextStyle As TextStyle, ByVal OpenEntries As Boolean) As PdfBookmark            ' bookmark title
             ' bookmark page
             ' bookmark vertical position relative to bottom left corner of the page
@@ -198,7 +198,7 @@ Imports System.Drawing
             Return AddBookmark(Title, Page, 0.0, YPos, 0.0, Paint, TextStyle, OpenEntries)
         End Function
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ''' <summary>
         ''' Add child bookmark
         ''' </summary>
@@ -214,7 +214,7 @@ Imports System.Drawing
         ''' This method creates a new child bookmark item attached
         ''' to this parent
         ''' </remarks>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Public Function AddBookmark(ByVal Title As String, ByVal Page As PdfPage, ByVal XPos As Double, ByVal YPos As Double, ByVal Zoom As Double, ByVal OpenEntries As Boolean) As PdfBookmark            ' bookmark title
             ' bookmark page
             ' bookmark horizontal position relative to bottom left corner of the page
@@ -224,7 +224,7 @@ Imports System.Drawing
             Return AddBookmark(Title, Page, XPos, YPos, Zoom, Color.Empty, TextStyle.Normal, OpenEntries)
         End Function
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ''' <summary>
         ''' Add child bookmark
         ''' </summary>
@@ -242,7 +242,7 @@ Imports System.Drawing
         ''' This method creates a new child bookmark item attached
         ''' to this parent
         ''' </remarks>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Public Function AddBookmark(ByVal Title As String, ByVal Page As PdfPage, ByVal XPos As Double, ByVal YPos As Double, ByVal Zoom As Double, ByVal Paint As Color, ByVal TextStyle As TextStyle, ByVal OpenEntries As Boolean) As PdfBookmark            ' bookmark title
             ' bookmark page
             ' bookmark horizontal position relative to bottom left corner of the page
@@ -293,7 +293,7 @@ Imports System.Drawing
             Return Bookmark
         End Function
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ''' <summary>
         ''' Gets child bookmark
         ''' </summary>
@@ -307,7 +307,7 @@ Imports System.Drawing
         ''' the third bookmark child and then the forth bookmark of the 
         ''' next level.
         ''' </remarks>
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         Public Function GetChild(ParamArray IndexArray As Integer()) As PdfBookmark
             Dim Bookmark = Me
             Dim Child As PdfBookmark = Nothing
@@ -334,9 +334,9 @@ Imports System.Drawing
             Return Child
         End Function
 
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
         ' Write object to PDF file
-        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        
 
         Friend Overrides Sub WriteObjectToPdfFile()
             ' update dictionary
