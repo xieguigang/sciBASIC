@@ -1,60 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::371e488e4ea0918e604f6594c428615a, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Graphics2D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Graphics2D
-    ' 
-    '         Properties: Center, Height, ImageResource, Size, Width
-    ' 
-    '         Constructor: (+5 Overloads) Sub New
-    ' 
-    '         Function: CreateDevice, CreateObject, Open, (+2 Overloads) Save, ToString
-    ' 
-    '         Sub: __save, DrawCircle
-    '         Structure Context
-    ' 
-    '             Function: Create
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Graphics2D
+' 
+'         Properties: Center, Height, ImageResource, Size, Width
+' 
+'         Constructor: (+5 Overloads) Sub New
+' 
+'         Function: CreateDevice, CreateObject, Open, (+2 Overloads) Save, ToString
+' 
+'         Sub: __save, DrawCircle
+'         Structure Context
+' 
+'             Function: Create
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Drawing.Imaging
+Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 
 Namespace Imaging
 
@@ -65,6 +67,7 @@ Namespace Imaging
     ''' <remarks></remarks>
     Public Class Graphics2D : Inherits GDICanvas
         Implements IDisposable
+        Implements SaveGdiBitmap
 
         ''' <summary>
         ''' GDI+ device handle memory.(GDI+设备之中的图像数据)
@@ -183,7 +186,7 @@ Namespace Imaging
         ''' <returns></returns>
         Public Overloads Function Save(path$, Optional Format As ImageFormat = Nothing) As Boolean
             Try
-                Call __save(path, Format Or Png)
+                Call saveFile(path, Format Or Png)
             Catch ex As Exception
                 Return App.LogException(ex, MethodBase.GetCurrentMethod.GetFullName)
             End Try
@@ -191,9 +194,8 @@ Namespace Imaging
             Return True
         End Function
 
-        Private Sub __save(path As String, format As ImageFormat)
-            Call path.ParentPath.MakeDir
-            Call ImageResource.Save(path, format)
+        Private Sub saveFile(path As String, format As ImageFormat)
+            Call Save(path.Open(FileMode.OpenOrCreate, doClear:=True), format)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -258,5 +260,12 @@ Namespace Imaging
             Call Me.DrawCircle(center, radius, New SolidBrush(fill))
             Call Me.DrawCircle(center, radius, stroke, fill:=False)
         End Sub
+
+        Public Overloads Function Save(stream As Stream, format As ImageFormat) As Boolean Implements SaveGdiBitmap.Save
+            Call ImageResource.Save(stream, format)
+            Call stream.Flush()
+
+            Return True
+        End Function
     End Class
 End Namespace

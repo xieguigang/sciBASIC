@@ -141,6 +141,11 @@ Namespace Scripting.Runtime
             Return CType(CObj(x), T)
         End Function
 
+        ''' <summary>
+        ''' width,height
+        ''' </summary>
+        ''' <param name="size"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Expression(size As Size) As String
@@ -149,6 +154,11 @@ Namespace Scripting.Runtime
             End With
         End Function
 
+        ''' <summary>
+        ''' width,height
+        ''' </summary>
+        ''' <param name="size"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Expression(size As SizeF) As String
