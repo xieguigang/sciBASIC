@@ -3,10 +3,13 @@ Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 Imports System.IO
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.application.pdf
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Public Class PdfGraphics : Inherits MockGDIPlusGraphics
+    Implements SaveGdiBitmap
 
     Friend ReadOnly g As PdfContents
     Friend ReadOnly page As PdfPage
@@ -934,5 +937,14 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
 
     Public Overrides Function IsVisible(x As Single, y As Single, width As Single, height As Single) As Boolean
         Throw New NotImplementedException()
+    End Function
+
+    Public Function Save(stream As Stream, format As ImageFormat) As Boolean Implements SaveGdiBitmap.Save
+        Dim pdf As New PdfImage(Me, Size, New Padding)
+
+        Call pdf.Save(stream)
+        Call stream.Flush()
+
+        Return True
     End Function
 End Class

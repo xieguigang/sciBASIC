@@ -15,6 +15,12 @@ Public Class PdfImage : Inherits GraphicsData
         End Get
     End Property
 
+    ''' <summary>
+    ''' <paramref name="img"/> parameter value is <see cref="PdfGraphics"/>
+    ''' </summary>
+    ''' <param name="img"><see cref="PdfGraphics"/></param>
+    ''' <param name="size"></param>
+    ''' <param name="padding"></param>
     Public Sub New(img As Object, size As Size, padding As Padding)
         MyBase.New(img, size, padding)
 
