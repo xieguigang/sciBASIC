@@ -199,13 +199,11 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
     End Function
 
     Public Function AddEdge(u As V, v As V, Optional weight# = 0) As G
-        Dim edge As New Edge With {
+        Return Insert(New Edge With {
             .U = u,
             .V = v,
             .weight = weight
-        }
-        edges += edge
-        Return Insert(edge)
+        })
     End Function
 
     ''' <summary>
