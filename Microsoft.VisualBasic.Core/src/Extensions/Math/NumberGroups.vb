@@ -201,6 +201,19 @@ Namespace Math
             End With
         End Function
 
+        '''' <summary>
+        '''' 将一维的数据按照一定的偏移量分组输出
+        '''' </summary>
+        '''' <param name="source"></param>
+        '''' <returns></returns>
+        '<Extension>
+        'Public Function GroupBy(Of T)(source As IEnumerable(Of T),
+        '                              evaluate As Evaluate(Of T),
+        '                              equals As GenericLambda(Of Double).IEquals) As IEnumerable(Of NamedCollection(Of T))
+
+        '    Return source.GroupBy(AddressOf evaluate.Invoke, equals)
+        'End Function
+
         ''' <summary>
         ''' 将一维的数据按照一定的偏移量分组输出
         ''' </summary>

@@ -129,7 +129,9 @@ Namespace Drawing2D
 
             g.__defaultDriver = ParseDriverEnumValue(type)
 
-            Call $"The default graphics driver value is config as {g.__defaultDriver.Description}({type}).".__INFO_ECHO
+            If VBDebugger.debugMode Then
+                Call $"The default graphics driver value is config as {g.__defaultDriver.Description}({type}).".__INFO_ECHO
+            End If
         End Sub
 
         Public Function ParseDriverEnumValue(str As String) As Drivers
