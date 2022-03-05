@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::f4f9c17c06dc536c0bb22e1ac992e5f4, Data_science\Graph\Model\Abstract\Graph.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class Graph
-    ' 
-    '     Properties: graphEdges, size, vertex
-    ' 
-    '     Function: (+3 Overloads) AddEdge, AddEdges, (+2 Overloads) AddVertex, CreateEdge, (+3 Overloads) Delete
-    '               ExistEdge, ExistVertex, GetConnectedVertex, GetEnumerator, IEnumerable_GetEnumerator
-    ' 
-    ' /********************************************************************************/
+' Class Graph
+' 
+'     Properties: graphEdges, size, vertex
+' 
+'     Function: (+3 Overloads) AddEdge, AddEdges, (+2 Overloads) AddVertex, CreateEdge, (+3 Overloads) Delete
+'               ExistEdge, ExistVertex, GetConnectedVertex, GetEnumerator, IEnumerable_GetEnumerator
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -114,6 +114,9 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
         End Get
     End Property
 
+    Public Sub New()
+    End Sub
+
     ''' <summary>
     ''' 返回所有至少具有一条边连接的节点的集合
     ''' </summary>
@@ -169,7 +172,7 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
         Else
             With New V With {
                 .ID = buffer.GetAvailablePos,
-                .Label = label
+                .label = label
             }
                 Call AddVertex(.ByRef)
                 Return .ByRef
@@ -177,22 +180,32 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
         End If
     End Function
 
-    Public Function AddEdge(u As V, v As V, Optional weight# = 0) As G
-        edges += New Edge With {
-            .U = u,
-            .V = v,
-            .weight = weight
-        }
-        If Not vertices.ContainsKey(u.Label) Then
+    Public Function Insert(edge As Edge) As G
+        Dim u = edge.U
+        Dim v = edge.V
+
+        edges += edge
+
+        If Not vertices.ContainsKey(u.label) Then
             vertices += u
             buffer.Add(u)
         End If
-        If Not vertices.ContainsKey(v.Label) Then
+        If Not vertices.ContainsKey(v.label) Then
             vertices += v
             buffer.Add(v)
         End If
 
         Return Me
+    End Function
+
+    Public Function AddEdge(u As V, v As V, Optional weight# = 0) As G
+        Dim edge As New Edge With {
+            .U = u,
+            .V = v,
+            .weight = weight
+        }
+        edges += edge
+        Return Insert(edge)
     End Function
 
     ''' <summary>
