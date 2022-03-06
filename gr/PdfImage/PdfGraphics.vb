@@ -137,6 +137,7 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
     End Sub
 
     Public Overrides Sub Clear(color As Color)
+        Call g.SetColorNonStroking(color)
         Call g.DrawRectangle(New PointD(0, 0), New SizeD(Size.Width, Size.Height), PaintOp.Fill)
     End Sub
 
