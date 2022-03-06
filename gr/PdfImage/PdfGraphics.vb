@@ -137,7 +137,7 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
     End Sub
 
     Public Overrides Sub Clear(color As Color)
-        Throw New NotImplementedException()
+        Call g.DrawRectangle(New PointD(0, 0), New SizeD(Size.Width, Size.Height), PaintOp.Fill)
     End Sub
 
     Public Overrides Sub CopyFromScreen(upperLeftSource As Point, upperLeftDestination As Point, blockRegionSize As Size)

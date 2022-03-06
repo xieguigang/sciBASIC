@@ -49,6 +49,7 @@ Namespace Driver
         Private Function handlePdf(d As DeviceDescription, plot As IPlot) As GraphicsData
             Dim g As IGraphics = pdfDriver(d.size)
 
+            Call g.Clear(d.background)
             Call plot(g, d.GetRegion)
             Call g.Flush()
 
