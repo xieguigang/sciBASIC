@@ -779,6 +779,9 @@
     <Compile Include="Drawing2D\Colors\Scaler\ColorIndex.vb" />
     <Compile Include="Drawing2D\Colors\Scaler\TrIQ.vb" />
     <Compile Include="Drawing2D\Colors\Viridis.vb" />
+    <Compile Include="Drawing2D\HeatMap\RasterScaler.vb" />
+    <Compile Include="Drawing2D\HeatMap\Pixel.vb" />
+    <Compile Include="Drawing2D\HeatMap\PixelRender.vb" />
     <Compile Include="Drawing2D\Math2D\MarchingSquares\ContourLayer.vb" />
     <Compile Include="Drawing2D\Math2D\MarchingSquares\ContourTracing.vb" />
     <Compile Include="Drawing2D\Math2D\MarchingSquares\GeneralPath.vb" />
