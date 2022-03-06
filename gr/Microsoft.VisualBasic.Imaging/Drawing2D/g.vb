@@ -269,8 +269,7 @@ Namespace Drawing2D
             size = size Or defaultSize
             padding = padding Or defaultPaddingValue
 
-            Return New DeviceDescription With {
-                .background = bg.TranslateColor,
+            Return New DeviceDescription(bg) With {
                 .dpi = dpiXY,
                 .driverUsed = driverUsed,
                 .padding = padding,
