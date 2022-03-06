@@ -52,6 +52,7 @@ Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.d3js.scale
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Html.CSS
@@ -123,7 +124,8 @@ Namespace Graphic.Axis
                             Optional htmlLabel As Boolean = False,
                             Optional XtickFormat$ = "F2",
                             Optional YtickFormat$ = "F2",
-                            Optional tickFontStyle$ = CSSFont.Win10NormalLarger)
+                            Optional tickFontStyle$ = CSSFont.Win10NormalLarger,
+                            Optional driver As Drivers = Drivers.Default)
             With region
                 Call g.DrawAxis(
                     scaler,
@@ -138,7 +140,8 @@ Namespace Graphic.Axis
                     YtickFormat:=YtickFormat,
                     tickFontStyle:=tickFontStyle,
                     gridX:=gridX,
-                    gridY:=gridY
+                    gridY:=gridY,
+                    driver:=driver
                 )
             End With
         End Sub
@@ -182,7 +185,8 @@ Namespace Graphic.Axis
                             Optional htmlLabel As Boolean = True,
                             Optional XtickFormat$ = "F2",
                             Optional YtickFormat$ = "F2",
-                            Optional xlabelRotate As Double = 0)
+                            Optional xlabelRotate As Double = 0,
+                            Optional driver As Drivers = Drivers.Default)
 
             ' 填充网格要先于坐标轴的绘制操作进行，否则会将坐标轴给覆盖掉
             Dim rect As Rectangle = scaler.region
@@ -192,7 +196,15 @@ Namespace Graphic.Axis
             Dim gridPenY As Pen = Stroke.TryParse(gridY)
 
             Call scaler.checkScaler
-            Call g.FillRectangle(gridFill.GetBrush, rect)
+
+            If driver = Drivers.PDF Then
+                Dim bugPos As New Rectangle(rect.X, g.Size.Height - 3 * rect.Y, rect.Width, rect.Height)
+                Dim background As Brush = gridFill.GetBrush
+
+                Call g.FillRectangle(background, bugPos)
+            Else
+                Call g.FillRectangle(gridFill.GetBrush, rect)
+            End If
 
             If showGrid AndAlso Not scaler.AxisTicks.X.IsNullOrEmpty Then
                 Dim ticks As Double()
