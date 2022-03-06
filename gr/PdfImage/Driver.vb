@@ -8,8 +8,8 @@ Imports Microsoft.VisualBasic.MIME.Html.CSS
 Public Module Driver
 
     Sub New()
-        g.pdfDriver = AddressOf OpenDevice
-        g.getPdfImage = AddressOf CreateImage
+        ImageDriver.pdfDriver = AddressOf OpenDevice
+        ImageDriver.getPdfImage = AddressOf CreateImage
     End Sub
 
     Private Function CreateImage(g As IGraphics, size As Size, padding As Padding) As GraphicsData
