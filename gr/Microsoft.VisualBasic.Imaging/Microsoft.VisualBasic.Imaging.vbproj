@@ -864,6 +864,8 @@
     <Compile Include="Drawing3D\Math3D\Projection.vb" />
     <Compile Include="Drawing3D\Math3D\Matrix.vb" />
     <Compile Include="Drawing3D\Math3D\Vector3D.vb" />
+    <Compile Include="Drivers\DeviceDescription.vb" />
+    <Compile Include="Drivers\InternalCanvas.vb" />
     <Compile Include="Drivers\MockGDIPlusGraphics.vb" />
     <Compile Include="Drivers\CSS\Driver.vb" />
     <Compile Include="Drivers\CSS\RuntimeInvoker.vb" />

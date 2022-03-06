@@ -62,19 +62,15 @@
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Text
-Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
-Imports Microsoft.VisualBasic.Imaging.PostScript
 Imports Microsoft.VisualBasic.Imaging.SVG
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.My.FrameworkInternal
 Imports Microsoft.VisualBasic.Scripting.Runtime
-
-<Assembly: InternalsVisibleTo("Microsoft.VisualBasic.Imaging.PDF")>
 
 Namespace Drawing2D
 
@@ -113,9 +109,6 @@ Namespace Drawing2D
         Public Const TinyPadding$ = "padding: 5px 5px 5px 5px;"
 
         Friend Const GraphicDriverEnvironmentConfigName$ = "graphic_driver"
-
-        Friend pdfDriver As Func(Of Size, IGraphics)
-        Friend getPdfImage As Func(Of IGraphics, Size, Padding, GraphicsData)
 
         ''' <summary>
         ''' 在这个模块的构造函数之中，程序会自动根据命令行所设置的环境参数来设置默认的图形引擎
@@ -276,66 +269,13 @@ Namespace Drawing2D
             size = size Or defaultSize
             padding = padding Or defaultPaddingValue
 
-            Dim region As New GraphicsRegion With {
-                .Size = size,
-                .Padding = padding
-            }
-
-            Select Case driverUsed
-                Case Drivers.SVG
-                    Dim svg As New GraphicsSVG(size, dpiXY.Width, dpiXY.Height)
-
-                    Call svg.Clear(bg.TranslateColor)
-                    Call plotAPI(svg, region)
-
-                    Return New SVGData(svg, size, padding)
-                Case Drivers.PS
-                    Dim ps As New GraphicsPS(size, dpiXY)
-
-                    Throw New NotImplementedException
-                Case Drivers.WMF
-                    Dim wmfstream As New MemoryStream
-
-                    Using wmf As New Wmf(size, wmfstream, bg, dpi:=dpiXY)
-                        Call plotAPI(wmf, region)
-                        Call wmf.Flush()
-                    End Using
-
-                    Return New WmfData(wmfstream, size, padding)
-
-                Case Drivers.PDF
-
-                    Dim g As IGraphics = pdfDriver(size)
-
-                    Call plotAPI(g, region)
-                    Call g.Flush()
-
-                    Return getPdfImage(g, size, padding)
-
-                Case Else
-                    ' using gdi+ graphics driver
-                    ' 在这里使用透明色进行填充，防止当bg参数为透明参数的时候被CreateGDIDevice默认填充为白色
-                    Using g As Graphics2D = size.CreateGDIDevice(Color.Transparent, dpi:=dpi)
-                        Dim rect As New Rectangle(New Point, size)
-
-                        With g.Graphics
-
-                            Call .FillBackground(bg$, rect)
-
-                            .CompositingQuality = CompositingQuality.HighQuality
-                            .CompositingMode = CompositingMode.SourceOver
-                            .InterpolationMode = InterpolationMode.HighQualityBicubic
-                            .PixelOffsetMode = PixelOffsetMode.HighQuality
-                            .SmoothingMode = SmoothingMode.HighQuality
-                            .TextRenderingHint = TextRenderingHint.ClearTypeGridFit
-
-                        End With
-
-                        Call plotAPI(g, region)
-
-                        Return New ImageData(g.ImageResource, size, padding)
-                    End Using
-            End Select
+            Return New DeviceDescription With {
+                .background = bg.TranslateColor,
+                .dpi = dpiXY,
+                .driverUsed = driverUsed,
+                .padding = padding,
+                .size = size
+            }.GraphicsPlot(plotAPI)
         End Function
 
         ''' <summary>
@@ -401,12 +341,19 @@ Namespace Drawing2D
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function GraphicsPlots(plot As Action(Of IGraphics), ByRef size As Size, ByRef padding As Padding, bg$) As GraphicsData
+        Public Function GraphicsPlots(plot As Action(Of IGraphics),
+                                      ByRef size As Size,
+                                      ByRef padding As Padding,
+                                      bg$) As GraphicsData
+
             Return GraphicsPlots(size, padding, bg, Sub(ByRef g, rect) Call plot(g))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Allocate(Optional size As Size = Nothing, Optional padding$ = DefaultPadding, Optional bg$ = "white") As InternalCanvas
+        Public Function Allocate(Optional size As Size = Nothing,
+                                 Optional padding$ = DefaultPadding,
+                                 Optional bg$ = "white") As InternalCanvas
+
             Return New InternalCanvas With {
                 .size = size,
                 .bg = bg,
@@ -425,63 +372,5 @@ Namespace Drawing2D
                 Return Graphics2D.Open(DirectCast(img, ImageData).Image)
             End If
         End Function
-
-        ''' <summary>
-        ''' 可以借助这个画布对象创建多图层的绘图操作
-        ''' </summary>
-        Public Class InternalCanvas
-
-            Dim plots As New List(Of IPlot)
-
-            Public Property size As Size
-            Public Property padding As Padding
-            Public Property bg As String
-
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Public Function InvokePlot() As GraphicsData
-                Return GraphicsPlots(
-                    size, padding, bg,
-                    Sub(ByRef g, rect)
-
-                        For Each plot As IPlot In plots
-                            Call plot(g, rect)
-                        Next
-                    End Sub)
-            End Function
-
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Public Shared Operator +(g As InternalCanvas, plot As IPlot) As InternalCanvas
-                g.plots += plot
-                Return g
-            End Operator
-
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Public Shared Operator +(g As InternalCanvas, plot As IPlot()) As InternalCanvas
-                g.plots += plot
-                Return g
-            End Operator
-
-            Public Shared Narrowing Operator CType(g As InternalCanvas) As GraphicsData
-                Return g.InvokePlot
-            End Operator
-
-            ''' <summary>
-            ''' canvas invoke this plot.
-            ''' </summary>
-            ''' <param name="g"></param>
-            ''' <param name="plot"></param>
-            ''' <returns></returns>
-            Public Shared Operator <=(g As InternalCanvas, plot As IPlot) As GraphicsData
-                Dim size As Size = g.size
-                Dim margin = g.padding
-                Dim bg As String = g.bg
-
-                Return GraphicsPlots(size, margin, bg, plot)
-            End Operator
-
-            Public Shared Operator >=(g As InternalCanvas, plot As IPlot) As GraphicsData
-                Throw New NotSupportedException
-            End Operator
-        End Class
     End Module
 End Namespace
