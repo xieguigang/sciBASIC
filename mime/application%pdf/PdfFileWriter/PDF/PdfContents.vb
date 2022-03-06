@@ -156,18 +156,15 @@
 '
 
 Imports System
-Imports System.Collections.Generic
 Imports System.Drawing
-Imports System.Text
 Imports System.Runtime.InteropServices
+Imports System.Text
 Imports i32 = Microsoft.VisualBasic.Language.i32
 Imports stdNum = System.Math
 
-'
 ''' <summary>
 ''' PDF font style flags enumeration
 ''' </summary>
-'
 Public Enum DrawStyle
     ''' <summary>
     ''' Normal

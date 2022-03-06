@@ -169,7 +169,6 @@ Public Class BarcodeBox
     End Sub
 End Class
 
-'
 ''' <summary>
 ''' One dimension barcode base class
 ''' </summary>
@@ -178,21 +177,8 @@ End Class
 ''' For more information go to <a href="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#BarcodeSupport">2.5 Barcode Support</a>
 ''' </para>
 ''' </remarks>
-'
 Public Class Barcode
 
-    ''' <summary>
-    ''' Text string
-    ''' </summary>
-
-    ''' <summary>
-    ''' Total number of black and white bars
-    ''' </summary>
-
-    ''' <summary>
-    ''' Total barcode width in narrow bar units.
-    ''' </summary>
-    Private _Text As String, _BarCount As Integer, _TotalWidth As Integer
     ''' <summary>
     ''' Gets a copy of CodeArray
     ''' </summary>
@@ -204,43 +190,28 @@ Public Class Barcode
 
     Friend _CodeArray As Integer()
 
+    ''' <summary>
+    ''' Text string
+    ''' </summary>
     Public Property Text As String
-        Get
-            Return _Text
-        End Get
-        Protected Set(value As String)
-            _Text = value
-        End Set
-    End Property
 
+    ''' <summary>
+    ''' Total number of black and white bars
+    ''' </summary>
     Public Property BarCount As Integer
-        Get
-            Return _BarCount
-        End Get
-        Protected Set(value As Integer)
-            _BarCount = value
-        End Set
-    End Property
 
+    ''' <summary>
+    ''' Total barcode width in narrow bar units.
+    ''' </summary>
     Public Property TotalWidth As Integer
-        Get
-            Return _TotalWidth
-        End Get
-        Protected Set(value As Integer)
-            _TotalWidth = value
-        End Set
-    End Property
 
-    '
     ''' <summary>
     ''' Protected barcode constructor
     ''' </summary>
     ''' <remarks>This class cannot be instantiated by itself.</remarks>
-    '
     Protected Sub New()
     End Sub
 
-    '
     ''' <summary>
     ''' Width of single bar code at indexed position expressed in narrow bar units.
     ''' </summary>
@@ -248,7 +219,6 @@ Public Class Barcode
     ''' <returns>Bar's width in narrow bar units.</returns>
     ''' <remarks>This virtual function must be implemented by derived class 
     ''' Index range is 0 to BarCount - 1</remarks>
-    '
     Public Overridable Function BarWidth(Index As Integer) As Integer
         Throw New ApplicationException("Barcode.BarWidth: Not defined in derived class")
     End Function
@@ -283,7 +253,6 @@ Public Class Barcode
     End Function
 End Class
 
-'
 ''' <summary>
 ''' Barcode 128 Class
 ''' </summary>
@@ -291,7 +260,6 @@ End Class
 ''' This program supports ASCII range of 0 to 127. 
 ''' Character range 128 to 255 is not supported.
 ''' </remarks>
-'
 Public Class Barcode128
     Inherits Barcode
     ''' <summary>
@@ -519,7 +487,7 @@ Public Class Barcode128
         ShiftB
     End Enum
 
-    '
+
     ''' <summary>
     ''' Width of one bar at indexed position in narrow bar units.
     ''' </summary>
@@ -527,13 +495,11 @@ Public Class Barcode128
     ''' <returns>Bar's width in narrow bar units.</returns>
     ''' <remarks>This virtual function must be implemented by derived class 
     ''' Index range is 0 to BarCount - 1</remarks>
-    '
-
     Public Overrides Function BarWidth(Index As Integer) As Integer
         Return If(Index + 1 < BarCount, CodeTable(_CodeArray(Index / CODE_CHAR_BARS), Index Mod CODE_CHAR_BARS), 2)
     End Function
 
-    
+
     ''' <summary>
     ''' Barcode 128 constructor
     ''' </summary>
@@ -563,7 +529,6 @@ Public Class Barcode128
     ''' CODEA, CODEB and CODEC
     ''' </para>
     ''' </remarks>
-    
     Public Sub New(Text As String)
         ' test argument
         If String.IsNullOrEmpty(Text) Then Throw New ApplicationException("Barcode128: Text is null or empty")
@@ -768,7 +733,7 @@ Public Class Barcode128
         Return
     End Sub
 
-    
+
     ''' <summary>
     ''' Barcode 128 constructor
     ''' </summary>
@@ -800,7 +765,7 @@ Public Class Barcode128
     ''' three function characters 256, 257 and 258.
     ''' </para>
     ''' </remarks>
-    
+
     Public Sub New(_CodeArray As Integer())
         ' save code array
         Me._CodeArray = _CodeArray
@@ -939,9 +904,9 @@ Public Class Barcode128
         Return
     End Sub
 
-    
+
     ' Process block of digits
-    
+
 
     Private Sub EncodeDigits(TextStart As Integer, TextEnd As Integer, ByRef CodeEnd As Integer)
         ' convert to pairs of digits
@@ -952,9 +917,9 @@ Public Class Barcode128
         Return
     End Sub
 
-    
+
     ' Process block of non-digits
-    
+
 
     Private Sub EncodeNonDigits(TextStart As Integer, TextEnd As Integer, ByRef CodeEnd As Integer)
         ' assume code set B
@@ -1056,10 +1021,10 @@ Public Class Barcode128
         Return
     End Sub
 
-    
+
     ' Code 128 checksum calculations
     ' The method stores the checksum and STOP character
-    
+
 
     Private Sub Checksum()
         ' calculate checksum
@@ -1079,11 +1044,9 @@ Public Class Barcode128
     End Sub
 End Class
 
-'
 ''' <summary>
 ''' Barcode 39 class
 ''' </summary>
-'
 Public Class Barcode39
     Inherits Barcode
     ''' <summary>
@@ -1309,7 +1272,6 @@ Public Class Barcode39
     End Sub
 End Class
 
-'
 ''' <summary>
 ''' Barcode EAN-13 or UPC-A class
 ''' </summary>
@@ -1322,7 +1284,6 @@ End Class
 ''' UPC-A. The zero will be eliminated.
 ''' The barcode in both cases is made out of 12 symbols.
 ''' </remarks>
-'
 Public Class BarcodeEAN13
     Inherits Barcode
     ''' <summary>
@@ -1406,13 +1367,13 @@ Public Class BarcodeEAN13
         {10, 10, 0, 10, 0}} ' 9
     Private FirstDigit As Integer
 
-    
+
     ''' <summary>
     ''' Barcode width
     ''' </summary>
     ''' <param name="BarIndex">Code array index</param>
     ''' <returns>Barcode EAN-13 single bar width</returns>
-    
+
     Public Overrides Function BarWidth(BarIndex As Integer) As Integer
         ' leading bars
         If BarIndex < LEAD_BARS Then Return 1
@@ -1462,7 +1423,7 @@ Public Class BarcodeEAN13
         Return New BarcodeBox(OriginX, OriginY, BarcodeWidth, BarcodeHeight + OriginY)
     End Function
 
-    
+
     ''' <summary>
     ''' Barcode EAN13 Constructor
     ''' </summary>
@@ -1489,7 +1450,7 @@ Public Class BarcodeEAN13
     ''' know the checksum just set the last digit to 0.
     ''' </para>
     ''' </remarks>
-    
+
     Public Sub New(Text As String)
         ' save text
         Me.Text = Text
@@ -1534,7 +1495,7 @@ Public Class BarcodeEAN13
         Return
     End Sub
 
-    
+
     ''' <summary>
     ''' Barcode EAN13 constructor.
     ''' </summary>
@@ -1570,7 +1531,7 @@ Public Class BarcodeEAN13
     ''' know the checksum just set the last element to 0.
     ''' </para>
     ''' 	</remarks>
-    
+
     Public Sub New(_CodeArray As Integer())
         ' save code array
         Me._CodeArray = _CodeArray
@@ -1627,9 +1588,9 @@ Public Class BarcodeEAN13
         Return
     End Sub
 
-    
+
     ' Code EAN-13 checksum calculations
-    
+
 
     Private Sub Checksum()
         ' calculate checksum

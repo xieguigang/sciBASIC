@@ -262,11 +262,6 @@ Public Class CharInfo
         End Set
     End Property
 
-    ''' <summary>
-    ''' Character height in design units
-    ''' </summary>
-    'public int DesignHeight {get; internal set;}
-
     Friend NewGlyphIndex As Integer
     Friend GlyphData As Byte()
     Friend Composite As Boolean
@@ -337,58 +332,26 @@ End Class
 ''' </remarks>
 
 Public Class FontBox
+
     ''' <summary>
     ''' Gets left side.
     ''' </summary>
+    Public Property Left As Integer
 
     ''' <summary>
     ''' Gets top side.
     ''' </summary>
+    Public Property Top As Integer
 
     ''' <summary>
     ''' Gets right side.
     ''' </summary>
+    Public Property Right As Integer
 
     ''' <summary>
     ''' Gets bottom side.
     ''' </summary>
-    Private _Left As Integer, _Top As Integer, _Right As Integer, _Bottom As Integer
-
-    Public Property Left As Integer
-        Get
-            Return _Left
-        End Get
-        Private Set(value As Integer)
-            _Left = value
-        End Set
-    End Property
-
-    Public Property Top As Integer
-        Get
-            Return _Top
-        End Get
-        Private Set(value As Integer)
-            _Top = value
-        End Set
-    End Property
-
-    Public Property Right As Integer
-        Get
-            Return _Right
-        End Get
-        Private Set(value As Integer)
-            _Right = value
-        End Set
-    End Property
-
     Public Property Bottom As Integer
-        Get
-            Return _Bottom
-        End Get
-        Private Set(value As Integer)
-            _Bottom = value
-        End Set
-    End Property
 
     Friend Sub New(DC As FontApi)
         Left = DC.ReadInt32()
