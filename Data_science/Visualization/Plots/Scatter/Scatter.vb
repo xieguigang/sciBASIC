@@ -577,7 +577,7 @@ Public Module Scatter
                                Optional lineType As DashStyle = DashStyle.Solid) As SerialData
 
         Return New SerialData With {
-            .color = lineColor.ToColor,
+            .color = lineColor.TranslateColor,
             .lineType = lineType,
             .pointSize = ptSize,
             .width = lineWidth,
