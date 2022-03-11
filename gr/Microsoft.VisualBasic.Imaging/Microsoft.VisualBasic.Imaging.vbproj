@@ -884,6 +884,7 @@
     <Compile Include="Drivers\ImageSynthesis.vb" />
     <Compile Include="Drivers\CreateGraphicsDriver.vb" />
     <Compile Include="Extensions.vb" />
+    <Compile Include="Filters\Effects.vb" />
     <Compile Include="Filters\Matrix.vb" />
     <Compile Include="Filters\GaussBlur.vb" />
     <Compile Include="Filters\GaussianSmooth.vb" />
