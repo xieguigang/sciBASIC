@@ -160,6 +160,10 @@ Namespace Net
             Return ipAddress & ":" & port.ToString
         End Function
 
+        Public Shared Function CreateLocal(localPort As Integer) As IPEndPoint
+            Return New IPEndPoint("localhost", localPort)
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(ep As IPEndPoint) As System.Net.IPEndPoint
             Return ep.GetIPEndPoint
