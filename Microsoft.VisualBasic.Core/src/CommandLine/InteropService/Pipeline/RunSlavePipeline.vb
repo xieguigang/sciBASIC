@@ -74,6 +74,10 @@ Namespace CommandLine.InteropService.Pipeline
             Return code
         End Function
 
+        Public Overrides Function ToString() As String
+            Return CommandLine
+        End Function
+
         Private Sub ProcessMessage(line As String)
             If line.StringEmpty Then
                 Return
