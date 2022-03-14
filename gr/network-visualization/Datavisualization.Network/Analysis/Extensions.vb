@@ -1,48 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::0a6ceb9f4b477c99766be2864c257541, gr\network-visualization\Datavisualization.Network\Analysis\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Extensions
-    ' 
-    '         Function: DecomposeGraph, isTupleEdge
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Extensions
+' 
+'         Function: DecomposeGraph, isTupleEdge
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis.Model
+Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
 Imports Microsoft.VisualBasic.Linq
@@ -72,6 +74,73 @@ Namespace Analysis
             End If
         End Function
 
+        <Extension>
+        Public Iterator Function DecomposeGraphByGroup(g As NetworkGraph, Optional minVertices As Integer = 5) As IEnumerable(Of NetworkGraph)
+            Dim nodeGroups = g.vertex.GroupBy(Function(v) v.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)).ToArray
+            Dim getEdgeGoups =
+                Iterator Function() As IEnumerable(Of Edge())
+                    For Each nodeSet In nodeGroups
+                        Yield g.getEdgeSet(nodeSet)
+                    Next
+                End Function
+
+            For Each group In getEdgeGoups().DecomposeGraph(minVertices)
+                Yield group
+            Next
+        End Function
+
+        <Extension>
+        Public Function getEdgeSet(g As NetworkGraph, nodeSet As IEnumerable(Of Node)) As Edge()
+            ' find a subset of edges from a
+            ' given node set of the network.
+            Dim id As Index(Of String) = nodeSet _
+                .Select(Function(v) v.label) _
+                .Indexing
+            Dim edgeSet = g.graphEdges _
+                .Where(Function(url)
+                           Return url.U.label Like id OrElse url.V.label Like id
+                       End Function) _
+                .ToArray
+
+            Return edgeSet
+        End Function
+
+        <Extension>
+        Public Function DecomposeGraph(components As Edge(), minVertices As Integer) As NetworkGraph
+            Dim subnetwork As New NetworkGraph
+            Dim nodes = components _
+                .Select(Function(a) {a.U, a.V}) _
+                .IteratesALL _
+                .Distinct _
+                .ToArray
+
+            If nodes.Length < minVertices Then
+                Return Nothing
+            End If
+
+            For Each v As Node In nodes.Select(Function(a) a.Clone)
+                Call subnetwork.AddNode(v)
+            Next
+            For Each edge As Edge In components.Select(Function(a) a.Clone)
+                Call subnetwork.CreateEdge(edge.U, edge.V, 0, edge.data)
+            Next
+
+            Return subnetwork
+        End Function
+
+        <Extension>
+        Public Iterator Function DecomposeGraph(components As IEnumerable(Of Edge()), minVertices As Integer) As IEnumerable(Of NetworkGraph)
+            Dim subnetwork As NetworkGraph
+
+            For Each part As Edge() In components
+                subnetwork = part.DecomposeGraph(minVertices)
+
+                If Not subnetwork Is Nothing Then
+                    Yield subnetwork
+                End If
+            Next
+        End Function
+
         ''' <summary>
         ''' Decompose a graph into components, Creates a separate graph for each component of a graph.
         ''' 
@@ -82,35 +151,17 @@ Namespace Analysis
         ''' <param name="minVertices"></param>
         ''' <returns></returns>
         <Extension>
-        Public Iterator Function DecomposeGraph(g As NetworkGraph,
-                                                Optional weakMode As Boolean = True,
-                                                Optional minVertices As Integer = 5) As IEnumerable(Of NetworkGraph)
+        Public Function DecomposeGraph(g As NetworkGraph,
+                                       Optional weakMode As Boolean = True,
+                                       Optional minVertices As Integer = 5) As IEnumerable(Of NetworkGraph)
 
             Dim analysis As Kosaraju = Kosaraju.StronglyConnectedComponents(g)
-            Dim subnetwork As NetworkGraph
-            Dim nodes As Node()
+            Dim components = analysis _
+                .GetComponents _
+                .Where(Function(a) a.Length <> g.size.edges) _
+                .DecomposeGraph(minVertices)
 
-            For Each part As Edge() In analysis.GetComponents.Where(Function(a) a.Length <> g.size.edges)
-                subnetwork = New NetworkGraph
-                nodes = part _
-                    .Select(Function(a) {a.U, a.V}) _
-                    .IteratesALL _
-                    .Distinct _
-                    .ToArray
-
-                If nodes.Length < minVertices Then
-                    Continue For
-                End If
-
-                For Each v As Node In nodes.Select(Function(a) a.Clone)
-                    Call subnetwork.AddNode(v)
-                Next
-                For Each edge As Edge In part.Select(Function(a) a.Clone)
-                    Call subnetwork.CreateEdge(edge.U, edge.V, 0, edge.data)
-                Next
-
-                Yield subnetwork
-            Next
+            Return components
         End Function
     End Module
 End Namespace

@@ -182,11 +182,13 @@ Namespace Graph
         ''' </summary>
         ''' <param name="node"></param>
         ''' <returns></returns>
-        Public Function AddNode(node As Node) As Node
+        Public Function AddNode(node As Node, Optional assignId As Boolean = True) As Node
             If Not vertices.ContainsKey(node.label) Then
-                ' 20201223 ID必须要在哈希表添加之前进行赋值
-                ' 编号必须从零开始
-                node.ID = buffer.GetAvailablePos
+                If assignId Then
+                    ' 20201223 ID必须要在哈希表添加之前进行赋值
+                    ' 编号必须从零开始
+                    node.ID = buffer.GetAvailablePos
+                End If
 
                 buffer.Add(node)
                 vertices.Add(node)

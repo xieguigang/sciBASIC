@@ -79,8 +79,8 @@ Namespace Analysis.Louvain
             louvain.head(u) = stdNum.Min(Threading.Interlocked.Increment(louvain.top), louvain.top - 1)
         End Sub
 
-        Public Shared Function Load(Of Node As {New, Network.Node}, Edge As {New, Network.Edge(Of Node)})(g As NetworkGraph(Of Node, Edge)) As LouvainCommunity
-            Dim louvain As New LouvainCommunity With {
+        Public Shared Function Load(Of Node As {New, Network.Node}, Edge As {New, Network.Edge(Of Node)})(g As NetworkGraph(Of Node, Edge), Optional eps As Double = 0.00000001) As LouvainCommunity
+            Dim louvain As New LouvainCommunity(eps:=eps) With {
                 .n = g.size.vertex,
                 .global_n = .n,
                 .m = g.size.edges * 2,

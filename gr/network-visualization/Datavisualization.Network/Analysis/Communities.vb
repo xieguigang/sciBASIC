@@ -114,15 +114,18 @@ Namespace Analysis
         End Function
 
         ''' <summary>
-        ''' 
+        ''' analysis network node community structure
         ''' </summary>
         ''' <param name="g">
         ''' 请注意，这个必须要要求节点的编号是连续的``0:n``序列中的值，不可以存在重复编号
         ''' </param>
-        ''' <returns></returns>
-        Public Shared Function Analysis(g As NetworkGraph) As NetworkGraph
+        ''' <returns>
+        ''' a network model with the <see cref="NamesOf.REFLECTION_ID_MAPPING_NODETYPE"/> 
+        ''' property data has been assigned as the community tags.
+        ''' </returns>
+        Public Shared Function Analysis(g As NetworkGraph, Optional eps As Double = 0.00001) As NetworkGraph
             Dim clusters As String() = Louvain.Builder _
-                .Load(g) _
+                .Load(g, eps:=eps) _
                 .SolveClusters _
                 .GetCommunity
 

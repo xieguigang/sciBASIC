@@ -104,8 +104,13 @@ Public Module IOExtensions
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Sub FlushTo(data$, out As StreamWriter)
+    Public Sub FlushTo(data$, out As StreamWriter, Optional closeFile As Boolean = False)
         Call out.WriteLine(data)
+
+        If closeFile Then
+            Call out.Flush()
+            Call out.Dispose()
+        End If
     End Sub
 
     ''' <summary>

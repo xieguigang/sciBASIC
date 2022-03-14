@@ -120,8 +120,13 @@ Public Class MsgPackSerializer
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Shared Sub SerializeObject(o As Object, file As Stream)
+    Public Shared Sub SerializeObject(o As Object, file As Stream, Optional closeFile As Boolean = False)
         Call GetSerializer(o.GetType()).Serialize(o, file)
+        Call file.Flush()
+
+        If closeFile Then
+            Call file.Dispose()
+        End If
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
