@@ -100,7 +100,14 @@
             Return (tag2, map2)
         End Function
 
-        Public Function DoAnalysis(map_dict As KeyMaps) As (KeyMaps, Double)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="map_dict">
+        ''' the network data: [a -> b[]]
+        ''' </param>
+        ''' <returns></returns>
+        Public Function Analysis(map_dict As KeyMaps) As (KeyMaps, Double)
             Dim Q As Double = 0
 
             Me.map_dict = map_dict
