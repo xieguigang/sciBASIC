@@ -53,7 +53,9 @@ Namespace Analysis.Louvain
     ''' A fast algorithm To find communities In large network
     ''' </summary>
     ''' <remarks>
-    ''' Blondel V D, Guillaume J L, Lambiotte R, et al. Fast unfolding of communities in large networks[J]. Journal of Statistical Mechanics, 2008, 2008(10)155-168.
+    ''' Blondel V D, Guillaume J L, Lambiotte R, et al. Fast 
+    ''' unfolding of communities in large networks[J]. Journal 
+    ''' of Statistical Mechanics, 2008, 2008(10)155-168.
     ''' </remarks>
     Public Class LouvainCommunity
 
