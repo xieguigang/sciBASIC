@@ -123,7 +123,7 @@ Namespace Analysis
         ''' a network model with the <see cref="NamesOf.REFLECTION_ID_MAPPING_NODETYPE"/> 
         ''' property data has been assigned as the community tags.
         ''' </returns>
-        Public Shared Function Analysis(g As NetworkGraph, Optional eps As Double = 0.00001) As NetworkGraph
+        Public Shared Function Analysis(ByRef g As NetworkGraph, Optional eps As Double = 0.00001) As NetworkGraph
             Dim clusters As String() = Louvain.Builder _
                 .Load(g, eps:=eps) _
                 .SolveClusters _
