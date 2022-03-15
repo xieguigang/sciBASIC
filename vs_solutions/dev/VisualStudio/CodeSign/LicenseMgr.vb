@@ -54,7 +54,7 @@ Imports Microsoft.VisualBasic.Text.Xml.Models
 Namespace CodeSign
 
     ''' <summary>
-    ''' Source code license manager
+    ''' Source code license banner
     ''' </summary>
     Public Module LicenseMgr
 
@@ -161,6 +161,7 @@ THE SOFTWARE.",
             For Each author As NamedValue In info.Authors.SafeQuery
                 Call sb.AppendLine($"    '       {author.name} ({author.text})")
             Next
+
             Call sb.AppendLine("    ' ")
             Call sb.AppendLine("    ' " & info.Copyright)
             Call sb.AppendLine("    ' ")
@@ -185,6 +186,7 @@ THE SOFTWARE.",
             Next
 
             sb.AppendLine("    ' /********************************************************************************/")
+
             Call sb.AppendLine()
             Call sb.AppendLine($"#End Region")
             Call sb.AppendLine()

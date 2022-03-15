@@ -66,7 +66,8 @@ Namespace CodeSign
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function SummaryModules(vb As String) As String
+        <Extension>
+        Public Function SummaryModules(vb As String) As String
             Dim vblines As Pointer(Of String) = vb _
                 .LineTokens _
                 .Select(AddressOf RemoveAttributes) _
