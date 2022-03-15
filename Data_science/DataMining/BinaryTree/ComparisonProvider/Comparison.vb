@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1c8f32e888471aad0d85205013c311c, Data_science\DataMining\BinaryTree\ComparisonProvider\Comparison.vb"
+﻿#Region "Microsoft.VisualBasic::a1c8f32e888471aad0d85205013c311c, sciBASIC#\Data_science\DataMining\BinaryTree\ComparisonProvider\Comparison.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 17
+    '    Code Lines: 13
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 504.00 B
+
 
     ' Class Comparison
     ' 

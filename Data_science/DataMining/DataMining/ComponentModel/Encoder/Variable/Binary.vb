@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9fe436ed8a291e398486aa4aae39493, Data_science\DataMining\DataMining\ComponentModel\Encoder\Variable\Binary.vb"
+﻿#Region "Microsoft.VisualBasic::e9fe436ed8a291e398486aa4aae39493, sciBASIC#\Data_science\DataMining\DataMining\ComponentModel\Encoder\Variable\Binary.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 47
+    '    Code Lines: 23
+    ' Comment Lines: 18
+    '   Blank Lines: 6
+    '     File Size: 1.47 KB
+
 
     '     Class Binary
     ' 

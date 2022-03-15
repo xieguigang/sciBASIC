@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4057e7254eae74f90294a3a97e0f8ee, gr\avi\UInt8Array.vb"
+﻿#Region "Microsoft.VisualBasic::d4057e7254eae74f90294a3a97e0f8ee, sciBASIC#\gr\avi\UInt8Array.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 110
+    '    Code Lines: 75
+    ' Comment Lines: 14
+    '   Blank Lines: 21
+    '     File Size: 3.32 KB
+
 
     ' Class UInt8Array
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::271f620d9d702663ad58320405253abc, Data\BinaryData\msgpack\Constants\FixedArray.vb"
+﻿#Region "Microsoft.VisualBasic::271f620d9d702663ad58320405253abc, sciBASIC#\Data\BinaryData\msgpack\Constants\FixedArray.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 7
+    '    Code Lines: 6
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 177.00 B
+
 
     '     Class FixedArray
     ' 

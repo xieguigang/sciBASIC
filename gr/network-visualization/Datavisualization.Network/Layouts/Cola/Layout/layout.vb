@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::23bc4497f6e668716c5e893a56b45db0, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\layout.vb"
+﻿#Region "Microsoft.VisualBasic::23bc4497f6e668716c5e893a56b45db0, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\layout.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1020
+    '    Code Lines: 647
+    ' Comment Lines: 237
+    '   Blank Lines: 136
+    '     File Size: 45.31 KB
+
 
     '     Class Layout
     ' 

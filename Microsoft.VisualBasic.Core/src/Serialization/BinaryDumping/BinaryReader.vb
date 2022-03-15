@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::72c30d405799c84b5d94d83c62d7948d, Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\BinaryReader.vb"
+﻿#Region "Microsoft.VisualBasic::72c30d405799c84b5d94d83c62d7948d, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\BinaryReader.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 6
+    '    Code Lines: 4
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 104.00 B
+
 
     '     Module BinaryReader
     ' 

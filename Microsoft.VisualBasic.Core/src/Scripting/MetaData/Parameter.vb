@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e079b2e518e7715ae5eabe2b0754b2f, Microsoft.VisualBasic.Core\src\Scripting\MetaData\Parameter.vb"
+﻿#Region "Microsoft.VisualBasic::0e079b2e518e7715ae5eabe2b0754b2f, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\MetaData\Parameter.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 115
+    '    Code Lines: 65
+    ' Comment Lines: 34
+    '   Blank Lines: 16
+    '     File Size: 4.63 KB
+
 
     '     Class Parameter
     ' 

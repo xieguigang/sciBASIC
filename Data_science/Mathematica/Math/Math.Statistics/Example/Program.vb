@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1fa4d1df7f156b0fe243748914e3ac8, Data_science\Mathematica\Math\Math.Statistics\Example\Program.vb"
+﻿#Region "Microsoft.VisualBasic::f1fa4d1df7f156b0fe243748914e3ac8, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Example\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 29
+    '    Code Lines: 18
+    ' Comment Lines: 5
+    '   Blank Lines: 6
+    '     File Size: 1.02 KB
+
 
     ' Module ExampleMonteCarlo
     ' 

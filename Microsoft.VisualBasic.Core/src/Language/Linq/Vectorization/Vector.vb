@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42d9ef426fa54b64617a5065d87944a9, Microsoft.VisualBasic.Core\src\Language\Linq\Vectorization\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::42d9ef426fa54b64617a5065d87944a9, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Linq\Vectorization\Vector.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 384
+    '    Code Lines: 227
+    ' Comment Lines: 118
+    '   Blank Lines: 39
+    '     File Size: 14.21 KB
+
 
     '     Class Vector
     ' 

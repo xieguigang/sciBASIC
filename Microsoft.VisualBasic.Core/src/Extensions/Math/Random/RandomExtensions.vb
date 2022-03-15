@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ea05d24e01bfd08268b14b0fe7aa3bb, Microsoft.VisualBasic.Core\src\Extensions\Math\Random\RandomExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::1ea05d24e01bfd08268b14b0fe7aa3bb, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Random\RandomExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 290
+    '    Code Lines: 141
+    ' Comment Lines: 114
+    '   Blank Lines: 35
+    '     File Size: 11.54 KB
+
 
     '     Delegate Function
     ' 

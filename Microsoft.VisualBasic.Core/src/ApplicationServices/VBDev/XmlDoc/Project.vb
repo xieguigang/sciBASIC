@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::06f75fbdfc170bd1d0de4f2b4f06c7f0, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\Project.vb"
+﻿#Region "Microsoft.VisualBasic::06f75fbdfc170bd1d0de4f2b4f06c7f0, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\Project.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 171
+    '    Code Lines: 122
+    ' Comment Lines: 12
+    '   Blank Lines: 37
+    '     File Size: 7.19 KB
+
 
     '     Class Project
     ' 

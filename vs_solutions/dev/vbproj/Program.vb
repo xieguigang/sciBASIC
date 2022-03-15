@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04f7bb8852408cec43a834c4abf6f795, vs_solutions\dev\vbproj\Program.vb"
+﻿#Region "Microsoft.VisualBasic::04f7bb8852408cec43a834c4abf6f795, sciBASIC#\vs_solutions\dev\vbproj\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 86
+    '    Code Lines: 67
+    ' Comment Lines: 6
+    '   Blank Lines: 13
+    '     File Size: 3.27 KB
+
 
     ' Module Program
     ' 

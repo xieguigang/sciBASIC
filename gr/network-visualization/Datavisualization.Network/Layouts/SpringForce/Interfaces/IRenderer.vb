@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3326d44c535f30284e5b77ed3d0f5639, gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Interfaces\IRenderer.vb"
+﻿#Region "Microsoft.VisualBasic::3326d44c535f30284e5b77ed3d0f5639, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Interfaces\IRenderer.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 50
+    '    Code Lines: 9
+    ' Comment Lines: 37
+    '   Blank Lines: 4
+    '     File Size: 1.73 KB
+
 
     '     Interface IRenderer
     ' 

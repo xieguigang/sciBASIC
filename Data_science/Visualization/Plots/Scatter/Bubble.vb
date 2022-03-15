@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d7770430db48a09ecb65c6ef101731bc, Data_science\Visualization\Plots\Scatter\Bubble.vb"
+﻿#Region "Microsoft.VisualBasic::6fe2ad45fe3d2438f1f4b9dce99139f1, sciBASIC#\Data_science\Visualization\Plots\Scatter\Bubble.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 303
+    '    Code Lines: 251
+    ' Comment Lines: 15
+    '   Blank Lines: 37
+    '     File Size: 12.39 KB
+
 
     ' Class Bubble
     ' 

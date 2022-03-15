@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cad92d5eeb55ae5a2249713b36b9cfa5, Microsoft.VisualBasic.Core\src\Extensions\Math\NumberEqualityComparer.vb"
+﻿#Region "Microsoft.VisualBasic::cad92d5eeb55ae5a2249713b36b9cfa5, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\NumberEqualityComparer.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 50
+    '    Code Lines: 29
+    ' Comment Lines: 11
+    '   Blank Lines: 10
+    '     File Size: 1.71 KB
+
 
     '     Class NumberEqualityComparer
     ' 

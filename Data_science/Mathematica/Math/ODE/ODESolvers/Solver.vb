@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18cdc478973a1234c0fec3e10d09b138, Data_science\Mathematica\Math\ODE\ODESolvers\Solver.vb"
+﻿#Region "Microsoft.VisualBasic::18cdc478973a1234c0fec3e10d09b138, sciBASIC#\Data_science\Mathematica\Math\ODE\ODESolvers\Solver.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 107
+    '    Code Lines: 57
+    ' Comment Lines: 36
+    '   Blank Lines: 14
+    '     File Size: 3.83 KB
+
 
     ' Module ODESolver
     ' 

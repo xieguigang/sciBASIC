@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3116f882254f6dd3ad04ec1d4a538ec, Microsoft.VisualBasic.Core\src\Extensions\Image\Math\GeomTransform.vb"
+﻿#Region "Microsoft.VisualBasic::a3116f882254f6dd3ad04ec1d4a538ec, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Math\GeomTransform.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 529
+    '    Code Lines: 286
+    ' Comment Lines: 189
+    '   Blank Lines: 54
+    '     File Size: 20.23 KB
+
 
     '     Module GeomTransform
     ' 

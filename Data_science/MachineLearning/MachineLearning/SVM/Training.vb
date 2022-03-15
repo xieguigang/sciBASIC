@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d7bfb3f92f6f4afb3463cbbb32687461, Data_science\MachineLearning\MachineLearning\SVM\Training.vb"
+﻿#Region "Microsoft.VisualBasic::d7bfb3f92f6f4afb3463cbbb32687461, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\Training.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 99
+    '    Code Lines: 52
+    ' Comment Lines: 32
+    '   Blank Lines: 15
+    '     File Size: 4.02 KB
+
 
     '     Module Training
     ' 

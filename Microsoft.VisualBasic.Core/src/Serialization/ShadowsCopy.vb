@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1ca747bde173dcbf510af436c988de4, Microsoft.VisualBasic.Core\src\Serialization\ShadowsCopy.vb"
+﻿#Region "Microsoft.VisualBasic::e1ca747bde173dcbf510af436c988de4, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\ShadowsCopy.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 197
+    '    Code Lines: 116
+    ' Comment Lines: 49
+    '   Blank Lines: 32
+    '     File Size: 8.80 KB
+
 
     '     Module ShadowsCopy
     ' 

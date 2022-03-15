@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9d1c622d3793b1e51fe219b77fcfd47, Data_science\Visualization\Plots\Fractions\Pyramid.vb"
+﻿#Region "Microsoft.VisualBasic::a9d1c622d3793b1e51fe219b77fcfd47, sciBASIC#\Data_science\Visualization\Plots\Fractions\Pyramid.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 99
+    '    Code Lines: 72
+    ' Comment Lines: 13
+    '   Blank Lines: 14
+    '     File Size: 3.94 KB
+
 
     '     Module Pyramid
     ' 

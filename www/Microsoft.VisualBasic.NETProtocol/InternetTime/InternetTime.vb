@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7ac3ee66e9224e94dc7144c0005d17f, www\Microsoft.VisualBasic.NETProtocol\InternetTime\InternetTime.vb"
+﻿#Region "Microsoft.VisualBasic::c7ac3ee66e9224e94dc7144c0005d17f, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\InternetTime\InternetTime.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 650
+    '    Code Lines: 298
+    ' Comment Lines: 308
+    '   Blank Lines: 44
+    '     File Size: 29.10 KB
+
 
     '     Class SNTPClient
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92789fc3f159cba49e8155950fb25b0d, Microsoft.VisualBasic.Core\src\Language\Language\Java\Collections.vb"
+﻿#Region "Microsoft.VisualBasic::92789fc3f159cba49e8155950fb25b0d, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\Java\Collections.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 720
+    '    Code Lines: 126
+    ' Comment Lines: 551
+    '   Blank Lines: 43
+    '     File Size: 36.63 KB
+
 
     '     Module Collections
     ' 

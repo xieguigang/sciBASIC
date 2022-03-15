@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfd3863104dcd40b6835f8c1740be46b, vs_solutions\dev\VisualStudio\sln\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::cfd3863104dcd40b6835f8c1740be46b, sciBASIC#\vs_solutions\dev\VisualStudio\sln\Parser.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 6
+    '    Code Lines: 4
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 67.00 B
+
 
     '     Module Parser
     ' 

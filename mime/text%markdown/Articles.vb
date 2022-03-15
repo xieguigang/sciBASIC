@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2b1659279149260b198d5f4bb992bd9, mime\text%markdown\Articles.vb"
+﻿#Region "Microsoft.VisualBasic::a2b1659279149260b198d5f4bb992bd9, sciBASIC#\mime\text%markdown\Articles.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 42
+    '    Code Lines: 19
+    ' Comment Lines: 14
+    '   Blank Lines: 9
+    '     File Size: 1.38 KB
+
 
     ' Module WikiArticles
     ' 

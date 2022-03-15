@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de276ee1524bc401e3931015077207e9, Data\BinaryData\DataStorage\netCDF\Components\Dimension.vb"
+﻿#Region "Microsoft.VisualBasic::de276ee1524bc401e3931015077207e9, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\Dimension.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 36
+    '    Code Lines: 19
+    ' Comment Lines: 10
+    '   Blank Lines: 7
+    '     File Size: 1.02 KB
+
 
     '     Structure Dimension
     ' 

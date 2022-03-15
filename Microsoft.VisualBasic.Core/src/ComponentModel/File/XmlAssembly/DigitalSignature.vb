@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57256a9215613a36d1a03cec97082c50, Microsoft.VisualBasic.Core\src\ComponentModel\File\XmlAssembly\DigitalSignature.vb"
+﻿#Region "Microsoft.VisualBasic::57256a9215613a36d1a03cec97082c50, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\File\XmlAssembly\DigitalSignature.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 48
+    '    Code Lines: 35
+    ' Comment Lines: 5
+    '   Blank Lines: 8
+    '     File Size: 1.74 KB
+
 
     '     Class DigitalSignature
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::429964ef1eaf3e0f813d64451e42d8f6, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Text.vb"
+﻿#Region "Microsoft.VisualBasic::429964ef1eaf3e0f813d64451e42d8f6, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Text.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 89
+    '    Code Lines: 59
+    ' Comment Lines: 18
+    '   Blank Lines: 12
+    '     File Size: 3.22 KB
+
 
     '     Module TextRender
     ' 

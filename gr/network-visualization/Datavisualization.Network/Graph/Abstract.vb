@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::854968be5330ce7461f5707751a96ff8, gr\network-visualization\Datavisualization.Network\Graph\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::854968be5330ce7461f5707751a96ff8, sciBASIC#\gr\network-visualization\Datavisualization.Network\Graph\Abstract.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 96
+    '    Code Lines: 63
+    ' Comment Lines: 21
+    '   Blank Lines: 12
+    '     File Size: 3.27 KB
+
 
     '     Interface INode
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e67673eeb57c96f49d0882f44f81e65, mime\application%pdf\PdfReader\Document\PdfInteger.vb"
+﻿#Region "Microsoft.VisualBasic::d52f2977aa4a6c44e7220b5248ef0b94, sciBASIC#\mime\application%pdf\PdfReader\Document\PdfInteger.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 33
+    '    Code Lines: 27
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 941.00 B
+
 
     '     Class PdfInteger
     ' 

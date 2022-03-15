@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c338dc8396b46ea1971b640d3da4518, tutorials\socketTest\server.vb"
+﻿#Region "Microsoft.VisualBasic::0c338dc8396b46ea1971b640d3da4518, sciBASIC#\tutorials\socketTest\server.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 34
+    '    Code Lines: 24
+    ' Comment Lines: 4
+    '   Blank Lines: 6
+    '     File Size: 1.26 KB
+
 
     ' Class server
     ' 

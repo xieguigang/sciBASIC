@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13104db3a3ee0ac77538902faca29f28, mime\text%yaml\1.2\Syntax\MappingEntry.vb"
+﻿#Region "Microsoft.VisualBasic::13104db3a3ee0ac77538902faca29f28, sciBASIC#\mime\text%yaml\1.2\Syntax\MappingEntry.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 23
+    '    Code Lines: 18
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 653.00 B
+
 
     '     Class MappingEntry
     ' 

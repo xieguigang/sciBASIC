@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70b6e4d9bf30b4cf8057eff6df9b9df0, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Geom\geom.vb"
+﻿#Region "Microsoft.VisualBasic::70b6e4d9bf30b4cf8057eff6df9b9df0, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\Geom\geom.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 415
+    '    Code Lines: 273
+    ' Comment Lines: 113
+    '   Blank Lines: 29
+    '     File Size: 17.45 KB
+
 
     '     Module Extensions
     ' 

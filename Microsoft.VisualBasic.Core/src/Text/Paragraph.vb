@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9bc73033c5aafb7d024daec3c94433eb, Microsoft.VisualBasic.Core\src\Text\Paragraph.vb"
+﻿#Region "Microsoft.VisualBasic::9bc73033c5aafb7d024daec3c94433eb, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Paragraph.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 92
+    '    Code Lines: 64
+    ' Comment Lines: 16
+    '   Blank Lines: 12
+    '     File Size: 3.47 KB
+
 
     '     Module Paragraph
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb6e250282baa62911e6aa1ebaf10e83, vs_solutions\dev\VisualStudio\vbproj\ItemGroup.vb"
+﻿#Region "Microsoft.VisualBasic::fb6e250282baa62911e6aa1ebaf10e83, sciBASIC#\vs_solutions\dev\VisualStudio\vbproj\ItemGroup.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 80
+    '    Code Lines: 66
+    ' Comment Lines: 0
+    '   Blank Lines: 14
+    '     File Size: 2.69 KB
+
 
     '     Class ItemGroup
     ' 

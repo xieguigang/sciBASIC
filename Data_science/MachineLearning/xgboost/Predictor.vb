@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a1ce374d1ea9b01451624effe3b58ce, Data_science\MachineLearning\xgboost\Predictor.vb"
+﻿#Region "Microsoft.VisualBasic::1428bd9fa620dea6b4c4498c21be9e62, sciBASIC#\Data_science\MachineLearning\xgboost\Predictor.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 255
+    '    Code Lines: 139
+    ' Comment Lines: 81
+    '   Blank Lines: 35
+    '     File Size: 9.69 KB
+
 
     ' Class Predictor
     ' 

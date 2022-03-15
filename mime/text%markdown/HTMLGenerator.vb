@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5841be0ff1b644dd41b5ba5b7b490aa, mime\text%markdown\HTMLGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::a5841be0ff1b644dd41b5ba5b7b490aa, sciBASIC#\mime\text%markdown\HTMLGenerator.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 10
+    '    Code Lines: 8
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 371.00 B
+
 
     ' Module HTMLGenerator
     ' 

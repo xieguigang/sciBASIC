@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b4b53501deba28ff4c7b49fc6245fe8, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\Schema.vb"
+﻿#Region "Microsoft.VisualBasic::0b4b53501deba28ff4c7b49fc6245fe8, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\Schema.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 57
+    '    Code Lines: 40
+    ' Comment Lines: 4
+    '   Blank Lines: 13
+    '     File Size: 2.07 KB
+
 
     '     Class Schema
     ' 

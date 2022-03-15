@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c1f1ebf06eea663a911d8f27a4726092, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\Namespace.vb"
+﻿#Region "Microsoft.VisualBasic::c1f1ebf06eea663a911d8f27a4726092, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\Namespace.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 89
+    '    Code Lines: 42
+    ' Comment Lines: 35
+    '   Blank Lines: 12
+    '     File Size: 3.32 KB
+
 
     '     Class [Namespace]
     ' 

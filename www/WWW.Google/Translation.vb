@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4272319931ec20b6367f675bf14a26ca, www\WWW.Google\Translation.vb"
+﻿#Region "Microsoft.VisualBasic::4272319931ec20b6367f675bf14a26ca, sciBASIC#\www\WWW.Google\Translation.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 92
+    '    Code Lines: 54
+    ' Comment Lines: 23
+    '   Blank Lines: 15
+    '     File Size: 4.19 KB
+
 
     ' Class Translation
     ' 

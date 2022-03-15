@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e667132a5d68449ea2f3f020836559b5, Data_science\DataMining\DataMining\ComponentModel\Normalizer\Methods.vb"
+﻿#Region "Microsoft.VisualBasic::e667132a5d68449ea2f3f020836559b5, sciBASIC#\Data_science\DataMining\DataMining\ComponentModel\Normalizer\Methods.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 17
+    '    Code Lines: 7
+    ' Comment Lines: 9
+    '   Blank Lines: 1
+    '     File Size: 572.00 B
+
 
     '     Enum Methods
     ' 

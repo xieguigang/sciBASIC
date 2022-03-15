@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4049edc641776c966b0858cfde469933, mime\application%pdf\PdfFileWriter\PDF\PdfEncryption.vb"
+﻿#Region "Microsoft.VisualBasic::9499f41f9f9aedb59fde536979175679, sciBASIC#\mime\application%pdf\PdfFileWriter\PDF\PdfEncryption.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 428
+    '    Code Lines: 198
+    ' Comment Lines: 134
+    '   Blank Lines: 96
+    '     File Size: 14.41 KB
+
 
     ' Enum EncryptionType
     ' 

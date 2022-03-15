@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3444666dfe24851c4ed4969b0ed2f69f, gr\network-visualization\NetworkCanvas\IGraphicsEngine.vb"
+﻿#Region "Microsoft.VisualBasic::3444666dfe24851c4ed4969b0ed2f69f, sciBASIC#\gr\network-visualization\NetworkCanvas\IGraphicsEngine.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 4
+    '    Code Lines: 3
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 85.00 B
+
 
     ' Interface IGraphicsEngine
     ' 

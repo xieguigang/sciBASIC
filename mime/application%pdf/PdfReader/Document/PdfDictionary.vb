@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1c6bdd391fdf7d887083494b727c8e66, mime\application%pdf\PdfReader\Document\PdfDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::f9a76a2524fa4dbf609f608ae4bb13a2, sciBASIC#\mime\application%pdf\PdfReader\Document\PdfDictionary.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 180
+    '    Code Lines: 146
+    ' Comment Lines: 1
+    '   Blank Lines: 33
+    '     File Size: 7.22 KB
+
 
     '     Class PdfDictionary
     ' 

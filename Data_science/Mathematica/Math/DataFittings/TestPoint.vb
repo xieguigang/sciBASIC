@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a7052003283ca54d5dd5fd15c508f219, Data_science\Mathematica\Math\DataFittings\TestPoint.vb"
+﻿#Region "Microsoft.VisualBasic::a7052003283ca54d5dd5fd15c508f219, sciBASIC#\Data_science\Mathematica\Math\DataFittings\TestPoint.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 34
+    '    Code Lines: 26
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 1.05 KB
+
 
     ' Interface IFitError
     ' 

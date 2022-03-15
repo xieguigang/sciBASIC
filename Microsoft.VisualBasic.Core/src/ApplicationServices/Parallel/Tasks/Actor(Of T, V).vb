@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::afb02982ac0178b827bb2e0d041591f0, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\Actor(Of T, V).vb"
+﻿#Region "Microsoft.VisualBasic::afb02982ac0178b827bb2e0d041591f0, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\Actor(Of T, V).vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 85
+    '    Code Lines: 36
+    ' Comment Lines: 35
+    '   Blank Lines: 14
+    '     File Size: 3.43 KB
+
 
     '     Class Actor
     ' 

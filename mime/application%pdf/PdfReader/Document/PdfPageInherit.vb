@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35e2b2119ee124417a2f364d0f0ec255, mime\application%pdf\PdfReader\Document\PdfPageInherit.vb"
+﻿#Region "Microsoft.VisualBasic::875c9bc26995764488a808cdabbe0ab9, sciBASIC#\mime\application%pdf\PdfReader\Document\PdfPageInherit.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 62
+    '    Code Lines: 38
+    ' Comment Lines: 10
+    '   Blank Lines: 14
+    '     File Size: 2.67 KB
+
 
     '     Class PdfPageInherit
     ' 

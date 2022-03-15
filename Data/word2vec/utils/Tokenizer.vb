@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e98854761425691fb7eaca994a321da, Data\word2vec\utils\Tokenizer.vb"
+﻿#Region "Microsoft.VisualBasic::cb177ee6173b1bf8e0d76e56f54a267a, sciBASIC#\Data\word2vec\utils\Tokenizer.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 78
+    '    Code Lines: 40
+    ' Comment Lines: 26
+    '   Blank Lines: 12
+    '     File Size: 2.48 KB
+
 
     '     Class Tokenizer
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a4a949334b0df68c216c2dd7ee9c597, Data\DataFrame\StorageProvider\Reflection\StorageProviders\MetaAttributes.vb"
+﻿#Region "Microsoft.VisualBasic::2a4a949334b0df68c216c2dd7ee9c597, sciBASIC#\Data\DataFrame\StorageProvider\Reflection\StorageProviders\MetaAttributes.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 81
+    '    Code Lines: 53
+    ' Comment Lines: 16
+    '   Blank Lines: 12
+    '     File Size: 3.66 KB
+
 
     '     Module MetaAttributeParser
     ' 

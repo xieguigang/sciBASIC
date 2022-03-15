@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd41909ac7af4e0011cea5f18d0bc056, Microsoft.VisualBasic.Core\src\Language\Language\Python\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::dd41909ac7af4e0011cea5f18d0bc056, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\Python\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 4
+    ' Comment Lines: 3
+    '   Blank Lines: 1
+    '     File Size: 203.00 B
+
 
     '     Class NamespaceDoc
     ' 

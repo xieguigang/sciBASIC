@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::759cd975edadb7dbba4b997b6043bdf9, Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Models\Line.vb"
+﻿#Region "Microsoft.VisualBasic::759cd975edadb7dbba4b997b6043bdf9, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Models\Line.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 84
+    '    Code Lines: 62
+    ' Comment Lines: 8
+    '   Blank Lines: 14
+    '     File Size: 2.39 KB
+
 
     '     Class Line
     ' 

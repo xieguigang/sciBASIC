@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31985d9ddfcbaf16b15d46198913056c, Data\DataFrame\IO\MetaData\Meta.vb"
+﻿#Region "Microsoft.VisualBasic::31985d9ddfcbaf16b15d46198913056c, sciBASIC#\Data\DataFrame\IO\MetaData\Meta.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 97
+    '    Code Lines: 74
+    ' Comment Lines: 6
+    '   Blank Lines: 17
+    '     File Size: 3.57 KB
+
 
     '     Module Meta
     ' 

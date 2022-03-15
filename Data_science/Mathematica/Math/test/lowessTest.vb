@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e26a06821fedf19d79f099f895b302ce, Data_science\Mathematica\Math\test\lowessTest.vb"
+﻿#Region "Microsoft.VisualBasic::47966372a12f7fec45d4377025198ccc, sciBASIC#\Data_science\Mathematica\Math\test\lowessTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 6
+    '    Code Lines: 4
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 57.00 B
+
 
     ' Module lowessTest
     ' 

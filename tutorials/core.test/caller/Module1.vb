@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50f8a39259909f32af6350f646bb1537, tutorials\core.test\caller\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::50f8a39259909f32af6350f646bb1537, sciBASIC#\tutorials\core.test\caller\Module1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 55
+    '    Code Lines: 10
+    ' Comment Lines: 29
+    '   Blank Lines: 16
+    '     File Size: 857.00 B
+
 
     ' Module Module1
     ' 

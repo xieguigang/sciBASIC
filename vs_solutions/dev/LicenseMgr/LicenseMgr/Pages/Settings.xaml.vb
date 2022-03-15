@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::06a72870b4dcb69ec26606e4f33387d7, vs_solutions\dev\LicenseMgr\LicenseMgr\Pages\Settings.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::06a72870b4dcb69ec26606e4f33387d7, sciBASIC#\vs_solutions\dev\LicenseMgr\LicenseMgr\Pages\Settings.xaml.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 13
+    '    Code Lines: 9
+    ' Comment Lines: 3
+    '   Blank Lines: 1
+    '     File Size: 307.00 B
+
 
     '     Class Settings
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76041681da105d7b0008d641fb872008, gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Mingle\InternalMath.vb"
+﻿#Region "Microsoft.VisualBasic::76041681da105d7b0008d641fb872008, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Mingle\InternalMath.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 49
+    '    Code Lines: 39
+    ' Comment Lines: 0
+    '   Blank Lines: 10
+    '     File Size: 1.55 KB
+
 
     '     Module InternalMath
     ' 

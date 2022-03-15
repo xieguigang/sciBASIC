@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c304147761157bff532cd096bb5df7e7, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Models\Accessor\LinkAccessor.vb"
+﻿#Region "Microsoft.VisualBasic::c304147761157bff532cd096bb5df7e7, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\Models\Accessor\LinkAccessor.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 27
+    '    Code Lines: 16
+    ' Comment Lines: 4
+    '   Blank Lines: 7
+    '     File Size: 889.00 B
+
 
     '     Class LinkAccessor
     ' 

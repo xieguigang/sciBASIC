@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69e4f6eb095b7c3fe4c1fc407d274d36, Data\BinaryData\DataStorage\HDF5\dataset\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::69e4f6eb095b7c3fe4c1fc407d274d36, sciBASIC#\Data\BinaryData\DataStorage\HDF5\dataset\Abstract.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 57
+    '    Code Lines: 36
+    ' Comment Lines: 9
+    '   Blank Lines: 12
+    '     File Size: 2.10 KB
+
 
     '     Class Hdf5Dataset
     ' 

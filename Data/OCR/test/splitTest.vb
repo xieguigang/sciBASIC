@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1515647ca552f9fe3d0b014160f76fd5, Data\OCR\test\splitTest.vb"
+﻿#Region "Microsoft.VisualBasic::1515647ca552f9fe3d0b014160f76fd5, sciBASIC#\Data\OCR\test\splitTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 41
+    '    Code Lines: 28
+    ' Comment Lines: 2
+    '   Blank Lines: 11
+    '     File Size: 1.08 KB
+
 
     ' Module splitTest
     ' 

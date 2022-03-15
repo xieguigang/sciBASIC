@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c758c7ac8aa41616a98265de5a9d9112, Data_science\MachineLearning\xgboost\gbm\GBLinear.vb"
+﻿#Region "Microsoft.VisualBasic::4fedb3fa824df0bbdb0e61851b829fab, sciBASIC#\Data_science\MachineLearning\xgboost\gbm\GBLinear.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 96
+    '    Code Lines: 65
+    ' Comment Lines: 11
+    '   Blank Lines: 20
+    '     File Size: 3.38 KB
+
 
     '     Class GBLinear
     ' 

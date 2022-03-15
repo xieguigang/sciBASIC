@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::500aabdcd638365bf0d783c918c7a26e, Data_science\DataMining\DataMining\Clustering\KMeans\CompleteLinkage\Point.vb"
+﻿#Region "Microsoft.VisualBasic::500aabdcd638365bf0d783c918c7a26e, sciBASIC#\Data_science\DataMining\DataMining\Clustering\KMeans\CompleteLinkage\Point.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 53
+    '    Code Lines: 39
+    ' Comment Lines: 0
+    '   Blank Lines: 14
+    '     File Size: 1.69 KB
+
 
     '     Class Point
     ' 

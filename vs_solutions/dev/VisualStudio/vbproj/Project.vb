@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::557058139dbdf659910b2c94d644cda5, vs_solutions\dev\VisualStudio\vbproj\Project.vb"
+﻿#Region "Microsoft.VisualBasic::557058139dbdf659910b2c94d644cda5, sciBASIC#\vs_solutions\dev\VisualStudio\vbproj\Project.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 79
+    '    Code Lines: 58
+    ' Comment Lines: 7
+    '   Blank Lines: 14
+    '     File Size: 3.07 KB
+
 
     '     Class Project
     ' 

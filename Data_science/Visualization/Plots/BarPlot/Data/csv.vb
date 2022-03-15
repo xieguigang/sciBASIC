@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::406f4b866d5a7c09e6797b6edfff68f0, Data_science\Visualization\Plots\BarPlot\Data\csv.vb"
+﻿#Region "Microsoft.VisualBasic::406f4b866d5a7c09e6797b6edfff68f0, sciBASIC#\Data_science\Visualization\Plots\BarPlot\Data\csv.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 99
+    '    Code Lines: 60
+    ' Comment Lines: 30
+    '   Blank Lines: 9
+    '     File Size: 3.62 KB
+
 
     '     Module BarDataTableExtensions
     ' 

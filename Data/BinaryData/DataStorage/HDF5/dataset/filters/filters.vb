@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5aba781c2931e519ae3824ee56acfcf9, Data\BinaryData\DataStorage\HDF5\dataset\filters\filters.vb"
+﻿#Region "Microsoft.VisualBasic::5aba781c2931e519ae3824ee56acfcf9, sciBASIC#\Data\BinaryData\DataStorage\HDF5\dataset\filters\filters.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 30
+    '    Code Lines: 20
+    ' Comment Lines: 3
+    '   Blank Lines: 7
+    '     File Size: 1.13 KB
+
 
     '     Class DeflatePipelineFilter
     ' 

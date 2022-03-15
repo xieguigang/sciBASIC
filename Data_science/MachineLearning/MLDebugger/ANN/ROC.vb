@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74bdfd24383e3f832e06a8aa5f3f51a6, Data_science\MachineLearning\MLDebugger\ANN\ROC.vb"
+﻿#Region "Microsoft.VisualBasic::74bdfd24383e3f832e06a8aa5f3f51a6, sciBASIC#\Data_science\MachineLearning\MLDebugger\ANN\ROC.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 55
+    '    Code Lines: 47
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 2.29 KB
+
 
     ' Module ROC
     ' 

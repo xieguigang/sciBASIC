@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fba62f19e0e28d63907c76c42dacb7c7, Data_science\Visualization\Plots-statistics\BoxPlot.vb"
+﻿#Region "Microsoft.VisualBasic::fba62f19e0e28d63907c76c42dacb7c7, sciBASIC#\Data_science\Visualization\Plots-statistics\BoxPlot.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 233
+    '    Code Lines: 171
+    ' Comment Lines: 27
+    '   Blank Lines: 35
+    '     File Size: 11.02 KB
+
 
     ' Module BoxPlot
     ' 

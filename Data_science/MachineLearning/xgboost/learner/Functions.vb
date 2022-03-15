@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5a40d9581c9db31626876902944be0b, Data_science\MachineLearning\xgboost\learner\Functions.vb"
+﻿#Region "Microsoft.VisualBasic::f5a40d9581c9db31626876902944be0b, sciBASIC#\Data_science\MachineLearning\xgboost\learner\Functions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 92
+    '    Code Lines: 62
+    ' Comment Lines: 9
+    '   Blank Lines: 21
+    '     File Size: 2.59 KB
+
 
     '     Class RegLossObjLogistic
     ' 

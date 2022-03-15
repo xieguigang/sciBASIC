@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2189b00bc555b193f0464393a7ea948, Data_science\DataMining\DynamicProgramming\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::f2189b00bc555b193f0464393a7ea948, sciBASIC#\Data_science\DataMining\DynamicProgramming\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 23
+    '    Code Lines: 15
+    ' Comment Lines: 6
+    '   Blank Lines: 2
+    '     File Size: 837.00 B
+
 
     ' Module Extensions
     ' 

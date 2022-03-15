@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6552772fd7830640a4447926f07f1562, Data\BinaryData\DataStorage\HDF5\structure\StructureMember.vb"
+﻿#Region "Microsoft.VisualBasic::6552772fd7830640a4447926f07f1562, sciBASIC#\Data\BinaryData\DataStorage\HDF5\structure\StructureMember.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 67
+    '    Code Lines: 43
+    ' Comment Lines: 7
+    '   Blank Lines: 17
+    '     File Size: 2.20 KB
+
 
     '     Class StructureMember
     ' 

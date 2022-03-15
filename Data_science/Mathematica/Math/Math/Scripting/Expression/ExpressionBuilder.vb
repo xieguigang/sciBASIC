@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d3c0fb409b96628e4904c379da3acb0d, Data_science\Mathematica\Math\Math\Scripting\Expression\ExpressionBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::27b9d298c52b33b41bf11c8e1d8d5149, sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Expression\ExpressionBuilder.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 211
+    '    Code Lines: 160
+    ' Comment Lines: 23
+    '   Blank Lines: 28
+    '     File Size: 8.34 KB
+
 
     '     Module ExpressionBuilder
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3503b95dbe10c98f4e3453234bdc759b, Data_science\Visualization\Plots\PlotTypes.vb"
+﻿#Region "Microsoft.VisualBasic::3503b95dbe10c98f4e3453234bdc759b, sciBASIC#\Data_science\Visualization\Plots\PlotTypes.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 5
+    '    Code Lines: 5
+    ' Comment Lines: 0
+    '   Blank Lines: 0
+    '     File Size: 77.00 B
+
 
     ' Enum PlotTypes
     ' 

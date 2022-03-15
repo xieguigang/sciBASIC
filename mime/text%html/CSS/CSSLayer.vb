@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f8fa1d4a4e827b156b3e0ee3be52a09, mime\text%html\CSS\CSSLayer.vb"
+﻿#Region "Microsoft.VisualBasic::7f8fa1d4a4e827b156b3e0ee3be52a09, sciBASIC#\mime\text%html\CSS\CSSLayer.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 18
+    '    Code Lines: 7
+    ' Comment Lines: 7
+    '   Blank Lines: 4
+    '     File Size: 451.00 B
+
 
     '     Interface CSSLayer
     ' 

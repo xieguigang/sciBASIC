@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4a291301a17327262a1ec2d0dc57f7f, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\xl\worksheets\sheet.xml.vb"
+﻿#Region "Microsoft.VisualBasic::e4a291301a17327262a1ec2d0dc57f7f, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\xl\worksheets\sheet.xml.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 224
+    '    Code Lines: 162
+    ' Comment Lines: 23
+    '   Blank Lines: 39
+    '     File Size: 7.60 KB
+
 
     '     Class worksheet
     ' 

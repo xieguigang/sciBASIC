@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1612507bf95fc2bc31178c8151f6c450, Data\DataFrame.Extensions\Serialize\ObjectSchema\Field.vb"
+﻿#Region "Microsoft.VisualBasic::1612507bf95fc2bc31178c8151f6c450, sciBASIC#\Data\DataFrame.Extensions\Serialize\ObjectSchema\Field.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 57
+    '    Code Lines: 33
+    ' Comment Lines: 16
+    '   Blank Lines: 8
+    '     File Size: 1.91 KB
+
 
     '     Class Field
     ' 

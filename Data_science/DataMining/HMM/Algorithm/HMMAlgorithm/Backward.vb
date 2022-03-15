@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0bcea484f1a1b3722fbe95ae4938b9ea, Data_science\DataMining\HMM\Algorithm\HMMAlgorithm\Backward.vb"
+﻿#Region "Microsoft.VisualBasic::0bcea484f1a1b3722fbe95ae4938b9ea, sciBASIC#\Data_science\DataMining\HMM\Algorithm\HMMAlgorithm\Backward.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 24
+    '    Code Lines: 19
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 896.00 B
+
 
     '     Class Backward
     ' 

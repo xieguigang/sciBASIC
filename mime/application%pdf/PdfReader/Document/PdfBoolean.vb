@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3ac8962a0d043a63bec6dbfd019ff23, mime\application%pdf\PdfReader\Document\PdfBoolean.vb"
+﻿#Region "Microsoft.VisualBasic::e8994f39b0f00eb9a200a3f9524fb01e, sciBASIC#\mime\application%pdf\PdfReader\Document\PdfBoolean.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 33
+    '    Code Lines: 27
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 941.00 B
+
 
     '     Class PdfBoolean
     ' 

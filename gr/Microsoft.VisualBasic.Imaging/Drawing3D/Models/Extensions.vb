@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8130913df7755e09b4eb88313a7ec630, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::8130913df7755e09b4eb88313a7ec630, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 32
+    '    Code Lines: 27
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 1.03 KB
+
 
     '     Module Extensions
     ' 

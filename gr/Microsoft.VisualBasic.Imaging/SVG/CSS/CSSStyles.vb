@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd9924e6d5889c158ac05aa709f829ff, gr\Microsoft.VisualBasic.Imaging\SVG\CSS\CSSStyles.vb"
+﻿#Region "Microsoft.VisualBasic::cd9924e6d5889c158ac05aa709f829ff, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\CSS\CSSStyles.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 22
+    '    Code Lines: 15
+    ' Comment Lines: 3
+    '   Blank Lines: 4
+    '     File Size: 682.00 B
+
 
     '     Class CSSStyles
     ' 

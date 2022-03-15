@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::414b2776d52e8143899df9e18c2b1c62, Microsoft.VisualBasic.Core\src\Data\Repository\RepositoryFileSystem.vb"
+﻿#Region "Microsoft.VisualBasic::414b2776d52e8143899df9e18c2b1c62, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\Repository\RepositoryFileSystem.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 221
+    '    Code Lines: 139
+    ' Comment Lines: 56
+    '   Blank Lines: 26
+    '     File Size: 10.06 KB
+
 
     '     Module RepositoryFileSystem
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1286de2416008dffcf794de83dcb5abf, gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Layout\Layout\ForceDirected2D.vb"
+﻿#Region "Microsoft.VisualBasic::1286de2416008dffcf794de83dcb5abf, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Layout\Layout\ForceDirected2D.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 57
+    '    Code Lines: 43
+    ' Comment Lines: 3
+    '   Blank Lines: 11
+    '     File Size: 2.41 KB
+
 
     '     Class ForceDirected2D
     ' 

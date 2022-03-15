@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6ae6eb69aa8a6b65f849efe066325b5, Data_science\DataMining\UMAP\Components\Tree\FlatTree.vb"
+﻿#Region "Microsoft.VisualBasic::a6ae6eb69aa8a6b65f849efe066325b5, sciBASIC#\Data_science\DataMining\UMAP\Components\Tree\FlatTree.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 9
+    '    Code Lines: 8
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 281.00 B
+
 
     '     Class FlatTree
     ' 

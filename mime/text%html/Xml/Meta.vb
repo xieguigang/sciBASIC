@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a0f6b90612caa9bf2714f87ad4b48ae, mime\text%html\Xml\Meta.vb"
+﻿#Region "Microsoft.VisualBasic::8a0f6b90612caa9bf2714f87ad4b48ae, sciBASIC#\mime\text%html\Xml\Meta.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 49
+    '    Code Lines: 29
+    ' Comment Lines: 12
+    '   Blank Lines: 8
+    '     File Size: 1.46 KB
+
 
     '     Class CSS
     ' 

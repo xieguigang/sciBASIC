@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::28b3cc072e2870adcb95661477f00604, gr\network-visualization\Visualizer\MingleRender\PosItem.vb"
+﻿#Region "Microsoft.VisualBasic::28b3cc072e2870adcb95661477f00604, sciBASIC#\gr\network-visualization\Visualizer\MingleRender\PosItem.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 11
+    '    Code Lines: 9
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 330.00 B
+
 
     ' Class PosItem
     ' 

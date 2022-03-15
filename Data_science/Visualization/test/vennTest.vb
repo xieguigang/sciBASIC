@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::274e1f1d04f72de31859ade394bd3753, Data_science\Visualization\test\vennTest.vb"
+﻿#Region "Microsoft.VisualBasic::274e1f1d04f72de31859ade394bd3753, sciBASIC#\Data_science\Visualization\test\vennTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 15
+    '    Code Lines: 12
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 801.00 B
+
 
     ' Module vennTest
     ' 

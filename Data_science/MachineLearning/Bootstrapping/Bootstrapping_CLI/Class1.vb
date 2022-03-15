@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d97b6376c7e278240bcc2f54c8ded16, Data_science\MachineLearning\Bootstrapping\Bootstrapping_CLI\Class1.vb"
+﻿#Region "Microsoft.VisualBasic::1d97b6376c7e278240bcc2f54c8ded16, sciBASIC#\Data_science\MachineLearning\Bootstrapping\Bootstrapping_CLI\Class1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 98
+    '    Code Lines: 75
+    ' Comment Lines: 4
+    '   Blank Lines: 19
+    '     File Size: 3.47 KB
+
 
     ' Class Class1
     ' 

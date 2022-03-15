@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7c0679c15bc970a1e6397b310215a49, gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Layout\Layout\ForceDirected.vb"
+﻿#Region "Microsoft.VisualBasic::b54e739e2da8205133bd52e712f89c34, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Layout\Layout\ForceDirected.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 332
+    '    Code Lines: 218
+    ' Comment Lines: 62
+    '   Blank Lines: 52
+    '     File Size: 13.69 KB
+
+
     '     Class ForceDirected
     ' 
     '         Properties: damping, graph, repulsion, stiffness, threshold
@@ -41,7 +51,8 @@
     '         Function: createSpring, GetSpring, getTotalEnergy, Nearest
     ' 
     '         Sub: (+2 Overloads) applyCoulombsLaw, applyHookesLaw, attractToCentre, Calculate, Clear
-    '              EachEdge, EachNode, SetPhysics, updatePosition, updateVelocity
+    '              (+2 Overloads) Dispose, EachEdge, EachNode, Flush, SetPhysics
+    '              updatePosition, updateVelocity
     ' 
     ' 
     ' /********************************************************************************/

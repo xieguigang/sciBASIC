@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c84b0b12df6d5ab507030fcddf7556e5, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Render2D\RenderContext.vb"
+﻿#Region "Microsoft.VisualBasic::c84b0b12df6d5ab507030fcddf7556e5, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Render2D\RenderContext.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 70
+    '    Code Lines: 47
+    ' Comment Lines: 0
+    '   Blank Lines: 23
+    '     File Size: 1.89 KB
+
 
     '     Class RenderContext
     ' 

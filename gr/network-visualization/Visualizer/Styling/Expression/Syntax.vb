@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a07f5798a2590ed0ab3510ece83ed75b, gr\network-visualization\Visualizer\Styling\Expression\Syntax.vb"
+﻿#Region "Microsoft.VisualBasic::d2afca569265af380001c0a094bb9c7e, sciBASIC#\gr\network-visualization\Visualizer\Styling\Expression\Syntax.vb"
 
     ' Author:
     ' 
@@ -31,23 +31,19 @@
 
     ' Summaries:
 
-    '     Enum MapperTypes
-    ' 
-    '         Continuous, Discrete, Passthrough
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
+
+    ' Code Statistics:
+
+    '   Total Lines: 87
+    '    Code Lines: 56
+    ' Comment Lines: 24
+    '   Blank Lines: 7
+    '     File Size: 3.54 KB
+
+
     '     Module SyntaxExtensions
     ' 
     '         Function: IsMapExpression, MapExpressionParser, RangeTransform
-    ' 
-    '     Structure MapExpression
-    ' 
-    '         Properties: AsDictionary
-    ' 
-    '         Function: ToString
     ' 
     ' 
     ' /********************************************************************************/

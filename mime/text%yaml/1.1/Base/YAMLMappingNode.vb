@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca108dd184282e0e0e2b9ed250f67b64, mime\text%yaml\1.1\Base\YAMLMappingNode.vb"
+﻿#Region "Microsoft.VisualBasic::ca108dd184282e0e0e2b9ed250f67b64, sciBASIC#\mime\text%yaml\1.1\Base\YAMLMappingNode.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 244
+    '    Code Lines: 198
+    ' Comment Lines: 0
+    '   Blank Lines: 46
+    '     File Size: 8.06 KB
+
 
     '     Class YAMLMappingNode
     ' 

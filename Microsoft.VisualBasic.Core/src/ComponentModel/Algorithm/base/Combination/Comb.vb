@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a9ce12c68f18cede187f581735ee789, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\base\Combination\Comb.vb"
+﻿#Region "Microsoft.VisualBasic::2a9ce12c68f18cede187f581735ee789, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\base\Combination\Comb.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 130
+    '    Code Lines: 86
+    ' Comment Lines: 23
+    '   Blank Lines: 21
+    '     File Size: 4.23 KB
+
 
     '     Class Comb
     ' 

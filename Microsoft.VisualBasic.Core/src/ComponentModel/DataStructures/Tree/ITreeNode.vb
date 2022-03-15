@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b6696441a2046b70e2472e46d333064, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Tree\ITreeNode.vb"
+﻿#Region "Microsoft.VisualBasic::1b6696441a2046b70e2472e46d333064, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Tree\ITreeNode.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 28
+    '    Code Lines: 12
+    ' Comment Lines: 11
+    '   Blank Lines: 5
+    '     File Size: 886.00 B
+
 
     '     Interface ITreeNode
     ' 

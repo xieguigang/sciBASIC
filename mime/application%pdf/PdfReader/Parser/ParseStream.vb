@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67a2829f1312136bfb4849aa70887c7d, mime\application%pdf\PdfReader\Parser\ParseStream.vb"
+﻿#Region "Microsoft.VisualBasic::5951d3ecab33f5da2c21a51c7e80f4fa, sciBASIC#\mime\application%pdf\PdfReader\Parser\ParseStream.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 96
+    '    Code Lines: 78
+    ' Comment Lines: 2
+    '   Blank Lines: 16
+    '     File Size: 3.46 KB
+
 
     '     Class ParseStream
     ' 

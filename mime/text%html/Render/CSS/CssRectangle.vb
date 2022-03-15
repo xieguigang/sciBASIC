@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::53a2cab73731d25e6cfa01e9a741b402, mime\text%html\Render\CSS\CssRectangle.vb"
+﻿#Region "Microsoft.VisualBasic::53a2cab73731d25e6cfa01e9a741b402, sciBASIC#\mime\text%html\Render\CSS\CssRectangle.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 100
+    '    Code Lines: 60
+    ' Comment Lines: 27
+    '   Blank Lines: 13
+    '     File Size: 2.75 KB
+
 
     '     Class CssRectangle
     ' 

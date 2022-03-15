@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf8ab69c86c516ff9e9251f8762f68fe, Data_science\Mathematica\Math\Math\Algebra\PCA\PCA.vb"
+﻿#Region "Microsoft.VisualBasic::cf8ab69c86c516ff9e9251f8762f68fe, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\PCA\PCA.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 207
+    '    Code Lines: 100
+    ' Comment Lines: 80
+    '   Blank Lines: 27
+    '     File Size: 7.98 KB
+
 
     '     Class PCA
     ' 

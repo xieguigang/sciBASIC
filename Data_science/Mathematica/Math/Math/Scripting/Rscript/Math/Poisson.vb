@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4033fc4a09396e9cb10a77d759b7f273, Data_science\Mathematica\Math\Math\Scripting\Rscript\Math\Poisson.vb"
+﻿#Region "Microsoft.VisualBasic::4033fc4a09396e9cb10a77d759b7f273, sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Rscript\Math\Poisson.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 111
+    '    Code Lines: 51
+    ' Comment Lines: 48
+    '   Blank Lines: 12
+    '     File Size: 5.12 KB
+
 
     '     Module Poisson
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d018f2030021b919112b982948b92f60, Data\SearchEngine\SearchEngine\Evaluation\AssertionProvider.vb"
+﻿#Region "Microsoft.VisualBasic::d018f2030021b919112b982948b92f60, sciBASIC#\Data\SearchEngine\SearchEngine\Evaluation\AssertionProvider.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 102
+    '    Code Lines: 77
+    ' Comment Lines: 10
+    '   Blank Lines: 15
+    '     File Size: 4.04 KB
+
 
     ' Module AssertionProvider
     ' 

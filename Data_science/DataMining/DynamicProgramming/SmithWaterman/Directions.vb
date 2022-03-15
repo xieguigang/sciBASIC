@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf5738edfd5bc6c384d96883eee3c238, Data_science\DataMining\DynamicProgramming\SmithWaterman\Directions.vb"
+﻿#Region "Microsoft.VisualBasic::bf5738edfd5bc6c384d96883eee3c238, sciBASIC#\Data_science\DataMining\DynamicProgramming\SmithWaterman\Directions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 28
+    '    Code Lines: 8
+    ' Comment Lines: 17
+    '   Blank Lines: 3
+    '     File Size: 723.00 B
+
 
     '     Class Directions
     ' 

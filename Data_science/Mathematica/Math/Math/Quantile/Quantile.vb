@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4fdb039183b9a69943bf62d88e05470, Data_science\Mathematica\Math\Math\Quantile\Quantile.vb"
+﻿#Region "Microsoft.VisualBasic::f4fdb039183b9a69943bf62d88e05470, sciBASIC#\Data_science\Mathematica\Math\Math\Quantile\Quantile.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 34
+    '    Code Lines: 14
+    ' Comment Lines: 15
+    '   Blank Lines: 5
+    '     File Size: 1.16 KB
+
 
     '     Structure Point
     ' 

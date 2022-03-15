@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0745b53686cc8414f09a56defc1c915c, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Transformation.vb"
+﻿#Region "Microsoft.VisualBasic::0745b53686cc8414f09a56defc1c915c, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Transformation.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 155
+    '    Code Lines: 106
+    ' Comment Lines: 30
+    '   Blank Lines: 19
+    '     File Size: 5.83 KB
+
 
     '     Module Transformation
     ' 

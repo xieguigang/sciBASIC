@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c1b67bbbb8ab4483d181bc24f480bc35, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\CLI\XlsxHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::c1b67bbbb8ab4483d181bc24f480bc35, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\CLI\XlsxHelpers.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 143
+    '    Code Lines: 123
+    ' Comment Lines: 0
+    '   Blank Lines: 20
+    '     File Size: 6.50 KB
+
 
     ' Module CLI
     ' 

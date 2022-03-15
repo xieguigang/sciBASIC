@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::986c397075dd4b07c9976529950a5502, Data\BinaryData\DataStorage\netCDF\Components\CDFData\floats.vb"
+﻿#Region "Microsoft.VisualBasic::986c397075dd4b07c9976529950a5502, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\CDFData\floats.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 18
+    '    Code Lines: 14
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 556.00 B
+
 
     '     Class floats
     ' 

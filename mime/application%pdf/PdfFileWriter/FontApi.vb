@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a3a93da4cfadb3b890458bee75bb0e8, mime\application%pdf\PdfFileWriter\FontApi.vb"
+﻿#Region "Microsoft.VisualBasic::aa989f47553b72f8493b213d7993d7f7, sciBASIC#\mime\application%pdf\PdfFileWriter\FontApi.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1859
+    '    Code Lines: 995
+    ' Comment Lines: 488
+    '   Blank Lines: 376
+    '     File Size: 52.01 KB
+
 
     ' Class CharInfo
     ' 

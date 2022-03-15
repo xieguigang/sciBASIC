@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b9f30f3c118ab678c0fb810423470b0, gr\Microsoft.VisualBasic.Imaging\SVG\XML\g.vb"
+﻿#Region "Microsoft.VisualBasic::0b9f30f3c118ab678c0fb810423470b0, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\XML\g.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 68
+    '    Code Lines: 56
+    ' Comment Lines: 6
+    '   Blank Lines: 6
+    '     File Size: 3.13 KB
+
 
     '     Interface ICanvas
     ' 

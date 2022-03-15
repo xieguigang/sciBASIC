@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d486e240d7a99446203db3a23aeb76c, Data\BinaryData\DataStorage\netCDF\Components\CDFData\chars.vb"
+﻿#Region "Microsoft.VisualBasic::0d486e240d7a99446203db3a23aeb76c, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\CDFData\chars.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 33
+    '    Code Lines: 26
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 1.16 KB
+
 
     '     Class chars
     ' 

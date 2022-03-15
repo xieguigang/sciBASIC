@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::867a991f956604f21f7eb1ea8bc0f4c3, Data_science\Mathematica\SignalProcessing\SignalProcessing\WaveletTransform\Constructors\Daubechies.vb"
+﻿#Region "Microsoft.VisualBasic::867a991f956604f21f7eb1ea8bc0f4c3, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\WaveletTransform\Constructors\Daubechies.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 134
+    '    Code Lines: 131
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 11.46 KB
+
 
     '     Class Daubechies
     ' 

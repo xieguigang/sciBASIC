@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3b6e151081b172a80977acff7a66a25f, Data\DataFrame\StorageProvider\Reflection\Attributes\MetaAttributeProvider.vb"
+﻿#Region "Microsoft.VisualBasic::3b6e151081b172a80977acff7a66a25f, sciBASIC#\Data\DataFrame\StorageProvider\Reflection\Attributes\MetaAttributeProvider.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 44
+    '    Code Lines: 23
+    ' Comment Lines: 14
+    '   Blank Lines: 7
+    '     File Size: 1.92 KB
+
 
     '     Class MetaAttribute
     ' 

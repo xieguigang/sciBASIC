@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51b25e8268f0b8c6f622b8db80e519a9, mime\text%yaml\1.1\Base\MappingStyle.vb"
+﻿#Region "Microsoft.VisualBasic::51b25e8268f0b8c6f622b8db80e519a9, sciBASIC#\mime\text%yaml\1.1\Base\MappingStyle.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 17
+    '    Code Lines: 6
+    ' Comment Lines: 9
+    '   Blank Lines: 2
+    '     File Size: 362.00 B
+
 
     '     Enum MappingStyle
     ' 

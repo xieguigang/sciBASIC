@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9464dde52d52346e034bba90c207fcf, Data_science\Graph\Model\GridNetwork\GridCell.vb"
+﻿#Region "Microsoft.VisualBasic::f9464dde52d52346e034bba90c207fcf, sciBASIC#\Data_science\Graph\Model\GridNetwork\GridCell.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 34
+    '    Code Lines: 22
+    ' Comment Lines: 4
+    '   Blank Lines: 8
+    '     File Size: 704.00 B
+
 
     ' Class GridCell
     ' 

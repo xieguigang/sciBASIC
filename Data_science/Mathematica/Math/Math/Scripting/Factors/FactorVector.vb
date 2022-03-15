@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::688334d22467b2dd6e124c90a1b35626, Data_science\Mathematica\Math\Math\Scripting\Factors\FactorVector.vb"
+﻿#Region "Microsoft.VisualBasic::688334d22467b2dd6e124c90a1b35626, sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Factors\FactorVector.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 69
+    '    Code Lines: 56
+    ' Comment Lines: 3
+    '   Blank Lines: 10
+    '     File Size: 2.46 KB
+
 
     '     Interface IFactorVector
     ' 

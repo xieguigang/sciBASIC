@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6ec7bef4c88e217265d0a358da1fd20, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\Flags.vb"
+﻿#Region "Microsoft.VisualBasic::e6ec7bef4c88e217265d0a358da1fd20, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\Flags.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 19
+    '    Code Lines: 10
+    ' Comment Lines: 6
+    '   Blank Lines: 3
+    '     File Size: 583.00 B
+
 
     '     Enum PipelineTypes
     ' 

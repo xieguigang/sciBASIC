@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99d292df53e70397a605c1c0824c7bdf, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Triangular.vb"
+﻿#Region "Microsoft.VisualBasic::99d292df53e70397a605c1c0824c7bdf, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Triangular.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 103
+    '    Code Lines: 81
+    ' Comment Lines: 16
+    '   Blank Lines: 6
+    '     File Size: 4.23 KB
+
 
     '     Class Triangular
     ' 

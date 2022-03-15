@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cedbd375d2122f475d2c3d66cc02a28a, mime\application%rdf+xml\DataModel\Bag.vb"
+﻿#Region "Microsoft.VisualBasic::cedbd375d2122f475d2c3d66cc02a28a, sciBASIC#\mime\application%rdf+xml\DataModel\Bag.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 41
+    '    Code Lines: 26
+    ' Comment Lines: 7
+    '   Blank Lines: 8
+    '     File Size: 1.35 KB
+
 
     ' Class Array
     ' 

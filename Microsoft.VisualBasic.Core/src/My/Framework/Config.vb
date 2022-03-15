@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b74aa6a7d2fafcd821ef5ab07425c46, Microsoft.VisualBasic.Core\src\My\Framework\Config.vb"
+﻿#Region "Microsoft.VisualBasic::7b74aa6a7d2fafcd821ef5ab07425c46, sciBASIC#\Microsoft.VisualBasic.Core\src\My\Framework\Config.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 124
+    '    Code Lines: 92
+    ' Comment Lines: 13
+    '   Blank Lines: 19
+    '     File Size: 4.48 KB
+
 
     '     Class Config
     ' 

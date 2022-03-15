@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bda82927f2532399610bec4e05f30f06, Microsoft.VisualBasic.Core\src\Extensions\Image\TiffWriter.vb"
+﻿#Region "Microsoft.VisualBasic::bda82927f2532399610bec4e05f30f06, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\TiffWriter.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 354
+    '    Code Lines: 265
+    ' Comment Lines: 24
+    '   Blank Lines: 65
+    '     File Size: 16.02 KB
+
 
     '     Class TiffWriter
     ' 

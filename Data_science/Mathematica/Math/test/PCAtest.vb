@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f91c0a742d4790b245c44d80a843ee03, Data_science\Mathematica\Math\test\PCAtest.vb"
+﻿#Region "Microsoft.VisualBasic::f91c0a742d4790b245c44d80a843ee03, sciBASIC#\Data_science\Mathematica\Math\test\PCAtest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 5
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 78.00 B
+
 
     ' Module PCAtest
     ' 

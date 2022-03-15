@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99eb7c6dd6fe93331c62424eef0122b6, mime\text%html\CSS\ICSSValue.vb"
+﻿#Region "Microsoft.VisualBasic::99eb7c6dd6fe93331c62424eef0122b6, sciBASIC#\mime\text%html\CSS\ICSSValue.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 11
+    '    Code Lines: 8
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 262.00 B
+
 
     '     Class ICSSValue
     ' 

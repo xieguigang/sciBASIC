@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58d88ab90ff4d2470f0de67536b7ce5d, www\githubAPI\DependencyGraph\package.json.vb"
+﻿#Region "Microsoft.VisualBasic::58d88ab90ff4d2470f0de67536b7ce5d, sciBASIC#\www\githubAPI\DependencyGraph\package.json.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 33
+    '    Code Lines: 29
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 984.00 B
+
 
     ' Class package
     ' 

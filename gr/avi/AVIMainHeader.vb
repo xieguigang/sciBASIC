@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f83090b249f368ecc6c293035e6a5586, gr\avi\AVIMainHeader.vb"
+﻿#Region "Microsoft.VisualBasic::f83090b249f368ecc6c293035e6a5586, sciBASIC#\gr\avi\AVIMainHeader.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 111
+    '    Code Lines: 53
+    ' Comment Lines: 48
+    '   Blank Lines: 10
+    '     File Size: 3.74 KB
+
 
     ' Class AVIMainHeader
     ' 

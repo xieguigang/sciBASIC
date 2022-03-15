@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::487251907ece296d2d6c797dc49ada2c, Data_science\MachineLearning\Bootstrapping\Darwinism\GAF\Drivers\RawCompare.vb"
+﻿#Region "Microsoft.VisualBasic::487251907ece296d2d6c797dc49ada2c, sciBASIC#\Data_science\MachineLearning\Bootstrapping\Darwinism\GAF\Drivers\RawCompare.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 90
+    '    Code Lines: 67
+    ' Comment Lines: 10
+    '   Blank Lines: 13
+    '     File Size: 3.47 KB
+
 
     '     Class RawCompare
     ' 

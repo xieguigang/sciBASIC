@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a075c461b75a52060e80e58f67cc4571, gr\network-visualization\Datavisualization.Network\TreeAPI\TreeGraph.vb"
+﻿#Region "Microsoft.VisualBasic::a075c461b75a52060e80e58f67cc4571, sciBASIC#\gr\network-visualization\Datavisualization.Network\TreeAPI\TreeGraph.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 50
+    '    Code Lines: 39
+    ' Comment Lines: 0
+    '   Blank Lines: 11
+    '     File Size: 2.36 KB
+
 
     ' Class TreeGraph
     ' 

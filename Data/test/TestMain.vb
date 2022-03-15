@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::49f2fd481e87924b541d0bff0f5fa9eb, Data\test\TestMain.vb"
+﻿#Region "Microsoft.VisualBasic::49f2fd481e87924b541d0bff0f5fa9eb, sciBASIC#\Data\test\TestMain.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 175
+    '    Code Lines: 0
+    ' Comment Lines: 124
+    '   Blank Lines: 51
+    '     File Size: 7.32 KB
+
 
     ' 
     ' /********************************************************************************/

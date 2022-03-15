@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::340ec83c9b335e42c3dfb73e45ead265, vs_solutions\dev\LicenseMgr\LicenseMgr\Content\SettingsAppearanceViewModel.vb"
+﻿#Region "Microsoft.VisualBasic::340ec83c9b335e42c3dfb73e45ead265, sciBASIC#\vs_solutions\dev\LicenseMgr\LicenseMgr\Content\SettingsAppearanceViewModel.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 210
+    '    Code Lines: 140
+    ' Comment Lines: 43
+    '   Blank Lines: 27
+    '     File Size: 8.22 KB
+
 
     '     Class SettingsAppearanceViewModel
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a180b46a9f813533d200877a64df6b52, Microsoft.VisualBasic.Core\test\wgetTest.vb"
+﻿#Region "Microsoft.VisualBasic::a180b46a9f813533d200877a64df6b52, sciBASIC#\Microsoft.VisualBasic.Core\test\wgetTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 9
+    '    Code Lines: 7
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 308.00 B
+
 
     ' Module wgetTest
     ' 

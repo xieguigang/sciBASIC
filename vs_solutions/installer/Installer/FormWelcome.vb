@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c52acd218f4ee1a5a48771e975ada4a, vs_solutions\installer\Installer\FormWelcome.vb"
+﻿#Region "Microsoft.VisualBasic::0c52acd218f4ee1a5a48771e975ada4a, sciBASIC#\vs_solutions\installer\Installer\FormWelcome.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 18
+    '    Code Lines: 11
+    ' Comment Lines: 2
+    '   Blank Lines: 5
+    '     File Size: 535.00 B
+
 
     ' Class FormWelcome
     ' 

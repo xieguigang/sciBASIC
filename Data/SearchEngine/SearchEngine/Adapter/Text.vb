@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::408d5f9d8f0b610734baa01728c56287, Data\SearchEngine\SearchEngine\Adapter\Text.vb"
+﻿#Region "Microsoft.VisualBasic::408d5f9d8f0b610734baa01728c56287, sciBASIC#\Data\SearchEngine\SearchEngine\Adapter\Text.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 12
+    '    Code Lines: 6
+    ' Comment Lines: 4
+    '   Blank Lines: 2
+    '     File Size: 262.00 B
+
 
     ' Structure Text
     ' 

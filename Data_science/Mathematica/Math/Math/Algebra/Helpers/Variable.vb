@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c31c360f2bfd57c0dd76fa0f28387b67, Data_science\Mathematica\Math\Math\Algebra\Helpers\Variable.vb"
+﻿#Region "Microsoft.VisualBasic::c31c360f2bfd57c0dd76fa0f28387b67, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Helpers\Variable.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 57
+    '    Code Lines: 0
+    ' Comment Lines: 47
+    '   Blank Lines: 10
+    '     File Size: 2.00 KB
+
 
     ' 
     ' /********************************************************************************/

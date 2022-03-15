@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5060f9db75dd7c6da450342ec0a2b3d3, Data_science\DataMining\DataMining\Clustering\KNN.vb"
+﻿#Region "Microsoft.VisualBasic::5060f9db75dd7c6da450342ec0a2b3d3, sciBASIC#\Data_science\DataMining\DataMining\Clustering\KNN.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 104
+    '    Code Lines: 78
+    ' Comment Lines: 11
+    '   Blank Lines: 15
+    '     File Size: 4.24 KB
+
 
     '     Class KNN
     ' 

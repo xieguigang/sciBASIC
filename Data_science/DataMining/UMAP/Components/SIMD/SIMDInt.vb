@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43f21e7cf32f2481c06cd8b909b25488, Data_science\DataMining\UMAP\Components\SIMD\SIMDInt.vb"
+﻿#Region "Microsoft.VisualBasic::43f21e7cf32f2481c06cd8b909b25488, sciBASIC#\Data_science\DataMining\UMAP\Components\SIMD\SIMDInt.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 61
+    '    Code Lines: 51
+    ' Comment Lines: 0
+    '   Blank Lines: 10
+    '     File Size: 2.04 KB
+
 
     ' Module SIMDint
     ' 

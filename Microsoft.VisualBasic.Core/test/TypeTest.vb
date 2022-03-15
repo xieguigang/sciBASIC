@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::309722185e7a73cc8dc96f3491126449, Microsoft.VisualBasic.Core\test\TypeTest.vb"
+﻿#Region "Microsoft.VisualBasic::309722185e7a73cc8dc96f3491126449, sciBASIC#\Microsoft.VisualBasic.Core\test\TypeTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 100
+    '    Code Lines: 72
+    ' Comment Lines: 0
+    '   Blank Lines: 28
+    '     File Size: 2.89 KB
+
 
     ' Enum FlagCombos
     ' 

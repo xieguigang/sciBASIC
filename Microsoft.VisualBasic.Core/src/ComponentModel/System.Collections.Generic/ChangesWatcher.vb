@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45b0679e782c9fe3e8e5d9767b561dba, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\ChangesWatcher.vb"
+﻿#Region "Microsoft.VisualBasic::45b0679e782c9fe3e8e5d9767b561dba, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\ChangesWatcher.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 62
+    '    Code Lines: 49
+    ' Comment Lines: 0
+    '   Blank Lines: 13
+    '     File Size: 1.82 KB
+
 
     '     Class ChangesWatcher
     ' 

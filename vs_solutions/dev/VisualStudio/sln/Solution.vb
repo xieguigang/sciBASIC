@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0110500a1a13881ab3099e5d683e5f1d, vs_solutions\dev\VisualStudio\sln\Solution.vb"
+﻿#Region "Microsoft.VisualBasic::0110500a1a13881ab3099e5d683e5f1d, sciBASIC#\vs_solutions\dev\VisualStudio\sln\Solution.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 37
+    '    Code Lines: 20
+    ' Comment Lines: 11
+    '   Blank Lines: 6
+    '     File Size: 1.14 KB
+
 
     '     Class Solution
     ' 

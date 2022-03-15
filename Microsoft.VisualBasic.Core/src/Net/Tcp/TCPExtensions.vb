@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf832c705c936b1a85e798efd98374e2, Microsoft.VisualBasic.Core\src\Net\Tcp\TCPExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::cf832c705c936b1a85e798efd98374e2, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\Tcp\TCPExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 109
+    '    Code Lines: 56
+    ' Comment Lines: 35
+    '   Blank Lines: 18
+    '     File Size: 4.77 KB
+
 
     '     Module TCPExtensions
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2c52408585a6777b454473ee24ca3c1, gr\network-visualization\Datavisualization.Network\Layouts\Cola\GridRouter\Models.vb"
+﻿#Region "Microsoft.VisualBasic::e2c52408585a6777b454473ee24ca3c1, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\GridRouter\Models.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 113
+    '    Code Lines: 82
+    ' Comment Lines: 3
+    '   Blank Lines: 28
+    '     File Size: 3.27 KB
+
 
     '     Class SVGRoutePath
     ' 

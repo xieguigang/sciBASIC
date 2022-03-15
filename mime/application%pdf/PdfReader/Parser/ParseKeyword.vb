@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee0e8987c9aef7926b4587374b09b9fd, mime\application%pdf\PdfReader\Parser\ParseKeyword.vb"
+﻿#Region "Microsoft.VisualBasic::ee0e8987c9aef7926b4587374b09b9fd, sciBASIC#\mime\application%pdf\PdfReader\Parser\ParseKeyword.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 28
+    '    Code Lines: 27
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 638.00 B
+
 
     '     Enum ParseKeyword
     ' 

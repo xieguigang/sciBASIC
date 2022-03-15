@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b6299fedd32f6a4cd19f62f60c095189, Data_science\Mathematica\CUDA\test\App.vb"
+﻿#Region "Microsoft.VisualBasic::b6299fedd32f6a4cd19f62f60c095189, sciBASIC#\Data_science\Mathematica\CUDA\test\App.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 20
+    '    Code Lines: 13
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 578.00 B
+
 
     ' Module App
     ' 

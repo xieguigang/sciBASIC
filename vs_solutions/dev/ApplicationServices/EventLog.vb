@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d6856d7d7f90f406d597f26e764f32f, vs_solutions\dev\ApplicationServices\EventLog.vb"
+﻿#Region "Microsoft.VisualBasic::9d6856d7d7f90f406d597f26e764f32f, sciBASIC#\vs_solutions\dev\ApplicationServices\EventLog.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 211
+    '    Code Lines: 130
+    ' Comment Lines: 61
+    '   Blank Lines: 20
+    '     File Size: 11.60 KB
+
 
     '     Class EventLog
     ' 

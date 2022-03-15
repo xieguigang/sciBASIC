@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dac9f7ec22e7e7e84cf9f7af868c310f, www\Microsoft.VisualBasic.NETProtocol\HTTP\WebCrawling.vb"
+﻿#Region "Microsoft.VisualBasic::dac9f7ec22e7e7e84cf9f7af868c310f, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\HTTP\WebCrawling.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 173
+    '    Code Lines: 138
+    ' Comment Lines: 9
+    '   Blank Lines: 26
+    '     File Size: 6.98 KB
+
 
     '     Module WebCrawling
     ' 

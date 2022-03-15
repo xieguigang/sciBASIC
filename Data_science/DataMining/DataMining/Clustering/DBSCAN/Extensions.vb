@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2783105ae343001a575c73ed38db74af, Data_science\DataMining\DataMining\Clustering\DBSCAN\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::2783105ae343001a575c73ed38db74af, sciBASIC#\Data_science\DataMining\DataMining\Clustering\DBSCAN\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 27
+    '    Code Lines: 23
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 1.14 KB
+
 
     '     Module Extensions
     ' 

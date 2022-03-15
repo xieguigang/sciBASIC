@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da4fb06d7e476bb6cfb4dadb47df2fc6, gr\Microsoft.VisualBasic.Imaging\SVG\CSS\Gradients\Stop.vb"
+﻿#Region "Microsoft.VisualBasic::da4fb06d7e476bb6cfb4dadb47df2fc6, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\CSS\Gradients\Stop.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 18
+    '    Code Lines: 14
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 524.00 B
+
 
     '     Class [stop]
     ' 

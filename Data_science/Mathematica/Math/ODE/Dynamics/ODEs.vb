@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c3c235e65dc82b8d822ef1b6d393805, Data_science\Mathematica\Math\ODE\Dynamics\ODEs.vb"
+﻿#Region "Microsoft.VisualBasic::5c3c235e65dc82b8d822ef1b6d393805, sciBASIC#\Data_science\Mathematica\Math\ODE\Dynamics\ODEs.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 238
+    '    Code Lines: 129
+    ' Comment Lines: 77
+    '   Blank Lines: 32
+    '     File Size: 8.54 KB
+
 
     '     Class ODEs
     ' 

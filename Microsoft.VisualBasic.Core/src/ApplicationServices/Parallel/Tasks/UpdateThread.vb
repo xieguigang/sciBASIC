@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d600fc3bc5d544d05801c901e154e033, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\UpdateThread.vb"
+﻿#Region "Microsoft.VisualBasic::d600fc3bc5d544d05801c901e154e033, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\UpdateThread.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 152
+    '    Code Lines: 81
+    ' Comment Lines: 52
+    '   Blank Lines: 19
+    '     File Size: 5.62 KB
+
 
     '     Class UpdateThread
     ' 

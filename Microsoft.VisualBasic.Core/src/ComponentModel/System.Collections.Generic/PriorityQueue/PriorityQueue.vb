@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6cebe2b568d1eae0cf3b03702280aa9c, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\PriorityQueue\PriorityQueue.vb"
+﻿#Region "Microsoft.VisualBasic::6cebe2b568d1eae0cf3b03702280aa9c, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\PriorityQueue\PriorityQueue.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 125
+    '    Code Lines: 66
+    ' Comment Lines: 40
+    '   Blank Lines: 19
+    '     File Size: 3.82 KB
+
 
     '     Class PriorityQueue
     ' 

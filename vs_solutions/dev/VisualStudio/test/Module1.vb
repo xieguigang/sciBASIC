@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b13b0ee8df0f526706e95dc433c90d23, vs_solutions\dev\VisualStudio\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::b13b0ee8df0f526706e95dc433c90d23, sciBASIC#\vs_solutions\dev\VisualStudio\test\Module1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 35
+    '    Code Lines: 27
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 1.24 KB
+
 
     ' Module Module1
     ' 

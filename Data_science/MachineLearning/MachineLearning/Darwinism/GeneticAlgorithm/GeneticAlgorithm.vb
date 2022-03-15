@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0ad71bbcb34a36f5c779fdbd62e8708, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\GeneticAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::d0ad71bbcb34a36f5c779fdbd62e8708, sciBASIC#\Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\GeneticAlgorithm.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 213
+    '    Code Lines: 100
+    ' Comment Lines: 85
+    '   Blank Lines: 28
+    '     File Size: 8.97 KB
+
 
     '     Class GeneticAlgorithm
     ' 

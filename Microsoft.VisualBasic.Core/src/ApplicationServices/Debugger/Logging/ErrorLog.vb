@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::44e8eb229134ed89af21286977335729, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Logging\ErrorLog.vb"
+﻿#Region "Microsoft.VisualBasic::44e8eb229134ed89af21286977335729, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Logging\ErrorLog.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 77
+    '    Code Lines: 65
+    ' Comment Lines: 7
+    '   Blank Lines: 5
+    '     File Size: 3.23 KB
+
 
     '     Module ErrorLog
     ' 

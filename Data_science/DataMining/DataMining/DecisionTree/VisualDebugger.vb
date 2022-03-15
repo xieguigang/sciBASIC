@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d46cf247ab44d72299a09e5076309005, Data_science\DataMining\DataMining\DecisionTree\VisualDebugger.vb"
+﻿#Region "Microsoft.VisualBasic::d46cf247ab44d72299a09e5076309005, sciBASIC#\Data_science\DataMining\DataMining\DecisionTree\VisualDebugger.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 51
+    '    Code Lines: 41
+    ' Comment Lines: 4
+    '   Blank Lines: 6
+    '     File Size: 2.23 KB
+
 
     '     Module VisualDebugger
     ' 

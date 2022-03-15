@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd4eea6a026c054e1b97ca8c78f98bd8, Microsoft.VisualBasic.Core\src\Extensions\IO\Path\Directory.vb"
+﻿#Region "Microsoft.VisualBasic::fd4eea6a026c054e1b97ca8c78f98bd8, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\Path\Directory.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 132
+    '    Code Lines: 61
+    ' Comment Lines: 54
+    '   Blank Lines: 17
+    '     File Size: 5.18 KB
+
 
     '     Class Directory
     ' 

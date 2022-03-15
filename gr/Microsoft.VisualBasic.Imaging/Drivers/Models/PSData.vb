@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d361b1e130e7f3f52b601bff68514375, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\PSData.vb"
+﻿#Region "Microsoft.VisualBasic::d361b1e130e7f3f52b601bff68514375, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drivers\Models\PSData.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 28
+    '    Code Lines: 21
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 838.00 B
+
 
     '     Class PSData
     ' 

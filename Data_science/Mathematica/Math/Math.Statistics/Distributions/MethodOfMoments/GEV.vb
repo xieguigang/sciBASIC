@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a44ed6387d2d0ee2994a535ede7ec810, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\GEV.vb"
+﻿#Region "Microsoft.VisualBasic::a44ed6387d2d0ee2994a535ede7ec810, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\GEV.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 78
+    '    Code Lines: 60
+    ' Comment Lines: 13
+    '   Blank Lines: 5
+    '     File Size: 3.02 KB
+
 
     '     Class GEV
     ' 

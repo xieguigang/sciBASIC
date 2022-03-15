@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df2b637060af1ce7e3753911c8b07482, mime\application%pdf\PdfFileWriter\PDF\PdfTableStyle.vb"
+﻿#Region "Microsoft.VisualBasic::76f5245e484f082df09c49df5b589b1d, sciBASIC#\mime\application%pdf\PdfFileWriter\PDF\PdfTableStyle.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 304
+    '    Code Lines: 86
+    ' Comment Lines: 187
+    '   Blank Lines: 31
+    '     File Size: 10.80 KB
+
 
     '     Class PdfTableStyle
     ' 

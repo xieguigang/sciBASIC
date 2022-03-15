@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::efd5952c1358648984db348369d7fc41, www\Microsoft.VisualBasic.NETProtocol\Authenticator\FormAuth.vb"
+﻿#Region "Microsoft.VisualBasic::efd5952c1358648984db348369d7fc41, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Authenticator\FormAuth.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 6
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 290.00 B
+
 
     ' Class FormAuth
     ' 

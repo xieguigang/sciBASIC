@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9fec9d842fa471035a4913826dec0a0b, gr\avi\AVIStreamHeader.vb"
+﻿#Region "Microsoft.VisualBasic::9fec9d842fa471035a4913826dec0a0b, sciBASIC#\gr\avi\AVIStreamHeader.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 104
+    '    Code Lines: 35
+    ' Comment Lines: 60
+    '   Blank Lines: 9
+    '     File Size: 2.95 KB
+
 
     ' Class AVIStreamHeader
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d6d0428b014ad0a70e63a7da167e9a10, mime\application%pdf\PdfReader\Parser\ParseResolveEventArgs.vb"
+﻿#Region "Microsoft.VisualBasic::d6d0428b014ad0a70e63a7da167e9a10, sciBASIC#\mime\application%pdf\PdfReader\Parser\ParseResolveEventArgs.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 11
+    '    Code Lines: 9
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 269.00 B
+
 
     '     Class ParseResolveEventArgs
     ' 

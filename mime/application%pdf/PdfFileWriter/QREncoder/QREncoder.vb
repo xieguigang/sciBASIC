@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a05ff6f213d52dedc8de9b485497edc1, mime\application%pdf\PdfFileWriter\QREncoder\QREncoder.vb"
+﻿#Region "Microsoft.VisualBasic::2ee85ef0f082ce4ce5a0fd6846af4d16, sciBASIC#\mime\application%pdf\PdfFileWriter\QREncoder\QREncoder.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1516
+    '    Code Lines: 803
+    ' Comment Lines: 364
+    '   Blank Lines: 349
+    '     File Size: 52.15 KB
+
 
     ' Enum ErrorCorrection
     ' 

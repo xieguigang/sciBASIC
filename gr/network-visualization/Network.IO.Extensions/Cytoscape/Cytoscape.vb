@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8bc1533efdec82e5390bade52dbf78d3, gr\network-visualization\Network.IO.Extensions\Cytoscape\Cytoscape.vb"
+﻿#Region "Microsoft.VisualBasic::8bc1533efdec82e5390bade52dbf78d3, sciBASIC#\gr\network-visualization\Network.IO.Extensions\Cytoscape\Cytoscape.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 87
+    '    Code Lines: 62
+    ' Comment Lines: 9
+    '   Blank Lines: 16
+    '     File Size: 2.92 KB
+
 
     '     Class Edges
     ' 

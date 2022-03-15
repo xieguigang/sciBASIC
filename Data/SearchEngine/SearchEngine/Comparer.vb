@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d8022d685200f14f00ab72d6ff092fb, Data\SearchEngine\SearchEngine\Comparer.vb"
+﻿#Region "Microsoft.VisualBasic::1d8022d685200f14f00ab72d6ff092fb, sciBASIC#\Data\SearchEngine\SearchEngine\Comparer.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 67
+    '    Code Lines: 40
+    ' Comment Lines: 18
+    '   Blank Lines: 9
+    '     File Size: 2.14 KB
+
 
     ' Module IComparer
     ' 

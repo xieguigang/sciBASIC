@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::46846a79968d968d90bebaad8fd0979a, Data_science\Visualization\test\RegressionPlotTest.vb"
+﻿#Region "Microsoft.VisualBasic::46846a79968d968d90bebaad8fd0979a, sciBASIC#\Data_science\Visualization\test\RegressionPlotTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 15
+    '    Code Lines: 12
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 596.00 B
+
 
     ' Module RegressionPlotTest
     ' 

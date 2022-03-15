@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6718d8aa0ba7c8de280c86133df1edf5, Data_science\MachineLearning\Bootstrapping\Darwinism\GAF\ODEs\ParameterVector.vb"
+﻿#Region "Microsoft.VisualBasic::6718d8aa0ba7c8de280c86133df1edf5, sciBASIC#\Data_science\MachineLearning\Bootstrapping\Darwinism\GAF\ODEs\ParameterVector.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 179
+    '    Code Lines: 97
+    ' Comment Lines: 54
+    '   Blank Lines: 28
+    '     File Size: 6.55 KB
+
 
     '     Class ParameterVector
     ' 

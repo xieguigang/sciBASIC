@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48f70b9883d7db98da5930ec2caf2f81, Data_science\DataMining\DynamicProgramming\Generic\GenericSequence.vb"
+﻿#Region "Microsoft.VisualBasic::48f70b9883d7db98da5930ec2caf2f81, sciBASIC#\Data_science\DataMining\DynamicProgramming\Generic\GenericSequence.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 75
+    '    Code Lines: 62
+    ' Comment Lines: 0
+    '   Blank Lines: 13
+    '     File Size: 2.37 KB
+
 
     ' Class GenericSequence
     ' 

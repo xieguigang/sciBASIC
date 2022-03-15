@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f0ac4a22027cb19129ffada694812cdf, mime\application%xml\xsd\elementTypes.vb"
+﻿#Region "Microsoft.VisualBasic::f0ac4a22027cb19129ffada694812cdf, sciBASIC#\mime\application%xml\xsd\elementTypes.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 10
+    '    Code Lines: 9
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 299.00 B
+
 
     ' Enum elementTypes
     ' 

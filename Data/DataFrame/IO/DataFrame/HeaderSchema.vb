@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7e860d24dde996ecca0d9317368a9e8, Data\DataFrame\IO\DataFrame\HeaderSchema.vb"
+﻿#Region "Microsoft.VisualBasic::e7e860d24dde996ecca0d9317368a9e8, sciBASIC#\Data\DataFrame\IO\DataFrame\HeaderSchema.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 152
+    '    Code Lines: 104
+    ' Comment Lines: 25
+    '   Blank Lines: 23
+    '     File Size: 6.07 KB
+
 
     '     Class HeaderSchema
     ' 

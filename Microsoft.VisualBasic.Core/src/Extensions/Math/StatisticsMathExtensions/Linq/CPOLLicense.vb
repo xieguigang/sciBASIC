@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4449e50ebab5d68ae6a22af3e6da7fe0, Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\Linq\CPOLLicense.vb"
+﻿#Region "Microsoft.VisualBasic::4449e50ebab5d68ae6a22af3e6da7fe0, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\Linq\CPOLLicense.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 19
+    '    Code Lines: 13
+    ' Comment Lines: 4
+    '   Blank Lines: 2
+    '     File Size: 753.00 B
+
 
     '     Module CPOLLicense
     ' 

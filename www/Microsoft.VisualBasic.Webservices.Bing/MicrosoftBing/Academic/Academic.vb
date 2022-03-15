@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::062d268198a4d9fce05a60cb5d6416ca, www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\Academic\Academic.vb"
+﻿#Region "Microsoft.VisualBasic::062d268198a4d9fce05a60cb5d6416ca, sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\Academic\Academic.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 102
+    '    Code Lines: 71
+    ' Comment Lines: 14
+    '   Blank Lines: 17
+    '     File Size: 3.96 KB
+
 
     '     Module AcademicSearch
     ' 

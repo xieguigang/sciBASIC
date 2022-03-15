@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a520325553223a1352da89bbf7b8b4f7, mime\application%json\BSON\Decoder.vb"
+﻿#Region "Microsoft.VisualBasic::5e9b49816eae85084d43b530ba0b4825, sciBASIC#\mime\application%json\BSON\Decoder.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 168
+    '    Code Lines: 105
+    ' Comment Lines: 29
+    '   Blank Lines: 34
+    '     File Size: 5.92 KB
+
 
     '     Class Decoder
     ' 

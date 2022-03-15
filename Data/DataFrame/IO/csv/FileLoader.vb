@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b1acc5559b50db40d8db7399c3346b0, Data\DataFrame\IO\csv\FileLoader.vb"
+﻿#Region "Microsoft.VisualBasic::7b1acc5559b50db40d8db7399c3346b0, sciBASIC#\Data\DataFrame\IO\csv\FileLoader.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 132
+    '    Code Lines: 96
+    ' Comment Lines: 19
+    '   Blank Lines: 17
+    '     File Size: 6.33 KB
+
 
     '     Module FileLoader
     ' 

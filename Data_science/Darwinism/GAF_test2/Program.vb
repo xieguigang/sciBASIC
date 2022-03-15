@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6609e03cabe28b8d657fb97c8198c6f, Data_science\Darwinism\GAF_test2\Program.vb"
+﻿#Region "Microsoft.VisualBasic::e6609e03cabe28b8d657fb97c8198c6f, sciBASIC#\Data_science\Darwinism\GAF_test2\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 124
+    '    Code Lines: 105
+    ' Comment Lines: 0
+    '   Blank Lines: 19
+    '     File Size: 5.06 KB
+
 
     ' Module Program
     ' 

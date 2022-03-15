@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f9f5fc9a4ee76fd8c055f5bdf6d441b, Data_science\Mathematica\Math\Math\Numerics\Framework\VariableObject.vb"
+﻿#Region "Microsoft.VisualBasic::9f9f5fc9a4ee76fd8c055f5bdf6d441b, sciBASIC#\Data_science\Mathematica\Math\Math\Numerics\Framework\VariableObject.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 20
+    '    Code Lines: 12
+    ' Comment Lines: 4
+    '   Blank Lines: 4
+    '     File Size: 666.00 B
+
 
     '     Class VariableObject
     ' 

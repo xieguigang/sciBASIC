@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a284bd5f6e222f15c47a0ab5a8dd2b31, Data\BinaryData\DataStorage\netCDF\Components\recordDimension.vb"
+﻿#Region "Microsoft.VisualBasic::a284bd5f6e222f15c47a0ab5a8dd2b31, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\recordDimension.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 35
+    '    Code Lines: 12
+    ' Comment Lines: 19
+    '   Blank Lines: 4
+    '     File Size: 1.15 KB
+
 
     '     Class recordDimension
     ' 

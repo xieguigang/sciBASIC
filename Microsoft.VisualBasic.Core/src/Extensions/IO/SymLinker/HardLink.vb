@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11141ac6b69c11c3cc556ac585589f7e, Microsoft.VisualBasic.Core\src\Extensions\IO\SymLinker\HardLink.vb"
+﻿#Region "Microsoft.VisualBasic::11141ac6b69c11c3cc556ac585589f7e, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\SymLinker\HardLink.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 14
+    '    Code Lines: 8
+    ' Comment Lines: 3
+    '   Blank Lines: 3
+    '     File Size: 443.00 B
+
 
     '     Module HardLink
     ' 

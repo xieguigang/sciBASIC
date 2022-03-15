@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::488dfb38965d6d598471aea5b47118d4, Data_science\Mathematica\Math\test\HalfTest.vb"
+﻿#Region "Microsoft.VisualBasic::488dfb38965d6d598471aea5b47118d4, sciBASIC#\Data_science\Mathematica\Math\test\HalfTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 82
+    '    Code Lines: 51
+    ' Comment Lines: 1
+    '   Blank Lines: 30
+    '     File Size: 2.41 KB
+
 
     ' Module HalfTest
     ' 

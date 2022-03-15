@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d0c4932aa3ab60c0344a1426935cf78, mime\text%yaml\1.1\Base\ScalarType.vb"
+﻿#Region "Microsoft.VisualBasic::1d0c4932aa3ab60c0344a1426935cf78, sciBASIC#\mime\text%yaml\1.1\Base\ScalarType.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 16
+    '    Code Lines: 15
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 260.00 B
+
 
     '     Enum ScalarType
     ' 

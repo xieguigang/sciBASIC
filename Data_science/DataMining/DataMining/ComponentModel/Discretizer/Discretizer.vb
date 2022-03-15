@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42ab668d81d321a063ced7ada88421dc, Data_science\DataMining\DataMining\ComponentModel\Discretizer\Discretizer.vb"
+﻿#Region "Microsoft.VisualBasic::42ab668d81d321a063ced7ada88421dc, sciBASIC#\Data_science\DataMining\DataMining\ComponentModel\Discretizer\Discretizer.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 64
+    '    Code Lines: 42
+    ' Comment Lines: 9
+    '   Blank Lines: 13
+    '     File Size: 1.80 KB
+
 
     '     Class Discretizer
     ' 

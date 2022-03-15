@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d6988c56b93e787f86005d6969fc9ca, Data\BinaryData\msgpack\Constants\FixedInteger.vb"
+﻿#Region "Microsoft.VisualBasic::0d6988c56b93e787f86005d6969fc9ca, sciBASIC#\Data\BinaryData\msgpack\Constants\FixedInteger.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 9
+    '    Code Lines: 8
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 296.00 B
+
 
     '     Class FixedInteger
     ' 

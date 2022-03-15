@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29afd3833f7c25be169196a4e1c45d8b, mime\application%xml\MathML\XML\maction.vb"
+﻿#Region "Microsoft.VisualBasic::29afd3833f7c25be169196a4e1c45d8b, sciBASIC#\mime\application%xml\MathML\XML\maction.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 18
+    '    Code Lines: 8
+    ' Comment Lines: 7
+    '   Blank Lines: 3
+    '     File Size: 633.00 B
+
 
     '     Class maction
     ' 

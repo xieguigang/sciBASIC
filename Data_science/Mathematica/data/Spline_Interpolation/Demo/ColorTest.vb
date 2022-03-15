@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90322157d701e46fed00efb2bad271d4, Data_science\Mathematica\data\Spline_Interpolation\Demo\ColorTest.vb"
+﻿#Region "Microsoft.VisualBasic::90322157d701e46fed00efb2bad271d4, sciBASIC#\Data_science\Mathematica\data\Spline_Interpolation\Demo\ColorTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 81
+    '    Code Lines: 68
+    ' Comment Lines: 1
+    '   Blank Lines: 12
+    '     File Size: 2.95 KB
+
 
     ' Module ColorTest
     ' 

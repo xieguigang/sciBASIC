@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::52c7b5d623f7837bb5050e174713ab0c, vs_solutions\dev\VisualStudio\sourceMap\mappingLine.vb"
+﻿#Region "Microsoft.VisualBasic::52c7b5d623f7837bb5050e174713ab0c, sciBASIC#\vs_solutions\dev\VisualStudio\sourceMap\mappingLine.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 69
+    '    Code Lines: 38
+    ' Comment Lines: 24
+    '   Blank Lines: 7
+    '     File Size: 2.39 KB
+
 
     '     Class mappingLine
     ' 

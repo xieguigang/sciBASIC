@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e63a81a3afa4e9bf3bebf99b34617b98, CLI_tools\Regex\frmRegexTest.vb"
+﻿#Region "Microsoft.VisualBasic::e63a81a3afa4e9bf3bebf99b34617b98, sciBASIC#\CLI_tools\Regex\frmRegexTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 80
+    '    Code Lines: 65
+    ' Comment Lines: 0
+    '   Blank Lines: 15
+    '     File Size: 2.90 KB
+
 
     ' Class frmRegexTest
     ' 

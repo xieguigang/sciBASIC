@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a212d2ae70ae9cbe31bb6918a074df57, Data\Trinity\StopWords.vb"
+﻿#Region "Microsoft.VisualBasic::a212d2ae70ae9cbe31bb6918a074df57, sciBASIC#\Data\Trinity\StopWords.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 411
+    '    Code Lines: 390
+    ' Comment Lines: 12
+    '   Blank Lines: 9
+    '     File Size: 11.24 KB
+
 
     ' Class StopWords
     ' 

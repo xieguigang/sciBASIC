@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47174717eb95b7d47c8957100a1e822d, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\xl\styles.xml.vb"
+﻿#Region "Microsoft.VisualBasic::47174717eb95b7d47c8957100a1e822d, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\xl\styles.xml.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 195
+    '    Code Lines: 150
+    ' Comment Lines: 3
+    '   Blank Lines: 42
+    '     File Size: 6.29 KB
+
 
     '     Class styles
     ' 

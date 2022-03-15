@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::579fa48d582987d3f031c394ca6f24fb, Data_science\DataMining\UMAP\KNN\KDTree\KDPoint.vb"
+﻿#Region "Microsoft.VisualBasic::579fa48d582987d3f031c394ca6f24fb, sciBASIC#\Data_science\DataMining\UMAP\KNN\KDTree\KDPoint.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 15
+    '    Code Lines: 11
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 321.00 B
+
 
     '     Class KDPoint
     ' 

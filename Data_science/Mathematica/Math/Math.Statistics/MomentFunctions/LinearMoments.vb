@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b418f72a98360b0a393d3834b4dfbfe, Data_science\Mathematica\Math\Math.Statistics\MomentFunctions\LinearMoments.vb"
+﻿#Region "Microsoft.VisualBasic::2b418f72a98360b0a393d3834b4dfbfe, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\MomentFunctions\LinearMoments.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 86
+    '    Code Lines: 61
+    ' Comment Lines: 11
+    '   Blank Lines: 14
+    '     File Size: 2.62 KB
+
 
     '     Class LinearMoments
     ' 

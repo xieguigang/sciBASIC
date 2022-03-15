@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0cc1091df879e9e45e2d892c87e5eb6, gr\Landscape\3DBuilder\XML\models.vb"
+﻿#Region "Microsoft.VisualBasic::b0cc1091df879e9e45e2d892c87e5eb6, sciBASIC#\gr\Landscape\3DBuilder\XML\models.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 84
+    '    Code Lines: 54
+    ' Comment Lines: 13
+    '   Blank Lines: 17
+    '     File Size: 2.49 KB
+
 
     '     Class mesh
     ' 

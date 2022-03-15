@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7bb24287b25a0327421f5ac2b11bff1, Data\BinaryData\msgpack\Serialization\Reflection\TypeInfo.vb"
+﻿#Region "Microsoft.VisualBasic::b7bb24287b25a0327421f5ac2b11bff1, sciBASIC#\Data\BinaryData\msgpack\Serialization\Reflection\TypeInfo.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 29
+    '    Code Lines: 22
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 900.00 B
+
 
     '     Class TypeInfo
     ' 

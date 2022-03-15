@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7643f29f48b09ae0824144c0702c9065, Data_science\Mathematica\Math\DataFittings\Linear\MLR\Error.vb"
+﻿#Region "Microsoft.VisualBasic::7643f29f48b09ae0824144c0702c9065, sciBASIC#\Data_science\Mathematica\Math\DataFittings\Linear\MLR\Error.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 32
+    '    Code Lines: 25
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 1.06 KB
+
 
     '     Structure [Error]
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e60b8ad39a90c810c090f46f60e62eea, mime\application%json\Serializer\ObjectSchema.vb"
+﻿#Region "Microsoft.VisualBasic::e60b8ad39a90c810c090f46f60e62eea, sciBASIC#\mime\application%json\Serializer\ObjectSchema.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 126
+    '    Code Lines: 92
+    ' Comment Lines: 18
+    '   Blank Lines: 16
+    '     File Size: 4.48 KB
+
 
     ' Class ObjectSchema
     ' 

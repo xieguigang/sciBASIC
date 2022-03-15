@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::745f8702351cf36b991ed4657c0bb62d, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\PrintAsTable.vb"
+﻿#Region "Microsoft.VisualBasic::745f8702351cf36b991ed4657c0bb62d, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\PrintAsTable.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 268
+    '    Code Lines: 199
+    ' Comment Lines: 33
+    '   Blank Lines: 36
+    '     File Size: 11.24 KB
+
 
     '     Module PrintAsTable
     ' 

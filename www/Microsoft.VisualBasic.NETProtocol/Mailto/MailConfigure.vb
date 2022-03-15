@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5bbe3ee72174feaee1338edff3ac068d, www\Microsoft.VisualBasic.NETProtocol\Mailto\MailConfigure.vb"
+﻿#Region "Microsoft.VisualBasic::5bbe3ee72174feaee1338edff3ac068d, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Mailto\MailConfigure.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 100
+    '    Code Lines: 79
+    ' Comment Lines: 7
+    '   Blank Lines: 14
+    '     File Size: 3.84 KB
+
 
     '     Structure MailConfigure
     ' 

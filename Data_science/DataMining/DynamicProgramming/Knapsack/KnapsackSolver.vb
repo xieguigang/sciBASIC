@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed7ca8761ecff331969643e5a858332d, Data_science\DataMining\DynamicProgramming\Knapsack\KnapsackSolver.vb"
+﻿#Region "Microsoft.VisualBasic::0cfd916d93810d71103cd58a47e1b8e3, sciBASIC#\Data_science\DataMining\DynamicProgramming\Knapsack\KnapsackSolver.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 73
+    '    Code Lines: 57
+    ' Comment Lines: 0
+    '   Blank Lines: 16
+    '     File Size: 2.34 KB
+
 
     '     Class KnapsackSolver
     ' 

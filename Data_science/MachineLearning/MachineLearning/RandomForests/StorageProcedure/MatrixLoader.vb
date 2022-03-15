@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fcbf83aeb8f6dbaffc5e3c309205d1e9, Data_science\MachineLearning\MachineLearning\RandomForests\StorageProcedure\MatrixLoader.vb"
+﻿#Region "Microsoft.VisualBasic::6a0d37a8a438d2d33133ade6a63e8cfd, sciBASIC#\Data_science\MachineLearning\MachineLearning\RandomForests\StorageProcedure\MatrixLoader.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 85
+    '    Code Lines: 57
+    ' Comment Lines: 15
+    '   Blank Lines: 13
+    '     File Size: 3.51 KB
+
 
     '     Module MatrixLoader
     ' 

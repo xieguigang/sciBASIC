@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::354efdba57a08f8ffa12f354e40b0265, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\Shell.vb"
+﻿#Region "Microsoft.VisualBasic::354efdba57a08f8ffa12f354e40b0265, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\Shell.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 64
+    '    Code Lines: 34
+    ' Comment Lines: 21
+    '   Blank Lines: 9
+    '     File Size: 2.20 KB
+
 
     '     Class Shell
     ' 

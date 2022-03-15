@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::980a54299e667f7b99a97e7c812309c4, mime\text%markdown\Paragraph.vb"
+﻿#Region "Microsoft.VisualBasic::980a54299e667f7b99a97e7c812309c4, sciBASIC#\mime\text%markdown\Paragraph.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 34
+    '    Code Lines: 25
+    ' Comment Lines: 0
+    '   Blank Lines: 9
+    '     File Size: 1.07 KB
+
 
     ' Module Paragraph
     ' 

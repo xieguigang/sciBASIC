@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9782ddefd09bbd56b82550737795e382, Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\PlatformUtility.vb"
+﻿#Region "Microsoft.VisualBasic::9782ddefd09bbd56b82550737795e382, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\PlatformUtility.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 151
+    '    Code Lines: 78
+    ' Comment Lines: 55
+    '   Blank Lines: 18
+    '     File Size: 8.10 KB
+
 
     '     Module PlatformUtility
     ' 

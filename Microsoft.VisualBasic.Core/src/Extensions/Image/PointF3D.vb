@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aeea519afd17da857810af769111f0a1, Microsoft.VisualBasic.Core\src\Extensions\Image\PointF3D.vb"
+﻿#Region "Microsoft.VisualBasic::aeea519afd17da857810af769111f0a1, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\PointF3D.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 18
+    '    Code Lines: 11
+    ' Comment Lines: 3
+    '   Blank Lines: 4
+    '     File Size: 442.00 B
+
 
     '     Interface PointF3D
     ' 

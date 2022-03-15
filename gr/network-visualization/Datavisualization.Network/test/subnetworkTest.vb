@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee9976bb0048d3f7e7bc264670ea1c51, gr\network-visualization\Datavisualization.Network\test\subnetworkTest.vb"
+﻿#Region "Microsoft.VisualBasic::ee9976bb0048d3f7e7bc264670ea1c51, sciBASIC#\gr\network-visualization\Datavisualization.Network\test\subnetworkTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 13
+    '    Code Lines: 9
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 311.00 B
+
 
     ' Module subnetworkTest
     ' 

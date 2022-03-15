@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e84e52e3262464a500a9bd0da9e985d8, mime\application%pdf\PdfReader\Tokenizer\TokenXRefEntry.vb"
+﻿#Region "Microsoft.VisualBasic::045cb54968ef158f7b2485d5cd5f0c76, sciBASIC#\mime\application%pdf\PdfReader\Tokenizer\TokenXRefEntry.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 50
+    '    Code Lines: 44
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 1.32 KB
+
 
     '     Class TokenXRefEntry
     ' 

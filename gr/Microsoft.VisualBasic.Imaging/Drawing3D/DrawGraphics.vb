@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f3255304f4e1657156450c0a91a15d53, gr\Microsoft.VisualBasic.Imaging\Drawing3D\DrawGraphics.vb"
+﻿#Region "Microsoft.VisualBasic::f3255304f4e1657156450c0a91a15d53, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\DrawGraphics.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 12
+    '    Code Lines: 4
+    ' Comment Lines: 5
+    '   Blank Lines: 3
+    '     File Size: 423.00 B
+
 
     '     Delegate Sub
     ' 

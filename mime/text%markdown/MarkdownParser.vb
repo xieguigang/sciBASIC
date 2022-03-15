@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93244ff1d08f3061b31f69ec21893d4c, mime\text%markdown\MarkdownParser.vb"
+﻿#Region "Microsoft.VisualBasic::93244ff1d08f3061b31f69ec21893d4c, sciBASIC#\mime\text%markdown\MarkdownParser.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 141
+    '    Code Lines: 64
+    ' Comment Lines: 62
+    '   Blank Lines: 15
+    '     File Size: 4.54 KB
+
 
     ' Module MarkdownParser
     ' 

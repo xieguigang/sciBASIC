@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2724ddaa591ec0d6492bdca0e7e9fc4, Data_science\DataMining\UMAP\Components\DefaultRandomGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::f2724ddaa591ec0d6492bdca0e7e9fc4, sciBASIC#\Data_science\DataMining\UMAP\Components\DefaultRandomGenerator.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 38
+    '    Code Lines: 23
+    ' Comment Lines: 7
+    '   Blank Lines: 8
+    '     File Size: 1.79 KB
+
 
     ' Class DefaultRandomGenerator
     ' 

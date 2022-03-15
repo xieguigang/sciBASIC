@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f004f5d54600aefc365bdd4634fb5018, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Models\Blocks.vb"
+﻿#Region "Microsoft.VisualBasic::f004f5d54600aefc365bdd4634fb5018, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\Models\Blocks.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 110
+    '    Code Lines: 71
+    ' Comment Lines: 16
+    '   Blank Lines: 23
+    '     File Size: 3.29 KB
+
 
     '     Class Blocks
     ' 

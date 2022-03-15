@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d253b318236c26601c4ad384bf1b6914, Data_science\Mathematica\Math\Math\Quantile\FastRankQuantile.vb"
+﻿#Region "Microsoft.VisualBasic::d253b318236c26601c4ad384bf1b6914, sciBASIC#\Data_science\Mathematica\Math\Math\Quantile\FastRankQuantile.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 46
+    '    Code Lines: 32
+    ' Comment Lines: 5
+    '   Blank Lines: 9
+    '     File Size: 1.34 KB
+
 
     '     Class FastRankQuantile
     ' 

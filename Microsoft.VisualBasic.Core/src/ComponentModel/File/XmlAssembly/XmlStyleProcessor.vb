@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99f875f0df13c8cba402ca06852ec117, Microsoft.VisualBasic.Core\src\ComponentModel\File\XmlAssembly\XmlStyleProcessor.vb"
+﻿#Region "Microsoft.VisualBasic::99f875f0df13c8cba402ca06852ec117, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\File\XmlAssembly\XmlStyleProcessor.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 55
+    '    Code Lines: 47
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 2.14 KB
+
 
     '     Class XmlStyleProcessor
     ' 

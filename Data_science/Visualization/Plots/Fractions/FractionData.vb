@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f4ec9dd60360d84ae37f06989e41558, Data_science\Visualization\Plots\Fractions\FractionData.vb"
+﻿#Region "Microsoft.VisualBasic::3f4ec9dd60360d84ae37f06989e41558, sciBASIC#\Data_science\Visualization\Plots\Fractions\FractionData.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 51
+    '    Code Lines: 27
+    ' Comment Lines: 19
+    '   Blank Lines: 5
+    '     File Size: 1.75 KB
+
 
     '     Class FractionData
     ' 

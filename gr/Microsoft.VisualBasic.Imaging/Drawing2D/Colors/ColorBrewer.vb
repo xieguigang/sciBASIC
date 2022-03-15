@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b47f1a485c8e0461ee540c149317ddd, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ColorBrewer.vb"
+﻿#Region "Microsoft.VisualBasic::9b47f1a485c8e0461ee540c149317ddd, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ColorBrewer.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 795
+    '    Code Lines: 510
+    ' Comment Lines: 199
+    '   Blank Lines: 86
+    '     File Size: 29.30 KB
+
 
     '     Structure ColorBrewer
     ' 

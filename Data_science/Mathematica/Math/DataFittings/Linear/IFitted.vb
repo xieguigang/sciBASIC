@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aaddfcffa892d4cc3545f5e58f86ef6a, Data_science\Mathematica\Math\DataFittings\Linear\IFitted.vb"
+﻿#Region "Microsoft.VisualBasic::aaddfcffa892d4cc3545f5e58f86ef6a, sciBASIC#\Data_science\Mathematica\Math\DataFittings\Linear\IFitted.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 31
+    '    Code Lines: 7
+    ' Comment Lines: 19
+    '   Blank Lines: 5
+    '     File Size: 806.00 B
+
 
     ' Interface IFitted
     ' 

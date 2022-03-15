@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05b6c2fec4c87e15722b6014b7ffc19b, Data_science\DataMining\DataMining\ComponentModel\Encoder\Variable\CategoricalEncoder.vb"
+﻿#Region "Microsoft.VisualBasic::05b6c2fec4c87e15722b6014b7ffc19b, sciBASIC#\Data_science\DataMining\DataMining\ComponentModel\Encoder\Variable\CategoricalEncoder.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 82
+    '    Code Lines: 68
+    ' Comment Lines: 0
+    '   Blank Lines: 14
+    '     File Size: 3.18 KB
+
 
     '     Class CategoricalEncoder
     ' 

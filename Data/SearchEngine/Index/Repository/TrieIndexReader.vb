@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50dc22b947bb8c7935e09aac9aa732f5, Data\SearchEngine\Index\Repository\TrieIndexReader.vb"
+﻿#Region "Microsoft.VisualBasic::50dc22b947bb8c7935e09aac9aa732f5, sciBASIC#\Data\SearchEngine\Index\Repository\TrieIndexReader.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 150
+    '    Code Lines: 77
+    ' Comment Lines: 45
+    '   Blank Lines: 28
+    '     File Size: 4.64 KB
+
 
     ' Class TrieIndexReader
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d83678903e88759a9090bbdc346641ed, Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\View\ExceptionHandler.vb"
+﻿#Region "Microsoft.VisualBasic::d83678903e88759a9090bbdc346641ed, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\View\ExceptionHandler.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 156
+    '    Code Lines: 64
+    ' Comment Lines: 55
+    '   Blank Lines: 37
+    '     File Size: 6.56 KB
+
 
     '     Class ExceptionHelp
     ' 

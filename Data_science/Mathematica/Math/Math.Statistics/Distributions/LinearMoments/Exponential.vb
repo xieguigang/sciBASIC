@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b21c9d40847cb45029b204760078de5c, Data_science\Mathematica\Math\Math.Statistics\Distributions\LinearMoments\Exponential.vb"
+﻿#Region "Microsoft.VisualBasic::b21c9d40847cb45029b204760078de5c, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Distributions\LinearMoments\Exponential.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 49
+    '    Code Lines: 34
+    ' Comment Lines: 10
+    '   Blank Lines: 5
+    '     File Size: 1.67 KB
+
 
     '     Class Exponential
     ' 

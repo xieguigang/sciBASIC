@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aeac6967faadad97a2c9eea28aa83cc1, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Logging\LogFile\LogReader.vb"
+﻿#Region "Microsoft.VisualBasic::aeac6967faadad97a2c9eea28aa83cc1, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Logging\LogFile\LogReader.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 14
+    '    Code Lines: 7
+    ' Comment Lines: 3
+    '   Blank Lines: 4
+    '     File Size: 296.00 B
+
 
     '     Class LogReader
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::145e12e726b63d26ebcce19e19f4fa6a, gr\network-visualization\Visualizer\MingleRender\RenderOptions.vb"
+﻿#Region "Microsoft.VisualBasic::145e12e726b63d26ebcce19e19f4fa6a, sciBASIC#\gr\network-visualization\Visualizer\MingleRender\RenderOptions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 10
+    '    Code Lines: 8
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 276.00 B
+
 
     ' Class RenderOptions
     ' 

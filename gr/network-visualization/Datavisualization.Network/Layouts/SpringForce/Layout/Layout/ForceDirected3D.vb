@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e6b9d0c5a0fb1b8ebf278fe0ec08749, gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Layout\Layout\ForceDirected3D.vb"
+﻿#Region "Microsoft.VisualBasic::6e6b9d0c5a0fb1b8ebf278fe0ec08749, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Layout\Layout\ForceDirected3D.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 58
+    '    Code Lines: 49
+    ' Comment Lines: 0
+    '   Blank Lines: 9
+    '     File Size: 2.53 KB
+
 
     '     Class ForceDirected3D
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5fadd2e72c7e2557f1ec4c0991d2749f, mime\application%pdf\PdfReader\Parser\ParseInteger.vb"
+﻿#Region "Microsoft.VisualBasic::a2b693e4329d9b4536ee8988267462e3, sciBASIC#\mime\application%pdf\PdfReader\Parser\ParseInteger.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 20
+    '    Code Lines: 17
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 481.00 B
+
 
     '     Class ParseInteger
     ' 

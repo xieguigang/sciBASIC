@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1124a0f8383f649a8ceb886eabadb08e, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Set\SetAPI.vb"
+﻿#Region "Microsoft.VisualBasic::1124a0f8383f649a8ceb886eabadb08e, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Set\SetAPI.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 102
+    '    Code Lines: 72
+    ' Comment Lines: 16
+    '   Blank Lines: 14
+    '     File Size: 4.15 KB
+
 
     ' Class GenericLambda
     ' 

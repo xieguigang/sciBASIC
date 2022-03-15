@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e6aa29fde2386fc384bb7219ad91c34, Data_science\Mathematica\Math\Math.Statistics\MomentFunctions\BasicProductMomentsHistogram.vb"
+﻿#Region "Microsoft.VisualBasic::4e6aa29fde2386fc384bb7219ad91c34, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\MomentFunctions\BasicProductMomentsHistogram.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 60
+    '    Code Lines: 39
+    ' Comment Lines: 15
+    '   Blank Lines: 6
+    '     File Size: 2.62 KB
+
 
     '     Class BasicProductMomentsHistogram
     ' 

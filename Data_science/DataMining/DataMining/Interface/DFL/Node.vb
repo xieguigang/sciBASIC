@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e49b1be2e3629db99eb6ae3a2cd3a1bc, Data_science\DataMining\DataMining\Interface\DFL\Node.vb"
+﻿#Region "Microsoft.VisualBasic::e49b1be2e3629db99eb6ae3a2cd3a1bc, sciBASIC#\Data_science\DataMining\DataMining\Interface\DFL\Node.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 56
+    '    Code Lines: 37
+    ' Comment Lines: 9
+    '   Blank Lines: 10
+    '     File Size: 2.19 KB
+
 
     '     Class dflNode
     ' 

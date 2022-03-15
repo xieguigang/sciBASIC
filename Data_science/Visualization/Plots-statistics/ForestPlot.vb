@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b494f0ffdfbee91cdf4cdc29ff6a8161, Data_science\Visualization\Plots-statistics\ForestPlot.vb"
+﻿#Region "Microsoft.VisualBasic::b494f0ffdfbee91cdf4cdc29ff6a8161, sciBASIC#\Data_science\Visualization\Plots-statistics\ForestPlot.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 36
+    '    Code Lines: 2
+    ' Comment Lines: 33
+    '   Blank Lines: 1
+    '     File Size: 3.01 KB
+
 
     ' Module ForestPlot
     ' 

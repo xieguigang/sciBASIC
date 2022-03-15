@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be6f97666739d5d7d1d64ab1ae561d47, Microsoft.VisualBasic.Core\src\Net\HTTP\Wget\WriteData.vb"
+﻿#Region "Microsoft.VisualBasic::be6f97666739d5d7d1d64ab1ae561d47, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\Wget\WriteData.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 89
+    '    Code Lines: 63
+    ' Comment Lines: 11
+    '   Blank Lines: 15
+    '     File Size: 2.77 KB
+
 
     '     Class WriteData
     ' 

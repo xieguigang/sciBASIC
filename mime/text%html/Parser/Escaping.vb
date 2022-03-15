@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3de1dcd3c85a4ff5f4aa502544b62980, mime\text%html\Parser\Escaping.vb"
+﻿#Region "Microsoft.VisualBasic::3de1dcd3c85a4ff5f4aa502544b62980, sciBASIC#\mime\text%html\Parser\Escaping.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 10
+    '    Code Lines: 7
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 182.00 B
+
 
     '     Class Escaping
     ' 

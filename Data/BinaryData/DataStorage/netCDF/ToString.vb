@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d572a575a1e19f93cdf3eda7581f40a, Data\BinaryData\DataStorage\netCDF\ToString.vb"
+﻿#Region "Microsoft.VisualBasic::6d572a575a1e19f93cdf3eda7581f40a, sciBASIC#\Data\BinaryData\DataStorage\netCDF\ToString.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 56
+    '    Code Lines: 35
+    ' Comment Lines: 8
+    '   Blank Lines: 13
+    '     File Size: 1.87 KB
+
 
     '     Module ToStringHelper
     ' 

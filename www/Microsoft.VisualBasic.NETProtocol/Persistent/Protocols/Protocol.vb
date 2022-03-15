@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3595d61e1ef35e1de1b66b466ead6cd6, www\Microsoft.VisualBasic.NETProtocol\Persistent\Protocols\Protocol.vb"
+﻿#Region "Microsoft.VisualBasic::3595d61e1ef35e1de1b66b466ead6cd6, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Persistent\Protocols\Protocol.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 83
+    '    Code Lines: 66
+    ' Comment Lines: 0
+    '   Blank Lines: 17
+    '     File Size: 3.18 KB
+
 
     '     Module ServicesProtocol
     ' 

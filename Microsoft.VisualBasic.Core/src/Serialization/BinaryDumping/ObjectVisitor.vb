@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2c26c4d7ba492eb6c8445f3badcfb78, Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\ObjectVisitor.vb"
+﻿#Region "Microsoft.VisualBasic::b2c26c4d7ba492eb6c8445f3badcfb78, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\ObjectVisitor.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 124
+    '    Code Lines: 75
+    ' Comment Lines: 25
+    '   Blank Lines: 24
+    '     File Size: 4.73 KB
+
 
     '     Delegate Sub
     ' 

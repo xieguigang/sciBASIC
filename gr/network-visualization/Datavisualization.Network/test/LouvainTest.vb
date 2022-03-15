@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c539dfde31316551d7a512c1ef272c5, gr\network-visualization\Datavisualization.Network\test\LouvainTest.vb"
+﻿#Region "Microsoft.VisualBasic::9ce34d03f18a4b7dea6c18dafe5273df, sciBASIC#\gr\network-visualization\Datavisualization.Network\test\LouvainTest.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,21 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 73
+    '    Code Lines: 47
+    ' Comment Lines: 3
+    '   Blank Lines: 23
+    '     File Size: 2.25 KB
+
+
     ' Module LouvainTest
     ' 
-    '     Sub: Main, RunAnalysis
+    '     Function: loadModel
+    ' 
+    '     Sub: analysis2, Main, RunAnalysis
     ' 
     ' /********************************************************************************/
 
@@ -47,9 +59,31 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module LouvainTest
 
-    Sub Main()
+    Const source As String = "D:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\Louvain\testdata.txt"
 
-        Dim links As String()() = "E:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\Louvain\facebook_combined.txt".ReadAllLines.Skip(1).Select(Function(str) Strings.Trim(str).StringSplit("\s+")).ToArray
+    Sub analysis2()
+
+        VBDebugger.Mute = True
+
+        Dim g = loadModel()
+
+        VBDebugger.Mute = False
+
+        ' the original network with communities labeled
+        Dim clusters As NetworkGraph = Communities.AnalysisUnweighted(g)
+
+        Call Console.WriteLine(Communities.Modularity(clusters))
+        Call Console.WriteLine(Communities.Community(g).GetJson(indent:=True))
+
+        Call clusters _
+            .Tabular _
+            .Save("D:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\UnweightedFastUnfolding\")
+
+        Pause()
+    End Sub
+
+    Private Function loadModel() As NetworkGraph
+        Dim links As String()() = source.ReadAllLines.Skip(1).Select(Function(str) Strings.Trim(str).StringSplit("\s+")).ToArray
         Dim g As New NetworkGraph
 
         ' build network via links
@@ -64,6 +98,14 @@ Module LouvainTest
             g.CreateEdge(g.GetElementByID(line(0)), g.GetElementByID(line(1)), 1)
         Next
 
+        Return g
+    End Function
+
+    Sub Main()
+
+        Call analysis2()
+
+        Dim g = loadModel()
         ' the original network with communities labeled
         Dim clusters As NetworkGraph = Communities.Analysis(g)
 

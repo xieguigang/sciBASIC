@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13f930113e18afbddf25233050ce2d69, Data_science\Mathematica\Math\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::13f930113e18afbddf25233050ce2d69, sciBASIC#\Data_science\Mathematica\Math\test\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 141
+    '    Code Lines: 81
+    ' Comment Lines: 10
+    '   Blank Lines: 50
+    '     File Size: 4.09 KB
+
 
     ' Module Program
     ' 

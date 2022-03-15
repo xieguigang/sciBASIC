@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c42464b7010a0c31979890d94c4fbae7, www\Microsoft.VisualBasic.NETProtocol\Captcha.vb"
+﻿#Region "Microsoft.VisualBasic::c42464b7010a0c31979890d94c4fbae7, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Captcha.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 296
+    '    Code Lines: 256
+    ' Comment Lines: 16
+    '   Blank Lines: 24
+    '     File Size: 12.40 KB
+
 
     ' Class Captcha
     ' 

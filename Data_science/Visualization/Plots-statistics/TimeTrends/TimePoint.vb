@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13d6686418c2307e5f1fbaf1bd94fa36, Data_science\Visualization\Plots-statistics\TimeTrends\TimePoint.vb"
+﻿#Region "Microsoft.VisualBasic::13d6686418c2307e5f1fbaf1bd94fa36, sciBASIC#\Data_science\Visualization\Plots-statistics\TimeTrends\TimePoint.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 15
+    '    Code Lines: 9
+    ' Comment Lines: 3
+    '   Blank Lines: 3
+    '     File Size: 395.00 B
+
 
     ' Structure TimePoint
     ' 

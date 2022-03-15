@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::510c30536c384df0aaf6b7cce2e597fc, mime\application%pdf\PdfFileWriter\PDF\PdfDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::b5c5ec0bb7b7869ff8aac276be223c34, sciBASIC#\mime\application%pdf\PdfFileWriter\PDF\PdfDictionary.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 325
+    '    Code Lines: 141
+    ' Comment Lines: 93
+    '   Blank Lines: 91
+    '     File Size: 10.02 KB
+
 
     ' Enum ValueType
     ' 

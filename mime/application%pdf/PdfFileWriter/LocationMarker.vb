@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af2e0ac97a1ee296e7d58ae2e64204b4, mime\application%pdf\PdfFileWriter\LocationMarker.vb"
+﻿#Region "Microsoft.VisualBasic::98242b7770dd86d56daf1f1a5ab7da79, sciBASIC#\mime\application%pdf\PdfFileWriter\LocationMarker.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 184
+    '    Code Lines: 51
+    ' Comment Lines: 114
+    '   Blank Lines: 19
+    '     File Size: 8.20 KB
+
 
     '     Enum LocMarkerScope
     ' 

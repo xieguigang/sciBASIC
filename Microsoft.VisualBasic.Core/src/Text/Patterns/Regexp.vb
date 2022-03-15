@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5797b66d3a24dd047b09d5c1418b8bb9, Microsoft.VisualBasic.Core\src\Text\Patterns\Regexp.vb"
+﻿#Region "Microsoft.VisualBasic::5797b66d3a24dd047b09d5c1418b8bb9, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Patterns\Regexp.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 91
+    '    Code Lines: 44
+    ' Comment Lines: 35
+    '   Blank Lines: 12
+    '     File Size: 3.62 KB
+
 
     '     Class Regexp
     ' 

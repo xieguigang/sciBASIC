@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c275b262f31e05eb63a41a2159d5414a, gr\physics\Math.vb"
+﻿#Region "Microsoft.VisualBasic::c275b262f31e05eb63a41a2159d5414a, sciBASIC#\gr\physics\Math.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 211
+    '    Code Lines: 109
+    ' Comment Lines: 79
+    '   Blank Lines: 23
+    '     File Size: 6.71 KB
+
 
     ' Module Math
     ' 

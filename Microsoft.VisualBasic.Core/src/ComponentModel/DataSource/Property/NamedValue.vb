@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd69f62ba89d286383c885c265c36579, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\NamedValue.vb"
+﻿#Region "Microsoft.VisualBasic::cd69f62ba89d286383c885c265c36579, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\NamedValue.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 199
+    '    Code Lines: 124
+    ' Comment Lines: 50
+    '   Blank Lines: 25
+    '     File Size: 7.74 KB
+
 
     '     Structure NamedValue
     ' 

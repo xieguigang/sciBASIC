@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8b7a5d7cdd7444734d36cb556058c2a, Data\BinaryData\DataStorage\HDF5\types\StringData.vb"
+﻿#Region "Microsoft.VisualBasic::b8b7a5d7cdd7444734d36cb556058c2a, sciBASIC#\Data\BinaryData\DataStorage\HDF5\types\StringData.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 11
+    '    Code Lines: 9
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 270.00 B
+
 
     '     Class StringData
     ' 

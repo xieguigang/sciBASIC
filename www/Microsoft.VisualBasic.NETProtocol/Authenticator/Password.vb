@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f32a054a099ef8d4f93fbe330ede831e, www\Microsoft.VisualBasic.NETProtocol\Authenticator\Password.vb"
+﻿#Region "Microsoft.VisualBasic::f32a054a099ef8d4f93fbe330ede831e, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Authenticator\Password.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 5
+    '    Code Lines: 4
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 132.00 B
+
 
     ' Class Password
     ' 

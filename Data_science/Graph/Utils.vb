@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::55ece0719175b253c6e81b8ca6186854, Data_science\Graph\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::55ece0719175b253c6e81b8ca6186854, sciBASIC#\Data_science\Graph\Utils.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 83
+    '    Code Lines: 53
+    ' Comment Lines: 20
+    '   Blank Lines: 10
+    '     File Size: 2.74 KB
+
 
     ' Module Utils
     ' 

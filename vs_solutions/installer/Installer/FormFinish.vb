@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3417689633639e994118b879a9e629ac, vs_solutions\installer\Installer\FormFinish.vb"
+﻿#Region "Microsoft.VisualBasic::3417689633639e994118b879a9e629ac, sciBASIC#\vs_solutions\installer\Installer\FormFinish.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 21
+    '    Code Lines: 16
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 737.00 B
+
 
     ' Class FormFinish
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::789706b42533a1753c01bc35b32bdc75, Microsoft.VisualBasic.Core\src\Scripting\MetaData\Author.vb"
+﻿#Region "Microsoft.VisualBasic::789706b42533a1753c01bc35b32bdc75, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\MetaData\Author.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 23
+    '    Code Lines: 17
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 730.00 B
+
 
     '     Class Author
     ' 

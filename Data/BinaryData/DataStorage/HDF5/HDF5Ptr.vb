@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fcec78a1669fac9f6156214513ecacbf, Data\BinaryData\DataStorage\HDF5\HDF5Ptr.vb"
+﻿#Region "Microsoft.VisualBasic::fcec78a1669fac9f6156214513ecacbf, sciBASIC#\Data\BinaryData\DataStorage\HDF5\HDF5Ptr.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 36
+    '    Code Lines: 18
+    ' Comment Lines: 10
+    '   Blank Lines: 8
+    '     File Size: 993.00 B
+
 
     '     Class HDF5Ptr
     ' 

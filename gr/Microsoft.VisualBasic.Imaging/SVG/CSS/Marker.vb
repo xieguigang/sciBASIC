@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::060520bc9a42d1cd608326aec3cb2a6f, gr\Microsoft.VisualBasic.Imaging\SVG\CSS\Marker.vb"
+﻿#Region "Microsoft.VisualBasic::060520bc9a42d1cd608326aec3cb2a6f, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\CSS\Marker.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 20
+    '    Code Lines: 15
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 672.00 B
+
 
     '     Class marker
     ' 

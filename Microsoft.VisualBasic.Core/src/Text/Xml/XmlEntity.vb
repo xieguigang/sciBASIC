@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13e95dcd8ff633322bd4a0a923f9cbd1, Microsoft.VisualBasic.Core\src\Text\Xml\XmlEntity.vb"
+﻿#Region "Microsoft.VisualBasic::13e95dcd8ff633322bd4a0a923f9cbd1, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\XmlEntity.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 146
+    '    Code Lines: 103
+    ' Comment Lines: 25
+    '   Blank Lines: 18
+    '     File Size: 5.15 KB
+
 
     '     Module XmlEntity
     ' 

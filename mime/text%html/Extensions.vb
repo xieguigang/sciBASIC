@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::169be9ac45e8e386f2a20cf4e159bf6d, mime\text%html\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::169be9ac45e8e386f2a20cf4e159bf6d, sciBASIC#\mime\text%html\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 14
+    '    Code Lines: 11
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 395.00 B
+
 
     ' Module Extensions
     ' 

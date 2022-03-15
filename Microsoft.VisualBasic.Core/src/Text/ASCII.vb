@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a844361bb26a14970e777ab1da7ff8b7, Microsoft.VisualBasic.Core\src\Text\ASCII.vb"
+﻿#Region "Microsoft.VisualBasic::bfa58c152a11a1dd0fc953a8304239a8, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\ASCII.vb"
 
     ' Author:
     ' 
@@ -31,11 +31,21 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 471
+    '    Code Lines: 190
+    ' Comment Lines: 252
+    '   Blank Lines: 29
+    '     File Size: 18.02 KB
+
+
     '     Class ASCII
     ' 
     '         Properties: AlphaNumericTable, Nonprintings, Symbols
     ' 
-    '         Function: (+2 Overloads) IsAsciiChar, IsASCIIString, IsNonPrinting, ReplaceQuot, TrimNonPrintings
+    '         Function: (+2 Overloads) IsAsciiChar, IsASCIIString, (+2 Overloads) IsNonPrinting, ReplaceQuot, TrimNonPrintings
     '         Class [Byte]
     ' 
     '             Function: GetASCIISymbols

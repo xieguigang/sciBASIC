@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c103b3ce57c78072541f537abf33fb65, mime\application%pdf\PdfFileWriter\PDF\PdfFontFile.vb"
+﻿#Region "Microsoft.VisualBasic::5332c0499cfa15521590ac37ca061ed3, sciBASIC#\mime\application%pdf\PdfFileWriter\PDF\PdfFontFile.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1443
+    '    Code Lines: 755
+    ' Comment Lines: 310
+    '   Blank Lines: 378
+    '     File Size: 49.60 KB
+
 
     ' Class PdfFontFile
     ' 

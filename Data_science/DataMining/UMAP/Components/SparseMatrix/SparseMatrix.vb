@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19ac417e8f5c09bfe1f135186dfc68eb, Data_science\DataMining\UMAP\Components\SparseMatrix\SparseMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::19ac417e8f5c09bfe1f135186dfc68eb, sciBASIC#\Data_science\DataMining\UMAP\Components\SparseMatrix\SparseMatrix.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 216
+    '    Code Lines: 150
+    ' Comment Lines: 21
+    '   Blank Lines: 45
+    '     File Size: 8.17 KB
+
 
     ' Class SparseMatrix
     ' 

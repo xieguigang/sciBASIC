@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f12559c3de0b1405a154ba528d74b244, www\Microsoft.VisualBasic.Webservices.Bing\test\DEBUG_MAIN.vb"
+﻿#Region "Microsoft.VisualBasic::f12559c3de0b1405a154ba528d74b244, sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\test\DEBUG_MAIN.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 15
+    '    Code Lines: 9
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 336.00 B
+
 
     ' Module DEBUG_MAIN
     ' 

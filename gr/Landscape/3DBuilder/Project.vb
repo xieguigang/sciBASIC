@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::342db05537f44878dd7cd0d8c3c904a3, gr\Landscape\3DBuilder\Project.vb"
+﻿#Region "Microsoft.VisualBasic::342db05537f44878dd7cd0d8c3c904a3, sciBASIC#\gr\Landscape\3DBuilder\Project.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 52
+    '    Code Lines: 31
+    ' Comment Lines: 13
+    '   Blank Lines: 8
+    '     File Size: 1.72 KB
+
 
     '     Class Project
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7453f1296ec9729f498106fe4d88fcfb, Data_science\DataMining\DataMining\Statistics.vb"
+﻿#Region "Microsoft.VisualBasic::51e244cb0b7b9781d83d07b928383f9f, sciBASIC#\Data_science\DataMining\DataMining\Statistics.vb"
 
     ' Author:
     ' 
@@ -31,10 +31,19 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 288
+    '    Code Lines: 90
+    ' Comment Lines: 178
+    '   Blank Lines: 20
+    '     File Size: 9.22 KB
+
+
     ' Module Statistics
     ' 
-    '     Function: Entropy, GetRange, Mean, Median, Mode
-    '               (+2 Overloads) StdDev
+    '     Function: GetRange, Mean, Median, Mode, (+2 Overloads) StdDev
     ' 
     ' /********************************************************************************/
 

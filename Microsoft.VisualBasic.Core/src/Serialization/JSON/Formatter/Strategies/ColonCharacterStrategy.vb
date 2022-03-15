@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95f725c3216ea3db06f0ede28f2d80fd, Microsoft.VisualBasic.Core\src\Serialization\JSON\Formatter\Strategies\ColonCharacterStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::95f725c3216ea3db06f0ede28f2d80fd, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\JSON\Formatter\Strategies\ColonCharacterStrategy.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 21
+    '    Code Lines: 19
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 783.00 B
+
 
     '     Class ColonCharacterStrategy
     ' 

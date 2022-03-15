@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af3049e344b85a6da6fea3244406ec4b, mime\text%yaml\1.1\Base\SequenceStyle.vb"
+﻿#Region "Microsoft.VisualBasic::af3049e344b85a6da6fea3244406ec4b, sciBASIC#\mime\text%yaml\1.1\Base\SequenceStyle.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 40
+    '    Code Lines: 17
+    ' Comment Lines: 17
+    '   Blank Lines: 6
+    '     File Size: 1.07 KB
+
 
     '     Enum SequenceStyle
     ' 

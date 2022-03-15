@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d1f0532dd0f53ee3c9099991f87a726, Data_science\Mathematica\Math\ODE\Dynamics\RefODEs.vb"
+﻿#Region "Microsoft.VisualBasic::0d1f0532dd0f53ee3c9099991f87a726, sciBASIC#\Data_science\Mathematica\Math\ODE\Dynamics\RefODEs.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 33
+    '    Code Lines: 17
+    ' Comment Lines: 8
+    '   Blank Lines: 8
+    '     File Size: 1.05 KB
+
 
     '     Class RefODEs
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff4f46af58e39e2cc68ad03117c6d3bc, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::4bd785b0bb78c24e2b580bf518e2d01f, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\Parser.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 344
+    '    Code Lines: 212
+    ' Comment Lines: 89
+    '   Blank Lines: 43
+    '     File Size: 10.33 KB
+
 
     ' Module PrimitiveParser
     ' 

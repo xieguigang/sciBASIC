@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a5e2355fb3d961a2b5d43b4d7fbcbc0, mime\text%markdown\DocumentHelper.vb"
+﻿#Region "Microsoft.VisualBasic::9a5e2355fb3d961a2b5d43b4d7fbcbc0, sciBASIC#\mime\text%markdown\DocumentHelper.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 122
+    '    Code Lines: 80
+    ' Comment Lines: 19
+    '   Blank Lines: 23
+    '     File Size: 4.61 KB
+
 
     ' Class DocumentToken
     ' 

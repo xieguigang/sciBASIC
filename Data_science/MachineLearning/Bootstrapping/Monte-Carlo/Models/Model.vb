@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9382ae738ab105898f408a9461cfb95c, Data_science\MachineLearning\Bootstrapping\Monte-Carlo\Models\Model.vb"
+﻿#Region "Microsoft.VisualBasic::9382ae738ab105898f408a9461cfb95c, sciBASIC#\Data_science\MachineLearning\Bootstrapping\Monte-Carlo\Models\Model.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 185
+    '    Code Lines: 97
+    ' Comment Lines: 63
+    '   Blank Lines: 25
+    '     File Size: 7.65 KB
+
 
     '     Class Model
     ' 

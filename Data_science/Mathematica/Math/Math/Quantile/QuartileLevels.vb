@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8b14e9c501370a5bb231d20dbd4fcfa8, Data_science\Mathematica\Math\Math\Quantile\QuartileLevels.vb"
+﻿#Region "Microsoft.VisualBasic::8b14e9c501370a5bb231d20dbd4fcfa8, sciBASIC#\Data_science\Mathematica\Math\Math\Quantile\QuartileLevels.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 7
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 140.00 B
+
 
     '     Enum QuartileLevels
     ' 

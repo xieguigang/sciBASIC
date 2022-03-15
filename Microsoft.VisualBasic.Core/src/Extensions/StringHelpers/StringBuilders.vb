@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::26c3c2ec1dbdcd6fa55e11b18a4a62a9, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringBuilders.vb"
+﻿#Region "Microsoft.VisualBasic::26c3c2ec1dbdcd6fa55e11b18a4a62a9, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringBuilders.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 44
+    '    Code Lines: 23
+    ' Comment Lines: 16
+    '   Blank Lines: 5
+    '     File Size: 1.46 KB
+
 
     ' Module StringBuilders
     ' 

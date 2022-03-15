@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::24b50cb3dd4b1122cc2e8799aa3279e6, Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\SafeHandleUnmanagedDll.vb"
+﻿#Region "Microsoft.VisualBasic::24b50cb3dd4b1122cc2e8799aa3279e6, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\SafeHandleUnmanagedDll.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 76
+    '    Code Lines: 54
+    ' Comment Lines: 8
+    '   Blank Lines: 14
+    '     File Size: 2.70 KB
+
 
     '     Class SafeHandleUnmanagedDll
     ' 

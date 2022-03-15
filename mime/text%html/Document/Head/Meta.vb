@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c9c474c26fb4e48d9651e5976b144f1, mime\text%html\Document\Head\Meta.vb"
+﻿#Region "Microsoft.VisualBasic::7c9c474c26fb4e48d9651e5976b144f1, sciBASIC#\mime\text%html\Document\Head\Meta.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 173
+    '    Code Lines: 132
+    ' Comment Lines: 0
+    '   Blank Lines: 41
+    '     File Size: 4.84 KB
+
 
     '     Class Charset
     ' 

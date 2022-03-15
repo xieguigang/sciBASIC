@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::81c8f5665b46a54623e729b250316f07, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\DebuggerArgs.vb"
+﻿#Region "Microsoft.VisualBasic::81c8f5665b46a54623e729b250316f07, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\DebuggerArgs.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 202
+    '    Code Lines: 102
+    ' Comment Lines: 74
+    '   Blank Lines: 26
+    '     File Size: 12.53 KB
+
 
     '     Module DebuggerArgs
     ' 

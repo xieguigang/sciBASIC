@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4163d36176ea809d115877d73ea8267, CLI_tools\FindKeyWord\Program.vb"
+﻿#Region "Microsoft.VisualBasic::c4163d36176ea809d115877d73ea8267, sciBASIC#\CLI_tools\FindKeyWord\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 14
+    '    Code Lines: 11
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 412.00 B
+
 
     ' Module Program
     ' 

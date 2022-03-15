@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0f30889f24336a09f59e37a73e3d83a, mime\text%html\Render\CSS\CssLayoutEngine.vb"
+﻿#Region "Microsoft.VisualBasic::a0f30889f24336a09f59e37a73e3d83a, sciBASIC#\mime\text%html\Render\CSS\CssLayoutEngine.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 517
+    '    Code Lines: 243
+    ' Comment Lines: 159
+    '   Blank Lines: 115
+    '     File Size: 20.16 KB
+
 
     '     Class CssLayoutEngine
     ' 

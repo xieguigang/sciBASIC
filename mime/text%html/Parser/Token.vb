@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67614dfe2043ccb6c5674882e6fe9518, mime\text%html\Parser\Token.vb"
+﻿#Region "Microsoft.VisualBasic::67614dfe2043ccb6c5674882e6fe9518, sciBASIC#\mime\text%html\Parser\Token.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 15
+    '    Code Lines: 11
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 403.00 B
+
 
     '     Class Token
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b28f96d34a7cd0de5a99bea569856d95, Data_science\MachineLearning\xgboost\TGBoost\Sampling.vb"
+﻿#Region "Microsoft.VisualBasic::2658f207cecba76a1c5a90feabeb0036, sciBASIC#\Data_science\MachineLearning\xgboost\TGBoost\Sampling.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 46
+    '    Code Lines: 35
+    ' Comment Lines: 0
+    '   Blank Lines: 11
+    '     File Size: 1.26 KB
+
 
     '     Class RowSampler
     ' 

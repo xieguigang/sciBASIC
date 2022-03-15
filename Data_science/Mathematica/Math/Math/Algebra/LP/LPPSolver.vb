@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe996a3ea4511b3dee6c53146869a4da, Data_science\Mathematica\Math\Math\Algebra\LP\LPPSolver.vb"
+﻿#Region "Microsoft.VisualBasic::fe996a3ea4511b3dee6c53146869a4da, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\LP\LPPSolver.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 423
+    '    Code Lines: 276
+    ' Comment Lines: 63
+    '   Blank Lines: 84
+    '     File Size: 17.88 KB
+
 
     '     Class LPPSolver
     ' 

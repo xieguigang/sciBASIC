@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db58ff13194cd94ac30cc6393fbfcd8f, gr\build_3DEngine\isometric\IsometricView\Program.vb"
+﻿#Region "Microsoft.VisualBasic::db58ff13194cd94ac30cc6393fbfcd8f, sciBASIC#\gr\build_3DEngine\isometric\IsometricView\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 25
+    '    Code Lines: 21
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 716.00 B
+
 
     ' Module Program
     ' 

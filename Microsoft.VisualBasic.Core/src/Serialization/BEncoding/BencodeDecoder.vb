@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e33e2583d697ec678ca0d8f8b3b5affa, Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BencodeDecoder.vb"
+﻿#Region "Microsoft.VisualBasic::ab1ccfa3e00e58116be3b4b06318e727, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BencodeDecoder.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 172
+    '    Code Lines: 109
+    ' Comment Lines: 26
+    '   Blank Lines: 37
+    '     File Size: 5.15 KB
+
 
     '     Module BencodeDecoder
     ' 

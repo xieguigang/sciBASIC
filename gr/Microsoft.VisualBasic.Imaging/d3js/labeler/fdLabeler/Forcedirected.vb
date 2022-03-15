@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27ad0f8913cd8872988932d954b935d4, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\fdLabeler\Forcedirected.vb"
+﻿#Region "Microsoft.VisualBasic::27ad0f8913cd8872988932d954b935d4, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\labeler\fdLabeler\Forcedirected.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 225
+    '    Code Lines: 169
+    ' Comment Lines: 12
+    '   Blank Lines: 44
+    '     File Size: 7.80 KB
+
 
     '     Class Forcedirected
     ' 

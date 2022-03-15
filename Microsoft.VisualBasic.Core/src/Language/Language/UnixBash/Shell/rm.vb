@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed5c63b298fc2b051b5de076932172ae, Microsoft.VisualBasic.Core\src\Language\Language\UnixBash\Shell\rm.vb"
+﻿#Region "Microsoft.VisualBasic::ed5c63b298fc2b051b5de076932172ae, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\UnixBash\Shell\rm.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 24
+    '    Code Lines: 15
+    ' Comment Lines: 3
+    '   Blank Lines: 6
+    '     File Size: 585.00 B
+
 
     '     Class FileDelete
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8148bc260b8c24426e8144382079ef46, Data_science\Visualization\Plots-statistics\HistStackedBarplot.vb"
+﻿#Region "Microsoft.VisualBasic::8148bc260b8c24426e8144382079ef46, sciBASIC#\Data_science\Visualization\Plots-statistics\HistStackedBarplot.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 156
+    '    Code Lines: 121
+    ' Comment Lines: 16
+    '   Blank Lines: 19
+    '     File Size: 6.82 KB
+
 
     ' Module HistStackedBarplot
     ' 

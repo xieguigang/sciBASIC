@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04e52d99ad351a31827a2add1b5efe36, Microsoft.VisualBasic.Core\src\Language\Language\Java\Arrays.vb"
+﻿#Region "Microsoft.VisualBasic::04e52d99ad351a31827a2add1b5efe36, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\Java\Arrays.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 56
+    '    Code Lines: 35
+    ' Comment Lines: 13
+    '   Blank Lines: 8
+    '     File Size: 2.33 KB
+
 
     '     Module Arrays
     ' 

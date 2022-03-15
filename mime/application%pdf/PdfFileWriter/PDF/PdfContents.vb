@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3a98cdd485b6e8f0a41adb783e3739d, mime\application%pdf\PdfFileWriter\PDF\PdfContents.vb"
+﻿#Region "Microsoft.VisualBasic::0a1723e9fc28d22462a4c2269210bb04, sciBASIC#\mime\application%pdf\PdfFileWriter\PDF\PdfContents.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 3083
+    '    Code Lines: 1070
+    ' Comment Lines: 1412
+    '   Blank Lines: 601
+    '     File Size: 108.20 KB
+
 
     ' Enum DrawStyle
     ' 
@@ -113,17 +123,16 @@
     '               (+2 Overloads) DrawTextWithKerning, (+2 Overloads) DrawWebLink, PaintOpStr, ReverseString, TextFitToWidth
     ' 
     '     Sub: AddToUsedResources, BeginTextMode, ClipText, CommitToPdfFile, DrawArc
-    '          DrawBarcodeText, (+3 Overloads) DrawBezier, (+2 Overloads) DrawBezierNoP1, (+2 Overloads) DrawBezierNoP2, (+2 Overloads) DrawChart
-    '          DrawDoubleBezierPath, (+2 Overloads) DrawHeart, (+2 Overloads) DrawImage, DrawInwardCornerRectangle, (+7 Overloads) DrawLine
-    '          (+2 Overloads) DrawOval, (+2 Overloads) DrawPolygon, (+2 Overloads) DrawRectangle, (+2 Overloads) DrawRegularPolygon, (+2 Overloads) DrawRoundedRectangle
-    '          (+2 Overloads) DrawShading, (+4 Overloads) DrawStar, DrawWPFPath, (+4 Overloads) DrawXObject, EndTextMode
-    '          GrayLevelNonStroking, GrayLevelStroking, LayerEnd, LayerStart, (+2 Overloads) LineTo
-    '          (+2 Overloads) MoveTo, OutputOneByte, RestoreGraphicsState, SaveGraphicsState, Scale
-    '          (+2 Overloads) SetAlphaNonStroking, (+2 Overloads) SetAlphaStroking, SetBlendMode, SetCharacterSpacing, SetColorNonStroking
-    '          SetColorStroking, SetDashLine, SetLineCap, SetLineJoin, SetLineWidth
-    '          SetMiterLimit, (+2 Overloads) SetPaintOp, SetPatternNonStroking, SetPatternStroking, SetTextPosition
-    '          SetTextRenderingMode, SetTransMatrix, SetWordSpacing, (+2 Overloads) Translate, (+4 Overloads) TranslateScale
-    '          (+3 Overloads) TranslateScaleRotate, WriteObjectToPdfFile
+    '          DrawBarcodeText, (+3 Overloads) DrawBezier, (+2 Overloads) DrawBezierNoP1, (+2 Overloads) DrawBezierNoP2, DrawDoubleBezierPath
+    '          (+2 Overloads) DrawHeart, (+2 Overloads) DrawImage, DrawInwardCornerRectangle, (+7 Overloads) DrawLine, (+2 Overloads) DrawOval
+    '          (+2 Overloads) DrawPolygon, (+2 Overloads) DrawRectangle, (+2 Overloads) DrawRegularPolygon, (+2 Overloads) DrawRoundedRectangle, (+2 Overloads) DrawShading
+    '          (+4 Overloads) DrawStar, (+4 Overloads) DrawXObject, EndTextMode, GrayLevelNonStroking, GrayLevelStroking
+    '          LayerEnd, LayerStart, (+2 Overloads) LineTo, (+2 Overloads) MoveTo, OutputOneByte
+    '          RestoreGraphicsState, SaveGraphicsState, Scale, (+2 Overloads) SetAlphaNonStroking, (+2 Overloads) SetAlphaStroking
+    '          SetBlendMode, SetCharacterSpacing, SetColorNonStroking, SetColorStroking, SetDashLine
+    '          SetLineCap, SetLineJoin, SetLineWidth, SetMiterLimit, (+2 Overloads) SetPaintOp
+    '          SetPatternNonStroking, SetPatternStroking, SetTextPosition, SetTextRenderingMode, SetTransMatrix
+    '          SetWordSpacing, (+2 Overloads) Translate, (+4 Overloads) TranslateScale, (+3 Overloads) TranslateScaleRotate, WriteObjectToPdfFile
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18358647228356832b40e826eebbd9ed, Microsoft.VisualBasic.Core\src\CommandLine\Parsers\DictionaryParser.vb"
+﻿#Region "Microsoft.VisualBasic::18358647228356832b40e826eebbd9ed, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Parsers\DictionaryParser.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 66
+    '    Code Lines: 50
+    ' Comment Lines: 5
+    '   Blank Lines: 11
+    '     File Size: 2.11 KB
+
 
     '     Class DictionaryParser
     ' 

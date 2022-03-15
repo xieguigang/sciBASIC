@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91f1a64cf3bb254ca0f2bc9bee362f2d, Microsoft.VisualBasic.Core\src\Language\Linq\Rapply.vb"
+﻿#Region "Microsoft.VisualBasic::91f1a64cf3bb254ca0f2bc9bee362f2d, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Linq\Rapply.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 33
+    '    Code Lines: 24
+    ' Comment Lines: 3
+    '   Blank Lines: 6
+    '     File Size: 1.19 KB
+
 
     '     Module Rapply
     ' 

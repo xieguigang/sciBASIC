@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f77dc50b99f1973007b4ee12bd77d7e, Data_science\DataMining\DataMining\ComponentModel\IntegerEntity.vb"
+﻿#Region "Microsoft.VisualBasic::2f77dc50b99f1973007b4ee12bd77d7e, sciBASIC#\Data_science\DataMining\DataMining\ComponentModel\IntegerEntity.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 40
+    '    Code Lines: 29
+    ' Comment Lines: 4
+    '   Blank Lines: 7
+    '     File Size: 1.38 KB
+
 
     '     Class IntegerEntity
     ' 

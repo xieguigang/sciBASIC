@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1bc75d7bd8d81ecdc01bf9c6342d8b8, Microsoft.VisualBasic.Core\src\Net\HTTP\Stream\GZStream.vb"
+﻿#Region "Microsoft.VisualBasic::b1bc75d7bd8d81ecdc01bf9c6342d8b8, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\Stream\GZStream.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 116
+    '    Code Lines: 57
+    ' Comment Lines: 44
+    '   Blank Lines: 15
+    '     File Size: 4.38 KB
+
 
     '     Module GZipStreamHandler
     ' 

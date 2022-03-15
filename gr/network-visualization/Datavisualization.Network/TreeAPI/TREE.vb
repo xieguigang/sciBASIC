@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5f71ae8571386061ca04d0f46a6f147, gr\network-visualization\Datavisualization.Network\TreeAPI\TREE.vb"
+﻿#Region "Microsoft.VisualBasic::e5f71ae8571386061ca04d0f46a6f147, sciBASIC#\gr\network-visualization\Datavisualization.Network\TreeAPI\TREE.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 46
+    '    Code Lines: 34
+    ' Comment Lines: 0
+    '   Blank Lines: 12
+    '     File Size: 1.28 KB
+
 
     '     Enum NodeTypes
     ' 

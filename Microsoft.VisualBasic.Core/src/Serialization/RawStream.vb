@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04555cff435ac9f30423b4f6b5bc4acc, Microsoft.VisualBasic.Core\src\Serialization\RawStream.vb"
+﻿#Region "Microsoft.VisualBasic::04555cff435ac9f30423b4f6b5bc4acc, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\RawStream.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 196
+    '    Code Lines: 134
+    ' Comment Lines: 33
+    '   Blank Lines: 29
+    '     File Size: 8.64 KB
+
 
     '     Interface ISerializable
     ' 

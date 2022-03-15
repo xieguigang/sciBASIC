@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d352a41853593eebf48c6463b0da6174, mime\text%markdown\IExtensionInterface.vb"
+﻿#Region "Microsoft.VisualBasic::d352a41853593eebf48c6463b0da6174, sciBASIC#\mime\text%markdown\IExtensionInterface.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 12
+    '    Code Lines: 1
+    ' Comment Lines: 10
+    '   Blank Lines: 1
+    '     File Size: 372.00 B
+
 
     ' Delegate Function
     ' 

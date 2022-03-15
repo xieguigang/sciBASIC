@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dc7e39b244447c07223488c5089fa330, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\CLIToken.vb"
+﻿#Region "Microsoft.VisualBasic::dc7e39b244447c07223488c5089fa330, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Reflection\CLIToken.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 96
+    '    Code Lines: 46
+    ' Comment Lines: 34
+    '   Blank Lines: 16
+    '     File Size: 3.37 KB
+
 
     '     Class CLIToken
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::827a4e281df612eb04044ede91a72ff8, Data\BinaryData\BinaryData\Bzip2\Algorithm\BZip2BlockCompressor.vb"
+﻿#Region "Microsoft.VisualBasic::827a4e281df612eb04044ede91a72ff8, sciBASIC#\Data\BinaryData\BinaryData\Bzip2\Algorithm\BZip2BlockCompressor.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 265
+    '    Code Lines: 140
+    ' Comment Lines: 76
+    '   Blank Lines: 49
+    '     File Size: 10.23 KB
+
 
     '     Class BZip2BlockCompressor
     ' 

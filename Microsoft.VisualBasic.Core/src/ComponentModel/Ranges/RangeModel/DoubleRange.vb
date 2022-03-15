@@ -1,47 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::65a13050500e4bf1c023e665095c9d77, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\DoubleRange.vb"
+﻿#Region "Microsoft.VisualBasic::7c932e187e546e8a998322812eee09f2, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\DoubleRange.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class DoubleRange
-' 
-'         Properties: Length, Max, Min
-' 
-'         Constructor: (+9 Overloads) Sub New
-'         Function: Contains, (+2 Overloads) Enumerate, GetEnumerator, IEnumerable_GetEnumerator, (+3 Overloads) IsInside
-'                   (+2 Overloads) IsOverlapping, ScaleMapping, (+2 Overloads) ToString, TryParse
-'         Operators: *, <>, =, (+2 Overloads) Like
-' 
-' 
-' /********************************************************************************/
+
+    ' Code Statistics:
+
+    '   Total Lines: 348
+    '    Code Lines: 183
+    ' Comment Lines: 120
+    '   Blank Lines: 45
+    '     File Size: 12.47 KB
+
+
+    '     Class DoubleRange
+    ' 
+    '         Properties: Length, Max, Min
+    ' 
+    '         Constructor: (+9 Overloads) Sub New
+    '         Function: Contains, (+2 Overloads) Enumerate, GetEnumerator, IEnumerable_GetEnumerator, (+3 Overloads) IsInside
+    '                   (+2 Overloads) IsOverlapping, (+2 Overloads) ScaleMapping, (+2 Overloads) ToString, TryParse
+    '         Operators: *, <>, =, (+2 Overloads) Like
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

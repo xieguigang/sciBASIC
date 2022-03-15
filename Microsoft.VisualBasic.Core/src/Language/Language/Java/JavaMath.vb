@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3596bb305a11d1630b4a5182304e5eb, Microsoft.VisualBasic.Core\src\Language\Language\Java\JavaMath.vb"
+﻿#Region "Microsoft.VisualBasic::c3596bb305a11d1630b4a5182304e5eb, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\Java\JavaMath.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 2219
+    '    Code Lines: 194
+    ' Comment Lines: 1909
+    '   Blank Lines: 116
+    '     File Size: 110.59 KB
+
 
     '     Module JavaMath
     ' 

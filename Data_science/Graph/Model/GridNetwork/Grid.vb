@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed4d947013c87f78d07459225a824ef4, Data_science\Graph\Model\GridNetwork\Grid.vb"
+﻿#Region "Microsoft.VisualBasic::ed4d947013c87f78d07459225a824ef4, sciBASIC#\Data_science\Graph\Model\GridNetwork\Grid.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 80
+    '    Code Lines: 43
+    ' Comment Lines: 22
+    '   Blank Lines: 15
+    '     File Size: 2.22 KB
+
 
     ' Class Grid
     ' 

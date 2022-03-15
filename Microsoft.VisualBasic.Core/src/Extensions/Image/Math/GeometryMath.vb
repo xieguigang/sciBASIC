@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7fc88297afe4cbd28d065f34d8e9f0b1, Microsoft.VisualBasic.Core\src\Extensions\Image\Math\GeometryMath.vb"
+﻿#Region "Microsoft.VisualBasic::7fc88297afe4cbd28d065f34d8e9f0b1, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Math\GeometryMath.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 333
+    '    Code Lines: 218
+    ' Comment Lines: 75
+    '   Blank Lines: 40
+    '     File Size: 13.02 KB
+
 
     '     Module GeometryMath
     ' 

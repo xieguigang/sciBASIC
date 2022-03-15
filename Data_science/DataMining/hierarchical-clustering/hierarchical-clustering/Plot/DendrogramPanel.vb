@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::96da9da54cc3f6097a4a3be4e7d1f8ca, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Plot\DendrogramPanel.vb"
+﻿#Region "Microsoft.VisualBasic::96da9da54cc3f6097a4a3be4e7d1f8ca, sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Plot\DendrogramPanel.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 57
+    '    Code Lines: 45
+    ' Comment Lines: 3
+    '   Blank Lines: 9
+    '     File Size: 2.17 KB
+
 
     ' Class DendrogramPanel
     ' 

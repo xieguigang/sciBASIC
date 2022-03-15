@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6ace6f916b84f94c734ad76c5f54991, Data_science\Mathematica\Math\DataFrame\LoadDataMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::c6ace6f916b84f94c734ad76c5f54991, sciBASIC#\Data_science\Mathematica\Math\DataFrame\LoadDataMatrix.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 94
+    '    Code Lines: 78
+    ' Comment Lines: 5
+    '   Blank Lines: 11
+    '     File Size: 4.14 KB
+
 
     ' Module LoadDataMatrix
     ' 

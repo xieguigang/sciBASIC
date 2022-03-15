@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3026202b75479261d80b20e0784f498, Data_science\Mathematica\Math\MathLambda\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::c3026202b75479261d80b20e0784f498, sciBASIC#\Data_science\Mathematica\Math\MathLambda\test\Module1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 47
+    '    Code Lines: 34
+    ' Comment Lines: 1
+    '   Blank Lines: 12
+    '     File Size: 1.64 KB
+
 
     ' Module Module1
     ' 

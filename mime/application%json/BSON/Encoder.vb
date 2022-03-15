@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e095b2781c36f2bb7504e96e8921b727, mime\application%json\BSON\Encoder.vb"
+﻿#Region "Microsoft.VisualBasic::e095b2781c36f2bb7504e96e8921b727, sciBASIC#\mime\application%json\BSON\Encoder.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 146
+    '    Code Lines: 126
+    ' Comment Lines: 0
+    '   Blank Lines: 20
+    '     File Size: 5.76 KB
+
 
     '     Class Encoder
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e99753ec5166b18cdaceb4e0fe015449, vs_solutions\dev\ApplicationServices\CodeDOM\CodeDOM.vb"
+﻿#Region "Microsoft.VisualBasic::e99753ec5166b18cdaceb4e0fe015449, sciBASIC#\vs_solutions\dev\ApplicationServices\CodeDOM\CodeDOM.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 262
+    '    Code Lines: 155
+    ' Comment Lines: 75
+    '   Blank Lines: 32
+    '     File Size: 12.60 KB
+
 
     '     Module CodeDOMExtension
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8cc482c25a8c023c328fe7eb41224510, gr\network-visualization\Datavisualization.Network\Graph\Model\data\EdgeData.vb"
+﻿#Region "Microsoft.VisualBasic::8cc482c25a8c023c328fe7eb41224510, sciBASIC#\gr\network-visualization\Datavisualization.Network\Graph\Model\data\EdgeData.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 67
+    '    Code Lines: 44
+    ' Comment Lines: 12
+    '   Blank Lines: 11
+    '     File Size: 2.08 KB
+
 
     '     Class EdgeData
     ' 

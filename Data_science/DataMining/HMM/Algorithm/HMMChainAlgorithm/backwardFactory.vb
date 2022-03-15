@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a14f01d115b5df6c5c0a9906df6fb374, Data_science\DataMining\HMM\Algorithm\HMMChainAlgorithm\backwardFactory.vb"
+﻿#Region "Microsoft.VisualBasic::a14f01d115b5df6c5c0a9906df6fb374, sciBASIC#\Data_science\DataMining\HMM\Algorithm\HMMChainAlgorithm\backwardFactory.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 50
+    '    Code Lines: 38
+    ' Comment Lines: 0
+    '   Blank Lines: 12
+    '     File Size: 2.01 KB
+
 
     '     Class backwardFactory
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cbde8d34e78df619f3e26774bab577d4, gr\physics\physics_Test\Form1.vb"
+﻿#Region "Microsoft.VisualBasic::cbde8d34e78df619f3e26774bab577d4, sciBASIC#\gr\physics\physics_Test\Form1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 51
+    '    Code Lines: 38
+    ' Comment Lines: 0
+    '   Blank Lines: 13
+    '     File Size: 1.95 KB
+
 
     ' Class Form1
     ' 

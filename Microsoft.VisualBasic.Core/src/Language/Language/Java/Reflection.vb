@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20be5e5db69eaa44a3037b9727dc487a, Microsoft.VisualBasic.Core\src\Language\Language\Java\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::20be5e5db69eaa44a3037b9727dc487a, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\Java\Reflection.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 31
+    '    Code Lines: 18
+    ' Comment Lines: 9
+    '   Blank Lines: 4
+    '     File Size: 986.00 B
+
 
     '     Module Reflection
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc18ec63d6f7159a0e7a591ebcb90eb7, mime\application%json\Serializer\Deserializer.vb"
+﻿#Region "Microsoft.VisualBasic::fc18ec63d6f7159a0e7a591ebcb90eb7, sciBASIC#\mime\application%json\Serializer\Deserializer.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 150
+    '    Code Lines: 111
+    ' Comment Lines: 20
+    '   Blank Lines: 19
+    '     File Size: 6.02 KB
+
 
     ' Module Deserializer
     ' 

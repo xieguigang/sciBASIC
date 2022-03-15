@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b00492b428789cc93948e9162ba6b6ac, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\RegexExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::b00492b428789cc93948e9162ba6b6ac, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\RegexExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 286
+    '    Code Lines: 121
+    ' Comment Lines: 127
+    '   Blank Lines: 38
+    '     File Size: 11.54 KB
+
 
     ' Module RegexExtensions
     ' 

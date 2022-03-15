@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5d3d816d04e777fda94fb2cf4d9bd7d, Data_science\MachineLearning\MachineLearning\DataSet\NormalizeMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::3ece72aebad853e55e95176ce07b775f, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\NormalizeMatrix.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 103
+    '    Code Lines: 64
+    ' Comment Lines: 29
+    '   Blank Lines: 10
+    '     File Size: 4.81 KB
+
 
     '     Class NormalizeMatrix
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e00f02d9b28d7d9655a3b7a0e091b897, www\Microsoft.VisualBasic.NETProtocol\Protocol\Reflection\ProtocolHandler.vb"
+﻿#Region "Microsoft.VisualBasic::e00f02d9b28d7d9655a3b7a0e091b897, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Protocol\Reflection\ProtocolHandler.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 166
+    '    Code Lines: 112
+    ' Comment Lines: 30
+    '   Blank Lines: 24
+    '     File Size: 7.63 KB
+
 
     '     Class ProtocolHandler
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18e9da38f598749618515ebbc06b3cdf, vs_solutions\dev\ApplicationServices\VBC.vb"
+﻿#Region "Microsoft.VisualBasic::18e9da38f598749618515ebbc06b3cdf, sciBASIC#\vs_solutions\dev\ApplicationServices\VBC.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 110
+    '    Code Lines: 60
+    ' Comment Lines: 36
+    '   Blank Lines: 14
+    '     File Size: 4.60 KB
+
 
     '     Module VBC
     ' 

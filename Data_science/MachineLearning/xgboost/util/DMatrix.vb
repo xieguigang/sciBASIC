@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6746a073d463fb1bb0933f4126b4d5ed, Data_science\MachineLearning\xgboost\util\DMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::6746a073d463fb1bb0933f4126b4d5ed, sciBASIC#\Data_science\MachineLearning\xgboost\util\DMatrix.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 45
+    '    Code Lines: 37
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 1.44 KB
+
 
     '     Class DMatrix
     ' 

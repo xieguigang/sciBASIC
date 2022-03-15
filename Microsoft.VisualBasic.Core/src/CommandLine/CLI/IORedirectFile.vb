@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87570c41c61d689f83fc0c2f44326be7, Microsoft.VisualBasic.Core\src\CommandLine\CLI\IORedirectFile.vb"
+﻿#Region "Microsoft.VisualBasic::87570c41c61d689f83fc0c2f44326be7, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\CLI\IORedirectFile.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 288
+    '    Code Lines: 153
+    ' Comment Lines: 95
+    '   Blank Lines: 40
+    '     File Size: 14.21 KB
+
 
     '     Class IORedirectFile
     ' 

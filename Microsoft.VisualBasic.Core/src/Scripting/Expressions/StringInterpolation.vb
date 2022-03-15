@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7aa365d9fe12cfeb3d5af60dae796238, Microsoft.VisualBasic.Core\src\Scripting\Expressions\StringInterpolation.vb"
+﻿#Region "Microsoft.VisualBasic::7aa365d9fe12cfeb3d5af60dae796238, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\Expressions\StringInterpolation.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 118
+    '    Code Lines: 61
+    ' Comment Lines: 40
+    '   Blank Lines: 17
+    '     File Size: 5.05 KB
+
 
     '     Module StringInterpolation
     ' 

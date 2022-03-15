@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93d88af6bac835144a873d526b6d5e38, vs_solutions\dev\VisualStudio\CodeSign\SupportedLanguages.vb"
+﻿#Region "Microsoft.VisualBasic::93d88af6bac835144a873d526b6d5e38, sciBASIC#\vs_solutions\dev\VisualStudio\CodeSign\SupportedLanguages.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 9
+    '    Code Lines: 8
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 141.00 B
+
 
     '     Enum Languages
     ' 

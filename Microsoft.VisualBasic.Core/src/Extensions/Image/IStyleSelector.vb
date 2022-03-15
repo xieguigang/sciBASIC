@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ef590590551a27f0a9b66df7eb0264b, Microsoft.VisualBasic.Core\src\Extensions\Image\IStyleSelector.vb"
+﻿#Region "Microsoft.VisualBasic::1ef590590551a27f0a9b66df7eb0264b, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\IStyleSelector.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 10
+    '    Code Lines: 7
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 280.00 B
+
 
     '     Interface IStyleSelector
     ' 

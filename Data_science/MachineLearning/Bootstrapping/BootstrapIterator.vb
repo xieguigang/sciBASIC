@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16af8e57f6e68b43e4600acff6d9ac7e, Data_science\MachineLearning\Bootstrapping\BootstrapIterator.vb"
+﻿#Region "Microsoft.VisualBasic::16af8e57f6e68b43e4600acff6d9ac7e, sciBASIC#\Data_science\MachineLearning\Bootstrapping\BootstrapIterator.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 250
+    '    Code Lines: 152
+    ' Comment Lines: 73
+    '   Blank Lines: 25
+    '     File Size: 10.79 KB
+
 
     ' Module BootstrapIterator
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67a546b6e2cb80d94c4ec9f4a836c883, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Office\OfficeColorThemes.vb"
+﻿#Region "Microsoft.VisualBasic::67a546b6e2cb80d94c4ec9f4a836c883, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Office\OfficeColorThemes.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 72
+    '    Code Lines: 52
+    ' Comment Lines: 9
+    '   Blank Lines: 11
+    '     File Size: 3.04 KB
+
 
     '     Module OfficeColorThemes
     ' 

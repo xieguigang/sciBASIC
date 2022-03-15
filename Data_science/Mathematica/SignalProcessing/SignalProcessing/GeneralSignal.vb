@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c9b8a659c88d7d40ec26d46f5221950, Data_science\Mathematica\SignalProcessing\SignalProcessing\GeneralSignal.vb"
+﻿#Region "Microsoft.VisualBasic::9c9b8a659c88d7d40ec26d46f5221950, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\GeneralSignal.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 109
+    '    Code Lines: 75
+    ' Comment Lines: 18
+    '   Blank Lines: 16
+    '     File Size: 3.60 KB
+
 
     ' Class GeneralSignal
     ' 

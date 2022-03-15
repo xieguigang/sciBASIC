@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9140f8dec533bc2fddb52916894e07ca, tutorials\core.test\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::9140f8dec533bc2fddb52916894e07ca, sciBASIC#\tutorials\core.test\CLI.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 86
+    '    Code Lines: 36
+    ' Comment Lines: 29
+    '   Blank Lines: 21
+    '     File Size: 2.53 KB
+
 
     ' Module CLI
     ' 

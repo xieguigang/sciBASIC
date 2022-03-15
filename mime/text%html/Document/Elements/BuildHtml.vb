@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b1567a36a3ee72e7fa5eb7e89a8eac7, mime\text%html\Document\Elements\BuildHtml.vb"
+﻿#Region "Microsoft.VisualBasic::1b1567a36a3ee72e7fa5eb7e89a8eac7, sciBASIC#\mime\text%html\Document\Elements\BuildHtml.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 31
+    '    Code Lines: 22
+    ' Comment Lines: 0
+    '   Blank Lines: 9
+    '     File Size: 940.00 B
+
 
     '     Module BuildHtmlDocument
     ' 

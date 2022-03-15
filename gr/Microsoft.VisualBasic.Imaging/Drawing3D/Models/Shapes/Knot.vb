@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a61e815183a1237df2a8788cad9efc2f, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\Knot.vb"
+﻿#Region "Microsoft.VisualBasic::a61e815183a1237df2a8788cad9efc2f, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\Knot.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 21
+    '    Code Lines: 14
+    ' Comment Lines: 5
+    '   Blank Lines: 2
+    '     File Size: 1.01 KB
+
 
     '     Class Knot
     ' 

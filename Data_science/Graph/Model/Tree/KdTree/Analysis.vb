@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a7f656e13134544568c70c0188ada37, Data_science\Graph\Model\Tree\KdTree\Analysis.vb"
+﻿#Region "Microsoft.VisualBasic::4a7f656e13134544568c70c0188ada37, sciBASIC#\Data_science\Graph\Model\Tree\KdTree\Analysis.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 129
+    '    Code Lines: 91
+    ' Comment Lines: 15
+    '   Blank Lines: 23
+    '     File Size: 5.03 KB
+
 
     '     Module ApproximateNearNeighbor
     ' 

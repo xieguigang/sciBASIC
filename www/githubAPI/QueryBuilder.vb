@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::52caca25ab75dbc8e61b485fae247c74, www\githubAPI\QueryBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::52caca25ab75dbc8e61b485fae247c74, sciBASIC#\www\githubAPI\QueryBuilder.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 96
+    '    Code Lines: 72
+    ' Comment Lines: 9
+    '   Blank Lines: 15
+    '     File Size: 3.65 KB
+
 
     ' Module QueryBuilder
     ' 

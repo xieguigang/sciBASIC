@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::28ec82426f8983e63105035bb2664c6a, gr\network-visualization\Network.IO.Extensions\IO\FileStream\csv\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::28ec82426f8983e63105035bb2664c6a, sciBASIC#\gr\network-visualization\Network.IO.Extensions\IO\FileStream\csv\Edge.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 157
+    '    Code Lines: 110
+    ' Comment Lines: 27
+    '   Blank Lines: 20
+    '     File Size: 6.18 KB
+
 
     '     Class NetworkEdge
     ' 

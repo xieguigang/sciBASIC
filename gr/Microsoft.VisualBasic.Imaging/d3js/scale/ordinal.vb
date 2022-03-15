@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34346061ba8aab23046a4d9dfbeb7451, gr\Microsoft.VisualBasic.Imaging\d3js\scale\ordinal.vb"
+﻿#Region "Microsoft.VisualBasic::34346061ba8aab23046a4d9dfbeb7451, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\scale\ordinal.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 124
+    '    Code Lines: 62
+    ' Comment Lines: 45
+    '   Blank Lines: 17
+    '     File Size: 5.05 KB
+
 
     '     Class OrdinalScale
     ' 

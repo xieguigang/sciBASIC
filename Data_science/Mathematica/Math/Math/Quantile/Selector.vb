@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f233dcff4688aff425a9b224106dcfbe, Data_science\Mathematica\Math\Math\Quantile\Selector.vb"
+﻿#Region "Microsoft.VisualBasic::f233dcff4688aff425a9b224106dcfbe, sciBASIC#\Data_science\Mathematica\Math\Math\Quantile\Selector.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 140
+    '    Code Lines: 91
+    ' Comment Lines: 29
+    '   Blank Lines: 20
+    '     File Size: 5.93 KB
+
 
     '     Module Selector
     ' 

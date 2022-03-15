@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b99be8ad1c9f75e72c72e060dddfa6a, Data_science\Mathematica\data\least-squares\test2\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::5b99be8ad1c9f75e72c72e060dddfa6a, sciBASIC#\Data_science\Mathematica\data\least-squares\test2\test\Module1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 98
+    '    Code Lines: 59
+    ' Comment Lines: 14
+    '   Blank Lines: 25
+    '     File Size: 3.34 KB
+
 
     ' Module Module1
     ' 

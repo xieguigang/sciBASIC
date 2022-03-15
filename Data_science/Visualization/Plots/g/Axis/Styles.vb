@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0ce23a30581c9c3b9043373de069721, Data_science\Visualization\Plots\g\Axis\Styles.vb"
+﻿#Region "Microsoft.VisualBasic::e0ce23a30581c9c3b9043373de069721, sciBASIC#\Data_science\Visualization\Plots\g\Axis\Styles.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 55
+    '    Code Lines: 21
+    ' Comment Lines: 27
+    '   Blank Lines: 7
+    '     File Size: 1.26 KB
+
 
     '     Enum XAxisLayoutStyles
     ' 

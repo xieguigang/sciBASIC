@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::464f8286a4a7e7470a1a695d3019fac4, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\NaiveBinaryTree.vb"
+﻿#Region "Microsoft.VisualBasic::464f8286a4a7e7470a1a695d3019fac4, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\NaiveBinaryTree.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 359
+    '    Code Lines: 178
+    ' Comment Lines: 140
+    '   Blank Lines: 41
+    '     File Size: 15.12 KB
+
 
     '     Class NaiveBinaryTree
     ' 

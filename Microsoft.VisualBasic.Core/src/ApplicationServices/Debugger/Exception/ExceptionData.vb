@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b4a64758106003be06984267d6c885e, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\ExceptionData.vb"
+﻿#Region "Microsoft.VisualBasic::1b4a64758106003be06984267d6c885e, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\ExceptionData.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 77
+    '    Code Lines: 58
+    ' Comment Lines: 8
+    '   Blank Lines: 11
+    '     File Size: 2.87 KB
+
 
     '     Class ExceptionData
     ' 

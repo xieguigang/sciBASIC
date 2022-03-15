@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d3c20f90bc15443addf0b9e957045d6, mime\text%yaml\1.1\IEnumerableExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::7d3c20f90bc15443addf0b9e957045d6, sciBASIC#\mime\text%yaml\1.1\IEnumerableExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 180
+    '    Code Lines: 159
+    ' Comment Lines: 0
+    '   Blank Lines: 21
+    '     File Size: 6.33 KB
+
 
     '     Module IEnumerableExtensions
     ' 

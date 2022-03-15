@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da0fe537e502eaa234a58447f83a8cce, tutorials\socketTest\Protocols.vb"
+﻿#Region "Microsoft.VisualBasic::da0fe537e502eaa234a58447f83a8cce, sciBASIC#\tutorials\socketTest\Protocols.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 12
+    '    Code Lines: 9
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 249.00 B
+
 
     ' Module Protocols
     ' 

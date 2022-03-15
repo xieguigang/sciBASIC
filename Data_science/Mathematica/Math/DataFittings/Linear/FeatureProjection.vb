@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4727dd3905c17d0657064742b099e5c0, Data_science\Mathematica\Math\DataFittings\Linear\FeatureProjection.vb"
+﻿#Region "Microsoft.VisualBasic::4727dd3905c17d0657064742b099e5c0, sciBASIC#\Data_science\Mathematica\Math\DataFittings\Linear\FeatureProjection.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 37
+    '    Code Lines: 25
+    ' Comment Lines: 6
+    '   Blank Lines: 6
+    '     File Size: 1.31 KB
+
 
     ' Module FeatureProjection
     ' 

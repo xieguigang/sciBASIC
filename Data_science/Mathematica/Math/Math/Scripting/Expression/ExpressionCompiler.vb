@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::639f7377931baa4aaa6fcf3c309403a1, Data_science\Mathematica\Math\Math\Scripting\Expression\ExpressionCompiler.vb"
+﻿#Region "Microsoft.VisualBasic::639f7377931baa4aaa6fcf3c309403a1, sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Expression\ExpressionCompiler.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 86
+    '    Code Lines: 69
+    ' Comment Lines: 5
+    '   Blank Lines: 12
+    '     File Size: 4.59 KB
+
 
     '     Delegate Function
     ' 

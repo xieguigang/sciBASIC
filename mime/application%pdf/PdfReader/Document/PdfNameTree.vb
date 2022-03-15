@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a49cce49a03804514e2115a45aad442b, mime\application%pdf\PdfReader\Document\PdfNameTree.vb"
+﻿#Region "Microsoft.VisualBasic::aa14c689643d71b220c88bead3c8af91, sciBASIC#\mime\application%pdf\PdfReader\Document\PdfNameTree.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 112
+    '    Code Lines: 89
+    ' Comment Lines: 5
+    '   Blank Lines: 18
+    '     File Size: 4.22 KB
+
 
     '     Class PdfNameTree
     ' 

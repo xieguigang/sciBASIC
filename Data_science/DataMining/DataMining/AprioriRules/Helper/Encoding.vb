@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::215821029db9113be0d815793c42d62f, Data_science\DataMining\DataMining\AprioriRules\Helper\Encoding.vb"
+﻿#Region "Microsoft.VisualBasic::215821029db9113be0d815793c42d62f, sciBASIC#\Data_science\DataMining\DataMining\AprioriRules\Helper\Encoding.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 89
+    '    Code Lines: 51
+    ' Comment Lines: 25
+    '   Blank Lines: 13
+    '     File Size: 3.46 KB
+
 
     '     Class Encoding
     ' 

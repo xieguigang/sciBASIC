@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8305becf920f6041f8ea2bc9cc8ab37f, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\ContourLayer.vb"
+﻿#Region "Microsoft.VisualBasic::ed8c45b5604d86218d3b358246c1e829, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\ContourLayer.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 81
+    '    Code Lines: 62
+    ' Comment Lines: 6
+    '   Blank Lines: 13
+    '     File Size: 3.29 KB
+
 
     '     Class ContourLayer
     ' 

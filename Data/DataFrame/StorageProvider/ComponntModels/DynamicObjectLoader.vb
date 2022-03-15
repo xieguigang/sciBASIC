@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb01831866ef1e20340c123d2350abb6, Data\DataFrame\StorageProvider\ComponntModels\DynamicObjectLoader.vb"
+﻿#Region "Microsoft.VisualBasic::cb01831866ef1e20340c123d2350abb6, sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\DynamicObjectLoader.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 449
+    '    Code Lines: 252
+    ' Comment Lines: 133
+    '   Blank Lines: 64
+    '     File Size: 18.67 KB
+
 
     '     Class DynamicObjectLoader
     ' 

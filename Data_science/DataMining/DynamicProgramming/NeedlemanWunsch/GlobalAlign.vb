@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3350b1b6018db36fe8feab844a68e582, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\GlobalAlign.vb"
+﻿#Region "Microsoft.VisualBasic::3350b1b6018db36fe8feab844a68e582, sciBASIC#\Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\GlobalAlign.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 78
+    '    Code Lines: 62
+    ' Comment Lines: 0
+    '   Blank Lines: 16
+    '     File Size: 2.27 KB
+
 
     '     Class GlobalAlign
     ' 

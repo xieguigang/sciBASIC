@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ab72ba42317fd979c89ee7da702bfcf, Data_science\Visualization\Plots\csv\SerialData.vb"
+﻿#Region "Microsoft.VisualBasic::2ab72ba42317fd979c89ee7da702bfcf, sciBASIC#\Data_science\Visualization\Plots\csv\SerialData.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 107
+    '    Code Lines: 83
+    ' Comment Lines: 11
+    '   Blank Lines: 13
+    '     File Size: 4.28 KB
+
 
     '     Class SerialData
     ' 

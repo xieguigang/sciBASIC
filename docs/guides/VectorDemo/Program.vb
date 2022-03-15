@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df3562213cb28e60453bd899ca3b4e4c, docs\guides\VectorDemo\Program.vb"
+﻿#Region "Microsoft.VisualBasic::df3562213cb28e60453bd899ca3b4e4c, sciBASIC#\docs\guides\VectorDemo\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 114
+    '    Code Lines: 78
+    ' Comment Lines: 4
+    '   Blank Lines: 32
+    '     File Size: 3.77 KB
+
 
     ' Module Program
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::358e8c1d57e8d5c708000758cecc1995, Data_science\Graph\Analysis\GraphAnalysis.vb"
+﻿#Region "Microsoft.VisualBasic::358e8c1d57e8d5c708000758cecc1995, sciBASIC#\Data_science\Graph\Analysis\GraphAnalysis.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 58
+    '    Code Lines: 34
+    ' Comment Lines: 15
+    '   Blank Lines: 9
+    '     File Size: 2.18 KB
+
 
     '     Module GraphAnalysis
     ' 

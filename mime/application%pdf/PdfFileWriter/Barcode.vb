@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c08a8af309b475331619c13309448d64, mime\application%pdf\PdfFileWriter\Barcode.vb"
+﻿#Region "Microsoft.VisualBasic::565354d0b8ebd83ac5b0c53653b9bd5d, sciBASIC#\mime\application%pdf\PdfFileWriter\Barcode.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1632
+    '    Code Lines: 741
+    ' Comment Lines: 628
+    '   Blank Lines: 263
+    '     File Size: 58.29 KB
+
 
     ' Class BarcodeBox
     ' 

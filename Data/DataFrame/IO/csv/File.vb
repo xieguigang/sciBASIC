@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8930cc182cbb31161106d856d41ff8b5, Data\DataFrame\IO\csv\File.vb"
+﻿#Region "Microsoft.VisualBasic::8930cc182cbb31161106d856d41ff8b5, sciBASIC#\Data\DataFrame\IO\csv\File.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 927
+    '    Code Lines: 554
+    ' Comment Lines: 253
+    '   Blank Lines: 120
+    '     File Size: 37.24 KB
+
 
     '     Class File
     ' 

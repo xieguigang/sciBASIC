@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1278cb38aaddd6612ebec571926ae901, Data_science\DataMining\DataMining\ComponentModel\Encoder\ClassEncoder.vb"
+﻿#Region "Microsoft.VisualBasic::1278cb38aaddd6612ebec571926ae901, sciBASIC#\Data_science\DataMining\DataMining\ComponentModel\Encoder\ClassEncoder.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 114
+    '    Code Lines: 72
+    ' Comment Lines: 21
+    '   Blank Lines: 21
+    '     File Size: 3.53 KB
+
 
     '     Class ClassEncoder
     ' 

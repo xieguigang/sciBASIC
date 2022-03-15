@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8abc330ba1f0750b87805c735deb2a13, mime\text%html\CSS\Size.vb"
+﻿#Region "Microsoft.VisualBasic::8abc330ba1f0750b87805c735deb2a13, sciBASIC#\mime\text%html\CSS\Size.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 9
+    '    Code Lines: 6
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 158.00 B
+
 
     '     Class CSSsize
     ' 

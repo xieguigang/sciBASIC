@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d6fc50e8d571fb7e37285a9f5e7c4828, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Set\Set.vb"
+﻿#Region "Microsoft.VisualBasic::a85638fe9ced3dd36346aa78049db551, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Set\Set.vb"
 
     ' Author:
     ' 
@@ -31,11 +31,21 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 378
+    '    Code Lines: 197
+    ' Comment Lines: 132
+    '   Blank Lines: 49
+    '     File Size: 14.53 KB
+
+
     '     Class [Set]
     ' 
     '         Properties: IsEmpty, Length
     ' 
-    '         Constructor: (+4 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     ' 
     '         Function: Contains, Equals, GetHashCode, IEnumerable_GetEnumerator, Remove
     '                   ToArray, ToString

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51e494f95440a8a91646388a12f3faca, Data_science\MachineLearning\xgboost\gbm\Dart.vb"
+﻿#Region "Microsoft.VisualBasic::bf75703547387554d946ea7e2c98066d, sciBASIC#\Data_science\MachineLearning\xgboost\gbm\Dart.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 39
+    '    Code Lines: 26
+    ' Comment Lines: 4
+    '   Blank Lines: 9
+    '     File Size: 1.21 KB
+
 
     '     Class Dart
     ' 

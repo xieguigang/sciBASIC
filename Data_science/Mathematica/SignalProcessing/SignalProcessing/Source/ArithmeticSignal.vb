@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7bccd0e3489dc2ef45453e4b326860f9, Data_science\Mathematica\SignalProcessing\SignalProcessing\Source\ArithmeticSignal.vb"
+﻿#Region "Microsoft.VisualBasic::7bccd0e3489dc2ef45453e4b326860f9, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\Source\ArithmeticSignal.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 121
+    '    Code Lines: 78
+    ' Comment Lines: 19
+    '   Blank Lines: 24
+    '     File Size: 5.08 KB
+
 
     '     Class ArithmeticSignal
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::123c1c7ba31a329499509ba7b974ed16, Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsVariance.vb"
+﻿#Region "Microsoft.VisualBasic::123c1c7ba31a329499509ba7b974ed16, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsVariance.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 551
+    '    Code Lines: 111
+    ' Comment Lines: 432
+    '   Blank Lines: 8
+    '     File Size: 20.79 KB
+
 
     '     Module EnumerableStatsVariance
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65b404216fc941973031380ad00d0d22, Data_science\MachineLearning\Bootstrapping\Darwinism\GAF\Drivers\TimeValue.vb"
+﻿#Region "Microsoft.VisualBasic::65b404216fc941973031380ad00d0d22, sciBASIC#\Data_science\MachineLearning\Bootstrapping\Darwinism\GAF\Drivers\TimeValue.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 57
+    '    Code Lines: 33
+    ' Comment Lines: 13
+    '   Blank Lines: 11
+    '     File Size: 1.75 KB
+
 
     '     Structure TimeValue
     ' 

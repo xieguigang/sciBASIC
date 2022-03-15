@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd2770113ad8a178615a1fd793da99d2, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Deque\ReversedEnumerator.vb"
+﻿#Region "Microsoft.VisualBasic::fd2770113ad8a178615a1fd793da99d2, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Deque\ReversedEnumerator.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 67
+    '    Code Lines: 45
+    ' Comment Lines: 8
+    '   Blank Lines: 14
+    '     File Size: 2.08 KB
+
 
     '     Class ReversedEnumerator
     ' 

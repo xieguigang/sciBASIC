@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d223e9ef095707f3d7f525527796540b, Microsoft.VisualBasic.Core\src\Extensions\Image\ImageFormat.vb"
+﻿#Region "Microsoft.VisualBasic::d223e9ef095707f3d7f525527796540b, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\ImageFormat.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 135
+    '    Code Lines: 89
+    ' Comment Lines: 32
+    '   Blank Lines: 14
+    '     File Size: 5.35 KB
+
 
     '     Module ImageFormatExtensions
     ' 

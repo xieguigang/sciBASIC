@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3b83986850b1680dd1cfca24c8386ea9, mime\application%pdf\PdfFileWriter\PDF\PdfFont.vb"
+﻿#Region "Microsoft.VisualBasic::9aca15337758225566a100dddef3957e, sciBASIC#\mime\application%pdf\PdfFileWriter\PDF\PdfFont.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1430
+    '    Code Lines: 649
+    ' Comment Lines: 454
+    '   Blank Lines: 327
+    '     File Size: 52.57 KB
+
 
     ' Enum PdfFontFlags
     ' 

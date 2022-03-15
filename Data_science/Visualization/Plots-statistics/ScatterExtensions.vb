@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ebfee7ff26d32199ff36f28fbcf816e, Data_science\Visualization\Plots-statistics\ScatterExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::6ebfee7ff26d32199ff36f28fbcf816e, sciBASIC#\Data_science\Visualization\Plots-statistics\ScatterExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 179
+    '    Code Lines: 128
+    ' Comment Lines: 39
+    '   Blank Lines: 12
+    '     File Size: 7.03 KB
+
 
     ' Module ScatterExtensions
     ' 

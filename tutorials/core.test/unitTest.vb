@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b85dac381fcfc20cac61b03ac478292c, tutorials\core.test\unitTest.vb"
+﻿#Region "Microsoft.VisualBasic::b85dac381fcfc20cac61b03ac478292c, sciBASIC#\tutorials\core.test\unitTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 18
+    '    Code Lines: 14
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 568.00 B
+
 
     ' Module unitTest
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b2e294a7bab02f989a148184763ed48, Data\BinaryData\DataStorage\SQLite3\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::5b2e294a7bab02f989a148184763ed48, sciBASIC#\Data\BinaryData\DataStorage\SQLite3\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 69
+    '    Code Lines: 50
+    ' Comment Lines: 10
+    '   Blank Lines: 9
+    '     File Size: 3.02 KB
+
 
     '     Module Extensions
     ' 

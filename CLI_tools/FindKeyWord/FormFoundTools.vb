@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed65746ce4718e7f8721a0a4c81ef19f, CLI_tools\FindKeyWord\FormFoundTools.vb"
+﻿#Region "Microsoft.VisualBasic::ed65746ce4718e7f8721a0a4c81ef19f, sciBASIC#\CLI_tools\FindKeyWord\FormFoundTools.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 210
+    '    Code Lines: 152
+    ' Comment Lines: 4
+    '   Blank Lines: 54
+    '     File Size: 7.62 KB
+
 
     ' Class FormFoundTools
     ' 

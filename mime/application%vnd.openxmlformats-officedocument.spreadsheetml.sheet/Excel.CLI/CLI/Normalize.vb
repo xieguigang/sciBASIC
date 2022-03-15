@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::639eff1cc46dc6adeae52d7a6b82763c, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\CLI\Normalize.vb"
+﻿#Region "Microsoft.VisualBasic::639eff1cc46dc6adeae52d7a6b82763c, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\CLI\Normalize.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 19
+    '    Code Lines: 16
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 632.00 B
+
 
     ' Module CLI
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8b964c20733e582688889c2231b6d251, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\User\User.vb"
+﻿#Region "Microsoft.VisualBasic::8b964c20733e582688889c2231b6d251, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\NETProtocol\User\User.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 117
+    '    Code Lines: 40
+    ' Comment Lines: 59
+    '   Blank Lines: 18
+    '     File Size: 4.61 KB
+
 
     '     Class User
     ' 

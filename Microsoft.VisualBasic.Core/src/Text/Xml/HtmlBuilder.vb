@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::584aaf4fa61d02a3e35c8ff0c57f3e71, Microsoft.VisualBasic.Core\src\Text\Xml\HtmlBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::584aaf4fa61d02a3e35c8ff0c57f3e71, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\HtmlBuilder.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 47
+    '    Code Lines: 31
+    ' Comment Lines: 10
+    '   Blank Lines: 6
+    '     File Size: 1.83 KB
+
 
     '     Module HtmlBuilder
     ' 

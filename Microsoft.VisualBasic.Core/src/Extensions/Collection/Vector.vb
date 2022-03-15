@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f92b5965d8dffb1d4f34e8cb09319d61, Microsoft.VisualBasic.Core\src\Extensions\Collection\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::02ad38662d39b50a3089e36f10e0ef2f, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\Vector.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 645
+    '    Code Lines: 366
+    ' Comment Lines: 204
+    '   Blank Lines: 75
+    '     File Size: 23.62 KB
+
 
     ' Module VectorExtensions
     ' 

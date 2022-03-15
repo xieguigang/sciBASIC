@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17cab2187f0c0f641c8e26270e567dbf, Data_science\Mathematica\Math\Math\FuzzyLogic\FuzzyRuleCollection.vb"
+﻿#Region "Microsoft.VisualBasic::17cab2187f0c0f641c8e26270e567dbf, sciBASIC#\Data_science\Mathematica\Math\Math\FuzzyLogic\FuzzyRuleCollection.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 37
+    '    Code Lines: 13
+    ' Comment Lines: 19
+    '   Blank Lines: 5
+    '     File Size: 1.13 KB
+
 
     '     Class FuzzyRuleCollection
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ee27ea9075425ce659d8161e63648aa, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Office\ObjectAccent.vb"
+﻿#Region "Microsoft.VisualBasic::4ee27ea9075425ce659d8161e63648aa, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Office\ObjectAccent.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 45
+    '    Code Lines: 29
+    ' Comment Lines: 7
+    '   Blank Lines: 9
+    '     File Size: 1.17 KB
+
 
     '     Structure ObjectColor
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d865566954cecb016e8a9789c08f7908, Data_science\Visualization\Canvas3D\Device\Mouse.vb"
+﻿#Region "Microsoft.VisualBasic::d865566954cecb016e8a9789c08f7908, sciBASIC#\Data_science\Visualization\Canvas3D\Device\Mouse.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 70
+    '    Code Lines: 48
+    ' Comment Lines: 4
+    '   Blank Lines: 18
+    '     File Size: 2.00 KB
+
 
     '     Class Mouse
     ' 

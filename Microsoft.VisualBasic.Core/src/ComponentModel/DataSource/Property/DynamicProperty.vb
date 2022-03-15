@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::744eaaf337f4a2e5faac8f24ec50490a, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\DynamicProperty.vb"
+﻿#Region "Microsoft.VisualBasic::744eaaf337f4a2e5faac8f24ec50490a, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\DynamicProperty.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 202
+    '    Code Lines: 122
+    ' Comment Lines: 55
+    '   Blank Lines: 25
+    '     File Size: 8.17 KB
+
 
     '     Class DynamicPropertyBase
     ' 

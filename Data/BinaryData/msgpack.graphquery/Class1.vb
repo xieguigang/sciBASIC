@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b5889a63a2df73d205e61daa894c7f3, Data\BinaryData\msgpack.graphquery\Class1.vb"
+﻿#Region "Microsoft.VisualBasic::9b5889a63a2df73d205e61daa894c7f3, sciBASIC#\Data\BinaryData\msgpack.graphquery\Class1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 3
+    '    Code Lines: 2
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 32.00 B
+
 
     ' Class Class1
     ' 

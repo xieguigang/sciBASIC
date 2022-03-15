@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5201621898821355e17301e32ebcf27d, mime\application%pdf\PdfReader\Tokenizer\TokenError.vb"
+﻿#Region "Microsoft.VisualBasic::21378cf685098e76d54141c7f8d0488f, sciBASIC#\mime\application%pdf\PdfReader\Tokenizer\TokenError.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 30
+    '    Code Lines: 26
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 784.00 B
+
 
     '     Class TokenError
     ' 

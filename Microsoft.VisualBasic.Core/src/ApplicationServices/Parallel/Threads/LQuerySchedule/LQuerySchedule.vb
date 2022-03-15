@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::708662ae342ebb27208a8e66aa4233f7, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\LQuerySchedule\LQuerySchedule.vb"
+﻿#Region "Microsoft.VisualBasic::708662ae342ebb27208a8e66aa4233f7, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\LQuerySchedule\LQuerySchedule.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 187
+    '    Code Lines: 100
+    ' Comment Lines: 61
+    '   Blank Lines: 26
+    '     File Size: 8.77 KB
+
 
     '     Module LQuerySchedule
     ' 

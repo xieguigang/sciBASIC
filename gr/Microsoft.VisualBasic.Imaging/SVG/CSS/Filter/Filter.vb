@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a8641172a6a4fa400915aab6b2d30f55, gr\Microsoft.VisualBasic.Imaging\SVG\CSS\Filter\Filter.vb"
+﻿#Region "Microsoft.VisualBasic::a8641172a6a4fa400915aab6b2d30f55, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\CSS\Filter\Filter.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 34
+    '    Code Lines: 22
+    ' Comment Lines: 6
+    '   Blank Lines: 6
+    '     File Size: 1.09 KB
+
 
     '     Class Filter
     ' 

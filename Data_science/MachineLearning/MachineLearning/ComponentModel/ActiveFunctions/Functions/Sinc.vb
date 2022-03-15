@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09b762e7d9f32180af2f17d46fe6b2b7, Data_science\MachineLearning\MachineLearning\NeuralNetwork\ActiveFunctions\Functions\Sinc.vb"
+﻿#Region "Microsoft.VisualBasic::20dd7d9c5cb56c6cde9fe3d2272263d1, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\Sinc.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 37
+    '    Code Lines: 31
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 1.11 KB
+
 
     '     Class Sinc
     ' 

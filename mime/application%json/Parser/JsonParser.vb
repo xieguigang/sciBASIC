@@ -1,47 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::40a0c00b75c77023ff8afc06eb7a0d09, mime\application%json\Parser\JsonParser.vb"
+﻿#Region "Microsoft.VisualBasic::7ec6e0c967db0d273610991962a4683d, sciBASIC#\mime\application%json\Parser\JsonParser.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Class JsonParser
-' 
-'     Properties: JSONvalue
-' 
-'     Function: GetParserErrors, Open, OpenJSON, parse, parseArray
-'               parseBoolean, parseKey, parseNull, parseNumber, parseObject
-'               parseString, parseValue, StripString
-' 
-'     Sub: ClearParserError, skipChar
-' 
-' /********************************************************************************/
+
+    ' Code Statistics:
+
+    '   Total Lines: 498
+    '    Code Lines: 330
+    ' Comment Lines: 107
+    '   Blank Lines: 61
+    '     File Size: 16.03 KB
+
+
+    ' Class JsonParser
+    ' 
+    '     Properties: JSONvalue
+    ' 
+    '     Function: GetParserErrors, Open, OpenJSON, parse, parseArray
+    '               parseBoolean, parseKey, parseNull, parseNumber, parseObject
+    '               parseString, parseValue, StripString
+    ' 
+    '     Sub: ClearParserError, skipChar
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

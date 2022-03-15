@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::685a8cdd39be1f99b372ed952df5140f, Microsoft.VisualBasic.Core\src\Text\IO\Encodings.vb"
+﻿#Region "Microsoft.VisualBasic::685a8cdd39be1f99b372ed952df5140f, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\IO\Encodings.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 41
+    '    Code Lines: 15
+    ' Comment Lines: 20
+    '   Blank Lines: 6
+    '     File Size: 1.31 KB
+
 
     '     Enum Encodings
     ' 

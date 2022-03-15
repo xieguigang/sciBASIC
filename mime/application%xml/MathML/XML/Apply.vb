@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::920759a2b3cc9ff083af085f97622086, mime\application%xml\MathML\XML\Apply.vb"
+﻿#Region "Microsoft.VisualBasic::920759a2b3cc9ff083af085f97622086, sciBASIC#\mime\application%xml\MathML\XML\Apply.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 34
+    '    Code Lines: 27
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 955.00 B
+
 
     '     Class Apply
     ' 

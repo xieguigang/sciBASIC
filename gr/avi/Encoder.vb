@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aad705cc49500f777372edcd446ab136, gr\avi\Encoder.vb"
+﻿#Region "Microsoft.VisualBasic::aad705cc49500f777372edcd446ab136, sciBASIC#\gr\avi\Encoder.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 99
+    '    Code Lines: 71
+    ' Comment Lines: 6
+    '   Blank Lines: 22
+    '     File Size: 3.05 KB
+
 
     ' Class Encoder
     ' 

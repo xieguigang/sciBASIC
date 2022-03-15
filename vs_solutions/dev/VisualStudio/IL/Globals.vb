@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0cad90964e58d1afd98117ed7237c3f5, vs_solutions\dev\VisualStudio\IL\Globals.vb"
+﻿#Region "Microsoft.VisualBasic::0cad90964e58d1afd98117ed7237c3f5, sciBASIC#\vs_solutions\dev\VisualStudio\IL\Globals.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 183
+    '    Code Lines: 42
+    ' Comment Lines: 116
+    '   Blank Lines: 25
+    '     File Size: 4.38 KB
+
 
     '     Module Globals
     ' 

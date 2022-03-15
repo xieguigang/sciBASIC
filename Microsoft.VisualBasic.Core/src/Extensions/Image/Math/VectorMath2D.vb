@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::566a4adfde30cf1a6f4dc770db618305, Microsoft.VisualBasic.Core\src\Extensions\Image\Math\VectorMath2D.vb"
+﻿#Region "Microsoft.VisualBasic::566a4adfde30cf1a6f4dc770db618305, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Math\VectorMath2D.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 181
+    '    Code Lines: 163
+    ' Comment Lines: 0
+    '   Blank Lines: 18
+    '     File Size: 9.27 KB
+
 
     '     Class VectorMath2D
     ' 

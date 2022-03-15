@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8bd8d70f7d44faeff407129ceed2b488, gr\network-visualization\Datavisualization.Network\Graph\Model\Graph.vb"
+﻿#Region "Microsoft.VisualBasic::56ef636df8500ace786a5df489cc111b, sciBASIC#\gr\network-visualization\Datavisualization.Network\Graph\Model\Graph.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 588
+    '    Code Lines: 354
+    ' Comment Lines: 155
+    '   Blank Lines: 79
+    '     File Size: 22.28 KB
+
 
     '     Class NetworkGraph
     ' 

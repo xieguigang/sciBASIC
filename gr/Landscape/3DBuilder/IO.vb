@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32cb23e99de8d70a750c30d16eeab153, gr\Landscape\3DBuilder\IO.vb"
+﻿#Region "Microsoft.VisualBasic::32cb23e99de8d70a750c30d16eeab153, sciBASIC#\gr\Landscape\3DBuilder\IO.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 36
+    '    Code Lines: 25
+    ' Comment Lines: 5
+    '   Blank Lines: 6
+    '     File Size: 1.31 KB
+
 
     '     Module IO
     ' 

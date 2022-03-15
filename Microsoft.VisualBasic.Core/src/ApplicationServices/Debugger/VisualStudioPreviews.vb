@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31fa0cd6ac08db181a93bd8a2614d2c9, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\VisualStudioPreviews.vb"
+﻿#Region "Microsoft.VisualBasic::31fa0cd6ac08db181a93bd8a2614d2c9, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\VisualStudioPreviews.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 6
+    '    Code Lines: 5
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 165.00 B
+
 
     '     Interface IVisualStudioPreviews
     ' 

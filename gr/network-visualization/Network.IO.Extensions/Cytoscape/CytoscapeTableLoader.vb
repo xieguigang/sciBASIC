@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::066960b9d55c9ce6ac612f43edd29f7f, gr\network-visualization\Network.IO.Extensions\Cytoscape\CytoscapeTableLoader.vb"
+﻿#Region "Microsoft.VisualBasic::066960b9d55c9ce6ac612f43edd29f7f, sciBASIC#\gr\network-visualization\Network.IO.Extensions\Cytoscape\CytoscapeTableLoader.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 110
+    '    Code Lines: 90
+    ' Comment Lines: 6
+    '   Blank Lines: 14
+    '     File Size: 4.87 KB
+
 
     '     Module CytoscapeTableLoader
     ' 

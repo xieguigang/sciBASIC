@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68c0ac06323b35ec2aacc5fccb0dcb23, Data_science\Mathematica\SignalProcessing\SignalProcessing\WaveletTransform\FourierTransform.vb"
+﻿#Region "Microsoft.VisualBasic::68c0ac06323b35ec2aacc5fccb0dcb23, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\WaveletTransform\FourierTransform.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 335
+    '    Code Lines: 189
+    ' Comment Lines: 97
+    '   Blank Lines: 49
+    '     File Size: 11.20 KB
+
 
     ' Module FourierTransform
     ' 

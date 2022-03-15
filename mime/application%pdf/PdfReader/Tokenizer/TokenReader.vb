@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::541f95618d46dd707147ff68a4b39836, mime\application%pdf\PdfReader\Tokenizer\TokenReader.vb"
+﻿#Region "Microsoft.VisualBasic::682a555806749427e2de832145c600aa, sciBASIC#\mime\application%pdf\PdfReader\Tokenizer\TokenReader.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 122
+    '    Code Lines: 91
+    ' Comment Lines: 11
+    '   Blank Lines: 20
+    '     File Size: 4.39 KB
+
 
     '     Class TokenReader
     ' 

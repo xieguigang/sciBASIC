@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::62392eae59a48ed7bab9e0706a540c46, Data\DataFrame.Extensions\Outlining\Schema.vb"
+﻿#Region "Microsoft.VisualBasic::62392eae59a48ed7bab9e0706a540c46, sciBASIC#\Data\DataFrame.Extensions\Outlining\Schema.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 159
+    '    Code Lines: 102
+    ' Comment Lines: 30
+    '   Blank Lines: 27
+    '     File Size: 5.95 KB
+
 
     '     Class Builder
     ' 

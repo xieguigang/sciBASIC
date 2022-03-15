@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2791dc6db94648265fca292fa3e94454, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushAPI\APIBase.vb"
+﻿#Region "Microsoft.VisualBasic::2791dc6db94648265fca292fa3e94454, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushAPI\APIBase.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 67
+    '    Code Lines: 0
+    ' Comment Lines: 52
+    '   Blank Lines: 15
+    '     File Size: 2.20 KB
+
 
     ' 
     ' /********************************************************************************/

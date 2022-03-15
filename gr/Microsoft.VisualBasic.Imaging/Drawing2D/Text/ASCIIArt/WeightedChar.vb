@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6cf39884cba05127173794f747be79e, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\ASCIIArt\WeightedChar.vb"
+﻿#Region "Microsoft.VisualBasic::c6cf39884cba05127173794f747be79e, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\ASCIIArt\WeightedChar.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 33
+    '    Code Lines: 17
+    ' Comment Lines: 11
+    '   Blank Lines: 5
+    '     File Size: 1.01 KB
+
 
     '     Class WeightedChar
     ' 

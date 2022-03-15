@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3ea239d238695c4706389e0e5498349, Data_science\Mathematica\Math\ODEsViewer\FormODEsViewer.vb"
+﻿#Region "Microsoft.VisualBasic::a3ea239d238695c4706389e0e5498349, sciBASIC#\Data_science\Mathematica\Math\ODEsViewer\FormODEsViewer.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 314
+    '    Code Lines: 255
+    ' Comment Lines: 5
+    '   Blank Lines: 54
+    '     File Size: 12.35 KB
+
 
     ' Class FormODEsViewer
     ' 

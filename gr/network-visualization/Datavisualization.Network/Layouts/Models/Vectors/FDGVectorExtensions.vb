@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0935a7310ef6979912f174d7e4179e87, gr\network-visualization\Datavisualization.Network\Layouts\Models\Vectors\FDGVectorExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::0935a7310ef6979912f174d7e4179e87, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Models\Vectors\FDGVectorExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 17
+    '    Code Lines: 13
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 569.00 B
+
 
     '     Module FDGVectorExtensions
     ' 

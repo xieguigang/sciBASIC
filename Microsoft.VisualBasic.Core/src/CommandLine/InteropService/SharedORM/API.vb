@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1dc8f2ae695690c348365c02d785831f, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\SharedORM\API.vb"
+﻿#Region "Microsoft.VisualBasic::1dc8f2ae695690c348365c02d785831f, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\InteropService\SharedORM\API.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 196
+    '    Code Lines: 131
+    ' Comment Lines: 39
+    '   Blank Lines: 26
+    '     File Size: 8.07 KB
+
 
     '     Module API
     ' 

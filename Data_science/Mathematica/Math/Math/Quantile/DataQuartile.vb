@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67431db459db2fdea34833ad4ad8b43c, Data_science\Mathematica\Math\Math\Quantile\DataQuartile.vb"
+﻿#Region "Microsoft.VisualBasic::67431db459db2fdea34833ad4ad8b43c, sciBASIC#\Data_science\Mathematica\Math\Math\Quantile\DataQuartile.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 61
+    '    Code Lines: 27
+    ' Comment Lines: 27
+    '   Blank Lines: 7
+    '     File Size: 2.38 KB
+
 
     '     Structure DataQuartile
     ' 

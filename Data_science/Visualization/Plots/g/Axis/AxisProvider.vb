@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::125da894ab23907e08619faf132aa716, Data_science\Visualization\Plots\g\Axis\AxisProvider.vb"
+﻿#Region "Microsoft.VisualBasic::125da894ab23907e08619faf132aa716, sciBASIC#\Data_science\Visualization\Plots\g\Axis\AxisProvider.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 81
+    '    Code Lines: 51
+    ' Comment Lines: 18
+    '   Blank Lines: 12
+    '     File Size: 2.49 KB
+
 
     '     Class AxisProvider
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd2677b36fa39f34cb95a4defda21d5c, Data_science\DataMining\DataMining\test\DBSCAN\Program.vb"
+﻿#Region "Microsoft.VisualBasic::fd2677b36fa39f34cb95a4defda21d5c, sciBASIC#\Data_science\DataMining\DataMining\test\DBSCAN\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 32
+    '    Code Lines: 23
+    ' Comment Lines: 2
+    '   Blank Lines: 7
+    '     File Size: 1.47 KB
+
 
     ' Class Program
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::794b4edb08ff634d8c164504a01c6ff0, Microsoft.VisualBasic.Core\src\Text\Xml\Models\ValueTuples\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::794b4edb08ff634d8c164504a01c6ff0, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\Models\ValueTuples\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 19
+    '    Code Lines: 15
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 829.00 B
+
 
     '     Module Extensions
     ' 

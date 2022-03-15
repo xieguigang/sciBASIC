@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ea9d1b05754ccc8dc3bc3f4105d0a1e, mime\application%pdf\PdfReader\Document\PdfIndirectObject.vb"
+﻿#Region "Microsoft.VisualBasic::d5e2d587a28d5fac98c59949969c9001, sciBASIC#\mime\application%pdf\PdfReader\Document\PdfIndirectObject.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 47
+    '    Code Lines: 40
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 1.23 KB
+
 
     '     Class PdfIndirectObject
     ' 

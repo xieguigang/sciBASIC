@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83854afc22dafbcc06414da639169786, mime\text%html\Document\Elements\HTML.vb"
+﻿#Region "Microsoft.VisualBasic::83854afc22dafbcc06414da639169786, sciBASIC#\mime\text%html\Document\Elements\HTML.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 68
+    '    Code Lines: 54
+    ' Comment Lines: 0
+    '   Blank Lines: 14
+    '     File Size: 2.11 KB
+
 
     '     Class HtmlHead
     ' 

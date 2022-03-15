@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c61128f17b33c389b7d021d2121b69d2, mime\application%pdf\PdfReader\Document\PdfIdentifier.vb"
+﻿#Region "Microsoft.VisualBasic::ad7a919c3018cf750f038e7f0b7e0e25, sciBASIC#\mime\application%pdf\PdfReader\Document\PdfIdentifier.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 29
+    '    Code Lines: 24
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 820.00 B
+
 
     '     Class PdfIdentifier
     ' 

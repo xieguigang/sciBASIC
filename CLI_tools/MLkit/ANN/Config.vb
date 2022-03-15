@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dac588f9d8f7978405698987159e547f, CLI_tools\MLkit\ANN\Config.vb"
+﻿#Region "Microsoft.VisualBasic::dac588f9d8f7978405698987159e547f, sciBASIC#\CLI_tools\MLkit\ANN\Config.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 70
+    '    Code Lines: 27
+    ' Comment Lines: 33
+    '   Blank Lines: 10
+    '     File Size: 2.83 KB
+
 
     ' Class Config
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f21bf2c2f8c6e9d354a2690ffa20396f, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::57bfe4410fce43ee7b3e2e0db10b2c75, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringHelpers.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 1302
+    '    Code Lines: 712
+    ' Comment Lines: 443
+    '   Blank Lines: 147
+    '     File Size: 48.81 KB
+
+
     ' Module StringHelpers
     ' 
     '     Properties: EmptyString, NonStrictCompares, StrictCompares
@@ -40,13 +50,13 @@
     '               First, FormatString, FormatZero, GetBetween, GetEMails
     '               GetStackValue, GetString, (+2 Overloads) GetTagValue, GetURLs, IgnoreCase
     '               InStrAny, (+2 Overloads) Intersection, IsEmptyStringVector, JoinBy, LineTokens
-    '               Located, Lookup, (+2 Overloads) Match, Matches, MatchPattern
-    '               (+2 Overloads) MaxLengthString, MinLengthString, NotEmpty, PadEnd, Parts
-    '               RepeatString, ReplaceChars, (+2 Overloads) Reverse, RNull, SaveTo
-    '               (+2 Overloads) Split, SplitBy, StartsWith, StringEmpty, StringHashCode
-    '               StringReplace, (+2 Overloads) StringSplit, StripBlank, Strips, SubstringSpecial
-    '               TextEquals, TextLast, TokenCount, TokenCountIgnoreCase, TrimNewLine
-    '               TrimNull, WildcardsLocated
+    '               Located, Lookup, Lookups, (+2 Overloads) Match, Matches
+    '               MatchPattern, (+2 Overloads) MaxLengthString, MinLengthString, NotEmpty, PadEnd
+    '               Parts, RepeatString, ReplaceChars, (+2 Overloads) Reverse, RNull
+    '               SaveTo, (+2 Overloads) Split, SplitBy, StartsWith, StringEmpty
+    '               StringHashCode, StringReplace, (+2 Overloads) StringSplit, StripBlank, Strips
+    '               SubstringSpecial, TextEquals, TextLast, TokenCount, TokenCountIgnoreCase
+    '               TrimNewLine, TrimNull, WildcardsLocated
     ' 
     '     Sub: Parts, RemoveLast
     ' 

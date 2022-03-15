@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e14a4dc536b4bb4c499f16e53b69d5d, gr\network-visualization\NetworkCanvas\Canvas3D\Input3D.vb"
+﻿#Region "Microsoft.VisualBasic::9e14a4dc536b4bb4c499f16e53b69d5d, sciBASIC#\gr\network-visualization\NetworkCanvas\Canvas3D\Input3D.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 48
+    '    Code Lines: 23
+    ' Comment Lines: 14
+    '   Blank Lines: 11
+    '     File Size: 1.44 KB
+
 
     ' Class Input3D
     ' 

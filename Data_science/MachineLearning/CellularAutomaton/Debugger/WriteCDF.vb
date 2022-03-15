@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::523286f1672134e323284c68b946bca9, Data_science\MachineLearning\CellularAutomaton\Debugger\WriteCDF.vb"
+﻿#Region "Microsoft.VisualBasic::729826f31b5093099537925e2089d5c7, sciBASIC#\Data_science\MachineLearning\CellularAutomaton\Debugger\WriteCDF.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 35
+    '    Code Lines: 31
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 1.46 KB
+
 
     ' Module WriteCDF
     ' 

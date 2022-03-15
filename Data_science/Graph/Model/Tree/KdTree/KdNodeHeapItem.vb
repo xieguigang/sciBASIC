@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73b53afdae67035ace0b81c145f77432, Data_science\Graph\Model\Tree\KdTree\KdNodeHeapItem.vb"
+﻿#Region "Microsoft.VisualBasic::73b53afdae67035ace0b81c145f77432, sciBASIC#\Data_science\Graph\Model\Tree\KdTree\KdNodeHeapItem.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 18
+    '    Code Lines: 13
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 447.00 B
+
 
     '     Class KdNodeHeapItem
     ' 

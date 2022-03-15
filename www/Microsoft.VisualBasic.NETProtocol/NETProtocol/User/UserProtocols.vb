@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c132fad788b0d1a8fe7c8a395cc48735, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\User\UserProtocols.vb"
+﻿#Region "Microsoft.VisualBasic::c132fad788b0d1a8fe7c8a395cc48735, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\NETProtocol\User\UserProtocols.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 26
+    '    Code Lines: 19
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 792.00 B
+
 
     '     Module UserProtocols
     ' 

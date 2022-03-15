@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae396c14467b34fb18c86a9942f1a47b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Expression.vb"
+﻿#Region "Microsoft.VisualBasic::ae396c14467b34fb18c86a9942f1a47b, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Expression.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 125
+    '    Code Lines: 93
+    ' Comment Lines: 11
+    '   Blank Lines: 21
+    '     File Size: 4.14 KB
+
 
     '     Structure DesignerExpression
     ' 

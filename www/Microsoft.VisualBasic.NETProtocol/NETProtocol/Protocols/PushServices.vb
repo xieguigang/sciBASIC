@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9df044ae4b90b2954a05f887485312ba, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\Protocols\PushServices.vb"
+﻿#Region "Microsoft.VisualBasic::9df044ae4b90b2954a05f887485312ba, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\NETProtocol\Protocols\PushServices.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 6
+    '    Code Lines: 4
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 91.00 B
+
 
     '     Module PushServices
     ' 

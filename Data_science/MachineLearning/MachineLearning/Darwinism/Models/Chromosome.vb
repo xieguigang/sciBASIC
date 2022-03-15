@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d1750998cc4f929e18fe7da79cae4fd, Data_science\MachineLearning\MachineLearning\Darwinism\Models\Chromosome.vb"
+﻿#Region "Microsoft.VisualBasic::0d1750998cc4f929e18fe7da79cae4fd, sciBASIC#\Data_science\MachineLearning\MachineLearning\Darwinism\Models\Chromosome.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 108
+    '    Code Lines: 8
+    ' Comment Lines: 95
+    '   Blank Lines: 5
+    '     File Size: 6.64 KB
+
 
     '     Interface Chromosome
     ' 

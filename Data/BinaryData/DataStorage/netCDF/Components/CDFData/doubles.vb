@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::46bcda59aa959a473a7268b5d76156e6, Data\BinaryData\DataStorage\netCDF\Components\CDFData\doubles.vb"
+﻿#Region "Microsoft.VisualBasic::46bcda59aa959a473a7268b5d76156e6, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\CDFData\doubles.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 26
+    '    Code Lines: 20
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 755.00 B
+
 
     '     Class doubles
     ' 

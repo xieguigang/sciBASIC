@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6eae44c478aead86e5b512150917a26, Data\OCR\Scanner.vb"
+﻿#Region "Microsoft.VisualBasic::c6eae44c478aead86e5b512150917a26, sciBASIC#\Data\OCR\Scanner.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 100
+    '    Code Lines: 81
+    ' Comment Lines: 2
+    '   Blank Lines: 17
+    '     File Size: 3.47 KB
+
 
     ' Module Scanner
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::939f8204158f16cacbc8ec4d825c0eeb, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Plot\Layouts.vb"
+﻿#Region "Microsoft.VisualBasic::939f8204158f16cacbc8ec4d825c0eeb, sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Plot\Layouts.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 14
+    '    Code Lines: 5
+    ' Comment Lines: 9
+    '   Blank Lines: 0
+    '     File Size: 295.00 B
+
 
     ' Enum Layouts
     ' 

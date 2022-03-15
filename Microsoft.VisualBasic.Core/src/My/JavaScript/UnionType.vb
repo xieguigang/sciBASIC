@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::02a6b956c15a6bc900237956efeeadbb, Microsoft.VisualBasic.Core\src\My\JavaScript\UnionType.vb"
+﻿#Region "Microsoft.VisualBasic::02a6b956c15a6bc900237956efeeadbb, sciBASIC#\Microsoft.VisualBasic.Core\src\My\JavaScript\UnionType.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 80
+    '    Code Lines: 64
+    ' Comment Lines: 5
+    '   Blank Lines: 11
+    '     File Size: 2.70 KB
+
 
     '     Class UnionType
     ' 

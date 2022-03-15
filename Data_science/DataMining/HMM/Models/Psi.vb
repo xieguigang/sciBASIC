@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8918d546f07ca6a346dcd9f61c2fb19a, Data_science\DataMining\HMM\Models\Psi.vb"
+﻿#Region "Microsoft.VisualBasic::8918d546f07ca6a346dcd9f61c2fb19a, sciBASIC#\Data_science\DataMining\HMM\Models\Psi.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 21
+    '    Code Lines: 14
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 458.00 B
+
 
     '     Class Psi
     ' 

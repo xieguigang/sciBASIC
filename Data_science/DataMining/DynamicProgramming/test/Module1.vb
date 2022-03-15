@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1315b2ebc0434929d7963011e68a9241, Data_science\DataMining\DynamicProgramming\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::1315b2ebc0434929d7963011e68a9241, sciBASIC#\Data_science\DataMining\DynamicProgramming\test\Module1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 44
+    '    Code Lines: 16
+    ' Comment Lines: 18
+    '   Blank Lines: 10
+    '     File Size: 1.67 KB
+
 
     ' Module Module1
     ' 

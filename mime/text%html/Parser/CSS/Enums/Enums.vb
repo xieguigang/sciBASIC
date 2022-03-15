@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d3104f06108de8e179a7bd1fbcaf3818, mime\text%html\Parser\CSS\Enums\Enums.vb"
+﻿#Region "Microsoft.VisualBasic::d3104f06108de8e179a7bd1fbcaf3818, sciBASIC#\mime\text%html\Parser\CSS\Enums\Enums.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 124
+    '    Code Lines: 47
+    ' Comment Lines: 71
+    '   Blank Lines: 6
+    '     File Size: 7.47 KB
+
 
     '     Enum CSSSelectorTypes
     ' 

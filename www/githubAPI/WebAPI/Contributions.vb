@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f201c14115fdd9cdbddacbbc36eb5c1e, www\githubAPI\WebAPI\Contributions.vb"
+﻿#Region "Microsoft.VisualBasic::f201c14115fdd9cdbddacbbc36eb5c1e, sciBASIC#\www\githubAPI\WebAPI\Contributions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 41
+    '    Code Lines: 27
+    ' Comment Lines: 5
+    '   Blank Lines: 9
+    '     File Size: 1.44 KB
+
 
     '     Module Contributions
     ' 

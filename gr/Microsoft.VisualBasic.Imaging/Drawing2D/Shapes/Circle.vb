@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b561c85dacd9d283f0722a9c1792ba14, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Circle.vb"
+﻿#Region "Microsoft.VisualBasic::b561c85dacd9d283f0722a9c1792ba14, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Circle.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 112
+    '    Code Lines: 81
+    ' Comment Lines: 13
+    '   Blank Lines: 18
+    '     File Size: 3.97 KB
+
 
     '     Class Circle
     ' 

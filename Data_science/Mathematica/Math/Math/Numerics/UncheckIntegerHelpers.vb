@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a962fbe21e07df9f2aea4908fab4d346, Data_science\Mathematica\Math\Math\Numerics\UncheckIntegerHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::a962fbe21e07df9f2aea4908fab4d346, sciBASIC#\Data_science\Mathematica\Math\Math\Numerics\UncheckIntegerHelpers.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 39
+    '    Code Lines: 29
+    ' Comment Lines: 3
+    '   Blank Lines: 7
+    '     File Size: 1.23 KB
+
 
     '     Module UncheckIntegerExtensions
     ' 

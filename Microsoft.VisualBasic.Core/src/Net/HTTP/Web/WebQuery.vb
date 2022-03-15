@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32b15834ea38e47fffcb8a04a1d2750f, Microsoft.VisualBasic.Core\src\Net\HTTP\Web\WebQuery.vb"
+﻿#Region "Microsoft.VisualBasic::32b15834ea38e47fffcb8a04a1d2750f, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\Web\WebQuery.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 227
+    '    Code Lines: 133
+    ' Comment Lines: 57
+    '   Blank Lines: 37
+    '     File Size: 9.40 KB
+
 
     '     Class WebQuery
     ' 

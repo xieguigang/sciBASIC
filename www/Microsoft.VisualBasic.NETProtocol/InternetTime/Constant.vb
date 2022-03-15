@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7050459bee9174d8cd2a27ffa7954a80, www\Microsoft.VisualBasic.NETProtocol\InternetTime\Constant.vb"
+﻿#Region "Microsoft.VisualBasic::7050459bee9174d8cd2a27ffa7954a80, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\InternetTime\Constant.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 76
+    '    Code Lines: 22
+    ' Comment Lines: 51
+    '   Blank Lines: 3
+    '     File Size: 2.33 KB
+
 
     '     Enum LeapIndicator
     ' 

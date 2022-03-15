@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3e7b30a981a91f050e4bc2d619f0b02, Data\SearchEngine\Index\BTree\Repository.vb"
+﻿#Region "Microsoft.VisualBasic::e3e7b30a981a91f050e4bc2d619f0b02, sciBASIC#\Data\SearchEngine\Index\BTree\Repository.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 40
+    '    Code Lines: 22
+    ' Comment Lines: 12
+    '   Blank Lines: 6
+    '     File Size: 1.39 KB
+
 
     ' Class Repository
     ' 

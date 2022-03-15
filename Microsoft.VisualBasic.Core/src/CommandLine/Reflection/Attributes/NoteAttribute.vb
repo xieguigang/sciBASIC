@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf23dd5abcd4c079b5dc29f66a019927, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\NoteAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::bf23dd5abcd4c079b5dc29f66a019927, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\NoteAttribute.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 22
+    '    Code Lines: 10
+    ' Comment Lines: 8
+    '   Blank Lines: 4
+    '     File Size: 770.00 B
+
 
     '     Class NoteAttribute
     ' 

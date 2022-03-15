@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::436da6e2d3cb6b200b900648eabc4346, gr\network-visualization\NetworkCanvas\AVI.vb"
+﻿#Region "Microsoft.VisualBasic::f26fc72e80d008a56bc766d42a017335, sciBASIC#\gr\network-visualization\NetworkCanvas\AVI.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 79
+    '    Code Lines: 65
+    ' Comment Lines: 0
+    '   Blank Lines: 14
+    '     File Size: 3.29 KB
+
 
     ' Module AVI
     ' 

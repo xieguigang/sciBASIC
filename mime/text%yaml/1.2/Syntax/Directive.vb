@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f7dba7f49e2fcca27a0e385727cd04b6, mime\text%yaml\1.2\Syntax\Directive.vb"
+﻿#Region "Microsoft.VisualBasic::f7dba7f49e2fcca27a0e385727cd04b6, sciBASIC#\mime\text%yaml\1.2\Syntax\Directive.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 42
+    '    Code Lines: 28
+    ' Comment Lines: 3
+    '   Blank Lines: 11
+    '     File Size: 1.09 KB
+
 
     '     Class Directive
     ' 

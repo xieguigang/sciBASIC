@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee02f7c99da810085173dc8448eb361b, mime\application%pdf\PdfFileWriter\417Encoder\Pdf417EncoderTables.vb"
+﻿#Region "Microsoft.VisualBasic::aa235b457278248803994e12570d3865, sciBASIC#\mime\application%pdf\PdfFileWriter\417Encoder\Pdf417EncoderTables.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 79
+    '    Code Lines: 21
+    ' Comment Lines: 48
+    '   Blank Lines: 10
+    '     File Size: 32.40 KB
+
 
     '     Class Pdf417EncoderTables
     ' 

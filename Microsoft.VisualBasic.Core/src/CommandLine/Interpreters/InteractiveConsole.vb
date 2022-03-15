@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d91fadf6f8f99c58d8e392055ca30964, Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\InteractiveConsole.vb"
+﻿#Region "Microsoft.VisualBasic::d91fadf6f8f99c58d8e392055ca30964, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\InteractiveConsole.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 133
+    '    Code Lines: 80
+    ' Comment Lines: 20
+    '   Blank Lines: 33
+    '     File Size: 4.49 KB
+
 
     '     Class InteractiveConsole
     ' 

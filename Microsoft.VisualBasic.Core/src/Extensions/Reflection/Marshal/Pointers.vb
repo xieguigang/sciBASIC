@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f13ea8556ad8d7833dfbd328e3818857, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Marshal\Pointers.vb"
+﻿#Region "Microsoft.VisualBasic::f13ea8556ad8d7833dfbd328e3818857, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Reflection\Marshal\Pointers.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 68
+    '    Code Lines: 43
+    ' Comment Lines: 8
+    '   Blank Lines: 17
+    '     File Size: 2.26 KB
+
 
     '     Class [Integer]
     ' 

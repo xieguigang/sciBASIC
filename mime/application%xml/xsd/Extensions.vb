@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13e75c8697def9e340dfaab62fab23ab, mime\application%xml\xsd\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::13e75c8697def9e340dfaab62fab23ab, sciBASIC#\mime\application%xml\xsd\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 3
+    '    Code Lines: 2
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 38.00 B
+
 
     ' Module Extensions
     ' 

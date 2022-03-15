@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c0c6cdbf3c27738d9dcadaf89831893, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\Serialization\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::0c0c6cdbf3c27738d9dcadaf89831893, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\Serialization\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 44
+    '    Code Lines: 34
+    ' Comment Lines: 6
+    '   Blank Lines: 4
+    '     File Size: 1.97 KB
+
 
     '     Module NamespaceDocExtensions
     ' 

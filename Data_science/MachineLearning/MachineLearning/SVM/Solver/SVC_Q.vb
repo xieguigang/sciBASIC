@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::311dba9ca782428ac4b336abcc1e9bf5, Data_science\MachineLearning\MachineLearning\SVM\Solver\SVC_Q.vb"
+﻿#Region "Microsoft.VisualBasic::311dba9ca782428ac4b336abcc1e9bf5, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\Solver\SVC_Q.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 59
+    '    Code Lines: 44
+    ' Comment Lines: 3
+    '   Blank Lines: 12
+    '     File Size: 1.74 KB
+
 
     '     Class SVC_Q
     ' 

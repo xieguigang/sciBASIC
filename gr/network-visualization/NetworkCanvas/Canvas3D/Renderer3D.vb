@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2948e76735855011ef3ad8e5fd0812e, gr\network-visualization\NetworkCanvas\Canvas3D\Renderer3D.vb"
+﻿#Region "Microsoft.VisualBasic::becd5215b36e78d283b89b8b23539e86, sciBASIC#\gr\network-visualization\NetworkCanvas\Canvas3D\Renderer3D.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 100
+    '    Code Lines: 76
+    ' Comment Lines: 9
+    '   Blank Lines: 15
+    '     File Size: 3.81 KB
+
 
     ' Class Renderer3D
     ' 

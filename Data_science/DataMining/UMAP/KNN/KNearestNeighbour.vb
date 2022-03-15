@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::265f66cd28164f4d96cc73ceb6364c8a, Data_science\DataMining\UMAP\KNN\KNearestNeighbour.vb"
+﻿#Region "Microsoft.VisualBasic::3362856fb4f9bc3b6985f8285964ea9c, sciBASIC#\Data_science\DataMining\UMAP\KNN\KNearestNeighbour.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 112
+    '    Code Lines: 65
+    ' Comment Lines: 29
+    '   Blank Lines: 18
+    '     File Size: 5.02 KB
+
 
     '     Class KNearestNeighbour
     ' 

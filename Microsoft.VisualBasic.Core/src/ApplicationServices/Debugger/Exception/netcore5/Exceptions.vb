@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b2ddc726abf201ae278e00a4d4a0d21, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\netcore5\Exceptions.vb"
+﻿#Region "Microsoft.VisualBasic::5b2ddc726abf201ae278e00a4d4a0d21, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\netcore5\Exceptions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 9
+    '    Code Lines: 7
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 239.00 B
+
 
     '     Class ObjectNotFoundException
     ' 

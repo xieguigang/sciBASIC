@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::39895d29fd09a958b135ec3c2e0d5745, Data_science\Mathematica\Math\Math\FuzzyLogic\Models\ModelAPI.vb"
+﻿#Region "Microsoft.VisualBasic::39895d29fd09a958b135ec3c2e0d5745, sciBASIC#\Data_science\Mathematica\Math\Math\FuzzyLogic\Models\ModelAPI.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 62
+    '    Code Lines: 46
+    ' Comment Lines: 3
+    '   Blank Lines: 13
+    '     File Size: 2.48 KB
+
 
     '     Class FuzzyModel
     ' 

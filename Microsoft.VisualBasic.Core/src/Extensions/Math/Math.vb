@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::573f8226f3706cab4a6520cc52a2c1c5, Microsoft.VisualBasic.Core\src\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::3f6ac01bacf524e23d19acd313c14488, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Math.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 614
+    '    Code Lines: 362
+    ' Comment Lines: 183
+    '   Blank Lines: 69
+    '     File Size: 20.71 KB
+
 
     '     Module VBMath
     ' 

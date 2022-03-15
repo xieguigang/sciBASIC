@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::853113e2b5a45591c2f8cb33fc040466, Data\DataFrame\StorageProvider\ComponntModels\ReflectionBridges\Dictionary.vb"
+﻿#Region "Microsoft.VisualBasic::853113e2b5a45591c2f8cb33fc040466, sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\ReflectionBridges\Dictionary.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 40
+    '    Code Lines: 30
+    ' Comment Lines: 0
+    '   Blank Lines: 10
+    '     File Size: 1.30 KB
+
 
     '     Class MetaAttribute
     ' 

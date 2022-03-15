@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7264459fc432f41ff7af91c66598588, Microsoft.VisualBasic.Core\src\Scripting\TokenIcer\OperatorExpression.vb"
+﻿#Region "Microsoft.VisualBasic::b7264459fc432f41ff7af91c66598588, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\TokenIcer\OperatorExpression.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 115
+    '    Code Lines: 104
+    ' Comment Lines: 4
+    '   Blank Lines: 7
+    '     File Size: 5.88 KB
+
 
     '     Module OperatorExpression
     ' 

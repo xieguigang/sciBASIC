@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1ac3c193e69bd4687c3dfbe2d1a4930, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\InteractiveDevice.vb"
+﻿#Region "Microsoft.VisualBasic::f1ac3c193e69bd4687c3dfbe2d1a4930, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\InteractiveDevice.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 211
+    '    Code Lines: 114
+    ' Comment Lines: 62
+    '   Blank Lines: 35
+    '     File Size: 8.45 KB
+
 
     '     Class InteractiveDevice
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07c7f917e89139650882b38cc1d8053c, Microsoft.VisualBasic.Core\src\Globals.vb"
+﻿#Region "Microsoft.VisualBasic::07c7f917e89139650882b38cc1d8053c, sciBASIC#\Microsoft.VisualBasic.Core\src\Globals.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 45
+    '    Code Lines: 16
+    ' Comment Lines: 22
+    '   Blank Lines: 7
+    '     File Size: 1.28 KB
+
 
     ' Module Globals
     ' 

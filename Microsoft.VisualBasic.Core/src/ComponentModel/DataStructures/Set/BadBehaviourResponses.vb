@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc03d914d599c8998230d843a443ae88, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Set\BadBehaviourResponses.vb"
+﻿#Region "Microsoft.VisualBasic::bc03d914d599c8998230d843a443ae88, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Set\BadBehaviourResponses.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 18
+    '    Code Lines: 6
+    ' Comment Lines: 10
+    '   Blank Lines: 2
+    '     File Size: 545.00 B
+
 
     '     Enum BadBehaviourResponses
     ' 

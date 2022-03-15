@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0f641fb6ef0df2e32b739fa1c8cdad8, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\VisualBasicAppException.vb"
+﻿#Region "Microsoft.VisualBasic::a0f641fb6ef0df2e32b739fa1c8cdad8, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\VisualBasicAppException.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 44
+    '    Code Lines: 18
+    ' Comment Lines: 20
+    '   Blank Lines: 6
+    '     File Size: 1.63 KB
+
 
     '     Class VisualBasicAppException
     ' 

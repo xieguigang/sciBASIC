@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::39203e6124720880104bb948c51f19dc, Data\SearchEngine\Index\BTree\StoredProcedure.vb"
+﻿#Region "Microsoft.VisualBasic::39203e6124720880104bb948c51f19dc, sciBASIC#\Data\SearchEngine\Index\BTree\StoredProcedure.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 89
+    '    Code Lines: 75
+    ' Comment Lines: 0
+    '   Blank Lines: 14
+    '     File Size: 3.14 KB
+
 
     ' Module StoredProcedure
     ' 

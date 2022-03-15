@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17c85c08cf998d30caa37cb006302524, Data_science\Visualization\Plots-statistics\Zscore\ZScoresPlot.vb"
+﻿#Region "Microsoft.VisualBasic::17c85c08cf998d30caa37cb006302524, sciBASIC#\Data_science\Visualization\Plots-statistics\Zscore\ZScoresPlot.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 15
+    '    Code Lines: 12
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 486.00 B
+
 
     ' Class ZScoresPlot
     ' 

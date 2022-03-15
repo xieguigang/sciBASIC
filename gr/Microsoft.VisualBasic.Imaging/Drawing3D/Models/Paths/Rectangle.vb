@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e924ad3b5077799ccb8c858fd143ccf4, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Paths\Rectangle.vb"
+﻿#Region "Microsoft.VisualBasic::e924ad3b5077799ccb8c858fd143ccf4, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Paths\Rectangle.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 16
+    '    Code Lines: 11
+    ' Comment Lines: 3
+    '   Blank Lines: 2
+    '     File Size: 575.00 B
+
 
     '     Class Rectangle
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f4f9cddb13ef03d682594b7938ebda9, Microsoft.VisualBasic.Core\src\Language\Language\C\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::5f4f9cddb13ef03d682594b7938ebda9, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\C\Vector.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 16
+    '    Code Lines: 12
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 390.00 B
+
 
     '     Module Vector
     ' 

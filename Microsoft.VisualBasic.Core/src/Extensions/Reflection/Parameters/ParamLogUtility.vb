@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e65ac0e10a02ece50ebe67cb3f1cabe6, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Parameters\ParamLogUtility.vb"
+﻿#Region "Microsoft.VisualBasic::e65ac0e10a02ece50ebe67cb3f1cabe6, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Reflection\Parameters\ParamLogUtility.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 123
+    '    Code Lines: 84
+    ' Comment Lines: 23
+    '   Blank Lines: 16
+    '     File Size: 5.70 KB
+
 
     '     Module ParamLogUtility
     ' 

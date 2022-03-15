@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee1594793836462f564cc264ea8e05f2, gr\avi\FrameStream.vb"
+﻿#Region "Microsoft.VisualBasic::ee1594793836462f564cc264ea8e05f2, sciBASIC#\gr\avi\FrameStream.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 35
+    '    Code Lines: 25
+    ' Comment Lines: 2
+    '   Blank Lines: 8
+    '     File Size: 1.11 KB
+
 
     ' Class FrameStream
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc611785dade38398154b491973ac26b, Microsoft.VisualBasic.Core\src\Text\Xml\Models\ValueTuples\NamedValues.vb"
+﻿#Region "Microsoft.VisualBasic::fc611785dade38398154b491973ac26b, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\Models\ValueTuples\NamedValues.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 125
+    '    Code Lines: 70
+    ' Comment Lines: 35
+    '   Blank Lines: 20
+    '     File Size: 3.99 KB
+
 
     '     Class NamedValue
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a8004817b6103dc4e58893f6cf4e4982, Data_science\DataMining\UMAP\test\test2.vb"
+﻿#Region "Microsoft.VisualBasic::a8004817b6103dc4e58893f6cf4e4982, sciBASIC#\Data_science\DataMining\UMAP\test\test2.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 17
+    '    Code Lines: 12
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 525.00 B
+
 
     ' Module test2
     ' 

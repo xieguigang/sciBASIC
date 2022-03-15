@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ed7b7f692d32c2dc0721df7380401e2, Data_science\DataMining\UMAP\Components\NNDescent.vb"
+﻿#Region "Microsoft.VisualBasic::9ed7b7f692d32c2dc0721df7380401e2, sciBASIC#\Data_science\DataMining\UMAP\Components\NNDescent.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 220
+    '    Code Lines: 154
+    ' Comment Lines: 24
+    '   Blank Lines: 42
+    '     File Size: 9.05 KB
+
 
     ' Interface NNDescentFn
     ' 

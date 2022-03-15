@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07e08422335d228a158f898d1d9752a0, Data_science\Mathematica\Math\Math\Algebra\Vector\VectorEqualityComparer.vb"
+﻿#Region "Microsoft.VisualBasic::07e08422335d228a158f898d1d9752a0, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Vector\VectorEqualityComparer.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 60
+    '    Code Lines: 35
+    ' Comment Lines: 15
+    '   Blank Lines: 10
+    '     File Size: 2.03 KB
+
 
     '     Class VectorEqualityComparer
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b561929ac8aa841e80923efc6860ee8, Microsoft.VisualBasic.Core\src\ComponentModel\RelayCommand.vb"
+﻿#Region "Microsoft.VisualBasic::4b561929ac8aa841e80923efc6860ee8, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\RelayCommand.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 74
+    '    Code Lines: 51
+    ' Comment Lines: 3
+    '   Blank Lines: 20
+    '     File Size: 2.10 KB
+
 
     '     Class ICallbackInvoke
     ' 

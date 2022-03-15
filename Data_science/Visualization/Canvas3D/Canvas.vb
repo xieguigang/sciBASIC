@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5635777a177f9de3ca9b830c9e06f13, Data_science\Visualization\Canvas3D\Canvas.vb"
+﻿#Region "Microsoft.VisualBasic::b5635777a177f9de3ca9b830c9e06f13, sciBASIC#\Data_science\Visualization\Canvas3D\Canvas.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 93
+    '    Code Lines: 40
+    ' Comment Lines: 32
+    '   Blank Lines: 21
+    '     File Size: 4.05 KB
+
 
     '     Class Canvas
     ' 

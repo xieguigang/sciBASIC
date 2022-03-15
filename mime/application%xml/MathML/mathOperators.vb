@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a95ebd30216be532744c6995b88bdbba, mime\application%xml\MathML\mathOperators.vb"
+﻿#Region "Microsoft.VisualBasic::a95ebd30216be532744c6995b88bdbba, sciBASIC#\mime\application%xml\MathML\mathOperators.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 12
+    '    Code Lines: 10
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 281.00 B
+
 
     '     Enum mathOperators
     ' 

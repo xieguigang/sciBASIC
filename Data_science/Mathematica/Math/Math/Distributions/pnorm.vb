@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93e5dc8f01ee650c736b33059c090441, Data_science\Mathematica\Math\Math\Distributions\pnorm.vb"
+﻿#Region "Microsoft.VisualBasic::6b1c9ec2a1aa6b850055901b1def1756, sciBASIC#\Data_science\Mathematica\Math\Math\Distributions\pnorm.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 287
+    '    Code Lines: 138
+    ' Comment Lines: 118
+    '   Blank Lines: 31
+    '     File Size: 12.37 KB
+
 
     '     Module pnorm
     ' 

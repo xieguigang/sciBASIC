@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c575a0b735567067462271099507a5ea, Data_science\Mathematica\Quick_correlation_matrix_heatmap\Heatmap\Program.vb"
+﻿#Region "Microsoft.VisualBasic::c575a0b735567067462271099507a5ea, sciBASIC#\Data_science\Mathematica\Quick_correlation_matrix_heatmap\Heatmap\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 41
+    '    Code Lines: 22
+    ' Comment Lines: 13
+    '   Blank Lines: 6
+    '     File Size: 1.79 KB
+
 
     ' Module Program
     ' 

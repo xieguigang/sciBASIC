@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c18b9ce8f18730eb01804ee15fb80a6, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\DistanceMap.vb"
+﻿#Region "Microsoft.VisualBasic::4c18b9ce8f18730eb01804ee15fb80a6, sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\DistanceMap.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 142
+    '    Code Lines: 101
+    ' Comment Lines: 14
+    '   Blank Lines: 27
+    '     File Size: 4.55 KB
+
 
     '     Class DistanceMap
     ' 

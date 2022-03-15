@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05fe3e7ff88f140aa71445e977390715, mime\application%pdf\PdfReader\Parser\ParseObjectReference.vb"
+﻿#Region "Microsoft.VisualBasic::782f465cba6b0112d4ed3e2d49902120, sciBASIC#\mime\application%pdf\PdfReader\Parser\ParseObjectReference.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 30
+    '    Code Lines: 26
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 766.00 B
+
 
     '     Class ParseObjectReference
     ' 

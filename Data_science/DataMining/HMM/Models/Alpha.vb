@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4691e1bc7df46f9cdd85facdf8f52039, Data_science\DataMining\HMM\Models\Alpha.vb"
+﻿#Region "Microsoft.VisualBasic::f27372ab0a0ecd6085ee5139f4b8efa5, sciBASIC#\Data_science\DataMining\HMM\Models\Alpha.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 12
+    '    Code Lines: 6
+    ' Comment Lines: 3
+    '   Blank Lines: 3
+    '     File Size: 238.00 B
+
 
     '     Class Alpha
     ' 

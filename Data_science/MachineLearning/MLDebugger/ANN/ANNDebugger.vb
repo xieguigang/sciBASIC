@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d70f0cb203c19c7c6b523d90471e118, Data_science\MachineLearning\MLDebugger\ANN\ANNDebugger.vb"
+﻿#Region "Microsoft.VisualBasic::8d70f0cb203c19c7c6b523d90471e118, sciBASIC#\Data_science\MachineLearning\MLDebugger\ANN\ANNDebugger.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 247
+    '    Code Lines: 195
+    ' Comment Lines: 15
+    '   Blank Lines: 37
+    '     File Size: 11.32 KB
+
 
     ' Class ANNDebugger
     ' 

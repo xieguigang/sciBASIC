@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::776b8416ea8cd286200447e3e5c93cf2, Microsoft.VisualBasic.Core\src\Scripting\MetaData\EntryPointMetaData.vb"
+﻿#Region "Microsoft.VisualBasic::776b8416ea8cd286200447e3e5c93cf2, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\MetaData\EntryPointMetaData.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 78
+    '    Code Lines: 45
+    ' Comment Lines: 15
+    '   Blank Lines: 18
+    '     File Size: 2.78 KB
+
 
     '     Class FunctionReturns
     ' 

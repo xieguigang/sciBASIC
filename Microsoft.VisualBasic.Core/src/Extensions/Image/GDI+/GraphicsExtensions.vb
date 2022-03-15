@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05e76c6fae612d99a780d75dd0cfa213, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\GraphicsExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::3e4d6b9e71ddbdd42224718031795db5, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\GraphicsExtensions.vb"
 
     ' Author:
     ' 
@@ -31,13 +31,23 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 607
+    '    Code Lines: 369
+    ' Comment Lines: 153
+    '   Blank Lines: 85
+    '     File Size: 23.08 KB
+
+
     '     Module GraphicsExtensions
     ' 
     '         Function: CanvasCreateFromImageFile, (+2 Overloads) Clone, ColorBrush, CreateCanvas2D, (+4 Overloads) CreateGDIDevice
     '                   CreateObject, EntireImage, GetBrush, GetBrushes, (+2 Overloads) GetIcon
     '                   GetStreamBuffer, GetStringPath, (+2 Overloads) GraphicsPath, ImageAddFrame, IsValidGDIParameter
-    '                   (+3 Overloads) LoadImage, (+2 Overloads) Opacity, (+2 Overloads) PointF, PointSizeScale, SaveIcon
-    '                   SizeF, ToFloat, ToPoint, ToPoints, ToStream
+    '                   (+3 Overloads) LoadImage, (+2 Overloads) Opacity, (+2 Overloads) PointF, SaveIcon, SizeF
+    '                   ToFloat, ToPoint, ToPoints, ToStream
     ' 
     '         Sub: (+5 Overloads) DrawCircle
     ' 

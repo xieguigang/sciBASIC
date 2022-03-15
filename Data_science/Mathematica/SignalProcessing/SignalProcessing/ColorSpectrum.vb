@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3dbe4423d54ea378342441e4b3cacb79, Data_science\Mathematica\SignalProcessing\SignalProcessing\ColorSpectrum.vb"
+﻿#Region "Microsoft.VisualBasic::3dbe4423d54ea378342441e4b3cacb79, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\ColorSpectrum.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 69
+    '    Code Lines: 52
+    ' Comment Lines: 10
+    '   Blank Lines: 7
+    '     File Size: 2.11 KB
+
 
     ' Module ColorSpectrum
     ' 

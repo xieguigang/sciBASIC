@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a13f6454460e04c2025835f07ef6f16e, mime\application%pdf\PdfReader\Document\PdfNull.vb"
+﻿#Region "Microsoft.VisualBasic::f723c7cfb242a0b9ac53bb9835d89d93, sciBASIC#\mime\application%pdf\PdfReader\Document\PdfNull.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 17
+    '    Code Lines: 14
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 422.00 B
+
 
     '     Class PdfNull
     ' 

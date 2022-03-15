@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6660c748be09594936710401bc64f5cf, Data_science\MachineLearning\MachineLearning\SVM\Parameter\Parameter.vb"
+﻿#Region "Microsoft.VisualBasic::6660c748be09594936710401bc64f5cf, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\Parameter\Parameter.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 198
+    '    Code Lines: 98
+    ' Comment Lines: 74
+    '   Blank Lines: 26
+    '     File Size: 6.87 KB
+
 
     '     Class Parameter
     ' 

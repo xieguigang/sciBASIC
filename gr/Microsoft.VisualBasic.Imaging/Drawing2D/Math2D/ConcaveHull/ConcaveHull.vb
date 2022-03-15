@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed5be1f4a2b240d9ab197b8e3036e71d, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConcaveHull\ConcaveHull.vb"
+﻿#Region "Microsoft.VisualBasic::ed5be1f4a2b240d9ab197b8e3036e71d, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConcaveHull\ConcaveHull.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 325
+    '    Code Lines: 281
+    ' Comment Lines: 9
+    '   Blank Lines: 35
+    '     File Size: 13.24 KB
+
 
     '     Class DelaunayTriangulation
     ' 

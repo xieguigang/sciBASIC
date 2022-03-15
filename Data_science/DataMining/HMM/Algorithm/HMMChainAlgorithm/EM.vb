@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c43d712ea72f4f6c37b87a20b620846, Data_science\DataMining\HMM\Algorithm\HMMChainAlgorithm\EM.vb"
+﻿#Region "Microsoft.VisualBasic::5c43d712ea72f4f6c37b87a20b620846, sciBASIC#\Data_science\DataMining\HMM\Algorithm\HMMChainAlgorithm\EM.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 78
+    '    Code Lines: 57
+    ' Comment Lines: 0
+    '   Blank Lines: 21
+    '     File Size: 3.06 KB
+
 
     '     Class EM
     ' 

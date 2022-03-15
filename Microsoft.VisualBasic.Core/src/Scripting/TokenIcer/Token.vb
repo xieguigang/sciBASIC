@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b332caec6ef970ab66731a848fe4aa8c, Microsoft.VisualBasic.Core\src\Scripting\TokenIcer\Token.vb"
+﻿#Region "Microsoft.VisualBasic::c5045566e9af7ab01bdb3592e75aa9a5, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\TokenIcer\Token.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 105
+    '    Code Lines: 62
+    ' Comment Lines: 26
+    '   Blank Lines: 17
+    '     File Size: 3.57 KB
+
 
     '     Class CodeToken
     ' 

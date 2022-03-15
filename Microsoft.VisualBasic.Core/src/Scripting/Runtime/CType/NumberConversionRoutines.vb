@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d263314bbddb400c829da18e7d03947, Microsoft.VisualBasic.Core\src\Scripting\Runtime\CType\NumberConversionRoutines.vb"
+﻿#Region "Microsoft.VisualBasic::5d263314bbddb400c829da18e7d03947, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\Runtime\CType\NumberConversionRoutines.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 176
+    '    Code Lines: 139
+    ' Comment Lines: 15
+    '   Blank Lines: 22
+    '     File Size: 6.61 KB
+
 
     '     Module NumberConversionRoutines
     ' 

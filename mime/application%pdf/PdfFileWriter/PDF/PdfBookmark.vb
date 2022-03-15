@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::852f5b08685f5073685e57d4fbb9169f, mime\application%pdf\PdfFileWriter\PDF\PdfBookmark.vb"
+﻿#Region "Microsoft.VisualBasic::792022a1b33f7114f036eb1bcb66ed3d, sciBASIC#\mime\application%pdf\PdfFileWriter\PDF\PdfBookmark.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 306
+    '    Code Lines: 93
+    ' Comment Lines: 163
+    '   Blank Lines: 50
+    '     File Size: 12.28 KB
+
 
     '     Class PdfBookmark
     ' 

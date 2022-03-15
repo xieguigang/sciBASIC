@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e837fb36b272bd1c0861e4389cec353b, Data_science\Mathematica\Math\test\scriptTest.vb"
+﻿#Region "Microsoft.VisualBasic::e837fb36b272bd1c0861e4389cec353b, sciBASIC#\Data_science\Mathematica\Math\test\scriptTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 16
+    '    Code Lines: 8
+    ' Comment Lines: 3
+    '   Blank Lines: 5
+    '     File Size: 596.00 B
+
 
     ' Module scriptTest
     ' 

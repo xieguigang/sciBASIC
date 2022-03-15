@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b23054bc1558daef393b5315f932249a, Data_science\DataMining\DataMining\DecisionTree\Attributes.vb"
+﻿#Region "Microsoft.VisualBasic::b23054bc1558daef393b5315f932249a, sciBASIC#\Data_science\DataMining\DataMining\DecisionTree\Attributes.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 36
+    '    Code Lines: 26
+    ' Comment Lines: 3
+    '   Blank Lines: 7
+    '     File Size: 1.20 KB
+
 
     '     Class Attributes
     ' 

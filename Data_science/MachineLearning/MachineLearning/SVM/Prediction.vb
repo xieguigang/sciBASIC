@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::098fff8df089a51ebd090c795c6096ab, Data_science\MachineLearning\MachineLearning\SVM\Prediction.vb"
+﻿#Region "Microsoft.VisualBasic::098fff8df089a51ebd090c795c6096ab, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\Prediction.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 171
+    '    Code Lines: 93
+    ' Comment Lines: 51
+    '   Blank Lines: 27
+    '     File Size: 7.33 KB
+
 
     '     Module Prediction
     ' 

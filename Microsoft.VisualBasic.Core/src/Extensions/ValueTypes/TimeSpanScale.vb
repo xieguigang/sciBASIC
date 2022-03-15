@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f15c3bec8897be389b15949bd09eb9f2, Microsoft.VisualBasic.Core\src\Extensions\ValueTypes\TimeSpanScale.vb"
+﻿#Region "Microsoft.VisualBasic::f15c3bec8897be389b15949bd09eb9f2, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\ValueTypes\TimeSpanScale.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 15
+    '    Code Lines: 11
+    ' Comment Lines: 3
+    '   Blank Lines: 1
+    '     File Size: 288.00 B
+
 
     '     Enum TimeSpanScale
     ' 

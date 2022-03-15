@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b238416517d55a92734965c6fa232a7, Data_science\MachineLearning\MachineLearning\QLearning\QLearning.vb"
+﻿#Region "Microsoft.VisualBasic::2b238416517d55a92734965c6fa232a7, sciBASIC#\Data_science\MachineLearning\MachineLearning\QLearning\QLearning.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 80
+    '    Code Lines: 32
+    ' Comment Lines: 34
+    '   Blank Lines: 14
+    '     File Size: 2.77 KB
+
 
     '     Class QLearning
     ' 

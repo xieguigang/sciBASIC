@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::928207e415a54cd7822190ea41ccd707, Data_science\DataMining\DataMining\test\KmedoidsTest.vb"
+﻿#Region "Microsoft.VisualBasic::928207e415a54cd7822190ea41ccd707, sciBASIC#\Data_science\DataMining\DataMining\test\KmedoidsTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 75
+    '    Code Lines: 0
+    ' Comment Lines: 58
+    '   Blank Lines: 17
+    '     File Size: 2.82 KB
+
 
     ' 
     ' /********************************************************************************/

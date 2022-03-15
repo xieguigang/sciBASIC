@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1982150d07994b6fc4934d13ea614a9e, mime\text%html\jQuery\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::1982150d07994b6fc4934d13ea614a9e, sciBASIC#\mime\text%html\jQuery\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 29
+    '    Code Lines: 18
+    ' Comment Lines: 7
+    '   Blank Lines: 4
+    '     File Size: 1.09 KB
+
 
     '     Module Extensions
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3360320b367f9504be5efb12d5a9f333, Data_science\DataMining\UMAP\Components\DistanceCalculation.vb"
+﻿#Region "Microsoft.VisualBasic::3360320b367f9504be5efb12d5a9f333, sciBASIC#\Data_science\DataMining\UMAP\Components\DistanceCalculation.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1
+    '    Code Lines: 1
+    ' Comment Lines: 0
+    '   Blank Lines: 0
+    '     File Size: 88.00 B
+
 
     ' Delegate Function
     ' 

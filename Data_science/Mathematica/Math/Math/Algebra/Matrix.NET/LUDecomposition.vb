@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5809d94b0a493bbe804747524575a5ad, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\LUDecomposition.vb"
+﻿#Region "Microsoft.VisualBasic::5809d94b0a493bbe804747524575a5ad, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\LUDecomposition.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 275
+    '    Code Lines: 170
+    ' Comment Lines: 66
+    '   Blank Lines: 39
+    '     File Size: 9.69 KB
+
 
     '     Class LUDecomposition
     ' 

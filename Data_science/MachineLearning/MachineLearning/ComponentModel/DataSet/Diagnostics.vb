@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4dcf81493730d4b76e02a700234ffd7, Data_science\MachineLearning\MachineLearning\DataSet\Diagnostics.vb"
+﻿#Region "Microsoft.VisualBasic::acb731df769fc5b2b617239d4b471997, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\Diagnostics.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 65
+    '    Code Lines: 55
+    ' Comment Lines: 2
+    '   Blank Lines: 8
+    '     File Size: 2.68 KB
+
 
     '     Module Diagnostics
     ' 

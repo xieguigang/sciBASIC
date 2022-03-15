@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99bcd70494d7881dd2097db6484e32f6, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\Program.vb"
+﻿#Region "Microsoft.VisualBasic::99bcd70494d7881dd2097db6484e32f6, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 21
+    '    Code Lines: 12
+    ' Comment Lines: 6
+    '   Blank Lines: 3
+    '     File Size: 641.00 B
+
 
     '     Module Program
     ' 

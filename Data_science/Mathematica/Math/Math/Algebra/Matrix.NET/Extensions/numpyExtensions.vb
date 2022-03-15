@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3304f087d232b224603136591e899a2, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Extensions\numpyExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::b3304f087d232b224603136591e899a2, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Extensions\numpyExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 148
+    '    Code Lines: 98
+    ' Comment Lines: 39
+    '   Blank Lines: 11
+    '     File Size: 6.37 KB
+
 
     '     Enum ApplyOnAxis
     ' 

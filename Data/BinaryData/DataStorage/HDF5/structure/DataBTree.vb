@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a08c765afdb007638a49fca93f607274, Data\BinaryData\DataStorage\HDF5\structure\DataBTree.vb"
+﻿#Region "Microsoft.VisualBasic::a08c765afdb007638a49fca93f607274, sciBASIC#\Data\BinaryData\DataStorage\HDF5\structure\DataBTree.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 40
+    '    Code Lines: 24
+    ' Comment Lines: 6
+    '   Blank Lines: 10
+    '     File Size: 1.14 KB
+
 
     '     Class DataBTree
     ' 

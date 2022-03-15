@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d19fe63b279eb9a79c08775376e129b, Data_science\Mathematica\SignalProcessing\SignalProcessing\WaveletTransform\Constructors\WaveletConstructor.vb"
+﻿#Region "Microsoft.VisualBasic::1d19fe63b279eb9a79c08775376e129b, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\WaveletTransform\Constructors\WaveletConstructor.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 24
+    '    Code Lines: 18
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 759.00 B
+
 
     '     Class WaveletConstructor
     ' 

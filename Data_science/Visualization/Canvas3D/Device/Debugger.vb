@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63c04126283cef81ac29097f36568bbe, Data_science\Visualization\Canvas3D\Device\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::63c04126283cef81ac29097f36568bbe, sciBASIC#\Data_science\Visualization\Canvas3D\Device\Debugger.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 96
+    '    Code Lines: 60
+    ' Comment Lines: 17
+    '   Blank Lines: 19
+    '     File Size: 3.69 KB
+
 
     '     Class Debugger
     ' 

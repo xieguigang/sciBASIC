@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::858cfa506ad7b1009dd88fdab472e8a0, gr\network-visualization\Datavisualization.Network\Analysis\Model\DirectedVertex.vb"
+﻿#Region "Microsoft.VisualBasic::858cfa506ad7b1009dd88fdab472e8a0, sciBASIC#\gr\network-visualization\Datavisualization.Network\Analysis\Model\DirectedVertex.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 89
+    '    Code Lines: 48
+    ' Comment Lines: 27
+    '   Blank Lines: 14
+    '     File Size: 2.92 KB
+
 
     '     Class DirectedVertex
     ' 

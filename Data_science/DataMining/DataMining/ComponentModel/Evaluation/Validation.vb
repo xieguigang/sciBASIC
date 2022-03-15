@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c77bf813ad87548928479041479a1a78, Data_science\DataMining\DataMining\ComponentModel\Evaluation\Validation.vb"
+﻿#Region "Microsoft.VisualBasic::c77bf813ad87548928479041479a1a78, sciBASIC#\Data_science\DataMining\DataMining\ComponentModel\Evaluation\Validation.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 218
+    '    Code Lines: 132
+    ' Comment Lines: 64
+    '   Blank Lines: 22
+    '     File Size: 8.48 KB
+
 
     '     Structure Validation
     ' 

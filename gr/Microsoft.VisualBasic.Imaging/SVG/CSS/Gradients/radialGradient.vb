@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e86a136d912896380e4cec90a65fe6d0, gr\Microsoft.VisualBasic.Imaging\SVG\CSS\Gradients\radialGradient.vb"
+﻿#Region "Microsoft.VisualBasic::e86a136d912896380e4cec90a65fe6d0, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\CSS\Gradients\radialGradient.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 16
+    '    Code Lines: 12
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 533.00 B
+
 
     '     Class radialGradient
     ' 

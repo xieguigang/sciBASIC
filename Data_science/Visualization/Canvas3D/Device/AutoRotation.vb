@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15ecd036f512fb986943c5906afefaab, Data_science\Visualization\Canvas3D\Device\AutoRotation.vb"
+﻿#Region "Microsoft.VisualBasic::15ecd036f512fb986943c5906afefaab, sciBASIC#\Data_science\Visualization\Canvas3D\Device\AutoRotation.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 44
+    '    Code Lines: 34
+    ' Comment Lines: 0
+    '   Blank Lines: 10
+    '     File Size: 1.07 KB
+
 
     '     Class AutoRotation
     ' 

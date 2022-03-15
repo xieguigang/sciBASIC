@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c3ae85564596a3d9b88f3f94db5041f, Data\BinaryData\BinaryData\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::4b6cc84c77e86905479f815f26966b0f, sciBASIC#\Data\BinaryData\BinaryData\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 128
+    '    Code Lines: 77
+    ' Comment Lines: 33
+    '   Blank Lines: 18
+    '     File Size: 3.93 KB
+
 
     ' Interface IMagicBlock
     ' 

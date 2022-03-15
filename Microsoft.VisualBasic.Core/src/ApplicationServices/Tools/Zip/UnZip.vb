@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a114dfa07192522412fc7036f4093edf, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\UnZip.vb"
+﻿#Region "Microsoft.VisualBasic::bf1bbc5a8c6eae30a57c602fcfc64f69, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\UnZip.vb"
 
     ' Author:
     ' 
@@ -31,11 +31,21 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 218
+    '    Code Lines: 111
+    ' Comment Lines: 84
+    '   Blank Lines: 23
+    '     File Size: 10.84 KB
+
+
     '     Module UnZip
     ' 
-    '         Function: ExtractToSelfDirectory
+    '         Function: ExtractToSelfDirectory, ImprovedExtractToDirectory
     ' 
-    '         Sub: ExtractToFileInternal, (+3 Overloads) ImprovedExtractToDirectory, ImprovedExtractToFile
+    '         Sub: ExtractToFileInternal, (+2 Overloads) ImprovedExtractToDirectory, ImprovedExtractToFile
     ' 
     ' 
     ' /********************************************************************************/

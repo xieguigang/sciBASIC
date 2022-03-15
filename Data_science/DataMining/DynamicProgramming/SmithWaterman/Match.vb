@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d6c752f4b496aa2afd2493c3ee7ab95, Data_science\DataMining\DynamicProgramming\SmithWaterman\Match.vb"
+﻿#Region "Microsoft.VisualBasic::5d6c752f4b496aa2afd2493c3ee7ab95, sciBASIC#\Data_science\DataMining\DynamicProgramming\SmithWaterman\Match.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 92
+    '    Code Lines: 48
+    ' Comment Lines: 30
+    '   Blank Lines: 14
+    '     File Size: 2.87 KB
+
 
     '     Class Match
     ' 

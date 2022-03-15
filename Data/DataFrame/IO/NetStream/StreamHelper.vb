@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86239ace0ce06bc036699a75623d7f06, Data\DataFrame\IO\NetStream\StreamHelper.vb"
+﻿#Region "Microsoft.VisualBasic::86239ace0ce06bc036699a75623d7f06, sciBASIC#\Data\DataFrame\IO\NetStream\StreamHelper.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 78
+    '    Code Lines: 0
+    ' Comment Lines: 62
+    '   Blank Lines: 16
+    '     File Size: 2.50 KB
+
 
     ' 
     ' /********************************************************************************/

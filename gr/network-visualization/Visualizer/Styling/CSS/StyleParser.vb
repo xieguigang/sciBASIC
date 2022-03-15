@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::175d9df9b7a86cf85d25e2b4b6367bc7, gr\network-visualization\Visualizer\Styling\CSS\StyleParser.vb"
+﻿#Region "Microsoft.VisualBasic::175d9df9b7a86cf85d25e2b4b6367bc7, sciBASIC#\gr\network-visualization\Visualizer\Styling\CSS\StyleParser.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 16
+    '    Code Lines: 9
+    ' Comment Lines: 3
+    '   Blank Lines: 4
+    '     File Size: 374.00 B
+
 
     '     Module StyleParser
     ' 

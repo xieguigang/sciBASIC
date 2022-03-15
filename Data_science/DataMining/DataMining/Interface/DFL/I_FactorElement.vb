@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0748f70313fc01e2b6809c5f8a59e771, Data_science\DataMining\DataMining\Interface\DFL\I_FactorElement.vb"
+﻿#Region "Microsoft.VisualBasic::0748f70313fc01e2b6809c5f8a59e771, sciBASIC#\Data_science\DataMining\DataMining\Interface\DFL\I_FactorElement.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 120
+    '    Code Lines: 62
+    ' Comment Lines: 42
+    '   Blank Lines: 16
+    '     File Size: 4.56 KB
+
 
     '     Class I_FactorElement
     ' 

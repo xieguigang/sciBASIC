@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9dcb5e3f47f6ca3fbd2267da011ed69, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\DataModels\ProfileItem.vb"
+﻿#Region "Microsoft.VisualBasic::c9dcb5e3f47f6ca3fbd2267da011ed69, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Settings\DataModels\ProfileItem.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 81
+    '    Code Lines: 35
+    ' Comment Lines: 37
+    '   Blank Lines: 9
+    '     File Size: 3.18 KB
+
 
     '     Enum ValueTypes
     ' 

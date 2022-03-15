@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::77cf0e6b9b104b79ae33000dd4b1e6a7, Data_science\MachineLearning\MachineLearning\SVM\SVMUtilities.vb"
+﻿#Region "Microsoft.VisualBasic::77cf0e6b9b104b79ae33000dd4b1e6a7, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\SVMUtilities.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 96
+    '    Code Lines: 78
+    ' Comment Lines: 1
+    '   Blank Lines: 17
+    '     File Size: 4.18 KB
+
 
     '     Module SVMUtilities
     ' 

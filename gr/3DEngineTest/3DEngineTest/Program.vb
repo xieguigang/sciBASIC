@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0c5cdad9cc896d0d686e6dd8cfc03df, gr\3DEngineTest\3DEngineTest\Program.vb"
+﻿#Region "Microsoft.VisualBasic::a0c5cdad9cc896d0d686e6dd8cfc03df, sciBASIC#\gr\3DEngineTest\3DEngineTest\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 6
+    ' Comment Lines: 1
+    '   Blank Lines: 1
+    '     File Size: 173.00 B
+
 
     ' Module Program
     ' 

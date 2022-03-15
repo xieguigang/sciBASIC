@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aff01acc33b6fc81473de30392c35c46, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\GraphicsData.vb"
+﻿#Region "Microsoft.VisualBasic::aff01acc33b6fc81473de30392c35c46, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drivers\Models\GraphicsData.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 125
+    '    Code Lines: 65
+    ' Comment Lines: 45
+    '   Blank Lines: 15
+    '     File Size: 4.76 KB
+
 
     '     Class GraphicsData
     ' 

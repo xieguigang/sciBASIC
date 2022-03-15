@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab1854e7b35f4e1435cce11a1418628b, Data_science\Darwinism\GAF_test2\Kinetics_of_influenza_A_virus_infection_in_humans.vb"
+﻿#Region "Microsoft.VisualBasic::ab1854e7b35f4e1435cce11a1418628b, sciBASIC#\Data_science\Darwinism\GAF_test2\Kinetics_of_influenza_A_virus_infection_in_humans.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 53
+    '    Code Lines: 38
+    ' Comment Lines: 6
+    '   Blank Lines: 9
+    '     File Size: 1.47 KB
+
 
     ' Class Kinetics_of_influenza_A_virus_infection_in_humans
     ' 

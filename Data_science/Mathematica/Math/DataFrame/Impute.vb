@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa181a1105c8fc75980e14faff0b87ad, Data_science\Mathematica\Math\DataFrame\Impute.vb"
+﻿#Region "Microsoft.VisualBasic::aa181a1105c8fc75980e14faff0b87ad, sciBASIC#\Data_science\Mathematica\Math\DataFrame\Impute.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 91
+    '    Code Lines: 70
+    ' Comment Lines: 7
+    '   Blank Lines: 14
+    '     File Size: 3.50 KB
+
 
     ' Module Impute
     ' 

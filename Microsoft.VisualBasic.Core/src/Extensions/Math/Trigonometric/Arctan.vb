@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73b97bd3da14c1a328975ca711b33bae, Microsoft.VisualBasic.Core\src\Extensions\Math\Trigonometric\Arctan.vb"
+﻿#Region "Microsoft.VisualBasic::73b97bd3da14c1a328975ca711b33bae, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Trigonometric\Arctan.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 50
+    '    Code Lines: 34
+    ' Comment Lines: 9
+    '   Blank Lines: 7
+    '     File Size: 1.51 KB
+
 
     '     Module Trigonometric
     ' 

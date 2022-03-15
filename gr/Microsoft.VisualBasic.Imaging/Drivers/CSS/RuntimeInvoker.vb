@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c7a47cafb990417bf2f585c8479f951, gr\Microsoft.VisualBasic.Imaging\Drivers\CSS\RuntimeInvoker.vb"
+﻿#Region "Microsoft.VisualBasic::4c7a47cafb990417bf2f585c8479f951, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drivers\CSS\RuntimeInvoker.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 218
+    '    Code Lines: 132
+    ' Comment Lines: 56
+    '   Blank Lines: 30
+    '     File Size: 9.37 KB
+
 
     '     Module RuntimeInvoker
     ' 

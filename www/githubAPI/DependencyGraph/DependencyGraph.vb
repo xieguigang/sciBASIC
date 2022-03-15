@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1cc4c50ff4b96530d5334c28178e2540, www\githubAPI\DependencyGraph\DependencyGraph.vb"
+﻿#Region "Microsoft.VisualBasic::1cc4c50ff4b96530d5334c28178e2540, sciBASIC#\www\githubAPI\DependencyGraph\DependencyGraph.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 4
+    '    Code Lines: 2
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 45.00 B
+
 
     ' Module DependencyGraph
     ' 

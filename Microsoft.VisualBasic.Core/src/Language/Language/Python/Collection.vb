@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2843442d7f9c74cde1791d4f1ce8ab15, Microsoft.VisualBasic.Core\src\Language\Language\Python\Collection.vb"
+﻿#Region "Microsoft.VisualBasic::2843442d7f9c74cde1791d4f1ce8ab15, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\Python\Collection.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 55
+    '    Code Lines: 25
+    ' Comment Lines: 23
+    '   Blank Lines: 7
+    '     File Size: 2.12 KB
+
 
     '     Module Collection
     ' 

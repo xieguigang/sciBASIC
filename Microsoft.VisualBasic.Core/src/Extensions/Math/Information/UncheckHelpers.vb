@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dae89f686d7e481105d44408dc3ba7fc, Microsoft.VisualBasic.Core\src\Extensions\Math\Information\UncheckHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::dae89f686d7e481105d44408dc3ba7fc, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Information\UncheckHelpers.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 37
+    '    Code Lines: 32
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 1.23 KB
+
 
     '     Module UncheckHelpers
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9e9acc095d23340143b6f3f8fb3bfd2, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\StreamHelper.vb"
+﻿#Region "Microsoft.VisualBasic::f9e9acc095d23340143b6f3f8fb3bfd2, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\StreamHelper.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 107
+    '    Code Lines: 73
+    ' Comment Lines: 17
+    '   Blank Lines: 17
+    '     File Size: 3.57 KB
+
 
     ' Module StreamHelper
     ' 

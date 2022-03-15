@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7344cef4fa9e83ffc02b4af5705d356f, Data\BinaryData\BinaryData\BufferRegion.vb"
+﻿#Region "Microsoft.VisualBasic::7344cef4fa9e83ffc02b4af5705d356f, sciBASIC#\Data\BinaryData\BinaryData\BufferRegion.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 16
+    '    Code Lines: 12
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 367.00 B
+
 
     ' Class BufferRegion
     ' 

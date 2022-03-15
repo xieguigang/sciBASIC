@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e0be133fd511e4de897e0e2f769c638, Data_science\Mathematica\data\LP\LP_tool\LPPTest.vb"
+﻿#Region "Microsoft.VisualBasic::9e0be133fd511e4de897e0e2f769c638, sciBASIC#\Data_science\Mathematica\data\LP\LP_tool\LPPTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 78
+    '    Code Lines: 52
+    ' Comment Lines: 4
+    '   Blank Lines: 22
+    '     File Size: 2.48 KB
+
 
     ' Module LPPTest
     ' 

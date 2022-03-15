@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c33ff5f0b5afdb466bf4476dca09c06, mime\application%rtf\Rtf.vb"
+﻿#Region "Microsoft.VisualBasic::3c33ff5f0b5afdb466bf4476dca09c06, sciBASIC#\mime\application%rtf\Rtf.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 209
+    '    Code Lines: 112
+    ' Comment Lines: 64
+    '   Blank Lines: 33
+    '     File Size: 8.40 KB
+
 
     ' Class Rtf
     ' 

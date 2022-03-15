@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22570f6c3b216ff908314d9752803f5f, Data_science\Mathematica\Math\ODE\Dynamics\GenericODEs.vb"
+﻿#Region "Microsoft.VisualBasic::22570f6c3b216ff908314d9752803f5f, sciBASIC#\Data_science\Mathematica\Math\ODE\Dynamics\GenericODEs.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 37
+    '    Code Lines: 24
+    ' Comment Lines: 4
+    '   Blank Lines: 9
+    '     File Size: 1.02 KB
+
 
     '     Delegate Sub
     ' 

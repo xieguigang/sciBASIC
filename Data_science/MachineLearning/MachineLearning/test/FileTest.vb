@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0574ed17e7bc68c95e24bd83da8da09, Data_science\MachineLearning\MachineLearning\test\FileTest.vb"
+﻿#Region "Microsoft.VisualBasic::d0574ed17e7bc68c95e24bd83da8da09, sciBASIC#\Data_science\MachineLearning\MachineLearning\test\FileTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 122
+    '    Code Lines: 0
+    ' Comment Lines: 96
+    '   Blank Lines: 26
+    '     File Size: 7.00 KB
+
 
     ' 
     ' /********************************************************************************/

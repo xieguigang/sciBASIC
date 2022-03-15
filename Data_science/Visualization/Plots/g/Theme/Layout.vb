@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d16ad80ea4faeb4bcc2fd82bc8a0e12, Data_science\Visualization\Plots\g\Theme\Layout.vb"
+﻿#Region "Microsoft.VisualBasic::af2cc911ddf9bb2a3ad0d4fdf543e125, sciBASIC#\Data_science\Visualization\Plots\g\Theme\Layout.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 113
+    '    Code Lines: 69
+    ' Comment Lines: 20
+    '   Blank Lines: 24
+    '     File Size: 3.57 KB
+
+
     '     Class Layout
     ' 
     ' 
@@ -44,7 +54,7 @@
     ' 
     '         Properties: isEmpty, x, y
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: GetLocation
     ' 
     '     Class PercentageRelative

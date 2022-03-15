@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d8ac4a3883a1480a7670b8fc8110ac2, Data_science\MachineLearning\xgboost\util\ModelReader.vb"
+﻿#Region "Microsoft.VisualBasic::0274b88855bf4fa4e301a8604ed27d93, sciBASIC#\Data_science\MachineLearning\xgboost\util\ModelReader.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 283
+    '    Code Lines: 200
+    ' Comment Lines: 9
+    '   Blank Lines: 74
+    '     File Size: 10.16 KB
+
 
     '     Class ModelReader
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4716d19ec99e1438ef94d2a701d8ded, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\OperationTimeOut.vb"
+﻿#Region "Microsoft.VisualBasic::82d8a48a4f051f64a98db1f0c21d8878, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\OperationTimeOut.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 74
+    '    Code Lines: 37
+    ' Comment Lines: 27
+    '   Blank Lines: 10
+    '     File Size: 2.65 KB
+
 
     '     Module TimeOutAPI
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8380d05c751399cf932284067ef9077f, gr\network-visualization\test\mingleTest.vb"
+﻿#Region "Microsoft.VisualBasic::8380d05c751399cf932284067ef9077f, sciBASIC#\gr\network-visualization\test\mingleTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 147
+    '    Code Lines: 132
+    ' Comment Lines: 0
+    '   Blank Lines: 15
+    '     File Size: 3.13 KB
+
 
     ' Module mingleTest
     ' 

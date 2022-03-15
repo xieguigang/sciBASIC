@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f9d3008788dea1ff4f81b60b3f74392, Data\BinaryData\DataStorage\netCDF\Components\CDFData\longs.vb"
+﻿#Region "Microsoft.VisualBasic::4f9d3008788dea1ff4f81b60b3f74392, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\CDFData\longs.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 18
+    '    Code Lines: 14
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 548.00 B
+
 
     '     Class longs
     ' 

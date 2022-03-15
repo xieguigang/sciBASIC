@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c97a10b15a5e8db99b645742c1524ab, Data_science\Visualization\Plots\g\Mapper.vb"
+﻿#Region "Microsoft.VisualBasic::7c97a10b15a5e8db99b645742c1524ab, sciBASIC#\Data_science\Visualization\Plots\g\Mapper.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 276
+    '    Code Lines: 204
+    ' Comment Lines: 33
+    '   Blank Lines: 39
+    '     File Size: 10.91 KB
+
 
     '     Class Mapper
     ' 

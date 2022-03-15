@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d8c88f2814f68448a420af814bbfb1f9, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\PropertyValue.vb"
+﻿#Region "Microsoft.VisualBasic::d8c88f2814f68448a420af814bbfb1f9, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\PropertyValue.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 73
+    '    Code Lines: 40
+    ' Comment Lines: 24
+    '   Blank Lines: 9
+    '     File Size: 2.60 KB
+
 
     '     Interface IPropertyValue
     ' 

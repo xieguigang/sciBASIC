@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::018a22d1d415c39f571eea520dcd5f1e, Data_science\Mathematica\Math\Math\Algebra\LP\LPPModel.vb"
+﻿#Region "Microsoft.VisualBasic::018a22d1d415c39f571eea520dcd5f1e, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\LP\LPPModel.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 127
+    '    Code Lines: 93
+    ' Comment Lines: 8
+    '   Blank Lines: 26
+    '     File Size: 4.42 KB
+
 
     '     Class LppVariable
     ' 

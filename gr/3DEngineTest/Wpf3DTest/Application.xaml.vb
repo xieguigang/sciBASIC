@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa2210cd5c3560f714e02e69336d201f, gr\3DEngineTest\Wpf3DTest\Application.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::fa2210cd5c3560f714e02e69336d201f, sciBASIC#\gr\3DEngineTest\Wpf3DTest\Application.xaml.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 6
+    '    Code Lines: 2
+    ' Comment Lines: 2
+    '   Blank Lines: 2
+    '     File Size: 157.00 B
+
 
     ' Class Application
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9688c1ee2d246d3adeb21e84798208ef, Data_science\Mathematica\Math\Math\FuzzyLogic\Models\Models.vb"
+﻿#Region "Microsoft.VisualBasic::9688c1ee2d246d3adeb21e84798208ef, sciBASIC#\Data_science\Mathematica\Math\Math\FuzzyLogic\Models\Models.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 131
+    '    Code Lines: 89
+    ' Comment Lines: 9
+    '   Blank Lines: 33
+    '     File Size: 3.43 KB
+
 
     '     Enum Tokens
     ' 

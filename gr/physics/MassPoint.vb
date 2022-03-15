@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d8844823e12ebbedfa04069dc7fd91ec, gr\physics\MassPoint.vb"
+﻿#Region "Microsoft.VisualBasic::d8844823e12ebbedfa04069dc7fd91ec, sciBASIC#\gr\physics\MassPoint.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 89
+    '    Code Lines: 37
+    ' Comment Lines: 40
+    '   Blank Lines: 12
+    '     File Size: 2.65 KB
+
 
     ' Class MassPoint
     ' 

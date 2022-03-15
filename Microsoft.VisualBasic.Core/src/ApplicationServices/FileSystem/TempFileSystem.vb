@@ -1,42 +1,53 @@
-﻿#Region "Microsoft.VisualBasic::8a8ba0ed0df30266239c43b858a92496, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\TempFileSystem.vb"
+﻿#Region "Microsoft.VisualBasic::cc9f0b79bd12b93f7399cac48b5732d8, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\TempFileSystem.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class TempFileSystem
-' 
-'         Function: __sysTEMP, CreateTempFilePath, GenerateTemp, GetAppSysTempFile, TempDir
-' 
-' 
-' /********************************************************************************/
+
+    ' Code Statistics:
+
+    '   Total Lines: 90
+    '    Code Lines: 50
+    ' Comment Lines: 23
+    '   Blank Lines: 17
+    '     File Size: 3.56 KB
+
+
+    '     Class TempFileSystem
+    ' 
+    '         Function: __sysTEMP, CreateTempFilePath, GenerateTemp, GenerateTempDir, GetAppSysTempFile
+    '                   TempDir
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c6e2f9223c5c56c5b4fae9951579c5d, Data_science\Graph\Model\Abstract\Vertex.vb"
+﻿#Region "Microsoft.VisualBasic::8c6e2f9223c5c56c5b4fae9951579c5d, sciBASIC#\Data_science\Graph\Model\Abstract\Vertex.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 33
+    '    Code Lines: 17
+    ' Comment Lines: 12
+    '   Blank Lines: 4
+    '     File Size: 1.06 KB
+
 
     ' Class Vertex
     ' 

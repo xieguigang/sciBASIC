@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75fed9939a89163f4d0355bed75c86f6, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\NetCore5\target.vb"
+﻿#Region "Microsoft.VisualBasic::75fed9939a89163f4d0355bed75c86f6, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\NetCore5\target.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 30
+    '    Code Lines: 23
+    ' Comment Lines: 1
+    '   Blank Lines: 6
+    '     File Size: 1.05 KB
+
 
     '     Class target
     ' 

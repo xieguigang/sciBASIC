@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::017e80907f9fb2362205ae2d14df52d1, mime\application%json\JSONtest\bsontest.vb"
+﻿#Region "Microsoft.VisualBasic::017e80907f9fb2362205ae2d14df52d1, sciBASIC#\mime\application%json\JSONtest\bsontest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 31
+    '    Code Lines: 22
+    ' Comment Lines: 0
+    '   Blank Lines: 9
+    '     File Size: 821.00 B
+
 
     ' Module bsontest
     ' 

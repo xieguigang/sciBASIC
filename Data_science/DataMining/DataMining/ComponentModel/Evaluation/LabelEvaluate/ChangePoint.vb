@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12f68beff145abc54992cb580461db7a, Data_science\DataMining\DataMining\ComponentModel\Evaluation\LabelEvaluate\ChangePoint.vb"
+﻿#Region "Microsoft.VisualBasic::12f68beff145abc54992cb580461db7a, sciBASIC#\Data_science\DataMining\DataMining\ComponentModel\Evaluation\LabelEvaluate\ChangePoint.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 18
+    '    Code Lines: 14
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 489.00 B
+
 
     '     Class ChangePoint
     ' 

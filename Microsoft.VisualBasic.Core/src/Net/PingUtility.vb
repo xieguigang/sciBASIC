@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df8b5d897caffaafa6d2ec25aedc6886, Microsoft.VisualBasic.Core\src\Net\PingUtility.vb"
+﻿#Region "Microsoft.VisualBasic::df8b5d897caffaafa6d2ec25aedc6886, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\PingUtility.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 177
+    '    Code Lines: 126
+    ' Comment Lines: 23
+    '   Blank Lines: 28
+    '     File Size: 6.64 KB
+
 
     '     Module PingUtility
     ' 

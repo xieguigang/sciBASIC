@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c6883fafbe92abce712e721d193cfb9, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\Line.vb"
+﻿#Region "Microsoft.VisualBasic::8c6883fafbe92abce712e721d193cfb9, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\Line.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 14
+    '    Code Lines: 11
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 405.00 B
+
 
     '     Class Line
     ' 

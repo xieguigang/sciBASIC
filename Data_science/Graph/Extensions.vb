@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::643cf195e33532960ca3136a4d1eb265, Data_science\Graph\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::643cf195e33532960ca3136a4d1eb265, sciBASIC#\Data_science\Graph\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 131
+    '    Code Lines: 75
+    ' Comment Lines: 41
+    '   Blank Lines: 15
+    '     File Size: 4.46 KB
+
 
     ' Module Extensions
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::edea566d8500930cf4d2ce97d5987d33, Data_science\MachineLearning\Bootstrapping\Monte-Carlo\Bifurcation\ParameterBifurcations.vb"
+﻿#Region "Microsoft.VisualBasic::edea566d8500930cf4d2ce97d5987d33, sciBASIC#\Data_science\MachineLearning\Bootstrapping\Monte-Carlo\Bifurcation\ParameterBifurcations.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 120
+    '    Code Lines: 92
+    ' Comment Lines: 17
+    '   Blank Lines: 11
+    '     File Size: 5.40 KB
+
 
     '     Module BifurcationAnalysis
     ' 

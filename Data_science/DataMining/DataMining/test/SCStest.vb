@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::77ecf295ebc94a7fed2f7840bc48e56e, Data_science\DataMining\DataMining\test\SCStest.vb"
+﻿#Region "Microsoft.VisualBasic::77ecf295ebc94a7fed2f7840bc48e56e, sciBASIC#\Data_science\DataMining\DataMining\test\SCStest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 47
+    '    Code Lines: 30
+    ' Comment Lines: 2
+    '   Blank Lines: 15
+    '     File Size: 1.71 KB
+
 
     ' Module SCStest
     ' 

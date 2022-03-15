@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::edaae4c09dab68da43345f436996cc2c, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\IndexVector.vb"
+﻿#Region "Microsoft.VisualBasic::edaae4c09dab68da43345f436996cc2c, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\IndexVector.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 22
+    '    Code Lines: 14
+    ' Comment Lines: 3
+    '   Blank Lines: 5
+    '     File Size: 509.00 B
+
 
     '     Class IndexVector
     ' 

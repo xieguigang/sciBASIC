@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::447bfad651845f4cc49457bb01512f3f, Data_science\Visualization\Plots\Contour\ContourPlot.vb"
+﻿#Region "Microsoft.VisualBasic::2d677c6df63272e34315fae5c57e6c51, sciBASIC#\Data_science\Visualization\Plots\Contour\ContourPlot.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 101
+    '    Code Lines: 79
+    ' Comment Lines: 0
+    '   Blank Lines: 22
+    '     File Size: 4.16 KB
+
 
     '     Class ContourPlot
     ' 

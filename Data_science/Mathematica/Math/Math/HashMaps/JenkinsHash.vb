@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0882f4be53d688f86599a2f6344b3445, Data_science\Mathematica\Math\Math\HashMaps\JenkinsHash.vb"
+﻿#Region "Microsoft.VisualBasic::0882f4be53d688f86599a2f6344b3445, sciBASIC#\Data_science\Mathematica\Math\Math\HashMaps\JenkinsHash.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 212
+    '    Code Lines: 109
+    ' Comment Lines: 74
+    '   Blank Lines: 29
+    '     File Size: 7.92 KB
+
 
     '     Module JenkinsHash
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::873e1965e63335164cb2a33b2f76dc37, Microsoft.VisualBasic.Core\src\Language\Linq\Vectorization\BooleanVector.vb"
+﻿#Region "Microsoft.VisualBasic::873e1965e63335164cb2a33b2f76dc37, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Linq\Vectorization\BooleanVector.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 171
+    '    Code Lines: 86
+    ' Comment Lines: 65
+    '   Blank Lines: 20
+    '     File Size: 6.04 KB
+
 
     '     Class BooleanVector
     ' 

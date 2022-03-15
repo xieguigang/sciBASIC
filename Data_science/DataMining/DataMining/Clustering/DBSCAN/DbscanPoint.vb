@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f40893066a6e185ff3673b25f6b8f42, Data_science\DataMining\DataMining\Clustering\DBSCAN\DbscanPoint.vb"
+﻿#Region "Microsoft.VisualBasic::0f40893066a6e185ff3673b25f6b8f42, sciBASIC#\Data_science\DataMining\DataMining\Clustering\DBSCAN\DbscanPoint.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 29
+    '    Code Lines: 22
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 841.00 B
+
 
     '     Class DbscanPoint
     ' 

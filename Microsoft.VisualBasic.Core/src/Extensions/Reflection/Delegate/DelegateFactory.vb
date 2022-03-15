@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7de3b38abe167002542f089ac0bcd767, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Delegate\DelegateFactory.vb"
+﻿#Region "Microsoft.VisualBasic::7de3b38abe167002542f089ac0bcd767, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Reflection\Delegate\DelegateFactory.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1012
+    '    Code Lines: 879
+    ' Comment Lines: 11
+    '   Blank Lines: 122
+    '     File Size: 60.88 KB
+
 
     '     Module DelegateFactory
     ' 

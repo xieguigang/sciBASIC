@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84336cdfd4b2ad6df6f2ad4367255f1d, Data_science\Mathematica\Math\Math\Spline\B_Spline.vb"
+﻿#Region "Microsoft.VisualBasic::84336cdfd4b2ad6df6f2ad4367255f1d, sciBASIC#\Data_science\Mathematica\Math\Math\Spline\B_Spline.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 143
+    '    Code Lines: 85
+    ' Comment Lines: 37
+    '   Blank Lines: 21
+    '     File Size: 5.16 KB
+
 
     '     Module B_Spline
     ' 

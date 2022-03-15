@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::596014c27216b500b6f6c1bfd0034ffd, tutorials\core.test\DefaultValueTest.vb"
+﻿#Region "Microsoft.VisualBasic::596014c27216b500b6f6c1bfd0034ffd, sciBASIC#\tutorials\core.test\DefaultValueTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 101
+    '    Code Lines: 30
+    ' Comment Lines: 42
+    '   Blank Lines: 29
+    '     File Size: 2.04 KB
+
 
     ' Module DefaultValueTest
     ' 

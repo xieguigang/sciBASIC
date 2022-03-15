@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54d04c54ba3eca7e35e68261cc9fc0b6, gr\Microsoft.VisualBasic.Imaging\test\ConcaveHull_demo.vb"
+﻿#Region "Microsoft.VisualBasic::54d04c54ba3eca7e35e68261cc9fc0b6, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\test\ConcaveHull_demo.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 22
+    '    Code Lines: 11
+    ' Comment Lines: 7
+    '   Blank Lines: 4
+    '     File Size: 738.00 B
+
 
     ' Module ConcaveHull_demo
     ' 

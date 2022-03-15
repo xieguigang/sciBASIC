@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::caee8921de8aef7e1ccec0d478fa11a3, Data\BinaryData\BinaryData\Extensions\FixLengthString.vb"
+﻿#Region "Microsoft.VisualBasic::caee8921de8aef7e1ccec0d478fa11a3, sciBASIC#\Data\BinaryData\BinaryData\Extensions\FixLengthString.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 27
+    '    Code Lines: 21
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 677.00 B
+
 
     ' Class FixLengthString
     ' 

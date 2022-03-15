@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::071d38529de5bfe387b720c3bd06d155, mime\text%html\Parser\CSS\File.vb"
+﻿#Region "Microsoft.VisualBasic::071d38529de5bfe387b720c3bd06d155, sciBASIC#\mime\text%html\Parser\CSS\File.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 101
+    '    Code Lines: 60
+    ' Comment Lines: 30
+    '   Blank Lines: 11
+    '     File Size: 3.85 KB
+
 
     '     Class CSSFile
     ' 

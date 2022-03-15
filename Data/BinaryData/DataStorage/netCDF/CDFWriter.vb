@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce9090cc91c3ab05117a6b792a1df638, Data\BinaryData\DataStorage\netCDF\CDFWriter.vb"
+﻿#Region "Microsoft.VisualBasic::ce9090cc91c3ab05117a6b792a1df638, sciBASIC#\Data\BinaryData\DataStorage\netCDF\CDFWriter.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 499
+    '    Code Lines: 209
+    ' Comment Lines: 235
+    '   Blank Lines: 55
+    '     File Size: 23.57 KB
+
 
     '     Class CDFWriter
     ' 

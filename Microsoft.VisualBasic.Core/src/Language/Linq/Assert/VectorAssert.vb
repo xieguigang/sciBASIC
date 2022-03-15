@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bd2f9068b0a8fd7a0b42615034d55cae, Microsoft.VisualBasic.Core\src\Language\Linq\Assert\VectorAssert.vb"
+﻿#Region "Microsoft.VisualBasic::bd2f9068b0a8fd7a0b42615034d55cae, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Linq\Assert\VectorAssert.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 72
+    '    Code Lines: 45
+    ' Comment Lines: 14
+    '   Blank Lines: 13
+    '     File Size: 2.63 KB
+
 
     '     Class VectorAssert
     ' 

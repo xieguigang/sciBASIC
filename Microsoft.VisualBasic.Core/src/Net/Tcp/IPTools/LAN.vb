@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35d325d3625c8644eac5a0c27067b109, Microsoft.VisualBasic.Core\src\Net\Tcp\IPTools\LAN.vb"
+﻿#Region "Microsoft.VisualBasic::35d325d3625c8644eac5a0c27067b109, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\Tcp\IPTools\LAN.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 180
+    '    Code Lines: 103
+    ' Comment Lines: 68
+    '   Blank Lines: 9
+    '     File Size: 8.09 KB
+
 
     '     Module LANTools
     ' 

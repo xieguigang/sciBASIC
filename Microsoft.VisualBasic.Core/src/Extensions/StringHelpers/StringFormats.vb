@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f9208f9e2392bc3c86a4d1bafe83a42, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringFormats.vb"
+﻿#Region "Microsoft.VisualBasic::54558a2e78e9ffa4cb6cb38f3142387c, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringFormats.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 83
+    '    Code Lines: 60
+    ' Comment Lines: 11
+    '   Blank Lines: 12
+    '     File Size: 2.70 KB
+
 
     ' Module StringFormats
     ' 

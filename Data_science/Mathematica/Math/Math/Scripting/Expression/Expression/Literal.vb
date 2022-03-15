@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f44734a1b70ce403f90032cf909642b, Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\Literal.vb"
+﻿#Region "Microsoft.VisualBasic::1f44734a1b70ce403f90032cf909642b, sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\Literal.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 57
+    '    Code Lines: 45
+    ' Comment Lines: 0
+    '   Blank Lines: 12
+    '     File Size: 1.75 KB
+
 
     '     Class Literal
     ' 

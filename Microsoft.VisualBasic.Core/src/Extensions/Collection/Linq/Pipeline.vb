@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5cbadd7b88a66bbf48adbb098c5e4da6, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\Pipeline.vb"
+﻿#Region "Microsoft.VisualBasic::5cbadd7b88a66bbf48adbb098c5e4da6, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\Pipeline.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 42
+    '    Code Lines: 23
+    ' Comment Lines: 14
+    '   Blank Lines: 5
+    '     File Size: 1.43 KB
+
 
     '     Module PipelineExtensions
     ' 

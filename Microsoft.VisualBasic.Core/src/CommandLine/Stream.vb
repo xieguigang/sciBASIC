@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d29d822507b18e368473917fe944414, Microsoft.VisualBasic.Core\src\CommandLine\Stream.vb"
+﻿#Region "Microsoft.VisualBasic::1d29d822507b18e368473917fe944414, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Stream.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 93
+    '    Code Lines: 50
+    ' Comment Lines: 31
+    '   Blank Lines: 12
+    '     File Size: 3.95 KB
+
 
     '     Enum FileTypes
     ' 

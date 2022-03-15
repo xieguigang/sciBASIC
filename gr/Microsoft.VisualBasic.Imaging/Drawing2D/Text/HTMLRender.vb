@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::514efbde58b7f1691ee49f5c09746d6f, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\HTMLRender.vb"
+﻿#Region "Microsoft.VisualBasic::514efbde58b7f1691ee49f5c09746d6f, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\HTMLRender.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 160
+    '    Code Lines: 120
+    ' Comment Lines: 20
+    '   Blank Lines: 20
+    '     File Size: 6.00 KB
+
 
     '     Module HTMLRender
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ece2066a485f1682bc5fcfd8369dd9d, Microsoft.VisualBasic.Core\src\My\JavaScript\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::8ece2066a485f1682bc5fcfd8369dd9d, sciBASIC#\Microsoft.VisualBasic.Core\src\My\JavaScript\Linq.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 190
+    '    Code Lines: 105
+    ' Comment Lines: 55
+    '   Blank Lines: 30
+    '     File Size: 6.77 KB
+
 
     '     Module Linq
     ' 

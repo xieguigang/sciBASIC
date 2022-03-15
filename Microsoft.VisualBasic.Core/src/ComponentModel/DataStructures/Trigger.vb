@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae5886bdee1b150a22ab337c8978e358, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Trigger.vb"
+﻿#Region "Microsoft.VisualBasic::ae5886bdee1b150a22ab337c8978e358, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Trigger.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 158
+    '    Code Lines: 91
+    ' Comment Lines: 39
+    '   Blank Lines: 28
+    '     File Size: 5.01 KB
+
 
     '     Class ITrigger
     ' 

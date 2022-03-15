@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01b6453c24d88ba62bb8afa00f92de01, Data_science\Visualization\Plots\3D\Serial3D.vb"
+﻿#Region "Microsoft.VisualBasic::01b6453c24d88ba62bb8afa00f92de01, sciBASIC#\Data_science\Visualization\Plots\3D\Serial3D.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 30
+    '    Code Lines: 18
+    ' Comment Lines: 7
+    '   Blank Lines: 5
+    '     File Size: 1.03 KB
+
 
     '     Class Serial3D
     ' 

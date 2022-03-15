@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ecd2229c267c6f208a59d6c70edc280, Microsoft.VisualBasic.Core\src\Serialization\ConfigMappings\ConfigurationMappings.vb"
+﻿#Region "Microsoft.VisualBasic::5ecd2229c267c6f208a59d6c70edc280, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\ConfigMappings\ConfigurationMappings.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 168
+    '    Code Lines: 122
+    ' Comment Lines: 27
+    '   Blank Lines: 19
+    '     File Size: 8.59 KB
+
 
     '     Module ConfigurationMappings
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d6efb5d0b795b760c96c7061629a661e, Data_science\Visualization\test\CSSTest.vb"
+﻿#Region "Microsoft.VisualBasic::d6efb5d0b795b760c96c7061629a661e, sciBASIC#\Data_science\Visualization\test\CSSTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 10
+    '    Code Lines: 7
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 288.00 B
+
 
     ' Module CSSTest
     ' 

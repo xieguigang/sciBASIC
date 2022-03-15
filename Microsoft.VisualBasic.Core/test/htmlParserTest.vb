@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07fd10d466b3e3e3a5c170394dbee05a, Microsoft.VisualBasic.Core\test\htmlParserTest.vb"
+﻿#Region "Microsoft.VisualBasic::07fd10d466b3e3e3a5c170394dbee05a, sciBASIC#\Microsoft.VisualBasic.Core\test\htmlParserTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 30
+    '    Code Lines: 18
+    ' Comment Lines: 0
+    '   Blank Lines: 12
+    '     File Size: 741.00 B
+
 
     ' Module htmlParserTest
     ' 

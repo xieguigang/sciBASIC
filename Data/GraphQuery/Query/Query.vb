@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d1463b2cf2023a7ed949e684272653b, Data\GraphQuery\Query\Query.vb"
+﻿#Region "Microsoft.VisualBasic::e88a15adcd757ec9a0432d9c3fff2e73, sciBASIC#\Data\GraphQuery\Query\Query.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 65
+    '    Code Lines: 41
+    ' Comment Lines: 11
+    '   Blank Lines: 13
+    '     File Size: 1.50 KB
+
 
     ' Class Query
     ' 

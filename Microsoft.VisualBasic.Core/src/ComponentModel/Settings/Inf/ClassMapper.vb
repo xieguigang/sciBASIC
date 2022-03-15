@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc9722d3dead7ea1fe31aeab80c665a3, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\ClassMapper.vb"
+﻿#Region "Microsoft.VisualBasic::fc9722d3dead7ea1fe31aeab80c665a3, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\ClassMapper.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 126
+    '    Code Lines: 80
+    ' Comment Lines: 28
+    '   Blank Lines: 18
+    '     File Size: 4.73 KB
+
 
     '     Module ClassMapper
     ' 

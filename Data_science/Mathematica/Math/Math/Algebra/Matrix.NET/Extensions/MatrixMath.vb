@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::537e823c70a338661d7b3a0214346152, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Extensions\MatrixMath.vb"
+﻿#Region "Microsoft.VisualBasic::537e823c70a338661d7b3a0214346152, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Extensions\MatrixMath.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 3161
+    '    Code Lines: 2562
+    ' Comment Lines: 545
+    '   Blank Lines: 54
+    '     File Size: 127.63 KB
+
 
     '     Module vbMatrix
     ' 

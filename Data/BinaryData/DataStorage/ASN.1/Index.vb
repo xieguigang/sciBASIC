@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::06a9d45deebb2a921bcea31d33420142, Data\BinaryData\DataStorage\ASN.1\Index.vb"
+﻿#Region "Microsoft.VisualBasic::06a9d45deebb2a921bcea31d33420142, sciBASIC#\Data\BinaryData\DataStorage\ASN.1\Index.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 6
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 188.00 B
+
 
     '     Class Index
     ' 

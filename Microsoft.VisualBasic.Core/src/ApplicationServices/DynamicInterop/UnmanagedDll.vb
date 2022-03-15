@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::621fac823c2f87d127ece9f31559d0d4, Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\UnmanagedDll.vb"
+﻿#Region "Microsoft.VisualBasic::621fac823c2f87d127ece9f31559d0d4, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\UnmanagedDll.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 309
+    '    Code Lines: 140
+    ' Comment Lines: 126
+    '   Blank Lines: 43
+    '     File Size: 15.62 KB
+
 
     '     Class UnmanagedDll
     ' 

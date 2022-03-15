@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80f9a855841a0a0c0276f883114497d4, Data\GraphQuery\Language\TokenIcer.vb"
+﻿#Region "Microsoft.VisualBasic::722f9f8a8efbd745b5d915a1c2a29379, sciBASIC#\Data\GraphQuery\Language\TokenIcer.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 90
+    '    Code Lines: 78
+    ' Comment Lines: 1
+    '   Blank Lines: 11
+    '     File Size: 3.23 KB
+
 
     '     Class TokenIcer
     ' 

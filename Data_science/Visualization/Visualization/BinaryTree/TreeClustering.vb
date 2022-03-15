@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::603268f6e84fac891de4124de70602f3, Data_science\Visualization\Visualization\BinaryTree\TreeClustering.vb"
+﻿#Region "Microsoft.VisualBasic::603268f6e84fac891de4124de70602f3, sciBASIC#\Data_science\Visualization\Visualization\BinaryTree\TreeClustering.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 211
+    '    Code Lines: 138
+    ' Comment Lines: 44
+    '   Blank Lines: 29
+    '     File Size: 9.59 KB
+
 
     '     Module TreeClustering
     ' 

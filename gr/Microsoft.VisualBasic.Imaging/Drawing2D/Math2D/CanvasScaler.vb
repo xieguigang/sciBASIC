@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::275d5b3ab3b07e670350bb397e76d0ec, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\CanvasScaler.vb"
+﻿#Region "Microsoft.VisualBasic::f7318452d344727136a9a7ebe5ce98ef, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\CanvasScaler.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 59
+    '    Code Lines: 42
+    ' Comment Lines: 7
+    '   Blank Lines: 10
+    '     File Size: 2.35 KB
+
 
     '     Module CanvasScaler
     ' 

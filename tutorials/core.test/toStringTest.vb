@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f77cfba2f205b0f6ca5674da03cba129, tutorials\core.test\toStringTest.vb"
+﻿#Region "Microsoft.VisualBasic::f77cfba2f205b0f6ca5674da03cba129, sciBASIC#\tutorials\core.test\toStringTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 90
+    '    Code Lines: 54
+    ' Comment Lines: 6
+    '   Blank Lines: 30
+    '     File Size: 2.42 KB
+
 
     ' Module toStringTest
     ' 

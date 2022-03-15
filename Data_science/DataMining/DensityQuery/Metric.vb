@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c76fec6abb4bf34f6795ac2ba125c205, Data_science\DataMining\DensityQuery\Metric.vb"
+﻿#Region "Microsoft.VisualBasic::c76fec6abb4bf34f6795ac2ba125c205, sciBASIC#\Data_science\DataMining\DensityQuery\Metric.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 47
+    '    Code Lines: 36
+    ' Comment Lines: 0
+    '   Blank Lines: 11
+    '     File Size: 1.52 KB
+
 
     ' Class Metric
     ' 

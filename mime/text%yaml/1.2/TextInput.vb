@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::faaaf7c6824495d9c6fe9a5a76d436a6, mime\text%yaml\1.2\TextInput.vb"
+﻿#Region "Microsoft.VisualBasic::faaaf7c6824495d9c6fe9a5a76d436a6, sciBASIC#\mime\text%yaml\1.2\TextInput.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 78
+    '    Code Lines: 64
+    ' Comment Lines: 0
+    '   Blank Lines: 14
+    '     File Size: 3.04 KB
+
 
     '     Class TextInput
     ' 

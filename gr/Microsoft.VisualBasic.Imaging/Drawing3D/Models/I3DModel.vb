@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e3681d5ee6aa646c48c6af3f47b1879, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\I3DModel.vb"
+﻿#Region "Microsoft.VisualBasic::6e3681d5ee6aa646c48c6af3f47b1879, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\I3DModel.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 6
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 261.00 B
+
 
     '     Interface I3DModel
     ' 

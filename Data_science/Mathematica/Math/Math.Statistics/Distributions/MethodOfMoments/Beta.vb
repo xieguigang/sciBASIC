@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f06667250de2935a37a3b27ab18b8668, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Beta.vb"
+﻿#Region "Microsoft.VisualBasic::f06667250de2935a37a3b27ab18b8668, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Beta.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 75
+    '    Code Lines: 56
+    ' Comment Lines: 14
+    '   Blank Lines: 5
+    '     File Size: 3.12 KB
+
 
     '     Class Beta
     ' 

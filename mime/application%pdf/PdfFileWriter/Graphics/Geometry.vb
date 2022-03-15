@@ -1,63 +1,73 @@
-﻿#Region "Microsoft.VisualBasic::b0176889ff6461df19e43c7c89a966bc, mime\application%pdf\PdfFileWriter\Geometry.vb"
+﻿#Region "Microsoft.VisualBasic::c8e97cfbfb4575e09b64aa4c693c94b8, sciBASIC#\mime\application%pdf\PdfFileWriter\Graphics\Geometry.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Class PointD
-' 
-'     Properties: X, Y
-' 
-'     Constructor: (+5 Overloads) Sub New
-' 
-' Class SizeD
-' 
-'     Properties: Height, Width
-' 
-'     Constructor: (+2 Overloads) Sub New
-' 
-' Class LineD
-' 
-'     Properties: DX, DY, Length, P1, P2
-' 
-'     Constructor: (+2 Overloads) Sub New
-' 
-' Class BezierD
-' 
-'     Properties: P1, P2, P3, P4
-' 
-'     Constructor: (+4 Overloads) Sub New
-'     Function: CircleFirstQuarter, CircleFourthQuarter, CircleSecondQuarter, CircleThirdQuarter, OvalFirstQuarter
-'               OvalFourthQuarter, OvalSecondQuarter, OvalThirdQuarter
-' 
-' /********************************************************************************/
+
+    ' Code Statistics:
+
+    '   Total Lines: 420
+    '    Code Lines: 145
+    ' Comment Lines: 235
+    '   Blank Lines: 40
+    '     File Size: 13.38 KB
+
+
+    ' Class PointD
+    ' 
+    '     Properties: X, Y
+    ' 
+    '     Constructor: (+5 Overloads) Sub New
+    ' 
+    ' Class SizeD
+    ' 
+    '     Properties: Height, Width
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
+    ' Class LineD
+    ' 
+    '     Properties: DX, DY, Length, P1, P2
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
+    ' Class BezierD
+    ' 
+    '     Properties: P1, P2, P3, P4
+    ' 
+    '     Constructor: (+4 Overloads) Sub New
+    '     Function: CircleFirstQuarter, CircleFourthQuarter, CircleSecondQuarter, CircleThirdQuarter, OvalFirstQuarter
+    '               OvalFourthQuarter, OvalSecondQuarter, OvalThirdQuarter
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

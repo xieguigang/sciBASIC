@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3cbbbd091c6e8bf2f0bc42c9da7fd035, Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsRange.vb"
+﻿#Region "Microsoft.VisualBasic::3cbbbd091c6e8bf2f0bc42c9da7fd035, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsRange.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 544
+    '    Code Lines: 105
+    ' Comment Lines: 432
+    '   Blank Lines: 7
+    '     File Size: 20.02 KB
+
 
     '     Module EnumerableStatsRange
     ' 

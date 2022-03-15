@@ -649,8 +649,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Analysis\Dijkstra\LinkCalculator.vb" />
+    <Compile Include="Analysis\FastUnfolding\Matrix.vb" />
     <Compile Include="Analysis\FastUnfolding\KeyMaps.vb" />
     <Compile Include="Analysis\FastUnfolding\FastUnfolding.vb" />
+    <Compile Include="Analysis\FastUnfolding\Utils.vb" />
     <Compile Include="Analysis\GraphAnalysis.vb" />
     <Compile Include="Analysis\Louvain\Builder.vb" />
     <Compile Include="Analysis\Louvain\Edge.vb" />

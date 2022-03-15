@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ebddfab9a23f5e58f464be3029a204a2, Data_science\Visualization\Plots\csv\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::ebddfab9a23f5e58f464be3029a204a2, sciBASIC#\Data_science\Visualization\Plots\csv\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 61
+    '    Code Lines: 47
+    ' Comment Lines: 6
+    '   Blank Lines: 8
+    '     File Size: 2.14 KB
+
 
     '     Module Extensions
     ' 

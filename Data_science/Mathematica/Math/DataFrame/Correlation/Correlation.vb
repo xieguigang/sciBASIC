@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf743c8e7a6847d63dce82429acaf0ec, Data_science\Mathematica\Math\DataFrame\Correlation\Correlation.vb"
+﻿#Region "Microsoft.VisualBasic::cf743c8e7a6847d63dce82429acaf0ec, sciBASIC#\Data_science\Mathematica\Math\DataFrame\Correlation\Correlation.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 103
+    '    Code Lines: 82
+    ' Comment Lines: 11
+    '   Blank Lines: 10
+    '     File Size: 4.49 KB
+
 
     ' Module Correlation
     ' 

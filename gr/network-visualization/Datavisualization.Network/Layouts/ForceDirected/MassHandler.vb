@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9422125b5a066157fa00f9cfbf41bf46, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\MassHandler.vb"
+﻿#Region "Microsoft.VisualBasic::9422125b5a066157fa00f9cfbf41bf46, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\MassHandler.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 38
+    '    Code Lines: 24
+    ' Comment Lines: 8
+    '   Blank Lines: 6
+    '     File Size: 1.23 KB
+
 
     '     Class MassHandler
     ' 

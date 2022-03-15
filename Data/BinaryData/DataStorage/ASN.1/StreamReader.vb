@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e577eb24481de28e455573da93359a80, Data\BinaryData\DataStorage\ASN.1\StreamReader.vb"
+﻿#Region "Microsoft.VisualBasic::e577eb24481de28e455573da93359a80, sciBASIC#\Data\BinaryData\DataStorage\ASN.1\StreamReader.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 190
+    '    Code Lines: 136
+    ' Comment Lines: 18
+    '   Blank Lines: 36
+    '     File Size: 6.08 KB
+
 
     '     Class StreamReader
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f3c341dc1d4682b7b8c2cec0a511eb3, mime\text%markdown\Markups\StreamWriter\HTMLWriter.vb"
+﻿#Region "Microsoft.VisualBasic::5f3c341dc1d4682b7b8c2cec0a511eb3, sciBASIC#\mime\text%markdown\Markups\StreamWriter\HTMLWriter.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 83
+    '    Code Lines: 55
+    ' Comment Lines: 11
+    '   Blank Lines: 17
+    '     File Size: 3.00 KB
+
 
     '     Module HTMLWriter
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa5c4618e31015f57921880ffe4cac76, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Arrow.vb"
+﻿#Region "Microsoft.VisualBasic::aa5c4618e31015f57921880ffe4cac76, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Arrow.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 131
+    '    Code Lines: 74
+    ' Comment Lines: 41
+    '   Blank Lines: 16
+    '     File Size: 5.31 KB
+
 
     '     Class Arrow
     ' 

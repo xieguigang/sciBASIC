@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf5cbde397fefa05a86d05a92addcfee, Data_science\DataMining\BinaryTree\ComparisonProvider\AlignmentComparison.vb"
+﻿#Region "Microsoft.VisualBasic::bf5cbde397fefa05a86d05a92addcfee, sciBASIC#\Data_science\DataMining\BinaryTree\ComparisonProvider\AlignmentComparison.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 34
+    '    Code Lines: 27
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 1.21 KB
+
 
     ' Class AlignmentComparison
     ' 

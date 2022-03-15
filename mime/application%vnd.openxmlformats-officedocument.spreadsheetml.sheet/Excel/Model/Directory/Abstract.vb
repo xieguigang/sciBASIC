@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59bf99ac8b302584aeaf6579450981b0, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\Directory\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::59bf99ac8b302584aeaf6579450981b0, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\Directory\Abstract.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 19
+    '    Code Lines: 14
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 489.00 B
+
 
     '     Class Directory
     ' 

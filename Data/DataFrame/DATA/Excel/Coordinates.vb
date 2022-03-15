@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bdca02441610c315bcd242daa7f51611, Data\DataFrame\DATA\Excel\Coordinates.vb"
+﻿#Region "Microsoft.VisualBasic::bdca02441610c315bcd242daa7f51611, sciBASIC#\Data\DataFrame\DATA\Excel\Coordinates.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 122
+    '    Code Lines: 90
+    ' Comment Lines: 12
+    '   Blank Lines: 20
+    '     File Size: 4.05 KB
+
 
     '     Module Coordinates
     ' 

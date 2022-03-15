@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b320cd4b4cceebf11c6eaf9cad8fe399, Data\BinaryData\BinaryData\Extensions\IByteReader.vb"
+﻿#Region "Microsoft.VisualBasic::b320cd4b4cceebf11c6eaf9cad8fe399, sciBASIC#\Data\BinaryData\BinaryData\Extensions\IByteReader.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 7
+    '    Code Lines: 5
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 170.00 B
+
 
     ' Interface IByteReader
     ' 

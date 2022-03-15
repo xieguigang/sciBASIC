@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::359b22dca144f2297177c38b8a019722, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\Group.vb"
+﻿#Region "Microsoft.VisualBasic::359b22dca144f2297177c38b8a019722, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\Group.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 7
+    '    Code Lines: 5
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 122.00 B
+
 
     '     Interface Indexed
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f37db26d6eefa7cb553e181ab1118a7, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\Node.vb"
+﻿#Region "Microsoft.VisualBasic::5f37db26d6eefa7cb553e181ab1118a7, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\Node.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 107
+    '    Code Lines: 67
+    ' Comment Lines: 23
+    '   Blank Lines: 17
+    '     File Size: 4.19 KB
+
 
     '     Class InputNode
     ' 

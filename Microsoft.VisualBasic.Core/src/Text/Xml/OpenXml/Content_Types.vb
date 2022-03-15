@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7cd16e63540b8754b215831f05c7c152, Microsoft.VisualBasic.Core\src\Text\Xml\OpenXml\Content_Types.vb"
+﻿#Region "Microsoft.VisualBasic::7cd16e63540b8754b215831f05c7c152, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\OpenXml\Content_Types.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 40
+    '    Code Lines: 29
+    ' Comment Lines: 4
+    '   Blank Lines: 7
+    '     File Size: 1.24 KB
+
 
     '     Class ContentTypes
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3b0c3112940bb250ccdb1fcf427f7e41, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\NetFile.vb"
+﻿#Region "Microsoft.VisualBasic::3b0c3112940bb250ccdb1fcf427f7e41, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\NetFile.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 103
+    '    Code Lines: 77
+    ' Comment Lines: 11
+    '   Blank Lines: 15
+    '     File Size: 3.63 KB
+
 
     '     Module NetFile
     ' 

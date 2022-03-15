@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::adcb990924d80c1f862c9726017ca6f4, mime\application%pdf\PdfReader\Document\PdfFunctionType2.vb"
+﻿#Region "Microsoft.VisualBasic::50d9214732532fb0ef4d7038c9f2ebcd, sciBASIC#\mime\application%pdf\PdfReader\Document\PdfFunctionType2.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 66
+    '    Code Lines: 51
+    ' Comment Lines: 2
+    '   Blank Lines: 13
+    '     File Size: 2.06 KB
+
 
     '     Class PdfFunctionType2
     ' 

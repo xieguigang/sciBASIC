@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c3ca3c20435ca7c8cf657e54ae92361, Data_science\MachineLearning\MachineLearning\SVM\Kernel\PrecomputedKernel.vb"
+﻿#Region "Microsoft.VisualBasic::7c3ca3c20435ca7c8cf657e54ae92361, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\Kernel\PrecomputedKernel.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 119
+    '    Code Lines: 37
+    ' Comment Lines: 62
+    '   Blank Lines: 20
+    '     File Size: 4.65 KB
+
 
     '     Class PrecomputedKernel
     ' 

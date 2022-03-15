@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51435beaf80873816b72565b2007240e, Data_science\Mathematica\Math\DataFrame\DataType.vb"
+﻿#Region "Microsoft.VisualBasic::51435beaf80873816b72565b2007240e, sciBASIC#\Data_science\Mathematica\Math\DataFrame\DataType.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 5
+    '    Code Lines: 5
+    ' Comment Lines: 0
+    '   Blank Lines: 0
+    '     File Size: 77.00 B
+
 
     ' Enum DataType
     ' 

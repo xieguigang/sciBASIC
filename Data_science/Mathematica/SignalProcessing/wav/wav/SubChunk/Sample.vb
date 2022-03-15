@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dbc8a441a7fe71efbeffd07a8dce50e9, Data_science\Mathematica\SignalProcessing\wav\wav\SubChunk\Sample.vb"
+﻿#Region "Microsoft.VisualBasic::dbc8a441a7fe71efbeffd07a8dce50e9, sciBASIC#\Data_science\Mathematica\SignalProcessing\wav\wav\SubChunk\Sample.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 60
+    '    Code Lines: 42
+    ' Comment Lines: 6
+    '   Blank Lines: 12
+    '     File Size: 1.98 KB
+
 
     ' Structure Sample
     ' 

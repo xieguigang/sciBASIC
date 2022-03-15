@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cea398faeec80829ae89e5ade8a30cb6, vs_solutions\dev\VisualStudio\CodeSign\LicenseInfo.vb"
+﻿#Region "Microsoft.VisualBasic::cea398faeec80829ae89e5ade8a30cb6, sciBASIC#\vs_solutions\dev\VisualStudio\CodeSign\LicenseInfo.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 55
+    '    Code Lines: 18
+    ' Comment Lines: 28
+    '   Blank Lines: 9
+    '     File Size: 2.27 KB
+
 
     '     Class LicenseInfo
     ' 

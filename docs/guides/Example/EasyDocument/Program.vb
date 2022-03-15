@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63f24a05632213261be8c904f16f375d, docs\guides\Example\EasyDocument\Program.vb"
+﻿#Region "Microsoft.VisualBasic::63f24a05632213261be8c904f16f375d, sciBASIC#\docs\guides\Example\EasyDocument\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 354
+    '    Code Lines: 230
+    ' Comment Lines: 60
+    '   Blank Lines: 64
+    '     File Size: 13.76 KB
+
 
     '     Delegate Function
     ' 

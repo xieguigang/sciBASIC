@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::153135150c90ae52fb855372928bce72, Data_science\Mathematica\Math\MathApp\Form1.vb"
+﻿#Region "Microsoft.VisualBasic::153135150c90ae52fb855372928bce72, sciBASIC#\Data_science\Mathematica\Math\MathApp\Form1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 12
+    '    Code Lines: 9
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 342.00 B
+
 
     ' Class Form1
     ' 

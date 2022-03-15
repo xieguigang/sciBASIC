@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c26eb2f049763576926aa5a969e626fd, www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\Academic\ProfileResult.vb"
+﻿#Region "Microsoft.VisualBasic::c26eb2f049763576926aa5a969e626fd, sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\Academic\ProfileResult.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 160
+    '    Code Lines: 134
+    ' Comment Lines: 9
+    '   Blank Lines: 17
+    '     File Size: 6.71 KB
+
 
     '     Module ProfileResult
     ' 

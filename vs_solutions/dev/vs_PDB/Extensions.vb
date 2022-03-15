@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::994b6174c2f49bd3bfc90d40d4f31545, vs_solutions\dev\vs_PDB\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::994b6174c2f49bd3bfc90d40d4f31545, sciBASIC#\vs_solutions\dev\vs_PDB\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 14
+    '    Code Lines: 6
+    ' Comment Lines: 5
+    '   Blank Lines: 3
+    '     File Size: 386.00 B
+
 
     ' Module Extensions
     ' 

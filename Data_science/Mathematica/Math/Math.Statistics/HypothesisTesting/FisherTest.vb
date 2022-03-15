@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a6c0bcd9fcda91e60779de861630c48, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\FisherTest.vb"
+﻿#Region "Microsoft.VisualBasic::1a6c0bcd9fcda91e60779de861630c48, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\FisherTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 115
+    '    Code Lines: 56
+    ' Comment Lines: 47
+    '   Blank Lines: 12
+    '     File Size: 4.44 KB
+
 
     ' Module FisherTest
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32e10c9bd83ae9824a0744ef74c27c2e, Data_science\Mathematica\Math\Randomizer\FastRandom\IProvideRandomValues.vb"
+﻿#Region "Microsoft.VisualBasic::32e10c9bd83ae9824a0744ef74c27c2e, sciBASIC#\Data_science\Mathematica\Math\Randomizer\FastRandom\IProvideRandomValues.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 29
+    '    Code Lines: 10
+    ' Comment Lines: 14
+    '   Blank Lines: 5
+    '     File Size: 1.40 KB
+
 
     ' Interface IProvideRandomValues
     ' 

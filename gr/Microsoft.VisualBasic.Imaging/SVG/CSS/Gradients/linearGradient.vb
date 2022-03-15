@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de57f0dd8f985f475d53ed6e6ba963b1, gr\Microsoft.VisualBasic.Imaging\SVG\CSS\Gradients\linearGradient.vb"
+﻿#Region "Microsoft.VisualBasic::de57f0dd8f985f475d53ed6e6ba963b1, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\CSS\Gradients\linearGradient.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 13
+    '    Code Lines: 9
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 354.00 B
+
 
     '     Class linearGradient
     ' 

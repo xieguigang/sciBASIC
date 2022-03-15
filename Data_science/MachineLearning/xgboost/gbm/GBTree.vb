@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8410467057d1bbc5a08d25f3776a9064, Data_science\MachineLearning\xgboost\gbm\GBTree.vb"
+﻿#Region "Microsoft.VisualBasic::28048993ce7eb36af1cf793f50b4eadd, sciBASIC#\Data_science\MachineLearning\xgboost\gbm\GBTree.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 146
+    '    Code Lines: 101
+    ' Comment Lines: 15
+    '   Blank Lines: 30
+    '     File Size: 5.50 KB
+
 
     '     Class GBTree
     ' 

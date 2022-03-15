@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf2bb932044d5c67ae3b901c54e04f8f, Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\Binding.vb"
+﻿#Region "Microsoft.VisualBasic::cf2bb932044d5c67ae3b901c54e04f8f, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\Binding.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 73
+    '    Code Lines: 40
+    ' Comment Lines: 22
+    '   Blank Lines: 11
+    '     File Size: 2.60 KB
+
 
     '     Structure Binding
     ' 

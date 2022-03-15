@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65975eadc33fb63cb7f11d8015e228d5, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shadow.vb"
+﻿#Region "Microsoft.VisualBasic::65975eadc33fb63cb7f11d8015e228d5, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shadow.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 148
+    '    Code Lines: 85
+    ' Comment Lines: 41
+    '   Blank Lines: 22
+    '     File Size: 6.73 KB
+
 
     '     Class Shadow
     ' 

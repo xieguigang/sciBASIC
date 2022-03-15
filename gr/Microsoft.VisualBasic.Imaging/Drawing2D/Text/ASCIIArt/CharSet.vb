@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed1dda5563410a59b26a6ce5c5ddb336, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\ASCIIArt\CharSet.vb"
+﻿#Region "Microsoft.VisualBasic::ed1dda5563410a59b26a6ce5c5ddb336, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\ASCIIArt\CharSet.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 176
+    '    Code Lines: 111
+    ' Comment Lines: 39
+    '   Blank Lines: 26
+    '     File Size: 8.72 KB
+
 
     '     Module CharSet
     ' 

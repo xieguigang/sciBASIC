@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f96d1b8fe455bcc689650341a8cbf4c, www\Microsoft.VisualBasic.NETProtocol\Protocol\Streams\VarArray.vb"
+﻿#Region "Microsoft.VisualBasic::2f96d1b8fe455bcc689650341a8cbf4c, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Protocol\Streams\VarArray.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 73
+    '    Code Lines: 49
+    ' Comment Lines: 8
+    '   Blank Lines: 16
+    '     File Size: 2.47 KB
+
 
     '     Class VarArray
     ' 

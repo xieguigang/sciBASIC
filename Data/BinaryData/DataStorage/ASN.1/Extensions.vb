@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::106e6da3fdc177cdeaa5a4e2ca068de4, Data\BinaryData\DataStorage\ASN.1\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::106e6da3fdc177cdeaa5a4e2ca068de4, sciBASIC#\Data\BinaryData\DataStorage\ASN.1\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 26
+    '    Code Lines: 18
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 1.06 KB
+
 
     '     Module Extensions
     ' 

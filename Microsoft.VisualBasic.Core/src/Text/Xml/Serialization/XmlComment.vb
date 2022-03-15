@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ea8673eecd4a8bbd78db8d5c2f814ff, Microsoft.VisualBasic.Core\src\Text\Xml\Serialization\XmlComment.vb"
+﻿#Region "Microsoft.VisualBasic::2ea8673eecd4a8bbd78db8d5c2f814ff, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\Serialization\XmlComment.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 54
+    '    Code Lines: 42
+    ' Comment Lines: 0
+    '   Blank Lines: 12
+    '     File Size: 1.83 KB
+
 
     '     Class XmlCommentAttribute
     ' 

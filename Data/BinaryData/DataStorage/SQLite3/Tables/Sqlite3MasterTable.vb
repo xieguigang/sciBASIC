@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4b94c96d5ad5d5c88c41b5d22c5c72c, Data\BinaryData\DataStorage\SQLite3\Tables\Sqlite3MasterTable.vb"
+﻿#Region "Microsoft.VisualBasic::c4b94c96d5ad5d5c88c41b5d22c5c72c, sciBASIC#\Data\BinaryData\DataStorage\SQLite3\Tables\Sqlite3MasterTable.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 47
+    '    Code Lines: 32
+    ' Comment Lines: 3
+    '   Blank Lines: 12
+    '     File Size: 1.52 KB
+
 
     '     Class Sqlite3MasterTable
     ' 

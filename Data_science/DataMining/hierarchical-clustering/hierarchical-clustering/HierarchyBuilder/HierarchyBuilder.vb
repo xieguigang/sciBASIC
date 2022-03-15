@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::49c90882251105fbd278d497807c7179, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\HierarchyBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::49c90882251105fbd278d497807c7179, sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\HierarchyBuilder.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 145
+    '    Code Lines: 80
+    ' Comment Lines: 43
+    '   Blank Lines: 22
+    '     File Size: 5.78 KB
+
 
     '     Class HierarchyBuilder
     ' 

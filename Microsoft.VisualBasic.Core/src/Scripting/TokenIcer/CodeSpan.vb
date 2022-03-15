@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8451dda2f14b33c39f39f5b1dc2195ea, Microsoft.VisualBasic.Core\src\Scripting\TokenIcer\CodeSpan.vb"
+﻿#Region "Microsoft.VisualBasic::8451dda2f14b33c39f39f5b1dc2195ea, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\TokenIcer\CodeSpan.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 31
+    '    Code Lines: 11
+    ' Comment Lines: 15
+    '   Blank Lines: 5
+    '     File Size: 906.00 B
+
 
     '     Class CodeSpan
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cccc247a90a767eac97b91db48465b0e, tutorials\core.test\wmfImage.vb"
+﻿#Region "Microsoft.VisualBasic::cccc247a90a767eac97b91db48465b0e, sciBASIC#\tutorials\core.test\wmfImage.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 111
+    '    Code Lines: 47
+    ' Comment Lines: 34
+    '   Blank Lines: 30
+    '     File Size: 2.96 KB
+
 
     ' Module wmfImage
     ' 

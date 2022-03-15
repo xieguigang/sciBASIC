@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1216bbe9f29a15c320780545f58a9f8c, gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Interfaces\IVector.vb"
+﻿#Region "Microsoft.VisualBasic::1216bbe9f29a15c320780545f58a9f8c, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Interfaces\IVector.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 62
+    '    Code Lines: 18
+    ' Comment Lines: 38
+    '   Blank Lines: 6
+    '     File Size: 2.20 KB
+
 
     '     Interface IVector
     ' 

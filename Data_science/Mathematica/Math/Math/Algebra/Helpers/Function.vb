@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8331afb9b91f31f997916549edb4c860, Data_science\Mathematica\Math\Math\Algebra\Helpers\Function.vb"
+﻿#Region "Microsoft.VisualBasic::8331afb9b91f31f997916549edb4c860, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Helpers\Function.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 205
+    '    Code Lines: 0
+    ' Comment Lines: 181
+    '   Blank Lines: 24
+    '     File Size: 10.95 KB
+
 
     ' 
     ' /********************************************************************************/

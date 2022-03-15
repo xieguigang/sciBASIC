@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c61d31cbf3bfcf6a60745eb5670cb52f, mime\text%yaml\1.1\Base\Emitter.vb"
+﻿#Region "Microsoft.VisualBasic::c61d31cbf3bfcf6a60745eb5670cb52f, sciBASIC#\mime\text%yaml\1.1\Base\Emitter.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 107
+    '    Code Lines: 88
+    ' Comment Lines: 0
+    '   Blank Lines: 19
+    '     File Size: 3.18 KB
+
 
     '     Class Emitter
     ' 

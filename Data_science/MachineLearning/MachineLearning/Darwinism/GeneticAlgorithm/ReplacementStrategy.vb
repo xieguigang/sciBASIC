@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8d2b0a83be42a4551173398efa657dd, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\ReplacementStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::c8d2b0a83be42a4551173398efa657dd, sciBASIC#\Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\ReplacementStrategy.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 105
+    '    Code Lines: 59
+    ' Comment Lines: 29
+    '   Blank Lines: 17
+    '     File Size: 4.17 KB
+
 
     '     Interface IStrategy
     ' 

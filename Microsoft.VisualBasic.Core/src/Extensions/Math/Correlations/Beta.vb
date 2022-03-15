@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc5ee750fec3f85eedeffd4537f53201, Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\Beta.vb"
+﻿#Region "Microsoft.VisualBasic::cc5ee750fec3f85eedeffd4537f53201, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\Beta.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 148
+    '    Code Lines: 115
+    ' Comment Lines: 0
+    '   Blank Lines: 33
+    '     File Size: 4.54 KB
+
 
     '     Module Beta
     ' 

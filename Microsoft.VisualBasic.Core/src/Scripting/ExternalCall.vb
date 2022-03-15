@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9fc91cb61a73740afa785ef73aef078a, Microsoft.VisualBasic.Core\src\Scripting\ExternalCall.vb"
+﻿#Region "Microsoft.VisualBasic::9fc91cb61a73740afa785ef73aef078a, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\ExternalCall.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 113
+    '    Code Lines: 58
+    ' Comment Lines: 43
+    '   Blank Lines: 12
+    '     File Size: 3.89 KB
+
 
     '     Class ExternalCall
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc63800415e644733dd9022b846c28a2, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\FishersExact\HyperState.vb"
+﻿#Region "Microsoft.VisualBasic::6350f24e2f405757258b905380145a7a, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\FishersExact\HyperState.vb"
 
     ' Author:
     ' 
@@ -31,16 +31,20 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 17
+    '    Code Lines: 14
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 497.00 B
+
+
     '     Class HyperState
     ' 
     '         Properties: n, n_1, n1_, n11, prob
     '                     valid
-    ' 
-    '         Function: ToString
-    ' 
-    '     Class FishersExactPvalues
-    ' 
-    '         Properties: greater_pvalue, hyper_state, less_pvalue, matrix, two_tail_pvalue
     ' 
     '         Function: ToString
     ' 

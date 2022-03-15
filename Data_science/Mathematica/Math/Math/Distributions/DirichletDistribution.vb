@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1532b89b231e3e6ac3a99457888ad2f2, Data_science\Mathematica\Math\Math\Distributions\DirichletDistribution.vb"
+﻿#Region "Microsoft.VisualBasic::1532b89b231e3e6ac3a99457888ad2f2, sciBASIC#\Data_science\Mathematica\Math\Math\Distributions\DirichletDistribution.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 45
+    '    Code Lines: 21
+    ' Comment Lines: 17
+    '   Blank Lines: 7
+    '     File Size: 2.08 KB
+
 
     '     Class DirichletDistribution
     ' 

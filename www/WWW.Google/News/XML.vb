@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4dee8da94c256c13687cb02a395f237, www\WWW.Google\News\XML.vb"
+﻿#Region "Microsoft.VisualBasic::f4dee8da94c256c13687cb02a395f237, sciBASIC#\www\WWW.Google\News\XML.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 44
+    '    Code Lines: 37
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 1.38 KB
+
 
     '     Class Channel
     ' 

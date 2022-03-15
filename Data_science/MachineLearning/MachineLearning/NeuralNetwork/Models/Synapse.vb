@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1344b57f7b4b883e336325e1d122a50e, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Models\Synapse.vb"
+﻿#Region "Microsoft.VisualBasic::1344b57f7b4b883e336325e1d122a50e, sciBASIC#\Data_science\MachineLearning\MachineLearning\NeuralNetwork\Models\Synapse.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 76
+    '    Code Lines: 42
+    ' Comment Lines: 25
+    '   Blank Lines: 9
+    '     File Size: 2.43 KB
+
 
     '     Class Synapse
     ' 

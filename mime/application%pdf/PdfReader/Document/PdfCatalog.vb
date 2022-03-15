@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48d260beec9773ab30dee4b3afeacc1e, mime\application%pdf\PdfReader\Document\PdfCatalog.vb"
+﻿#Region "Microsoft.VisualBasic::71ef5ad0667f2c0d2dd1be40af3dfefc, sciBASIC#\mime\application%pdf\PdfReader\Document\PdfCatalog.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 225
+    '    Code Lines: 178
+    ' Comment Lines: 3
+    '   Blank Lines: 44
+    '     File Size: 7.34 KB
+
 
     '     Class PdfCatalog
     ' 

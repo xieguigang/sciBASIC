@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5175ede6df88eea5d9b841451b84c4a3, vs_solutions\dev\VisualStudio\CodeSign\CodeSign.vb"
+﻿#Region "Microsoft.VisualBasic::5175ede6df88eea5d9b841451b84c4a3, sciBASIC#\vs_solutions\dev\VisualStudio\CodeSign\CodeSign.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 48
+    '    Code Lines: 27
+    ' Comment Lines: 14
+    '   Blank Lines: 7
+    '     File Size: 2.23 KB
+
 
     '     Module CodeSignHelpers
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::932825e5c1eb6ad73400b6e76e6ae9d6, Microsoft.VisualBasic.Core\src\Net\MIME\ContentTypeAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::932825e5c1eb6ad73400b6e76e6ae9d6, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\MIME\ContentTypeAttribute.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 49
+    '    Code Lines: 14
+    ' Comment Lines: 30
+    '   Blank Lines: 5
+    '     File Size: 2.33 KB
+
 
     '     Class ContentTypeAttribute
     ' 

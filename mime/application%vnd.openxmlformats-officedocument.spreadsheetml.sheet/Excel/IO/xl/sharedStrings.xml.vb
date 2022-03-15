@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b848a98496e6d2493a2d60ccc20469a, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\xl\sharedStrings.xml.vb"
+﻿#Region "Microsoft.VisualBasic::fb828afccaae402af0fd499d31e9a63c, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\xl\sharedStrings.xml.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 80
+    '    Code Lines: 53
+    ' Comment Lines: 14
+    '   Blank Lines: 13
+    '     File Size: 2.59 KB
+
+
     '     Class sharedStrings
     ' 
     '         Properties: count, strings, uniqueCount
@@ -40,7 +50,7 @@
     ' 
     '     Class si
     ' 
-    '         Properties: phoneticPr, t
+    '         Properties: phoneticPr, styled, t
     ' 
     '         Function: ToString
     ' 

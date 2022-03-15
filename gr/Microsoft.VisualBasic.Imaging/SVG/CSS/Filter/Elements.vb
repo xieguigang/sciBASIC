@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7864519d18ed9757acb5094e7763ea18, gr\Microsoft.VisualBasic.Imaging\SVG\CSS\Filter\Elements.vb"
+﻿#Region "Microsoft.VisualBasic::7864519d18ed9757acb5094e7763ea18, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\CSS\Filter\Elements.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 38
+    '    Code Lines: 31
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 1.27 KB
+
 
     '     Class feMorphology
     ' 

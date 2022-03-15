@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf9b7b38e9df9e4f8be10ac7d8c37a79, Data\BinaryData\BinaryData\Bzip2\Math\CRC32.vb"
+﻿#Region "Microsoft.VisualBasic::bf9b7b38e9df9e4f8be10ac7d8c37a79, sciBASIC#\Data\BinaryData\BinaryData\Bzip2\Math\CRC32.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 48
+    '    Code Lines: 26
+    ' Comment Lines: 15
+    '   Blank Lines: 7
+    '     File Size: 4.78 KB
+
 
     '     Class CRC32
     ' 

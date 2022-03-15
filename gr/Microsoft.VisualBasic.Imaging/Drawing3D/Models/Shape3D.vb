@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c23d9f8ecfccb3c99ae00aea03e5a3a, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shape3D.vb"
+﻿#Region "Microsoft.VisualBasic::6c23d9f8ecfccb3c99ae00aea03e5a3a, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shape3D.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 223
+    '    Code Lines: 165
+    ' Comment Lines: 16
+    '   Blank Lines: 42
+    '     File Size: 7.87 KB
+
 
     '     Class Shape3D
     ' 

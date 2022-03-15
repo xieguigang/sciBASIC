@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dca0d8eb053aea50944ddbb57bb9b978, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\Models\ProblemTable.vb"
+﻿#Region "Microsoft.VisualBasic::dca0d8eb053aea50944ddbb57bb9b978, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\Models\ProblemTable.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 126
+    '    Code Lines: 83
+    ' Comment Lines: 26
+    '   Blank Lines: 17
+    '     File Size: 4.67 KB
+
 
     '     Class SupportVector
     ' 

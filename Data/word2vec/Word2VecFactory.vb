@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dee304f47fe005173ec3f1414434a78b, Data\word2vec\Word2VecFactory.vb"
+﻿#Region "Microsoft.VisualBasic::dee304f47fe005173ec3f1414434a78b, sciBASIC#\Data\word2vec\Word2VecFactory.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 71
+    '    Code Lines: 46
+    ' Comment Lines: 5
+    '   Blank Lines: 20
+    '     File Size: 2.03 KB
+
 
     '     Class Word2VecFactory
     ' 

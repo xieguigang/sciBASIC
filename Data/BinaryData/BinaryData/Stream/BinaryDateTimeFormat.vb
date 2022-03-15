@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41081eac9d8b2576f3b6f8cc89c82140, Data\BinaryData\BinaryData\Stream\BinaryDateTimeFormat.vb"
+﻿#Region "Microsoft.VisualBasic::41081eac9d8b2576f3b6f8cc89c82140, sciBASIC#\Data\BinaryData\BinaryData\Stream\BinaryDateTimeFormat.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 14
+    '    Code Lines: 4
+    ' Comment Lines: 9
+    '   Blank Lines: 1
+    '     File Size: 423.00 B
+
 
     ' Enum BinaryDateTimeFormat
     ' 

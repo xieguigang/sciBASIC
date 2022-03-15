@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7406e5448a12504df6f55f859547282f, Microsoft.VisualBasic.Core\src\My\Framework\DoConfiguration.vb"
+﻿#Region "Microsoft.VisualBasic::7406e5448a12504df6f55f859547282f, sciBASIC#\Microsoft.VisualBasic.Core\src\My\Framework\DoConfiguration.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 70
+    '    Code Lines: 45
+    ' Comment Lines: 16
+    '   Blank Lines: 9
+    '     File Size: 3.03 KB
+
 
     '     Module DoConfiguration
     ' 

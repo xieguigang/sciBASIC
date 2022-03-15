@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::707b5f73e947c80a4efc25ff8b059224, Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsCovariance.vb"
+﻿#Region "Microsoft.VisualBasic::707b5f73e947c80a4efc25ff8b059224, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsCovariance.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 534
+    '    Code Lines: 105
+    ' Comment Lines: 421
+    '   Blank Lines: 8
+    '     File Size: 21.51 KB
+
 
     '     Module EnumerableStatsCovariance
     ' 

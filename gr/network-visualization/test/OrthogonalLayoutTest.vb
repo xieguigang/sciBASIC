@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::24cc48f16d141a8b041740efc0966ca5, gr\network-visualization\test\OrthogonalLayoutTest.vb"
+﻿#Region "Microsoft.VisualBasic::24cc48f16d141a8b041740efc0966ca5, sciBASIC#\gr\network-visualization\test\OrthogonalLayoutTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 35
+    '    Code Lines: 29
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 1.26 KB
+
 
     ' Module OrthogonalLayoutTest
     ' 

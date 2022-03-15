@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed43de2c9f0c1d94cf59c15eb0e3d271, Data_science\Visualization\Plots-statistics\QQPlot.vb"
+﻿#Region "Microsoft.VisualBasic::ed43de2c9f0c1d94cf59c15eb0e3d271, sciBASIC#\Data_science\Visualization\Plots-statistics\QQPlot.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 117
+    '    Code Lines: 42
+    ' Comment Lines: 69
+    '   Blank Lines: 6
+    '     File Size: 5.72 KB
+
 
     ' Module QQPlot
     ' 

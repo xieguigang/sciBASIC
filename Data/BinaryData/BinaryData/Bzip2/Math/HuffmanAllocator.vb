@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::219844aa92422a1346ae9a7d55782134, Data\BinaryData\BinaryData\Bzip2\Math\HuffmanAllocator.vb"
+﻿#Region "Microsoft.VisualBasic::219844aa92422a1346ae9a7d55782134, sciBASIC#\Data\BinaryData\BinaryData\Bzip2\Math\HuffmanAllocator.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 198
+    '    Code Lines: 123
+    ' Comment Lines: 43
+    '   Blank Lines: 32
+    '     File Size: 8.12 KB
+
 
     '     Module HuffmanAllocator
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3201436b9bd47b1cdd93f137bfb8a514, www\githubAPI\Visualizer\IsometricContributions.vb"
+﻿#Region "Microsoft.VisualBasic::3201436b9bd47b1cdd93f137bfb8a514, sciBASIC#\www\githubAPI\Visualizer\IsometricContributions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 205
+    '    Code Lines: 159
+    ' Comment Lines: 6
+    '   Blank Lines: 40
+    '     File Size: 8.92 KB
+
 
     ' Module IsometricContributions
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29285dd324248baea974d922ef0c22cd, mime\application%json\Serializer\Variant.vb"
+﻿#Region "Microsoft.VisualBasic::29285dd324248baea974d922ef0c22cd, sciBASIC#\mime\application%json\Serializer\Variant.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 46
+    '    Code Lines: 27
+    ' Comment Lines: 10
+    '   Blank Lines: 9
+    '     File Size: 1.32 KB
+
 
     ' Class [Variant]
     ' 

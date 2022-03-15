@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c731ac798c808c1feac3177c81413d5, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Unit\ByteSize.vb"
+﻿#Region "Microsoft.VisualBasic::6c731ac798c808c1feac3177c81413d5, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Unit\ByteSize.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 10
+    '    Code Lines: 9
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 207.00 B
+
 
     '     Enum ByteSize
     ' 

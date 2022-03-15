@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea3ef1d0bc16cac5b32be9fb60c273cb, Data_science\DataMining\DataMining\Clustering\KMeans\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::2b625d888ad097a1c355b31d3adc6bf3, sciBASIC#\Data_science\DataMining\DataMining\Clustering\KMeans\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 132
+    '    Code Lines: 107
+    ' Comment Lines: 13
+    '   Blank Lines: 12
+    '     File Size: 5.84 KB
+
 
     '     Module Extensions
     ' 
@@ -73,7 +83,8 @@ Namespace KMeans
         ''' <param name="array"></param>
         ''' <param name="nd"></param>
         ''' <returns></returns>
-        <Extension> Public Function ValueGroups(array As IEnumerable(Of Double), nd%) As List(Of EntityClusterModel)
+        <Extension>
+        Public Function ValueGroups(array As IEnumerable(Of Double), nd%) As List(Of EntityClusterModel)
             Dim entities As EntityClusterModel() = array _
                 .Select(Function(x, i)
                             Return New EntityClusterModel With {

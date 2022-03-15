@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50c6ea33bfbbc9a7c61974bf99ad5a2f, www\Microsoft.VisualBasic.Webservices.Bing\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::50c6ea33bfbbc9a7c61974bf99ad5a2f, sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\test\Module1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 7
+    '    Code Lines: 4
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 61.00 B
+
 
     ' Module Module1
     ' 

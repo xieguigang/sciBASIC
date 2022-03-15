@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::896e5dda413887dee58058b336d85210, Microsoft.VisualBasic.Core\src\Net\HTTP\DataURI.vb"
+﻿#Region "Microsoft.VisualBasic::896e5dda413887dee58058b336d85210, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\DataURI.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 130
+    '    Code Lines: 83
+    ' Comment Lines: 29
+    '   Blank Lines: 18
+    '     File Size: 4.53 KB
+
 
     '     Class DataURI
     ' 

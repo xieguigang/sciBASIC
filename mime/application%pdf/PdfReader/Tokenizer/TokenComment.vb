@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::334401bceb32aa3cea6e4a470c1e4174, mime\application%pdf\PdfReader\Tokenizer\TokenComment.vb"
+﻿#Region "Microsoft.VisualBasic::b47bcc287c94b4d91706b75472f17a56, sciBASIC#\mime\application%pdf\PdfReader\Tokenizer\TokenComment.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 20
+    '    Code Lines: 17
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 466.00 B
+
 
     '     Class TokenComment
     ' 

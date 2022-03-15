@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16aa6f45a382891531175005b3eddcee, Data_science\Mathematica\Math\Math\Algebra\Solvers\GaussianElimination.vb"
+﻿#Region "Microsoft.VisualBasic::16aa6f45a382891531175005b3eddcee, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Solvers\GaussianElimination.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 68
+    '    Code Lines: 44
+    ' Comment Lines: 14
+    '   Blank Lines: 10
+    '     File Size: 2.08 KB
+
 
     '     Module GaussianElimination
     ' 

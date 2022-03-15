@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a892fc0c925cb172abe78a800d56823, Data_science\Mathematica\Math\Math\Quantile\Quartile.vb"
+﻿#Region "Microsoft.VisualBasic::8a892fc0c925cb172abe78a800d56823, sciBASIC#\Data_science\Mathematica\Math\Math\Quantile\Quartile.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 72
+    '    Code Lines: 33
+    ' Comment Lines: 31
+    '   Blank Lines: 8
+    '     File Size: 4.20 KB
+
 
     '     Module Quartile
     ' 

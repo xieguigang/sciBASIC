@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef232de001f4d07d12b206313d8623ca, Data_science\Mathematica\Math\Math\Distributions\Gamma.vb"
+﻿#Region "Microsoft.VisualBasic::ef232de001f4d07d12b206313d8623ca, sciBASIC#\Data_science\Mathematica\Math\Math\Distributions\Gamma.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 150
+    '    Code Lines: 86
+    ' Comment Lines: 43
+    '   Blank Lines: 21
+    '     File Size: 4.81 KB
+
 
     '     Module MathGamma
     ' 

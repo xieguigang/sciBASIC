@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6cfbb166664865bb4c2301d99e54e2a6, Data_science\Visualization\test\heatmapPlot.vb"
+﻿#Region "Microsoft.VisualBasic::6cfbb166664865bb4c2301d99e54e2a6, sciBASIC#\Data_science\Visualization\test\heatmapPlot.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 56
+    '    Code Lines: 42
+    ' Comment Lines: 1
+    '   Blank Lines: 13
+    '     File Size: 2.03 KB
+
 
     ' Module heatmapPlot
     ' 

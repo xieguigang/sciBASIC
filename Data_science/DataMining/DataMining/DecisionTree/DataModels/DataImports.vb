@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2b44a49c95bebc302f14f56096d7110, Data_science\DataMining\DataMining\DecisionTree\DataModels\DataImports.vb"
+﻿#Region "Microsoft.VisualBasic::c2b44a49c95bebc302f14f56096d7110, sciBASIC#\Data_science\DataMining\DataMining\DecisionTree\DataModels\DataImports.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 83
+    '    Code Lines: 65
+    ' Comment Lines: 5
+    '   Blank Lines: 13
+    '     File Size: 3.09 KB
+
 
     '     Module DataImports
     ' 

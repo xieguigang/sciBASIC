@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d649efe90cf7f5b52773f852d0b7130, Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Line2D.vb"
+﻿#Region "Microsoft.VisualBasic::6d649efe90cf7f5b52773f852d0b7130, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Line2D.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 356
+    '    Code Lines: 88
+    ' Comment Lines: 253
+    '   Blank Lines: 15
+    '     File Size: 20.56 KB
+
 
     '     Module Line2D
     ' 

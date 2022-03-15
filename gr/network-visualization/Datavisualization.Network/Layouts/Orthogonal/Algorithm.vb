@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b419f71fbc372c10ee4954c4892f31bd, gr\network-visualization\Datavisualization.Network\Layouts\Orthogonal\Algorithm.vb"
+﻿#Region "Microsoft.VisualBasic::b419f71fbc372c10ee4954c4892f31bd, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Orthogonal\Algorithm.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 267
+    '    Code Lines: 180
+    ' Comment Lines: 46
+    '   Blank Lines: 41
+    '     File Size: 11.42 KB
+
 
     '     Module Algorithm
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af62bba4b3d09bb8a9754fdb3844cd95, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\SparseMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::af62bba4b3d09bb8a9754fdb3844cd95, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\SparseMatrix.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 159
+    '    Code Lines: 125
+    ' Comment Lines: 10
+    '   Blank Lines: 24
+    '     File Size: 5.92 KB
+
 
     '     Class SparseMatrix
     ' 

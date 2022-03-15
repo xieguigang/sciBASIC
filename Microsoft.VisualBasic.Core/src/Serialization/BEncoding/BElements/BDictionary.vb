@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66206dbd7e3b2a34fb27ee5c4c73ea1d, Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BElements\BDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::81178ece77dd54e33f19a39c1499cb6b, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BElements\BDictionary.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 81
+    '    Code Lines: 39
+    ' Comment Lines: 32
+    '   Blank Lines: 10
+    '     File Size: 3.03 KB
+
 
     '     Class BDictionary
     ' 

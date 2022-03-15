@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5cda075ddc9b842feeb12b3c35cfcba4, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO.vb"
+﻿#Region "Microsoft.VisualBasic::5cda075ddc9b842feeb12b3c35cfcba4, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 150
+    '    Code Lines: 105
+    ' Comment Lines: 24
+    '   Blank Lines: 21
+    '     File Size: 5.39 KB
+
 
     ' Module IO
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::139f0dbfcf4da3f97d04233ce967e2cf, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\test\test.vb"
+﻿#Region "Microsoft.VisualBasic::139f0dbfcf4da3f97d04233ce967e2cf, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\test\test.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 65
+    '    Code Lines: 47
+    ' Comment Lines: 1
+    '   Blank Lines: 17
+    '     File Size: 2.14 KB
+
 
     ' Module test
     ' 

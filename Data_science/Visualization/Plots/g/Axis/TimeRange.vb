@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19e4e2db62875ce04243c900e161ee53, Data_science\Visualization\Plots\g\Axis\TimeRange.vb"
+﻿#Region "Microsoft.VisualBasic::19e4e2db62875ce04243c900e161ee53, sciBASIC#\Data_science\Visualization\Plots\g\Axis\TimeRange.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 45
+    '    Code Lines: 36
+    ' Comment Lines: 0
+    '   Blank Lines: 9
+    '     File Size: 1.54 KB
+
 
     '     Class TimeRange
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4af5ff61c4b47c4c01deef54ea7009c0, tutorials\core.test\__DEBUG_MAIN.vb"
+﻿#Region "Microsoft.VisualBasic::4af5ff61c4b47c4c01deef54ea7009c0, sciBASIC#\tutorials\core.test\__DEBUG_MAIN.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 539
+    '    Code Lines: 248
+    ' Comment Lines: 124
+    '   Blank Lines: 167
+    '     File Size: 20.00 KB
+
 
     ' Module __DEBUG_MAIN
     ' 

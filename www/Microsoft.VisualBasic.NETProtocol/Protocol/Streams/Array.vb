@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c71404ce6ab97101986f8df9397ea506, www\Microsoft.VisualBasic.NETProtocol\Protocol\Streams\Array.vb"
+﻿#Region "Microsoft.VisualBasic::c71404ce6ab97101986f8df9397ea506, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Protocol\Streams\Array.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 96
+    '    Code Lines: 74
+    ' Comment Lines: 0
+    '   Blank Lines: 22
+    '     File Size: 2.94 KB
+
 
     '     Class [Long]
     ' 

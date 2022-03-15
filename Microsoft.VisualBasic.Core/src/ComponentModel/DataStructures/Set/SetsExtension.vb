@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3871fbac9fc98d8c282a3eef3e5d300b, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Set\SetsExtension.vb"
+﻿#Region "Microsoft.VisualBasic::3871fbac9fc98d8c282a3eef3e5d300b, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Set\SetsExtension.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 110
+    '    Code Lines: 61
+    ' Comment Lines: 36
+    '   Blank Lines: 13
+    '     File Size: 3.34 KB
+
 
     ' Module SetsExtension
     ' 

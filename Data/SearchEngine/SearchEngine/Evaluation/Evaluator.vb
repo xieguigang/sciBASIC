@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb940cabe15e5bbbad8359175d857d2e, Data\SearchEngine\SearchEngine\Evaluation\Evaluator.vb"
+﻿#Region "Microsoft.VisualBasic::fb940cabe15e5bbbad8359175d857d2e, sciBASIC#\Data\SearchEngine\SearchEngine\Evaluation\Evaluator.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 137
+    '    Code Lines: 103
+    ' Comment Lines: 15
+    '   Blank Lines: 19
+    '     File Size: 5.53 KB
+
 
     ' Module Evaluator
     ' 

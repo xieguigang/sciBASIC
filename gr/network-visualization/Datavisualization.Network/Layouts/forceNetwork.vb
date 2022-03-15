@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18d7bdef7734c50a9f21c791c1527dfe, gr\network-visualization\Datavisualization.Network\Layouts\forceNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::18d7bdef7734c50a9f21c791c1527dfe, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\forceNetwork.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 168
+    '    Code Lines: 115
+    ' Comment Lines: 34
+    '   Blank Lines: 19
+    '     File Size: 7.57 KB
+
 
     '     Module forceNetwork
     ' 

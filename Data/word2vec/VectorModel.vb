@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d446bade7e0147373c6dba7a147a0c45, Data\word2vec\VectorModel.vb"
+﻿#Region "Microsoft.VisualBasic::3e9594161dc849d35076616d9837eb1f, sciBASIC#\Data\word2vec\VectorModel.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 273
+    '    Code Lines: 176
+    ' Comment Lines: 35
+    '   Blank Lines: 62
+    '     File Size: 9.25 KB
+
 
     '     Class VectorModel
     ' 

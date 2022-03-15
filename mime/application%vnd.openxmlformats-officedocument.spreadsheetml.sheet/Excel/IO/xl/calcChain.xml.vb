@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::accfb6ab35932afcd21f673d69dd0c6d, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\xl\calcChain.xml.vb"
+﻿#Region "Microsoft.VisualBasic::accfb6ab35932afcd21f673d69dd0c6d, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\xl\calcChain.xml.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 16
+    '    Code Lines: 13
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 468.00 B
+
 
     '     Class calcChain
     ' 

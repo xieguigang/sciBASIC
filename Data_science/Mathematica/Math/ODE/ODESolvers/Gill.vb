@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::94aee2d3628307aab938ce8df3f96def, Data_science\Mathematica\Math\ODE\ODESolvers\Gill.vb"
+﻿#Region "Microsoft.VisualBasic::94aee2d3628307aab938ce8df3f96def, sciBASIC#\Data_science\Mathematica\Math\ODE\ODESolvers\Gill.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 34
+    '    Code Lines: 24
+    ' Comment Lines: 4
+    '   Blank Lines: 6
+    '     File Size: 1.24 KB
+
 
     ' Module ODESolver
     ' 

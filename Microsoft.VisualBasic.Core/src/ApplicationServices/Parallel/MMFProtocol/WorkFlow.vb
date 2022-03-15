@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa9a6c158df2b0f6ff46e52ef7b79e28, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\MMFProtocol\WorkFlow.vb"
+﻿#Region "Microsoft.VisualBasic::aa9a6c158df2b0f6ff46e52ef7b79e28, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\MMFProtocol\WorkFlow.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 42
+    '    Code Lines: 26
+    ' Comment Lines: 12
+    '   Blank Lines: 4
+    '     File Size: 1.87 KB
+
 
     '     Module WorkFlow
     ' 

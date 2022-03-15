@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e245be03faf8b7d265bd34704a72c58, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Models\DirectedEdge.vb"
+﻿#Region "Microsoft.VisualBasic::9e245be03faf8b7d265bd34704a72c58, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\Models\DirectedEdge.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 106
+    '    Code Lines: 80
+    ' Comment Lines: 6
+    '   Blank Lines: 20
+    '     File Size: 3.34 KB
+
 
     '     Structure DirectedEdge
     ' 

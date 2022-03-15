@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb72f54eaa8ba4e9e7131b990fac8694, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\Serialization\APIExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::fb72f54eaa8ba4e9e7131b990fac8694, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\Serialization\APIExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 143
+    '    Code Lines: 97
+    ' Comment Lines: 14
+    '   Blank Lines: 32
+    '     File Size: 5.24 KB
+
 
     '     Module APIExtensions
     ' 

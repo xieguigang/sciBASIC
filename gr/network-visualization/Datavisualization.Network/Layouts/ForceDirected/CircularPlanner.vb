@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f92dafb2a5f485840e40f69ff56f2e8b, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\CircularPlanner.vb"
+﻿#Region "Microsoft.VisualBasic::f92dafb2a5f485840e40f69ff56f2e8b, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\CircularPlanner.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 75
+    '    Code Lines: 51
+    ' Comment Lines: 7
+    '   Blank Lines: 17
+    '     File Size: 2.86 KB
+
 
     '     Class CircularPlanner
     ' 

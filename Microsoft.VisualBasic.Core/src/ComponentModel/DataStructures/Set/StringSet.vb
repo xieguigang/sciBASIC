@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::40222131056ab52cedace7de0903de1a, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Set\StringSet.vb"
+﻿#Region "Microsoft.VisualBasic::40222131056ab52cedace7de0903de1a, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Set\StringSet.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 57
+    '    Code Lines: 31
+    ' Comment Lines: 16
+    '   Blank Lines: 10
+    '     File Size: 2.18 KB
+
 
     '     Class StringSet
     ' 

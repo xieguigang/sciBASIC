@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6027da4becb6e05db8f636c5e52f110d, Data\BinaryData\msgpack\Constants\MsgPackConstants.vb"
+﻿#Region "Microsoft.VisualBasic::6027da4becb6e05db8f636c5e52f110d, sciBASIC#\Data\BinaryData\msgpack\Constants\MsgPackConstants.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 5
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 149.00 B
+
 
     '     Module MsgPackConstants
     ' 

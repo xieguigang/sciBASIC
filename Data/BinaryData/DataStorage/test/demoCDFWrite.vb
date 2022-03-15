@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ff4d89124a64b1c77ac8a0e343c9c05, Data\BinaryData\DataStorage\test\demoCDFWrite.vb"
+﻿#Region "Microsoft.VisualBasic::5ff4d89124a64b1c77ac8a0e343c9c05, sciBASIC#\Data\BinaryData\DataStorage\test\demoCDFWrite.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 34
+    '    Code Lines: 26
+    ' Comment Lines: 1
+    '   Blank Lines: 7
+    '     File Size: 1.67 KB
+
 
     ' Module demoCDFWrite
     ' 

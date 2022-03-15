@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6954a42314c3147cc56cf03beb920f4d, Data_science\Graph\Analysis\PQDijkstra\PQDijkstraProvider.vb"
+﻿#Region "Microsoft.VisualBasic::6954a42314c3147cc56cf03beb920f4d, sciBASIC#\Data_science\Graph\Analysis\PQDijkstra\PQDijkstraProvider.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 37
+    '    Code Lines: 14
+    ' Comment Lines: 18
+    '   Blank Lines: 5
+    '     File Size: 1.56 KB
+
 
     '     Class PQDijkstraProvider
     ' 

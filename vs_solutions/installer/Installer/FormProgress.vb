@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cabffe0d5bdc2db0dc87f2abdfa93c20, vs_solutions\installer\Installer\FormProgress.vb"
+﻿#Region "Microsoft.VisualBasic::cabffe0d5bdc2db0dc87f2abdfa93c20, sciBASIC#\vs_solutions\installer\Installer\FormProgress.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 45
+    '    Code Lines: 34
+    ' Comment Lines: 0
+    '   Blank Lines: 11
+    '     File Size: 1.69 KB
+
 
     ' Class FormProgress
     ' 

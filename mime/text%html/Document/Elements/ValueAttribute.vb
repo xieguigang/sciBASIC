@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ec3ee5c3808a0b04fb701e1c4572a38, mime\text%html\Document\Elements\ValueAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::3ec3ee5c3808a0b04fb701e1c4572a38, sciBASIC#\mime\text%html\Document\Elements\ValueAttribute.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 54
+    '    Code Lines: 38
+    ' Comment Lines: 5
+    '   Blank Lines: 11
+    '     File Size: 1.80 KB
+
 
     '     Structure ValueAttribute
     ' 

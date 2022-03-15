@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ad0108fd823cbbd71719f81e36e5cf9, Data_science\Mathematica\Math\Math\Scripting\Symbolic\Symbolic.vb"
+﻿#Region "Microsoft.VisualBasic::0ad0108fd823cbbd71719f81e36e5cf9, sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Symbolic\Symbolic.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 128
+    '    Code Lines: 102
+    ' Comment Lines: 13
+    '   Blank Lines: 13
+    '     File Size: 5.63 KB
+
 
     '     Module Symbolic
     ' 

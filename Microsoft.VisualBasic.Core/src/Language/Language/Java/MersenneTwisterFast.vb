@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb7d384016451b2e147093e9fe1a3eff, Microsoft.VisualBasic.Core\src\Language\Language\Java\MersenneTwisterFast.vb"
+﻿#Region "Microsoft.VisualBasic::fb7d384016451b2e147093e9fe1a3eff, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\Java\MersenneTwisterFast.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 917
+    '    Code Lines: 625
+    ' Comment Lines: 159
+    '   Blank Lines: 133
+    '     File Size: 41.24 KB
+
 
     '     Class MersenneTwisterFast
     ' 

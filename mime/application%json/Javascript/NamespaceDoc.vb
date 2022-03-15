@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::edaad5bd14d42e7c0f243ca97da0e8bb, mime\application%json\Javascript\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::edaad5bd14d42e7c0f243ca97da0e8bb, sciBASIC#\mime\application%json\Javascript\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 4
+    ' Comment Lines: 3
+    '   Blank Lines: 1
+    '     File Size: 171.00 B
+
 
     '     Module NamespaceDoc
     ' 

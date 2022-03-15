@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92bff8f4f2603c5bcb01a9b70bd3828b, gr\OpenGL\Camera.vb"
+﻿#Region "Microsoft.VisualBasic::92bff8f4f2603c5bcb01a9b70bd3828b, sciBASIC#\gr\OpenGL\Camera.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 45
+    '    Code Lines: 36
+    ' Comment Lines: 0
+    '   Blank Lines: 9
+    '     File Size: 1.37 KB
+
 
     ' Class Camera
     ' 

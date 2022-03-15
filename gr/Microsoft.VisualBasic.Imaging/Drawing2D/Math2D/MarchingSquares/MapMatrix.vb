@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c93b27f7d2978e2f422722b97ebcb24, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\MapMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::92d6eea0c126193cb2d1d21449f0dfdc, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\MapMatrix.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 174
+    '    Code Lines: 108
+    ' Comment Lines: 37
+    '   Blank Lines: 29
+    '     File Size: 5.84 KB
+
 
     '     Class MapMatrix
     ' 

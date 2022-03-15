@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::675a967a44add44cc604a19e846f2e28, Data_science\Visualization\test\ColorLegendTest.vb"
+﻿#Region "Microsoft.VisualBasic::675a967a44add44cc604a19e846f2e28, sciBASIC#\Data_science\Visualization\test\ColorLegendTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 21
+    '    Code Lines: 15
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 740.00 B
+
 
     ' Module ColorLegendTest
     ' 

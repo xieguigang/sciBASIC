@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a7fdf9972bc354f9de754c115e60c2cd, vs_solutions\dev\VisualStudio\sourceMap\mappingEncode.vb"
+﻿#Region "Microsoft.VisualBasic::a7fdf9972bc354f9de754c115e60c2cd, sciBASIC#\vs_solutions\dev\VisualStudio\sourceMap\mappingEncode.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 64
+    '    Code Lines: 49
+    ' Comment Lines: 6
+    '   Blank Lines: 9
+    '     File Size: 2.46 KB
+
 
     '     Module mappingEncode
     ' 

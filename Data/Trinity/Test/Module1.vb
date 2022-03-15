@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0414c1f8f64a4775be05bc560774f8ae, Data\Trinity\Test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::0414c1f8f64a4775be05bc560774f8ae, sciBASIC#\Data\Trinity\Test\Module1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 38
+    '    Code Lines: 22
+    ' Comment Lines: 6
+    '   Blank Lines: 10
+    '     File Size: 1.32 KB
+
 
     ' Module Module1
     ' 

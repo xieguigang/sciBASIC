@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::276c64f851dc419160b00c9a8e554e6c, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Assert.vb"
+﻿#Region "Microsoft.VisualBasic::276c64f851dc419160b00c9a8e554e6c, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Assert.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 24
+    '    Code Lines: 20
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 1.10 KB
+
 
     '     Class Assert
     ' 

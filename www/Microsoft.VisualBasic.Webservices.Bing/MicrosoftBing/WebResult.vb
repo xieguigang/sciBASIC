@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a13d90c82220608e2c644ced97636caf, www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\WebResult.vb"
+﻿#Region "Microsoft.VisualBasic::a13d90c82220608e2c644ced97636caf, sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\WebResult.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 69
+    '    Code Lines: 47
+    ' Comment Lines: 11
+    '   Blank Lines: 11
+    '     File Size: 2.33 KB
+
 
     '     Class WebResult
     ' 

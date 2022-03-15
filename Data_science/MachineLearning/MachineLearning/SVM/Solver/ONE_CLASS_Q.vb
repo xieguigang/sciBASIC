@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::349d392d8758400a9965393d010f4694, Data_science\MachineLearning\MachineLearning\SVM\Solver\ONE_CLASS_Q.vb"
+﻿#Region "Microsoft.VisualBasic::349d392d8758400a9965393d010f4694, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\Solver\ONE_CLASS_Q.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 51
+    '    Code Lines: 38
+    ' Comment Lines: 0
+    '   Blank Lines: 13
+    '     File Size: 1.42 KB
+
 
     '     Class ONE_CLASS_Q
     ' 

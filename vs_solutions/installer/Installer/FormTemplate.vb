@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::06c7574d3cd53920f317b43465ce1d60, vs_solutions\installer\Installer\FormTemplate.vb"
+﻿#Region "Microsoft.VisualBasic::06c7574d3cd53920f317b43465ce1d60, sciBASIC#\vs_solutions\installer\Installer\FormTemplate.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 13
+    '    Code Lines: 9
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 394.00 B
+
 
     ' Class FormTemplate
     ' 

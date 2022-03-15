@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9ec99e8382633aa47f71f0e34ea779e, mime\application%pdf\PdfReader\Parser\ParseReal.vb"
+﻿#Region "Microsoft.VisualBasic::05d2436631665bb1548b24eced611b88, sciBASIC#\mime\application%pdf\PdfReader\Parser\ParseReal.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 24
+    '    Code Lines: 20
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 562.00 B
+
 
     '     Class ParseReal
     ' 

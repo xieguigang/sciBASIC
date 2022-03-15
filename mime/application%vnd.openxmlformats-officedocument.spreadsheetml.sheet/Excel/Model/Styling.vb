@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6ab36b6dbbcf1b78faa65c4baa813ee, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\Styling.vb"
+﻿#Region "Microsoft.VisualBasic::e6ab36b6dbbcf1b78faa65c4baa813ee, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\Styling.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 70
+    '    Code Lines: 60
+    ' Comment Lines: 0
+    '   Blank Lines: 10
+    '     File Size: 2.70 KB
+
 
     ' Module Styling
     ' 

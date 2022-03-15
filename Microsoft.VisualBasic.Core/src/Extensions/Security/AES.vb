@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5cfa890b656e93e3a8988f76e1e286f, Microsoft.VisualBasic.Core\src\Extensions\Security\AES.vb"
+﻿#Region "Microsoft.VisualBasic::e5cfa890b656e93e3a8988f76e1e286f, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Security\AES.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 68
+    '    Code Lines: 49
+    ' Comment Lines: 11
+    '   Blank Lines: 8
+    '     File Size: 2.75 KB
+
 
     '     Class AES
     ' 

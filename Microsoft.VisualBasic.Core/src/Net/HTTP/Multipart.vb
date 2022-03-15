@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2587947bba388a6f54f5f06c0d5246f1, Microsoft.VisualBasic.Core\src\Net\HTTP\Multipart.vb"
+﻿#Region "Microsoft.VisualBasic::2587947bba388a6f54f5f06c0d5246f1, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\Multipart.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 136
+    '    Code Lines: 80
+    ' Comment Lines: 36
+    '   Blank Lines: 20
+    '     File Size: 5.31 KB
+
 
     '     Class MultipartForm
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df6c30b20183d0575770c1c9e429664f, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\SharedORM\CodeGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::df6c30b20183d0575770c1c9e429664f, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\InteropService\SharedORM\CodeGenerator.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 102
+    '    Code Lines: 80
+    ' Comment Lines: 5
+    '   Blank Lines: 17
+    '     File Size: 3.54 KB
+
 
     '     Class CodeGenerator
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a5048284d91f859afcd0427a4254ac3, gr\3DEngineTest\3DEngineTest\Simple\CubeModel.vb"
+﻿#Region "Microsoft.VisualBasic::1a5048284d91f859afcd0427a4254ac3, sciBASIC#\gr\3DEngineTest\3DEngineTest\Simple\CubeModel.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 19
+    '    Code Lines: 15
+    ' Comment Lines: 1
+    '   Blank Lines: 3
+    '     File Size: 694.00 B
+
 
     ' Class CubeModel
     ' 

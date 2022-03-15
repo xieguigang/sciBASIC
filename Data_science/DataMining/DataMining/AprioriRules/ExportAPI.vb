@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::537e2ceb6350f84164a1fafc67df66bf, Data_science\DataMining\DataMining\AprioriRules\ExportAPI.vb"
+﻿#Region "Microsoft.VisualBasic::537e2ceb6350f84164a1fafc67df66bf, sciBASIC#\Data_science\DataMining\DataMining\AprioriRules\ExportAPI.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 72
+    '    Code Lines: 59
+    ' Comment Lines: 3
+    '   Blank Lines: 10
+    '     File Size: 3.31 KB
+
 
     '     Delegate Function
     ' 

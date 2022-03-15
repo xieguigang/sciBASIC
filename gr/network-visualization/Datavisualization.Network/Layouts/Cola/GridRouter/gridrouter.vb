@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83723fdb842462229921cea905e8ea9f, gr\network-visualization\Datavisualization.Network\Layouts\Cola\GridRouter\gridrouter.vb"
+﻿#Region "Microsoft.VisualBasic::83723fdb842462229921cea905e8ea9f, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\GridRouter\gridrouter.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 777
+    '    Code Lines: 580
+    ' Comment Lines: 125
+    '   Blank Lines: 72
+    '     File Size: 37.29 KB
+
 
     '     Class GridRouter
     ' 

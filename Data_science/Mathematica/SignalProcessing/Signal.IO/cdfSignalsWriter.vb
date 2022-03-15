@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de20b66bcfabe041ba0a28f7a1dca9d3, Data_science\Mathematica\SignalProcessing\Signal.IO\cdfSignalsWriter.vb"
+﻿#Region "Microsoft.VisualBasic::de20b66bcfabe041ba0a28f7a1dca9d3, sciBASIC#\Data_science\Mathematica\SignalProcessing\Signal.IO\cdfSignalsWriter.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 215
+    '    Code Lines: 167
+    ' Comment Lines: 14
+    '   Blank Lines: 34
+    '     File Size: 10.68 KB
+
 
     ' Module cdfSignalsWriter
     ' 

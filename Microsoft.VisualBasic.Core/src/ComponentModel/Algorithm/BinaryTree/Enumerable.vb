@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2490319bb8bde8baa5c8bf29ec93e755, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\Enumerable.vb"
+﻿#Region "Microsoft.VisualBasic::2490319bb8bde8baa5c8bf29ec93e755, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\Enumerable.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 71
+    '    Code Lines: 34
+    ' Comment Lines: 29
+    '   Blank Lines: 8
+    '     File Size: 2.69 KB
+
 
     '     Module Enumerable
     ' 

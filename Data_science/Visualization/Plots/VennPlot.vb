@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d54dafe0c7004603f24d45e9019a5b84, Data_science\Visualization\Plots\VennPlot.vb"
+﻿#Region "Microsoft.VisualBasic::d54dafe0c7004603f24d45e9019a5b84, sciBASIC#\Data_science\Visualization\Plots\VennPlot.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 185
+    '    Code Lines: 100
+    ' Comment Lines: 55
+    '   Blank Lines: 30
+    '     File Size: 7.75 KB
+
 
     ' Module VennPlot
     ' 

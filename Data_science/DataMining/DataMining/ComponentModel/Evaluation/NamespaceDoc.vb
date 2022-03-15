@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::39a002cbaa8accb44a2129506e503e94, Data_science\DataMining\DataMining\ComponentModel\Evaluation\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::39a002cbaa8accb44a2129506e503e94, sciBASIC#\Data_science\DataMining\DataMining\ComponentModel\Evaluation\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 4
+    ' Comment Lines: 3
+    '   Blank Lines: 1
+    '     File Size: 172.00 B
+
 
     '     Module NamespaceDoc
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a119b28ea327aec2097f32abe61c2190, Data_science\Visualization\Plots\BarPlot\Data\BarPlotDataExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::a119b28ea327aec2097f32abe61c2190, sciBASIC#\Data_science\Visualization\Plots\BarPlot\Data\BarPlotDataExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 224
+    '    Code Lines: 178
+    ' Comment Lines: 19
+    '   Blank Lines: 27
+    '     File Size: 8.97 KB
+
 
     '     Module BarPlotDataExtensions
     ' 

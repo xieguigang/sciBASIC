@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45fc5ad21ef13e7b44fcdae02ca19a5e, Data_science\MachineLearning\SVMDemo\MainWindow.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::45fc5ad21ef13e7b44fcdae02ca19a5e, sciBASIC#\Data_science\MachineLearning\SVMDemo\MainWindow.xaml.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 175
+    '    Code Lines: 148
+    ' Comment Lines: 3
+    '   Blank Lines: 24
+    '     File Size: 7.70 KB
+
 
     '     Class MainWindow
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2925e31f95f6bafbad82bbb6c889e7ad, Data_science\Visualization\Plots-statistics\Heatmap\CorrelationData.vb"
+﻿#Region "Microsoft.VisualBasic::2925e31f95f6bafbad82bbb6c889e7ad, sciBASIC#\Data_science\Visualization\Plots-statistics\Heatmap\CorrelationData.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 77
+    '    Code Lines: 60
+    ' Comment Lines: 0
+    '   Blank Lines: 17
+    '     File Size: 2.29 KB
+
 
     '     Class CorrelationData
     ' 

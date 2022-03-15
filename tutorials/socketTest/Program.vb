@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d4190451a65fec77d27638cc378da79, tutorials\socketTest\Program.vb"
+﻿#Region "Microsoft.VisualBasic::3d4190451a65fec77d27638cc378da79, sciBASIC#\tutorials\socketTest\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 72
+    '    Code Lines: 51
+    ' Comment Lines: 0
+    '   Blank Lines: 21
+    '     File Size: 2.09 KB
+
 
     ' Module Program
     ' 

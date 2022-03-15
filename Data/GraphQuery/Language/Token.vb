@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9180dd28945b99aa1765f3c335ed842b, Data\GraphQuery\Language\Token.vb"
+﻿#Region "Microsoft.VisualBasic::9180dd28945b99aa1765f3c335ed842b, sciBASIC#\Data\GraphQuery\Language\Token.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 15
+    '    Code Lines: 11
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 404.00 B
+
 
     '     Class Token
     ' 

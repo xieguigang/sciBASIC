@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d774765ac27b20ca9c2d047b76e43364, CLI_tools\XMLFormater\Program.vb"
+﻿#Region "Microsoft.VisualBasic::d774765ac27b20ca9c2d047b76e43364, sciBASIC#\CLI_tools\XMLFormater\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 17
+    '    Code Lines: 14
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 541.00 B
+
 
     ' Module Program
     ' 

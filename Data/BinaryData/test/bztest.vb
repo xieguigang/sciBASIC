@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31acbad62043abcfca0f22231e974719, Data\BinaryData\test\bztest.vb"
+﻿#Region "Microsoft.VisualBasic::31acbad62043abcfca0f22231e974719, sciBASIC#\Data\BinaryData\test\bztest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 108
+    '    Code Lines: 62
+    ' Comment Lines: 31
+    '   Blank Lines: 15
+    '     File Size: 4.15 KB
+
 
     '     Class UnitTests
     ' 

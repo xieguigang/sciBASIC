@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b43dd450ac1875ebd780ed6c399af063, vs_solutions\dev\ApplicationServices\Win32\WindowsServices.vb"
+﻿#Region "Microsoft.VisualBasic::b43dd450ac1875ebd780ed6c399af063, sciBASIC#\vs_solutions\dev\ApplicationServices\Win32\WindowsServices.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 131
+    '    Code Lines: 47
+    ' Comment Lines: 68
+    '   Blank Lines: 16
+    '     File Size: 6.43 KB
+
 
     '     Module WindowsServices
     ' 

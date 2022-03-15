@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a8f583e2966f8d1d501e5664ae0b34c6, mime\text%yaml\1.1\Base\YAMLTag.vb"
+﻿#Region "Microsoft.VisualBasic::a8f583e2966f8d1d501e5664ae0b34c6, sciBASIC#\mime\text%yaml\1.1\Base\YAMLTag.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 30
+    '    Code Lines: 23
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 859.00 B
+
 
     '     Structure YAMLTag
     ' 

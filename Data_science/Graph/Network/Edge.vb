@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e75b50ef76a74078bdbac498b6cccc1, Data_science\Graph\Network\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::0e75b50ef76a74078bdbac498b6cccc1, sciBASIC#\Data_science\Graph\Network\Edge.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 6
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 158.00 B
+
 
     '     Class Edge
     ' 

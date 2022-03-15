@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e34d0aa6832de6a79452cd791056a477, mime\application%pdf\PdfReader\Tokenizer\TokenStringHex.vb"
+﻿#Region "Microsoft.VisualBasic::ffcb6265eb577b45fa2968c21ab4348f, sciBASIC#\mime\application%pdf\PdfReader\Tokenizer\TokenStringHex.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 41
+    '    Code Lines: 29
+    ' Comment Lines: 3
+    '   Blank Lines: 9
+    '     File Size: 1.50 KB
+
 
     '     Class TokenStringHex
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25fbcd0712d279fed27abdd65c98993e, www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\Academic\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::25fbcd0712d279fed27abdd65c98993e, sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\Academic\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 82
+    '    Code Lines: 71
+    ' Comment Lines: 0
+    '   Blank Lines: 11
+    '     File Size: 2.97 KB
+
 
     '     Module Extensions
     ' 

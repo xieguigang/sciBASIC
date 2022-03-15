@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::981343b86afa32fae5111455cf423738, gr\Microsoft.VisualBasic.Imaging\Filters\Effects.vb"
+﻿#Region "Microsoft.VisualBasic::013564c353a88c8732e00c76039b437c, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Filters\Effects.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 202
+    '    Code Lines: 140
+    ' Comment Lines: 27
+    '   Blank Lines: 35
+    '     File Size: 7.70 KB
+
 
     '     Module Effects
     ' 

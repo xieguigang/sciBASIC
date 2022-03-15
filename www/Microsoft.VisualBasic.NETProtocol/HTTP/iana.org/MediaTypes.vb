@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2547dc08db30de3978e4d1e053278609, www\Microsoft.VisualBasic.NETProtocol\HTTP\iana.org\MediaTypes.vb"
+﻿#Region "Microsoft.VisualBasic::2547dc08db30de3978e4d1e053278609, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\HTTP\iana.org\MediaTypes.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 23
+    '    Code Lines: 8
+    ' Comment Lines: 14
+    '   Blank Lines: 1
+    '     File Size: 1.07 KB
+
 
     ' Class MediaTypes
     ' 

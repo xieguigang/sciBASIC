@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97a8c9fde4fcc21d5f47187693a72336, Microsoft.VisualBasic.Core\src\Scripting\MetaData\Namespace.vb"
+﻿#Region "Microsoft.VisualBasic::97a8c9fde4fcc21d5f47187693a72336, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\MetaData\Namespace.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 92
+    '    Code Lines: 42
+    ' Comment Lines: 42
+    '   Blank Lines: 8
+    '     File Size: 3.60 KB
+
 
     '     Class PackageAttribute
     ' 

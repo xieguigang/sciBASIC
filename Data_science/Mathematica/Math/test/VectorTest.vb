@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::871c2b48d182a79a6ce59c244e5b12cb, Data_science\Mathematica\Math\test\VectorTest.vb"
+﻿#Region "Microsoft.VisualBasic::871c2b48d182a79a6ce59c244e5b12cb, sciBASIC#\Data_science\Mathematica\Math\test\VectorTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 149
+    '    Code Lines: 95
+    ' Comment Lines: 0
+    '   Blank Lines: 54
+    '     File Size: 4.77 KB
+
 
     ' Module VectorTest
     ' 

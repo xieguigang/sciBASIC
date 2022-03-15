@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93f6a83769b7733e227e6108d2870de9, Data\BinaryData\DataStorage\SQLite3\Helpers\ReadonlyStream.vb"
+﻿#Region "Microsoft.VisualBasic::93f6a83769b7733e227e6108d2870de9, sciBASIC#\Data\BinaryData\DataStorage\SQLite3\Helpers\ReadonlyStream.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 24
+    '    Code Lines: 20
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 701.00 B
+
 
     '     Class ReadonlyStream
     ' 

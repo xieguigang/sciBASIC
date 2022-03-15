@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d778ee5d576e999a44c42696c94281f5, Microsoft.VisualBasic.Core\src\My\JavaScript\ES6\Map.vb"
+﻿#Region "Microsoft.VisualBasic::d778ee5d576e999a44c42696c94281f5, sciBASIC#\Microsoft.VisualBasic.Core\src\My\JavaScript\ES6\Map.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 65
+    '    Code Lines: 46
+    ' Comment Lines: 6
+    '   Blank Lines: 13
+    '     File Size: 1.93 KB
+
 
     '     Class RegExp
     ' 

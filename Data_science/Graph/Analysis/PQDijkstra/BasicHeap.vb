@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1426d0576106690256e975422c591c9d, Data_science\Graph\Analysis\PQDijkstra\BasicHeap.vb"
+﻿#Region "Microsoft.VisualBasic::1426d0576106690256e975422c591c9d, sciBASIC#\Data_science\Graph\Analysis\PQDijkstra\BasicHeap.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 72
+    '    Code Lines: 57
+    ' Comment Lines: 2
+    '   Blank Lines: 13
+    '     File Size: 2.15 KB
+
 
     '     Class BasicHeap
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86010f91b7c9f5f11629e04d0212ff08, Data_science\MachineLearning\MachineLearning\RandomForests\RandomForests.vb"
+﻿#Region "Microsoft.VisualBasic::86010f91b7c9f5f11629e04d0212ff08, sciBASIC#\Data_science\MachineLearning\MachineLearning\RandomForests\RandomForests.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 66
+    '    Code Lines: 58
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 2.81 KB
+
 
     '     Class RandomForests
     ' 

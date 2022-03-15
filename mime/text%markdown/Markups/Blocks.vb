@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c02f78e3cae82904e1b4b31c13df3995, mime\text%markdown\Markups\Blocks.vb"
+﻿#Region "Microsoft.VisualBasic::c02f78e3cae82904e1b4b31c13df3995, sciBASIC#\mime\text%markdown\Markups\Blocks.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 11
+    '    Code Lines: 8
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 287.00 B
+
 
     ' Class Header
     ' 

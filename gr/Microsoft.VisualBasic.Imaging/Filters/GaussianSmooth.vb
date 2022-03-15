@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f00de03fb66661dd9d739dbf2548f51, gr\Microsoft.VisualBasic.Imaging\Filters\GaussianSmooth.vb"
+﻿#Region "Microsoft.VisualBasic::6f00de03fb66661dd9d739dbf2548f51, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Filters\GaussianSmooth.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 114
+    '    Code Lines: 80
+    ' Comment Lines: 19
+    '   Blank Lines: 15
+    '     File Size: 4.57 KB
+
 
     '     Class GaussianSmooth
     ' 

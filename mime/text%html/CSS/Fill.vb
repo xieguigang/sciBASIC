@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c56bbd1072ce11db8b2dc93fc4f9f22, mime\text%html\CSS\Fill.vb"
+﻿#Region "Microsoft.VisualBasic::2c56bbd1072ce11db8b2dc93fc4f9f22, sciBASIC#\mime\text%html\CSS\Fill.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 13
+    '    Code Lines: 6
+    ' Comment Lines: 3
+    '   Blank Lines: 4
+    '     File Size: 263.00 B
+
 
     '     Class Fill
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13737a7d8a3c8579738e173c9b569448, Data\BinaryData\DataStorage\netCDF\Components\DimensionList.vb"
+﻿#Region "Microsoft.VisualBasic::13737a7d8a3c8579738e173c9b569448, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\DimensionList.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 23
+    '    Code Lines: 16
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 638.00 B
+
 
     '     Class DimensionList
     ' 

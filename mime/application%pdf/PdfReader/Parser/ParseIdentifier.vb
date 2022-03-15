@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ead901cdf633319d4c8c42bd9842f59, mime\application%pdf\PdfReader\Parser\ParseIdentifier.vb"
+﻿#Region "Microsoft.VisualBasic::748d91e51ef8646508f3e52ddf93b2dc, sciBASIC#\mime\application%pdf\PdfReader\Parser\ParseIdentifier.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 36
+    '    Code Lines: 29
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 1.23 KB
+
 
     '     Class ParseIdentifier
     ' 

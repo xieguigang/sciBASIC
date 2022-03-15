@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c294fdb2eb1a77b518d9d828eba5e30, Data\DataFrame\Linq\LinqWhere.vb"
+﻿#Region "Microsoft.VisualBasic::0c294fdb2eb1a77b518d9d828eba5e30, sciBASIC#\Data\DataFrame\Linq\LinqWhere.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 365
+    '    Code Lines: 232
+    ' Comment Lines: 83
+    '   Blank Lines: 50
+    '     File Size: 14.10 KB
+
 
     '     Class LinqWhere
     ' 

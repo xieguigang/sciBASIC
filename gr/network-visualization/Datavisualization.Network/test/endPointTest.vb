@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13e99a2aaa102db3432cf23086cc4a88, gr\network-visualization\Datavisualization.Network\test\endPointTest.vb"
+﻿#Region "Microsoft.VisualBasic::13e99a2aaa102db3432cf23086cc4a88, sciBASIC#\gr\network-visualization\Datavisualization.Network\test\endPointTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 20
+    '    Code Lines: 12
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 391.00 B
+
 
     ' Module endPointTest
     ' 

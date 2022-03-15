@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84fb9859fe35175c7c3c7b617fb4214b, Data_science\Mathematica\Math\MathApp\Modules\PDFTest.vb"
+﻿#Region "Microsoft.VisualBasic::84fb9859fe35175c7c3c7b617fb4214b, sciBASIC#\Data_science\Mathematica\Math\MathApp\Modules\PDFTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 98
+    '    Code Lines: 53
+    ' Comment Lines: 29
+    '   Blank Lines: 16
+    '     File Size: 3.18 KB
+
 
     ' Module PDFTest
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d87b0e7ead61ecca80eda2d8d3ddb432, Data_science\Mathematica\Math\Math\Scripting\ScriptEngine.vb"
+﻿#Region "Microsoft.VisualBasic::d87b0e7ead61ecca80eda2d8d3ddb432, sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\ScriptEngine.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 148
+    '    Code Lines: 72
+    ' Comment Lines: 54
+    '   Blank Lines: 22
+    '     File Size: 5.45 KB
+
 
     '     Module ScriptEngine
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5386687f6a3b1945115dc69dea2fbb24, vs_solutions\dev\LicenseMgr\LicenseMgr\Content\SettingsAppearance.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::5386687f6a3b1945115dc69dea2fbb24, sciBASIC#\vs_solutions\dev\LicenseMgr\LicenseMgr\Content\SettingsAppearance.xaml.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 16
+    '    Code Lines: 10
+    ' Comment Lines: 4
+    '   Blank Lines: 2
+    '     File Size: 451.00 B
+
 
     '     Class SettingsAppearance
     ' 

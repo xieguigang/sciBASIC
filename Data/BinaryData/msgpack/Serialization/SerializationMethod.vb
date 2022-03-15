@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b39e753d0ba8c53101dceeee2f988dd, Data\BinaryData\msgpack\Serialization\SerializationMethod.vb"
+﻿#Region "Microsoft.VisualBasic::2b39e753d0ba8c53101dceeee2f988dd, sciBASIC#\Data\BinaryData\msgpack\Serialization\SerializationMethod.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 7
+    '    Code Lines: 6
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 119.00 B
+
 
     '     Enum SerializationMethod
     ' 

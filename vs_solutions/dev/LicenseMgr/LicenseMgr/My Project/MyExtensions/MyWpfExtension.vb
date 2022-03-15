@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0e3e176186fc47c4b834cd01ed4e050, vs_solutions\dev\LicenseMgr\LicenseMgr\My Project\MyExtensions\MyWpfExtension.vb"
+﻿#Region "Microsoft.VisualBasic::e0e3e176186fc47c4b834cd01ed4e050, sciBASIC#\vs_solutions\dev\LicenseMgr\LicenseMgr\My Project\MyExtensions\MyWpfExtension.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 121
+    '    Code Lines: 99
+    ' Comment Lines: 20
+    '   Blank Lines: 2
+    '     File Size: 7.08 KB
+
 
     '     Module MyWpfExtension
     ' 

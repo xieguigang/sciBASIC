@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07a4c9b714d10ef5926958918c39880c, Microsoft.VisualBasic.Core\src\Extensions\WebServices\RequestBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::07a4c9b714d10ef5926958918c39880c, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\WebServices\RequestBuilder.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 56
+    '    Code Lines: 40
+    ' Comment Lines: 7
+    '   Blank Lines: 9
+    '     File Size: 2.16 KB
+
 
     '     Module RequestBuilder
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5d124ec5793dd97ffb34ea0fbf396f7, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\EventProc.vb"
+﻿#Region "Microsoft.VisualBasic::e5d124ec5793dd97ffb34ea0fbf396f7, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\EventProc.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 94
+    '    Code Lines: 54
+    ' Comment Lines: 27
+    '   Blank Lines: 13
+    '     File Size: 2.85 KB
+
 
     '     Class EventProc
     ' 

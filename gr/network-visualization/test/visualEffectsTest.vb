@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85b8293db6093a0d6e83562c56d3e3c2, gr\network-visualization\test\visualEffectsTest.vb"
+﻿#Region "Microsoft.VisualBasic::85b8293db6093a0d6e83562c56d3e3c2, sciBASIC#\gr\network-visualization\test\visualEffectsTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 31
+    '    Code Lines: 27
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 1.12 KB
+
 
     ' Module visualEffectsTest
     ' 

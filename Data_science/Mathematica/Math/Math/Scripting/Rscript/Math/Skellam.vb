@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6660c7d33a346849cd42dd7a67bfe2b, Data_science\Mathematica\Math\Math\Scripting\Rscript\Math\Skellam.vb"
+﻿#Region "Microsoft.VisualBasic::a6660c7d33a346849cd42dd7a67bfe2b, sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Rscript\Math\Skellam.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 356
+    '    Code Lines: 0
+    ' Comment Lines: 325
+    '   Blank Lines: 31
+    '     File Size: 20.43 KB
+
 
     ' 
     ' /********************************************************************************/

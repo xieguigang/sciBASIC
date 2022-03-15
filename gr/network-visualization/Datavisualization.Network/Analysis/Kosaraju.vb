@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a6f785492189b3f2276162dc8d8bda8, gr\network-visualization\Datavisualization.Network\Analysis\Kosaraju.vb"
+﻿#Region "Microsoft.VisualBasic::3a6f785492189b3f2276162dc8d8bda8, sciBASIC#\gr\network-visualization\Datavisualization.Network\Analysis\Kosaraju.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 131
+    '    Code Lines: 81
+    ' Comment Lines: 27
+    '   Blank Lines: 23
+    '     File Size: 4.71 KB
+
 
     '     Class Kosaraju
     ' 

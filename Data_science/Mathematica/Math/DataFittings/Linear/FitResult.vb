@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d42548a2570bfa2c18e954ec8a0f03f, Data_science\Mathematica\Math\DataFittings\Linear\FitResult.vb"
+﻿#Region "Microsoft.VisualBasic::6d42548a2570bfa2c18e954ec8a0f03f, sciBASIC#\Data_science\Mathematica\Math\DataFittings\Linear\FitResult.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 136
+    '    Code Lines: 58
+    ' Comment Lines: 66
+    '   Blank Lines: 12
+    '     File Size: 4.75 KB
+
 
     ' Class FitResult
     ' 

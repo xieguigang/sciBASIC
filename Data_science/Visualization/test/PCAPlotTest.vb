@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::40e047c363d763a4e27819f95aa545c4, Data_science\Visualization\test\PCAPlotTest.vb"
+﻿#Region "Microsoft.VisualBasic::40e047c363d763a4e27819f95aa545c4, sciBASIC#\Data_science\Visualization\test\PCAPlotTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 32
+    '    Code Lines: 24
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 1.43 KB
+
 
     ' Module PCAPlotTest
     ' 

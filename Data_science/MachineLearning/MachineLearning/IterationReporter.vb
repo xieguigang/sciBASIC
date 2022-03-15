@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d78e953e4129f7114cf9feaa4859cb4, Data_science\MachineLearning\MachineLearning\IterationReporter.vb"
+﻿#Region "Microsoft.VisualBasic::7d78e953e4129f7114cf9feaa4859cb4, sciBASIC#\Data_science\MachineLearning\MachineLearning\IterationReporter.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 25
+    '    Code Lines: 12
+    ' Comment Lines: 6
+    '   Blank Lines: 7
+    '     File Size: 696.00 B
+
 
     ' Class IterationReporter
     ' 

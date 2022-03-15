@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e498b2e5d8f26283d46709dbdc85a999, Data_science\Mathematica\Math\MathLambda\test\SymbolicTest.vb"
+﻿#Region "Microsoft.VisualBasic::e498b2e5d8f26283d46709dbdc85a999, sciBASIC#\Data_science\Mathematica\Math\MathLambda\test\SymbolicTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 49
+    '    Code Lines: 34
+    ' Comment Lines: 0
+    '   Blank Lines: 15
+    '     File Size: 1.52 KB
+
 
     ' Module SymbolicTest
     ' 

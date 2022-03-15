@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae74b9296db08d7df5499dbbecfb6cb2, vs_solutions\dev\LicenseMgr\LicenseMgr\LicenseInfo.vb"
+﻿#Region "Microsoft.VisualBasic::8230b8e9f1454f0ce7da6e9ac5c6a011, sciBASIC#\vs_solutions\dev\LicenseMgr\LicenseMgr\LicenseInfo.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 20
+    '    Code Lines: 15
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 478.00 B
+
+
     ' Module LicenseInfoExtensions
     ' 
     '     Properties: info
@@ -39,7 +49,7 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.ApplicationServices.Development
+Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.CodeSign
 
 Module LicenseInfoExtensions
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c01efe879a62dd983db25056f69b3d3a, Data_science\DataMining\DataMining\Clustering\KMeans\Evaluation.vb"
+﻿#Region "Microsoft.VisualBasic::c01efe879a62dd983db25056f69b3d3a, sciBASIC#\Data_science\DataMining\DataMining\Clustering\KMeans\Evaluation.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 106
+    '    Code Lines: 72
+    ' Comment Lines: 13
+    '   Blank Lines: 21
+    '     File Size: 3.66 KB
+
 
     '     Module Evaluation
     ' 

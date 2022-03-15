@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56d056d2ab346e48034388638d38b322, Data_science\Visualization\data\PCA\PCA\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::56d056d2ab346e48034388638d38b322, sciBASIC#\Data_science\Visualization\data\PCA\PCA\Module1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 42
+    '    Code Lines: 26
+    ' Comment Lines: 4
+    '   Blank Lines: 12
+    '     File Size: 1.20 KB
+
 
     ' Module Module1
     ' 

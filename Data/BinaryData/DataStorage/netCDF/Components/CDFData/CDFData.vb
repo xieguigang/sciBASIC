@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86c6be851af4aa5faef0aeded57e91b4, Data\BinaryData\DataStorage\netCDF\Components\CDFData\CDFData.vb"
+﻿#Region "Microsoft.VisualBasic::639eb9a3c7245147eb6d7d06a390e293, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\CDFData\CDFData.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 134
+    '    Code Lines: 108
+    ' Comment Lines: 9
+    '   Blank Lines: 17
+    '     File Size: 5.56 KB
+
 
     '     Class CDFData
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05cdec2923b16e095487d27a7a2cf5c1, Data_science\DataMining\UMAP\Components\Tree\RandomProjectionTreeNode.vb"
+﻿#Region "Microsoft.VisualBasic::05cdec2923b16e095487d27a7a2cf5c1, sciBASIC#\Data_science\DataMining\UMAP\Components\Tree\RandomProjectionTreeNode.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 11
+    '    Code Lines: 10
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 410.00 B
+
 
     '     Class RandomProjectionTreeNode
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0d5e7e4bdb4d0dd6fb1e5904898fb4b, Data\BinaryData\DataStorage\HDF5\device\BinaryReader.vb"
+﻿#Region "Microsoft.VisualBasic::c0d5e7e4bdb4d0dd6fb1e5904898fb4b, sciBASIC#\Data\BinaryData\DataStorage\HDF5\device\BinaryReader.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 257
+    '    Code Lines: 178
+    ' Comment Lines: 33
+    '   Blank Lines: 46
+    '     File Size: 8.42 KB
+
 
     '     Class BinaryReader
     ' 

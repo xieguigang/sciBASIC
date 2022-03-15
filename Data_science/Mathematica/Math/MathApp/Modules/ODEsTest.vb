@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::52c8d74ec1594d3032e723797c12429b, Data_science\Mathematica\Math\MathApp\Modules\ODEsTest.vb"
+﻿#Region "Microsoft.VisualBasic::52c8d74ec1594d3032e723797c12429b, sciBASIC#\Data_science\Mathematica\Math\MathApp\Modules\ODEsTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 22
+    '    Code Lines: 17
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 640.00 B
+
 
     ' Class ODEsTest
     ' 

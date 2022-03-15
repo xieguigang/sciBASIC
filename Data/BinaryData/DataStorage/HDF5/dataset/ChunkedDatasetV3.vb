@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75d47cb6ef699cfeb4ad21b6894ac111, Data\BinaryData\DataStorage\HDF5\dataset\ChunkedDatasetV3.vb"
+﻿#Region "Microsoft.VisualBasic::75d47cb6ef699cfeb4ad21b6894ac111, sciBASIC#\Data\BinaryData\DataStorage\HDF5\dataset\ChunkedDatasetV3.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 297
+    '    Code Lines: 161
+    ' Comment Lines: 81
+    '   Blank Lines: 55
+    '     File Size: 11.83 KB
+
 
     '     Class ChunkedDatasetV3
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d053db75be3ad31bd7967315457f08c, gr\network-visualization\Datavisualization.Network\Analysis\Model\GraphIndex.vb"
+﻿#Region "Microsoft.VisualBasic::5d053db75be3ad31bd7967315457f08c, sciBASIC#\gr\network-visualization\Datavisualization.Network\Analysis\Model\GraphIndex.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 130
+    '    Code Lines: 82
+    ' Comment Lines: 28
+    '   Blank Lines: 20
+    '     File Size: 4.95 KB
+
 
     '     Class GraphIndex
     ' 

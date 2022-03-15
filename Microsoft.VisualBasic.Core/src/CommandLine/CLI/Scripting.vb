@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59b88f692c6293c9bfc2b7e7af2d6e63, Microsoft.VisualBasic.Core\src\CommandLine\CLI\Scripting.vb"
+﻿#Region "Microsoft.VisualBasic::59b88f692c6293c9bfc2b7e7af2d6e63, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\CLI\Scripting.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 86
+    '    Code Lines: 63
+    ' Comment Lines: 8
+    '   Blank Lines: 15
+    '     File Size: 3.49 KB
+
 
     '     Module ScriptingExtensions
     ' 

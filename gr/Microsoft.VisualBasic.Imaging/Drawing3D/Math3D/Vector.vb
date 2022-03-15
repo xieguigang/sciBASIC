@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9e5f459c6c2c27072fceeaceb3a6bce, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::b9e5f459c6c2c27072fceeaceb3a6bce, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Vector.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 46
+    '    Code Lines: 36
+    ' Comment Lines: 1
+    '   Blank Lines: 9
+    '     File Size: 1.48 KB
+
 
     '     Module VectorMath
     ' 

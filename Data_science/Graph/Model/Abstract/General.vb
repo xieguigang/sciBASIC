@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b25baf2be827517ea1b242c9274627a5, Data_science\Graph\Model\Abstract\General.vb"
+﻿#Region "Microsoft.VisualBasic::b25baf2be827517ea1b242c9274627a5, sciBASIC#\Data_science\Graph\Model\Abstract\General.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 33
+    '    Code Lines: 22
+    ' Comment Lines: 5
+    '   Blank Lines: 6
+    '     File Size: 1.17 KB
+
 
     ' Class VertexEdge
     ' 

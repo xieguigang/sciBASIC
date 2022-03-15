@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70003e87abf3f1c42bdc9eba12a0bbc8, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm\DefaultClusteringAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::70003e87abf3f1c42bdc9eba12a0bbc8, sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm\DefaultClusteringAlgorithm.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 171
+    '    Code Lines: 108
+    ' Comment Lines: 28
+    '   Blank Lines: 35
+    '     File Size: 7.28 KB
+
 
     ' Class DefaultClusteringAlgorithm
     ' 

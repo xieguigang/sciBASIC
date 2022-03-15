@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff7cab0986dd7b075db9ab8d5ae04560, Microsoft.VisualBasic.Core\src\Data\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::ff7cab0986dd7b075db9ab8d5ae04560, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 4
+    ' Comment Lines: 3
+    '   Blank Lines: 1
+    '     File Size: 158.00 B
+
 
     '     Module NamespaceDoc
     ' 

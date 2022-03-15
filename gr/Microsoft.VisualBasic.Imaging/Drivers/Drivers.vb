@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4d759d167f18d665c89626094af8c28, gr\Microsoft.VisualBasic.Imaging\Drivers\Drivers.vb"
+﻿#Region "Microsoft.VisualBasic::3bc274bd8f02fc291527e37636b58a79, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drivers\Drivers.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,20 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 33
+    '    Code Lines: 12
+    ' Comment Lines: 18
+    '   Blank Lines: 3
+    '     File Size: 1.01 KB
+
+
     '     Enum Drivers
     ' 
-    '         [Default], GDI, PS, SVG, WMF
+    '         [Default], GDI, PDF, PS, SVG
+    '         WMF
     ' 
     '  
     ' 

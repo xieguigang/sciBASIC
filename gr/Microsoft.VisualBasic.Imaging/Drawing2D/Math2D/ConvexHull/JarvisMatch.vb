@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1cd62e2e1647bae0a275a0f4b2034eb, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConvexHull\JarvisMatch.vb"
+﻿#Region "Microsoft.VisualBasic::e1cd62e2e1647bae0a275a0f4b2034eb, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConvexHull\JarvisMatch.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 63
+    '    Code Lines: 49
+    ' Comment Lines: 0
+    '   Blank Lines: 14
+    '     File Size: 1.87 KB
+
 
     '     Module JarvisMatch
     ' 

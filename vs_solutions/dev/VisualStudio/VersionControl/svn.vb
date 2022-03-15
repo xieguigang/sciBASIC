@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fccd934cd733e5a243e04270d99c5090, vs_solutions\dev\VisualStudio\VersionControl\svn.vb"
+﻿#Region "Microsoft.VisualBasic::fccd934cd733e5a243e04270d99c5090, sciBASIC#\vs_solutions\dev\VisualStudio\VersionControl\svn.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 16
+    '    Code Lines: 11
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 405.00 B
+
 
     '     Module svn
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6917b8c8af09007df9ce6117b6648e38, gr\Microsoft.VisualBasic.Imaging\Drivers\ImageSynthesis.vb"
+﻿#Region "Microsoft.VisualBasic::5397f2ba53d3f78bde6db2205aca8b46, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drivers\ImageSynthesis.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1067
+    '    Code Lines: 138
+    ' Comment Lines: 897
+    '   Blank Lines: 32
+    '     File Size: 46.66 KB
+
 
     '     Module ImageSynthesis
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30eee2eeff14868750b1140a95ff893f, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\Worksheet.vb"
+﻿#Region "Microsoft.VisualBasic::30eee2eeff14868750b1140a95ff893f, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\Worksheet.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 82
+    '    Code Lines: 69
+    ' Comment Lines: 0
+    '   Blank Lines: 13
+    '     File Size: 2.43 KB
+
 
     '     Class SheetTable
     ' 

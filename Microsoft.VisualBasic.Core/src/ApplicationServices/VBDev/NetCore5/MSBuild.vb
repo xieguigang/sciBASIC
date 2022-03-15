@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e076d597b1b4af56c3ff1a695d6d2486, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\NetCore5\MSBuild.vb"
+﻿#Region "Microsoft.VisualBasic::35b671f955ee893ac6e5071402b25f2d, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\NetCore5\MSBuild.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 75
+    '    Code Lines: 47
+    ' Comment Lines: 18
+    '   Blank Lines: 10
+    '     File Size: 2.52 KB
+
 
     '     Class MSBuild
     ' 

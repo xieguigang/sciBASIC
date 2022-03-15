@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b95d4ee07a795dd03f098b859afdfda7, Data\word2vec\HuffmanNeuron.vb"
+﻿#Region "Microsoft.VisualBasic::422439da1cace6541b60ea325c08d1f9, sciBASIC#\Data\word2vec\HuffmanNeuron.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 55
+    '    Code Lines: 43
+    ' Comment Lines: 3
+    '   Blank Lines: 9
+    '     File Size: 1.74 KB
+
 
     '     Class HuffmanNeuron
     ' 

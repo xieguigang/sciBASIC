@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dabda53def1609e856f1d536793907a1, Data\BinaryData\BinaryData\Extensions\MSWindows.vb"
+﻿#Region "Microsoft.VisualBasic::dabda53def1609e856f1d536793907a1, sciBASIC#\Data\BinaryData\BinaryData\Extensions\MSWindows.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 18
+    '    Code Lines: 2
+    ' Comment Lines: 15
+    '   Blank Lines: 1
+    '     File Size: 808.00 B
+
 
     ' Module MSWindows
     ' 

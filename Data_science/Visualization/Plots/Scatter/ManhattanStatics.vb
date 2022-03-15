@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad1a699294010e992f8e4ea4694b5c8c, Data_science\Visualization\Plots\Scatter\ManhattanStatics.vb"
+﻿#Region "Microsoft.VisualBasic::ad1a699294010e992f8e4ea4694b5c8c, sciBASIC#\Data_science\Visualization\Plots\Scatter\ManhattanStatics.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 158
+    '    Code Lines: 0
+    ' Comment Lines: 144
+    '   Blank Lines: 14
+    '     File Size: 6.81 KB
+
 
     ' 
     ' /********************************************************************************/

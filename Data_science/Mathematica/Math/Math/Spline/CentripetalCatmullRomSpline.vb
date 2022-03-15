@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6818dfe6fa916242f3c167754e0b905, Data_science\Mathematica\Math\Math\Spline\CentripetalCatmullRomSpline.vb"
+﻿#Region "Microsoft.VisualBasic::c6818dfe6fa916242f3c167754e0b905, sciBASIC#\Data_science\Mathematica\Math\Math\Spline\CentripetalCatmullRomSpline.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 70
+    '    Code Lines: 37
+    ' Comment Lines: 22
+    '   Blank Lines: 11
+    '     File Size: 3.28 KB
+
 
     '     Module CentripetalCatmullRomSpline
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0d6ed223e923e63f3b5f955baa01063, Data_science\MachineLearning\MachineLearning\SVM\Solver\Solver.vb"
+﻿#Region "Microsoft.VisualBasic::b0d6ed223e923e63f3b5f955baa01063, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\Solver\Solver.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 667
+    '    Code Lines: 476
+    ' Comment Lines: 70
+    '   Blank Lines: 121
+    '     File Size: 22.11 KB
+
 
     '     Class Solver
     ' 

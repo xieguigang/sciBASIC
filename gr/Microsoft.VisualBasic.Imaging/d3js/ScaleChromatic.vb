@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd68761433179889fe8b6c0379d701e7, gr\Microsoft.VisualBasic.Imaging\d3js\ScaleChromatic.vb"
+﻿#Region "Microsoft.VisualBasic::fd68761433179889fe8b6c0379d701e7, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\ScaleChromatic.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 146
+    '    Code Lines: 95
+    ' Comment Lines: 45
+    '   Blank Lines: 6
+    '     File Size: 4.55 KB
+
 
     '     Module ScaleChromatic
     ' 

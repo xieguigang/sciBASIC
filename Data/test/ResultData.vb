@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a4268fea954902a51a20cf1410c07b1, Data\test\ResultData.vb"
+﻿#Region "Microsoft.VisualBasic::4a4268fea954902a51a20cf1410c07b1, sciBASIC#\Data\test\ResultData.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 34
+    '    Code Lines: 26
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 1.27 KB
+
 
     '     Class DESeq
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::decd68a23e8432690347a647562b1801, gr\network-visualization\Network.IO.Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::decd68a23e8432690347a647562b1801, sciBASIC#\gr\network-visualization\Network.IO.Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 131
+    '    Code Lines: 90
+    ' Comment Lines: 29
+    '   Blank Lines: 12
+    '     File Size: 4.80 KB
+
 
     ' Module Extensions
     ' 

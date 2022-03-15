@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::77611a0edb6226754cb43329f630e336, Data_science\Mathematica\Math\Math\Spline\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::77611a0edb6226754cb43329f630e336, sciBASIC#\Data_science\Mathematica\Math\Math\Spline\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 103
+    '    Code Lines: 66
+    ' Comment Lines: 22
+    '   Blank Lines: 15
+    '     File Size: 3.01 KB
+
 
     '     Enum Splines
     ' 

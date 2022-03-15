@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c122848f5dc01b16d812e37fcae6887, www\Microsoft.VisualBasic.NETProtocol\Mailto\MailClient.vb"
+﻿#Region "Microsoft.VisualBasic::2c122848f5dc01b16d812e37fcae6887, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Mailto\MailClient.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 108
+    '    Code Lines: 70
+    ' Comment Lines: 19
+    '   Blank Lines: 19
+    '     File Size: 3.60 KB
+
 
     '     Class EMailClient
     ' 

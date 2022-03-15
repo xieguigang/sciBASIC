@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2f1e1842f6cbd8e130158d5b9db2e75, gr\avi\AVIStream.vb"
+﻿#Region "Microsoft.VisualBasic::f3eca2808c725ae4e7ed690dc02ca4d7, sciBASIC#\gr\avi\AVIStream.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 148
+    '    Code Lines: 106
+    ' Comment Lines: 18
+    '   Blank Lines: 24
+    '     File Size: 5.65 KB
+
 
     ' Class AVIStream
     ' 

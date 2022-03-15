@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::00c626cd8267d1857d768b0f2f6869a3, vs_solutions\installer\zip\Program.vb"
+﻿#Region "Microsoft.VisualBasic::00c626cd8267d1857d768b0f2f6869a3, sciBASIC#\vs_solutions\installer\zip\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 76
+    '    Code Lines: 66
+    ' Comment Lines: 0
+    '   Blank Lines: 10
+    '     File Size: 2.88 KB
+
 
     ' Module Program
     ' 

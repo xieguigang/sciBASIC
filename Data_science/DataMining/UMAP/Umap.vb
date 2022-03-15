@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34249ce88a8a0c72f19575ac495f4edb, Data_science\DataMining\UMAP\Umap.vb"
+﻿#Region "Microsoft.VisualBasic::362a7964a8eeb5a2466e5807dd2b8d98, sciBASIC#\Data_science\DataMining\UMAP\Umap.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 485
+    '    Code Lines: 299
+    ' Comment Lines: 109
+    '   Blank Lines: 77
+    '     File Size: 20.26 KB
+
 
     ' Class Umap
     ' 

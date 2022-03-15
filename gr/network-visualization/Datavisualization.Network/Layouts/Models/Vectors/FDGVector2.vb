@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a95ce18a1e14c8164a0fcfef057d8bb8, gr\network-visualization\Datavisualization.Network\Layouts\Models\Vectors\FDGVector2.vb"
+﻿#Region "Microsoft.VisualBasic::a95ce18a1e14c8164a0fcfef057d8bb8, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Models\Vectors\FDGVector2.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 270
+    '    Code Lines: 175
+    ' Comment Lines: 58
+    '   Blank Lines: 37
+    '     File Size: 9.24 KB
+
 
     '     Class FDGVector2
     ' 

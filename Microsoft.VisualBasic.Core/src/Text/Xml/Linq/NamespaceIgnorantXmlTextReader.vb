@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1dd2d81772c9463a25d2615ef944eb6f, Microsoft.VisualBasic.Core\src\Text\Xml\Linq\NamespaceIgnorantXmlTextReader.vb"
+﻿#Region "Microsoft.VisualBasic::1dd2d81772c9463a25d2615ef944eb6f, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\Linq\NamespaceIgnorantXmlTextReader.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 26
+    '    Code Lines: 18
+    ' Comment Lines: 3
+    '   Blank Lines: 5
+    '     File Size: 664.00 B
+
 
     '     Class NamespaceIgnorantXmlTextReader
     ' 

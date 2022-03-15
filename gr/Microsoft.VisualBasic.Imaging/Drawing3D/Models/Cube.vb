@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9370de73bb561e603f3933fe0934432a, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Cube.vb"
+﻿#Region "Microsoft.VisualBasic::9370de73bb561e603f3933fe0934432a, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Cube.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 138
+    '    Code Lines: 89
+    ' Comment Lines: 26
+    '   Blank Lines: 23
+    '     File Size: 4.53 KB
+
 
     '     Class Cube
     ' 

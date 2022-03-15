@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d5514dab2f4b39b07db887ae8741926, Data_science\MachineLearning\SVMDemo\DataPoint.vb"
+﻿#Region "Microsoft.VisualBasic::1d5514dab2f4b39b07db887ae8741926, sciBASIC#\Data_science\MachineLearning\SVMDemo\DataPoint.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 7
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 185.00 B
+
 
     '     Class DataPoint
     ' 

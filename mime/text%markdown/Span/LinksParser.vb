@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::928b5849c2395d537c222244852be0cb, mime\text%markdown\Span\LinksParser.vb"
+﻿#Region "Microsoft.VisualBasic::928b5849c2395d537c222244852be0cb, sciBASIC#\mime\text%markdown\Span\LinksParser.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 204
+    '    Code Lines: 29
+    ' Comment Lines: 169
+    '   Blank Lines: 6
+    '     File Size: 8.45 KB
+
 
     '     Module LinksParser
     ' 

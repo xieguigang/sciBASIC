@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cba66bc5764906a8c76972e977bc71f2, Microsoft.VisualBasic.Core\src\Extensions\Image\Colors\ColorMap.vb"
+﻿#Region "Microsoft.VisualBasic::cba66bc5764906a8c76972e977bc71f2, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Colors\ColorMap.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 354
+    '    Code Lines: 256
+    ' Comment Lines: 61
+    '   Blank Lines: 37
+    '     File Size: 13.79 KB
+
 
     '     Module ColorMapsExtensions
     ' 

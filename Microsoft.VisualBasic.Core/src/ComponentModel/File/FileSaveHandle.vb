@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::011fa2291fe5dd6f7fc89410a001045d, Microsoft.VisualBasic.Core\src\ComponentModel\File\FileSaveHandle.vb"
+﻿#Region "Microsoft.VisualBasic::011fa2291fe5dd6f7fc89410a001045d, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\File\FileSaveHandle.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 40
+    '    Code Lines: 13
+    ' Comment Lines: 22
+    '   Blank Lines: 5
+    '     File Size: 1.51 KB
+
 
     '     Interface ISaveHandle
     ' 

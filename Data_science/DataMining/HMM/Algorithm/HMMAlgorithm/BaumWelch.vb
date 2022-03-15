@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e82ea8282ba7b73a56ae4da36954a331, Data_science\DataMining\HMM\Algorithm\HMMAlgorithm\BaumWelch.vb"
+﻿#Region "Microsoft.VisualBasic::e82ea8282ba7b73a56ae4da36954a331, sciBASIC#\Data_science\DataMining\HMM\Algorithm\HMMAlgorithm\BaumWelch.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 66
+    '    Code Lines: 54
+    ' Comment Lines: 0
+    '   Blank Lines: 12
+    '     File Size: 2.74 KB
+
 
     '     Class BaumWelch
     ' 

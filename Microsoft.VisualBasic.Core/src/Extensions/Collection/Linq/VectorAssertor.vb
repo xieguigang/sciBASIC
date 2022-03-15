@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::730427f4a9abf5b32dc2a672b92d2ec2, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\VectorAssertor.vb"
+﻿#Region "Microsoft.VisualBasic::730427f4a9abf5b32dc2a672b92d2ec2, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\VectorAssertor.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 52
+    '    Code Lines: 38
+    ' Comment Lines: 6
+    '   Blank Lines: 8
+    '     File Size: 1.80 KB
+
 
     '     Structure VectorAssertor
     ' 

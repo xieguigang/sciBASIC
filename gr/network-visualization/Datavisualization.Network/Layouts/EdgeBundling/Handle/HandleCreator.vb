@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d2286cc75dd5442d235f9b50098dec6, gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Handle\HandleCreator.vb"
+﻿#Region "Microsoft.VisualBasic::8d2286cc75dd5442d235f9b50098dec6, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Handle\HandleCreator.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 102
+    '    Code Lines: 59
+    ' Comment Lines: 27
+    '   Blank Lines: 16
+    '     File Size: 3.85 KB
+
 
     '     Module HandleCreator
     ' 

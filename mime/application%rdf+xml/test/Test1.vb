@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb960f65e8eec8d7940fed87be82e305, mime\application%rdf+xml\test\Test1.vb"
+﻿#Region "Microsoft.VisualBasic::cb960f65e8eec8d7940fed87be82e305, sciBASIC#\mime\application%rdf+xml\test\Test1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 67
+    '    Code Lines: 0
+    ' Comment Lines: 55
+    '   Blank Lines: 12
+    '     File Size: 2.42 KB
+
 
     ' 
     ' /********************************************************************************/

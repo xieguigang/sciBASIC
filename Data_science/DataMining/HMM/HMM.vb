@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58af541c831b9f7f8a6f6e72d15f9cbc, Data_science\DataMining\HMM\HMM.vb"
+﻿#Region "Microsoft.VisualBasic::58af541c831b9f7f8a6f6e72d15f9cbc, sciBASIC#\Data_science\DataMining\HMM\HMM.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 62
+    '    Code Lines: 46
+    ' Comment Lines: 5
+    '   Blank Lines: 11
+    '     File Size: 2.46 KB
+
 
     ' Class HMM
     ' 

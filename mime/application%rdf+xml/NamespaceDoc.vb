@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c9a185699e9c6257c2f4ebfa991f0c5, mime\application%rdf+xml\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::3c9a185699e9c6257c2f4ebfa991f0c5, sciBASIC#\mime\application%rdf+xml\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 10
+    '    Code Lines: 2
+    ' Comment Lines: 8
+    '   Blank Lines: 0
+    '     File Size: 440.00 B
+
 
     ' Module NamespaceDoc
     ' 

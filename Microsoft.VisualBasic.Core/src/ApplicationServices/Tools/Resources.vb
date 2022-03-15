@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f345bc2c98b1bc2eecf9fa4dfe31de6d, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Resources.vb"
+﻿#Region "Microsoft.VisualBasic::f345bc2c98b1bc2eecf9fa4dfe31de6d, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Resources.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 349
+    '    Code Lines: 129
+    ' Comment Lines: 189
+    '   Blank Lines: 31
+    '     File Size: 17.03 KB
+
 
     '     Class ResourcesSatellite
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6803785d2f3b8fc2e9f8f1fff515d40c, Data_science\Visualization\Plots-statistics\Bihistogram.vb"
+﻿#Region "Microsoft.VisualBasic::6803785d2f3b8fc2e9f8f1fff515d40c, sciBASIC#\Data_science\Visualization\Plots-statistics\Bihistogram.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 40
+    '    Code Lines: 6
+    ' Comment Lines: 32
+    '   Blank Lines: 2
+    '     File Size: 1.92 KB
+
 
     ' Module Bihistogram
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::005283277281cf8731c675f195bb7335, Data\BinaryData\msgpack\MsgPackIO.vb"
+﻿#Region "Microsoft.VisualBasic::cb319245bd1751a22fc2f78c1214d952, sciBASIC#\Data\BinaryData\msgpack\MsgPackIO.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 815
+    '    Code Lines: 700
+    ' Comment Lines: 2
+    '   Blank Lines: 113
+    '     File Size: 34.91 KB
+
 
     ' Module MsgPackIO
     ' 

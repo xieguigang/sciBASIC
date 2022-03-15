@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29d81b272cab652301eb9579beeb7524, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\IRange.vb"
+﻿#Region "Microsoft.VisualBasic::29d81b272cab652301eb9579beeb7524, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\IRange.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 16
+    '    Code Lines: 6
+    ' Comment Lines: 6
+    '   Blank Lines: 4
+    '     File Size: 349.00 B
+
 
     '     Interface IRange
     ' 

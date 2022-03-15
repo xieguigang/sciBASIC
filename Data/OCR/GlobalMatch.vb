@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fea48b0200e4934c1ed5e96010a98c43, Data\OCR\GlobalMatch.vb"
+﻿#Region "Microsoft.VisualBasic::fea48b0200e4934c1ed5e96010a98c43, sciBASIC#\Data\OCR\GlobalMatch.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 26
+    '    Code Lines: 23
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 870.00 B
+
 
     ' Module GlobalMatch
     ' 

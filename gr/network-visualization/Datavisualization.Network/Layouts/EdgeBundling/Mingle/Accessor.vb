@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c325e0f5412ca62e83f8274b4b584861, gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Mingle\Accessor.vb"
+﻿#Region "Microsoft.VisualBasic::c325e0f5412ca62e83f8274b4b584861, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Mingle\Accessor.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 51
+    '    Code Lines: 42
+    ' Comment Lines: 0
+    '   Blank Lines: 9
+    '     File Size: 1.81 KB
+
 
     '     Class Accessor
     ' 

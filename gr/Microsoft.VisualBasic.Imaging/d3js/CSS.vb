@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::730672e552bd208222b944940fa8c937, gr\Microsoft.VisualBasic.Imaging\d3js\CSS.vb"
+﻿#Region "Microsoft.VisualBasic::730672e552bd208222b944940fa8c937, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\CSS.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 78
+    '    Code Lines: 58
+    ' Comment Lines: 3
+    '   Blank Lines: 17
+    '     File Size: 2.58 KB
+
 
     '     Class DirectedForceGraph
     ' 

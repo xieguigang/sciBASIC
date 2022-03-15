@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e53d8d192ec7718ba398e05bd536c1b3, Data\SearchEngine\SearchEngine\Expression\SyntaxParser.vb"
+﻿#Region "Microsoft.VisualBasic::e53d8d192ec7718ba398e05bd536c1b3, sciBASIC#\Data\SearchEngine\SearchEngine\Expression\SyntaxParser.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 240
+    '    Code Lines: 197
+    ' Comment Lines: 8
+    '   Blank Lines: 35
+    '     File Size: 8.43 KB
+
 
     ' Module SyntaxParser
     ' 

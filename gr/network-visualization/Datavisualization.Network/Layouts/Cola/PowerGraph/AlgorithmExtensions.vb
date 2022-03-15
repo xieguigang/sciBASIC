@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::643703879ca86daccdaac357a5b51734, gr\network-visualization\Datavisualization.Network\Layouts\Cola\PowerGraph\AlgorithmExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::643703879ca86daccdaac357a5b51734, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\PowerGraph\AlgorithmExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 89
+    '    Code Lines: 67
+    ' Comment Lines: 2
+    '   Blank Lines: 20
+    '     File Size: 3.47 KB
+
 
     '     Module powergraphExtensions
     ' 

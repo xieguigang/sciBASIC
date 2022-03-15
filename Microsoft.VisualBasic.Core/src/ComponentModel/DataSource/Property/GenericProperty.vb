@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::afdc41fd857e848fd9b0d6618891e601, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\GenericProperty.vb"
+﻿#Region "Microsoft.VisualBasic::afdc41fd857e848fd9b0d6618891e601, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\GenericProperty.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 58
+    '    Code Lines: 37
+    ' Comment Lines: 13
+    '   Blank Lines: 8
+    '     File Size: 1.93 KB
+
 
     '     Class [Property]
     ' 

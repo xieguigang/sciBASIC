@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ed7376f24e64e8d336722c70f3c1d75, Data_science\MachineLearning\MachineLearning\SVM\RangeTransform\RangeTransform.vb"
+﻿#Region "Microsoft.VisualBasic::0ed7376f24e64e8d336722c70f3c1d75, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\RangeTransform\RangeTransform.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 150
+    '    Code Lines: 74
+    ' Comment Lines: 55
+    '   Blank Lines: 21
+    '     File Size: 6.35 KB
+
 
     '     Class RangeTransform
     ' 

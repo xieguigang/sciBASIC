@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::204010e8c5a67c7d8d08c2676a1a0f63, mime\application%pdf\PdfFileWriter\PDF\PdfAnnotation.vb"
+﻿#Region "Microsoft.VisualBasic::7b405eb77ea4f75941317c9ef1171b57, sciBASIC#\mime\application%pdf\PdfFileWriter\PDF\PdfAnnotation.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 188
+    '    Code Lines: 77
+    ' Comment Lines: 79
+    '   Blank Lines: 32
+    '     File Size: 7.06 KB
+
 
     '     Class PdfAnnotation
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f885d41d3b69ae752774cd15eebbb83, mime\text%html\Render\CSS\CssValue.vb"
+﻿#Region "Microsoft.VisualBasic::8f885d41d3b69ae752774cd15eebbb83, sciBASIC#\mime\text%html\Render\CSS\CssValue.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 491
+    '    Code Lines: 306
+    ' Comment Lines: 89
+    '   Blank Lines: 96
+    '     File Size: 18.59 KB
+
 
     '     Class CssValue
     ' 

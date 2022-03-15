@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16d983e6d84a03a54aa85b39c18123c2, Data_science\Mathematica\Math\ODE\Dynamics\SolverIterator.vb"
+﻿#Region "Microsoft.VisualBasic::16d983e6d84a03a54aa85b39c18123c2, sciBASIC#\Data_science\Mathematica\Math\ODE\Dynamics\SolverIterator.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 48
+    '    Code Lines: 34
+    ' Comment Lines: 3
+    '   Blank Lines: 11
+    '     File Size: 1.29 KB
+
 
     '     Class SolverIterator
     ' 

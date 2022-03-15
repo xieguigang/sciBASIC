@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d5c51bc0373ca613d4accf135673b25, Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\WindowsLibraryLoader.vb"
+﻿#Region "Microsoft.VisualBasic::6d5c51bc0373ca613d4accf135673b25, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\WindowsLibraryLoader.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 76
+    '    Code Lines: 54
+    ' Comment Lines: 7
+    '   Blank Lines: 15
+    '     File Size: 3.16 KB
+
 
     '     Class WindowsLibraryLoader
     ' 

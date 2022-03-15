@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e22a48e95e120ec354b6d8707140924, Microsoft.VisualBasic.Core\src\Data\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::5e22a48e95e120ec354b6d8707140924, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\Abstract.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 35
+    '    Code Lines: 17
+    ' Comment Lines: 13
+    '   Blank Lines: 5
+    '     File Size: 1.16 KB
+
 
     '     Enum PropertyAccess
     ' 

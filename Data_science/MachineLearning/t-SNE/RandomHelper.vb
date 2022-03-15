@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e429487764fc08e60f156b3bb194a438, Data_science\MachineLearning\t-SNE\RandomHelper.vb"
+﻿#Region "Microsoft.VisualBasic::e429487764fc08e60f156b3bb194a438, sciBASIC#\Data_science\MachineLearning\t-SNE\RandomHelper.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 108
+    '    Code Lines: 57
+    ' Comment Lines: 26
+    '   Blank Lines: 25
+    '     File Size: 2.86 KB
+
 
     ' Class RandomHelper
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5416955ed7eaabf498305d2a93be5aba, mime\text%markdown\TOC.vb"
+﻿#Region "Microsoft.VisualBasic::5416955ed7eaabf498305d2a93be5aba, sciBASIC#\mime\text%markdown\TOC.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 100
+    '    Code Lines: 66
+    ' Comment Lines: 15
+    '   Blank Lines: 19
+    '     File Size: 3.07 KB
+
 
     ' Module TOC
     ' 

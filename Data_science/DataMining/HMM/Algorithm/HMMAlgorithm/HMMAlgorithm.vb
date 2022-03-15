@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a5f079b36b226403aecd10b3d70f34d, Data_science\DataMining\HMM\Algorithm\HMMAlgorithm\HMMAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::6a5f079b36b226403aecd10b3d70f34d, sciBASIC#\Data_science\DataMining\HMM\Algorithm\HMMAlgorithm\HMMAlgorithm.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 12
+    '    Code Lines: 8
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 206.00 B
+
 
     '     Class HMMAlgorithmBase
     ' 

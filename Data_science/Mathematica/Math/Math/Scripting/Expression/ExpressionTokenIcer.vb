@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad10bb2f44e7f86075aa0c2769d23294, Data_science\Mathematica\Math\Math\Scripting\Expression\ExpressionTokenIcer.vb"
+﻿#Region "Microsoft.VisualBasic::ad10bb2f44e7f86075aa0c2769d23294, sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Expression\ExpressionTokenIcer.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 117
+    '    Code Lines: 99
+    ' Comment Lines: 1
+    '   Blank Lines: 17
+    '     File Size: 4.35 KB
+
 
     '     Class ExpressionTokenIcer
     ' 

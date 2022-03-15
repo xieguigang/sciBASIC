@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c7c5d6727043c557dae717be2518ceb, Data_science\Mathematica\Math\ODE\Dynamics\Data\ValueVector.vb"
+﻿#Region "Microsoft.VisualBasic::0c7c5d6727043c557dae717be2518ceb, sciBASIC#\Data_science\Mathematica\Math\ODE\Dynamics\Data\ValueVector.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 41
+    '    Code Lines: 28
+    ' Comment Lines: 6
+    '   Blank Lines: 7
+    '     File Size: 1.32 KB
+
 
     '     Class ValueVector
     ' 

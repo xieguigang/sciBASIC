@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47a176099fe8ea7633561d49142e3ac1, www\Microsoft.VisualBasic.NETProtocol\Persistent\Protocols\POST.vb"
+﻿#Region "Microsoft.VisualBasic::47a176099fe8ea7633561d49142e3ac1, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Persistent\Protocols\POST.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 86
+    '    Code Lines: 63
+    ' Comment Lines: 4
+    '   Blank Lines: 19
+    '     File Size: 3.57 KB
+
 
     '     Class LogonPOST
     ' 

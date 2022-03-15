@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::923b3c33434f8f19177cfd2cac21c939, Data_science\Visualization\test\PieChartTest.vb"
+﻿#Region "Microsoft.VisualBasic::923b3c33434f8f19177cfd2cac21c939, sciBASIC#\Data_science\Visualization\test\PieChartTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 173
+    '    Code Lines: 113
+    ' Comment Lines: 20
+    '   Blank Lines: 40
+    '     File Size: 6.81 KB
+
 
     ' Module PieChartTest
     ' 

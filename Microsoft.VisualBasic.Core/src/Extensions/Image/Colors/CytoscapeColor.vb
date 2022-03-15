@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4961155af412b3ed26de1bfe5e85b8cf, Microsoft.VisualBasic.Core\src\Extensions\Image\Colors\CytoscapeColor.vb"
+﻿#Region "Microsoft.VisualBasic::4961155af412b3ed26de1bfe5e85b8cf, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Colors\CytoscapeColor.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 137
+    '    Code Lines: 95
+    ' Comment Lines: 16
+    '   Blank Lines: 26
+    '     File Size: 4.39 KB
+
 
     '     Module HexColor
     ' 

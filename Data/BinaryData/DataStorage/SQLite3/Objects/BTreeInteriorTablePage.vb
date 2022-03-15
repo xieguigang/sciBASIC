@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31ea600258d26ab129fb033a307fb4ab, Data\BinaryData\DataStorage\SQLite3\Objects\BTreeInteriorTablePage.vb"
+﻿#Region "Microsoft.VisualBasic::31ea600258d26ab129fb033a307fb4ab, sciBASIC#\Data\BinaryData\DataStorage\SQLite3\Objects\BTreeInteriorTablePage.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 38
+    '    Code Lines: 27
+    ' Comment Lines: 3
+    '   Blank Lines: 8
+    '     File Size: 1.33 KB
+
 
     '     Class BTreeInteriorTablePage
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0d4832fcdcee95abe1d939357c720be, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\StoreProcedure.vb"
+﻿#Region "Microsoft.VisualBasic::dd6b039e1da562af3b4386d5564ef07b, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\StoreProcedure.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 131
+    '    Code Lines: 101
+    ' Comment Lines: 11
+    '   Blank Lines: 19
+    '     File Size: 4.52 KB
+
 
     '     Module StoreProcedure
     ' 

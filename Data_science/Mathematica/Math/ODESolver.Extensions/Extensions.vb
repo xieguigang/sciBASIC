@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e2de526ec7dba6a5f0da7f720ae76c3, Data_science\Mathematica\Math\ODESolver.Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::7e2de526ec7dba6a5f0da7f720ae76c3, sciBASIC#\Data_science\Mathematica\Math\ODESolver.Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 163
+    '    Code Lines: 114
+    ' Comment Lines: 25
+    '   Blank Lines: 24
+    '     File Size: 6.20 KB
+
 
     ' Module Extensions
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d1266535f38b574c765f091b0b95414, Data_science\Visualization\Visualization\Embedding\UmapGraph.vb"
+﻿#Region "Microsoft.VisualBasic::5d1266535f38b574c765f091b0b95414, sciBASIC#\Data_science\Visualization\Visualization\Embedding\UmapGraph.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 57
+    '    Code Lines: 46
+    ' Comment Lines: 0
+    '   Blank Lines: 11
+    '     File Size: 1.79 KB
+
 
     ' Module UmapGraph
     ' 

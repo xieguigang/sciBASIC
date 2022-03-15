@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0960e1dc32ec5fdb0f8798145f67d96f, mime\text%yaml\1.2\Syntax\NodeProperty.vb"
+﻿#Region "Microsoft.VisualBasic::0960e1dc32ec5fdb0f8798145f67d96f, sciBASIC#\mime\text%yaml\1.2\Syntax\NodeProperty.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 12
+    '    Code Lines: 9
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 270.00 B
+
 
     '     Class NodeProperty
     ' 

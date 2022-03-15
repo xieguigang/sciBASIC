@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41c1a6877cece6a3c73ac62306e8fa5f, Data\BinaryData\DataStorage\HDF5\structure\SymbolicLinkScratchpadFormat.vb"
+﻿#Region "Microsoft.VisualBasic::41c1a6877cece6a3c73ac62306e8fa5f, sciBASIC#\Data\BinaryData\DataStorage\HDF5\structure\SymbolicLinkScratchpadFormat.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 39
+    '    Code Lines: 21
+    ' Comment Lines: 6
+    '   Blank Lines: 12
+    '     File Size: 1.30 KB
+
 
     '     Class SymbolicLinkScratchpadFormat
     ' 

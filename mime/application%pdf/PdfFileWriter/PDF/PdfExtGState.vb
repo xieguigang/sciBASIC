@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7275a658e86c33c28d37a0fcb6f4c2c2, mime\application%pdf\PdfFileWriter\PDF\PdfExtGState.vb"
+﻿#Region "Microsoft.VisualBasic::cee8aabef390313427e2c811e2b681a4, sciBASIC#\mime\application%pdf\PdfFileWriter\PDF\PdfExtGState.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 91
+    '    Code Lines: 34
+    ' Comment Lines: 41
+    '   Blank Lines: 16
+    '     File Size: 2.93 KB
+
 
     '     Class PdfExtGState
     ' 

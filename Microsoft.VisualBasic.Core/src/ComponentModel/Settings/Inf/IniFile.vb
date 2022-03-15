@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31f272cd959d1eeede333a11c7271181, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\IniFile.vb"
+﻿#Region "Microsoft.VisualBasic::31f272cd959d1eeede333a11c7271181, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\IniFile.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 135
+    '    Code Lines: 81
+    ' Comment Lines: 36
+    '   Blank Lines: 18
+    '     File Size: 5.07 KB
+
 
     '     Class IniFile
     ' 

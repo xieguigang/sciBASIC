@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86f7154e7e85332cdab743464b9fb044, mime\application%pdf\PdfReader\Parser\ParseNull.vb"
+﻿#Region "Microsoft.VisualBasic::86f7154e7e85332cdab743464b9fb044, sciBASIC#\mime\application%pdf\PdfReader\Parser\ParseNull.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 7
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 156.00 B
+
 
     '     Class ParseNull
     ' 

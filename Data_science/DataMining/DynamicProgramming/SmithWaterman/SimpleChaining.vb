@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1386717a718ecb9c6c2da87df742d753, Data_science\DataMining\DynamicProgramming\SmithWaterman\SimpleChaining.vb"
+﻿#Region "Microsoft.VisualBasic::1386717a718ecb9c6c2da87df742d753, sciBASIC#\Data_science\DataMining\DynamicProgramming\SmithWaterman\SimpleChaining.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 197
+    '    Code Lines: 135
+    ' Comment Lines: 35
+    '   Blank Lines: 27
+    '     File Size: 7.69 KB
+
 
     '     Module SimpleChaining
     ' 

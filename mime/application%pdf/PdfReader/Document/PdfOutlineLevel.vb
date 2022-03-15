@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6852c763020854d99c3bcd1579dd9df3, mime\application%pdf\PdfReader\Document\PdfOutlineLevel.vb"
+﻿#Region "Microsoft.VisualBasic::e700022e96f1f2062263295cf9f273e1, sciBASIC#\mime\application%pdf\PdfReader\Document\PdfOutlineLevel.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 42
+    '    Code Lines: 34
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 1.30 KB
+
 
     '     Class PdfOutlineLevel
     ' 

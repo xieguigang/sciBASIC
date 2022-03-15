@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b9464a71dbcf7c8cce7014079a52442, Data\word2vec\WordNeuron.vb"
+﻿#Region "Microsoft.VisualBasic::6d0baebdac07b0d90d629848d101de4b, sciBASIC#\Data\word2vec\WordNeuron.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 38
+    '    Code Lines: 24
+    ' Comment Lines: 4
+    '   Blank Lines: 10
+    '     File Size: 1.04 KB
+
 
     '     Class WordNeuron
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::364af627922019fa5b8ee65261ef3093, tutorials\core.test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::364af627922019fa5b8ee65261ef3093, sciBASIC#\tutorials\core.test\Module1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 206
+    '    Code Lines: 53
+    ' Comment Lines: 91
+    '   Blank Lines: 62
+    '     File Size: 3.96 KB
+
 
     ' Module Module1
     ' 

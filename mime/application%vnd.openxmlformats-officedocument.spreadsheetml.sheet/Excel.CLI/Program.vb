@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4dfe9987f7ba498fcb37a3994b3db9e, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\Program.vb"
+﻿#Region "Microsoft.VisualBasic::c4dfe9987f7ba498fcb37a3994b3db9e, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 9
+    '    Code Lines: 7
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 270.00 B
+
 
     ' Module Program
     ' 

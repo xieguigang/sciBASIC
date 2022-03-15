@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c157c208b6659a1ca66836033f2b40e, tutorials\core.test\treeTest.vb"
+﻿#Region "Microsoft.VisualBasic::5c157c208b6659a1ca66836033f2b40e, sciBASIC#\tutorials\core.test\treeTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 118
+    '    Code Lines: 42
+    ' Comment Lines: 44
+    '   Blank Lines: 32
+    '     File Size: 3.64 KB
+
 
     ' Module treeTest
     ' 

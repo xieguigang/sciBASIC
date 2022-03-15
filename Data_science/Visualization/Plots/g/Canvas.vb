@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2571aa791eccacb8cb8d2adc6b7f65d3, Data_science\Visualization\Plots\g\Canvas.vb"
+﻿#Region "Microsoft.VisualBasic::2571aa791eccacb8cb8d2adc6b7f65d3, sciBASIC#\Data_science\Visualization\Plots\g\Canvas.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 26
+    '    Code Lines: 17
+    ' Comment Lines: 0
+    '   Blank Lines: 9
+    '     File Size: 1.17 KB
+
 
     '     Module Resolution2K
     ' 

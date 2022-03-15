@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35bff808306b47fa2cdd7240d87b0334, gr\network-visualization\Datavisualization.Network\Layouts\OrganicLayout\GraphLayout.vb"
+﻿#Region "Microsoft.VisualBasic::35bff808306b47fa2cdd7240d87b0334, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\OrganicLayout\GraphLayout.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 185
+    '    Code Lines: 103
+    ' Comment Lines: 44
+    '   Blank Lines: 38
+    '     File Size: 7.71 KB
+
 
     '     Class mxGraphLayout
     ' 

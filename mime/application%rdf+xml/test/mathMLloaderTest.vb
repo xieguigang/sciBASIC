@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93ee43aa3455dae54daa53c9142543a5, mime\application%rdf+xml\test\mathMLloaderTest.vb"
+﻿#Region "Microsoft.VisualBasic::93ee43aa3455dae54daa53c9142543a5, sciBASIC#\mime\application%rdf+xml\test\mathMLloaderTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 10
+    '    Code Lines: 7
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 243.00 B
+
 
     ' Module mathMLloaderTest
     ' 

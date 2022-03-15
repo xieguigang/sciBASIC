@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf8402d0f1d848bf07dbf24c811558be, Data_science\DataMining\DataMining\Kernel\Neuron\Neuron.vb"
+﻿#Region "Microsoft.VisualBasic::cf8402d0f1d848bf07dbf24c811558be, sciBASIC#\Data_science\DataMining\DataMining\Kernel\Neuron\Neuron.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 67
+    '    Code Lines: 41
+    ' Comment Lines: 12
+    '   Blank Lines: 14
+    '     File Size: 2.36 KB
+
 
     '     Delegate Function
     ' 

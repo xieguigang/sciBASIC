@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e664c47ef1ecc1181eb379f46f5b531a, Data_science\DataMining\DataMining\Clustering\DBSCAN\DbscanSession.vb"
+﻿#Region "Microsoft.VisualBasic::1117dabfa20afda497a1806f43d711cc, sciBASIC#\Data_science\DataMining\DataMining\Clustering\DBSCAN\DbscanSession.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 209
+    '    Code Lines: 144
+    ' Comment Lines: 35
+    '   Blank Lines: 30
+    '     File Size: 8.32 KB
+
 
     '     Class DbscanSession
     ' 

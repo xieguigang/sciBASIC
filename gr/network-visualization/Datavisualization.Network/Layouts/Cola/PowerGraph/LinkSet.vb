@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b38f8da7e46056d9979869c5673c925, gr\network-visualization\Datavisualization.Network\Layouts\Cola\PowerGraph\LinkSet.vb"
+﻿#Region "Microsoft.VisualBasic::6b38f8da7e46056d9979869c5673c925, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\PowerGraph\LinkSet.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 80
+    '    Code Lines: 60
+    ' Comment Lines: 0
+    '   Blank Lines: 20
+    '     File Size: 2.43 KB
+
 
     '     Class LinkSets
     ' 

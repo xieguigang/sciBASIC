@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eeeb243955f56dd50e1cb9e76b776bc0, www\Microsoft.VisualBasic.NETProtocol\Protocol\Streams\ArrayBase.vb"
+﻿#Region "Microsoft.VisualBasic::eeeb243955f56dd50e1cb9e76b776bc0, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Protocol\Streams\ArrayBase.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 74
+    '    Code Lines: 52
+    ' Comment Lines: 6
+    '   Blank Lines: 16
+    '     File Size: 2.79 KB
+
 
     '     Class ValueArray
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af789b0d6865e25776b370ed0206e358, Data\DataFrame\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::af789b0d6865e25776b370ed0206e358, sciBASIC#\Data\DataFrame\test\Module1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 31
+    '    Code Lines: 24
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 1.02 KB
+
 
     ' Module Module1
     ' 

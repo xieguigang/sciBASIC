@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2be6c6811f4f9ecdd124cd61ef25f85, gr\network-visualization\Visualizer\MingleRender\BundleNode.vb"
+﻿#Region "Microsoft.VisualBasic::c2be6c6811f4f9ecdd124cd61ef25f85, sciBASIC#\gr\network-visualization\Visualizer\MingleRender\BundleNode.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 90
+    '    Code Lines: 73
+    ' Comment Lines: 1
+    '   Blank Lines: 16
+    '     File Size: 3.27 KB
+
 
     ' Class BundleNode
     ' 

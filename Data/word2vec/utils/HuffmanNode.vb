@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69f690dca4b1b48dc667099859cc3cac, Data\word2vec\utils\HuffmanNode.vb"
+﻿#Region "Microsoft.VisualBasic::c73901ef8aad04987419a8b1648bdf77, sciBASIC#\Data\word2vec\utils\HuffmanNode.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 14
+    '    Code Lines: 9
+    ' Comment Lines: 4
+    '   Blank Lines: 1
+    '     File Size: 411.00 B
+
 
     '     Interface HuffmanNode
     ' 

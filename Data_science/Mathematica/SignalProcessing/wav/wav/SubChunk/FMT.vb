@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::375d059de8b1ab2342c6111fa887c983, Data_science\Mathematica\SignalProcessing\wav\wav\SubChunk\FMT.vb"
+﻿#Region "Microsoft.VisualBasic::375d059de8b1ab2342c6111fa887c983, sciBASIC#\Data_science\Mathematica\SignalProcessing\wav\wav\SubChunk\FMT.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 72
+    '    Code Lines: 28
+    ' Comment Lines: 38
+    '   Blank Lines: 6
+    '     File Size: 2.20 KB
+
 
     ' Class FMTSubChunk
     ' 

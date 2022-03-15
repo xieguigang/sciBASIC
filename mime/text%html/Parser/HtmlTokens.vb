@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76e77e59f68a200b40c3454bb8c8a7d1, mime\text%html\Parser\HtmlTokens.vb"
+﻿#Region "Microsoft.VisualBasic::76e77e59f68a200b40c3454bb8c8a7d1, sciBASIC#\mime\text%html\Parser\HtmlTokens.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 22
+    '    Code Lines: 9
+    ' Comment Lines: 12
+    '   Blank Lines: 1
+    '     File Size: 415.00 B
+
 
     '     Enum HtmlTokens
     ' 

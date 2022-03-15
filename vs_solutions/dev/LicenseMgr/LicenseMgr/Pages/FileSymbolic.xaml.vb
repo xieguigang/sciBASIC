@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc6253b3d85fc3c3087c8f639f213181, vs_solutions\dev\LicenseMgr\LicenseMgr\Pages\FileSymbolic.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::b594f157abaf9410b62bd2660c735cd3, sciBASIC#\vs_solutions\dev\LicenseMgr\LicenseMgr\Pages\FileSymbolic.xaml.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 72
+    '    Code Lines: 54
+    ' Comment Lines: 8
+    '   Blank Lines: 10
+    '     File Size: 3.00 KB
+
+
     '     Class FileSymbolic
     ' 
     '         Constructor: (+1 Overloads) Sub New
@@ -41,17 +51,13 @@
 
 #End Region
 
-Imports System.IO
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Media
 Imports FirstFloor.ModernUI.Presentation
 Imports FirstFloor.ModernUI.Windows.Controls
-Imports Microsoft
-Imports Microsoft.VisualBasic.ApplicationServices
-'Imports Microsoft.VisualBasic.Windows.Forms
+Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio
 Imports Microsoft.Win32
-'Imports Microsoft.VisualBasic.FileIO.SymLinker
 
 Namespace Pages
 
@@ -89,7 +95,7 @@ Namespace Pages
                 Try
                     Dim rootDir = BrowsedFile.Text.ParentPath
 
-                    Development.LicenseMgr.Insert(BrowsedFile.Text, info, rootDir)
+                    CodeSign.LicenseMgr.Insert(BrowsedFile.Text, info, rootDir)
                     BrowsedFile.Text = "You haven't selected a source yet."
                     ModernDialog.ShowMessage("License information applied success.", "Success!", MessageBoxButton.OK)
                 Catch ex As Exception

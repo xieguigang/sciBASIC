@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6455ffdb01b6c717eaa9f2a113674400, CLI_tools\FindKeyWord\CLI\Cli.vb"
+﻿#Region "Microsoft.VisualBasic::6455ffdb01b6c717eaa9f2a113674400, sciBASIC#\CLI_tools\FindKeyWord\CLI\Cli.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 243
+    '    Code Lines: 190
+    ' Comment Lines: 10
+    '   Blank Lines: 43
+    '     File Size: 9.95 KB
+
 
     ' Module CLI
     ' 

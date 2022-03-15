@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09b6db20ed99b91932bdc8e6e828c08f, gr\network-visualization\Datavisualization.Network\test\OrthogonalTest.vb"
+﻿#Region "Microsoft.VisualBasic::09b6db20ed99b91932bdc8e6e828c08f, sciBASIC#\gr\network-visualization\Datavisualization.Network\test\OrthogonalTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 39
+    '    Code Lines: 31
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 1.31 KB
+
 
     ' Module OrthogonalTest
     ' 

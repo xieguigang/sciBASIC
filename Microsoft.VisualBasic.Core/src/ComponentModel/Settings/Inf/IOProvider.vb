@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d3eb3705667b82881bcc847fca2a15a, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\IOProvider.vb"
+﻿#Region "Microsoft.VisualBasic::3d3eb3705667b82881bcc847fca2a15a, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\IOProvider.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 165
+    '    Code Lines: 91
+    ' Comment Lines: 49
+    '   Blank Lines: 25
+    '     File Size: 6.50 KB
+
 
     '     Module IOProvider
     ' 

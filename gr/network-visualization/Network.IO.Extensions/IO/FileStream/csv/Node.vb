@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a59f7cff3f138c0ce372ef833dab3dd, gr\network-visualization\Network.IO.Extensions\IO\FileStream\csv\Node.vb"
+﻿#Region "Microsoft.VisualBasic::2a59f7cff3f138c0ce372ef833dab3dd, sciBASIC#\gr\network-visualization\Network.IO.Extensions\IO\FileStream\csv\Node.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 51
+    '    Code Lines: 30
+    ' Comment Lines: 12
+    '   Blank Lines: 9
+    '     File Size: 1.72 KB
+
 
     '     Class Node
     ' 

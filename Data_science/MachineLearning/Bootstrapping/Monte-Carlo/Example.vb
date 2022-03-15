@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3b77316b6c4bc3ac1e35e4fe005b81fd, Data_science\MachineLearning\Bootstrapping\Monte-Carlo\Example.vb"
+﻿#Region "Microsoft.VisualBasic::3b77316b6c4bc3ac1e35e4fe005b81fd, sciBASIC#\Data_science\MachineLearning\Bootstrapping\Monte-Carlo\Example.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 76
+    '    Code Lines: 56
+    ' Comment Lines: 7
+    '   Blank Lines: 13
+    '     File Size: 2.49 KB
+
 
     '     Class Example
     ' 

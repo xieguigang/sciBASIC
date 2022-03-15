@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d15d647079709129f06785401b54d9b8, mime\application%pdf\PdfFileWriter\PDF\PdfImage.vb"
+﻿#Region "Microsoft.VisualBasic::eaa76eea6bab7befe0a07706b16e5ce9, sciBASIC#\mime\application%pdf\PdfFileWriter\PDF\PdfImage.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1140
+    '    Code Lines: 552
+    ' Comment Lines: 334
+    '   Blank Lines: 254
+    '     File Size: 39.45 KB
+
 
     ' Enum SaveImageAs
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9aaba1e934584b734ef25a8b9995d05, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\Iterator.vb"
+﻿#Region "Microsoft.VisualBasic::f9aaba1e934584b734ef25a8b9995d05, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\Iterator.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 149
+    '    Code Lines: 96
+    ' Comment Lines: 33
+    '   Blank Lines: 20
+    '     File Size: 5.67 KB
+
 
     '     Module IteratorExtensions
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3045daa806ea69fd3e897bfcf5c89aa9, vs_solutions\dev\VisualStudio\sourceMap\base64VLQ.vb"
+﻿#Region "Microsoft.VisualBasic::3045daa806ea69fd3e897bfcf5c89aa9, sciBASIC#\vs_solutions\dev\VisualStudio\sourceMap\base64VLQ.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 203
+    '    Code Lines: 80
+    ' Comment Lines: 98
+    '   Blank Lines: 25
+    '     File Size: 7.45 KB
+
 
     '     Module base64VLQ
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f56cbd58ab573460eba7aadda0b0404, Data\BinaryData\BinaryData\Bzip2\Algorithm\Bzip2MTFAndRLE2StageEncoder.vb"
+﻿#Region "Microsoft.VisualBasic::9f56cbd58ab573460eba7aadda0b0404, sciBASIC#\Data\BinaryData\BinaryData\Bzip2\Algorithm\Bzip2MTFAndRLE2StageEncoder.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 176
+    '    Code Lines: 112
+    ' Comment Lines: 31
+    '   Blank Lines: 33
+    '     File Size: 6.87 KB
+
 
     '     Class BZip2MTFAndRLE2StageEncoder
     ' 

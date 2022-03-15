@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f59476bc1647bd45bb9921eab52a197f, Data_science\Mathematica\Math\MathLambda\MathMLCompiler.vb"
+﻿#Region "Microsoft.VisualBasic::f59476bc1647bd45bb9921eab52a197f, sciBASIC#\Data_science\Mathematica\Math\MathLambda\MathMLCompiler.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 54
+    '    Code Lines: 46
+    ' Comment Lines: 3
+    '   Blank Lines: 5
+    '     File Size: 2.86 KB
+
 
     ' Module MathMLCompiler
     ' 

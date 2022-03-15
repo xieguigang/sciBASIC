@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d334ce4017f1e12a7f845df84cf2f7c, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\Workspace.vb"
+﻿#Region "Microsoft.VisualBasic::9d334ce4017f1e12a7f845df84cf2f7c, sciBASIC#\Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\Workspace.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 95
+    '    Code Lines: 47
+    ' Comment Lines: 32
+    '   Blank Lines: 16
+    '     File Size: 3.12 KB
+
 
     '     Class Workspace
     ' 

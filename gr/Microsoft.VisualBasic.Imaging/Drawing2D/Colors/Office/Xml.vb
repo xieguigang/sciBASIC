@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f01be840fdbaea60c129e724ba0c78fa, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Office\Xml.vb"
+﻿#Region "Microsoft.VisualBasic::f01be840fdbaea60c129e724ba0c78fa, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Office\Xml.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 55
+    '    Code Lines: 45
+    ' Comment Lines: 0
+    '   Blank Lines: 10
+    '     File Size: 1.99 KB
+
 
     '     Class OfficeColorTheme
     ' 

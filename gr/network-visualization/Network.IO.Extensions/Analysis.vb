@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ab76efcdd2ed32e6729e43c2f44e714, gr\network-visualization\Network.IO.Extensions\Analysis.vb"
+﻿#Region "Microsoft.VisualBasic::8ab76efcdd2ed32e6729e43c2f44e714, sciBASIC#\gr\network-visualization\Network.IO.Extensions\Analysis.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 102
+    '    Code Lines: 59
+    ' Comment Lines: 32
+    '   Blank Lines: 11
+    '     File Size: 4.24 KB
+
 
     ' Module AnalysisAPI
     ' 

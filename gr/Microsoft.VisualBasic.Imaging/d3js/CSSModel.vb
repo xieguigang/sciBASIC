@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e16a293347816d3f3f8e19b163bc7474, gr\Microsoft.VisualBasic.Imaging\d3js\CSSModel.vb"
+﻿#Region "Microsoft.VisualBasic::e16a293347816d3f3f8e19b163bc7474, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\CSSModel.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 3
+    '    Code Lines: 2
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 39.00 B
+
 
     ' 
     ' /********************************************************************************/

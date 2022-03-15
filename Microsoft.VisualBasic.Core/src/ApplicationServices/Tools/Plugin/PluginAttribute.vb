@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de6cfa0c844217dfe9ea5a05146b4413, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Plugin\PluginAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::de6cfa0c844217dfe9ea5a05146b4413, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Plugin\PluginAttribute.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 16
+    '    Code Lines: 12
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 482.00 B
+
 
     '     Class PluginAttribute
     ' 

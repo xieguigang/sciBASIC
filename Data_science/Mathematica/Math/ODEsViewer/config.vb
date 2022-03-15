@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b028dda780d08ac268c2cbf6d8636cf, Data_science\Mathematica\Math\ODEsViewer\config.vb"
+﻿#Region "Microsoft.VisualBasic::0b028dda780d08ac268c2cbf6d8636cf, sciBASIC#\Data_science\Mathematica\Math\ODEsViewer\config.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 31
+    '    Code Lines: 26
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 922.00 B
+
 
     ' Class config
     ' 

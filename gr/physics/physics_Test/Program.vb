@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3b52a3090011adbd361e08ae411ec0b, gr\physics\physics_Test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::c3b52a3090011adbd361e08ae411ec0b, sciBASIC#\gr\physics\physics_Test\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 73
+    '    Code Lines: 31
+    ' Comment Lines: 16
+    '   Blank Lines: 26
+    '     File Size: 2.20 KB
+
 
     ' Module Program
     ' 

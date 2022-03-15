@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43867c5deb714515e3ef89b5ecc006ba, Data\Trinity\NLP.vb"
+﻿#Region "Microsoft.VisualBasic::43867c5deb714515e3ef89b5ecc006ba, sciBASIC#\Data\Trinity\NLP.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 98
+    '    Code Lines: 64
+    ' Comment Lines: 22
+    '   Blank Lines: 12
+    '     File Size: 3.78 KB
+
 
     ' Module NLPExtensions
     ' 

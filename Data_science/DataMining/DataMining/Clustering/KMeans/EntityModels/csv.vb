@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7bcf801b98cdd60f2e55a666bd97d5e, Data_science\DataMining\DataMining\Clustering\KMeans\EntityModels\csv.vb"
+﻿#Region "Microsoft.VisualBasic::c7bcf801b98cdd60f2e55a666bd97d5e, sciBASIC#\Data_science\DataMining\DataMining\Clustering\KMeans\EntityModels\csv.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 66
+    '    Code Lines: 43
+    ' Comment Lines: 15
+    '   Blank Lines: 8
+    '     File Size: 2.63 KB
+
 
     '     Class EntityClusterModel
     ' 

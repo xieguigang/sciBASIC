@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d1f511c5c205d10717e3648869eb1f9, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\Side.vb"
+﻿#Region "Microsoft.VisualBasic::5d1f511c5c205d10717e3648869eb1f9, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\Side.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 10
+    '    Code Lines: 9
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 167.00 B
+
 
     '     Enum Side
     ' 

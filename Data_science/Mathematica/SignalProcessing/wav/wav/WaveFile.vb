@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a253f251bb219c05487f9d2bac1d24a6, Data_science\Mathematica\SignalProcessing\wav\wav\WaveFile.vb"
+﻿#Region "Microsoft.VisualBasic::a253f251bb219c05487f9d2bac1d24a6, sciBASIC#\Data_science\Mathematica\SignalProcessing\wav\wav\WaveFile.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 94
+    '    Code Lines: 36
+    ' Comment Lines: 44
+    '   Blank Lines: 14
+    '     File Size: 3.04 KB
+
 
     ' Class WaveFile
     ' 

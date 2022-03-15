@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05c87baeacab72defabcecbe7a50cc9c, Data_science\Graph\Analysis\PQDijkstra\HeapNode.vb"
+﻿#Region "Microsoft.VisualBasic::05c87baeacab72defabcecbe7a50cc9c, sciBASIC#\Data_science\Graph\Analysis\PQDijkstra\HeapNode.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 15
+    '    Code Lines: 12
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 338.00 B
+
 
     '     Structure HeapNode
     ' 

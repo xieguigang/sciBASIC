@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dad6e59ced848f109d82e8b5022d3bed, Data_science\Visualization\Plots\BarPlot\RectangleStyles.vb"
+﻿#Region "Microsoft.VisualBasic::dad6e59ced848f109d82e8b5022d3bed, sciBASIC#\Data_science\Visualization\Plots\BarPlot\RectangleStyles.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 99
+    '    Code Lines: 79
+    ' Comment Lines: 0
+    '   Blank Lines: 20
+    '     File Size: 3.38 KB
+
 
     '     Enum RectangleSides
     ' 

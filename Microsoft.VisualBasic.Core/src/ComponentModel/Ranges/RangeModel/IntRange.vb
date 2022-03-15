@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dc59df59459baa5f3e01bf2aa9b97dbf, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\IntRange.vb"
+﻿#Region "Microsoft.VisualBasic::dc59df59459baa5f3e01bf2aa9b97dbf, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\IntRange.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 165
+    '    Code Lines: 67
+    ' Comment Lines: 77
+    '   Blank Lines: 21
+    '     File Size: 6.04 KB
+
 
     '     Class IntRange
     ' 

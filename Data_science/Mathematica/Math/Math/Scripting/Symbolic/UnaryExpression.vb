@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92a9826e4946a6293f4cae808d6f5346, Data_science\Mathematica\Math\Math\Scripting\Symbolic\UnaryExpression.vb"
+﻿#Region "Microsoft.VisualBasic::92a9826e4946a6293f4cae808d6f5346, sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Symbolic\UnaryExpression.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 25
+    '    Code Lines: 19
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 806.00 B
+
 
     '     Class UnaryExpression
     ' 

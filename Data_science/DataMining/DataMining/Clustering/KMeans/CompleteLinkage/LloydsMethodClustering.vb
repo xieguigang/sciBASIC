@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9fa3f00b6629ad3c711a33fd6944add1, Data_science\DataMining\DataMining\Clustering\KMeans\CompleteLinkage\LloydsMethodClustering.vb"
+﻿#Region "Microsoft.VisualBasic::9fa3f00b6629ad3c711a33fd6944add1, sciBASIC#\Data_science\DataMining\DataMining\Clustering\KMeans\CompleteLinkage\LloydsMethodClustering.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 95
+    '    Code Lines: 63
+    ' Comment Lines: 8
+    '   Blank Lines: 24
+    '     File Size: 3.92 KB
+
 
     '     Class LloydsMethodClustering
     ' 

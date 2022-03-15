@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff31bc32602386ff0b7f25628b13297b, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\FishersExact\FisherTest.vb"
+﻿#Region "Microsoft.VisualBasic::ff31bc32602386ff0b7f25628b13297b, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\FishersExact\FisherTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 210
+    '    Code Lines: 128
+    ' Comment Lines: 54
+    '   Blank Lines: 28
+    '     File Size: 7.30 KB
+
 
     '     Module FishersExactTest
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::00be1d6d919b48e02d8de045b9739b5a, Microsoft.VisualBasic.Core\src\My\Framework\IOHandler.vb"
+﻿#Region "Microsoft.VisualBasic::00be1d6d919b48e02d8de045b9739b5a, sciBASIC#\Microsoft.VisualBasic.Core\src\My\Framework\IOHandler.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 50
+    '    Code Lines: 31
+    ' Comment Lines: 8
+    '   Blank Lines: 11
+    '     File Size: 2.05 KB
+
 
     '     Module IOHandler
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0de791d2c279a2b59edf032ed8c262ab, Data\OCR\test\AlignTest.vb"
+﻿#Region "Microsoft.VisualBasic::0de791d2c279a2b59edf032ed8c262ab, sciBASIC#\Data\OCR\test\AlignTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 71
+    '    Code Lines: 54
+    ' Comment Lines: 1
+    '   Blank Lines: 16
+    '     File Size: 2.45 KB
+
 
     ' Module AlignTest
     ' 

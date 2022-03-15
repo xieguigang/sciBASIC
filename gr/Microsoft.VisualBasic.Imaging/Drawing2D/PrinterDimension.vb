@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::62d02f70a21058a17226c4f455e81bc6, gr\Microsoft.VisualBasic.Imaging\Drawing2D\PrinterDimension.vb"
+﻿#Region "Microsoft.VisualBasic::62d02f70a21058a17226c4f455e81bc6, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\PrinterDimension.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 105
+    '    Code Lines: 81
+    ' Comment Lines: 10
+    '   Blank Lines: 14
+    '     File Size: 3.73 KB
+
 
     '     Class PrinterDimension
     ' 

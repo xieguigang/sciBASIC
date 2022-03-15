@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b34a783130de145ba76fe129dc0385a, mime\application%xml\MathML\Expression\SymbolExpression.vb"
+﻿#Region "Microsoft.VisualBasic::7b34a783130de145ba76fe129dc0385a, sciBASIC#\mime\application%xml\MathML\Expression\SymbolExpression.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 13
+    '    Code Lines: 9
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 311.00 B
+
 
     '     Class SymbolExpression
     ' 

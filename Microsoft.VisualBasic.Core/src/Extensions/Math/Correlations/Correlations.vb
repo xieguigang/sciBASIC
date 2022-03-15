@@ -1,67 +1,67 @@
-﻿#Region "Microsoft.VisualBasic::2b78908f372006a0a22c9656e6e98638, Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\Correlations.vb"
+﻿#Region "Microsoft.VisualBasic::9fd70ca2ede0fc57e8ae08e117691a35, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\Correlations.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Module Correlations
-' 
-'         Properties: PearsonDefault
-' 
-'         Function: (+2 Overloads) GetPearson, JaccardIndex, JSD, kendallTauBeta, KLD
-'                   KLDi, rankKendallTauBeta, SW
-'         Structure Pearson
-' 
-'             Properties: P
-' 
-'             Function: Measure, RankPearson, ToString
-' 
-'         Delegate Function
-' 
-'             Function: __getOrder, CorrelationMatrix, Spearman
-' 
-'             Sub: throwNotAgree
-'         Structure spcc
-' 
-' 
-'             Structure __spccInner
-' 
-' 
-' 
-' 
-' 
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+
+    ' Code Statistics:
+
+    '   Total Lines: 501
+    '    Code Lines: 301
+    ' Comment Lines: 123
+    '   Blank Lines: 77
+    '     File Size: 18.93 KB
+
+
+    '     Module Correlations
+    ' 
+    '         Properties: PearsonDefault
+    ' 
+    '         Function: (+2 Overloads) GetPearson, JaccardIndex, JSD, kendallTauBeta, KLD
+    '                   KLDi, rankKendallTauBeta, SW
+    '         Structure Pearson
+    ' 
+    '             Properties: P
+    ' 
+    '             Function: Measure, RankPearson, ToString
+    ' 
+    '         Delegate Function
+    ' 
+    '             Function: CorrelationMatrix, rankingOrder, Spearman
+    ' 
+    '             Sub: throwNotAgree
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

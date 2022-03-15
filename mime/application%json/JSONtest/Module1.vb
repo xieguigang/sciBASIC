@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3df71a28b8cdee7d29d829209ce92fbb, mime\application%json\JSONtest\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::3df71a28b8cdee7d29d829209ce92fbb, sciBASIC#\mime\application%json\JSONtest\Module1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 37
+    '    Code Lines: 29
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 1.37 KB
+
 
     ' Class TestDynamicsObject
     ' 

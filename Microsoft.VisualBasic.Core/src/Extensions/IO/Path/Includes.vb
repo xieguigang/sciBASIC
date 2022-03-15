@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7202c8182af67db8c9484cd28e50bfd, Microsoft.VisualBasic.Core\src\Extensions\IO\Path\Includes.vb"
+﻿#Region "Microsoft.VisualBasic::b7202c8182af67db8c9484cd28e50bfd, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\Path\Includes.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 46
+    '    Code Lines: 26
+    ' Comment Lines: 12
+    '   Blank Lines: 8
+    '     File Size: 1.41 KB
+
 
     '     Class Includes
     ' 

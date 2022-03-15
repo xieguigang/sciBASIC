@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da7d37f5c2821e7d67cec90f93723e9e, Data_science\Mathematica\Math\Math\Algebra\Polynomial\Polynomial.vb"
+﻿#Region "Microsoft.VisualBasic::da7d37f5c2821e7d67cec90f93723e9e, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Polynomial\Polynomial.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 125
+    '    Code Lines: 82
+    ' Comment Lines: 24
+    '   Blank Lines: 19
+    '     File Size: 4.11 KB
+
 
     '     Class Polynomial
     ' 

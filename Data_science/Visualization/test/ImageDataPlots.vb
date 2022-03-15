@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8299c942ce8646eb1510a972593ba7cb, Data_science\Visualization\test\ImageDataPlots.vb"
+﻿#Region "Microsoft.VisualBasic::8299c942ce8646eb1510a972593ba7cb, sciBASIC#\Data_science\Visualization\test\ImageDataPlots.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 38
+    '    Code Lines: 30
+    ' Comment Lines: 1
+    '   Blank Lines: 7
+    '     File Size: 1.20 KB
+
 
     ' Module ImageDataPlots
     ' 

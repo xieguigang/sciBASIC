@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::98b02d345bc36fecfd6e3bd32fb9cedc, Data_science\DataMining\hierarchical-clustering\Test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::98b02d345bc36fecfd6e3bd32fb9cedc, sciBASIC#\Data_science\DataMining\hierarchical-clustering\Test\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 103
+    '    Code Lines: 57
+    ' Comment Lines: 28
+    '   Blank Lines: 18
+    '     File Size: 3.53 KB
+
 
     ' Module Program
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34a9b88409ae852d6e16c4fbbbb1489f, Data_science\DataMining\DataMining\Kernel\BayesianBeliefNetwork\BeliefNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::34a9b88409ae852d6e16c4fbbbb1489f, sciBASIC#\Data_science\DataMining\DataMining\Kernel\BayesianBeliefNetwork\BeliefNetwork.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 298
+    '    Code Lines: 218
+    ' Comment Lines: 32
+    '   Blank Lines: 48
+    '     File Size: 12.48 KB
+
 
     '     Class BeliefNode
     ' 

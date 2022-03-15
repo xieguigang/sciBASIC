@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d1b251284fda7fe774793bd92fae0ee, Microsoft.VisualBasic.Core\src\Serialization\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::0d1b251284fda7fe774793bd92fae0ee, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\Abstract.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 22
+    '    Code Lines: 7
+    ' Comment Lines: 11
+    '   Blank Lines: 4
+    '     File Size: 965.00 B
+
 
     '     Delegate Function
     ' 

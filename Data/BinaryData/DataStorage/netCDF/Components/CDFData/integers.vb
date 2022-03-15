@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a00b30e6cce7f5686473b1ca6841747a, Data\BinaryData\DataStorage\netCDF\Components\CDFData\integers.vb"
+﻿#Region "Microsoft.VisualBasic::a00b30e6cce7f5686473b1ca6841747a, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\CDFData\integers.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 25
+    '    Code Lines: 19
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 704.00 B
+
 
     '     Class integers
     ' 

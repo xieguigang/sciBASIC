@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8369886bcfef0891b65464cda7985cb9, www\githubAPI\API\Organizations.vb"
+﻿#Region "Microsoft.VisualBasic::8369886bcfef0891b65464cda7985cb9, sciBASIC#\www\githubAPI\API\Organizations.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 22
+    '    Code Lines: 18
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 815.00 B
+
 
     '     Class Organizations
     ' 

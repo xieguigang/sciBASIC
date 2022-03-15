@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7349ed8a280f9c2257cbc7d637d3d2dc, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\Serialization\Models\Member.vb"
+﻿#Region "Microsoft.VisualBasic::7349ed8a280f9c2257cbc7d637d3d2dc, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\Serialization\Models\Member.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 91
+    '    Code Lines: 60
+    ' Comment Lines: 15
+    '   Blank Lines: 16
+    '     File Size: 2.57 KB
+
 
     '     Class member
     ' 

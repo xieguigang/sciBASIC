@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a8249973c8caf43e37764fb9bbd8e1f2, vs_solutions\dev\ApplicationServices\Win32\Win32API.vb"
+﻿#Region "Microsoft.VisualBasic::a8249973c8caf43e37764fb9bbd8e1f2, sciBASIC#\vs_solutions\dev\ApplicationServices\Win32\Win32API.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 218
+    '    Code Lines: 167
+    ' Comment Lines: 25
+    '   Blank Lines: 26
+    '     File Size: 11.76 KB
+
 
     '     Structure RECT
     ' 

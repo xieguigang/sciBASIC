@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::757e07096ce1cce1ba369c560e37aac5, mime\application%pdf\PdfReader\Document\PdfNumberTree.vb"
+﻿#Region "Microsoft.VisualBasic::1bd271ded65fb04825bfa69467b554b6, sciBASIC#\mime\application%pdf\PdfReader\Document\PdfNumberTree.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 112
+    '    Code Lines: 89
+    ' Comment Lines: 5
+    '   Blank Lines: 18
+    '     File Size: 4.18 KB
+
 
     '     Class PdfNumberTree
     ' 

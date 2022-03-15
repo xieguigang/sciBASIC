@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e20ebf789813fbf19867990055a073ec, mime\text%yaml\1.2\Syntax\YamlVersion.vb"
+﻿#Region "Microsoft.VisualBasic::e20ebf789813fbf19867990055a073ec, sciBASIC#\mime\text%yaml\1.2\Syntax\YamlVersion.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 12
+    '    Code Lines: 9
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 263.00 B
+
 
     '     Class YamlVersion
     ' 

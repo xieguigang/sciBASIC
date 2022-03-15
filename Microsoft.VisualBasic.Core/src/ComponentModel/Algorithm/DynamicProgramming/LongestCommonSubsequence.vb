@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1dd182cc126f1ec9add3568244450e3c, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\LongestCommonSubsequence.vb"
+﻿#Region "Microsoft.VisualBasic::1dd182cc126f1ec9add3568244450e3c, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\LongestCommonSubsequence.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 82
+    '    Code Lines: 59
+    ' Comment Lines: 10
+    '   Blank Lines: 13
+    '     File Size: 2.51 KB
+
 
     '     Class LongestCommonSubsequence
     ' 

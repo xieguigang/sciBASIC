@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9a8ea37a6d8a2df83f45fe4bcddcf33, mime\application%json\BSON\ValueType.vb"
+﻿#Region "Microsoft.VisualBasic::b9a8ea37a6d8a2df83f45fe4bcddcf33, sciBASIC#\mime\application%json\BSON\ValueType.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 16
+    '    Code Lines: 15
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 340.00 B
+
 
     '     Enum ValueType
     ' 

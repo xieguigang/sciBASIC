@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8835f87b4953650d6891af727a63ffe9, gr\network-visualization\Visualizer\Styling\CSS\StyleObject.vb"
+﻿#Region "Microsoft.VisualBasic::8835f87b4953650d6891af727a63ffe9, sciBASIC#\gr\network-visualization\Visualizer\Styling\CSS\StyleObject.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 50
+    '    Code Lines: 19
+    ' Comment Lines: 20
+    '   Blank Lines: 11
+    '     File Size: 1.29 KB
+
 
     '     Class Styles
     ' 

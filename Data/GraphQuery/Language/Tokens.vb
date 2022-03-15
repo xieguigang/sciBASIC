@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c00bb058e870dbfd472ef1bd8eff3f7, Data\GraphQuery\Language\Tokens.vb"
+﻿#Region "Microsoft.VisualBasic::6c00bb058e870dbfd472ef1bd8eff3f7, sciBASIC#\Data\GraphQuery\Language\Tokens.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 23
+    '    Code Lines: 13
+    ' Comment Lines: 9
+    '   Blank Lines: 1
+    '     File Size: 400.00 B
+
 
     '     Enum Tokens
     ' 

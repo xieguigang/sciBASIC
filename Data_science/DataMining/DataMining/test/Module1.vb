@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2fe8dc165ee288dfdef4f874425a492, Data_science\DataMining\DataMining\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::e2fe8dc165ee288dfdef4f874425a492, sciBASIC#\Data_science\DataMining\DataMining\test\Module1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 13
+    '    Code Lines: 4
+    ' Comment Lines: 6
+    '   Blank Lines: 3
+    '     File Size: 448.00 B
+
 
     ' Module Module1
     ' 

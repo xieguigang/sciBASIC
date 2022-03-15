@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c59f5a7c4d2393eebda5486d459ac210, Data\SearchEngine\SearchEngine\Adapter\IObject.vb"
+﻿#Region "Microsoft.VisualBasic::c59f5a7c4d2393eebda5486d459ac210, sciBASIC#\Data\SearchEngine\SearchEngine\Adapter\IObject.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 55
+    '    Code Lines: 39
+    ' Comment Lines: 8
+    '   Blank Lines: 8
+    '     File Size: 1.86 KB
+
 
     ' Structure IObject
     ' 

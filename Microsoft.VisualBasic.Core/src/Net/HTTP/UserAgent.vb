@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f885f72728f8313eadd537fcae2fb4e, Microsoft.VisualBasic.Core\src\Net\HTTP\UserAgent.vb"
+﻿#Region "Microsoft.VisualBasic::9f885f72728f8313eadd537fcae2fb4e, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\UserAgent.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 47
+    '    Code Lines: 33
+    ' Comment Lines: 6
+    '   Blank Lines: 8
+    '     File Size: 5.26 KB
+
 
     '     Class UserAgent
     ' 

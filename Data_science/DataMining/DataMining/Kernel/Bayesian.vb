@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f36db390f8164faa1b2505d767abdebb, Data_science\DataMining\DataMining\Kernel\Bayesian.vb"
+﻿#Region "Microsoft.VisualBasic::f36db390f8164faa1b2505d767abdebb, sciBASIC#\Data_science\DataMining\DataMining\Kernel\Bayesian.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 84
+    '    Code Lines: 52
+    ' Comment Lines: 22
+    '   Blank Lines: 10
+    '     File Size: 3.42 KB
+
 
     '     Class Bayesian
     ' 

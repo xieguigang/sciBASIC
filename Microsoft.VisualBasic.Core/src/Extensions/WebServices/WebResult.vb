@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d445cef547ce840494d44dac58c9d12e, Microsoft.VisualBasic.Core\src\Extensions\WebServices\WebResult.vb"
+﻿#Region "Microsoft.VisualBasic::d445cef547ce840494d44dac58c9d12e, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\WebServices\WebResult.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 45
+    '    Code Lines: 17
+    ' Comment Lines: 23
+    '   Blank Lines: 5
+    '     File Size: 1.38 KB
+
 
     '     Class WebResult
     ' 

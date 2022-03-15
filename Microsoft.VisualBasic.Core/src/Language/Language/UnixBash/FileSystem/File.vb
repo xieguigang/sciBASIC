@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d04e821c6beb24a5aa6bb3f5d9ec50dc, Microsoft.VisualBasic.Core\src\Language\Language\UnixBash\FileSystem\File.vb"
+﻿#Region "Microsoft.VisualBasic::d04e821c6beb24a5aa6bb3f5d9ec50dc, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\UnixBash\FileSystem\File.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 68
+    '    Code Lines: 46
+    ' Comment Lines: 10
+    '   Blank Lines: 12
+    '     File Size: 2.19 KB
+
 
     '     Class File
     ' 

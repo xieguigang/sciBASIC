@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d181d429169d4718ef2df9776a785d11, mime\application%pdf\PdfFileWriter\PDF\PdfEmbeddedFile.vb"
+﻿#Region "Microsoft.VisualBasic::9b9eae0e56e56fc8eb8deaad6eaae71c, sciBASIC#\mime\application%pdf\PdfFileWriter\PDF\PdfEmbeddedFile.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 226
+    '    Code Lines: 91
+    ' Comment Lines: 96
+    '   Blank Lines: 39
+    '     File Size: 8.55 KB
+
 
     '     Class PdfEmbeddedFile
     ' 

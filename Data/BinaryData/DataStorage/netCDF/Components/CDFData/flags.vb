@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87abf7461dac8a626699ea60db7bbcb7, Data\BinaryData\DataStorage\netCDF\Components\CDFData\flags.vb"
+﻿#Region "Microsoft.VisualBasic::87abf7461dac8a626699ea60db7bbcb7, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\CDFData\flags.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 18
+    '    Code Lines: 14
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 557.00 B
+
 
     '     Class flags
     ' 

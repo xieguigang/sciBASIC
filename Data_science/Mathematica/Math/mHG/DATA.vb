@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6942910f23bbb1dd6479d47c9df6249, Data_science\Mathematica\Math\mHG\DATA.vb"
+﻿#Region "Microsoft.VisualBasic::a6942910f23bbb1dd6479d47c9df6249, sciBASIC#\Data_science\Mathematica\Math\mHG\DATA.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 45
+    '    Code Lines: 12
+    ' Comment Lines: 28
+    '   Blank Lines: 5
+    '     File Size: 1.06 KB
+
 
     ' Class htest
     ' 

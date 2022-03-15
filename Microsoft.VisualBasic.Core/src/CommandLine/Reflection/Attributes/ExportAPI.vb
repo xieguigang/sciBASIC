@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5951f352564f26c5da0f962913f208b, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\ExportAPI.vb"
+﻿#Region "Microsoft.VisualBasic::2d04cc804323531a4023f6eaeb89e1ea, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\ExportAPI.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 68
+    '    Code Lines: 20
+    ' Comment Lines: 42
+    '   Blank Lines: 6
+    '     File Size: 2.69 KB
+
 
     '     Class ExportAPIAttribute
     ' 

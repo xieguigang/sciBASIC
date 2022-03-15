@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f898a3ec9338b5a1250daafb1137dbf9, Data_science\DataMining\HMM\Models\Beta.vb"
+﻿#Region "Microsoft.VisualBasic::f898a3ec9338b5a1250daafb1137dbf9, sciBASIC#\Data_science\DataMining\HMM\Models\Beta.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 12
+    '    Code Lines: 6
+    ' Comment Lines: 3
+    '   Blank Lines: 3
+    '     File Size: 230.00 B
+
 
     '     Class Beta
     ' 

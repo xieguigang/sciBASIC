@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ba72bc2b8ec6fbd1b54905d9cd2330e, www\Microsoft.VisualBasic.NETProtocol\IPv4\IPUtils.vb"
+﻿#Region "Microsoft.VisualBasic::4ba72bc2b8ec6fbd1b54905d9cd2330e, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\IPv4\IPUtils.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 90
+    '    Code Lines: 27
+    ' Comment Lines: 54
+    '   Blank Lines: 9
+    '     File Size: 2.92 KB
+
 
     ' Module IPUtils
     ' 

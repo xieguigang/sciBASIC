@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1581034924d1885ad6edf64052591203, mime\application%pdf\PdfReader\Document\IPdfObjectVisitor.vb"
+﻿#Region "Microsoft.VisualBasic::86cbb85af3f0be68ec362545f795996d, sciBASIC#\mime\application%pdf\PdfReader\Document\IPdfObjectVisitor.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 30
+    '    Code Lines: 30
+    ' Comment Lines: 0
+    '   Blank Lines: 0
+    '     File Size: 1.21 KB
+
 
     '     Interface IPdfObjectVisitor
     ' 

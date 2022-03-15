@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e23833117986edfc9fb6234ef77f8780, Data\BinaryData\DataStorage\HDF5\structure\SymbolTableEntry.vb"
+﻿#Region "Microsoft.VisualBasic::e23833117986edfc9fb6234ef77f8780, sciBASIC#\Data\BinaryData\DataStorage\HDF5\structure\SymbolTableEntry.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 120
+    '    Code Lines: 79
+    ' Comment Lines: 16
+    '   Blank Lines: 25
+    '     File Size: 5.20 KB
+
 
     '     Class SymbolTableEntry
     ' 

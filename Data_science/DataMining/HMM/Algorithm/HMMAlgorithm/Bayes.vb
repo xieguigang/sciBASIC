@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d47d48bd0cfa2ef00ad1fa9fe6a86ff, Data_science\DataMining\HMM\Algorithm\HMMAlgorithm\Bayes.vb"
+﻿#Region "Microsoft.VisualBasic::4d47d48bd0cfa2ef00ad1fa9fe6a86ff, sciBASIC#\Data_science\DataMining\HMM\Algorithm\HMMAlgorithm\Bayes.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 26
+    '    Code Lines: 21
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 965.00 B
+
 
     '     Class Bayes
     ' 

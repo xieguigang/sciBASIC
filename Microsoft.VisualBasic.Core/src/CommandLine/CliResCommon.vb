@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59bd2fa95b9c61d2dba7e52326f4afae, Microsoft.VisualBasic.Core\src\CommandLine\CliResCommon.vb"
+﻿#Region "Microsoft.VisualBasic::59bd2fa95b9c61d2dba7e52326f4afae, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\CliResCommon.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 73
+    '    Code Lines: 47
+    ' Comment Lines: 14
+    '   Blank Lines: 12
+    '     File Size: 2.62 KB
+
 
     '     Class CliResCommon
     ' 

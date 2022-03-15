@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ccd8c5edeb41241f44c48cb110f3def2, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinarySearchFunction.vb"
+﻿#Region "Microsoft.VisualBasic::ccd8c5edeb41241f44c48cb110f3def2, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinarySearchFunction.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 87
+    '    Code Lines: 68
+    ' Comment Lines: 8
+    '   Blank Lines: 11
+    '     File Size: 2.89 KB
+
 
     '     Class BinarySearchFunction
     ' 

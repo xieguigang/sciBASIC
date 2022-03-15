@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5afaf6e4cf5ae56926395efbbee6da86, Data_science\Mathematica\SignalProcessing\SignalProcessing\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::5afaf6e4cf5ae56926395efbbee6da86, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\test\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 29
+    '    Code Lines: 21
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 1.06 KB
+
 
     ' Module Program
     ' 

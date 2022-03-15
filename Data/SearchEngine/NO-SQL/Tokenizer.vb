@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3bd8abfa5d7b4fa1cddb69c1e4b16ac0, Data\SearchEngine\NO-SQL\Tokenizer.vb"
+﻿#Region "Microsoft.VisualBasic::3bd8abfa5d7b4fa1cddb69c1e4b16ac0, sciBASIC#\Data\SearchEngine\NO-SQL\Tokenizer.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 4
+    '    Code Lines: 2
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 39.00 B
+
 
     ' Module Tokenizer
     ' 

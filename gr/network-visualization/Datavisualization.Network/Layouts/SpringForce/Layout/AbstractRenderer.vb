@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4223e5da568628c8e5abbf74c8038a1a, gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Layout\AbstractRenderer.vb"
+﻿#Region "Microsoft.VisualBasic::51bafefcd38e8699d6b9e8231427b9c7, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Layout\AbstractRenderer.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 88
+    '    Code Lines: 30
+    ' Comment Lines: 47
+    '   Blank Lines: 11
+    '     File Size: 3.35 KB
+
 
     '     Class AbstractRenderer
     ' 

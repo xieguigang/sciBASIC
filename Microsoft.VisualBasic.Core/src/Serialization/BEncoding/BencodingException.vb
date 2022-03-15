@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6b0e7311bbd742e92731c1f0e00928c, Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BencodingException.vb"
+﻿#Region "Microsoft.VisualBasic::f6b0e7311bbd742e92731c1f0e00928c, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BencodingException.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 33
+    '    Code Lines: 13
+    ' Comment Lines: 15
+    '   Blank Lines: 5
+    '     File Size: 927.00 B
+
 
     '     Class BencodingException
     ' 

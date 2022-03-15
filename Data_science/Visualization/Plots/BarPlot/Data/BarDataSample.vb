@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::809e6e6a7177f207a1a5f136d7d7c050, Data_science\Visualization\Plots\BarPlot\Data\BarDataSample.vb"
+﻿#Region "Microsoft.VisualBasic::809e6e6a7177f207a1a5f136d7d7c050, sciBASIC#\Data_science\Visualization\Plots\BarPlot\Data\BarDataSample.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 36
+    '    Code Lines: 16
+    ' Comment Lines: 15
+    '   Blank Lines: 5
+    '     File Size: 1.06 KB
+
 
     '     Class BarDataSample
     ' 

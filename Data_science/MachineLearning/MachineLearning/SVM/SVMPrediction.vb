@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::683d09ba0f87044c9b5a9a2fc4668849, Data_science\MachineLearning\MachineLearning\SVM\SVMPrediction.vb"
+﻿#Region "Microsoft.VisualBasic::683d09ba0f87044c9b5a9a2fc4668849, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\SVMPrediction.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 16
+    '    Code Lines: 11
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 383.00 B
+
 
     '     Structure SVMPrediction
     ' 

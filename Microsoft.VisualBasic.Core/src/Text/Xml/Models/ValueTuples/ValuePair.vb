@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31a753351be9474b091cf5e0bb7c3d03, Microsoft.VisualBasic.Core\src\Text\Xml\Models\ValueTuples\ValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::31a753351be9474b091cf5e0bb7c3d03, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\Models\ValueTuples\ValuePair.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 141
+    '    Code Lines: 95
+    ' Comment Lines: 24
+    '   Blank Lines: 22
+    '     File Size: 5.63 KB
+
 
     '     Class KeyValuePair
     ' 

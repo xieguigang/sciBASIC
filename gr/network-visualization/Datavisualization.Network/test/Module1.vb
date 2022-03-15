@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::353177286d4802108858fdc51907fc4f, gr\network-visualization\Datavisualization.Network\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::353177286d4802108858fdc51907fc4f, sciBASIC#\gr\network-visualization\Datavisualization.Network\test\Module1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 60
+    '    Code Lines: 43
+    ' Comment Lines: 3
+    '   Blank Lines: 14
+    '     File Size: 1.66 KB
+
 
     ' Module Module1
     ' 

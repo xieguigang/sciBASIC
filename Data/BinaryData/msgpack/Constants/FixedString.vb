@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c2f31b4f206d28123e2f04296f12fc4, Data\BinaryData\msgpack\Constants\FixedString.vb"
+﻿#Region "Microsoft.VisualBasic::3c2f31b4f206d28123e2f04296f12fc4, sciBASIC#\Data\BinaryData\msgpack\Constants\FixedString.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 7
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 227.00 B
+
 
     '     Class FixedString
     ' 

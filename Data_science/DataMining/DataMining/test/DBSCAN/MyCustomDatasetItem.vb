@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a0c43b209b7d3a4047aab292c2980bc, Data_science\DataMining\DataMining\test\DBSCAN\MyCustomDatasetItem.vb"
+﻿#Region "Microsoft.VisualBasic::4a0c43b209b7d3a4047aab292c2980bc, sciBASIC#\Data_science\DataMining\DataMining\test\DBSCAN\MyCustomDatasetItem.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 12
+    '    Code Lines: 9
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 247.00 B
+
 
     ' Class MyCustomDatasetItem
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f46427d51b5936c8e7ee78ac8104ca35, tutorials\core.test\TableTest.vb"
+﻿#Region "Microsoft.VisualBasic::f46427d51b5936c8e7ee78ac8104ca35, sciBASIC#\tutorials\core.test\TableTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 95
+    '    Code Lines: 34
+    ' Comment Lines: 35
+    '   Blank Lines: 26
+    '     File Size: 2.03 KB
+
 
     ' Module TableTest
     ' 

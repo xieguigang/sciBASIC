@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fdffbe3f5a9b5ef21aeb6960771243db, vs_solutions\dev\VisualStudio\CodeSign\LicenseMgr.vb"
+﻿#Region "Microsoft.VisualBasic::46d4d176abaa394bbd47d675c7375152, sciBASIC#\vs_solutions\dev\VisualStudio\CodeSign\LicenseMgr.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 199
+    '    Code Lines: 137
+    ' Comment Lines: 27
+    '   Blank Lines: 35
+    '     File Size: 7.55 KB
+
 
     '     Module LicenseMgr
     ' 
@@ -152,6 +162,7 @@ THE SOFTWARE.",
 
         Public Function AddRegion(src As String, info As LicenseInfo, file As String) As String
             Dim sb As New StringBuilder
+            Dim stat = CodeStatics.StatVB(src)
 
             Call sb.AppendLine($"#Region ""Microsoft.VisualBasic::{SecurityString.GetMd5Hash(src)}, {file}""")
             Call sb.AppendLine()
@@ -179,6 +190,19 @@ THE SOFTWARE.",
             sb.AppendLine("    ' /********************************************************************************/")
             sb.AppendLine()
             sb.AppendLine("    ' Summaries:")
+            sb.AppendLine()
+
+            sb.AppendLine()
+
+            sb.AppendLine($"    ' Code Statistics:")
+            sb.AppendLine()
+            sb.AppendLine($"    '   Total Lines: {stat.totalLines}")
+            sb.AppendLine($"    '    Code Lines: {stat.lineOfCodes}")
+            sb.AppendLine($"    ' Comment Lines: {stat.commentLines}")
+            sb.AppendLine($"    '   Blank Lines: {stat.blankLines}")
+            sb.AppendLine($"    '     File Size: {StringFormats.Lanudry(stat.size)}")
+
+            sb.AppendLine()
             sb.AppendLine()
 
             For Each line As String In VBCodeSignature.SummaryModules(vb:=src).LineTokens

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30f0809533229e3dc85abb86041f8892, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\VectorAssertExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::30f0809533229e3dc85abb86041f8892, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\VectorAssertExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 62
+    '    Code Lines: 33
+    ' Comment Lines: 22
+    '   Blank Lines: 7
+    '     File Size: 2.38 KB
+
 
     '     Module VectorAssertExtensions
     ' 

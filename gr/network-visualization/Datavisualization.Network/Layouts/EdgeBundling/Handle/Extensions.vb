@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97b732cf5e178f2995070cc053fbfb98, gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Handle\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::97b732cf5e178f2995070cc053fbfb98, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Handle\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 7
+    '    Code Lines: 4
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 107.00 B
+
 
     '     Module Extensions
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16ecd3475bb1f299d07889ea955be53a, Data_science\Mathematica\Math\ODE\Dynamics\var.vb"
+﻿#Region "Microsoft.VisualBasic::16ecd3475bb1f299d07889ea955be53a, sciBASIC#\Data_science\Mathematica\Math\ODE\Dynamics\var.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 117
+    '    Code Lines: 85
+    ' Comment Lines: 7
+    '   Blank Lines: 25
+    '     File Size: 3.54 KB
+
 
     '     Class var
     ' 

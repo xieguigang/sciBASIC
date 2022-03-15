@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a8fe9a4285cd09d6e26f9d615f32614, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StrUtils.vb"
+﻿#Region "Microsoft.VisualBasic::6a8fe9a4285cd09d6e26f9d615f32614, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StrUtils.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 676
+    '    Code Lines: 398
+    ' Comment Lines: 216
+    '   Blank Lines: 62
+    '     File Size: 24.09 KB
+
 
     ' Module StrUtils
     ' 

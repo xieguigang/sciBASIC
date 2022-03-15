@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae11c528a546231cc375971e6dce18b6, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Interface.vb"
+﻿#Region "Microsoft.VisualBasic::ae11c528a546231cc375971e6dce18b6, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Interface.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 4479
+    '    Code Lines: 265
+    ' Comment Lines: 4169
+    '   Blank Lines: 45
+    '     File Size: 203.71 KB
+
 
     '     Class IGraphics
     ' 

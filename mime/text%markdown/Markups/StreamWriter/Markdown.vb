@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e04e39afecfcf1c6acb938e90fa302f, mime\text%markdown\Markups\StreamWriter\Markdown.vb"
+﻿#Region "Microsoft.VisualBasic::1e04e39afecfcf1c6acb938e90fa302f, sciBASIC#\mime\text%markdown\Markups\StreamWriter\Markdown.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 16
+    '    Code Lines: 13
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 457.00 B
+
 
     '     Module Markdown
     ' 

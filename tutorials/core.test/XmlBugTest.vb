@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a05fd4bf8761d08c9ac2da83197fbb4, tutorials\core.test\XmlBugTest.vb"
+﻿#Region "Microsoft.VisualBasic::6a05fd4bf8761d08c9ac2da83197fbb4, sciBASIC#\tutorials\core.test\XmlBugTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 294
+    '    Code Lines: 206
+    ' Comment Lines: 38
+    '   Blank Lines: 50
+    '     File Size: 9.96 KB
+
 
     ' Module XmlBugTest
     ' 

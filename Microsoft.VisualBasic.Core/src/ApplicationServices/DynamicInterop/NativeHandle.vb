@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c200c8eeff2906f21da9699abaf81ade, Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\NativeHandle.vb"
+﻿#Region "Microsoft.VisualBasic::c200c8eeff2906f21da9699abaf81ade, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\NativeHandle.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 113
+    '    Code Lines: 58
+    ' Comment Lines: 37
+    '   Blank Lines: 18
+    '     File Size: 4.99 KB
+
 
     '     Class NativeHandle
     ' 

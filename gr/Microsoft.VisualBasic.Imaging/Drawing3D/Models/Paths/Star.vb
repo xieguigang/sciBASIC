@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e5a79a4de02f81bfde8fb54488d60b1, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Paths\Star.vb"
+﻿#Region "Microsoft.VisualBasic::9e5a79a4de02f81bfde8fb54488d60b1, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Paths\Star.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 25
+    '    Code Lines: 17
+    ' Comment Lines: 3
+    '   Blank Lines: 5
+    '     File Size: 765.00 B
+
 
     '     Class Star
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a591e45dcc98adcab22fca36e032fae5, Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\UnixLibraryLoader.vb"
+﻿#Region "Microsoft.VisualBasic::a591e45dcc98adcab22fca36e032fae5, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\UnixLibraryLoader.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 80
+    '    Code Lines: 46
+    ' Comment Lines: 21
+    '   Blank Lines: 13
+    '     File Size: 3.78 KB
+
 
     '     Class UnixLibraryLoader
     ' 

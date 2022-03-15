@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::adec478ab0683caaeb480cf13b7bac4a, mime\text%yaml\1.2\ParserInput.vb"
+﻿#Region "Microsoft.VisualBasic::adec478ab0683caaeb480cf13b7bac4a, sciBASIC#\mime\text%yaml\1.2\ParserInput.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 16
+    '    Code Lines: 11
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 477.00 B
+
 
     '     Interface ParserInput
     ' 

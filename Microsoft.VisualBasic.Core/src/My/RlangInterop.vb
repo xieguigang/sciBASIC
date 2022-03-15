@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d1283cc28a958992c638bb70836a719, Microsoft.VisualBasic.Core\src\My\RlangInterop.vb"
+﻿#Region "Microsoft.VisualBasic::6d1283cc28a958992c638bb70836a719, sciBASIC#\Microsoft.VisualBasic.Core\src\My\RlangInterop.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 61
+    '    Code Lines: 41
+    ' Comment Lines: 11
+    '   Blank Lines: 9
+    '     File Size: 2.29 KB
+
 
     '     Module RlangInterop
     ' 

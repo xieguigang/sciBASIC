@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60e9cc85d88a634488df990b70e6a31a, Microsoft.VisualBasic.Core\src\Serialization\JSON\Formatter\JsonFormatterStrategyContext.vb"
+﻿#Region "Microsoft.VisualBasic::60e9cc85d88a634488df990b70e6a31a, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\JSON\Formatter\JsonFormatterStrategyContext.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 121
+    '    Code Lines: 92
+    ' Comment Lines: 0
+    '   Blank Lines: 29
+    '     File Size: 3.76 KB
+
 
     '     Class JsonFormatterStrategyContext
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f60247cf7b092c88874765ff67aa8ea, mime\application%pdf\PdfReader\Parser\ParseDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::597af3fae14c62b9de8a5e6992668221, sciBASIC#\mime\application%pdf\PdfReader\Parser\ParseDictionary.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 102
+    '    Code Lines: 85
+    ' Comment Lines: 0
+    '   Blank Lines: 17
+    '     File Size: 3.57 KB
+
 
     '     Class ParseDictionary
     ' 

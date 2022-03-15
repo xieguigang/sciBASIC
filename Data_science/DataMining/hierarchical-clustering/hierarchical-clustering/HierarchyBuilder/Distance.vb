@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c1b6405d1db6978c951801af46f93b40, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\Distance.vb"
+﻿#Region "Microsoft.VisualBasic::c1b6405d1db6978c951801af46f93b40, sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\Distance.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 57
+    '    Code Lines: 30
+    ' Comment Lines: 17
+    '   Blank Lines: 10
+    '     File Size: 1.99 KB
+
 
     '     Class Distance
     ' 

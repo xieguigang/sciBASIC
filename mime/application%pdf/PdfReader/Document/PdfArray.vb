@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a949f2ecbe5862e46bb0d5c3242bf83f, mime\application%pdf\PdfReader\Document\PdfArray.vb"
+﻿#Region "Microsoft.VisualBasic::0e746c32d70d05f3cd6ad951923b64a7, sciBASIC#\mime\application%pdf\PdfReader\Document\PdfArray.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 63
+    '    Code Lines: 42
+    ' Comment Lines: 7
+    '   Blank Lines: 14
+    '     File Size: 1.82 KB
+
 
     '     Class PdfArray
     ' 

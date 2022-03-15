@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd44689dd45f801d606a5c637b1d14f0, Data_science\DataMining\BinaryTree\btreeCluster.vb"
+﻿#Region "Microsoft.VisualBasic::dd44689dd45f801d606a5c637b1d14f0, sciBASIC#\Data_science\DataMining\BinaryTree\btreeCluster.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 33
+    '    Code Lines: 23
+    ' Comment Lines: 4
+    '   Blank Lines: 6
+    '     File Size: 1.12 KB
+
 
     ' Class BTreeCluster
     ' 

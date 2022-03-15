@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0fb95d646b67a56f1e5b09562057d1e3, Microsoft.VisualBasic.Core\src\CommandLine\Parsers\CLIParser.vb"
+﻿#Region "Microsoft.VisualBasic::2741f05148c513f185f4641f9c6c6f0c, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Parsers\CLIParser.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 209
+    '    Code Lines: 145
+    ' Comment Lines: 34
+    '   Blank Lines: 30
+    '     File Size: 7.80 KB
+
 
     '     Module CLIParser
     ' 

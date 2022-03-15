@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12a8fc4eed84175fb7d0c68f1489c5b2, mime\text%markdown\Markups\HtmlWriter.vb"
+﻿#Region "Microsoft.VisualBasic::12a8fc4eed84175fb7d0c68f1489c5b2, sciBASIC#\mime\text%markdown\Markups\HtmlWriter.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 18
+    '    Code Lines: 15
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 951.00 B
+
 
     ' Class HtmlWriter
     ' 

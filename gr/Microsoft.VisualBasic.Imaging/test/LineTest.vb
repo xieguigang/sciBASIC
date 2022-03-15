@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cac828278f38759bfa7f6182053a756a, gr\Microsoft.VisualBasic.Imaging\test\LineTest.vb"
+﻿#Region "Microsoft.VisualBasic::cac828278f38759bfa7f6182053a756a, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\test\LineTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 44
+    '    Code Lines: 30
+    ' Comment Lines: 0
+    '   Blank Lines: 14
+    '     File Size: 1.07 KB
+
 
     ' Module LineTest
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::96458672676fa96f6a85c04c012ccc2b, mime\text%html\Parser\CSS\Selector.vb"
+﻿#Region "Microsoft.VisualBasic::96458672676fa96f6a85c04c012ccc2b, sciBASIC#\mime\text%html\Parser\CSS\Selector.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 63
+    '    Code Lines: 41
+    ' Comment Lines: 15
+    '   Blank Lines: 7
+    '     File Size: 2.17 KB
+
 
     '     Class Selector
     ' 

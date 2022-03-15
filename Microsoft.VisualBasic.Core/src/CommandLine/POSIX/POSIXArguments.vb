@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2fdd8611e3bc881462155feaba57b58, Microsoft.VisualBasic.Core\src\CommandLine\POSIX\POSIXArguments.vb"
+﻿#Region "Microsoft.VisualBasic::f2fdd8611e3bc881462155feaba57b58, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\POSIX\POSIXArguments.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 19
+    '    Code Lines: 15
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 593.00 B
+
 
     '     Class POSIXArguments
     ' 

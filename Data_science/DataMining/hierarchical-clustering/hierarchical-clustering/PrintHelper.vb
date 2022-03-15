@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75faff2f8409ee57417268200cc341c4, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\PrintHelper.vb"
+﻿#Region "Microsoft.VisualBasic::75faff2f8409ee57417268200cc341c4, sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\PrintHelper.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 49
+    '    Code Lines: 32
+    ' Comment Lines: 9
+    '   Blank Lines: 8
+    '     File Size: 1.63 KB
+
 
     ' Module PrintHelper
     ' 

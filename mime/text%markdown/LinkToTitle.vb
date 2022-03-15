@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1c50331d812e3a259c8474d97699cfc9, mime\text%markdown\LinkToTitle.vb"
+﻿#Region "Microsoft.VisualBasic::1c50331d812e3a259c8474d97699cfc9, sciBASIC#\mime\text%markdown\LinkToTitle.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 141
+    '    Code Lines: 82
+    ' Comment Lines: 37
+    '   Blank Lines: 22
+    '     File Size: 5.03 KB
+
 
     ' Class LinkToTitle
     ' 

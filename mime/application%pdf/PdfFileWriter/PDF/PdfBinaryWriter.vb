@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::530e71de163036574e13bd545c0c646f, mime\application%pdf\PdfFileWriter\PDF\PdfBinaryWriter.vb"
+﻿#Region "Microsoft.VisualBasic::f94592e6618b77e47752be838268f92f, sciBASIC#\mime\application%pdf\PdfFileWriter\PDF\PdfBinaryWriter.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 111
+    '    Code Lines: 33
+    ' Comment Lines: 65
+    '   Blank Lines: 13
+    '     File Size: 3.57 KB
+
 
     '     Class PdfBinaryWriter
     ' 

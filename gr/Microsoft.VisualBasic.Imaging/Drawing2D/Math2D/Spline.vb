@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::181d06ce70cf9904609831f07ae720bc, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Spline.vb"
+﻿#Region "Microsoft.VisualBasic::181d06ce70cf9904609831f07ae720bc, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Spline.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 55
+    '    Code Lines: 47
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 2.12 KB
+
 
     '     Module Spline
     ' 

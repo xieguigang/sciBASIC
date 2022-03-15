@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9070cbf6a86fc2c6194cd5bcdb538746, mime\application%pdf\PdfFileWriter\PDF\PdfDisplayMedia.vb"
+﻿#Region "Microsoft.VisualBasic::26d75acd019a033c7ceb6f004c067f56, sciBASIC#\mime\application%pdf\PdfFileWriter\PDF\PdfDisplayMedia.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 473
+    '    Code Lines: 143
+    ' Comment Lines: 260
+    '   Blank Lines: 70
+    '     File Size: 13.15 KB
+
 
     ' Enum TempFilePermission
     ' 

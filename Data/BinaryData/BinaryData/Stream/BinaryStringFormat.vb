@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e25d4e20023fc702cebecc792629f9c6, Data\BinaryData\BinaryData\Stream\BinaryStringFormat.vb"
+﻿#Region "Microsoft.VisualBasic::e25d4e20023fc702cebecc792629f9c6, sciBASIC#\Data\BinaryData\BinaryData\Stream\BinaryStringFormat.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 37
+    '    Code Lines: 8
+    ' Comment Lines: 25
+    '   Blank Lines: 4
+    '     File Size: 1.29 KB
+
 
     ' Enum BinaryStringFormat
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f5a7be2da2d23af411f895ece968967, www\Microsoft.VisualBasic.NETProtocol\Protocol\Reflection\ProtocolAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::1f5a7be2da2d23af411f895ece968967, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Protocol\Reflection\ProtocolAttribute.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 88
+    '    Code Lines: 38
+    ' Comment Lines: 40
+    '   Blank Lines: 10
+    '     File Size: 3.95 KB
+
 
     '     Class ProtocolAttribute
     ' 

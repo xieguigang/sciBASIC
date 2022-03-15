@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4a2d0d22fe12d290a9aae3bb2fa45eb, gr\network-visualization\Datavisualization.Network\Analysis\Similarity\GraphTopology.vb"
+﻿#Region "Microsoft.VisualBasic::e4a2d0d22fe12d290a9aae3bb2fa45eb, sciBASIC#\gr\network-visualization\Datavisualization.Network\Analysis\Similarity\GraphTopology.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 113
+    '    Code Lines: 86
+    ' Comment Lines: 9
+    '   Blank Lines: 18
+    '     File Size: 4.83 KB
+
 
     '     Module GraphTopology
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8eb8ec0711a6cb09fd6cfcc728662a0c, gr\network-visualization\Datavisualization.Network\Layouts\Orthogonal\Compaction.vb"
+﻿#Region "Microsoft.VisualBasic::8eb8ec0711a6cb09fd6cfcc728662a0c, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Orthogonal\Compaction.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 17
+    '    Code Lines: 13
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 508.00 B
+
 
     '     Module Compaction
     ' 

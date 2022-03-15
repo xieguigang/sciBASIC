@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91480881a7aedf9600bb9961ac988746, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\PipelineCLI.vb"
+﻿#Region "Microsoft.VisualBasic::91480881a7aedf9600bb9961ac988746, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\PipelineCLI.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 55
+    '    Code Lines: 28
+    ' Comment Lines: 18
+    '   Blank Lines: 9
+    '     File Size: 2.02 KB
+
 
     '     Module PipelineCLI
     ' 

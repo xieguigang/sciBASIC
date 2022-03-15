@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff6e6ce0ff44ac99345881ec94961ae3, Data_science\DataMining\HMM\Chain.vb"
+﻿#Region "Microsoft.VisualBasic::f94e27de6be1013ff7395caf16b7b1f5, sciBASIC#\Data_science\DataMining\HMM\Chain.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 58
+    '    Code Lines: 34
+    ' Comment Lines: 14
+    '   Blank Lines: 10
+    '     File Size: 1.57 KB
+
 
     ' Class Chain
     ' 

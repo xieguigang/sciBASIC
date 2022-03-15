@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::98ae7eeaa7c39573d6d9503a971814fc, Data_science\Mathematica\Math\Math\Scripting\Aggregate\Aggregate.vb"
+﻿#Region "Microsoft.VisualBasic::98ae7eeaa7c39573d6d9503a971814fc, sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Aggregate\Aggregate.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 18
+    '    Code Lines: 15
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 668.00 B
+
 
     '     Delegate Function
     ' 

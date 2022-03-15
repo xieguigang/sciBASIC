@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c60e2faf059cf1476ebed585647a59f1, Data_science\Mathematica\Math\MathApp\Modules\DEBUG.vb"
+﻿#Region "Microsoft.VisualBasic::c60e2faf059cf1476ebed585647a59f1, sciBASIC#\Data_science\Mathematica\Math\MathApp\Modules\DEBUG.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 535
+    '    Code Lines: 264
+    ' Comment Lines: 141
+    '   Blank Lines: 130
+    '     File Size: 22.25 KB
+
 
     ' Module DEBUG
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::641af121dadad678721f7b91e5260cf4, gr\Microsoft.VisualBasic.Imaging\SVG\SVGDataLayers.vb"
+﻿#Region "Microsoft.VisualBasic::641af121dadad678721f7b91e5260cf4, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\SVGDataLayers.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 255
+    '    Code Lines: 172
+    ' Comment Lines: 40
+    '   Blank Lines: 43
+    '     File Size: 8.60 KB
+
 
     '     Class SVGDataLayers
     ' 

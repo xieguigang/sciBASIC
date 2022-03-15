@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2704b38dd7d42f0e6e52235b117121a7, gr\network-visualization\Datavisualization.Network\Layouts\Orthogonal\Grid.vb"
+﻿#Region "Microsoft.VisualBasic::2704b38dd7d42f0e6e52235b117121a7, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Orthogonal\Grid.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 277
+    '    Code Lines: 186
+    ' Comment Lines: 43
+    '   Blank Lines: 48
+    '     File Size: 9.34 KB
+
 
     '     Class GridCell
     ' 

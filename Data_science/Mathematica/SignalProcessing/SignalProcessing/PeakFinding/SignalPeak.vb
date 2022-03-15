@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2afbf9ad2dd55862b2921eac19155a2b, Data_science\Mathematica\SignalProcessing\SignalProcessing\PeakFinding\SignalPeak.vb"
+﻿#Region "Microsoft.VisualBasic::2afbf9ad2dd55862b2921eac19155a2b, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\PeakFinding\SignalPeak.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 79
+    '    Code Lines: 65
+    ' Comment Lines: 0
+    '   Blank Lines: 14
+    '     File Size: 2.61 KB
+
 
     '     Structure SignalPeak
     ' 

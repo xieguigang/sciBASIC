@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eefc2f44fbac7a267e0e359d83213b50, Microsoft.VisualBasic.Core\src\Serialization\ConfigMappings\Attributes.vb"
+﻿#Region "Microsoft.VisualBasic::eefc2f44fbac7a267e0e359d83213b50, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\ConfigMappings\Attributes.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 48
+    '    Code Lines: 18
+    ' Comment Lines: 24
+    '   Blank Lines: 6
+    '     File Size: 1.58 KB
+
 
     '     Class MappingsIgnored
     ' 

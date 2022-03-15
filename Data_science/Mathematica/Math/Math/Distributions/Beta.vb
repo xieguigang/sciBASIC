@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6c5698f9542f8c8dd3b4d395dbabfd5, Data_science\Mathematica\Math\Math\Distributions\Beta.vb"
+﻿#Region "Microsoft.VisualBasic::a6c5698f9542f8c8dd3b4d395dbabfd5, sciBASIC#\Data_science\Mathematica\Math\Math\Distributions\Beta.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 50
+    '    Code Lines: 16
+    ' Comment Lines: 28
+    '   Blank Lines: 6
+    '     File Size: 1.69 KB
+
 
     '     Module Beta
     ' 

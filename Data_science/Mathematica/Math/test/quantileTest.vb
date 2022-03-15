@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43043136898fc0034c6f09b4be51bfe6, Data_science\Mathematica\Math\test\quantileTest.vb"
+﻿#Region "Microsoft.VisualBasic::43043136898fc0034c6f09b4be51bfe6, sciBASIC#\Data_science\Mathematica\Math\test\quantileTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 34
+    '    Code Lines: 24
+    ' Comment Lines: 0
+    '   Blank Lines: 10
+    '     File Size: 885.00 B
+
 
     ' Module quantileTest
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e594b8b64c5b14f252096dea7cf45b15, Data_science\Graph\Analysis\Dijkstra\Route.vb"
+﻿#Region "Microsoft.VisualBasic::e594b8b64c5b14f252096dea7cf45b15, sciBASIC#\Data_science\Graph\Analysis\Dijkstra\Route.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 67
+    '    Code Lines: 50
+    ' Comment Lines: 3
+    '   Blank Lines: 14
+    '     File Size: 1.99 KB
+
 
     '     Class Route
     ' 

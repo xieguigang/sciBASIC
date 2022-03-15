@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22817113f43af04039fb4db22e8a29ab, Data\BinaryData\msgpack\ObjectExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::22817113f43af04039fb4db22e8a29ab, sciBASIC#\Data\BinaryData\msgpack\ObjectExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 14
+    '    Code Lines: 12
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 409.00 B
+
 
     ' Module ObjectExtensions
     ' 

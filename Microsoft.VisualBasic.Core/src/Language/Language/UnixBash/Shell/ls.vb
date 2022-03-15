@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a81909f72bcb2869129761dbd5078445, Microsoft.VisualBasic.Core\src\Language\Language\UnixBash\Shell\ls.vb"
+﻿#Region "Microsoft.VisualBasic::a81909f72bcb2869129761dbd5078445, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\UnixBash\Shell\ls.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 277
+    '    Code Lines: 185
+    ' Comment Lines: 57
+    '   Blank Lines: 35
+    '     File Size: 10.15 KB
+
 
     '     Class Search
     ' 

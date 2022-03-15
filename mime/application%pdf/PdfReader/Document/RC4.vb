@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f376fdb7146b54933db3a03dd333c87b, mime\application%pdf\PdfReader\Document\RC4.vb"
+﻿#Region "Microsoft.VisualBasic::dd05624e0396bcda2b15e690679d56b3, sciBASIC#\mime\application%pdf\PdfReader\Document\RC4.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 42
+    '    Code Lines: 34
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 1.14 KB
+
 
     '     Module RC4
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9d65084b6ac0c81cc8f9828949af17b, Data_science\DataMining\DynamicProgramming\SmithWaterman\Workspace.vb"
+﻿#Region "Microsoft.VisualBasic::e9d65084b6ac0c81cc8f9828949af17b, sciBASIC#\Data_science\DataMining\DynamicProgramming\SmithWaterman\Workspace.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 34
+    '    Code Lines: 29
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 1.27 KB
+
 
     '     Module Workspace
     ' 

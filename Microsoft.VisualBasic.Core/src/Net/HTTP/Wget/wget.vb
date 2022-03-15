@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97358dafb82e6ad9135eeadfc71e5eb2, Microsoft.VisualBasic.Core\src\Net\HTTP\Wget\wget.vb"
+﻿#Region "Microsoft.VisualBasic::97358dafb82e6ad9135eeadfc71e5eb2, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\Wget\wget.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 185
+    '    Code Lines: 115
+    ' Comment Lines: 33
+    '   Blank Lines: 37
+    '     File Size: 7.14 KB
+
 
     '     Class wget
     ' 

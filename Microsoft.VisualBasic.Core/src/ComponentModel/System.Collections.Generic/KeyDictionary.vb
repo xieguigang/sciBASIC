@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ffc81a523eea8551656486a0f0747d2, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\KeyDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::4ffc81a523eea8551656486a0f0747d2, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\KeyDictionary.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 358
+    '    Code Lines: 207
+    ' Comment Lines: 107
+    '   Blank Lines: 44
+    '     File Size: 13.37 KB
+
 
     '     Class HashTable
     ' 

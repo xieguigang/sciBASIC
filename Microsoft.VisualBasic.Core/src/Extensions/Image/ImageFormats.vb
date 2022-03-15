@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::585d141c53f82ebae6127b7c9bebf2c8, Microsoft.VisualBasic.Core\src\Extensions\Image\ImageFormats.vb"
+﻿#Region "Microsoft.VisualBasic::585d141c53f82ebae6127b7c9bebf2c8, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\ImageFormats.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 53
+    '    Code Lines: 15
+    ' Comment Lines: 36
+    '   Blank Lines: 2
+    '     File Size: 1.49 KB
+
 
     '     Enum ImageFormats
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dbaf9467465590201c2ad01f9a9df81b, Microsoft.VisualBasic.Core\src\Extensions\IO\Path\TemporaryEnvironment.vb"
+﻿#Region "Microsoft.VisualBasic::dbaf9467465590201c2ad01f9a9df81b, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\Path\TemporaryEnvironment.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 65
+    '    Code Lines: 31
+    ' Comment Lines: 23
+    '   Blank Lines: 11
+    '     File Size: 2.36 KB
+
 
     '     Class TemporaryEnvironment
     ' 

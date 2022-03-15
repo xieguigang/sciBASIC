@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd0f8df9c96ccee2b02bdf2eae38016e, Data_science\MachineLearning\MachineLearning\QLearning\Maze-Q-Learning\Map.vb"
+﻿#Region "Microsoft.VisualBasic::fd0f8df9c96ccee2b02bdf2eae38016e, sciBASIC#\Data_science\MachineLearning\MachineLearning\QLearning\Maze-Q-Learning\Map.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 42
+    '    Code Lines: 36
+    ' Comment Lines: 2
+    '   Blank Lines: 4
+    '     File Size: 1.49 KB
+
 
     ' Class Map
     ' 

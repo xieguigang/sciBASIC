@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba8cb2303b5de0eef8904500430d1f48, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\NumericMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::9c7fa8a2533757e6e501c5e9d084e41c, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\NumericMatrix.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 1357
+    '    Code Lines: 721
+    ' Comment Lines: 461
+    '   Blank Lines: 175
+    '     File Size: 49.41 KB
+
+
     '     Class NumericMatrix
     ' 
     '         Properties: ColumnDimension, ColumnPackedCopy, DiagonalVector, RowDimension, RowPackedCopy
@@ -49,7 +59,7 @@
     ' 
     '         Sub: CheckMatrixDimensions, (+2 Overloads) Dispose, Finalize, ISerializable_GetObjectData, (+4 Overloads) SetMatrix
     ' 
-    '         Operators: (+4 Overloads) -, (+3 Overloads) *, ^, +
+    '         Operators: (+4 Overloads) -, (+3 Overloads) *, /, ^, +
     ' 
     ' 
     ' /********************************************************************************/

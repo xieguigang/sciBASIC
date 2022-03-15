@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7fb6b9fbde6738ff6b57142552aa8d07, Microsoft.VisualBasic.Core\src\CommandLine\CLI\IORedirect.vb"
+﻿#Region "Microsoft.VisualBasic::7fb6b9fbde6738ff6b57142552aa8d07, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\CLI\IORedirect.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 430
+    '    Code Lines: 255
+    ' Comment Lines: 109
+    '   Blank Lines: 66
+    '     File Size: 17.58 KB
+
 
     '     Delegate Function
     ' 

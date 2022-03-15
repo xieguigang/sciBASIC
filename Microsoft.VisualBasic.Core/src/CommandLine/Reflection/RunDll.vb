@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e89d959e6a8a1b5bfde7cb4d9886656c, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\RunDll.vb"
+﻿#Region "Microsoft.VisualBasic::e89d959e6a8a1b5bfde7cb4d9886656c, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Reflection\RunDll.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 71
+    '    Code Lines: 41
+    ' Comment Lines: 20
+    '   Blank Lines: 10
+    '     File Size: 2.45 KB
+
 
     '     Class RunDllEntryPoint
     ' 

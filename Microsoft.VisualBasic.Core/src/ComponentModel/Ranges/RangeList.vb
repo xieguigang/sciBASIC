@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db823fc685023f06205b5c43d4ba9f77, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeList.vb"
+﻿#Region "Microsoft.VisualBasic::db823fc685023f06205b5c43d4ba9f77, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeList.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 95
+    '    Code Lines: 78
+    ' Comment Lines: 1
+    '   Blank Lines: 16
+    '     File Size: 3.35 KB
+
 
     '     Class RangeList
     ' 

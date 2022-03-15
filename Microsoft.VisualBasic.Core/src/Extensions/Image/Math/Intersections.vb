@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7cbe2116c4c0a85a4d59fee4610999e9, Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Intersections.vb"
+﻿#Region "Microsoft.VisualBasic::7cbe2116c4c0a85a4d59fee4610999e9, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Intersections.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 21
+    '    Code Lines: 8
+    ' Comment Lines: 12
+    '   Blank Lines: 1
+    '     File Size: 448.00 B
+
 
     '     Enum Intersections
     ' 

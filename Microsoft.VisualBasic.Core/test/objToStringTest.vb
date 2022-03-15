@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59482f83f24ebc0fbbd22756c6544618, Microsoft.VisualBasic.Core\test\objToStringTest.vb"
+﻿#Region "Microsoft.VisualBasic::59482f83f24ebc0fbbd22756c6544618, sciBASIC#\Microsoft.VisualBasic.Core\test\objToStringTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 23
+    '    Code Lines: 17
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 853.00 B
+
 
     ' Module objToStringTest
     ' 

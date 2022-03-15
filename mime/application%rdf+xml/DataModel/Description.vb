@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8afdcaf910b1cd7349433ea0f243840, mime\application%rdf+xml\DataModel\Description.vb"
+﻿#Region "Microsoft.VisualBasic::b8afdcaf910b1cd7349433ea0f243840, sciBASIC#\mime\application%rdf+xml\DataModel\Description.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 16
+    '    Code Lines: 11
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 409.00 B
+
 
     ' Class Description
     ' 

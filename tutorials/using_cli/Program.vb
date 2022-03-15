@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18d0ca50b5ba65a7d12c250127146042, tutorials\using_cli\Program.vb"
+﻿#Region "Microsoft.VisualBasic::18d0ca50b5ba65a7d12c250127146042, sciBASIC#\tutorials\using_cli\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 100
+    '    Code Lines: 74
+    ' Comment Lines: 1
+    '   Blank Lines: 25
+    '     File Size: 3.99 KB
+
 
     ' Module Program
     ' 

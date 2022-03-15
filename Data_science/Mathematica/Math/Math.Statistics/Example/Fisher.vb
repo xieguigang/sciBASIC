@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::988275e92e47fc46635f172eabef3f06, Data_science\Mathematica\Math\Math.Statistics\Example\Fisher.vb"
+﻿#Region "Microsoft.VisualBasic::988275e92e47fc46635f172eabef3f06, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Example\Fisher.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 22
+    '    Code Lines: 14
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 646.00 B
+
 
     ' Module Fisher
     ' 

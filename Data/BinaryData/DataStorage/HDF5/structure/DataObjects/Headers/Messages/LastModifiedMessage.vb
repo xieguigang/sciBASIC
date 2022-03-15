@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::491329b2caa9c810f6a9e06be6836d21, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\LastModifiedMessage.vb"
+﻿#Region "Microsoft.VisualBasic::491329b2caa9c810f6a9e06be6836d21, sciBASIC#\Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\LastModifiedMessage.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 44
+    '    Code Lines: 25
+    ' Comment Lines: 6
+    '   Blank Lines: 13
+    '     File Size: 1.29 KB
+
 
     '     Class LastModifiedMessage
     ' 

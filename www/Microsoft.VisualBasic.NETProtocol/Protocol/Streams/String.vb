@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9680ed3980692bd67d1211d60de4b6b6, www\Microsoft.VisualBasic.NETProtocol\Protocol\Streams\String.vb"
+﻿#Region "Microsoft.VisualBasic::9680ed3980692bd67d1211d60de4b6b6, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Protocol\Streams\String.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 75
+    '    Code Lines: 54
+    ' Comment Lines: 3
+    '   Blank Lines: 18
+    '     File Size: 2.15 KB
+
 
     '     Class [String]
     ' 

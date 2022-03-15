@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3b88c258c452568f121a4468c11d487, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\EntryPoints\Delegate.vb"
+﻿#Region "Microsoft.VisualBasic::c3b88c258c452568f121a4468c11d487, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Reflection\EntryPoints\Delegate.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 140
+    '    Code Lines: 97
+    ' Comment Lines: 19
+    '   Blank Lines: 24
+    '     File Size: 5.44 KB
+
 
     '     Class APIDelegate
     ' 

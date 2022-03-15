@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dfc8b25f0b1bf9353b233a5b71456b6e, Data_science\MachineLearning\xgboost\tree\Node.vb"
+﻿#Region "Microsoft.VisualBasic::dfc8b25f0b1bf9353b233a5b71456b6e, sciBASIC#\Data_science\MachineLearning\xgboost\tree\Node.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 70
+    '    Code Lines: 48
+    ' Comment Lines: 9
+    '   Blank Lines: 13
+    '     File Size: 2.34 KB
+
 
     '     Class Node
     ' 

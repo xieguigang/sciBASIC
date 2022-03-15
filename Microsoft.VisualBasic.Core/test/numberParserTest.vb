@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2837da591b3a42593fa8b0826396567b, Microsoft.VisualBasic.Core\test\numberParserTest.vb"
+﻿#Region "Microsoft.VisualBasic::2837da591b3a42593fa8b0826396567b, sciBASIC#\Microsoft.VisualBasic.Core\test\numberParserTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 131
+    '    Code Lines: 91
+    ' Comment Lines: 8
+    '   Blank Lines: 32
+    '     File Size: 3.72 KB
+
 
     ' Module numberParserTest
     ' 

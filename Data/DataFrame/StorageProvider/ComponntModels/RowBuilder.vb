@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63af967c53085db088ff23da5f9f8c58, Data\DataFrame\StorageProvider\ComponntModels\RowBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::63af967c53085db088ff23da5f9f8c58, sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\RowBuilder.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 264
+    '    Code Lines: 167
+    ' Comment Lines: 51
+    '   Blank Lines: 46
+    '     File Size: 10.60 KB
+
 
     '     Interface ISchema
     ' 

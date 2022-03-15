@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9277150f9916539941eca1b4d89b1948, Data_science\Visualization\Plots\g\Axis\AxisData.vb"
+﻿#Region "Microsoft.VisualBasic::9277150f9916539941eca1b4d89b1948, sciBASIC#\Data_science\Visualization\Plots\g\Axis\AxisData.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 45
+    '    Code Lines: 19
+    ' Comment Lines: 18
+    '   Blank Lines: 8
+    '     File Size: 1.17 KB
+
 
     '     Class AxisValue
     ' 

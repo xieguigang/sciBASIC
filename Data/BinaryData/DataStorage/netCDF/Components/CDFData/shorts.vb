@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db1cce3408757849d2c26fe9339b0c45, Data\BinaryData\DataStorage\netCDF\Components\CDFData\shorts.vb"
+﻿#Region "Microsoft.VisualBasic::db1cce3408757849d2c26fe9339b0c45, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\CDFData\shorts.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 18
+    '    Code Lines: 14
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 554.00 B
+
 
     '     Class shorts
     ' 

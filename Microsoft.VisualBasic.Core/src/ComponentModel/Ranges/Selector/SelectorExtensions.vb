@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b69e81435087deddd22021c4849209c7, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Selector\SelectorExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::b69e81435087deddd22021c4849209c7, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Selector\SelectorExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 20
+    '    Code Lines: 16
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 737.00 B
+
 
     '     Module SelectorExtensions
     ' 

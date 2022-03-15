@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0bda06d123d3d322620ad54be9db3682, Data_science\DataMining\DataMining\Clustering\KMeans\Models\KMeansCluster.vb"
+﻿#Region "Microsoft.VisualBasic::0bda06d123d3d322620ad54be9db3682, sciBASIC#\Data_science\DataMining\DataMining\Clustering\KMeans\Models\KMeansCluster.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 124
+    '    Code Lines: 83
+    ' Comment Lines: 22
+    '   Blank Lines: 19
+    '     File Size: 4.76 KB
+
 
     '     Class KMeansCluster
     ' 

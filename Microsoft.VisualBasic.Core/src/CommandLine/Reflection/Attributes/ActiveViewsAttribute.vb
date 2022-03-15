@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::739f2005aa1812d6eed17fed26549c46, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\ActiveViewsAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::739f2005aa1812d6eed17fed26549c46, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\ActiveViewsAttribute.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 21
+    '    Code Lines: 13
+    ' Comment Lines: 4
+    '   Blank Lines: 4
+    '     File Size: 691.00 B
+
 
     '     Class ActiveViewsAttribute
     ' 

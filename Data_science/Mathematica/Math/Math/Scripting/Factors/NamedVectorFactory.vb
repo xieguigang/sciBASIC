@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17641d6e6576234db8533a6274c72866, Data_science\Mathematica\Math\Math\Scripting\Factors\NamedVectorFactory.vb"
+﻿#Region "Microsoft.VisualBasic::17641d6e6576234db8533a6274c72866, sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Factors\NamedVectorFactory.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 58
+    '    Code Lines: 43
+    ' Comment Lines: 3
+    '   Blank Lines: 12
+    '     File Size: 2.10 KB
+
 
     '     Class NamedVectorFactory
     ' 

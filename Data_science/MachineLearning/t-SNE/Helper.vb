@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f48c46fd055084cbea5a334bb102d176, Data_science\MachineLearning\t-SNE\Helper.vb"
+﻿#Region "Microsoft.VisualBasic::f48c46fd055084cbea5a334bb102d176, sciBASIC#\Data_science\MachineLearning\t-SNE\Helper.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 164
+    '    Code Lines: 97
+    ' Comment Lines: 36
+    '   Blank Lines: 31
+    '     File Size: 5.26 KB
+
 
     ' Module Helper
     ' 

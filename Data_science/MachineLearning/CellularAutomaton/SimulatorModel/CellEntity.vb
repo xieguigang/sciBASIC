@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e406ac14d6d65a4eb4dd95457937f332, Data_science\MachineLearning\CellularAutomaton\SimulatorModel\CellEntity.vb"
+﻿#Region "Microsoft.VisualBasic::e406ac14d6d65a4eb4dd95457937f332, sciBASIC#\Data_science\MachineLearning\CellularAutomaton\SimulatorModel\CellEntity.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 33
+    '    Code Lines: 26
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 975.00 B
+
 
     ' Class CellEntity
     ' 

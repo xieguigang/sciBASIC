@@ -1,50 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::67991bf8ad7a5f090d54f7634473d1a9, Data_science\Graph\Model\Tree\KdTree\KdTree.vb"
+﻿#Region "Microsoft.VisualBasic::f424b3ba738f8d6f33ea3762bbc228d0, sciBASIC#\Data_science\Graph\Model\Tree\KdTree\KdTree.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class KdTree
-' 
-'         Properties: balanceFactor, counts, dimSize, rootNode
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: buildTree, count, findMax, findMin, GetPoints
-'                   height, innerSearch, insert, nearest, nodeSearch
-'                   remove
-' 
-'         Sub: nearestSearch, removeNode
-' 
-' 
-' /********************************************************************************/
+
+    ' Code Statistics:
+
+    '   Total Lines: 403
+    '    Code Lines: 270
+    ' Comment Lines: 66
+    '   Blank Lines: 67
+    '     File Size: 14.62 KB
+
+
+    '     Class KdTree
+    ' 
+    '         Properties: balanceFactor, counts, dimSize, rootNode
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: buildTree, count, findMax, findMin, GetPoints
+    '                   GetPointSample, height, innerSearch, insert, nearest
+    '                   nodeSearch, remove
+    ' 
+    '         Sub: nearestSearch, removeNode
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

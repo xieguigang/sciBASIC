@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe83d00ae41972618fcf897231bf4adb, Data_science\Graph\Network\SubNetworkComponents.vb"
+﻿#Region "Microsoft.VisualBasic::fe83d00ae41972618fcf897231bf4adb, sciBASIC#\Data_science\Graph\Network\SubNetworkComponents.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 100
+    '    Code Lines: 78
+    ' Comment Lines: 2
+    '   Blank Lines: 20
+    '     File Size: 3.60 KB
+
 
     '     Class SubNetworkComponents
     ' 

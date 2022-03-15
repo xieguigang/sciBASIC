@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::772de024f836ad890c4eb4db49dd50da, Microsoft.VisualBasic.Core\src\Language\Linq\List.vb"
+﻿#Region "Microsoft.VisualBasic::772de024f836ad890c4eb4db49dd50da, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Linq\List.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 678
+    '    Code Lines: 363
+    ' Comment Lines: 251
+    '   Blank Lines: 64
+    '     File Size: 26.09 KB
+
 
     '     Class List
     ' 

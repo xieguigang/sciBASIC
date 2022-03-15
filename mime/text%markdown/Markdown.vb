@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f0e5f9f9f4663de61fb6839b0e12b7c, mime\text%markdown\Markdown.vb"
+﻿#Region "Microsoft.VisualBasic::0f0e5f9f9f4663de61fb6839b0e12b7c, sciBASIC#\mime\text%markdown\Markdown.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1531
+    '    Code Lines: 867
+    ' Comment Lines: 387
+    '   Blank Lines: 277
+    '     File Size: 62.48 KB
+
 
     ' Class MarkdownHTML
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47d93f86dcffbafe410362b978638292, mime\application%pdf\PdfReader\Tokenizer\TokenInteger.vb"
+﻿#Region "Microsoft.VisualBasic::fb10e96ad6b546312bba7a738f3f1f40, sciBASIC#\mime\application%pdf\PdfReader\Tokenizer\TokenInteger.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 20
+    '    Code Lines: 17
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 474.00 B
+
 
     '     Class TokenInteger
     ' 

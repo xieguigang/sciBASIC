@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ae3f74d01beece56f19fb285cf49d22, Microsoft.VisualBasic.Core\src\Serialization\JSON\Formatter\Strategies\SkipWhileNotInStringStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::9ae3f74d01beece56f19fb285cf49d22, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\JSON\Formatter\Strategies\SkipWhileNotInStringStrategy.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 22
+    '    Code Lines: 19
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 827.00 B
+
 
     '     Class SkipWhileNotInStringStrategy
     ' 

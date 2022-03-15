@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::910649a9a40176fe21c4ef193910066b, Data_science\Mathematica\Math\Math\FuzzyLogic\LinguisticVariableCollection.vb"
+﻿#Region "Microsoft.VisualBasic::910649a9a40176fe21c4ef193910066b, sciBASIC#\Data_science\Mathematica\Math\Math\FuzzyLogic\LinguisticVariableCollection.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 51
+    '    Code Lines: 19
+    ' Comment Lines: 24
+    '   Blank Lines: 8
+    '     File Size: 1.78 KB
+
 
     '     Class LinguisticVariableCollection
     ' 

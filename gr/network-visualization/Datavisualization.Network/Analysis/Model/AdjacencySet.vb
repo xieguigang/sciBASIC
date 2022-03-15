@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::46fae650107202e800050df3d9ad88f3, gr\network-visualization\Datavisualization.Network\Analysis\Model\AdjacencySet.vb"
+﻿#Region "Microsoft.VisualBasic::46fae650107202e800050df3d9ad88f3, sciBASIC#\gr\network-visualization\Datavisualization.Network\Analysis\Model\AdjacencySet.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 91
+    '    Code Lines: 59
+    ' Comment Lines: 16
+    '   Blank Lines: 16
+    '     File Size: 3.44 KB
+
 
     '     Class AdjacencySet
     ' 

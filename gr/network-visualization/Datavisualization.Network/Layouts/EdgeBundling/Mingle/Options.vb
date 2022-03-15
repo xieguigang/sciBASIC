@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cea5cbb45b44fe85ea4c456f18c96230, gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Mingle\Options.vb"
+﻿#Region "Microsoft.VisualBasic::cea5cbb45b44fe85ea4c456f18c96230, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Mingle\Options.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 11
+    '    Code Lines: 7
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 266.00 B
+
 
     '     Class Options
     ' 

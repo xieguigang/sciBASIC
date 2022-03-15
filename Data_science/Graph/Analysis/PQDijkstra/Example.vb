@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30e5c911930e258ea4058e0de5192ced, Data_science\Graph\Analysis\PQDijkstra\Example.vb"
+﻿#Region "Microsoft.VisualBasic::30e5c911930e258ea4058e0de5192ced, sciBASIC#\Data_science\Graph\Analysis\PQDijkstra\Example.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 73
+    '    Code Lines: 52
+    ' Comment Lines: 8
+    '   Blank Lines: 13
+    '     File Size: 2.54 KB
+
 
     '     Class Finder
     ' 

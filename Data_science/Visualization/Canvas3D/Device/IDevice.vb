@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e36bf6a8b9032972d5ea0226bf3745b, Data_science\Visualization\Canvas3D\Device\IDevice.vb"
+﻿#Region "Microsoft.VisualBasic::7e36bf6a8b9032972d5ea0226bf3745b, sciBASIC#\Data_science\Visualization\Canvas3D\Device\IDevice.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 18
+    '    Code Lines: 13
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 452.00 B
+
 
     '     Class IDevice
     ' 

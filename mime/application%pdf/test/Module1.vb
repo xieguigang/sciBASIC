@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::88c4a0f11ffbd587e4e680df4a929b58, mime\application%pdf\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::dd064fdcbe53b66fec7e7342877e9548, sciBASIC#\mime\application%pdf\test\Module1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 163
+    '    Code Lines: 54
+    ' Comment Lines: 63
+    '   Blank Lines: 46
+    '     File Size: 6.16 KB
+
 
     ' Module Module1
     ' 

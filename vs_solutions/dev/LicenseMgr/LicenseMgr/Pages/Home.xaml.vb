@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bd271e1f85cdf7fcf09e164d0322fd26, vs_solutions\dev\LicenseMgr\LicenseMgr\Pages\Home.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::b2947820427deea80114643b87459140, sciBASIC#\vs_solutions\dev\LicenseMgr\LicenseMgr\Pages\Home.xaml.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 128
+    '    Code Lines: 92
+    ' Comment Lines: 7
+    '   Blank Lines: 29
+    '     File Size: 4.65 KB
+
+
     '     Class Home
     ' 
     '         Constructor: (+1 Overloads) Sub New
@@ -45,7 +55,7 @@
 Imports System.Linq
 Imports System.Windows
 Imports System.Windows.Controls
-Imports Microsoft.VisualBasic.ApplicationServices.Development
+Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.CodeSign
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Models
@@ -160,7 +170,7 @@ Namespace Pages
         ''' </summary>
         Private Sub __update()
             info.Authors = LinqAPI.Exec(Of NamedValue) _
- _
+                                                       _
                 () <= From author As KeyValuePair(Of TextBox, TextBox)
                       In Me.authors
                       Select New NamedValue With {

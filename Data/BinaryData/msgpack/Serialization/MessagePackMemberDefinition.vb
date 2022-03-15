@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9fdc06d74b4c32a801eecfd48d34517, Data\BinaryData\msgpack\Serialization\MessagePackMemberDefinition.vb"
+﻿#Region "Microsoft.VisualBasic::e9fdc06d74b4c32a801eecfd48d34517, sciBASIC#\Data\BinaryData\msgpack\Serialization\MessagePackMemberDefinition.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 16
+    '    Code Lines: 11
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 405.00 B
+
 
     '     Class MessagePackMemberDefinition
     ' 

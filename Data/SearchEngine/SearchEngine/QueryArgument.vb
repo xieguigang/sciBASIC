@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::79b2798fa052d1d45c811bd4bea65f3b, Data\SearchEngine\SearchEngine\QueryArgument.vb"
+﻿#Region "Microsoft.VisualBasic::79b2798fa052d1d45c811bd4bea65f3b, sciBASIC#\Data\SearchEngine\SearchEngine\QueryArgument.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 35
+    '    Code Lines: 13
+    ' Comment Lines: 17
+    '   Blank Lines: 5
+    '     File Size: 920.00 B
+
 
     ' Class QueryArgument
     ' 

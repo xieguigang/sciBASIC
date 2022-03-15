@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea751a82dfc794fe9cad8fff6de817d0, gr\network-visualization\NetworkCanvas\InputDevice.vb"
+﻿#Region "Microsoft.VisualBasic::747d894adbc62f3cb932678c71c52809, sciBASIC#\gr\network-visualization\NetworkCanvas\InputDevice.vb"
 
     ' Author:
     ' 
@@ -31,11 +31,21 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 121
+    '    Code Lines: 69
+    ' Comment Lines: 30
+    '   Blank Lines: 22
+    '     File Size: 4.06 KB
+
+
     ' Class InputDevice
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: __getNode
+    '     Function: getNode, GetPointedNode
     ' 
     '     Sub: Canvas_MouseDown, Canvas_MouseMove, Canvas_MouseUp, Canvas_MouseWheel, (+2 Overloads) Dispose
     ' 

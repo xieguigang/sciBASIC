@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::763644d6b47d19b79abfdddadb9041d2, Data_science\Graph\test\TreeTest.vb"
+﻿#Region "Microsoft.VisualBasic::763644d6b47d19b79abfdddadb9041d2, sciBASIC#\Data_science\Graph\test\TreeTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 17
+    '    Code Lines: 12
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 368.00 B
+
 
     ' Module TreeTest
     ' 

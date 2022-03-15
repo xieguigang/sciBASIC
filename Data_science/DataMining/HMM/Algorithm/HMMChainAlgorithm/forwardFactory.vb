@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29edb176a093fc4f94012f7a1dfbca06, Data_science\DataMining\HMM\Algorithm\HMMChainAlgorithm\forwardFactory.vb"
+﻿#Region "Microsoft.VisualBasic::29edb176a093fc4f94012f7a1dfbca06, sciBASIC#\Data_science\DataMining\HMM\Algorithm\HMMChainAlgorithm\forwardFactory.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 46
+    '    Code Lines: 38
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 1.97 KB
+
 
     '     Class forwardFactory
     ' 

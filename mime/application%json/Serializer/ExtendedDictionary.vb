@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5565e2dff0ccea6395a09a0db26056e9, mime\application%json\Serializer\ExtendedDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::6c76e05306941ee92263cec735060591, sciBASIC#\mime\application%json\Serializer\ExtendedDictionary.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 113
+    '    Code Lines: 72
+    ' Comment Lines: 19
+    '   Blank Lines: 22
+    '     File Size: 3.83 KB
+
 
     ' Module ExtendedDictionary
     ' 

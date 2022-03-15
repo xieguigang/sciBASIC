@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f511fd972828adb3075654c4ee2e030f, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\RBTree\RBTree.vb"
+﻿#Region "Microsoft.VisualBasic::f511fd972828adb3075654c4ee2e030f, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\RBTree\RBTree.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 382
+    '    Code Lines: 242
+    ' Comment Lines: 72
+    '   Blank Lines: 68
+    '     File Size: 13.14 KB
+
 
     '     Class RBTree
     ' 

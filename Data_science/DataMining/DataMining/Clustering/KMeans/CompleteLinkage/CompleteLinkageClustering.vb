@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6aeb10d74871ccf8b42d2a9ebc993c12, Data_science\DataMining\DataMining\Clustering\KMeans\CompleteLinkage\CompleteLinkageClustering.vb"
+﻿#Region "Microsoft.VisualBasic::6aeb10d74871ccf8b42d2a9ebc993c12, sciBASIC#\Data_science\DataMining\DataMining\Clustering\KMeans\CompleteLinkage\CompleteLinkageClustering.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 58
+    '    Code Lines: 40
+    ' Comment Lines: 6
+    '   Blank Lines: 12
+    '     File Size: 2.66 KB
+
 
     '     Class CompleteLinkageClustering
     ' 

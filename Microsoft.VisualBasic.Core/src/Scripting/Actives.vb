@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::279d5f8932e56eb5963414a847240e4a, Microsoft.VisualBasic.Core\src\Scripting\Actives.vb"
+﻿#Region "Microsoft.VisualBasic::279d5f8932e56eb5963414a847240e4a, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\Actives.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 181
+    '    Code Lines: 131
+    ' Comment Lines: 31
+    '   Blank Lines: 19
+    '     File Size: 7.19 KB
+
 
     '     Module Activity
     ' 

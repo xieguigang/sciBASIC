@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42f959b21b6122749cfa0d83e2fb80c7, Data_science\Graph\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::42f959b21b6122749cfa0d83e2fb80c7, sciBASIC#\Data_science\Graph\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 6
+    '    Code Lines: 2
+    ' Comment Lines: 3
+    '   Blank Lines: 1
+    '     File Size: 195.00 B
+
 
     ' Class NamespaceDoc
     ' 

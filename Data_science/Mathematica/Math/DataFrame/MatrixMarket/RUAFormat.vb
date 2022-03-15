@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1bcb8d7b669d17103fed71f558c00061, Data_science\Mathematica\Math\DataFrame\MatrixMarket\RUAFormat.vb"
+﻿#Region "Microsoft.VisualBasic::1bcb8d7b669d17103fed71f558c00061, sciBASIC#\Data_science\Mathematica\Math\DataFrame\MatrixMarket\RUAFormat.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 6
+    '    Code Lines: 4
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 84.00 B
+
 
     '     Class RUAFormat
     ' 

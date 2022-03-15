@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca39f35f764f36c20d7caf7b3bddc192, Data_science\Graph\Model\Abstract\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::ca39f35f764f36c20d7caf7b3bddc192, sciBASIC#\Data_science\Graph\Model\Abstract\Edge.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 53
+    '    Code Lines: 25
+    ' Comment Lines: 23
+    '   Blank Lines: 5
+    '     File Size: 1.78 KB
+
 
     ' Class Edge
     ' 

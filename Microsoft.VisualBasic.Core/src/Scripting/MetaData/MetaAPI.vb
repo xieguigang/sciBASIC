@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4ac39b554ee308d53f58010efa121b0, Microsoft.VisualBasic.Core\src\Scripting\MetaData\MetaAPI.vb"
+﻿#Region "Microsoft.VisualBasic::a4ac39b554ee308d53f58010efa121b0, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\MetaData\MetaAPI.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 55
+    '    Code Lines: 40
+    ' Comment Lines: 9
+    '   Blank Lines: 6
+    '     File Size: 2.02 KB
+
 
     '     Module MetaAPI
     ' 

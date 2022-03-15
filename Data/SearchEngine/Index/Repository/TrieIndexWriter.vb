@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1c625adc1e27935be338c1d0c0b3e6d9, Data\SearchEngine\Index\Repository\TrieIndexWriter.vb"
+﻿#Region "Microsoft.VisualBasic::1c625adc1e27935be338c1d0c0b3e6d9, sciBASIC#\Data\SearchEngine\Index\Repository\TrieIndexWriter.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 140
+    '    Code Lines: 69
+    ' Comment Lines: 49
+    '   Blank Lines: 22
+    '     File Size: 5.22 KB
+
 
     ' Class TrieIndexWriter
     ' 

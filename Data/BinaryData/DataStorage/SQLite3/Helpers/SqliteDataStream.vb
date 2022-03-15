@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef2a354c0087ebb4668bcef6c3a40702, Data\BinaryData\DataStorage\SQLite3\Helpers\SqliteDataStream.vb"
+﻿#Region "Microsoft.VisualBasic::ef2a354c0087ebb4668bcef6c3a40702, sciBASIC#\Data\BinaryData\DataStorage\SQLite3\Helpers\SqliteDataStream.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 113
+    '    Code Lines: 76
+    ' Comment Lines: 15
+    '   Blank Lines: 22
+    '     File Size: 4.06 KB
+
 
     '     Class SqliteDataStream
     ' 

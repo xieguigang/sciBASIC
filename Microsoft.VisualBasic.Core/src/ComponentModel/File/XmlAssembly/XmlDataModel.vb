@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a38f867b66e622eee047be3e87feaab8, Microsoft.VisualBasic.Core\src\ComponentModel\File\XmlAssembly\XmlDataModel.vb"
+﻿#Region "Microsoft.VisualBasic::a38f867b66e622eee047be3e87feaab8, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\File\XmlAssembly\XmlDataModel.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 97
+    '    Code Lines: 59
+    ' Comment Lines: 28
+    '   Blank Lines: 10
+    '     File Size: 3.80 KB
+
 
     '     Class XmlDataModel
     ' 

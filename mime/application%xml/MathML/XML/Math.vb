@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::daea8d1568fd6a0d367f5b39b6a0f8b5, mime\application%xml\MathML\XML\Math.vb"
+﻿#Region "Microsoft.VisualBasic::daea8d1568fd6a0d367f5b39b6a0f8b5, sciBASIC#\mime\application%xml\MathML\XML\Math.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 46
+    '    Code Lines: 32
+    ' Comment Lines: 0
+    '   Blank Lines: 14
+    '     File Size: 1.06 KB
+
 
     '     Class Math
     ' 

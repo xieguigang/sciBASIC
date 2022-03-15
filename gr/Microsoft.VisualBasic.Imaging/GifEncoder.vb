@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0399b73b1b111eb4b2aec4184a6cba2, gr\Microsoft.VisualBasic.Imaging\GifEncoder.vb"
+﻿#Region "Microsoft.VisualBasic::d0399b73b1b111eb4b2aec4184a6cba2, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\GifEncoder.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 205
+    '    Code Lines: 122
+    ' Comment Lines: 59
+    '   Blank Lines: 24
+    '     File Size: 8.02 KB
+
 
     ' Class GifEncoder
     ' 

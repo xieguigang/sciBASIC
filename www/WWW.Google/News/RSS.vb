@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a9ff72631e7159c86e6568bf38593bb, www\WWW.Google\News\RSS.vb"
+﻿#Region "Microsoft.VisualBasic::2a9ff72631e7159c86e6568bf38593bb, sciBASIC#\www\WWW.Google\News\RSS.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 60
+    '    Code Lines: 22
+    ' Comment Lines: 31
+    '   Blank Lines: 7
+    '     File Size: 3.48 KB
+
 
     '     Class RSS
     ' 

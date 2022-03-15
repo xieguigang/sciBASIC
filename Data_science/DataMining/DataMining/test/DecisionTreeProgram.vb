@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::744c8a4af52e4c31fc7aa8eb01956e12, Data_science\DataMining\DataMining\test\DecisionTreeProgram.vb"
+﻿#Region "Microsoft.VisualBasic::744c8a4af52e4c31fc7aa8eb01956e12, sciBASIC#\Data_science\DataMining\DataMining\test\DecisionTreeProgram.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 474
+    '    Code Lines: 57
+    ' Comment Lines: 322
+    '   Blank Lines: 95
+    '     File Size: 22.07 KB
+
 
     '     Module DecisionTreeProgram
     ' 

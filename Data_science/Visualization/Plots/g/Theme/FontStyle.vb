@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50c731ec82de28a8df54c1fc518f9ded, Data_science\Visualization\Plots\g\Theme\FontStyle.vb"
+﻿#Region "Microsoft.VisualBasic::50c731ec82de28a8df54c1fc518f9ded, sciBASIC#\Data_science\Visualization\Plots\g\Theme\FontStyle.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 14
+    '    Code Lines: 7
+    ' Comment Lines: 4
+    '   Blank Lines: 3
+    '     File Size: 356.00 B
+
 
     '     Class FontStyle
     ' 

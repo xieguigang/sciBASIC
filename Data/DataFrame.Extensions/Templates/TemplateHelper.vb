@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d81155e61152ed021bd0ef6a9827699, Data\DataFrame.Extensions\Templates\TemplateHelper.vb"
+﻿#Region "Microsoft.VisualBasic::3d81155e61152ed021bd0ef6a9827699, sciBASIC#\Data\DataFrame.Extensions\Templates\TemplateHelper.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 63
+    '    Code Lines: 46
+    ' Comment Lines: 7
+    '   Blank Lines: 10
+    '     File Size: 2.36 KB
+
 
     ' Module TemplateHelper
     ' 

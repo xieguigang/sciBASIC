@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8e61874a260bcf2315f620776751bb1, Data_science\DataMining\DataMining\Kernel\BayesianBeliefNetwork\BNInfer.vb"
+﻿#Region "Microsoft.VisualBasic::c8e61874a260bcf2315f620776751bb1, sciBASIC#\Data_science\DataMining\DataMining\Kernel\BayesianBeliefNetwork\BNInfer.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 143
+    '    Code Lines: 103
+    ' Comment Lines: 10
+    '   Blank Lines: 30
+    '     File Size: 5.22 KB
+
 
     '     Class BNInfer
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e90ae4b04e44cd613d4a12768c250343, mime\application%pdf\PdfFileWriter\PDF\PdfTilingPattern.vb"
+﻿#Region "Microsoft.VisualBasic::22ae3ec7c1e309f80f981dbc69216a49, sciBASIC#\mime\application%pdf\PdfFileWriter\PDF\PdfTilingPattern.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 307
+    '    Code Lines: 91
+    ' Comment Lines: 177
+    '   Blank Lines: 39
+    '     File Size: 12.08 KB
+
 
     '     Enum TilingType
     ' 

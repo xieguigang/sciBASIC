@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ebcd1e667a37b88ea0cd0cf52c620b0, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\ProjectSpace.vb"
+﻿#Region "Microsoft.VisualBasic::9ebcd1e667a37b88ea0cd0cf52c620b0, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\ProjectSpace.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 154
+    '    Code Lines: 106
+    ' Comment Lines: 18
+    '   Blank Lines: 30
+    '     File Size: 5.73 KB
+
 
     '     Class ProjectSpace
     ' 

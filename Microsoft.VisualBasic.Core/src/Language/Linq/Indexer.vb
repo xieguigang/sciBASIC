@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21b606b1226b294efb6ef4c10082b3bb, Microsoft.VisualBasic.Core\src\Language\Linq\Indexer.vb"
+﻿#Region "Microsoft.VisualBasic::21b606b1226b294efb6ef4c10082b3bb, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Linq\Indexer.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 44
+    '    Code Lines: 33
+    ' Comment Lines: 5
+    '   Blank Lines: 6
+    '     File Size: 1.81 KB
+
 
     '     Module Indexer
     ' 

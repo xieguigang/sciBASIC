@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48989c74a7761dd42d8a802636df5b28, Data_science\Mathematica\Math\ODE\ODESolvers\ODE.vb"
+﻿#Region "Microsoft.VisualBasic::48989c74a7761dd42d8a802636df5b28, sciBASIC#\Data_science\Mathematica\Math\ODE\ODESolvers\ODE.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 43
+    '    Code Lines: 16
+    ' Comment Lines: 22
+    '   Blank Lines: 5
+    '     File Size: 1.34 KB
+
 
     ' Class ODE
     ' 

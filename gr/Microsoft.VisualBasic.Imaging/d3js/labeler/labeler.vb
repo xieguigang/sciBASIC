@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3f1509309afc3991c92c021548504e0, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\labeler.vb"
+﻿#Region "Microsoft.VisualBasic::c3f1509309afc3991c92c021548504e0, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\labeler\labeler.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 330
+    '    Code Lines: 199
+    ' Comment Lines: 75
+    '   Blank Lines: 56
+    '     File Size: 12.31 KB
+
 
     '     Delegate Function
     ' 

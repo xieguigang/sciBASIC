@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2425cb6f1864422b5be05fb7c8bc8106, Data_science\Visualization\Plots-statistics\Heatmap\PlotExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::2425cb6f1864422b5be05fb7c8bc8106, sciBASIC#\Data_science\Visualization\Plots-statistics\Heatmap\PlotExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 119
+    '    Code Lines: 89
+    ' Comment Lines: 13
+    '   Blank Lines: 17
+    '     File Size: 4.98 KB
+
 
     '     Module PlotExtensions
     ' 

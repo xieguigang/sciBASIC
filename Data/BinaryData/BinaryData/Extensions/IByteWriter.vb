@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4386dbc456c9a3b3e9229ce0fed35df0, Data\BinaryData\BinaryData\Extensions\IByteWriter.vb"
+﻿#Region "Microsoft.VisualBasic::4386dbc456c9a3b3e9229ce0fed35df0, sciBASIC#\Data\BinaryData\BinaryData\Extensions\IByteWriter.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 4
+    '    Code Lines: 4
+    ' Comment Lines: 0
+    '   Blank Lines: 0
+    '     File Size: 102.00 B
+
 
     ' Interface IByteWriter
     ' 

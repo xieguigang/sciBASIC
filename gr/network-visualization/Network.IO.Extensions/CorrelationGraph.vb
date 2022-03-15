@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab1146657baf34d029047e0bfe28b464, gr\network-visualization\Network.IO.Extensions\CorrelationGraph.vb"
+﻿#Region "Microsoft.VisualBasic::ab1146657baf34d029047e0bfe28b464, sciBASIC#\gr\network-visualization\Network.IO.Extensions\CorrelationGraph.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 96
+    '    Code Lines: 71
+    ' Comment Lines: 12
+    '   Blank Lines: 13
+    '     File Size: 3.45 KB
+
 
     ' Module CorrelationGraph
     ' 

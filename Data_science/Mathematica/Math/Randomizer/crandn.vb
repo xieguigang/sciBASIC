@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::512944ef23ab5129c65b2a7039ec4bcf, Data_science\Mathematica\Math\Randomizer\crandn.vb"
+﻿#Region "Microsoft.VisualBasic::512944ef23ab5129c65b2a7039ec4bcf, sciBASIC#\Data_science\Mathematica\Math\Randomizer\crandn.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 218
+    '    Code Lines: 92
+    ' Comment Lines: 92
+    '   Blank Lines: 34
+    '     File Size: 7.73 KB
+
 
     ' Module crandn
     ' 

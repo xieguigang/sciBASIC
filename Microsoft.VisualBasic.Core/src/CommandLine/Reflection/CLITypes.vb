@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2fc1db2e6208fb90a99353505f436fe9, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\CLITypes.vb"
+﻿#Region "Microsoft.VisualBasic::2fc1db2e6208fb90a99353505f436fe9, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Reflection\CLITypes.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 57
+    '    Code Lines: 12
+    ' Comment Lines: 38
+    '   Blank Lines: 7
+    '     File Size: 2.01 KB
+
 
     '     Enum CLITypes
     ' 

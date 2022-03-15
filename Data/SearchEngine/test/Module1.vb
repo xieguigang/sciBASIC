@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce7a4e01177a0c434afa2afda90f09c1, Data\SearchEngine\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::ce7a4e01177a0c434afa2afda90f09c1, sciBASIC#\Data\SearchEngine\test\Module1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 23
+    '    Code Lines: 17
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 648.00 B
+
 
     ' Module Module1
     ' 

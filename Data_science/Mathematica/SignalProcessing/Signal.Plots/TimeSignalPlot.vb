@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aecfb8c84b78e2c59cc5372a7527436f, Data_science\Mathematica\SignalProcessing\Signal.Plots\TimeSignalPlot.vb"
+﻿#Region "Microsoft.VisualBasic::aecfb8c84b78e2c59cc5372a7527436f, sciBASIC#\Data_science\Mathematica\SignalProcessing\Signal.Plots\TimeSignalPlot.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 24
+    '    Code Lines: 18
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 895.00 B
+
 
     ' Class TimeSignalPlot
     ' 

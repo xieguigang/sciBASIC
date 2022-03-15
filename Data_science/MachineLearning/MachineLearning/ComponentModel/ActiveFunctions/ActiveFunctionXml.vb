@@ -1,45 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::6ecb20ef051d8d35aa35f2e55c59aff7, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Models\ActiveFunction.vb"
+﻿#Region "Microsoft.VisualBasic::36db57a04e5860d132afaea725629e65, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\ActiveFunctionXml.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class ActiveFunction
-' 
-'         Properties: [Function], Arguments, BipolarSigmoid, name, ReLU
-'                     Sigmoid, Threshold
-' 
-'         Function: CreateFunction, HasKey, Parse, ToString
-' 
-' 
-' /********************************************************************************/
+
+    ' Code Statistics:
+
+    '   Total Lines: 144
+    '    Code Lines: 104
+    ' Comment Lines: 28
+    '   Blank Lines: 12
+    '     File Size: 5.92 KB
+
+
+    '     Class ActiveFunction
+    ' 
+    '         Properties: [Function], Arguments, BipolarSigmoid, name, ReLU
+    '                     Sigmoid, Threshold
+    ' 
+    '         Function: CreateFunction, HasKey, Parse, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

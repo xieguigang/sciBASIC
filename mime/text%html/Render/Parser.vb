@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bcdcbe6e56ca06b67d7659bd464b5ef8, mime\text%html\Render\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::bcdcbe6e56ca06b67d7659bd464b5ef8, sciBASIC#\mime\text%html\Render\Parser.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 158
+    '    Code Lines: 47
+    ' Comment Lines: 84
+    '   Blank Lines: 27
+    '     File Size: 6.36 KB
+
 
     '     Class Parser
     ' 

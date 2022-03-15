@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::545bc6802b266c850b7610f45b185990, Data\BinaryData\DataStorage\netCDF\Components\variable.vb"
+﻿#Region "Microsoft.VisualBasic::545bc6802b266c850b7610f45b185990, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\variable.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 103
+    '    Code Lines: 43
+    ' Comment Lines: 50
+    '   Blank Lines: 10
+    '     File Size: 3.59 KB
+
 
     '     Class variable
     ' 

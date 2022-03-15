@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3bf7fefc7fc4153069a0e2a3c9126923, mime\text%markdown\FormatHelper.vb"
+﻿#Region "Microsoft.VisualBasic::3bf7fefc7fc4153069a0e2a3c9126923, sciBASIC#\mime\text%markdown\FormatHelper.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 125
+    '    Code Lines: 83
+    ' Comment Lines: 23
+    '   Blank Lines: 19
+    '     File Size: 5.20 KB
+
 
     ' Module FormatHelper
     ' 

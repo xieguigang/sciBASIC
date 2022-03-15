@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb23f87e901dbe3b09902ba28ad2c6d1, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\SetValue.vb"
+﻿#Region "Microsoft.VisualBasic::fb23f87e901dbe3b09902ba28ad2c6d1, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\SetValue.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 151
+    '    Code Lines: 91
+    ' Comment Lines: 39
+    '   Blank Lines: 21
+    '     File Size: 6.42 KB
+
 
     '     Structure SetValuExtension
     ' 

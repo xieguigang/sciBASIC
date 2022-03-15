@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::049f8db2694fba3729b1469c779a9122, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\QRDecomposition.vb"
+﻿#Region "Microsoft.VisualBasic::049f8db2694fba3729b1469c779a9122, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\QRDecomposition.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 237
+    '    Code Lines: 154
+    ' Comment Lines: 56
+    '   Blank Lines: 27
+    '     File Size: 8.74 KB
+
 
     '     Class QRDecomposition
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cafa00dc9889175256cf6220b15f67bc, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\Levenshtein\LevenshteinModel.vb"
+﻿#Region "Microsoft.VisualBasic::cafa00dc9889175256cf6220b15f67bc, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\Levenshtein\LevenshteinModel.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 171
+    '    Code Lines: 124
+    ' Comment Lines: 16
+    '   Blank Lines: 31
+    '     File Size: 5.62 KB
+
 
     '     Class ArrayRow
     ' 

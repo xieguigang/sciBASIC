@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae888446c779a64c3b1ec764b04d88a5, Data_science\Visualization\Visualization\BinaryTree\NodeTrees.vb"
+﻿#Region "Microsoft.VisualBasic::ae888446c779a64c3b1ec764b04d88a5, sciBASIC#\Data_science\Visualization\Visualization\BinaryTree\NodeTrees.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 152
+    '    Code Lines: 109
+    ' Comment Lines: 22
+    '   Blank Lines: 21
+    '     File Size: 6.94 KB
+
 
     '     Module NodeTrees
     ' 

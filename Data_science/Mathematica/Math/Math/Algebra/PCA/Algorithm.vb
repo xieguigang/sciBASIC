@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::611a532b94040865ebc40dbe6140a610, Data_science\Mathematica\Math\Math\Algebra\PCA\Algorithm.vb"
+﻿#Region "Microsoft.VisualBasic::611a532b94040865ebc40dbe6140a610, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\PCA\Algorithm.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 6
+    '    Code Lines: 4
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 87.00 B
+
 
     '     Module Algorithm
     ' 

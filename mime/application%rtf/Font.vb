@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d3b2d733e4ab8cc3fbf15e81284b8ac, mime\application%rtf\Font.vb"
+﻿#Region "Microsoft.VisualBasic::3d3b2d733e4ab8cc3fbf15e81284b8ac, sciBASIC#\mime\application%rtf\Font.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 108
+    '    Code Lines: 77
+    ' Comment Lines: 11
+    '   Blank Lines: 20
+    '     File Size: 3.37 KB
+
 
     ' Class Font
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2341461641c672795a56e9ff61d0c358, vs_solutions\dev\LicenseMgr\LicenseMgr\Content\Ms-PL.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::2341461641c672795a56e9ff61d0c358, sciBASIC#\vs_solutions\dev\LicenseMgr\LicenseMgr\Content\Ms-PL.xaml.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 25
+    '    Code Lines: 21
+    ' Comment Lines: 3
+    '   Blank Lines: 1
+    '     File Size: 656.00 B
+
 
     '     Class Ms_PL
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57bd05582d639f1491e93ee960f5a108, Data_science\Mathematica\Math\Math\Scripting\Symbolic\UnifySymbol.vb"
+﻿#Region "Microsoft.VisualBasic::57bd05582d639f1491e93ee960f5a108, sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Symbolic\UnifySymbol.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 27
+    '    Code Lines: 16
+    ' Comment Lines: 5
+    '   Blank Lines: 6
+    '     File Size: 865.00 B
+
 
     '     Class UnifySymbol
     ' 

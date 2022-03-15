@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45d1918b58b44c5eda308090b429c4fb, mime\text%html\Render\CSS\CssDrawingHelper.vb"
+﻿#Region "Microsoft.VisualBasic::45d1918b58b44c5eda308090b429c4fb, sciBASIC#\mime\text%html\Render\CSS\CssDrawingHelper.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 284
+    '    Code Lines: 177
+    ' Comment Lines: 57
+    '   Blank Lines: 50
+    '     File Size: 11.62 KB
+
 
     '     Class CssDrawingHelper
     ' 

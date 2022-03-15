@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0ec385451e64964603e5f3a1c435053, Data_science\DataMining\DataMining\Clustering\KMeans\KMeans.vb"
+﻿#Region "Microsoft.VisualBasic::d0ec385451e64964603e5f3a1c435053, sciBASIC#\Data_science\DataMining\DataMining\Clustering\KMeans\KMeans.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 332
+    '    Code Lines: 223
+    ' Comment Lines: 60
+    '   Blank Lines: 49
+    '     File Size: 15.00 KB
+
 
     '     Module KMeansAlgorithm
     ' 

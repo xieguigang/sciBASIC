@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c79e8481c39c61cc9c4d3ae1fc9b7f9, Data_science\Visualization\Plots-statistics\Heatmap\Heatmap.vb"
+﻿#Region "Microsoft.VisualBasic::5c79e8481c39c61cc9c4d3ae1fc9b7f9, sciBASIC#\Data_science\Visualization\Plots-statistics\Heatmap\Heatmap.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 189
+    '    Code Lines: 119
+    ' Comment Lines: 51
+    '   Blank Lines: 19
+    '     File Size: 10.40 KB
+
 
     '     Module Heatmap
     ' 

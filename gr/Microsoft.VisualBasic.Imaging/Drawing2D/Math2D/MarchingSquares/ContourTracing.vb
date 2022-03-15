@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4075835f42422db82e9c6b48a26f0b9e, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\ContourTracing.vb"
+﻿#Region "Microsoft.VisualBasic::4075835f42422db82e9c6b48a26f0b9e, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\ContourTracing.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 361
+    '    Code Lines: 198
+    ' Comment Lines: 120
+    '   Blank Lines: 43
+    '     File Size: 14.62 KB
+
 
     '     Module ContourTracing
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1c91e29a91a82c184a2e5a88be354d45, Data_science\DataMining\DataMining\ComponentModel\Encoder\Variable\Categorical.vb"
+﻿#Region "Microsoft.VisualBasic::1c91e29a91a82c184a2e5a88be354d45, sciBASIC#\Data_science\DataMining\DataMining\ComponentModel\Encoder\Variable\Categorical.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 12
+    '    Code Lines: 8
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 389.00 B
+
 
     '     Class Categorical
     ' 

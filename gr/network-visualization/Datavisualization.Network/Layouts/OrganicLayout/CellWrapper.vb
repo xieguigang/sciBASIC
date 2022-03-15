@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bd75460b1dc737cf591d83641a9a60ce, gr\network-visualization\Datavisualization.Network\Layouts\OrganicLayout\CellWrapper.vb"
+﻿#Region "Microsoft.VisualBasic::bd75460b1dc737cf591d83641a9a60ce, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\OrganicLayout\CellWrapper.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 71
+    '    Code Lines: 18
+    ' Comment Lines: 39
+    '   Blank Lines: 14
+    '     File Size: 2.54 KB
+
 
     '     Class CellWrapper
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4feb2b427678b9108ea48435e974423d, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::4feb2b427678b9108ea48435e974423d, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Matrix.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 77
+    '    Code Lines: 56
+    ' Comment Lines: 5
+    '   Blank Lines: 16
+    '     File Size: 2.69 KB
+
 
     '     Class Matrix
     ' 

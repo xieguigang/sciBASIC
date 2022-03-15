@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bfd4ac4e8043e96b93b6f99ddd9a197f, Data_science\DataMining\DataMining\AprioriRules\Algorithm\Entities\Output.vb"
+﻿#Region "Microsoft.VisualBasic::bfd4ac4e8043e96b93b6f99ddd9a197f, sciBASIC#\Data_science\DataMining\DataMining\AprioriRules\Algorithm\Entities\Output.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 48
+    '    Code Lines: 38
+    ' Comment Lines: 4
+    '   Blank Lines: 6
+    '     File Size: 1.84 KB
+
 
     '     Class Output
     ' 

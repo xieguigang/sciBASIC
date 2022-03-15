@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a45c5f5331d177332207ca0660da19f, www\Microsoft.VisualBasic.NETProtocol\Protocol\Reflection\ProtocolInvoker.vb"
+﻿#Region "Microsoft.VisualBasic::9a45c5f5331d177332207ca0660da19f, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Protocol\Reflection\ProtocolInvoker.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 53
+    '    Code Lines: 42
+    ' Comment Lines: 3
+    '   Blank Lines: 8
+    '     File Size: 2.01 KB
+
 
     '     Class ProtocolInvoker
     ' 

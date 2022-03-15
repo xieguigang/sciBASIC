@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee79a70c5370ab971af0f4a425e047f6, Data_science\Mathematica\Math\Math\Spline\BezierCurve.vb"
+﻿#Region "Microsoft.VisualBasic::ee79a70c5370ab971af0f4a425e047f6, sciBASIC#\Data_science\Mathematica\Math\Math\Spline\BezierCurve.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 145
+    '    Code Lines: 66
+    ' Comment Lines: 61
+    '   Blank Lines: 18
+    '     File Size: 6.14 KB
+
 
     '     Class BezierCurve
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e198295c9d16c03622f8b2993eb4f71, gr\Microsoft.VisualBasic.Imaging\test\LabelingTest.vb"
+﻿#Region "Microsoft.VisualBasic::1e198295c9d16c03622f8b2993eb4f71, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\test\LabelingTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 52
+    '    Code Lines: 46
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 2.10 KB
+
 
     ' Module LabelingTest
     ' 

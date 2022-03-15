@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2dc50b9d0e2f662e618d5852f95cd6d4, Data\GraphQuery\TextParser\BaseInvoke.vb"
+﻿#Region "Microsoft.VisualBasic::90900cb335985c2d9db5ab6f2a8126b5, sciBASIC#\Data\GraphQuery\TextParser\BaseInvoke.vb"
 
     ' Author:
     ' 
@@ -31,12 +31,21 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 218
+    '    Code Lines: 135
+    ' Comment Lines: 54
+    '   Blank Lines: 29
+    '     File Size: 8.89 KB
+
+
     '     Module BaseInvoke
     ' 
-    '         Function: cssValue, eq, filter, getText, html
-    '                   match, regexp, regexpParseText, regexpReplace, replace
-    '                   skip, split, strip, tagValue, text
-    '                   (+2 Overloads) trim, urlQuery
+    '         Function: filter, getText, match, regexp, regexpParseText
+    '                   regexpReplace, replace, split, strip, tagValue
+    '                   text, (+2 Overloads) trim
     ' 
     ' 
     ' /********************************************************************************/

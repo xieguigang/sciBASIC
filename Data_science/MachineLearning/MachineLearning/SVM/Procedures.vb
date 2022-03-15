@@ -1,55 +1,65 @@
-﻿#Region "Microsoft.VisualBasic::e6461d834bb64b26b9686fde4bb9c4f8, Data_science\MachineLearning\MachineLearning\SVM\Procedures.vb"
+﻿#Region "Microsoft.VisualBasic::8d0ec3e377c55ea1b27c8f218a6d65a6, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\Procedures.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Module Procedures
-' 
-'         Function: sigmoid_predict, svm_check_parameter, svm_check_probability_model, svm_get_nr_class, svm_get_nr_sv
-'                   svm_get_svm_type, svm_get_svr_probability, svm_predict, svm_predict_probability, svm_predict_values
-'                   svm_svr_probability, svm_train, svm_train_one
-' 
-'         Sub: multiclass_probability, multipleClassification, oneClassSvm, setRandomSeed, sigmoid_train
-'              solve_c_svc, solve_epsilon_svr, solve_nu_svc, solve_nu_svr, solve_one_class
-'              svm_binary_svc_probability, svm_cross_validation, svm_get_labels, svm_get_sv_indices, svm_group_classes
-'         Class decision_function
-' 
-'             Properties: alpha, rho
-' 
-'             Function: ToString
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+
+    ' Code Statistics:
+
+    '   Total Lines: 1426
+    '    Code Lines: 1045
+    ' Comment Lines: 100
+    '   Blank Lines: 281
+    '     File Size: 52.23 KB
+
+
+    '     Module Procedures
+    ' 
+    '         Function: sigmoid_predict, svm_check_parameter, svm_check_probability_model, svm_get_nr_class, svm_get_nr_sv
+    '                   svm_get_svm_type, svm_get_svr_probability, svm_predict, svm_predict_probability, svm_predict_values
+    '                   svm_svr_probability, svm_train, svm_train_one
+    ' 
+    '         Sub: multiclass_probability, multipleClassification, oneClassSvm, setRandomSeed, sigmoid_train
+    '              solve_c_svc, solve_epsilon_svr, solve_nu_svc, solve_nu_svr, solve_one_class
+    '              svm_binary_svc_probability, svm_cross_validation, svm_get_labels, svm_get_sv_indices, svm_group_classes
+    '         Class decision_function
+    ' 
+    '             Properties: alpha, rho
+    ' 
+    '             Function: ToString
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

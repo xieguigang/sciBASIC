@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35508495f6a2db5b7c2f116f42921d89, Data_science\MachineLearning\xgboost\util\FVec\FVecTransformer.vb"
+﻿#Region "Microsoft.VisualBasic::35508495f6a2db5b7c2f116f42921d89, sciBASIC#\Data_science\MachineLearning\xgboost\util\FVec\FVecTransformer.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 61
+    '    Code Lines: 19
+    ' Comment Lines: 35
+    '   Blank Lines: 7
+    '     File Size: 2.50 KB
+
 
     '     Module FVecTransformer
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::edc657564d16181ff0284c69ebe251a3, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\RequestStream.vb"
+﻿#Region "Microsoft.VisualBasic::53349569ab297031fac6eddb9dfb19d2, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\RequestStream.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 434
+    '    Code Lines: 232
+    ' Comment Lines: 146
+    '   Blank Lines: 56
+    '     File Size: 17.50 KB
+
 
     '     Delegate Function
     ' 

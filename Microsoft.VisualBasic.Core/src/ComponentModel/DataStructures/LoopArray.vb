@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6cbca453e2ad0186dd0aa5e35dce4f3a, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\LoopArray.vb"
+﻿#Region "Microsoft.VisualBasic::6cbca453e2ad0186dd0aa5e35dce4f3a, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\LoopArray.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 134
+    '    Code Lines: 88
+    ' Comment Lines: 22
+    '   Blank Lines: 24
+    '     File Size: 4.02 KB
+
 
     '     Class LoopArray
     ' 

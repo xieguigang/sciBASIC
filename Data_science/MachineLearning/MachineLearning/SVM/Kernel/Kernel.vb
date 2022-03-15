@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b4a81e6ba7a1941a9f8044763d8e4a5, Data_science\MachineLearning\MachineLearning\SVM\Kernel\Kernel.vb"
+﻿#Region "Microsoft.VisualBasic::2b4a81e6ba7a1941a9f8044763d8e4a5, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\Kernel\Kernel.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 208
+    '    Code Lines: 178
+    ' Comment Lines: 0
+    '   Blank Lines: 30
+    '     File Size: 7.07 KB
+
 
     '     Class Kernel
     ' 

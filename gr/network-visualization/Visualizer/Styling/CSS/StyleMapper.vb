@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8641b468630452d54959d3ef92dc862, gr\network-visualization\Visualizer\Styling\CSS\StyleMapper.vb"
+﻿#Region "Microsoft.VisualBasic::b8641b468630452d54959d3ef92dc862, sciBASIC#\gr\network-visualization\Visualizer\Styling\CSS\StyleMapper.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 24
+    '    Code Lines: 13
+    ' Comment Lines: 6
+    '   Blank Lines: 5
+    '     File Size: 722.00 B
+
 
     '     Structure StyleMapper
     ' 

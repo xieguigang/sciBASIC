@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b20db8b1413bef6509207703e01b7575, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\Xmlns.vb"
+﻿#Region "Microsoft.VisualBasic::b20db8b1413bef6509207703e01b7575, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\Xmlns.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 29
+    '    Code Lines: 22
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 1.69 KB
+
 
     '     Module Xmlns
     ' 

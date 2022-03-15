@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::826234bc668cedcaccfaa20d0f9f99e8, mime\application%pdf\PdfReader\Tokenizer\TokenReal.vb"
+﻿#Region "Microsoft.VisualBasic::141eea8be2379a150b8c7f6e31aecd0f, sciBASIC#\mime\application%pdf\PdfReader\Tokenizer\TokenReal.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 20
+    '    Code Lines: 17
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 457.00 B
+
 
     '     Class TokenReal
     ' 

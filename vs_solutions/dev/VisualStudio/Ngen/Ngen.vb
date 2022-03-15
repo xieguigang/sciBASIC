@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c793066defb4f6a5d309661e2525c5f5, vs_solutions\dev\VisualStudio\Ngen\Ngen.vb"
+﻿#Region "Microsoft.VisualBasic::c793066defb4f6a5d309661e2525c5f5, sciBASIC#\vs_solutions\dev\VisualStudio\Ngen\Ngen.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 359
+    '    Code Lines: 128
+    ' Comment Lines: 193
+    '   Blank Lines: 38
+    '     File Size: 21.06 KB
+
 
     ' Module NgenInstaller
     ' 

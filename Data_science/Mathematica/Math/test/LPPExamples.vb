@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfec2398838c46299331ea4c17705bc3, Data_science\Mathematica\Math\test\LPPExamples.vb"
+﻿#Region "Microsoft.VisualBasic::cfec2398838c46299331ea4c17705bc3, sciBASIC#\Data_science\Mathematica\Math\test\LPPExamples.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 33
+    '    Code Lines: 26
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 2.35 KB
+
 
     ' Class LPPExamples
     ' 

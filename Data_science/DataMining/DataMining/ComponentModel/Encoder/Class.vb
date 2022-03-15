@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::81d3e31948fed8afeb02990e42fd1ab3, Data_science\DataMining\DataMining\ComponentModel\Encoder\Class.vb"
+﻿#Region "Microsoft.VisualBasic::81d3e31948fed8afeb02990e42fd1ab3, sciBASIC#\Data_science\DataMining\DataMining\ComponentModel\Encoder\Class.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 118
+    '    Code Lines: 75
+    ' Comment Lines: 21
+    '   Blank Lines: 22
+    '     File Size: 4.09 KB
+
 
     '     Class ColorClass
     ' 

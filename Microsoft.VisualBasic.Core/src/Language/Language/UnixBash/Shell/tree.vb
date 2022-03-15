@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d28ff8281acb4bbd422c6407b62ff6a6, Microsoft.VisualBasic.Core\src\Language\Language\UnixBash\Shell\tree.vb"
+﻿#Region "Microsoft.VisualBasic::d28ff8281acb4bbd422c6407b62ff6a6, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\UnixBash\Shell\tree.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 12
+    '    Code Lines: 4
+    ' Comment Lines: 6
+    '   Blank Lines: 2
+    '     File Size: 240.00 B
+
 
     '     Class tree
     ' 

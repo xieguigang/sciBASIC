@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ecf9a25b3a13bff5a6779a441d97e3c, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\AnimatedBar.vb"
+﻿#Region "Microsoft.VisualBasic::7ecf9a25b3a13bff5a6779a441d97e3c, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\AnimatedBar.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 30
+    '    Code Lines: 20
+    ' Comment Lines: 3
+    '   Blank Lines: 7
+    '     File Size: 797.00 B
+
 
     '     Class AnimatedBar
     ' 

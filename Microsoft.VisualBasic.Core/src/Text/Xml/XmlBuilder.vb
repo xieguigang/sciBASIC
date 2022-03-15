@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7cad29bb6e7293c733ba4ebe6e43484d, Microsoft.VisualBasic.Core\src\Text\Xml\XmlBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::7cad29bb6e7293c733ba4ebe6e43484d, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\XmlBuilder.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 56
+    '    Code Lines: 35
+    ' Comment Lines: 11
+    '   Blank Lines: 10
+    '     File Size: 1.84 KB
+
 
     '     Class XmlBuilder
     ' 

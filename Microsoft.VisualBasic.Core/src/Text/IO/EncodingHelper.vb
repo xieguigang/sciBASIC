@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7deacbacbe45ff501aee967090fc664, Microsoft.VisualBasic.Core\src\Text\IO\EncodingHelper.vb"
+﻿#Region "Microsoft.VisualBasic::c7deacbacbe45ff501aee967090fc664, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\IO\EncodingHelper.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 95
+    '    Code Lines: 18
+    ' Comment Lines: 68
+    '   Blank Lines: 9
+    '     File Size: 3.62 KB
+
 
     '     Class EncodingHelper
     ' 

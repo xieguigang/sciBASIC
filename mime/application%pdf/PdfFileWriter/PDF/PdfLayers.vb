@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::315ee4d224a189b2559c32bbb212e7f9, mime\application%pdf\PdfFileWriter\PDF\PdfLayers.vb"
+﻿#Region "Microsoft.VisualBasic::1fe5cc32e25d960842bf301f58b770c4, sciBASIC#\mime\application%pdf\PdfFileWriter\PDF\PdfLayers.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 209
+    '    Code Lines: 119
+    ' Comment Lines: 52
+    '   Blank Lines: 38
+    '     File Size: 7.59 KB
+
 
     '     Enum ListMode
     ' 

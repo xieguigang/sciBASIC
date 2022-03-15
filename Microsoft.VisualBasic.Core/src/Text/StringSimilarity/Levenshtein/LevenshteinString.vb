@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b88487ba232c713061072c1359b96840, Microsoft.VisualBasic.Core\src\Text\StringSimilarity\Levenshtein\LevenshteinString.vb"
+﻿#Region "Microsoft.VisualBasic::b88487ba232c713061072c1359b96840, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\StringSimilarity\Levenshtein\LevenshteinString.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 87
+    '    Code Lines: 53
+    ' Comment Lines: 24
+    '   Blank Lines: 10
+    '     File Size: 2.95 KB
+
 
     '     Structure LevenshteinString
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc10132a86b72e00e05e5fbc2dd6f31b, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\Protocols\UserAPI.vb"
+﻿#Region "Microsoft.VisualBasic::cc10132a86b72e00e05e5fbc2dd6f31b, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\NETProtocol\Protocols\UserAPI.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 42
+    '    Code Lines: 25
+    ' Comment Lines: 11
+    '   Blank Lines: 6
+    '     File Size: 1.51 KB
+
 
     '     Module UserAPI
     ' 

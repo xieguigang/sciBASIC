@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8bec22e7bb958f2a0f0bbb6d576e3941, tutorials\using_cli\code.vb"
+﻿#Region "Microsoft.VisualBasic::8bec22e7bb958f2a0f0bbb6d576e3941, sciBASIC#\tutorials\using_cli\code.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 76
+    '    Code Lines: 43
+    ' Comment Lines: 18
+    '   Blank Lines: 15
+    '     File Size: 2.60 KB
+
 
     '     Class CLI_Example
     ' 

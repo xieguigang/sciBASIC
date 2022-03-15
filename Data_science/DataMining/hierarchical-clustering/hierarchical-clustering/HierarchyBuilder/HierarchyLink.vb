@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ee29fb5759c35da6ddb646ec1a6f0c8, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\HierarchyLink.vb"
+﻿#Region "Microsoft.VisualBasic::5ee29fb5759c35da6ddb646ec1a6f0c8, sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\HierarchyLink.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 64
+    '    Code Lines: 47
+    ' Comment Lines: 4
+    '   Blank Lines: 13
+    '     File Size: 2.20 KB
+
 
     '     Class HierarchyLink
     ' 

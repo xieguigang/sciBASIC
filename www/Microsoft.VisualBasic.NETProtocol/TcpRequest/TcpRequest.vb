@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca4ea1e197caa2191613b66334d469a0, www\Microsoft.VisualBasic.NETProtocol\TcpRequest\TcpRequest.vb"
+﻿#Region "Microsoft.VisualBasic::ca4ea1e197caa2191613b66334d469a0, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\TcpRequest\TcpRequest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 402
+    '    Code Lines: 205
+    ' Comment Lines: 140
+    '   Blank Lines: 57
+    '     File Size: 17.37 KB
+
 
     '     Class TcpRequest
     ' 

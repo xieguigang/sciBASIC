@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0dfe5bbe55c03ee1e518c404549c0255, mime\text%html\Parser\CSS\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::8015f72bbe522acbb9da056a46cc1f75, sciBASIC#\mime\text%html\Parser\CSS\Parser.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 189
+    '    Code Lines: 123
+    ' Comment Lines: 42
+    '   Blank Lines: 24
+    '     File Size: 6.88 KB
+
 
     '     Module CssParser
     ' 

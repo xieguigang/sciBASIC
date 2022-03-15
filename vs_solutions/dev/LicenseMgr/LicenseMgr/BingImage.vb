@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4a5bfce4d442e3556100228404e955f, vs_solutions\dev\LicenseMgr\LicenseMgr\BingImage.vb"
+﻿#Region "Microsoft.VisualBasic::a4a5bfce4d442e3556100228404e955f, sciBASIC#\vs_solutions\dev\LicenseMgr\LicenseMgr\BingImage.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 80
+    '    Code Lines: 64
+    ' Comment Lines: 3
+    '   Blank Lines: 13
+    '     File Size: 3.14 KB
+
 
     ' Class BingImage
     ' 

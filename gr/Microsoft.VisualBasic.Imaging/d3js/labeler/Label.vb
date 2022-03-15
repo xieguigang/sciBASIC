@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c8e68cd4ad2dca8dcd597fb82b27413, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Label.vb"
+﻿#Region "Microsoft.VisualBasic::e0470850ab4d6fda23098237dacccf69, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Label.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 127
+    '    Code Lines: 74
+    ' Comment Lines: 36
+    '   Blank Lines: 17
+    '     File Size: 3.95 KB
+
 
     '     Class Label
     ' 

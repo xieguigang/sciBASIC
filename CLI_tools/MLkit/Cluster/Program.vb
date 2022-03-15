@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74f8093a9d4e15d82034734e94cab12c, CLI_tools\MLkit\Cluster\Program.vb"
+﻿#Region "Microsoft.VisualBasic::74f8093a9d4e15d82034734e94cab12c, sciBASIC#\CLI_tools\MLkit\Cluster\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 6
+    '    Code Lines: 5
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 138.00 B
+
 
     ' Module Program
     ' 

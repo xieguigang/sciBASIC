@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9972dfc3f040568740d2c80ffbaff018, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Selector\NumericTagged.vb"
+﻿#Region "Microsoft.VisualBasic::9972dfc3f040568740d2c80ffbaff018, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Selector\NumericTagged.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 65
+    '    Code Lines: 44
+    ' Comment Lines: 10
+    '   Blank Lines: 11
+    '     File Size: 2.32 KB
+
 
     '     Structure NumericTagged
     ' 

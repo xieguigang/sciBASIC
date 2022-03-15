@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::624954b0d976d4ee1ecf713953a6fcc5, Microsoft.VisualBasic.Core\src\Extensions\Collection\IsNullOrEmptyExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::624954b0d976d4ee1ecf713953a6fcc5, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\IsNullOrEmptyExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 237
+    '    Code Lines: 122
+    ' Comment Lines: 88
+    '   Blank Lines: 27
+    '     File Size: 8.07 KB
+
 
     ' Module IsNullOrEmptyExtensions
     ' 

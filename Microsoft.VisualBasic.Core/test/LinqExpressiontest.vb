@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1cd618d84602bb5e02f7e78ba29bf818, Microsoft.VisualBasic.Core\test\LinqExpressiontest.vb"
+﻿#Region "Microsoft.VisualBasic::1cd618d84602bb5e02f7e78ba29bf818, sciBASIC#\Microsoft.VisualBasic.Core\test\LinqExpressiontest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 9
+    '    Code Lines: 6
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 162.00 B
+
 
     ' Module LinqExpressiontest
     ' 

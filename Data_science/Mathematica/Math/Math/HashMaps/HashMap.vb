@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::089529aa3a6de7169fa31baf0ec5d8f6, Data_science\Mathematica\Math\Math\HashMaps\HashMap.vb"
+﻿#Region "Microsoft.VisualBasic::089529aa3a6de7169fa31baf0ec5d8f6, sciBASIC#\Data_science\Mathematica\Math\Math\HashMaps\HashMap.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 363
+    '    Code Lines: 247
+    ' Comment Lines: 57
+    '   Blank Lines: 59
+    '     File Size: 12.97 KB
+
 
     '     Module HashMap
     ' 

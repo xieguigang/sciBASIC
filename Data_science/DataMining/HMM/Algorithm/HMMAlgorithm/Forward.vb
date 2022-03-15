@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c722db3af181929666356b9d8337d62, Data_science\DataMining\HMM\Algorithm\HMMAlgorithm\Forward.vb"
+﻿#Region "Microsoft.VisualBasic::0c722db3af181929666356b9d8337d62, sciBASIC#\Data_science\DataMining\HMM\Algorithm\HMMAlgorithm\Forward.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 23
+    '    Code Lines: 18
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 838.00 B
+
 
     '     Class Forward
     ' 

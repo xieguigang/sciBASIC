@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd33f604e0637dd1eea818bd53b6364b, gr\Microsoft.VisualBasic.Imaging\Drivers\CSS\Driver.vb"
+﻿#Region "Microsoft.VisualBasic::cd33f604e0637dd1eea818bd53b6364b, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drivers\CSS\Driver.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 80
+    '    Code Lines: 46
+    ' Comment Lines: 21
+    '   Blank Lines: 13
+    '     File Size: 2.08 KB
+
 
     '     Class Driver
     ' 

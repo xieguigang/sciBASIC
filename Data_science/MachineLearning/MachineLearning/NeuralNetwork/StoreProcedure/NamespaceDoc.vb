@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::890d65e120fdc78fcb3a131269e30aab, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::890d65e120fdc78fcb3a131269e30aab, sciBASIC#\Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 15
+    '    Code Lines: 6
+    ' Comment Lines: 7
+    '   Blank Lines: 2
+    '     File Size: 592.00 B
+
 
     '     Module NamespaceDoc
     ' 

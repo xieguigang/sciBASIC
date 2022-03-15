@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da3009a2466666d1a7e637d306b8b9ec, gr\build_3DEngine\isometric\IsometricView\IsometricViewTest.vb"
+﻿#Region "Microsoft.VisualBasic::da3009a2466666d1a7e637d306b8b9ec, sciBASIC#\gr\build_3DEngine\isometric\IsometricView\IsometricViewTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 223
+    '    Code Lines: 188
+    ' Comment Lines: 1
+    '   Blank Lines: 34
+    '     File Size: 10.18 KB
+
 
     ' Class IsometricViewTest
     ' 

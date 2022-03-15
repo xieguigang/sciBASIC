@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a99bc9ef812a8f2513d72ef2da03b05, Data_science\DataMining\DataMining\ComponentModel\IDataEmbedding.vb"
+﻿#Region "Microsoft.VisualBasic::4a99bc9ef812a8f2513d72ef2da03b05, sciBASIC#\Data_science\DataMining\DataMining\ComponentModel\IDataEmbedding.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 14
+    '    Code Lines: 6
+    ' Comment Lines: 4
+    '   Blank Lines: 4
+    '     File Size: 357.00 B
+
 
     '     Class IDataEmbedding
     ' 

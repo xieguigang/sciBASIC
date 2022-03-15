@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a5d23348b6afb7bf478c9c5746454a8, mime\text%yaml\1.2\YamlParser.vb"
+﻿#Region "Microsoft.VisualBasic::0a5d23348b6afb7bf478c9c5746454a8, sciBASIC#\mime\text%yaml\1.2\YamlParser.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 5373
+    '    Code Lines: 4570
+    ' Comment Lines: 60
+    '   Blank Lines: 743
+    '     File Size: 189.44 KB
+
 
     '     Class YamlParser
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9fa733f3a6fe84854bff07c9b9232bb3, gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Interfaces\IGraph.vb"
+﻿#Region "Microsoft.VisualBasic::9fa733f3a6fe84854bff07c9b9232bb3, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Interfaces\IGraph.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 46
+    '    Code Lines: 6
+    ' Comment Lines: 37
+    '   Blank Lines: 3
+    '     File Size: 1.68 KB
+
 
     '     Interface IGraphEventListener
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9faf9e3e6de9036dababf6420bd15464, Data\BinaryData\DataStorage\SQLite3\Tables\Sqlite3Row.vb"
+﻿#Region "Microsoft.VisualBasic::9faf9e3e6de9036dababf6420bd15464, sciBASIC#\Data\BinaryData\DataStorage\SQLite3\Tables\Sqlite3Row.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 59
+    '    Code Lines: 44
+    ' Comment Lines: 1
+    '   Blank Lines: 14
+    '     File Size: 1.88 KB
+
 
     '     Class Sqlite3Row
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e40b4f87b9792507d688617cab562c65, mime\application%pdf\PdfReader\Document\PdfStream.vb"
+﻿#Region "Microsoft.VisualBasic::a289f8b74695f9ab71b957d8eeea190a, sciBASIC#\mime\application%pdf\PdfReader\Document\PdfStream.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 46
+    '    Code Lines: 38
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 1.34 KB
+
 
     '     Class PdfStream
     ' 

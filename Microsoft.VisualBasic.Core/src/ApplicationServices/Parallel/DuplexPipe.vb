@@ -1,66 +1,76 @@
-﻿#Region "Microsoft.VisualBasic::1601487dba82b3ae9a81782a6e7caf90, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\DuplexPipe.vb"
+﻿#Region "Microsoft.VisualBasic::052e346c045c06541259983408215178, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\DuplexPipe.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class DuplexPipe
-' 
-'         Properties: Length
-' 
-'         Function: GetBlocks, Read
-' 
-'         Sub: Close, Wait, Write
-' 
-'     Class BufferPipe
-' 
-' 
-' 
-'     Class StreamPipe
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: GetBlocks, Read
-' 
-'         Sub: (+2 Overloads) Dispose
-' 
-'     Class DataPipe
-' 
-'         Constructor: (+4 Overloads) Sub New
-' 
-'         Function: GetBlocks, Read
-' 
-'         Sub: (+2 Overloads) Dispose
-' 
-' 
-' /********************************************************************************/
+
+    ' Code Statistics:
+
+    '   Total Lines: 197
+    '    Code Lines: 138
+    ' Comment Lines: 20
+    '   Blank Lines: 39
+    '     File Size: 6.51 KB
+
+
+    '     Class DuplexPipe
+    ' 
+    '         Properties: Length
+    ' 
+    '         Function: GetBlocks, Read
+    ' 
+    '         Sub: Close, Wait, Write
+    ' 
+    '     Class BufferPipe
+    ' 
+    ' 
+    ' 
+    '     Class StreamPipe
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: GetBlocks, Read
+    ' 
+    '         Sub: (+2 Overloads) Dispose
+    ' 
+    '     Class DataPipe
+    ' 
+    '         Constructor: (+5 Overloads) Sub New
+    ' 
+    '         Function: GetBlocks, Read
+    ' 
+    '         Sub: (+2 Overloads) Dispose
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

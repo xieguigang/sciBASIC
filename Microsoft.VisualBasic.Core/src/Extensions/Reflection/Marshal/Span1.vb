@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::853134c9b8f16567c71f1478ebe03ad9, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Marshal\Span1.vb"
+﻿#Region "Microsoft.VisualBasic::853134c9b8f16567c71f1478ebe03ad9, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Reflection\Marshal\Span1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 76
+    '    Code Lines: 51
+    ' Comment Lines: 12
+    '   Blank Lines: 13
+    '     File Size: 2.24 KB
+
 
     '     Class Span
     ' 

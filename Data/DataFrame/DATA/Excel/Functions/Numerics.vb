@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::450b3e6ad19d5d069b2311b2521082f0, Data\DataFrame\DATA\Excel\Functions\Numerics.vb"
+﻿#Region "Microsoft.VisualBasic::450b3e6ad19d5d069b2311b2521082f0, sciBASIC#\Data\DataFrame\DATA\Excel\Functions\Numerics.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 17
+    '    Code Lines: 13
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 495.00 B
+
 
     '     Module Numerics
     ' 

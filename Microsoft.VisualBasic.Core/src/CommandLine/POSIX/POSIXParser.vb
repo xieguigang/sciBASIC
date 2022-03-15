@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e46c85a5b3d42b865153ab4fde167e4a, Microsoft.VisualBasic.Core\src\CommandLine\POSIX\POSIXParser.vb"
+﻿#Region "Microsoft.VisualBasic::12e36488154c82a974a262949ebef461, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\POSIX\POSIXParser.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 31
+    '    Code Lines: 24
+    ' Comment Lines: 1
+    '   Blank Lines: 6
+    '     File Size: 1.09 KB
+
 
     '     Module POSIXParser
     ' 

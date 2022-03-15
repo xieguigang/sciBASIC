@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b05f77a5137e20c183c27bc3ebc8bdf7, Data_science\MachineLearning\MachineLearning\DataSet\SampleList.vb"
+﻿#Region "Microsoft.VisualBasic::1094148389a9fd58a672b7acee33f857, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\SampleList.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 80
+    '    Code Lines: 62
+    ' Comment Lines: 4
+    '   Blank Lines: 14
+    '     File Size: 2.90 KB
+
 
     '     Class SampleList
     ' 

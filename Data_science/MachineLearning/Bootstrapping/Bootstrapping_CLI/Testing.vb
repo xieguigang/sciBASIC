@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8674823e7679f30decce87752547d6d0, Data_science\MachineLearning\Bootstrapping\Bootstrapping_CLI\Testing.vb"
+﻿#Region "Microsoft.VisualBasic::8674823e7679f30decce87752547d6d0, sciBASIC#\Data_science\MachineLearning\Bootstrapping\Bootstrapping_CLI\Testing.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 69
+    '    Code Lines: 49
+    ' Comment Lines: 8
+    '   Blank Lines: 12
+    '     File Size: 2.25 KB
+
 
     ' Module Testing
     ' 

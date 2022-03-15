@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da54c1fc7a7c06212975fa89a844463b, Data_science\Mathematica\Math\Math\Algebra\Helpers\MatrixMathArithmetic.vb"
+﻿#Region "Microsoft.VisualBasic::da54c1fc7a7c06212975fa89a844463b, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Helpers\MatrixMathArithmetic.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 81
+    '    Code Lines: 30
+    ' Comment Lines: 43
+    '   Blank Lines: 8
+    '     File Size: 3.64 KB
+
 
     '     Class MatrixMathArithmetic
     ' 

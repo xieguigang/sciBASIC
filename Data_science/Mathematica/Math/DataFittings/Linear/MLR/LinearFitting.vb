@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95ad8ae445ad2ec5a0f2efd47f9442b3, Data_science\Mathematica\Math\DataFittings\Linear\MLR\LinearFitting.vb"
+﻿#Region "Microsoft.VisualBasic::95ad8ae445ad2ec5a0f2efd47f9442b3, sciBASIC#\Data_science\Mathematica\Math\DataFittings\Linear\MLR\LinearFitting.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 101
+    '    Code Lines: 56
+    ' Comment Lines: 35
+    '   Blank Lines: 10
+    '     File Size: 3.24 KB
+
 
     '     Module LinearFittingAlgorithm
     ' 

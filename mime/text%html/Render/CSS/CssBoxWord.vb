@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::afc765eb5bde9c63991845de2bb1c3a5, mime\text%html\Render\CSS\CssBoxWord.vb"
+﻿#Region "Microsoft.VisualBasic::afc765eb5bde9c63991845de2bb1c3a5, sciBASIC#\mime\text%html\Render\CSS\CssBoxWord.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 194
+    '    Code Lines: 105
+    ' Comment Lines: 56
+    '   Blank Lines: 33
+    '     File Size: 5.86 KB
+
 
     '     Class CssBoxWord
     ' 

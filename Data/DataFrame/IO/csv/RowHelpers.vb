@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5d207ce7ac0e0eb6c3455135da14e64, Data\DataFrame\IO\csv\RowHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::b5d207ce7ac0e0eb6c3455135da14e64, sciBASIC#\Data\DataFrame\IO\csv\RowHelpers.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 90
+    '    Code Lines: 51
+    ' Comment Lines: 29
+    '   Blank Lines: 10
+    '     File Size: 3.21 KB
+
 
     '     Module RowHelpers
     ' 

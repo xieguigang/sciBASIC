@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cdf4edfa1d484a1bfe9c77f0aab04e58, Microsoft.VisualBasic.Core\src\ComponentModel\TimeSpan.vb"
+﻿#Region "Microsoft.VisualBasic::cdf4edfa1d484a1bfe9c77f0aab04e58, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\TimeSpan.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 51
+    '    Code Lines: 37
+    ' Comment Lines: 5
+    '   Blank Lines: 9
+    '     File Size: 1.84 KB
+
 
     '     Structure TimeInterval
     ' 

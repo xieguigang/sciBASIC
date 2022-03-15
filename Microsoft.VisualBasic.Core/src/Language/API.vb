@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef7f209661ae7d45eb0706d7a27e1e37, Microsoft.VisualBasic.Core\src\Language\API.vb"
+﻿#Region "Microsoft.VisualBasic::ef7f209661ae7d45eb0706d7a27e1e37, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\API.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 253
+    '    Code Lines: 143
+    ' Comment Lines: 85
+    '   Blank Lines: 25
+    '     File Size: 9.46 KB
+
 
     '     Module LanguageAPI
     ' 

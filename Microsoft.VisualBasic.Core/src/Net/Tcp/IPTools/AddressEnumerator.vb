@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f8c6151177cfe095a53de8901e19930, Microsoft.VisualBasic.Core\src\Net\Tcp\IPTools\AddressEnumerator.vb"
+﻿#Region "Microsoft.VisualBasic::8f8c6151177cfe095a53de8901e19930, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\Tcp\IPTools\AddressEnumerator.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 71
+    '    Code Lines: 48
+    ' Comment Lines: 14
+    '   Blank Lines: 9
+    '     File Size: 2.14 KB
+
 
     '     Module AddressEnumerator
     ' 

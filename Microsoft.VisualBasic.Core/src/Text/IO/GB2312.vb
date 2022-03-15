@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb497ff03dedbdde88190d1619339ad6, Microsoft.VisualBasic.Core\src\Text\IO\GB2312.vb"
+﻿#Region "Microsoft.VisualBasic::fb497ff03dedbdde88190d1619339ad6, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\IO\GB2312.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1310
+    '    Code Lines: 1227
+    ' Comment Lines: 69
+    '   Blank Lines: 14
+    '     File Size: 69.84 KB
+
 
     '     Module GB2312
     ' 

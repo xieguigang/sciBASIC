@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::457c8f15652d9796a05732c15b0881e3, Data_science\DataMining\DataMining\AprioriRules\Algorithm\Entities\Rule.vb"
+﻿#Region "Microsoft.VisualBasic::457c8f15652d9796a05732c15b0881e3, sciBASIC#\Data_science\DataMining\DataMining\AprioriRules\Algorithm\Entities\Rule.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 86
+    '    Code Lines: 58
+    ' Comment Lines: 10
+    '   Blank Lines: 18
+    '     File Size: 2.58 KB
+
 
     '     Class Rule
     ' 

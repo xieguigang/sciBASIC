@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76e53225407031e21750116ab01d4f4c, mime\application%xml\xsd\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::76e53225407031e21750116ab01d4f4c, sciBASIC#\mime\application%xml\xsd\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 10
+    '    Code Lines: 6
+    ' Comment Lines: 3
+    '   Blank Lines: 1
+    '     File Size: 234.00 B
+
 
     '     Class NamespaceDoc
     ' 

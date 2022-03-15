@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c6e4bcaf43cd53cf190230a393b776e, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Layouts\Point2D.vb"
+﻿#Region "Microsoft.VisualBasic::4c6e4bcaf43cd53cf190230a393b776e, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Layouts\Point2D.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 159
+    '    Code Lines: 89
+    ' Comment Lines: 48
+    '   Blank Lines: 22
+    '     File Size: 5.67 KB
+
 
     '     Class Point2D
     ' 

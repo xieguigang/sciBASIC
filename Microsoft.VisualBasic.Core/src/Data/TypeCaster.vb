@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c129a449557dee3f9aea51c4e14c1d3, Microsoft.VisualBasic.Core\src\Data\TypeCaster.vb"
+﻿#Region "Microsoft.VisualBasic::4c129a449557dee3f9aea51c4e14c1d3, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\TypeCaster.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 143
+    '    Code Lines: 107
+    ' Comment Lines: 0
+    '   Blank Lines: 36
+    '     File Size: 5.35 KB
+
 
     '     Module Extensions
     ' 

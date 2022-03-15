@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f3dbc12b77997e43463d58f22c4c4aea, mime\text%yaml\1.1\Base\YAMLNode.vb"
+﻿#Region "Microsoft.VisualBasic::f3dbc12b77997e43463d58f22c4c4aea, sciBASIC#\mime\text%yaml\1.1\Base\YAMLNode.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 40
+    '    Code Lines: 33
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 1.28 KB
+
 
     '     Class YAMLNode
     ' 

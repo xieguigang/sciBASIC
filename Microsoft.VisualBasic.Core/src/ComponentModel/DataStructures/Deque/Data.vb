@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa7aef23b210ad75f1c3190ad265ea4d, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Deque\Data.vb"
+﻿#Region "Microsoft.VisualBasic::aa7aef23b210ad75f1c3190ad265ea4d, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Deque\Data.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 398
+    '    Code Lines: 210
+    ' Comment Lines: 124
+    '   Blank Lines: 64
+    '     File Size: 13.32 KB
+
 
     '     Class Data
     ' 

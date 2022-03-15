@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3145582edf54a2b53a31cacd2168be8e, Data_science\DataMining\DataMining\AprioriRules\Algorithm\Entities\Transaction.vb"
+﻿#Region "Microsoft.VisualBasic::3145582edf54a2b53a31cacd2168be8e, sciBASIC#\Data_science\DataMining\DataMining\AprioriRules\Algorithm\Entities\Transaction.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 40
+    '    Code Lines: 33
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 1.40 KB
+
 
     '     Structure Transaction
     ' 

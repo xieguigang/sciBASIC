@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8efc4aae01732482feefed23ef95fff, gr\Landscape\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::f8efc4aae01732482feefed23ef95fff, sciBASIC#\gr\Landscape\Vector.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 39
+    '    Code Lines: 27
+    ' Comment Lines: 6
+    '   Blank Lines: 6
+    '     File Size: 1.26 KB
+
 
     '     Structure Vector
     ' 

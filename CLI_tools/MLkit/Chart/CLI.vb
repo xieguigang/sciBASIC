@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::462fa230031ad5f91e550b9611ccc819, CLI_tools\MLkit\Chart\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::462fa230031ad5f91e550b9611ccc819, sciBASIC#\CLI_tools\MLkit\Chart\CLI.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 239
+    '    Code Lines: 218
+    ' Comment Lines: 0
+    '   Blank Lines: 21
+    '     File Size: 11.48 KB
+
 
     ' Module CLI
     ' 

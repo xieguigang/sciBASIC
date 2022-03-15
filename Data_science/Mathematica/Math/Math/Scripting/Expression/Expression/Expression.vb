@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfa2d1b4aba656ba2d75cbb4182a33e3, Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\Expression.vb"
+﻿#Region "Microsoft.VisualBasic::cfa2d1b4aba656ba2d75cbb4182a33e3, sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\Expression.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 5
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 198.00 B
+
 
     '     Class Expression
     ' 

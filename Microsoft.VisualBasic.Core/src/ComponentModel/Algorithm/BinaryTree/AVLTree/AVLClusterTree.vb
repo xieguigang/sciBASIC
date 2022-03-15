@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb6950d0324c575c9e727f0a29e12344, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\AVLTree\AVLClusterTree.vb"
+﻿#Region "Microsoft.VisualBasic::eb6950d0324c575c9e727f0a29e12344, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\AVLTree\AVLClusterTree.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 129
+    '    Code Lines: 99
+    ' Comment Lines: 7
+    '   Blank Lines: 23
+    '     File Size: 4.86 KB
+
 
     '     Enum ComparisonDirectionPrefers
     ' 

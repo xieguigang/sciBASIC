@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70d402beae714073189a913489113cfe, Data\SearchEngine\SearchEngine\Expression\MetaExpression.vb"
+﻿#Region "Microsoft.VisualBasic::70d402beae714073189a913489113cfe, sciBASIC#\Data\SearchEngine\SearchEngine\Expression\MetaExpression.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 19
+    '    Code Lines: 8
+    ' Comment Lines: 8
+    '   Blank Lines: 3
+    '     File Size: 708.00 B
+
 
     ' Class MetaExpression
     ' 

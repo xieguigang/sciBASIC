@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::817a462648dbc00f66e286d4222d0491, mime\text%html\Parser\CSS\UrlEvaluator.vb"
+﻿#Region "Microsoft.VisualBasic::817a462648dbc00f66e286d4222d0491, sciBASIC#\mime\text%html\Parser\CSS\UrlEvaluator.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 50
+    '    Code Lines: 29
+    ' Comment Lines: 16
+    '   Blank Lines: 5
+    '     File Size: 1.81 KB
+
 
     '     Module UrlEvaluator
     ' 

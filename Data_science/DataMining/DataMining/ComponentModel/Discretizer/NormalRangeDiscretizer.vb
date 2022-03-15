@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0741548dda86622d3f128c462cd395e1, Data_science\DataMining\DataMining\ComponentModel\Discretizer\NormalRangeDiscretizer.vb"
+﻿#Region "Microsoft.VisualBasic::0741548dda86622d3f128c462cd395e1, sciBASIC#\Data_science\DataMining\DataMining\ComponentModel\Discretizer\NormalRangeDiscretizer.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 73
+    '    Code Lines: 50
+    ' Comment Lines: 11
+    '   Blank Lines: 12
+    '     File Size: 2.60 KB
+
 
     '     Class NormalRangeDiscretizer
     ' 

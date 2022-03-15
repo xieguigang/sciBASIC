@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1b0fc4314267431ba6cc9dd76a7ad31, Data_science\DataMining\UMAP\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::e1b0fc4314267431ba6cc9dd76a7ad31, sciBASIC#\Data_science\DataMining\UMAP\test\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 126
+    '    Code Lines: 96
+    ' Comment Lines: 3
+    '   Blank Lines: 27
+    '     File Size: 5.74 KB
+
 
     '     Class Program
     ' 

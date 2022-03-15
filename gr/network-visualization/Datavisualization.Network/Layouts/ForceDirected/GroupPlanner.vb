@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::648e476f337d31220f1b3ae198ad366b, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\GroupPlanner.vb"
+﻿#Region "Microsoft.VisualBasic::648e476f337d31220f1b3ae198ad366b, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\GroupPlanner.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 146
+    '    Code Lines: 119
+    ' Comment Lines: 5
+    '   Blank Lines: 22
+    '     File Size: 6.24 KB
+
 
     '     Class GroupPlanner
     ' 

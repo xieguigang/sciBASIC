@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::883efcb5ab21f62333f0b4d7c2beb12c, Microsoft.VisualBasic.Core\src\Scripting\Expressions\Aggregate.vb"
+﻿#Region "Microsoft.VisualBasic::883efcb5ab21f62333f0b4d7c2beb12c, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\Expressions\Aggregate.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 34
+    '    Code Lines: 17
+    ' Comment Lines: 13
+    '   Blank Lines: 4
+    '     File Size: 1.03 KB
+
 
     '     Module Aggregate
     ' 

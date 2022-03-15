@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a5a00a5b95202b0f60de7bfccd73868, Data_science\DataMining\UMAP\KNN\KNNState.vb"
+﻿#Region "Microsoft.VisualBasic::3a5a00a5b95202b0f60de7bfccd73868, sciBASIC#\Data_science\DataMining\UMAP\KNN\KNNState.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 17
+    '    Code Lines: 6
+    ' Comment Lines: 7
+    '   Blank Lines: 4
+    '     File Size: 416.00 B
+
 
     '     Class KNNState
     ' 

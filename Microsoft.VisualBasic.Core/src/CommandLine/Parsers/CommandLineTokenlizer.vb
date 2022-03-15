@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16ce6bbafd1ac4d26788c7d3c7745416, Microsoft.VisualBasic.Core\src\CommandLine\Parsers\CommandLineTokenlizer.vb"
+﻿#Region "Microsoft.VisualBasic::16ce6bbafd1ac4d26788c7d3c7745416, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Parsers\CommandLineTokenlizer.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 100
+    '    Code Lines: 79
+    ' Comment Lines: 0
+    '   Blank Lines: 21
+    '     File Size: 3.68 KB
+
 
     '     Class CommandLineTokenlizer
     ' 

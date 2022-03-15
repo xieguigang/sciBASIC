@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0210c02ab2cb097f3b13323cabc124b, www\githubAPI\API\Repositories.vb"
+﻿#Region "Microsoft.VisualBasic::b0210c02ab2cb097f3b13323cabc124b, sciBASIC#\www\githubAPI\API\Repositories.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 14
+    '    Code Lines: 11
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 462.00 B
+
 
     '     Class Repositories
     ' 

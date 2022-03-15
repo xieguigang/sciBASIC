@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d247ddeb1767da2e3a8e7c12214ad5e5, Data_science\Mathematica\Math\mHG\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::d247ddeb1767da2e3a8e7c12214ad5e5, sciBASIC#\Data_science\Mathematica\Math\mHG\Module1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 470
+    '    Code Lines: 196
+    ' Comment Lines: 220
+    '   Blank Lines: 54
+    '     File Size: 23.25 KB
+
 
     ' Module Module1
     ' 

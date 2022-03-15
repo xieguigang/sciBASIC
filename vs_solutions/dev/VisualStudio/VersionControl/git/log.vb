@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::844e07299c8ff46a146d216497ab7b91, vs_solutions\dev\VisualStudio\VersionControl\git\log.vb"
+﻿#Region "Microsoft.VisualBasic::844e07299c8ff46a146d216497ab7b91, sciBASIC#\vs_solutions\dev\VisualStudio\VersionControl\git\log.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 57
+    '    Code Lines: 39
+    ' Comment Lines: 13
+    '   Blank Lines: 5
+    '     File Size: 2.14 KB
+
 
     ' Class log
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1678278bb9ed9d3ef6dc9033c1a3594, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Algorithms.vb"
+﻿#Region "Microsoft.VisualBasic::a1678278bb9ed9d3ef6dc9033c1a3594, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Algorithms.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 7
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 138.00 B
+
 
     '     Enum Algorithms
     ' 

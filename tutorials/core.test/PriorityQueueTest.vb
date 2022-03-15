@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95ea402a027d1e454286b94b4beb4b45, tutorials\core.test\PriorityQueueTest.vb"
+﻿#Region "Microsoft.VisualBasic::95ea402a027d1e454286b94b4beb4b45, sciBASIC#\tutorials\core.test\PriorityQueueTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 144
+    '    Code Lines: 59
+    ' Comment Lines: 52
+    '   Blank Lines: 33
+    '     File Size: 3.26 KB
+
 
     ' Module PriorityQueueTest
     ' 

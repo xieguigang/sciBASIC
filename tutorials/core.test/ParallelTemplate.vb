@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5385add417dafd50030cea3ee7590cd5, tutorials\core.test\ParallelTemplate.vb"
+﻿#Region "Microsoft.VisualBasic::5385add417dafd50030cea3ee7590cd5, sciBASIC#\tutorials\core.test\ParallelTemplate.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 99
+    '    Code Lines: 0
+    ' Comment Lines: 77
+    '   Blank Lines: 22
+    '     File Size: 2.49 KB
+
 
     ' 
     ' /********************************************************************************/

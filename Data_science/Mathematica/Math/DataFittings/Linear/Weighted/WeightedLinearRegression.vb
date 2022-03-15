@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b55fee552b79812914cf2039ae14373, Data_science\Mathematica\Math\DataFittings\Linear\Weighted\WeightedLinearRegression.vb"
+﻿#Region "Microsoft.VisualBasic::49be332382b700803db35cde7d4d9609, sciBASIC#\Data_science\Mathematica\Math\DataFittings\Linear\Weighted\WeightedLinearRegression.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 238
+    '    Code Lines: 191
+    ' Comment Lines: 29
+    '   Blank Lines: 18
+    '     File Size: 7.52 KB
+
 
     ' Module WeightedLinearRegression
     ' 

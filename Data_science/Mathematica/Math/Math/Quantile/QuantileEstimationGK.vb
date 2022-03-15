@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca02b3f8652f03a649f551247c73f05d, Data_science\Mathematica\Math\Math\Quantile\QuantileEstimationGK.vb"
+﻿#Region "Microsoft.VisualBasic::ca02b3f8652f03a649f551247c73f05d, sciBASIC#\Data_science\Mathematica\Math\Math\Quantile\QuantileEstimationGK.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 157
+    '    Code Lines: 78
+    ' Comment Lines: 53
+    '   Blank Lines: 26
+    '     File Size: 5.21 KB
+
 
     '     Class QuantileEstimationGK
     ' 

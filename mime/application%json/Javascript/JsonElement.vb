@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c2a9046b1db4922fce76570dd40864c, mime\application%json\Javascript\JsonElement.vb"
+﻿#Region "Microsoft.VisualBasic::2c2a9046b1db4922fce76570dd40864c, sciBASIC#\mime\application%json\Javascript\JsonElement.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 29
+    '    Code Lines: 16
+    ' Comment Lines: 8
+    '   Blank Lines: 5
+    '     File Size: 923.00 B
+
 
     '     Class JsonElement
     ' 

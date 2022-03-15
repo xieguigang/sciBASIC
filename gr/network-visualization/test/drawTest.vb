@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e1433838acd94295aff9bbe584c3569, gr\network-visualization\test\drawTest.vb"
+﻿#Region "Microsoft.VisualBasic::7e1433838acd94295aff9bbe584c3569, sciBASIC#\gr\network-visualization\test\drawTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 135
+    '    Code Lines: 92
+    ' Comment Lines: 18
+    '   Blank Lines: 25
+    '     File Size: 5.17 KB
+
 
     ' Module drawTest
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c9cf6cdeb99f34d1da941d00f7786fe, Microsoft.VisualBasic.Core\src\Extensions\Math\ScaleMaps.vb"
+﻿#Region "Microsoft.VisualBasic::9c9cf6cdeb99f34d1da941d00f7786fe, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\ScaleMaps.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 204
+    '    Code Lines: 127
+    ' Comment Lines: 46
+    '   Blank Lines: 31
+    '     File Size: 9.09 KB
+
 
     '     Module ScaleMaps
     ' 

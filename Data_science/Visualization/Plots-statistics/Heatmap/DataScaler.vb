@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82ec1fab2b7ad7a28d3c22610c054848, Data_science\Visualization\Plots-statistics\Heatmap\DataScaler.vb"
+﻿#Region "Microsoft.VisualBasic::82ec1fab2b7ad7a28d3c22610c054848, sciBASIC#\Data_science\Visualization\Plots-statistics\Heatmap\DataScaler.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 128
+    '    Code Lines: 100
+    ' Comment Lines: 17
+    '   Blank Lines: 11
+    '     File Size: 5.78 KB
+
 
     '     Module DataScaler
     ' 

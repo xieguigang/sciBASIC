@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a932a3b98d366ee02de011c3b4c836eb, vs_solutions\dev\ApplicationServices\CodeDOM\CodeHelper.vb"
+﻿#Region "Microsoft.VisualBasic::a932a3b98d366ee02de011c3b4c836eb, sciBASIC#\vs_solutions\dev\ApplicationServices\CodeDOM\CodeHelper.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 72
+    '    Code Lines: 46
+    ' Comment Lines: 12
+    '   Blank Lines: 14
+    '     File Size: 2.59 KB
+
 
     '     Module CodeHelper
     ' 

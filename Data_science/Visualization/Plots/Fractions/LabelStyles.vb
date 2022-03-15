@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::26351168e2be3aacca53da138d7ea5ef, Data_science\Visualization\Plots\Fractions\LabelStyles.vb"
+﻿#Region "Microsoft.VisualBasic::26351168e2be3aacca53da138d7ea5ef, sciBASIC#\Data_science\Visualization\Plots\Fractions\LabelStyles.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 7
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 128.00 B
+
 
     '     Enum ValueLabels
     ' 

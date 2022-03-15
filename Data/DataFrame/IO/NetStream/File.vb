@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::168470844f978e8aac2d97891271af91, Data\DataFrame\IO\NetStream\File.vb"
+﻿#Region "Microsoft.VisualBasic::168470844f978e8aac2d97891271af91, sciBASIC#\Data\DataFrame\IO\NetStream\File.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 85
+    '    Code Lines: 0
+    ' Comment Lines: 68
+    '   Blank Lines: 17
+    '     File Size: 2.99 KB
+
 
     ' 
     ' /********************************************************************************/

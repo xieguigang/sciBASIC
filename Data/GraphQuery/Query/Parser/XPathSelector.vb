@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5158d1f9acebe55c8c4a98f0f904b7bc, Data\GraphQuery\Query\Parser\XPathSelector.vb"
+﻿#Region "Microsoft.VisualBasic::f62deba3c0d5788937f4d0587dbfea78, sciBASIC#\Data\GraphQuery\Query\Parser\XPathSelector.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 32
+    '    Code Lines: 27
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 1.13 KB
+
 
     ' Class XPathSelector
     ' 

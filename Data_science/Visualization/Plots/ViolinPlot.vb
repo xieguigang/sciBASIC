@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1ed612b96dfafa786f2ce5671fc2191, Data_science\Visualization\Plots\ViolinPlot.vb"
+﻿#Region "Microsoft.VisualBasic::df4f21583a32f9fb5eba615b883895ff, sciBASIC#\Data_science\Visualization\Plots\ViolinPlot.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 299
+    '    Code Lines: 219
+    ' Comment Lines: 41
+    '   Blank Lines: 39
+    '     File Size: 14.10 KB
+
 
     ' Module ViolinPlot
     ' 

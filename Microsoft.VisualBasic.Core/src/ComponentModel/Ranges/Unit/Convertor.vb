@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f660384bd7e021798b05a8b297a717e, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Unit\Convertor.vb"
+﻿#Region "Microsoft.VisualBasic::1f660384bd7e021798b05a8b297a717e, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Unit\Convertor.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 21
+    '    Code Lines: 9
+    ' Comment Lines: 7
+    '   Blank Lines: 5
+    '     File Size: 634.00 B
+
 
     '     Class Convertor
     ' 

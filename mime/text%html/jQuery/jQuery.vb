@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7991e694e2cfb46530ef975de157e641, mime\text%html\jQuery\jQuery.vb"
+﻿#Region "Microsoft.VisualBasic::7991e694e2cfb46530ef975de157e641, sciBASIC#\mime\text%html\jQuery\jQuery.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 6
+    '    Code Lines: 4
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 80.00 B
+
 
     '     Class jQuery
     ' 

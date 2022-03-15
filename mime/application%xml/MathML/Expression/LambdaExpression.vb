@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5f8d4cf07579e2dfbfd3a6183cf753a, mime\application%xml\MathML\Expression\LambdaExpression.vb"
+﻿#Region "Microsoft.VisualBasic::d5f8d4cf07579e2dfbfd3a6183cf753a, sciBASIC#\mime\application%xml\MathML\Expression\LambdaExpression.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 26
+    '    Code Lines: 17
+    ' Comment Lines: 3
+    '   Blank Lines: 6
+    '     File Size: 704.00 B
+
 
     '     Class LambdaExpression
     ' 

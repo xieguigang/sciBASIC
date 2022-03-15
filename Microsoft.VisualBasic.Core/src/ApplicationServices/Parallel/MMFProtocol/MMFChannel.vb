@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::205c05be186b42548f64d0608048ec4a, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\MMFProtocol\MMFChannel.vb"
+﻿#Region "Microsoft.VisualBasic::205c05be186b42548f64d0608048ec4a, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\MMFProtocol\MMFChannel.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 203
+    '    Code Lines: 123
+    ' Comment Lines: 46
+    '   Blank Lines: 34
+    '     File Size: 7.77 KB
+
 
     '     Delegate Sub
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a06610e244232c20869558c8b6e9ab1, Data_science\Mathematica\Math\Math\Scripting\Factors\Factor.vb"
+﻿#Region "Microsoft.VisualBasic::3a06610e244232c20869558c8b6e9ab1, sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Factors\Factor.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 50
+    '    Code Lines: 36
+    ' Comment Lines: 4
+    '   Blank Lines: 10
+    '     File Size: 1.55 KB
+
 
     '     Class Factor
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e893d1214dacac3cf8609c97a5c7b005, Data\DataFrame.Extensions\Templates\TemplateAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::e893d1214dacac3cf8609c97a5c7b005, sciBASIC#\Data\DataFrame.Extensions\Templates\TemplateAttribute.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 24
+    '    Code Lines: 14
+    ' Comment Lines: 7
+    '   Blank Lines: 3
+    '     File Size: 857.00 B
+
 
     ' Class TemplateAttribute
     ' 

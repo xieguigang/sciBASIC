@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6282c7313c21be312c0b984620ca7119, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Rayleigh.vb"
+﻿#Region "Microsoft.VisualBasic::6282c7313c21be312c0b984620ca7119, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Rayleigh.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 45
+    '    Code Lines: 29
+    ' Comment Lines: 10
+    '   Blank Lines: 6
+    '     File Size: 1.71 KB
+
 
     '     Class Rayleigh
     ' 

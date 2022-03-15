@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bedb57243843e70d9a9c426704b21f4a, Data\OCR\OCR.vb"
+﻿#Region "Microsoft.VisualBasic::bedb57243843e70d9a9c426704b21f4a, sciBASIC#\Data\OCR\OCR.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 192
+    '    Code Lines: 133
+    ' Comment Lines: 29
+    '   Blank Lines: 30
+    '     File Size: 7.24 KB
+
 
     ' Module OCR
     ' 

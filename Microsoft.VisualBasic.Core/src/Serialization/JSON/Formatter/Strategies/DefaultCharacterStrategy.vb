@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ebbcc66232061388db6b453151835f8, Microsoft.VisualBasic.Core\src\Serialization\JSON\Formatter\Strategies\DefaultCharacterStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::0ebbcc66232061388db6b453151835f8, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\JSON\Formatter\Strategies\DefaultCharacterStrategy.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 16
+    '    Code Lines: 14
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 685.00 B
+
 
     '     Class DefaultCharacterStrategy
     ' 

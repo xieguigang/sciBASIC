@@ -1,55 +1,65 @@
-﻿#Region "Microsoft.VisualBasic::5b72a20dba4f681b752abf8be400171d, Data\BinaryData\BinaryData\BitSet.vb"
+﻿#Region "Microsoft.VisualBasic::f2e5378529778d5dd8a29bf41df65487, sciBASIC#\Data\BinaryData\BinaryData\BitSet.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Class BitSet
-' 
-'     Properties: Count, IsSynchronized, SyncRoot
-' 
-'     Constructor: (+13 Overloads) Sub New
-' 
-'     Function: [And], [Get], [Not], [Or], [Set]
-'               [Xor], (+2 Overloads) Append, BinaryBitwiseOp, Clone, Concatenate
-'               Duplicate, Equals, FromBinaryString, FromHexString, GetBits
-'               GetEnumerator, GetHashCode, Repeat, RequiredSize, Reverse
-'               SetAll, SetBits, SplitEvery, ToArray, ToBinaryString
-'               ToBytes, ToHexString, ToInteger, ToString, ValueOf
-' 
-'     Sub: CopyTo, Extend, (+2 Overloads) InitializeFrom
-' 
-'     Operators: +, <<, <>, =, >>
-'                (+2 Overloads) And, (+2 Overloads) Not, (+2 Overloads) Or, (+2 Overloads) Xor
-' 
-' /********************************************************************************/
+
+    ' Code Statistics:
+
+    '   Total Lines: 663
+    '    Code Lines: 511
+    ' Comment Lines: 48
+    '   Blank Lines: 104
+    '     File Size: 22.26 KB
+
+
+    ' Class BitSet
+    ' 
+    '     Properties: Count, IsSynchronized, SyncRoot
+    ' 
+    '     Constructor: (+15 Overloads) Sub New
+    ' 
+    '     Function: [And], [Get], [Not], [Or], [Set]
+    '               [Xor], (+2 Overloads) Append, BinaryBitwiseOp, Clone, Concatenate
+    '               Duplicate, Equals, FromBinaryString, FromHexString, GetBits
+    '               GetEnumerator, GetHashCode, Repeat, RequiredSize, Reverse
+    '               SetAll, (+3 Overloads) SetBits, SplitEvery, ToArray, ToBinaryString
+    '               ToBytes, ToHexString, (+2 Overloads) ToInteger, ToString, ValueOf
+    ' 
+    '     Sub: CopyTo, Extend, (+2 Overloads) InitializeFrom
+    ' 
+    '     Operators: +, <<, <>, =, >>
+    '                (+2 Overloads) And, (+2 Overloads) Not, (+2 Overloads) Or, (+2 Overloads) Xor
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

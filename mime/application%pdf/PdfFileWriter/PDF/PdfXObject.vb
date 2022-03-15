@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34907dbd8e05cada9954cedf1ef4a604, mime\application%pdf\PdfFileWriter\PDF\PdfXObject.vb"
+﻿#Region "Microsoft.VisualBasic::7b9eceda682a05a3da920e9658c30d4b, sciBASIC#\mime\application%pdf\PdfFileWriter\PDF\PdfXObject.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 131
+    '    Code Lines: 61
+    ' Comment Lines: 57
+    '   Blank Lines: 13
+    '     File Size: 3.90 KB
+
 
     '     Class PdfXObject
     ' 

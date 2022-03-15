@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21e597e0e1508e892c6dcf61d74efea0, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\HalfVector.vb"
+﻿#Region "Microsoft.VisualBasic::21e597e0e1508e892c6dcf61d74efea0, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Vector\Class\HalfVector.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 132
+    '    Code Lines: 103
+    ' Comment Lines: 3
+    '   Blank Lines: 26
+    '     File Size: 5.24 KB
+
 
     '     Class HalfVector
     ' 

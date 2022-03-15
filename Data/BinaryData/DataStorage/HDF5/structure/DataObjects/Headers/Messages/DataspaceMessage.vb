@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f15b54b7883f6f7c37e9a751acf501ac, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\DataspaceMessage.vb"
+﻿#Region "Microsoft.VisualBasic::f15b54b7883f6f7c37e9a751acf501ac, sciBASIC#\Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\DataspaceMessage.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 116
+    '    Code Lines: 63
+    ' Comment Lines: 34
+    '   Blank Lines: 19
+    '     File Size: 4.73 KB
+
 
     '     Class DataspaceMessage
     ' 

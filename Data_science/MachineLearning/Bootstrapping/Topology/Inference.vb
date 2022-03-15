@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d8eab898b3c0f07ecdf4ff5b3cc3993a, Data_science\MachineLearning\Bootstrapping\Topology\Inference.vb"
+﻿#Region "Microsoft.VisualBasic::d8eab898b3c0f07ecdf4ff5b3cc3993a, sciBASIC#\Data_science\MachineLearning\Bootstrapping\Topology\Inference.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 23
+    '    Code Lines: 11
+    ' Comment Lines: 9
+    '   Blank Lines: 3
+    '     File Size: 749.00 B
+
 
     '     Module Inference
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb3f13228b6371778f3e0d31ab01245d, Microsoft.VisualBasic.Core\src\Language\Language\UnixBash\ShellSyntax.vb"
+﻿#Region "Microsoft.VisualBasic::eb3f13228b6371778f3e0d31ab01245d, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\UnixBash\ShellSyntax.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 69
+    '    Code Lines: 33
+    ' Comment Lines: 24
+    '   Blank Lines: 12
+    '     File Size: 2.33 KB
+
 
     '     Module ShellSyntax
     ' 

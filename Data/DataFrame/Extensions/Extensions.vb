@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed566a37aa088878c05d92973f670bd6, Data\DataFrame\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::b472a916a21c1517634576f303a581b0, sciBASIC#\Data\DataFrame\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 698
+    '    Code Lines: 402
+    ' Comment Lines: 220
+    '   Blank Lines: 76
+    '     File Size: 31.16 KB
+
 
     ' Module Extensions
     ' 

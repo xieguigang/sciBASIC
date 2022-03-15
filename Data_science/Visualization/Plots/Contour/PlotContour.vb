@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::23779b1bde4976c8680f30b67012e08f, Data_science\Visualization\Plots\Contour\PlotContour.vb"
+﻿#Region "Microsoft.VisualBasic::994b710994ae9569743c9357302bcee2, sciBASIC#\Data_science\Visualization\Plots\Contour\PlotContour.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 71
+    '    Code Lines: 63
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 3.23 KB
+
 
     '     Module PlotContour
     ' 

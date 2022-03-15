@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2207e431f94291f702c63743effd8e86, Data_science\Mathematica\Math\Math\Scripting\Rscript\Vectors\GenericVector(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::2207e431f94291f702c63743effd8e86, sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Rscript\Vectors\GenericVector(Of T).vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 150
+    '    Code Lines: 95
+    ' Comment Lines: 36
+    '   Blank Lines: 19
+    '     File Size: 5.59 KB
+
 
     '     Class GenericVector
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e21ab1839f3e8e938e3801e9aaa66f8, Microsoft.VisualBasic.Core\src\Language\Language\Perl\Tools.vb"
+﻿#Region "Microsoft.VisualBasic::1e21ab1839f3e8e938e3801e9aaa66f8, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\Perl\Tools.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 210
+    '    Code Lines: 63
+    ' Comment Lines: 131
+    '   Blank Lines: 16
+    '     File Size: 10.19 KB
+
 
     '     Module Functions
     ' 

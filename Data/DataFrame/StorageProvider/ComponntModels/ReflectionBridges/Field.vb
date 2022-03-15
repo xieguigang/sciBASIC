@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d11cd9ce72980b2195df3b9d7ba765e, Data\DataFrame\StorageProvider\ComponntModels\ReflectionBridges\Field.vb"
+﻿#Region "Microsoft.VisualBasic::6d11cd9ce72980b2195df3b9d7ba765e, sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\ReflectionBridges\Field.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 63
+    '    Code Lines: 40
+    ' Comment Lines: 10
+    '   Blank Lines: 13
+    '     File Size: 2.09 KB
+
 
     '     Class Column
     ' 

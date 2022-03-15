@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e066d81efc261bcecff3272ecbbc6f5, Microsoft.VisualBasic.Core\src\Text\Splitter.vb"
+﻿#Region "Microsoft.VisualBasic::a539a9b87975a8fe28029b95cbd6a5eb, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Splitter.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 160
+    '    Code Lines: 98
+    ' Comment Lines: 45
+    '   Blank Lines: 17
+    '     File Size: 6.48 KB
+
 
     '     Class Splitter
     ' 

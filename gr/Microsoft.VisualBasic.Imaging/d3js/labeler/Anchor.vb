@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f48f496404007bf374422bdce0e7e607, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Anchor.vb"
+﻿#Region "Microsoft.VisualBasic::f48f496404007bf374422bdce0e7e607, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Anchor.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 104
+    '    Code Lines: 64
+    ' Comment Lines: 22
+    '   Blank Lines: 18
+    '     File Size: 3.00 KB
+
 
     '     Class Anchor
     ' 

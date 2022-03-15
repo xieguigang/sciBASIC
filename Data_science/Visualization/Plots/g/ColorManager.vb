@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e3d9250e48d51b96de211eff0a7a5d0, Data_science\Visualization\Plots\g\ColorManager.vb"
+﻿#Region "Microsoft.VisualBasic::3e3d9250e48d51b96de211eff0a7a5d0, sciBASIC#\Data_science\Visualization\Plots\g\ColorManager.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 99
+    '    Code Lines: 70
+    ' Comment Lines: 8
+    '   Blank Lines: 21
+    '     File Size: 3.56 KB
+
 
     '     Class ColorProfile
     ' 

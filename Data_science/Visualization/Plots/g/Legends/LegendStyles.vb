@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dac2a7257a48da24014e2da396ff89be, Data_science\Visualization\Plots\g\Legends\LegendStyles.vb"
+﻿#Region "Microsoft.VisualBasic::dac2a7257a48da24014e2da396ff89be, sciBASIC#\Data_science\Visualization\Plots\g\Legends\LegendStyles.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 49
+    '    Code Lines: 14
+    ' Comment Lines: 33
+    '   Blank Lines: 2
+    '     File Size: 1.11 KB
+
 
     '     Enum LegendStyles
     ' 

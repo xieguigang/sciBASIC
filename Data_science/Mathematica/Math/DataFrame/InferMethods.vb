@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db7eae00c386f245beb3d8f038484957, Data_science\Mathematica\Math\DataFrame\InferMethods.vb"
+﻿#Region "Microsoft.VisualBasic::db7eae00c386f245beb3d8f038484957, sciBASIC#\Data_science\Mathematica\Math\DataFrame\InferMethods.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 7
+    '    Code Lines: 4
+    ' Comment Lines: 3
+    '   Blank Lines: 0
+    '     File Size: 123.00 B
+
 
     ' Enum InferMethods
     ' 

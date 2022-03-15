@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7cb4c9de3c3a481d4d8a749b0cc0156f, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ConsolePasswordInput.vb"
+﻿#Region "Microsoft.VisualBasic::7cb4c9de3c3a481d4d8a749b0cc0156f, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ConsolePasswordInput.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 467
+    '    Code Lines: 190
+    ' Comment Lines: 231
+    '   Blank Lines: 46
+    '     File Size: 24.09 KB
+
 
     '     Module Constants
     ' 

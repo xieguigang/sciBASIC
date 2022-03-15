@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a377c5d95e27db1829ec07f5418041d, Data\BinaryData\DataStorage\HDF5\device\MemoryReader.vb"
+﻿#Region "Microsoft.VisualBasic::3a377c5d95e27db1829ec07f5418041d, sciBASIC#\Data\BinaryData\DataStorage\HDF5\device\MemoryReader.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 69
+    '    Code Lines: 50
+    ' Comment Lines: 2
+    '   Blank Lines: 17
+    '     File Size: 1.90 KB
+
 
     '     Class MemoryReader
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2bc81f82cf1a26d06e4d18edad34ebe8, Microsoft.VisualBasic.Core\src\Net\HTTP\Stream\ZipStream.vb"
+﻿#Region "Microsoft.VisualBasic::2bc81f82cf1a26d06e4d18edad34ebe8, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\Stream\ZipStream.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 66
+    '    Code Lines: 36
+    ' Comment Lines: 20
+    '   Blank Lines: 10
+    '     File Size: 2.54 KB
+
 
     '     Module ZipStreamExtensions
     ' 

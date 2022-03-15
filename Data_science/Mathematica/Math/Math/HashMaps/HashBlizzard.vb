@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70d7bfa443a67e67497f02731ee07ed9, Data_science\Mathematica\Math\Math\HashMaps\HashBlizzard.vb"
+﻿#Region "Microsoft.VisualBasic::70d7bfa443a67e67497f02731ee07ed9, sciBASIC#\Data_science\Mathematica\Math\Math\HashMaps\HashBlizzard.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 98
+    '    Code Lines: 52
+    ' Comment Lines: 34
+    '   Blank Lines: 12
+    '     File Size: 3.56 KB
+
 
     '     Class HashBlizzard
     ' 

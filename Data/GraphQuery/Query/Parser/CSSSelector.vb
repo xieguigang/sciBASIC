@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f9dbc94ef4d8686592fda2ca297a449, Data\GraphQuery\Query\Parser\CSSSelector.vb"
+﻿#Region "Microsoft.VisualBasic::46e93d6fc1fb4622cc1578a011396585, sciBASIC#\Data\GraphQuery\Query\Parser\CSSSelector.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 183
+    '    Code Lines: 128
+    ' Comment Lines: 32
+    '   Blank Lines: 23
+    '     File Size: 7.04 KB
+
 
     ' Class CSSSelector
     ' 

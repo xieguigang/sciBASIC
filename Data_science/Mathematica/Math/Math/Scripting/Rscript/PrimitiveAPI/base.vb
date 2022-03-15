@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3d7bbafa268360066052b073b2f6ed7, Data_science\Mathematica\Math\Math\Scripting\Rscript\PrimitiveAPI\base.vb"
+﻿#Region "Microsoft.VisualBasic::b3d7bbafa268360066052b073b2f6ed7, sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Rscript\PrimitiveAPI\base.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 324
+    '    Code Lines: 158
+    ' Comment Lines: 119
+    '   Blank Lines: 47
+    '     File Size: 16.22 KB
+
 
     '     Module base
     ' 

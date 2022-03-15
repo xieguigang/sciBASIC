@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a23b3f3ab00bbcfc05cb0d5141312bc, Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\Min.vb"
+﻿#Region "Microsoft.VisualBasic::8a23b3f3ab00bbcfc05cb0d5141312bc, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\Min.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 27
+    '    Code Lines: 20
+    ' Comment Lines: 1
+    '   Blank Lines: 6
+    '     File Size: 753.00 B
+
 
     '     Class Min
     ' 

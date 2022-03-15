@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87a4d0e58d678ca46a41c0205cf00704, Data_science\Visualization\test\ChartingBase.Test\Module2.vb"
+﻿#Region "Microsoft.VisualBasic::87a4d0e58d678ca46a41c0205cf00704, sciBASIC#\Data_science\Visualization\test\ChartingBase.Test\Module2.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 36
+    '    Code Lines: 28
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 953.00 B
+
 
     ' Module Module2
     ' 

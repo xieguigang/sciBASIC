@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::059b2012cf20b682907941bd3dfa62c7, Microsoft.VisualBasic.Core\src\Net\DomainParser.vb"
+﻿#Region "Microsoft.VisualBasic::059b2012cf20b682907941bd3dfa62c7, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\DomainParser.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 91
+    '    Code Lines: 58
+    ' Comment Lines: 16
+    '   Blank Lines: 17
+    '     File Size: 3.29 KB
+
 
     '     Module DomainParser
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c84e53207506bf084cf9d0566a105f87, Data_science\Mathematica\Math\Math\FuzzyLogic\FuzzyEngine.vb"
+﻿#Region "Microsoft.VisualBasic::c84e53207506bf084cf9d0566a105f87, sciBASIC#\Data_science\Mathematica\Math\Math\FuzzyLogic\FuzzyEngine.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 214
+    '    Code Lines: 131
+    ' Comment Lines: 36
+    '   Blank Lines: 47
+    '     File Size: 7.63 KB
+
 
     '     Class FuzzyEngine
     ' 

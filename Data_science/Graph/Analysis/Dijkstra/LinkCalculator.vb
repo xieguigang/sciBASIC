@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::501d840aeedf2f0300b14221d9165c2b, Data_science\Graph\Analysis\Dijkstra\LinkCalculator.vb"
+﻿#Region "Microsoft.VisualBasic::501d840aeedf2f0300b14221d9165c2b, sciBASIC#\Data_science\Graph\Analysis\Dijkstra\LinkCalculator.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 230
+    '    Code Lines: 147
+    ' Comment Lines: 36
+    '   Blank Lines: 47
+    '     File Size: 7.96 KB
+
 
     '     Class Neighbour
     ' 

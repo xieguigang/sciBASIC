@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::541b819a4093237abc5fc66c675c0040, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\Models\SvmModelJSON.vb"
+﻿#Region "Microsoft.VisualBasic::541b819a4093237abc5fc66c675c0040, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\Models\SvmModelJSON.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 196
+    '    Code Lines: 128
+    ' Comment Lines: 34
+    '   Blank Lines: 34
+    '     File Size: 7.29 KB
+
 
     '     Class supportNodeVector
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c98a7e023a873122bae56ad986681136, Data_science\Mathematica\Math\Math\Algebra\Solvers\ISolver.vb"
+﻿#Region "Microsoft.VisualBasic::c98a7e023a873122bae56ad986681136, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Solvers\ISolver.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 14
+    '    Code Lines: 4
+    ' Comment Lines: 7
+    '   Blank Lines: 3
+    '     File Size: 378.00 B
+
 
     '     Delegate Function
     ' 

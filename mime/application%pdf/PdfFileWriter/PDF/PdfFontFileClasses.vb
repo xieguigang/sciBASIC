@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8811ba85ca8a24c99f20b83df6bd2e9a, mime\application%pdf\PdfFileWriter\PDF\PdfFontFileClasses.vb"
+﻿#Region "Microsoft.VisualBasic::7ce7c05b9c6336cca3a9b90d188ff439, sciBASIC#\mime\application%pdf\PdfFileWriter\PDF\PdfFontFileClasses.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 323
+    '    Code Lines: 187
+    ' Comment Lines: 94
+    '   Blank Lines: 42
+    '     File Size: 15.13 KB
+
 
     '     Class FontFileHeader
     ' 

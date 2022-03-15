@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5dbb4e948844ce357c23baf15f6487c, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\STDIO__\Shell.vb"
+﻿#Region "Microsoft.VisualBasic::f5dbb4e948844ce357c23baf15f6487c, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\STDIO__\Shell.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 55
+    '    Code Lines: 27
+    ' Comment Lines: 18
+    '   Blank Lines: 10
+    '     File Size: 1.89 KB
+
 
     '     Module Shell
     ' 

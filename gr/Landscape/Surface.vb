@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3b69a1c7b5842ab05843c6bd56809be2, gr\Landscape\Surface.vb"
+﻿#Region "Microsoft.VisualBasic::3b69a1c7b5842ab05843c6bd56809be2, sciBASIC#\gr\Landscape\Surface.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 63
+    '    Code Lines: 27
+    ' Comment Lines: 28
+    '   Blank Lines: 8
+    '     File Size: 2.38 KB
+
 
     '     Class Surface
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9053929c18e7fd3cb377cd3a880f4b15, Data_science\MachineLearning\MachineLearning\RandomForests\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::9053929c18e7fd3cb377cd3a880f4b15, sciBASIC#\Data_science\MachineLearning\MachineLearning\RandomForests\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 60
+    '    Code Lines: 4
+    ' Comment Lines: 55
+    '   Blank Lines: 1
+    '     File Size: 3.95 KB
+
 
     '     Module NamespaceDoc
     ' 

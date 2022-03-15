@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f815b3bcc41dc30d2256a7bfa34ae57, Data\DataFrame\StorageProvider\Reflection\Attributes\Collection.vb"
+﻿#Region "Microsoft.VisualBasic::9f815b3bcc41dc30d2256a7bfa34ae57, sciBASIC#\Data\DataFrame\StorageProvider\Reflection\Attributes\Collection.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 71
+    '    Code Lines: 42
+    ' Comment Lines: 17
+    '   Blank Lines: 12
+    '     File Size: 2.75 KB
+
 
     '     Class CollectionAttribute
     ' 

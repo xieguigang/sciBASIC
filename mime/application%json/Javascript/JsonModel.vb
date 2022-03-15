@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9181e8afa491fce795988254b89aae9d, mime\application%json\Javascript\JsonModel.vb"
+﻿#Region "Microsoft.VisualBasic::9181e8afa491fce795988254b89aae9d, sciBASIC#\mime\application%json\Javascript\JsonModel.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 38
+    '    Code Lines: 30
+    ' Comment Lines: 3
+    '   Blank Lines: 5
+    '     File Size: 1.25 KB
+
 
     '     Class JsonModel
     ' 

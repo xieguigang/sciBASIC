@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c6c5e5250ea09d390ae7e3bd6d28bf3, Data_science\Mathematica\Math\ODE\Dynamics\Data\ODEsOut.vb"
+﻿#Region "Microsoft.VisualBasic::5c6c5e5250ea09d390ae7e3bd6d28bf3, sciBASIC#\Data_science\Mathematica\Math\ODE\Dynamics\Data\ODEsOut.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 107
+    '    Code Lines: 65
+    ' Comment Lines: 27
+    '   Blank Lines: 15
+    '     File Size: 3.78 KB
+
 
     '     Class ODEsOut
     ' 

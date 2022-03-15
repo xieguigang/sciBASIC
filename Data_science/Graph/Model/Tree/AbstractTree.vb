@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3b603fc134be04e6e07505e2510a1e23, Data_science\Graph\Model\Tree\AbstractTree.vb"
+﻿#Region "Microsoft.VisualBasic::498f78b8ebfa2b5da0a4856a47c654f5, sciBASIC#\Data_science\Graph\Model\Tree\AbstractTree.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 140
+    '    Code Lines: 83
+    ' Comment Lines: 36
+    '   Blank Lines: 21
+    '     File Size: 3.92 KB
+
 
     ' Class AbstractTree
     ' 

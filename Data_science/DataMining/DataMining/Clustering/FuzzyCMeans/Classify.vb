@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78b0534b1c2f545556e887226b26adb0, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\Classify.vb"
+﻿#Region "Microsoft.VisualBasic::78b0534b1c2f545556e887226b26adb0, sciBASIC#\Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\Classify.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 11
+    '    Code Lines: 7
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 236.00 B
+
 
     '     Class Classify
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69591cd9eec46b4fd7e537ebf0fd202d, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\ProjectionExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::69591cd9eec46b4fd7e537ebf0fd202d, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\ProjectionExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 223
+    '    Code Lines: 191
+    ' Comment Lines: 2
+    '   Blank Lines: 30
+    '     File Size: 9.97 KB
+
 
     '     Module ProjectionExtensions
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e505faee304339630f6b3e462d36b90, Microsoft.VisualBasic.Core\src\Serialization\JSON\Formatter\Strategies\CloseBracketStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::6e505faee304339630f6b3e462d36b90, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\JSON\Formatter\Strategies\CloseBracketStrategy.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 34
+    '    Code Lines: 24
+    ' Comment Lines: 3
+    '   Blank Lines: 7
+    '     File Size: 1.03 KB
+
 
     '     Class CloseBracketStrategy
     ' 

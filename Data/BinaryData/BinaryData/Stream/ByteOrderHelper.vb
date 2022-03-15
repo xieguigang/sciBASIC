@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c479eae75c6dbe39dd383f924297830, Data\BinaryData\BinaryData\Stream\ByteOrderHelper.vb"
+﻿#Region "Microsoft.VisualBasic::7c479eae75c6dbe39dd383f924297830, sciBASIC#\Data\BinaryData\BinaryData\Stream\ByteOrderHelper.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 61
+    '    Code Lines: 44
+    ' Comment Lines: 9
+    '   Blank Lines: 8
+    '     File Size: 2.10 KB
+
 
     ' Module ByteOrderHelper
     ' 

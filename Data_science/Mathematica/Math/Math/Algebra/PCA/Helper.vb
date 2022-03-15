@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29e7c4d3127befafc0fd0395fc64e475, Data_science\Mathematica\Math\Math\Algebra\PCA\Helper.vb"
+﻿#Region "Microsoft.VisualBasic::29e7c4d3127befafc0fd0395fc64e475, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\PCA\Helper.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 50
+    '    Code Lines: 34
+    ' Comment Lines: 6
+    '   Blank Lines: 10
+    '     File Size: 2.14 KB
+
 
     '     Module Helper
     ' 

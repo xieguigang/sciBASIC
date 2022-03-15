@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f8ea136d1d0594faf98b3f75ae16ff3, Data_science\Visualization\Plots\g\ProfileGroup.vb"
+﻿#Region "Microsoft.VisualBasic::1f8ea136d1d0594faf98b3f75ae16ff3, sciBASIC#\Data_science\Visualization\Plots\g\ProfileGroup.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 22
+    '    Code Lines: 11
+    ' Comment Lines: 7
+    '   Blank Lines: 4
+    '     File Size: 619.00 B
+
 
     '     Class ProfileGroup
     ' 

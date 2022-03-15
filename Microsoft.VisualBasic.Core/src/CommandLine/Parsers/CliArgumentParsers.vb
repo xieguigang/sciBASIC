@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2269d46cdac80badc3c8dcb3d3122368, Microsoft.VisualBasic.Core\src\CommandLine\Parsers\CliArgumentParsers.vb"
+﻿#Region "Microsoft.VisualBasic::2269d46cdac80badc3c8dcb3d3122368, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Parsers\CliArgumentParsers.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 150
+    '    Code Lines: 94
+    ' Comment Lines: 29
+    '   Blank Lines: 27
+    '     File Size: 5.82 KB
+
 
     '     Module CliArgumentParsers
     ' 

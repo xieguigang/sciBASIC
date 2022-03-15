@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::438325707d4d77b34c505fa52d39d26c, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\ASCIIPrinter.vb"
+﻿#Region "Microsoft.VisualBasic::438325707d4d77b34c505fa52d39d26c, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\ASCIIPrinter.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 185
+    '    Code Lines: 137
+    ' Comment Lines: 15
+    '   Blank Lines: 33
+    '     File Size: 6.28 KB
+
 
     '     Module ASCIIPrinter
     ' 

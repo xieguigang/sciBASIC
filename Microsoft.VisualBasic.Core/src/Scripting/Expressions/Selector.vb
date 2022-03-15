@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9cd796ead2b6eec2ebc29c8a427c84e4, Microsoft.VisualBasic.Core\src\Scripting\Expressions\Selector.vb"
+﻿#Region "Microsoft.VisualBasic::9cd796ead2b6eec2ebc29c8a427c84e4, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\Expressions\Selector.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 193
+    '    Code Lines: 117
+    ' Comment Lines: 56
+    '   Blank Lines: 20
+    '     File Size: 8.04 KB
+
 
     '     Module Selector
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17b1e96680b298c5f1a2608399abd491, mime\application%pdf\PdfFileWriter\PDF\PdfTableCell.vb"
+﻿#Region "Microsoft.VisualBasic::1800bf13070865778e8bd375e482f50a, sciBASIC#\mime\application%pdf\PdfFileWriter\PDF\PdfTableCell.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 787
+    '    Code Lines: 342
+    ' Comment Lines: 327
+    '   Blank Lines: 118
+    '     File Size: 30.85 KB
+
 
     '     Enum CellType
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ae103f3f93cf86fc241306c52e6103e, Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\Factorial.vb"
+﻿#Region "Microsoft.VisualBasic::0ae103f3f93cf86fc241306c52e6103e, sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\Factorial.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 23
+    '    Code Lines: 18
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 640.00 B
+
 
     '     Class Factorial
     ' 

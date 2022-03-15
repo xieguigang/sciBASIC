@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d84707321d86caa75f371ba9c96ea8e, Data_science\DataMining\DataMining\ComponentModel\Evaluation\LabelEvaluate\RankPair.vb"
+﻿#Region "Microsoft.VisualBasic::1d84707321d86caa75f371ba9c96ea8e, sciBASIC#\Data_science\DataMining\DataMining\ComponentModel\Evaluation\LabelEvaluate\RankPair.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 50
+    '    Code Lines: 18
+    ' Comment Lines: 23
+    '   Blank Lines: 9
+    '     File Size: 1.70 KB
+
 
     '     Class RankPair
     ' 

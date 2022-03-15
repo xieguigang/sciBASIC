@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60310c114e1492b4991556b4f243b4ff, Data_science\Visualization\Visualization\CorrelationNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::60310c114e1492b4991556b4f243b4ff, sciBASIC#\Data_science\Visualization\Visualization\CorrelationNetwork.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 81
+    '    Code Lines: 59
+    ' Comment Lines: 11
+    '   Blank Lines: 11
+    '     File Size: 2.96 KB
+
 
     ' Module CorrelationNetwork
     ' 

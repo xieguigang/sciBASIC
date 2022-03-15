@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d24e686cc9417fbab598b831708482a6, gr\network-visualization\Network.IO.Extensions\IO\FileStream\csv\Network.vb"
+﻿#Region "Microsoft.VisualBasic::d24e686cc9417fbab598b831708482a6, sciBASIC#\gr\network-visualization\Network.IO.Extensions\IO\FileStream\csv\Network.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 78
+    '    Code Lines: 55
+    ' Comment Lines: 9
+    '   Blank Lines: 14
+    '     File Size: 2.89 KB
+
 
     '     Class NetworkTables
     ' 

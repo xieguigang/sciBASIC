@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e596222607bb4c44abc5ff539debfded, gr\network-visualization\Datavisualization.Network\Layouts\Cola\PowerGraph\Module.vb"
+﻿#Region "Microsoft.VisualBasic::e596222607bb4c44abc5ff539debfded, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\PowerGraph\Module.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 138
+    '    Code Lines: 113
+    ' Comment Lines: 0
+    '   Blank Lines: 25
+    '     File Size: 5.01 KB
+
 
     '     Class [Module]
     ' 

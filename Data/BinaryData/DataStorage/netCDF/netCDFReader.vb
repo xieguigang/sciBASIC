@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1c571fc5d519df73d39bc1fb377267ac, Data\BinaryData\DataStorage\netCDF\netCDFReader.vb"
+﻿#Region "Microsoft.VisualBasic::d8d75f9288740e502e5d61ce87683e25, sciBASIC#\Data\BinaryData\DataStorage\netCDF\netCDFReader.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 317
+    '    Code Lines: 166
+    ' Comment Lines: 114
+    '   Blank Lines: 37
+    '     File Size: 12.90 KB
+
+
     '     Class netCDFReader
     ' 
     '         Properties: dimensions, globalAttributes, recordDimension, variables, version
@@ -40,7 +50,7 @@
     '         Function: attributeExists, dataVariableExists, (+2 Overloads) getDataVariable, getDataVariableAsString, getDataVariableEntry
     '                   Open, ToString
     ' 
-    '         Sub: (+2 Overloads) Dispose, Print
+    '         Sub: (+2 Overloads) Dispose, getDataVariable, Print
     ' 
     ' 
     ' /********************************************************************************/

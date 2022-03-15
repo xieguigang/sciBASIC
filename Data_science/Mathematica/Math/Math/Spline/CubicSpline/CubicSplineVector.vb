@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92697823b563ec315a8dc3ef312bceae, Data_science\Mathematica\Math\Math\Spline\CubicSpline\CubicSplineVector.vb"
+﻿#Region "Microsoft.VisualBasic::92697823b563ec315a8dc3ef312bceae, sciBASIC#\Data_science\Mathematica\Math\Math\Spline\CubicSpline\CubicSplineVector.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 123
+    '    Code Lines: 79
+    ' Comment Lines: 16
+    '   Blank Lines: 28
+    '     File Size: 4.21 KB
+
 
     '     Class CubicSplineVector
     ' 

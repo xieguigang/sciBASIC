@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de9dd79d4b0233a4da83179a6803246a, Data\SearchEngine\SearchEngine\Evaluation\Match.vb"
+﻿#Region "Microsoft.VisualBasic::de9dd79d4b0233a4da83179a6803246a, sciBASIC#\Data\SearchEngine\SearchEngine\Evaluation\Match.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 38
+    '    Code Lines: 22
+    ' Comment Lines: 10
+    '   Blank Lines: 6
+    '     File Size: 1.01 KB
+
 
     ' Structure Match
     ' 

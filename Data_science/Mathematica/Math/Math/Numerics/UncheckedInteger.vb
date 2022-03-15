@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::980bb25b4a501eb3f1124930c1671267, Data_science\Mathematica\Math\Math\Numerics\UncheckedInteger.vb"
+﻿#Region "Microsoft.VisualBasic::980bb25b4a501eb3f1124930c1671267, sciBASIC#\Data_science\Mathematica\Math\Math\Numerics\UncheckedInteger.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 76
+    '    Code Lines: 54
+    ' Comment Lines: 7
+    '   Blank Lines: 15
+    '     File Size: 2.57 KB
+
 
     '     Structure UncheckedInteger
     ' 

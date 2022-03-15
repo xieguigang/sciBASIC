@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d050dc125f2e05fbca1ec5699ac806f6, vs_solutions\dev\VisualStudio\sourceMap\mappingDecode.vb"
+﻿#Region "Microsoft.VisualBasic::d050dc125f2e05fbca1ec5699ac806f6, sciBASIC#\vs_solutions\dev\VisualStudio\sourceMap\mappingDecode.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 36
+    '    Code Lines: 29
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 1.20 KB
+
 
     '     Module mappingDecode
     ' 

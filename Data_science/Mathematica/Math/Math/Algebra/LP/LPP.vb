@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1ff0f0229bbb02f4c5bb2006949e174, Data_science\Mathematica\Math\Math\Algebra\LP\LPP.vb"
+﻿#Region "Microsoft.VisualBasic::b1ff0f0229bbb02f4c5bb2006949e174, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\LP\LPP.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 203
+    '    Code Lines: 132
+    ' Comment Lines: 45
+    '   Blank Lines: 26
+    '     File Size: 9.78 KB
+
 
     '     Class LPP
     ' 

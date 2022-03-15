@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7909c99f1defbbc99e82a63515792e03, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Models\Variable.vb"
+﻿#Region "Microsoft.VisualBasic::7909c99f1defbbc99e82a63515792e03, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\Models\Variable.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 51
+    '    Code Lines: 42
+    ' Comment Lines: 0
+    '   Blank Lines: 9
+    '     File Size: 1.68 KB
+
 
     '     Class Variable
     ' 

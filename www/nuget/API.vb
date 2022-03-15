@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e08e93c723cf18f3d232824d21ad5b5, www\nuget\API.vb"
+﻿#Region "Microsoft.VisualBasic::1e08e93c723cf18f3d232824d21ad5b5, sciBASIC#\www\nuget\API.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 3
+    '    Code Lines: 2
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 31.00 B
+
 
     ' Module API
     ' 

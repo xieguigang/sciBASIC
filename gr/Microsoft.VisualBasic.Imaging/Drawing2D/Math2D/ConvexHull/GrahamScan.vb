@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d90deff852096edc55b231535c331cb, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConvexHull\GrahamScan.vb"
+﻿#Region "Microsoft.VisualBasic::9d90deff852096edc55b231535c331cb, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConvexHull\GrahamScan.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 89
+    '    Code Lines: 73
+    ' Comment Lines: 0
+    '   Blank Lines: 16
+    '     File Size: 2.95 KB
+
 
     '     Module GrahamScan
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20576803c8aac243342ddac7618cd23f, Data_science\algorithms\CMeans\DEMO\Program.vb"
+﻿#Region "Microsoft.VisualBasic::20576803c8aac243342ddac7618cd23f, sciBASIC#\Data_science\algorithms\CMeans\DEMO\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 123
+    '    Code Lines: 91
+    ' Comment Lines: 13
+    '   Blank Lines: 19
+    '     File Size: 4.23 KB
+
 
     ' Module Program
     ' 

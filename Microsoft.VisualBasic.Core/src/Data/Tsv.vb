@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f64e58f8c379ac5d5e872027beeaadd4, Microsoft.VisualBasic.Core\src\Data\Tsv.vb"
+﻿#Region "Microsoft.VisualBasic::f64e58f8c379ac5d5e872027beeaadd4, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\Tsv.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 175
+    '    Code Lines: 112
+    ' Comment Lines: 44
+    '   Blank Lines: 19
+    '     File Size: 7.77 KB
+
 
     '     Module TsvFileIO
     ' 

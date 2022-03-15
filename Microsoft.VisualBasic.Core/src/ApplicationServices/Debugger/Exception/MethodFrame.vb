@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4be2c6aed1bae45a0ef0d6f229ed811e, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\MethodFrame.vb"
+﻿#Region "Microsoft.VisualBasic::4be2c6aed1bae45a0ef0d6f229ed811e, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\MethodFrame.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 24
+    '    Code Lines: 18
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 628.00 B
+
 
     '     Class Method
     ' 

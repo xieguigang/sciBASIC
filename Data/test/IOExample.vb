@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ebc0ac2697649f575a94b4901314ca0, Data\test\IOExample.vb"
+﻿#Region "Microsoft.VisualBasic::3ebc0ac2697649f575a94b4901314ca0, sciBASIC#\Data\test\IOExample.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 157
+    '    Code Lines: 103
+    ' Comment Lines: 10
+    '   Blank Lines: 44
+    '     File Size: 4.76 KB
+
 
     ' Module IOExample
     ' 

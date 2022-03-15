@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ebc0acb27e6002bb75c2f03711b0f9ac, Microsoft.VisualBasic.Core\src\Data\Trinity\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::ebc0acb27e6002bb75c2f03711b0f9ac, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\Trinity\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 24
+    '    Code Lines: 19
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 718.00 B
+
 
     '     Module Extensions
     ' 

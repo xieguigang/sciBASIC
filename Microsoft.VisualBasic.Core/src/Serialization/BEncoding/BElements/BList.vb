@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f298ad8c28fb982a2a3ff79012ee7490, Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BElements\BList.vb"
+﻿#Region "Microsoft.VisualBasic::5f27405a10df325bc173a113f0439e0b, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BElements\BList.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 55
+    '    Code Lines: 26
+    ' Comment Lines: 20
+    '   Blank Lines: 9
+    '     File Size: 1.77 KB
+
 
     '     Class BList
     ' 

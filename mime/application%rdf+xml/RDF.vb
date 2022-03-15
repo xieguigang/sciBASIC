@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90e4ab445881618c1e1e862acc3d84d5, mime\application%rdf+xml\RDF.vb"
+﻿#Region "Microsoft.VisualBasic::90e4ab445881618c1e1e862acc3d84d5, sciBASIC#\mime\application%rdf+xml\RDF.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 29
+    '    Code Lines: 11
+    ' Comment Lines: 14
+    '   Blank Lines: 4
+    '     File Size: 1.02 KB
+
 
     ' Class RDF
     ' 

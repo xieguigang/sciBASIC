@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0adbc52120f4399bc4bd23ef4b26a98e, Data_science\Mathematica\Math\Math\Quantile\X.vb"
+﻿#Region "Microsoft.VisualBasic::0adbc52120f4399bc4bd23ef4b26a98e, sciBASIC#\Data_science\Mathematica\Math\Math\Quantile\X.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 38
+    '    Code Lines: 15
+    ' Comment Lines: 18
+    '   Blank Lines: 5
+    '     File Size: 1.27 KB
+
 
     '     Class X
     ' 

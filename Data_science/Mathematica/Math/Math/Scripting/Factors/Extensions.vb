@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::81b3f215d912b8c9efdd501fd062166b, Data_science\Mathematica\Math\Math\Scripting\Factors\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::81b3f215d912b8c9efdd501fd062166b, sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Factors\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 53
+    '    Code Lines: 39
+    ' Comment Lines: 7
+    '   Blank Lines: 7
+    '     File Size: 1.97 KB
+
 
     '     Module FactorExtensions
     ' 

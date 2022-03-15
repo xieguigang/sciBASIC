@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8611498ebb5fdf1882e96b5f8e123bf6, Data_science\Visualization\Plots\3D\PieChart3D.vb"
+﻿#Region "Microsoft.VisualBasic::8611498ebb5fdf1882e96b5f8e123bf6, sciBASIC#\Data_science\Visualization\Plots\3D\PieChart3D.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 67
+    '    Code Lines: 58
+    ' Comment Lines: 1
+    '   Blank Lines: 8
+    '     File Size: 2.86 KB
+
 
     '     Module PieChart3D
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ba37d35a89a53e730191af6f9a56639, Data_science\Mathematica\data\least-squares\test2\test\testoutlier.vb"
+﻿#Region "Microsoft.VisualBasic::4ba37d35a89a53e730191af6f9a56639, sciBASIC#\Data_science\Mathematica\data\least-squares\test2\test\testoutlier.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 46
+    '    Code Lines: 24
+    ' Comment Lines: 4
+    '   Blank Lines: 18
+    '     File Size: 1.56 KB
+
 
     ' Module testoutlier
     ' 

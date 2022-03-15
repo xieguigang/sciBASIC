@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d046b5d36db10264ebb628156bdc4c90, Data_science\Mathematica\SignalProcessing\SignalProcessing\Source\DumpsSignal.vb"
+﻿#Region "Microsoft.VisualBasic::d046b5d36db10264ebb628156bdc4c90, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\Source\DumpsSignal.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 41
+    '    Code Lines: 22
+    ' Comment Lines: 12
+    '   Blank Lines: 7
+    '     File Size: 1.21 KB
+
 
     '     Module DumpsSignal
     ' 

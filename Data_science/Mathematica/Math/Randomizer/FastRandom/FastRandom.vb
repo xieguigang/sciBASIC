@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5fe11ea24a44bf758277e7a1c7668b8, Data_science\Mathematica\Math\Randomizer\FastRandom\FastRandom.vb"
+﻿#Region "Microsoft.VisualBasic::d5fe11ea24a44bf758277e7a1c7668b8, sciBASIC#\Data_science\Mathematica\Math\Randomizer\FastRandom\FastRandom.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 362
+    '    Code Lines: 181
+    ' Comment Lines: 133
+    '   Blank Lines: 48
+    '     File Size: 13.80 KB
+
 
     ' Class FastRandom
     ' 

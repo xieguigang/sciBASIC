@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c724a6c5019466b33322220c8ba14d3c, Data_science\Mathematica\Math\Math\Distributions\BinBox\BinMaps.vb"
+﻿#Region "Microsoft.VisualBasic::c724a6c5019466b33322220c8ba14d3c, sciBASIC#\Data_science\Mathematica\Math\Math\Distributions\BinBox\BinMaps.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 17
+    '    Code Lines: 7
+    ' Comment Lines: 9
+    '   Blank Lines: 1
+    '     File Size: 341.00 B
+
 
     '     Enum BinMaps
     ' 

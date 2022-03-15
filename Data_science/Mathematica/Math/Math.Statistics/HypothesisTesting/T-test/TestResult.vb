@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bda9c5aa85929f36dbf2635386dd758f, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\T-test\TestResult.vb"
+﻿#Region "Microsoft.VisualBasic::bda9c5aa85929f36dbf2635386dd758f, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\T-test\TestResult.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 84
+    '    Code Lines: 37
+    ' Comment Lines: 34
+    '   Blank Lines: 13
+    '     File Size: 2.80 KB
+
 
     '     Class TtestResult
     ' 

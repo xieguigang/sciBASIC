@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::575a21c47e9c5c1fe0f6fa46933415e6, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\ExceptionExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::575a21c47e9c5c1fe0f6fa46933415e6, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\ExceptionExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 24
+    '    Code Lines: 10
+    ' Comment Lines: 10
+    '   Blank Lines: 4
+    '     File Size: 844.00 B
+
 
     '     Delegate Sub
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f1863c3a4945a290067b72a352abc02, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\ParallelExtension.vb"
+﻿#Region "Microsoft.VisualBasic::ea56ce42c81b5bfd44b7321219c14f86, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\ParallelExtension.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 93
+    '    Code Lines: 37
+    ' Comment Lines: 49
+    '   Blank Lines: 7
+    '     File Size: 3.77 KB
+
 
     '     Module ParallelExtension
     ' 

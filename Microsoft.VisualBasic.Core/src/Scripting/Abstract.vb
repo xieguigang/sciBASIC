@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::581c915f18cd405a60353097d42aa234, Microsoft.VisualBasic.Core\src\Scripting\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::581c915f18cd405a60353097d42aa234, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\Abstract.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 38
+    '    Code Lines: 9
+    ' Comment Lines: 25
+    '   Blank Lines: 4
+    '     File Size: 1.50 KB
+
 
     '     Module Abstract
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e4655c16e3372225d723ca27812cefc, Data_science\MachineLearning\MachineLearning\Darwinism\DifferentialEvolution.vb"
+﻿#Region "Microsoft.VisualBasic::2e4655c16e3372225d723ca27812cefc, sciBASIC#\Data_science\MachineLearning\MachineLearning\Darwinism\DifferentialEvolution.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 296
+    '    Code Lines: 180
+    ' Comment Lines: 79
+    '   Blank Lines: 37
+    '     File Size: 14.01 KB
+
 
     '     Interface IIndividual
     ' 

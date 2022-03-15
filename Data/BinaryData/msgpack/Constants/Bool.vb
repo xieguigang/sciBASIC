@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9185ff40d7400dbfac5cf8ba569b12e0, Data\BinaryData\msgpack\Constants\Bool.vb"
+﻿#Region "Microsoft.VisualBasic::9185ff40d7400dbfac5cf8ba569b12e0, sciBASIC#\Data\BinaryData\msgpack\Constants\Bool.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 7
+    '    Code Lines: 6
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 178.00 B
+
 
     '     Class Bool
     ' 

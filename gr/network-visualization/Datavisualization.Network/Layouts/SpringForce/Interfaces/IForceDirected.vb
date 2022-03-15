@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34ecb531be9290215c3914d3845062bb, gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Interfaces\IForceDirected.vb"
+﻿#Region "Microsoft.VisualBasic::f89cbe78f5f3e5aa806dfac5fc5d8093, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Interfaces\IForceDirected.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 71
+    '    Code Lines: 20
+    ' Comment Lines: 42
+    '   Blank Lines: 9
+    '     File Size: 2.66 KB
+
+
     '     Delegate Sub
     ' 
     ' 
@@ -44,7 +54,7 @@
     ' 
     '         Function: GetBoundingBox, GetPoint, Nearest
     ' 
-    '         Sub: Calculate, Clear, EachEdge, EachNode, SetPhysics
+    '         Sub: Clear, EachEdge, EachNode, SetPhysics
     ' 
     ' 
     ' 

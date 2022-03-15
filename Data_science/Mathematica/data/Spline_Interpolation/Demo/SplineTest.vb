@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff1498b7422f97a77c059bec38f6e87e, Data_science\Mathematica\data\Spline_Interpolation\Demo\SplineTest.vb"
+﻿#Region "Microsoft.VisualBasic::ff1498b7422f97a77c059bec38f6e87e, sciBASIC#\Data_science\Mathematica\data\Spline_Interpolation\Demo\SplineTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 221
+    '    Code Lines: 184
+    ' Comment Lines: 11
+    '   Blank Lines: 26
+    '     File Size: 8.54 KB
+
 
     ' Module SplineTest
     ' 

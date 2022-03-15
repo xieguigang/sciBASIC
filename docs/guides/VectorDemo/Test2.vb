@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8f35eac7497559cb38a473c2a7da695, docs\guides\VectorDemo\Test2.vb"
+﻿#Region "Microsoft.VisualBasic::c8f35eac7497559cb38a473c2a7da695, sciBASIC#\docs\guides\VectorDemo\Test2.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 64
+    '    Code Lines: 45
+    ' Comment Lines: 5
+    '   Blank Lines: 14
+    '     File Size: 1.82 KB
+
 
     ' Module Test2
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::149889335b38136e0d3eccf502b78876, Microsoft.VisualBasic.Core\src\Extensions\Math\Information\Entropy.vb"
+﻿#Region "Microsoft.VisualBasic::e25019e5782153aaae9645412a0ff613, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Information\Entropy.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,19 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 102
+    '    Code Lines: 28
+    ' Comment Lines: 68
+    '   Blank Lines: 6
+    '     File Size: 4.58 KB
+
+
     '     Module Entropy
     ' 
-    '         Function: ShannonEnt, ShannonEntropy
+    '         Function: Gini, ShannonEnt, ShannonEntropy
     ' 
     ' 
     ' /********************************************************************************/

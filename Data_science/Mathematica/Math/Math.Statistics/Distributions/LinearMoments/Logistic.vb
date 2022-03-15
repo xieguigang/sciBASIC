@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::968f8036199258ba62fae5595d4e86e5, Data_science\Mathematica\Math\Math.Statistics\Distributions\LinearMoments\Logistic.vb"
+﻿#Region "Microsoft.VisualBasic::968f8036199258ba62fae5595d4e86e5, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Distributions\LinearMoments\Logistic.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 64
+    '    Code Lines: 49
+    ' Comment Lines: 10
+    '   Blank Lines: 5
+    '     File Size: 2.37 KB
+
 
     '     Class Logistic
     ' 

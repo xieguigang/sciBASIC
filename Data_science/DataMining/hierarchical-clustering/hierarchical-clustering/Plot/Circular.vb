@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84b4aedc70fcd72b85866d9e6a14dd53, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Plot\Circular.vb"
+﻿#Region "Microsoft.VisualBasic::58687702674acbe4e44af5fc1025737e, sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Plot\Circular.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 141
+    '    Code Lines: 112
+    ' Comment Lines: 5
+    '   Blank Lines: 24
+    '     File Size: 6.03 KB
+
 
     ' Class Circular
     ' 

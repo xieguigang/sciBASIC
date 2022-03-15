@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b72fbd8a7df1866bee5b7eed059b346, mime\text%html\Render\InitialContainer.vb"
+﻿#Region "Microsoft.VisualBasic::1b72fbd8a7df1866bee5b7eed059b346, sciBASIC#\mime\text%html\Render\InitialContainer.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 420
+    '    Code Lines: 228
+    ' Comment Lines: 103
+    '   Blank Lines: 89
+    '     File Size: 15.83 KB
+
 
     '     Class InitialContainer
     ' 

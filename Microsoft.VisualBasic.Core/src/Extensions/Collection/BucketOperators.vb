@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::79b7fdec7ccc63b6a3a733dfb733105d, Microsoft.VisualBasic.Core\src\Extensions\Collection\BucketOperators.vb"
+﻿#Region "Microsoft.VisualBasic::79b7fdec7ccc63b6a3a733dfb733105d, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\BucketOperators.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 104
+    '    Code Lines: 44
+    ' Comment Lines: 48
+    '   Blank Lines: 12
+    '     File Size: 4.22 KB
+
 
     ' Module BucketOperators
     ' 

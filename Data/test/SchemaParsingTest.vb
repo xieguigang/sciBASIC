@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc59474c0914fa67b1ac51e5a72f4219, Data\test\SchemaParsingTest.vb"
+﻿#Region "Microsoft.VisualBasic::fc59474c0914fa67b1ac51e5a72f4219, sciBASIC#\Data\test\SchemaParsingTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 23
+    '    Code Lines: 18
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 959.00 B
+
 
     ' Class SchemaParsingTest
     ' 

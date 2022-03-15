@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6796b3d56e20a46676cbfc068e948a5, Data_science\MachineLearning\Bootstrapping\Normalization.vb"
+﻿#Region "Microsoft.VisualBasic::e6796b3d56e20a46676cbfc068e948a5, sciBASIC#\Data_science\MachineLearning\Bootstrapping\Normalization.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 86
+    '    Code Lines: 63
+    ' Comment Lines: 15
+    '   Blank Lines: 8
+    '     File Size: 3.14 KB
+
 
     ' Module Normalization
     ' 

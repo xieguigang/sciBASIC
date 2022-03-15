@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ebdf46fff322a8fbaf22989b286305b2, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\Options.vb"
+﻿#Region "Microsoft.VisualBasic::ebdf46fff322a8fbaf22989b286305b2, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\Options.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 24
+    '    Code Lines: 13
+    ' Comment Lines: 9
+    '   Blank Lines: 2
+    '     File Size: 542.00 B
+
 
     '     Enum Overwrite
     ' 

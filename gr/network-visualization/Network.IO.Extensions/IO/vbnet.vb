@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f9e4c7e5ce897361688eb3944ac3c87, gr\network-visualization\Network.IO.Extensions\IO\vbnet.vb"
+﻿#Region "Microsoft.VisualBasic::7f9e4c7e5ce897361688eb3944ac3c87, sciBASIC#\gr\network-visualization\Network.IO.Extensions\IO\vbnet.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 45
+    '    Code Lines: 25
+    ' Comment Lines: 14
+    '   Blank Lines: 6
+    '     File Size: 1.55 KB
+
 
     '     Class vbnet
     ' 

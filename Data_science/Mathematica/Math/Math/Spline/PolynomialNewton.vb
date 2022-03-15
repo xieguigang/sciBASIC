@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ffd6c99ce5d92930a25749aac38bdd24, Data_science\Mathematica\Math\Math\Spline\PolynomialNewton.vb"
+﻿#Region "Microsoft.VisualBasic::ffd6c99ce5d92930a25749aac38bdd24, sciBASIC#\Data_science\Mathematica\Math\Math\Spline\PolynomialNewton.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 106
+    '    Code Lines: 61
+    ' Comment Lines: 27
+    '   Blank Lines: 18
+    '     File Size: 3.76 KB
+
 
     '     Module PolynomialNewton
     ' 

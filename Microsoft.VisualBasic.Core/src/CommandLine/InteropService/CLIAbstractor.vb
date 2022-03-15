@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::620a74df1490b707ca723085e2996b2e, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\CLIAbstractor.vb"
+﻿#Region "Microsoft.VisualBasic::620a74df1490b707ca723085e2996b2e, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\InteropService\CLIAbstractor.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 86
+    '    Code Lines: 65
+    ' Comment Lines: 10
+    '   Blank Lines: 11
+    '     File Size: 3.70 KB
+
 
     '     Module CLIAbstractor
     ' 

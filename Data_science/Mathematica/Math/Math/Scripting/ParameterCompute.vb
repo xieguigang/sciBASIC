@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5121dbd8630bbdc719f8e610ad9b8ce, Data_science\Mathematica\Math\Math\Scripting\ParameterCompute.vb"
+﻿#Region "Microsoft.VisualBasic::d5121dbd8630bbdc719f8e610ad9b8ce, sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\ParameterCompute.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 172
+    '    Code Lines: 107
+    ' Comment Lines: 43
+    '   Blank Lines: 22
+    '     File Size: 7.94 KB
+
 
     '     Module ParameterExpressionScript
     ' 

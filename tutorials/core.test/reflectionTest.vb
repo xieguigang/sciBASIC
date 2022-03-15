@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29e621c2f7755e88fcd68e59145237cd, tutorials\core.test\reflectionTest.vb"
+﻿#Region "Microsoft.VisualBasic::29e621c2f7755e88fcd68e59145237cd, sciBASIC#\tutorials\core.test\reflectionTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 140
+    '    Code Lines: 51
+    ' Comment Lines: 57
+    '   Blank Lines: 32
+    '     File Size: 5.27 KB
+
 
     ' Module reflectionTest
     ' 

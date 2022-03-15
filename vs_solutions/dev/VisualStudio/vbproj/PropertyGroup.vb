@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5dffcf545e9f7dc01bdb8f0f011fbec, vs_solutions\dev\VisualStudio\vbproj\PropertyGroup.vb"
+﻿#Region "Microsoft.VisualBasic::a5dffcf545e9f7dc01bdb8f0f011fbec, sciBASIC#\vs_solutions\dev\VisualStudio\vbproj\PropertyGroup.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 65
+    '    Code Lines: 61
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 2.86 KB
+
 
     '     Class PropertyGroup
     ' 

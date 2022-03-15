@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3b8e9e7c5f86befaa750e163617aa80, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Models\IGraphNode.vb"
+﻿#Region "Microsoft.VisualBasic::e3b8e9e7c5f86befaa750e163617aa80, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\Models\IGraphNode.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 45
+    '    Code Lines: 15
+    ' Comment Lines: 16
+    '   Blank Lines: 14
+    '     File Size: 1.49 KB
+
 
     '     Interface IGraphNode
     ' 

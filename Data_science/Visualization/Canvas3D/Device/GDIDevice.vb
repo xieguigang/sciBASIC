@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b708a6535a64e0db78dd6ec0bf4765fd, Data_science\Visualization\Canvas3D\Device\GDIDevice.vb"
+﻿#Region "Microsoft.VisualBasic::b708a6535a64e0db78dd6ec0bf4765fd, sciBASIC#\Data_science\Visualization\Canvas3D\Device\GDIDevice.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 235
+    '    Code Lines: 161
+    ' Comment Lines: 41
+    '   Blank Lines: 33
+    '     File Size: 7.65 KB
+
 
     '     Class GDIDevice
     ' 

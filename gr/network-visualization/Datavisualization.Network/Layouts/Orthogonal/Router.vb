@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::905db0976cd26f4a77eb621287c91b09, gr\network-visualization\Datavisualization.Network\Layouts\Orthogonal\Router.vb"
+﻿#Region "Microsoft.VisualBasic::905db0976cd26f4a77eb621287c91b09, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Orthogonal\Router.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 42
+    '    Code Lines: 19
+    ' Comment Lines: 16
+    '   Blank Lines: 7
+    '     File Size: 1.85 KB
+
 
     '     Module Router
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::518e99c49cc149033d90d0cddccafbb7, Data\OCR\OpticalCharacter.vb"
+﻿#Region "Microsoft.VisualBasic::518e99c49cc149033d90d0cddccafbb7, sciBASIC#\Data\OCR\OpticalCharacter.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 59
+    '    Code Lines: 40
+    ' Comment Lines: 9
+    '   Blank Lines: 10
+    '     File Size: 1.67 KB
+
 
     ' Class OpticalCharacter
     ' 

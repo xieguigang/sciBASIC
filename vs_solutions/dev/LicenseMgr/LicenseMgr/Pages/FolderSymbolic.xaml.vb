@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c038e448e84af2295159d3e505335cf, vs_solutions\dev\LicenseMgr\LicenseMgr\Pages\FolderSymbolic.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::e54a536d882ffc4bdd2631f41fa10f57, sciBASIC#\vs_solutions\dev\LicenseMgr\LicenseMgr\Pages\FolderSymbolic.xaml.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,16 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 75
+    '    Code Lines: 54
+    ' Comment Lines: 8
+    '   Blank Lines: 13
+    '     File Size: 3.22 KB
+
+
     '     Class FolderSymbolic
     ' 
     '         Constructor: (+1 Overloads) Sub New
@@ -41,17 +51,13 @@
 
 #End Region
 
-Imports FirstFloor.ModernUI.Presentation
-Imports FirstFloor.ModernUI.Windows.Controls
-Imports System.IO
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Media
-'Imports Microsoft.VisualBasic.FileIO.SymLinker
-Imports Microsoft
+Imports FirstFloor.ModernUI.Presentation
+Imports FirstFloor.ModernUI.Windows.Controls
+Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.ApplicationServices
-'Imports Microsoft.VisualBasic.Windows.Forms
 
 Namespace Pages
 
@@ -84,7 +90,7 @@ Namespace Pages
                 Try
 
                     Dim rootDir$ = BrowsedFolder.Text
-                    Dim failures = Development.LicenseMgr.Inserts(info, rootDir)
+                    Dim failures = CodeSign.LicenseMgr.Inserts(info, rootDir)
 
                     If failures.Length > 0 Then
                         Dim ex As New Exception("These files are write data failures!")

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d9d98d865f68908ed7970cbc274fe2a, mime\application%pdf\PdfReader\Document\PdfDebugBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::c61ca96a5f5ab3988e3558ad0900b454, sciBASIC#\mime\application%pdf\PdfReader\Document\PdfDebugBuilder.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 389
+    '    Code Lines: 322
+    ' Comment Lines: 2
+    '   Blank Lines: 65
+    '     File Size: 13.91 KB
+
 
     '     Class PdfDebugBuilder
     ' 

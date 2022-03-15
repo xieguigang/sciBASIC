@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eda1b6a42e778bc44dde43f84f74aaf2, Data\DataFrame\IO\NetStream\RowObject.vb"
+﻿#Region "Microsoft.VisualBasic::eda1b6a42e778bc44dde43f84f74aaf2, sciBASIC#\Data\DataFrame\IO\NetStream\RowObject.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 84
+    '    Code Lines: 0
+    ' Comment Lines: 68
+    '   Blank Lines: 16
+    '     File Size: 3.08 KB
+
 
     ' 
     ' /********************************************************************************/

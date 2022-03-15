@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e42b09b4627d054b75ba6e7b4da14f00, Data_science\DataMining\DataMining\Clustering\DBSCAN\DbscanAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::64b8f1f017bd6dbfb64d1f6b80ff96ca, sciBASIC#\Data_science\DataMining\DataMining\Clustering\DBSCAN\DbscanAlgorithm.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 144
+    '    Code Lines: 95
+    ' Comment Lines: 29
+    '   Blank Lines: 20
+    '     File Size: 5.72 KB
+
 
     '     Class DbscanAlgorithm
     ' 

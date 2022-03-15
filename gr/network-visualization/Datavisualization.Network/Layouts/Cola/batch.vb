@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6d5fe54b527272a72a0db73db9f7c1e, gr\network-visualization\Datavisualization.Network\Layouts\Cola\batch.vb"
+﻿#Region "Microsoft.VisualBasic::c6d5fe54b527272a72a0db73db9f7c1e, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\batch.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 163
+    '    Code Lines: 117
+    ' Comment Lines: 27
+    '   Blank Lines: 19
+    '     File Size: 8.19 KB
+
 
     '     Module batch
     ' 

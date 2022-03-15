@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a92e639703ea4a4ae4f1b00f40ddb78d, mime\application%xml\MathML\Expression\MathFunctionExpression.vb"
+﻿#Region "Microsoft.VisualBasic::a92e639703ea4a4ae4f1b00f40ddb78d, sciBASIC#\mime\application%xml\MathML\Expression\MathFunctionExpression.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 12
+    '    Code Lines: 9
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 350.00 B
+
 
     '     Class MathFunctionExpression
     ' 

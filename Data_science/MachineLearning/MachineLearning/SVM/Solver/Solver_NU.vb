@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e97fc618aea52ea9f926f3682729d774, Data_science\MachineLearning\MachineLearning\SVM\Solver\Solver_NU.vb"
+﻿#Region "Microsoft.VisualBasic::e97fc618aea52ea9f926f3682729d774, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\Solver\Solver_NU.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 247
+    '    Code Lines: 188
+    ' Comment Lines: 15
+    '   Blank Lines: 44
+    '     File Size: 8.78 KB
+
 
     '     Class Solver_NU
     ' 

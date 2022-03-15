@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71d0cd9147178764a43a20b37c147aec, Data\BinaryData\DataStorage\netCDF\Components\Header.vb"
+﻿#Region "Microsoft.VisualBasic::71d0cd9147178764a43a20b37c147aec, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\Header.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 106
+    '    Code Lines: 40
+    ' Comment Lines: 52
+    '   Blank Lines: 14
+    '     File Size: 3.59 KB
+
 
     '     Class Header
     ' 

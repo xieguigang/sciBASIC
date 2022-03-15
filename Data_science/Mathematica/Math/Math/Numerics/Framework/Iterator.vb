@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::62ba84d57fabde09150e5ee2c05dac64, Data_science\Mathematica\Math\Math\Numerics\Framework\Iterator.vb"
+﻿#Region "Microsoft.VisualBasic::62ba84d57fabde09150e5ee2c05dac64, sciBASIC#\Data_science\Mathematica\Math\Math\Numerics\Framework\Iterator.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 43
+    '    Code Lines: 27
+    ' Comment Lines: 7
+    '   Blank Lines: 9
+    '     File Size: 1.28 KB
+
 
     '     Module Iterator
     ' 

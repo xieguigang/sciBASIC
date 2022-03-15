@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ed7a83939f80aeff4bd32660502ba69, Data\BinaryData\DataStorage\HDF5\structure\GroupNode.vb"
+﻿#Region "Microsoft.VisualBasic::2ed7a83939f80aeff4bd32660502ba69, sciBASIC#\Data\BinaryData\DataStorage\HDF5\structure\GroupNode.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 98
+    '    Code Lines: 51
+    ' Comment Lines: 23
+    '   Blank Lines: 24
+    '     File Size: 3.82 KB
+
 
     '     Class GroupNode
     ' 

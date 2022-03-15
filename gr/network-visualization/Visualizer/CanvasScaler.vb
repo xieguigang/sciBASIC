@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f791c82963c241cece84669d01eedd87, gr\network-visualization\Visualizer\CanvasScaler.vb"
+﻿#Region "Microsoft.VisualBasic::f791c82963c241cece84669d01eedd87, sciBASIC#\gr\network-visualization\Visualizer\CanvasScaler.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 127
+    '    Code Lines: 42
+    ' Comment Lines: 71
+    '   Blank Lines: 14
+    '     File Size: 5.11 KB
+
 
     ' Module CanvasScaler
     ' 

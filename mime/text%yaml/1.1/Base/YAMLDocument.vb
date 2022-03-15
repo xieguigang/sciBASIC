@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5e21d34583e5876b30f42bf2aeeecd7, mime\text%yaml\1.1\Base\YAMLDocument.vb"
+﻿#Region "Microsoft.VisualBasic::c5e21d34583e5876b30f42bf2aeeecd7, sciBASIC#\mime\text%yaml\1.1\Base\YAMLDocument.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 37
+    '    Code Lines: 28
+    ' Comment Lines: 0
+    '   Blank Lines: 9
+    '     File Size: 985.00 B
+
 
     '     Class YAMLDocument
     ' 

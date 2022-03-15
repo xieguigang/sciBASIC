@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff15ebdde82f1587fed23a6797692799, www\Microsoft.VisualBasic.Webservices.Bing\DOI\Response.vb"
+﻿#Region "Microsoft.VisualBasic::ff15ebdde82f1587fed23a6797692799, sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\DOI\Response.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 28
+    '    Code Lines: 24
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 796.00 B
+
 
     '     Class Response
     ' 

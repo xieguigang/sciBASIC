@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d50d0ba2fcaaee407553abd3d8e34a41, Microsoft.VisualBasic.Core\src\Data\Trinity\Word.vb"
+﻿#Region "Microsoft.VisualBasic::d50d0ba2fcaaee407553abd3d8e34a41, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\Trinity\Word.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 21
+    '    Code Lines: 17
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 622.00 B
+
 
     '     Class Word
     ' 

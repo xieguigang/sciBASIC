@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f3beff9b1935ec5c39357aaa0c1b439, Data\DataFrame\Mappings.vb"
+﻿#Region "Microsoft.VisualBasic::4f3beff9b1935ec5c39357aaa0c1b439, sciBASIC#\Data\DataFrame\Mappings.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 110
+    '    Code Lines: 60
+    ' Comment Lines: 37
+    '   Blank Lines: 13
+    '     File Size: 4.66 KB
+
 
     ' Class MappingsHelper
     ' 

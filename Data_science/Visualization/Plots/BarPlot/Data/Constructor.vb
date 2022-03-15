@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce9dff6e75345b85ffc5d27e07848ca1, Data_science\Visualization\Plots\BarPlot\Data\Constructor.vb"
+﻿#Region "Microsoft.VisualBasic::ce9dff6e75345b85ffc5d27e07848ca1, sciBASIC#\Data_science\Visualization\Plots\BarPlot\Data\Constructor.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 80
+    '    Code Lines: 64
+    ' Comment Lines: 7
+    '   Blank Lines: 9
+    '     File Size: 3.08 KB
+
 
     '     Module Constructor
     ' 

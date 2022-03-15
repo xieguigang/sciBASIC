@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d42e865588a0ba13d09d6f8fbd4c03c9, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\Task.vb"
+﻿#Region "Microsoft.VisualBasic::d42e865588a0ba13d09d6f8fbd4c03c9, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\Task.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 83
+    '    Code Lines: 52
+    ' Comment Lines: 16
+    '   Blank Lines: 15
+    '     File Size: 2.66 KB
+
 
     '     Class Task
     ' 

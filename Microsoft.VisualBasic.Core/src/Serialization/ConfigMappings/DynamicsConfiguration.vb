@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::62eeaf8e27a3cb53c7e82e79da5c4304, Microsoft.VisualBasic.Core\src\Serialization\ConfigMappings\DynamicsConfiguration.vb"
+﻿#Region "Microsoft.VisualBasic::62eeaf8e27a3cb53c7e82e79da5c4304, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\ConfigMappings\DynamicsConfiguration.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 83
+    '    Code Lines: 52
+    ' Comment Lines: 15
+    '   Blank Lines: 16
+    '     File Size: 3.33 KB
+
 
     '     Class DynamicsConfiguration
     ' 

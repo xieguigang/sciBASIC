@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9d1d6e75ce6f2e87f7805f516701162, www\Microsoft.VisualBasic.NETProtocol\Persistent\Socket\TcpClient.vb"
+﻿#Region "Microsoft.VisualBasic::b9d1d6e75ce6f2e87f7805f516701162, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Persistent\Socket\TcpClient.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 350
+    '    Code Lines: 202
+    ' Comment Lines: 90
+    '   Blank Lines: 58
+    '     File Size: 13.64 KB
+
 
     '     Class PersistentClient
     ' 

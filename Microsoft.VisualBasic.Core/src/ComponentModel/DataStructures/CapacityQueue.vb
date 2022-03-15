@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3671c550d58132fc3b4056767b3e8568, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\CapacityQueue.vb"
+﻿#Region "Microsoft.VisualBasic::3671c550d58132fc3b4056767b3e8568, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\CapacityQueue.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 58
+    '    Code Lines: 39
+    ' Comment Lines: 5
+    '   Blank Lines: 14
+    '     File Size: 1.70 KB
+
 
     '     Class CapacityQueue
     ' 

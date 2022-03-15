@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45cba76eb3740ed7b4fc2419ff4ccfe9, Microsoft.VisualBasic.Core\src\Extensions\IO\SymLinker\JunctionPoint.vb"
+﻿#Region "Microsoft.VisualBasic::45cba76eb3740ed7b4fc2419ff4ccfe9, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\SymLinker\JunctionPoint.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 384
+    '    Code Lines: 224
+    ' Comment Lines: 99
+    '   Blank Lines: 61
+    '     File Size: 16.66 KB
+
 
     '     Module JunctionPoint
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b669aeb9c1c27a7f86850e88c9f2be13, Data\BinaryData\BinaryData\Bzip2\Algorithm\BZip2BitInputStream.vb"
+﻿#Region "Microsoft.VisualBasic::b669aeb9c1c27a7f86850e88c9f2be13, sciBASIC#\Data\BinaryData\BinaryData\Bzip2\Algorithm\BZip2BitInputStream.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 104
+    '    Code Lines: 59
+    ' Comment Lines: 27
+    '   Blank Lines: 18
+    '     File Size: 4.00 KB
+
 
     '     Class BZip2BitInputStream
     ' 

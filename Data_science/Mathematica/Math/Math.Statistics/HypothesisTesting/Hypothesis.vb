@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf7a152cbf3f8938020766d7d480b22a, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\Hypothesis.vb"
+﻿#Region "Microsoft.VisualBasic::bf7a152cbf3f8938020766d7d480b22a, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\Hypothesis.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 19
+    '    Code Lines: 8
+    ' Comment Lines: 9
+    '   Blank Lines: 2
+    '     File Size: 498.00 B
+
 
     '     Enum Hypothesis
     ' 

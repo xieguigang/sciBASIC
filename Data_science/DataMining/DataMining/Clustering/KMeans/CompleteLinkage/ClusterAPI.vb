@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0088fb11e73ddc8c713e86ee50631be, Data_science\DataMining\DataMining\Clustering\KMeans\CompleteLinkage\ClusterAPI.vb"
+﻿#Region "Microsoft.VisualBasic::a0088fb11e73ddc8c713e86ee50631be, sciBASIC#\Data_science\DataMining\DataMining\Clustering\KMeans\CompleteLinkage\ClusterAPI.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 101
+    '    Code Lines: 68
+    ' Comment Lines: 7
+    '   Blank Lines: 26
+    '     File Size: 4.30 KB
+
 
     '     Module ClusterAPI
     ' 

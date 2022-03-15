@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db3b8e9543d16ef36a97631e72ad620e, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\xConsole\xConsole.vb"
+﻿#Region "Microsoft.VisualBasic::db3b8e9543d16ef36a97631e72ad620e, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\xConsole\xConsole.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 517
+    '    Code Lines: 285
+    ' Comment Lines: 152
+    '   Blank Lines: 80
+    '     File Size: 20.61 KB
+
 
     '     Module xConsole
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c591217a593356b481506d2f083bf58, Data_science\Darwinism\GeneticAlgorithm\GAF_example\Demo.vb"
+﻿#Region "Microsoft.VisualBasic::9c591217a593356b481506d2f083bf58, sciBASIC#\Data_science\Darwinism\GeneticAlgorithm\GAF_example\Demo.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 89
+    '    Code Lines: 59
+    ' Comment Lines: 15
+    '   Blank Lines: 15
+    '     File Size: 3.37 KB
+
 
     ' Class Demo
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::287c1a39afa8da80bea3ecda95b010cc, Data_science\Visualization\test\SampleVisualizeTest.vb"
+﻿#Region "Microsoft.VisualBasic::287c1a39afa8da80bea3ecda95b010cc, sciBASIC#\Data_science\Visualization\test\SampleVisualizeTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 15
+    '    Code Lines: 10
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 354.00 B
+
 
     ' Module SampleVisualizeTest
     ' 

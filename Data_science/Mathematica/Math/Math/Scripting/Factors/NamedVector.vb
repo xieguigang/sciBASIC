@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3fd3d9ff7f99ed4146d03523b018a6f5, Data_science\Mathematica\Math\Math\Scripting\Factors\NamedVector.vb"
+﻿#Region "Microsoft.VisualBasic::3fd3d9ff7f99ed4146d03523b018a6f5, sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Factors\NamedVector.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 65
+    '    Code Lines: 47
+    ' Comment Lines: 8
+    '   Blank Lines: 10
+    '     File Size: 2.32 KB
+
 
     '     Class NamedVector
     ' 

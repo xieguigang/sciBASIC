@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e524d44895bd7e4d882390dff2e2092, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Gumbel.vb"
+﻿#Region "Microsoft.VisualBasic::1e524d44895bd7e4d882390dff2e2092, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Gumbel.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 49
+    '    Code Lines: 35
+    ' Comment Lines: 9
+    '   Blank Lines: 5
+    '     File Size: 1.77 KB
+
 
     '     Class Gumbel
     ' 

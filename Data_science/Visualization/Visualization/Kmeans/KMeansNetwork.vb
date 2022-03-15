@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::635463b36f93a129c080a6f851f3c9c3, Data_science\Visualization\Visualization\Kmeans\KMeansNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::635463b36f93a129c080a6f851f3c9c3, sciBASIC#\Data_science\Visualization\Visualization\Kmeans\KMeansNetwork.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 101
+    '    Code Lines: 84
+    ' Comment Lines: 5
+    '   Blank Lines: 12
+    '     File Size: 4.16 KB
+
 
     '     Module KMeansNetwork
     ' 

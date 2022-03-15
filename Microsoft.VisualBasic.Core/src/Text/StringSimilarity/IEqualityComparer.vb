@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e55be13f3c8d0809bcc427b49cb1e3ca, Microsoft.VisualBasic.Core\src\Text\StringSimilarity\IEqualityComparer.vb"
+﻿#Region "Microsoft.VisualBasic::e55be13f3c8d0809bcc427b49cb1e3ca, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\StringSimilarity\IEqualityComparer.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 71
+    '    Code Lines: 43
+    ' Comment Lines: 19
+    '   Blank Lines: 9
+    '     File Size: 2.51 KB
+
 
     '     Class StringEqualityHelper
     ' 

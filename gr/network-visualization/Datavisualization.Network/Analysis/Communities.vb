@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4008a943bb6863ab05bdd794fe447186, gr\network-visualization\Datavisualization.Network\Analysis\Communities.vb"
+﻿#Region "Microsoft.VisualBasic::f3de3c1ad2639a3aac10bd19245b5588, sciBASIC#\gr\network-visualization\Datavisualization.Network\Analysis\Communities.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,19 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 122
+    '    Code Lines: 79
+    ' Comment Lines: 17
+    '   Blank Lines: 26
+    '     File Size: 4.57 KB
+
+
     '     Class Communities
     ' 
-    '         Function: Analysis, Community, GetCommunitySet, Modularity
+    '         Function: Analysis, AnalysisUnweighted, Community, GetCommunitySet, Modularity
     ' 
     ' 
     ' /********************************************************************************/
@@ -41,6 +51,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Data.GraphTheory.Analysis
+Imports Microsoft.VisualBasic.Data.GraphTheory.Analysis.FastUnfolding
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 
@@ -111,6 +122,30 @@ Namespace Analysis
 
             Dim mov As Double = (1.0 / (2.0 * m)) * q
             Return mov
+        End Function
+
+        Public Shared Function AnalysisUnweighted(ByRef g As NetworkGraph, Optional directed As Boolean = True) As NetworkGraph
+            Dim maps As New KeyMaps
+
+            For Each link As Edge In g.graphEdges
+                Call maps(link.U.label).Add(link.V.label)
+                'If Not directed Then
+                Call maps(link.V.label).Add(link.U.label)
+                'End If
+            Next
+
+            Dim clustering As New FastUnfolding(maps)
+            Dim communities = clustering.Analysis
+
+            maps = communities.Item1
+
+            For Each group In maps.Keys
+                For Each id As String In maps(group)
+                    g.GetElementByID(id).data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE) = group
+                Next
+            Next
+
+            Return g
         End Function
 
         ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::061b3ee093fbc9e7589605b692dbcd45, mime\application%pdf\PdfReader\Tokenizer\TokenStringLiteral.vb"
+﻿#Region "Microsoft.VisualBasic::99fc674cdee403b48fc7cc46fb6ea0ae, sciBASIC#\mime\application%pdf\PdfReader\Tokenizer\TokenStringLiteral.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 92
+    '    Code Lines: 73
+    ' Comment Lines: 5
+    '   Blank Lines: 14
+    '     File Size: 3.80 KB
+
 
     '     Class TokenStringLiteral
     ' 

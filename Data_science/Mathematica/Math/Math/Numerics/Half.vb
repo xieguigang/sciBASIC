@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::216ba640b8f32fbb45c0022a8705be67, Data_science\Mathematica\Math\Math\Numerics\Half.vb"
+﻿#Region "Microsoft.VisualBasic::216ba640b8f32fbb45c0022a8705be67, sciBASIC#\Data_science\Mathematica\Math\Math\Numerics\Half.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1058
+    '    Code Lines: 387
+    ' Comment Lines: 535
+    '   Blank Lines: 136
+    '     File Size: 51.14 KB
+
 
     '     Structure Half
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2713d81c7a1bd6735daa510054d42127, Data\BinaryData\DataStorage\HDF5\dataset\filters\ReservedFilters.vb"
+﻿#Region "Microsoft.VisualBasic::2713d81c7a1bd6735daa510054d42127, sciBASIC#\Data\BinaryData\DataStorage\HDF5\dataset\filters\ReservedFilters.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 36
+    '    Code Lines: 11
+    ' Comment Lines: 24
+    '   Blank Lines: 1
+    '     File Size: 919.00 B
+
 
     '     Enum ReservedFilters
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27cbcec043181af3574f5b31c69d9e1d, mime\text%html\Document\Elements\Image.vb"
+﻿#Region "Microsoft.VisualBasic::27cbcec043181af3574f5b31c69d9e1d, sciBASIC#\mime\text%html\Document\Elements\Image.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 55
+    '    Code Lines: 36
+    ' Comment Lines: 9
+    '   Blank Lines: 10
+    '     File Size: 2.17 KB
+
 
     '     Class Image
     ' 

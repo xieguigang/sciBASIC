@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47ce05ab7d1f0d93d6141c042f8d2245, mime\text%html\Render\CSS\CssPropertyAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::47ce05ab7d1f0d93d6141c042f8d2245, sciBASIC#\mime\text%html\Render\CSS\CssPropertyAttribute.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 26
+    '    Code Lines: 11
+    ' Comment Lines: 11
+    '   Blank Lines: 4
+    '     File Size: 782.00 B
+
 
     '     Class CssPropertyAttribute
     ' 

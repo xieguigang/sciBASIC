@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ee2f8cff11dadab6afab790cc16069f, Microsoft.VisualBasic.Core\src\My\Framework\FrameworkConfig.vb"
+﻿#Region "Microsoft.VisualBasic::7ee2f8cff11dadab6afab790cc16069f, sciBASIC#\Microsoft.VisualBasic.Core\src\My\Framework\FrameworkConfig.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 28
+    '    Code Lines: 19
+    ' Comment Lines: 4
+    '   Blank Lines: 5
+    '     File Size: 900.00 B
+
 
     '     Class FrameworkConfigAttribute
     ' 

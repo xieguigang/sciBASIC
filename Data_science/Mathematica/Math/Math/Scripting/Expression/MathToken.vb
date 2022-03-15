@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11a32cbf1fad335af1b0e7870f15cd60, Data_science\Mathematica\Math\Math\Scripting\Expression\MathToken.vb"
+﻿#Region "Microsoft.VisualBasic::5968315bd5c118d751d8be8d8f064109, sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Expression\MathToken.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,19 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 32
+    '    Code Lines: 23
+    ' Comment Lines: 4
+    '   Blank Lines: 5
+    '     File Size: 780.00 B
+
+
     '     Class MathToken
+    ' 
+    '         Properties: ZERO
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

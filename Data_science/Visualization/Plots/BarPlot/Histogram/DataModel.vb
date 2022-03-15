@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe531378bf78eb40977bea9a403e17a4, Data_science\Visualization\Plots\BarPlot\Histogram\DataModel.vb"
+﻿#Region "Microsoft.VisualBasic::fe531378bf78eb40977bea9a403e17a4, sciBASIC#\Data_science\Visualization\Plots\BarPlot\Histogram\DataModel.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 189
+    '    Code Lines: 128
+    ' Comment Lines: 39
+    '   Blank Lines: 22
+    '     File Size: 6.22 KB
+
 
     '     Structure HistogramData
     ' 

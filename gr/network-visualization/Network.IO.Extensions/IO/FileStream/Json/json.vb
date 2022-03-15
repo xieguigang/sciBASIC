@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74f4cf58c885fcfdef95af796520d1d1, gr\network-visualization\Network.IO.Extensions\IO\FileStream\Json\json.vb"
+﻿#Region "Microsoft.VisualBasic::74f4cf58c885fcfdef95af796520d1d1, sciBASIC#\gr\network-visualization\Network.IO.Extensions\IO\FileStream\Json\json.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 56
+    '    Code Lines: 37
+    ' Comment Lines: 8
+    '   Blank Lines: 11
+    '     File Size: 1.85 KB
+
 
     '     Class net
     ' 

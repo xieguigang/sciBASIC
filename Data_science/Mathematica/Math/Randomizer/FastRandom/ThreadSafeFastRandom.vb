@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf2da557fd2588452d6670a23ff753f5, Data_science\Mathematica\Math\Randomizer\FastRandom\ThreadSafeFastRandom.vb"
+﻿#Region "Microsoft.VisualBasic::cf2da557fd2588452d6670a23ff753f5, sciBASIC#\Data_science\Mathematica\Math\Randomizer\FastRandom\ThreadSafeFastRandom.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 125
+    '    Code Lines: 74
+    ' Comment Lines: 24
+    '   Blank Lines: 27
+    '     File Size: 4.50 KB
+
 
     ' Module ThreadSafeFastRandom
     ' 

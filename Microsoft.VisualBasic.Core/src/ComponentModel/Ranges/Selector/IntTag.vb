@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cad912ae1140ccfb151d96a22f387105, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Selector\IntTag.vb"
+﻿#Region "Microsoft.VisualBasic::cad912ae1140ccfb151d96a22f387105, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Selector\IntTag.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 50
+    '    Code Lines: 41
+    ' Comment Lines: 0
+    '   Blank Lines: 9
+    '     File Size: 1.75 KB
+
 
     '     Structure IntTag
     ' 

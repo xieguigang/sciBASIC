@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::733749350b0bf2d9facb2f819ea6beba, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Planner.vb"
+﻿#Region "Microsoft.VisualBasic::51ad9e833a6c0061109996fd70eea05b, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Planner.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 201
+    '    Code Lines: 150
+    ' Comment Lines: 18
+    '   Blank Lines: 33
+    '     File Size: 7.35 KB
+
 
     '     Class Planner
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61c1e954ab5b1b2692e6084b6ac0215e, Data_science\DataMining\DynamicProgramming\Generic\GenericSymbol.vb"
+﻿#Region "Microsoft.VisualBasic::61c1e954ab5b1b2692e6084b6ac0215e, sciBASIC#\Data_science\DataMining\DynamicProgramming\Generic\GenericSymbol.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 37
+    '    Code Lines: 29
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 1.18 KB
+
 
     ' Class GenericSymbol
     ' 

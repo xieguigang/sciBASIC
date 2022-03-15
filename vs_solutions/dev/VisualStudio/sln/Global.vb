@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1095d194f47d7e7d60cda0c853481f6a, vs_solutions\dev\VisualStudio\sln\Global.vb"
+﻿#Region "Microsoft.VisualBasic::1095d194f47d7e7d60cda0c853481f6a, sciBASIC#\vs_solutions\dev\VisualStudio\sln\Global.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 6
+    '    Code Lines: 4
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 74.00 B
+
 
     '     Class [Global]
     ' 

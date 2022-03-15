@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::552ee95a1179b4dbfe7b774f034ebd00, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\LCS.vb"
+﻿#Region "Microsoft.VisualBasic::552ee95a1179b4dbfe7b774f034ebd00, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\LCS.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 75
+    '    Code Lines: 51
+    ' Comment Lines: 9
+    '   Blank Lines: 15
+    '     File Size: 2.56 KB
+
 
     '     Module LongestCommonSubsequenceExtension
     ' 

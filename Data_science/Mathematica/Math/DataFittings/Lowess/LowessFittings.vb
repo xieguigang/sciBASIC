@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::778bc3554a0ac39616dc79f52d2f3dba, Data_science\Mathematica\Math\DataFittings\Lowess\LowessFittings.vb"
+﻿#Region "Microsoft.VisualBasic::f38f134424eb7bee9e476467d5b47995, sciBASIC#\Data_science\Mathematica\Math\DataFittings\Lowess\LowessFittings.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 301
+    '    Code Lines: 187
+    ' Comment Lines: 66
+    '   Blank Lines: 48
+    '     File Size: 10.79 KB
+
 
     ' Module LowessFittings
     ' 

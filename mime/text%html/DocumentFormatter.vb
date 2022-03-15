@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::72e4b70fd5a8764990683fecf5ffac91, mime\text%html\DocumentFormatter.vb"
+﻿#Region "Microsoft.VisualBasic::72e4b70fd5a8764990683fecf5ffac91, sciBASIC#\mime\text%html\DocumentFormatter.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 50
+    '    Code Lines: 22
+    ' Comment Lines: 20
+    '   Blank Lines: 8
+    '     File Size: 1.70 KB
+
 
     ' Module DocumentFormatter
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5627d797e358395d6809a740869d3048, Data_science\Mathematica\Math\Math\Distributions\Abundance.vb"
+﻿#Region "Microsoft.VisualBasic::5627d797e358395d6809a740869d3048, sciBASIC#\Data_science\Mathematica\Math\Math\Distributions\Abundance.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 47
+    '    Code Lines: 36
+    ' Comment Lines: 6
+    '   Blank Lines: 5
+    '     File Size: 1.89 KB
+
 
     '     Module Abundance
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3568d27bae2c091bb5c92f6aa85c2517, Data_science\Visualization\Visualization\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::3568d27bae2c091bb5c92f6aa85c2517, sciBASIC#\Data_science\Visualization\Visualization\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 101
+    '    Code Lines: 74
+    ' Comment Lines: 17
+    '   Blank Lines: 10
+    '     File Size: 4.07 KB
+
 
     ' Module Extensions
     ' 

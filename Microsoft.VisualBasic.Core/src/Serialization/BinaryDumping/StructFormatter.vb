@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::643441f00248ad1e5d3cf531e26528f1, Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\StructFormatter.vb"
+﻿#Region "Microsoft.VisualBasic::643441f00248ad1e5d3cf531e26528f1, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\StructFormatter.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 58
+    '    Code Lines: 34
+    ' Comment Lines: 17
+    '   Blank Lines: 7
+    '     File Size: 2.38 KB
+
 
     '     Module StructFormatter
     ' 

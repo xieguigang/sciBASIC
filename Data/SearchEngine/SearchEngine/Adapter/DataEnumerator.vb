@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b87ee11c2e1b886c1016d8733b8a2dd, Data\SearchEngine\SearchEngine\Adapter\DataEnumerator.vb"
+﻿#Region "Microsoft.VisualBasic::6b87ee11c2e1b886c1016d8733b8a2dd, sciBASIC#\Data\SearchEngine\SearchEngine\Adapter\DataEnumerator.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 118
+    '    Code Lines: 81
+    ' Comment Lines: 21
+    '   Blank Lines: 16
+    '     File Size: 4.54 KB
+
 
     ' Module DataEnumerator
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10cd986be3fd926160839206cb975118, Microsoft.VisualBasic.Core\src\Extensions\Reflection\ScriptMeta.vb"
+﻿#Region "Microsoft.VisualBasic::10cd986be3fd926160839206cb975118, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Reflection\ScriptMeta.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 130
+    '    Code Lines: 87
+    ' Comment Lines: 28
+    '   Blank Lines: 15
+    '     File Size: 4.21 KB
+
 
     ' Module ScriptMeta
     ' 

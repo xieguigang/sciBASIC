@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f94715148a8c93f8c1d6244523d6924b, Data_science\MachineLearning\Bootstrapping\Monte-Carlo\CodeGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::f94715148a8c93f8c1d6244523d6924b, sciBASIC#\Data_science\MachineLearning\Bootstrapping\Monte-Carlo\CodeGenerator.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 136
+    '    Code Lines: 84
+    ' Comment Lines: 24
+    '   Blank Lines: 28
+    '     File Size: 4.72 KB
+
 
     '     Module CodeGenerator
     ' 

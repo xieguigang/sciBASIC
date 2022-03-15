@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0226bbd0b1ec3b44424b853fe3771726, Data_science\MachineLearning\MachineLearning\SVM\Parameter\SvmType.vb"
+﻿#Region "Microsoft.VisualBasic::0226bbd0b1ec3b44424b853fe3771726, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\Parameter\SvmType.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 27
+    '    Code Lines: 9
+    ' Comment Lines: 18
+    '   Blank Lines: 0
+    '     File Size: 607.00 B
+
 
     '     Enum SvmType
     ' 

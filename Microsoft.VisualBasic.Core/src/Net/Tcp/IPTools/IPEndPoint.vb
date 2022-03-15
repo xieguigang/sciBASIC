@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::00ce0d7c0c9908966cda62b23071bb2e, Microsoft.VisualBasic.Core\src\Net\Tcp\IPTools\IPEndPoint.vb"
+﻿#Region "Microsoft.VisualBasic::12b382a5d580c3fff9baacc62b669fad, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\Tcp\IPTools\IPEndPoint.vb"
 
     ' Author:
     ' 
@@ -31,12 +31,22 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 142
+    '    Code Lines: 73
+    ' Comment Lines: 46
+    '   Blank Lines: 23
+    '     File Size: 4.94 KB
+
+
     '     Class IPEndPoint
     ' 
     '         Properties: guid, ipAddress, IsValid, port
     ' 
     '         Constructor: (+4 Overloads) Sub New
-    '         Function: GetIPEndPoint, GetValue, IsIpv4Address, ToString
+    '         Function: CreateLocal, GetIPEndPoint, GetValue, IsIpv4Address, ToString
     ' 
     ' 
     ' /********************************************************************************/

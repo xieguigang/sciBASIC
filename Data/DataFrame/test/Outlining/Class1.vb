@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f524fbb68291258c1f6914b7fa502e06, Data\DataFrame\test\Outlining\Class1.vb"
+﻿#Region "Microsoft.VisualBasic::f524fbb68291258c1f6914b7fa502e06, sciBASIC#\Data\DataFrame\test\Outlining\Class1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 47
+    '    Code Lines: 40
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 2.01 KB
+
 
     ' Class compound
     ' 

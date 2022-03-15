@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::62865e892fb4d8b58978d835778f2699, Data_science\Visualization\test\Module3.vb"
+﻿#Region "Microsoft.VisualBasic::62865e892fb4d8b58978d835778f2699, sciBASIC#\Data_science\Visualization\test\Module3.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 17
+    '    Code Lines: 12
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 491.00 B
+
 
     ' Module Module3
     ' 

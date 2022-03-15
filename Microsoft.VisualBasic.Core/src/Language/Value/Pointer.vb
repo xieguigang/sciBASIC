@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef16285bcf1dd1e43c4720a98796fe49, Microsoft.VisualBasic.Core\src\Language\Value\Pointer.vb"
+﻿#Region "Microsoft.VisualBasic::ef16285bcf1dd1e43c4720a98796fe49, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\Pointer.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 143
+    '    Code Lines: 71
+    ' Comment Lines: 52
+    '   Blank Lines: 20
+    '     File Size: 4.74 KB
+
 
     '     Class Pointer
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b78c275b4a9348fc00ecfb15990c859c, Microsoft.VisualBasic.Core\src\Scripting\Runtime\BinaryOperator.vb"
+﻿#Region "Microsoft.VisualBasic::b78c275b4a9348fc00ecfb15990c859c, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\Runtime\BinaryOperator.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 152
+    '    Code Lines: 87
+    ' Comment Lines: 45
+    '   Blank Lines: 20
+    '     File Size: 5.44 KB
+
 
     '     Class BinaryOperator
     ' 

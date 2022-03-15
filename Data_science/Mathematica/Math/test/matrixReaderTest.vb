@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a40fa59daadf651158d3eb085208fa81, Data_science\Mathematica\Math\test\matrixReaderTest.vb"
+﻿#Region "Microsoft.VisualBasic::bb5d0af101a651cd6d3a2b5c52cf0ef2, sciBASIC#\Data_science\Mathematica\Math\test\matrixReaderTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 14
+    '    Code Lines: 10
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 446.00 B
+
 
     ' Module matrixReaderTest
     ' 

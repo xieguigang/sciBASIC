@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a4eedc42dc822538b5ae473f6b77c0f, Data\BinaryData\DataStorage\netCDF\Components\attribute.vb"
+﻿#Region "Microsoft.VisualBasic::9a4eedc42dc822538b5ae473f6b77c0f, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\attribute.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 88
+    '    Code Lines: 58
+    ' Comment Lines: 18
+    '   Blank Lines: 12
+    '     File Size: 3.42 KB
+
 
     '     Class attribute
     ' 

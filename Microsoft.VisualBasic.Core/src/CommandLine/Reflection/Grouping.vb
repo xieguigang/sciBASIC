@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99cd40f5ce68d259dc1ed4697b33d09d, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Grouping.vb"
+﻿#Region "Microsoft.VisualBasic::99cd40f5ce68d259dc1ed4697b33d09d, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Grouping.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 101
+    '    Code Lines: 74
+    ' Comment Lines: 10
+    '   Blank Lines: 17
+    '     File Size: 3.90 KB
+
 
     '     Class Grouping
     ' 

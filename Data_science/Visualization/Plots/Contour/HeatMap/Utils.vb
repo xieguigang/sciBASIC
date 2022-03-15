@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01185c2ae5b47e9818982345c83543d0, Data_science\Visualization\Plots\Contour\HeatMap\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::01185c2ae5b47e9818982345c83543d0, sciBASIC#\Data_science\Visualization\Plots\Contour\HeatMap\Utils.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 310
+    '    Code Lines: 203
+    ' Comment Lines: 86
+    '   Blank Lines: 21
+    '     File Size: 13.63 KB
+
 
     '     Module Utils
     ' 

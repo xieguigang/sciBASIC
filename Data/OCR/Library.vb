@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bdc1c09bffdad9d62610d317cea0cdec, Data\OCR\Library.vb"
+﻿#Region "Microsoft.VisualBasic::bdc1c09bffdad9d62610d317cea0cdec, sciBASIC#\Data\OCR\Library.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 141
+    '    Code Lines: 101
+    ' Comment Lines: 17
+    '   Blank Lines: 23
+    '     File Size: 5.24 KB
+
 
     ' Class Library
     ' 

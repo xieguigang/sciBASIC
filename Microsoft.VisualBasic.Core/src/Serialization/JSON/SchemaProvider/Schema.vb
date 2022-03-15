@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b71e24fa0391addb7022cf3116ed3d6, Microsoft.VisualBasic.Core\src\Serialization\JSON\SchemaProvider\Schema.vb"
+﻿#Region "Microsoft.VisualBasic::0b71e24fa0391addb7022cf3116ed3d6, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\JSON\SchemaProvider\Schema.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 58
+    '    Code Lines: 26
+    ' Comment Lines: 24
+    '   Blank Lines: 8
+    '     File Size: 1.74 KB
+
 
     '     Class Schema
     ' 

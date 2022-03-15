@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::509c595b181e32feb6f26159ff36302d, tutorials\PipelineTest\Program.vb"
+﻿#Region "Microsoft.VisualBasic::509c595b181e32feb6f26159ff36302d, sciBASIC#\tutorials\PipelineTest\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 107
+    '    Code Lines: 73
+    ' Comment Lines: 11
+    '   Blank Lines: 23
+    '     File Size: 3.30 KB
+
 
     ' Module Program
     ' 

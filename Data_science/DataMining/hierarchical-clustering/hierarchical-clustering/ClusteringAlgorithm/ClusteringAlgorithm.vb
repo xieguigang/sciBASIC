@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb13666e7b35ce0f0618b9c5f84ef5e5, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm\ClusteringAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::fb13666e7b35ce0f0618b9c5f84ef5e5, sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm\ClusteringAlgorithm.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 27
+    '    Code Lines: 6
+    ' Comment Lines: 17
+    '   Blank Lines: 4
+    '     File Size: 1.32 KB
+
 
     ' Interface ClusteringAlgorithm
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3368ebe9b7c4bdcd8d69e3c4f3fd02ff, Data_science\Mathematica\Math\Math\FuzzyLogic\MembershipFunction.vb"
+﻿#Region "Microsoft.VisualBasic::3368ebe9b7c4bdcd8d69e3c4f3fd02ff, sciBASIC#\Data_science\Mathematica\Math\Math\FuzzyLogic\MembershipFunction.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 121
+    '    Code Lines: 44
+    ' Comment Lines: 54
+    '   Blank Lines: 23
+    '     File Size: 3.82 KB
+
 
     '     Class MembershipFunction
     ' 

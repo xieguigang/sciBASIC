@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13c0d0aa24d0f0328ded6d32f18d33d1, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\ExportApiInformation.vb"
+﻿#Region "Microsoft.VisualBasic::13c0d0aa24d0f0328ded6d32f18d33d1, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Reflection\ExportApiInformation.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 78
+    '    Code Lines: 64
+    ' Comment Lines: 3
+    '   Blank Lines: 11
+    '     File Size: 2.53 KB
+
 
     '     Class ExportApiInformation
     ' 

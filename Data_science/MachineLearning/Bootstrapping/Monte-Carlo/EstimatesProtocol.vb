@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab774272ec46a91216c982d4a4813469, Data_science\MachineLearning\Bootstrapping\Monte-Carlo\EstimatesProtocol.vb"
+﻿#Region "Microsoft.VisualBasic::ab774272ec46a91216c982d4a4813469, sciBASIC#\Data_science\MachineLearning\Bootstrapping\Monte-Carlo\EstimatesProtocol.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 348
+    '    Code Lines: 242
+    ' Comment Lines: 63
+    '   Blank Lines: 43
+    '     File Size: 16.42 KB
+
 
     '     Module EstimatesProtocol
     ' 

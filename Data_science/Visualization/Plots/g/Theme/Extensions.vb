@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75933bc5701fa7906a9018c8109553f3, Data_science\Visualization\Plots\g\Theme\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::75933bc5701fa7906a9018c8109553f3, sciBASIC#\Data_science\Visualization\Plots\g\Theme\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 16
+    '    Code Lines: 13
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 405.00 B
+
 
     '     Module Extensions
     ' 

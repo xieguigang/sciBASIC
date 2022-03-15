@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe0e195744016013d6bc30ab975104cc, Microsoft.VisualBasic.Core\src\Scripting\Runtime\Where.vb"
+﻿#Region "Microsoft.VisualBasic::fe0e195744016013d6bc30ab975104cc, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\Runtime\Where.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 121
+    '    Code Lines: 71
+    ' Comment Lines: 34
+    '   Blank Lines: 16
+    '     File Size: 3.92 KB
+
 
     '     Enum Logics
     ' 

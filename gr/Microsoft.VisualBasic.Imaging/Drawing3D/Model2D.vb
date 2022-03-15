@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9350f213975a6889e4dac61bcf1ca80d, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Model2D.vb"
+﻿#Region "Microsoft.VisualBasic::9350f213975a6889e4dac61bcf1ca80d, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Model2D.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 52
+    '    Code Lines: 38
+    ' Comment Lines: 6
+    '   Blank Lines: 8
+    '     File Size: 1.63 KB
+
 
     '     Class Model2D
     ' 

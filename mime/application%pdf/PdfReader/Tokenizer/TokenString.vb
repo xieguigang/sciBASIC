@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b37960968321b649e3c8c58264cf2f6c, mime\application%pdf\PdfReader\Tokenizer\TokenString.vb"
+﻿#Region "Microsoft.VisualBasic::71c02a2b550222daa2bac71e65b48dd8, sciBASIC#\mime\application%pdf\PdfReader\Tokenizer\TokenString.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 58
+    '    Code Lines: 44
+    ' Comment Lines: 4
+    '   Blank Lines: 10
+    '     File Size: 2.00 KB
+
 
     '     Class TokenString
     ' 

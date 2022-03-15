@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::49858a28b558a9ab68c7a3553a77ee89, Data_science\MachineLearning\MachineLearning\SVM\RangeTransform\IRangeTransform.vb"
+﻿#Region "Microsoft.VisualBasic::49858a28b558a9ab68c7a3553a77ee89, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\RangeTransform\IRangeTransform.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 38
+    '    Code Lines: 6
+    ' Comment Lines: 30
+    '   Blank Lines: 2
+    '     File Size: 1.57 KB
+
 
     '     Interface IRangeTransform
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66b0996955f0f90ac83217611f39b3de, Data\BinaryData\DataStorage\netCDF\Data\Xml.vb"
+﻿#Region "Microsoft.VisualBasic::66b0996955f0f90ac83217611f39b3de, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Data\Xml.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 71
+    '    Code Lines: 38
+    ' Comment Lines: 24
+    '   Blank Lines: 9
+    '     File Size: 2.50 KB
+
 
     '     Class Xml
     ' 

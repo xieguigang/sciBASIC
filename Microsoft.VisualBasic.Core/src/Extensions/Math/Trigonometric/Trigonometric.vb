@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2a8285bf60a6be77e19b4ad56e0ee48, Microsoft.VisualBasic.Core\src\Extensions\Math\Trigonometric\Trigonometric.vb"
+﻿#Region "Microsoft.VisualBasic::d2a8285bf60a6be77e19b4ad56e0ee48, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Trigonometric\Trigonometric.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 158
+    '    Code Lines: 80
+    ' Comment Lines: 55
+    '   Blank Lines: 23
+    '     File Size: 6.12 KB
+
 
     '     Module Trigonometric
     ' 

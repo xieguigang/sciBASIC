@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b00440d4f7706e4bc0f20dd433ca5f2f, vs_solutions\dev\VisualStudio\IL\ILInstruction.vb"
+﻿#Region "Microsoft.VisualBasic::b00440d4f7706e4bc0f20dd433ca5f2f, sciBASIC#\vs_solutions\dev\VisualStudio\IL\ILInstruction.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 116
+    '    Code Lines: 81
+    ' Comment Lines: 12
+    '   Blank Lines: 23
+    '     File Size: 4.12 KB
+
 
     '     Class ILInstruction
     ' 

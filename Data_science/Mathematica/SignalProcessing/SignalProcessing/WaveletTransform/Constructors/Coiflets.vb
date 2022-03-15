@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a72c5d3a980fb316f41d68b7e2337b73, Data_science\Mathematica\SignalProcessing\SignalProcessing\WaveletTransform\Constructors\Coiflets.vb"
+﻿#Region "Microsoft.VisualBasic::a72c5d3a980fb316f41d68b7e2337b73, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\WaveletTransform\Constructors\Coiflets.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 37
+    '    Code Lines: 34
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 2.75 KB
+
 
     '     Class Coiflets
     ' 

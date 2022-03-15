@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db0731c1b3b2da14a20ad1c15c49de7f, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\TraceBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::db0731c1b3b2da14a20ad1c15c49de7f, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\TraceBuffer.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 87
+    '    Code Lines: 66
+    ' Comment Lines: 0
+    '   Blank Lines: 21
+    '     File Size: 3.00 KB
+
 
     '     Class TraceBuffer
     ' 

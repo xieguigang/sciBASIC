@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2fb9c656753077274a4c14b6c3ef9d6, vs_solutions\dev\ApplicationServices\Win32\PriorityClass.vb"
+﻿#Region "Microsoft.VisualBasic::d2fb9c656753077274a4c14b6c3ef9d6, sciBASIC#\vs_solutions\dev\ApplicationServices\Win32\PriorityClass.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 43
+    '    Code Lines: 17
+    ' Comment Lines: 21
+    '   Blank Lines: 5
+    '     File Size: 1.76 KB
+
 
     '     Module PriorityClass
     ' 

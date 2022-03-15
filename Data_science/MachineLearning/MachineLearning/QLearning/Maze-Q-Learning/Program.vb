@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d64db20302840e678ae4c5ac41b112d, Data_science\MachineLearning\MachineLearning\QLearning\Maze-Q-Learning\Program.vb"
+﻿#Region "Microsoft.VisualBasic::8d64db20302840e678ae4c5ac41b112d, sciBASIC#\Data_science\MachineLearning\MachineLearning\QLearning\Maze-Q-Learning\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 7
+    '    Code Lines: 6
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 143.00 B
+
 
     ' Module Program
     ' 

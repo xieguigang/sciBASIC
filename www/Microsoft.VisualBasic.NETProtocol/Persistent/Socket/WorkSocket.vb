@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5489bad5d7e1a506ed7d57fe9928511b, www\Microsoft.VisualBasic.NETProtocol\Persistent\Socket\WorkSocket.vb"
+﻿#Region "Microsoft.VisualBasic::5489bad5d7e1a506ed7d57fe9928511b, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Persistent\Socket\WorkSocket.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 51
+    '    Code Lines: 31
+    ' Comment Lines: 12
+    '   Blank Lines: 8
+    '     File Size: 1.70 KB
+
 
     '     Class WorkSocket
     ' 

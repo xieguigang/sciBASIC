@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2937fb5a9f802ac484f61dd5b8c32b46, Data_science\DataMining\DynamicProgramming\SmithWaterman\LocalHSPMatch.vb"
+﻿#Region "Microsoft.VisualBasic::2937fb5a9f802ac484f61dd5b8c32b46, sciBASIC#\Data_science\DataMining\DynamicProgramming\SmithWaterman\LocalHSPMatch.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 85
+    '    Code Lines: 46
+    ' Comment Lines: 24
+    '   Blank Lines: 15
+    '     File Size: 2.80 KB
+
 
     '     Class LocalHSPMatch
     ' 

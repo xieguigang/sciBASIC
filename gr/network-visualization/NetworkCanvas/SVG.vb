@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83705d3dac3f4a5bec210503fa86740b, gr\network-visualization\NetworkCanvas\SVG.vb"
+﻿#Region "Microsoft.VisualBasic::5f8117c6fcdca7fb1c49a280cbf042bc, sciBASIC#\gr\network-visualization\NetworkCanvas\SVG.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 162
+    '    Code Lines: 134
+    ' Comment Lines: 15
+    '   Blank Lines: 13
+    '     File Size: 7.11 KB
+
 
     ' Module SVGExtensions
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de05da1320c106d357f0b861b1381be5, Data_science\Graph\Model\TimeSerialsGraph.vb"
+﻿#Region "Microsoft.VisualBasic::de05da1320c106d357f0b861b1381be5, sciBASIC#\Data_science\Graph\Model\TimeSerialsGraph.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 6
+    '    Code Lines: 2
+    ' Comment Lines: 3
+    '   Blank Lines: 1
+    '     File Size: 108.00 B
+
 
     ' Module TimeSerialsGraph
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e8486a30c239586537e6dea3be6d41f2, mime\text%yaml\1.1\Base\YAMLSequenceNode.vb"
+﻿#Region "Microsoft.VisualBasic::e8486a30c239586537e6dea3be6d41f2, sciBASIC#\mime\text%yaml\1.1\Base\YAMLSequenceNode.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 182
+    '    Code Lines: 151
+    ' Comment Lines: 0
+    '   Blank Lines: 31
+    '     File Size: 5.64 KB
+
 
     '     Class YAMLSequenceNode
     ' 

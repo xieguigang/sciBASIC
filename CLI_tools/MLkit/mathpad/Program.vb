@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e2b4da7d271b6a20fdbf2d99995426f, CLI_tools\MLkit\mathpad\Program.vb"
+﻿#Region "Microsoft.VisualBasic::7e2b4da7d271b6a20fdbf2d99995426f, sciBASIC#\CLI_tools\MLkit\mathpad\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 28
+    '    Code Lines: 19
+    ' Comment Lines: 1
+    '   Blank Lines: 8
+    '     File Size: 659.00 B
+
 
     ' Module Program
     ' 

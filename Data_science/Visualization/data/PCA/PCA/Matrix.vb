@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50f2e605b892092a30e287fa91ffc6b3, Data_science\Visualization\data\PCA\PCA\Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::50f2e605b892092a30e287fa91ffc6b3, sciBASIC#\Data_science\Visualization\data\PCA\PCA\Matrix.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 68
+    '    Code Lines: 38
+    ' Comment Lines: 13
+    '   Blank Lines: 17
+    '     File Size: 1.57 KB
+
 
     ' Module Matrix
     ' 

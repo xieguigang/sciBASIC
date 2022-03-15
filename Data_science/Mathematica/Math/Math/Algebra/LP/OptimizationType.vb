@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff145209d5fb7f23f5d4d58cac265084, Data_science\Mathematica\Math\Math\Algebra\LP\OptimizationType.vb"
+﻿#Region "Microsoft.VisualBasic::ff145209d5fb7f23f5d4d58cac265084, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\LP\OptimizationType.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 16
+    '    Code Lines: 7
+    ' Comment Lines: 6
+    '   Blank Lines: 3
+    '     File Size: 357.00 B
+
 
     '     Enum OptimizationType
     ' 

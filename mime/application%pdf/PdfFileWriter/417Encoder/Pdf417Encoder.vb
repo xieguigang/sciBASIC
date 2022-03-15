@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::504f22d6ffcdb35e3f2021f98f267e4f, mime\application%pdf\PdfFileWriter\417Encoder\Pdf417Encoder.vb"
+﻿#Region "Microsoft.VisualBasic::74f17e7be61e13776d980c41829760a7, sciBASIC#\mime\application%pdf\PdfFileWriter\417Encoder\Pdf417Encoder.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1290
+    '    Code Lines: 689
+    ' Comment Lines: 374
+    '   Blank Lines: 227
+    '     File Size: 46.88 KB
+
 
     ' Enum EncodingControl
     ' 

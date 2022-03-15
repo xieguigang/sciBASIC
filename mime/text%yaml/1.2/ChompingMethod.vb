@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bedcc4bc233daac4c1f0f8f6ed56313c, mime\text%yaml\1.2\ChompingMethod.vb"
+﻿#Region "Microsoft.VisualBasic::bedcc4bc233daac4c1f0f8f6ed56313c, sciBASIC#\mime\text%yaml\1.2\ChompingMethod.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 25
+    '    Code Lines: 9
+    ' Comment Lines: 12
+    '   Blank Lines: 4
+    '     File Size: 513.00 B
+
 
     '     Enum ChompingMethod
     ' 

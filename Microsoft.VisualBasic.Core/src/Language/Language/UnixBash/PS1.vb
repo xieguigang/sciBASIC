@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe79dc9907f00af89005ab4d3bed2e97, Microsoft.VisualBasic.Core\src\Language\Language\UnixBash\PS1.vb"
+﻿#Region "Microsoft.VisualBasic::fe79dc9907f00af89005ab4d3bed2e97, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\UnixBash\PS1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 195
+    '    Code Lines: 99
+    ' Comment Lines: 69
+    '   Blank Lines: 27
+    '     File Size: 6.26 KB
+
 
     '     Class PS1
     ' 

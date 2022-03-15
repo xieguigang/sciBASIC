@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c3d6fadfb4889846ae2ae9f7229b627, Data\DataFrame\StorageProvider\Reflection\Attributes\DataAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::7c3d6fadfb4889846ae2ae9f7229b627, sciBASIC#\Data\DataFrame\StorageProvider\Reflection\Attributes\DataAttribute.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 10
+    '    Code Lines: 7
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 201.00 B
+
 
     '     Class DataAttribute
     ' 

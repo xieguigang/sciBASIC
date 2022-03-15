@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3eb61de4c62bf6c27ce287fa53b1434, gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Handle\Handle.vb"
+﻿#Region "Microsoft.VisualBasic::e3eb61de4c62bf6c27ce287fa53b1434, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Handle\Handle.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 150
+    '    Code Lines: 83
+    ' Comment Lines: 45
+    '   Blank Lines: 22
+    '     File Size: 5.20 KB
+
 
     '     Class Handle
     ' 

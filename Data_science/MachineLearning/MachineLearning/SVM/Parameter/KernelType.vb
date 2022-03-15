@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9744808cc8a340d85c9c452ef09d504d, Data_science\MachineLearning\MachineLearning\SVM\Parameter\KernelType.vb"
+﻿#Region "Microsoft.VisualBasic::9744808cc8a340d85c9c452ef09d504d, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\Parameter\KernelType.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 28
+    '    Code Lines: 9
+    ' Comment Lines: 18
+    '   Blank Lines: 1
+    '     File Size: 706.00 B
+
 
     '     Enum KernelType
     ' 

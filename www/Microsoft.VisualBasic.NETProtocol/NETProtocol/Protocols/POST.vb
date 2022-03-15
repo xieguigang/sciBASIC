@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95fb1dad6e52689ae619566b466a7ad2, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\Protocols\POST.vb"
+﻿#Region "Microsoft.VisualBasic::95fb1dad6e52689ae619566b466a7ad2, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\NETProtocol\Protocols\POST.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 24
+    '    Code Lines: 14
+    ' Comment Lines: 4
+    '   Blank Lines: 6
+    '     File Size: 586.00 B
+
 
     '     Class InitPOSTBack
     ' 

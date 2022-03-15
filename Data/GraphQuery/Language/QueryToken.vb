@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c09791bb244fb80b0519f844934ff396, Data\GraphQuery\Language\QueryToken.vb"
+﻿#Region "Microsoft.VisualBasic::c09791bb244fb80b0519f844934ff396, sciBASIC#\Data\GraphQuery\Language\QueryToken.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 37
+    '    Code Lines: 31
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 937.00 B
+
 
     '     Class QueryToken
     ' 

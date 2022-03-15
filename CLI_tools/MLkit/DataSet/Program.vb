@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::982b9381f238719b604c8a0ee77b1906, CLI_tools\MLkit\DataSet\Program.vb"
+﻿#Region "Microsoft.VisualBasic::982b9381f238719b604c8a0ee77b1906, sciBASIC#\CLI_tools\MLkit\DataSet\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 67
+    '    Code Lines: 53
+    ' Comment Lines: 5
+    '   Blank Lines: 9
+    '     File Size: 2.76 KB
+
 
     ' Module Program
     ' 

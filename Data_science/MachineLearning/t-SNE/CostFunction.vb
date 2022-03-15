@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b14575111acb769e54ce30377d1c624d, Data_science\MachineLearning\t-SNE\CostFunction.vb"
+﻿#Region "Microsoft.VisualBasic::b14575111acb769e54ce30377d1c624d, sciBASIC#\Data_science\MachineLearning\t-SNE\CostFunction.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 88
+    '    Code Lines: 59
+    ' Comment Lines: 8
+    '   Blank Lines: 21
+    '     File Size: 2.37 KB
+
 
     ' Class CostFunction
     ' 

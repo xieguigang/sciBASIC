@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc09b231248d9abaf45f2d3f13fe6122, gr\Microsoft.VisualBasic.Imaging\SVG\Renderer.vb"
+﻿#Region "Microsoft.VisualBasic::bc09b231248d9abaf45f2d3f13fe6122, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\Renderer.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 89
+    '    Code Lines: 67
+    ' Comment Lines: 12
+    '   Blank Lines: 10
+    '     File Size: 3.19 KB
+
 
     '     Module Renderer
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf604f709a0ada068726574cd3cccdda, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Tree\BinaryTree\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::cf604f709a0ada068726574cd3cccdda, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Tree\BinaryTree\Abstract.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 17
+    '    Code Lines: 12
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 620.00 B
+
 
     '     Class TreeMap
     ' 

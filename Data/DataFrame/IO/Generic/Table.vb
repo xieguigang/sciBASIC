@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ddf2f9c4eacaf51fa9b7f26e5060f321, Data\DataFrame\IO\Generic\Table.vb"
+﻿#Region "Microsoft.VisualBasic::ddf2f9c4eacaf51fa9b7f26e5060f321, sciBASIC#\Data\DataFrame\IO\Generic\Table.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 127
+    '    Code Lines: 80
+    ' Comment Lines: 31
+    '   Blank Lines: 16
+    '     File Size: 5.06 KB
+
 
     '     Class Table
     ' 

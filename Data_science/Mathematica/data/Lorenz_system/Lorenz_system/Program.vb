@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e76cfef3ea5708e0bb0d6d916303a2e, Data_science\Mathematica\data\Lorenz_system\Lorenz_system\Program.vb"
+﻿#Region "Microsoft.VisualBasic::4e76cfef3ea5708e0bb0d6d916303a2e, sciBASIC#\Data_science\Mathematica\data\Lorenz_system\Lorenz_system\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 115
+    '    Code Lines: 105
+    ' Comment Lines: 0
+    '   Blank Lines: 10
+    '     File Size: 3.91 KB
+
 
     ' Module Program
     ' 

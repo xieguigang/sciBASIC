@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f55b44ccaca05d1edae7551d0b6e9456, Microsoft.VisualBasic.Core\src\Text\Parser\TryParse.vb"
+﻿#Region "Microsoft.VisualBasic::f55b44ccaca05d1edae7551d0b6e9456, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Parser\TryParse.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 47
+    '    Code Lines: 29
+    ' Comment Lines: 12
+    '   Blank Lines: 6
+    '     File Size: 1.47 KB
+
 
     '     Enum TryParseOptions
     ' 

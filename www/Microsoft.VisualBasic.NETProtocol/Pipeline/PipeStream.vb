@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fcef67d082278c0a628092039df11539, www\Microsoft.VisualBasic.NETProtocol\Pipeline\PipeStream.vb"
+﻿#Region "Microsoft.VisualBasic::fcef67d082278c0a628092039df11539, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Pipeline\PipeStream.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 31
+    '    Code Lines: 19
+    ' Comment Lines: 3
+    '   Blank Lines: 9
+    '     File Size: 746.00 B
+
 
     '     Class PipeStream
     ' 

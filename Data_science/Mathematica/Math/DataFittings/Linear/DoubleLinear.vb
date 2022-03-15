@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cbb536d9f835d795193fda151e6b80ca, Data_science\Mathematica\Math\DataFittings\Linear\DoubleLinear.vb"
+﻿#Region "Microsoft.VisualBasic::cbb536d9f835d795193fda151e6b80ca, sciBASIC#\Data_science\Mathematica\Math\DataFittings\Linear\DoubleLinear.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 157
+    '    Code Lines: 110
+    ' Comment Lines: 25
+    '   Blank Lines: 22
+    '     File Size: 5.35 KB
+
 
     ' Delegate Function
     ' 

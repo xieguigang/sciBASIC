@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5edaf5369d53c5468fdb9e5cbdd22a4, Data_science\Mathematica\Math\Math\Spline\CatmullRomSpline.vb"
+﻿#Region "Microsoft.VisualBasic::e5edaf5369d53c5468fdb9e5cbdd22a4, sciBASIC#\Data_science\Mathematica\Math\Math\Spline\CatmullRomSpline.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 155
+    '    Code Lines: 96
+    ' Comment Lines: 35
+    '   Blank Lines: 24
+    '     File Size: 6.89 KB
+
 
     '     Module CatmullRomSpline
     ' 

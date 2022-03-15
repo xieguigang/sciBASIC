@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78bdc54b2ea15b650d7d88166ad32547, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Image.vb"
+﻿#Region "Microsoft.VisualBasic::78bdc54b2ea15b650d7d88166ad32547, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\XML\Image.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 72
+    '    Code Lines: 54
+    ' Comment Lines: 5
+    '   Blank Lines: 13
+    '     File Size: 2.69 KB
+
 
     '     Class Image
     ' 

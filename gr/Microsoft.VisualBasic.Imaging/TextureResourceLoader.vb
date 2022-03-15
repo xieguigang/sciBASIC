@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff8dff6c1b5f71a08c5175a9488467be, gr\Microsoft.VisualBasic.Imaging\TextureResourceLoader.vb"
+﻿#Region "Microsoft.VisualBasic::ff8dff6c1b5f71a08c5175a9488467be, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\TextureResourceLoader.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 78
+    '    Code Lines: 53
+    ' Comment Lines: 10
+    '   Blank Lines: 15
+    '     File Size: 2.66 KB
+
 
     ' Module TextureResourceLoader
     ' 

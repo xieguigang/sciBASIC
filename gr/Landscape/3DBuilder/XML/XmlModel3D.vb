@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a632281d279f73325aaf4f54d6a1fcd7, gr\Landscape\3DBuilder\XML\XmlModel3D.vb"
+﻿#Region "Microsoft.VisualBasic::a632281d279f73325aaf4f54d6a1fcd7, sciBASIC#\gr\Landscape\3DBuilder\XML\XmlModel3D.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 73
+    '    Code Lines: 53
+    ' Comment Lines: 6
+    '   Blank Lines: 14
+    '     File Size: 2.24 KB
+
 
     '     Class XmlModel3D
     ' 

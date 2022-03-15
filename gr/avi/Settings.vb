@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f53570cd82211f389ab2fe9b320ce66, gr\avi\Settings.vb"
+﻿#Region "Microsoft.VisualBasic::3f53570cd82211f389ab2fe9b320ce66, sciBASIC#\gr\avi\Settings.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 6
+    '    Code Lines: 4
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 113.00 B
+
 
     ' Class Settings
     ' 

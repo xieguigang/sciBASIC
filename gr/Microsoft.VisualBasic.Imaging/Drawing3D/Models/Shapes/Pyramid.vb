@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::654afc13fef556209f289b48bf96d7f4, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\Pyramid.vb"
+﻿#Region "Microsoft.VisualBasic::654afc13fef556209f289b48bf96d7f4, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\Pyramid.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 41
+    '    Code Lines: 28
+    ' Comment Lines: 6
+    '   Blank Lines: 7
+    '     File Size: 1.49 KB
+
 
     '     Class Pyramid
     ' 

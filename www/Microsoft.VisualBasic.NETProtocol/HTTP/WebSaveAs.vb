@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15ca7773e0f046ab2ff0c7fe64012b57, www\Microsoft.VisualBasic.NETProtocol\HTTP\WebSaveAs.vb"
+﻿#Region "Microsoft.VisualBasic::15ca7773e0f046ab2ff0c7fe64012b57, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\HTTP\WebSaveAs.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 84
+    '    Code Lines: 50
+    ' Comment Lines: 17
+    '   Blank Lines: 17
+    '     File Size: 2.84 KB
+
 
     '     Module WebSaveAs
     ' 

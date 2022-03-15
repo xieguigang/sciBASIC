@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9da705021af3870ca621f4feee5aad29, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\T-test\TwoSampleResult.vb"
+﻿#Region "Microsoft.VisualBasic::9da705021af3870ca621f4feee5aad29, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\T-test\TwoSampleResult.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 28
+    '    Code Lines: 21
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 794.00 B
+
 
     '     Class TwoSampleResult
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::436b7597f2e46454e1028c8fdfcbe116, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\xl\theme\theme.xml.vb"
+﻿#Region "Microsoft.VisualBasic::436b7597f2e46454e1028c8fdfcbe116, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\xl\theme\theme.xml.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 71
+    '    Code Lines: 58
+    ' Comment Lines: 0
+    '   Blank Lines: 13
+    '     File Size: 2.15 KB
+
 
     '     Class theme
     ' 

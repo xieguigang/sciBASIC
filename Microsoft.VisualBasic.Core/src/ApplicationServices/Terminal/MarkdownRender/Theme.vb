@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::587f9b9f54d37f97bae2d8ebfe6abdc6, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\Theme.vb"
+﻿#Region "Microsoft.VisualBasic::587f9b9f54d37f97bae2d8ebfe6abdc6, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\Theme.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 101
+    '    Code Lines: 79
+    ' Comment Lines: 0
+    '   Blank Lines: 22
+    '     File Size: 3.40 KB
+
 
     '     Class MarkdownTheme
     ' 

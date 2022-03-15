@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::690724c8edefb7914a2be740adff0aad, Microsoft.VisualBasic.Core\src\Text\Patterns\Validator\isIP.vb"
+﻿#Region "Microsoft.VisualBasic::690724c8edefb7914a2be740adff0aad, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Patterns\Validator\isIP.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 118
+    '    Code Lines: 68
+    ' Comment Lines: 36
+    '   Blank Lines: 14
+    '     File Size: 5.11 KB
+
 
     '     Module Validator
     ' 

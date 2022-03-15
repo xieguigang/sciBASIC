@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab00a99e8d49a425b35339f455296714, Data\DataFrame\Extensions\ProfileStreams.vb"
+﻿#Region "Microsoft.VisualBasic::ab00a99e8d49a425b35339f455296714, sciBASIC#\Data\DataFrame\Extensions\ProfileStreams.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 54
+    '    Code Lines: 30
+    ' Comment Lines: 18
+    '   Blank Lines: 6
+    '     File Size: 2.11 KB
+
 
     ' Module ProfileStreams
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70d9b0dc5576ba2eb52d75aa5c63c1b2, Data\BinaryData\DataStorage\netCDF\Components\VectorHelper.vb"
+﻿#Region "Microsoft.VisualBasic::70d9b0dc5576ba2eb52d75aa5c63c1b2, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\VectorHelper.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 57
+    '    Code Lines: 51
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 2.33 KB
+
 
     '     Module VectorHelper
     ' 

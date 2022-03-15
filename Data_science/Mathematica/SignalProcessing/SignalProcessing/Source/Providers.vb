@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd8a7701a59d4adf5229712a0fda25c0, Data_science\Mathematica\SignalProcessing\SignalProcessing\Source\Providers.vb"
+﻿#Region "Microsoft.VisualBasic::fd8a7701a59d4adf5229712a0fda25c0, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\Source\Providers.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 61
+    '    Code Lines: 46
+    ' Comment Lines: 0
+    '   Blank Lines: 15
+    '     File Size: 2.26 KB
+
 
     '     Class OneSignal
     ' 

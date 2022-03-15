@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::53be0e0688910726f8ba1fbef0059abc, gr\physics\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::53be0e0688910726f8ba1fbef0059abc, sciBASIC#\gr\physics\Debugger.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 48
+    '    Code Lines: 33
+    ' Comment Lines: 5
+    '   Blank Lines: 10
+    '     File Size: 1.74 KB
+
 
     ' Module Debugger
     ' 

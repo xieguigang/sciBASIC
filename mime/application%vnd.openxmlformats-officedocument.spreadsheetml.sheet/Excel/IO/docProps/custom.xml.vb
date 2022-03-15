@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::569f56ad7990a64f681bca8cf411e33e, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\docProps\custom.xml.vb"
+﻿#Region "Microsoft.VisualBasic::569f56ad7990a64f681bca8cf411e33e, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\docProps\custom.xml.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 42
+    '    Code Lines: 31
+    ' Comment Lines: 0
+    '   Blank Lines: 11
+    '     File Size: 1.31 KB
+
 
     '     Class custom
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f43f977632c131961c7cc6f415527be, Data\word2vec\utils\Counter.vb"
+﻿#Region "Microsoft.VisualBasic::4e23cd0fd15bffb54ec401d29d33dca3, sciBASIC#\Data\word2vec\utils\Counter.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 96
+    '    Code Lines: 53
+    ' Comment Lines: 27
+    '   Blank Lines: 16
+    '     File Size: 2.96 KB
+
 
     '     Class Counter
     ' 

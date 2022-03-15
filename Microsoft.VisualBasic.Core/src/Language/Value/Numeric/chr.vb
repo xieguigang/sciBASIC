@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d70edc6bcd7ed6ab6fb472f722178e7a, Microsoft.VisualBasic.Core\src\Language\Value\Numeric\chr.vb"
+﻿#Region "Microsoft.VisualBasic::d70edc6bcd7ed6ab6fb472f722178e7a, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\Numeric\chr.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 71
+    '    Code Lines: 53
+    ' Comment Lines: 0
+    '   Blank Lines: 18
+    '     File Size: 2.04 KB
+
 
     '     Class chr
     ' 

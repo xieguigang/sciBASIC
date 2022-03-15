@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::872b4a56f1e3f3b7899fbf3287e91187, Data\DataFrame.Extensions\Serialize\Writer.vb"
+﻿#Region "Microsoft.VisualBasic::872b4a56f1e3f3b7899fbf3287e91187, sciBASIC#\Data\DataFrame.Extensions\Serialize\Writer.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 113
+    '    Code Lines: 60
+    ' Comment Lines: 33
+    '   Blank Lines: 20
+    '     File Size: 3.96 KB
+
 
     ' Class Writer
     ' 

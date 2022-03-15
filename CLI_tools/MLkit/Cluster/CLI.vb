@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e854ad30b18bd6f872d5f5e08409b227, CLI_tools\MLkit\Cluster\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::e854ad30b18bd6f872d5f5e08409b227, sciBASIC#\CLI_tools\MLkit\Cluster\CLI.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 114
+    '    Code Lines: 52
+    ' Comment Lines: 53
+    '   Blank Lines: 9
+    '     File Size: 5.67 KB
+
 
     ' Module CLI
     ' 

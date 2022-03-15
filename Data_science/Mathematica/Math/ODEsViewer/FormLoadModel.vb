@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f88aef9468756a72c9dc77403784ffa, Data_science\Mathematica\Math\ODEsViewer\FormLoadModel.vb"
+﻿#Region "Microsoft.VisualBasic::2f88aef9468756a72c9dc77403784ffa, sciBASIC#\Data_science\Mathematica\Math\ODEsViewer\FormLoadModel.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 33
+    '    Code Lines: 25
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 935.00 B
+
 
     ' Class FormLoadModel
     ' 

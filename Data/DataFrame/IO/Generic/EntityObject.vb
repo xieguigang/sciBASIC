@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43ee1a9bf730f719b822c16f5dee981d, Data\DataFrame\IO\Generic\EntityObject.vb"
+﻿#Region "Microsoft.VisualBasic::43ee1a9bf730f719b822c16f5dee981d, sciBASIC#\Data\DataFrame\IO\Generic\EntityObject.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 215
+    '    Code Lines: 132
+    ' Comment Lines: 61
+    '   Blank Lines: 22
+    '     File Size: 8.90 KB
+
 
     '     Class EntityObject
     ' 

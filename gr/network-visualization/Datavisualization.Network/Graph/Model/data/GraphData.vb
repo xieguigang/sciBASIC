@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af176863cc54767eddd65c902e3e2b69, gr\network-visualization\Datavisualization.Network\Graph\Model\data\GraphData.vb"
+﻿#Region "Microsoft.VisualBasic::af176863cc54767eddd65c902e3e2b69, sciBASIC#\gr\network-visualization\Datavisualization.Network\Graph\Model\data\GraphData.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 61
+    '    Code Lines: 13
+    ' Comment Lines: 42
+    '   Blank Lines: 6
+    '     File Size: 2.19 KB
+
 
     '     Class GraphData
     ' 

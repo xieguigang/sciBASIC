@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51e86c3ac5fa0b5c906c5ec7d2076a80, Data\BinaryData\BinaryData\Extensions\ReaderProvider.vb"
+﻿#Region "Microsoft.VisualBasic::51e86c3ac5fa0b5c906c5ec7d2076a80, sciBASIC#\Data\BinaryData\BinaryData\Extensions\ReaderProvider.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 119
+    '    Code Lines: 75
+    ' Comment Lines: 29
+    '   Blank Lines: 15
+    '     File Size: 4.26 KB
+
 
     ' Class ReaderProvider
     ' 

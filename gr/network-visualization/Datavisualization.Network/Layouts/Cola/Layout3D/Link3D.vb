@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0c94954bef5aece5f060eec11faf867, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout3D\Link3D.vb"
+﻿#Region "Microsoft.VisualBasic::d0c94954bef5aece5f060eec11faf867, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout3D\Link3D.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 27
+    '    Code Lines: 21
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 808.00 B
+
 
     '     Class Link3D
     ' 

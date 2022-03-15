@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5fdc752e22decce062fed8f63eb5ffe4, Data_science\Mathematica\SignalProcessing\SignalProcessing\Source\Signal.vb"
+﻿#Region "Microsoft.VisualBasic::5fdc752e22decce062fed8f63eb5ffe4, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\Source\Signal.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 90
+    '    Code Lines: 42
+    ' Comment Lines: 29
+    '   Blank Lines: 19
+    '     File Size: 3.49 KB
+
 
     '     Class Signal
     ' 

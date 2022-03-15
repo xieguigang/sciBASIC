@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f24913964d45e5acfe669d853532b77, gr\Landscape\3DBuilder\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::5f24913964d45e5acfe669d853532b77, sciBASIC#\gr\Landscape\3DBuilder\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 11
+    '    Code Lines: 7
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 206.00 B
+
 
     '     Module Extensions
     ' 

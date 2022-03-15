@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::46642feb1338db563f29bfee8498d597, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Relations.vb"
+﻿#Region "Microsoft.VisualBasic::1ff373be14dc1263b63cdc3e1eb3d107, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Relations.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 22
+    '    Code Lines: 8
+    ' Comment Lines: 12
+    '   Blank Lines: 2
+    '     File Size: 556.00 B
+
 
     '     Enum Relations
     ' 

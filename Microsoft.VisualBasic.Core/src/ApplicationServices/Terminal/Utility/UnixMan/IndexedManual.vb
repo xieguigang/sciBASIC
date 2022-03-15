@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::daaaf2df410c48852713dcb1eb12b5b8, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\UnixMan\IndexedManual.vb"
+﻿#Region "Microsoft.VisualBasic::daaaf2df410c48852713dcb1eb12b5b8, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\UnixMan\IndexedManual.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 95
+    '    Code Lines: 59
+    ' Comment Lines: 18
+    '   Blank Lines: 18
+    '     File Size: 3.80 KB
+
 
     '     Class IndexedManual
     ' 

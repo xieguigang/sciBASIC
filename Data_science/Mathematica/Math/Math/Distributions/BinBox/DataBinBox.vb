@@ -1,45 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::8f3032d89098953626b8bc3fea2b9077, Data_science\Mathematica\Math\Math\Distributions\BinBox\DataBinBox.vb"
+﻿#Region "Microsoft.VisualBasic::937c98cd40b35f55c2fde67a46ef9b5d, sciBASIC#\Data_science\Mathematica\Math\Math\Distributions\BinBox\DataBinBox.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class DataBinBox
-' 
-'         Properties: BinMaps, Count, Raw, Sample
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: GetBinMaps, ToString
-' 
-' 
-' /********************************************************************************/
+
+    ' Code Statistics:
+
+    '   Total Lines: 118
+    '    Code Lines: 89
+    ' Comment Lines: 11
+    '   Blank Lines: 18
+    '     File Size: 4.20 KB
+
+
+    '     Class DataBinBox
+    ' 
+    '         Properties: BinMaps, Boundary, Count, Raw, Sample
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetBinMaps, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

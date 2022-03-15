@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::947251ea82f34688f58a535f74e72c73, gr\physics\Reactions.vb"
+﻿#Region "Microsoft.VisualBasic::947251ea82f34688f58a535f74e72c73, sciBASIC#\gr\physics\Reactions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 24
+    '    Code Lines: 11
+    ' Comment Lines: 10
+    '   Blank Lines: 3
+    '     File Size: 777.00 B
+
 
     ' Module Reactions
     ' 

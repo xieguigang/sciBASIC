@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::816ee368b23f588554b98ef2ac658fb3, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ColorIndex.vb"
+﻿#Region "Microsoft.VisualBasic::af255d502d76b33a5e799e0f10eb858e, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Scaler\ColorIndex.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 119
+    '    Code Lines: 94
+    ' Comment Lines: 5
+    '   Blank Lines: 20
+    '     File Size: 4.18 KB
+
 
     '     Class ColorIndex
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3b049b3ee3b51a8682534cdf96635719, Data_science\MachineLearning\MachineLearning\SVM\Cache\Cache.vb"
+﻿#Region "Microsoft.VisualBasic::3b049b3ee3b51a8682534cdf96635719, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\Cache\Cache.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 141
+    '    Code Lines: 82
+    ' Comment Lines: 37
+    '   Blank Lines: 22
+    '     File Size: 4.51 KB
+
 
     '     Class Cache
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e849ed570493e9d4baf9416dbca98104, Data_science\Visualization\Plots\BarPlot\StackedBarPlot.vb"
+﻿#Region "Microsoft.VisualBasic::e849ed570493e9d4baf9416dbca98104, sciBASIC#\Data_science\Visualization\Plots\BarPlot\StackedBarPlot.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 156
+    '    Code Lines: 107
+    ' Comment Lines: 25
+    '   Blank Lines: 24
+    '     File Size: 7.59 KB
+
 
     '     Module StackedBarPlot
     ' 

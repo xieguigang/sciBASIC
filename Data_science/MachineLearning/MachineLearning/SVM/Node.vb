@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::994c6216f326e715dcc8cc270c61120a, Data_science\MachineLearning\MachineLearning\SVM\Node.vb"
+﻿#Region "Microsoft.VisualBasic::994c6216f326e715dcc8cc270c61120a, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\Node.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 95
+    '    Code Lines: 37
+    ' Comment Lines: 43
+    '   Blank Lines: 15
+    '     File Size: 3.40 KB
+
 
     '     Class Node
     ' 

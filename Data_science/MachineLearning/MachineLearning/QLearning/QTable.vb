@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a145b3a13b06e4df284099aa9cfd285, Data_science\MachineLearning\MachineLearning\QLearning\QTable.vb"
+﻿#Region "Microsoft.VisualBasic::3e268f38ca1483f57bc2aa958780130e, sciBASIC#\Data_science\MachineLearning\MachineLearning\QLearning\QTable.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 239
+    '    Code Lines: 85
+    ' Comment Lines: 120
+    '   Blank Lines: 34
+    '     File Size: 10.69 KB
+
 
     '     Class QTable
     ' 

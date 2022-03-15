@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cebc3b825a25663efe4643332599591a, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Triangle.vb"
+﻿#Region "Microsoft.VisualBasic::cebc3b825a25663efe4643332599591a, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Triangle.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 80
+    '    Code Lines: 53
+    ' Comment Lines: 14
+    '   Blank Lines: 13
+    '     File Size: 2.84 KB
+
 
     '     Class Triangle
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d210dd0092b861e5be1f42df5a92287, Data_science\Mathematica\Math\Math\Quantile\QuantileQuery.vb"
+﻿#Region "Microsoft.VisualBasic::3d210dd0092b861e5be1f42df5a92287, sciBASIC#\Data_science\Mathematica\Math\Math\Quantile\QuantileQuery.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 6
+    '    Code Lines: 5
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 135.00 B
+
 
     '     Interface QuantileQuery
     ' 

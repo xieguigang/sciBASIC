@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a79503a53d136ac385c967f97a0a6907, mime\text%markdown\Block.vb"
+﻿#Region "Microsoft.VisualBasic::a79503a53d136ac385c967f97a0a6907, sciBASIC#\mime\text%markdown\Block.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 29
+    '    Code Lines: 22
+    ' Comment Lines: 3
+    '   Blank Lines: 4
+    '     File Size: 1.29 KB
+
 
     ' Module Block
     ' 

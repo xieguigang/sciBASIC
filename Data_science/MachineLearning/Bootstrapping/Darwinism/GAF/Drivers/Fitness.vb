@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab4e7a5c6fec659103ec9c36088b442f, Data_science\MachineLearning\Bootstrapping\Darwinism\GAF\Drivers\Fitness.vb"
+﻿#Region "Microsoft.VisualBasic::ab4e7a5c6fec659103ec9c36088b442f, sciBASIC#\Data_science\MachineLearning\Bootstrapping\Darwinism\GAF\Drivers\Fitness.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 157
+    '    Code Lines: 89
+    ' Comment Lines: 47
+    '   Blank Lines: 21
+    '     File Size: 5.51 KB
+
 
     '     Delegate Function
     ' 

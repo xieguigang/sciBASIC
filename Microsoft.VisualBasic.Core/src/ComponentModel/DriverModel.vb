@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::adcad34ffc4db772e17534e416b8591c, Microsoft.VisualBasic.Core\src\ComponentModel\DriverModel.vb"
+﻿#Region "Microsoft.VisualBasic::adcad34ffc4db772e17534e416b8591c, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DriverModel.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 14
+    '    Code Lines: 5
+    ' Comment Lines: 7
+    '   Blank Lines: 2
+    '     File Size: 324.00 B
+
 
     '     Interface ITaskDriver
     ' 

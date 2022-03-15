@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a0a75c381881c0025c597f28a53d652, Data_science\Mathematica\Math\ODE\Dynamics\RungeKutta4.vb"
+﻿#Region "Microsoft.VisualBasic::7a0a75c381881c0025c597f28a53d652, sciBASIC#\Data_science\Mathematica\Math\ODE\Dynamics\RungeKutta4.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 98
+    '    Code Lines: 60
+    ' Comment Lines: 18
+    '   Blank Lines: 20
+    '     File Size: 3.32 KB
+
 
     '     Class RungeKutta4
     ' 

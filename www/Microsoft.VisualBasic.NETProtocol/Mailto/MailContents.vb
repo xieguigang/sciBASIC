@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5eebe6cecbfa88f354fe3df3a5f553cc, www\Microsoft.VisualBasic.NETProtocol\Mailto\MailContents.vb"
+﻿#Region "Microsoft.VisualBasic::5eebe6cecbfa88f354fe3df3a5f553cc, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Mailto\MailContents.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 45
+    '    Code Lines: 19
+    ' Comment Lines: 19
+    '   Blank Lines: 7
+    '     File Size: 1.26 KB
+
 
     '     Class MailContents
     ' 

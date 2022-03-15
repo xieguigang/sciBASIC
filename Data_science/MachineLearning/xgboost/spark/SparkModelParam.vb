@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1808c0a4191940be084129b134770b3a, Data_science\MachineLearning\xgboost\spark\SparkModelParam.vb"
+﻿#Region "Microsoft.VisualBasic::8077064c12f94f5f73efe30a401df7d9, sciBASIC#\Data_science\MachineLearning\xgboost\spark\SparkModelParam.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 41
+    '    Code Lines: 30
+    ' Comment Lines: 4
+    '   Blank Lines: 7
+    '     File Size: 1.59 KB
+
 
     '     Class SparkModelParam
     ' 

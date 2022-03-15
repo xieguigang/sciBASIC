@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0574a76475a319e2f8d600b71aa25036, Data_science\Mathematica\Math\Math\Algebra\Helpers\MatrixArithmetic.vb"
+﻿#Region "Microsoft.VisualBasic::0574a76475a319e2f8d600b71aa25036, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Helpers\MatrixArithmetic.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 50
+    '    Code Lines: 0
+    ' Comment Lines: 44
+    '   Blank Lines: 6
+    '     File Size: 2.26 KB
+
 
     ' 
     ' /********************************************************************************/

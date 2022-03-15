@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::630b9b0ad2d45201a39f301719f51855, Data\BinaryData\BinaryData\Bzip2\Math\MoveToFront.vb"
+﻿#Region "Microsoft.VisualBasic::630b9b0ad2d45201a39f301719f51855, sciBASIC#\Data\BinaryData\BinaryData\Bzip2\Math\MoveToFront.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 58
+    '    Code Lines: 35
+    ' Comment Lines: 15
+    '   Blank Lines: 8
+    '     File Size: 1.95 KB
+
 
     '     Class MoveToFront
     ' 

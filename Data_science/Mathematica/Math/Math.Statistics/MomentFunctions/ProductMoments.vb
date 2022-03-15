@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ee7f8ed5f4d818ea7071fb14d915976, Data_science\Mathematica\Math\Math.Statistics\MomentFunctions\ProductMoments.vb"
+﻿#Region "Microsoft.VisualBasic::2ee7f8ed5f4d818ea7071fb14d915976, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\MomentFunctions\ProductMoments.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 58
+    '    Code Lines: 37
+    ' Comment Lines: 11
+    '   Blank Lines: 10
+    '     File Size: 2.08 KB
+
 
     '     Class ProductMoments
     ' 

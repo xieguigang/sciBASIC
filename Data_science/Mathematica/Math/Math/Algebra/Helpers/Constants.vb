@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48ef65efb5e19a41d480c0d074ca0823, Data_science\Mathematica\Math\Math\Algebra\Helpers\Constants.vb"
+﻿#Region "Microsoft.VisualBasic::48ef65efb5e19a41d480c0d074ca0823, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Helpers\Constants.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 46
+    '    Code Lines: 0
+    ' Comment Lines: 39
+    '   Blank Lines: 7
+    '     File Size: 1.67 KB
+
 
     ' 
     ' /********************************************************************************/

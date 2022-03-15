@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6cdf68a05d1d66615b14c269ad3b7a68, Data_science\Visualization\Plots-statistics\Heatmap\Models.vb"
+﻿#Region "Microsoft.VisualBasic::6cdf68a05d1d66615b14c269ad3b7a68, sciBASIC#\Data_science\Visualization\Plots-statistics\Heatmap\Models.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 60
+    '    Code Lines: 30
+    ' Comment Lines: 21
+    '   Blank Lines: 9
+    '     File Size: 1.70 KB
+
 
     '     Class PlotArguments
     ' 

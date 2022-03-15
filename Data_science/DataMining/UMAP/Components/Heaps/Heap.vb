@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::542e03adcecfe64f1ba36741ed9ca295, Data_science\DataMining\UMAP\Components\Heaps\Heap.vb"
+﻿#Region "Microsoft.VisualBasic::542e03adcecfe64f1ba36741ed9ca295, sciBASIC#\Data_science\DataMining\UMAP\Components\Heaps\Heap.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 18
+    '    Code Lines: 14
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 502.00 B
+
 
     ' Class Heap
     ' 

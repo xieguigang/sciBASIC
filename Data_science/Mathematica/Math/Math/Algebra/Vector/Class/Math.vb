@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::deedf17da6de49576ebe6d243ec03d3b, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Math.vb"
+﻿#Region "Microsoft.VisualBasic::deedf17da6de49576ebe6d243ec03d3b, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Math.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 234
+    '    Code Lines: 147
+    ' Comment Lines: 58
+    '   Blank Lines: 29
+    '     File Size: 10.16 KB
+
 
     '     Class Vector
     ' 

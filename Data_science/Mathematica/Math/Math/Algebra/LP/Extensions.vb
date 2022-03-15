@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc9bcb12570190a8e54c30e0e6778bf9, Data_science\Mathematica\Math\Math\Algebra\LP\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::cc9bcb12570190a8e54c30e0e6778bf9, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\LP\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 81
+    '    Code Lines: 64
+    ' Comment Lines: 5
+    '   Blank Lines: 12
+    '     File Size: 2.70 KB
+
 
     '     Module Extensions
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d0b58a6f6b3b0ca1023df018be39184, gr\network-visualization\Datavisualization.Network\Analysis\Model\EdgeSet.vb"
+﻿#Region "Microsoft.VisualBasic::7d0b58a6f6b3b0ca1023df018be39184, sciBASIC#\gr\network-visualization\Datavisualization.Network\Analysis\Model\EdgeSet.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 27
+    '    Code Lines: 16
+    ' Comment Lines: 6
+    '   Blank Lines: 5
+    '     File Size: 865.00 B
+
 
     '     Class EdgeSet
     ' 

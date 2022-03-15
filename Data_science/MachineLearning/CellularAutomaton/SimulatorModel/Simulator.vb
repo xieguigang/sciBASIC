@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0805e3072733bf61d39dafdba851b952, Data_science\MachineLearning\CellularAutomaton\SimulatorModel\Simulator.vb"
+﻿#Region "Microsoft.VisualBasic::22ece2099416edf696da00f872fe4a5f, sciBASIC#\Data_science\MachineLearning\CellularAutomaton\SimulatorModel\Simulator.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 101
+    '    Code Lines: 72
+    ' Comment Lines: 14
+    '   Blank Lines: 15
+    '     File Size: 2.83 KB
+
 
     ' Class Simulator
     ' 

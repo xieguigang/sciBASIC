@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e8744a6c59f7de0ab8941bd85c4a625f, Microsoft.VisualBasic.Core\src\Text\Xml\Models\StringValue.vb"
+﻿#Region "Microsoft.VisualBasic::e8744a6c59f7de0ab8941bd85c4a625f, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\Models\StringValue.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 34
+    '    Code Lines: 20
+    ' Comment Lines: 7
+    '   Blank Lines: 7
+    '     File Size: 924.00 B
+
 
     '     Class StringValue
     ' 

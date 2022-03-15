@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82a6e9e2ddd3af5595828b70a1e6a6a9, Microsoft.VisualBasic.Core\src\Serialization\JSON\Formatter\JsonFormatterInternal.vb"
+﻿#Region "Microsoft.VisualBasic::82a6e9e2ddd3af5595828b70a1e6a6a9, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\JSON\Formatter\JsonFormatterInternal.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 50
+    '    Code Lines: 39
+    ' Comment Lines: 0
+    '   Blank Lines: 11
+    '     File Size: 2.10 KB
+
 
     '     Class JsonFormatterInternal
     ' 

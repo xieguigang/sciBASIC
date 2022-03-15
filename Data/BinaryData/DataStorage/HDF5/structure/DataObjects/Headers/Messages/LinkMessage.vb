@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae44336be13383e3fa37f9213f349adc, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\LinkMessage.vb"
+﻿#Region "Microsoft.VisualBasic::ae44336be13383e3fa37f9213f349adc, sciBASIC#\Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\LinkMessage.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 99
+    '    Code Lines: 54
+    ' Comment Lines: 26
+    '   Blank Lines: 19
+    '     File Size: 3.66 KB
+
 
     '     Class LinkMessage
     ' 

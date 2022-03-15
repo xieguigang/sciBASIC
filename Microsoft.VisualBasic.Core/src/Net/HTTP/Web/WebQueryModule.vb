@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad17a72d58c0c93194d354055830908a, Microsoft.VisualBasic.Core\src\Net\HTTP\Web\WebQueryModule.vb"
+﻿#Region "Microsoft.VisualBasic::ad17a72d58c0c93194d354055830908a, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\Web\WebQueryModule.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 38
+    '    Code Lines: 23
+    ' Comment Lines: 5
+    '   Blank Lines: 10
+    '     File Size: 1.28 KB
+
 
     '     Class WebQueryModule
     ' 

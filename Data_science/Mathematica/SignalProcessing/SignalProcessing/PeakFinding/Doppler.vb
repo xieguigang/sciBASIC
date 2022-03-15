@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90ebf5768b21e30ccf8c4c86d36ef286, Data_science\Mathematica\SignalProcessing\SignalProcessing\PeakFinding\Doppler.vb"
+﻿#Region "Microsoft.VisualBasic::90ebf5768b21e30ccf8c4c86d36ef286, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\PeakFinding\Doppler.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 30
+    '    Code Lines: 23
+    ' Comment Lines: 3
+    '   Blank Lines: 4
+    '     File Size: 1.06 KB
+
 
     ' Module Doppler
     ' 

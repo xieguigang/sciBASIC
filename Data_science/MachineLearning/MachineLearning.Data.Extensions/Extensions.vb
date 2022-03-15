@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::785de2126341df562b89a6b78bf9932f, Data_science\MachineLearning\MachineLearning.Data.Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::785de2126341df562b89a6b78bf9932f, sciBASIC#\Data_science\MachineLearning\MachineLearning.Data.Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 46
+    '    Code Lines: 35
+    ' Comment Lines: 5
+    '   Blank Lines: 6
+    '     File Size: 1.64 KB
+
 
     ' Module Extensions
     ' 

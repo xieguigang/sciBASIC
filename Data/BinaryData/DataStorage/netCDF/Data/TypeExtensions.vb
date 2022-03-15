@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2155f48b237c7bf6bb9dee622983e720, Data\BinaryData\DataStorage\netCDF\Data\TypeExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::2155f48b237c7bf6bb9dee622983e720, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Data\TypeExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 100
+    '    Code Lines: 70
+    ' Comment Lines: 21
+    '   Blank Lines: 9
+    '     File Size: 4.19 KB
+
 
     '     Module TypeExtensions
     ' 

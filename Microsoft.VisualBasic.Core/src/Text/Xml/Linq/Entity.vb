@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f907f2072d9c4db9369402874903414, Microsoft.VisualBasic.Core\src\Text\Xml\Linq\Entity.vb"
+﻿#Region "Microsoft.VisualBasic::7f907f2072d9c4db9369402874903414, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\Linq\Entity.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 19
+    '    Code Lines: 15
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 639.00 B
+
 
     '     Class Entity
     ' 

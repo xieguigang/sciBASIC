@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4bf03db9d09c5b6637bc8a7f817902c, Data_science\MachineLearning\Bootstrapping\Darwinism\DESolver.vb"
+﻿#Region "Microsoft.VisualBasic::c4bf03db9d09c5b6637bc8a7f817902c, sciBASIC#\Data_science\MachineLearning\Bootstrapping\Darwinism\DESolver.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 107
+    '    Code Lines: 74
+    ' Comment Lines: 23
+    '   Blank Lines: 10
+    '     File Size: 4.88 KB
+
 
     '     Module DifferentialEvolutionSolver
     ' 

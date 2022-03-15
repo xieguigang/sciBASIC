@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0eb9b3506cafc67ba199d76df81cc755, Data_science\DataMining\DynamicProgramming\KBand\KBandSearch.vb"
+﻿#Region "Microsoft.VisualBasic::aa016c5d1ee157f014fb6a6e7fa33655, sciBASIC#\Data_science\DataMining\DynamicProgramming\KBand\KBandSearch.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 134
+    '    Code Lines: 90
+    ' Comment Lines: 20
+    '   Blank Lines: 24
+    '     File Size: 3.48 KB
+
 
     ' Class KBandSearch
     ' 
@@ -174,4 +184,3 @@ Public Class KBandSearch
         Return temp
     End Function
 End Class
-

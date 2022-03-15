@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f19812dbb6df6eb1b99f0a2c5d65ec6, mime\application%xml\MathML\actiontypes.vb"
+﻿#Region "Microsoft.VisualBasic::7f19812dbb6df6eb1b99f0a2c5d65ec6, sciBASIC#\mime\application%xml\MathML\actiontypes.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 12
+    '    Code Lines: 7
+    ' Comment Lines: 4
+    '   Blank Lines: 1
+    '     File Size: 398.00 B
+
 
     '     Enum actiontypes
     ' 

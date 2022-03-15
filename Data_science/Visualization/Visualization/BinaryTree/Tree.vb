@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36cda9d966282aa9ed688b5de426cfcc, Data_science\Visualization\Visualization\BinaryTree\Tree.vb"
+﻿#Region "Microsoft.VisualBasic::36cda9d966282aa9ed688b5de426cfcc, sciBASIC#\Data_science\Visualization\Visualization\BinaryTree\Tree.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 212
+    '    Code Lines: 158
+    ' Comment Lines: 21
+    '   Blank Lines: 33
+    '     File Size: 8.09 KB
+
 
     '     Module Tree
     ' 

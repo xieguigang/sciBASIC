@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::701f1dceb57a3ac1185081181915fe42, mime\text%markdown\MarkdownOptions.vb"
+﻿#Region "Microsoft.VisualBasic::701f1dceb57a3ac1185081181915fe42, sciBASIC#\mime\text%markdown\MarkdownOptions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 83
+    '    Code Lines: 28
+    ' Comment Lines: 41
+    '   Blank Lines: 14
+    '     File Size: 2.64 KB
+
 
     ' Class MarkdownOptions
     ' 

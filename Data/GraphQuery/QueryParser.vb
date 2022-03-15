@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d7bf451e555fde2a0de4088afc743672, Data\GraphQuery\QueryParser.vb"
+﻿#Region "Microsoft.VisualBasic::66cddd40d52ea287f9c2e819496d3acc, sciBASIC#\Data\GraphQuery\QueryParser.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 138
+    '    Code Lines: 121
+    ' Comment Lines: 1
+    '   Blank Lines: 16
+    '     File Size: 5.06 KB
+
 
     ' Class QueryParser
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42ceee9bf84b03ee9c5a4b51c7b09c5a, Data_science\MachineLearning\MachineLearning\SVM\RangeTransform\GaussianTransform.vb"
+﻿#Region "Microsoft.VisualBasic::42ceee9bf84b03ee9c5a4b51c7b09c5a, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\RangeTransform\GaussianTransform.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 116
+    '    Code Lines: 56
+    ' Comment Lines: 41
+    '   Blank Lines: 19
+    '     File Size: 4.36 KB
+
 
     '     Class GaussianTransform
     ' 

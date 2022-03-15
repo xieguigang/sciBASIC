@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1cca0d5b099c4d57b717de5b2d58fc3b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Polar\PolarGraphics2D.vb"
+﻿#Region "Microsoft.VisualBasic::1cca0d5b099c4d57b717de5b2d58fc3b, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Polar\PolarGraphics2D.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 95
+    '    Code Lines: 38
+    ' Comment Lines: 46
+    '   Blank Lines: 11
+    '     File Size: 4.20 KB
+
 
     '     Class PolarGraphics2D
     ' 

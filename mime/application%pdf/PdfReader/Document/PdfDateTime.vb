@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d1a26c565fbb53add348a72b5fda1a2c, mime\application%pdf\PdfReader\Document\PdfDateTime.vb"
+﻿#Region "Microsoft.VisualBasic::d65f962460cf49ad69e21e53ca2bc8b7, sciBASIC#\mime\application%pdf\PdfReader\Document\PdfDateTime.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 32
+    '    Code Lines: 26
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 939.00 B
+
 
     '     Class PdfDateTime
     ' 

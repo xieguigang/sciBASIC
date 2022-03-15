@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::190df25fbad54e34a7d42666819ef248, gr\network-visualization\Datavisualization.Network\Analysis\Model\EdgeTraversalPolicy.vb"
+﻿#Region "Microsoft.VisualBasic::190df25fbad54e34a7d42666819ef248, sciBASIC#\gr\network-visualization\Datavisualization.Network\Analysis\Model\EdgeTraversalPolicy.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 37
+    '    Code Lines: 27
+    ' Comment Lines: 0
+    '   Blank Lines: 10
+    '     File Size: 1.19 KB
+
 
     '     Interface EdgeTraversalPolicy
     ' 

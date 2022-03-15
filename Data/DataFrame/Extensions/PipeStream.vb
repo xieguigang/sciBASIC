@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::233fedda82169ca54292bc8373916359, Data\DataFrame\Extensions\PipeStream.vb"
+﻿#Region "Microsoft.VisualBasic::233fedda82169ca54292bc8373916359, sciBASIC#\Data\DataFrame\Extensions\PipeStream.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 85
+    '    Code Lines: 58
+    ' Comment Lines: 17
+    '   Blank Lines: 10
+    '     File Size: 3.21 KB
+
 
     ' Module PipeStream
     ' 

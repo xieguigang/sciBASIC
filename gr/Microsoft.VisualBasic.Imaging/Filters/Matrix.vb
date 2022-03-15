@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3777d4dd98e0fb72214b4f824740c1ee, gr\Microsoft.VisualBasic.Imaging\Filters\Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::3777d4dd98e0fb72214b4f824740c1ee, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Filters\Matrix.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 98
+    '    Code Lines: 74
+    ' Comment Lines: 5
+    '   Blank Lines: 19
+    '     File Size: 3.75 KB
+
 
     '     Class Matrix
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0720c8e5af3efa52ad43264a8f773142, Data\DataFrame\StorageProvider\Reflection\StorageProviders\DataFlowDirections.vb"
+﻿#Region "Microsoft.VisualBasic::0720c8e5af3efa52ad43264a8f773142, sciBASIC#\Data\DataFrame\StorageProvider\Reflection\StorageProviders\DataFlowDirections.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 15
+    '    Code Lines: 6
+    ' Comment Lines: 8
+    '   Blank Lines: 1
+    '     File Size: 496.00 B
+
 
     '     Enum DataFlowDirections
     ' 

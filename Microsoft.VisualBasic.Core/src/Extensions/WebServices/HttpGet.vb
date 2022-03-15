@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::798a57d74898ed651d239cd4758cf766, Microsoft.VisualBasic.Core\src\Extensions\WebServices\HttpGet.vb"
+﻿#Region "Microsoft.VisualBasic::798a57d74898ed651d239cd4758cf766, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\WebServices\HttpGet.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 225
+    '    Code Lines: 160
+    ' Comment Lines: 25
+    '   Blank Lines: 40
+    '     File Size: 8.39 KB
+
 
     ' Module HttpGet
     ' 

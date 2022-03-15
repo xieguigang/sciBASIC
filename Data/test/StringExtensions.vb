@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2c87a942112ce875331122f803976d6, Data\test\StringExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::b2c87a942112ce875331122f803976d6, sciBASIC#\Data\test\StringExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 71
+    '    Code Lines: 34
+    ' Comment Lines: 29
+    '   Blank Lines: 8
+    '     File Size: 2.80 KB
+
 
     ' Module StringExtensions
     ' 

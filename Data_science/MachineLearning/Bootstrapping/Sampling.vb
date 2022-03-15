@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5a1978ae8c3416b151020efab6b413d, Data_science\MachineLearning\Bootstrapping\Sampling.vb"
+﻿#Region "Microsoft.VisualBasic::d5a1978ae8c3416b151020efab6b413d, sciBASIC#\Data_science\MachineLearning\Bootstrapping\Sampling.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 26
+    '    Code Lines: 22
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 1.21 KB
+
 
     ' Module Sampling
     ' 

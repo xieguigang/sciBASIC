@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aabdc7afef0756977d75e8e894f20fed, Data_science\Visualization\Plots\g\Legends\ColorBar\DualColorBar.vb"
+﻿#Region "Microsoft.VisualBasic::4caaa54258352fb992d1d0c59778488f, sciBASIC#\Data_science\Visualization\Plots\g\Legends\ColorBar\DualColorBar.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 62
+    '    Code Lines: 49
+    ' Comment Lines: 0
+    '   Blank Lines: 13
+    '     File Size: 2.37 KB
+
 
     '     Module DualColorBar
     ' 

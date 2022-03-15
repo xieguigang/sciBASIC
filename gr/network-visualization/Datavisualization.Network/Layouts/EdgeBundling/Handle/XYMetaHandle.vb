@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f10f64ef20bc0a653e5e06d0b133d6d, gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Handle\XYMetaHandle.vb"
+﻿#Region "Microsoft.VisualBasic::2f10f64ef20bc0a653e5e06d0b133d6d, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Handle\XYMetaHandle.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 69
+    '    Code Lines: 39
+    ' Comment Lines: 18
+    '   Blank Lines: 12
+    '     File Size: 2.34 KB
+
 
     '     Class XYMetaHandle
     ' 

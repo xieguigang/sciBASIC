@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42944117fde7a7baaef735a443411fc5, Data_science\MachineLearning\Bootstrapping\Darwinism\GAF\ODEs\Protocol.vb"
+﻿#Region "Microsoft.VisualBasic::42944117fde7a7baaef735a443411fc5, sciBASIC#\Data_science\MachineLearning\Bootstrapping\Darwinism\GAF\ODEs\Protocol.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 479
+    '    Code Lines: 337
+    ' Comment Lines: 88
+    '   Blank Lines: 54
+    '     File Size: 21.44 KB
+
 
     '     Enum MutateLevels
     ' 

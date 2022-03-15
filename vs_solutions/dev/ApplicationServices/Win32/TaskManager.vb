@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6dac82a5a59fa93194bba41263b84e65, vs_solutions\dev\ApplicationServices\Win32\TaskManager.vb"
+﻿#Region "Microsoft.VisualBasic::6dac82a5a59fa93194bba41263b84e65, sciBASIC#\vs_solutions\dev\ApplicationServices\Win32\TaskManager.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 98
+    '    Code Lines: 63
+    ' Comment Lines: 17
+    '   Blank Lines: 18
+    '     File Size: 3.53 KB
+
 
     '     Module TaskManager
     ' 

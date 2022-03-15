@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::082178c76b74da8d7fd6c81c49ac2e28, Data_science\Mathematica\Math\DataFrame\Correlation\Distance.vb"
+﻿#Region "Microsoft.VisualBasic::082178c76b74da8d7fd6c81c49ac2e28, sciBASIC#\Data_science\Mathematica\Math\DataFrame\Correlation\Distance.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 48
+    '    Code Lines: 29
+    ' Comment Lines: 13
+    '   Blank Lines: 6
+    '     File Size: 1.96 KB
+
 
     ' Module Distance
     ' 

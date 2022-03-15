@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e45ba7a7b38d087fda2074ee05a6a4ec, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IXml.vb"
+﻿#Region "Microsoft.VisualBasic::e45ba7a7b38d087fda2074ee05a6a4ec, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IXml.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 19
+    '    Code Lines: 15
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 591.00 B
+
 
     ' Class IXml
     ' 

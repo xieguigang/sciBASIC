@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ebe2c913895d59d23d18b527d5344bfd, Microsoft.VisualBasic.Core\src\Text\Parser\HtmlParser\Table.vb"
+﻿#Region "Microsoft.VisualBasic::ebe2c913895d59d23d18b527d5344bfd, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Parser\HtmlParser\Table.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 92
+    '    Code Lines: 56
+    ' Comment Lines: 23
+    '   Blank Lines: 13
+    '     File Size: 3.73 KB
+
 
     '     Module TableParser
     ' 

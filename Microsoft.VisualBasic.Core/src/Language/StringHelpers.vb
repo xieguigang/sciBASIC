@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::024d215f06ecc1b4e0d2dc2c071b4650, Microsoft.VisualBasic.Core\src\Language\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::1586eae08de218790350d3185ca1749c, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\StringHelpers.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,19 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 69
+    '    Code Lines: 40
+    ' Comment Lines: 17
+    '   Blank Lines: 12
+    '     File Size: 2.20 KB
+
+
     '     Module FormatHelpers
     ' 
-    '         Function: StringFormat, xFormat
+    '         Function: StringFormat, Trim, xFormat
     ' 
     '     Structure FormatHelper
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d74122cace1213a8d034d726989ab43, gr\Microsoft.VisualBasic.Imaging\d3js\ModuleAPI.vb"
+﻿#Region "Microsoft.VisualBasic::6d74122cace1213a8d034d726989ab43, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\ModuleAPI.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 86
+    '    Code Lines: 68
+    ' Comment Lines: 9
+    '   Blank Lines: 9
+    '     File Size: 3.60 KB
+
 
     '     Module ModuleAPI
     ' 

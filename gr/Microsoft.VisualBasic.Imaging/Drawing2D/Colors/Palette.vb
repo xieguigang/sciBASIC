@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d7f855b826d0220a067c5e2038e80a8, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Palette.vb"
+﻿#Region "Microsoft.VisualBasic::b1aa91146191baad3eb2d5ef3761baf8, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Palette.vb"
 
     ' Author:
     ' 
@@ -31,12 +31,21 @@
 
     ' Summaries:
 
-    '     Enum Palettes
+
+    ' Code Statistics:
+
+    '   Total Lines: 104
+    '    Code Lines: 31
+    ' Comment Lines: 66
+    '   Blank Lines: 7
+    '     File Size: 3.43 KB
+
+
+    '     Enum CategoryPalettes
     ' 
-    '         Aspect, Autumn, BlackGreenRed, Clusters, Cool
-    '         Gray, Hot, Jet, Marquee, material
-    '         NA, Office2010, Office2016, Paper, rainbow
-    '         Slipstream, Spring, Summer, TSF, Winter
+    '         Aspect, Clusters, Marquee, material, NA
+    '         Office2010, Office2016, Paper, rainbow, Slipstream
+    '         TSF
     ' 
     '  
     ' 

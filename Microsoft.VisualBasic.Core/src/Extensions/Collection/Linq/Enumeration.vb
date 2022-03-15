@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91f411ba53961fdf1727b672ff2a7f14, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\Enumeration.vb"
+﻿#Region "Microsoft.VisualBasic::91f411ba53961fdf1727b672ff2a7f14, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\Enumeration.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 33
+    '    Code Lines: 7
+    ' Comment Lines: 21
+    '   Blank Lines: 5
+    '     File Size: 1.59 KB
+
 
     '     Interface Enumeration
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::815c1eae0e3c2d87ed7e4a09a430bcb6, mime\text%html\Parser\CSS\Enums\CssProperty.vb"
+﻿#Region "Microsoft.VisualBasic::815c1eae0e3c2d87ed7e4a09a430bcb6, sciBASIC#\mime\text%html\Parser\CSS\Enums\CssProperty.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1211
+    '    Code Lines: 305
+    ' Comment Lines: 903
+    '   Blank Lines: 3
+    '     File Size: 37.96 KB
+
 
     '     Enum CssProperty
     ' 

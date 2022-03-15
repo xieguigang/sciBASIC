@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50d78f84fe9741478a1f09ce125898b1, vs_solutions\dev\vs_PDB\Stream.vb"
+﻿#Region "Microsoft.VisualBasic::50d78f84fe9741478a1f09ce125898b1, sciBASIC#\vs_solutions\dev\vs_PDB\Stream.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 10
+    '    Code Lines: 2
+    ' Comment Lines: 7
+    '   Blank Lines: 1
+    '     File Size: 352.00 B
+
 
     ' Class Stream
     ' 

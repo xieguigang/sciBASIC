@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d3381a220021d85959f81ad7dab17afc, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\InCompatible.vb"
+﻿#Region "Microsoft.VisualBasic::d3381a220021d85959f81ad7dab17afc, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\InteropService\InCompatible.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 30
+    '    Code Lines: 17
+    ' Comment Lines: 8
+    '   Blank Lines: 5
+    '     File Size: 1.02 KB
+
 
     '     Class InCompatibleAttribute
     ' 

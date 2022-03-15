@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6bdca451132b9a048d2ba72ff789965, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\_rels\rels.vb"
+﻿#Region "Microsoft.VisualBasic::a6bdca451132b9a048d2ba72ff789965, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\_rels\rels.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 52
+    '    Code Lines: 42
+    ' Comment Lines: 0
+    '   Blank Lines: 10
+    '     File Size: 1.73 KB
+
 
     '     Class rels
     ' 

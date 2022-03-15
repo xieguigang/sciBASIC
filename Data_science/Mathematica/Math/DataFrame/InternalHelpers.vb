@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93b12635b715e4be73e1991fa1bde011, Data_science\Mathematica\Math\DataFrame\InternalHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::93b12635b715e4be73e1991fa1bde011, sciBASIC#\Data_science\Mathematica\Math\DataFrame\InternalHelpers.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 20
+    '    Code Lines: 14
+    ' Comment Lines: 3
+    '   Blank Lines: 3
+    '     File Size: 926.00 B
+
 
     ' Module InternalHelpers
     ' 

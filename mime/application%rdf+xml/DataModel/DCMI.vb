@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0ec7d5f1bd886f6b077a0a036dcded0, mime\application%rdf+xml\DataModel\DCMI.vb"
+﻿#Region "Microsoft.VisualBasic::d0ec7d5f1bd886f6b077a0a036dcded0, sciBASIC#\mime\application%rdf+xml\DataModel\DCMI.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 90
+    '    Code Lines: 17
+    ' Comment Lines: 72
+    '   Blank Lines: 1
+    '     File Size: 3.02 KB
+
 
     ' Class DCMI
     ' 

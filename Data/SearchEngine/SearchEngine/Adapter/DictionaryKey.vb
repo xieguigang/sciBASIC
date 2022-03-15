@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a20517397c69a40615c8be491f50fc38, Data\SearchEngine\SearchEngine\Adapter\DictionaryKey.vb"
+﻿#Region "Microsoft.VisualBasic::a20517397c69a40615c8be491f50fc38, sciBASIC#\Data\SearchEngine\SearchEngine\Adapter\DictionaryKey.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 24
+    '    Code Lines: 18
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 745.00 B
+
 
     ' Structure DictionaryKey
     ' 

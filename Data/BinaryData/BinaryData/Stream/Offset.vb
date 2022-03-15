@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f3c2ddf604a3f903b7ce6781615aaef1, Data\BinaryData\BinaryData\Stream\Offset.vb"
+﻿#Region "Microsoft.VisualBasic::f3c2ddf604a3f903b7ce6781615aaef1, sciBASIC#\Data\BinaryData\BinaryData\Stream\Offset.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 39
+    '    Code Lines: 15
+    ' Comment Lines: 21
+    '   Blank Lines: 3
+    '     File Size: 1.58 KB
+
 
     ' Class Offset
     ' 

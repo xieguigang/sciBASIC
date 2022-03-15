@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a39d54db36a4ea62618cd72a76de6603, Data_science\Mathematica\SignalProcessing\SignalProcessing\WaveletTransform\Wavelet.vb"
+﻿#Region "Microsoft.VisualBasic::a39d54db36a4ea62618cd72a76de6603, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\WaveletTransform\Wavelet.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 47
+    '    Code Lines: 33
+    ' Comment Lines: 5
+    '   Blank Lines: 9
+    '     File Size: 1.61 KB
+
 
     '     Class Wavelet
     ' 

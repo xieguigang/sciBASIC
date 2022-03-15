@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bad7ca9a2534978375ad2e9f04b5d307, Microsoft.VisualBasic.Core\src\Extensions\Image\Colors\HexColor.vb"
+﻿#Region "Microsoft.VisualBasic::bad7ca9a2534978375ad2e9f04b5d307, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Colors\HexColor.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 66
+    '    Code Lines: 50
+    ' Comment Lines: 10
+    '   Blank Lines: 6
+    '     File Size: 2.90 KB
+
 
     '     Module HexColor
     ' 

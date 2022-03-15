@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af521f6975d7c21269ce0e2f77787740, Data_science\Visualization\Canvas3D\ColorPalette.vb"
+﻿#Region "Microsoft.VisualBasic::af521f6975d7c21269ce0e2f77787740, sciBASIC#\Data_science\Visualization\Canvas3D\ColorPalette.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 153
+    '    Code Lines: 119
+    ' Comment Lines: 14
+    '   Blank Lines: 20
+    '     File Size: 5.46 KB
+
 
     '     Class ColorPalette
     ' 

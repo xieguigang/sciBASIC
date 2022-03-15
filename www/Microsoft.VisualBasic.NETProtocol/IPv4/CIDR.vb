@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::686e5010694ce36a2ab7b95cfa3787ec, www\Microsoft.VisualBasic.NETProtocol\IPv4\CIDR.vb"
+﻿#Region "Microsoft.VisualBasic::686e5010694ce36a2ab7b95cfa3787ec, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\IPv4\CIDR.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 419
+    '    Code Lines: 243
+    ' Comment Lines: 80
+    '   Blank Lines: 96
+    '     File Size: 13.31 KB
+
 
     ' Class IPv4
     ' 

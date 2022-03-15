@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1f0969b36e43471e7d9e1b3d084daa6, gr\Microsoft.VisualBasic.Imaging\test\ExifTest.vb"
+﻿#Region "Microsoft.VisualBasic::7c958ce6aca55549fab25a66fb370963, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\test\ExifTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 59
+    '    Code Lines: 0
+    ' Comment Lines: 46
+    '   Blank Lines: 13
+    '     File Size: 1.93 KB
+
 
     ' 
     ' /********************************************************************************/

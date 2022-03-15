@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ea108cf947d574f856a1bdda1177ead, Data_science\Mathematica\Math\Math\Spline\CubicSpline\CubicEval.vb"
+﻿#Region "Microsoft.VisualBasic::6ea108cf947d574f856a1bdda1177ead, sciBASIC#\Data_science\Mathematica\Math\Math\Spline\CubicSpline\CubicEval.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 27
+    '    Code Lines: 20
+    ' Comment Lines: 1
+    '   Blank Lines: 6
+    '     File Size: 749.00 B
+
 
     '     Structure Cubic
     ' 

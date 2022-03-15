@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::652de20725056f88741a4a501b5fb26f, gr\Microsoft.VisualBasic.Imaging\Drawing2D\GraphicsRegion.vb"
+﻿#Region "Microsoft.VisualBasic::652de20725056f88741a4a501b5fb26f, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\GraphicsRegion.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 161
+    '    Code Lines: 103
+    ' Comment Lines: 37
+    '   Blank Lines: 21
+    '     File Size: 5.38 KB
+
 
     '     Structure GraphicsRegion
     ' 

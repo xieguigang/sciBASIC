@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bbe34c2878848ca1c1fad14f80bb26b2, mime\application%pdf\PdfReader\Parser\ParseIndirectObject.vb"
+﻿#Region "Microsoft.VisualBasic::83bc745ad084b7e46e88983b869c7759, sciBASIC#\mime\application%pdf\PdfReader\Parser\ParseIndirectObject.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 40
+    '    Code Lines: 35
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 1.11 KB
+
 
     '     Class ParseIndirectObject
     ' 

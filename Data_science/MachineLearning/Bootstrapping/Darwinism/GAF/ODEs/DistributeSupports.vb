@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb69be7b00c33cd84b4a9c41d0b514d6, Data_science\MachineLearning\Bootstrapping\Darwinism\GAF\ODEs\DistributeSupports.vb"
+﻿#Region "Microsoft.VisualBasic::fb69be7b00c33cd84b4a9c41d0b514d6, sciBASIC#\Data_science\MachineLearning\Bootstrapping\Darwinism\GAF\ODEs\DistributeSupports.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 91
+    '    Code Lines: 57
+    ' Comment Lines: 23
+    '   Blank Lines: 11
+    '     File Size: 3.66 KB
+
 
     '     Module DistributeSupports
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::566b4932c35f6de00ce6459ff34dc093, gr\network-visualization\Datavisualization.Network\Layouts\SpringEmbedder.vb"
+﻿#Region "Microsoft.VisualBasic::566b4932c35f6de00ce6459ff34dc093, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\SpringEmbedder.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 183
+    '    Code Lines: 118
+    ' Comment Lines: 32
+    '   Blank Lines: 33
+    '     File Size: 7.35 KB
+
 
     '     Class SpringEmbedder
     ' 

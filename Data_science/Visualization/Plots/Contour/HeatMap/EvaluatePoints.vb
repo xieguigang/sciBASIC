@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d483a35aba5e29c5aa40b2694a3c8bb3, Data_science\Visualization\Plots\Contour\HeatMap\EvaluatePoints.vb"
+﻿#Region "Microsoft.VisualBasic::d483a35aba5e29c5aa40b2694a3c8bb3, sciBASIC#\Data_science\Visualization\Plots\Contour\HeatMap\EvaluatePoints.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 26
+    '    Code Lines: 11
+    ' Comment Lines: 9
+    '   Blank Lines: 6
+    '     File Size: 761.00 B
+
 
     '     Class EvaluatePoints
     ' 

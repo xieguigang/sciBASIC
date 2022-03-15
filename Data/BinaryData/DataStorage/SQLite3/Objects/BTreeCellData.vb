@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1beaf146e17036c13e16fcba9bd80608, Data\BinaryData\DataStorage\SQLite3\Objects\BTreeCellData.vb"
+﻿#Region "Microsoft.VisualBasic::1beaf146e17036c13e16fcba9bd80608, sciBASIC#\Data\BinaryData\DataStorage\SQLite3\Objects\BTreeCellData.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 13
+    '    Code Lines: 9
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 363.00 B
+
 
     '     Class BTreeCellData
     ' 

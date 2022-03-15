@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3015149cae9ac915e4789b451fba14c8, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\Protocols\InvokeAPI.vb"
+﻿#Region "Microsoft.VisualBasic::3015149cae9ac915e4789b451fba14c8, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\NETProtocol\Protocols\InvokeAPI.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 32
+    '    Code Lines: 20
+    ' Comment Lines: 6
+    '   Blank Lines: 6
+    '     File Size: 1.17 KB
+
 
     '     Module InvokeAPI
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b92d41ffb8cc3ca385037b7bcaa47ca6, tutorials\core.test\LogFileTest.vb"
+﻿#Region "Microsoft.VisualBasic::b92d41ffb8cc3ca385037b7bcaa47ca6, sciBASIC#\tutorials\core.test\LogFileTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 102
+    '    Code Lines: 40
+    ' Comment Lines: 29
+    '   Blank Lines: 33
+    '     File Size: 1.83 KB
+
 
     ' Module LogFileTest
     ' 

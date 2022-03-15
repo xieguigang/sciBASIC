@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::297d5eb7cdac3a5525ad20a7976b5344, www\Microsoft.VisualBasic.NETProtocol\Pipeline\API.vb"
+﻿#Region "Microsoft.VisualBasic::297d5eb7cdac3a5525ad20a7976b5344, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Pipeline\API.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 94
+    '    Code Lines: 58
+    ' Comment Lines: 22
+    '   Blank Lines: 14
+    '     File Size: 3.52 KB
+
 
     '     Module API
     ' 

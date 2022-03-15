@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::522f35d0acc94909a8053a5f2b9d6469, Data_science\Visualization\Plots-statistics\JointPlot.vb"
+﻿#Region "Microsoft.VisualBasic::522f35d0acc94909a8053a5f2b9d6469, sciBASIC#\Data_science\Visualization\Plots-statistics\JointPlot.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 12
+    '    Code Lines: 9
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 313.00 B
+
 
     ' Module JointPlot
     ' 

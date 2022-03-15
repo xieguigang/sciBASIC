@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8abfee3f34d079c7c214ee3f82e262d2, Data_science\MachineLearning\xgboost\TGBoost\ModelSerializer.vb"
+﻿#Region "Microsoft.VisualBasic::2c485e407e9e156017ec19ef659e0047, sciBASIC#\Data_science\MachineLearning\xgboost\TGBoost\ModelSerializer.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 220
+    '    Code Lines: 152
+    ' Comment Lines: 31
+    '   Blank Lines: 37
+    '     File Size: 8.28 KB
+
 
     '     Class ModelSerializer
     ' 

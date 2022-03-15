@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45fb7ef629fb542c0dec1ee419c19ce4, Data_science\Mathematica\Math\DataFrame\MatrixMarket\MTXFormat.vb"
+﻿#Region "Microsoft.VisualBasic::45fb7ef629fb542c0dec1ee419c19ce4, sciBASIC#\Data_science\Mathematica\Math\DataFrame\MatrixMarket\MTXFormat.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 74
+    '    Code Lines: 29
+    ' Comment Lines: 36
+    '   Blank Lines: 9
+    '     File Size: 3.06 KB
+
 
     '     Class MTXFormat
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07c62dd41b650ea5a8ed80b370171ac3, Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\ExecuteImpl.vb"
+﻿#Region "Microsoft.VisualBasic::07c62dd41b650ea5a8ed80b370171ac3, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\ExecuteImpl.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 136
+    '    Code Lines: 111
+    ' Comment Lines: 5
+    '   Blank Lines: 20
+    '     File Size: 5.34 KB
+
 
     '     Module ExecuteImpl
     ' 

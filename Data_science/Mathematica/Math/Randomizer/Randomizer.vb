@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6c72f312d8a957be241defab0dff01e, Data_science\Mathematica\Math\Randomizer\Randomizer.vb"
+﻿#Region "Microsoft.VisualBasic::c6c72f312d8a957be241defab0dff01e, sciBASIC#\Data_science\Mathematica\Math\Randomizer\Randomizer.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 228
+    '    Code Lines: 117
+    ' Comment Lines: 74
+    '   Blank Lines: 37
+    '     File Size: 8.92 KB
+
 
     ' Class Randomizer
     ' 

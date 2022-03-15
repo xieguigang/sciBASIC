@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::878226dba155e65735e2547348735533, Data_science\MachineLearning\Bootstrapping\Obsolete\Analysis.vb"
+﻿#Region "Microsoft.VisualBasic::878226dba155e65735e2547348735533, sciBASIC#\Data_science\MachineLearning\Bootstrapping\Obsolete\Analysis.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 76
+    '    Code Lines: 0
+    ' Comment Lines: 63
+    '   Blank Lines: 13
+    '     File Size: 3.03 KB
+
 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bac0b2173c35d3b5e32a69163a0bc3b5, Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\SymbolExpression.vb"
+﻿#Region "Microsoft.VisualBasic::bac0b2173c35d3b5e32a69163a0bc3b5, sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\SymbolExpression.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 22
+    '    Code Lines: 14
+    ' Comment Lines: 3
+    '   Blank Lines: 5
+    '     File Size: 605.00 B
+
 
     '     Class SymbolExpression
     ' 

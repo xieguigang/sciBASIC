@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::569e94a0eee2f4b49b160f19eb302c50, vs_solutions\dev\ApplicationServices\Win32\HardwareInfo.vb"
+﻿#Region "Microsoft.VisualBasic::569e94a0eee2f4b49b160f19eb302c50, sciBASIC#\vs_solutions\dev\ApplicationServices\Win32\HardwareInfo.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 104
+    '    Code Lines: 59
+    ' Comment Lines: 27
+    '   Blank Lines: 18
+    '     File Size: 4.02 KB
+
 
     '     Module HardwareInfo
     ' 

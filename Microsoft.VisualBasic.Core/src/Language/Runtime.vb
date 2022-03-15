@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dcb3322ee4e391d22a4a9c2180c661fa, Microsoft.VisualBasic.Core\src\Language\Runtime.vb"
+﻿#Region "Microsoft.VisualBasic::dcb3322ee4e391d22a4a9c2180c661fa, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Runtime.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 173
+    '    Code Lines: 120
+    ' Comment Lines: 26
+    '   Blank Lines: 27
+    '     File Size: 6.04 KB
+
 
     '     Class ArgumentReference
     ' 

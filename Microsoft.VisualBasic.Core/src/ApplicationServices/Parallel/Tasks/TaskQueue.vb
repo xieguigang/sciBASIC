@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b21a3f5b2e783a5420e7d6570b5d53cf, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\TaskQueue.vb"
+﻿#Region "Microsoft.VisualBasic::b21a3f5b2e783a5420e7d6570b5d53cf, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\TaskQueue.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 187
+    '    Code Lines: 110
+    ' Comment Lines: 49
+    '   Blank Lines: 28
+    '     File Size: 6.82 KB
+
 
     '     Interface ITaskHandle
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1971450e48038a381377a4f976fa00da, Microsoft.VisualBasic.Core\test\indexTest.vb"
+﻿#Region "Microsoft.VisualBasic::1971450e48038a381377a4f976fa00da, sciBASIC#\Microsoft.VisualBasic.Core\test\indexTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 54
+    '    Code Lines: 40
+    ' Comment Lines: 0
+    '   Blank Lines: 14
+    '     File Size: 1.63 KB
+
 
     ' Module indexTest
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::befb60e95843d32d309c02b865dcb4a7, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::befb60e95843d32d309c02b865dcb4a7, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 177
+    '    Code Lines: 122
+    ' Comment Lines: 29
+    '   Blank Lines: 26
+    '     File Size: 7.49 KB
+
 
     '     Class Leaf
     ' 

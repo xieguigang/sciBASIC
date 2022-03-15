@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::89414a916c7f1f44897c1fff07996ae8, mime\application%pdf\PdfFileWriter\PDF\PdfInfo.vb"
+﻿#Region "Microsoft.VisualBasic::5226191c6ecf7811df3dcb0a34f69ba0, sciBASIC#\mime\application%pdf\PdfFileWriter\PDF\PdfInfo.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 147
+    '    Code Lines: 51
+    ' Comment Lines: 82
+    '   Blank Lines: 14
+    '     File Size: 5.34 KB
+
 
     '     Class PdfInfo
     ' 

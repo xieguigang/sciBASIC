@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c99f394c67211c1be6ae0eff0094d23e, Data\OCR\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::c99f394c67211c1be6ae0eff0094d23e, sciBASIC#\Data\OCR\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 95
+    '    Code Lines: 70
+    ' Comment Lines: 14
+    '   Blank Lines: 11
+    '     File Size: 3.33 KB
+
 
     ' Module Extensions
     ' 

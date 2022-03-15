@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::33d39955c45c07b29e34b41eb842dfbc, Data_science\DataMining\DensityQuery\Density2D.vb"
+﻿#Region "Microsoft.VisualBasic::d3e052456548d65b40b937882710353f, sciBASIC#\Data_science\DataMining\DensityQuery\Density2D.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 68
+    '    Code Lines: 45
+    ' Comment Lines: 13
+    '   Blank Lines: 10
+    '     File Size: 2.63 KB
+
 
     ' Module Density2D
     ' 

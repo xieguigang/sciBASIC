@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba3dfeedc83873fcc592484aff540102, mime\application%pdf\PdfReader\Document\PdfDecryptStandard.vb"
+﻿#Region "Microsoft.VisualBasic::54e399625c5f6b7c08c2a3c481f638a4, sciBASIC#\mime\application%pdf\PdfReader\Document\PdfDecryptStandard.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 202
+    '    Code Lines: 131
+    ' Comment Lines: 27
+    '   Blank Lines: 44
+    '     File Size: 9.86 KB
+
 
     '     Class PdfDecryptStandard
     ' 

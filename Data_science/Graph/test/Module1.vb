@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b06c4a6eaeff7cb31813c0ae2d0924d, Data_science\Graph\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::9b06c4a6eaeff7cb31813c0ae2d0924d, sciBASIC#\Data_science\Graph\test\Module1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 17
+    '    Code Lines: 12
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 340.00 B
+
 
     ' Module Module1
     ' 

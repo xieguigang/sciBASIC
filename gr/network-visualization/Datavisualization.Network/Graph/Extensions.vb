@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80a7474dcc33720a8dd2c34c82ec3227, gr\network-visualization\Datavisualization.Network\Graph\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::80a7474dcc33720a8dd2c34c82ec3227, sciBASIC#\gr\network-visualization\Datavisualization.Network\Graph\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 56
+    '    Code Lines: 35
+    ' Comment Lines: 15
+    '   Blank Lines: 6
+    '     File Size: 2.14 KB
+
 
     '     Module Extensions
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::53a0ca48bd36732716a0fbce6455a3f5, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout3D\Node3D.vb"
+﻿#Region "Microsoft.VisualBasic::53a0ca48bd36732716a0fbce6455a3f5, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout3D\Node3D.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 13
+    '    Code Lines: 10
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 312.00 B
+
 
     '     Class Node3D
     ' 

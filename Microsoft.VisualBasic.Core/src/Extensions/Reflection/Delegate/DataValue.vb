@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47613598a39f8f8ce8696e10eb628216, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Delegate\DataValue.vb"
+﻿#Region "Microsoft.VisualBasic::47613598a39f8f8ce8696e10eb628216, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Reflection\Delegate\DataValue.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 151
+    '    Code Lines: 83
+    ' Comment Lines: 45
+    '   Blank Lines: 23
+    '     File Size: 6.21 KB
+
 
     '     Class DataValue
     ' 

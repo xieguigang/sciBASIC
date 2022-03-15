@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a64a38c5a263fee27de57021d2e7829b, Data_science\Visualization\Plots-statistics\PCA\PC2.vb"
+﻿#Region "Microsoft.VisualBasic::a64a38c5a263fee27de57021d2e7829b, sciBASIC#\Data_science\Visualization\Plots-statistics\PCA\PC2.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 106
+    '    Code Lines: 80
+    ' Comment Lines: 12
+    '   Blank Lines: 14
+    '     File Size: 4.17 KB
+
 
     '     Module PCAPlot
     ' 

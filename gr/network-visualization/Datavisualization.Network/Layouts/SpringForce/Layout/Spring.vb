@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::840e123300919eec1d98057f62d9dea8, gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Layout\Spring.vb"
+﻿#Region "Microsoft.VisualBasic::840e123300919eec1d98057f62d9dea8, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Layout\Spring.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 90
+    '    Code Lines: 39
+    ' Comment Lines: 38
+    '   Blank Lines: 13
+    '     File Size: 2.84 KB
+
 
     '     Class Spring
     ' 

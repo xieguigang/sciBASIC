@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a07d5bf90e33773db4dfd97fd079ffd8, gr\Microsoft.VisualBasic.Imaging\Drivers\Exif\JpegMetadataAdapter.vb"
+﻿#Region "Microsoft.VisualBasic::a07d5bf90e33773db4dfd97fd079ffd8, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drivers\Exif\JpegMetadataAdapter.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 165
+    '    Code Lines: 113
+    ' Comment Lines: 16
+    '   Blank Lines: 36
+    '     File Size: 6.33 KB
+
 
     '     Class JpegMetadataAdapter
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a7ae7f93498f08af88c06a318c0e25eb, mime\application%pdf\PdfFileWriter\QREncoder\QREncoderTables.vb"
+﻿#Region "Microsoft.VisualBasic::ac3a91cf0137d336debb3c4232e2a708, sciBASIC#\mime\application%pdf\PdfFileWriter\QREncoder\QREncoderTables.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 344
+    '    Code Lines: 283
+    ' Comment Lines: 55
+    '   Blank Lines: 6
+    '     File Size: 26.32 KB
+
 
     ' Class QREncoderTables
     ' 

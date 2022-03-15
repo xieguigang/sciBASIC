@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83047b58f40b4861c3caf291e597bd5b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\IsoCell.vb"
+﻿#Region "Microsoft.VisualBasic::83047b58f40b4861c3caf291e597bd5b, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\IsoCell.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 201
+    '    Code Lines: 100
+    ' Comment Lines: 83
+    '   Blank Lines: 18
+    '     File Size: 9.20 KB
+
 
     '     Class IsoCell
     ' 

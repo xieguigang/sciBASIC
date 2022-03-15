@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4ee5554c4ef765c4af6e9ba97f47faa, tutorials\core.test\devToolTest.vb"
+﻿#Region "Microsoft.VisualBasic::f4ee5554c4ef765c4af6e9ba97f47faa, sciBASIC#\tutorials\core.test\devToolTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 178
+    '    Code Lines: 68
+    ' Comment Lines: 65
+    '   Blank Lines: 45
+    '     File Size: 3.67 KB
+
 
     ' Module devToolTest
     ' 

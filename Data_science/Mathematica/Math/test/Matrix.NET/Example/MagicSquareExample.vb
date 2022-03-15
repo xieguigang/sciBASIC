@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad5abd35edd7dd1fb00a13590076af66, Data_science\Mathematica\Math\test\Matrix.NET\Example\MagicSquareExample.vb"
+﻿#Region "Microsoft.VisualBasic::ad5abd35edd7dd1fb00a13590076af66, sciBASIC#\Data_science\Mathematica\Math\test\Matrix.NET\Example\MagicSquareExample.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 170
+    '    Code Lines: 118
+    ' Comment Lines: 21
+    '   Blank Lines: 31
+    '     File Size: 6.95 KB
+
 
     '     Class MagicSquareExample
     ' 

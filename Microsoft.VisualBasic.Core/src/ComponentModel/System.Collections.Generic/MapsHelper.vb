@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::365e41ebbae12c816e37e68eabfbc3ce, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\MapsHelper.vb"
+﻿#Region "Microsoft.VisualBasic::365e41ebbae12c816e37e68eabfbc3ce, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\MapsHelper.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 243
+    '    Code Lines: 150
+    ' Comment Lines: 53
+    '   Blank Lines: 40
+    '     File Size: 8.62 KB
+
 
     '     Class MapsHelper
     ' 

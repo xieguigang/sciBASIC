@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::efab0a3b492516d6b494387cb3a1e2f1, Data_science\algorithms\PageRank\PR_test\test.vb"
+﻿#Region "Microsoft.VisualBasic::efab0a3b492516d6b494387cb3a1e2f1, sciBASIC#\Data_science\algorithms\PageRank\PR_test\test.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 56
+    '    Code Lines: 42
+    ' Comment Lines: 0
+    '   Blank Lines: 14
+    '     File Size: 1.51 KB
+
 
     ' Module test
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c77fbd61bc40f29251e18374e234196b, CLI_tools\FindKeyWord\CLI\FuzzySearch.vb"
+﻿#Region "Microsoft.VisualBasic::c77fbd61bc40f29251e18374e234196b, sciBASIC#\CLI_tools\FindKeyWord\CLI\FuzzySearch.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 72
+    '    Code Lines: 57
+    ' Comment Lines: 0
+    '   Blank Lines: 15
+    '     File Size: 2.67 KB
+
 
     ' Module CLI
     ' 

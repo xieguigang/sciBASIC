@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65c984e26f3f9f6f6d05f41a4dd45cb3, Data_science\MachineLearning\CellularAutomaton\SimulatorModel\Individual.vb"
+﻿#Region "Microsoft.VisualBasic::65c984e26f3f9f6f6d05f41a4dd45cb3, sciBASIC#\Data_science\MachineLearning\CellularAutomaton\SimulatorModel\Individual.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 7
+    '    Code Lines: 4
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 178.00 B
+
 
     ' Interface Individual
     ' 

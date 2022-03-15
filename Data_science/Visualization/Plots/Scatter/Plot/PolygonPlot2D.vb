@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36f06d9b6e08019befc2aba35979d364, Data_science\Visualization\Plots\Scatter\Plot\PolygonPlot2D.vb"
+﻿#Region "Microsoft.VisualBasic::922fa28849a62556a0309a7ab4bec3bc, sciBASIC#\Data_science\Visualization\Plots\Scatter\Plot\PolygonPlot2D.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 108
+    '    Code Lines: 93
+    ' Comment Lines: 0
+    '   Blank Lines: 15
+    '     File Size: 4.50 KB
+
 
     '     Class PolygonPlot2D
     ' 

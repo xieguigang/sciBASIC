@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4ff91d7e8c03fe1c6922c18c8ed05b2, vs_solutions\dev\VisualStudio\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::f4ff91d7e8c03fe1c6922c18c8ed05b2, sciBASIC#\vs_solutions\dev\VisualStudio\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 104
+    '    Code Lines: 80
+    ' Comment Lines: 15
+    '   Blank Lines: 9
+    '     File Size: 4.19 KB
+
 
     ' Module Extensions
     ' 

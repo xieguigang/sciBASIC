@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f0b0b2e2e586470118f09f5562dd933, Data_science\DataMining\UMAP\Components\SparseMatrix\RowCol.vb"
+﻿#Region "Microsoft.VisualBasic::6f0b0b2e2e586470118f09f5562dd933, sciBASIC#\Data_science\DataMining\UMAP\Components\SparseMatrix\RowCol.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 42
+    '    Code Lines: 27
+    ' Comment Lines: 7
+    '   Blank Lines: 8
+    '     File Size: 1.42 KB
+
 
     ' Structure RowCol
     ' 

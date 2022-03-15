@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::206c360f4227160dbca004c6ee221862, Data_science\DataMining\DataMining\DecisionTree\TreeNode.vb"
+﻿#Region "Microsoft.VisualBasic::206c360f4227160dbca004c6ee221862, sciBASIC#\Data_science\DataMining\DataMining\DecisionTree\TreeNode.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 37
+    '    Code Lines: 31
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 1.09 KB
+
 
     '     Class TreeNode
     ' 

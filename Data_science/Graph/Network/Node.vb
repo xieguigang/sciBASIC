@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9508b735362dc18dd9b06988b7d1d3c8, Data_science\Graph\Network\Node.vb"
+﻿#Region "Microsoft.VisualBasic::9508b735362dc18dd9b06988b7d1d3c8, sciBASIC#\Data_science\Graph\Network\Node.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 15
+    '    Code Lines: 5
+    ' Comment Lines: 7
+    '   Blank Lines: 3
+    '     File Size: 370.00 B
+
 
     '     Class Node
     ' 

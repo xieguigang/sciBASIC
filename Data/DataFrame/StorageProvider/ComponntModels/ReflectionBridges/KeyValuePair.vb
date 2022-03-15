@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dee305340330adaf5a5f2cb4c32f8089, Data\DataFrame\StorageProvider\ComponntModels\ReflectionBridges\KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::dee305340330adaf5a5f2cb4c32f8089, sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\ReflectionBridges\KeyValuePair.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 72
+    '    Code Lines: 54
+    ' Comment Lines: 5
+    '   Blank Lines: 13
+    '     File Size: 2.99 KB
+
 
     '     Class KeyValuePair
     ' 

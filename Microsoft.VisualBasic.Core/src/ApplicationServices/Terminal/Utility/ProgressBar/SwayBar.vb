@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2017947f4565118930c2ab5af95fb68d, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\SwayBar.vb"
+﻿#Region "Microsoft.VisualBasic::2017947f4565118930c2ab5af95fb68d, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\SwayBar.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 107
+    '    Code Lines: 62
+    ' Comment Lines: 24
+    '   Blank Lines: 21
+    '     File Size: 3.24 KB
+
 
     '     Class SwayBar
     ' 

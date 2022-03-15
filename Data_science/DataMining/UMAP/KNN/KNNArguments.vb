@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc6cf39e51b0a829daa8044b62847971, Data_science\DataMining\UMAP\KNN\KNNArguments.vb"
+﻿#Region "Microsoft.VisualBasic::bc6cf39e51b0a829daa8044b62847971, sciBASIC#\Data_science\DataMining\UMAP\KNN\KNNArguments.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 32
+    '    Code Lines: 21
+    ' Comment Lines: 4
+    '   Blank Lines: 7
+    '     File Size: 888.00 B
+
 
     '     Structure KNNArguments
     ' 

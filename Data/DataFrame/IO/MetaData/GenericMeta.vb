@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::067f9367f812385e656985211acdf33d, Data\DataFrame\IO\MetaData\GenericMeta.vb"
+﻿#Region "Microsoft.VisualBasic::067f9367f812385e656985211acdf33d, sciBASIC#\Data\DataFrame\IO\MetaData\GenericMeta.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 46
+    '    Code Lines: 32
+    ' Comment Lines: 7
+    '   Blank Lines: 7
+    '     File Size: 1.75 KB
+
 
     '     Module GenericMeta
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58e009055c440bc711e5ba3e2ab64bb4, mime\text%html\Render\HtmlConstants.vb"
+﻿#Region "Microsoft.VisualBasic::58e009055c440bc711e5ba3e2ab64bb4, sciBASIC#\mime\text%html\Render\HtmlConstants.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 232
+    '    Code Lines: 223
+    ' Comment Lines: 3
+    '   Blank Lines: 6
+    '     File Size: 10.92 KB
+
 
     '     Class HtmlConstants
     ' 

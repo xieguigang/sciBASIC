@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4efc758f3f1c45982f3bc04e05a3137a, mime\text%yaml\1.1\Base\YAMLNodeType.vb"
+﻿#Region "Microsoft.VisualBasic::4efc758f3f1c45982f3bc04e05a3137a, sciBASIC#\mime\text%yaml\1.1\Base\YAMLNodeType.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 19
+    '    Code Lines: 7
+    ' Comment Lines: 9
+    '   Blank Lines: 3
+    '     File Size: 450.00 B
+
 
     '     Enum YAMLNodeType
     ' 

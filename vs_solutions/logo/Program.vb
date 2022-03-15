@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6fc714cbe4f6e955afdec38af5c18742, vs_solutions\logo\Program.vb"
+﻿#Region "Microsoft.VisualBasic::6fc714cbe4f6e955afdec38af5c18742, sciBASIC#\vs_solutions\logo\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 75
+    '    Code Lines: 53
+    ' Comment Lines: 3
+    '   Blank Lines: 19
+    '     File Size: 2.84 KB
+
 
     ' Module Program
     ' 

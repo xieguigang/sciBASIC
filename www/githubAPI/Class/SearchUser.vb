@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35dcc72116e7db220850b5bf81385f3b, www\githubAPI\Class\SearchUser.vb"
+﻿#Region "Microsoft.VisualBasic::35dcc72116e7db220850b5bf81385f3b, sciBASIC#\www\githubAPI\Class\SearchUser.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 73
+    '    Code Lines: 58
+    ' Comment Lines: 7
+    '   Blank Lines: 8
+    '     File Size: 2.69 KB
+
 
     '     Class SearchResult
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7683d13f411374dff211a96cc4c2f6e, www\Microsoft.VisualBasic.NETProtocol\InternetTime\WinAPI.vb"
+﻿#Region "Microsoft.VisualBasic::e7683d13f411374dff211a96cc4c2f6e, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\InternetTime\WinAPI.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 42
+    '    Code Lines: 32
+    ' Comment Lines: 4
+    '   Blank Lines: 6
+    '     File Size: 1.55 KB
+
 
     '     Module WinAPI
     ' 

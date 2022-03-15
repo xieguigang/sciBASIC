@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6332ac4898baa85d28703b9746753e2f, mime\text%html\Xml\Node.vb"
+﻿#Region "Microsoft.VisualBasic::6332ac4898baa85d28703b9746753e2f, sciBASIC#\mime\text%html\Xml\Node.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 31
+    '    Code Lines: 12
+    ' Comment Lines: 11
+    '   Blank Lines: 8
+    '     File Size: 930.00 B
+
 
     '     Class Node
     ' 

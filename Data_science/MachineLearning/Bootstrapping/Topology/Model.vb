@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86315a5f5faba9d19213c245841a0fd3, Data_science\MachineLearning\Bootstrapping\Topology\Model.vb"
+﻿#Region "Microsoft.VisualBasic::86315a5f5faba9d19213c245841a0fd3, sciBASIC#\Data_science\MachineLearning\Bootstrapping\Topology\Model.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 75
+    '    Code Lines: 47
+    ' Comment Lines: 16
+    '   Blank Lines: 12
+    '     File Size: 2.73 KB
+
 
     '     Class Model
     ' 

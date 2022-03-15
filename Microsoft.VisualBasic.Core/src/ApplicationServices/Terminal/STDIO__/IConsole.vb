@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84ea77c3d8cf4d69b57b2233f4cdaf8f, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\STDIO__\IConsole.vb"
+﻿#Region "Microsoft.VisualBasic::84ea77c3d8cf4d69b57b2233f4cdaf8f, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\STDIO__\IConsole.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 71
+    '    Code Lines: 21
+    ' Comment Lines: 41
+    '   Blank Lines: 9
+    '     File Size: 2.77 KB
+
 
     '     Interface IReadDevice
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9cb52eef12222618ddfc34ef63606cca, Data\DataFrame\DATA\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::9cb52eef12222618ddfc34ef63606cca, sciBASIC#\Data\DataFrame\DATA\DataFrame.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 191
+    '    Code Lines: 125
+    ' Comment Lines: 44
+    '   Blank Lines: 22
+    '     File Size: 7.68 KB
+
 
     '     Class DataFrame
     ' 

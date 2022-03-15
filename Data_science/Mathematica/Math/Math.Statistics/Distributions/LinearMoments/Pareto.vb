@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ba0188a43ca2000189a3c7bb69c7234, Data_science\Mathematica\Math\Math.Statistics\Distributions\LinearMoments\Pareto.vb"
+﻿#Region "Microsoft.VisualBasic::9ba0188a43ca2000189a3c7bb69c7234, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Distributions\LinearMoments\Pareto.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 68
+    '    Code Lines: 52
+    ' Comment Lines: 11
+    '   Blank Lines: 5
+    '     File Size: 2.39 KB
+
 
     '     Class Pareto
     ' 

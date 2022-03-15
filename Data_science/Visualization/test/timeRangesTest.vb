@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0acaf4255e851a6f2fbeb54e28f24ca, Data_science\Visualization\test\timeRangesTest.vb"
+﻿#Region "Microsoft.VisualBasic::c0acaf4255e851a6f2fbeb54e28f24ca, sciBASIC#\Data_science\Visualization\test\timeRangesTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 25
+    '    Code Lines: 21
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 1.23 KB
+
 
     ' Module timeRangesTest
     ' 

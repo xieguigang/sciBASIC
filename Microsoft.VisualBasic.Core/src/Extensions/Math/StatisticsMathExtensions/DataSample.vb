@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::faa61f7e4eeecd79a87b9293ce0c4280, Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\DataSample.vb"
+﻿#Region "Microsoft.VisualBasic::faa61f7e4eeecd79a87b9293ce0c4280, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\DataSample.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 104
+    '    Code Lines: 76
+    ' Comment Lines: 12
+    '   Blank Lines: 16
+    '     File Size: 3.43 KB
+
 
     '     Class DataSample
     ' 

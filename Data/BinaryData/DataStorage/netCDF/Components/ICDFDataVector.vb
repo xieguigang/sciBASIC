@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0526298f4c10c6073306857cfa303fa5, Data\BinaryData\DataStorage\netCDF\Components\ICDFDataVector.vb"
+﻿#Region "Microsoft.VisualBasic::0526298f4c10c6073306857cfa303fa5, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\ICDFDataVector.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 14
+    '    Code Lines: 9
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 338.00 B
+
 
     '     Interface ICDFDataVector
     ' 

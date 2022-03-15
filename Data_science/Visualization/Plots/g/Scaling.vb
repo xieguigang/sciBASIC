@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50a11c14c627bd89aec86f36f560f720, Data_science\Visualization\Plots\g\Scaling.vb"
+﻿#Region "Microsoft.VisualBasic::50a11c14c627bd89aec86f36f560f720, sciBASIC#\Data_science\Visualization\Plots\g\Scaling.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 222
+    '    Code Lines: 127
+    ' Comment Lines: 63
+    '   Blank Lines: 32
+    '     File Size: 8.19 KB
+
 
     '     Class Scaling
     ' 

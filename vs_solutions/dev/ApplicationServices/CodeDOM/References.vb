@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17fb9b3d17c8919d3b11a0521564013d, vs_solutions\dev\ApplicationServices\CodeDOM\References.vb"
+﻿#Region "Microsoft.VisualBasic::17fb9b3d17c8919d3b11a0521564013d, sciBASIC#\vs_solutions\dev\ApplicationServices\CodeDOM\References.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 161
+    '    Code Lines: 97
+    ' Comment Lines: 38
+    '   Blank Lines: 26
+    '     File Size: 6.37 KB
+
 
     '     Module ReferenceSolver
     ' 

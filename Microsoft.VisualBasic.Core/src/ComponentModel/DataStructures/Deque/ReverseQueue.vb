@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ddff95eb64e37e432b078b011527db6, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Deque\ReverseQueue.vb"
+﻿#Region "Microsoft.VisualBasic::1ddff95eb64e37e432b078b011527db6, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Deque\ReverseQueue.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 169
+    '    Code Lines: 87
+    ' Comment Lines: 59
+    '   Blank Lines: 23
+    '     File Size: 6.36 KB
+
 
     '     Class ReverseQueue
     ' 

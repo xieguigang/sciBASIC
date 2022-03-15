@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e65599c41fbe94bb3a3f46a34bf6dfbc, mime\text%html\Render\CSS\CssDefaults.vb"
+﻿#Region "Microsoft.VisualBasic::e65599c41fbe94bb3a3f46a34bf6dfbc, sciBASIC#\mime\text%html\Render\CSS\CssDefaults.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 55
+    '    Code Lines: 14
+    ' Comment Lines: 30
+    '   Blank Lines: 11
+    '     File Size: 9.41 KB
+
 
     '     Class CssDefaults
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db24a54361e12779d42acbb7bdd1978b, gr\Microsoft.VisualBasic.Imaging\SVG\CSS\ObjectStyle.vb"
+﻿#Region "Microsoft.VisualBasic::db24a54361e12779d42acbb7bdd1978b, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\CSS\ObjectStyle.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 20
+    '    Code Lines: 15
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 526.00 B
+
 
     '     Class ObjectStyle
     ' 

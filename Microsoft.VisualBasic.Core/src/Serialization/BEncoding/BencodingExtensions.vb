@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e6b2953cfc1559fa0aa5848ed5fcf14, Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BencodingExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::0e6b2953cfc1559fa0aa5848ed5fcf14, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BencodingExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 134
+    '    Code Lines: 72
+    ' Comment Lines: 43
+    '   Blank Lines: 19
+    '     File Size: 5.38 KB
+
 
     '     Module BencodingExtensions
     ' 

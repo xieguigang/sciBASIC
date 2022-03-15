@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a5e57143b7d97ff5548587405fe1595, Data\OCR\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::3a5e57143b7d97ff5548587405fe1595, sciBASIC#\Data\OCR\test\Module1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 216
+    '    Code Lines: 120
+    ' Comment Lines: 32
+    '   Blank Lines: 64
+    '     File Size: 6.81 KB
+
 
     ' Module Module1
     ' 

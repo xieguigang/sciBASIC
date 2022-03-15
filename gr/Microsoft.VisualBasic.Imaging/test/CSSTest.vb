@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3959bdc358d376150280df54f20af0fb, gr\Microsoft.VisualBasic.Imaging\test\CSSTest.vb"
+﻿#Region "Microsoft.VisualBasic::3959bdc358d376150280df54f20af0fb, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\test\CSSTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 122
+    '    Code Lines: 0
+    ' Comment Lines: 104
+    '   Blank Lines: 18
+    '     File Size: 7.70 KB
+
 
     ' 
     ' /********************************************************************************/

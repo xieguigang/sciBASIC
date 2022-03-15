@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c04e1b48b50beabd7c6063ea58e3c0b, Data_science\Mathematica\SignalProcessing\wav\wav\SubChunk\Enums.vb"
+﻿#Region "Microsoft.VisualBasic::5c04e1b48b50beabd7c6063ea58e3c0b, sciBASIC#\Data_science\Mathematica\SignalProcessing\wav\wav\SubChunk\Enums.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 33
+    '    Code Lines: 16
+    ' Comment Lines: 15
+    '   Blank Lines: 2
+    '     File Size: 652.00 B
+
 
     ' Enum wFormatTag
     ' 

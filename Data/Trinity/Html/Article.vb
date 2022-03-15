@@ -1,43 +1,53 @@
-﻿#Region "Microsoft.VisualBasic::5eaa0c470aa3f638ac1a9b97eca11515, Data\Trinity\Html\Article.vb"
+﻿#Region "Microsoft.VisualBasic::14ebd398c3349991ab4978a979ad489b, sciBASIC#\Data\Trinity\Html\Article.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Structure Article
-' 
-'     Properties: Content, ContentWithTags, PublishDate, Title
-' 
-'     Function: ToString
-' 
-' /********************************************************************************/
+
+    ' Code Statistics:
+
+    '   Total Lines: 41
+    '    Code Lines: 19
+    ' Comment Lines: 15
+    '   Blank Lines: 7
+    '     File Size: 1.07 KB
+
+
+    ' Structure Article
+    ' 
+    '     Properties: content, contentWithTags, publishDate, title
+    ' 
+    '     Function: ParseText, ToString
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

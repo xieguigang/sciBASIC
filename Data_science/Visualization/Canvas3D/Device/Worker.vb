@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6fc9bf698a86322eb100798484b7ab47, Data_science\Visualization\Canvas3D\Device\Worker.vb"
+﻿#Region "Microsoft.VisualBasic::6fc9bf698a86322eb100798484b7ab47, sciBASIC#\Data_science\Visualization\Canvas3D\Device\Worker.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 149
+    '    Code Lines: 101
+    ' Comment Lines: 22
+    '   Blank Lines: 26
+    '     File Size: 5.23 KB
+
 
     '     Class Worker
     ' 

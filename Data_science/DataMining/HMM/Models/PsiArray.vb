@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4171931f15e61cc9cf47f974164faba6, Data_science\DataMining\HMM\Models\PsiArray.vb"
+﻿#Region "Microsoft.VisualBasic::4171931f15e61cc9cf47f974164faba6, sciBASIC#\Data_science\DataMining\HMM\Models\PsiArray.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 42
+    '    Code Lines: 31
+    ' Comment Lines: 0
+    '   Blank Lines: 11
+    '     File Size: 1.15 KB
+
 
     '     Class viterbiSequence
     ' 

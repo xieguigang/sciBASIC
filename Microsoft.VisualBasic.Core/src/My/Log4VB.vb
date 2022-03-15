@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::953e2b4e23b621025ea248508f9b639d, Microsoft.VisualBasic.Core\src\My\Log4VB.vb"
+﻿#Region "Microsoft.VisualBasic::953e2b4e23b621025ea248508f9b639d, sciBASIC#\Microsoft.VisualBasic.Core\src\My\Log4VB.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 178
+    '    Code Lines: 104
+    ' Comment Lines: 51
+    '   Blank Lines: 23
+    '     File Size: 7.38 KB
+
 
     '     Module Log4VB
     ' 

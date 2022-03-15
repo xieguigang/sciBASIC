@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d65684dc5d5f8fecadfeac41e2e710a2, Microsoft.VisualBasic.Core\src\Extensions\Security\TripleDES.vb"
+﻿#Region "Microsoft.VisualBasic::d65684dc5d5f8fecadfeac41e2e710a2, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Security\TripleDES.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 90
+    '    Code Lines: 68
+    ' Comment Lines: 6
+    '   Blank Lines: 16
+    '     File Size: 3.34 KB
+
 
     '     Class TripleDES
     ' 

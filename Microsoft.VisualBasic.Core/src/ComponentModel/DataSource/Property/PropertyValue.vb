@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5834ea2d7b39560dd5d476170c1be22, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\PropertyValue.vb"
+﻿#Region "Microsoft.VisualBasic::b5834ea2d7b39560dd5d476170c1be22, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\PropertyValue.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 142
+    '    Code Lines: 74
+    ' Comment Lines: 51
+    '   Blank Lines: 17
+    '     File Size: 5.67 KB
+
 
     '     Class PropertyValue
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c815be91669f34a09384e5ac0c9ffb18, gr\network-visualization\Datavisualization.Network\Layouts\OrganicLayout\mxGeometry.vb"
+﻿#Region "Microsoft.VisualBasic::c815be91669f34a09384e5ac0c9ffb18, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\OrganicLayout\mxGeometry.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 225
+    '    Code Lines: 87
+    ' Comment Lines: 99
+    '   Blank Lines: 39
+    '     File Size: 9.37 KB
+
 
     '     Class mxGeometry
     ' 

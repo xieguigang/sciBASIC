@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fda1c38ae53e0b9f9133d16483a1adca, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::fda1c38ae53e0b9f9133d16483a1adca, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 35
+    '    Code Lines: 27
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 1.38 KB
+
 
     '     Module Extensions
     ' 

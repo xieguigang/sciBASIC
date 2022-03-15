@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9dd628a6670c8ba59934c76ffca948d8, gr\network-visualization\Datavisualization.Network\Graph\GraphTree.vb"
+﻿#Region "Microsoft.VisualBasic::9dd628a6670c8ba59934c76ffca948d8, sciBASIC#\gr\network-visualization\Datavisualization.Network\Graph\GraphTree.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 123
+    '    Code Lines: 80
+    ' Comment Lines: 25
+    '   Blank Lines: 18
+    '     File Size: 4.29 KB
+
 
     '     Class GraphTreeNode
     ' 

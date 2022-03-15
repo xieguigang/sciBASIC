@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bbc599d86a4699896362a32a092a0535, mime\application%pdf\PdfReader\Tokenizer\TokenByteSplice.vb"
+﻿#Region "Microsoft.VisualBasic::bbc599d86a4699896362a32a092a0535, sciBASIC#\mime\application%pdf\PdfReader\Tokenizer\TokenByteSplice.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 7
+    '    Code Lines: 7
+    ' Comment Lines: 0
+    '   Blank Lines: 0
+    '     File Size: 190.00 B
+
 
     '     Structure TokenByteSplice
     ' 

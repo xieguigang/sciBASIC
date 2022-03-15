@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4682d4cbcf5aefe9ccea4f2b111c2499, vs_solutions\dev\VisualStudio\CodeSign\VBCodeSignature.vb"
+﻿#Region "Microsoft.VisualBasic::fb4cfb0eda51d89906f7f65852e7ff3f, sciBASIC#\vs_solutions\dev\VisualStudio\CodeSign\VBCodeSignature.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 270
+    '    Code Lines: 225
+    ' Comment Lines: 9
+    '   Blank Lines: 36
+    '     File Size: 11.46 KB
+
 
     '     Module VBCodeSignature
     ' 
@@ -65,6 +75,11 @@ Namespace CodeSign
             Return r.Replace(line, VBCodePatterns.Attribute, "", RegexICSng)
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="vb">the vb source code text</param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function SummaryModules(vb As String) As String

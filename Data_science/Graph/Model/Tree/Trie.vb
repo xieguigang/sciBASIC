@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73335992ec91e65554f46dd9868f40aa, Data_science\Graph\Model\Tree\Trie.vb"
+﻿#Region "Microsoft.VisualBasic::73335992ec91e65554f46dd9868f40aa, sciBASIC#\Data_science\Graph\Model\Tree\Trie.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 165
+    '    Code Lines: 103
+    ' Comment Lines: 34
+    '   Blank Lines: 28
+    '     File Size: 4.89 KB
+
 
     ' Class Trie
     ' 

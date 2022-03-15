@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2ac8d0c6bb29410ddd947bd1c3ec59e, Microsoft.VisualBasic.Core\src\Extensions\Collection\ByteStreamExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::b2ac8d0c6bb29410ddd947bd1c3ec59e, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\ByteStreamExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 37
+    '    Code Lines: 31
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 1.30 KB
+
 
     ' Module ByteStreamExtensions
     ' 

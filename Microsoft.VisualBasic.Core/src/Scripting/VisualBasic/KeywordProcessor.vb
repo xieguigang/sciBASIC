@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3def9fdd143b474305f796dd8a75cfb, Microsoft.VisualBasic.Core\src\Scripting\VisualBasic\KeywordProcessor.vb"
+﻿#Region "Microsoft.VisualBasic::e3def9fdd143b474305f796dd8a75cfb, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\VisualBasic\KeywordProcessor.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 71
+    '    Code Lines: 47
+    ' Comment Lines: 18
+    '   Blank Lines: 6
+    '     File Size: 3.19 KB
+
 
     '     Class KeywordProcessor
     ' 

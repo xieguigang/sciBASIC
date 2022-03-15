@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2689e5431452a703893e4cbfb8f343c2, docs\guides\Example\LanguageSyntax\Program.vb"
+﻿#Region "Microsoft.VisualBasic::2689e5431452a703893e4cbfb8f343c2, sciBASIC#\docs\guides\Example\LanguageSyntax\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 43
+    '    Code Lines: 36
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 1.16 KB
+
 
     ' Module Program
     ' 

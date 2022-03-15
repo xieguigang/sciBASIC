@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1bc2787d407848cfa11170d2cdd06dd, gr\network-visualization\Datavisualization.Network\Graph\mxGraphModel.vb"
+﻿#Region "Microsoft.VisualBasic::a1bc2787d407848cfa11170d2cdd06dd, sciBASIC#\gr\network-visualization\Datavisualization.Network\Graph\mxGraphModel.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 2000
+    '    Code Lines: 1043
+    ' Comment Lines: 611
+    '   Blank Lines: 346
+    '     File Size: 67.15 KB
+
 
     ' 	Class mxGraphModel
     ' 

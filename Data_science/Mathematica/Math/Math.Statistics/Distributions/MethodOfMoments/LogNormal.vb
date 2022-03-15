@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f671736e3a1117fc6a2d91a451354882, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\LogNormal.vb"
+﻿#Region "Microsoft.VisualBasic::f671736e3a1117fc6a2d91a451354882, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\LogNormal.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 74
+    '    Code Lines: 56
+    ' Comment Lines: 13
+    '   Blank Lines: 5
+    '     File Size: 3.22 KB
+
 
     '     Class LogNormal
     ' 

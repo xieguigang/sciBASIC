@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d658848f4deea7889c359430a6f6422, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\LogPearsonIII.vb"
+﻿#Region "Microsoft.VisualBasic::1d658848f4deea7889c359430a6f6422, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\LogPearsonIII.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 90
+    '    Code Lines: 73
+    ' Comment Lines: 10
+    '   Blank Lines: 7
+    '     File Size: 3.81 KB
+
 
     '     Class LogPearsonIII
     ' 

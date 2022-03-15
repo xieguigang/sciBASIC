@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d289d0be82398321616d42c29a280d45, mime\application%pdf\PdfFileWriter\PDF\PdfObject.vb"
+﻿#Region "Microsoft.VisualBasic::e7bb3cdd6a48fbfc34f9c231cbb757e9, sciBASIC#\mime\application%pdf\PdfFileWriter\PDF\PdfObject.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 414
+    '    Code Lines: 183
+    ' Comment Lines: 136
+    '   Blank Lines: 95
+    '     File Size: 14.93 KB
+
 
     ' Enum ResCode
     ' 

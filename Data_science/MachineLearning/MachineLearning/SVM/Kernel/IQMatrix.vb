@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::150ee4edc251ece5969ceeb8680ab871, Data_science\MachineLearning\MachineLearning\SVM\Kernel\IQMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::150ee4edc251ece5969ceeb8680ab871, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\Kernel\IQMatrix.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 7
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 239.00 B
+
 
     '     Interface IQMatrix
     ' 

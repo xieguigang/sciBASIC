@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a7777fd874b89d14b530350b76b58d9a, Data_science\MachineLearning\Bootstrapping\Darwinism\GAF\ODEs\GAFModel.vb"
+﻿#Region "Microsoft.VisualBasic::a7777fd874b89d14b530350b76b58d9a, sciBASIC#\Data_science\MachineLearning\Bootstrapping\Darwinism\GAF\ODEs\GAFModel.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 49
+    '    Code Lines: 36
+    ' Comment Lines: 0
+    '   Blank Lines: 13
+    '     File Size: 1.38 KB
+
 
     '     Class Model
     ' 

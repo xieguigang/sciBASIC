@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8deb7022a32ace0845aa7b4055e175a9, mime\application%pdf\PdfReader\Parser\ParseObjectBase.vb"
+﻿#Region "Microsoft.VisualBasic::8deb7022a32ace0845aa7b4055e175a9, sciBASIC#\mime\application%pdf\PdfReader\Parser\ParseObjectBase.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 7
+    '    Code Lines: 7
+    ' Comment Lines: 0
+    '   Blank Lines: 0
+    '     File Size: 325.00 B
+
 
     '     Class ParseObjectBase
     ' 

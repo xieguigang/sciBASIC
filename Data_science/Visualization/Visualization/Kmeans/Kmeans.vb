@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d7e7598023bed47c287f9be4694741ae, Data_science\Visualization\Visualization\Kmeans\Kmeans.vb"
+﻿#Region "Microsoft.VisualBasic::d7e7598023bed47c287f9be4694741ae, sciBASIC#\Data_science\Visualization\Visualization\Kmeans\Kmeans.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 280
+    '    Code Lines: 202
+    ' Comment Lines: 49
+    '   Blank Lines: 29
+    '     File Size: 13.28 KB
+
 
     '     Module KmeansExtensions
     ' 

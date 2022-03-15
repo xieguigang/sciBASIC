@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ba07e347942f1b505de3c4900f780fd, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Marshal\MarshalExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::9b8fd6d05d5aedbdbd596872dffdecf7, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Reflection\Marshal\MarshalExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 69
+    '    Code Lines: 34
+    ' Comment Lines: 30
+    '   Blank Lines: 5
+    '     File Size: 3.74 KB
+
 
     '     Module MarshalExtensions
     ' 

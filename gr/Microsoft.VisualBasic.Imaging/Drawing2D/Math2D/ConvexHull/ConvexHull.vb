@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3396794c52a4e0e8eb8e69381b9bcb53, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConvexHull\ConvexHull.vb"
+﻿#Region "Microsoft.VisualBasic::3396794c52a4e0e8eb8e69381b9bcb53, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConvexHull\ConvexHull.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 46
+    '    Code Lines: 21
+    ' Comment Lines: 19
+    '   Blank Lines: 6
+    '     File Size: 1.80 KB
+
 
     '     Module ConvexHull
     ' 

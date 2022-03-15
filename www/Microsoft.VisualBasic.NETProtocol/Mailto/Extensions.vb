@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::49f2e8ba21bd96ee6694c43c6b36c2af, www\Microsoft.VisualBasic.NETProtocol\Mailto\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::49f2e8ba21bd96ee6694c43c6b36c2af, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Mailto\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 82
+    '    Code Lines: 65
+    ' Comment Lines: 3
+    '   Blank Lines: 14
+    '     File Size: 2.57 KB
+
 
     '     Module Extensions
     ' 

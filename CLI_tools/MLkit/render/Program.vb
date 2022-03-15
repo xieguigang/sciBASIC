@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af9ff03c42be51b57e6114c5b30de2a4, CLI_tools\MLkit\render\Program.vb"
+﻿#Region "Microsoft.VisualBasic::af9ff03c42be51b57e6114c5b30de2a4, sciBASIC#\CLI_tools\MLkit\render\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 7
+    '    Code Lines: 5
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 140.00 B
+
 
     ' Module Program
     ' 

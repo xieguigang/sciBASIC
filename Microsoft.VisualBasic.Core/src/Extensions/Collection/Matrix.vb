@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f31b6ea8f28b5caae54474a0503a066, Microsoft.VisualBasic.Core\src\Extensions\Collection\Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::2f31b6ea8f28b5caae54474a0503a066, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\Matrix.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 271
+    '    Code Lines: 161
+    ' Comment Lines: 65
+    '   Blank Lines: 45
+    '     File Size: 9.67 KB
+
 
     '     Module MatrixExtensions
     ' 

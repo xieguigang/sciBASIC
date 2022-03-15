@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75bbbd352531d2ceedbfc8dcce6a417b, vs_solutions\dev\VisualStudio\IL\MethodBodyReader.vb"
+﻿#Region "Microsoft.VisualBasic::75bbbd352531d2ceedbfc8dcce6a417b, sciBASIC#\vs_solutions\dev\VisualStudio\IL\MethodBodyReader.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 228
+    '    Code Lines: 149
+    ' Comment Lines: 35
+    '   Blank Lines: 44
+    '     File Size: 8.84 KB
+
 
     '     Class MethodBodyReader
     ' 

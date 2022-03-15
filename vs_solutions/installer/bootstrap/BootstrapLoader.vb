@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48d1b7e9aa058516291f6dfd4b5353b9, vs_solutions\installer\bootstrap\BootstrapLoader.vb"
+﻿#Region "Microsoft.VisualBasic::48d1b7e9aa058516291f6dfd4b5353b9, sciBASIC#\vs_solutions\installer\bootstrap\BootstrapLoader.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 37
+    '    Code Lines: 27
+    ' Comment Lines: 2
+    '   Blank Lines: 8
+    '     File Size: 1.26 KB
+
 
     ' Class BootstrapLoader
     ' 

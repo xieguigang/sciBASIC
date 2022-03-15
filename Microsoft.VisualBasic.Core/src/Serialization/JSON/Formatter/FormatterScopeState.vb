@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f41f4c5c4d2398be38343660afc9b67, Microsoft.VisualBasic.Core\src\Serialization\JSON\Formatter\FormatterScopeState.vb"
+﻿#Region "Microsoft.VisualBasic::2f41f4c5c4d2398be38343660afc9b67, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\JSON\Formatter\FormatterScopeState.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 38
+    '    Code Lines: 29
+    ' Comment Lines: 0
+    '   Blank Lines: 9
+    '     File Size: 1.03 KB
+
 
     '     Class FormatterScopeState
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aab1e9b22cee0f292629446ecdd06390, vs_solutions\dev\vs_PDB\PDB.vb"
+﻿#Region "Microsoft.VisualBasic::aab1e9b22cee0f292629446ecdd06390, sciBASIC#\vs_solutions\dev\vs_PDB\PDB.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 10
+    '    Code Lines: 2
+    ' Comment Lines: 7
+    '   Blank Lines: 1
+    '     File Size: 632.00 B
+
 
     ' Class PDB
     ' 

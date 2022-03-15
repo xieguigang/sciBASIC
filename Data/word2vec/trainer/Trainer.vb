@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb1b9e3437e24a41ca65fa56f30db2b7, Data\word2vec\trainer\Trainer.vb"
+﻿#Region "Microsoft.VisualBasic::fb1b9e3437e24a41ca65fa56f30db2b7, sciBASIC#\Data\word2vec\trainer\Trainer.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 110
+    '    Code Lines: 84
+    ' Comment Lines: 7
+    '   Blank Lines: 19
+    '     File Size: 5.09 KB
+
 
     '     Class Trainer
     ' 

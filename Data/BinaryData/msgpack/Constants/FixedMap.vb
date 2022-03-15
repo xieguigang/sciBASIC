@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dad60f9d39a4676e6d9cec347c33bec4, Data\BinaryData\msgpack\Constants\FixedMap.vb"
+﻿#Region "Microsoft.VisualBasic::dad60f9d39a4676e6d9cec347c33bec4, sciBASIC#\Data\BinaryData\msgpack\Constants\FixedMap.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 7
+    '    Code Lines: 6
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 175.00 B
+
 
     '     Class FixedMap
     ' 

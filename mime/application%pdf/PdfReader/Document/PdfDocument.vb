@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::068191788e04597bb736cc435955ed7e, mime\application%pdf\PdfReader\Document\PdfDocument.vb"
+﻿#Region "Microsoft.VisualBasic::3b2e2b65dc5c784a45777ba9333eba88, sciBASIC#\mime\application%pdf\PdfReader\Document\PdfDocument.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 273
+    '    Code Lines: 203
+    ' Comment Lines: 20
+    '   Blank Lines: 50
+    '     File Size: 10.92 KB
+
 
     '     Class PdfDocument
     ' 

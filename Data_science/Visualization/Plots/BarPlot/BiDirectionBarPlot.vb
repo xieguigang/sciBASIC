@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::478d349cc8085a1445910a609c99653a, Data_science\Visualization\Plots\BarPlot\BiDirectionBarPlot.vb"
+﻿#Region "Microsoft.VisualBasic::5b42fbbe783c92ddc2983479f3ae4f4c, sciBASIC#\Data_science\Visualization\Plots\BarPlot\BiDirectionBarPlot.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 159
+    '    Code Lines: 114
+    ' Comment Lines: 11
+    '   Blank Lines: 34
+    '     File Size: 7.27 KB
+
 
     '     Class BiDirectionBarPlot
     ' 

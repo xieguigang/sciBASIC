@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8fe9b46ce1afdc942074e66332a05c12, Microsoft.VisualBasic.Core\src\Language\Value\Numeric\Numeric.vb"
+﻿#Region "Microsoft.VisualBasic::c05b1ff41d88dfa5d8e985fd4ffdb349, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\Numeric\Numeric.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 175
+    '    Code Lines: 74
+    ' Comment Lines: 78
+    '   Blank Lines: 23
+    '     File Size: 5.84 KB
+
 
     '     Module Numeric
     ' 

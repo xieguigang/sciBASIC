@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0cd0ef2cf9c7af6caffa5939574eb9a9, Data\BinaryData\DataStorage\HDF5\HDF5File.vb"
+﻿#Region "Microsoft.VisualBasic::0cd0ef2cf9c7af6caffa5939574eb9a9, sciBASIC#\Data\BinaryData\DataStorage\HDF5\HDF5File.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 183
+    '    Code Lines: 100
+    ' Comment Lines: 52
+    '   Blank Lines: 31
+    '     File Size: 7.78 KB
+
 
     '     Class HDF5File
     ' 

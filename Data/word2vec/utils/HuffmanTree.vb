@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::24299c3c5b866b1c6b6acc4654f25bac, Data\word2vec\utils\HuffmanTree.vb"
+﻿#Region "Microsoft.VisualBasic::960c1ffa46f043d6996231a96b71ad69, sciBASIC#\Data\word2vec\utils\HuffmanTree.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 36
+    '    Code Lines: 23
+    ' Comment Lines: 5
+    '   Blank Lines: 8
+    '     File Size: 1.03 KB
+
 
     '     Class HuffmanTree
     ' 

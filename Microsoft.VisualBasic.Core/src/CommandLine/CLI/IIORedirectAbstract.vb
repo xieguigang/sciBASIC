@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9507a5e3cd6b2ec30a9b908f6e9aa232, Microsoft.VisualBasic.Core\src\CommandLine\CLI\IIORedirectAbstract.vb"
+﻿#Region "Microsoft.VisualBasic::9507a5e3cd6b2ec30a9b908f6e9aa232, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\CLI\IIORedirectAbstract.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 39
+    '    Code Lines: 10
+    ' Comment Lines: 24
+    '   Blank Lines: 5
+    '     File Size: 1.96 KB
+
 
     '     Interface IIORedirectAbstract
     ' 

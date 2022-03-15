@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29825c8b0f407da82b2cfc1484de2c2e, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::29825c8b0f407da82b2cfc1484de2c2e, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Reflection\Reflection.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 567
+    '    Code Lines: 339
+    ' Comment Lines: 158
+    '   Blank Lines: 70
+    '     File Size: 21.87 KB
+
 
     ' Module EmitReflection
     ' 

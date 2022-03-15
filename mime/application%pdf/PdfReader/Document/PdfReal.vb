@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90212940cdc7a80d9788d45d4c52751c, mime\application%pdf\PdfReader\Document\PdfReal.vb"
+﻿#Region "Microsoft.VisualBasic::8ccfe3041df98f857c71a2da286924bd, sciBASIC#\mime\application%pdf\PdfReader\Document\PdfReal.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 33
+    '    Code Lines: 27
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 908.00 B
+
 
     '     Class PdfReal
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5cc762d6b158f4952d945fa5dd68b834, gr\network-visualization\Datavisualization.Network\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::5cc762d6b158f4952d945fa5dd68b834, sciBASIC#\gr\network-visualization\Datavisualization.Network\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 6
+    '    Code Lines: 2
+    ' Comment Lines: 3
+    '   Blank Lines: 1
+    '     File Size: 173.00 B
+
 
     ' Class NamespaceDoc
     ' 

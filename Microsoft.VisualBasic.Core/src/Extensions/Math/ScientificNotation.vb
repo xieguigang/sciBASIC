@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65cde6c4d02a7bca04736fe866a4bb9b, Microsoft.VisualBasic.Core\src\Extensions\Math\ScientificNotation.vb"
+﻿#Region "Microsoft.VisualBasic::65cde6c4d02a7bca04736fe866a4bb9b, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\ScientificNotation.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 70
+    '    Code Lines: 37
+    ' Comment Lines: 21
+    '   Blank Lines: 12
+    '     File Size: 2.21 KB
+
 
     '     Module ScientificNotation
     ' 

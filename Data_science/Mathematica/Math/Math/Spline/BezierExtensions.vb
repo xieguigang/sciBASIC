@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c397db5dec68966b92f48a7d91620b01, Data_science\Mathematica\Math\Math\Spline\BezierExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::c397db5dec68966b92f48a7d91620b01, sciBASIC#\Data_science\Mathematica\Math\Math\Spline\BezierExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 98
+    '    Code Lines: 69
+    ' Comment Lines: 15
+    '   Blank Lines: 14
+    '     File Size: 3.52 KB
+
 
     '     Module BezierExtensions
     ' 

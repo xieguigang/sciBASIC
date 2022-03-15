@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0dcd6884dfa835c37ab7787f2a468261, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\ThreadStart.vb"
+﻿#Region "Microsoft.VisualBasic::0dcd6884dfa835c37ab7787f2a468261, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\ThreadStart.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 19
+    '    Code Lines: 11
+    ' Comment Lines: 4
+    '   Blank Lines: 4
+    '     File Size: 581.00 B
+
 
     '     Class ThreadStart
     ' 

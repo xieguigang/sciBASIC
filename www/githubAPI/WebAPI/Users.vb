@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca26e4f988f3279f585699c2d881cb82, www\githubAPI\WebAPI\Users.vb"
+﻿#Region "Microsoft.VisualBasic::ca26e4f988f3279f585699c2d881cb82, sciBASIC#\www\githubAPI\WebAPI\Users.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 171
+    '    Code Lines: 132
+    ' Comment Lines: 14
+    '   Blank Lines: 25
+    '     File Size: 7.52 KB
+
 
     '     Class Counter
     ' 

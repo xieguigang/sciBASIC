@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf9d1c76cfe9fc4a2da6486333a0b8b0, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Render2D\Path2D.vb"
+﻿#Region "Microsoft.VisualBasic::bf9d1c76cfe9fc4a2da6486333a0b8b0, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Render2D\Path2D.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 153
+    '    Code Lines: 104
+    ' Comment Lines: 31
+    '   Blank Lines: 18
+    '     File Size: 5.79 KB
+
 
     '     Class Path2D
     ' 

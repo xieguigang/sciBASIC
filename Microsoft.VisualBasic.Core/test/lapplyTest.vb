@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4578ffe1b5f6837efb3c1994bc9a23ee, Microsoft.VisualBasic.Core\test\lapplyTest.vb"
+﻿#Region "Microsoft.VisualBasic::4578ffe1b5f6837efb3c1994bc9a23ee, sciBASIC#\Microsoft.VisualBasic.Core\test\lapplyTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 93
+    '    Code Lines: 82
+    ' Comment Lines: 0
+    '   Blank Lines: 11
+    '     File Size: 5.47 KB
+
 
     ' Module lapplyTest
     ' 

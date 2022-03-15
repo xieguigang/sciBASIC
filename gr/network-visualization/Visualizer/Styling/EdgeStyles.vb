@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9e257045619f80cc39de20da93053ef, gr\network-visualization\Visualizer\Styling\EdgeStyles.vb"
+﻿#Region "Microsoft.VisualBasic::e9e257045619f80cc39de20da93053ef, sciBASIC#\gr\network-visualization\Visualizer\Styling\EdgeStyles.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 6
+    '    Code Lines: 4
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 82.00 B
+
 
     '     Module EdgeStyles
     ' 

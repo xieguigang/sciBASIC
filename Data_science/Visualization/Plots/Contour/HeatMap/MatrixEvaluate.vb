@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a38b43b6e6690227e6aa649b55adf872, Data_science\Visualization\Plots\Contour\HeatMap\MatrixEvaluate.vb"
+﻿#Region "Microsoft.VisualBasic::a38b43b6e6690227e6aa649b55adf872, sciBASIC#\Data_science\Visualization\Plots\Contour\HeatMap\MatrixEvaluate.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 79
+    '    Code Lines: 49
+    ' Comment Lines: 19
+    '   Blank Lines: 11
+    '     File Size: 2.90 KB
+
 
     '     Class MatrixEvaluate
     ' 

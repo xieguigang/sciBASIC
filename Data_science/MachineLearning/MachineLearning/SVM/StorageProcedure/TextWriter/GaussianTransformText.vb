@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6c2f8a0b2ef43875405d6134ab9ade4, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\TextWriter\GaussianTransformText.vb"
+﻿#Region "Microsoft.VisualBasic::c6c2f8a0b2ef43875405d6134ab9ade4, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\TextWriter\GaussianTransformText.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 34
+    '    Code Lines: 20
+    ' Comment Lines: 6
+    '   Blank Lines: 8
+    '     File Size: 1.05 KB
+
 
     '     Module GaussianTransformText
     ' 

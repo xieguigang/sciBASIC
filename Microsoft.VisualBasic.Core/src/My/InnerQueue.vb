@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::497600900f97d7e319fec3b8ee15cd98, Microsoft.VisualBasic.Core\src\My\InnerQueue.vb"
+﻿#Region "Microsoft.VisualBasic::497600900f97d7e319fec3b8ee15cd98, sciBASIC#\Microsoft.VisualBasic.Core\src\My\InnerQueue.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 36
+    '    Code Lines: 15
+    ' Comment Lines: 16
+    '   Blank Lines: 5
+    '     File Size: 1.11 KB
+
 
     '     Module InnerQueue
     ' 

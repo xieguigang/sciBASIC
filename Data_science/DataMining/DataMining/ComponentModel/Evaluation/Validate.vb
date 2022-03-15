@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5fd3226e436e03d133f4314e8f3f5fb, Data_science\DataMining\DataMining\ComponentModel\Evaluation\Validate.vb"
+﻿#Region "Microsoft.VisualBasic::c5fd3226e436e03d133f4314e8f3f5fb, sciBASIC#\Data_science\DataMining\DataMining\ComponentModel\Evaluation\Validate.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 80
+    '    Code Lines: 61
+    ' Comment Lines: 7
+    '   Blank Lines: 12
+    '     File Size: 3.10 KB
+
 
     '     Structure Validate
     ' 

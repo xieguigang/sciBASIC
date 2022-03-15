@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8fed230e6226b27c7c3e33662bb4c68b, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Unit\UnitTag.vb"
+﻿#Region "Microsoft.VisualBasic::8fed230e6226b27c7c3e33662bb4c68b, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Unit\UnitTag.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 14
+    '    Code Lines: 10
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 286.00 B
+
 
     '     Structure UnitTag
     ' 

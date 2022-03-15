@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d40e4f660ed348f026c3975a109f7d0, gr\network-visualization\Datavisualization.Network\Layouts\Circular\CircularLayout.vb"
+﻿#Region "Microsoft.VisualBasic::1d40e4f660ed348f026c3975a109f7d0, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Circular\CircularLayout.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 6
+    '    Code Lines: 4
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 95.00 B
+
 
     '     Module CircularLayout
     ' 

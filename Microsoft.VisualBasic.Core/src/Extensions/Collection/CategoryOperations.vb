@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::72c864e4a19c2b393aac50a1610ab8d3, Microsoft.VisualBasic.Core\src\Extensions\Collection\CategoryOperations.vb"
+﻿#Region "Microsoft.VisualBasic::72c864e4a19c2b393aac50a1610ab8d3, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\CategoryOperations.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 65
+    '    Code Lines: 54
+    ' Comment Lines: 6
+    '   Blank Lines: 5
+    '     File Size: 2.81 KB
+
 
     ' Module CategoryOperations
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57ee8cfb5127b57404ae2ea8dc16a7a2, vs_solutions\installer\bootstrap\ZipLib.vb"
+﻿#Region "Microsoft.VisualBasic::57ee8cfb5127b57404ae2ea8dc16a7a2, sciBASIC#\vs_solutions\installer\bootstrap\ZipLib.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 118
+    '    Code Lines: 42
+    ' Comment Lines: 63
+    '   Blank Lines: 13
+    '     File Size: 4.41 KB
+
 
     ' Module GZip
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d461c950031ddc627241a7d14fb4d77e, gr\network-visualization\Visualizer\LayoutLabel.vb"
+﻿#Region "Microsoft.VisualBasic::49f5260714318527643c056ade228b86, sciBASIC#\gr\network-visualization\Visualizer\LayoutLabel.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,19 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 38
+    '    Code Lines: 31
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 1.08 KB
+
+
     ' Class LayoutLabel
     ' 
-    '     Properties: offsetDistance
+    '     Properties: hasGDIData, offsetDistance
     ' 
     '     Function: GetTextAnchor, ToString
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::24fe77940a2e97203e4ee57610c1000c, Data_science\Mathematica\Math\DataFittings\Evaluation.vb"
+﻿#Region "Microsoft.VisualBasic::24fe77940a2e97203e4ee57610c1000c, sciBASIC#\Data_science\Mathematica\Math\DataFittings\Evaluation.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 68
+    '    Code Lines: 40
+    ' Comment Lines: 19
+    '   Blank Lines: 9
+    '     File Size: 2.37 KB
+
 
     ' Class Evaluation
     ' 

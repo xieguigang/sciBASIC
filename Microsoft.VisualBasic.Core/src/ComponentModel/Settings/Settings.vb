@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5da60dbd3e007a0efc48dec6e821a958, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Settings.vb"
+﻿#Region "Microsoft.VisualBasic::5da60dbd3e007a0efc48dec6e821a958, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Settings.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 85
+    '    Code Lines: 52
+    ' Comment Lines: 21
+    '   Blank Lines: 12
+    '     File Size: 3.18 KB
+
 
     '     Class Settings
     ' 

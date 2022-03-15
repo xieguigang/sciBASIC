@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64f323af4af4104fc143d30e42288576, Data_science\Visualization\test\DensityPlotTest.vb"
+﻿#Region "Microsoft.VisualBasic::64f323af4af4104fc143d30e42288576, sciBASIC#\Data_science\Visualization\test\DensityPlotTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 22
+    '    Code Lines: 19
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 784.00 B
+
 
     ' Module DensityPlotTest
     ' 

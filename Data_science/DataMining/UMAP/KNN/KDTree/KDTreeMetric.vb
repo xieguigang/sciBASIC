@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da4ecd00c3bf69d186e2ef3c2e16eeba, Data_science\DataMining\UMAP\KNN\KDTree\KDTreeMetric.vb"
+﻿#Region "Microsoft.VisualBasic::da4ecd00c3bf69d186e2ef3c2e16eeba, sciBASIC#\Data_science\DataMining\UMAP\KNN\KDTree\KDTreeMetric.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 45
+    '    Code Lines: 40
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 1.69 KB
+
 
     '     Module KDTreeMetric
     ' 

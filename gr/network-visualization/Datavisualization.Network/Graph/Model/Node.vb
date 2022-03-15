@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e900dfb0754013fd1c2e45d960279d1f, gr\network-visualization\Datavisualization.Network\Graph\Model\Node.vb"
+﻿#Region "Microsoft.VisualBasic::39689c575fff9f1c74df227c64dacf6f, sciBASIC#\gr\network-visualization\Datavisualization.Network\Graph\Model\Node.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,20 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 194
+    '    Code Lines: 106
+    ' Comment Lines: 68
+    '   Blank Lines: 20
+    '     File Size: 7.18 KB
+
+
     '     Class Node
     ' 
-    '         Properties: adjacencies, data, directedVertex, pinned, visited
+    '         Properties: adjacencies, data, directedVertex, pinned, text
+    '                     visited
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: adjacentTo, Clone, EnumerateAdjacencies, (+2 Overloads) Equals, GetHashCode

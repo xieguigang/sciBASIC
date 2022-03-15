@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::24742b9c4b7c6c1a832dde7cba05ef92, gr\3DEngineTest\Wpf3DTest\MainWindow.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::24742b9c4b7c6c1a832dde7cba05ef92, sciBASIC#\gr\3DEngineTest\Wpf3DTest\MainWindow.xaml.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 3
+    '    Code Lines: 2
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 29.00 B
+
 
     ' Class MainWindow
     ' 

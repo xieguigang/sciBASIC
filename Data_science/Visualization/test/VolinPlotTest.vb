@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::848d03405320fa01431f9a33c80ddd98, Data_science\Visualization\test\VolinPlotTest.vb"
+﻿#Region "Microsoft.VisualBasic::848d03405320fa01431f9a33c80ddd98, sciBASIC#\Data_science\Visualization\test\VolinPlotTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 21
+    '    Code Lines: 13
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 921.00 B
+
 
     ' Module VolinPlotTest
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7446ce066e60856e71d0244476d0b48d, Data\BinaryData\DataStorage\SQLite3\Schema\Schema.vb"
+﻿#Region "Microsoft.VisualBasic::7446ce066e60856e71d0244476d0b48d, sciBASIC#\Data\BinaryData\DataStorage\SQLite3\Schema\Schema.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 79
+    '    Code Lines: 63
+    ' Comment Lines: 0
+    '   Blank Lines: 16
+    '     File Size: 3.23 KB
+
 
     '     Class Schema
     ' 

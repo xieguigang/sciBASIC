@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f0388c7a7e97814d6da346ffdd87ddb, Microsoft.VisualBasic.Core\test\math_test.vb"
+﻿#Region "Microsoft.VisualBasic::3f0388c7a7e97814d6da346ffdd87ddb, sciBASIC#\Microsoft.VisualBasic.Core\test\math_test.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 6
+    '    Code Lines: 4
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 61.00 B
+
 
     ' Module math_test
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9bd62b7ae0f06f258aaa0b24eb3b0d6, mime\application%xml\XmlGeneric\Xmlparser.vb"
+﻿#Region "Microsoft.VisualBasic::c9bd62b7ae0f06f258aaa0b24eb3b0d6, sciBASIC#\mime\application%xml\XmlGeneric\Xmlparser.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 52
+    '    Code Lines: 37
+    ' Comment Lines: 5
+    '   Blank Lines: 10
+    '     File Size: 1.69 KB
+
 
     ' Module XmlParser
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2debca7cd3efe83ccc0e320cc30e40a7, mime\application%pdf\PdfReader\Document\PdfOutlineItem.vb"
+﻿#Region "Microsoft.VisualBasic::56ff105b23674216f6ca7a1419ec8f88, sciBASIC#\mime\application%pdf\PdfReader\Document\PdfOutlineItem.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 52
+    '    Code Lines: 43
+    ' Comment Lines: 0
+    '   Blank Lines: 9
+    '     File Size: 1.59 KB
+
 
     '     Class PdfOutlineItem
     ' 

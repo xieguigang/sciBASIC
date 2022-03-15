@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b06bba936ea8ea8f174f15fb8d3b466e, Data_science\DataMining\DataMining\test\AprioriTest.vb"
+﻿#Region "Microsoft.VisualBasic::b06bba936ea8ea8f174f15fb8d3b466e, sciBASIC#\Data_science\DataMining\DataMining\test\AprioriTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 54
+    '    Code Lines: 41
+    ' Comment Lines: 0
+    '   Blank Lines: 13
+    '     File Size: 1.99 KB
+
 
     ' Module AprioriTest
     ' 

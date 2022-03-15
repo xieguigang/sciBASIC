@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4aa5177528dd39799f4a409120c29815, Data\DataFrame\IO\Generic\DataSet.vb"
+﻿#Region "Microsoft.VisualBasic::4aa5177528dd39799f4a409120c29815, sciBASIC#\Data\DataFrame\IO\Generic\DataSet.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 215
+    '    Code Lines: 123
+    ' Comment Lines: 69
+    '   Blank Lines: 23
+    '     File Size: 9.23 KB
+
 
     '     Class DataSet
     ' 

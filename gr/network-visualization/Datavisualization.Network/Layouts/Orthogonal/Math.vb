@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b63cce605f44a24371200da47f0df874, gr\network-visualization\Datavisualization.Network\Layouts\Orthogonal\Math.vb"
+﻿#Region "Microsoft.VisualBasic::b63cce605f44a24371200da47f0df874, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Orthogonal\Math.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 85
+    '    Code Lines: 59
+    ' Comment Lines: 17
+    '   Blank Lines: 9
+    '     File Size: 3.63 KB
+
 
     '     Module Math
     ' 

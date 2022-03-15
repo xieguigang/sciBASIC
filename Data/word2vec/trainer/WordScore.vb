@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a01d09061deddf92ace0bcca94219bc, Data\word2vec\trainer\WordScore.vb"
+﻿#Region "Microsoft.VisualBasic::1d1db035f98e444ff88c34d61ce8a0e3, sciBASIC#\Data\word2vec\trainer\WordScore.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 31
+    '    Code Lines: 23
+    ' Comment Lines: 3
+    '   Blank Lines: 5
+    '     File Size: 823.00 B
+
 
     '     Class WordScore
     ' 

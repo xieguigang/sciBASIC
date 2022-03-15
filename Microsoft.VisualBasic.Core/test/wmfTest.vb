@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2850e374bf69e03d66ee2c3c5db883e0, Microsoft.VisualBasic.Core\test\wmfTest.vb"
+﻿#Region "Microsoft.VisualBasic::2850e374bf69e03d66ee2c3c5db883e0, sciBASIC#\Microsoft.VisualBasic.Core\test\wmfTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 16
+    '    Code Lines: 13
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 658.00 B
+
 
     ' Module wmfTest
     ' 

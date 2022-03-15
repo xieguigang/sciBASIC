@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c68ddf0bb4e89991a94bbd8809b55aa, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::8c68ddf0bb4e89991a94bbd8809b55aa, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 176
+    '    Code Lines: 112
+    ' Comment Lines: 41
+    '   Blank Lines: 23
+    '     File Size: 6.62 KB
+
 
     '     Module Extensions
     ' 

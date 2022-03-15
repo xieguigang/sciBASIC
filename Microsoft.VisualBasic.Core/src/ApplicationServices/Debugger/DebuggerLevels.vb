@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70fd68fd2eafbadf80da2922e0ec0b7d, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\DebuggerLevels.vb"
+﻿#Region "Microsoft.VisualBasic::70fd68fd2eafbadf80da2922e0ec0b7d, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\DebuggerLevels.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 28
+    '    Code Lines: 9
+    ' Comment Lines: 18
+    '   Blank Lines: 1
+    '     File Size: 837.00 B
+
 
     '     Enum DebuggerLevels
     ' 

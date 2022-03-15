@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e92424f025703779c41b905bca4070b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\GraphicsText.vb"
+﻿#Region "Microsoft.VisualBasic::4e92424f025703779c41b905bca4070b, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\GraphicsText.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 150
+    '    Code Lines: 95
+    ' Comment Lines: 32
+    '   Blank Lines: 23
+    '     File Size: 5.83 KB
+
 
     '     Class GraphicsText
     ' 

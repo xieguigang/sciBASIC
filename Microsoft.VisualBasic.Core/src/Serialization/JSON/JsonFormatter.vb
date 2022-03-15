@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18caaeaecae432ae59ba5c9891b0b90d, Microsoft.VisualBasic.Core\src\Serialization\JSON\JsonFormatter.vb"
+﻿#Region "Microsoft.VisualBasic::18caaeaecae432ae59ba5c9891b0b90d, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\JSON\JsonFormatter.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 35
+    '    Code Lines: 15
+    ' Comment Lines: 15
+    '   Blank Lines: 5
+    '     File Size: 1.47 KB
+
 
     '     Module JsonFormatter
     ' 

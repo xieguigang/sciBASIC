@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8617a72d83035cc5aff970f9131dc104, Data_science\MachineLearning\SVMDemo\App.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::8617a72d83035cc5aff970f9131dc104, sciBASIC#\Data_science\MachineLearning\SVMDemo\App.xaml.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 10
+    '    Code Lines: 6
+    ' Comment Lines: 3
+    '   Blank Lines: 1
+    '     File Size: 212.00 B
+
 
     '     Class App
     ' 

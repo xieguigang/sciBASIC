@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a7968d67953fc77c9194e2b6a71927e0, Microsoft.VisualBasic.Core\src\Text\Xml\Linq\DataSetWriter.vb"
+﻿#Region "Microsoft.VisualBasic::a7968d67953fc77c9194e2b6a71927e0, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\Linq\DataSetWriter.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 93
+    '    Code Lines: 50
+    ' Comment Lines: 29
+    '   Blank Lines: 14
+    '     File Size: 3.90 KB
+
 
     '     Class DataSetWriter
     ' 

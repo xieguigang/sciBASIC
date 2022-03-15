@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1099a51d6575fa2c550ad6b6d495b516, www\Microsoft.VisualBasic.NETProtocol\Pipeline\PipeBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::1099a51d6575fa2c550ad6b6d495b516, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Pipeline\PipeBuffer.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 49
+    '    Code Lines: 37
+    ' Comment Lines: 0
+    '   Blank Lines: 12
+    '     File Size: 1.90 KB
+
 
     '     Class PipeBuffer
     ' 

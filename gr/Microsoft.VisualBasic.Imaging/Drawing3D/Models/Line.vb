@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f5536584b129f25cdf42389d5b5cc67, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Line.vb"
+﻿#Region "Microsoft.VisualBasic::2f5536584b129f25cdf42389d5b5cc67, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Line.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 41
+    '    Code Lines: 32
+    ' Comment Lines: 0
+    '   Blank Lines: 9
+    '     File Size: 1.33 KB
+
 
     '     Structure Line3D
     ' 

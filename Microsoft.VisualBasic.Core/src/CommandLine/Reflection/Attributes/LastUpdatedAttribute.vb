@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b74918c1abe9b30f63774f8b47e27455, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\LastUpdatedAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::b74918c1abe9b30f63774f8b47e27455, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\LastUpdatedAttribute.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 27
+    '    Code Lines: 18
+    ' Comment Lines: 3
+    '   Blank Lines: 6
+    '     File Size: 814.00 B
+
 
     '     Class LastUpdatedAttribute
     ' 

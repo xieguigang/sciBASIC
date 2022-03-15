@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4065fabee788aa15e161924e237c9587, www\WWW.Google\Map\KML.vb"
+﻿#Region "Microsoft.VisualBasic::4065fabee788aa15e161924e237c9587, sciBASIC#\www\WWW.Google\Map\KML.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 60
+    '    Code Lines: 44
+    ' Comment Lines: 0
+    '   Blank Lines: 16
+    '     File Size: 1.69 KB
+
 
     '     Class KML
     ' 

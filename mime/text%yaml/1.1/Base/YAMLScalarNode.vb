@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::288272f623e0501f02cb2df7ca9d6e13, mime\text%yaml\1.1\Base\YAMLScalarNode.vb"
+﻿#Region "Microsoft.VisualBasic::288272f623e0501f02cb2df7ca9d6e13, sciBASIC#\mime\text%yaml\1.1\Base\YAMLScalarNode.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 261
+    '    Code Lines: 214
+    ' Comment Lines: 3
+    '   Blank Lines: 44
+    '     File Size: 8.40 KB
+
 
     '     Class YAMLScalarNode
     ' 

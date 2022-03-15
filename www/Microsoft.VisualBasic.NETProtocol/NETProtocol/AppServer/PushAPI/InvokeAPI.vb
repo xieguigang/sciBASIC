@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d4abd31197e588fd551c884ffaaa35f, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushAPI\InvokeAPI.vb"
+﻿#Region "Microsoft.VisualBasic::9d4abd31197e588fd551c884ffaaa35f, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushAPI\InvokeAPI.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 71
+    '    Code Lines: 0
+    ' Comment Lines: 58
+    '   Blank Lines: 13
+    '     File Size: 2.64 KB
+
 
     ' 
     ' /********************************************************************************/

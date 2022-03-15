@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::14a20a3eb6c5ba80937b3f957a2c27ab, Data\word2vec\test\counterTest.vb"
+﻿#Region "Microsoft.VisualBasic::d15f44e73daec06469a603dda3199aa6, sciBASIC#\Data\word2vec\test\counterTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 22
+    '    Code Lines: 15
+    ' Comment Lines: 1
+    '   Blank Lines: 6
+    '     File Size: 609.00 B
+
 
     ' Module counterTest
     ' 

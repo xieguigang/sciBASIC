@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::81cf1477165f2fcafd76324ce2b58abf, Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Models\Vector2D.vb"
+﻿#Region "Microsoft.VisualBasic::81cf1477165f2fcafd76324ce2b58abf, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Models\Vector2D.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 80
+    '    Code Lines: 47
+    ' Comment Lines: 20
+    '   Blank Lines: 13
+    '     File Size: 2.30 KB
+
 
     '     Class Vector2D
     ' 

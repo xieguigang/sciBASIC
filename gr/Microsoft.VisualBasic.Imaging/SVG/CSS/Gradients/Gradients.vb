@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9817c3fb4555a1c97f020a36b5ca4243, gr\Microsoft.VisualBasic.Imaging\SVG\CSS\Gradients\Gradients.vb"
+﻿#Region "Microsoft.VisualBasic::9817c3fb4555a1c97f020a36b5ca4243, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\CSS\Gradients\Gradients.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 14
+    '    Code Lines: 8
+    ' Comment Lines: 1
+    '   Blank Lines: 5
+    '     File Size: 331.00 B
+
 
     '     Class Gradient
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21c7b59f3286485d29202e79ef245f10, Data_science\Mathematica\Math\ODE\Dynamics\Data\StreamExtension.vb"
+﻿#Region "Microsoft.VisualBasic::21c7b59f3286485d29202e79ef245f10, sciBASIC#\Data_science\Mathematica\Math\ODE\Dynamics\Data\StreamExtension.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 96
+    '    Code Lines: 71
+    ' Comment Lines: 6
+    '   Blank Lines: 19
+    '     File Size: 3.51 KB
+
 
     '     Module StreamExtension
     ' 

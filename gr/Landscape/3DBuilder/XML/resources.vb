@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c389cbeacac3e434f030ff8032624e5, gr\Landscape\3DBuilder\XML\resources.vb"
+﻿#Region "Microsoft.VisualBasic::4c389cbeacac3e434f030ff8032624e5, sciBASIC#\gr\Landscape\3DBuilder\XML\resources.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 58
+    '    Code Lines: 39
+    ' Comment Lines: 4
+    '   Blank Lines: 15
+    '     File Size: 1.63 KB
+
 
     '     Class base
     ' 

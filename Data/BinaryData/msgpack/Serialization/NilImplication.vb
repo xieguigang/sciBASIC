@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c729f401db0ec466a469c801a5dd26c, Data\BinaryData\msgpack\Serialization\NilImplication.vb"
+﻿#Region "Microsoft.VisualBasic::2c729f401db0ec466a469c801a5dd26c, sciBASIC#\Data\BinaryData\msgpack\Serialization\NilImplication.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 7
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 141.00 B
+
 
     '     Enum NilImplication
     ' 

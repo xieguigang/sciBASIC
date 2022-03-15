@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b4df267d306b0ff286bd36b263a108ac, Data_science\DataMining\DataMining\Kernel\Neuron\NeuronEntity.vb"
+﻿#Region "Microsoft.VisualBasic::b4df267d306b0ff286bd36b263a108ac, sciBASIC#\Data_science\DataMining\DataMining\Kernel\Neuron\NeuronEntity.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 33
+    '    Code Lines: 26
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 1.16 KB
+
 
     '     Class NeuronEntity
     ' 

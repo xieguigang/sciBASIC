@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a0d6719b48db0175c8fd3709cfe4d21, gr\network-visualization\Visualizer\MingleRender\MingleRender.vb"
+﻿#Region "Microsoft.VisualBasic::1a0d6719b48db0175c8fd3709cfe4d21, sciBASIC#\gr\network-visualization\Visualizer\MingleRender\MingleRender.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 190
+    '    Code Lines: 145
+    ' Comment Lines: 21
+    '   Blank Lines: 24
+    '     File Size: 7.59 KB
+
 
     ' Class MingleRender
     ' 

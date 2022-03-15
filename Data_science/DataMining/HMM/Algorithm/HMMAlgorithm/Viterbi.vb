@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ef1a2f35c001382b3869809465abd8c, Data_science\DataMining\HMM\Algorithm\HMMAlgorithm\Viterbi.vb"
+﻿#Region "Microsoft.VisualBasic::3f4838c0e4fcfbd3ace6e04a6f155d58, sciBASIC#\Data_science\DataMining\HMM\Algorithm\HMMAlgorithm\Viterbi.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 30
+    '    Code Lines: 24
+    ' Comment Lines: 1
+    '   Blank Lines: 5
+    '     File Size: 1.35 KB
+
 
     '     Class Viterbi
     ' 

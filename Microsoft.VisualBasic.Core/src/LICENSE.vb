@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b19316480e931dee2d07a353e91503b0, Microsoft.VisualBasic.Core\src\LICENSE.vb"
+﻿#Region "Microsoft.VisualBasic::b19316480e931dee2d07a353e91503b0, sciBASIC#\Microsoft.VisualBasic.Core\src\LICENSE.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 44
+    '    Code Lines: 16
+    ' Comment Lines: 23
+    '   Blank Lines: 5
+    '     File Size: 1.49 KB
+
 
     ' Module LICENSE
     ' 

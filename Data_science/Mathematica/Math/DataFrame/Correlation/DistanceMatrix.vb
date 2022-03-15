@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2141ad06ed1e6549c82c62a7c993b1dc, Data_science\Mathematica\Math\DataFrame\Correlation\DistanceMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::2141ad06ed1e6549c82c62a7c993b1dc, sciBASIC#\Data_science\Mathematica\Math\DataFrame\Correlation\DistanceMatrix.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 82
+    '    Code Lines: 59
+    ' Comment Lines: 8
+    '   Blank Lines: 15
+    '     File Size: 2.79 KB
+
 
     ' Class DistanceMatrix
     ' 

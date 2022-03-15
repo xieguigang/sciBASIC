@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3be8c22ae75013087ba1f8baa2338ab4, mime\text%yaml\1.2\Syntax\TagHandle.vb"
+﻿#Region "Microsoft.VisualBasic::3be8c22ae75013087ba1f8baa2338ab4, sciBASIC#\mime\text%yaml\1.2\Syntax\TagHandle.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 23
+    '    Code Lines: 17
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 478.00 B
+
 
     '     Class TagHandle
     ' 

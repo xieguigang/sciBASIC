@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d7a29fc7130806039b8a1a3741c08b3, Data\SearchEngine\SearchEngine\Expression\ExpressionBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::4d7a29fc7130806039b8a1a3741c08b3, sciBASIC#\Data\SearchEngine\SearchEngine\Expression\ExpressionBuilder.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 158
+    '    Code Lines: 107
+    ' Comment Lines: 27
+    '   Blank Lines: 24
+    '     File Size: 6.29 KB
+
 
     ' Module ExpressionBuilder
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3fef618e0b4e8a5afc7d73c7a372a656, Microsoft.VisualBasic.Core\src\Language\Linq\Vectorization\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::3fef618e0b4e8a5afc7d73c7a372a656, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Linq\Vectorization\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 42
+    '    Code Lines: 25
+    ' Comment Lines: 10
+    '   Blank Lines: 7
+    '     File Size: 1.52 KB
+
 
     '     Module Extensions
     ' 

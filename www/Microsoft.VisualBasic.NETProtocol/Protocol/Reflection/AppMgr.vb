@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d315b51b60f30e97e1c3adba55c65e27, www\Microsoft.VisualBasic.NETProtocol\Protocol\Reflection\AppMgr.vb"
+﻿#Region "Microsoft.VisualBasic::d315b51b60f30e97e1c3adba55c65e27, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Protocol\Reflection\AppMgr.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 65
+    '    Code Lines: 40
+    ' Comment Lines: 12
+    '   Blank Lines: 13
+    '     File Size: 2.24 KB
+
 
     '     Class AppMgr
     ' 

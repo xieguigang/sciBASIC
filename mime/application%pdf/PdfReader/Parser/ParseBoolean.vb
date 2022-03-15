@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7f5c10956c8c208fd7676eee91a1ac8, mime\application%pdf\PdfReader\Parser\ParseBoolean.vb"
+﻿#Region "Microsoft.VisualBasic::6b81b01bc823a77fadee0ed3c4611974, sciBASIC#\mime\application%pdf\PdfReader\Parser\ParseBoolean.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 20
+    '    Code Lines: 17
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 473.00 B
+
 
     '     Class ParseBoolean
     ' 

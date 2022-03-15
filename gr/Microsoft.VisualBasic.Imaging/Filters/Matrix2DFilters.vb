@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd1aa5a1ba7dc369bf5fe01ebc7fc7cf, gr\Microsoft.VisualBasic.Imaging\Filters\Matrix2DFilters.vb"
+﻿#Region "Microsoft.VisualBasic::fd1aa5a1ba7dc369bf5fe01ebc7fc7cf, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Filters\Matrix2DFilters.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 133
+    '    Code Lines: 108
+    ' Comment Lines: 3
+    '   Blank Lines: 22
+    '     File Size: 4.77 KB
+
 
     '     Enum Matrix2DFilters
     ' 

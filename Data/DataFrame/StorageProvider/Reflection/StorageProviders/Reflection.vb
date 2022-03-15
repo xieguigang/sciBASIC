@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::038f9f53a04d77f610598964d102acbc, Data\DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::4799be37283e487a27b3d869965c230d, sciBASIC#\Data\DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 339
+    '    Code Lines: 220
+    ' Comment Lines: 81
+    '   Blank Lines: 38
+    '     File Size: 16.18 KB
+
 
     '     Module Reflector
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6002e87336e9a12b2362ef4312cfbe9a, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\ThreadQueue.vb"
+﻿#Region "Microsoft.VisualBasic::6002e87336e9a12b2362ef4312cfbe9a, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\ThreadQueue.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 163
+    '    Code Lines: 88
+    ' Comment Lines: 49
+    '   Blank Lines: 26
+    '     File Size: 5.28 KB
+
 
     '     Class ThreadQueue
     ' 

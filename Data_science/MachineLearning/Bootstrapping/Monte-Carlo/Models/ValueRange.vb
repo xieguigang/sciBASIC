@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::94d2667eb5789843b210c4047aceabda, Data_science\MachineLearning\Bootstrapping\Monte-Carlo\Models\ValueRange.vb"
+﻿#Region "Microsoft.VisualBasic::94d2667eb5789843b210c4047aceabda, sciBASIC#\Data_science\MachineLearning\Bootstrapping\Monte-Carlo\Models\ValueRange.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 59
+    '    Code Lines: 38
+    ' Comment Lines: 11
+    '   Blank Lines: 10
+    '     File Size: 1.74 KB
+
 
     '     Class ValueRange
     ' 

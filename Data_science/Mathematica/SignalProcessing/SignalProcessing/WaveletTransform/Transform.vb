@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::794fcb7210443c636a6139e0b3d779df, Data_science\Mathematica\SignalProcessing\SignalProcessing\WaveletTransform\Transform.vb"
+﻿#Region "Microsoft.VisualBasic::794fcb7210443c636a6139e0b3d779df, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\WaveletTransform\Transform.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 520
+    '    Code Lines: 468
+    ' Comment Lines: 5
+    '   Blank Lines: 47
+    '     File Size: 22.45 KB
+
 
     '     Module Transform
     ' 

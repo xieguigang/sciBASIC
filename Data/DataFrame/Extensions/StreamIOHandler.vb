@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e616a3f6a9432ff1eff4f6c1ca29ce3, Data\DataFrame\Extensions\StreamIOHandler.vb"
+﻿#Region "Microsoft.VisualBasic::1e616a3f6a9432ff1eff4f6c1ca29ce3, sciBASIC#\Data\DataFrame\Extensions\StreamIOHandler.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 53
+    '    Code Lines: 39
+    ' Comment Lines: 3
+    '   Blank Lines: 11
+    '     File Size: 2.66 KB
+
 
     ' Module StreamIOHandler
     ' 

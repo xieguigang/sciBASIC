@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ffd1694f7b3bd50ce7b3cb054a35f52, Data_science\MachineLearning\MachineLearning\QLearning\Maze-Q-Learning\Maze.vb"
+﻿#Region "Microsoft.VisualBasic::2ffd1694f7b3bd50ce7b3cb054a35f52, sciBASIC#\Data_science\MachineLearning\MachineLearning\QLearning\Maze-Q-Learning\Maze.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 130
+    '    Code Lines: 103
+    ' Comment Lines: 3
+    '   Blank Lines: 24
+    '     File Size: 3.76 KB
+
 
     ' Class Maze
     ' 

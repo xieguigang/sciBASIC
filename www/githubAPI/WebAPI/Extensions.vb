@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10099b769f7bc7dad43ec17bc4cfca96, www\githubAPI\WebAPI\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::10099b769f7bc7dad43ec17bc4cfca96, sciBASIC#\www\githubAPI\WebAPI\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 32
+    '    Code Lines: 22
+    ' Comment Lines: 6
+    '   Blank Lines: 4
+    '     File Size: 1.10 KB
+
 
     '     Module Extensions
     ' 

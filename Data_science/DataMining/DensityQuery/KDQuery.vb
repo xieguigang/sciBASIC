@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f7257d214192e2217db3c09de280ee2, Data_science\DataMining\DensityQuery\KDQuery.vb"
+﻿#Region "Microsoft.VisualBasic::2f7257d214192e2217db3c09de280ee2, sciBASIC#\Data_science\DataMining\DensityQuery\KDQuery.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 43
+    '    Code Lines: 36
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 1.55 KB
+
 
     ' Class KDQuery
     ' 

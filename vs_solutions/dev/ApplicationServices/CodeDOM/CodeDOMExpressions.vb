@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::062abf9170cbd65288b462d737aac04f, vs_solutions\dev\ApplicationServices\CodeDOM\CodeDOMExpressions.vb"
+﻿#Region "Microsoft.VisualBasic::062abf9170cbd65288b462d737aac04f, sciBASIC#\vs_solutions\dev\ApplicationServices\CodeDOM\CodeDOMExpressions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 349
+    '    Code Lines: 163
+    ' Comment Lines: 144
+    '   Blank Lines: 42
+    '     File Size: 14.84 KB
+
 
     '     Module CodeDOMExpressions
     ' 

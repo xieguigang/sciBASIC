@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::758f84c692424368c312c6876083878d, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\NumericFormatHelper.vb"
+﻿#Region "Microsoft.VisualBasic::758f84c692424368c312c6876083878d, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\NumericFormatHelper.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 168
+    '    Code Lines: 80
+    ' Comment Lines: 71
+    '   Blank Lines: 17
+    '     File Size: 4.28 KB
+
 
     ' Module NumericFormatHelper
     ' 

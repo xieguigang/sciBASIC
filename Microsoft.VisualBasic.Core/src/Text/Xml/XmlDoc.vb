@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ae207281fa3fb4e0208111d9c26bab6, Microsoft.VisualBasic.Core\src\Text\Xml\XmlDoc.vb"
+﻿#Region "Microsoft.VisualBasic::4ae207281fa3fb4e0208111d9c26bab6, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\XmlDoc.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 111
+    '    Code Lines: 62
+    ' Comment Lines: 32
+    '   Blank Lines: 17
+    '     File Size: 4.22 KB
+
 
     '     Class XmlDoc
     ' 

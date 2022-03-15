@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4b0e58064d3abaf0063393fa5e17e9d, Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::f4b0e58064d3abaf0063393fa5e17e9d, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\Abstract.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 30
+    '    Code Lines: 6
+    ' Comment Lines: 20
+    '   Blank Lines: 4
+    '     File Size: 1.05 KB
+
 
     '     Delegate Function
     ' 

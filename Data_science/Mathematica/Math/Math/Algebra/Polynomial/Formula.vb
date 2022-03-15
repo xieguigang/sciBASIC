@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01b0c2f023e1060f629626119189e49a, Data_science\Mathematica\Math\Math\Algebra\Polynomial\Formula.vb"
+﻿#Region "Microsoft.VisualBasic::01b0c2f023e1060f629626119189e49a, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Polynomial\Formula.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 22
+    '    Code Lines: 13
+    ' Comment Lines: 4
+    '   Blank Lines: 5
+    '     File Size: 827.00 B
+
 
     '     Class Formula
     ' 

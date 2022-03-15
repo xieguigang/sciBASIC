@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::699d191daf55f0dbc4851fc04ed40a8f, Data_science\MachineLearning\MachineLearning\SVM\Models\Problem.vb"
+﻿#Region "Microsoft.VisualBasic::699d191daf55f0dbc4851fc04ed40a8f, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\Models\Problem.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 95
+    '    Code Lines: 33
+    ' Comment Lines: 49
+    '   Blank Lines: 13
+    '     File Size: 3.34 KB
+
 
     '     Class Problem
     ' 

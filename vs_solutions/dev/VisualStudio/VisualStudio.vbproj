@@ -340,6 +340,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodeSign\CodeStatistics.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="AssemblyInfo.vb" />
     <Compile Include="IL\MethodBodyReader.vb" />

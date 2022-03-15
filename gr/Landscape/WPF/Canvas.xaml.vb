@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a7b2ff8821b7ceed5e2583048ebacbb5, gr\Landscape\WPF\Canvas.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::a7b2ff8821b7ceed5e2583048ebacbb5, sciBASIC#\gr\Landscape\WPF\Canvas.xaml.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 112
+    '    Code Lines: 89
+    ' Comment Lines: 2
+    '   Blank Lines: 21
+    '     File Size: 4.28 KB
+
 
     ' Class Canvas
     ' 

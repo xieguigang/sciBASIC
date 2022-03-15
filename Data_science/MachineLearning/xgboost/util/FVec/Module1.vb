@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e849e492af2ec50b9988965385039204, Data_science\MachineLearning\xgboost\util\FVec\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::e849e492af2ec50b9988965385039204, sciBASIC#\Data_science\MachineLearning\xgboost\util\FVec\Module1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 111
+    '    Code Lines: 82
+    ' Comment Lines: 0
+    '   Blank Lines: 29
+    '     File Size: 3.14 KB
+
 
     '     Class FVecFloatArrayImpl
     ' 

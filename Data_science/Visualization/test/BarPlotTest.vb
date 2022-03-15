@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dcce95c3d7a5ca4f45a16597d7ab3484, Data_science\Visualization\test\BarPlotTest.vb"
+﻿#Region "Microsoft.VisualBasic::dcce95c3d7a5ca4f45a16597d7ab3484, sciBASIC#\Data_science\Visualization\test\BarPlotTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 83
+    '    Code Lines: 61
+    ' Comment Lines: 5
+    '   Blank Lines: 17
+    '     File Size: 4.16 KB
+
 
     ' Module BarPlotTest
     ' 

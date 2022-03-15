@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::842ede966f066ef8c19a778a952cc508, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\STDIO__\STDIO.vb"
+﻿#Region "Microsoft.VisualBasic::842ede966f066ef8c19a778a952cc508, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\STDIO__\STDIO.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 309
+    '    Code Lines: 195
+    ' Comment Lines: 80
+    '   Blank Lines: 34
+    '     File Size: 12.36 KB
+
 
     '     Module STDIO
     ' 

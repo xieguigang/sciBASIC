@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20ab3125d7ce1ceea0b99cf345bf190e, mime\application%pdf\PdfFileWriter\PDF\PdfImageControl.vb"
+﻿#Region "Microsoft.VisualBasic::125ecbec32618a3ee94bd43327504ff4, sciBASIC#\mime\application%pdf\PdfFileWriter\PDF\PdfImageControl.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 88
+    '    Code Lines: 52
+    ' Comment Lines: 28
+    '   Blank Lines: 8
+    '     File Size: 2.82 KB
+
 
     ' Class PdfImageControl
     ' 

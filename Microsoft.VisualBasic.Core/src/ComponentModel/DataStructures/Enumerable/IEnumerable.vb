@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3eb69c5ec28321fbdb068dfd45528a54, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Enumerable\IEnumerable.vb"
+﻿#Region "Microsoft.VisualBasic::3eb69c5ec28321fbdb068dfd45528a54, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Enumerable\IEnumerable.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 25
+    '    Code Lines: 8
+    ' Comment Lines: 13
+    '   Blank Lines: 4
+    '     File Size: 982.00 B
+
 
     '     Interface INamedValue
     ' 

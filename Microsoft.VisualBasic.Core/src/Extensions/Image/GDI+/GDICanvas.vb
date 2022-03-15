@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::754f61ed11503b5c5a69ec2d5728e7da, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\GDICanvas.vb"
+﻿#Region "Microsoft.VisualBasic::312fa77ea9a67da8bbce3239b3f7e303, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\GDICanvas.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 4915
+    '    Code Lines: 672
+    ' Comment Lines: 4074
+    '   Blank Lines: 169
+    '     File Size: 211.52 KB
+
 
     '     Class GDICanvas
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b971f95937a975d61ec82a40a5de12a, Microsoft.VisualBasic.Core\src\Serialization\JSON\Formatter\Strategies\CommaCharacterStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::0b971f95937a975d61ec82a40a5de12a, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\JSON\Formatter\Strategies\CommaCharacterStrategy.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 32
+    '    Code Lines: 22
+    ' Comment Lines: 3
+    '   Blank Lines: 7
+    '     File Size: 918.00 B
+
 
     '     Class CommaStrategy
     ' 

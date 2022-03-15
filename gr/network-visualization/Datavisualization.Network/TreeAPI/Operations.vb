@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5c7b6cea85c356a60c86dd5c3f70a19, gr\network-visualization\Datavisualization.Network\TreeAPI\Operations.vb"
+﻿#Region "Microsoft.VisualBasic::d5c7b6cea85c356a60c86dd5c3f70a19, sciBASIC#\gr\network-visualization\Datavisualization.Network\TreeAPI\Operations.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 120
+    '    Code Lines: 51
+    ' Comment Lines: 49
+    '   Blank Lines: 20
+    '     File Size: 4.97 KB
+
 
     '     Module Operations
     ' 

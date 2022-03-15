@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e0c49b1ebc1c6a8060f80b31f0c190a, Data_science\Visualization\test\OutlineTest.vb"
+﻿#Region "Microsoft.VisualBasic::7f155c11f75ddf165f5032184df29ce5, sciBASIC#\Data_science\Visualization\test\OutlineTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 53
+    '    Code Lines: 41
+    ' Comment Lines: 1
+    '   Blank Lines: 11
+    '     File Size: 1.92 KB
+
 
     ' Module OutlineTest
     ' 

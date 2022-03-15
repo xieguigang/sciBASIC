@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61b5641542d7cbade5f79ecd5296fab9, Data_science\DataMining\DataMining\ComponentModel\Evaluation\LabelEvaluate\PerformanceEvaluator.vb"
+﻿#Region "Microsoft.VisualBasic::61b5641542d7cbade5f79ecd5296fab9, sciBASIC#\Data_science\DataMining\DataMining\ComponentModel\Evaluation\LabelEvaluate\PerformanceEvaluator.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 181
+    '    Code Lines: 114
+    ' Comment Lines: 35
+    '   Blank Lines: 32
+    '     File Size: 5.81 KB
+
 
     '     Class PerformanceEvaluator
     ' 

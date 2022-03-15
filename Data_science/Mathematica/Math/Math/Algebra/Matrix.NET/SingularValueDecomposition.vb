@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::39da3f7fc404e6c31b7ae26e66212dd2, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\SingularValueDecomposition.vb"
+﻿#Region "Microsoft.VisualBasic::39da3f7fc404e6c31b7ae26e66212dd2, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\SingularValueDecomposition.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 572
+    '    Code Lines: 410
+    ' Comment Lines: 92
+    '   Blank Lines: 70
+    '     File Size: 23.05 KB
+
 
     '     Class SingularValueDecomposition
     ' 

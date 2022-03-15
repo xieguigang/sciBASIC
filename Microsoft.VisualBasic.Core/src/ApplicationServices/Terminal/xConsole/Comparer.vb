@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::521a6385da64640c5632686b88208ddd, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\xConsole\Comparer.vb"
+﻿#Region "Microsoft.VisualBasic::521a6385da64640c5632686b88208ddd, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\xConsole\Comparer.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 108
+    '    Code Lines: 56
+    ' Comment Lines: 34
+    '   Blank Lines: 18
+    '     File Size: 3.41 KB
+
 
     '     Class Comparer
     ' 

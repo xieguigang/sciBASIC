@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e3bc80a71130854c8b7e09b112d53eb, Data\BinaryData\DataStorage\test\SQLParserTest.vb"
+﻿#Region "Microsoft.VisualBasic::0e3bc80a71130854c8b7e09b112d53eb, sciBASIC#\Data\BinaryData\DataStorage\test\SQLParserTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 99
+    '    Code Lines: 85
+    ' Comment Lines: 0
+    '   Blank Lines: 14
+    '     File Size: 3.79 KB
+
 
     ' Module SQLParserTest
     ' 

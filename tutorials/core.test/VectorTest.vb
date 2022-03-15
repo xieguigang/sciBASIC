@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::52424e3194b490adddd7e82cf13d3359, tutorials\core.test\VectorTest.vb"
+﻿#Region "Microsoft.VisualBasic::52424e3194b490adddd7e82cf13d3359, sciBASIC#\tutorials\core.test\VectorTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 269
+    '    Code Lines: 117
+    ' Comment Lines: 74
+    '   Blank Lines: 78
+    '     File Size: 6.73 KB
+
 
     ' Module VectorTest
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9d89634311f0ec1c5779be3ba075dd1, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\NetCore5\runtime.vb"
+﻿#Region "Microsoft.VisualBasic::a9d89634311f0ec1c5779be3ba075dd1, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\NetCore5\runtime.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 39
+    '    Code Lines: 26
+    ' Comment Lines: 0
+    '   Blank Lines: 13
+    '     File Size: 924.00 B
+
 
     '     Class runtime
     ' 

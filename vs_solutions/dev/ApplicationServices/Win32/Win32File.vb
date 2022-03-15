@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5fabdcf92fe163a9b8eff4cd5bd91ce1, vs_solutions\dev\ApplicationServices\Win32\Win32File.vb"
+﻿#Region "Microsoft.VisualBasic::5fabdcf92fe163a9b8eff4cd5bd91ce1, sciBASIC#\vs_solutions\dev\ApplicationServices\Win32\Win32File.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 283
+    '    Code Lines: 182
+    ' Comment Lines: 56
+    '   Blank Lines: 45
+    '     File Size: 11.03 KB
+
 
     '     Module Win32File
     ' 

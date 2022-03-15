@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d19aea302410f605b59a8c09be4b64ec, www\WWW.Google\Map\Style.vb"
+﻿#Region "Microsoft.VisualBasic::d19aea302410f605b59a8c09be4b64ec, sciBASIC#\www\WWW.Google\Map\Style.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 72
+    '    Code Lines: 56
+    ' Comment Lines: 0
+    '   Blank Lines: 16
+    '     File Size: 1.99 KB
+
 
     '     Class Style
     ' 

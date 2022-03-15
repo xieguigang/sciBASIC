@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::273da05431d41f4560295a7f7996af28, Microsoft.VisualBasic.Core\src\Serialization\ICloneable.vb"
+﻿#Region "Microsoft.VisualBasic::273da05431d41f4560295a7f7996af28, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\ICloneable.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 7
+    '    Code Lines: 5
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 131.00 B
+
 
     '     Interface ICloneable
     ' 

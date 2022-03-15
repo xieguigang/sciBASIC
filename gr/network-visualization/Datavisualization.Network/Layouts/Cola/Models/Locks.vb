@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87dc741afa2b50e2cc0ef72750fda598, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Models\Locks.vb"
+﻿#Region "Microsoft.VisualBasic::87dc741afa2b50e2cc0ef72750fda598, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\Models\Locks.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 46
+    '    Code Lines: 21
+    ' Comment Lines: 19
+    '   Blank Lines: 6
+    '     File Size: 1.34 KB
+
 
     '     Class Locks
     ' 

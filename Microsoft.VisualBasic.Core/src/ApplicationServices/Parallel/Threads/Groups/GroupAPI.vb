@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91c0c7bf05f5cc78570c51304351cd2d, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\Groups\GroupAPI.vb"
+﻿#Region "Microsoft.VisualBasic::91c0c7bf05f5cc78570c51304351cd2d, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\Groups\GroupAPI.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 44
+    '    Code Lines: 34
+    ' Comment Lines: 7
+    '   Blank Lines: 3
+    '     File Size: 2.79 KB
+
 
     '     Module GroupAPI
     ' 

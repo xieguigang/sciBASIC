@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5fcfa1900c543e5ca1382fc40a9e5950, Data_science\Visualization\Plots\g\Axis\DataScaler\TermScaler.vb"
+﻿#Region "Microsoft.VisualBasic::5fcfa1900c543e5ca1382fc40a9e5950, sciBASIC#\Data_science\Visualization\Plots\g\Axis\DataScaler\TermScaler.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 34
+    '    Code Lines: 24
+    ' Comment Lines: 4
+    '   Blank Lines: 6
+    '     File Size: 1.08 KB
+
 
     '     Class TermScaler
     ' 

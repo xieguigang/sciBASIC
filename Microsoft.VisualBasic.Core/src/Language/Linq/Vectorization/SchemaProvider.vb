@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::677f5ea9fa56622501543cf8692e9b93, Microsoft.VisualBasic.Core\src\Language\Linq\Vectorization\SchemaProvider.vb"
+﻿#Region "Microsoft.VisualBasic::677f5ea9fa56622501543cf8692e9b93, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Linq\Vectorization\SchemaProvider.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 317
+    '    Code Lines: 227
+    ' Comment Lines: 46
+    '   Blank Lines: 44
+    '     File Size: 12.26 KB
+
 
     '     Class VectorSchemaProvider
     ' 

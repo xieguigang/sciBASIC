@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84267a091925de0068dc69f7add4099c, Microsoft.VisualBasic.Core\src\Language\Value\Numeric\i32.vb"
+﻿#Region "Microsoft.VisualBasic::84267a091925de0068dc69f7add4099c, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\Numeric\i32.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 309
+    '    Code Lines: 175
+    ' Comment Lines: 94
+    '   Blank Lines: 40
+    '     File Size: 11.10 KB
+
 
     '     Class i32
     ' 

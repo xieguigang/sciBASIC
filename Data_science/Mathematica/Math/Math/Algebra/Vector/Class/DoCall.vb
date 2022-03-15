@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2be909ef2f2b250086f753b22bff18ab, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\DoCall.vb"
+﻿#Region "Microsoft.VisualBasic::2be909ef2f2b250086f753b22bff18ab, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Vector\Class\DoCall.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 199
+    '    Code Lines: 145
+    ' Comment Lines: 20
+    '   Blank Lines: 34
+    '     File Size: 7.61 KB
+
 
     '     Class Vector
     ' 

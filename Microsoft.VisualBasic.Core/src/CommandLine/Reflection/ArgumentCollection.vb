@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3a948fb061036548bb8c87a27764b1f, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\ArgumentCollection.vb"
+﻿#Region "Microsoft.VisualBasic::a3a948fb061036548bb8c87a27764b1f, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Reflection\ArgumentCollection.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 156
+    '    Code Lines: 108
+    ' Comment Lines: 28
+    '   Blank Lines: 20
+    '     File Size: 6.19 KB
+
 
     '     Class ArgumentCollection
     ' 

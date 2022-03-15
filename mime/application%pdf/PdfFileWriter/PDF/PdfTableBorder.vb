@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22e69ee34d654fc1f89e836de7b844ca, mime\application%pdf\PdfFileWriter\PDF\PdfTableBorder.vb"
+﻿#Region "Microsoft.VisualBasic::f3dd5589f85e804dfe5d360646fe15fd, sciBASIC#\mime\application%pdf\PdfFileWriter\PDF\PdfTableBorder.vb"
 
     ' Author:
     ' 
@@ -31,11 +31,21 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 684
+    '    Code Lines: 346
+    ' Comment Lines: 253
+    '   Blank Lines: 85
+    '     File Size: 20.41 KB
+
+
     ' Class PdfTableBorderStyle
     ' 
     '     Properties: Color, Display, HalfWidth, Width
     ' 
-    '     Constructor: (+3 Overloads) Sub New
+    '     Constructor: (+4 Overloads) Sub New
     '     Sub: [Set], Clear, Copy
     ' 
     ' Class PdfTableBorder

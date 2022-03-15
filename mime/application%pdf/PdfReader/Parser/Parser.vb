@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b594a5cc3aa71533dda0eb9292193be6, mime\application%pdf\PdfReader\Parser\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::8cf30edc2ed0d95b984e4457087ac479, sciBASIC#\mime\application%pdf\PdfReader\Parser\Parser.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 389
+    '    Code Lines: 292
+    ' Comment Lines: 31
+    '   Blank Lines: 66
+    '     File Size: 18.21 KB
+
 
     '     Class Parser
     ' 

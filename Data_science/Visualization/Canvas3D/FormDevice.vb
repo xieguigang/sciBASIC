@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7dbe11251c9a071d384a0aed9c611e4, Data_science\Visualization\Canvas3D\FormDevice.vb"
+﻿#Region "Microsoft.VisualBasic::e7dbe11251c9a071d384a0aed9c611e4, sciBASIC#\Data_science\Visualization\Canvas3D\FormDevice.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 32
+    '    Code Lines: 26
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 1.02 KB
+
 
     '     Class FormDevice
     ' 

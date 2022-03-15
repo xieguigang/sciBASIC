@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::44e9f1b7281604d406c9122cf843822c, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\DataLayoutMessage.vb"
+﻿#Region "Microsoft.VisualBasic::44e9f1b7281604d406c9122cf843822c, sciBASIC#\Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\DataLayoutMessage.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 180
+    '    Code Lines: 98
+    ' Comment Lines: 51
+    '   Blank Lines: 31
+    '     File Size: 7.29 KB
+
 
     '     Class DataLayoutMessage
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76334608bbcff3839c42f84eed4ddab8, Microsoft.VisualBasic.Core\src\Extensions\Security\SecurityString.vb"
+﻿#Region "Microsoft.VisualBasic::76334608bbcff3839c42f84eed4ddab8, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Security\SecurityString.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 59
+    '    Code Lines: 36
+    ' Comment Lines: 12
+    '   Blank Lines: 11
+    '     File Size: 2.55 KB
+
 
     '     Class SecurityStringModel
     ' 

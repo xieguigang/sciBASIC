@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2460124c32e3d134d60871879fea42c8, gr\network-visualization\Visualizer\Canvas.vb"
+﻿#Region "Microsoft.VisualBasic::2460124c32e3d134d60871879fea42c8, sciBASIC#\gr\network-visualization\Visualizer\Canvas.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 25
+    '    Code Lines: 20
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 935.00 B
+
 
     ' Module CanvasDrawer
     ' 

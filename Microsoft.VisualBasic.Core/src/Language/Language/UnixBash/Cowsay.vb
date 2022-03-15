@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba4b0cdb8500ef891eab9b8b03368ac8, Microsoft.VisualBasic.Core\src\Language\Language\UnixBash\Cowsay.vb"
+﻿#Region "Microsoft.VisualBasic::ba4b0cdb8500ef891eab9b8b03368ac8, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\UnixBash\Cowsay.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 105
+    '    Code Lines: 74
+    ' Comment Lines: 20
+    '   Blank Lines: 11
+    '     File Size: 4.10 KB
+
 
     '     Module CowsayTricks
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::879901a8bb9d27ea3c6cc6a202105ce3, mime\text%yaml\1.1\IDictionaryExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::879901a8bb9d27ea3c6cc6a202105ce3, sciBASIC#\mime\text%yaml\1.1\IDictionaryExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 36
+    '    Code Lines: 31
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 1.18 KB
+
 
     '     Module IDictionaryExtensions
     ' 

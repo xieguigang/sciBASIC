@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d4799c36d68864681e102bf49b045c8, mime\application%xml\MathML\Expression\BinaryExpression.vb"
+﻿#Region "Microsoft.VisualBasic::6d4799c36d68864681e102bf49b045c8, sciBASIC#\mime\application%xml\MathML\Expression\BinaryExpression.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 22
+    '    Code Lines: 13
+    ' Comment Lines: 0
+    '   Blank Lines: 9
+    '     File Size: 504.00 B
+
 
     '     Class BinaryExpression
     ' 

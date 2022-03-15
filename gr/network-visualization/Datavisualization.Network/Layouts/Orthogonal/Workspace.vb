@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5cf45fb0eca42c7b1e9459d8e8d2836e, gr\network-visualization\Datavisualization.Network\Layouts\Orthogonal\Workspace.vb"
+﻿#Region "Microsoft.VisualBasic::5cf45fb0eca42c7b1e9459d8e8d2836e, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Orthogonal\Workspace.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 94
+    '    Code Lines: 50
+    ' Comment Lines: 24
+    '   Blank Lines: 20
+    '     File Size: 3.06 KB
+
 
     '     Class Workspace
     ' 

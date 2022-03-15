@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e307b1d41b0a7d30c301ba3a5b731da1, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Light.vb"
+﻿#Region "Microsoft.VisualBasic::e307b1d41b0a7d30c301ba3a5b731da1, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Light.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 101
+    '    Code Lines: 59
+    ' Comment Lines: 27
+    '   Blank Lines: 15
+    '     File Size: 4.05 KB
+
 
     '     Module Light
     ' 

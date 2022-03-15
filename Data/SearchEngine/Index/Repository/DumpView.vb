@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74eb77378d4d7474f994b7cf74435e76, Data\SearchEngine\Index\Repository\DumpView.vb"
+﻿#Region "Microsoft.VisualBasic::74eb77378d4d7474f994b7cf74435e76, sciBASIC#\Data\SearchEngine\Index\Repository\DumpView.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 62
+    '    Code Lines: 45
+    ' Comment Lines: 4
+    '   Blank Lines: 13
+    '     File Size: 1.94 KB
+
 
     ' Module TrieDump
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::33ac9a6601ba675a58f12ecb2ae285e6, gr\Microsoft.VisualBasic.Imaging\test\Class1.vb"
+﻿#Region "Microsoft.VisualBasic::33ac9a6601ba675a58f12ecb2ae285e6, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\test\Class1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 133
+    '    Code Lines: 0
+    ' Comment Lines: 115
+    '   Blank Lines: 18
+    '     File Size: 5.25 KB
+
 
     ' 
     ' /********************************************************************************/

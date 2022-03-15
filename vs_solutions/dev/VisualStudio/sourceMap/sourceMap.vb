@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0959fa9c3b208ff19cb3c79b5ffb3b6d, vs_solutions\dev\VisualStudio\sourceMap\sourceMap.vb"
+﻿#Region "Microsoft.VisualBasic::0959fa9c3b208ff19cb3c79b5ffb3b6d, sciBASIC#\vs_solutions\dev\VisualStudio\sourceMap\sourceMap.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 21
+    '    Code Lines: 10
+    ' Comment Lines: 8
+    '   Blank Lines: 3
+    '     File Size: 569.00 B
+
 
     '     Class sourceMap
     ' 

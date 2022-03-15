@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b1a726bf8fb2cb8b4e36e8256d8c5e9, Data_science\DataMining\HMM\Algorithm\HMMChainAlgorithm\viterbiFactory.vb"
+﻿#Region "Microsoft.VisualBasic::4b1a726bf8fb2cb8b4e36e8256d8c5e9, sciBASIC#\Data_science\DataMining\HMM\Algorithm\HMMChainAlgorithm\viterbiFactory.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 87
+    '    Code Lines: 72
+    ' Comment Lines: 0
+    '   Blank Lines: 15
+    '     File Size: 3.94 KB
+
 
     '     Class viterbiFactory
     ' 

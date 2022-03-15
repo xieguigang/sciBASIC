@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f134b13d48a2ab1affa6e492f861e229, www\Microsoft.VisualBasic.NETProtocol\InternetTime\SynchronizingTime.vb"
+﻿#Region "Microsoft.VisualBasic::f134b13d48a2ab1affa6e492f861e229, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\InternetTime\SynchronizingTime.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 38
+    '    Code Lines: 27
+    ' Comment Lines: 3
+    '   Blank Lines: 8
+    '     File Size: 1.31 KB
+
 
     '     Module SetSystemTime
     ' 

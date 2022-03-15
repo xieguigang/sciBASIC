@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93e4af80684106fb91ef4edf332e73f2, Data\DataFrame.Extensions\Serialize\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::93e4af80684106fb91ef4edf332e73f2, sciBASIC#\Data\DataFrame.Extensions\Serialize\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 141
+    '    Code Lines: 96
+    ' Comment Lines: 26
+    '   Blank Lines: 19
+    '     File Size: 5.34 KB
+
 
     ' Module SchemasAPI
     ' 

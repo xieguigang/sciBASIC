@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90047379c4788082f0d12f5454c90286, Data\BinaryData\DataStorage\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::90047379c4788082f0d12f5454c90286, sciBASIC#\Data\BinaryData\DataStorage\test\Module1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 75
+    '    Code Lines: 50
+    ' Comment Lines: 0
+    '   Blank Lines: 25
+    '     File Size: 2.40 KB
+
 
     ' Module Module1
     ' 

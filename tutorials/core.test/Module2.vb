@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e8d1f4cbf48d04d3aa303a224d63a8a, tutorials\core.test\Module2.vb"
+﻿#Region "Microsoft.VisualBasic::5e8d1f4cbf48d04d3aa303a224d63a8a, sciBASIC#\tutorials\core.test\Module2.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 26
+    '    Code Lines: 18
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 516.00 B
+
 
     ' Module Module2
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::349dba59af30a71bbdc1a237da4f671c, Microsoft.VisualBasic.Core\src\Extensions\Doc\PartitionedStream.vb"
+﻿#Region "Microsoft.VisualBasic::349dba59af30a71bbdc1a237da4f671c, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Doc\PartitionedStream.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 116
+    '    Code Lines: 70
+    ' Comment Lines: 23
+    '   Blank Lines: 23
+    '     File Size: 4.26 KB
+
 
     ' Delegate Function
     ' 

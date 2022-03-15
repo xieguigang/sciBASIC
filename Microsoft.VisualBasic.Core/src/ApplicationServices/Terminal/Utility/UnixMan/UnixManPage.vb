@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76bfe7b27af8509f2a092e4c00766691, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\UnixMan\UnixManPage.vb"
+﻿#Region "Microsoft.VisualBasic::37e12e83fd66148fc3454c92a5173268, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\UnixMan\UnixManPage.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 160
+    '    Code Lines: 98
+    ' Comment Lines: 43
+    '   Blank Lines: 19
+    '     File Size: 5.92 KB
+
 
     '     Class Index
     ' 

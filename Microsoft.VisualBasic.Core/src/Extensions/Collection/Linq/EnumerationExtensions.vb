@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4bc23ee15c90920f5701b44f9767a682, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\EnumerationExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::4bc23ee15c90920f5701b44f9767a682, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\EnumerationExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 59
+    '    Code Lines: 31
+    ' Comment Lines: 23
+    '   Blank Lines: 5
+    '     File Size: 2.38 KB
+
 
     '     Module EnumerationExtensions
     ' 

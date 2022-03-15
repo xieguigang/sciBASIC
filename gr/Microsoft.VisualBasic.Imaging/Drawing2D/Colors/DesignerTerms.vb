@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::94f9fecaebfd99c81915e79b2634ee36, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\DesignerTerms.vb"
+﻿#Region "Microsoft.VisualBasic::94f9fecaebfd99c81915e79b2634ee36, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\DesignerTerms.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 135
+    '    Code Lines: 85
+    ' Comment Lines: 25
+    '   Blank Lines: 25
+    '     File Size: 5.50 KB
+
 
     '     Module DesignerTerms
     ' 

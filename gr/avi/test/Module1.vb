@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee65924ddfde92acb04bac7168f1d9ac, gr\avi\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::ee65924ddfde92acb04bac7168f1d9ac, sciBASIC#\gr\avi\test\Module1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 22
+    '    Code Lines: 16
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 665.00 B
+
 
     ' Module Module1
     ' 

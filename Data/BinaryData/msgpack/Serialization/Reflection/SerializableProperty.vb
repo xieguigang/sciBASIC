@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f66596d63c86e8d98e241defd8c657a6, Data\BinaryData\msgpack\Serialization\Reflection\SerializableProperty.vb"
+﻿#Region "Microsoft.VisualBasic::f66596d63c86e8d98e241defd8c657a6, sciBASIC#\Data\BinaryData\msgpack\Serialization\Reflection\SerializableProperty.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 50
+    '    Code Lines: 37
+    ' Comment Lines: 0
+    '   Blank Lines: 13
+    '     File Size: 1.92 KB
+
 
     '     Class SerializableProperty
     ' 

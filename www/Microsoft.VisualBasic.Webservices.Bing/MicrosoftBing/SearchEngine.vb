@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1c83ad273705007da9b42c7ba682e646, www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\SearchEngine.vb"
+﻿#Region "Microsoft.VisualBasic::1c83ad273705007da9b42c7ba682e646, sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\SearchEngine.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 110
+    '    Code Lines: 70
+    ' Comment Lines: 24
+    '   Blank Lines: 16
+    '     File Size: 4.11 KB
+
 
     '     Module SearchEngineProvider
     ' 

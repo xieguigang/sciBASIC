@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4375f4fce26ff91f7486b0103e911132, mime\text%html\Render\CSS\CssConstants.vb"
+﻿#Region "Microsoft.VisualBasic::4375f4fce26ff91f7486b0103e911132, sciBASIC#\mime\text%html\Render\CSS\CssConstants.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 142
+    '    Code Lines: 101
+    ' Comment Lines: 27
+    '   Blank Lines: 14
+    '     File Size: 5.57 KB
+
 
     '     Class CssConstants
     ' 

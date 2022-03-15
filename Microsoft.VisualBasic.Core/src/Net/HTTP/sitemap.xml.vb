@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4bc7d87b1c2b8387d9a23a207a33af6b, Microsoft.VisualBasic.Core\src\Net\HTTP\sitemap.xml.vb"
+﻿#Region "Microsoft.VisualBasic::4bc7d87b1c2b8387d9a23a207a33af6b, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\sitemap.xml.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 95
+    '    Code Lines: 66
+    ' Comment Lines: 13
+    '   Blank Lines: 16
+    '     File Size: 3.75 KB
+
 
     '     Class sitemap
     ' 

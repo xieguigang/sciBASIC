@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::419aabf1c38f6e9c7a898c7b95daba63, Data_science\Mathematica\SignalProcessing\SignalProcessing\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::419aabf1c38f6e9c7a898c7b95daba63, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\Extensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 46
+    '    Code Lines: 18
+    ' Comment Lines: 24
+    '   Blank Lines: 4
+    '     File Size: 2.18 KB
+
 
     ' Module Extensions
     ' 

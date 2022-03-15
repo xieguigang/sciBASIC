@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4cd2fe870dc3305a68c035365df58fb, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\WordWrap.vb"
+﻿#Region "Microsoft.VisualBasic::a4cd2fe870dc3305a68c035365df58fb, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\WordWrap.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 123
+    '    Code Lines: 76
+    ' Comment Lines: 26
+    '   Blank Lines: 21
+    '     File Size: 4.77 KB
+
 
     '     Module WordWrap
     ' 

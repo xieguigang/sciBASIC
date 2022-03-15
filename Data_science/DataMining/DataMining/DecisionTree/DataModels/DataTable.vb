@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3cdd342711bb5fc508f154f35733db69, Data_science\DataMining\DataMining\DecisionTree\DataModels\DataTable.vb"
+﻿#Region "Microsoft.VisualBasic::3cdd342711bb5fc508f154f35733db69, sciBASIC#\Data_science\DataMining\DataMining\DecisionTree\DataModels\DataTable.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 60
+    '    Code Lines: 32
+    ' Comment Lines: 19
+    '   Blank Lines: 9
+    '     File Size: 1.76 KB
+
 
     '     Class DataTable
     ' 

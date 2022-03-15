@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ef744c166decdba9b71780bde6c4411, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushAPI\UserMsgPool.vb"
+﻿#Region "Microsoft.VisualBasic::0ef744c166decdba9b71780bde6c4411, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushAPI\UserMsgPool.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 46
+    '    Code Lines: 20
+    ' Comment Lines: 20
+    '   Blank Lines: 6
+    '     File Size: 1.39 KB
+
 
     '     Class UserMsgPool
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b85e8e814df08e4dcc1633f211dab3aa, Data_science\MachineLearning\xgboost\test\Training.vb"
+﻿#Region "Microsoft.VisualBasic::2151b4424ab2de22ab0aa6a371353ffd, sciBASIC#\Data_science\MachineLearning\xgboost\test\Training.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 73
+    '    Code Lines: 65
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 2.95 KB
+
 
     '     Class Training
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c8a79274b37aaae73919f35b35db427, gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Parameters.vb"
+﻿#Region "Microsoft.VisualBasic::5c8a79274b37aaae73919f35b35db427, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Parameters.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 83
+    '    Code Lines: 49
+    ' Comment Lines: 20
+    '   Blank Lines: 14
+    '     File Size: 3.28 KB
+
 
     '     Class Parameters
     ' 

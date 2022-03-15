@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6bac3abad158dee19713f863974f75ae, Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\GenericAbstract.vb"
+﻿#Region "Microsoft.VisualBasic::6bac3abad158dee19713f863974f75ae, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\GenericAbstract.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 102
+    '    Code Lines: 48
+    ' Comment Lines: 41
+    '   Blank Lines: 13
+    '     File Size: 3.63 KB
+
 
     '     Interface IKeyValuePairObject
     ' 

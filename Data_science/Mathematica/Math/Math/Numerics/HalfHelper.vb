@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a431a5efd7f81c7354f3f2f0fb331334, Data_science\Mathematica\Math\Math\Numerics\HalfHelper.vb"
+﻿#Region "Microsoft.VisualBasic::a431a5efd7f81c7354f3f2f0fb331334, sciBASIC#\Data_science\Mathematica\Math\Math\Numerics\HalfHelper.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 202
+    '    Code Lines: 144
+    ' Comment Lines: 34
+    '   Blank Lines: 24
+    '     File Size: 8.25 KB
+
 
     '     Class HalfHelper
     ' 

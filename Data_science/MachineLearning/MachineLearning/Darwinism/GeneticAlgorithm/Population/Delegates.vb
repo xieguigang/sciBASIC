@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b20c07212994dac592af052b8a324152, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\Delegates.vb"
+﻿#Region "Microsoft.VisualBasic::b20c07212994dac592af052b8a324152, sciBASIC#\Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\Delegates.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 15
+    '    Code Lines: 6
+    ' Comment Lines: 6
+    '   Blank Lines: 3
+    '     File Size: 731.00 B
+
 
     '     Delegate Function
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb9407c5fe42cee35f042e7608cb841f, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Delegate\TypeExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::cb9407c5fe42cee35f042e7608cb841f, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Reflection\Delegate\TypeExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 66
+    '    Code Lines: 37
+    ' Comment Lines: 18
+    '   Blank Lines: 11
+    '     File Size: 2.46 KB
+
 
     '     Module TypeExtensions
     ' 

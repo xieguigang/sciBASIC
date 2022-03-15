@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0b62ee226a6655a11e9b26edcefe8e3, Data_science\Visualization\Visualization\BinaryTree\Partition.vb"
+﻿#Region "Microsoft.VisualBasic::e0b62ee226a6655a11e9b26edcefe8e3, sciBASIC#\Data_science\Visualization\Visualization\BinaryTree\Partition.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 47
+    '    Code Lines: 38
+    ' Comment Lines: 0
+    '   Blank Lines: 9
+    '     File Size: 1.58 KB
+
 
     '     Class Partition
     ' 

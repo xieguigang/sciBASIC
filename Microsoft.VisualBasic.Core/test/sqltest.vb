@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::14fe4bf9ce988049a70dd17c060e23d6, Microsoft.VisualBasic.Core\test\sqltest.vb"
+﻿#Region "Microsoft.VisualBasic::14fe4bf9ce988049a70dd17c060e23d6, sciBASIC#\Microsoft.VisualBasic.Core\test\sqltest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 10
+    '    Code Lines: 7
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 393.00 B
+
 
     ' Module sqltest
     ' 

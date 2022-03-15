@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5950d7ab9de8c7aa48cc2d7899e80d56, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\MarkdownRender.vb"
+﻿#Region "Microsoft.VisualBasic::5950d7ab9de8c7aa48cc2d7899e80d56, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\MarkdownRender.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 284
+    '    Code Lines: 228
+    ' Comment Lines: 22
+    '   Blank Lines: 34
+    '     File Size: 9.81 KB
+
 
     '     Class MarkdownRender
     ' 

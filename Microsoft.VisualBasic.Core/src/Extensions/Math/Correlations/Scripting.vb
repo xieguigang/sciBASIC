@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4fc00f25d57e8bb1b5f847a4a897cc01, Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\Scripting.vb"
+﻿#Region "Microsoft.VisualBasic::4fc00f25d57e8bb1b5f847a4a897cc01, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\Scripting.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 17
+    '    Code Lines: 15
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 592.00 B
+
 
     '     Module Scripting
     ' 

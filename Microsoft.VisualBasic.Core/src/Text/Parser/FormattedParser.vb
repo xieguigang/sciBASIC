@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b444ddca74dd29280e23f69fbfa34375, Microsoft.VisualBasic.Core\src\Text\Parser\FormattedParser.vb"
+﻿#Region "Microsoft.VisualBasic::b444ddca74dd29280e23f69fbfa34375, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Parser\FormattedParser.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 127
+    '    Code Lines: 55
+    ' Comment Lines: 54
+    '   Blank Lines: 18
+    '     File Size: 4.78 KB
+
 
     '     Module FormattedParser
     ' 

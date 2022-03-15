@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad0ffb53cf89d6cbf10cda3eaca17f01, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm\DoCluster.vb"
+﻿#Region "Microsoft.VisualBasic::ad0ffb53cf89d6cbf10cda3eaca17f01, sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm\DoCluster.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 37
+    '    Code Lines: 22
+    ' Comment Lines: 9
+    '   Blank Lines: 6
+    '     File Size: 1.93 KB
+
 
     ' Module DoCluster
     ' 

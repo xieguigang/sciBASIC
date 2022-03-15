@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::062fd1e60ece0c42709904006ee49625, mime\application%xml\xsd\XML.vb"
+﻿#Region "Microsoft.VisualBasic::062fd1e60ece0c42709904006ee49625, sciBASIC#\mime\application%xml\xsd\XML.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 112
+    '    Code Lines: 80
+    ' Comment Lines: 0
+    '   Blank Lines: 32
+    '     File Size: 2.99 KB
+
 
     '     Class restriction
     ' 

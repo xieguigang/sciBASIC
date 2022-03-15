@@ -1,48 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::768f79291df9adec54f8d374bb657d8a, Data_science\Visualization\Plots\g\Plot.vb"
+﻿#Region "Microsoft.VisualBasic::387389132012978ae7e964bea27ea68a, sciBASIC#\Data_science\Visualization\Plots\g\Plot.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class Plot
-' 
-'         Properties: legendTitle, main, xlabel, ylabel, zlabel
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: EvaluateLayout, Plot
-' 
-'         Sub: DrawLegends, DrawMainTitle, (+2 Overloads) Plot
-' 
-' 
-' /********************************************************************************/
+
+    ' Code Statistics:
+
+    '   Total Lines: 172
+    '    Code Lines: 125
+    ' Comment Lines: 22
+    '   Blank Lines: 25
+    '     File Size: 6.83 KB
+
+
+    '     Class Plot
+    ' 
+    '         Properties: legendTitle, main, xlabel, ylabel, zlabel
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: EvaluateLayout, (+2 Overloads) Plot
+    ' 
+    '         Sub: DrawLegends, DrawMainTitle, (+2 Overloads) Plot
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

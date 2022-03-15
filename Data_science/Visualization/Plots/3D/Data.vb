@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27fb6702891675b93446219a3c649d16, Data_science\Visualization\Plots\3D\Data.vb"
+﻿#Region "Microsoft.VisualBasic::27fb6702891675b93446219a3c649d16, sciBASIC#\Data_science\Visualization\Plots\3D\Data.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 327
+    '    Code Lines: 231
+    ' Comment Lines: 53
+    '   Blank Lines: 43
+    '     File Size: 13.95 KB
+
 
     '     Module DataProvider
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::695a07f681a4310aa76df5f2851285f6, Data_science\MachineLearning\xgboost\util\FVec\FVecMapImpl.vb"
+﻿#Region "Microsoft.VisualBasic::695a07f681a4310aa76df5f2851285f6, sciBASIC#\Data_science\MachineLearning\xgboost\util\FVec\FVecMapImpl.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 26
+    '    Code Lines: 17
+    ' Comment Lines: 4
+    '   Blank Lines: 5
+    '     File Size: 776.00 B
+
 
     '     Class FVecMapImpl
     ' 

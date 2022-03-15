@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::edbc2d2717cc0ca706384b61d805b147, Data\DataFrame\DATA\HTMLWriter.vb"
+﻿#Region "Microsoft.VisualBasic::53af31abb577d95198e796bdd56d2b73, sciBASIC#\Data\DataFrame\DATA\HTMLWriter.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 149
+    '    Code Lines: 111
+    ' Comment Lines: 18
+    '   Blank Lines: 20
+    '     File Size: 5.65 KB
+
 
     '     Module HTMLWriter
     ' 

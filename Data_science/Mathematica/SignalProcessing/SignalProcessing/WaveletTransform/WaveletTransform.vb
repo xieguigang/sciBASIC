@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54146a5738b6edaeb1ac5536670a6c1c, Data_science\Mathematica\SignalProcessing\SignalProcessing\WaveletTransform\WaveletTransform.vb"
+﻿#Region "Microsoft.VisualBasic::54146a5738b6edaeb1ac5536670a6c1c, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\WaveletTransform\WaveletTransform.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 187
+    '    Code Lines: 82
+    ' Comment Lines: 81
+    '   Blank Lines: 24
+    '     File Size: 6.22 KB
+
 
     ' Module WaveletTransformExtensions
     ' 

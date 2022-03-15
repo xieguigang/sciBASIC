@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d04a3c3c5820c0a96164068e5711634, Data_science\MachineLearning\Bootstrapping\Bootstrapping.Extension\EigenvectorBootstrappingExtension.vb"
+﻿#Region "Microsoft.VisualBasic::5d04a3c3c5820c0a96164068e5711634, sciBASIC#\Data_science\MachineLearning\Bootstrapping\Bootstrapping.Extension\EigenvectorBootstrappingExtension.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 80
+    '    Code Lines: 63
+    ' Comment Lines: 6
+    '   Blank Lines: 11
+    '     File Size: 3.62 KB
+
 
     ' Module EigenvectorBootstrappingExtension
     ' 

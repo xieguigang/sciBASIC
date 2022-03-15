@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b0d51b5393f39ab9816abbfe05e69ca, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\Serialization.vb"
+﻿#Region "Microsoft.VisualBasic::2b0d51b5393f39ab9816abbfe05e69ca, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\Serialization.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 53
+    '    Code Lines: 28
+    ' Comment Lines: 15
+    '   Blank Lines: 10
+    '     File Size: 1.78 KB
+
 
     '     Class ClassName
     ' 

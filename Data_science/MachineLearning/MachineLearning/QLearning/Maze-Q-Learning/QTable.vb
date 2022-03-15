@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a91ac14412d89010bc4ce5abdfc7eb4, Data_science\MachineLearning\MachineLearning\QLearning\Maze-Q-Learning\QTable.vb"
+﻿#Region "Microsoft.VisualBasic::3a91ac14412d89010bc4ce5abdfc7eb4, sciBASIC#\Data_science\MachineLearning\MachineLearning\QLearning\Maze-Q-Learning\QTable.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 38
+    '    Code Lines: 28
+    ' Comment Lines: 5
+    '   Blank Lines: 5
+    '     File Size: 1.48 KB
+
 
     ' Class QTable
     ' 

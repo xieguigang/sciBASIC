@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7341cd314f5984cc56d6cde262f924ef, Data_science\DataMining\DataMining\AprioriRules\Algorithm\Entities\TransactionTokensItem.vb"
+﻿#Region "Microsoft.VisualBasic::7341cd314f5984cc56d6cde262f924ef, sciBASIC#\Data_science\DataMining\DataMining\AprioriRules\Algorithm\Entities\TransactionTokensItem.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 24
+    '    Code Lines: 16
+    ' Comment Lines: 0
+    '   Blank Lines: 8
+    '     File Size: 688.00 B
+
 
     '     Class TransactionTokensItem
     ' 

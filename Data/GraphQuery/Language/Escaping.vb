@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::14e97224d3612a30da06fae26841ccf7, Data\GraphQuery\Language\Escaping.vb"
+﻿#Region "Microsoft.VisualBasic::14e97224d3612a30da06fae26841ccf7, sciBASIC#\Data\GraphQuery\Language\Escaping.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 10
+    '    Code Lines: 7
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 181.00 B
+
 
     '     Class Escaping
     ' 

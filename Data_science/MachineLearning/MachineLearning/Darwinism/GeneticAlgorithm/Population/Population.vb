@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b576ac223fb6b9114e61cd30f1472e3, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\Population.vb"
+﻿#Region "Microsoft.VisualBasic::6b576ac223fb6b9114e61cd30f1472e3, sciBASIC#\Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\Population.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 224
+    '    Code Lines: 109
+    ' Comment Lines: 87
+    '   Blank Lines: 28
+    '     File Size: 9.42 KB
+
 
     '     Class IPopulation
     ' 

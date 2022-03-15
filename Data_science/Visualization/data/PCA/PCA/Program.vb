@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3d4657f2edc3f42e13c14501ea7ddfa, Data_science\Visualization\data\PCA\PCA\Program.vb"
+﻿#Region "Microsoft.VisualBasic::a3d4657f2edc3f42e13c14501ea7ddfa, sciBASIC#\Data_science\Visualization\data\PCA\PCA\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 87
+    '    Code Lines: 0
+    ' Comment Lines: 67
+    '   Blank Lines: 20
+    '     File Size: 3.04 KB
+
 
     ' 
     ' /********************************************************************************/

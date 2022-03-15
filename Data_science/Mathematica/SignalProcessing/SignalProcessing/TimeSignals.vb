@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4b4948a3bb654fabcfbed9e27cf829d, Data_science\Mathematica\SignalProcessing\SignalProcessing\TimeSignals.vb"
+﻿#Region "Microsoft.VisualBasic::d4b4948a3bb654fabcfbed9e27cf829d, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\TimeSignals.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 53
+    '    Code Lines: 41
+    ' Comment Lines: 0
+    '   Blank Lines: 12
+    '     File Size: 1.52 KB
+
 
     ' Structure TimeSignal
     ' 

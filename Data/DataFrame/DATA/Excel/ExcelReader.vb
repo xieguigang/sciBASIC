@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50b09665d6a081cc29af0212550dd93d, Data\DataFrame\DATA\Excel\ExcelReader.vb"
+﻿#Region "Microsoft.VisualBasic::50b09665d6a081cc29af0212550dd93d, sciBASIC#\Data\DataFrame\DATA\Excel\ExcelReader.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 113
+    '    Code Lines: 70
+    ' Comment Lines: 19
+    '   Blank Lines: 24
+    '     File Size: 4.06 KB
+
 
     '     Class ExcelReader
     ' 

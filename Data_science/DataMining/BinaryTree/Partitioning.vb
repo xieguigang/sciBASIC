@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a94046a469114fcc785ca497f2b32af8, Data_science\DataMining\BinaryTree\Partitioning.vb"
+﻿#Region "Microsoft.VisualBasic::a94046a469114fcc785ca497f2b32af8, sciBASIC#\Data_science\DataMining\BinaryTree\Partitioning.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 9
+    '    Code Lines: 6
+    ' Comment Lines: 0
+    '   Blank Lines: 3
+    '     File Size: 219.00 B
+
 
     ' Module Partitioning
     ' 

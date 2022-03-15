@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af1c9ec9cca65e898487df45eafc43aa, Data\DataFrame\DATA\Union.vb"
+﻿#Region "Microsoft.VisualBasic::af1c9ec9cca65e898487df45eafc43aa, sciBASIC#\Data\DataFrame\DATA\Union.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 51
+    '    Code Lines: 36
+    ' Comment Lines: 4
+    '   Blank Lines: 11
+    '     File Size: 1.74 KB
+
 
     '     Class CbindProvider
     ' 

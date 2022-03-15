@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f83cca3a924284d2a4e8f8458f9780e2, Data\word2vec\test\TestWord2Vec.vb"
+﻿#Region "Microsoft.VisualBasic::47091a61152c0fd0a678546a386fd839, sciBASIC#\Data\word2vec\test\TestWord2Vec.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 54
+    '    Code Lines: 39
+    ' Comment Lines: 4
+    '   Blank Lines: 11
+    '     File Size: 1.95 KB
+
 
     '     Class TestWord2Vec
     ' 

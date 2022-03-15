@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65d758bc125496bf614322f3f6ddcf57, Data\SearchEngine\SearchEngine\Expression\Expression.vb"
+﻿#Region "Microsoft.VisualBasic::65d758bc125496bf614322f3f6ddcf57, sciBASIC#\Data\SearchEngine\SearchEngine\Expression\Expression.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 126
+    '    Code Lines: 92
+    ' Comment Lines: 16
+    '   Blank Lines: 18
+    '     File Size: 4.46 KB
+
 
     ' Class Expression
     ' 

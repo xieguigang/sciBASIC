@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce037e5e6fb3af2018c3e9db118205c8, Data_science\MachineLearning\MachineLearning\RandomForests\Bootstraping.vb"
+﻿#Region "Microsoft.VisualBasic::9d63e6535c1628684fd432142cf9b3b2, sciBASIC#\Data_science\MachineLearning\MachineLearning\RandomForests\Bootstraping.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,19 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 51
+    '    Code Lines: 32
+    ' Comment Lines: 15
+    '   Blank Lines: 4
+    '     File Size: 1.98 KB
+
+
     '     Module RandomForestsBootstraping
     ' 
-    '         Function: Bagging, Gini, Sampling
+    '         Function: Bagging, Sampling
     ' 
     ' 
     ' /********************************************************************************/

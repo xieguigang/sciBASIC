@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e8ed6bcfa05daee7e9649676c5500245, www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\Translation\WordTranslation.vb"
+﻿#Region "Microsoft.VisualBasic::e8ed6bcfa05daee7e9649676c5500245, sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\Translation\WordTranslation.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 27
+    '    Code Lines: 12
+    ' Comment Lines: 11
+    '   Blank Lines: 4
+    '     File Size: 787.00 B
+
 
     '     Class WordTranslation
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee50458d0a734abe5791b95add19f118, Data_science\MachineLearning\MachineLearning\SVM\Cache\head_t.vb"
+﻿#Region "Microsoft.VisualBasic::ee50458d0a734abe5791b95add19f118, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\Cache\head_t.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 27
+    '    Code Lines: 16
+    ' Comment Lines: 6
+    '   Blank Lines: 5
+    '     File Size: 696.00 B
+
 
     '     Class head_t
     ' 

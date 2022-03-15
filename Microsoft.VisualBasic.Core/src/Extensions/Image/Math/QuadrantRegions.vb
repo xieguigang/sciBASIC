@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7463f59d14794f842f0e5e46595536c6, Microsoft.VisualBasic.Core\src\Extensions\Image\Math\QuadrantRegions.vb"
+﻿#Region "Microsoft.VisualBasic::7463f59d14794f842f0e5e46595536c6, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Math\QuadrantRegions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 34
+    '    Code Lines: 13
+    ' Comment Lines: 18
+    '   Blank Lines: 3
+    '     File Size: 861.00 B
+
 
     '     Enum QuadrantRegions
     ' 

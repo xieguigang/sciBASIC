@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::351853de2326233d3504aeb74e280f20, Data_science\Mathematica\Math\Math\Scripting\VectorModel.vb"
+﻿#Region "Microsoft.VisualBasic::351853de2326233d3504aeb74e280f20, sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\VectorModel.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 106
+    '    Code Lines: 76
+    ' Comment Lines: 17
+    '   Blank Lines: 13
+    '     File Size: 4.36 KB
+
 
     '     Class IVector
     ' 

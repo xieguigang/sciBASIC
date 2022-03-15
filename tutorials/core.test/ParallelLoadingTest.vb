@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5464232b57e72bc75b485fe8ad034a11, tutorials\core.test\ParallelLoadingTest.vb"
+﻿#Region "Microsoft.VisualBasic::5464232b57e72bc75b485fe8ad034a11, sciBASIC#\tutorials\core.test\ParallelLoadingTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 105
+    '    Code Lines: 0
+    ' Comment Lines: 83
+    '   Blank Lines: 22
+    '     File Size: 2.48 KB
+
 
     ' 
     ' /********************************************************************************/

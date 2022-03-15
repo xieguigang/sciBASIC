@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::216f38d9f0efc57ce54c857008d6fa84, www\githubAPI\github-vcard\Program.vb"
+﻿#Region "Microsoft.VisualBasic::216f38d9f0efc57ce54c857008d6fa84, sciBASIC#\www\githubAPI\github-vcard\Program.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 63
+    '    Code Lines: 53
+    ' Comment Lines: 0
+    '   Blank Lines: 10
+    '     File Size: 2.52 KB
+
 
     ' Module Program
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e0c4afd6bcc94795c3de87747396540, gr\network-visualization\Network.IO.Extensions\IO\Network.vb"
+﻿#Region "Microsoft.VisualBasic::9e0c4afd6bcc94795c3de87747396540, sciBASIC#\gr\network-visualization\Network.IO.Extensions\IO\Network.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 227
+    '    Code Lines: 142
+    ' Comment Lines: 54
+    '   Blank Lines: 31
+    '     File Size: 8.17 KB
+
 
     '     Class Network
     ' 

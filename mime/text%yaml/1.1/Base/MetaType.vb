@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::abc1d35ad60a4fe008ae21a361386f9d, mime\text%yaml\1.1\Base\MetaType.vb"
+﻿#Region "Microsoft.VisualBasic::abc1d35ad60a4fe008ae21a361386f9d, sciBASIC#\mime\text%yaml\1.1\Base\MetaType.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 7
+    '    Code Lines: 6
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 103.00 B
+
 
     '     Enum MetaType
     ' 

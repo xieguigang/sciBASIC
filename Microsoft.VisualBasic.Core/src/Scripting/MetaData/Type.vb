@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d2850e2e865312084a41f52e5ac388f, Microsoft.VisualBasic.Core\src\Scripting\MetaData\Type.vb"
+﻿#Region "Microsoft.VisualBasic::1d2850e2e865312084a41f52e5ac388f, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\MetaData\Type.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 212
+    '    Code Lines: 127
+    ' Comment Lines: 48
+    '   Blank Lines: 37
+    '     File Size: 7.81 KB
+
 
     '     Class TypeInfo
     ' 

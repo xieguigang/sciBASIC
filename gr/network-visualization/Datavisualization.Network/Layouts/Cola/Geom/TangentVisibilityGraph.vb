@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec70352370a0256b615bf4b9cdab26f6, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Geom\TangentVisibilityGraph.vb"
+﻿#Region "Microsoft.VisualBasic::ec70352370a0256b615bf4b9cdab26f6, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\Geom\TangentVisibilityGraph.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 89
+    '    Code Lines: 72
+    ' Comment Lines: 6
+    '   Blank Lines: 11
+    '     File Size: 3.50 KB
+
 
     '     Class TangentVisibilityGraph
     ' 

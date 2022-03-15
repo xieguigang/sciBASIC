@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0cb6025690528504570ed4f1051f7198, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\Event.vb"
+﻿#Region "Microsoft.VisualBasic::0cb6025690528504570ed4f1051f7198, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\Event.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 57
+    '    Code Lines: 31
+    ' Comment Lines: 18
+    '   Blank Lines: 8
+    '     File Size: 1.79 KB
+
 
     '     Enum EventType
     ' 

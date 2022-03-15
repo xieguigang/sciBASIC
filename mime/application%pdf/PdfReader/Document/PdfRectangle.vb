@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78d3dc9bf5d8ad863aaec9adab0ff3dc, mime\application%pdf\PdfReader\Document\PdfRectangle.vb"
+﻿#Region "Microsoft.VisualBasic::8fac665f08cf07ef00b39f868e60845f, sciBASIC#\mime\application%pdf\PdfReader\Document\PdfRectangle.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 92
+    '    Code Lines: 76
+    ' Comment Lines: 3
+    '   Blank Lines: 13
+    '     File Size: 3.03 KB
+
 
     '     Class PdfRectangle
     ' 

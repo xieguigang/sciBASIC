@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0d3a68d33ee112d4cd6b30316f85dcf, Data\BinaryData\test\sqliteTest.vb"
+﻿#Region "Microsoft.VisualBasic::a0d3a68d33ee112d4cd6b30316f85dcf, sciBASIC#\Data\BinaryData\test\sqliteTest.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 53
+    '    Code Lines: 0
+    ' Comment Lines: 43
+    '   Blank Lines: 10
+    '     File Size: 1.78 KB
+
 
     ' 
     ' /********************************************************************************/

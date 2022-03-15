@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e601b76310010aebb99c324f0e943326, Data\DataFrame\StorageProvider\ComponntModels\ReflectionBridges\Enum.vb"
+﻿#Region "Microsoft.VisualBasic::e601b76310010aebb99c324f0e943326, sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\ReflectionBridges\Enum.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 66
+    '    Code Lines: 49
+    ' Comment Lines: 4
+    '   Blank Lines: 13
+    '     File Size: 2.51 KB
+
 
     '     Class [Enum]
     ' 

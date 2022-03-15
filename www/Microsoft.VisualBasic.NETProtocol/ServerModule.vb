@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::88fd998f4e0101c2b71d2b3f42694a96, www\Microsoft.VisualBasic.NETProtocol\ServerModule.vb"
+﻿#Region "Microsoft.VisualBasic::88fd998f4e0101c2b71d2b3f42694a96, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\ServerModule.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 107
+    '    Code Lines: 61
+    ' Comment Lines: 28
+    '   Blank Lines: 18
+    '     File Size: 4.40 KB
+
 
     '     Class ServerModule
     ' 

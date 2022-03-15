@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ae6a31b6d1d3c61c63d00f95cf6d228, mime\application%pdf\PdfFileWriter\AnnotAction.vb"
+﻿#Region "Microsoft.VisualBasic::6d0827fbbc4d7dc11c48da1f5e3d9d51, sciBASIC#\mime\application%pdf\PdfFileWriter\AnnotAction.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 271
+    '    Code Lines: 112
+    ' Comment Lines: 128
+    '   Blank Lines: 31
+    '     File Size: 8.08 KB
+
 
     ' Enum FileAttachIcon
     ' 

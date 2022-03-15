@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8357a66372ba226ebaf64d3194bd176, gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Layout\Point.vb"
+﻿#Region "Microsoft.VisualBasic::b8357a66372ba226ebaf64d3194bd176, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Layout\Point.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 130
+    '    Code Lines: 63
+    ' Comment Lines: 48
+    '   Blank Lines: 19
+    '     File Size: 4.59 KB
+
 
     '     Class LayoutPoint
     ' 

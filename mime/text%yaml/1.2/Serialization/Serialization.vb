@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa1489803c057e61320f75220a94387f, mime\text%yaml\1.2\Serialization\Serialization.vb"
+﻿#Region "Microsoft.VisualBasic::aa1489803c057e61320f75220a94387f, sciBASIC#\mime\text%yaml\1.2\Serialization\Serialization.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 90
+    '    Code Lines: 77
+    ' Comment Lines: 0
+    '   Blank Lines: 13
+    '     File Size: 3.22 KB
+
 
     ' Module Serialization
     ' 

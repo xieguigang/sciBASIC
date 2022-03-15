@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fcd13a6ea45f1437f07f1c6c796a7ca5, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Uniform.vb"
+﻿#Region "Microsoft.VisualBasic::fcd13a6ea45f1437f07f1c6c796a7ca5, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Uniform.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 67
+    '    Code Lines: 47
+    ' Comment Lines: 13
+    '   Blank Lines: 7
+    '     File Size: 2.24 KB
+
 
     '     Class Uniform
     ' 

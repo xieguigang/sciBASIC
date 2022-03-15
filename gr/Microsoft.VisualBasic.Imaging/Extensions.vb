@@ -1,43 +1,53 @@
-﻿#Region "Microsoft.VisualBasic::3ff3a6ba29d153d2d58e058f80a0eef4, gr\Microsoft.VisualBasic.Imaging\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::354925f422b3b0a74630504d8d1cdaac, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Extensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module Extensions
-' 
-'     Function: AsGDIImage, AsSVG
-' 
-'     Sub: (+4 Overloads) FillCircles
-' 
-' /********************************************************************************/
+
+    ' Code Statistics:
+
+    '   Total Lines: 78
+    '    Code Lines: 61
+    ' Comment Lines: 6
+    '   Blank Lines: 11
+    '     File Size: 2.99 KB
+
+
+    ' Module Extensions
+    ' 
+    '     Function: ArgbColor, AsGDIImage, AsSVG, ToVector
+    ' 
+    '     Sub: (+4 Overloads) FillCircles
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

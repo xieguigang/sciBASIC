@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56479ba0ea3136d11d7fcc87fceb0fab, Data\DataFrame\DATA\MySQL.vb"
+﻿#Region "Microsoft.VisualBasic::56479ba0ea3136d11d7fcc87fceb0fab, sciBASIC#\Data\DataFrame\DATA\MySQL.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 202
+    '    Code Lines: 122
+    ' Comment Lines: 55
+    '   Blank Lines: 25
+    '     File Size: 8.02 KB
+
 
     '     Module MySQL
     ' 

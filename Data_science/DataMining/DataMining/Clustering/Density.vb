@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56c64f0e80158ea6bb7cdadef2bded5c, Data_science\DataMining\DataMining\Clustering\Density.vb"
+﻿#Region "Microsoft.VisualBasic::56c64f0e80158ea6bb7cdadef2bded5c, sciBASIC#\Data_science\DataMining\DataMining\Clustering\Density.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 117
+    '    Code Lines: 70
+    ' Comment Lines: 29
+    '   Blank Lines: 18
+    '     File Size: 4.97 KB
+
 
     '     Class Density
     ' 

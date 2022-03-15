@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0315f4fbd3961e788eae35ae422d1054, Data_science\Mathematica\SignalProcessing\SignalProcessing\WaveletTransform\DFT.vb"
+﻿#Region "Microsoft.VisualBasic::0315f4fbd3961e788eae35ae422d1054, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\WaveletTransform\DFT.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 132
+    '    Code Lines: 54
+    ' Comment Lines: 59
+    '   Blank Lines: 19
+    '     File Size: 5.28 KB
+
 
     ' Class TFftAlgorithm
     ' 

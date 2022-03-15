@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3b4902fdb6587139b49d650377bf0391, www\Microsoft.VisualBasic.NETProtocol\Test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::3b4902fdb6587139b49d650377bf0391, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Test\Module1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 13
+    '    Code Lines: 9
+    ' Comment Lines: 0
+    '   Blank Lines: 4
+    '     File Size: 386.00 B
+
 
     ' Module Module1
     ' 

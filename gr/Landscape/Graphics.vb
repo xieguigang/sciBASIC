@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af18493fe141e76e55cdd4ad74edb5e8, gr\Landscape\Graphics.vb"
+﻿#Region "Microsoft.VisualBasic::af18493fe141e76e55cdd4ad74edb5e8, sciBASIC#\gr\Landscape\Graphics.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 16
+    '    Code Lines: 6
+    ' Comment Lines: 7
+    '   Blank Lines: 3
+    '     File Size: 437.00 B
+
 
     '     Class Graphics
     ' 

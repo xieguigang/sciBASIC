@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bffb2faa3638e71df376c0028bee4b3d, Data\SearchEngine\Index\BTree\BinaryTreeIndex.vb"
+﻿#Region "Microsoft.VisualBasic::bffb2faa3638e71df376c0028bee4b3d, sciBASIC#\Data\SearchEngine\Index\BTree\BinaryTreeIndex.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 32
+    '    Code Lines: 22
+    ' Comment Lines: 3
+    '   Blank Lines: 7
+    '     File Size: 902.00 B
+
 
     ' Class BinaryTreeIndex
     ' 

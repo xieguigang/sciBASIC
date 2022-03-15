@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f506608694faa5f51d75c94347722b9, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\DynamicProgramming.vb"
+﻿#Region "Microsoft.VisualBasic::1f506608694faa5f51d75c94347722b9, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\DynamicProgramming.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 28
+    '    Code Lines: 21
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 1.00 KB
+
 
     '     Class Cost
     ' 

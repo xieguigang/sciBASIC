@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2e2a8d37fde7991bd8fe73fadc9adea, Data_science\DataMining\HMM\Models\Objects.vb"
+﻿#Region "Microsoft.VisualBasic::f2e2a8d37fde7991bd8fe73fadc9adea, sciBASIC#\Data_science\DataMining\HMM\Models\Objects.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 27
+    '    Code Lines: 18
+    ' Comment Lines: 0
+    '   Blank Lines: 9
+    '     File Size: 725.00 B
+
 
     '     Class StatesObject
     ' 

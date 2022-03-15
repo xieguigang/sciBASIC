@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::219ae357375e43a8ba23aedb0f91603c, www\githubAPI\API\Search.vb"
+﻿#Region "Microsoft.VisualBasic::219ae357375e43a8ba23aedb0f91603c, sciBASIC#\www\githubAPI\API\Search.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 73
+    '    Code Lines: 46
+    ' Comment Lines: 16
+    '   Blank Lines: 11
+    '     File Size: 2.86 KB
+
 
     '     Module Search
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5b0f1724d6c773888cc4358e91244da, Microsoft.VisualBasic.Core\src\CommandLine\CLITools.vb"
+﻿#Region "Microsoft.VisualBasic::b5b0f1724d6c773888cc4358e91244da, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\CLITools.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 383
+    '    Code Lines: 229
+    ' Comment Lines: 103
+    '   Blank Lines: 51
+    '     File Size: 14.96 KB
+
 
     '     Module CLITools
     ' 

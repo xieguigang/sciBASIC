@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20de3aa47e082d8fb9f9500633cfe243, mime\application%pdf\PdfFileWriter\PDF\PdfWebLink.vb"
+﻿#Region "Microsoft.VisualBasic::3b6c0198649de705418974cc84587850, sciBASIC#\mime\application%pdf\PdfFileWriter\PDF\PdfWebLink.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 114
+    '    Code Lines: 29
+    ' Comment Lines: 68
+    '   Blank Lines: 17
+    '     File Size: 3.79 KB
+
 
     '     Class PdfWebLink
     ' 

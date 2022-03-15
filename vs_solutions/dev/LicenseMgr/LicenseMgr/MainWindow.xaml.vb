@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19cb1e767ff1e798f4b608f4f4e83f72, vs_solutions\dev\LicenseMgr\LicenseMgr\MainWindow.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::19cb1e767ff1e798f4b608f4f4e83f72, sciBASIC#\vs_solutions\dev\LicenseMgr\LicenseMgr\MainWindow.xaml.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 18
+    '    Code Lines: 9
+    ' Comment Lines: 7
+    '   Blank Lines: 2
+    '     File Size: 495.00 B
+
 
     ' Class MainWindow
     ' 

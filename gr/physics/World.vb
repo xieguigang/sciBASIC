@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c698f3ceca015d598a121270bd86cf11, gr\physics\World.vb"
+﻿#Region "Microsoft.VisualBasic::c698f3ceca015d598a121270bd86cf11, sciBASIC#\gr\physics\World.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 132
+    '    Code Lines: 88
+    ' Comment Lines: 21
+    '   Blank Lines: 23
+    '     File Size: 4.38 KB
+
 
     ' Class World
     ' 

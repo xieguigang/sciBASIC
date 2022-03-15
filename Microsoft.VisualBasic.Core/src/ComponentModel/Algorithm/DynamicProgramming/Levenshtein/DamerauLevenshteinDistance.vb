@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d1365fbbbb8dd008dda8946a5f524c1, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\Levenshtein\DamerauLevenshteinDistance.vb"
+﻿#Region "Microsoft.VisualBasic::5d1365fbbbb8dd008dda8946a5f524c1, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\Levenshtein\DamerauLevenshteinDistance.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 39
+    '    Code Lines: 32
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 1.70 KB
+
 
     '     Module DamerauLevenshteinDistance
     ' 

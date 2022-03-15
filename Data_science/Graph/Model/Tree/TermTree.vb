@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec88e1c7025c20acdd572ff495e95649, Data_science\Graph\Model\Tree\TermTree.vb"
+﻿#Region "Microsoft.VisualBasic::ec88e1c7025c20acdd572ff495e95649, sciBASIC#\Data_science\Graph\Model\Tree\TermTree.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 70
+    '    Code Lines: 49
+    ' Comment Lines: 11
+    '   Blank Lines: 10
+    '     File Size: 2.16 KB
+
 
     ' Class TermTree
     ' 

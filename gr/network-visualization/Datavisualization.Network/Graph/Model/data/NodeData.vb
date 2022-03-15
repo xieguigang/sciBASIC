@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::166002e7e1b1f5a6d92a72828b9c4014, gr\network-visualization\Datavisualization.Network\Graph\Model\data\NodeData.vb"
+﻿#Region "Microsoft.VisualBasic::ae1746f721833e60c0213edca189a909, sciBASIC#\gr\network-visualization\Datavisualization.Network\Graph\Model\data\NodeData.vb"
 
     ' Author:
     ' 
@@ -31,13 +31,23 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 118
+    '    Code Lines: 74
+    ' Comment Lines: 27
+    '   Blank Lines: 17
+    '     File Size: 3.84 KB
+
+
     '     Class NodeData
     ' 
     '         Properties: betweennessCentrality, color, force, initialPostion, mass
     '                     neighborhoods, neighbours, origID, size, weights
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: Clone, ToString
+    '         Function: Clone, SafeGetRadius, ToString
     ' 
     ' 
     ' /********************************************************************************/

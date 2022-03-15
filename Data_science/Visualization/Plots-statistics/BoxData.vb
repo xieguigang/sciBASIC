@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cdb2a1db1952b6278fe1223fbcfbe876, Data_science\Visualization\Plots-statistics\BoxData.vb"
+﻿#Region "Microsoft.VisualBasic::cdb2a1db1952b6278fe1223fbcfbe876, sciBASIC#\Data_science\Visualization\Plots-statistics\BoxData.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 68
+    '    Code Lines: 40
+    ' Comment Lines: 21
+    '   Blank Lines: 7
+    '     File Size: 2.27 KB
+
 
     ' Class BoxData
     ' 

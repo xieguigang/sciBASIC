@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::124e7d1c1eda27d4112fca9f569cbafe, mime\application%rtf\FormatedRegion.vb"
+﻿#Region "Microsoft.VisualBasic::124e7d1c1eda27d4112fca9f569cbafe, sciBASIC#\mime\application%rtf\FormatedRegion.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 82
+    '    Code Lines: 62
+    ' Comment Lines: 6
+    '   Blank Lines: 14
+    '     File Size: 2.06 KB
+
 
     ' Class FormatedRegion
     ' 

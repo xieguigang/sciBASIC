@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5c4848179aa59575e050f23c3ce185b, Data_science\Mathematica\SignalProcessing\SignalProcessing\Resampler.vb"
+﻿#Region "Microsoft.VisualBasic::f5c4848179aa59575e050f23c3ce185b, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\Resampler.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 78
+    '    Code Lines: 58
+    ' Comment Lines: 7
+    '   Blank Lines: 13
+    '     File Size: 2.28 KB
+
 
     ' Class Resampler
     ' 

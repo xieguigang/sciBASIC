@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fefb68ccd2aa3584166fd672e20a4916, Data_science\Graph\Analysis\PageRank\GraphMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::fefb68ccd2aa3584166fd672e20a4916, sciBASIC#\Data_science\Graph\Analysis\PageRank\GraphMatrix.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 103
+    '    Code Lines: 76
+    ' Comment Lines: 11
+    '   Blank Lines: 16
+    '     File Size: 3.50 KB
+
 
     '     Class GraphMatrix
     ' 

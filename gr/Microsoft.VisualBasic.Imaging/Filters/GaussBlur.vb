@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c20be08e3c9f589e5f53fa5268e9af39, gr\Microsoft.VisualBasic.Imaging\Filters\GaussBlur.vb"
+﻿#Region "Microsoft.VisualBasic::c20be08e3c9f589e5f53fa5268e9af39, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Filters\GaussBlur.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 179
+    '    Code Lines: 145
+    ' Comment Lines: 15
+    '   Blank Lines: 19
+    '     File Size: 11.49 KB
+
 
     '     Class GaussBlur
     ' 

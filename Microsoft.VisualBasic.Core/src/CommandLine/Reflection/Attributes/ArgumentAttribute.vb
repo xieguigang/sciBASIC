@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c52e3666517e6b88ff6fc67c40087d51, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\ArgumentAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::c52e3666517e6b88ff6fc67c40087d51, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\ArgumentAttribute.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 169
+    '    Code Lines: 79
+    ' Comment Lines: 69
+    '   Blank Lines: 21
+    '     File Size: 6.27 KB
+
 
     '     Class ArgumentAttribute
     ' 

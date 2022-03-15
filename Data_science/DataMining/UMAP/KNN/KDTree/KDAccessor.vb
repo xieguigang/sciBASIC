@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ebd13525e66a69595b4417d8928f7fd6, Data_science\DataMining\UMAP\KNN\KDTree\KDAccessor.vb"
+﻿#Region "Microsoft.VisualBasic::c3ea6e2a10102f46a9b0c34ffcd868f9, sciBASIC#\Data_science\DataMining\UMAP\KNN\KDTree\KDAccessor.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 51
+    '    Code Lines: 41
+    ' Comment Lines: 0
+    '   Blank Lines: 10
+    '     File Size: 1.86 KB
+
 
     '     Class KDAccessor
     ' 

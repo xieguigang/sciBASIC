@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::762df4953b93ad6ed2fafa9f8317dded, Data\word2vec\trainer\TrainMethod.vb"
+﻿#Region "Microsoft.VisualBasic::762df4953b93ad6ed2fafa9f8317dded, sciBASIC#\Data\word2vec\trainer\TrainMethod.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 7
+    '    Code Lines: 6
+    ' Comment Lines: 0
+    '   Blank Lines: 1
+    '     File Size: 109.00 B
+
 
     '     Enum TrainMethod
     ' 

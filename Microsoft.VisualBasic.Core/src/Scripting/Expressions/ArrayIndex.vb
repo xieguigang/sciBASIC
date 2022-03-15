@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22e0d756b8ab969dcd7a8b9bb5f999c8, Microsoft.VisualBasic.Core\src\Scripting\Expressions\ArrayIndex.vb"
+﻿#Region "Microsoft.VisualBasic::22e0d756b8ab969dcd7a8b9bb5f999c8, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\Expressions\ArrayIndex.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 75
+    '    Code Lines: 48
+    ' Comment Lines: 19
+    '   Blank Lines: 8
+    '     File Size: 2.59 KB
+
 
     '     Module ArrayIndex
     ' 

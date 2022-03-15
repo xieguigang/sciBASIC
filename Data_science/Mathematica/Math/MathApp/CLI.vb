@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75d33877a42e5a7dd0874cad46098feb, Data_science\Mathematica\Math\MathApp\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::75d33877a42e5a7dd0874cad46098feb, sciBASIC#\Data_science\Mathematica\Math\MathApp\CLI.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 18
+    '    Code Lines: 11
+    ' Comment Lines: 5
+    '   Blank Lines: 2
+    '     File Size: 583.00 B
+
 
     ' Module CLI
     ' 

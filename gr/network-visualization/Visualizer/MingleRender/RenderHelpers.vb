@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f52e114438a78ca9db1048040ae5e44, gr\network-visualization\Visualizer\MingleRender\RenderHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::5f52e114438a78ca9db1048040ae5e44, sciBASIC#\gr\network-visualization\Visualizer\MingleRender\RenderHelpers.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 106
+    '    Code Lines: 82
+    ' Comment Lines: 10
+    '   Blank Lines: 14
+    '     File Size: 3.79 KB
+
 
     ' Module RenderHelpers
     ' 

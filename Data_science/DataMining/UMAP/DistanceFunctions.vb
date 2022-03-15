@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b15a65d43026ec288ce8b4932b0459d5, Data_science\DataMining\UMAP\DistanceFunctions.vb"
+﻿#Region "Microsoft.VisualBasic::b15a65d43026ec288ce8b4932b0459d5, sciBASIC#\Data_science\DataMining\UMAP\DistanceFunctions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 21
+    '    Code Lines: 16
+    ' Comment Lines: 1
+    '   Blank Lines: 4
+    '     File Size: 892.00 B
+
 
     ' Class DistanceFunctions
     ' 

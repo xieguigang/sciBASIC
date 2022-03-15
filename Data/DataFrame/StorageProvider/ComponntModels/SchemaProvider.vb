@@ -1,53 +1,63 @@
-﻿#Region "Microsoft.VisualBasic::3db59065890de08eae250e48a3b71b40, Data\DataFrame\StorageProvider\ComponntModels\SchemaProvider.vb"
+﻿#Region "Microsoft.VisualBasic::5f5c82d434064b330802898b1d15bde3, sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\SchemaProvider.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class SchemaProvider
-' 
-'         Properties: CollectionColumns, Columns, DeclaringType, EnumColumns, HasMetaAttributes
-'                     KeyValuePairColumns, MetaAttributes, Raw
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: __columnType, (+2 Overloads) CacheOrdinal, CheckFieldConsistent, ContainsField, ContainsProperty
-'                   CopyReadDataFromObject, CopyWriteDataToObject, (+2 Overloads) CreateObject, CreateObjectInternal, GetCollectionColumns
-'                   GetColumns, GetEnumColumns, GetEnumerator, GetField, GetKeyValuePairColumn
-'                   getMeta, GetMetaAttributeColumn, gets, getWriteProvider, IEnumerable_GetEnumerator
-'                   ToString
-' 
-'         Sub: Remove
-' 
-' 
-' /********************************************************************************/
+
+    ' Code Statistics:
+
+    '   Total Lines: 505
+    '    Code Lines: 360
+    ' Comment Lines: 81
+    '   Blank Lines: 64
+    '     File Size: 21.22 KB
+
+
+    '     Class SchemaProvider
+    ' 
+    '         Properties: CollectionColumns, Columns, DeclaringType, EnumColumns, HasMetaAttributes
+    '                     KeyValuePairColumns, MetaAttributes, Raw
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: __columnType, (+2 Overloads) CacheOrdinal, CheckFieldConsistent, ContainsField, ContainsProperty
+    '                   CopyReadDataFromObject, CopyWriteDataToObject, (+2 Overloads) CreateObject, CreateObjectInternal, GetCollectionColumns
+    '                   GetColumns, GetEnumColumns, GetEnumerator, GetField, GetKeyValuePairColumn
+    '                   getMeta, GetMetaAttributeColumn, gets, getWriteProvider, IEnumerable_GetEnumerator
+    '                   ToString
+    ' 
+    '         Sub: Remove
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

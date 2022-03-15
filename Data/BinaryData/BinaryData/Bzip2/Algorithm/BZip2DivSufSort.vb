@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a9cf150a0c573f5fff03811159eb8f9, Data\BinaryData\BinaryData\Bzip2\Algorithm\BZip2DivSufSort.vb"
+﻿#Region "Microsoft.VisualBasic::0a9cf150a0c573f5fff03811159eb8f9, sciBASIC#\Data\BinaryData\BinaryData\Bzip2\Algorithm\BZip2DivSufSort.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 2558
+    '    Code Lines: 2019
+    ' Comment Lines: 27
+    '   Blank Lines: 512
+    '     File Size: 94.86 KB
+
 
     '     Class BZip2DivSufSort
     ' 

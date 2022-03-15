@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fdd744a2f62d1942b365ea191ad05412, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\xConsole\CoolWriteSettings.vb"
+﻿#Region "Microsoft.VisualBasic::fdd744a2f62d1942b365ea191ad05412, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\xConsole\CoolWriteSettings.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 24
+    '    Code Lines: 9
+    ' Comment Lines: 9
+    '   Blank Lines: 6
+    '     File Size: 663.00 B
+
 
     '     Class CoolWriteSettings
     ' 

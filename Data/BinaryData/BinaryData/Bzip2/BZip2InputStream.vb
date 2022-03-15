@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f586e09d058cac7401b0c075e534a77, Data\BinaryData\BinaryData\Bzip2\BZip2InputStream.vb"
+﻿#Region "Microsoft.VisualBasic::8f586e09d058cac7401b0c075e534a77, sciBASIC#\Data\BinaryData\BinaryData\Bzip2\BZip2InputStream.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 235
+    '    Code Lines: 149
+    ' Comment Lines: 43
+    '   Blank Lines: 43
+    '     File Size: 9.60 KB
+
 
     '     Class BZip2InputStream
     ' 

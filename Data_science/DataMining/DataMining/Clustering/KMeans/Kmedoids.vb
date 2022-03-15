@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::752ae9d468b4f47e24dc93f5ed189067, Data_science\DataMining\DataMining\Clustering\KMeans\Kmedoids.vb"
+﻿#Region "Microsoft.VisualBasic::752ae9d468b4f47e24dc93f5ed189067, sciBASIC#\Data_science\DataMining\DataMining\Clustering\KMeans\Kmedoids.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 120
+    '    Code Lines: 74
+    ' Comment Lines: 22
+    '   Blank Lines: 24
+    '     File Size: 4.85 KB
+
 
     '     Module Kmedoids
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::24b13cc75929d945706caddec5b92b1f, Microsoft.VisualBasic.Core\src\Language\Value\CharStream.vb"
+﻿#Region "Microsoft.VisualBasic::24b13cc75929d945706caddec5b92b1f, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\CharStream.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 40
+    '    Code Lines: 31
+    ' Comment Lines: 0
+    '   Blank Lines: 9
+    '     File Size: 1.47 KB
+
 
     '     Class CharStream
     ' 

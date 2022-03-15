@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57177822ea8b681402e8e9f22b770c50, Data\BinaryData\DataStorage\SQLite3\Schema\SQLParser.vb"
+﻿#Region "Microsoft.VisualBasic::57177822ea8b681402e8e9f22b770c50, sciBASIC#\Data\BinaryData\DataStorage\SQLite3\Schema\SQLParser.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 189
+    '    Code Lines: 160
+    ' Comment Lines: 3
+    '   Blank Lines: 26
+    '     File Size: 6.33 KB
+
 
     '     Enum TokenTypes
     ' 

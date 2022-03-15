@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4bb35695fa8f004fa107a6c69d05e7f2, Data\BinaryData\DataStorage\netCDF\Data\StructureParser.vb"
+﻿#Region "Microsoft.VisualBasic::4bb35695fa8f004fa107a6c69d05e7f2, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Data\StructureParser.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 229
+    '    Code Lines: 116
+    ' Comment Lines: 80
+    '   Blank Lines: 33
+    '     File Size: 8.95 KB
+
 
     '     Module StructureParser
     ' 

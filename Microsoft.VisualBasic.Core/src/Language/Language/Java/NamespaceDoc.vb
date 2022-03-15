@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::778fade6af9fcd57355c0a28a9bad6b0, Microsoft.VisualBasic.Core\src\Language\Language\Java\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::778fade6af9fcd57355c0a28a9bad6b0, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\Java\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 4
+    ' Comment Lines: 3
+    '   Blank Lines: 1
+    '     File Size: 199.00 B
+
 
     '     Class NamespaceDoc
     ' 

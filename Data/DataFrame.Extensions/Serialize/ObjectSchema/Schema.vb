@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0608a57a4031a51be02b2312409fb656, Data\DataFrame.Extensions\Serialize\ObjectSchema\Schema.vb"
+﻿#Region "Microsoft.VisualBasic::0608a57a4031a51be02b2312409fb656, sciBASIC#\Data\DataFrame.Extensions\Serialize\ObjectSchema\Schema.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 109
+    '    Code Lines: 73
+    ' Comment Lines: 19
+    '   Blank Lines: 17
+    '     File Size: 4.32 KB
+
 
     '     Class Schema
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c444583f8d6c5465b6752fe46e8cea2a, www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\Academic\ArticleProfile.vb"
+﻿#Region "Microsoft.VisualBasic::c444583f8d6c5465b6752fe46e8cea2a, sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\Academic\ArticleProfile.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 65
+    '    Code Lines: 41
+    ' Comment Lines: 15
+    '   Blank Lines: 9
+    '     File Size: 1.91 KB
+
 
     '     Class ArticleProfile
     ' 

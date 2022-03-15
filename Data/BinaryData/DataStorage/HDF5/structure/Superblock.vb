@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::299bd25e73f89c097bd367ddb7888b90, Data\BinaryData\DataStorage\HDF5\structure\Superblock.vb"
+﻿#Region "Microsoft.VisualBasic::299bd25e73f89c097bd367ddb7888b90, sciBASIC#\Data\BinaryData\DataStorage\HDF5\structure\Superblock.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 209
+    '    Code Lines: 144
+    ' Comment Lines: 27
+    '   Blank Lines: 38
+    '     File Size: 9.42 KB
+
 
     '     Class Superblock
     ' 

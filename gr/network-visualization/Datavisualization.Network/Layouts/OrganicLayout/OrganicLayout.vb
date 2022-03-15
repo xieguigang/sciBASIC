@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::abe553f7dd21d4c40a98e949b07d1c8a, gr\network-visualization\Datavisualization.Network\Layouts\OrganicLayout\OrganicLayout.vb"
+﻿#Region "Microsoft.VisualBasic::abe553f7dd21d4c40a98e949b07d1c8a, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\OrganicLayout\OrganicLayout.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1110
+    '    Code Lines: 478
+    ' Comment Lines: 489
+    '   Blank Lines: 143
+    '     File Size: 55.14 KB
+
 
     '     Class mxOrganicLayout
     ' 

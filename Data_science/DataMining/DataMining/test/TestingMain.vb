@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5592b289d59ee3d3b5dbcbc4bcdc90ac, Data_science\DataMining\DataMining\test\TestingMain.vb"
+﻿#Region "Microsoft.VisualBasic::5592b289d59ee3d3b5dbcbc4bcdc90ac, sciBASIC#\Data_science\DataMining\DataMining\test\TestingMain.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 256
+    '    Code Lines: 0
+    ' Comment Lines: 180
+    '   Blank Lines: 76
+    '     File Size: 10.29 KB
+
 
     ' 
     ' /********************************************************************************/

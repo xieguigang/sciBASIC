@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c82fa439c2a50b3e1adce094578398f, www\githubAPI\Test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::8c82fa439c2a50b3e1adce094578398f, sciBASIC#\www\githubAPI\Test\Module1.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 44
+    '    Code Lines: 19
+    ' Comment Lines: 9
+    '   Blank Lines: 16
+    '     File Size: 1.74 KB
+
 
     ' Module Module1
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d01cddb7ddf40c0f3f9db5201f64c3b1, Data\GraphQuery\Query\Parser\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::715a2099ed751c3e7e4495df4e448fa8, sciBASIC#\Data\GraphQuery\Query\Parser\Parser.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 67
+    '    Code Lines: 51
+    ' Comment Lines: 2
+    '   Blank Lines: 14
+    '     File Size: 2.16 KB
+
 
     ' Class Parser
     ' 

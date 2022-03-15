@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1771c61acba8743dfc6cd73f25951ffe, Microsoft.VisualBasic.Core\src\Scripting\Runtime\CType\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::1771c61acba8743dfc6cd73f25951ffe, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\Runtime\CType\Abstract.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 23
+    '    Code Lines: 6
+    ' Comment Lines: 13
+    '   Blank Lines: 4
+    '     File Size: 667.00 B
+
 
     '     Interface IParser
     ' 

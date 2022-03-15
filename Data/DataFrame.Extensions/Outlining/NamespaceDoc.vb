@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eff6a7f751d94605b067a63c9c48e5e0, Data\DataFrame.Extensions\Outlining\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::eff6a7f751d94605b067a63c9c48e5e0, sciBASIC#\Data\DataFrame.Extensions\Outlining\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 8
+    '    Code Lines: 4
+    ' Comment Lines: 3
+    '   Blank Lines: 1
+    '     File Size: 195.00 B
+
 
     '     Module NamespaceDoc
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60528a094a437ebe34d157b825a0173b, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\Projection.vb"
+﻿#Region "Microsoft.VisualBasic::60528a094a437ebe34d157b825a0173b, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\Projection.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 249
+    '    Code Lines: 197
+    ' Comment Lines: 14
+    '   Blank Lines: 38
+    '     File Size: 10.66 KB
+
 
     '     Class Projection
     ' 

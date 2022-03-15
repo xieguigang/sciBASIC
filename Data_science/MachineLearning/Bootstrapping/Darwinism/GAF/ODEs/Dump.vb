@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59ea8d660ffcb6907c7ba949c82b16f1, Data_science\MachineLearning\Bootstrapping\Darwinism\GAF\ODEs\Dump.vb"
+﻿#Region "Microsoft.VisualBasic::59ea8d660ffcb6907c7ba949c82b16f1, sciBASIC#\Data_science\MachineLearning\Bootstrapping\Darwinism\GAF\ODEs\Dump.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 29
+    '    Code Lines: 23
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 1.13 KB
+
 
     '     Class Dump
     ' 

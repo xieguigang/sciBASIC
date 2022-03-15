@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bdb9cc942f7123775b83eb9ecf8cd4d5, Microsoft.VisualBasic.Core\src\Language\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::bdb9cc942f7123775b83eb9ecf8cd4d5, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Linq\Linq.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 365
+    '    Code Lines: 175
+    ' Comment Lines: 129
+    '   Blank Lines: 61
+    '     File Size: 15.67 KB
+
 
     '     Class LinqAPI
     ' 

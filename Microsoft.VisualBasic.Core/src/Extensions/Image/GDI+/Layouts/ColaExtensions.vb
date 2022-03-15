@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::52d1fd2850cb177372a640f45ef31dbe, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Layouts\ColaExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::52d1fd2850cb177372a640f45ef31dbe, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Layouts\ColaExtensions.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,16 @@
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 48
+    '    Code Lines: 32
+    ' Comment Lines: 8
+    '   Blank Lines: 8
+    '     File Size: 1.82 KB
+
 
     '     Module ColaExtensions
     ' 
