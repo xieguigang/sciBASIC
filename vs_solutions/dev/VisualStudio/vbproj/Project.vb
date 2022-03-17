@@ -117,7 +117,12 @@ Namespace vbproj
         End Function
 
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Dim sb As New StringBuilder
+
+            Call sb.AppendLine($"[{MimeType(0).ToString}]")
+
+
+            Return sb.ToString
         End Function
 
         Public Shared Function Load(file As String) As Project
