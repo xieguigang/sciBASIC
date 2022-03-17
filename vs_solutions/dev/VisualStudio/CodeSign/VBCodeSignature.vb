@@ -119,7 +119,7 @@ Namespace CodeSign
                     type = list(-2)
                     name = list(-1)
                     indents = line.Match(VBCodePatterns.Indents, RegexICMul)
-                    stat.class += 1
+                    stat.classes += 1
 
                     If type = "Enum" Then
                         Dim members = vb _

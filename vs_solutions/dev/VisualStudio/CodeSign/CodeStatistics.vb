@@ -70,7 +70,7 @@ Namespace CodeSign
             End Get
         End Property
 
-        Public Property [class] As Integer
+        Public Property classes As Integer
         Public Property [method] As Integer
         Public Property [operator] As Integer
         Public Property [function] As Integer
