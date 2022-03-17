@@ -101,7 +101,7 @@ Imports Microsoft.VisualBasic.Linq
             .IteratesALL _
             .Where(Function(vb)
                        If skipAssmInfo Then
-                           Return vb <> Development.AssemblyInfo.ProjectFile
+                           Return Not vb.EndsWith(Development.AssemblyInfo.ProjectFile)
                        Else
                            Return True
                        End If
