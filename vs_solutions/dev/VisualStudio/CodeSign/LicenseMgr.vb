@@ -206,7 +206,7 @@ THE SOFTWARE.",
             sb.AppendLine()
             sb.AppendLine()
 
-            For Each line As String In VBCodeSignature.SummaryModules(vb:=src).LineTokens
+            For Each line As String In VBCodeSignature.SummaryModules(vb:=src, stat).LineTokens
                 Call sb.AppendLine("    ' " & line)
             Next
 

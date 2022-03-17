@@ -70,6 +70,12 @@ Namespace CodeSign
             End Get
         End Property
 
+        Public Property [class] As Integer
+        Public Property [method] As Integer
+        Public Property [operator] As Integer
+        Public Property [function] As Integer
+        Public Property properties As Integer
+
         Public Shared Function StatVB(code As String) As CodeStatics
             Dim lines = code.LineTokens.Select(Function(str) str.Trim(" "c, ASCII.TAB)).ToArray
             Dim stat As New CodeStatics With {
