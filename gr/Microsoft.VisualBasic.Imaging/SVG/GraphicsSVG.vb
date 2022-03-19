@@ -237,7 +237,7 @@ Namespace SVG
         ''' This function will clear entire svg document contents.
         ''' </summary>
         ''' <param name="color"></param>
-        Public Overrides Sub Clear(color As Color)
+        Protected Overrides Sub ClearCanvas(color As Color)
             __svgData.bg$ = color.ToHtmlColor
             __svgData.Clear()
         End Sub

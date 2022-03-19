@@ -72,7 +72,11 @@ Namespace Drawing2D.HeatMap
             buffer = BitmapBuffer.FromBitmap(heatmap, ImageLockMode.ReadOnly)
         End Sub
 
-        Public Sub Scale(g As IGraphics, newSize As Size)
+        Public Sub ScaleTo(g As IGraphics, region As Rectangle)
+            Call Scale(g, region.Size, region.Location)
+        End Sub
+
+        Public Sub Scale(g As IGraphics, newSize As Size, Optional offset As Point = Nothing)
             Dim width As Single = newSize.Width / buffer.Width
             Dim height As Single = newSize.Height / buffer.Height
             Dim cellSize As New SizeF(width, height)
@@ -85,7 +89,7 @@ Namespace Drawing2D.HeatMap
 
                     If Not c.IsTransparent Then
                         color = New SolidBrush(c)
-                        g.FillRectangle(color, x * width, y * width, cellSize)
+                        g.FillRectangle(color, x * width + offset.X, y * width + offset.Y, cellSize)
                     End If
                 Next
             Next

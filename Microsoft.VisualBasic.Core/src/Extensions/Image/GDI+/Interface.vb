@@ -79,6 +79,12 @@ Namespace Imaging
 
         Public MustOverride ReadOnly Property Size As Size
 
+        ''' <summary>
+        ''' set background via <see cref="Clear"/> method.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Background As Color
+
         ''
         '' Summary:
         ''     Gets or sets a System.Drawing.Region that limits the drawing region of this System.Drawing.Graphics.
@@ -246,16 +252,27 @@ Namespace Imaging
         '   data:
         '     Array of bytes that contains the comment.
         Public MustOverride Sub AddMetafileComment(data() As Byte)
-        '
-        ' Summary:
-        '     Clears the entire drawing surface and fills it with the specified background
-        '     color.
-        '
-        ' Parameters:
-        '   color:
-        '     System.Drawing.Color structure that represents the background color of the drawing
-        '     surface.
-        Public MustOverride Sub Clear(color As Color)
+
+        ''' <summary>
+        ''' Clears the entire drawing surface and fills it with the specified background
+        ''' color.
+        ''' </summary>
+        ''' <param name="color">
+        ''' <see cref="Color"/> structure that represents the background color of the drawing
+        ''' surface.
+        ''' </param>
+        Public Sub Clear(color As Color)
+            Me.ClearCanvas(color)
+            Me._Background = color
+        End Sub
+
+        ''' <summary>
+        ''' Clears the entire drawing surface and fills it with the specified background
+        ''' color.
+        ''' </summary>
+        ''' <param name="color"></param>
+        Protected MustOverride Sub ClearCanvas(color As Color)
+
         '
         ' Summary:
         '     Performs a bit-block transfer of color data, corresponding to a rectangle of

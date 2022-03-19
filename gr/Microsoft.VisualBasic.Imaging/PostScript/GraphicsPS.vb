@@ -164,7 +164,7 @@ Namespace PostScript
             Throw New NotImplementedException()
         End Sub
 
-        Public Overrides Sub Clear(color As Color)
+        Protected Overrides Sub ClearCanvas(color As Color)
             Throw New NotImplementedException()
         End Sub
 

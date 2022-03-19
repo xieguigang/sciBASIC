@@ -321,15 +321,7 @@ Namespace Imaging
             Call Graphics.AddMetafileComment(data)
         End Sub
 
-        ''' <summary>
-        ''' Clears the entire drawing surface and fills it with the specified background
-        ''' color.
-        ''' </summary>
-        ''' <param name="color">System.Drawing.Color structure that represents the background color of the drawing
-        ''' surface.</param>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Sub Clear(color As Color)
+        Protected Overrides Sub ClearCanvas(color As Color)
             Call Graphics.Clear(color)
         End Sub
 
