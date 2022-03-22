@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::c58a8355bfc587aaf8aa4fcd65c9357e, sciBASIC#\Data_science\Visualization\Plots\BarPlot\AlignmentPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 521
-    '    Code Lines: 410
-    ' Comment Lines: 37
-    '   Blank Lines: 74
-    '     File Size: 26.25 KB
+' Summaries:
 
 
-    '     Module AlignmentPlot
-    ' 
-    '         Function: createHits, HighlightGroups, Hit, Keys, PlotAlignment
-    '                   PlotAlignmentGroups, Values
-    '         Structure Signal
-    ' 
-    '             Function: ToString
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 521
+'    Code Lines: 410
+' Comment Lines: 37
+'   Blank Lines: 74
+'     File Size: 26.25 KB
+
+
+'     Module AlignmentPlot
+' 
+'         Function: createHits, HighlightGroups, Hit, Keys, PlotAlignment
+'                   PlotAlignmentGroups, Values
+'         Structure Signal
+' 
+'             Function: ToString
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -131,7 +131,8 @@ Namespace BarPlot
                                       Optional rectangleStyle As RectangleStyling = Nothing,
                                       Optional drawLegend As Boolean = True,
                                       Optional drawGrid As Boolean = True,
-                                      Optional tagXFormat$ = "F2") As GraphicsData
+                                      Optional tagXFormat$ = "F2",
+                                      Optional driver As Drivers = Drivers.Default) As GraphicsData
 
             Dim q As New Signal With {
                 .Name = queryName,
@@ -158,7 +159,8 @@ Namespace BarPlot
                 rectangleStyle:=rectangleStyle,
                 drawLegend:=drawLegend,
                 drawGrid:=drawGrid,
-                tagXFormat:=tagXFormat
+                tagXFormat:=tagXFormat,
+                driver:=driver
             )
         End Function
 
@@ -172,7 +174,8 @@ Namespace BarPlot
             End Function
         End Structure
 
-        <Extension> Private Function Hit(highlights#(), err#) As Func(Of Double, (err#, X#, yes As Boolean))
+        <Extension>
+        Private Function Hit(highlights#(), err#) As Func(Of Double, (err#, X#, yes As Boolean))
             If highlights.IsNullOrEmpty Then
                 Return Function() (-1, -1, False)
             Else
@@ -233,7 +236,8 @@ Namespace BarPlot
                                             Optional rectangleStyle As RectangleStyling = Nothing,
                                             Optional drawLegend As Boolean = True,
                                             Optional drawGrid As Boolean = True,
-                                            Optional tagXFormat$ = "F2") As GraphicsData
+                                            Optional tagXFormat$ = "F2",
+                                            Optional driver As Drivers = Drivers.Default) As GraphicsData
             If xrange Is Nothing Then
                 Dim ALL = query _
                     .Select(Function(x) x.signals.Keys) _
@@ -332,14 +336,18 @@ Namespace BarPlot
                                 labPos = New Point(.Left + 3, .Top)
                                 Call g.DrawString(ylab, labelFont, Brushes.Black, labPos)
                             Case YlabelPosition.LeftCenter
-                                Dim lx = (.Left - labSize.Height) / 4
-                                Dim ly = .Top * 2.5 + (.Height - labSize.Width) / 2
+                                If TypeOf g Is Graphics2D Then
+                                    Dim lx = (.Left - labSize.Height) / 4
+                                    Dim ly = .Top * 2.5 + (.Height - labSize.Width) / 2
 
-                                labPos = New PointF(lx, ly)
+                                    labPos = New PointF(lx, ly)
 
-                                With New GraphicsText(DirectCast(g, Graphics2D).Graphics)
-                                    Call .DrawString(ylab, labelFont, Brushes.Black, labPos, -90)
-                                End With
+                                    With New GraphicsText(DirectCast(g, Graphics2D).Graphics)
+                                        Call .DrawString(ylab, labelFont, Brushes.Black, labPos, -90)
+                                    End With
+                                Else
+                                    Call g.DrawString(ylab, labelFont, Brushes.Black, labPos.X, labPos.Y, -90)
+                                End If
                             Case Else
                                 ' 不进行标签的绘制
                         End Select
@@ -517,7 +525,8 @@ Namespace BarPlot
             Return g.GraphicsPlots(
                 size.SizeParser, padding,
                 bg,
-                plotInternal
+                plotInternal,
+                driver:=driver
             )
         End Function
 

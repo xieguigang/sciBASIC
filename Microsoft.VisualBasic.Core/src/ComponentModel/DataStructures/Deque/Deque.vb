@@ -181,6 +181,10 @@ Namespace ComponentModel.Collection.Deque
             version += 1
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return $"first: {First} --- {Count} element --- last: {Last}"
+        End Function
+
         ''' <summary>
         ''' Determines whether an element is in the Deque(Of T).
         ''' </summary>

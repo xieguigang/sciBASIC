@@ -136,6 +136,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PdfFileWriter\Flags.vb" />
     <Compile Include="Properties\AssemblyInfo.vb" />
     <Compile Include="PdfReader\Tokenizer\TokenReal.vb" />
     <Compile Include="PdfReader\Tokenizer\TokenString.vb" />

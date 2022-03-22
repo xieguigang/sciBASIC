@@ -73,7 +73,7 @@ Namespace KMeans
         <XmlAttribute> Public Property cluster As Integer
 
         Public Overrides Function ToString() As String
-            Return $"[{entityVector.JoinBy(", ")}]"
+            Return $"[{entityVector.Select(Function(x) x.ToString("G3")).JoinBy(", ")}]"
         End Function
 
         ''' <summary>
@@ -89,7 +89,9 @@ Namespace KMeans
                 .Properties = entityVector _
                     .SeqIterator _
                     .ToDictionary(Function(x) CStr(x.i),
-                                  Function(x) x.value)
+                                  Function(x)
+                                      Return x.value
+                                  End Function)
             }
         End Function
 

@@ -90,4 +90,15 @@ Public Module BuildTree
 
         Return BTreeCluster.GetClusters(btree)
     End Function
+
+    <Extension>
+    Public Function BTreeCluster(uniqueId As IEnumerable(Of String), alignment As ComparisonProvider) As BTreeCluster
+        Dim btree As New AVLTree(Of String, String)(alignment.GetComparer, Function(str) str)
+
+        For Each id As String In uniqueId
+            Call btree.Add(id, id, valueReplace:=False)
+        Next
+
+        Return BTreeCluster.GetClusters(btree)
+    End Function
 End Module

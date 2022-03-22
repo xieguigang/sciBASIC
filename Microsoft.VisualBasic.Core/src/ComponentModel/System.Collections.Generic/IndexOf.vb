@@ -180,6 +180,14 @@ Namespace ComponentModel.Collection
             End Get
         End Property
 
+        Default Public ReadOnly Property IndexOf([set] As IEnumerable(Of T)) As Integer()
+            Get
+                Return (From i As T
+                        In [set]
+                        Select Me.IndexOf(i)).ToArray
+            End Get
+        End Property
+
         ''' <summary>
         ''' 直接通过索引获取目标对象的值，请注意，如果<typeparamref name="T"/>泛型类型是<see cref="Integer"/>，
         ''' 则如果需要查找index的话，则必须要显式的指定参数名为``x:=``，否则调用的是当前的这个索引方法，
