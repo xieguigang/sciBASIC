@@ -167,6 +167,11 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
         Return vertices.ContainsKey(name)
     End Function
 
+    ''' <summary>
+    ''' query edge item exists or not by edge id
+    ''' </summary>
+    ''' <param name="edge"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function ExistEdge(edge As Edge) As Boolean
         Return edges.ContainsKey(edge.ID)
