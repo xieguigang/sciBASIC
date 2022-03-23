@@ -197,7 +197,7 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
         End If
     End Function
 
-    Public Function Insert(edge As Edge) As G
+    Public Overridable Function Insert(edge As Edge) As G
         Dim u = edge.U
         Dim v = edge.V
 
