@@ -1220,13 +1220,18 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
-    ''' 查找到任意一个既返回位置，大小写不敏感，假若查找不到，则返回-1值，判断是否查找成功，可以使用 &lt;0 来完成，
-    ''' 因为是通过InStr来完成的，所以查找成功的时候，最小的值是1，即字符串序列的第一个位置，也是元素0位置
+    ''' test if any <paramref name="find"/> tokens is 
+    ''' inside the given <paramref name="text"/> 
+    ''' string.
+    ''' (查找到任意一个既返回位置，大小写不敏感)
     ''' </summary>
     ''' <param name="text"></param>
     ''' <param name="find"></param>
-    ''' <returns></returns>
-    <ExportAPI("InStr.Any")>
+    ''' <returns>
+    ''' 假若查找不到，则返回-1值，判断是否查找成功，可以使用 &lt;0 来完成，
+    ''' 因为是通过InStr来完成的，所以查找成功的时候，最小的值是1，
+    ''' 即字符串序列的第一个位置，也是元素0位置
+    ''' </returns>
     <Extension>
     Public Function InStrAny(text$, ParamArray find$()) As Integer
         For Each token As String In find

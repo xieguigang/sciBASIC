@@ -642,6 +642,7 @@
     <Compile Include="BarPlot\Data\BarPlotDataExtensions.vb" />
     <Compile Include="BarPlot\Histogram\HistogramPlot.vb" />
     <Compile Include="BarPlot\LevelBarplot.vb" />
+    <Compile Include="BarPlot\PlotAlignmentGroup.vb" />
     <Compile Include="BarPlot\RectangleStyles.vb" />
     <Compile Include="BarPlot\StackedBarPlot.vb" />
     <Compile Include="BarPlot\StyledBarplot.vb" />

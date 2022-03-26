@@ -900,7 +900,8 @@ Public Class PdfContents
     ''' <param name="PP">Paint operator</param>
     ''' <remarks>
     ''' <para>
-    ''' <a href="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#DrawHeart">For example of drawing heart see 3.10. Draw Heart</a>
+    ''' <a href="http://www.codeproject.com/Articles/570682/PDF-File-Writer-Csharp-Class-Library-Version#DrawHeart">
+    ''' For example of drawing heart see 3.10. Draw Heart</a>
     ''' </para>
     ''' </remarks>
     Public Sub DrawHeart(CenterLineTopX As Double, CenterLineTopY As Double, CenterLineBottomX As Double, CenterLineBottomY As Double, PP As PaintOp)

@@ -208,13 +208,13 @@ Namespace Graphic
             End If
         End Sub
 
-        Protected Sub DrawMainTitle(g As IGraphics, plotRegion As Rectangle)
+        Protected Sub DrawMainTitle(g As IGraphics, plotRegion As Rectangle, Optional offsetFactor As Double = 1.125)
             If Not main.StringEmpty Then
                 Dim fontOfTitle As Font = CSSFont.TryParse(theme.mainCSS).GDIObject(g.Dpi)
                 Dim titleSize As SizeF = g.MeasureString(main, fontOfTitle)
                 Dim position As New PointF With {
                     .X = plotRegion.X + (plotRegion.Width - titleSize.Width) / 2,
-                    .Y = plotRegion.Y - titleSize.Height * 1.125
+                    .Y = plotRegion.Y - titleSize.Height * offsetFactor
                 }
                 Dim color As Brush = Brushes.Black
 

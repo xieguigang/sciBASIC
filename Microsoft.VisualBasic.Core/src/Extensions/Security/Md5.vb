@@ -343,5 +343,17 @@ Namespace SecurityString
 
             Return (s2 << 16) Or s1
         End Function
+
+        ''' <summary>
+        ''' # Generate SHA1 checksum of a file
+        ''' </summary>
+        ''' <param name="filePath"></param>
+        ''' <returns></returns>
+        Public Function GetSha1Hash(filePath As String) As String
+            Using fs As FileStream = File.OpenRead(filePath)
+                Dim sha As SHA1 = New SHA1Managed()
+                Return BitConverter.ToString(sha.ComputeHash(fs)).Replace("-", "").ToLower
+            End Using
+        End Function
     End Module
 End Namespace

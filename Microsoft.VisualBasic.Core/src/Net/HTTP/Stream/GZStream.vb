@@ -139,7 +139,7 @@ Namespace Net.Http
         ''' <param name="stream"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function GZipStream(stream As Stream) As MemoryStream
+        Public Function GZipStream(stream As Stream, Optional noMagic As Boolean = False) As MemoryStream
             Dim ms As New MemoryStream()
 
             Using gz As New GZipStream(ms, CompressionMode.Compress)
@@ -150,7 +150,7 @@ Namespace Net.Http
             ' we create the data array here once the GZIP stream has been disposed
             Dim data = ms.ToArray()
             ms.Dispose()
-            ms = New MemoryStream(data)
+            ms = New MemoryStream(If(noMagic, data.Skip(2).ToArray, data))
 
             Return ms
         End Function
@@ -160,8 +160,9 @@ Namespace Net.Http
         ''' </summary>
         ''' <param name="stream"></param>
         ''' <returns></returns>
-        <Extension> Public Function GZipAsBase64(stream As Stream) As String
-            Dim bytes As Byte() = stream.GZipStream.ToArray
+        <Extension>
+        Public Function GZipAsBase64(stream As Stream, Optional noMagic As Boolean = False) As String
+            Dim bytes As Byte() = stream.GZipStream(noMagic).ToArray
             Dim s$ = Convert.ToBase64String(bytes)
             Return s
         End Function

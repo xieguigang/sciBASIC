@@ -82,7 +82,8 @@ Namespace Driver
         Public Function GetRegion() As GraphicsRegion
             Return New GraphicsRegion With {
                 .Size = size,
-                .Padding = padding
+                .Padding = padding,
+                .device = Me
             }
         End Function
 

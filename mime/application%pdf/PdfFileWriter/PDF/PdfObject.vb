@@ -1,75 +1,75 @@
 ﻿#Region "Microsoft.VisualBasic::e7bb3cdd6a48fbfc34f9c231cbb757e9, sciBASIC#\mime\application%pdf\PdfFileWriter\PDF\PdfObject.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 414
-    '    Code Lines: 183
-    ' Comment Lines: 136
-    '   Blank Lines: 95
-    '     File Size: 14.93 KB
+' Summaries:
 
 
-    ' Enum ResCode
-    ' 
-    '     ExtGState, Font, Length, OpContent, Pattern
-    '     Shading, XObject
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    ' Enum ObjectType
-    ' 
-    '     Dictionary, Other, Stream
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    ' Class PdfObject
-    ' 
-    '     Properties: Document, ScaleFactor
-    ' 
-    '     Constructor: (+2 Overloads) Sub New
-    ' 
-    '     Function: Adler32Checksum, BuildResourcesDictionary, CompareTo, CompressStream, Round
-    '               ToPt
-    ' 
-    '     Sub: ObjectValueAppend, ObjectValueFormat, WriteObjectToPdfFile
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 414
+'    Code Lines: 183
+' Comment Lines: 136
+'   Blank Lines: 95
+'     File Size: 14.93 KB
+
+
+' Enum ResCode
+' 
+'     ExtGState, Font, Length, OpContent, Pattern
+'     Shading, XObject
+' 
+'  
+' 
+' 
+' 
+' Enum ObjectType
+' 
+'     Dictionary, Other, Stream
+' 
+'  
+' 
+' 
+' 
+' Class PdfObject
+' 
+'     Properties: Document, ScaleFactor
+' 
+'     Constructor: (+2 Overloads) Sub New
+' 
+'     Function: Adler32Checksum, BuildResourcesDictionary, CompareTo, CompressStream, Round
+'               ToPt
+' 
+'     Sub: ObjectValueAppend, ObjectValueFormat, WriteObjectToPdfFile
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -98,35 +98,12 @@
 '
 '
 
-Imports System
-Imports System.Collections.Generic
 Imports System.IO
 Imports System.IO.Compression
 Imports System.Text
+Imports System.Threading
 Imports i32 = Microsoft.VisualBasic.Language.i32
 Imports stdNum = System.Math
-
-'
-' Resource code enumeration
-'
-
-Friend Enum ResCode
-    ' must be in this order
-    Font
-    Pattern
-    Shading
-    XObject
-    ExtGState
-    OpContent
-    Length
-End Enum
-
-Friend Enum ObjectType
-    Other
-    Dictionary
-    Stream
-End Enum
-
 
 ''' <summary>
 ''' PDF indirect object base class
@@ -135,44 +112,42 @@ End Enum
 ''' PDF indirect object base class.
 ''' User program cannot call it directly.
 ''' </remarks>
+Public Class PdfObject : Implements IComparable(Of PdfObject)
 
-Public Class PdfObject
-    Implements IComparable(Of PdfObject)
     ''' <summary>
     ''' PDF document object
     ''' </summary>
-
+    ''' <returns></returns>
+    Public Property Document As PdfDocument
     ''' <summary>
     ''' Scale factor
     ''' </summary>
+    ''' <returns></returns>
     ''' <remarks>Convert from user unit of measure to points.</remarks>
-    Private _Document As PdfDocument, _ScaleFactor As Double
-
-    Public Property Document As PdfDocument
-        Get
-            Return _Document
-        End Get
-        Friend Set(value As PdfDocument)
-            _Document = value
-        End Set
-    End Property
-
     Public Property ScaleFactor As Double
-        Get
-            Return _ScaleFactor
-        End Get
-        Friend Set(value As Double)
-            _ScaleFactor = value
-        End Set
-    End Property
 
-    Friend ObjectNumber As Integer      ' PDF indirect object number
-    Friend ResourceCode As String       ' resource code automatically generated by the program
-    Friend FilePosition As Long     ' PDF file position for this indirect object
-    Friend ObjectType As ObjectType         ' object type
+    ''' <summary>
+    ''' PDF indirect object number
+    ''' </summary>
+    Friend ObjectNumber As Integer
+    ''' <summary>
+    ''' resource code automatically generated by the program
+    ''' </summary>
+    Friend ResourceCode As String
+    ''' <summary>
+    ''' PDF file position for this indirect object
+    ''' </summary>
+    Friend FilePosition As Long
+    ''' <summary>
+    ''' object type
+    ''' </summary>
+    Friend ObjectType As ObjectType
     Friend ObjectValueList As List(Of Byte)
     Friend ObjectValueArray As Byte()
-    Friend Dictionary As PdfDictionary          ' indirect objects dictionary or stream dictionary
+    ''' <summary>
+    ''' indirect objects dictionary or stream dictionary
+    ''' </summary>
+    Friend Dictionary As PdfDictionary
     Friend NoCompression As Boolean
     Private Shared ResCodeStr As String() = {"/Font <<", "/Pattern <<", "/Shading <<", "/XObject <<", "/ExtGState <<", "/Properties <<"}
     Friend Shared ResCodeLetter As String = "FPSXGO"
@@ -180,11 +155,13 @@ Public Class PdfObject
     Friend Sub New()
     End Sub
 
-    
-    ' Constructor for objects with /Type in their dictionary
-    ' Note: access is internal. Used by derived classes only
-    
-
+    ''' <summary>
+    ''' Constructor for objects with /Type in their dictionary
+    ''' Note: access is internal. Used by derived classes only
+    ''' </summary>
+    ''' <param name="Document"></param>
+    ''' <param name="Type"></param>
+    ''' <param name="PdfDictType"></param>
     Friend Sub New(Document As PdfDocument, Optional Type As ObjectType = ObjectType.Dictionary, Optional PdfDictType As String = Nothing)    ' object type (i.e. /Catalog, /Pages, /Font, /XObject, /OCG)
         ' save link to main document object
         Me.Document = Document
@@ -215,7 +192,6 @@ Public Class PdfObject
         Return
     End Sub
 
-    
     ''' <summary>
     ''' Compare the resource codes of two PDF objects.
     ''' </summary>
@@ -224,30 +200,40 @@ Public Class PdfObject
     ''' <remarks>
     ''' Used by PdfContents to maintain resource objects in sorted order.
     ''' </remarks>
-    
-    Public Function CompareTo(Other As PdfObject) As Integer Implements IComparable(Of PdfObject).CompareTo       ' the second object
+    Public Function CompareTo(Other As PdfObject) As Integer Implements IComparable(Of PdfObject).CompareTo
+        ' the second object
         Return String.Compare(ResourceCode, Other.ResourceCode)
     End Function
 
-    
-    ' Convert user coordinates or line width to points.
-    ' The result is rounded to 6 decimal places and converted to Single.
-    
-
-    Friend Function ToPt(Value As Double) As Single       ' coordinate value in user unit of measure
+    ''' <summary>
+    ''' Convert user coordinates or line width to points.
+    ''' The result is rounded to 6 decimal places and converted to Single.
+    ''' </summary>
+    ''' <param name="Value">
+    ''' coordinate value in user unit of measure
+    ''' </param>
+    ''' <returns></returns>
+    Friend Function ToPt(Value As Double) As Single
         Dim ReturnValue = ScaleFactor * Value
-        If stdNum.Abs(ReturnValue) < 0.0001 Then ReturnValue = 0
-        Return ReturnValue
+
+        If stdNum.Abs(ReturnValue) < 0.0001 Then
+            Return 0
+        Else
+            Return ReturnValue
+        End If
     End Function
 
-    
-    ' Round unscaled numbers.
-    ' The value is rounded to 6 decimal places and converted to Single
-    
-
-    Friend Function Round(Value As Double) As Single      ' a number to be saved in contents
-        If stdNum.Abs(Value) < 0.0001 Then Value = 0
-        Return Value
+    ''' <summary>
+    ''' Round unscaled numbers.
+    ''' </summary>
+    ''' <param name="Value">a number to be saved in contents</param>
+    ''' <returns>The value is rounded to 6 decimal places and converted to Single</returns>
+    Friend Function Round(Value As Double) As Single
+        If stdNum.Abs(Value) < 0.0001 Then
+            Return 0
+        Else
+            Return Value
+        End If
     End Function
 
     Friend Sub ObjectValueAppend(Str As String)
@@ -255,8 +241,6 @@ Public Class PdfObject
         For Each Chr As Char In Str
             ObjectValueList.Add(Microsoft.VisualBasic.AscW(Chr))
         Next
-
-        Return
     End Sub
 
     Friend Sub ObjectValueFormat(FormatStr As String, ParamArray List As Object())
@@ -267,19 +251,18 @@ Public Class PdfObject
         For Each Chr As Char In Str
             ObjectValueList.Add(Microsoft.VisualBasic.AscW(Chr))
         Next
-
-        Return
     End Sub
 
-    
-    ' Convert resource dictionary to one String.
-    ' This method is called at the last step of document creation
-    ' from within PdfDocument.CreateFile(FileName).
-    ' it is relevant to page contents, X objects and tiled pattern
-    ' Return value is resource dictionary string.
-    
-
-    Friend Function BuildResourcesDictionary(ResObjects As List(Of PdfObject), AddProcSet As Boolean) As String     ' list of resource objects for this contents
+    ''' <summary>
+    ''' Convert resource dictionary to one String.
+    ''' This method is called at the last step of document creation
+    ''' from within PdfDocument.CreateFile(FileName).
+    ''' it is relevant to page contents, X objects and tiled pattern
+    ''' </summary>
+    ''' <param name="ResObjects">list of resource objects for this contents</param>
+    ''' <param name="AddProcSet"></param>
+    ''' <returns>Return value is resource dictionary string.</returns>
+    Friend Function BuildResourcesDictionary(ResObjects As List(Of PdfObject), AddProcSet As Boolean) As String
         ' for page contents we need /ProcSet 
         ' resource object list is empty
         ' if there are no resources an empty dictionary must be returned
@@ -324,13 +307,12 @@ Public Class PdfObject
         Return Resources.ToString()
     End Function
 
-    
-    ' Write object to PDF file
-    ' Called by PdfDocument.CreateFile(FileName) method
-    ' to output one indirect PDF object.
-    ' It is a virtual method. Derived classes can overwrite it.
-    
-
+    ''' <summary>
+    ''' Write object to PDF file
+    ''' Called by PdfDocument.CreateFile(FileName) method
+    ''' to output one indirect PDF object.
+    ''' It is a virtual method. Derived classes can overwrite it.
+    ''' </summary>
     Friend Overridable Sub WriteObjectToPdfFile()
         ' save file position for this object
         FilePosition = Document.PdfFile.BaseStream.Position
@@ -389,13 +371,13 @@ Public Class PdfObject
         Dictionary = Nothing
         ObjectValueList = Nothing
         ObjectValueArray = Nothing
-        Return
     End Sub
 
-    
-    ' Compress byte array
-    
-
+    ''' <summary>
+    ''' Compress byte array
+    ''' </summary>
+    ''' <param name="InputBuf"></param>
+    ''' <returns></returns>
     Friend Function CompressStream(InputBuf As Byte()) As Byte()
         ' input length
         Dim InputLen = InputBuf.Length
@@ -438,9 +420,9 @@ Public Class PdfObject
 
         ' ZLib checksum is Adler32 write it big endian order, high byte first
         OutputLen += 2
-        OutputBuf(stdNum.Min(Threading.Interlocked.Increment(OutputLen), OutputLen - 1)) = CByte(ReadAdler32 >> 24)
-        OutputBuf(stdNum.Min(Threading.Interlocked.Increment(OutputLen), OutputLen - 1)) = CByte(ReadAdler32 >> 16)
-        OutputBuf(stdNum.Min(Threading.Interlocked.Increment(OutputLen), OutputLen - 1)) = CByte(ReadAdler32 >> 8)
+        OutputBuf(stdNum.Min(Interlocked.Increment(OutputLen), OutputLen - 1)) = CByte(ReadAdler32 >> 24)
+        OutputBuf(stdNum.Min(Interlocked.Increment(OutputLen), OutputLen - 1)) = CByte(ReadAdler32 >> 16)
+        OutputBuf(stdNum.Min(Interlocked.Increment(OutputLen), OutputLen - 1)) = CByte(ReadAdler32 >> 8)
         OutputBuf(OutputLen) = CByte(ReadAdler32)
 
         ' update dictionary
@@ -450,10 +432,11 @@ Public Class PdfObject
         Return OutputBuf
     End Function
 
-    '
-    ' Accumulate Adler Checksum
-    '
-
+    ''' <summary>
+    ''' Accumulate Adler Checksum
+    ''' </summary>
+    ''' <param name="Buffer"></param>
+    ''' <returns></returns>
     Private Function Adler32Checksum(Buffer As Byte()) As UInteger
         Const Adler32Base As UInteger = 65521
 
@@ -475,7 +458,7 @@ Public Class PdfObject
             Dim n = If(Len < 5552, Len, 5552)
             Len -= n
 
-            While Threading.Interlocked.Decrement(n) >= 0
+            While Interlocked.Decrement(n) >= 0
                 AdlerLow += Buffer(++Pos)
                 AdlerHigh += AdlerLow
             End While

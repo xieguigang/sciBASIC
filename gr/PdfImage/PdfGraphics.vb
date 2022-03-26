@@ -1,67 +1,67 @@
 ﻿#Region "Microsoft.VisualBasic::19af1414df2a8edcae60007102fec41d, sciBASIC#\gr\PdfImage\PdfGraphics.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 956
-    '    Code Lines: 728
-    ' Comment Lines: 6
-    '   Blank Lines: 222
-    '     File Size: 40.73 KB
+' Summaries:
 
 
-    ' Class PdfGraphics
-    ' 
-    '     Properties: CompositingMode, CompositingQuality, InterpolationMode, IsClipEmpty, IsVisibleClipEmpty
-    '                 PageScale, PageUnit, PixelOffsetMode, RenderingOrigin, SmoothingMode
-    '                 TextContrast, TextRenderingHint
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: (+3 Overloads) BeginContainer, GetContextInfo, GetNearestColor, (+8 Overloads) IsVisible, Save
-    ' 
-    '     Sub: AddMetafileComment, Clear, (+4 Overloads) CopyFromScreen, Dispose, (+4 Overloads) DrawArc
-    '          (+3 Overloads) DrawBezier, (+2 Overloads) DrawBeziers, DrawCircle, (+4 Overloads) DrawClosedCurve, (+7 Overloads) DrawCurve
-    '          (+4 Overloads) DrawEllipse, (+2 Overloads) DrawIcon, DrawIconUnstretched, (+30 Overloads) DrawImage, (+4 Overloads) DrawImageUnscaled
-    '          DrawImageUnscaledAndClipped, (+4 Overloads) DrawLine, (+2 Overloads) DrawLines, DrawPath, (+4 Overloads) DrawPie
-    '          (+2 Overloads) DrawPolygon, (+4 Overloads) DrawRectangle, (+2 Overloads) DrawRectangles, (+6 Overloads) DrawString, EndContainer
-    '          (+36 Overloads) EnumerateMetafile, (+2 Overloads) ExcludeClip, (+6 Overloads) FillClosedCurve, (+4 Overloads) FillEllipse, FillPath
-    '          (+3 Overloads) FillPie, (+4 Overloads) FillPolygon, (+4 Overloads) FillRectangle, FillRegion, (+2 Overloads) Flush
-    '          (+3 Overloads) IntersectClip, (+2 Overloads) MultiplyTransform, ResetClip, ResetTransform, (+2 Overloads) RotateTransform
-    '          (+2 Overloads) ScaleTransform, (+9 Overloads) SetClip, (+2 Overloads) TransformPoints, (+2 Overloads) TranslateClip, (+2 Overloads) TranslateTransform
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 956
+'    Code Lines: 728
+' Comment Lines: 6
+'   Blank Lines: 222
+'     File Size: 40.73 KB
+
+
+' Class PdfGraphics
+' 
+'     Properties: CompositingMode, CompositingQuality, InterpolationMode, IsClipEmpty, IsVisibleClipEmpty
+'                 PageScale, PageUnit, PixelOffsetMode, RenderingOrigin, SmoothingMode
+'                 TextContrast, TextRenderingHint
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: (+3 Overloads) BeginContainer, GetContextInfo, GetNearestColor, (+8 Overloads) IsVisible, Save
+' 
+'     Sub: AddMetafileComment, Clear, (+4 Overloads) CopyFromScreen, Dispose, (+4 Overloads) DrawArc
+'          (+3 Overloads) DrawBezier, (+2 Overloads) DrawBeziers, DrawCircle, (+4 Overloads) DrawClosedCurve, (+7 Overloads) DrawCurve
+'          (+4 Overloads) DrawEllipse, (+2 Overloads) DrawIcon, DrawIconUnstretched, (+30 Overloads) DrawImage, (+4 Overloads) DrawImageUnscaled
+'          DrawImageUnscaledAndClipped, (+4 Overloads) DrawLine, (+2 Overloads) DrawLines, DrawPath, (+4 Overloads) DrawPie
+'          (+2 Overloads) DrawPolygon, (+4 Overloads) DrawRectangle, (+2 Overloads) DrawRectangles, (+6 Overloads) DrawString, EndContainer
+'          (+36 Overloads) EnumerateMetafile, (+2 Overloads) ExcludeClip, (+6 Overloads) FillClosedCurve, (+4 Overloads) FillEllipse, FillPath
+'          (+3 Overloads) FillPie, (+4 Overloads) FillPolygon, (+4 Overloads) FillRectangle, FillRegion, (+2 Overloads) Flush
+'          (+3 Overloads) IntersectClip, (+2 Overloads) MultiplyTransform, ResetClip, ResetTransform, (+2 Overloads) RotateTransform
+'          (+2 Overloads) ScaleTransform, (+9 Overloads) SetClip, (+2 Overloads) TransformPoints, (+2 Overloads) TranslateClip, (+2 Overloads) TranslateTransform
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -70,6 +70,7 @@ Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 Imports System.IO
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.application.pdf
@@ -506,7 +507,15 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
     End Sub
 
     Public Overrides Sub DrawPath(pen As Pen, path As GraphicsPath)
-        Throw New NotImplementedException()
+        Dim allPoints = path.PathPoints
+
+        g.SetColorNonStroking(pen.Color)
+
+        For Each line In allPoints.CreateSlideWindows(winSize:=2)
+            Call DrawLine(pen, line.First, line.Last)
+        Next
+
+        g.SetPaintOp(PaintOp.Stroke)
     End Sub
 
     Public Overrides Sub DrawPie(pen As Pen, rect As Rectangle, startAngle As Single, sweepAngle As Single)
@@ -554,11 +563,15 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
     End Sub
 
     Public Overrides Sub DrawRectangles(pen As Pen, rects() As RectangleF)
-        Throw New NotImplementedException()
+        For Each rect In rects
+            Call DrawRectangle(pen, rect)
+        Next
     End Sub
 
     Public Overrides Sub DrawRectangles(pen As Pen, rects() As Rectangle)
-        Throw New NotImplementedException()
+        For Each rect In rects
+            Call DrawRectangle(pen, rect)
+        Next
     End Sub
 
     Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, point As PointF)
@@ -790,7 +803,16 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
     End Sub
 
     Public Overrides Sub FillPath(brush As Brush, path As GraphicsPath)
-        Throw New NotImplementedException()
+        Dim allPoints = path.PathPoints
+        Dim pen As New Pen(brush, 1)
+
+        g.SetColorNonStroking(DirectCast(brush, SolidBrush).Color)
+
+        For Each line In allPoints.CreateSlideWindows(winSize:=2)
+            Call DrawLine(pen, line.First, line.Last)
+        Next
+
+        g.SetPaintOp(PaintOp.Fill)
     End Sub
 
     Public Overrides Sub FillPie(brush As Brush, rect As Rectangle, startAngle As Single, sweepAngle As Single)
@@ -830,9 +852,13 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
     End Sub
 
     Public Overrides Sub FillRectangle(brush As Brush, rect As RectangleF)
+        Dim y As Double = Me.height - rect.Y
+
+        Call g.MoveTo(rect.X, y)
+
         ' change nonstroking (fill) color to yellow
         Call g.SetColorNonStroking(DirectCast(brush, SolidBrush).Color)
-        Call g.DrawRectangle(rect.X, Me.height - rect.Y, rect.Width, rect.Height, PaintOp.Fill)
+        Call g.DrawRectangle(rect.X, y, rect.Width, rect.Height, PaintOp.Fill)
     End Sub
 
     Public Overrides Sub FillRectangle(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer)

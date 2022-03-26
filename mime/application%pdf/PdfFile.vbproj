@@ -158,6 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PdfFileWriter\Flags.vb" />
+    <Compile Include="PdfFileWriter\ObjectCode.vb" />
     <Compile Include="Properties\AssemblyInfo.vb" />
     <Compile Include="PdfReader\Tokenizer\TokenReal.vb" />
     <Compile Include="PdfReader\Tokenizer\TokenString.vb" />
@@ -281,6 +282,7 @@
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
     <Import Include="System.Collections" />
     <Import Include="System.Collections.Generic" />
   </ItemGroup>

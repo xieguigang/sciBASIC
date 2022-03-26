@@ -138,6 +138,11 @@ Namespace Graphic.Canvas
         Public Property tagCSS As String = CSSFont.PlotLabelNormal
         Public Property tagColor As String = "black"
         ''' <summary>
+        ''' 在图表上的数字标签的格式
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property tagFormat As String = "F2"
+        ''' <summary>
         ''' 数据点与数据标签之间的连接线的样式
         ''' </summary>
         ''' <returns></returns>
@@ -166,6 +171,7 @@ Namespace Graphic.Canvas
         ''' </summary>
         ''' <returns></returns>
         Public Property yAxisLayout As YAxisLayoutStyles = YAxisLayoutStyles.Left
+        Public Property yAxislabelPosition As YlabelPosition = YlabelPosition.LeftCenter
 
         ''' <summary>
         ''' 坐标轴上的标签的字体样式
