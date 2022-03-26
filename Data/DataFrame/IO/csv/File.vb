@@ -761,6 +761,15 @@ B21,B22,B23,...
             Return FileLoader.Load(path.MapNetFile.ReadAllLines(encoding), trimBlanks, skipWhile)
         End Function
 
+        Protected Shared Function loads(file As Stream, encoding As Encoding, trimBlanks As Boolean, skipWhile As NamedValue(Of Func(Of String, Boolean))) As List(Of RowObject)
+            Using reader As New StreamReader(file, encoding)
+                Dim allLines As String() = reader.IteratesStream.ToArray
+                Dim data = FileLoader.Load(allLines, trimBlanks, skipWhile)
+
+                Return data
+            End Using
+        End Function
+
         ''' <summary>
         ''' 对目标文本内容字符串进行解析，得到csv文件对象数据模型
         ''' </summary>

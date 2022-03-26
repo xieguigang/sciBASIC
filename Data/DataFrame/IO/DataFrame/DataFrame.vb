@@ -1,72 +1,73 @@
 ﻿#Region "Microsoft.VisualBasic::f00cb68c82f76e1d69a1adadeaafcfe4, sciBASIC#\Data\DataFrame\IO\DataFrame\DataFrame.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 657
-    '    Code Lines: 421
-    ' Comment Lines: 135
-    '   Blank Lines: 101
-    '     File Size: 26.93 KB
+' Summaries:
 
 
-    '     Class DataFrame
-    ' 
-    '         Properties: Depth, FieldCount, Headers, HeadTitles, IDataRecord_Item
-    '                     IsClosed, Item, RecordsAffected, SchemaOridinal
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    ' 
-    '         Function: [Select], __createTableVector, AddAttribute, ColumnRows, CreateDataSource
-    '                   CreateObject, createObjectInternal, csv, EnumerateData, EnumerateRowObjects
-    '                   Generate, GetBoolean, GetByte, GetBytes, GetChar
-    '                   GetChars, getColumnList, GetData, GetDataTypeName, GetDateTime
-    '                   GetDecimal, GetDouble, GetEnumerator2, GetFieldType, GetFloat
-    '                   GetGuid, GetInt16, GetInt32, GetInt64, GetName
-    '                   GetOrdinal, GetOrdinalSchema, GetSchemaTable, GetString, GetValue
-    '                   GetValueLambda, GetValues, IDataRecord_GetValue, IsDBNull, Load
-    '                   LoadDataSet, MeasureTypeSchema, Parse, Read, reviewColumnHeader
-    '                   ToString
-    ' 
-    '         Sub: ChangeMapping, Close, CopyFrom, (+2 Overloads) Dispose, Initialize
-    '              Reset
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 657
+'    Code Lines: 421
+' Comment Lines: 135
+'   Blank Lines: 101
+'     File Size: 26.93 KB
+
+
+'     Class DataFrame
+' 
+'         Properties: Depth, FieldCount, Headers, HeadTitles, IDataRecord_Item
+'                     IsClosed, Item, RecordsAffected, SchemaOridinal
+' 
+'         Constructor: (+3 Overloads) Sub New
+' 
+'         Function: [Select], __createTableVector, AddAttribute, ColumnRows, CreateDataSource
+'                   CreateObject, createObjectInternal, csv, EnumerateData, EnumerateRowObjects
+'                   Generate, GetBoolean, GetByte, GetBytes, GetChar
+'                   GetChars, getColumnList, GetData, GetDataTypeName, GetDateTime
+'                   GetDecimal, GetDouble, GetEnumerator2, GetFieldType, GetFloat
+'                   GetGuid, GetInt16, GetInt32, GetInt64, GetName
+'                   GetOrdinal, GetOrdinalSchema, GetSchemaTable, GetString, GetValue
+'                   GetValueLambda, GetValues, IDataRecord_GetValue, IsDBNull, Load
+'                   LoadDataSet, MeasureTypeSchema, Parse, Read, reviewColumnHeader
+'                   ToString
+' 
+'         Sub: ChangeMapping, Close, CopyFrom, (+2 Overloads) Dispose, Initialize
+'              Reset
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
@@ -156,9 +157,9 @@ Namespace IO
         ''' <remarks></remarks>
         Public Function CreateDataSource() As DynamicObjectLoader()
             Dim LQuery As DynamicObjectLoader() = LinqAPI.Exec(Of DynamicObjectLoader) _
- _
+                                                                                       _
             () <=
- _
+                 _
                 From i As Integer
                 In RowNumbers _
                     .Sequence _
@@ -341,6 +342,15 @@ Namespace IO
             Return CreateObject(file)
         End Function
 
+        Public Overloads Shared Function Load(stream As Stream, Optional encoding As Encoding = Nothing) As DataFrame
+            Dim file As New File With {
+                ._innerTable = File.loads(stream, encoding, trimBlanks:=False, skipWhile:=Nothing)
+            }
+            Dim table = CreateObject(file)
+
+            Return table
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function LoadDataSet(path$, Optional encoding As Encoding = Nothing) As IEnumerable(Of DataSet)
             Return DataSet.LoadDataSet(path, encoding:=encoding)
@@ -353,7 +363,7 @@ Namespace IO
 
         Private Shared Function getColumnList(table As IEnumerable(Of RowObject)) As List(Of String)
             Return LinqAPI.MakeList(Of String) _
- _
+                                               _
                 () <= From strValue As String
                       In table.First
                       Let s = reviewColumnHeader(strValue)
