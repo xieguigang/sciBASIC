@@ -226,7 +226,7 @@ Namespace Tcp
                 End If
             Next
 
-            While Not Me.disposedValue
+            While Not Me.disposedValue AndAlso App.Running
                 If _threadEndAccept Then
                     _threadEndAccept = False
 
