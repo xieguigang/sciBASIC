@@ -344,7 +344,7 @@ Namespace IO
 
         Public Overloads Shared Function Load(stream As Stream, Optional encoding As Encoding = Nothing) As DataFrame
             Dim file As New File With {
-                ._innerTable = File.loads(stream, encoding, trimBlanks:=False, skipWhile:=Nothing)
+                ._innerTable = File.loads(stream, If(encoding, Encoding.Default), trimBlanks:=False, skipWhile:=Nothing)
             }
             Dim table = CreateObject(file)
 
