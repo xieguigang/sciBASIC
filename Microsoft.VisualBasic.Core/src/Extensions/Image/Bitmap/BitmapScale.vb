@@ -252,7 +252,7 @@ Namespace Imaging.BitmapImage
                     For x As Integer = 0 To bitmapdata.Width - 1
                         Dim i As Integer = x * PixelSize
 
-                        If i < destPixels.Length Then
+                        If i + destPixels.Position < destPixels.Length Then
                             destPixels(i) = contrastLookup(destPixels(i))
                             destPixels(i + 1) = contrastLookup(destPixels(i + 1))
                             destPixels(i + 2) = contrastLookup(destPixels(i + 2))
