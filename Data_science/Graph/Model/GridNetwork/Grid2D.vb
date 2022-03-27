@@ -88,6 +88,13 @@ Public Class Grid(Of T)
         End Get
     End Property
 
+    Default Public ReadOnly Property GetPoint(x As Integer, y As Integer) As T
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return GetData(x, y)
+        End Get
+    End Property
+
     ''' <summary>
     ''' counts of all non-empty cell.
     ''' </summary>
