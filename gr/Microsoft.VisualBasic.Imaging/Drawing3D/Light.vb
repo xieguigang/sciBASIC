@@ -104,7 +104,8 @@ Namespace Drawing3D.Device
         ''' <param name="color"></param>
         ''' <param name="lightColor">光源的颜色，最常用的光源颜色为白色``<see cref="Color.White"/>``</param>
         ''' <returns></returns>
-        <Extension> Public Function Lighting(path As Path3D, lightAngle As Point3D, color As Color, colorDifference#, lightColor As Color) As Color
+        <Extension>
+        Public Function Lighting(path As Path3D, lightAngle As Point3D, color As Color, colorDifference#, lightColor As Color) As Color
             Return path.Points _
                 .ToArray _
                 .Lighting(lightAngle, color, colorDifference, lightColor)
@@ -119,7 +120,8 @@ Namespace Drawing3D.Device
         ''' <param name="colorDifference#"></param>
         ''' <param name="lightColor"></param>
         ''' <returns></returns>
-        <Extension> Public Function Lighting(vertices As Point3D(), lightAngle As Point3D, color As Color, colorDifference#, lightColor As Color) As Color
+        <Extension>
+        Public Function Lighting(vertices As Point3D(), lightAngle As Point3D, color As Color, colorDifference#, lightColor As Color) As Color
             Dim p1 As Point3D = vertices(1)
             Dim p2 As Point3D = vertices(0)
             Dim i As Double = p2.X - p1.X
