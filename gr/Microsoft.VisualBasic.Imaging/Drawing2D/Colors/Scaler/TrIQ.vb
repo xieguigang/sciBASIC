@@ -131,6 +131,15 @@ Namespace Drawing2D.Colors.Scaler
             Return range
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="q"></param>
+        ''' <param name="eps"></param>
+        ''' <returns>
+        ''' the upper bound raw value of the threshold
+        ''' </returns>
         <Extension>
         Public Function FindThreshold(data As IEnumerable(Of DataBinBox(Of Double)), q As Double, Optional eps As Double = 0.1) As Double
             Dim sample As DataBinBox(Of Double)() = data.OrderBy(Function(b) b.Boundary.Min).ToArray
