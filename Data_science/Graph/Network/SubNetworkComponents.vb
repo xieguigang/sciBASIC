@@ -68,7 +68,7 @@ Namespace Network
 
         Sub New(network As NetworkGraph(Of Node, U), Optional singleNodeAsGraph As Boolean = False)
             Me.network = network
-            Me.edges = network.edges.Values.AsList
+            Me.edges = network.graphEdges.AsList
             Me.components = IteratesSubNetworks.ToArray
 
             If singleNodeAsGraph Then

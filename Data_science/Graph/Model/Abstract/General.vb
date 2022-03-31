@@ -58,10 +58,6 @@ Imports TV = Microsoft.VisualBasic.Data.GraphTheory.Vertex
 
 Public Class VertexEdge : Inherits Edge(Of TV)
 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Shared Function EdgeKey(U As TV, V As TV) As String
-        Return $"[{U.ID}]{U.label} -> [{V.ID}]{V.label}"
-    End Function
 End Class
 
 ''' <summary>
@@ -75,13 +71,7 @@ Public Class Graph : Inherits Graph(Of TV, VertexEdge, Graph)
         If Not (vertices.ContainsKey(u) OrElse vertices.ContainsKey(v)) Then
             Return Nothing
         Else
-            Dim key As String = VertexEdge.EdgeKey(vertices(u), vertices(v))
-
-            If edges.ContainsKey(key) Then
-                Return edges(key)
-            Else
-                Return Nothing
-            End If
+            Return QueryEdge(u, v)
         End If
     End Function
 
