@@ -94,7 +94,7 @@ Public Module Tabular
             br.ReadLine()
 
             For row = 0 To data.dataset_size - 1
-                Dim strs As String() = br.ReadLine().Split(",")
+                Dim strs As String() = br.ReadLine().Split(","c)
 
                 For col = 0 To data.feature_dim - 1
 
@@ -143,7 +143,7 @@ Public Module Tabular
             br.ReadLine()
 
             For row = 0 To data.dataset_size - 1
-                Dim strs As String() = br.ReadLine().Split(",")
+                Dim strs As String() = br.ReadLine().Split(","c)
                 data.label(row) = Single.Parse(strs(strs.Length - 1))
 
                 For col = 0 To data.feature_dim - 1
@@ -238,7 +238,7 @@ Public Module Tabular
         Arrays.fill(cur_missing_index, 0)
 
         For row = 0 To data.dataset_size - 1
-            Dim strs As String() = br.ReadLine().Split(",")
+            Dim strs As String() = br.ReadLine().Split(","c)
             data.label(row) = Single.Parse(strs(strs.Length - 1))
 
             For col = 0 To data.feature_dim - 1

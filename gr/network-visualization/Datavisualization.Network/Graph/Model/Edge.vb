@@ -179,6 +179,11 @@ Namespace Graph
             Call Me.New(Nothing, Nothing, Nothing, Nothing)
         End Sub
 
+        ''' <summary>
+        ''' find the partner node of the given <paramref name="current"/> node
+        ''' </summary>
+        ''' <param name="current"></param>
+        ''' <returns></returns>
         Public Function Other(current As Node) As Node
             If U Is current Then
                 Return V

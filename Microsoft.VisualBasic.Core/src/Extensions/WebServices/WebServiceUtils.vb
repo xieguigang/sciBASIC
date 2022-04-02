@@ -268,17 +268,13 @@ Public Module WebServiceUtils
     ''' 在服务器端对URL进行解码还原
     ''' </summary>
     ''' <param name="s"></param>
-    ''' <param name="encoding"></param>
     ''' <returns></returns>
-    <Extension> <ExportAPI("URL.Decode")>
-    Public Function UrlDecode(s$, Optional encoding As Encoding = Nothing) As String
+    <Extension>
+    Public Function UrlDecode(s As String) As String
         If s.StringEmpty Then
             Return ""
-        End If
-        If encoding IsNot Nothing Then
-            Return HttpUtility.UrlDecode(s, encoding)
         Else
-            Return HttpUtility.UrlDecode(s)
+            Return WebUtility.UrlDecode(s)
         End If
     End Function
 
@@ -293,25 +289,18 @@ Public Module WebServiceUtils
     ''' 进行url编码，将特殊字符进行转码
     ''' </summary>
     ''' <param name="s"></param>
-    ''' <param name="encoding"></param>
     ''' <param name="jswhitespace">
     ''' 空格符号默认被转义为``+``, 如果这个参数为真的话,则空格会被转义为``%20``
     ''' </param>
     ''' <returns></returns>
     ''' <remarks>
-    ''' A extension method wrapper for <see cref="HttpUtility.UrlEncode"/>
+    ''' A extension method wrapper for <see cref="WebUtility.UrlEncode"/>
     ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("URL.Encode")>
     <Extension>
-    Public Function UrlEncode(s As String, Optional encoding As Encoding = Nothing, Optional jswhitespace As Boolean = False) As String
-        Dim component As String
-
-        If encoding IsNot Nothing Then
-            component = HttpUtility.UrlEncode(s, encoding)
-        Else
-            component = HttpUtility.UrlEncode(s)
-        End If
+    Public Function UrlEncode(s As String, Optional jswhitespace As Boolean = False) As String
+        Dim component As String = WebUtility.UrlEncode(s)
 
         If jswhitespace Then
             ' 20190517 因为+号被转义为%2b,所以在这里可以直接替换
@@ -346,9 +335,9 @@ Public Module WebServiceUtils
 
         If idx <> -1 Then
             s2 = s.Substring(0, idx)
-            s2 = HttpUtility.UrlEncode(s2) & s.Substring(idx)
+            s2 = WebUtility.UrlEncode(s2) & s.Substring(idx)
         Else
-            s2 = HttpUtility.UrlEncode(s)
+            s2 = WebUtility.UrlEncode(s)
         End If
 
         Return s2
@@ -670,7 +659,7 @@ Public Module WebServiceUtils
 
         For Each postValue As KeyValuePair(Of String, String()) In data
             postString += postValue.Value _
-                .Select(Function(v) postValue.Key & "=" & HttpUtility.UrlEncode(v))
+                .Select(Function(v) postValue.Key & "=" & WebUtility.UrlEncode(v))
         Next
 
         Dim postData As String = postString.JoinBy("&")

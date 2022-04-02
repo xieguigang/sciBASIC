@@ -67,6 +67,10 @@ Public Class BTreeCluster : Implements INamedValue
     ''' <returns></returns>
     Public Property members As String()
 
+    Public Overrides Function ToString() As String
+        Return $"[{uuid}] ({members.Length} members) {members.JoinBy(", ")}"
+    End Function
+
     Public Shared Function GetClusters(btree As AVLTree(Of String, String)) As BTreeCluster
         Return GetClusters(btree.root)
     End Function

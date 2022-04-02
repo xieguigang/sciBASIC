@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
-    <TargetFramework>net5.0</TargetFramework>
+	  <TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.cs</DefaultItemExcludes>
     <AssemblyName>Microsoft.VisualBasic.MachineLearning.XGBoost</AssemblyName>
     <RootNamespace>Microsoft.VisualBasic.MachineLearning.XGBoost</RootNamespace>

@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<RootNamespace>Microsoft.VisualBasic.DataMining.UMAP</RootNamespace>
-		<TargetFramework>net5.0</TargetFramework>
+		<TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
 		<AssemblyName>Microsoft.VisualBasic.DataMining.UMAP</AssemblyName>
 		<Authors>xie.guigang@live.com</Authors>
 		<Company>sciBASIC.NET</Company>
