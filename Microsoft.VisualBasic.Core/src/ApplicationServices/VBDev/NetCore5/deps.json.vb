@@ -131,7 +131,7 @@ Namespace ApplicationServices.Development.NetCore5
         ''' </summary>
         ''' <param name="dllFile">full path</param>
         ''' <returns></returns>
-        Public Shared Function LoadAssemblyOrCache(dllFile As String) As Assembly
+        Public Shared Function LoadAssemblyOrCache(dllFile As String, Optional strict As Boolean = True) As Assembly
             Dim dllFullName As String = dllFile.FileName
             Dim result As New Value(Of Assembly)
 
@@ -144,8 +144,18 @@ Namespace ApplicationServices.Development.NetCore5
                               Select assembly
 
             If (result = queryLoaded.FirstOrDefault) Is Nothing Then
-                ' not loaded yet
-                Return Assembly.LoadFrom(dllFile.GetFullPath)
+                Try
+                    ' not loaded yet
+                    Return Assembly.LoadFrom(dllFile.GetFullPath)
+                Catch ex As Exception
+                    ex = New InvalidProgramException($"error while loading dll file: " & dllFile, ex)
+
+                    If strict Then
+                        Throw ex
+                    Else
+                        Return App.LogException(ex)
+                    End If
+                End Try
             Else
                 Return result
             End If
