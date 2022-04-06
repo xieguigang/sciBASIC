@@ -64,7 +64,7 @@ Imports OpenXML = Microsoft.VisualBasic.MIME.Office.Excel.Model.Xmlns
 Namespace XML.docProps
 
     <XmlRoot("coreProperties", [Namespace]:=OpenXML.cp)>
-    Public Class core : Inherits IXml
+    Public Class core : Implements IXml
 
         <XmlNamespaceDeclarations()>
         Public xmlns As XmlSerializerNamespaces
@@ -106,11 +106,11 @@ Namespace XML.docProps
         <XmlElement([Namespace]:=OpenXML.cp)>
         Public Property contentStatus As String
 
-        Protected Overrides Function filePath() As String
+        Protected Function filePath() As String Implements IXml.filePath
             Return "docProps/core.xml"
         End Function
 
-        Protected Overrides Function toXml() As String
+        Protected Function toXml() As String Implements IXml.toXml
             Return Me.GetXml
         End Function
     End Class

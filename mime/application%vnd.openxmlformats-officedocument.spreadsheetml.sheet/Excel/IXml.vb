@@ -52,19 +52,20 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Text
 
-Public MustInherit Class IXml
+Public Interface IXml
 
-    Protected MustOverride Function filePath() As String
-    Protected MustOverride Function toXml() As String
+    Function filePath() As String
+    Function toXml() As String
 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Overrides Function ToString() As String
-        Return filePath()
-    End Function
+End Interface
 
-    Public Function WriteXml(dir$) As Boolean
-        Dim path$ = dir & "/" & filePath()
-        Dim xml$ = toXml()
+Module XMLExtensions
+
+    <Extension>
+    Public Function WriteXml(xmlObj As IXml, dir$) As Boolean
+        Dim path$ = dir & "/" & xmlObj.filePath()
+        Dim xml$ = xmlObj.ToXML()
+
         Return xml.SaveTo(path, TextEncodings.UTF8WithoutBOM)
     End Function
-End Class
+End Module

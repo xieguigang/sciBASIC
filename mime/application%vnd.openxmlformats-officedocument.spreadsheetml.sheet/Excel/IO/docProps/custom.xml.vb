@@ -65,7 +65,7 @@ Imports OpenXML = Microsoft.VisualBasic.MIME.Office.Excel.Model.Xmlns
 Namespace XML.docProps
 
     <XmlRoot("Properties", [Namespace]:="http://schemas.openxmlformats.org/officeDocument/2006/custom-properties")>
-    Public Class custom : Inherits IXml
+    Public Class custom : Implements IXml
 
         <XmlElement("property")>
         Public Property properties As [property]()
@@ -78,11 +78,11 @@ Namespace XML.docProps
             xmlns.Add("vt", OpenXML.vt)
         End Sub
 
-        Protected Overrides Function filePath() As String
+        Protected Function filePath() As String Implements IXml.filePath
             Return "docProps/custom.xml"
         End Function
 
-        Protected Overrides Function toXml() As String
+        Protected Function toXml() As String Implements IXml.toXml
             Throw New NotImplementedException()
         End Function
     End Class
