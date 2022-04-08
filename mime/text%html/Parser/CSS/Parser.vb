@@ -72,6 +72,15 @@ Namespace Language.CSS
     ''' </remarks>
     Public Module CssParser
 
+        <Extension>
+        Public Function IsNullOrEmpty(css As CSSFile) As Boolean
+            If css Is Nothing Then
+                Return True
+            Else
+                Return css.Selectors.IsNullOrEmpty
+            End If
+        End Function
+
         ''' <summary>
         ''' 创建元素选择器表达式
         ''' </summary>

@@ -8,7 +8,7 @@
 		<Company>sciBASIC.NET</Company>
 		<Version>5.0.1.2389</Version>
 
-		<AssemblyVersion>5.33.*</AssemblyVersion>
+		<AssemblyVersion>5.33.69.2558</AssemblyVersion>
 		<Deterministic>false</Deterministic>
 		<RuntimeIdentifiers>win7-x64;win7-x86;win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
 		<Copyright>GPL3</Copyright>
@@ -20,7 +20,7 @@
 		<Configurations>Debug;Release;Rsharp_app_release;LipidSearch;PlantMAT;mzkit;NPSearch</Configurations>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-		<Description>The core runtime module of sciBASIC# scientific computing project.</Description>
+		<Description>sciBASIC#: Microsoft VisualBasic for Scientific Computing</Description>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

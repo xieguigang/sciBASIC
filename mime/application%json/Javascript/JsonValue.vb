@@ -74,6 +74,16 @@ Namespace Javascript
             End Get
         End Property
 
+        Public ReadOnly Property UnderlyingType As Type
+            Get
+                If value Is Nothing Then
+                    Return GetType(Object)
+                Else
+                    Return value.GetType
+                End If
+            End Get
+        End Property
+
         Public Sub New()
         End Sub
 

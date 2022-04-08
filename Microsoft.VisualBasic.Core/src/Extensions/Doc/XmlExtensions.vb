@@ -259,7 +259,9 @@ Public Module XmlExtensions
         Dim serializer As New XmlSerializer(type)
         ' The XmlTextWriter takes a stream And encoding
         ' as one of its constructors
-        Dim xtWriter As New XmlTextWriter(out, encoding.CodePage)
+        Dim xtWriter As New XmlTextWriter(out, encoding.CodePage) With {
+            .Indentation = 3
+        }
 
         Call serializer.Serialize(xtWriter, obj)
         Call xtWriter.Flush()

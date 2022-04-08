@@ -1,16 +1,28 @@
-﻿Imports Microsoft.VisualBasic.Text.Xml
+﻿Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Text.Xml
+Imports Microsoft.VisualBasic.Text.Xml.OpenXml
 
 Namespace XML._rels
 
-    Public Class rels : Inherits OpenXml.rels
-        Implements IXml
+    Public Class rels : Implements IXml
+
+        Public Property document As OpenXml.rels
+
+        Public Property Target(Id As String) As Relationship
+            Get
+                Return _document(Id)
+            End Get
+            Set(value As Relationship)
+                _document(Id) = value
+            End Set
+        End Property
 
         Private Function filePath() As String Implements IXml.filePath
             Return "_rels/.rels"
         End Function
 
         Private Function toXml() As String Implements IXml.toXml
-            Return Me.GetXml
+            Return document.GetXml
         End Function
 
         Public Overrides Function ToString() As String
