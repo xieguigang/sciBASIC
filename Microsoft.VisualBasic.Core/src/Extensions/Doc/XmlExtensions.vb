@@ -72,6 +72,7 @@ Imports Microsoft.VisualBasic.Text.Xml
 Imports Microsoft.VisualBasic.Text.Xml.Linq
 
 <Package("Doc.Xml", Description:="Tools for read and write sbml, KEGG document, etc, xml based documents...")>
+<HideModuleName>
 Public Module XmlExtensions
 
     Public ReadOnly Property XmlParser As New [Default](Of IObjectBuilder)(AddressOf LoadFromXml)
@@ -102,11 +103,13 @@ Public Module XmlExtensions
     ''' <param name="encoding">Default is <see cref="UTF8"/> text encoding.</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function LoadXml(Of T)(xmlFile$,
-                                              Optional encoding As Encoding = Nothing,
-                                              Optional throwEx As Boolean = True,
-                                              Optional preprocess As Func(Of String, String) = Nothing,
-                                              Optional stripInvalidsCharacter As Boolean = False) As T
+    <Extension>
+    Public Function LoadXml(Of T)(xmlFile$,
+                                  Optional encoding As Encoding = Nothing,
+                                  Optional throwEx As Boolean = True,
+                                  Optional preprocess As Func(Of String, String) = Nothing,
+                                  Optional stripInvalidsCharacter As Boolean = False) As T
+
         Dim type As Type = GetType(T)
         Dim obj As Object = xmlFile.LoadXml(
             type, encoding, throwEx,
@@ -137,11 +140,12 @@ Public Module XmlExtensions
     ''' <remarks></remarks>
     ''' <param name="encoding">Default is <see cref="UTF8"/> text encoding.</param>
     <ExportAPI("LoadXml")>
-    <Extension> Public Function LoadXml(xmlFile$, type As Type,
-                                        Optional encoding As Encoding = Nothing,
-                                        Optional ThrowEx As Boolean = True,
-                                        Optional preprocess As Func(Of String, String) = Nothing,
-                                        Optional stripInvalidsCharacter As Boolean = False) As Object
+    <Extension>
+    Public Function LoadXml(xmlFile$, type As Type,
+                            Optional encoding As Encoding = Nothing,
+                            Optional ThrowEx As Boolean = True,
+                            Optional preprocess As Func(Of String, String) = Nothing,
+                            Optional stripInvalidsCharacter As Boolean = False) As Object
 
         If Not xmlFile.FileExists(ZERO_Nonexists:=True) Then
             Dim exMsg$ = $"{xmlFile.ToFileURL} is not exists on your file system or it is ZERO length content!"
@@ -198,10 +202,11 @@ Public Module XmlExtensions
     ''' <remarks></remarks>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function GetXml(Of T)(
-                                    obj As T,
-                       Optional ThrowEx As Boolean = True,
-                       Optional xmlEncoding As XmlEncodings = XmlEncodings.UTF16) As String
+    <Extension>
+    Public Function GetXml(Of T)(
+                                 obj As T,
+                     Optional ThrowEx As Boolean = True,
+                     Optional xmlEncoding As XmlEncodings = XmlEncodings.UTF8) As String
 
         Return GetXml(obj, GetType(T), ThrowEx, xmlEncoding)
     End Function
@@ -210,7 +215,7 @@ Public Module XmlExtensions
                         obj As Object,
                        type As Type,
            Optional throwEx As Boolean = True,
-           Optional xmlEncoding As XmlEncodings = XmlEncodings.UTF16) As String
+           Optional xmlEncoding As XmlEncodings = XmlEncodings.UTF8) As String
 
         Try
 
@@ -260,7 +265,8 @@ Public Module XmlExtensions
         ' The XmlTextWriter takes a stream And encoding
         ' as one of its constructors
         Dim xtWriter As New XmlTextWriter(out, encoding.CodePage) With {
-            .Indentation = 3
+            .Indentation = 3,
+            .Formatting = Formatting.Indented
         }
 
         Call serializer.Serialize(xtWriter, obj)
@@ -280,7 +286,7 @@ Public Module XmlExtensions
                                     obj As T,
                                 saveXml As String,
                        Optional throwEx As Boolean = True,
-                       Optional encoding As Encodings = Encodings.UTF16,
+                       Optional encoding As Encodings = Encodings.UTF8,
     <CallerMemberName> Optional caller As String = "") As Boolean
         Try
             Return obj _
