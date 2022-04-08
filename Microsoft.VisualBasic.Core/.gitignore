@@ -20,3 +20,8 @@ obj/
 .vs/Core/DesignTimeBuild/.dtbcache.v2
 
 Apps
+*.vsidx
+*.bin
+*.v2
+*.v1
+*.v2
