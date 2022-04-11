@@ -91,6 +91,12 @@ Namespace KdTree
                 .FindNeighbors(k)
         End Function
 
+        ''' <summary>
+        ''' the output keeps the same order as the given input <paramref name="data"/>
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="k"></param>
+        ''' <returns></returns>
         <Extension>
         Public Iterator Function FindNeighbors(data As IEnumerable(Of TagVector), Optional k As Integer = 30) As IEnumerable(Of (size As Integer, indices As Integer(), weights As Double()))
             Dim allData As TagVector() = data.ToArray
@@ -133,6 +139,7 @@ Namespace KdTree
 
         Dim index As Integer
         Dim vector As Double()
+        Dim tag As String
 
         Public ReadOnly Property size As Integer
             Get

@@ -142,16 +142,23 @@ Namespace SecurityString
         ''' in Java wrong). 
         ''' Essentially, though, you'll want to do something like this:
         '''
+        ''' ```
         ''' Long a = md5[0] * 256 * md5[1] + 256 * 256 * md5[2] + 256 * 256 * 256 * md5[3];
         ''' Long b = md5[4] * 256 * md5[5] + 256 * 256 * md5[6] + 256 * 256 * 256 * md5[7];
         ''' Long result = a ^ b;
+        ''' ```
         ''' 
         ''' Note I have made no attempt To deal With endianness. If you just care about a consistent hash value, 
         ''' though, endianness should Not matter.
         ''' </remarks>
-        <ExportAPI("As.Long")> <Extension>
+        <ExportAPI("As.Long")>
+        <Extension>
         Public Function ToLong(bytes As Byte()) As Long
-            Dim md5 As Long() = bytes.Select(Function(x) CLng(x)).ToArray
+            Dim md5 As Long() = (From chunk As Byte()
+                                 In bytes.Split(4)
+                                 Let i32 As Integer = BitConverter.ToInt32(chunk, Scan0)
+                                 Select CLng(i32)).ToArray
+
             Dim a As Long = md5(0) * 256 * md5(1) + 256 * 256 * md5(2) + 256 * 256 * 256 * md5(3)
             Dim b As Long = md5(4) * 256 * md5(5) + 256 * 256 * md5(6) + 256 * 256 * 256 * md5(7)
             Dim result As Long = a Xor b
