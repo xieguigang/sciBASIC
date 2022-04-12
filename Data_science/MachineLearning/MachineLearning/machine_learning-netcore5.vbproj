@@ -15,7 +15,7 @@
 		<Platforms>AnyCPU;x64</Platforms>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit</Configurations>
+		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;mzkit_win32</Configurations>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -47,6 +47,10 @@
 	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|AnyCPU'">
+	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
+	</PropertyGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|AnyCPU'">
 	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
 	</PropertyGroup>
@@ -72,6 +76,18 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
+	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+	  <Optimize>false</Optimize>
+	  <DebugSymbols>true</DebugSymbols>
+	  <DebugType>full</DebugType>
+	  <DefineDebug>false</DefineDebug>
+	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+	  <OutputPath>../../../../../\R-sharp\App\</OutputPath>
+	  <DefineTrace>true</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|x64'">
 	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <Optimize>false</Optimize>

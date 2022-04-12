@@ -1,0 +1,113 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Microsoft.VisualBasic.Data.visualize.Network.Canvas</RootNamespace>
+	  <TargetFrameworks>net6.0-windows;net5.0-windows;net48</TargetFrameworks>
+    <AssemblyName>Microsoft.VisualBasic.Data.visualize.Network.Canvas</AssemblyName>
+   
+    <Platforms>AnyCPU;x64</Platforms>
+    <Configurations>Debug;Release;Rsharp_app_release;mzkit</Configurations>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+	  <AssemblyVersion>2.33.*</AssemblyVersion>
+	  <Deterministic>false</Deterministic>
+	  <RuntimeIdentifiers>win7-x64;win7-x86;win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
+	  <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+	  <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+	  <StartupObject></StartupObject>
+	  <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  <UseWindowsForms>true</UseWindowsForms> 
+	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <Copyright>GPL3</Copyright>
+	  <PackageLicenseExpression>GPL3</PackageLicenseExpression>
+
+	  <PackageIconUrl />
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineConstants>netcore5=1</DefineConstants>
+    <DocumentationFile>Rstudio.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineConstants>netcore5=1</DefineConstants>
+    <DocumentationFile>Rstudio.xml</DocumentationFile>
+    <OutputPath>D:\GCModeller\src\R-sharp\App\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+    <OutputPath>D:\GCModeller\src\R-sharp\App\</OutputPath>
+    <DocumentationFile>Rstudio.xml</DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DefineDebug>false</DefineDebug>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>Rstudio.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
+    <DocumentationFile>Rstudio.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|AnyCPU'">
+    <DocumentationFile>Rstudio.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
+    <DocumentationFile>Rstudio.xml</DocumentationFile>
+    <OutputPath>../../App/</OutputPath>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|x64'">
+    <DocumentationFile>Rstudio.xml</DocumentationFile>
+    <OutputPath>D:\mzkit\Rscript\Library\mzkit_app\assembly\</OutputPath>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Resources.Extensions" Version="6.0.0" />
+    <PackageReference Include="System.Runtime" Version="4.3.1" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<Import Include="System.Data" />
+		<Import Include="System.Drawing" />
+		<Import Include="System.Windows.Forms" />
+		<Import Include="System.Windows.Forms.Design" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+	  <ProjectReference Include="..\..\avi\AVI.NET5.vbproj" />
+	  <ProjectReference Include="..\..\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj" />
+	  <ProjectReference Include="..\Datavisualization.Network\network_graph-netcore5.vbproj" />
+	  <ProjectReference Include="..\Network.IO.Extensions\network_io-netcore5.vbproj" />
+	</ItemGroup>
+
+
+
+</Project>

@@ -5,7 +5,7 @@
 	  <TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
     <AssemblyName>Microsoft.VisualBasic.Data.GraphQuery</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
-    <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;PlantMAT;mzkit;NPSearch</Configurations>
+    <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;PlantMAT;mzkit;NPSearch;mzkit_win32</Configurations>
     <PackageId>Microsoft.VisualBasic.Data.GraphQuery</PackageId>
     <Version>5.0.123</Version>
     <Description>GraphQuery is a query language and execution engine tied to any backend service. It is back-end language independent.</Description>
@@ -65,6 +65,19 @@
     <OutputPath>D:\GCModeller\src\R-sharp\App\</OutputPath>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|x64'">
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <BaseAddress>4194304</BaseAddress>
+    <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+    <DefineTrace>true</DefineTrace>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphQuery.xml</DocumentationFile>
+    <OutputPath>D:\GCModeller\src\R-sharp\App\</OutputPath>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|x64'">
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
@@ -113,6 +126,10 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphQuery.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|AnyCPU'">
     <DocumentationFile>Microsoft.VisualBasic.Data.GraphQuery.xml</DocumentationFile>
   </PropertyGroup>
 

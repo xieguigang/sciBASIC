@@ -1,14 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <RootNamespace>Microsoft.VisualBasic.Data.IO</RootNamespace>
 	  <TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
     <AssemblyName>Microsoft.VisualBasic.Data.BinaryData</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
-    <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;PlantMAT;mzkit;NPSearch</Configurations>
+    <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;PlantMAT;mzkit;NPSearch;mzkit_win32</Configurations>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -29,6 +31,16 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>Microsoft.VisualBasic.Data.BinaryData.xml</DocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineConstants>netcore5=1</DefineConstants>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|AnyCPU'">
     <DocumentationFile>Microsoft.VisualBasic.Data.BinaryData.xml</DocumentationFile>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DebugSymbols>true</DebugSymbols>
@@ -90,6 +102,12 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <DocumentationFile>Microsoft.VisualBasic.Data.BinaryData.xml</DocumentationFile>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|x64'">
+    <DocumentationFile>Microsoft.VisualBasic.Data.BinaryData.xml</DocumentationFile>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
@@ -153,6 +171,114 @@
     <DefineTrace>true</DefineTrace>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net6.0|x64'">
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DefineConstants>netcore5=1</DefineConstants>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net6.0|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PlantMAT|net6.0|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net6.0|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net6.0|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net6.0|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|x64'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|x64'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net6.0|x64'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0|x64'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PlantMAT|net6.0|x64'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net6.0|x64'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net6.0|x64'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Properties\**" />
+    <EmbeddedResource Remove="Properties\**" />
+    <None Remove="Properties\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />

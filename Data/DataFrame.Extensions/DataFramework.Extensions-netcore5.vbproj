@@ -5,7 +5,7 @@
 	  <TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
     <AssemblyName>Microsoft.VisualBasic.Data.Framework.Extensions</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
-    <Configurations>Debug;Release;LipidSearch;Rsharp_app_release</Configurations>
+    <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit_win32</Configurations>
     <PackageId>Microsoft.VisualBasic.Data.Framework.Extensions</PackageId>
     <Authors>xieguigang</Authors>
     <Version>5.0.2323</Version>
@@ -37,6 +37,10 @@
     <DocumentationFile>Microsoft.VisualBasic.Data.Csv.Extensions.xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|AnyCPU'">
+    <DocumentationFile>Microsoft.VisualBasic.Data.Csv.Extensions.xml</DocumentationFile>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|AnyCPU'">
     <DocumentationFile>Microsoft.VisualBasic.Data.Csv.Extensions.xml</DocumentationFile>
   </PropertyGroup>
@@ -46,6 +50,18 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
+    <DocumentationFile>Microsoft.VisualBasic.Data.Csv.Extensions.xml</DocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+    <OutputPath>D:\GCModeller\src\R-sharp\App\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|x64'">
     <DocumentationFile>Microsoft.VisualBasic.Data.Csv.Extensions.xml</DocumentationFile>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>

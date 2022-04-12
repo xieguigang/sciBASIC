@@ -5,10 +5,11 @@
 	  <TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
     <AssemblyName>Microsoft.VisualBasic.DataMining.DynamicProgramming</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
-    <Configurations>Debug;Release;Rsharp_app_release</Configurations>
+    <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32</Configurations>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -23,6 +24,10 @@
     <DocumentationFile>Microsoft.VisualBasic.DataMining.DynamicProgramming.xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|AnyCPU'">
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.DynamicProgramming.xml</DocumentationFile>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <DocumentationFile>Microsoft.VisualBasic.DataMining.DynamicProgramming.xml</DocumentationFile>
   </PropertyGroup>
@@ -33,6 +38,19 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
     <DocumentationFile>Microsoft.VisualBasic.DataMining.DynamicProgramming.xml</DocumentationFile>
+    <DefineConstants>netcore5=1</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|x64'">
+    <DocumentationFile>Microsoft.VisualBasic.DataMining.DynamicProgramming.xml</DocumentationFile>
+    <DefineConstants>netcore5=1</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
     <DefineConstants>netcore5=1</DefineConstants>
   </PropertyGroup>
 

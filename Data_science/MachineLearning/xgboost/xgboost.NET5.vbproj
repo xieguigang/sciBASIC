@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<RootNamespace>Microsoft.VisualBasic.Data.visualize</RootNamespace>
+		<RootNamespace>Microsoft.VisualBasic.MachineLearning.XGBoost</RootNamespace>
 		<TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
-		<AssemblyName>Microsoft.VisualBasic.Data.visualize</AssemblyName>
+		<AssemblyName>Microsoft.VisualBasic.MachineLearning.XGBoost</AssemblyName>
 		<Authors>xie.guigang@live.com</Authors>
 		<Company>sciBASIC.NET</Company>
 		<Version>5.0.1.2389</Version>
@@ -15,7 +15,7 @@
 		<Platforms>AnyCPU;x64</Platforms>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit_win32</Configurations>
+		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit</Configurations>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -23,12 +23,12 @@
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <DebugSymbols>true</DebugSymbols>
 	  <DebugType>full</DebugType>
-	  <DocumentationFile>Microsoft.VisualBasic.Data.visualize.xml</DocumentationFile>
+	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
 	  <DefineConstants>netcore5=1</DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-	  <DocumentationFile>Microsoft.VisualBasic.Data.visualize.xml</DocumentationFile>
+	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
 	  <DefineConstants>netcore5=1</DefineConstants>
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <DebugSymbols>true</DebugSymbols>
@@ -36,23 +36,33 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-	  <DocumentationFile>Microsoft.VisualBasic.Data.visualize.xml</DocumentationFile>
+	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|AnyCPU'">
+	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
-	  <DocumentationFile>Microsoft.VisualBasic.Data.visualize.xml</DocumentationFile>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|AnyCPU'">
-	  <DocumentationFile>Microsoft.VisualBasic.Data.visualize.xml</DocumentationFile>
+	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|AnyCPU'">
-	  <DocumentationFile>Microsoft.VisualBasic.Data.visualize.xml</DocumentationFile>
+	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-	  <DocumentationFile>Microsoft.VisualBasic.Data.visualize.xml</DocumentationFile>
+	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+	  <Optimize>false</Optimize>
+	  <DebugSymbols>true</DebugSymbols>
+	  <DebugType>full</DebugType>
+	  <DefineDebug>false</DefineDebug>
+	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|x64'">
+	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <Optimize>false</Optimize>
 	  <DebugSymbols>true</DebugSymbols>
@@ -62,29 +72,19 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
-	  <DocumentationFile>Microsoft.VisualBasic.Data.visualize.xml</DocumentationFile>
+	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <Optimize>false</Optimize>
 	  <DebugSymbols>true</DebugSymbols>
 	  <DebugType>full</DebugType>
 	  <DefineDebug>false</DefineDebug>
 	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-	  <OutputPath>D:\GCModeller\src\R-sharp\App\</OutputPath>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|x64'">
-	  <DocumentationFile>Microsoft.VisualBasic.Data.visualize.xml</DocumentationFile>
-	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
-	  <Optimize>false</Optimize>
-	  <DebugSymbols>true</DebugSymbols>
-	  <DebugType>full</DebugType>
-	  <DefineDebug>false</DefineDebug>
-	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-	  <OutputPath>D:\GCModeller\src\R-sharp\App\</OutputPath>
+	  <OutputPath>../../../../../\R-sharp\App\</OutputPath>
+	  <DefineTrace>true</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|x64'">
-	  <DocumentationFile>Microsoft.VisualBasic.Data.visualize.xml</DocumentationFile>
+	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <Optimize>false</Optimize>
 	  <DebugSymbols>true</DebugSymbols>
@@ -95,9 +95,15 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="Testing\**" />
-	  <EmbeddedResource Remove="Testing\**" />
-	  <None Remove="Testing\**" />
+	  <Compile Remove="NeuralNetwork\Demo\**" />
+	  <Compile Remove="QLearning\Maze-Q-Learning\**" />
+	  <Compile Remove="test\**" />
+	  <EmbeddedResource Remove="NeuralNetwork\Demo\**" />
+	  <EmbeddedResource Remove="QLearning\Maze-Q-Learning\**" />
+	  <EmbeddedResource Remove="test\**" />
+	  <None Remove="NeuralNetwork\Demo\**" />
+	  <None Remove="QLearning\Maze-Q-Learning\**" />
+	  <None Remove="test\**" />
 	  <None Include="..\..\..\LICENSE">
 	    <Pack>True</Pack>
 	    <PackagePath></PackagePath>
@@ -113,18 +119,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Data\DataFrame\dataframework-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\gr\network-visualization\Datavisualization.Network\network_graph-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\gr\network-visualization\Network.IO.Extensions\network_io-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\gr\physics\physics-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\DataMining\DataMining\DataMining.NET5.vbproj" />
-    <ProjectReference Include="..\..\DataMining\UMAP\UMAP.NET5.vbproj" />
-    <ProjectReference Include="..\..\Graph\graph-netcore5.vbproj" />
-    <ProjectReference Include="..\..\MachineLearning\MachineLearning\machine_learning-netcore5.vbproj" />
-    <ProjectReference Include="..\..\Mathematica\Math\DataFrame\dataframeUtils-netcore5.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
-    <ProjectReference Include="..\Plots\plots-netcore5.vbproj" />
   </ItemGroup>
 
 </Project>

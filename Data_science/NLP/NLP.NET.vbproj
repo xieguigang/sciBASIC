@@ -7,7 +7,7 @@
     <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.cs</DefaultItemExcludes>
     <AssemblyName>Microsoft.VisualBasic.Data.NLP</AssemblyName>
     <RootNamespace>Microsoft.VisualBasic.Data.NLP</RootNamespace>
-    <Configurations>Debug;Release;Rsharp_app_release</Configurations>
+    <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32</Configurations>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -19,6 +19,10 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
+    <DocumentationFile>Microsoft.VisualBasic.Data.NLP.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|AnyCPU'">
     <DocumentationFile>Microsoft.VisualBasic.Data.NLP.xml</DocumentationFile>
   </PropertyGroup>
 
@@ -34,6 +38,10 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
+    <DocumentationFile>Microsoft.VisualBasic.Data.NLP.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|x64'">
     <DocumentationFile>Microsoft.VisualBasic.Data.NLP.xml</DocumentationFile>
   </PropertyGroup>
 

@@ -17,7 +17,7 @@
 		<PackageIcon>logo-knot.png</PackageIcon>
 		<RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
 		<Platforms>AnyCPU;x64</Platforms>
-		<Configurations>Debug;Release;Rsharp_app_release;LipidSearch;PlantMAT;mzkit;NPSearch</Configurations>
+		<Configurations>Debug;Release;Rsharp_app_release;LipidSearch;PlantMAT;mzkit;NPSearch;mzkit_win32</Configurations>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<Description>sciBASIC#: Microsoft VisualBasic for Scientific Computing</Description>
@@ -67,6 +67,10 @@
 		<DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|AnyCPU'">
+	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
+	</PropertyGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|AnyCPU'">
 		<DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
 	</PropertyGroup>
@@ -111,6 +115,19 @@
 		<DefineDebug>false</DefineDebug>
 		<DefineTrace>true</DefineTrace>
 		<OutputPath>D:\GCModeller\src\R-sharp\App\</OutputPath>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|x64'">
+	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
+	  <DefineConstants>netcore5=1,UNIX=1,FRAMEWORD_CORE=1</DefineConstants>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+	  <Optimize>false</Optimize>
+	  <BaseAddress>4194304</BaseAddress>
+	  <DebugSymbols>true</DebugSymbols>
+	  <DebugType>full</DebugType>
+	  <DefineDebug>false</DefineDebug>
+	  <DefineTrace>true</DefineTrace>
+	  <OutputPath>D:\GCModeller\src\R-sharp\App\</OutputPath>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|x64'">

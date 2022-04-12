@@ -5,7 +5,7 @@
 		<TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
 		<AssemblyName>Microsoft.VisualBasic.Imaging</AssemblyName>
 		<Platforms>AnyCPU;x64</Platforms>
-		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;NPSearch</Configurations>
+		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;NPSearch;mzkit_win32</Configurations>
 
 		<GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
 		
@@ -47,6 +47,18 @@
 	  <OutputPath></OutputPath>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|x64'">
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+	  <Optimize>false</Optimize>
+	  <DebugSymbols>true</DebugSymbols>
+	  <DebugType>full</DebugType>
+	  <DefineDebug>false</DefineDebug>
+	  <DefineTrace>true</DefineTrace>
+	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+	  <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
+	  <OutputPath />
+	</PropertyGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NPSearch|x64'">
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <Optimize>false</Optimize>
@@ -80,6 +92,10 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
+	  <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|AnyCPU'">
 	  <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
 	</PropertyGroup>
 

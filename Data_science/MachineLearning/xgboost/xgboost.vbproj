@@ -13,7 +13,7 @@
     <PackageIcon>logo.png</PackageIcon>
     <PackageIconUrl />
     <Description>Extreme Gradient Boosting</Description>
-    <Configurations>Debug;Release;Rsharp_app_release</Configurations>
+    <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32</Configurations>
     <OptionStrict>Off</OptionStrict>
     <OptionExplicit>On</OptionExplicit>
   </PropertyGroup>
@@ -36,6 +36,13 @@
     <DocumentationFile>Microsoft.VisualBasic.MachineLearning.XGBoost.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <WarningsAsErrors></WarningsAsErrors>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|AnyCPU'">
+    <DocumentationFile>Microsoft.VisualBasic.MachineLearning.XGBoost.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <WarningsAsErrors />
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
@@ -66,6 +73,19 @@
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <WarningsAsErrors></WarningsAsErrors>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|x64'">
+    <DocumentationFile>Microsoft.VisualBasic.MachineLearning.XGBoost.xml</DocumentationFile>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <WarningsAsErrors />
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
