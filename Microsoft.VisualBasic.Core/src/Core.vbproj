@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<RootNamespace>Microsoft.VisualBasic</RootNamespace>
-		<TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
+		<TargetFrameworks>net6.0-windows;net6.0;net5.0;net48</TargetFrameworks>
 		<AssemblyName>Microsoft.VisualBasic.Runtime</AssemblyName>
 		<Authors>xie.guigang@live.com</Authors>
 		<Company>sciBASIC.NET</Company>
@@ -21,6 +21,7 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<Description>sciBASIC#: Microsoft VisualBasic for Scientific Computing</Description>
+		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -114,7 +115,7 @@
 		<DebugType>full</DebugType>
 		<DefineDebug>false</DefineDebug>
 		<DefineTrace>true</DefineTrace>
-		<OutputPath>D:\GCModeller\src\R-sharp\App\</OutputPath>
+		<OutputPath>../../../../\R-sharp\App\</OutputPath>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|x64'">
