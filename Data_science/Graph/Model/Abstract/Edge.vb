@@ -94,10 +94,14 @@ Public Class Edge(Of Vertex As V) : Implements INamedValue
         End Set
     End Property
 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Overrides Function GetHashCode() As Integer
-        Return ID.GetHashCode
-    End Function
+    ' 20220415 this function will makes the list removes 
+    ' in graph model too slow!
+    ' removes this method overrides
+    '
+    '<MethodImpl(MethodImplOptions.AggressiveInlining)>
+    'Public Overrides Function GetHashCode() As Integer
+    '    Return ID.GetHashCode
+    'End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String

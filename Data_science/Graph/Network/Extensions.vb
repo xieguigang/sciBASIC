@@ -96,14 +96,20 @@ Namespace Network
         ''' 枚举出所输入的网络数据模型之中的所有互不相连的子网络
         ''' </summary>
         ''' <param name="network"></param>
+        ''' <param name="edgeCut">
+        ''' all of the edge weight less than this 
+        ''' cutff value will be ignored.
+        ''' </param>
         ''' <returns></returns>
         <Extension>
         Public Function IteratesSubNetworks(Of Node As {New, Network.Node},
                                                U As {New, Edge(Of Node)},
-                                               Graph As {New, NetworkGraph(Of Node, U)}
-                                            )(network As NetworkGraph(Of Node, U), Optional singleNodeAsGraph As Boolean = False) As Graph()
+                                               Graph As {New, NetworkGraph(Of Node, U)})(
+                                               network As NetworkGraph(Of Node, U),
+                                               Optional singleNodeAsGraph As Boolean = False,
+                                               Optional edgeCut As Double = -1) As IEnumerable(Of Graph)
 
-            Return New SubNetworkComponents(Of Node, U, Graph)(network, singleNodeAsGraph).ToArray
+            Return New SubNetworkComponents(Of Node, U, Graph)(network, singleNodeAsGraph, edgeCut)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

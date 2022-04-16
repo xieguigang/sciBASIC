@@ -370,8 +370,8 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
     Public Function Delete(u$, v$) As G
         If linkIndex.ContainsKey(u) Then
             If linkIndex(u).ContainsKey(v) Then
-                Call linkIndex(u).Remove(v)
                 Call edges.Remove(linkIndex(u)(v))
+                Call linkIndex(u).Remove(v)
             End If
         End If
 

@@ -56,7 +56,6 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Text
 
 Public Module NetworkFileIO
 
@@ -71,10 +70,13 @@ Public Module NetworkFileIO
     ''' <remarks></remarks>
     ''' 
     <Extension>
-    Public Function Save(Of T_Node As Node, T_Edge As NetworkEdge)(network As Network(Of T_Node, T_Edge), output$, Optional encoding As Encoding = Nothing) As Boolean
+    Public Function Save(Of T_Node As Node, T_Edge As NetworkEdge)(network As Network(Of T_Node, T_Edge),
+                                                                   output$,
+                                                                   Optional encoding As Encoding = Nothing,
+                                                                   Optional silent As Boolean = True) As Boolean
         With output Or App.CurrentDirectory.AsDefault
-            Call network.nodes.SaveTo($"{ .ByRef}/nodes.csv", False, encoding Or UTF8)
-            Call network.edges.SaveTo($"{ .ByRef}/network-edges.csv", False, encoding Or UTF8)
+            Call network.nodes.SaveTo($"{ .ByRef}/nodes.csv", False, encoding Or UTF8, silent:=silent)
+            Call network.edges.SaveTo($"{ .ByRef}/network-edges.csv", False, encoding Or UTF8, silent:=silent)
             Call network.meta.GetJson(indent:=True).SaveTo($"{ .ByRef}/meta.json", UTF8)
         End With
 
@@ -82,10 +84,10 @@ Public Module NetworkFileIO
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function Load(Of T_Node As Node, T_Edge As NetworkEdge)(directory As String) As Network(Of T_Node, T_Edge)
+    Public Function Load(Of T_Node As Node, T_Edge As NetworkEdge)(directory As String, Optional silent As Boolean = True) As Network(Of T_Node, T_Edge)
         Return New Network(Of T_Node, T_Edge) With {
-            .edges = $"{directory}/network-edges.csv".LoadCsv(Of T_Edge),
-            .nodes = $"{directory}/nodes.csv".LoadCsv(Of T_Node),
+            .edges = $"{directory}/network-edges.csv".LoadCsv(Of T_Edge)(mute:=silent),
+            .nodes = $"{directory}/nodes.csv".LoadCsv(Of T_Node)(mute:=silent),
             .meta = loadMetaJson(directory)
         }
     End Function

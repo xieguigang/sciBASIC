@@ -1,64 +1,66 @@
 ﻿#Region "Microsoft.VisualBasic::c36fd81e68eb86ecbdb224cfd148ddc2, sciBASIC#\gr\network-visualization\Datavisualization.Network\Analysis\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 125
-    '    Code Lines: 87
-    ' Comment Lines: 19
-    '   Blank Lines: 19
-    '     File Size: 5.09 KB
+' Summaries:
 
 
-    '     Module Extensions
-    ' 
-    '         Function: (+3 Overloads) DecomposeGraph, DecomposeGraphByGroup, getEdgeSet, isTupleEdge
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 125
+'    Code Lines: 87
+' Comment Lines: 19
+'   Blank Lines: 19
+'     File Size: 5.09 KB
+
+
+'     Module Extensions
+' 
+'         Function: (+3 Overloads) DecomposeGraph, DecomposeGraphByGroup, getEdgeSet, isTupleEdge
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis.Model
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
 Imports Microsoft.VisualBasic.Linq
+Imports Node = Microsoft.VisualBasic.Data.visualize.Network.Graph.Node
 
 Namespace Analysis
 
@@ -174,5 +176,36 @@ Namespace Analysis
 
             Return components
         End Function
+
+        ''' <summary>
+        ''' 枚举出所输入的网络数据模型之中的所有互不相连的子网络
+        ''' </summary>
+        ''' <param name="network"></param>
+        ''' <param name="edgeCut">
+        ''' all of the edge weight less than this 
+        ''' cutff value will be ignored.
+        ''' </param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function IteratesSubNetworks(network As NetworkGraph,
+                                            Optional singleNodeAsGraph As Boolean = False,
+                                            Optional edgeCut As Double = -1,
+                                            Optional breakKeys As String() = Nothing) As IEnumerable(Of NetworkGraph)
+
+            Return New SubNetworkComponents(Of Node, Edge, NetworkGraph)(network, singleNodeAsGraph, edgeCut, breakKeys, New NodeReader)
+        End Function
     End Module
+
+    Friend Class NodeReader : Implements NodeMetaDataAccessor(Of Node)
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function hasMetadata(v As Node, key As String) As Boolean Implements NodeMetaDataAccessor(Of Node).hasMetadata
+            Return v.data.HasProperty(key)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function getMetadata(v As Node, key As String) As String Implements NodeMetaDataAccessor(Of Node).getMetadata
+            Return v.data(key)
+        End Function
+    End Class
 End Namespace

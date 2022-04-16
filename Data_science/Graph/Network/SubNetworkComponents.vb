@@ -59,6 +59,13 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Network
 
+    Public Interface NodeMetaDataAccessor(Of Node As {New, Network.Node})
+
+        Function hasMetadata(v As Node, key As String) As Boolean
+        Function getMetadata(v As Node, key As String) As String
+
+    End Interface
+
     Public Class SubNetworkComponents(Of Node As {New, Network.Node}, U As {New, Network.Edge(Of Node)}, Graph As {New, NetworkGraph(Of Node, U)})
         Implements IEnumerable(Of Graph)
 
@@ -67,34 +74,67 @@ Namespace Network
         ''' </summary>
         Dim edges As New Dictionary(Of String, NamedValue(Of U))
         Dim network As NetworkGraph(Of Node, U)
-        Dim components As Graph()
         Dim populatedNodes As New List(Of Node)
+        Dim singleNodeAsGraph As Boolean
 
-        Sub New(network As NetworkGraph(Of Node, U), Optional singleNodeAsGraph As Boolean = False)
+        Sub New(network As NetworkGraph(Of Node, U),
+                Optional singleNodeAsGraph As Boolean = False,
+                Optional edgeCut As Double = -1,
+                Optional breakKeys As String() = Nothing,
+                Optional vertex As NodeMetaDataAccessor(Of Node) = Nothing)
+
             Dim label As String
             Dim tag As NamedValue(Of U)
 
             For Each link As U In network.graphEdges
-                label = link.ID
-                tag = New NamedValue(Of U) With {.Name = label, .Value = link}
+                If Not breakKeys.IsNullOrEmpty Then
+                    Dim ignoreByKey As Boolean = False
 
-                Call edges.Add(label, tag)
+                    For Each key As String In breakKeys
+                        If vertex.hasMetadata(link.U, key) AndAlso vertex.hasMetadata(link.V, key) Then
+                            If vertex.getMetadata(link.U, key) <> vertex.getMetadata(link.V, key) Then
+                                ignoreByKey = True
+                                Exit For
+                            End If
+                        Else
+                            ' ignoreByKey = True
+                            ' Exit For 
+                            ' 
+                            ' 20220415 just ignores this missing data test result?
+                            ' do nothing
+                        End If
+                    Next
+
+                    If ignoreByKey Then
+                        Continue For
+                    End If
+                End If
+
+                If link.weight >= edgeCut Then
+                    label = link.ID
+                    tag = New NamedValue(Of U) With {.Name = label, .Value = link}
+
+                    ' only add edges that its edge weight
+                    ' greater than the given cutoff
+                    ' value.
+                    Call edges.Add(label, tag)
+                End If
             Next
 
             Me.network = network
-            Me.components = IteratesSubNetworks.ToArray
-
-            If singleNodeAsGraph Then
-                Me.components = Me.components _
-                    .JoinIterates(GetSingleNodeGraphs) _
-                    .ToArray
-            End If
+            Me.singleNodeAsGraph = singleNodeAsGraph
         End Sub
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of Graph) Implements IEnumerable(Of Graph).GetEnumerator
-            For Each g As Graph In components
+            For Each g As Graph In IteratesSubNetworks()
                 Yield g
             Next
+
+            If singleNodeAsGraph Then
+                For Each g As Graph In GetSingleNodeGraphs()
+                    Yield g
+                Next
+            End If
         End Function
 
         Private Iterator Function GetSingleNodeGraphs() As IEnumerable(Of Graph)
