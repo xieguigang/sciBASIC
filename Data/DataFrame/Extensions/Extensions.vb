@@ -657,7 +657,8 @@ Public Module Extensions
                                                       Optional KeyMap$ = Nothing,
                                                       Optional blank$ = "",
                                                       Optional reorderKeys As Integer = 0,
-                                                      Optional transpose As Boolean = False) As Boolean
+                                                      Optional transpose As Boolean = False,
+                                                      Optional silent As Boolean = True) As Boolean
 
         Dim modify As Dictionary(Of String, String) = Nothing
         Dim layout As New Dictionary(Of String, Integer) From {
@@ -672,13 +673,15 @@ Public Module Extensions
             layout.Add(KeyMap, -10000)
         End If
 
-        Return source.SaveTo(path, , encoding.CodePage, blank,, modify, reorderKeys, layout, transpose:=transpose)
+        Return source.SaveTo(path, , encoding.CodePage, blank,, modify, reorderKeys, layout, transpose:=transpose, silent:=silent)
     End Function
 
-    <Extension> Public Function SaveTo(Of T)(source As IEnumerable(Of T),
-                                             path As String,
-                                             encoding As Encodings,
-                                             Optional explicit As Boolean = False) As Boolean
+    <Extension>
+    Public Function SaveTo(Of T)(source As IEnumerable(Of T),
+                                 path As String,
+                                 encoding As Encodings,
+                                 Optional explicit As Boolean = False) As Boolean
+
         Return source.SaveTo(path, explicit, encoding.CodePage)
     End Function
 
