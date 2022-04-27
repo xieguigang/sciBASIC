@@ -31,24 +31,6 @@ Namespace Hypothesis.MantelTest
     Public Module stats
 
         ' 
-        '        fact: compute factorial 
-        '        input integer n
-        '        return n! as long
-        ' 
-
-        ' prototypes of functions 
-        Public Function fact(n As Integer) As Integer
-            Dim i As Integer
-            Dim ret = 1
-
-            For i = 1 To n
-                ret *= i
-            Next
-
-            Return ret
-        End Function
-
-        ' 
         '        somx:   compute simple sum of elements in a half-matrix
         '        input:  matrix pointer, size of the half-matrix
         '        return: sum as double
