@@ -5,16 +5,46 @@
     ''' </summary>
     Public Class Model
 
-        Public coef As Double ' reference statistic
-        Public proba As Double ' p-value
-        Public numrand As Integer ' number of randomizations
-        Public matsize As Integer ' size of matrices
-        Public numelt As Integer ' number of elements in the half-matrix without diagonal values
-        Public [partial] As Integer ' option partial 0|1
-        Public raw As Integer ' option raw 0|1
-        Public help As Integer ' option help 0|1
-        Public exact As Integer ' option exact permutation 0|1
-        Public licence As Integer ' option licence terms 0|1
+        ''' <summary>
+        ''' reference statistic
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property coef As Double
+        ''' <summary>
+        ''' p-value
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property proba As Double
+        ''' <summary>
+        ''' number of randomizations
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property numrand As Integer
+        ''' <summary>
+        ''' size of matrices
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property matsize As Integer
+        ''' <summary>
+        ''' number of elements in the half-matrix without diagonal values
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property numelt As Integer
+        ''' <summary>
+        ''' option partial 0|1
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property [partial] As Integer = True
+        ''' <summary>
+        ''' option raw 0|1
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property raw As Integer
+        ''' <summary>
+        ''' option exact permutation 0|1
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property exact As Integer ' 
 
     End Class
 End Namespace
