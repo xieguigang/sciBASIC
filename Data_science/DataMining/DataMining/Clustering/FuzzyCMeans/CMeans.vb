@@ -151,6 +151,14 @@ Namespace FuzzyCMeans
             Dim membership_diff As Double
             Dim [loop] As i32 = Scan0
 
+            For Each v As ClusterEntity In entities
+                For i As Integer = 0 To v.Length - 1
+                    If v(i).IsNaNImaginary Then
+                        v(i) = 0
+                    End If
+                Next
+            Next
+
             While True
                 centers = GetCenters(classCount, fuzzification, u, entities, width).ToArray
                 j_new = J(fuzzification, u, centers, entities)
@@ -286,8 +294,13 @@ Namespace FuzzyCMeans
             For Each i As Integer In Enumerable.Range(0, classCount)
                 Yield Enumerable.Range(0, width) _
                     .[Select](Function(x)
-                                  Dim sumAll = Aggregate j As Integer In entityIndex Let val As Double = (u(j)(i) ^ m) * entities(j)(x) Into Sum(val)
-                                  Dim bValue = Aggregate j As Integer In entityIndex Let val As Double = u(j)(i) ^ m Into Sum(val)
+                                  Dim prow As Double() = (From j As Integer In entityIndex Let xi = u(j)(i) ^ m Select If(xi.IsNaNImaginary, 0, xi)).ToArray
+                                  Dim v As Double() = (From j As Integer In entityIndex Let yi = entities(j)(x) Select If(yi.IsNaNImaginary, 0, yi)).ToArray
+                                  Dim sumAll = Aggregate j As Integer
+                                               In entityIndex
+                                               Let val As Double = prow(j)
+                                               Into Sum(val * v(j))
+                                  Dim bValue = prow.Sum
 
                                   Return sumAll / bValue
                               End Function) _

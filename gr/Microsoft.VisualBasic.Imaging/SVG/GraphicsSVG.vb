@@ -763,9 +763,19 @@ Namespace SVG
             Next
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="pen"></param>
+        ''' <param name="path"></param>
+        ''' <remarks>
+        ''' 20220421  因为在svg没有设置默认底色的情况下，fill默认是黑色的，这个就会导致
+        ''' path绘制的结果是黑色的多边形，所以在这个函数没有办法传递底色的情况下，自动添加
+        ''' transparent填充底色来解决这个填充色为黑色默认值的问题
+        ''' </remarks>
         Public Overrides Sub DrawPath(pen As Pen, path As GraphicsPath)
             Dim pathData As New path(path) With {
-                .style = New Stroke(pen).CSSValue
+                .style = $"fill: transparent; {New Stroke(pen).CSSValue}"
             }
             Call __svgData.Add(pathData)
         End Sub
@@ -857,7 +867,7 @@ Namespace SVG
             Next
         End Sub
 
-        Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, point As PointF)
+        Public Overloads Sub DrawString(s As String, font As Font, brush As Brush, x!, y!, angle!)
             ' 2019-04-18 似乎SVG的scale和gdi的scale有一些不一样
             ' 在这里存在一个位置偏移的bug
             ' 在这里尝试使用font size来修正
@@ -865,8 +875,8 @@ Namespace SVG
             Dim css As New CSSFont(font, fontSize)
             Dim text As New XML.text With {
                 .value = s,
-                .x = point.X + fontSize,
-                .y = point.Y + fontSize,
+                .x = x + fontSize,
+                .y = y + fontSize,
                 .style = css.CSSValue
             }
 
@@ -875,7 +885,15 @@ Namespace SVG
                 text.style &= color
             End If
 
+            If angle <> 0.0 Then
+                text.transform = $"rotate({angle} {x} {y})"
+            End If
+
             Call __svgData.Add(text)
+        End Sub
+
+        Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, point As PointF)
+            Call DrawString(s, font, brush, point.X, point.Y, angle:=0)
         End Sub
 
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, layoutRectangle As RectangleF)

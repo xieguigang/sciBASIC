@@ -9,6 +9,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports Microsoft.VisualBasic.Imaging.SVG
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
@@ -225,15 +226,19 @@ Namespace BarPlot
                         labPos = New Point(.Left + 3, .Top)
                         Call g.DrawString(ylabel, labelFont, Brushes.Black, labPos)
                     Case YlabelPosition.LeftCenter
-                        If TypeOf g Is Graphics2D Then
+                        If TypeOf g Is Graphics2D OrElse TypeOf g Is GraphicsSVG Then
                             Dim lx = (.Left - labSize.Height) / 4
                             Dim ly = .Top * 2.5 + (.Height - labSize.Width) / 2
 
                             labPos = New PointF(lx, ly)
 
-                            With New GraphicsText(DirectCast(g, Graphics2D).Graphics)
-                                Call .DrawString(ylabel, labelFont, Brushes.Black, labPos, -90)
-                            End With
+                            If TypeOf g Is Graphics2D Then
+                                With New GraphicsText(DirectCast(g, Graphics2D).Graphics)
+                                    Call .DrawString(ylabel, labelFont, Brushes.Black, labPos, -90)
+                                End With
+                            Else
+                                Call DirectCast(g, GraphicsSVG).DrawString(ylabel, labelFont, Brushes.Black, labPos.X, labPos.Y, -90)
+                            End If
                         Else
                             ' 20220324 pdf设备还没有找到办法兼容这个操作
                             ' 所以在这里正常绘制，不做角度旋转

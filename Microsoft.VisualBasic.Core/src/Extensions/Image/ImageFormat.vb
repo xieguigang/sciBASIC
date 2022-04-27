@@ -150,10 +150,12 @@ Namespace Imaging
         ''' <param name="path">path string</param>
         ''' <param name="format">Image formats enumeration.</param>
         ''' <returns></returns>
-        <Extension> Public Function SaveAs(res As Image,
-                                           path$,
-                                           Optional format As ImageFormats = ImageFormats.Png,
-                                           Optional autoDispose As Boolean = False) As Boolean
+        <Extension>
+        Public Function SaveAs(res As Image,
+                               path$,
+                               Optional format As ImageFormats = ImageFormats.Png,
+                               Optional autoDispose As Boolean = False) As Boolean
+
             If res Is Nothing Then
                 Return False
             End If

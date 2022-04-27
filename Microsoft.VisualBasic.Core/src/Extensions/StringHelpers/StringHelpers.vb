@@ -744,7 +744,8 @@ Public Module StringHelpers
     ''' <param name="fill"></param>
     ''' <returns></returns>
     <ExportAPI("FormatZero")>
-    <Extension> Public Function FormatZero(Of T As {IComparable(Of T)})(n As T, Optional fill$ = "00") As String
+    <Extension>
+    Public Function FormatZero(Of T As {IComparable(Of T)})(n As T, Optional fill$ = "00") As String
         Dim s As String = n.ToString
         Dim d As Integer = Len(fill) - Len(s)
 

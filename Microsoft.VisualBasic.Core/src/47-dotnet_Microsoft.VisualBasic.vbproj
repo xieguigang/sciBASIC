@@ -1686,6 +1686,7 @@
     <Compile Include="ComponentModel\System.Collections.Generic\JoinElement.vb" />
     <Compile Include="ComponentModel\ValuePair\IDataIndex.vb" />
     <Compile Include="Data\NamespaceDoc.vb" />
+    <Compile Include="Data\Repository\FNV1a.vb" />
     <Compile Include="Data\Repository\RepositoryFileSystem.vb" />
     <Compile Include="Data\Trinity\WordSimilarityIndex.vb" />
     <Compile Include="Extensions\Collection\CategoryOperations.vb" />
@@ -1921,6 +1922,7 @@
     <Compile Include="Text\Patterns\NamespaceDoc.vb" />
     <Compile Include="Text\Patterns\Validator\isIP.vb" />
     <Compile Include="Text\Patterns\Validator\Validator.vb" />
+    <Compile Include="Text\Xml\OpenXml\rels.vb" />
     <Compile Include="Text\Xml\XmlDocumentTree.vb" />
     <Compile Include="Text\Xml\Linq\Iterator\NodeIteratorImpl.vb" />
     <Compile Include="Text\Xml\Linq\NamespaceIgnorantXmlTextReader.vb" />

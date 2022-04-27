@@ -100,6 +100,20 @@ Namespace Math
         End Function
 
         ''' <summary>
+        ''' Returns a non-negative random <see cref="Integer"/>.
+        ''' </summary>
+        ''' <returns>
+        ''' A 32-bit signed integer that is greater than or equal to 0 and less than <see cref="Int32.MaxValue"/>.
+        ''' </returns>
+        Public Function NextNumber() As Integer
+            If seeds Is Nothing Then
+                Call SetSeed(Seed)
+            End If
+
+            Return seeds.Next
+        End Function
+
+        ''' <summary>
         ''' A number used to calculate a starting value for the pseudo-random number sequence.
         ''' If a negative number is specified, the absolute value of the number is used.
         ''' </summary>

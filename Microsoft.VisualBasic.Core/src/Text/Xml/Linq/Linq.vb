@@ -217,7 +217,8 @@ Namespace Text.Xml.Linq
                                                       Optional typeName$ = Nothing,
                                                       Optional xmlns$ = Nothing,
                                                       Optional forceLargeMode As Boolean = False,
-                                                      Optional elementFilter As Func(Of String, Boolean) = Nothing) As IEnumerable(Of T)
+                                                      Optional elementFilter As Func(Of String, Boolean) = Nothing,
+                                                      Optional ignoreError As Boolean = False) As IEnumerable(Of T)
 
             Dim nodeName$ = GetType(T).GetTypeName([default]:=typeName)
             Dim source As IEnumerable(Of String)
@@ -230,12 +231,12 @@ Namespace Text.Xml.Linq
                 source = InternalIterates(XML, nodeName, elementFilter)
             End If
 
-            Return source.NodeInstanceBuilder(Of T)(xmlns, xmlNode:=nodeName)
+            Return source.NodeInstanceBuilder(Of T)(xmlns, xmlNode:=nodeName, ignoreError:=ignoreError)
         End Function
 
         <Extension>
-        Public Function NodeStream(Of T As Class)(stream As IEnumerable(Of String), Optional typeName$ = Nothing, Optional xmlns$ = Nothing) As IEnumerable(Of T)
-            Return stream.NodeInstanceBuilder(Of T)(xmlns, xmlNode:=GetType(T).GetTypeName([default]:=typeName))
+        Public Function NodeStream(Of T As Class)(stream As IEnumerable(Of String), Optional typeName$ = Nothing, Optional xmlns$ = Nothing, Optional ignoreError As Boolean = False) As IEnumerable(Of T)
+            Return stream.NodeInstanceBuilder(Of T)(xmlns, xmlNode:=GetType(T).GetTypeName([default]:=typeName), ignoreError:=ignoreError)
         End Function
 
         ''' <summary>
@@ -247,14 +248,23 @@ Namespace Text.Xml.Linq
         ''' <param name="xmlNode$">文件之中的节点名称</param>
         ''' <returns></returns>
         <Extension>
-        Private Iterator Function NodeInstanceBuilder(Of T As Class)(nodes As IEnumerable(Of String), replaceXmlns$, xmlNode$) As IEnumerable(Of T)
+        Private Iterator Function NodeInstanceBuilder(Of T As Class)(nodes As IEnumerable(Of String), replaceXmlns$, xmlNode$, ignoreError As Boolean) As IEnumerable(Of T)
             Dim handle As New DeserializeHandler(Of T)(xmlNode) With {
                 .ReplaceXmlns = replaceXmlns
             }
             Dim element As T
 
             For Each xml As String In nodes
-                element = handle.LoadXml(xml)
+                Try
+                    element = handle.LoadXml(xml)
+                Catch ex As Exception
+                    If ignoreError Then
+                        Call $"find invalid xml text content! [{Mid(xml, 1, 32).TrimNewLine}...]".Warning
+                        Continue For
+                    Else
+                        Throw
+                    End If
+                End Try
 
                 ' populate a new element from the 
                 ' node Text
@@ -290,7 +300,8 @@ Namespace Text.Xml.Linq
                                                                 Optional typeName$ = Nothing,
                                                                 Optional xmlns$ = Nothing,
                                                                 Optional selector As Func(Of XElement, Boolean) = Nothing,
-                                                                Optional preprocess As Func(Of String, String) = Nothing) As IEnumerable(Of T)
+                                                                Optional preprocess As Func(Of String, String) = Nothing,
+                                                                Optional ignoreError As Boolean = False) As IEnumerable(Of T)
             With GetType(T).GetTypeName([default]:=typeName)
                 Return .UltraLargeXmlNodesIterator(path, selector) _
                     .Select(Function(node)
@@ -300,18 +311,20 @@ Namespace Text.Xml.Linq
                                     Return node.ToString
                                 End If
                             End Function) _
-                    .NodeInstanceBuilder(Of T)(xmlns, xmlNode:= .ByRef)
+                    .NodeInstanceBuilder(Of T)(xmlns, xmlNode:= .ByRef, ignoreError:=ignoreError)
             End With
         End Function
 
         Public Function LoadArrayNodes(Of T As Class)(documentText$,
                                                       Optional typeName$ = Nothing,
                                                       Optional xmlns$ = Nothing,
-                                                      Optional selector As Func(Of XElement, Boolean) = Nothing) As IEnumerable(Of T)
+                                                      Optional selector As Func(Of XElement, Boolean) = Nothing,
+                                                      Optional ignoreError As Boolean = False) As IEnumerable(Of T)
+
             With GetType(T).GetTypeName([default]:=typeName)
                 Return .UltraLargeXmlNodesIterator(New MemoryStream(Encoding.UTF8.GetBytes(documentText)), selector) _
                     .Select(Function(node) node.ToString) _
-                    .NodeInstanceBuilder(Of T)(xmlns, xmlNode:= .ByRef)
+                    .NodeInstanceBuilder(Of T)(xmlns, xmlNode:= .ByRef, ignoreError:=ignoreError)
             End With
         End Function
 

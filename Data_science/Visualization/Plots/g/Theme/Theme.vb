@@ -221,6 +221,10 @@ Namespace Graphic.Canvas
 
         Public Property gridStrokeX As String = Stroke.AxisGridStroke
         Public Property gridStrokeY As String = Stroke.AxisGridStroke
+        ''' <summary>
+        ''' the background of the charting plot region
+        ''' </summary>
+        ''' <returns></returns>
         Public Property gridFill As String = "white"
 
         Public Property htmlLabel As Boolean = False

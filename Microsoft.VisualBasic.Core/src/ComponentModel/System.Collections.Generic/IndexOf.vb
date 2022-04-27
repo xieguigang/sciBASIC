@@ -115,8 +115,8 @@ Namespace ComponentModel.Collection
             End If
 
             For Each x As SeqValue(Of T) In source.SeqIterator
-                If Not maps.ContainsKey(x) Then
-                    Call maps.Add(+x, x.i + base)
+                If Not maps.ContainsKey(x.value) Then
+                    Call maps.Add(x.value, x.i + base)
                 End If
             Next
 
