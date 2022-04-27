@@ -49,6 +49,13 @@ Namespace Hypothesis.Mantel
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function test(model As Model, matA As Double()(), matB As Double()(), Optional matC As Double()() = Nothing) As Result
+            matA = matA.GetCorrelations(AddressOf Pearson).cor
+            matB = matB.GetCorrelations(AddressOf Pearson).cor
+
+            If Not matC Is Nothing Then
+                matC = matC.GetCorrelations(AddressOf Pearson).cor
+            End If
+
             Return New Result(model).test(matA, matB, matC)
         End Function
 

@@ -1,51 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::24d161ac9d27d305305dfad96dc62db2, sciBASIC#\Data_science\Mathematica\Math\DataFrame\Correlation\Builder.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 109
-    '    Code Lines: 75
-    ' Comment Lines: 23
-    '   Blank Lines: 11
-    '     File Size: 4.29 KB
+' Summaries:
 
 
-    ' Module Builder
-    ' 
-    '     Function: Correlation, corTuple, (+3 Overloads) MatrixBuilder
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 109
+'    Code Lines: 75
+' Comment Lines: 23
+'   Blank Lines: 11
+'     File Size: 4.29 KB
+
+
+' Module Builder
+' 
+'     Function: Correlation, corTuple, (+3 Overloads) MatrixBuilder
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -55,6 +55,8 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
+Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis.Mantel
 
 Public Module Builder
 
@@ -71,23 +73,14 @@ Public Module Builder
         Return data.MatrixBuilder(Function(x, y) (eval(x, y), 0), type)
     End Function
 
-    Friend Function corTuple(x As Double(), y As Double()) As (cor#, pvalue#)
-        Dim pvalue As Double
-        Dim corVal = Correlations.GetPearson(x, y, prob:=pvalue)
-
-        Return (corVal, pvalue)
-    End Function
-
     <Extension>
     Public Function Correlation(Of DataSet As INamedValue)(data As Enumeration(Of DataSet), eval As Func(Of DataSet, Double())) As CorrelationMatrix
-        Return data _
-            .AsEnumerable _
-            .ToArray _
-            .MatrixBuilder(
-                vector:=eval,
-                eval:=AddressOf corTuple,
-                type:=DataType.Correlation
-            )
+        Dim allData = data.AsEnumerable.ToArray
+        Dim mat As Double()() = allData.Select(eval).ToArray
+        Dim corr = mat.GetCorrelations(AddressOf Mantel.Pearson)
+        Dim keys As Index(Of String) = allData.Keys.Indexing
+
+        Return New CorrelationMatrix(keys, corr.cor, corr.pvalue)
     End Function
 
     ''' <summary>
