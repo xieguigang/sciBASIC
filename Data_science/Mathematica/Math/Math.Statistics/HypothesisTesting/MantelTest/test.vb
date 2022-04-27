@@ -92,8 +92,6 @@ Namespace Hypothesis.Mantel
             End If
             ' define and test number of randomizations 
             If model.exact = False Then
-                model.numrand = stdNum.Abs(Now().GetHashCode)
-
                 If model.numrand < 99 OrElse model.numrand > 999999999 Then
                     Throw New InvalidProgramException("Error: Number of iterations must be between 99 and 999999999.")
                 End If

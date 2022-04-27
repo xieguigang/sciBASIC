@@ -21,11 +21,6 @@ Namespace Hypothesis.Mantel
         ''' </summary>
         ''' <returns></returns>
         Public Property numelt As Integer
-        ''' <summary>
-        ''' number of randomizations
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property numrand As Integer
 
         <DebuggerStepThrough>
         Sub New(copyModel As Model)
@@ -33,6 +28,7 @@ Namespace Hypothesis.Mantel
             [partial] = copyModel.partial
             raw = copyModel.raw
             exact = copyModel.exact
+            numrand = copyModel.numrand
         End Sub
 
         Public Overrides Function ToString() As String
@@ -66,6 +62,11 @@ Namespace Hypothesis.Mantel
         ''' </summary>
         ''' <returns></returns>
         Public Property exact As Boolean
+        ''' <summary>
+        ''' [permutations] number of randomizations
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property numrand As Integer
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
