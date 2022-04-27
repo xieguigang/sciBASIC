@@ -218,83 +218,6 @@ Namespace Hypothesis.Mantel
         End Sub
 
         ''' <summary>
-        ''' partial Mantel test
-        ''' </summary>
-        ''' <param name="A">matrix A pointer, matrix B pointer, matrix C pointer, struct of parameters (see rr.h)</param>
-        ''' <param name="B"></param>
-        ''' <param name="C"></param>
-        ''' <param name="p"></param>
-        ''' <returns>1 if ok</returns>
-        Public Function pmt(A As Double()(), B As Double()(), C As Double()(), p As Model) As Integer
-            Dim moyA As Double
-            Dim moyC As Double
-            Dim i As Integer
-            Dim j As Integer
-            Dim N As Integer
-            Dim r_abc As Double = 0
-            Dim r_ab As Double = 0
-            Dim r_ac As Double = 0
-            Dim r_bc As Double = 0
-            Dim ret = 0
-            N = p.matsize - 1
-
-            ' computing mean and standard deviation 
-            moyA = moy(A, N)
-            moyC = moy(C, N)
-
-            ' computing residuals 
-            If p.raw = 0 Then resid(A, C, N, moyA, moyC)
-
-            ' normalization 
-            norm(A, N)
-            norm(B, N)
-            norm(C, N)
-
-            ' computing initial r_ab 
-            For i = 0 To N - 1
-
-                For j = 0 To i
-                    r_ab += A(i)(j) * B(i)(j)
-                Next
-            Next
-
-            r_ab = r_ab / (p.numelt - 1)
-
-            ' computing initial r_ac 
-            For i = 0 To N - 1
-
-                For j = 0 To i
-                    r_ac += A(i)(j) * C(i)(j)
-                Next
-            Next
-
-            r_ac = r_ac / (p.numelt - 1)
-
-            ' computing initial r_bc 
-            For i = 0 To N - 1
-
-                For j = 0 To i
-                    r_bc += B(i)(j) * C(i)(j)
-                Next
-            Next
-
-            r_bc = r_bc / (p.numelt - 1)
-
-            ' computing initial r_abc 
-            r_abc = (r_ab - r_ac * r_bc) / (stdNum.Sqrt(1 - r_ac * r_ac) * stdNum.Sqrt(1 - r_bc * r_bc))
-            p.coef = r_abc
-
-            ' force exact permutation ? 
-            If p.exact = 0 Then
-                ret = pmt_perm(A, B, C, r_bc, p)
-            Else
-                ret = pmt_perm_exact(A, B, C, r_bc, p)
-            End If
-
-            Return ret
-        End Function
-
-        ''' <summary>
         ''' randomization procedure for partial Mantel test
         ''' </summary>
         ''' <param name="A">matrix A pointer, matrix B pointer, matrix C pointer, r_bc pointer, struct for parameters</param>
@@ -502,43 +425,6 @@ Namespace Hypothesis.Mantel
             Erase ord
 
             Return 1
-        End Function
-
-        ''' <summary>
-        ''' simple Mantel test
-        ''' </summary>
-        ''' <param name="A">matrix A pointer, matrix B pointer, struct for results  </param>
-        ''' <param name="B"></param>
-        ''' <param name="p"></param>
-        ''' <returns>1 if ok</returns>
-        Public Function smt(A As Double()(), B As Double()(), p As Model) As Integer
-            Dim i As Integer
-            Dim j As Integer
-            Dim zini As Double
-            Dim N = p.matsize - 1
-            Dim ret = 0
-            norm(A, N)
-            norm(B, N)
-
-            ' computing initial z 
-            zini = 0
-
-            For i = 0 To N - 1
-
-                For j = 0 To i
-                    zini += A(i)(j) * B(i)(j)
-                Next
-            Next
-
-            p.coef = zini / (p.numelt - 1)
-
-            If p.exact = 0 Then
-                ret = smt_perm(A, B, p)
-            Else
-                ret = smt_perm_exact(A, B, p)
-            End If
-
-            Return ret
         End Function
 
         ''' <summary>
