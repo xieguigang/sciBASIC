@@ -1,4 +1,6 @@
-﻿Namespace Hypothesis.Mantel
+﻿Imports Microsoft.VisualBasic.Serialization.JSON
+
+Namespace Hypothesis.Mantel
 
     ''' <summary>
     ''' the test model
@@ -45,6 +47,10 @@
         ''' </summary>
         ''' <returns></returns>
         Public Property exact As Boolean
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
 
     End Class
 End Namespace

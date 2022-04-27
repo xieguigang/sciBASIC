@@ -191,7 +191,6 @@ Namespace Hypothesis.Mantel
             Return ret
         End Function
 
-
         ''' <summary>
         ''' simple Mantel test
         ''' </summary>
