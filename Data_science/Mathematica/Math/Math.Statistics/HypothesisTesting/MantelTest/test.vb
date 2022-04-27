@@ -22,16 +22,33 @@ Imports stdNum = System.Math
 
 Namespace Hypothesis.Mantel
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
     <HideModuleName>
-    Public Module test
+    Public Module statistical_test
 
         Public Const MIN_MAT_SIZE As Integer = 5
         Public Const MAX_EXACT_SIZE As Integer = 12
         Public Const EXACT_PROC_SIZE As Integer = 8
 
+        ''' <summary>
+        ''' The Mantel test, named after Nathan Mantel, is a statistical test of 
+        ''' the correlation between two matrices. The matrices must be of the 
+        ''' same dimension; in most applications, they are matrices of interrelations 
+        ''' between the same vectors of objects. The test was first published 
+        ''' by Nathan Mantel, a biostatistician at the National Institutes of 
+        ''' Health, in 1967.[1] Accounts of it can be found in advanced statistics
+        ''' books (e.g., Sokal &amp; Rohlf 1995[2]).
+        ''' </summary>
+        ''' <param name="model"></param>
+        ''' <param name="matA"></param>
+        ''' <param name="matB"></param>
+        ''' <param name="matC"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function test(model As Model, matA As Double()(), matB As Double()(), matC As Double()()) As Result
+        Public Function test(model As Model, matA As Double()(), matB As Double()(), Optional matC As Double()() = Nothing) As Result
             Return New Result(model).test(matA, matB, matC)
         End Function
 
@@ -39,9 +56,10 @@ Namespace Hypothesis.Mantel
         Private Function test(model As Result, matA As Double()(), matB As Double()(), matC As Double()()) As Result
             Dim NA = matA.Length
             Dim NB = matB.Length
-            Dim NC = matC.Length
+            Dim NC = If(matC Is Nothing, -1, matC.Length)
 
             model.numelt = model.matsize * (model.matsize - 1) / 2
+            model.partial = Not matC Is Nothing
 
             ' test matrices size 
             If model.partial = False Then
@@ -76,7 +94,7 @@ Namespace Hypothesis.Mantel
 
             If model.exact Then model.numrand = fact(model.matsize)
 
-            If model.partial = 0 Then
+            If model.partial = False Then
                 Console.Write("simple ")
             Else
                 Console.Write("partial ")
@@ -97,11 +115,11 @@ Namespace Hypothesis.Mantel
 
             ' launch the test 
             If model.partial Then
-                If Not Mantel.test.pmt(matA, matB, matC, model) Then
+                If Not Mantel.statistical_test.pmt(matA, matB, matC, model) Then
                     Throw New InvalidProgramException("An error has occurred during permutation procedure.")
                 End If
             Else
-                If Not Mantel.test.smt(matA, matB, model) Then
+                If Not Mantel.statistical_test.smt(matA, matB, model) Then
                     Throw New InvalidProgramException("An error has occurred during permutation procedure.")
                 End If
             End If
