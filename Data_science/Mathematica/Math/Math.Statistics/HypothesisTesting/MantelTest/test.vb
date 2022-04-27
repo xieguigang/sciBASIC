@@ -18,13 +18,18 @@
 '     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
 '        
 
-Namespace Hypothesis.MantelTest
+Namespace Hypothesis.Mantel
 
-    Module test
+    <HideModuleName>
+    Public Module test
 
         Public Const MIN_MAT_SIZE As Integer = 5
         Public Const MAX_EXACT_SIZE As Integer = 12
         Public Const EXACT_PROC_SIZE As Integer = 8
+
+        Public Function test()
+
+        End Function
 
     End Module
 End Namespace

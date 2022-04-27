@@ -26,7 +26,7 @@ Imports rand2 = Microsoft.VisualBasic.Math.RandomExtensions
 '      Thanks, Glenn !
 ' 
 
-Namespace Hypothesis.MantelTest
+Namespace Hypothesis.Mantel
 
     Public Module stats
 

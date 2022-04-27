@@ -1,4 +1,4 @@
-﻿Namespace Hypothesis.MantelTest
+﻿Namespace Hypothesis.Mantel
 
     ''' <summary>
     ''' the test model
