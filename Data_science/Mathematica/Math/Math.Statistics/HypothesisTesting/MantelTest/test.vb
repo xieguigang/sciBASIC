@@ -222,8 +222,7 @@ Namespace Hypothesis.Mantel
             Dim i As Integer
             Dim j As Integer
             Dim zini As Double
-            Dim N = p.matsize - 1
-            Dim ret = 0
+            Dim N = p.matsize
 
             Call norm(A, N)
             Call norm(B, N)
@@ -241,12 +240,10 @@ Namespace Hypothesis.Mantel
             p.coef = zini / (p.numelt - 1)
 
             If p.exact = 0 Then
-                ret = smt_perm(A, B, p)
+                Return smt_perm(A, B, p)
             Else
-                ret = smt_perm_exact(A, B, p)
+                Return smt_perm_exact(A, B, p)
             End If
-
-            Return ret
         End Function
     End Module
 End Namespace
