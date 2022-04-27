@@ -30,11 +30,12 @@ Namespace Hypothesis.MantelTest
 
     Public Module stats
 
-        ' 
-        '        somx:   compute simple sum of elements in a half-matrix
-        '        input:  matrix pointer, size of the half-matrix
-        '        return: sum as double
-        ' 
+        ''' <summary>
+        ''' compute simple sum of elements in a half-matrix
+        ''' </summary>
+        ''' <param name="a">matrix pointer, size of the half-matrix</param>
+        ''' <param name="[stop]"></param>
+        ''' <returns>sum as double</returns>
         Public Function somx(a As Double()(), [stop] As Integer) As Double
             Dim i As Integer
             Dim j As Integer
@@ -50,11 +51,12 @@ Namespace Hypothesis.MantelTest
             Return ret
         End Function
 
-        ' 
-        '        somx2:  compute square sum of elements in a half-matrix
-        '        input:  matrix pointer, size of the half-matrix
-        '        return: square sum as double
-        ' 
+        ''' <summary>
+        ''' compute square sum of elements in a half-matrix
+        ''' </summary>
+        ''' <param name="a">matrix pointer, size of the half-matrix</param>
+        ''' <param name="[stop]"></param>
+        ''' <returns>square sum as double</returns>
         Public Function somx2(a As Double()(), [stop] As Integer) As Double
             Dim i As Integer
             Dim j As Integer
@@ -70,11 +72,12 @@ Namespace Hypothesis.MantelTest
             Return ret
         End Function
 
-        ' 
-        '        moy:    compute mean for a half-matrix
-        '        input:  matrix pointer, size of the half-matrix
-        '        return: mean as double
-        ' 
+        ''' <summary>
+        ''' compute mean for a half-matrix
+        ''' </summary>
+        ''' <param name="a">matrix pointer, size of the half-matrix</param>
+        ''' <param name="[stop]"></param>
+        ''' <returns>mean as double</returns>
         Public Function moy(a As Double()(), [stop] As Integer) As Double
             Dim i As Integer
             Dim j As Integer
@@ -93,11 +96,12 @@ Namespace Hypothesis.MantelTest
             Return ret
         End Function
 
-        ' 
-        '        ect:    compute standard deviation for a half-matrix
-        '        input:  matrix pointer, size of the half-matrix
-        '        return: standard deviation as double
-        ' 
+        ''' <summary>
+        ''' compute standard deviation for a half-matrix
+        ''' </summary>
+        ''' <param name="a">matrix pointer, size of the half-matrix</param>
+        ''' <param name="[stop]"></param>
+        ''' <returns>standard deviation as double</returns>
         Public Function ect(a As Double()(), [stop] As Integer) As Double
             Dim N As Integer
             Dim ret As Double = 0
@@ -108,10 +112,11 @@ Namespace Hypothesis.MantelTest
             Return ret
         End Function
 
-        ' 
-        '        shake:  shaking elements of a vector at random 
-        '        input:  array pointer, size of the array
-        ' 
+        ''' <summary>
+        ''' shaking elements of a vector at random 
+        ''' </summary>
+        ''' <param name="a">array pointer, size of the array</param>
+        ''' <param name="f"></param>
         Public Sub shake(a As Integer(), f As Integer)
             Dim i As Integer
             Dim aleat As Integer
@@ -125,11 +130,12 @@ Namespace Hypothesis.MantelTest
             Next
         End Sub
 
-        ' 
-        '        sompx: compute square sum of mean deviations for a half matrix
-        '        input:  matrix pointer, size of the half-matrix
-        '        return: sum as double
-        ' 
+        ''' <summary>
+        ''' compute square sum of mean deviations for a half matrix
+        ''' </summary>
+        ''' <param name="a">matrix pointer, size of the half-matrix</param>
+        ''' <param name="[stop]"></param>
+        ''' <returns>sum as double</returns>
         Public Function sompx(a As Double()(), [stop] As Integer) As Double
             Dim ret As Double = 0
             Dim N As Integer
@@ -140,11 +146,15 @@ Namespace Hypothesis.MantelTest
             Return ret
         End Function
 
-        ' 
-        '        sompxy: sum x-mean(x) * y-mean(y) for two half matrices
-        '        input:  matrix A pointer, matrix B pointer, size of the matrices, mean matrix A, mean matrix B
-        '        return: sum as double
-        ' 
+        ''' <summary>
+        ''' sum x-mean(x) * y-mean(y) for two half matrices
+        ''' </summary>
+        ''' <param name="a">matrix A pointer, matrix B pointer, size of the matrices, mean matrix A, mean matrix B</param>
+        ''' <param name="b"></param>
+        ''' <param name="[stop]"></param>
+        ''' <param name="lmoyA"></param>
+        ''' <param name="lmoyB"></param>
+        ''' <returns>sum as double</returns>
         Public Function sompxy(a As Double()(), b As Double()(), [stop] As Integer, lmoyA As Double, lmoyB As Double) As Double
             Dim i As Integer
             Dim j As Integer
@@ -160,10 +170,14 @@ Namespace Hypothesis.MantelTest
             Return ret
         End Function
 
-        ' 
-        '        resid:  compute residuals of half-matrix A against half-matrix B
-        '        input:  matrix A pointer, matrix B pointer, size of the matrices, mean matrix A, mean matrix B
-        ' 
+        ''' <summary>
+        ''' compute residuals of half-matrix A against half-matrix B
+        ''' </summary>
+        ''' <param name="a">matrix A pointer, matrix B pointer, size of the matrices, mean matrix A, mean matrix B</param>
+        ''' <param name="b"></param>
+        ''' <param name="[stop]"></param>
+        ''' <param name="lmoyA"></param>
+        ''' <param name="lmoyB"></param>
         Public Sub resid(a As Double()(), b As Double()(), [stop] As Integer, lmoyA As Double, lmoyB As Double)
             Dim coef_b As Double
             Dim coef_a As Double
@@ -180,10 +194,13 @@ Namespace Hypothesis.MantelTest
             Next
         End Sub
 
-        ' 
-        '        norm: normalization of a half-matrix
-        '        input:  matrix pointer, size of the matrix      
-        ' 
+        ''' <summary>
+        ''' normalization of a half-matrix
+        ''' </summary>
+        ''' <param name="a">
+        ''' matrix pointer, size of the matrix      
+        ''' </param>
+        ''' <param name="[stop]"></param>
         Public Sub norm(a As Double()(), [stop] As Integer)
             Dim lmoya As Double
             Dim lecta As Double
@@ -200,11 +217,14 @@ Namespace Hypothesis.MantelTest
             Next
         End Sub
 
-        ' 
-        '        pmt:    partial Mantel test
-        '        input:  matrix A pointer, matrix B pointer, matrix C pointer, struct of parameters (see rr.h)
-        '        return: 1 if ok
-        ' 
+        ''' <summary>
+        ''' partial Mantel test
+        ''' </summary>
+        ''' <param name="A">matrix A pointer, matrix B pointer, matrix C pointer, struct of parameters (see rr.h)</param>
+        ''' <param name="B"></param>
+        ''' <param name="C"></param>
+        ''' <param name="p"></param>
+        ''' <returns>1 if ok</returns>
         Public Function pmt(A As Double()(), B As Double()(), C As Double()(), p As Model) As Integer
             Dim moyA As Double
             Dim moyC As Double
@@ -274,11 +294,15 @@ Namespace Hypothesis.MantelTest
             Return ret
         End Function
 
-        ' 
-        '        pmt_perm:       randomization procedure for partial Mantel test
-        '        input:          matrix A pointer, matrix B pointer, matrix C pointer, r_bc pointer, struct for parameters
-        '        return:         1 if ok
-        ' 
+        ''' <summary>
+        ''' randomization procedure for partial Mantel test
+        ''' </summary>
+        ''' <param name="A">matrix A pointer, matrix B pointer, matrix C pointer, r_bc pointer, struct for parameters</param>
+        ''' <param name="B"></param>
+        ''' <param name="C"></param>
+        ''' <param name="r_bc"></param>
+        ''' <param name="p"></param>
+        ''' <returns>1 if ok</returns>
         Public Function pmt_perm(A As Double()(), B As Double()(), C As Double()(), ByRef r_bc As Double, p As Model) As Integer
             Dim i As Integer
             Dim j As Integer
@@ -356,11 +380,15 @@ Namespace Hypothesis.MantelTest
             Return 1
         End Function
 
-        ' 
-        '        pmt_perm_exact: exact permutation procedure for partial Mantel test
-        '        input:          matrix A pointer, matrix B pointer, matrix C pointer, r_bc pointer, struct for results
-        '        return          1 if ok 
-        ' 
+        ''' <summary>
+        ''' exact permutation procedure for partial Mantel test
+        ''' </summary>
+        ''' <param name="A">matrix A pointer, matrix B pointer, matrix C pointer, r_bc pointer, struct for results</param>
+        ''' <param name="B"></param>
+        ''' <param name="C"></param>
+        ''' <param name="r_bc"></param>
+        ''' <param name="p"></param>
+        ''' <returns>1 if ok </returns>
         Public Function pmt_perm_exact(A As Double()(), B As Double()(), C As Double()(), ByRef r_bc As Double, p As Model) As Integer
             Dim i As Integer
             Dim j As Integer
@@ -476,11 +504,13 @@ Namespace Hypothesis.MantelTest
             Return 1
         End Function
 
-        ' 
-        '        smt:    simple Mantel test
-        '        input:  matrix A pointer, matrix B pointer, struct for results  
-        '        return  1 if ok
-        ' 
+        ''' <summary>
+        ''' simple Mantel test
+        ''' </summary>
+        ''' <param name="A">matrix A pointer, matrix B pointer, struct for results  </param>
+        ''' <param name="B"></param>
+        ''' <param name="p"></param>
+        ''' <returns>1 if ok</returns>
         Public Function smt(A As Double()(), B As Double()(), p As Model) As Integer
             Dim i As Integer
             Dim j As Integer
@@ -511,11 +541,13 @@ Namespace Hypothesis.MantelTest
             Return ret
         End Function
 
-        ' 
-        '        smt_perm:       randomization procedure for simple Mantel test
-        '        input:          matrix A pointer, matrix B pointer, struct for results
-        '        return          1 if ok
-        ' 
+        ''' <summary>
+        ''' randomization procedure for simple Mantel test
+        ''' </summary>
+        ''' <param name="A">matrix A pointer, matrix B pointer, struct for results</param>
+        ''' <param name="B"></param>
+        ''' <param name="p"></param>
+        ''' <returns>1 if ok</returns>
         Public Function smt_perm(A As Double()(), B As Double()(), p As Model) As Integer
             Dim i As Integer
             Dim j As Integer
@@ -576,11 +608,13 @@ Namespace Hypothesis.MantelTest
             Return 1
         End Function
 
-        ' 
-        '        smt_perm_exact:         exact permutation procedure for simple Mantel test
-        '        input:                  matrix pointer A, matrix pointer B, struct for results
-        '        return                  1 if ok
-        ' 
+        ''' <summary>
+        ''' exact permutation procedure for simple Mantel test
+        ''' </summary>
+        ''' <param name="A">matrix pointer A, matrix pointer B, struct for results</param>
+        ''' <param name="B"></param>
+        ''' <param name="p"></param>
+        ''' <returns>1 if ok</returns>
         Public Function smt_perm_exact(A As Double()(), B As Double()(), p As Model) As Integer
             Dim i As Integer
             Dim j As Integer
