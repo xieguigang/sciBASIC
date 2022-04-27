@@ -824,11 +824,7 @@ End Class
 ''' The OUTLINETEXTMETRIC structure contains metrics describing
 ''' a TrueType font.
 ''' </remarks>
-
 Public Class WinOutlineTextMetric
-
-
-
 
 
     ''' <summary>
@@ -883,16 +879,6 @@ Public Class WinOutlineTextMetric
             _otmfsSelection = value
         End Set
     End Property
-
-
-
-
-
-
-
-
-
-
 
     ''' <summary>
     ''' Outline text metric ascent
