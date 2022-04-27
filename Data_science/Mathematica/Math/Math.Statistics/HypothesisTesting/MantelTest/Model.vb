@@ -27,6 +27,7 @@ Namespace Hypothesis.Mantel
         ''' <returns></returns>
         Public Property numrand As Integer
 
+        <DebuggerStepThrough>
         Sub New(copyModel As Model)
             matsize = copyModel.matsize
             [partial] = copyModel.partial
