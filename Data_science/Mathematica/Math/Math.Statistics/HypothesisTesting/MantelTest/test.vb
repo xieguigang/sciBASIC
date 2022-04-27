@@ -29,9 +29,14 @@ Namespace Hypothesis.Mantel
         Public Const MAX_EXACT_SIZE As Integer = 12
         Public Const EXACT_PROC_SIZE As Integer = 8
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function test(model As Model, matA As Double()(), matB As Double()(), matC As Double()()) As Integer
-            Dim res As Integer
+        Public Function test(model As Model, matA As Double()(), matB As Double()(), matC As Double()()) As Result
+            Return New Result(model).test(matA, matB, matC)
+        End Function
+
+        <Extension>
+        Private Function test(model As Result, matA As Double()(), matB As Double()(), matC As Double()()) As Result
             Dim NA = matA.Length
             Dim NB = matB.Length
             Dim NC = matC.Length
@@ -92,26 +97,16 @@ Namespace Hypothesis.Mantel
 
             ' launch the test 
             If model.partial Then
-                res = Mantel.test.pmt(matA, matB, matC, model)
-
-                If res <> 0 Then
-                    Console.Write("r =" & vbTab & vbTab & vbTab & "{0:f}" & vbLf, model.coef)
-                    Console.Write("p =" & vbTab & vbTab & vbTab & "{0:f} (one-tailed)" & vbLf & vbLf, model.proba)
-                Else
-                    Console.Write("An error has occurred during permutation procedure." & vbLf & "Please retry." & vbLf & vbLf)
+                If Not Mantel.test.pmt(matA, matB, matC, model) Then
+                    Throw New InvalidProgramException("An error has occurred during permutation procedure.")
                 End If
             Else
-                res = Mantel.test.smt(matA, matB, model)
-
-                If res <> 0 Then
-                    Console.Write("r =" & vbTab & vbTab & vbTab & "{0:f}" & vbLf, model.coef)
-                    Console.Write("p =" & vbTab & vbTab & vbTab & "{0:f} (one-tailed)" & vbLf & vbLf, model.proba)
-                Else
-                    Console.Write("An error has occurred during permutation procedure." & vbLf & "Please retry." & vbLf & vbLf)
+                If Not Mantel.test.smt(matA, matB, model) Then
+                    Throw New InvalidProgramException("An error has occurred during permutation procedure.")
                 End If
             End If
 
-            Return res
+            Return model
         End Function
 
         ''' <summary>
@@ -122,7 +117,7 @@ Namespace Hypothesis.Mantel
         ''' <param name="C"></param>
         ''' <param name="p"></param>
         ''' <returns>1 if ok</returns>
-        Public Function pmt(A As Double()(), B As Double()(), C As Double()(), p As Model) As Integer
+        Public Function pmt(A As Double()(), B As Double()(), C As Double()(), ByRef p As Result) As Boolean
             Dim moyA As Double
             Dim moyC As Double
             Dim i As Integer
@@ -198,14 +193,15 @@ Namespace Hypothesis.Mantel
         ''' <param name="B"></param>
         ''' <param name="p"></param>
         ''' <returns>1 if ok</returns>
-        Public Function smt(A As Double()(), B As Double()(), p As Model) As Integer
+        Public Function smt(A As Double()(), B As Double()(), ByRef p As Result) As Boolean
             Dim i As Integer
             Dim j As Integer
             Dim zini As Double
             Dim N = p.matsize - 1
             Dim ret = 0
-            norm(A, N)
-            norm(B, N)
+
+            Call norm(A, N)
+            Call norm(B, N)
 
             ' computing initial z 
             zini = 0

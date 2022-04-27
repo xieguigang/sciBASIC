@@ -226,7 +226,7 @@ Namespace Hypothesis.Mantel
         ''' <param name="r_bc"></param>
         ''' <param name="p"></param>
         ''' <returns>1 if ok</returns>
-        Public Function pmt_perm(A As Double()(), B As Double()(), C As Double()(), ByRef r_bc As Double, p As Model) As Integer
+        Public Function pmt_perm(A As Double()(), B As Double()(), C As Double()(), ByRef r_bc As Double, ByRef p As Result) As Integer
             Dim i As Integer
             Dim j As Integer
             Dim r As Integer
@@ -312,7 +312,7 @@ Namespace Hypothesis.Mantel
         ''' <param name="r_bc"></param>
         ''' <param name="p"></param>
         ''' <returns>1 if ok </returns>
-        Public Function pmt_perm_exact(A As Double()(), B As Double()(), C As Double()(), ByRef r_bc As Double, p As Model) As Integer
+        Public Function pmt_perm_exact(A As Double()(), B As Double()(), C As Double()(), ByRef r_bc As Double, ByRef p As Result) As Integer
             Dim i As Integer
             Dim j As Integer
             Dim r As Integer
@@ -434,7 +434,7 @@ Namespace Hypothesis.Mantel
         ''' <param name="B"></param>
         ''' <param name="p"></param>
         ''' <returns>1 if ok</returns>
-        Public Function smt_perm(A As Double()(), B As Double()(), p As Model) As Integer
+        Public Function smt_perm(A As Double()(), B As Double()(), ByRef p As Result) As Integer
             Dim i As Integer
             Dim j As Integer
             Dim r As Integer
@@ -501,7 +501,7 @@ Namespace Hypothesis.Mantel
         ''' <param name="B"></param>
         ''' <param name="p"></param>
         ''' <returns>1 if ok</returns>
-        Public Function smt_perm_exact(A As Double()(), B As Double()(), p As Model) As Integer
+        Public Function smt_perm_exact(A As Double()(), B As Double()(), ByRef p As Result) As Integer
             Dim i As Integer
             Dim j As Integer
             Dim r As Integer
