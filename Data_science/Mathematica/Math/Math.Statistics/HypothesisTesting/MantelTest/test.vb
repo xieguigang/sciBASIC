@@ -115,8 +115,8 @@ Namespace Hypothesis.Mantel
                 Console.Write("exact ")
             End If
 
-            Console.Write(vbLf & vbLf)
-            Console.Write("Randomizing..." & vbLf & vbLf)
+            Console.WriteLine()
+            Console.WriteLine("Randomizing...")
 
             ' launch the test 
             If model.partial Then
