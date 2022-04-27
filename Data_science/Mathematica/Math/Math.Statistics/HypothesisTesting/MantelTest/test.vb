@@ -18,6 +18,8 @@
 '     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
 '        
 
+Imports System.Runtime.CompilerServices
+
 Namespace Hypothesis.Mantel
 
     <HideModuleName>
@@ -27,8 +29,13 @@ Namespace Hypothesis.Mantel
         Public Const MAX_EXACT_SIZE As Integer = 12
         Public Const EXACT_PROC_SIZE As Integer = 8
 
-        Public Function test()
-
+        <Extension>
+        Public Function test(model As Model, matA As Double()(), matB As Double()(), matC As Double()())
+            Dim i As Integer
+            Dim j As Integer
+            Dim c As Integer
+            Dim tmem As Integer
+            Dim res As Integer
         End Function
 
     End Module

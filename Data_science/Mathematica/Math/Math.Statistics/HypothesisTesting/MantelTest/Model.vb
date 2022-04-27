@@ -34,17 +34,17 @@
         ''' option partial 0|1
         ''' </summary>
         ''' <returns></returns>
-        Public Property [partial] As Integer = True
+        Public Property [partial] As Boolean
         ''' <summary>
         ''' option raw 0|1
         ''' </summary>
         ''' <returns></returns>
-        Public Property raw As Integer
+        Public Property raw As Boolean
         ''' <summary>
         ''' option exact permutation 0|1
         ''' </summary>
         ''' <returns></returns>
-        Public Property exact As Integer ' 
+        Public Property exact As Boolean
 
     End Class
 End Namespace
