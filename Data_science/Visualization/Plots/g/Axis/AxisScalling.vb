@@ -94,6 +94,11 @@ Namespace Graphic.Axis
 
             Static smallNumber As New DoubleRange(1.0E-300, 0.00001)
 
+            If range.Length = 0 Then
+                Dim delta As Double = range.Max * 1.25 - range.Max
+                range = New DoubleRange(range.Min - delta, range.Max + delta)
+            End If
+
             With range
                 If .Min.IsNaNImaginary AndAlso .Max.IsNaNImaginary Then
                     Return {0, 1}
