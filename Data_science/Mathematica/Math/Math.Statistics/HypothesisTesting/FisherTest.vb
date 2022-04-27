@@ -163,4 +163,20 @@ Public Module FisherTest
 
         Return product
     End Function
+
+    ''' <summary>
+    ''' compute factorial 
+    ''' </summary>
+    ''' <param name="n">integer n</param>
+    ''' <returns>n! as long</returns>
+    Friend Function fact(n As Integer) As Integer
+        Dim i As Integer
+        Dim ret = 1
+
+        For i = 1 To n
+            ret *= i
+        Next
+
+        Return ret
+    End Function
 End Module
