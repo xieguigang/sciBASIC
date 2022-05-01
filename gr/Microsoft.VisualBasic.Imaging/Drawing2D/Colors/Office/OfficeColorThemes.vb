@@ -75,12 +75,22 @@ Namespace Drawing2D.Colors.OfficeAccent
         Public ReadOnly Property Paper As OfficeColorTheme
 
         Sub New()
-            Office2016 = OfficeColorTheme.LoadFromXml(My.Resources.Default_Office)
-            Office2010 = OfficeColorTheme.LoadFromXml(My.Resources.Default_Office2007_2010)
-            Marquee = OfficeColorTheme.LoadFromXml(My.Resources.Default_Marquee)
-            Aspect = OfficeColorTheme.LoadFromXml(My.Resources.Default_Aspect)
-            Paper = OfficeColorTheme.LoadFromXml(My.Resources.Default_Paper)
-            Slipstream = OfficeColorTheme.LoadFromXml(My.Resources.Default_Slipstream)
+            Try
+                Call Load()
+            Catch ex As Exception
+                ' 20220501 how to fix the bugs between the .NET 4.8/.NET 5 nuget packages
+                '
+                ' System.IO.FileLoadException: Could not load file or assembly 'System.Resources.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51' or one of its dependencies. The located assembly's manifest definition does not match the assembly reference. (Exception from HRESULT: 0x80131040)
+            End Try
+        End Sub
+
+        Private Sub Load()
+            _Office2016 = OfficeColorTheme.LoadFromXml(My.Resources.Default_Office)
+            _Office2010 = OfficeColorTheme.LoadFromXml(My.Resources.Default_Office2007_2010)
+            _Marquee = OfficeColorTheme.LoadFromXml(My.Resources.Default_Marquee)
+            _Aspect = OfficeColorTheme.LoadFromXml(My.Resources.Default_Aspect)
+            _Paper = OfficeColorTheme.LoadFromXml(My.Resources.Default_Paper)
+            _Slipstream = OfficeColorTheme.LoadFromXml(My.Resources.Default_Slipstream)
 
             Call InternalLoadAllThemes()
         End Sub

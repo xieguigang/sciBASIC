@@ -139,9 +139,16 @@
 	<ItemGroup>
 		<PackageReference Include="System.Drawing.Common" Version="6.0.0-preview.6.21352.12" />
 		<PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
-		<PackageReference Include="System.Resources.Extensions" Version="6.0.0" />
+		<PackageReference Include="System.Resources.Extensions" Version="6.0.0">
+		  <GeneratePathProperty>True</GeneratePathProperty>
+		</PackageReference>
 	</ItemGroup>
 
+  <!--<dependentAssembly>
+    <assemblyIdentity name="System.Resources.Extensions" publicKeyToken="cc7b13ffcd2ddd51" culture="neutral" />
+    <bindingRedirect oldVersion="0.0.0.0-5.0.0.0" newVersion="5.0.0.0" />
+  </dependentAssembly>-->
+  
 	<ItemGroup>
 		<ProjectReference Include="..\..\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
 		<ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
