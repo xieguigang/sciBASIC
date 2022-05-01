@@ -146,6 +146,10 @@ Namespace My
             Call SingletonHolder(Of List(Of T)).Instance.AddRange(items)
         End Sub
 
+        Public Shared Sub Clear()
+            Call SingletonHolder(Of List(Of T)).Instance.Clear()
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function ForEach() As IEnumerable(Of T)
             Return SingletonHolder(Of List(Of T)).Instance
