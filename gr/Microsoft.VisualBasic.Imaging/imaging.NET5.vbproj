@@ -8,6 +8,14 @@
 		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;NPSearch;mzkit_win32</Configurations>
 
 		<GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+
+		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+
+		<PackageLicenseExpression>GPL</PackageLicenseExpression>
 		
 	</PropertyGroup>
 
