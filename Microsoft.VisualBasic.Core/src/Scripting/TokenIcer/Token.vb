@@ -128,8 +128,6 @@ Namespace Scripting.TokenIcer
             Return $"[{name}] {text}"
         End Function
 
-#If NET_48 = 1 Or netcore5 = 1 Then
-
         ''' <summary>
         ''' token is target token type andalso token text is one of any in the given text items 
         ''' </summary>
@@ -155,7 +153,5 @@ Namespace Scripting.TokenIcer
         Public Overloads Shared Operator <>(token As CodeToken(Of Tokens), element As (Tokens, String)) As Boolean
             Return Not token = element
         End Operator
-
-#End If
     End Class
 End Namespace

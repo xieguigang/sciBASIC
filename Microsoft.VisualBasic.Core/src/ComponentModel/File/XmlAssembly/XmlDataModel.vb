@@ -105,7 +105,6 @@ Namespace ComponentModel
         ''' </remarks>
         <DataMember>
         <IgnoreDataMember>
-        <ScriptIgnore>
         <SoapIgnore>
         <XmlAnyElement>
         Public Property TypeComment As XmlComment Implements IXmlType.TypeComment

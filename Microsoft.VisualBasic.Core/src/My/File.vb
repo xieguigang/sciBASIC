@@ -57,9 +57,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices
-#If netcore5 = 1 Then
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Diagnostics
-#End If
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
 Imports Microsoft.VisualBasic.Text

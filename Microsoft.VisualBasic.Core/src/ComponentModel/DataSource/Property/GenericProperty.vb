@@ -52,9 +52,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-#If netcore5 = 0 Then
-Imports System.Web.Script.Serialization
-#End If
 
 Namespace ComponentModel.DataSourceModel
 
@@ -80,7 +77,6 @@ Namespace ComponentModel.DataSourceModel
         ''' 
         ''' </summary>
         ''' <returns></returns>
-        <ScriptIgnore>
         Public Iterator Property src As IEnumerable(Of NamedValue(Of T))
             Get
                 For Each x In Properties

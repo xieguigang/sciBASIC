@@ -63,8 +63,6 @@ Namespace Math
     ''' </summary>
     Public Module Trigonometric
 
-#If NET_48 = 1 Or netcore5 = 1 Then
-
         ''' <summary>
         ''' Polar to cartesian coordinate system point.(将极坐标转换为笛卡尔坐标系直角坐标系)
         ''' </summary>
@@ -86,8 +84,6 @@ Namespace Math
 
             Return New PointF(x + offsetX, y + offsetY)
         End Function
-
-#End If
 
         ''' <summary>
         ''' 

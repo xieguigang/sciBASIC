@@ -56,8 +56,6 @@
 
 Namespace ComponentModel.Algorithm
 
-#If netcore5 = 1 Or NET_48 = 1 Then
-
     ''' <summary>
     ''' 快速排序基本上被认为是相同数量级的所有排序算法中，平均性能最好的。
     ''' </summary>
@@ -111,6 +109,4 @@ Namespace ComponentModel.Algorithm
             End If
         End Sub
     End Class
-    
-#End If
 End Namespace

@@ -22,6 +22,7 @@
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<Description>sciBASIC#: Microsoft VisualBasic for Scientific Computing</Description>
 		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -182,10 +183,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="System.ComponentModel.Annotations" Version="6.0.0-preview.4.21253.7" />
 		<PackageReference Include="System.Composition" Version="6.0.0" />
+		<PackageReference Include="System.Data.DataSetExtensions" Version="4.6.0-preview3.19128.7" />
 		<PackageReference Include="System.Drawing.Common" Version="6.0.0-preview.6.21352.12" />
 		<PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
 		<PackageReference Include="System.IO.Compression" Version="4.3.0" />
+		<PackageReference Include="System.Linq.Queryable" Version="4.3.0" />
 		<PackageReference Include="System.Net.Http" Version="4.3.4" />
 		<PackageReference Include="System.Net.Requests" Version="4.3.0" />
 		<PackageReference Include="System.Net.WebHeaderCollection" Version="4.3.0" />
@@ -196,8 +200,18 @@
 		<PackageReference Include="System.Text.Encodings.Web" Version="6.0.0" />
 	</ItemGroup>
 
-  <PropertyGroup  Condition=" '$(Configuration)|$(TargetFramework)' == 'mzkit_win32|net48' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(TargetFramework)' == 'mzkit_win32|net48' ">
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net6.0-windows|x64'">
+    <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
   </PropertyGroup>
 
   <ItemGroup>

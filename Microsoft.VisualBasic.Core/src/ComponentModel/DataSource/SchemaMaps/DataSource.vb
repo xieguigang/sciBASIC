@@ -76,8 +76,6 @@ Imports FieldTuple = System.Collections.Generic.KeyValuePair(Of Microsoft.Visual
 
 Namespace ComponentModel.DataSourceModel.SchemaMaps
 
-#If netcore5 = 1 Then
-
     <AttributeUsage(AttributeTargets.[Property], Inherited:=True, AllowMultiple:=False)>
     Public Class ColumnAttribute : Inherits Attribute
 
@@ -90,7 +88,6 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         Sub New()
         End Sub
     End Class
-#End If
 
     ''' <summary>
     ''' <see cref="DataFrameColumnAttribute"/>属性的别称

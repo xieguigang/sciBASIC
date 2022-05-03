@@ -98,7 +98,7 @@ Namespace ComponentModel.DataSourceModel
         ''' Does this object have value?
         ''' </summary>
         ''' <returns></returns>
-        <XmlIgnore, ScriptIgnore, DataIgnored>
+        <XmlIgnore, DataIgnored>
         Public ReadOnly Property IsEmpty As Boolean Implements IsEmpty.IsEmpty
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
