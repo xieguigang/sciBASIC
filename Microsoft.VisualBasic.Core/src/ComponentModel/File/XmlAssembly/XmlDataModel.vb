@@ -1,75 +1,75 @@
 ﻿#Region "Microsoft.VisualBasic::a38f867b66e622eee047be3e87feaab8, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\File\XmlAssembly\XmlDataModel.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 97
-    '    Code Lines: 59
-    ' Comment Lines: 28
-    '   Blank Lines: 10
-    '     File Size: 3.80 KB
+' Summaries:
 
 
-    '     Class XmlDataModel
-    ' 
-    '         Properties: Stylesheet, TypeComment
-    ' 
-    '         Function: CreateTypeReferenceComment, (+2 Overloads) GetTypeReferenceComment
-    ' 
-    '         Sub: SaveTypeComment
-    '         Interface IXmlType
-    ' 
-    '             Properties: TypeComment
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 97
+'    Code Lines: 59
+' Comment Lines: 28
+'   Blank Lines: 10
+'     File Size: 3.80 KB
+
+
+'     Class XmlDataModel
+' 
+'         Properties: Stylesheet, TypeComment
+' 
+'         Function: CreateTypeReferenceComment, (+2 Overloads) GetTypeReferenceComment
+' 
+'         Sub: SaveTypeComment
+'         Interface IXmlType
+' 
+'             Properties: TypeComment
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Runtime.CompilerServices
-Imports System.Runtime.Serialization
 #If netcore5 = 0 Then
 Imports System.Web.Script.Serialization
+#Else
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 #End If
+
+Imports System.Runtime.CompilerServices
+Imports System.Runtime.Serialization
 Imports System.Xml
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ApplicationServices.Development
-#If netcore5 = 1 Then
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-#End If
 Imports Microsoft.VisualBasic.SecurityString
 
 Namespace ComponentModel
@@ -105,7 +105,7 @@ Namespace ComponentModel
         ''' </remarks>
         <DataMember>
         <IgnoreDataMember>
-        <ScriptIgnoreAttribute>
+        <ScriptIgnore>
         <SoapIgnore>
         <XmlAnyElement>
         Public Property TypeComment As XmlComment Implements IXmlType.TypeComment

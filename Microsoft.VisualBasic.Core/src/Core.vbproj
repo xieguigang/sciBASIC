@@ -118,9 +118,13 @@
 		<OutputPath>../../../../\R-sharp\App\</OutputPath>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)|$(TargetFramework)'=='mzkit_win32|x64|net6.0'">
+    <OutputPath>bin\</OutputPath>
+  </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)|$(TargetFramework)'=='mzkit_win32|x64|net48'">
 	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
-	  <DefineConstants>netcore5=1,UNIX=1,FRAMEWORD_CORE=1</DefineConstants>
+	  <DefineConstants>netcore5=0,UNIX=1,FRAMEWORD_CORE=1</DefineConstants>
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <Optimize>false</Optimize>
 	  <BaseAddress>4194304</BaseAddress>
