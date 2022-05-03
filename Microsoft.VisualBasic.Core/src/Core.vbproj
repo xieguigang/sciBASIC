@@ -7,7 +7,7 @@
 		<Authors>xie.guigang@live.com</Authors>
 		<Company>sciBASIC.NET</Company>
 		<Version>5.0.1.2389</Version>
-
+    <DefineConstants>netcore5=1,FRAMEWORD_CORE=1</DefineConstants>
 		<AssemblyVersion>5.33.69.2558</AssemblyVersion>
 		<Deterministic>false</Deterministic>
 		<RuntimeIdentifiers>win7-x64;win7-x86;win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
