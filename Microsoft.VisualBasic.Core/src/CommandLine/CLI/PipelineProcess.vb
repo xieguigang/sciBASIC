@@ -157,7 +157,7 @@ Namespace CommandLine
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="app"></param>
+        ''' <param name="appPath"></param>
         ''' <param name="args"></param>
         ''' <param name="it">
         ''' this option will affects the UseShellExecute:
@@ -172,17 +172,17 @@ Namespace CommandLine
         ''' the target process object is already has been 
         ''' started in this function.
         ''' </returns>
-        Public Function CreatePipeline(app As String, args As String, Optional it As Boolean = True) As Process
+        Public Function CreatePipeline(appPath As String, args As String, Optional it As Boolean = True) As Process
             Dim p As New Process
             p.StartInfo = New ProcessStartInfo
-            p.StartInfo.FileName = app
+            p.StartInfo.FileName = appPath
             p.StartInfo.Arguments = args.TrimNewLine(replacement:=" ")
             p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden
             p.StartInfo.RedirectStandardOutput = it
             p.StartInfo.RedirectStandardInput = it
             p.StartInfo.RedirectStandardError = it
             p.StartInfo.UseShellExecute = Not it
-            p.StartInfo.CreateNoWindow = Microsoft.VisualBasic.App.IsMicrosoftPlatform
+            p.StartInfo.CreateNoWindow = App.IsMicrosoftPlatform
             p.Start()
 
             Return p

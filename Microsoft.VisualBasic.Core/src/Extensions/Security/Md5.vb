@@ -63,7 +63,10 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace SecurityString
 
-    <Package("Md5Hash", Publisher:="Microsoft Corp.", Description:="Represents the abstract class from which all implementations of the System.Security.Cryptography.MD5 hash algorithm inherit.")>
+    ''' <summary>
+    ''' Represents the abstract class from which all implementations of 
+    ''' the System.Security.Cryptography.MD5 hash algorithm inherit.
+    ''' </summary>
     Public Module MD5Hash
 
         <ExportAPI("Uid")>
