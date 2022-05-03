@@ -66,6 +66,7 @@ Namespace CommandLine.InteropService.Pipeline
 
         ReadOnly app As String
         ReadOnly arguments As String
+        ReadOnly workdir As String
 
         Public ReadOnly Property CommandLine As String
             Get
@@ -73,14 +74,22 @@ Namespace CommandLine.InteropService.Pipeline
             End Get
         End Property
 
-        Sub New(app$, arguments$)
+        Sub New(app$, arguments$, Optional workdir As String = Nothing)
             Me.app = app
             Me.arguments = arguments
+            Me.workdir = workdir
         End Sub
 
         Public Function Run() As Integer
-            Dim code As Integer = PipelineProcess.ExecSub(app, arguments, AddressOf ProcessMessage)
+            Dim code As Integer = PipelineProcess.ExecSub(
+                app:=app,
+                args:=arguments,
+                onReadLine:=AddressOf ProcessMessage,
+                workdir:=workdir
+            )
+
             RaiseEvent Finish()
+
             Return code
         End Function
 
