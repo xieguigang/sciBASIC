@@ -142,7 +142,9 @@ Namespace Math.Information
         ''' 
         ''' 基尼指数越大，说明不确定性就越大；基尼系数越小，不确定性越小，数据分割越彻底，越干净。
         ''' </summary>
-        ''' <param name="p"></param>
+        ''' <param name="p">
+        ''' the data probability
+        ''' </param>
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
