@@ -120,7 +120,9 @@ Namespace Model.Directory
                               Function(page) page.Item2)
             _rels = (ls - l - "*.rels" <= (Folder & "/_rels")) _
                 .ToDictionary(Function(path) path.BaseName,
-                              Function(path) path.LoadXml(Of rels))
+                              Function(path)
+                                  Return rels.Load(path)
+                              End Function)
         End Sub
 
         Public Sub Save()

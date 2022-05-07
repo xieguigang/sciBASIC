@@ -103,7 +103,7 @@
 		<DebugSymbols>true</DebugSymbols>
 		<DebugType>full</DebugType>
 		<DefineDebug>false</DefineDebug>
-		<OutputPath>D:\mzkit\Rscript\Library\mzkit_app\assembly\</OutputPath>
+		<OutputPath>../../../../../..\mzkit\Rscript\Library\mzkit_app\assembly\</OutputPath>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
@@ -133,7 +133,7 @@
 	  <DebugType>full</DebugType>
 	  <DefineDebug>false</DefineDebug>
 	  <DefineTrace>true</DefineTrace>
-	  <OutputPath>E:\mzkit\dist\bin\</OutputPath>
+	  <OutputPath>../../../../../..\mzkit\dist\bin\</OutputPath>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|x64'">
@@ -146,7 +146,7 @@
 		<DebugType>full</DebugType>
 		<DefineDebug>false</DefineDebug>
 		<DefineTrace>true</DefineTrace>
-		<OutputPath>D:\PlantMAT\PlantMAT\assembly\</OutputPath>
+		<OutputPath>../../../../../..\PlantMAT\PlantMAT\assembly\</OutputPath>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NPSearch|x64'">
@@ -159,7 +159,7 @@
 		<DebugType>full</DebugType>
 		<DefineDebug>false</DefineDebug>
 		<DefineTrace>true</DefineTrace>
-		<OutputPath>D:\biodeep\biodeepdb_v3\metaCluster\NPSearch\assembly\</OutputPath>
+		<OutputPath>../../../../../..\biodeep\biodeepdb_v3\metaCluster\NPSearch\assembly\</OutputPath>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|x64'">

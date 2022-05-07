@@ -149,6 +149,9 @@ Namespace ComponentModel.Collection
         ''' <param name="key"></param>
         ''' <param name="lazyValue"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' target <paramref name="table"/> has been SyncLock at here
+        ''' </remarks>
         <Extension>
         Public Function ComputeIfAbsent(Of K, V)(table As IDictionary(Of K, V), key As K, lazyValue As Func(Of K, V)) As V
             SyncLock table

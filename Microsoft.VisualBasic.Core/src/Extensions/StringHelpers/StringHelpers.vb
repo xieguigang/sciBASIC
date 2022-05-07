@@ -824,13 +824,17 @@ Public Module StringHelpers
     ''' <param name="pattern">The regular expression pattern to match.</param>
     ''' <param name="options"></param>
     ''' <returns></returns>
-    <Extension> Public Function Match(<Parameter("input", "The string to search for a match.")> input$,
-                                      <Parameter("Pattern", "The regular expression pattern to match.")> pattern$,
-                                      Optional options As RegexOptions = RegexOptions.Multiline) As String
+    <Extension>
+    Public Function Match(input$, pattern$, Optional options As RegexOptions = RegexOptions.Multiline) As String
         If input.StringEmpty Then
             Return ""
         Else
-            Return r.Match(input, pattern, options).Value
+            Static cache As New Dictionary(Of String, Regex)
+
+            Return cache _
+                .ComputeIfAbsent(pattern, lazyValue:=Function() New Regex(pattern, options)) _
+                .Match(input) _
+                .Value
         End If
     End Function
 
@@ -842,7 +846,8 @@ Public Module StringHelpers
     ''' <param name="options"></param>
     ''' <returns></returns>
     <ExportAPI("Match")>
-    <Extension> Public Function Match(input As Match, pattern$, Optional options As RegexOptions = RegexOptions.Multiline) As String
+    <Extension>
+    Public Function Match(input As Match, pattern$, Optional options As RegexOptions = RegexOptions.Multiline) As String
         Return r.Match(input.Value, pattern, options).Value
     End Function
 

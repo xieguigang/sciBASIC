@@ -414,7 +414,8 @@ Namespace Math
         ''' <remarks></remarks>
         ''' 
         <ExportAPI("Sum")>
-        <Extension> Public Function Sum(bc As IEnumerable(Of Boolean)) As Double
+        <Extension>
+        Public Function Sum(bc As IEnumerable(Of Boolean)) As Double
             If bc Is Nothing Then
                 Return 0
             Else
@@ -558,7 +559,8 @@ Namespace Math
         ''' <returns></returns>
         ''' <remarks></remarks>
         ''' 
-        <Extension> Public Function SD(values As IEnumerable(Of Integer)) As Double
+        <Extension>
+        Public Function SD(values As IEnumerable(Of Integer)) As Double
             Return values.Select(Function(x) CDbl(x)).SD
         End Function
 
@@ -568,7 +570,8 @@ Namespace Math
         ''' <returns></returns>
         ''' <remarks></remarks>
         ''' 
-        <Extension> Public Function SD(values As IEnumerable(Of Long)) As Double
+        <Extension>
+        Public Function SD(values As IEnumerable(Of Long)) As Double
             Return values.Select(Function(x) CDbl(x)).SD
         End Function
 
@@ -578,25 +581,29 @@ Namespace Math
         ''' <returns></returns>
         ''' <remarks></remarks>
         ''' 
-        <Extension> Public Function SD(values As IEnumerable(Of Single)) As Double
+        <Extension>
+        Public Function SD(values As IEnumerable(Of Single)) As Double
             Return values.Select(Function(x) CDbl(x)).SD
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("RangesAt")>
-        <Extension> Public Function RangesAt(n As Double, LowerBound As Double, UpBound As Double) As Boolean
+        <Extension>
+        Public Function RangesAt(n As Double, LowerBound As Double, UpBound As Double) As Boolean
             Return n <= UpBound AndAlso n > LowerBound
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("RangesAt")>
-        <Extension> Public Function RangesAt(n As Integer, LowerBound As Double, UpBound As Double) As Boolean
+        <Extension>
+        Public Function RangesAt(n As Integer, LowerBound As Double, UpBound As Double) As Boolean
             Return n <= UpBound AndAlso n > LowerBound
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("RangesAt")>
-        <Extension> Public Function RangesAt(n As Long, LowerBound As Double, UpBound As Double) As Boolean
+        <Extension>
+        Public Function RangesAt(n As Long, LowerBound As Double, UpBound As Double) As Boolean
             Return n <= UpBound AndAlso n > LowerBound
         End Function
 
@@ -625,7 +632,35 @@ Namespace Math
         End Function
 
         ''' <summary>
-        ''' ``相对标准偏差（RSD）= 标准偏差（SD）/ 计算结果的算术平均值（X）* 100%``
+        ''' ## relative standard deviation
+        ''' 
+        ''' Relative standard deviation is a common formula 
+        ''' used in statistics and probability theory to determine
+        ''' a standardized measure of the ratio of the standard
+        ''' deviation to the mean. This formula is useful in
+        ''' various situations including when comparing your 
+        ''' own data to other related data and in financial 
+        ''' settings such as the stock market.
+        ''' 
+        ''' Relative standard deviation, which also may be referred 
+        ''' to as RSD or the coefficient of variation, is used 
+        ''' to determine if the standard deviation of a set of 
+        ''' data is small or large when compared to the mean.
+        ''' In other words, the relative standard deviation can
+        ''' tell you how precise the average of your results is.
+        ''' This formula is most frequently used in chemistry, 
+        ''' statistics and other math-related settings but can 
+        ''' also be used in the business world when assessing
+        ''' finances and the stock market.
+        ''' 
+        ''' The relative standard deviation Of a Set Of data can be
+        ''' depicted As either a percentage Or As a number. The 
+        ''' higher the relative standard deviation, the more spread 
+        ''' out the results are from the mean Of the data. On the
+        ''' other hand, a lower relative standard deviation means 
+        ''' that the measurement Of data Is more precise.
+        ''' 
+        ''' (``相对标准偏差（RSD）= 标准偏差（SD）/ 计算结果的算术平均值（X）* 100%``)
         ''' </summary>
         ''' <param name="data"></param>
         ''' <returns></returns>
@@ -645,7 +680,8 @@ Namespace Math
         End Function
 
         ''' <summary>
-        ''' Returns the PDF value at x for the specified Poisson distribution.
+        ''' Returns the PDF value at x for the specified 
+        ''' Poisson distribution.
         ''' </summary>
         ''' 
         <ExportAPI("Poisson.PDF")>

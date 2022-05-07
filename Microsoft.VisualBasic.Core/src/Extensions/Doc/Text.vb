@@ -354,6 +354,7 @@ Public Module TextDoc
         If path.FileExists Then
             Return path.IterateAllLines(encoding:=Encoding).ToArray
         Else
+            Call $"missing text file: {path.GetFullPath}!".Warning
             Return New String() {}
         End If
     End Function

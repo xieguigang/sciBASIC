@@ -25,6 +25,12 @@ Namespace XML._rels
             Return document.GetXml
         End Function
 
+        Public Shared Function Load(file As String) As rels
+            Return New rels With {
+                .document = file.LoadXml(Of OpenXml.rels)
+            }
+        End Function
+
         Public Overrides Function ToString() As String
             Return filePath()
         End Function

@@ -173,17 +173,21 @@ Public Module DataImports
     ''' <remarks></remarks>
     ''' 
     Public Function RowParsing(Line As String, SplitRegxExpression As String) As RowObject
-        Dim columns$() = Regex.Split(Line, SplitRegxExpression)
+        If Line.StringEmpty(whitespaceAsEmpty:=False) Then
+            Return New RowObject(New String() {})
+        Else
+            Dim columns$() = Regex.Split(Line, SplitRegxExpression)
 
-        For i As Integer = 0 To columns.Length - 1
-            If Not String.IsNullOrEmpty(columns(i)) Then
-                If columns(i).First = """"c AndAlso columns(i).Last = """"c Then
-                    columns(i) = Mid(columns(i), 2, Len(columns(i)) - 2)
+            For i As Integer = 0 To columns.Length - 1
+                If Not String.IsNullOrEmpty(columns(i)) Then
+                    If columns(i).First = """"c AndAlso columns(i).Last = """"c Then
+                        columns(i) = Mid(columns(i), 2, Len(columns(i)) - 2)
+                    End If
                 End If
-            End If
-        Next
+            Next
 
-        Return columns
+            Return New RowObject(columns)
+        End If
     End Function
 
     ''' <summary>

@@ -106,7 +106,11 @@ Namespace IO
         ''' <param name="s"></param>
         ''' <returns></returns>
         Public Shared Function CharsParser(s$, Optional delimiter As Char = ","c, Optional quot As Char = ASCII.Quot) As IEnumerable(Of String)
-            Return New RowTokenizer(s).GetTokens(delimiter, quot)
+            If s.StringEmpty(whitespaceAsEmpty:=False) Then
+                Return New String() {}
+            Else
+                Return New RowTokenizer(s).GetTokens(delimiter, quot)
+            End If
         End Function
 
         ''' <summary>
