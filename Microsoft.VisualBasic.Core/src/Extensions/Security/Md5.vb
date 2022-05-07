@@ -198,6 +198,7 @@ Namespace SecurityString
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Md5")>
+        <Extension>
         Public Function GetMd5Hash(input As Byte()) As String
             Return New Md5HashProvider().GetMd5Hash(input)
         End Function
