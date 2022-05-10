@@ -66,7 +66,7 @@ Namespace ComponentModel.Algorithm
             Dim compares = Algorithm.Block(Of T).GetComparision
 
             For Each x In input
-                If x.tag - min < delta Then
+                If x.tag - min <= delta Then
                     tmp.Add(x)
                 ElseIf tmp > 0 Then
                     block = New Block(Of T)(tmp.PopAll)
