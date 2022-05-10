@@ -55,14 +55,14 @@ Namespace ComponentModel.Algorithm
         Dim eval As Func(Of T, Double)
         Dim tolerance As Double
 
-        Sub New(data As IEnumerable(Of T), eval As Func(Of T, Double), tolerance As Double, Optional blockSize As Integer = 100)
+        Sub New(data As IEnumerable(Of T), eval As Func(Of T, Double), tolerance As Double)
             Dim input = getOrderSeq(data, eval).ToArray
             Dim blocks As New List(Of Block(Of T))
             Dim block As Block(Of T)
             Dim tmp As New List(Of SequenceTag(Of T))
             Dim min As Double = input.First.tag
             Dim max As Double = input.Last.tag
-            Dim delta As Double = (max - min) / blockSize * 1.25
+            Dim delta As Double = tolerance * 2
             Dim compares = Algorithm.Block(Of T).GetComparision
 
             For Each x In input
@@ -70,7 +70,7 @@ Namespace ComponentModel.Algorithm
                     tmp.Add(x)
                 ElseIf tmp > 0 Then
                     block = New Block(Of T)(tmp.PopAll)
-                    min = block.min
+                    min = block.max
                     blocks.Add(block)
                 End If
             Next
