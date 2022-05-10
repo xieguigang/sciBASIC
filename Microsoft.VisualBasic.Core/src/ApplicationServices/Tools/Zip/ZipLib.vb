@@ -298,6 +298,18 @@ Namespace ApplicationServices.Zip
             End Using
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="zipFile"></param>
+        ''' <param name="files">
+        ''' a file path list to save into the zip package file, should be full path!
+        ''' </param>
+        ''' <param name="mode"></param>
+        ''' <param name="fileOverwrite"></param>
+        ''' <param name="compression"></param>
+        ''' <param name="relativeDir"></param>
+        ''' <param name="parent$"></param>
         <Extension>
         Public Sub WriteFiles(zipFile As ZipArchive, files As String(), mode As ZipArchiveMode,
                               Optional fileOverwrite As Overwrite = Overwrite.IfNewer,

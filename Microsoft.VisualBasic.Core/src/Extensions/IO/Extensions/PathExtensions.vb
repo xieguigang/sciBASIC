@@ -266,7 +266,9 @@ Public Module PathExtensions
     ''' Default is ``*.*`` for match any kind of files.
     ''' (文件名进行匹配的关键词)
     ''' </param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' a collection of file full paths
+    ''' </returns>
     <Extension>
     Public Function EnumerateFiles(dir$, ParamArray keyword$()) As IEnumerable(Of String)
         Const top = FileIO.SearchOption.SearchTopLevelOnly
