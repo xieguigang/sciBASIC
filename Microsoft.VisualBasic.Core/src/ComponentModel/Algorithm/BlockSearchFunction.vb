@@ -16,6 +16,10 @@ Namespace ComponentModel.Algorithm
             max = block.Last.tag
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return $"[{min} ~ {max}] {block.Length} elements"
+        End Function
+
         Friend Shared Function GetComparision() As Comparison(Of Block(Of T))
             Return Function(source, target)
                        ' target is the input data to search
@@ -38,6 +42,10 @@ Namespace ComponentModel.Algorithm
         Dim i As Integer
         Dim tag As Double
         Dim data As T
+
+        Public Overrides Function ToString() As String
+            Return $"[{i}] {tag}"
+        End Function
 
     End Structure
 
