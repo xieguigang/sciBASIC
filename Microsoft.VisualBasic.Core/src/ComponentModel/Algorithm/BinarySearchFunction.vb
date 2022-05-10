@@ -55,6 +55,11 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace ComponentModel.Algorithm
 
+    ''' <summary>
+    ''' 精确查找某一个对象
+    ''' </summary>
+    ''' <typeparam name="K"></typeparam>
+    ''' <typeparam name="T"></typeparam>
     Public Class BinarySearchFunction(Of K, T)
 
         ReadOnly sequence As (index As Integer, key As K, T)()
@@ -68,6 +73,12 @@ Namespace ComponentModel.Algorithm
                 Else
                     Return rawOrder(i)
                 End If
+            End Get
+        End Property
+
+        Public ReadOnly Property size As Integer
+            Get
+                Return rawOrder.Length
             End Get
         End Property
 
