@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Language
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports stdNum = System.Math
 
@@ -55,14 +56,14 @@ Namespace ComponentModel.Algorithm
         Dim eval As Func(Of T, Double)
         Dim tolerance As Double
 
-        Sub New(data As IEnumerable(Of T), eval As Func(Of T, Double), tolerance As Double)
+        Sub New(data As IEnumerable(Of T), eval As Func(Of T, Double), tolerance As Double, Optional factor As Double = 2)
             Dim input = getOrderSeq(data, eval).ToArray
             Dim blocks As New List(Of Block(Of T))
             Dim block As Block(Of T)
             Dim tmp As New List(Of SequenceTag(Of T))
             Dim min As Double = input.First.tag
             Dim max As Double = input.Last.tag
-            Dim delta As Double = tolerance * 2
+            Dim delta As Double = tolerance * factor
             Dim compares = Algorithm.Block(Of T).GetComparision
 
             For Each x In input
@@ -70,8 +71,9 @@ Namespace ComponentModel.Algorithm
                     tmp.Add(x)
                 ElseIf tmp > 0 Then
                     block = New Block(Of T)(tmp.PopAll)
-                    min = block.max
+                    min = x.tag
                     blocks.Add(block)
+                    tmp.Add(x)
                 End If
             Next
 
@@ -85,6 +87,7 @@ Namespace ComponentModel.Algorithm
             Me.binary = New BinarySearchFunction(Of Block(Of T), Block(Of T))(blocks, Function(any) any, compares)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function getOrderSeq(data As IEnumerable(Of T), eval As Func(Of T, Double)) As IEnumerable(Of SequenceTag(Of T))
             Return data _
                 .Select(Function(a) (a, eval(a))) _
@@ -104,12 +107,14 @@ Namespace ComponentModel.Algorithm
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        Public Iterator Function Search(x As T) As IEnumerable(Of T)
+        Public Iterator Function Search(x As T, Optional tolerance As Double? = Nothing) As IEnumerable(Of T)
             Dim wrap As New Block(Of T) With {.min = eval(x)}
             Dim i As Integer = binary.BinarySearch(target:=wrap)
 
             If i = -1 Then
                 Return
+            ElseIf tolerance Is Nothing Then
+                tolerance = Me.tolerance
             End If
 
             Dim joint As New List(Of SequenceTag(Of T))
