@@ -466,4 +466,6 @@ BufferLength = BitConverter.ToInt64(bitChunk, Scan0)
 
 ![](./www/data/github/xieguigang_github-vcard.png)
 
-> Copyleft 2018, [I@xieguigang.me](mailto://I@xieguigang.me) (http://sciBASIC.NET/)
+<img src="https://starchart.cc/xieguigang/sciBASIC.svg" alt="Stargazers over time" style="max-width: 60%">
+
+> Copyleft 2022, [I@xieguigang.me](mailto://I@xieguigang.me) (http://sciBASIC.NET/)
