@@ -953,13 +953,30 @@ Public Module StringHelpers
     ''' <remarks></remarks>
     <Extension>
     Public Function StringSplit(source$, pattern$,
-                                Optional TrimTrailingEmptyStrings As Boolean = False,
+                                Optional trimTrailingEmptyStrings As Boolean = False,
                                 Optional opt As RegexOptions = RegexICSng) As String()
 
         If source.StringEmpty Then
             Return {}
         Else
-            Return source.StringSplit(New Regex(pattern, opt), TrimTrailingEmptyStrings)
+            Static patternCache As New Dictionary(Of RegexOptions, Dictionary(Of String, Regex))
+
+            SyncLock patternCache
+                Dim internalCache As Dictionary(Of String, Regex)
+                Dim r As Regex
+
+                If Not patternCache.ContainsKey(opt) Then
+                    Call patternCache.Add(opt, New Dictionary(Of String, r))
+                End If
+
+                internalCache = patternCache(opt)
+
+                If Not internalCache.ContainsKey(pattern) Then
+                    Call internalCache.Add(pattern, New Regex(pattern, opt))
+                End If
+
+                Return source.StringSplit(internalCache(pattern), trimTrailingEmptyStrings)
+            End SyncLock
         End If
     End Function
 
@@ -972,14 +989,14 @@ Public Module StringHelpers
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension>
-    Public Function StringSplit(source$, pattern As Regex, Optional TrimTrailingEmptyStrings As Boolean = False) As String()
+    Public Function StringSplit(source$, pattern As Regex, Optional trimTrailingEmptyStrings As Boolean = False) As String()
         If source.StringEmpty Then
             Return {}
         End If
 
         Dim splitArray$() = pattern.Split(source)
 
-        If Not TrimTrailingEmptyStrings OrElse splitArray.Length <= 1 Then
+        If Not trimTrailingEmptyStrings OrElse splitArray.Length <= 1 Then
             Return splitArray
         Else
             Return splitArray _
