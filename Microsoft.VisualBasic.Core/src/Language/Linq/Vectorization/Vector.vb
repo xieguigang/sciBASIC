@@ -335,7 +335,9 @@ Namespace Language.Vectorization
         Default Public Overloads ReadOnly Property Item([where] As Predicate(Of T)) As T()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return buffer.Where(Function(o) where(o)).ToArray
+                Return buffer _
+                    .Where(Function(o) where(o)) _
+                    .ToArray
             End Get
         End Property
 
@@ -360,12 +362,14 @@ Namespace Language.Vectorization
                             buffer(i) = [single]
                         End If
                     Next
-                Else
-                    For Each i In flags.SeqIterator
-                        If i.value Then
+                ElseIf flags.Length = value.Length Then
+                    For i As Integer = 0 To flags.Length - 1
+                        If True = flags(i) Then
                             buffer(i) = value(i)
                         End If
                     Next
+                Else
+                    Throw New InvalidProgramException($"the test cndition size({flags.Length}) must be equals to the value vector size({value.Length})!")
                 End If
             End Set
         End Property

@@ -109,6 +109,7 @@ Namespace KMeans
                                expected%,
                                Optional debug As Boolean = True,
                                Optional parallel As Boolean = True) As List(Of EntityClusterModel)
+
             Dim rawInput As EntityClusterModel() = source.ToArray
             Dim maps As String() = rawInput _
                 .Select(Function(a) a.Properties.Keys) _

@@ -69,6 +69,18 @@ Namespace LinearAlgebra.Matrix
         Row = 1
     End Enum
 
+    Public NotInheritable Class Numpy
+
+        Private Sub New()
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function array(v As IEnumerable(Of Double)) As Vector
+            Return New Vector(data:=v)
+        End Function
+
+    End Class
+
     <HideModuleName> Public Module NumpyExtensions
 
         ''' <summary>
