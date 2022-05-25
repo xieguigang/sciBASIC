@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::dbd114f10611ca27be2d072afceacf10, sciBASIC#\Data_science\Visualization\Plots\Scatter\Scatter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 550
-    '    Code Lines: 459
-    ' Comment Lines: 55
-    '   Blank Lines: 36
-    '     File Size: 24.86 KB
+' Summaries:
 
 
-    ' Module Scatter
-    ' 
-    '     Function: CreateAxisTicks, (+2 Overloads) FromPoints, FromVector, getSplinePoints, (+5 Overloads) Plot
-    '               PlotFunction
-    ' 
-    '     Sub: Plot
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 550
+'    Code Lines: 459
+' Comment Lines: 55
+'   Blank Lines: 36
+'     File Size: 24.86 KB
+
+
+' Module Scatter
+' 
+'     Function: CreateAxisTicks, (+2 Overloads) FromPoints, FromVector, getSplinePoints, (+5 Overloads) Plot
+'               PlotFunction
+' 
+'     Sub: Plot
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -80,8 +80,40 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Public Module Scatter
 
+    ''' <summary>
+    ''' A jitter function to randomly assign the x-axis 
+    ''' positions for each x-parameter
+    ''' </summary>
+    ''' <param name="a"></param>
+    ''' <param name="width_jit"></param>
+    ''' <returns></returns>
+    Public Function Jitter(a As Vector, width_jit As Double) As Vector
+        a += Vector.rand(a.Length) * width_jit - width_jit / 2
+        Return a
+    End Function
+
+    Public Iterator Function MakeJitter(groups As IEnumerable(Of NamedValue(Of Vector)),
+                                        width_jit As Double,
+                                        Optional dodge_gap As Double = 1) As IEnumerable(Of NamedValue(Of Vector))
+        For Each grp In groups
+            Dim grpl As Double = grp.Value.Length
+            Dim uniq As Double = Val(grp.Description)
+            Dim x As Vector = (grp.Value - 0.25 * dodge_gap) + 0.5 * dodge_gap * (grpl - 1) / (If(uniq = 0.0, grpl, uniq) - 1)
+
+            x = Jitter(x, width_jit)
+
+            Yield New NamedValue(Of Vector) With {
+                .Name = grp.Name,
+                .Value = x
+            }
+        Next
+    End Function
+
     <Extension>
-    Public Function CreateAxisTicks(array As SerialData(), Optional preferPositive As Boolean = False, Optional scaleX# = 1.2, Optional scaleY# = 1.2) As (x As Double(), y As Double())
+    Public Function CreateAxisTicks(array As SerialData(),
+                                    Optional preferPositive As Boolean = False,
+                                    Optional scaleX# = 1.2,
+                                    Optional scaleY# = 1.2) As (x As Double(), y As Double())
         Dim ptX#() = array _
             .Select(Function(s)
                         Return s.pts.Select(Function(pt) CDbl(pt.pt.X))
@@ -424,7 +456,7 @@ Public Module Scatter
             .title = title,
             .width = width,
             .pts = LinqAPI.Exec(Of PointData) <=
- _
+                                                _
                 From o As SeqValue(Of Double)
                 In y0.SeqIterator
                 Where Not o.value.IsNaNImaginary
