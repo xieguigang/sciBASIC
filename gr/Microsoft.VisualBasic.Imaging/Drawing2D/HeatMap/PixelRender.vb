@@ -111,26 +111,50 @@ Namespace Drawing2D.HeatMap
             Dim level As Integer
             Dim color As Color
             Dim full As New Rectangle(0, 0, raw.Width, raw.Height)
+            Dim fillRect As Boolean = Not App.IsMicrosoftPlatform
+            Dim pixel As RectangleF
+            Dim g As IGraphics = raw.CreateCanvas2D(directAccess:=True)
 
-            Call raw _
-                .CreateCanvas2D(directAccess:=True) _
-                .Clear(defaultColor)
+            Call g.Clear(defaultColor)
+            '
+            ' 20220525 set pixels is not working on the linux server platform
+            '
+            If fillRect Then
+                Dim solids As SolidBrush() = colors _
+                    .Select(Function(c) New SolidBrush(c)) _
+                    .ToArray
+                Dim paint As SolidBrush
+                Dim defaultPaint As New SolidBrush(defaultColor)
 
-            Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(raw, ImageLockMode.WriteOnly)
                 For Each point As Pixel In ScalePixels(pixels)
                     level = CInt(point.Scale)
 
                     If level <= 0.0 Then
-                        color = defaultColor
+                        paint = defaultPaint
                     Else
-                        color = colors(level)
+                        paint = solids(level)
                     End If
 
-                    ' imzXML里面的坐标是从1开始的
-                    ' 需要减一转换为.NET中从零开始的位置
-                    Call buffer.SetPixel(point.X - 1, point.Y - 1, color)
+                    pixel = New RectangleF(point.X, point.Y, 1, 1)
+                    g.FillRectangle(paint, pixel)
                 Next
-            End Using
+            Else
+                Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(raw, ImageLockMode.WriteOnly)
+                    For Each point As Pixel In ScalePixels(pixels)
+                        level = CInt(point.Scale)
+
+                        If level <= 0.0 Then
+                            color = defaultColor
+                        Else
+                            color = colors(level)
+                        End If
+
+                        ' imzXML里面的坐标是从1开始的
+                        ' 需要减一转换为.NET中从零开始的位置
+                        Call buffer.SetPixel(point.X - 1, point.Y - 1, color)
+                    Next
+                End Using
+            End If
 
             Return raw
         End Function

@@ -158,11 +158,20 @@ Namespace Analysis
         ''' a network model with the <see cref="NamesOf.REFLECTION_ID_MAPPING_NODETYPE"/> 
         ''' property data has been assigned as the community tags.
         ''' </returns>
-        Public Shared Function Analysis(ByRef g As NetworkGraph, Optional eps As Double = 0.00001) As NetworkGraph
+        Public Shared Function Analysis(ByRef g As NetworkGraph,
+                                        Optional eps As Double = 0.00001,
+                                        Optional prefix As String = Nothing) As NetworkGraph
+
             Dim clusters As String() = Louvain.Builder _
                 .Load(g, eps:=eps) _
                 .SolveClusters _
                 .GetCommunity
+
+            If Not prefix.StringEmpty Then
+                clusters = clusters _
+                    .Select(Function(id) $"{prefix}{id}") _
+                    .ToArray
+            End If
 
             For Each v As Node In g.vertex
                 v.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE) = clusters(v.ID)

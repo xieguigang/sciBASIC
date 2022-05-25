@@ -103,10 +103,14 @@ Namespace Drawing2D.Math2D.ConvexHull
                 q = nextHullPoint(vector, hull(counter))
 
                 If Not q = hull(0) Then
-                    hull.Add(q)
+                    Call hull.Add(q)
                 End If
 
                 counter += 1
+
+                If hull.Count / vector.Length > 100 Then
+                    Exit While
+                End If
             End While
 
             Return hull

@@ -60,6 +60,14 @@ Namespace d3js.Layout
 
         Protected m_labels As Label()
         Protected m_anchors As Anchor()
+
+        ''' <summary>
+        ''' the index of the labels which is unpinned
+        ''' (can move on the canvas) in the array of 
+        ''' <see cref="m_labels"/>, this index value 
+        ''' can also used for read anchor object from 
+        ''' the <see cref="m_anchors"/>.
+        ''' </summary>
         Protected unpinnedLabels As Integer()
 
         ''' <summary>
@@ -70,7 +78,9 @@ Namespace d3js.Layout
         Protected offset As PointF
 
         ''' <summary>
-        ''' main simulated annealing function.(这个函数运行完成之后，可以直接使用<see cref="Label.X"/>和<see cref="Label.Y"/>位置数据进行作图)
+        ''' main simulated annealing function.
+        ''' (这个函数运行完成之后，可以直接使用<see cref="Label.X"/>和
+        ''' <see cref="Label.Y"/>位置数据进行作图)
         ''' </summary>
         ''' <param name="nsweeps"></param>
         ''' <returns></returns>

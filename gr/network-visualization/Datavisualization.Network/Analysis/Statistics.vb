@@ -94,7 +94,12 @@ Namespace Analysis
         ''' <returns></returns>
         <Extension>
         Public Function ComputeBetweennessCentrality(ByRef graph As NetworkGraph, Optional base% = 0) As Dictionary(Of String, Integer)
-            Dim data As Dictionary(Of String, Integer) = graph.BetweennessCentrality.ToDictionary(Function(a) a.Key, Function(a) a.Value + base)
+            Dim data As Dictionary(Of String, Integer) = graph _
+                .BetweennessCentrality _
+                .ToDictionary(Function(a) a.Key,
+                              Function(a)
+                                  Return a.Value + base
+                              End Function)
             ' convert to double for avoid the integer upbound overflow
             ' when deal with the network graph in ultra large size
             Dim sumAll As Double = data.Values.Select(Function(i) CDbl(i)).Sum

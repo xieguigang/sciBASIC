@@ -56,17 +56,17 @@ Module AutoContext
 
     Friend Const AutoContext As String = "graphquery-auto-context"
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Friend Function IsAutoContext(element As HtmlElement) As Boolean
         Return element.hasAttribute(AutoContext)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Attribute() As ValueAttribute
         Return New ValueAttribute With {
             .Name = AutoContext,
-            .Values = Environment.StackTrace _
-                .LineTokens _
-                .AsList
+            .Values = New List(Of String) From {"in-memory-source"}
         }
     End Function
 

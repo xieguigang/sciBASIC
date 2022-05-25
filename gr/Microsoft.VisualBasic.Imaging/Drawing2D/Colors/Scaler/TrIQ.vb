@@ -95,7 +95,7 @@ Namespace Drawing2D.Colors.Scaler
         ''' <param name="q"></param>
         ''' <param name="N"></param>
         ''' <param name="eps"></param>
-        ''' <returns></returns>
+        ''' <returns>the upper bound raw value of the threshold</returns>
         <Extension>
         Public Function FindThreshold(data As IEnumerable(Of Double), q As Double,
                                       Optional N As Integer = 100,
