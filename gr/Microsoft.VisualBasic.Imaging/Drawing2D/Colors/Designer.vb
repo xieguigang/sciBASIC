@@ -499,18 +499,27 @@ Namespace Drawing2D.Colors
         ''' **<see cref="ColorCube.GetColorSequence"/>**
         ''' 
         ''' Some useful color tables for images and tools to handle them.
-        ''' Several color scales useful for image plots: a pleasing rainbow style color table patterned after 
-        ''' that used in Matlab by Tim Hoar and also some simple color interpolation schemes between two or 
-        ''' more colors. There is also a function that converts between colors and a real valued vector.
+        ''' Several color scales useful for image plots: a pleasing rainbow 
+        ''' style color table patterned after that used in Matlab by Tim 
+        ''' Hoar and also some simple color interpolation schemes between 
+        ''' two or more colors. There is also a function that converts 
+        ''' between colors and a real valued vector.
         ''' </summary>
-        ''' <param name="col">A list of colors (names or hex values) to interpolate</param>
-        ''' <param name="n">Number of color levels. The setting n=64 is the orignal definition.</param>
+        ''' <param name="col">
+        ''' A list of colors (names or hex values) to interpolate.
+        ''' </param>
+        ''' <param name="n">
+        ''' Number of color levels. The setting n=64 is the 
+        ''' orignal definition.
+        ''' </param>
         ''' <param name="alpha">
-        ''' The transparency of the color – 255 is opaque and 0 is transparent. This is useful for 
-        ''' overlays of color and still being able to view the graphics that is covered.
+        ''' The transparency of the color – 255 is opaque and 0 is transparent. 
+        ''' This is useful for overlays of color and still being able to view 
+        ''' the graphics that is covered.
         ''' </param>
         ''' <returns>
-        ''' A vector giving the colors in a hexadecimal format, two extra hex digits are added for the alpha channel.
+        ''' A vector giving the colors in a hexadecimal format, two extra 
+        ''' hex digits are added for the alpha channel.
         ''' </returns>
         Public Function Colors(col As Color(), Optional n% = 256, Optional alpha% = 255) As Color()
             Dim out As New List(Of Color)
@@ -535,7 +544,12 @@ Namespace Drawing2D.Colors
         ''' <param name="colors"></param>
         ''' <param name="n">所期望的颜色的数量</param>
         ''' <returns></returns>
-        ''' 
+        ''' <remarks>
+        ''' if the <paramref name="n"/> value less than the 
+        ''' collection size of the input <paramref name="colors"/>, 
+        ''' then top n colors will be takes from the input 
+        ''' color.
+        ''' </remarks>
         <Extension>
         Public Function CubicSpline(colors As IEnumerable(Of Color), Optional n% = 256, Optional alpha% = 255) As Color()
             Dim source As Color() = colors.ToArray

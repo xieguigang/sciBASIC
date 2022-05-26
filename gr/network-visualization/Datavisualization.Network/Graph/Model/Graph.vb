@@ -615,7 +615,7 @@ Namespace Graph
         Private Function Clone(vertex As IEnumerable(Of Node)) As Object
             Dim g As New NetworkGraph
 
-            For Each v In vertex
+            For Each v As Node In vertex
                 g.CreateNode(v.label, v.data.Clone)
             Next
 

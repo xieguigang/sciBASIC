@@ -168,6 +168,11 @@ Namespace d3js.Layout
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function distanceTo(anchor As Anchor) As Double
+            Return (X - anchor.x) ^ 2 + (Y - anchor.y) ^ 2
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(label As Label) As PointF
             Return New PointF With {
                 .X = label.X,
