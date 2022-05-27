@@ -55,7 +55,6 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math.Scripting
 
 Namespace d3js.scale
 
@@ -82,6 +81,12 @@ Namespace d3js.scale
             End Get
         End Property
 
+        Public ReadOnly Property binWidth As Double
+            Get
+                Return lazyPositions(1) - lazyPositions(0)
+            End Get
+        End Property
+
         Default Public Overrides ReadOnly Property Value(x As Double) As Double
             Get
                 Return Me(x.ToString)
@@ -96,32 +101,30 @@ Namespace d3js.scale
 
         Default Public Overrides ReadOnly Property Value(term As String) As Double
             Get
-                If positions.IsNullOrEmpty Then
-                    positions = _range.Enumerate(index.Count + 1)
-                End If
-
                 If Not index.NotExists(term) Then
                     Dim i As Integer = index(term) + 1
-                    Dim val As Double = positions(i)
+                    Dim val As Double = lazyPositions(i)
 
                     Return val
                 Else
-                    'For Each factor In factors.SeqIterator
-                    '    With factor.value
-                    '        If term < .FactorValue Then
-                    '            If factor.i = 0 Then
-                    '                Return .Value
-                    '            End If
-                    '            Return (factors(factor.i - 1).Value + .Value) / 2
-                    '        End If
-                    '    End With
-                    'Next
-
-                    'Return factors.Last.Value
-                    Throw New NotImplementedException
+                    Throw New MissingMemberException($"missing ordinal mapping: {term}!")
                 End If
             End Get
         End Property
+
+        Public Overrides ReadOnly Property type As scalers
+            Get
+                Return scalers.ordinal
+            End Get
+        End Property
+
+        Private Function lazyPositions() As Double()
+            If positions.IsNullOrEmpty Then
+                positions = _range.Enumerate(index.Count + 1)
+            End If
+
+            Return positions
+        End Function
 
         Public Overrides Function range(Optional values As IEnumerable(Of Double) = Nothing) As OrdinalScale
             _range = values.Range
@@ -159,7 +162,7 @@ Namespace d3js.scale
             'index = factors _
             '    .Select(Function(x) x.FactorValue) _
             '    .Indexing
-            index = values.Indexing
+            index = values.Distinct.Indexing
 
             Return Me
         End Function

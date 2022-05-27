@@ -69,6 +69,8 @@ Namespace d3js.scale
     ''' </summary>
     Public MustInherit Class Scaler
 
+        Public MustOverride ReadOnly Property type As scalers
+
         ''' <summary>
         ''' value transform
         ''' </summary>

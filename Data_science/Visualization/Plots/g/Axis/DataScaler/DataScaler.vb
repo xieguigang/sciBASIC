@@ -79,6 +79,12 @@ Namespace Graphic.Axis
         Public Property X As Scaler
         Public Property AxisTicks As (X As Vector, Y As Vector)
 
+        Public ReadOnly Property xscale As scalers
+            Get
+                Return X.type
+            End Get
+        End Property
+
         Public ReadOnly Property xmin As Double
             Get
                 Return AxisTicks.X.Min
@@ -145,6 +151,11 @@ Namespace Graphic.Axis
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function TranslateX(x#) As Double
+            Return Me.X(x)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function TranslateX(x As String) As Double
             Return Me.X(x)
         End Function
 
