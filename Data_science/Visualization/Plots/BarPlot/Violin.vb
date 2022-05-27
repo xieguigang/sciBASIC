@@ -121,6 +121,29 @@ Public Class Violin : Inherits Plot
                             canvas:=canvas,
                             theme:=theme)
 
+            If theme.xAxisRotate = 0.0 Then
+                labelPos = New PointF With {
+                .X = X - labelSize.Width / 2,
+                .Y = plotRegion.Bottom + labelSize.Height * 1.125
+            }
+
+                Call g.DrawString(group.name, labelFont, Brushes.Black, labelPos)
+            Else
+                labelPos = New PointF With {
+                        .X = X - labelSize.Width / 2,
+                        .Y = plotRegion.Bottom + labelSize.Width * stdNum.Sin(stdNum.PI / 4)
+                    }
+
+                ' 绘制X坐标轴分组标签
+                Call New GraphicsText(DirectCast(g, GDICanvas).Graphics).DrawString(
+                s:=group.name,
+                font:=labelFont,
+                brush:=Brushes.Black,
+                point:=labelPos,
+                angle:=theme.xAxisRotate
+            )
+            End If
+
             X += semiWidth + groupInterval + semiWidth
         Next
     End Sub
@@ -200,11 +223,11 @@ Public Class Violin : Inherits Plot
 
         ' draw IQR
         Dim iqrBox As New RectangleF With {
-                    .Width = 32,
-                    .X = x - .Width / 2,
-                    .Y = yscale.TranslateY(quartile.Q3),
-                    .Height = stdNum.Abs(.Y - yQ1)
-                }
+            .Width = 32,
+            .X = x - .Width / 2,
+            .Y = yscale.TranslateY(quartile.Q3),
+            .Height = stdNum.Abs(.Y - yQ1)
+        }
 
         Call g.FillRectangle(polygonStroke.Brush, iqrBox)
 
@@ -213,48 +236,24 @@ Public Class Violin : Inherits Plot
         lowerBound = group.Average - 1.96 * group.SD
 
         Call g.DrawLine(
-                    pen:=polygonStroke,
-                    pt1:=New PointF(x, yscale.TranslateY(lowerBound)),
-                    pt2:=New PointF(x, yscale.TranslateY(upperBound))
-                )
+            pen:=polygonStroke,
+            pt1:=New PointF(x, yscale.TranslateY(lowerBound)),
+            pt2:=New PointF(x, yscale.TranslateY(upperBound))
+        )
 
         ' draw median point
         Call g.DrawCircle(New PointF(x + 1, yscale.TranslateY(quartile.Q2) - 1), 12, color:=Pens.White)
 
-        ' 在右上绘制数据的分布信息
-        Dim sampleDescrib As String =
+        If showStats Then
+            ' 在右上绘制数据的分布信息
+            Dim sampleDescrib As String =
                 $"CI95%: {lowerBound.ToString(theme.YaxisTickFormat)} ~ {upperBound.ToString(theme.YaxisTickFormat)}" & vbCrLf &
                 $"Median: {quartile.Q2.ToString(theme.YaxisTickFormat)}" & vbCrLf &
                 $"Normal Range: {(quartile.Q1 - 1.5 * quartile.IQR).ToString(theme.YaxisTickFormat)} ~ {(quartile.Q3 + 1.5 * quartile.IQR).ToString(theme.YaxisTickFormat)}"
 
-        Dim labelSize = g.MeasureString(group.name, labelFont)
-        Dim labelPos As PointF
+            Dim labelSize = g.MeasureString(group.name, labelFont)
 
-        If showStats Then
             Call g.DrawString(sampleDescrib, labelFont, Brushes.Black, New PointF(x + semiWidth / 5, upper + labelSize.Height * 2))
-        End If
-
-        If theme.xAxisRotate = 0.0 Then
-            labelPos = New PointF With {
-                .X = x - labelSize.Width / 2,
-                .Y = plotRegion.Bottom + labelSize.Height * 1.125
-            }
-
-            Call g.DrawString(group.name, labelFont, Brushes.Black, labelPos)
-        Else
-            labelPos = New PointF With {
-                        .X = x - labelSize.Width / 2,
-                        .Y = plotRegion.Bottom + labelSize.Width * stdNum.Sin(stdNum.PI / 4)
-                    }
-
-            ' 绘制X坐标轴分组标签
-            Call New GraphicsText(DirectCast(g, GDICanvas).Graphics).DrawString(
-                s:=group.name,
-                font:=labelFont,
-                brush:=Brushes.Black,
-                point:=labelPos,
-                angle:=theme.xAxisRotate
-            )
         End If
     End Sub
 End Class
