@@ -70,6 +70,12 @@ Namespace Graphic.Axis
             Return data.Range.CreateAxisTicks(ticks, decimalDigits)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function CreateAxisTicks(data As (min#, max#), Optional ticks% = 10, Optional decimalDigits% = 2) As Double()
+            Return New DoubleRange(data.min, data.max).CreateAxisTicks(ticks, decimalDigits)
+        End Function
+
         ''' <summary>
         ''' 
         ''' </summary>

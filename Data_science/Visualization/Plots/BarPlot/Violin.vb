@@ -174,12 +174,11 @@ Public Class Violin : Inherits Plot
         Dim n As Integer = 30
         Dim dstep = (upperBound - lowerBound) / n ' (group.Max - group.Min) / n
         Dim dy = stdNum.Abs(upper - lower) / n
-        Dim outliers As New List(Of PointF)
 
         For p As Integer = 0 To n
             Dim q1 = q0 + dstep
             Dim range As DoubleRange = {q0, q1}
-            Dim density = group.Count(AddressOf range.IsInside)
+            Dim density = quartile.ModelSamples.normal.Count(AddressOf range.IsInside)
 
             line_l += New PointF With {.X = density, .Y = lower - p * dy}
             line_r += New PointF With {.X = density, .Y = lower - p * dy}
