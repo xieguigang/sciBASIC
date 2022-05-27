@@ -138,6 +138,12 @@ Namespace d3js.scale
             End Get
         End Property
 
+        Public Overrides ReadOnly Property type As scalers
+            Get
+                Return scalers.linear
+            End Get
+        End Property
+
         Public Overrides Function ToString() As String
             Return $"[{_domain.Min}, {_domain.Max}] --> [{_range.Min}, {_range.Max}]"
         End Function

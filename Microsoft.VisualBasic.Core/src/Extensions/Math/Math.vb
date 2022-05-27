@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::3f6ac01bacf524e23d19acd313c14488, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Math.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 614
-    '    Code Lines: 362
-    ' Comment Lines: 183
-    '   Blank Lines: 69
-    '     File Size: 20.71 KB
+' Summaries:
 
 
-    '     Module VBMath
-    ' 
-    '         Function: Covariance, CumSum, Factorial, FactorialSequence, FormatNumeric
-    '                   Hypot, IsPowerOf2, (+2 Overloads) Log2, LogN, Max
-    '                   Permut, PoissonPDF, Pow2, (+3 Overloads) ProductALL, (+3 Overloads) RangesAt
-    '                   RMS, RMSE, RSD, (+4 Overloads) SD, (+2 Overloads) seq
-    '                   (+5 Overloads) Sum, WeighedAverage
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 614
+'    Code Lines: 362
+' Comment Lines: 183
+'   Blank Lines: 69
+'     File Size: 20.71 KB
+
+
+'     Module VBMath
+' 
+'         Function: Covariance, CumSum, Factorial, FactorialSequence, FormatNumeric
+'                   Hypot, IsPowerOf2, (+2 Overloads) Log2, LogN, Max
+'                   Permut, PoissonPDF, Pow2, (+3 Overloads) ProductALL, (+3 Overloads) RangesAt
+'                   RMS, RMSE, RSD, (+4 Overloads) SD, (+2 Overloads) seq
+'                   (+5 Overloads) Sum, WeighedAverage
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -671,6 +671,26 @@ Namespace Math
         Public Function RSD(data As IEnumerable(Of Double)) As Double
             Dim vec As Double() = data.ToArray
             Dim sd As Double = vec.SD
+
+            If sd = 0.0 Then
+                Return 0
+            Else
+                Return sd / vec.Average
+            End If
+        End Function
+
+        <Extension>
+        Public Function RSD(data As IEnumerable(Of Double), maxSize As Integer) As Double
+            Dim vec As Double() = data.ToArray
+            Dim sd As Double
+
+            If vec.Length < maxSize Then
+                vec = vec _
+                    .JoinIterates(0.0.Repeats(maxSize - vec.Length)) _
+                    .ToArray
+            End If
+
+            sd = vec.SD
 
             If sd = 0.0 Then
                 Return 0

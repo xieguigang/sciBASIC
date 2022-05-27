@@ -135,6 +135,7 @@ Namespace Graphic.Axis
                             Optional XtickFormat$ = "F2",
                             Optional YtickFormat$ = "F2",
                             Optional tickFontStyle$ = CSSFont.Win10NormalLarger,
+                            Optional xlabelRotate As Double = 0,
                             Optional driver As Drivers = Drivers.Default)
             With region
                 Call g.DrawAxis(
@@ -151,7 +152,8 @@ Namespace Graphic.Axis
                     tickFontStyle:=tickFontStyle,
                     gridX:=gridX,
                     gridY:=gridY,
-                    driver:=driver
+                    driver:=driver,
+                    xlabelRotate:=xlabelRotate
                 )
             End With
         End Sub
