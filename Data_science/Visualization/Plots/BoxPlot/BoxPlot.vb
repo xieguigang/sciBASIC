@@ -60,57 +60,61 @@ Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
-''' <summary>
-''' ```
-''' min, q1, q2, q3, max
-'''       _________
-'''  +----|   |   |----+
-'''       ---------
-''' ```
-''' </summary>
-Public Module BoxPlot
+Namespace BoxPlot
 
-    Friend ReadOnly Zero As [Default](Of Double()) = LanguageAPI.[Default]({0R}, Function(x) TryCast(x, Double()).IsNullOrEmpty)
+    ''' <summary>
+    ''' ```
+    ''' min, q1, q2, q3, max
+    '''       _________
+    '''  +----|   |   |----+
+    '''       ---------
+    ''' ```
+    ''' </summary>
+    Public Module BoxPlot
 
-    <Extension> Public Function Plot(data As BoxData,
-                                     Optional size$ = "3000,2700",
-                                     Optional padding$ = g.DefaultPadding,
-                                     Optional bg$ = "white",
-                                     Optional schema$ = ColorBrewer.QualitativeSchemes.Set1_9,
-                                     Optional YaxisLabel$ = "value",
-                                     Optional groupLabelCSSFont$ = CSSFont.Win7Large,
-                                     Optional YAxisLabelFontCSS$ = CSSFont.Win7Large,
-                                     Optional tickFontCSS$ = CSSFont.Win7LittleLarge,
-                                     Optional regionStroke$ = Stroke.AxisStroke,
-                                     Optional interval# = 100,
-                                     Optional dotSize! = 10,
-                                     Optional lineWidth% = 2,
-                                     Optional rangeScale# = 1.25,
-                                     Optional showDataPoints As Boolean = True,
-                                     Optional showOutliers As Boolean = True,
-                                     Optional fillBox As Boolean = True,
-                                     Optional ppi As Integer = 100,
-                                     Optional driver As Drivers = Drivers.GDI) As GraphicsData
+        Friend ReadOnly Zero As [Default](Of Double()) = LanguageAPI.[Default]({0R}, Function(x) TryCast(x, Double()).IsNullOrEmpty)
 
-        Dim theme As New Theme With {
-            .padding = padding,
-            .background = bg,
-            .colorSet = schema,
-            .lineStroke = regionStroke,
-            .axisTickCSS = tickFontCSS,
-            .axisLabelCSS = YAxisLabelFontCSS
-        }
-        Dim app As New Box(data, theme) With {
-            .ylabel = YaxisLabel,
-            .interval = interval,
-            .fillBox = fillBox,
-            .rangeScale = rangeScale,
-            .lineWidth = lineWidth,
-            .dotSize = dotSize,
-            .showDataPoints = showDataPoints,
-            .showOutliers = showOutliers
-        }
+        <Extension>
+        Public Function Plot(data As BoxData,
+                             Optional size$ = "3000,2700",
+                             Optional padding$ = g.DefaultPadding,
+                             Optional bg$ = "white",
+                             Optional schema$ = ColorBrewer.QualitativeSchemes.Set1_9,
+                             Optional YaxisLabel$ = "value",
+                             Optional groupLabelCSSFont$ = CSSFont.Win7Large,
+                             Optional YAxisLabelFontCSS$ = CSSFont.Win7Large,
+                             Optional tickFontCSS$ = CSSFont.Win7LittleLarge,
+                             Optional regionStroke$ = Stroke.AxisStroke,
+                             Optional interval# = 100,
+                             Optional dotSize! = 10,
+                             Optional lineWidth% = 2,
+                             Optional rangeScale# = 1.25,
+                             Optional showDataPoints As Boolean = True,
+                             Optional showOutliers As Boolean = True,
+                             Optional fillBox As Boolean = True,
+                             Optional ppi As Integer = 100,
+                             Optional driver As Drivers = Drivers.GDI) As GraphicsData
 
-        Return app.Plot(size.SizeParser, ppi, driver)
-    End Function
-End Module
+            Dim theme As New Theme With {
+                .padding = padding,
+                .background = bg,
+                .colorSet = schema,
+                .lineStroke = regionStroke,
+                .axisTickCSS = tickFontCSS,
+                .axisLabelCSS = YAxisLabelFontCSS
+            }
+            Dim app As New Box(data, theme) With {
+                .ylabel = YaxisLabel,
+                .interval = interval,
+                .fillBox = fillBox,
+                .rangeScale = rangeScale,
+                .lineWidth = lineWidth,
+                .dotSize = dotSize,
+                .showDataPoints = showDataPoints,
+                .showOutliers = showOutliers
+            }
+
+            Return app.Plot(size.SizeParser, ppi, driver)
+        End Function
+    End Module
+End Namespace
