@@ -6,6 +6,9 @@ Public Class Anova
     Public SSW As Double
     Public F_score As Double
 
+    Public Const P_FIVE_PERCENT As String = "p<.05"
+    Public Const P_ONE_PERCENT As String = "p<.01"
+
     Public SSW_sum_of_squares_within_groups As Double
     Public SSB_sum_of_squares_between_groups As Double
     Public SS_total_sum_of_squares As Double
@@ -15,7 +18,7 @@ Public Class Anova
     Private numenator_degrees_of_freedom As Integer = -1
     Private denomenator_degrees_of_freedom As Integer = -1
 
-    Private type_Renamed As String = "this will be a constant to chose 1 or 5 %"
+    Dim m_type As String = "this will be a constant to chose 1 or 5 %"
 
     Public Overridable ReadOnly Property numenator As Integer
         Get
@@ -36,7 +39,7 @@ Public Class Anova
     Public Overridable ReadOnly Property type As String
         Get
             ' return whether this is a 1% or a 5% test
-            Return type_Renamed
+            Return m_type
         End Get
     End Property
 
@@ -71,12 +74,11 @@ Public Class Anova
         SSW = SSW_sum_of_squares_within_groups / denomenator_degrees_of_freedom
     End Sub
 
-    Public Overridable Sub populate_step1(ByVal matrix As Double()(), ByVal type As String)
+    Public Overridable Sub populate_step1(ByVal matrix As IEnumerable(Of Double()), ByVal type As String)
+        m_type = type
 
-        type_Renamed = type
-
-        For i = 0 To matrix.Length - 1
-            groups.Add(New Group(matrix(i)))
+        For Each v As Double() In matrix
+            Call groups.Add(New Group(v))
         Next
     End Sub
 
