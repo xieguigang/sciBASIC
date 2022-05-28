@@ -1,5 +1,4 @@
-﻿Imports System.Collections.Generic
-Public Class DistributionTable
+﻿Public Class DistributionTable
 
     Private table_fivepercent As IList(Of Double()) = New List(Of Double())()
     Private table_onepercent As IList(Of Double()) = New List(Of Double())()

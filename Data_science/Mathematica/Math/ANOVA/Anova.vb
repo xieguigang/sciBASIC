@@ -1,10 +1,13 @@
-﻿Imports stdNum = System.Math
+﻿Imports Microsoft.VisualBasic.Math.Statistics.Distributions.LinearMoments
+Imports stdNum = System.Math
 
 Public Class Anova
 
     Public SSB As Double
     Public SSW As Double
     Public F_score As Double
+    Public singlePvalue As Double
+    Public doublePvalue As Double
 
     Public Const P_FIVE_PERCENT As String = "p<.05"
     Public Const P_ONE_PERCENT As String = "p<.01"
@@ -13,7 +16,7 @@ Public Class Anova
     Public SSB_sum_of_squares_between_groups As Double
     Public SS_total_sum_of_squares As Double
     Public allObservationsMean As Double
-    Public groups As IList(Of Group) = New List(Of Group)()
+    Public groups As New List(Of Group)()
 
     Private numenator_degrees_of_freedom As Integer = -1
     Private denomenator_degrees_of_freedom As Integer = -1
@@ -45,7 +48,7 @@ Public Class Anova
 
     Public Overridable ReadOnly Property criticalNumber As Double
         Get
-            Dim table As DistributionTable = New DistributionTable()
+            Dim table As New DistributionTable()
             Dim critical = table.getCriticalNumber(denomenator, numenator, type)
 
             Return critical
@@ -54,6 +57,8 @@ Public Class Anova
 
     Public Overridable Function fScore_determineIt_step7() As Double
         F_score = SSB / SSW
+        singlePvalue = New FDistribution(numenator_degrees_of_freedom, denomenator_degrees_of_freedom).GetCDF(F_score)
+        doublePvalue = singlePvalue * 2
 
         Return F_score
     End Function
