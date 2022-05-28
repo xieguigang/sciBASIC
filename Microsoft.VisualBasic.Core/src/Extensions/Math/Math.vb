@@ -59,6 +59,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Statistics.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports stdNum = System.Math
 
@@ -540,16 +541,14 @@ Namespace Math
         ''' 
         <Extension>
         Public Function SD(values As IEnumerable(Of Double), Optional isSample As Boolean = False) As Double
-            Dim data#() = values.ToArray
-            Dim avg# = data.Average
-            Dim sumValue# = Aggregate n As Double
-                            In data
-                            Into Sum((n - avg) ^ 2)
+            Dim x As Double() = values.ToArray
+            Dim n As Integer = x.Length
+            Dim var As Double = x.Variance
 
             If isSample Then
-                Return stdNum.Sqrt(sumValue / (data.Length - 1))
+                Return stdNum.Sqrt(var / (n - 1))
             Else
-                Return stdNum.Sqrt(sumValue / data.Length)
+                Return stdNum.Sqrt(var / n)
             End If
         End Function
 
