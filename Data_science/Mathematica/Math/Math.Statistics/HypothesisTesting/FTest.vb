@@ -1,28 +1,33 @@
-﻿Imports Microsoft.VisualBasic.Math.Statistics.Distributions
+﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.Math.Statistics.Distributions
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
 
 Public Class FTest
 
     Dim x, y As Double()
 
+    <Field("freedom1")>
     Public ReadOnly Property XdegreeOfFreedom As Integer
         Get
             Return x.Length - 1
         End Get
     End Property
 
+    <Field("freedom2")>
     Public ReadOnly Property YdegreeOfFreedom As Integer
         Get
             Return y.Length - 1
         End Get
     End Property
 
+    <Field("var.x")>
     Public ReadOnly Property XVariance As Double
         Get
             Return x.SD
         End Get
     End Property
 
+    <Field("var.y")>
     Public ReadOnly Property YVariance As Double
         Get
             Return y.SD
@@ -33,6 +38,8 @@ Public Class FTest
     ''' ratio of variances 
     ''' </summary>
     ''' <returns></returns>
+    ''' 
+    <Field("F")>
     Public ReadOnly Property F As Double
         Get
             Dim q As Double = XVariance ^ 2
@@ -42,6 +49,7 @@ Public Class FTest
         End Get
     End Property
 
+    <Field("single_tailed p-value")>
     Public ReadOnly Property SingleTailedPval As Double
         Get
             Dim f As Double = Me.F
@@ -59,6 +67,8 @@ Public Class FTest
     ''' double tailed p-value
     ''' </summary>
     ''' <returns></returns>
+    ''' 
+    <Field("double_tailed p-value")>
     Public ReadOnly Property PValue As Double
         Get
             Return SingleTailedPval * 2
