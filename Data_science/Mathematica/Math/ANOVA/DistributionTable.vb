@@ -26,10 +26,10 @@
         Dim criticalNumber As Double = -1
 
         ' NOTE: The table is 1 based but array are 0 based so -1 from each of the n and d
-        If type.Equals(Anova.P_FIVE_PERCENT) Then
+        If type.Equals(AnovaTest.P_FIVE_PERCENT) Then
             Dim row = table_fivepercent(n - 1)
             criticalNumber = row(d - 1)
-        ElseIf type.Equals(Anova.P_ONE_PERCENT) Then
+        ElseIf type.Equals(AnovaTest.P_ONE_PERCENT) Then
             Dim row = table_onepercent(n - 1)
             criticalNumber = row(d - 1)
         End If

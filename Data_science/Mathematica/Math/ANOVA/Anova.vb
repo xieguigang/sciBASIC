@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.Math.Statistics.Distributions.LinearMoments
 Imports stdNum = System.Math
 
-Public Class Anova
+Public Class AnovaTest
 
     Public SSB As Double
     Public SSW As Double
@@ -55,7 +55,11 @@ Public Class Anova
         End Get
     End Property
 
-    Public Overridable Function fScore_determineIt_step7() As Double
+    ''' <summary>
+    ''' step7
+    ''' </summary>
+    ''' <returns></returns>
+    Public Overridable Function fScore_determineIt() As Double
         F_score = SSB / SSW
         singlePvalue = New FDistribution(numenator_degrees_of_freedom, denomenator_degrees_of_freedom).GetCDF(F_score)
         doublePvalue = singlePvalue * 2
@@ -63,7 +67,10 @@ Public Class Anova
         Return F_score
     End Function
 
-    Public Overridable Sub divide_by_degrees_of_freedom_step6()
+    ''' <summary>
+    ''' step6
+    ''' </summary>
+    Public Overridable Sub divide_by_degrees_of_freedom()
 
         numenator_degrees_of_freedom = groups.Count - 1
 
@@ -79,7 +86,12 @@ Public Class Anova
         SSW = SSW_sum_of_squares_within_groups / denomenator_degrees_of_freedom
     End Sub
 
-    Public Overridable Sub populate_step1(ByVal matrix As IEnumerable(Of Double()), ByVal type As String)
+    ''' <summary>
+    ''' step1
+    ''' </summary>
+    ''' <param name="matrix"></param>
+    ''' <param name="type"></param>
+    Public Overridable Sub populate(ByVal matrix As IEnumerable(Of Double()), ByVal type As String)
         m_type = type
 
         For Each v As Double() In matrix
@@ -87,7 +99,10 @@ Public Class Anova
         Next
     End Sub
 
-    Public Overridable Sub findWithinGroupMeans_step2()
+    ''' <summary>
+    ''' step2
+    ''' </summary>
+    Public Overridable Sub findWithinGroupMeans()
         Dim total As Double = 0
         Dim observationsCount = 0
         For i = 0 To groups.Count - 1
@@ -103,7 +118,10 @@ Public Class Anova
         allObservationsMean = total / observationsCount
     End Sub
 
-    Public Overridable Sub setSumOfSquaresOfGroups_step3()
+    ''' <summary>
+    ''' step3
+    ''' </summary>
+    Public Overridable Sub setSumOfSquaresOfGroups()
 
         For i = 0 To groups.Count - 1
             Dim g = groups(i)
@@ -117,7 +135,10 @@ Public Class Anova
         Next
     End Sub
 
-    Public Overridable Sub setTotalSumOfSquares_step4()
+    ''' <summary>
+    ''' step4
+    ''' </summary>
+    Public Overridable Sub setTotalSumOfSquares()
         SS_total_sum_of_squares = 0
         For i = 0 To groups.Count - 1
             Dim g = groups(i)
@@ -128,9 +149,7 @@ Public Class Anova
                 SS_total_sum_of_squares += stdNum.Pow(result, 2)
             Next
         Next
-    End Sub
 
-    Public Overridable Sub setTotalSumOfSquares_step5()
         SSB_sum_of_squares_between_groups = SS_total_sum_of_squares - SSW_sum_of_squares_within_groups
     End Sub
 End Class

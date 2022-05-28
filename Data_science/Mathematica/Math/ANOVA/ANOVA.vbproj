@@ -11,6 +11,8 @@
     <PackageIconUrl />
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;Rsharp_app_release</Configurations>
+    <PackageProjectUrl></PackageProjectUrl>
+    <Copyright>https://github.com/kermitt/ANOVA</Copyright>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
