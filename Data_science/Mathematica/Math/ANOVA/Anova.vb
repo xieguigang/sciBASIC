@@ -184,17 +184,20 @@ Call:
 
 Terms:
                 group Residuals
-Sum of Squares     80        80
-Deg. of Freedom     2        17
+Sum of Squares     {SSB_sum_of_squares_between_groups.ToString("F1")}        {SSW_sum_of_squares_within_groups.ToString("F1")}
+Deg. of Freedom     {numenator}        {denomenator}
 
-Residual standard error: 2.169305
+Residual standard error: {stdNum.Sqrt(SSW)}
+SSB: {SSB}
+SSW: {SSW}
+SS_total_sum_of_squares: {SS_total_sum_of_squares}
 Estimated effects may be unbalanced
 Probability level: {type}
 allObservationsMean: {allObservationsMean}
 Critical number: {criticalNumber}
 
 *** F Score:  {f_score}
-*** P-Value:  {singlePvalue}  [double_tailed: {doublePvalue}]
+*** P-Value:  {singlePvalue.ToString("G3")}  [double_tailed: {doublePvalue.ToString("G3")}]
 
 {result}
 "
