@@ -23,6 +23,10 @@ Public Class AnovaTest
 
     Dim m_type As String = "this will be a constant to chose 1 or 5 %"
 
+    ''' <summary>
+    ''' numenator_degrees_of_freedom(Groups degrees of freedom)
+    ''' </summary>
+    ''' <returns></returns>
     Public Overridable ReadOnly Property numenator As Integer
         Get
             ' return groups.size() -1...
@@ -31,6 +35,10 @@ Public Class AnovaTest
         End Get
     End Property
 
+    ''' <summary>
+    ''' denomenator_degrees_of_freedom(Observations degrees of freedom)
+    ''' </summary>
+    ''' <returns></returns>
     Public Overridable ReadOnly Property denomenator As Integer
         Get
             ' return number of all observations - groups.size()... 
@@ -160,4 +168,35 @@ Public Class AnovaTest
 
         SSB_sum_of_squares_between_groups = SS_total_sum_of_squares - SSW_sum_of_squares_within_groups
     End Sub
+
+    Public Overrides Function ToString() As String
+        Dim f_score As Double = fScore_determineIt()
+        Dim criticalNumber = Me.criticalNumber
+        Dim result As String = "The null hypothesis is supported! There is no especial difference in these groups. "
+
+        If f_score > criticalNumber Then
+            result = "The null hypothesis is rejected! These groups are different."
+        End If
+
+        Return $"
+Call:
+   aov(formula = v ~ group, data = observations)
+
+Terms:
+                group Residuals
+Sum of Squares     80        80
+Deg. of Freedom     2        17
+
+Residual standard error: 2.169305
+Estimated effects may be unbalanced
+Probability level: {type}
+allObservationsMean: {allObservationsMean}
+Critical number: {criticalNumber}
+
+*** F Score:  {f_score}
+*** P-Value:  {singlePvalue}  [double_tailed: {doublePvalue}]
+
+{result}
+"
+    End Function
 End Class
