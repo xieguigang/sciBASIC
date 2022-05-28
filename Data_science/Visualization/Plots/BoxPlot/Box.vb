@@ -80,6 +80,12 @@ Namespace BoxPlot
                 .linear _
                 .domain(ranges) _
                 .range(values:=New Double() {plotRegion.Top, plotRegion.Bottom})
+            Dim yscale As New DataScaler() With {
+                .AxisTicks = Nothing,
+                .region = plotRegion,
+                .X = Nothing,
+                .Y = y
+            }
 
             If Not regionStroke.StringEmpty Then
                 Call g.DrawRectangle(
@@ -100,7 +106,7 @@ Namespace BoxPlot
                 Dim brush As SolidBrush = colors.Next   ' 得到了色彩画刷
                 Dim x1 = x0 + boxWidth / 2  ' x1在盒子的中间
 
-                Call PlotBox(group, x0, brush, boxWidth, fillBox, lineWidth, y, dotSize, showDataPoints, showOutliers, g)
+                Call PlotBox(group, x0, brush, boxWidth, fillBox, lineWidth, yscale, dotSize, showDataPoints, showOutliers, g)
 
                 ' draw group label
                 labelSize = g.MeasureString(group.Name, groupLabelFont)
@@ -150,7 +156,7 @@ Namespace BoxPlot
                                   boxWidth As Double,
                                   fillBox As Boolean,
                                   lineWidth As Double,
-                                  y As d3js.scale.Scaler,
+                                  y As DataScaler,
                                   dotSize As Single,
                                   showDataPoints As Boolean,
                                   showOutliers As Boolean,
@@ -168,9 +174,9 @@ Namespace BoxPlot
                 ' 先填充盒子
                 ' y 分别为q1和q3
                 Dim box As New Rectangle With {
-                .Location = New Drawing.Point(x0, y(quartile.Q3)),
-                .Size = New Size(boxWidth, y(quartile.Q1) - y(quartile.Q3))
-            }
+                    .Location = New Drawing.Point(x0, y.TranslateY(quartile.Q3)),
+                    .Size = New Size(boxWidth, y.TranslateY(quartile.Q1) - y.TranslateY(quartile.Q3))
+                }
                 g.FillRectangle(brush, rect:=box)
             Else
                 pen = New Pen(brush.Color, lineWidth)
@@ -181,25 +187,25 @@ Namespace BoxPlot
             End If
 
             ' max
-            y0 = y(quartile.range.Max)
+            y0 = y.TranslateY(quartile.range.Max)
             g.DrawLine(pen, New Drawing.Point(x0, y0), New Drawing.Point(x0 + boxWidth, y0))
 
             ' min
-            y0 = y(quartile.range.Min)
+            y0 = y.TranslateY(quartile.range.Min)
             g.DrawLine(pen, New Drawing.Point(x0, y0), New Drawing.Point(x0 + boxWidth, y0))
 
             ' q1
-            Dim q1Y = y(quartile.Q1)
+            Dim q1Y = y.TranslateY(quartile.Q1)
             g.DrawLine(pen, New Drawing.Point(x0, q1Y), New Drawing.Point(x0 + boxWidth, q1Y))
 
             ' q2
-            Dim q2Y = y(quartile.Q2)
+            Dim q2Y = y.TranslateY(quartile.Q2)
             g.DrawLine(pen, New Drawing.Point(x0, q2Y), New Drawing.Point(x0 + boxWidth, q2Y))
             g.DrawLine(pen, New Drawing.Point(x0, q2Y + lineWidth), New Drawing.Point(x0 + boxWidth, q2Y + lineWidth))
             g.DrawLine(pen, New Drawing.Point(x0, q2Y + 2 * lineWidth), New Drawing.Point(x0 + boxWidth, q2Y + 2 * lineWidth))
 
             ' q3
-            Dim q3Y = y(quartile.Q3)
+            Dim q3Y = y.TranslateY(quartile.Q3)
             g.DrawLine(pen, New Drawing.Point(x0, q3Y), New Drawing.Point(x0 + boxWidth, q3Y))
 
             ' box
@@ -208,11 +214,11 @@ Namespace BoxPlot
 
             ' dashline to min/max
             pen = New Pen(brush.Color, lineWidth) With {
-            .DashStyle = DashStyle.Dash
-        }
+                .DashStyle = DashStyle.Dash
+            }
 
-            g.DrawLine(pen, New Drawing.Point(x1, y(quartile.range.Min)), New Drawing.Point(x1, q1Y))
-            g.DrawLine(pen, New Drawing.Point(x1, y(quartile.range.Max)), New Drawing.Point(x1, q3Y))
+            g.DrawLine(pen, New Drawing.Point(x1, y.TranslateY(quartile.range.Min)), New Drawing.Point(x1, q1Y))
+            g.DrawLine(pen, New Drawing.Point(x1, y.TranslateY(quartile.range.Max)), New Drawing.Point(x1, q3Y))
 
             If fillBox Then
                 brush = Brushes.Black
@@ -221,12 +227,12 @@ Namespace BoxPlot
             ' outliers + normal points
             If showDataPoints Then
                 For Each n As Double In outlier.normal
-                    Call g.FillEllipse(brush, New PointF(x1, y(n)).CircleRectangle(dotSize))
+                    Call g.FillEllipse(brush, New PointF(x1, y.TranslateY(n)).CircleRectangle(dotSize))
                 Next
             End If
             If showOutliers Then
                 For Each n As Double In outlier.outlier
-                    Call g.FillEllipse(brush, New PointF(x1, y(n)).CircleRectangle(dotSize))
+                    Call g.FillEllipse(brush, New PointF(x1, y.TranslateY(n)).CircleRectangle(dotSize))
                 Next
             End If
         End Sub
