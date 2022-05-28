@@ -1,6 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Math.Statistics.Distributions
-Imports Microsoft.VisualBasic.Math.Statistics.Linq
 
 Public Class FTest
 
