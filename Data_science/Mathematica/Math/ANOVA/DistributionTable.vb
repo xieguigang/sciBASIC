@@ -1,11 +1,14 @@
 ﻿Friend MustInherit Class DistributionTable
 
-    ReadOnly numerators As Integer() = New Integer() {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 20, 24, 30, 40, 60, 120, 121}
-    ReadOnly denominators As Integer() = New Integer() {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 40, 60, 120, 121}
-    ReadOnly dist As Double()()
+    Shared ReadOnly numerators As Integer() = New Integer() {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 20, 24, 30, 40, 60, 120, 121}
+    Shared ReadOnly denominators As Integer() = New Integer() {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 40, 60, 120, 121}
 
-    Sub New()
-        dist = loadMatrix.ToArray
+    ReadOnly dist As Double()()
+    ReadOnly type As String
+
+    Protected Sub New(type As String)
+        Me.type = type
+        Me.dist = loadMatrix.ToArray
     End Sub
 
     Protected MustOverride Function loadMatrix() As IEnumerable(Of Double())
@@ -18,32 +21,38 @@
     '  Returns a double... ...if the F score is higher than the returned critial number
     '  then _reject the null hypothesis_
     ' 
-    Public Overridable Function getCriticalNumber(numerator As Integer, denominator As Integer, type As String) As Double
-        Dim n = getRowIndex(numerator)
-        Dim d = getColIndex(denominator)
+    Public Shared Function getCriticalNumber(numerator As Integer, denominator As Integer, type As String) As Double
+        Dim n As Integer = getRowIndex(numerator)
+        Dim d As Integer = getColIndex(denominator)
+        Dim criticalNumber As Double
+        Dim row As Double()
 
-        Dim criticalNumber As Double = -1
+        Static five As New TableFivepercent
+        Static one As New TableOnepercent
 
         ' NOTE: The table is 1 based but array are 0 based so -1 from each of the n and d
-        If type.Equals(AnovaTest.P_FIVE_PERCENT) Then
-            Dim row = table_fivepercent(n - 1)
-            criticalNumber = row(d - 1)
-        ElseIf type.Equals(AnovaTest.P_ONE_PERCENT) Then
-            Dim row = table_onepercent(n - 1)
-            criticalNumber = row(d - 1)
-        End If
+        Select Case type
+            Case AnovaTest.P_FIVE_PERCENT : row = five.dist(n - 1)
+            Case AnovaTest.P_ONE_PERCENT : row = one.dist(n - 1)
+            Case Else
+                Throw New NotImplementedException(type)
+        End Select
+
+        criticalNumber = row(d - 1)
 
         Return criticalNumber
     End Function
 
-    Public Overridable Function about() As String
-        Return "These F distribution tables are adapted from: http://www.socr.ucla.edu/applets.dir/f_table.html"
+    Public Overrides Function ToString() As String
+        Return $"These F({type}) distribution tables are adapted from: http://www.socr.ucla.edu/applets.dir/f_table.html"
     End Function
 
-    ' 
-    '  Row = numerator lookup
-    ' 
-    Protected Friend Overridable Function getRowIndex(actualNumerator As Integer) As Integer
+    ''' <summary>
+    ''' Row = numerator lookup
+    ''' </summary>
+    ''' <param name="actualNumerator"></param>
+    ''' <returns></returns>
+    Protected Friend Shared Function getRowIndex(actualNumerator As Integer) As Integer
         Dim chosen = -1
 
         For i As Integer = 0 To numerators.Length - 1
@@ -62,10 +71,12 @@
         Return chosen
     End Function
 
-    ' 
-    '  Col = denominator lookup
-    ' 
-    Protected Friend Overridable Function getColIndex(actualNumerator As Integer) As Integer
+    ''' <summary>
+    ''' Col = denominator lookup
+    ''' </summary>
+    ''' <param name="actualNumerator"></param>
+    ''' <returns></returns>
+    Protected Friend Shared Function getColIndex(actualNumerator As Integer) As Integer
         Dim choosen = -1
 
         For i As Integer = 0 To denominators.Length - 1

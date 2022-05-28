@@ -39,18 +39,19 @@ Public Class AnovaTest
         End Get
     End Property
 
+    ''' <summary>
+    ''' return whether this is a 1% or a 5% test
+    ''' </summary>
+    ''' <returns></returns>
     Public Overridable ReadOnly Property type As String
         Get
-            ' return whether this is a 1% or a 5% test
             Return m_type
         End Get
     End Property
 
     Public Overridable ReadOnly Property criticalNumber As Double
         Get
-            Dim table As New DistributionTable()
-            Dim critical = table.getCriticalNumber(denomenator, numenator, type)
-
+            Dim critical = DistributionTable.getCriticalNumber(denomenator, numenator, type)
             Return critical
         End Get
     End Property
@@ -71,18 +72,17 @@ Public Class AnovaTest
     ''' step6
     ''' </summary>
     Public Overridable Sub divide_by_degrees_of_freedom()
+        Dim observations = 0
 
         numenator_degrees_of_freedom = groups.Count - 1
-
         SSB = SSB_sum_of_squares_between_groups / numenator_degrees_of_freedom
-        Dim observations = 0
+
         For Each g In groups
             observations += g.ary.Length
         Next
 
         'degrees_of_freedom = observations - groups.size(); 
         denomenator_degrees_of_freedom = observations - groups.Count
-
         SSW = SSW_sum_of_squares_within_groups / denomenator_degrees_of_freedom
     End Sub
 
@@ -105,16 +105,20 @@ Public Class AnovaTest
     Public Overridable Sub findWithinGroupMeans()
         Dim total As Double = 0
         Dim observationsCount = 0
-        For i = 0 To groups.Count - 1
+
+        For i As Integer = 0 To groups.Count - 1
             Dim g = groups(i)
             Dim groupTotal As Double = 0
-            For j = 0 To g.ary.Length - 1
+
+            For j As Integer = 0 To g.ary.Length - 1
                 groupTotal += g.ary(j)
             Next
+
             total += groupTotal
             observationsCount += g.ary.Length
             g.mean = groupTotal / g.ary.Length
         Next
+
         allObservationsMean = total / observationsCount
     End Sub
 
@@ -122,15 +126,17 @@ Public Class AnovaTest
     ''' step3
     ''' </summary>
     Public Overridable Sub setSumOfSquaresOfGroups()
+        For i As Integer = 0 To groups.Count - 1
+            Dim g As Group = groups(i)
 
-        For i = 0 To groups.Count - 1
-            Dim g = groups(i)
-            For j = 0 To g.ary.Length - 1
+            For j As Integer = 0 To g.ary.Length - 1
                 Dim observation = g.ary(j)
                 Dim result = observation - g.mean
                 Dim answer = stdNum.Pow(result, 2)
+
                 g.raisedSum += answer
             Next
+
             SSW_sum_of_squares_within_groups += g.raisedSum
         Next
     End Sub
@@ -140,9 +146,11 @@ Public Class AnovaTest
     ''' </summary>
     Public Overridable Sub setTotalSumOfSquares()
         SS_total_sum_of_squares = 0
-        For i = 0 To groups.Count - 1
-            Dim g = groups(i)
-            For j = 0 To g.ary.Length - 1
+
+        For i As Integer = 0 To groups.Count - 1
+            Dim g As Group = groups(i)
+
+            For j As Integer = 0 To g.ary.Length - 1
                 Dim observation = g.ary(j)
                 Dim result = observation - allObservationsMean
 

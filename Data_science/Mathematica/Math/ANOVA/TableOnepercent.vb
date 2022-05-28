@@ -1,5 +1,9 @@
 ﻿Friend Class TableOnepercent : Inherits DistributionTable
 
+    Public Sub New()
+        MyBase.New(AnovaTest.P_ONE_PERCENT)
+    End Sub
+
     Protected Overrides Iterator Function loadMatrix() As IEnumerable(Of Double())
         Yield New Double() {4052.181, 4999.5, 5403.352, 5624.583, 5763.65, 5858.986, 5928.356, 5981.07, 6022.473, 6055.847, 6106.321, 6157.285, 6208.73, 6234.631, 6260.649, 6286.782, 6313.03, 6339.391, 6365.864}
         Yield New Double() {98.503, 99, 99.166, 99.249, 99.299, 99.333, 99.356, 99.374, 99.388, 99.399, 99.416, 99.433, 99.449, 99.458, 99.466, 99.474, 99.482, 99.491, 99.499}
