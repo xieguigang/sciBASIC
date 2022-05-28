@@ -91,7 +91,7 @@ Public Class AnovaTest
     ''' </summary>
     ''' <param name="matrix"></param>
     ''' <param name="type"></param>
-    Public Overridable Sub populate(ByVal matrix As IEnumerable(Of Double()), ByVal type As String)
+    Public Overridable Sub populate(matrix As IEnumerable(Of Double()), type As String)
         m_type = type
 
         For Each v As Double() In matrix

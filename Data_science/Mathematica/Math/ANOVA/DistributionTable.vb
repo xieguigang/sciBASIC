@@ -1,17 +1,14 @@
 ﻿Friend MustInherit Class DistributionTable
 
-    Private table_fivepercent As New List(Of Double())()
-    Private table_onepercent As New List(Of Double())()
-    Private numerators As Integer() = New Integer() {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 20, 24, 30, 40, 60, 120, 121}
-    Private denominators As Integer() = New Integer() {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 40, 60, 120, 121}
+    ReadOnly numerators As Integer() = New Integer() {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 20, 24, 30, 40, 60, 120, 121}
+    ReadOnly denominators As Integer() = New Integer() {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 40, 60, 120, 121}
+    ReadOnly dist As Double()()
 
-    Public Sub New()
-        setup_fivepercent_table()
-        setup_onepercent_table()
+    Sub New()
+        dist = loadMatrix.ToArray
     End Sub
 
     Protected MustOverride Function loadMatrix() As IEnumerable(Of Double())
-
 
     ' 
     '  The numerator = the number of groups that are being compared ( i.e., group degrees of freedom )
@@ -21,8 +18,7 @@
     '  Returns a double... ...if the F score is higher than the returned critial number
     '  then _reject the null hypothesis_
     ' 
-    Public Overridable Function getCriticalNumber(ByVal numerator As Integer, ByVal denominator As Integer, ByVal type As String) As Double
-
+    Public Overridable Function getCriticalNumber(numerator As Integer, denominator As Integer, type As String) As Double
         Dim n = getRowIndex(numerator)
         Dim d = getColIndex(denominator)
 
@@ -41,16 +37,16 @@
     End Function
 
     Public Overridable Function about() As String
-        Dim msg = "These F distribution tables are adapted from: http://www.socr.ucla.edu/applets.dir/f_table.html"
-        Return msg
+        Return "These F distribution tables are adapted from: http://www.socr.ucla.edu/applets.dir/f_table.html"
     End Function
 
     ' 
     '  Row = numerator lookup
     ' 
-    Protected Friend Overridable Function getRowIndex(ByVal actualNumerator As Integer) As Integer
+    Protected Friend Overridable Function getRowIndex(actualNumerator As Integer) As Integer
         Dim chosen = -1
-        For i = 0 To numerators.Length - 1
+
+        For i As Integer = 0 To numerators.Length - 1
             If actualNumerator = numerators(i) Then
                 chosen = numerators(i)
             ElseIf actualNumerator > numerators(i) Then
@@ -62,12 +58,14 @@
                 End Try
             End If
         Next
+
         Return chosen
     End Function
+
     ' 
     '  Col = denominator lookup
     ' 
-    Protected Friend Overridable Function getColIndex(ByVal actualNumerator As Integer) As Integer
+    Protected Friend Overridable Function getColIndex(actualNumerator As Integer) As Integer
         Dim choosen = -1
 
         For i As Integer = 0 To denominators.Length - 1

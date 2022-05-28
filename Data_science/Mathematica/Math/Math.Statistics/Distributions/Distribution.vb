@@ -27,7 +27,7 @@ Namespace Distributions
         ' 
         ' 
 
-        Private Shared Function Ex(ByVal x As Double) As Double
+        Private Shared Function Ex(x As Double) As Double
             If x < -BIGX Then
                 Return 0
             End If
@@ -49,7 +49,7 @@ Namespace Distributions
         ' 
         ' 
 
-        Public Shared Function Beta(ByVal x As Double()) As Double
+        Public Shared Function Beta(x As Double()) As Double
             Dim sum = 0.0, result = 0.0
             Dim i As Integer
             For i = 0 To x.Length - 1
@@ -74,7 +74,7 @@ Namespace Distributions
         ' 
         ' 
 
-        Public Shared Function GammaLn(ByVal x As Double) As Double
+        Public Shared Function GammaLn(x As Double) As Double
             Dim cof = {76.180091729471457, -86.505320329416776, 24.014098240830911, -1.231739572450155, 0.001208650973866179, -0.000005395239384953}
             Dim j As Integer
             Dim y As i32 = x + 1
@@ -102,7 +102,7 @@ Namespace Distributions
         ' 
         ' 
 
-        Public Shared Function ZNormal(ByVal z As Double) As Double
+        Public Shared Function ZNormal(z As Double) As Double
             Dim x As Double
             If z = 0.0 Then
                 x = 0.0
@@ -141,7 +141,7 @@ Namespace Distributions
         ' 
         ' 
 
-        Public Shared Function ZInverse(ByVal p As Double) As Double
+        Public Shared Function ZInverse(p As Double) As Double
             Dim minZ = -Z_MAX
             Dim maxZ = Z_MAX
             Dim zValue = 0.0
@@ -181,7 +181,7 @@ Namespace Distributions
         ' 
         ' 
 
-        Public Shared Function ChiSquare(ByVal x As Double, ByVal freedom As Integer) As Double
+        Public Shared Function ChiSquare(x As Double, freedom As Integer) As Double
             Dim y As Double = 0
             If x <= 0.0 OrElse freedom < 1 Then
                 Return 1.0
@@ -249,7 +249,7 @@ Namespace Distributions
         ' 
         ' 
 
-        Public Shared Function ChiSquareInverse(ByVal p As Double, ByVal freedom As Integer) As Double
+        Public Shared Function ChiSquareInverse(p As Double, freedom As Integer) As Double
             Dim minChiSquare = 0.0
             Dim maxChiSquare = CHI_MAX
             If p <= 0.0 Then
@@ -294,7 +294,7 @@ Namespace Distributions
         ' 
         ' 
 
-        Public Shared Function FDistribution(ByVal fValue As Double, ByVal freedom1 As Integer, ByVal freedom2 As Integer) As Double
+        Public Shared Function FDistribution(fValue As Double, freedom1 As Integer, freedom2 As Integer) As Double
             Dim i, j As Integer
             Dim y, d, p As Double
             If fValue < F_EPSILON OrElse freedom1 < 1 OrElse freedom2 < 1 Then
@@ -377,7 +377,7 @@ Namespace Distributions
         ' 
         ' 
 
-        Public Shared Function FDistributionInverse(ByVal p As Double, ByVal freedom1 As Integer, ByVal freedom2 As Integer) As Double
+        Public Shared Function FDistributionInverse(p As Double, freedom1 As Integer, freedom2 As Integer) As Double
             Dim maxF = F_MAX
             Dim minF = 0.0
             If p <= 0.0 OrElse p >= 1.0 Then
@@ -419,7 +419,7 @@ Namespace Distributions
         ' 
         ' 
 
-        Public Shared Function TDistribution(ByVal T As Double, ByVal freedom As Integer) As Double
+        Public Shared Function TDistribution(T As Double, freedom As Integer) As Double
             If T >= 0 Then
                 Return FDistribution(T * T, 1, freedom) / 2
             Else
@@ -443,7 +443,7 @@ Namespace Distributions
         ' 
         ' 
 
-        Public Shared Function TDistributionInverse(ByVal p As Double, ByVal freedom As Integer) As Double
+        Public Shared Function TDistributionInverse(p As Double, freedom As Integer) As Double
             If p < 0.5 Then
                 Return System.Math.Sqrt(FDistributionInverse(p * 2, 1, freedom))
             Else

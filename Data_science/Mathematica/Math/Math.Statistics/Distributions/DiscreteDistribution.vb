@@ -16,7 +16,7 @@ Namespace Distributions
         ' 
         ' 
 
-        Public Sub AddItem(ByVal item As String)
+        Public Sub AddItem(item As String)
             If ContainsKey(item) Then
                 Me(item) = Me(item) + 1
             Else
@@ -37,7 +37,7 @@ Namespace Distributions
         ' 
         ' 
 
-        Public Sub RemoveItem(ByVal item As String)
+        Public Sub RemoveItem(item As String)
             If ContainsKey(item) Then
                 Me(item) = Me(item) - 1
                 If Me(item) = 0 Then
@@ -58,7 +58,7 @@ Namespace Distributions
         ' 
         ' 
 
-        Public Sub AddDistribution(ByVal distribution As DiscreteDistribution)
+        Public Sub AddDistribution(distribution As DiscreteDistribution)
             For Each entry In distribution.Keys
                 If ContainsKey(entry) Then
                     Me(entry) = Me(entry) + distribution(entry)
@@ -82,7 +82,7 @@ Namespace Distributions
         ' 
         ' 
 
-        Public Sub RemoveDistribution(ByVal distribution As DiscreteDistribution)
+        Public Sub RemoveDistribution(distribution As DiscreteDistribution)
             For Each entry In distribution.Keys
                 If Me(entry) - distribution(entry) <> 0 Then
                     Me(entry) = Me(entry) - distribution(entry)
@@ -121,7 +121,7 @@ Namespace Distributions
         ' 
         ' 
 
-        Public Function GetIndex(ByVal item As String) As Integer
+        Public Function GetIndex(item As String) As Integer
             Return New List(Of String)(Keys).IndexOf(item)
         End Function
 
@@ -139,7 +139,7 @@ Namespace Distributions
         ' 
         ' 
 
-        Public Function ContainsItem(ByVal item As String) As Boolean
+        Public Function ContainsItem(item As String) As Boolean
             Return ContainsKey(item)
         End Function
 
@@ -156,7 +156,7 @@ Namespace Distributions
         ' 
         ' 
 
-        Public Function GetItem(ByVal index As Integer) As String
+        Public Function GetItem(index As Integer) As String
             Dim list As New List(Of String)(Keys)
             Return list(index)
         End Function
@@ -174,7 +174,7 @@ Namespace Distributions
         ' 
         ' 
 
-        Public Function GetValue(ByVal index As Integer) As Integer
+        Public Function GetValue(index As Integer) As Integer
             Dim list As New List(Of String)(Keys)
 
             Return Me(list(index))
@@ -194,7 +194,7 @@ Namespace Distributions
         ' 
         ' 
 
-        Public Function GetCount(ByVal item As String) As Integer
+        Public Function GetCount(item As String) As Integer
             Return Me(item)
         End Function
 
@@ -235,7 +235,7 @@ Namespace Distributions
         ' 
         ' 
 
-        Public Function GetMaxItem(ByVal includeTheseOnly As List(Of String)) As String
+        Public Function GetMaxItem(includeTheseOnly As List(Of String)) As String
             Dim max = -1
             Dim maxItem As String = Nothing
             For Each item As String In includeTheseOnly
@@ -267,7 +267,7 @@ Namespace Distributions
         ' 
         ' 
 
-        Public Function GetProbability(ByVal item As String) As Double
+        Public Function GetProbability(item As String) As Double
             If ContainsKey(item) Then
                 Return Me(item) / _sum
             End If
@@ -299,7 +299,7 @@ Namespace Distributions
         ' 
         ' 
 
-        Public Function GetProbabilityLaplaceSmoothing(ByVal item As String) As Double
+        Public Function GetProbabilityLaplaceSmoothing(item As String) As Double
             If ContainsKey(item) Then
                 Return (Me(item) + 1) / (_sum + Count + 1)
             End If
