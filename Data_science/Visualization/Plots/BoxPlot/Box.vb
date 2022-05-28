@@ -44,15 +44,14 @@ Namespace BoxPlot
             Dim tickLabelFont As Font = CSSFont.TryParse(theme.axisTickCSS).GDIObject(ppi)
             Dim regionStroke As String = theme.lineStroke
             Dim colors As LoopArray(Of SolidBrush) = Designer _
-            .GetColors(theme.colorSet) _
-            .Select(Function(color) New SolidBrush(color)) _
-            .ToArray
-            Dim ticks#() = data _
-            .Groups _
-            .Select(Function(x) x.Value) _
-            .IteratesALL _
-            .Range _
-            .CreateAxisTicks
+                .GetColors(theme.colorSet) _
+                .Select(Function(color) New SolidBrush(color)) _
+                .ToArray
+            Dim ticks#() = data.Groups _
+                .Select(Function(x) x.Value) _
+                .IteratesALL _
+                .Range _
+                .CreateAxisTicks
             Dim ranges As DoubleRange = ticks Or BoxPlot.Zero
 
             ranges *= rangeScale
@@ -78,9 +77,9 @@ Namespace BoxPlot
             Dim boxWidth = StackedBarPlot.BarWidth(plotRegion.Width - 2 * interval, data.Groups.Length, interval)
             Dim bottom = plotRegion.Bottom
             Dim y = d3js.scale _
-            .linear _
-            .domain(ranges) _
-            .range(values:=New Double() {plotRegion.Top, plotRegion.Bottom})
+                .linear _
+                .domain(ranges) _
+                .range(values:=New Double() {plotRegion.Top, plotRegion.Bottom})
 
             If Not regionStroke.StringEmpty Then
                 Call g.DrawRectangle(
@@ -146,16 +145,16 @@ Namespace BoxPlot
         End Sub
 
         Public Shared Sub PlotBox(group As NamedValue(Of Vector),
-                              x0 As Double,
-                              brush As SolidBrush,
-                              boxWidth As Double,
-                              fillBox As Boolean,
-                              lineWidth As Double,
-                              y As d3js.scale.Scaler,
-                              dotSize As Single,
-                              showDataPoints As Boolean,
-                              showOutliers As Boolean,
-                              g As IGraphics)
+                                  x0 As Double,
+                                  brush As SolidBrush,
+                                  boxWidth As Double,
+                                  fillBox As Boolean,
+                                  lineWidth As Double,
+                                  y As d3js.scale.Scaler,
+                                  dotSize As Single,
+                                  showDataPoints As Boolean,
+                                  showOutliers As Boolean,
+                                  g As IGraphics)
 
             Dim quartile = group.Value.Quartile
             Dim outlier = group.Value.Outlier(quartile)
