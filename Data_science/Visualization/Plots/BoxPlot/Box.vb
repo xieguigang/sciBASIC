@@ -167,6 +167,7 @@ Namespace BoxPlot
             Dim x1 = x0 + boxWidth / 2  ' x1在盒子的中间
             Dim pen As Pen
             Dim y0 As Double
+            Dim deltaWidth As Double = boxWidth / 2
 
             If fillBox Then
                 ' 使用彩色画刷填充盒子，但是线条和点都是黑色的
@@ -188,11 +189,11 @@ Namespace BoxPlot
 
             ' max
             y0 = y.TranslateY(quartile.range.Max)
-            g.DrawLine(pen, New Drawing.Point(x0, y0), New Drawing.Point(x0 + boxWidth, y0))
+            g.DrawLine(pen, New Drawing.Point(x0 + deltaWidth / 2, y0), New Drawing.Point(x0 + deltaWidth * 1.5, y0))
 
             ' min
             y0 = y.TranslateY(quartile.range.Min)
-            g.DrawLine(pen, New Drawing.Point(x0, y0), New Drawing.Point(x0 + boxWidth, y0))
+            g.DrawLine(pen, New Drawing.Point(x0 + deltaWidth / 2, y0), New Drawing.Point(x0 + deltaWidth * 1.5, y0))
 
             ' q1
             Dim q1Y = y.TranslateY(quartile.Q1)
