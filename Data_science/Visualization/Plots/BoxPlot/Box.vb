@@ -196,7 +196,7 @@ Namespace BoxPlot
 
             ' q1
             Dim q1Y = y.TranslateY(quartile.Q1)
-            g.DrawLine(pen, New Drawing.Point(x0, q1Y), New Drawing.Point(x0 + boxWidth, q1Y))
+            ' g.DrawLine(pen, New Drawing.Point(x0, q1Y), New Drawing.Point(x0 + boxWidth, q1Y))
 
             ' q2
             Dim q2Y = y.TranslateY(quartile.Q2)
@@ -206,11 +206,11 @@ Namespace BoxPlot
 
             ' q3
             Dim q3Y = y.TranslateY(quartile.Q3)
-            g.DrawLine(pen, New Drawing.Point(x0, q3Y), New Drawing.Point(x0 + boxWidth, q3Y))
+            ' g.DrawLine(pen, New Drawing.Point(x0, q3Y), New Drawing.Point(x0 + boxWidth, q3Y))
 
             ' box
-            g.DrawLine(pen, New Drawing.Point(x0, q3Y), New Drawing.Point(x0, q1Y))
-            g.DrawLine(pen, New Drawing.Point(x0 + boxWidth, q3Y), New Drawing.Point(x0 + boxWidth, q1Y))
+            ' g.DrawLine(pen, New Drawing.Point(x0, q3Y), New Drawing.Point(x0, q1Y))
+            ' g.DrawLine(pen, New Drawing.Point(x0 + boxWidth, q3Y), New Drawing.Point(x0 + boxWidth, q1Y))
 
             ' dashline to min/max
             pen = New Pen(brush.Color, lineWidth) With {
