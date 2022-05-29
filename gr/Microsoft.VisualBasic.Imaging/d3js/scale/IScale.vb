@@ -104,6 +104,7 @@ Namespace d3js.scale
         Public MustOverride ReadOnly Property domainSize As Double
 
         Public MustOverride ReadOnly Property rangeMax As Double
+        Public MustOverride ReadOnly Property rangeMin As Double
 
     End Class
 
@@ -127,6 +128,12 @@ Namespace d3js.scale
         Public Overrides ReadOnly Property rangeMax As Double
             Get
                 Return _range.Max
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property rangeMin As Double
+            Get
+                Return _range.Min
             End Get
         End Property
 
