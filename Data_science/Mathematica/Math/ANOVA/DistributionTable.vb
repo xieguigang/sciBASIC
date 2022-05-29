@@ -26,18 +26,20 @@
         Dim d As Integer = getColIndex(denominator)
         Dim criticalNumber As Double
         Dim row As Double()
+        Dim matrix As Double()()
 
         Static five As New TableFivepercent
         Static one As New TableOnepercent
 
         ' NOTE: The table is 1 based but array are 0 based so -1 from each of the n and d
         Select Case type
-            Case AnovaTest.P_FIVE_PERCENT : row = five.dist(n - 1)
-            Case AnovaTest.P_ONE_PERCENT : row = one.dist(n - 1)
+            Case AnovaTest.P_FIVE_PERCENT : matrix = five.dist
+            Case AnovaTest.P_ONE_PERCENT : matrix = one.dist
             Case Else
                 Throw New NotImplementedException(type)
         End Select
 
+        row = If(n - 1 >= matrix.Length, matrix.Last, matrix(n - 1))
         criticalNumber = row(d - 1)
 
         Return criticalNumber
