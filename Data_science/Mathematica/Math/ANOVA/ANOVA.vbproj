@@ -1,0 +1,102 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Microsoft.VisualBasic.Math.Statistics.Hypothesis.ANOVA</RootNamespace>
+    <TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
+    <AssemblyName>Microsoft.VisualBasic.Math.Statistics.ANOVA</AssemblyName>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageIcon>logo-knot.png</PackageIcon>
+    <PackageIconUrl />
+    <Platforms>AnyCPU;x64</Platforms>
+    <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32</Configurations>
+    <PackageProjectUrl></PackageProjectUrl>
+    <Copyright>https://github.com/kermitt/ANOVA</Copyright>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>Microsoft.VisualBasic.Math.Statistics.ANOVA.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <DocumentationFile>Microsoft.VisualBasic.Math.Statistics.ANOVA.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>Microsoft.VisualBasic.Math.Statistics.ANOVA.xml</DocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
+    <DocumentationFile>Microsoft.VisualBasic.Math.Statistics.ANOVA.xml</DocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|AnyCPU'">
+    <DocumentationFile>Microsoft.VisualBasic.Math.Statistics.ANOVA.xml</DocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DocumentationFile>Microsoft.VisualBasic.Math.Statistics.ANOVA.xml</DocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
+    <DocumentationFile>Microsoft.VisualBasic.Math.Statistics.ANOVA.xml</DocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|x64'">
+    <DocumentationFile>Microsoft.VisualBasic.Math.Statistics.ANOVA.xml</DocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="AnovaMain.vb" />
+    <Compile Remove="AnovaTest.vb" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\Math.Statistics\stats-netcore5.vbproj" />
+    <ProjectReference Include="..\Math\Math.NET5.vbproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\..\..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

@@ -6,6 +6,7 @@
     <AssemblyName>Microsoft.VisualBasic.Math.Statistics</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit</Configurations>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

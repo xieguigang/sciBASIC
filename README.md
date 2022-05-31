@@ -244,7 +244,21 @@ Call bitmap.GetBinaryBitmap(BinarizationStyles.SparseGray)
 + **[Data Mining &amp; Machine Learning](./Data_science/)**
 + **[sciBASIC# DataFrame System](./Data/DataFrame/)**
 
-##### sciBASIC# Chart Plots System
+### sciBASIC# Chart Plots System
+
+#### sciBASIC Power the R# ggplot graphics library
+
+The ``R#`` language is another scientific computing language which is designed for .NET runtime, ``R#`` is evolved from the R language. There is a famous graphics library called ``ggplot2`` in R language, so keeps the same, there is a graphics library called ``ggplot`` was developed for ``R#`` language.
+
+![](Data_science/Mathematica/images/myeloma_violin.png)
+![](Data_science/Mathematica/images/myeloma_box.png)
+![](Data_science/Mathematica/images/myeloma_bar.png)
+
+> charting via [R# ggplot](https://github.com/rsharp-lang/ggplot)
+
+#### Another charting
+
+Imports namespace for use the sciBASIC charting plot system api:
 
 ```vbnet
 Imports Microsoft.VisualBasic.Data.ChartPlots
