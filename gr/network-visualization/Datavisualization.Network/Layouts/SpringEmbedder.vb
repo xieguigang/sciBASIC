@@ -61,10 +61,8 @@ Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace Layouts
 
-    Public Class SpringEmbedder
+    Public Class SpringEmbedder : Implements IPlanner
 
-        ReadOnly g As NetworkGraph
-        ReadOnly size As Size
         ReadOnly k As Double
         ReadOnly maxRepulsiveForceDistance As Double = 10
         ReadOnly c As Double = 3
@@ -80,12 +78,15 @@ Namespace Layouts
         ''' <param name="maxRepulsiveForceDistance">
         ''' Repulsive forces between nodes that are further apart than this are ignored.
         ''' </param>
-        Sub New(g As NetworkGraph, size As Size, Optional maxRepulsiveForceDistance As Double = 10)
-            Me.g = g
-            Me.size = size
-            Me.k = size.Width * size.Height / (nodes.Length * 1000)
+        Sub New(g As NetworkGraph, size As Size,
+                Optional maxRepulsiveForceDistance As Double = 10,
+                Optional c As Double = 3)
+
             Me.nodes = g.connectedNodes
             Me.edges = g.graphEdges.ToArray
+            Me.c = c
+            Me.maxRepulsiveForceDistance = maxRepulsiveForceDistance
+            Me.k = size.Width * size.Height / (nodes.Length * 1000)
         End Sub
 
         ''' <summary>
@@ -95,10 +96,14 @@ Namespace Layouts
         Public Sub doLayout(iterations As Integer)
             ' For each iteration...
             For it As Integer = 0 To iterations - 1
-                Call repulsions()
-                Call edgeAttractions()
-                Call setLocation(c)
+                Call Collide(Me.c)
             Next
+        End Sub
+
+        Public Sub Collide(Optional timeStep As Double = Double.NaN) Implements IPlanner.Collide
+            Call repulsions()
+            Call edgeAttractions()
+            Call setLocation(c:=timeStep)
         End Sub
 
         ''' <summary>

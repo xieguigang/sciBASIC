@@ -1,61 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::b54e739e2da8205133bd52e712f89c34, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Layout\Layout\ForceDirected.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 332
-    '    Code Lines: 218
-    ' Comment Lines: 62
-    '   Blank Lines: 52
-    '     File Size: 13.69 KB
+' Summaries:
 
 
-    '     Class ForceDirected
-    ' 
-    '         Properties: damping, graph, repulsion, stiffness, threshold
-    '                     withinThreshold
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: createSpring, GetSpring, getTotalEnergy, Nearest
-    ' 
-    '         Sub: (+2 Overloads) applyCoulombsLaw, applyHookesLaw, attractToCentre, Calculate, Clear
-    '              (+2 Overloads) Dispose, EachEdge, EachNode, Flush, SetPhysics
-    '              updatePosition, updateVelocity
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 332
+'    Code Lines: 218
+' Comment Lines: 62
+'   Blank Lines: 52
+'     File Size: 13.69 KB
+
+
+'     Class ForceDirected
+' 
+'         Properties: damping, graph, repulsion, stiffness, threshold
+'                     withinThreshold
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: createSpring, GetSpring, getTotalEnergy, Nearest
+' 
+'         Sub: (+2 Overloads) applyCoulombsLaw, applyHookesLaw, attractToCentre, Calculate, Clear
+'              (+2 Overloads) Dispose, EachEdge, EachNode, Flush, SetPhysics
+'              updatePosition, updateVelocity
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -99,6 +99,8 @@
 
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce.Interfaces
+Imports stdNum = System.Math
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace Layouts.SpringForce
 
@@ -247,8 +249,6 @@ Namespace Layouts.SpringForce
                 Else
                     spring.point1.ApplyForce(direction * (spring.K * displacement * -0.5F))
                     spring.point2.ApplyForce(direction * (spring.K * displacement * 0.5F))
-
-
                 End If
             Next
         End Sub
@@ -280,11 +280,32 @@ Namespace Layouts.SpringForce
         Protected Sub updatePosition(iTimeStep As Double)
             Dim point As LayoutPoint
             Dim delta As AbstractVector
+            Dim x, y, z As Double
+            Dim maxCanvas As Double = 1000000
 
             For Each n As Node In graph.vertex
                 point = GetPoint(n)
+                x = point.position.x
+                y = point.position.y
+                z = point.position.z
                 delta = point.velocity * iTimeStep
                 point.position.Add(delta)
+
+                If point.position.x.IsNaNImaginary OrElse stdNum.Abs(point.position.x) > maxCanvas OrElse point.position.x < 0 Then
+                    point.position.x = x
+                End If
+                If point.position.y.IsNaNImaginary OrElse stdNum.Abs(point.position.y) > maxCanvas OrElse point.position.y < 0 Then
+                    point.position.y = y
+                End If
+                If point.position.z.IsNaNImaginary OrElse stdNum.Abs(point.position.z) > maxCanvas OrElse point.position.z < 0 Then
+                    point.position.z = z
+                End If
+
+                If point.position.x = 0.0 AndAlso point.position.y = 0.0 AndAlso point.position.z = 0.0 Then
+                    point.position.x = randf.NextDouble * (maxCanvas)
+                    point.position.y = randf.NextDouble * (maxCanvas)
+                    point.position.z = randf.NextDouble * (maxCanvas)
+                End If
             Next
         End Sub
 

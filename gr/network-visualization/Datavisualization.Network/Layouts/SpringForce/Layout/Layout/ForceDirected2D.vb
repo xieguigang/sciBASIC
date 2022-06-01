@@ -60,8 +60,8 @@ Namespace Layouts.SpringForce
     ''' </summary>
     Public Class ForceDirected2D : Inherits ForceDirected(Of FDGVector2)
 
-        Public Sub New(iGraph As NetworkGraph, iStiffness As Double, iRepulsion As Double, iDamping As Double)
-            MyBase.New(iGraph, iStiffness, iRepulsion, iDamping)
+        Public Sub New(igraph As NetworkGraph, iStiffness As Double, iRepulsion As Double, iDamping As Double)
+            MyBase.New(igraph, iStiffness, iRepulsion, iDamping)
         End Sub
 
         Public Overrides Function GetPoint(iNode As Node) As LayoutPoint
