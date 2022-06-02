@@ -1,60 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::34346061ba8aab23046a4d9dfbeb7451, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\scale\ordinal.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 124
-    '    Code Lines: 62
-    ' Comment Lines: 45
-    '   Blank Lines: 17
-    '     File Size: 5.05 KB
+' Summaries:
 
 
-    '     Class OrdinalScale
-    ' 
-    '         Properties: domainSize, Zero
-    ' 
-    '         Function: (+3 Overloads) domain, getTerms, range
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 124
+'    Code Lines: 62
+' Comment Lines: 45
+'   Blank Lines: 17
+'     File Size: 5.05 KB
+
+
+'     Class OrdinalScale
+' 
+'         Properties: domainSize, Zero
+' 
+'         Function: (+3 Overloads) domain, getTerms, range
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace d3js.scale
 
@@ -102,7 +103,7 @@ Namespace d3js.scale
         Default Public Overrides ReadOnly Property Value(term As String) As Double
             Get
                 If Not index.NotExists(term) Then
-                    Dim i As Integer = index(term) + 1
+                    Dim i As Integer = index(term)
                     Dim val As Double = lazyPositions(i)
 
                     Return val
@@ -120,7 +121,16 @@ Namespace d3js.scale
 
         Private Function lazyPositions() As Double()
             If positions.IsNullOrEmpty Then
-                positions = _range.Enumerate(index.Count + 1)
+                Dim delta As Double = _range.Length / index.Count
+                Dim list As New List(Of Double)
+                Dim x As Double = _range.Min + delta / 2
+
+                For i As Integer = 0 To index.Count - 1
+                    list.Add(x)
+                    x += delta
+                Next
+
+                positions = list.ToArray
             End If
 
             Return positions

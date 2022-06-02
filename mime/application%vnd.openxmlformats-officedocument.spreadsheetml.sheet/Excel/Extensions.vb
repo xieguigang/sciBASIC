@@ -59,6 +59,7 @@ Imports Microsoft.VisualBasic.Language.Default
 Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 
+<HideModuleName>
 Public Module Extensions
 
     ''' <summary>
@@ -97,6 +98,13 @@ Public Module Extensions
                 .Value = xlsx.GetTable(sheetName:=name)
             }
         Next
+    End Function
+
+    Public Function GetSheetNames(path As String) As String()
+        Dim xlsx As Xlsx = File.Open(path)
+        Dim names$() = xlsx.SheetNames.ToArray
+
+        Return names
     End Function
 
     ''' <summary>

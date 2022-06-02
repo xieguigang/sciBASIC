@@ -101,17 +101,19 @@ Public Module DataImports
     ''' <param name="delimiter"></param>
     ''' <param name="encoding"></param>
     ''' <returns></returns>
-    <Extension> Public Function [Imports](Of T As Class)(path$,
-                                                         Optional delimiter$ = ",",
-                                                         Optional encoding As Encoding = Nothing,
-                                                         Optional nameMaps As Dictionary(Of String, String) = Nothing) As IEnumerable(Of T)
+    <Extension>
+    Public Function [Imports](Of T As Class)(path$,
+                                             Optional delimiter$ = ",",
+                                             Optional encoding As Encoding = Nothing,
+                                             Optional nameMaps As Dictionary(Of String, String) = Nothing,
+                                             Optional mute As Boolean = False) As IEnumerable(Of T)
 
         Dim source As IO.File = [Imports](path, delimiter, encoding)
 
         If source.RowNumbers = 0 Then
             Return New T() {}
         Else
-            Return source.AsDataSource(Of T)(False, maps:=nameMaps)
+            Return source.AsDataSource(Of T)(False, maps:=nameMaps, silent:=mute)
         End If
     End Function
 
