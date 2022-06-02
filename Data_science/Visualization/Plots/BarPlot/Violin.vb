@@ -185,7 +185,7 @@ Public Class Violin : Inherits Plot
             q0 = q1
         Next
 
-        Call $"{group.name} = {New Double() {group.Min, group.Max}.GetJson}".__DEBUG_ECHO
+        ' Call $"{group.name} = {New Double() {group.Min, group.Max}.GetJson}".__DEBUG_ECHO
 
         ' 进行宽度伸缩映射
         Dim maxDensity As DoubleRange = line_l.X
