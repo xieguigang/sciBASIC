@@ -103,6 +103,10 @@ Namespace Scripting.SymbolBuilder
             script = New StringBuilder(capacity)
         End Sub
 
+        Sub New(lines As IEnumerable(Of String))
+            script = New StringBuilder(lines.JoinBy(vbCrLf))
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New()
             Call Me.New(capacity:=1024)
