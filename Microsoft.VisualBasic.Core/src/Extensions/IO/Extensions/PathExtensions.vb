@@ -111,17 +111,30 @@ Public Module PathExtensions
     <Extension>
     Public Function DeleteFile(path$,
                                Optional throwEx As Boolean = False,
-                               Optional strictFile As Boolean = True) As Boolean
+                               Optional strictFile As Boolean = True,
+                               Optional verbose As Action(Of Object) = Nothing) As Boolean
         Try
+            If verbose Is Nothing Then
+                verbose = Sub(any)
+                              ' do nothing
+                          End Sub
+            End If
+
             If path.FileExists Then
+                Call verbose($"removes file '{path}'.")
                 Call FileIO.FileSystem.DeleteFile(
                    path, UIOption.OnlyErrorDialogs, RecycleOption.DeletePermanently
                 )
             ElseIf path.DirectoryExists Then
+                Call verbose($"removes directory '{path}'.")
+
                 If strictFile Then
                     Throw New InvalidOperationException($"the given target is a directory, which the option of this operation is not allowed by default, you could set `strictFile` parameter to FALSE for removes this restriction!")
                 Else
-                    Call $"All content files in directory '{path}' is removed.".Warning
+                    Dim msg As String = $"All content files in directory '{path}' is removed."
+
+                    Call msg.Warning
+                    Call verbose(msg)
                     Call FileIO.FileSystem.DeleteDirectory(
                         path, DeleteDirectoryOption.DeleteAllContents
                     )
