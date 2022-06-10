@@ -75,6 +75,7 @@ Namespace Drawing2D.Colors
         Public Property format As String = "F2"
         Public Property legendOffsetLeft As Single = -99999
         Public Property noblank As Boolean = True
+        Public Property foreColor As Color = Color.Black
 
         Sub New(palette As String, Optional mapLevels As Integer = 30)
             designer = GetColors(palette, mapLevels) _
@@ -82,6 +83,13 @@ Namespace Drawing2D.Colors
                 .ToArray
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="layout">
+        ''' the plot location and the rectangle region
+        ''' </param>
         Public Sub Draw(ByRef g As IGraphics, layout As Rectangle)
             Call g.ColorMapLegend(
                 layout:=layout,
@@ -95,7 +103,8 @@ Namespace Drawing2D.Colors
                 ruleOffset:=ruleOffset,
                 format:=format,
                 legendOffsetLeft:=legendOffsetLeft,
-                noLeftBlank:=noblank
+                noLeftBlank:=noblank,
+                foreColor:=foreColor.ToHtmlColor
             )
         End Sub
 
