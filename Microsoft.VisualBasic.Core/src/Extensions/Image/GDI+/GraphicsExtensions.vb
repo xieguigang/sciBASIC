@@ -569,8 +569,14 @@ Namespace Imaging
         '    End If
         'End Function
 
+        ''' <summary>
+        ''' both width and height in current size object must be greater than zero
+        ''' </summary>
+        ''' <param name="size"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function IsValidGDIParameter(size As Size) As Boolean
+        <Extension>
+        Public Function IsValidGDIParameter(size As Size) As Boolean
             Return size.Width > 0 AndAlso size.Height > 0
         End Function
 

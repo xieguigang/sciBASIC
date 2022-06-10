@@ -181,7 +181,8 @@ Namespace Drawing2D.Colors
                                   Optional ruleOffset! = 10,
                                   Optional format$ = "F2",
                                   Optional legendOffsetLeft! = -99999,
-                                  Optional noLeftBlank As Boolean = False)
+                                  Optional noLeftBlank As Boolean = False,
+                                  Optional foreColor As String = "black")
 
             Dim titleSize As SizeF = g.MeasureString(title, titleFont)
             Dim legendOffsetTop!
@@ -189,6 +190,7 @@ Namespace Drawing2D.Colors
             Dim legendHeight!
             Dim d!
             Dim offsetAuto As Boolean = legendOffsetLeft < 0
+            Dim fontColor As Brush = foreColor.GetBrush
 
             ' 首先计算出layout
             legendOffsetTop = titleSize.Height * 2 + 5
@@ -222,7 +224,7 @@ Namespace Drawing2D.Colors
             y = layout.Top
             point = New PointF(x, y)
 
-            Call g.DrawString(title, titleFont, Brushes.Black, point)
+            Call g.DrawString(title, titleFont, fontColor, point)
 
             ' 绘制出颜色谱
             y = legendOffsetTop + layout.Top
@@ -251,7 +253,7 @@ Namespace Drawing2D.Colors
                     .Y = y + (d - tickFont.Height) / 2
                 }
                 g.FillRectangle(color, rect:=rect)
-                g.DrawString("Unknown", tickFont, Brushes.Black, point)
+                g.DrawString("Unknown", tickFont, fontColor, point)
             End If
 
             ' 绘制出标尺
@@ -265,10 +267,10 @@ Namespace Drawing2D.Colors
 
             x += ruleOffset + 5
             point = New PointF(x, y - tickFont.Height / 2)
-            g.DrawString(ticks.Max.ToString(format), tickFont, Brushes.Black, point)
+            g.DrawString(ticks.Max.ToString(format), tickFont, fontColor, point)
 
             point = New PointF(x, y + legendHeight - tickFont.Height / 2)
-            g.DrawString(ticks.Min.ToString(format), tickFont, Brushes.Black, point)
+            g.DrawString(ticks.Min.ToString(format), tickFont, fontColor, point)
 
             ticks = ticks _
                 .Skip(1) _
@@ -296,7 +298,7 @@ Namespace Drawing2D.Colors
                     .Y = y - tickFont.Height / 2
                 }
                 g.DrawLine(Pens.Black, x, y, x - 5, y)
-                g.DrawString(tickStr, tickFont, Brushes.Gray, point)
+                g.DrawString(tickStr, tickFont, fontColor, point)
 
                 y += delta
             Next
