@@ -77,6 +77,7 @@ Imports Microsoft.VisualBasic.Math.Scripting.MathExpression
 Imports Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports randf2 = Microsoft.VisualBasic.Math.RandomExtensions
 
 Public Module Scatter
 
@@ -87,6 +88,9 @@ Public Module Scatter
     ''' <param name="a"></param>
     ''' <param name="width_jit"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' this method can be affected by the <see cref="randf2.SetSeed(Integer)"/> method.
+    ''' </remarks>
     Public Function Jitter(a As Vector, width_jit As Double) As Vector
         a += Vector.rand(a.Length) * width_jit - width_jit / 2
         Return a

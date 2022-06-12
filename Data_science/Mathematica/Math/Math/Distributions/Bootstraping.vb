@@ -1,53 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::0d7069136e052e36d6eb6af4302f2f54, sciBASIC#\Data_science\Mathematica\Math\Math\Distributions\Bootstraping.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 242
-    '    Code Lines: 165
-    ' Comment Lines: 50
-    '   Blank Lines: 27
-    '     File Size: 10.47 KB
+' Summaries:
 
 
-    '     Module Bootstraping
-    ' 
-    '         Function: Distributes, Hist, Sample, (+2 Overloads) Samples, Sampling
-    '                   TabulateBin, TabulateMode
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 242
+'    Code Lines: 165
+' Comment Lines: 50
+'   Blank Lines: 27
+'     File Size: 10.47 KB
+
+
+'     Module Bootstraping
+' 
+'         Function: Distributes, Hist, Sample, (+2 Overloads) Samples, Sampling
+'                   TabulateBin, TabulateMode
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -60,6 +60,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions.BinBox
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports stdNum = System.Math
+Imports randf2 = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace Distributions
 
@@ -100,6 +101,9 @@ Namespace Distributions
         ''' 是否为有放回的进行抽样？默认是有放回的。设置这个参数为False表示不重复的采样，即抽取过后的元素将不会再出现在后面的采样结果之中
         ''' </param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' this method can be affected by the <see cref="randf2.SetSeed(Integer)"/> method.
+        ''' </remarks>
         <Extension>
         Public Iterator Function Samples(Of T)(source As IEnumerable(Of T), N As Integer,
                                                Optional bags As Integer = 100,
@@ -107,42 +111,59 @@ Namespace Distributions
 
             Dim array As T() = source.ToArray
             Dim index As New List(Of Integer)(array.Sequence)
-            Dim sampleBags = Iterator Function() As IEnumerable(Of T)
-                                 If replace Then
-                                     For k As Integer = 0 To N - 1
-                                         ' 在这里是有放回的随机采样
-                                         Yield array(seeds.Next(array.Length))
-                                     Next
-                                 Else
-                                     Dim i As Integer
-
-                                     If index.Count = 0 Then
-                                         Return
-                                     End If
-
-                                     ' 无放回的抽样
-                                     For k As Integer = 0 To N - 1
-                                         i = seeds.Next(index.Count)
-                                         i = index(i)
-                                         index.Remove(item:=i)
-
-                                         Yield array(i)
-
-                                         If index.Count = 0 Then
-                                             Return
-                                         End If
-                                     Next
-                                 End If
-                             End Function
 
             For i As Integer = 0 To bags
-                Call seeds.Next()
+                Call randf2.seeds.Next()
 
                 Yield New SeqValue(Of T()) With {
                     .i = i,
-                    .value = sampleBags().ToArray
+                    .value = array _
+                        .GetBagSample(N, New List(Of Integer)(index), replace) _
+                        .ToArray
                 }
             Next
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="pool"></param>
+        ''' <param name="N"></param>
+        ''' <param name="index"></param>
+        ''' <param name="replace">
+        ''' if replace, then each bag sample may contains duplicated element
+        ''' else, each of the data element in one bag sample is unique.
+        ''' </param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' this method can be affected by the <see cref="randf2.SetSeed(Integer)"/> method.
+        ''' </remarks>
+        <Extension>
+        Private Iterator Function GetBagSample(Of T)(pool As T(), N As Integer, index As List(Of Integer), replace As Boolean) As IEnumerable(Of T)
+            If replace Then
+                For k As Integer = 0 To N - 1
+                    ' 在这里是有放回的随机采样
+                    Yield pool(randf2.seeds.Next(pool.Length))
+                Next
+            ElseIf index.Count = 0 Then
+                Return
+            Else
+                Dim i As Integer = Scan0
+
+                ' 无放回的抽样
+                For k As Integer = 0 To N - 1
+                    i = randf2.seeds.Next(index.Count)
+                    i = index(i)
+                    index.Remove(item:=i)
+
+                    Yield pool(i)
+
+                    If index.Count = 0 Then
+                        Return
+                    End If
+                Next
+            End If
         End Function
 
         <Extension>
@@ -187,7 +208,7 @@ Namespace Distributions
             Do While ++l < max
                 Dim LQuery As DoubleTagged(Of Double)() =
                     LinqAPI.Exec(Of DoubleTagged(Of Double)) <=
- _
+                                                               _
                     From x As DoubleTagged(Of Double)
                     In array
                     Where x.Tag >= low AndAlso

@@ -146,7 +146,9 @@ Namespace ComponentModel.Algorithm.BinaryTree
         ReadOnly defaultView As New [Default](Of Func(Of K, String))(Function(key) Scripting.ToString(key))
 
         ''' <summary>
-        ''' 
+        ''' the given <paramref name="value"/> will be added 
+        ''' into the member list by default in this constructor 
+        ''' function.
         ''' </summary>
         ''' <param name="key"></param>
         ''' <param name="value"></param>

@@ -83,19 +83,20 @@ Namespace ComponentModel.Algorithm.BinaryTree
         ''' <typeparam name="K"></typeparam>
         ''' <typeparam name="V"></typeparam>
         ''' <param name="tree"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' current -> right -> left
+        ''' </returns>
         <Extension>
         Public Iterator Function PopulateNodes(Of K, V)(tree As BinaryTree(Of K, V)) As IEnumerable(Of BinaryTree(Of K, V))
-            If Not tree.Left Is Nothing Then
-                For Each node In tree.Left.PopulateNodes
-                    Yield node
-                Next
-            End If
-
             Yield tree
 
             If Not tree.Right Is Nothing Then
                 For Each node In tree.Right.PopulateNodes
+                    Yield node
+                Next
+            End If
+            If Not tree.Left Is Nothing Then
+                For Each node In tree.Left.PopulateNodes
                     Yield node
                 Next
             End If
