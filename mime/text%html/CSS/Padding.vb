@@ -81,6 +81,12 @@ Namespace CSS
             End Get
         End Property
 
+        Public Shared ReadOnly Property Zero As Padding
+            Get
+                Return New Padding
+            End Get
+        End Property
+
         ''' <summary>
         ''' Gets or sets the padding value for the top edge.
         ''' </summary>

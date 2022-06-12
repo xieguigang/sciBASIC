@@ -75,6 +75,7 @@ Imports Microsoft.VisualBasic.Math.Scripting.Rscript
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports numpy = Microsoft.VisualBasic.Language.Python
+Imports randf2 = Microsoft.VisualBasic.Math.RandomExtensions
 Imports stdNum = System.Math
 
 Namespace LinearAlgebra
@@ -1049,6 +1050,15 @@ Namespace LinearAlgebra
             Return result
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="size%"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' this method can be affected by the <see cref="randf2.SetSeed(Integer)"/> method.
+        ''' </remarks> 
+        '''
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function rand(size%) As Vector
             Return Extensions.rand(size)

@@ -1074,16 +1074,19 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' Return a collection with randomize element position in <paramref name="source">the original collection</paramref>.
+    ''' Return a collection with randomize element position in 
+    ''' <paramref name="source">the original collection</paramref>.
     ''' (从原有序序列中获取一个随机元素的序列)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
     ''' <returns></returns>
-    ''' <remarks></remarks>
-    '''
+    ''' <remarks>
+    ''' this method can be affected by the <see cref="Math.RandomExtensions.SetSeed"/> method.
+    ''' </remarks>
     <ExportAPI("Shuffles")>
-    <Extension> Public Function Shuffles(Of T)(source As IEnumerable(Of T)) As T()
+    <Extension>
+    Public Function Shuffles(Of T)(source As IEnumerable(Of T)) As T()
         Dim list = source.SafeQuery.ToList
         Call Math.Shuffle(list)
         Return list.ToArray

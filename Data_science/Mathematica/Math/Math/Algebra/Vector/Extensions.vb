@@ -58,7 +58,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
-Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+Imports randf2 = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace LinearAlgebra
 
@@ -115,19 +115,22 @@ Namespace LinearAlgebra
         ''' </summary>
         ''' <param name="size%"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' this method can be affected by the <see cref="randf2.SetSeed(Integer)"/> method.
+        ''' </remarks>
         Public Function rand(size%, Optional range As DoubleRange = Nothing) As Vector
             Dim list As Double() = New Double(size - 1) {}
 
-            SyncLock seeds
+            SyncLock randf2.seeds
                 If range Is Nothing Then
                     For i As Integer = 0 To size - 1
-                        list(i) = seeds.NextDouble
+                        list(i) = randf2.seeds.NextDouble
                     Next
                 Else
                     Dim d = range.Length
 
                     For i As Integer = 0 To size - 1
-                        list(i) = seeds.NextDouble * d + range.Min
+                        list(i) = randf2.seeds.NextDouble * d + range.Min
                     Next
                 End If
             End SyncLock
