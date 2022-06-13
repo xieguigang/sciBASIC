@@ -458,13 +458,19 @@ Public Module PathExtensions
     ''' <remarks></remarks>
     <ExportAPI("NormalizePathString")>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function NormalizePathString(str$, Optional alphabetOnly As Boolean = True) As String
-        Return NormalizePathString(str, "_", alphabetOnly)
+    <Extension>
+    Public Function NormalizePathString(str$,
+                                        Optional alphabetOnly As Boolean = True,
+                                        Optional replacement As String = "_") As String
+
+        Return NormalizePathString(str, replacement, alphabetOnly)
     End Function
 
     <ExportAPI("NormalizePathString")>
-    <Extension> Public Function NormalizePathString(str$, normAs As String, Optional alphabetOnly As Boolean = True) As String
+    <Extension>
+    Public Function NormalizePathString(str$, normAs As String, Optional alphabetOnly As Boolean = True) As String
         Dim sb As New StringBuilder(str)
+
         For Each ch As Char In ILLEGAL_FILENAME_CHARACTERS
             Call sb.Replace(ch, normAs)
         Next

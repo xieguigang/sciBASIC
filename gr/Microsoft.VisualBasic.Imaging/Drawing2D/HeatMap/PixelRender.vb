@@ -106,12 +106,11 @@ Namespace Drawing2D.HeatMap
         ''' <param name="pixels"></param>
         ''' <param name="size"></param>
         ''' <returns></returns>
-        Public Function RenderRasterImage(Of T As Pixel)(pixels As IEnumerable(Of T), size As Size) As Bitmap
+        Public Function RenderRasterImage(Of T As Pixel)(pixels As IEnumerable(Of T), size As Size, Optional fillRect As Boolean = True) As Bitmap
             Dim raw As New Bitmap(size.Width, size.Height, PixelFormat.Format32bppArgb)
             Dim level As Integer
             Dim color As Color
             Dim full As New Rectangle(0, 0, raw.Width, raw.Height)
-            Dim fillRect As Boolean = Not App.IsMicrosoftPlatform
             Dim pixel As RectangleF
             Dim g As IGraphics = raw.CreateCanvas2D(directAccess:=True)
 

@@ -239,11 +239,10 @@ Namespace Drawing2D.Colors
                 y += d
             Next
 
-            y += d
-
             If Not unmapColor.StringEmpty Then
                 Dim color As Brush = unmapColor.GetBrush
 
+                y += d * 3
                 rect = New RectangleF With {
                     .Location = New PointF(legendOffsetLeft, y),
                     .Size = New SizeF(legendWidth, d)
@@ -254,6 +253,8 @@ Namespace Drawing2D.Colors
                 }
                 g.FillRectangle(color, rect:=rect)
                 g.DrawString("Unknown", tickFont, fontColor, point)
+            Else
+                y += d
             End If
 
             ' 绘制出标尺
