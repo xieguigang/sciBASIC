@@ -1,59 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::6fe2ad45fe3d2438f1f4b9dce99139f1, sciBASIC#\Data_science\Visualization\Plots\Scatter\Bubble.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 303
-    '    Code Lines: 251
-    ' Comment Lines: 15
-    '   Blank Lines: 37
-    '     File Size: 12.39 KB
+' Summaries:
 
 
-    ' Class Bubble
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: logRadius, Plot
-    ' 
-    '     Sub: drawLegend, PlotInternal
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 303
+'    Code Lines: 251
+' Comment Lines: 15
+'   Blank Lines: 37
+'     File Size: 12.39 KB
+
+
+' Class Bubble
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: logRadius, Plot
+' 
+'     Sub: drawLegend, PlotInternal
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
+Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
@@ -291,12 +292,21 @@ Public Class Bubble : Inherits Plot
 
         Dim anchor As Anchor
         Dim label As Label
+        Dim labelPointer As New Pen(Color.Gray, 2) With {
+            .EndCap = LineCap.ArrowAnchor
+        }
 
         For Each index As SeqValue(Of Label) In labels.SeqIterator
             label = index
             anchor = anchors(index)
+            ' labelPos = New PointF(label.X, label.Y)
 
-            ' Call g.DrawLine(Pens.Gray, anchor, label.GetTextAnchor(anchor))
+            If label.X + label.width > canvas.PlotRegion.Right Then
+                ' labelPos = New PointF(canvas.PlotRegion.Right - label.width, labelPos.Y)
+                label.X = canvas.PlotRegion.Right - label.width
+            End If
+
+            Call g.DrawLine(labelPointer, anchor, label.GetTextAnchor(anchor))
             Call g.DrawString(label.text, tagLabelFont, Brushes.Black, label)
         Next
 
@@ -339,7 +349,7 @@ Public Class Bubble : Inherits Plot
         End If
 
         Dim legends = LinqAPI.Exec(Of LegendObject) <=
- _
+                                                      _
             From serial As SerialData
             In data
             Let color As String = If(

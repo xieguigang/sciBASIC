@@ -79,8 +79,16 @@ Namespace d3js.Layout
         Dim acc As Integer = 0
         Dim rej As Integer = 0
 
+        ''' <summary>
+        ''' the max move distance in each loop iteration
+        ''' </summary>
         Friend maxMove As Double = 5
         Friend maxAngle As Double = 0.5
+        ''' <summary>
+        ''' the max total move distance of the label with 
+        ''' the corresponding anchor point.
+        ''' </summary>
+        Friend maxDistance As Double = 30
 
 #Region "weights"
         Friend w_len As Double = 0.2      ' leader line length 
@@ -183,14 +191,14 @@ Namespace d3js.Layout
         ''' returns true if two lines intersect, else false
         ''' from http:'paulbourke.net/geometry/lineline2d/
         ''' </summary>
-        ''' <param name="x1#"></param>
-        ''' <param name="x2#"></param>
-        ''' <param name="x3#"></param>
-        ''' <param name="x4#"></param>
-        ''' <param name="y1#"></param>
-        ''' <param name="y2#"></param>
-        ''' <param name="y3#"></param>
-        ''' <param name="y4#"></param>
+        ''' <param name="x1"></param>
+        ''' <param name="x2"></param>
+        ''' <param name="x3"></param>
+        ''' <param name="x4"></param>
+        ''' <param name="y1"></param>
+        ''' <param name="y2"></param>
+        ''' <param name="y3"></param>
+        ''' <param name="y4"></param>
         ''' <returns></returns>
         Private Shared Function intersect(x1#, x2#, x3#, x4#, y1#, y2#, y3#, y4#) As Boolean
             Dim mua, mub As Double
@@ -218,13 +226,13 @@ Namespace d3js.Layout
         ''' </summary>
         Private Sub mclMove(i%)
             ' random translation
-            m_labels(i).X += (Rnd() - 0.5) * maxMove
-            m_labels(i).Y += (Rnd() - 0.5) * maxMove
+            m_labels(i).X += (randf.NextDouble - 0.5) * maxMove
+            m_labels(i).Y += (randf.NextDouble - 0.5) * maxMove
         End Sub
 
         Private Sub MonteCarlo(currT#, action As Action(Of Integer))
             ' select a random label which is not pinned
-            Dim i As Integer = unpinnedLabels(stdNum.Floor(Rnd() * unpinnedLabels.Length))
+            Dim i As Integer = unpinnedLabels(stdNum.Floor(randf.NextDouble * unpinnedLabels.Length))
             Dim label As Label = m_labels(i)
             Dim anchor As Anchor = m_anchors(i)
 
@@ -250,9 +258,13 @@ Namespace d3js.Layout
             ' delta E
             Dim delta_energy = (new_energy - old_energy) * If(distance_old = 0.0, 1, distance_new / distance_old)
 
+            If distance_new > maxDistance Then
+                delta_energy = 1.0E+64
+            End If
+
             ' the lower of the delta energy
             ' the higher chance to accept current change
-            If (Rnd() < stdNum.Exp(-delta_energy / currT)) Then
+            If (randf.NextDouble < stdNum.Exp(-delta_energy / currT)) Then
                 acc += 1
             Else
                 ' move back to old coordinates
@@ -267,7 +279,7 @@ Namespace d3js.Layout
         ''' </summary>
         Private Sub mclRotate(i%)
             ' random angle
-            Dim angle = (Rnd() - 0.5) * maxAngle
+            Dim angle = (randf.NextDouble - 0.5) * maxAngle
 
             Dim s = stdNum.Sin(angle)
             Dim c = stdNum.Cos(angle)
@@ -306,6 +318,11 @@ Namespace d3js.Layout
         Public Function Temperature(Optional T# = 1, Optional initialT# = 1) As Labeler
             Me.T = T
             Me.initialT = initialT
+            Return Me
+        End Function
+
+        Public Function MaxMoveDistance(Optional max As Double = 50) As Labeler
+            Me.maxDistance = max
             Return Me
         End Function
 
