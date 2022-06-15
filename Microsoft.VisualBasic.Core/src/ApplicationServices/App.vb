@@ -913,6 +913,9 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Private Function checkIsMicrosoftPlatform() As Boolean
+#If NET48 Then
+        Return True
+#Else
 #If UNIX Then
 #If DEBUG Then
         Return True
@@ -924,6 +927,7 @@ Public Module App
         Return RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
 #Else
         Return True
+#End If
 #End If
 #End If
     End Function
