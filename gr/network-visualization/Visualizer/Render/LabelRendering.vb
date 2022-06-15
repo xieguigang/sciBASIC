@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::254ac3db93682970d02ccf9ee96221cd, sciBASIC#\gr\network-visualization\Visualizer\Render\LabelRendering.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 142
-    '    Code Lines: 119
-    ' Comment Lines: 6
-    '   Blank Lines: 17
-    '     File Size: 5.59 KB
+' Summaries:
 
 
-    ' Class LabelRendering
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: renderLabel, renderLabels
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 142
+'    Code Lines: 119
+' Comment Lines: 6
+'   Blank Lines: 17
+'     File Size: 5.59 KB
+
+
+' Class LabelRendering
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Sub: renderLabel, renderLabels
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -117,6 +117,7 @@ Friend Class LabelRendering
             Call $"Do node label layouts, iteration={iteration}".__INFO_ECHO
             Call d3js _
                 .labeler(maxMove:=1, maxAngle:=1, w_len:=1, w_inter:=2, w_lab2:=10, w_lab_anc:=10, w_orient:=2) _
+                .MaxMoveDistance(0.05 * {g.Size.Width, g.Size.Height}.DistanceTo(0, 0)) _
                 .Anchors(labels.Select(Function(x) x.anchor)) _
                 .Labels(labels.Select(Function(x) x.label)) _
                 .Size(g.Size) _
@@ -154,7 +155,7 @@ Friend Class LabelRendering
 
             If iteration > 0 Then
                 If label.offsetDistance >= stdNum.Max(g.Size.Width, g.Size.Height) * 0.01 Then
-                    Call g.DrawLine(New Pen(Brushes.Gray, 3) With {.DashStyle = DashStyle.Dot}, label.anchor, label.GetTextAnchor)
+                    Call g.DrawLine(New Pen(Brushes.Gray, 2) With {.DashStyle = DashStyle.Dash}, label.anchor, label.GetTextAnchor)
                 End If
             End If
 
