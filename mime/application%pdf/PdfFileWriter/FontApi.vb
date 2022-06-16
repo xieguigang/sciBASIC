@@ -295,138 +295,57 @@ End Class
 ''' used to associate the font with other fonts of similar
 ''' appearance but different names.
 ''' </remarks>
-
 Public Class WinPanose
+
     ''' <summary>
     ''' Panose family type
     ''' </summary>
+    Public Property bFamilyType As Byte
 
     ''' <summary>
     ''' Panose serif style
     ''' </summary>
+    Public Property bSerifStyle As Byte
 
     ''' <summary>
     ''' Panose weight
     ''' </summary>
+    Public Property bWeight As Byte
 
     ''' <summary>
     ''' Panose proportion
     ''' </summary>
+    Public Property bProportion As Byte
 
     ''' <summary>
     ''' Panose contrast
     ''' </summary>
+    Public Property bContrast As Byte
 
     ''' <summary>
     ''' Panose stroke variation
     ''' </summary>
+    Public Property bStrokeVariation As Byte
 
     ''' <summary>
     ''' Panose arm style
     ''' </summary>
+    Public Property bArmStyle As Byte
 
     ''' <summary>
     ''' Panose letter form
     ''' </summary>
+    Public Property bLetterform As Byte
 
     ''' <summary>
     ''' Panose mid line
     ''' </summary>
+    Public Property bMidline As Byte
 
     ''' <summary>
     ''' Panose X height
     ''' </summary>
-    Private _bFamilyType As Byte, _bSerifStyle As Byte, _bWeight As Byte, _bProportion As Byte, _bContrast As Byte, _bStrokeVariation As Byte, _bArmStyle As Byte, _bLetterform As Byte, _bMidline As Byte, _bXHeight As Byte
-
-    Public Property bFamilyType As Byte
-        Get
-            Return _bFamilyType
-        End Get
-        Private Set(value As Byte)
-            _bFamilyType = value
-        End Set
-    End Property
-
-    Public Property bSerifStyle As Byte
-        Get
-            Return _bSerifStyle
-        End Get
-        Private Set(value As Byte)
-            _bSerifStyle = value
-        End Set
-    End Property
-
-    Public Property bWeight As Byte
-        Get
-            Return _bWeight
-        End Get
-        Private Set(value As Byte)
-            _bWeight = value
-        End Set
-    End Property
-
-    Public Property bProportion As Byte
-        Get
-            Return _bProportion
-        End Get
-        Private Set(value As Byte)
-            _bProportion = value
-        End Set
-    End Property
-
-    Public Property bContrast As Byte
-        Get
-            Return _bContrast
-        End Get
-        Private Set(value As Byte)
-            _bContrast = value
-        End Set
-    End Property
-
-    Public Property bStrokeVariation As Byte
-        Get
-            Return _bStrokeVariation
-        End Get
-        Private Set(value As Byte)
-            _bStrokeVariation = value
-        End Set
-    End Property
-
-    Public Property bArmStyle As Byte
-        Get
-            Return _bArmStyle
-        End Get
-        Private Set(value As Byte)
-            _bArmStyle = value
-        End Set
-    End Property
-
-    Public Property bLetterform As Byte
-        Get
-            Return _bLetterform
-        End Get
-        Private Set(value As Byte)
-            _bLetterform = value
-        End Set
-    End Property
-
-    Public Property bMidline As Byte
-        Get
-            Return _bMidline
-        End Get
-        Private Set(value As Byte)
-            _bMidline = value
-        End Set
-    End Property
-
     Public Property bXHeight As Byte
-        Get
-            Return _bXHeight
-        End Get
-        Private Set(value As Byte)
-            _bXHeight = value
-        End Set
-    End Property
 
     Friend Sub New(DC As FontApi)
         bFamilyType = DC.ReadByte()
@@ -447,48 +366,22 @@ End Class
 ''' <summary>
 ''' Kerning pair class
 ''' </summary>
+Public Class WinKerningPair : Implements IComparable(Of WinKerningPair)
 
-Public Class WinKerningPair
-    Implements IComparable(Of WinKerningPair)
     ''' <summary>
     ''' Gets first character
     ''' </summary>
+    Public Property First As Char
 
     ''' <summary>
     ''' Gets second character
     ''' </summary>
+    Public Property Second As Char
 
     ''' <summary>
     ''' Gets kerning amount in design units
     ''' </summary>
-    Private _First As Char, _Second As Char, _KernAmount As Integer
-
-    Public Property First As Char
-        Get
-            Return _First
-        End Get
-        Private Set(value As Char)
-            _First = value
-        End Set
-    End Property
-
-    Public Property Second As Char
-        Get
-            Return _Second
-        End Get
-        Private Set(value As Char)
-            _Second = value
-        End Set
-    End Property
-
     Public Property KernAmount As Integer
-        Get
-            Return _KernAmount
-        End Get
-        Private Set(value As Integer)
-            _KernAmount = value
-        End Set
-    End Property
 
     Friend Sub New(DC As FontApi)
         First = DC.ReadChar()
