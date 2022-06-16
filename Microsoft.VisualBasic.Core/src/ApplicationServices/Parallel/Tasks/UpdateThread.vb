@@ -141,6 +141,7 @@ Namespace Parallel.Tasks
         Private Sub __invoke()
 #If DEBUG Then
             Call _execute()
+            Call Threading.Thread.Sleep(Periods)
 #Else
             Try
                 Call _execute()
