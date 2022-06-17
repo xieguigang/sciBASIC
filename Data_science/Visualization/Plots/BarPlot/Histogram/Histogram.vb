@@ -215,7 +215,8 @@ Namespace BarPlot.Histogram
                              Optional axisLabelFontStyle$ = CSSFont.Win7LargerBold,
                              Optional xAxis$ = Nothing,
                              Optional title$ = Nothing,
-                             Optional titleCss$ = CSSFont.PlotTitle) As GraphicsData
+                             Optional titleCss$ = CSSFont.PlotTitle,
+                             Optional dpi As Integer = 100) As GraphicsData
 
             Dim theme As New Theme With {
                 .padding = padding,
@@ -238,7 +239,7 @@ Namespace BarPlot.Histogram
                 theme.legendLayout = New Absolute(legendPos)
             End If
 
-            Return app.Plot(size)
+            Return app.Plot(size, ppi:=dpi)
         End Function
 
         ''' <summary>
@@ -267,7 +268,8 @@ Namespace BarPlot.Histogram
                                       Optional xLabel$ = "X",
                                       Optional yLabel$ = "Y",
                                       Optional xAxis$ = Nothing,
-                                      Optional showLegend As Boolean = True) As GraphicsData
+                                      Optional showLegend As Boolean = True,
+                                      Optional dpi As Integer = 100) As GraphicsData
             Return data.ToArray _
                 .Hist([step]) _
                 .HistogramPlot(serialsTitle:=serialsTitle,
@@ -280,7 +282,8 @@ Namespace BarPlot.Histogram
                                xLabel:=xLabel,
                                yLabel:=yLabel,
                                xAxis:=xAxis,
-                               showLegend:=showLegend
+                               showLegend:=showLegend,
+                               dpi:=dpi
                 )
         End Function
 
@@ -306,7 +309,8 @@ Namespace BarPlot.Histogram
                                       Optional xLabel$ = "X",
                                       Optional yLabel$ = "Y",
                                       Optional xAxis$ = Nothing,
-                                      Optional showLegend As Boolean = True) As GraphicsData
+                                      Optional showLegend As Boolean = True,
+                                      Optional dpi As Integer = 100) As GraphicsData
 
             Dim histLegend As New LegendObject With {
                 .color = color,
@@ -328,7 +332,8 @@ Namespace BarPlot.Histogram
                 showTagChartLayer:=False,
                 xlabel:=xLabel, Ylabel:=yLabel,
                 xAxis:=xAxis,
-                showLegend:=showLegend
+                showLegend:=showLegend,
+                dpi:=dpi
             )
         End Function
     End Module
