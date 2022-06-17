@@ -117,6 +117,9 @@ Namespace Imaging
             End Set
         End Property
 
+        Sub New()
+        End Sub
+
 #Region "Default canvas style values"
         ''' <summary>
         ''' Default pen for drawing
