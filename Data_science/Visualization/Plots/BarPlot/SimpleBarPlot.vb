@@ -101,10 +101,12 @@ Namespace BarPlot
                 Else
                     Dim dw As Double = barWidth / sample.value.data.Length
 
+                    x = x - barWidth / 2
+
                     ' 改变X
                     For Each val As SeqValue(Of Double) In sample.value.data.SeqIterator
-                        Dim right = x + dw
-                        Dim top = yscaler.TranslateY(val.value)
+                        Dim right As Double = x + dw
+                        Dim top As Double = yscaler.TranslateY(val.value)
                         Dim rect As Rectangle = BarPlotAPI.Rectangle(top, x, right, bottom)
 
                         Call g.DrawRectangle(Pens.Black, rect)
