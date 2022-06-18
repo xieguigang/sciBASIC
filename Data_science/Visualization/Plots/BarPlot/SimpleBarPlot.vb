@@ -19,6 +19,7 @@ Namespace BarPlot
 
         Public Property stackReorder As Boolean = True
         Public Property stacked As Boolean = False
+        Public Property angle As Double = -45
 
         Public Sub New(data As BarDataGroup, theme As Theme)
             MyBase.New(theme)
@@ -27,9 +28,28 @@ Namespace BarPlot
         End Sub
 
         Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
-            Dim scaler As New Scaling(Data, stacked, False)
-            Dim mapper As New Mapper(scaler)
             Dim n As Integer
+            Dim yTicks As Double() = data.Samples _
+                .Select(Function(s) s.data) _
+                .IteratesALL _
+                .Range _
+                .CreateAxisTicks
+            Dim xscale = d3js.scale.ordinal() _
+                .range(values:=data.Samples.Select(Function(s) s.tag)) _
+                .domain(values:=New Double() {
+                    canvas.PlotRegion.Left,
+                    canvas.PlotRegion.Right
+                })
+            Dim yscale = d3js.scale.linear() _
+                .range(values:=data.Samples.Select(Function(s) s.data).IteratesALL) _
+                .domain(values:=New Double() {
+                    canvas.PlotRegion.Top,
+                    canvas.PlotRegion.Bottom
+                })
+            Dim yscaler As New YScaler(reversed:=False) With {
+                .region = canvas.PlotRegion,
+                .Y = yscale
+            }
 
             If stacked Then
                 n = Data.Samples.Length
@@ -37,31 +57,20 @@ Namespace BarPlot
                 n = Data.Samples.Sum(Function(x) x.data.Length) - 1
             End If
 
-            Dim dxStep As Double = (canvas.Size.Width - canvas.Padding.Horizontal - 2 * canvas.Padding.Horizontal) / n
-            Dim interval As Double = canvas.Padding.Horizontal / n
-            Dim left As Single = canvas.Padding.Left
-            Dim sy As Func(Of Single, Single) = mapper.YScaler(canvas.Size, canvas.Padding)
-            Dim bottom = canvas.Size.Height - canvas.Padding.Bottom
-            Dim angle! = -45
-            Dim leftMargins As New List(Of Double)
-
-            ' Call g.DrawAxis(grect.Size, grect.Padding, mapper, showGrid)
+            Dim bottom As Double = canvas.PlotRegion.Bottom
+            Dim barWidth As Double = xscale.binWidth
 
             For Each sample As SeqValue(Of BarDataSample) In Data.Samples.SeqIterator
-                Dim x = left + interval
-
-                leftMargins += x
+                Dim x As Double = xscale(sample.value.tag)
 
                 If stacked Then
                     ' 改变Y
-                    Dim right = x + dxStep
-                    Dim top = sy(sample.value.StackedSum)
+                    Dim right As Double = x + barWidth
+                    Dim top = yscaler.TranslateY(sample.value.StackedSum)
                     ' 畫布的高度
                     Dim canvasHeight = canvas.Size.Height - (canvas.Padding.Vertical)
                     ' 底部減去最高的就是實際的高度（縂的）
                     Dim actualHeight = bottom - top
-                    Dim barWidth = dxStep
-
                     Dim stack As IEnumerable(Of SeqValue(Of Double))
 
                     If stackReorder Then
@@ -87,14 +96,14 @@ Namespace BarPlot
 
                         top += barHeight
                     Next
-
-                    x += dxStep
                 Else
+                    Dim dw As Double = barWidth / sample.value.data.Length
+
                     ' 改变X
                     For Each val As SeqValue(Of Double) In sample.value.data.SeqIterator
-                        Dim right = x + dxStep
-                        Dim top = sy(val.value)
-                        Dim rect As Rectangle = BarPlotAPI.Rectangle(top, x, right, canvas.Size.Height - canvas.Padding.Bottom)
+                        Dim right = x + dw
+                        Dim top = yscaler.TranslateY(val.value)
+                        Dim rect As Rectangle = BarPlotAPI.Rectangle(top, x, right, bottom)
 
                         Call g.DrawRectangle(Pens.Black, rect)
                         Call g.FillRectangle(
@@ -102,30 +111,22 @@ Namespace BarPlot
                             BarPlotAPI.Rectangle(top + 1,
                                       x + 1,
                                       right - 1,
-                                     canvas.Size.Height - canvas.Padding.Bottom - 1))
-                        x += dxStep
+                                      bottom - 1))
+                        x += dw
                     Next
                 End If
-
-                left = x
             Next
 
             Dim keys$() = Data.Samples _
                 .Select(Function(s) s.Tag) _
                 .ToArray
             Dim font As New Font(FontFace.SegoeUI, 28)
-            Dim dd As Double
-
-            If leftMargins.Count = 1 Then
-                dd = 0
-            Else
-                dd = leftMargins(1) - leftMargins(0)
-            End If
+            Dim dd As Double = 0
 
             bottom += 80
 
             For Each key As SeqValue(Of String) In keys.SeqIterator
-                left = leftMargins(index:=key.i) + dd / 2 - If(Not stacked, dxStep / 2, 0)
+                Dim left = xscale(key.value)
 
                 ' 得到斜边的长度
                 Dim sz = g.MeasureString((+key), font)
