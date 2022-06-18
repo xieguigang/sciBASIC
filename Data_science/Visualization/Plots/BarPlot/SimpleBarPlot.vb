@@ -51,7 +51,28 @@ Namespace BarPlot
                 .Y = yscale
             }
 
-            Call Axis.DrawAxis(g, New DataScaler With {.AxisTicks = (Nothing, yTicks.AsVector), .region = canvas.PlotRegion, .X = xscale, .Y = yscale}, canvas, showGrid:=True)
+            Call Axis.DrawAxis(
+                g:=g,
+                scaler:=New DataScaler With {
+                    .AxisTicks = (Nothing, yTicks.AsVector),
+                    .region = canvas.PlotRegion,
+                    .X = xscale,
+                    .Y = yscale
+                },
+                region:=canvas,
+                showGrid:=theme.drawGrid,
+                offset:=Nothing,
+                xlabel:=xlabel,
+                ylabel:=ylabel,
+                labelFontStyle:=theme.axisLabelCSS,
+                gridFill:=theme.gridFill,
+                gridX:=theme.gridStrokeX,
+                gridY:=theme.gridStrokeY,
+                axisStroke:=theme.axisStroke,
+                tickFontStyle:=theme.axisTickCSS,
+                XtickFormat:=theme.XaxisTickFormat,
+                YtickFormat:=theme.YaxisTickFormat
+            )
 
             If stacked Then
                 n = data.Samples.Length
