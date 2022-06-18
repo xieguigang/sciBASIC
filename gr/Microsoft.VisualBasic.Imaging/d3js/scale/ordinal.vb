@@ -55,7 +55,6 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace d3js.scale
 
@@ -84,7 +83,13 @@ Namespace d3js.scale
 
         Public ReadOnly Property binWidth As Double
             Get
-                Return lazyPositions(1) - lazyPositions(0)
+                Dim pos = lazyPositions()
+
+                If pos.Length > 1 Then
+                    Return pos(1) - pos(0)
+                Else
+                    Return _range.Length * 0.85
+                End If
             End Get
         End Property
 
