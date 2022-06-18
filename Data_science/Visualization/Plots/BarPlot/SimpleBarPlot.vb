@@ -9,7 +9,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports stdNum = System.Math
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace BarPlot
 
@@ -51,16 +51,18 @@ Namespace BarPlot
                 .Y = yscale
             }
 
+            Call Axis.DrawAxis(g, New DataScaler With {.AxisTicks = (Nothing, yTicks.AsVector), .region = canvas.PlotRegion, .X = xscale, .Y = yscale}, canvas, showGrid:=True)
+
             If stacked Then
-                n = Data.Samples.Length
+                n = data.Samples.Length
             Else
-                n = Data.Samples.Sum(Function(x) x.data.Length) - 1
+                n = data.Samples.Sum(Function(x) x.data.Length) - 1
             End If
 
             Dim bottom As Double = canvas.PlotRegion.Bottom
             Dim barWidth As Double = xscale.binWidth
 
-            For Each sample As SeqValue(Of BarDataSample) In Data.Samples.SeqIterator
+            For Each sample As SeqValue(Of BarDataSample) In data.Samples.SeqIterator
                 Dim x As Double = xscale(sample.value.tag)
 
                 If stacked Then
@@ -92,7 +94,7 @@ Namespace BarPlot
                         Dim barSize As New Size(barWidth, barHeight)
                         Dim rect As New Rectangle(topleft, barSize)
 
-                        Call g.FillRectangle(New SolidBrush(Data.Serials(val.i).Value), rect)
+                        Call g.FillRectangle(New SolidBrush(data.Serials(val.i).Value), rect)
 
                         top += barHeight
                     Next
@@ -117,37 +119,18 @@ Namespace BarPlot
                 End If
             Next
 
-            Dim keys$() = Data.Samples _
-                .Select(Function(s) s.Tag) _
-                .ToArray
-            Dim font As New Font(FontFace.SegoeUI, 28)
-            Dim dd As Double = 0
-
-            bottom += 80
-
-            For Each key As SeqValue(Of String) In keys.SeqIterator
-                Dim left = xscale(key.value)
-
-                ' 得到斜边的长度
-                Dim sz = g.MeasureString((+key), font)
-                Dim dx! = sz.Width * stdNum.Cos(angle)
-                Dim dy! = sz.Width * stdNum.Sin(angle)
-
-                Call g.DrawString(key, font, Brushes.Black, left - dx, bottom, angle)
-            Next
-
             If theme.drawLegend Then
                 Dim cssStyle As String = theme.legendLabelCSS
                 Dim legends As LegendObject() = LinqAPI.Exec(Of LegendObject) <=
                                                                                 _
-                From x As NamedValue(Of Color)
-                In data.Serials
-                Select New LegendObject With {
-                    .color = x.Value.RGBExpression,
-                    .fontstyle = cssStyle,
-                    .style = LegendStyles.Circle,
-                    .title = x.Name
-                }
+                    From x As NamedValue(Of Color)
+                    In data.Serials
+                    Select New LegendObject With {
+                        .color = x.Value.RGBExpression,
+                        .fontstyle = cssStyle,
+                        .style = LegendStyles.Rectangle,
+                        .title = x.Name
+                    }
 
                 Call DrawLegends(g, legends, False, canvas)
             End If
