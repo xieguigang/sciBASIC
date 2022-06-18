@@ -114,7 +114,13 @@ Namespace BarPlot
                 .Select(Function(s) s.Tag) _
                 .ToArray
             Dim font As New Font(FontFace.SegoeUI, 28)
-            Dim dd = leftMargins(1) - leftMargins(0)
+            Dim dd As Double
+
+            If leftMargins.Count = 1 Then
+                dd = 0
+            Else
+                dd = leftMargins(1) - leftMargins(0)
+            End If
 
             bottom += 80
 
