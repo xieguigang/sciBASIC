@@ -91,7 +91,7 @@ Namespace PCA
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
                     Dim rect As Rectangle = region.PlotRegion
-                    Dim Xscaler = d3js.scale.ordinal.domain(values:=X).range(integers:={rect.Left, rect.Right})
+                    Dim Xscaler = d3js.scale.ordinal.domain(tags:=X).range(integers:={rect.Left, rect.Right})
                     Dim Yscaler = d3js.scale.linear.domain(values:=Y).range(integers:={rect.Top, rect.Bottom})
                     Dim scaler As New TermScaler With {
                         .AxisTicks = (X, Y),

@@ -35,14 +35,14 @@ Namespace BarPlot
                 .Range _
                 .CreateAxisTicks
             Dim xscale = d3js.scale.ordinal() _
-                .range(values:=data.Samples.Select(Function(s) s.tag)) _
-                .domain(values:=New Double() {
+                .domain(tags:=data.Samples.Select(Function(s) s.tag).ToArray) _
+                .range(values:=New Double() {
                     canvas.PlotRegion.Left,
                     canvas.PlotRegion.Right
                 })
             Dim yscale = d3js.scale.linear() _
-                .range(values:=data.Samples.Select(Function(s) s.data).IteratesALL) _
-                .domain(values:=New Double() {
+                .domain(values:=data.Samples.Select(Function(s) s.data).IteratesALL) _
+                .range(values:=New Double() {
                     canvas.PlotRegion.Top,
                     canvas.PlotRegion.Bottom
                 })

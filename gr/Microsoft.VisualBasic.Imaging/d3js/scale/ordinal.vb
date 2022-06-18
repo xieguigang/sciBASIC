@@ -165,14 +165,14 @@ Namespace d3js.scale
         ''' that an explicit domain Is recommended To ensure deterministic behavior, As inferring 
         ''' the domain from usage will be dependent On ordering.
         ''' </summary>
-        ''' <param name="values"></param>
+        ''' <param name="tags"></param>
         ''' <returns></returns>
-        Public Overrides Function domain(values As IEnumerable(Of String)) As OrdinalScale
+        Public Overrides Function domain(tags As IEnumerable(Of String)) As OrdinalScale
             ' factors = values.factors
             'index = factors _
             '    .Select(Function(x) x.FactorValue) _
             '    .Indexing
-            index = values.Distinct.Indexing
+            index = tags.Distinct.Indexing
 
             Return Me
         End Function
