@@ -124,7 +124,7 @@ Public Class Canvas
         Me.ShowLabel = showLabel
     End Sub
 
-    Public ReadOnly Property FdgArgs As ForceDirectedArgs = Parameters.Load
+    Public ReadOnly Property FdgArgs As New ForceDirectedArgs
 
     Public Sub SetRotate(x As Double)
         If Not space3D Then
