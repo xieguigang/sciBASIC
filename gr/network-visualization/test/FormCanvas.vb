@@ -76,6 +76,8 @@ Public Class FormCanvas
         DToolStripMenuItem.Checked = True
         ShowLabelsToolStripMenuItem.Checked = False
         AutoRotateToolStripMenuItem.Checked = True
+
+        canvas.SetFDGParams(New ForceDirectedArgs With {.Damping = 0.85, .Iterations = 100000, .Repulsion = 10000.0!, .Stiffness = 100})
     End Sub
 
     Private Sub SaveAsSVGToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveAsSVGToolStripMenuItem.Click

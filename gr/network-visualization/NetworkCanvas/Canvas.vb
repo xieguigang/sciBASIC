@@ -229,7 +229,7 @@ Public Class Canvas
     Private Sub doPhysicsUpdates()
         SyncLock fdgRenderer
             If Not fdgRenderer Is Nothing Then
-                Call fdgRenderer.PhysicsEngine.Collide(0.0005F)
+                Call fdgRenderer.PhysicsEngine.Collide(0.05F)
             End If
         End SyncLock
     End Sub

@@ -62,15 +62,18 @@ Namespace Layouts.SpringForce
             MyBase.New(iGraph, iStiffness, iRepulsion, iDamping)
         End Sub
 
-        Public Overrides Function GetPoint(iNode As Node) As LayoutPoint
-            If Not (nodePoints.ContainsKey(iNode.label)) Then
-                Dim iniPosition As FDGVector3 = TryCast(iNode.data.initialPostion, FDGVector3)
+        Public Overrides Function GetPoint(v As Node) As LayoutPoint
+            If Not nodePoints.ContainsKey(v.label) Then
+                Dim iniPosition As FDGVector3 = TryCast(v.data.initialPostion, FDGVector3)
+
                 If iniPosition Is Nothing Then
                     iniPosition = TryCast(FDGVector3.Random(), FDGVector3)
                 End If
-                nodePoints(iNode.label) = New LayoutPoint(iniPosition, FDGVector3.Zero(), FDGVector3.Zero(), iNode)
+
+                nodePoints(v.label) = New LayoutPoint(iniPosition, FDGVector3.Zero(), FDGVector3.Zero(), v)
             End If
-            Return nodePoints(iNode.label)
+
+            Return nodePoints(v.label)
         End Function
 
         Public Overrides Function GetBoundingBox() As BoundingBox

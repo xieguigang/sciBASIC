@@ -114,8 +114,8 @@ Namespace Layouts.SpringForce
         Public Property threshold As Double Implements IForceDirected.Threshold
         Public Property withinThreshold As Boolean Implements IForceDirected.WithinThreshold
 
-        Protected nodePoints As Dictionary(Of String, LayoutPoint)
-        Protected edgeSprings As Dictionary(Of String, Spring)
+        Protected nodePoints As New Dictionary(Of String, LayoutPoint)
+        Protected edgeSprings As New Dictionary(Of String, Spring)
 
         Dim disposedValue As Boolean
 
@@ -138,11 +138,13 @@ Namespace Layouts.SpringForce
         Public MustOverride Function GetPoint(iNode As Node) As LayoutPoint Implements IForceDirected.GetPoint
 
         Public Function GetSpring(edge As Edge) As Spring
-            If Not edgeSprings.ContainsKey(edge.ID) Then
-                Return createSpring(edge)
-            Else
-                Return edgeSprings(edge.ID)
-            End If
+            SyncLock edgeSprings
+                If Not edgeSprings.ContainsKey(edge.ID) Then
+                    Return createSpring(edge)
+                Else
+                    Return edgeSprings(edge.ID)
+                End If
+            End SyncLock
         End Function
 
         Private Function createSpring(edge As Edge) As Spring
