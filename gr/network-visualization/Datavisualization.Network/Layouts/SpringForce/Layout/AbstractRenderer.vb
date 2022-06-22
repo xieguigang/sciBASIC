@@ -131,7 +131,7 @@ Namespace Layouts.SpringForce
         ''' 不计算位置而直接更新绘图
         ''' </summary>
         Public Overridable Sub DirectDraw()
-            forceDirected.EachEdge(Sub(edge As Edge, spring As Spring) drawEdge(edge, spring.point1.position, spring.point2.position))
+            forceDirected.EachEdge(Sub(edge As Edge, spring As Spring) drawEdge(edge, spring.A.position, spring.B.position))
             forceDirected.EachNode(Sub(node As Node, point As LayoutPoint) drawNode(node, point.position))
         End Sub
 

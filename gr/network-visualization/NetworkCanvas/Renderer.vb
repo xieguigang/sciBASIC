@@ -143,7 +143,7 @@ Public Class Renderer : Inherits AbstractRenderer
             End If
         End If
 
-        Call drawEdge(edge, spring.point1.position, spring.point2.position)
+        Call drawEdge(edge, spring.A.position, spring.B.position)
     End Sub
 
     Public Overrides Sub Clear()

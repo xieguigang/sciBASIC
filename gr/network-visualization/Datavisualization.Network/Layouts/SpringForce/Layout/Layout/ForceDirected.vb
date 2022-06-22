@@ -137,11 +137,11 @@ Namespace Layouts.SpringForce
 
         Public MustOverride Function GetPoint(iNode As Node) As LayoutPoint Implements IForceDirected.GetPoint
 
-        Public Function GetSpring(iEdge As Edge) As Spring
-            If Not (edgeSprings.ContainsKey(iEdge.ID)) Then
-                Return createSpring(iEdge)
+        Public Function GetSpring(edge As Edge) As Spring
+            If Not edgeSprings.ContainsKey(edge.ID) Then
+                Return createSpring(edge)
             Else
-                Return edgeSprings(iEdge.ID)
+                Return edgeSprings(edge.ID)
             End If
         End Function
 
@@ -161,7 +161,7 @@ Namespace Layouts.SpringForce
             End If
 
             If existingSpring IsNot Nothing Then
-                Return New Spring(existingSpring.point1, existingSpring.point2, 0F, 0F)
+                Return New Spring(existingSpring.A, existingSpring.B, 0F, 0F)
             End If
 
             Dim toEdges As IEnumerable(Of Edge) = graph.GetEdges(iedge.V, iedge.U)
@@ -176,7 +176,7 @@ Namespace Layouts.SpringForce
             End If
 
             If existingSpring IsNot Nothing Then
-                Return New Spring(existingSpring.point2, existingSpring.point1, 0F, 0F)
+                Return New Spring(existingSpring.B, existingSpring.A, 0F, 0F)
             End If
 
             Dim U = GetPoint(iedge.U)
@@ -233,22 +233,22 @@ Namespace Layouts.SpringForce
         Protected Sub applyHookesLaw()
             For Each e As Edge In graph.graphEdges
                 Dim spring As Spring = GetSpring(e)
-                Dim d As AbstractVector = spring.point2.position - spring.point1.position
+                Dim d As AbstractVector = spring.B.position - spring.A.position
                 Dim displacement As Double = spring.length - d.Magnitude()
                 Dim direction As AbstractVector = d.Normalize()
 
-                If spring.point1.node.pinned AndAlso spring.point2.node.pinned Then
-                    spring.point1.ApplyForce(direction * 0F)
-                    spring.point2.ApplyForce(direction * 0F)
-                ElseIf spring.point1.node.pinned Then
-                    spring.point1.ApplyForce(direction * 0F)
-                    spring.point2.ApplyForce(direction * (spring.K * displacement))
-                ElseIf spring.point2.node.pinned Then
-                    spring.point1.ApplyForce(direction * (spring.K * displacement * -1.0F))
-                    spring.point2.ApplyForce(direction * 0F)
+                If spring.A.node.pinned AndAlso spring.B.node.pinned Then
+                    spring.A.ApplyForce(direction * 0F)
+                    spring.B.ApplyForce(direction * 0F)
+                ElseIf spring.A.node.pinned Then
+                    spring.A.ApplyForce(direction * 0F)
+                    spring.B.ApplyForce(direction * (spring.K * displacement))
+                ElseIf spring.B.node.pinned Then
+                    spring.A.ApplyForce(direction * (spring.K * displacement * -1.0F))
+                    spring.B.ApplyForce(direction * 0F)
                 Else
-                    spring.point1.ApplyForce(direction * (spring.K * displacement * -0.5F))
-                    spring.point2.ApplyForce(direction * (spring.K * displacement * 0.5F))
+                    spring.A.ApplyForce(direction * (spring.K * displacement * -0.5F))
+                    spring.B.ApplyForce(direction * (spring.K * displacement * 0.5F))
                 End If
             Next
         End Sub
@@ -256,12 +256,11 @@ Namespace Layouts.SpringForce
         Protected Sub attractToCentre()
             For Each n As Node In graph.vertex
                 Dim point As LayoutPoint = GetPoint(n)
+
                 If Not point.node.pinned Then
                     Dim direction As AbstractVector = point.position * -1.0F
-                    'point.ApplyForce(direction * ((float)Math.Sqrt((double)(Repulsion / 100.0f))));
-
-
                     Dim displacement As Double = direction.Magnitude()
+
                     direction = direction.Normalize()
                     point.ApplyForce(direction * (stiffness * displacement * 0.4F))
                 End If

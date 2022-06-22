@@ -106,14 +106,14 @@ Namespace Layouts.SpringForce
 
     Public Class Spring
 
-        Public Property point1 As LayoutPoint
-        Public Property point2 As LayoutPoint
+        Public Property A As LayoutPoint
+        Public Property B As LayoutPoint
         Public Property length As Double
         Public Property K As Double
 
         Public Sub New(point1 As LayoutPoint, point2 As LayoutPoint, length As Double, K As Double)
-            Me.point1 = point1
-            Me.point2 = point2
+            Me.A = point1
+            Me.B = point2
             Me.length = length
             Me.K = K
         End Sub
