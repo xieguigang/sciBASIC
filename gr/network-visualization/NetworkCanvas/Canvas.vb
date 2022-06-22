@@ -124,7 +124,7 @@ Public Class Canvas
         Me.ShowLabel = showLabel
     End Sub
 
-    Public ReadOnly Property FdgArgs As ForceDirectedArgs = Parameters.Load
+    Public ReadOnly Property FdgArgs As New ForceDirectedArgs
 
     Public Sub SetRotate(x As Double)
         If Not space3D Then
@@ -229,7 +229,7 @@ Public Class Canvas
     Private Sub doPhysicsUpdates()
         SyncLock fdgRenderer
             If Not fdgRenderer Is Nothing Then
-                Call fdgRenderer.PhysicsEngine.Collide(0.05F)
+                Call fdgRenderer.PhysicsEngine.Collide(0.0005F)
             End If
         End SyncLock
     End Sub

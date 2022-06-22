@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::b8357a66372ba226ebaf64d3194bd176, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Layout\Point.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 130
-    '    Code Lines: 63
-    ' Comment Lines: 48
-    '   Blank Lines: 19
-    '     File Size: 4.59 KB
+' Summaries:
 
 
-    '     Class LayoutPoint
-    ' 
-    '         Properties: acceleration, mass, node, position, velocity
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: (+2 Overloads) Equals, GetHashCode, ToString
-    ' 
-    '         Sub: ApplyForce
-    ' 
-    '         Operators: <>, =
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 130
+'    Code Lines: 63
+' Comment Lines: 48
+'   Blank Lines: 19
+'     File Size: 4.59 KB
+
+
+'     Class LayoutPoint
+' 
+'         Properties: acceleration, mass, node, position, velocity
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: (+2 Overloads) Equals, GetHashCode, ToString
+' 
+'         Sub: ApplyForce
+' 
+'         Operators: <>, =
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -151,7 +151,7 @@ Namespace Layouts.SpringForce
 
         Public Overloads Function Equals(p As LayoutPoint) As Boolean
             ' If parameter is null return false:
-            If DirectCast(p, Object) Is Nothing Then
+            If p Is Nothing Then
                 Return False
             End If
 
@@ -161,12 +161,12 @@ Namespace Layouts.SpringForce
 
         Public Shared Operator =(a As LayoutPoint, b As LayoutPoint) As Boolean
             ' If both are null, or both are same instance, return true.
-            If System.[Object].ReferenceEquals(a, b) Then
+            If a Is b Then
                 Return True
             End If
 
             ' If one is null, but not both, return false.
-            If (DirectCast(a, Object) Is Nothing) OrElse (DirectCast(b, Object) Is Nothing) Then
+            If a Is Nothing OrElse b Is Nothing Then
                 Return False
             End If
 
@@ -179,12 +179,13 @@ Namespace Layouts.SpringForce
             Return Not (a = b)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub ApplyForce(force As AbstractVector)
-            acceleration.Add(force / mass)
+            Call acceleration.Add(force / mass)
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"{node} [{position.x}, {position.y}, {position.z}]"
+            Return $"({If(node.pinned, "pinned", "unpinned")}){node} [{position.x.ToString("F0")}, {position.y.ToString("F0")}, {position.z.ToString("F0")}]"
         End Function
     End Class
 End Namespace

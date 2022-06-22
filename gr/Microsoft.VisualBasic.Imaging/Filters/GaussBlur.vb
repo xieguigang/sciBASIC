@@ -57,6 +57,13 @@ Imports System.Runtime.InteropServices.Marshal
 
 Namespace Filters
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <remarks>
+    ''' 20220621, warning: not working as expected on LINUX platform 
+    ''' due to the reason of call un-managed code.
+    ''' </remarks>
     Public NotInheritable Class GaussBlur
 
         Private Sub New()
