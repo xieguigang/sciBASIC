@@ -1016,22 +1016,14 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     image is null.
         Public MustOverride Sub DrawImage(image As Image, destPoints() As PointF)
-        '
-        ' Summary:
-        '     Draws the specified System.Drawing.Image at the specified location and with the
-        '     specified size.
-        '
-        ' Parameters:
-        '   image:
-        '     System.Drawing.Image to draw.
-        '
-        '   rect:
-        '     System.Drawing.Rectangle structure that specifies the location and size of the
-        '     drawn image.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     image is null.
+
+        ''' <summary>
+        ''' Draws the specified <see cref="Image"/> at the specified location and with the
+        ''' specified size.
+        ''' </summary>
+        ''' <param name="image">Image to draw.</param>
+        ''' <param name="rect">Rectangle structure that specifies the location and size of the
+        ''' drawn image.</param>
         Public MustOverride Sub DrawImage(image As Image, rect As Rectangle)
 
         ''' <summary>
@@ -3701,10 +3693,14 @@ Namespace Imaging
         End Sub
 
         ''' <summary>
-        ''' Fills the interior of a rectangle specified by a System.Drawing.RectangleF structure.
+        ''' Fills the interior of a rectangle specified by a <see cref="RectangleF"/> structure.
         ''' </summary>
-        ''' <param name="brush">System.Drawing.Brush that determines the characteristics of the fill.</param>
-        ''' <param name="rect">System.Drawing.RectangleF structure that represents the rectangle to fill.</param>
+        ''' <param name="brush">
+        ''' <see cref="Brush"/> that determines the characteristics of the fill.
+        ''' </param>
+        ''' <param name="rect">
+        ''' <see cref="RectangleF"/> structure that represents the rectangle to fill.
+        ''' </param>
         Public MustOverride Sub FillRectangle(brush As Brush, rect As RectangleF)
         '
         ' Summary:
