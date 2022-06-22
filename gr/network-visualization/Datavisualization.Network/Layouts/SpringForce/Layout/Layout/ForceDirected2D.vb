@@ -60,23 +60,29 @@ Namespace Layouts.SpringForce
     ''' </summary>
     Public Class ForceDirected2D : Inherits ForceDirected(Of FDGVector2)
 
-        Public Sub New(igraph As NetworkGraph, iStiffness As Double, iRepulsion As Double, iDamping As Double)
-            MyBase.New(igraph, iStiffness, iRepulsion, iDamping)
+        Public Sub New(igraph As NetworkGraph, stiffness As Double, repulsion As Double, damping As Double)
+            MyBase.New(igraph, stiffness, repulsion, damping)
         End Sub
 
-        Public Overrides Function GetPoint(iNode As Node) As LayoutPoint
-            Dim iniPosition As FDGVector2
+        Public Overrides Function GetPoint(v As Node) As LayoutPoint
+            Dim init0 As FDGVector2
 
-            If Not (nodePoints.ContainsKey(iNode.label)) Then
-                iniPosition = TryCast(iNode.data.initialPostion, FDGVector2)
-                If iniPosition Is Nothing Then
-                    iniPosition = TryCast(FDGVector2.Random(), FDGVector2)
+            If Not nodePoints.ContainsKey(v.label) Then
+                init0 = TryCast(v.data.initialPostion, FDGVector2)
+
+                If init0 Is Nothing Then
+                    init0 = TryCast(FDGVector2.Random(), FDGVector2)
                 End If
 
-                nodePoints(iNode.label) = New LayoutPoint(iniPosition, FDGVector2.Zero(), FDGVector2.Zero(), iNode)
+                nodePoints(v.label) = New LayoutPoint(
+                    position:=init0,
+                    velocity:=FDGVector2.Zero(),
+                    acceleration:=FDGVector2.Zero(),
+                    node:=v
+                )
             End If
 
-            Return nodePoints(iNode.label)
+            Return nodePoints(v.label)
         End Function
 
         Public Overrides Function GetBoundingBox() As BoundingBox
@@ -84,8 +90,8 @@ Namespace Layouts.SpringForce
             Dim bottomLeft As FDGVector2 = TryCast(FDGVector2.Identity().Multiply(BoundingBox.defaultBB * -1.0F), FDGVector2)
             Dim topRight As FDGVector2 = TryCast(FDGVector2.Identity().Multiply(BoundingBox.defaultBB), FDGVector2)
 
-            For Each n As Node In graph.vertex
-                Dim position As FDGVector2 = TryCast(GetPoint(n).position, FDGVector2)
+            For Each v As Node In graph.vertex
+                Dim position As FDGVector2 = TryCast(GetPoint(v).position, FDGVector2)
 
                 If position.x < bottomLeft.x Then
                     bottomLeft.x = position.x
@@ -104,6 +110,7 @@ Namespace Layouts.SpringForce
             Dim padding As AbstractVector = (topRight - bottomLeft).Multiply(BoundingBox.defaultPadding)
             boundingBox.bottomLeftFront = bottomLeft.Subtract(padding)
             boundingBox.topRightBack = topRight.Add(padding)
+
             Return boundingBox
         End Function
     End Class

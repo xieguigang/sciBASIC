@@ -99,8 +99,8 @@
 
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce.Interfaces
-Imports stdNum = System.Math
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+Imports stdNum = System.Math
 
 Namespace Layouts.SpringForce
 
@@ -116,7 +116,9 @@ Namespace Layouts.SpringForce
 
         Protected nodePoints As Dictionary(Of String, LayoutPoint)
         Protected edgeSprings As Dictionary(Of String, Spring)
-        Private disposedValue As Boolean
+
+        Dim disposedValue As Boolean
+
         Public Property graph As NetworkGraph Implements IForceDirected.graph
 
         Public Sub Clear() Implements IForceDirected.Clear
