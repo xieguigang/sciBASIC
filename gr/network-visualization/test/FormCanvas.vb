@@ -66,14 +66,9 @@ Public Class FormCanvas
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Call Me.Controls.Add(canvas)
 
-        canvas.Graph = CytoscapeTableLoader.CytoscapeExportAsGraph(
+        canvas.Graph(True) = CytoscapeTableLoader.CytoscapeExportAsGraph(
             App.HOME & "/../../Data\xcb-main-Edges.csv",
             App.HOME & "/../../Data\xcb-main-Nodes.csv")
-
-        'canvas.Graph() = CytoscapeTableLoader.CytoscapeExportAsGraph(
-        '    App.HOME & "/../simple\Edges.csv",
-        '    App.HOME & "/../simple\Nodes.csv"
-        ')
 
         TrackBar1.Minimum = 0
         TrackBar1.Maximum = Math.PI * 2 * 1000
@@ -82,7 +77,7 @@ Public Class FormCanvas
         ShowLabelsToolStripMenuItem.Checked = False
         AutoRotateToolStripMenuItem.Checked = True
 
-        canvas.SetFDGParams(New ForceDirectedArgs With {.Damping = 0.8, .Iterations = 100000, .Repulsion = 10000.0!, .Stiffness = 100})
+        canvas.SetFDGParams(New ForceDirectedArgs With {.Damping = 0.85, .Iterations = 100000, .Repulsion = 10000.0!, .Stiffness = 100})
     End Sub
 
     Private Sub SaveAsSVGToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveAsSVGToolStripMenuItem.Click
