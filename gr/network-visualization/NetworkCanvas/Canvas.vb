@@ -111,6 +111,7 @@ Public Class Canvas
                 Function() paper,
                 Function() New Rectangle(New Point, Size),
                 fdgPhysics, DynamicsRadius)
+            DirectCast(fdgRenderer, Renderer3D).ViewDistance = viewDist
             inputs = New Input3D(Me)
         Else
             fdgPhysics = New ForceDirected2D(Me.net, FdgArgs.Stiffness, FdgArgs.Repulsion, FdgArgs.Damping)
@@ -167,6 +168,7 @@ Public Class Canvas
     ''' GDI+ interface for the canvas control.
     ''' </summary>
     Dim paper As Graphics
+    Dim viewDist As Double = -450
 
     Public Property AutoRotate As Boolean = True
     Public Property DynamicsRadius As Boolean = False
@@ -183,6 +185,8 @@ Public Class Canvas
             If space3D Then
                 DirectCast(fdgRenderer, Renderer3D).ViewDistance = value
             End If
+
+            viewDist = value
         End Set
     End Property
 

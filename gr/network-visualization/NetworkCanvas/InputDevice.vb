@@ -1,60 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::747d894adbc62f3cb932678c71c52809, sciBASIC#\gr\network-visualization\NetworkCanvas\InputDevice.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 121
-    '    Code Lines: 69
-    ' Comment Lines: 30
-    '   Blank Lines: 22
-    '     File Size: 4.06 KB
+' Summaries:
 
 
-    ' Class InputDevice
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: getNode, GetPointedNode
-    ' 
-    '     Sub: Canvas_MouseDown, Canvas_MouseMove, Canvas_MouseUp, Canvas_MouseWheel, (+2 Overloads) Dispose
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 121
+'    Code Lines: 69
+' Comment Lines: 30
+'   Blank Lines: 22
+'     File Size: 4.06 KB
+
+
+' Class InputDevice
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: getNode, GetPointedNode
+' 
+'     Sub: Canvas_MouseDown, Canvas_MouseMove, Canvas_MouseUp, Canvas_MouseWheel, (+2 Overloads) Dispose
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce
 
 ''' <summary>
 ''' 使用鼠标左键进行拖拽
@@ -146,6 +147,9 @@ Public Class InputDevice : Implements IDisposable
         If Canvas.space3D Then
             ' adjust view distance
             Canvas.ViewDistance += e.Delta / 10
+        Else
+            Dim oldArgument = Canvas.FdgArgs
+            Canvas.SetFDGParams(New ForceDirectedArgs With {.Damping = oldArgument.Damping, .Iterations = 0, .Repulsion = oldArgument.Repulsion, .Stiffness = oldArgument.Stiffness + e.Delta / 10})
         End If
     End Sub
 
