@@ -106,7 +106,12 @@ Public Class InputDevice : Implements IDisposable
     Protected Overridable Function getNode(p As Point) As Node
         For Each node As Node In Canvas.Graph.vertex
             Dim r As Single = node.data.size(0)
-            Dim v As FDGVector2 = TryCast(Canvas.fdgPhysics.GetPoint(node).position, FDGVector2)
+            Dim v As AbstractVector = Canvas.fdgPhysics.GetPoint(node).position
+
+            If TypeOf v Is FDGVector3 Then
+                Return Nothing
+            End If
+
             Dim npt As Point = Renderer.GraphToScreen(v, Canvas.fdgRenderer.ClientRegion)
             Dim pt As New Point(CInt(npt.X - r / 2), CInt(npt.Y - r / 2))
             Dim rect As New Rectangle(pt, New Size(CInt(r), CInt(r)))
@@ -138,7 +143,10 @@ Public Class InputDevice : Implements IDisposable
     End Sub
 
     Protected Overridable Sub Canvas_MouseWheel(sender As Object, e As MouseEventArgs) Handles Canvas.MouseWheel
-
+        If Canvas.space3D Then
+            ' adjust view distance
+            Canvas.ViewDistance += e.Delta
+        End If
     End Sub
 
 #Region "IDisposable Support"
