@@ -145,7 +145,7 @@ Public Class InputDevice : Implements IDisposable
     Protected Overridable Sub Canvas_MouseWheel(sender As Object, e As MouseEventArgs) Handles Canvas.MouseWheel
         If Canvas.space3D Then
             ' adjust view distance
-            Canvas.ViewDistance += e.Delta
+            Canvas.ViewDistance += e.Delta / 10
         End If
     End Sub
 
