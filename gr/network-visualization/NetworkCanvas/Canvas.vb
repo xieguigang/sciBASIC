@@ -97,7 +97,7 @@ Public Class Canvas
         Dim showLabel As Boolean = Me.ShowLabel
 
         Me.net = net
-        Me.space3D = Me.space3D
+        Me.space3D = space3D
 
         If Not inputs Is Nothing Then
             Call inputs.Dispose()
