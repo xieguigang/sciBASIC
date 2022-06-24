@@ -196,13 +196,17 @@ Public Class Renderer : Inherits AbstractRenderer
         Dim canvas As Graphics = graphicsProvider()
 
         SyncLock canvas
-            Call canvas.DrawLine(
-                edgeStyles(iEdge),
-                pos1.X,
-                pos1.Y,
-                pos2.X,
-                pos2.Y
-            )
+            Try
+                Call canvas.DrawLine(
+                    edgeStyles(iEdge),
+                    pos1.X,
+                    pos1.Y,
+                    pos2.X,
+                    pos2.Y
+                )
+            Catch ex As Exception
+
+            End Try
         End SyncLock
     End Sub
 
