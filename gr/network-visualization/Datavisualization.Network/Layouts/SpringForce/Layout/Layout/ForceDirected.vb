@@ -294,23 +294,23 @@ Namespace Layouts.SpringForce
                     ' 在这里仅处理非实数的情况
                     ' 实数约束会使交互式模式下布局失效
                     If point.position.x.IsNaNImaginary Then
-                        point.position.x = randf.NextDouble * x
+                        point.position.x = 0
                     End If
                     If point.position.y.IsNaNImaginary Then
-                        point.position.y = randf.NextDouble * y
+                        point.position.y = 0
                     End If
                     If point.position.z.IsNaNImaginary Then
-                        point.position.z = randf.NextDouble * z
+                        point.position.z = 0
                     End If
                 Else
                     If point.position.x.IsNaNImaginary OrElse stdNum.Abs(point.position.x) > maxCanvas OrElse point.position.x < 0 Then
-                        point.position.x = randf.NextDouble * x
+                        point.position.x = randf.NextDouble * x / 100
                     End If
                     If point.position.y.IsNaNImaginary OrElse stdNum.Abs(point.position.y) > maxCanvas OrElse point.position.y < 0 Then
-                        point.position.y = randf.NextDouble * y
+                        point.position.y = randf.NextDouble * y / 100
                     End If
                     If point.position.z.IsNaNImaginary OrElse stdNum.Abs(point.position.z) > maxCanvas OrElse point.position.z < 0 Then
-                        point.position.z = randf.NextDouble * z
+                        point.position.z = randf.NextDouble * z / 100
                     End If
                 End If
 

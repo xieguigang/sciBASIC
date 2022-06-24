@@ -221,7 +221,11 @@ Public Class Renderer : Inherits AbstractRenderer
             Dim pt As New Point(CInt(pos.X - r / 2), CInt(pos.Y - r / 2))
             Dim rect As New Rectangle(pt, New Size(CInt(r), CInt(r)))
 
-            Call canvas.FillPie(n.data.color, rect, 0, 360)
+            Try
+                Call canvas.FillPie(n.data.color, rect, 0, 360)
+            Catch ex As Exception
+
+            End Try
 
             If ShowLabels Then
                 Dim center As Point = rect.Centre
