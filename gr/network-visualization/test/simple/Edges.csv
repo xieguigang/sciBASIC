@@ -1,0 +1,7 @@
+SUID,EdgeBetweenness,interaction,name,selected,shared interaction,shared name
+495,356,interact_with,PWY-6892 (interact_with) PWY-6910,FALSE,interact_with,PWY-5154 (interact_with) PROLINE-SYN
+496,1645.083516,OUTGOING,PWY-6892 (OUTGOING) PWY-6897,FALSE,OUTGOING,ARGSYNBSUB-PWY (OUTGOING) PWY0-162
+497,1728.583516,interact_with,PWY-6897 (interact_with) PWY-6284,FALSE,interact_with,ARGSYNBSUB-PWY (interact_with) GLUTAMATE-SYN
+4975,1728.583516,interact_with,PWY-6910 (interact_with) PWY-6284,FALSE,interact_with,ARGSYNBSUB-PWY (interact_with) GLUTAMATE-SYN2
+4976,1728.583516,interact_with,PWY-6910 (interact_with) PWY-6897,FALSE,interact_with,ARGSYNBSUB-PWY (interact_with) GLUTAMATE-SYN2
+4977,1728.583516,interact_with,PWY-69770 (interact_with) PWY-6897,FALSE,interact_with,ARGSYNBSUB-PWY (interact_with) GLUTAMATE-SYN2

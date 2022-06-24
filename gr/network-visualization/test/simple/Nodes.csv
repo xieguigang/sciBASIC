@@ -1,0 +1,6 @@
+SUID,AverageShortestPathLength,BetweennessCentrality,ClosenessCentrality,ClusteringCoefficient,CommonName,Degree,degree.layout,Eccentricity,EnzymeCounts,GeneObjects,IsSingleNode,name,NeighborhoodConnectivity,NumberOfDirectedEdges,NumberOfUndirectedEdges,PartnerOfMultiEdgedNodePairs,Radiality,ReactionCounts,selected,SelfLoops,shared name,Stress,SuperPathway,TopologicalCoefficient
+239,6.30337079,0.00609249,0.15864528,0.6,thiazole biosynthesis I (E. coli),6,6,14,4,XC_1015; XC_1344; XC_1347; XC_1678,FALSE,PWY-6892,6.8,6,0,1,0.73483146,6,FALSE,0,PWY-6892,2112,FALSE,0.37777778
+240,8.20786517,0.01123596,0.12183436,0,hydroxymethylpyrimidine salvage,2,2,16,1,XC_2499,FALSE,PWY-6910,2.5,2,0,0,0.63960674,2,FALSE,0,PWY-6910,1438,FALSE,0.5
+241,9.20224719,0,0.10866911,0,thiamin salvage II,1,1,17,3,XC_0895; XC_2499; XC_3535,FALSE,PWY-6897,2,1,0,0,0.58988764,4,FALSE,0,PWY-6897,0,TRUE,0
+253,8.48876404,0.11239129,0.11780278,0.3,superpathway of unsaturated fatty acids biosynthesis (<i>E. coli</i>),7,7,16,9,XC_0222; XC_0429; XC_0809; XC_3225; XC_3227; XC_3229; XC_3652; XC_4087; XC_4096,FALSE,PWY-6284,3.6,7,0,1,0.6255618,3,FALSE,0,PWY-6284,32766,TRUE,0.30909091
+2401,9.20224719,0,0.10866911,0,thiamin salvage II,1,1,17,3,XC_0895; XC_2499; XC_3535,FALSE,PWY-69770,2,1,0,0,0.58988764,4,FALSE,0,PWY-69770,0,TRUE,0

@@ -119,6 +119,7 @@ Namespace Layouts.SpringForce.Interfaces
         ReadOnly Property WithinThreshold() As Boolean
 
         Property Threshold As Double
+        Property interactiveMode As Boolean
 
         Sub Clear()
 

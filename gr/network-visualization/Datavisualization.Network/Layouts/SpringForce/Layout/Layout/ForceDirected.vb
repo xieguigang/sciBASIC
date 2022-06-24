@@ -120,6 +120,7 @@ Namespace Layouts.SpringForce
         Dim disposedValue As Boolean
 
         Public Property graph As NetworkGraph Implements IForceDirected.graph
+        Public Property interactiveMode As Boolean = False Implements IForceDirected.interactiveMode
 
         Public Sub Clear() Implements IForceDirected.Clear
             nodePoints.Clear()
@@ -288,14 +289,29 @@ Namespace Layouts.SpringForce
                 delta = point.velocity * timeStep
                 point.position.Add(delta)
 
-                If point.position.x.IsNaNImaginary OrElse stdNum.Abs(point.position.x) > maxCanvas OrElse point.position.x < 0 Then
-                    point.position.x = x
-                End If
-                If point.position.y.IsNaNImaginary OrElse stdNum.Abs(point.position.y) > maxCanvas OrElse point.position.y < 0 Then
-                    point.position.y = y
-                End If
-                If point.position.z.IsNaNImaginary OrElse stdNum.Abs(point.position.z) > maxCanvas OrElse point.position.z < 0 Then
-                    point.position.z = z
+                If interactiveMode Then
+                    ' 20220625 
+                    ' 在这里仅处理非实数的情况
+                    ' 实数约束会使交互式模式下布局失效
+                    If point.position.x.IsNaNImaginary Then
+                        point.position.x = randf.NextDouble * x
+                    End If
+                    If point.position.y.IsNaNImaginary Then
+                        point.position.y = randf.NextDouble * y
+                    End If
+                    If point.position.z.IsNaNImaginary Then
+                        point.position.z = randf.NextDouble * z
+                    End If
+                Else
+                    If point.position.x.IsNaNImaginary OrElse stdNum.Abs(point.position.x) > maxCanvas OrElse point.position.x < 0 Then
+                        point.position.x = randf.NextDouble * x
+                    End If
+                    If point.position.y.IsNaNImaginary OrElse stdNum.Abs(point.position.y) > maxCanvas OrElse point.position.y < 0 Then
+                        point.position.y = randf.NextDouble * y
+                    End If
+                    If point.position.z.IsNaNImaginary OrElse stdNum.Abs(point.position.z) > maxCanvas OrElse point.position.z < 0 Then
+                        point.position.z = randf.NextDouble * z
+                    End If
                 End If
 
                 If point.position.x = 0.0 AndAlso point.position.y = 0.0 AndAlso point.position.z = 0.0 Then

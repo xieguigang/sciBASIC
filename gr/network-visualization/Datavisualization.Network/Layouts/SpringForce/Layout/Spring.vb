@@ -100,7 +100,6 @@
 '
 
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Layouts.SpringForce
 
@@ -119,7 +118,7 @@ Namespace Layouts.SpringForce
         End Sub
 
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Return $"{A.node.ToString} ~ {B.node.ToString}"
         End Function
     End Class
 
@@ -134,6 +133,10 @@ Namespace Layouts.SpringForce
             point = Nothing
             distance = Nothing
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"{point} -> {node}"
+        End Function
     End Class
 
     Public Class BoundingBox
