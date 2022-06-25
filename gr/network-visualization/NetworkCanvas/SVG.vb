@@ -152,7 +152,7 @@ Public Module SVGExtensions
             Select New SVG.XML.text With {
                 .x = CStr(pos.X),
                 .y = CStr(pos.Y),
-                .value = n.ID,
+                .value = If(n.data.label, n.label),
                 .class = "text"
             }
         Dim svg As New SVGXml With {
