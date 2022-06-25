@@ -101,6 +101,28 @@ Namespace SVG.XML
         <XmlElement("text")> Public Property texts As text() Implements ICanvas.texts
         <XmlElement("image")> Public Property images As Image() Implements ICanvas.images
 
+        Sub New()
+        End Sub
+
+        Sub New(layer As SVG.XML.node)
+            If layer Is Nothing Then
+                Return
+            End If
+
+            Select Case layer.GetType
+                Case GetType(path) : path = {DirectCast(layer, path)}
+                Case GetType(g) : Layers = {DirectCast(layer, g)}
+                Case GetType(rect) : rect = {DirectCast(layer, rect)}
+                Case GetType(polygon) : polygon = {DirectCast(layer, polygon)}
+                Case GetType(line) : lines = {DirectCast(layer, line)}
+                Case GetType(circle) : circles = {DirectCast(layer, circle)}
+                Case GetType(polyline) : polyline = {DirectCast(layer, polyline)}
+                Case GetType(text) : texts = {DirectCast(layer, text)}
+                Case Else
+                    Throw New NotImplementedException(layer.GetType.FullName)
+            End Select
+        End Sub
+
         Public Overrides Function ToString() As String
             Return $"{id} = '{title}'; //{XmlCommentValue}"
         End Function

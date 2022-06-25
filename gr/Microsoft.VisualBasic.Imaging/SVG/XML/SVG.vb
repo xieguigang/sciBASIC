@@ -204,6 +204,10 @@ Namespace SVG.XML
             Return Me
         End Function
 
+        Public Function AddLayer(layer As SVG.XML.node) As SVGXml
+            Return AddLayer(New g(layer))
+        End Function
+
         ''' <summary>
         ''' Load SVG object from a specific xml file path or xml file text content.
         ''' </summary>
