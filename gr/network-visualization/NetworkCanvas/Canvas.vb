@@ -285,9 +285,10 @@ Public Class Canvas
     ''' <summary>
     ''' Write the node layout position into its extensions data, for generates the svg graphics.
     ''' </summary>
-    Public Sub WriteLayout()
+    Public Function WriteLayout() As NetworkGraph
         Call Graph.WriteLayouts(fdgPhysics)
-    End Sub
+        Return Graph
+    End Function
 
     Private Sub Canvas_Disposed(sender As Object, e As EventArgs) Handles Me.Disposed
         timer.Dispose()
