@@ -164,7 +164,7 @@ Public Module SVGExtensions
                 }
             },
             .width = size.Width & "px",
-            .height = size.Height & "px",
+            .height = size.Height & "px"
         }
 
         For Each line As line In links
