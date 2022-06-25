@@ -162,10 +162,10 @@ Public Module SVGExtensions
                         .style = If(style Is Nothing, DefaultStyle(), style).ToString
                     }
                 }
-            },
-            .width = size.Width & "px",
-            .height = size.Height & "px"
+            }
         }
+
+        Call svg.Size(size)
 
         For Each line As line In links
             Call svg.AddLayer(line)

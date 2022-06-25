@@ -160,7 +160,7 @@ Namespace SVG.XML
             End Set
         End Property
 
-        Dim _layers As List(Of g)
+        Dim _layers As New List(Of g)
 
         ''' <summary>
         ''' Graphic layers
