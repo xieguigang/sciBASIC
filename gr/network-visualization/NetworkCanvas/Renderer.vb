@@ -229,11 +229,15 @@ Public Class Renderer : Inherits AbstractRenderer
 
             If ShowLabels Then
                 Dim center As Point = rect.Centre
-                Dim sz As SizeF = canvas.MeasureString(n.ID, Font)
+                Dim labelText As String = n.data.label
+                Dim sz As SizeF = canvas.MeasureString(labelText, Font)
+
                 center = New Point(
                     CInt(center.X - sz.Width / 2),
-                    CInt(center.Y - sz.Height / 2))
-                Call canvas.DrawString(n.ID, Font, Brushes.Black, center)
+                    CInt(center.Y - sz.Height / 2)
+                )
+
+                Call canvas.DrawString(labelText, Font, Brushes.Black, center)
             End If
         End SyncLock
     End Sub
