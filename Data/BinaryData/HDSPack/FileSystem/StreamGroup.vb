@@ -60,7 +60,20 @@ Public Class StreamGroup : Inherits StreamObject
         Return tree.ContainsKey(nodeName)
     End Function
 
+    ''' <summary>
+    ''' get file
+    ''' </summary>
+    ''' <param name="filepath"></param>
+    ''' <returns></returns>
     Public Function GetDataBlock(filepath As FilePath) As StreamBlock
+        Return VisitBlock(filepath)
+    End Function
+
+    Public Function GetDataGroup(filepath As FilePath) As StreamGroup
+        Return VisitBlock(filepath)
+    End Function
+
+    Public Function GetObject(filepath As FilePath) As StreamObject
         Return VisitBlock(filepath)
     End Function
 
@@ -109,6 +122,13 @@ Public Class StreamGroup : Inherits StreamObject
         Return dir
     End Function
 
+    ''' <summary>
+    ''' get file or directory
+    ''' </summary>
+    ''' <param name="filepath"></param>
+    ''' <returns>
+    ''' returns nothing if object not found!
+    ''' </returns>
     Private Function VisitBlock(filepath As FilePath) As StreamObject
         Dim tree As Dictionary(Of String, StreamObject) = Me.tree
         Dim file As StreamObject

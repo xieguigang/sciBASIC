@@ -1,4 +1,5 @@
 
+Imports System.Data
 Imports System.IO
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
@@ -33,6 +34,16 @@ Public Class StreamPack : Implements IDisposable
             Call buffer.Write(Encoding.ASCII.GetBytes(magic), Scan0, magic.Length)
             Call buffer.SetLength(magic.Length + 1024 * 1024)
             Call buffer.Flush()
+        End If
+    End Sub
+
+    Public Sub SetAttribute(fileName As String, attrs As Dictionary(Of String, Object))
+        Dim file As StreamObject = superBlock.GetObject(New FilePath(fileName))
+
+        If file Is Nothing Then
+            Throw New MissingPrimaryKeyException(fileName)
+        Else
+            Call file.AddAttributes(attrs)
         End If
     End Sub
 
