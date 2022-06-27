@@ -28,7 +28,7 @@ Public Class StreamGroup : Inherits StreamObject
     End Sub
 
     Public Function GetDataBlock(filepath As FilePath) As StreamBlock
-
+        Return VisitBlock(filepath)
     End Function
 
     Public Function AddDataBlock(filepath As FilePath) As StreamBlock

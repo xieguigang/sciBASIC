@@ -9,7 +9,7 @@ Public Class StreamBlock : Inherits StreamObject
     End Sub
 
     Sub New(filepath As FilePath)
-
+        Call MyBase.New(filepath)
     End Sub
 
 End Class
