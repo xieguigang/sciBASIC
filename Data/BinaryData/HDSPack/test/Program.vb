@@ -30,6 +30,14 @@ Module Program
 
             Call Console.WriteLine()
             Call Console.WriteLine(Encoding.Unicode.GetString(bytes))
+
+            buf = hds.OpenBlock("/root_text.txt")
+            bytes = New Byte(buf.Length - 1) {}
+
+            Call buf.Read(bytes, Scan0, bytes.Length)
+
+            Call Console.WriteLine()
+            Call Console.WriteLine(Encoding.Unicode.GetString(bytes))
         End Using
     End Sub
 
@@ -51,6 +59,14 @@ Module Program
 
             textBuf = Encoding.Unicode.GetBytes("你好，世界（Hello World！）")
             block2 = hds.OpenBlock("/another_folder/text_data/data.txt")
+
+            Call block2.Write(textBuf, Scan0, textBuf.Length)
+            Call block2.Flush()
+            Call block2.Dispose()
+
+            textBuf = Encoding.UTF32.GetBytes("我是谁？（Who am I）")
+
+            block2 = hds.OpenBlock("/root_text.txt")
 
             Call block2.Write(textBuf, Scan0, textBuf.Length)
             Call block2.Flush()

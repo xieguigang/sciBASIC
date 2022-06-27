@@ -64,5 +64,18 @@
                 Return $"{DirectoryPath}/{FileName}".StringReplace("[/]{2,}", "/")
             End If
         End Function
+
+        Public Shared Operator =(file1 As FilePath, file2 As FilePath) As Boolean
+            Dim path1 As String = file1.ToString
+            Dim path2 As String = file2.ToString
+
+            Return path1 = path2 AndAlso
+                file1.IsAbsolutePath = file2.IsAbsolutePath AndAlso
+                file1.IsDirectory = file2.IsDirectory
+        End Operator
+
+        Public Shared Operator <>(file1 As FilePath, file2 As FilePath) As Boolean
+            Return Not file1 = file2
+        End Operator
     End Class
 End Namespace

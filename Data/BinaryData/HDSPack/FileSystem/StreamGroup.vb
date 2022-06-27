@@ -115,6 +115,10 @@ Public Class StreamGroup : Inherits StreamObject
         Dim names As String() = filepath.Components
         Dim name As String
 
+        If Me.referencePath = filepath Then
+            Return Me
+        End If
+
         For i As Integer = 0 To names.Length - 1
             name = names(i)
 
