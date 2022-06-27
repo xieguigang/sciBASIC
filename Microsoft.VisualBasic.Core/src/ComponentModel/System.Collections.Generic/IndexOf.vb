@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::cd9414c3c5c9df4562149d9bda7acd33, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\IndexOf.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 370
-    '    Code Lines: 223
-    ' Comment Lines: 99
-    '   Blank Lines: 48
-    '     File Size: 13.12 KB
+' Summaries:
 
 
-    '     Class Index
-    ' 
-    '         Properties: Count, Map, Objects
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    ' 
-    '         Function: (+2 Overloads) Add, EnumerateMapKeys, GetEnumerator, GetOrdinal, IEnumerable_GetEnumerator
-    '                   indexing, Indexing, (+2 Overloads) Intersect, NotExists, ToString
-    ' 
-    '         Sub: Clear, Delete
-    ' 
-    '         Operators: (+2 Overloads) -, (+2 Overloads) +, <>, =, (+2 Overloads) IsFalse
-    '                    (+2 Overloads) IsTrue, (+2 Overloads) Like
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 370
+'    Code Lines: 223
+' Comment Lines: 99
+'   Blank Lines: 48
+'     File Size: 13.12 KB
+
+
+'     Class Index
+' 
+'         Properties: Count, Map, Objects
+' 
+'         Constructor: (+4 Overloads) Sub New
+' 
+'         Function: (+2 Overloads) Add, EnumerateMapKeys, GetEnumerator, GetOrdinal, IEnumerable_GetEnumerator
+'                   indexing, Indexing, (+2 Overloads) Intersect, NotExists, ToString
+' 
+'         Sub: Clear, Delete
+' 
+'         Operators: (+2 Overloads) -, (+2 Overloads) +, <>, =, (+2 Overloads) IsFalse
+'                    (+2 Overloads) IsTrue, (+2 Overloads) Like
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -268,6 +268,14 @@ Namespace ComponentModel.Collection
 
             Return maps(x)
         End Function
+
+        Public Sub Add(x As T, index As Integer)
+            Call Me.maps.Add(x, index)
+            Call Me.index.Add(New SeqValue(Of T) With {
+                .i = index,
+                .value = x
+            })
+        End Sub
 
         Public Iterator Function Add(x As T()) As IEnumerable(Of Integer)
             For Each xi As T In x

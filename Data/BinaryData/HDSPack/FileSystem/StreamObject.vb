@@ -2,6 +2,9 @@
 Imports Microsoft.VisualBasic.Linq
 Imports any = Microsoft.VisualBasic.Scripting
 
+''' <summary>
+''' the abstract type of the file or directory object
+''' </summary>
 Public MustInherit Class StreamObject
 
     Public ReadOnly Property referencePath As FilePath

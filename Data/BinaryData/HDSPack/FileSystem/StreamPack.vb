@@ -3,6 +3,9 @@ Imports System.Data
 Imports System.IO
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.FileIO.Path
 
 ''' <summary>
@@ -13,6 +16,7 @@ Public Class StreamPack : Implements IDisposable
     ReadOnly superBlock As StreamGroup
     ReadOnly buffer As Stream
     ReadOnly init_size As Integer
+    ReadOnly registriedTypes As New Index(Of String)
 
     Private disposedValue As Boolean
 
@@ -42,10 +46,20 @@ Public Class StreamPack : Implements IDisposable
     ''' </summary>
     ''' <param name="fileName"></param>
     ''' <param name="attrs">
-    ''' non-primitive value type will be serialized via messagepack
+    ''' all attribute value will be serialized via messagepack
     ''' </param>
     Public Sub SetAttribute(fileName As String, attrs As Dictionary(Of String, Object))
         Dim file As StreamObject = superBlock.GetObject(New FilePath(fileName))
+
+        For Each val As Object In attrs.Values
+            If Not val Is Nothing Then
+                Dim code As String = val.GetType.FullName
+
+                If Not code Like registriedTypes Then
+                    Call registriedTypes.Add(code)
+                End If
+            End If
+        Next
 
         If file Is Nothing Then
             Throw New MissingPrimaryKeyException(fileName)
@@ -62,6 +76,14 @@ Public Class StreamPack : Implements IDisposable
 
         If Encoding.ASCII.GetString(magic) <> StreamPack.magic Then
             Throw New FormatException("invalid magic header!")
+        Else
+            Dim bin As New BinaryDataReader(buffer)
+            Dim bufSize As Integer = bin.ReadInt32
+            Dim buf As Byte() = bin.ReadBytes(bufSize)
+
+            For Each type As NamedValue(Of Integer) In New MemoryStream(buf).GetTypeRegistry
+                Call registriedTypes.Add(type.Name, type.Value)
+            Next
         End If
 
         ' and then parse filesystem tree
@@ -105,10 +127,14 @@ Public Class StreamPack : Implements IDisposable
         If Not disposedValue Then
             If disposing Then
                 ' TODO: 释放托管状态(托管对象)
-                Dim treeMetadata As Byte() = superBlock.GetBuffer
+                Dim treeMetadata As Byte() = superBlock.GetBuffer(registriedTypes)
+                Dim registeryMetadata As Byte() = registriedTypes.GetTypeCodes
                 Dim size As Byte() = BitConverter.GetBytes(treeMetadata.Length)
+                Dim size2 As Byte() = BitConverter.GetBytes(registeryMetadata.Length)
 
                 Call buffer.Seek(magic.Length, SeekOrigin.Begin)
+                Call buffer.Write(size2, Scan0, size2.Length)
+                Call buffer.Write(registeryMetadata, Scan0, registeryMetadata.Length)
                 Call buffer.Write(size, Scan0, size.Length)
                 Call buffer.Write(treeMetadata, Scan0, treeMetadata.Length)
 
