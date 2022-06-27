@@ -28,8 +28,8 @@
             End Get
         End Property
 
-        Private Sub New(tokens As IEnumerable(Of String), isDir As Boolean, isAbs As Boolean)
-            Components = tokens.ToArray
+        Public Sub New(tokens As IEnumerable(Of String), isDir As Boolean, isAbs As Boolean)
+            Components = (From name As String In tokens Where Not name.StringEmpty).ToArray
             IsDirectory = isDir
             IsAbsolutePath = isAbs
         End Sub
