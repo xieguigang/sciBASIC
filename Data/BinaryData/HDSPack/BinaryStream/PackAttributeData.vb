@@ -53,11 +53,11 @@ Module PackAttributeData
         Dim buf As Byte()
 
         Using ms As New MemoryStream, bin As New BinaryDataWriter(ms)
-            Call bin.Write(If(file.description, ""), BinaryStringFormat.ZeroTerminated)
             Call bin.Write(attrs.Length)
+            Call bin.Write(If(file.description, ""), BinaryStringFormat.ZeroTerminated)
 
             For Each tuple As KeyValuePair(Of String, Object) In attrs
-                Call bin.Write(tuple.Key)
+                Call bin.Write(tuple.Key, BinaryStringFormat.ZeroTerminated)
 
                 If tuple.Value Is Nothing Then
                     ' null has no type code
@@ -69,7 +69,7 @@ Module PackAttributeData
                     typeCode = type(valType.FullName)
 
                     ' write type code
-                    Call bin.Write(typeCode)
+                    bin.Write(typeCode)
                     ' pack via messagepack
                     buf = MsgPackSerializer.SerializeObject(tuple.Value)
                     size = buf.Length
@@ -81,6 +81,36 @@ Module PackAttributeData
             Call bin.Flush()
 
             Return ms.ToArray
+        End Using
+    End Function
+
+    <Extension>
+    Public Function UnPack(buf As Stream, ByRef desc As String, registry As Dictionary(Of String, String)) As Dictionary(Of String, Object)
+        Using bin As New BinaryDataReader(buf)
+            Dim n As Integer = bin.ReadInt32
+            Dim attrs As New Dictionary(Of String, Object)
+            Dim type As Type
+
+            desc = bin.ReadString(BinaryStringFormat.ZeroTerminated)
+
+            For i As Integer = 0 To n - 1
+                Dim key As String = bin.ReadString(BinaryStringFormat.ZeroTerminated)
+                Dim code As Integer = bin.ReadInt32
+                Dim buffer As Byte()
+                Dim size As Integer = bin.ReadInt32
+                Dim value As Object
+
+                If code < 0 Then
+                    attrs.Add(key, Nothing)
+                Else
+                    buffer = bin.ReadBytes(size)
+                    type = Type.GetType(registry(code.ToString))
+                    value = MsgPackSerializer.Deserialize(type, buffer)
+                    attrs.Add(key, value)
+                End If
+            Next
+
+            Return attrs
         End Using
     End Function
 End Module

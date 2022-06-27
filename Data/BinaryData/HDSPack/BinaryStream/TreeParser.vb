@@ -24,6 +24,10 @@ Friend Module TreeParser
         Dim nfiles As Integer = bin.ReadInt32
         Dim path As String = bin.ReadString(BinaryStringFormat.ZeroTerminated)
         Dim tree As New Dictionary(Of String, StreamObject)
+        Dim attrSize As Integer = bin.ReadInt32
+        Dim attrBuf As Byte() = bin.ReadBytes(attrSize)
+
+
 
         For i As Integer = 1 To nfiles
             Dim flag As Integer = bin.ReadInt32
