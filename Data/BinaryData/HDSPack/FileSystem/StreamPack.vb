@@ -1,5 +1,6 @@
 
 Imports System.IO
+Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.FileIO.Path
 
@@ -14,6 +15,8 @@ Public Class StreamPack : Implements IDisposable
 
     Private disposedValue As Boolean
 
+    Const magic As String = "HDS"
+
     Sub New(filepath As String, Optional init_size As Integer = 1024)
         Call Me.New(filepath.Open(FileMode.OpenOrCreate, doClear:=False, [readOnly]:=False), init_size:=init_size)
     End Sub
@@ -23,15 +26,25 @@ Public Class StreamPack : Implements IDisposable
         Me.init_size = init_size
 
         If buffer.Length > 0 Then
-            Call ParseTree()
+            superBlock = ParseTree()
         Else
             superBlock = StreamGroup.CreateRootTree
         End If
     End Sub
 
-    Private Sub ParseTree()
+    Private Function ParseTree() As StreamGroup
+        ' verify data at first
+        Dim magic As Byte() = New Byte(StreamPack.magic.Length - 1) {}
 
-    End Sub
+        Call buffer.Read(magic, Scan0, magic.Length)
+
+        If Encoding.ASCII.GetString(magic) <> StreamPack.magic Then
+            Throw New FormatException("invalid magic header!")
+        End If
+
+        ' and then parse filesystem tree
+        Return TreeParser.Parse(buffer)
+    End Function
 
     ''' <summary>
     ''' open a data block for read and write
