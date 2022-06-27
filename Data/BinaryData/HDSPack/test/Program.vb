@@ -26,6 +26,8 @@ Module Program
             buf = hds.OpenBlock("/another_folder/text_data/data.txt")
             bytes = New Byte(buf.Length - 1) {}
 
+            Call buf.Read(bytes, Scan0, bytes.Length)
+
             Call Console.WriteLine()
             Call Console.WriteLine(Encoding.Unicode.GetString(bytes))
         End Using
