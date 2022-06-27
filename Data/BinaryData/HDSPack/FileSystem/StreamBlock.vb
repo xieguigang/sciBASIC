@@ -12,4 +12,8 @@ Public Class StreamBlock : Inherits StreamObject
         Call MyBase.New(filepath)
     End Sub
 
+    Public Overrides Function ToString() As String
+        Return $"{MyBase.ToString} [offset={offset}, size={StringFormats.Lanudry(size)}]"
+    End Function
+
 End Class

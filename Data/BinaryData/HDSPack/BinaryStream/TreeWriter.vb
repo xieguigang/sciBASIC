@@ -1,11 +1,13 @@
 ﻿Imports System.IO
+Imports System.Runtime.CompilerServices
 
 Friend Module TreeWriter
 
-    Public Function GetBuffer() As MemoryStream
-        Dim ms As New MemoryStream
-
-
+    <Extension>
+    Public Function GetBuffer(root As StreamGroup) As Byte()
+        Using ms As New MemoryStream
+            Return ms.ToArray
+        End Using
     End Function
 
 End Module

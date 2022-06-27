@@ -4,6 +4,26 @@ Public Class StreamGroup : Inherits StreamObject
 
     Public ReadOnly Property tree As Dictionary(Of String, StreamObject)
 
+    ''' <summary>
+    ''' get total data size in current folder
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property totalSize As Long
+        Get
+            Dim size As Long
+
+            For Each file In tree.Values
+                If TypeOf file Is StreamBlock Then
+                    size += DirectCast(file, StreamBlock).size
+                Else
+                    size += DirectCast(file, StreamGroup).totalSize
+                End If
+            Next
+
+            Return size
+        End Get
+    End Property
+
     Sub New()
     End Sub
 
@@ -58,7 +78,7 @@ Public Class StreamGroup : Inherits StreamObject
         Dim name As String
         Dim targetName As String = filepath.FileName
 
-        For i As Integer = 0 To names.Length - 2
+        For i As Integer = 0 To names.Length - 1
             name = names(i)
 
             If Not dir.hasName(name) Then
@@ -121,7 +141,12 @@ Public Class StreamGroup : Inherits StreamObject
         Return Not VisitBlock(filepath) Is Nothing
     End Function
 
+    Public Overrides Function ToString() As String
+        Return $"{MyBase.ToString} [total: {StringFormats.Lanudry(totalSize)}]"
+    End Function
+
     Public Shared Function CreateRootTree() As StreamGroup
         Return New StreamGroup("/")
     End Function
+
 End Class

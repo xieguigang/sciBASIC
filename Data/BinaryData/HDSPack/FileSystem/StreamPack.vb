@@ -29,6 +29,10 @@ Public Class StreamPack : Implements IDisposable
             superBlock = ParseTree()
         Else
             superBlock = StreamGroup.CreateRootTree
+
+            Call buffer.Write(Encoding.ASCII.GetBytes(magic), Scan0, magic.Length)
+            Call buffer.Seek(magic.Length + 1024 * 1024, SeekOrigin.Begin)
+            Call buffer.Flush()
         End If
     End Sub
 
@@ -79,6 +83,11 @@ Public Class StreamPack : Implements IDisposable
         If Not disposedValue Then
             If disposing Then
                 ' TODO: 释放托管状态(托管对象)
+                Dim treeMetadata As Byte() = superBlock.GetBuffer
+
+                Call buffer.Seek(magic.Length, SeekOrigin.Begin)
+                Call buffer.Write(treeMetadata, Scan0, treeMetadata.Length)
+
                 Call buffer.Flush()
                 Call buffer.Close()
             End If
