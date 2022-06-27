@@ -39,7 +39,7 @@ Public Class StreamGroup : Inherits StreamObject
 
         If dirBlock Is Nothing Then
             ' no dir tree
-            dirBlock = AddDataGroup(filepath)
+            dirBlock = AddDataGroup(dir)
         End If
 
         Call dirBlock.tree.Add(filepath.FileName, createNew)
@@ -53,7 +53,7 @@ Public Class StreamGroup : Inherits StreamObject
         Dim names As String() = filepath.Components
         Dim name As String
 
-        For i As Integer = 0 To names.Length - 1
+        For i As Integer = 0 To names.Length - 2
             name = names(i)
 
             If Not tree.ContainsKey(name) Then
@@ -72,7 +72,9 @@ Public Class StreamGroup : Inherits StreamObject
             End If
         Next
 
-        Return tree(filepath.Components.Last)
+        Call tree.Add(filepath.FileName, New StreamGroup(names))
+
+        Return tree(filepath.FileName)
     End Function
 
     Private Function VisitBlock(filepath As FilePath) As StreamObject
