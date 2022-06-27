@@ -106,7 +106,7 @@ Public Class StreamGroup : Inherits StreamObject
             End If
         Next
 
-        Return dir.tree(targetName)
+        Return dir
     End Function
 
     Private Function VisitBlock(filepath As FilePath) As StreamObject
