@@ -23,7 +23,7 @@
                 If Components.Length = 1 Then
                     Return New FilePath("/")
                 Else
-                    Return New FilePath(Components.Take(Components.Length - 1), IsDirectory, IsAbsolutePath)
+                    Return New FilePath(Components.Take(Components.Length - 1), True, IsAbsolutePath)
                 End If
             End Get
         End Property
