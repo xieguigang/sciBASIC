@@ -50,13 +50,22 @@ Imports System.IO
 
 Namespace ApplicationServices
 
-    Public Class ReadSubStream : Inherits Stream
+    Public Class SubStream : Inherits Stream
 
         ReadOnly s As Stream
 
+        ''' <summary>
+        ''' the position offset in the base stream
+        ''' </summary>
         Dim offset As Long
         Dim [end] As Long
         Dim m_position As Long
+
+        Public ReadOnly Property BaseStream As Stream
+            Get
+                Return s
+            End Get
+        End Property
 
         Public Overrides ReadOnly Property CanRead() As Boolean
             Get
@@ -104,6 +113,7 @@ Namespace ApplicationServices
         End Sub
 
         Public Overrides Sub Flush()
+            Call BaseStream.Flush()
         End Sub
 
         Public Overrides Function Read(buffer As Byte(), dest_offset As Integer, count As Integer) As Integer
@@ -150,6 +160,16 @@ Namespace ApplicationServices
             Return result
         End Function
 
+        Public Overrides Sub Write(buffer As Byte(), offset As Integer, count As Integer)
+            If buffer.IsNullOrEmpty Then
+                Return
+            Else
+                s.Position = m_position
+            End If
+
+            Call s.Write(buffer, offset, count)
+        End Sub
+
         Public Overrides Function ReadByte() As Integer
             If m_position >= [end] Then
                 Return -1
@@ -193,12 +213,9 @@ Namespace ApplicationServices
             Return m_position
         End Function
 
+        ''' <inheritdoc />
         Public Overrides Sub SetLength(value As Long)
-            Throw New NotSupportedException()
-        End Sub
-
-        Public Overrides Sub Write(buffer As Byte(), offset As Integer, count As Integer)
-            Throw New NotSupportedException()
+            Throw New NotSupportedException("sub stream is not allowed to modified its buffer size!")
         End Sub
     End Class
 End Namespace
