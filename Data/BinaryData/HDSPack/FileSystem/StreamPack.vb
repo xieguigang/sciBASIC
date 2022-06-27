@@ -37,6 +37,13 @@ Public Class StreamPack : Implements IDisposable
         End If
     End Sub
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="fileName"></param>
+    ''' <param name="attrs">
+    ''' non-primitive value type will be serialized via messagepack
+    ''' </param>
     Public Sub SetAttribute(fileName As String, attrs As Dictionary(Of String, Object))
         Dim file As StreamObject = superBlock.GetObject(New FilePath(fileName))
 

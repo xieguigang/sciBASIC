@@ -1,6 +1,7 @@
 ﻿Imports System
 Imports System.Text
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
+Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Module Program
 
@@ -63,6 +64,14 @@ Module Program
             Call block2.Write(textBuf, Scan0, textBuf.Length)
             Call block2.Flush()
             Call block2.Dispose()
+
+            Call hds.SetAttribute("/another_folder/text_data/data.txt", New Dictionary(Of String, Object) From {
+                {"description", "我也不知道要写什么"},
+                {"aabbcc", "ccbbAA"},
+                {"time", Now},
+                {"ints", {56, 986, 44, 8, 8888}},
+                {"tuple", New NamedValue With {.name = "aaa", .text = "cccccccccccccccccccccccccccccccccccccccccccccc"}}
+            })
 
             textBuf = Encoding.UTF32.GetBytes("我是谁？（Who am I）")
 
