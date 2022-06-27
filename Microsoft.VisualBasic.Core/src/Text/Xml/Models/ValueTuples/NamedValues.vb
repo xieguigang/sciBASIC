@@ -107,6 +107,7 @@ Namespace Text.Xml.Models
             Me.text = namedValue.Value
         End Sub
 
+        <DebuggerStepThrough>
         Sub New()
         End Sub
 

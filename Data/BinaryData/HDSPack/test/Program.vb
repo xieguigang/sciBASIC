@@ -70,7 +70,7 @@ Module Program
                 {"aabbcc", "ccbbAA"},
                 {"time", Now},
                 {"ints", {56, 986, 44, 8, 8888}},
-                {"tuple", New NamedValue With {.name = "aaa", .text = "cccccccccccccccccccccccccccccccccccccccccccccc"}}
+                {"tuple", New NamedValue With {.name = "aaa", .text = "cccccccccccccccccccccccccccccccccccccccccccccc,还好啦"}}
             })
 
             textBuf = Encoding.UTF32.GetBytes("我是谁？（Who am I）")
