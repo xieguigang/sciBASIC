@@ -55,7 +55,7 @@ Imports System.IO
 Imports Microsoft.VisualBasic.Linq
 Imports FS = Microsoft.VisualBasic.FileIO.FileSystem
 
-Namespace ApplicationServices.IO
+Namespace ApplicationServices
 
     ''' <summary>
     ''' return name and handle of a temporary file safely
