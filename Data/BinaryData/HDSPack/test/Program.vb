@@ -21,7 +21,7 @@ Module Program
             Dim xml As String = Encoding.UTF8.GetString(bytes)
 
             Call Console.WriteLine(xml)
-
+            Call xml.SaveTo("./test_text_exports.svg")
         End Using
     End Sub
 
