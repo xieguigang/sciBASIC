@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Data.IO.MessagePack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.ValueTypes
 
 Module PackAttributeData
 
@@ -70,8 +71,14 @@ Module PackAttributeData
 
                     ' write type code
                     bin.Write(typeCode)
-                    ' pack via messagepack
-                    buf = MsgPackSerializer.SerializeObject(tuple.Value)
+
+                    If valType Is GetType(Date) Then
+                        buf = BitConverter.GetBytes(DirectCast(tuple.Value, Date).UnixTimeStamp)
+                    Else
+                        ' pack via messagepack
+                        buf = MsgPackSerializer.SerializeObject(tuple.Value)
+                    End If
+
                     size = buf.Length
                     bin.Write(size)
                     bin.Write(buf)
@@ -90,6 +97,7 @@ Module PackAttributeData
             Dim n As Integer = bin.ReadInt32
             Dim attrs As New Dictionary(Of String, Object)
             Dim type As Type
+            Dim typeName As String
 
             desc = bin.ReadString(BinaryStringFormat.ZeroTerminated)
 
@@ -104,8 +112,16 @@ Module PackAttributeData
                     attrs.Add(key, Nothing)
                 Else
                     buffer = bin.ReadBytes(size)
-                    type = Type.GetType(registry(code.ToString))
-                    value = MsgPackSerializer.Deserialize(type, buffer)
+                    typeName = registry(code.ToString)
+                    type = Type.GetType(typeName)
+
+                    If type Is GetType(Date) Then
+                        value = BitConverter.ToDouble(buffer, Scan0)
+                        value = FromUnixTimeStamp(CDbl(value))
+                    Else
+                        value = MsgPackSerializer.Deserialize(type, buffer)
+                    End If
+
                     attrs.Add(key, value)
                 End If
             Next

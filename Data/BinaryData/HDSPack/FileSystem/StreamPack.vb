@@ -73,6 +73,7 @@ Namespace FileSystem
         Private Function ParseTree() As StreamGroup
             ' verify data at first
             Dim magic As Byte() = New Byte(StreamPack.magic.Length - 1) {}
+            Dim registry As New Dictionary(Of String, String)
 
             Call buffer.Read(magic, Scan0, magic.Length)
 
@@ -85,11 +86,12 @@ Namespace FileSystem
 
                 For Each type As NamedValue(Of Integer) In New MemoryStream(buf).GetTypeRegistry
                     Call registriedTypes.Add(type.Name, type.Value)
+                    Call registry.Add(type.Value.ToString, type.Name)
                 Next
             End If
 
             ' and then parse filesystem tree
-            Return TreeParser.Parse(buffer)
+            Return TreeParser.Parse(buffer, registry)
         End Function
 
         ''' <summary>
