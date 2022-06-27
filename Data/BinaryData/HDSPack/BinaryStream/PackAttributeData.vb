@@ -11,12 +11,37 @@ Module PackAttributeData
 
     <Extension>
     Public Function GetTypeCodes(registry As Index(Of String)) As Byte()
+        Using ms As New MemoryStream, bin As New BinaryDataWriter(ms)
+            Call bin.Write(registry.Count)
 
+            For Each code As SeqValue(Of String) In registry
+                Call bin.Write(code.i)
+                Call bin.Write(code.value, BinaryStringFormat.ZeroTerminated)
+            Next
+
+            Call bin.Flush()
+
+            Return ms.ToArray
+        End Using
     End Function
 
     <Extension>
     Public Iterator Function GetTypeRegistry(buffer As Stream) As IEnumerable(Of NamedValue(Of Integer))
+        Using bin As New BinaryDataReader(buffer)
+            Dim n As Integer = bin.ReadInt32
+            Dim code As Integer
+            Dim type As String
 
+            For i As Integer = 0 To n - 1
+                code = bin.ReadInt32
+                type = bin.ReadString(BinaryStringFormat.ZeroTerminated)
+
+                Yield New NamedValue(Of Integer) With {
+                    .Name = type,
+                    .Value = code
+                }
+            Next
+        End Using
     End Function
 
     <Extension>
