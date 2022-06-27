@@ -72,6 +72,21 @@ Module Program
             Call block.Flush()
             Call block.Dispose()
 
+            image = "E:\VB_GamePads\src\framework\etc\ggplot2.png".ReadBinary
+            block = hds.OpenBlock("/another_folder\ggplot-logo.png")
+
+            Call block.Write(image, Scan0, image.Length)
+            Call block.Flush()
+            Call block.Dispose()
+
+            image = "E:\GCModeller\src\GCModeller.sln".ReadBinary
+
+            block = hds.OpenBlock("/another_folder/text_data\gcmodeller.sln")
+
+            Call block.Write(image, Scan0, image.Length)
+            Call block.Flush()
+            Call block.Dispose()
+
             Dim textBuf As Byte() = "E:\GCModeller\src\runtime\sciBASIC#\etc\(๑•̀ㅂ•́)و✧.svg".ReadBinary
             Dim block2 = hds.OpenBlock("/another_folder/text_data/\GCModeller\src\runtime\sciBASIC#\etc\(๑•̀ㅂ•́)و✧.svg")
 
@@ -102,6 +117,9 @@ Module Program
             Call block2.Write(textBuf, Scan0, textBuf.Length)
             Call block2.Flush()
             Call block2.Dispose()
+
+
+
         End Using
     End Sub
 End Module
