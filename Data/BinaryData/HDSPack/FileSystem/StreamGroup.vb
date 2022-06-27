@@ -179,7 +179,13 @@ Namespace FileSystem
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"{MyBase.ToString} [total: {StringFormats.Lanudry(totalSize)}]"
+            Dim ndirs As Integer = Aggregate file As StreamObject
+                                   In files
+                                   Where TypeOf file Is StreamGroup
+                                   Into Count
+            Dim nfiles As Integer = files.Length - ndirs
+
+            Return $"{MyBase.ToString} [{StringFormats.Lanudry(totalSize)}, {ndirs} dirs, {nfiles} files]"
         End Function
 
         Public Shared Function CreateRootTree() As StreamGroup

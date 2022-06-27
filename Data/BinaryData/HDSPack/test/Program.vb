@@ -72,7 +72,7 @@ Module Program
             Call block.Flush()
             Call block.Dispose()
 
-            image = "E:\VB_GamePads\src\framework\etc\ggplot2.png".ReadBinary
+            image = "E:\GCModeller\src\runtime\sciBASIC#\etc\ggplot2.png".ReadBinary
             block = hds.OpenBlock("/another_folder\ggplot-logo.png")
 
             Call block.Write(image, Scan0, image.Length)
@@ -81,7 +81,7 @@ Module Program
 
             image = "E:\GCModeller\src\GCModeller.sln".ReadBinary
 
-            block = hds.OpenBlock("/another_folder/text_data\gcmodeller.sln")
+            block = hds.OpenBlock("/another_folder/git/////////////\gcmodeller.sln")
 
             Call block.Write(image, Scan0, image.Length)
             Call block.Flush()

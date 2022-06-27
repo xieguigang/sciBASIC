@@ -261,7 +261,8 @@ Namespace ApplicationServices
         ''' </summary>
         ''' <param name="token"></param>
         ''' <returns></returns>
-        <Extension> Public Function CLIToken(token As String) As String
+        <Extension>
+        Public Function CLIToken(token As String) As String
             If String.IsNullOrEmpty(token) Then
                 Return """"""
             ElseIf Not Len(token) > 2 Then
@@ -292,7 +293,8 @@ Namespace ApplicationServices
         ''' </summary>
         ''' <param name="ext$"></param>
         ''' <returns></returns>
-        <Extension> Public Function GetMIMEDescrib(ext$) As ContentType
+        <Extension>
+        Public Function GetMIMEDescrib(ext$) As ContentType
             Dim key$ = LCase(ext).Trim("*"c)
 
             If MIME.SuffixTable.ContainsKey(key) Then
