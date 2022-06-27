@@ -48,7 +48,7 @@
 
 Imports System.IO
 
-Namespace ApplicationServices
+Namespace ApplicationServices.IO
 
     Public Class ReadSubStream : Inherits Stream
 
