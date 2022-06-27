@@ -21,7 +21,7 @@ Namespace FileSystem
         ''' </summary>
         ''' <returns></returns>
         Public Property description As String
-        Public Property attributes As New Dictionary(Of String, Object)
+        Public Property attributes As New LazyAttribute
 
         Sub New(path As FilePath)
             referencePath = path
@@ -35,7 +35,7 @@ Namespace FileSystem
                 If item.Key = NameOf(description) Then
                     description = any.ToString(item.Value)
                 Else
-                    _attributes(item.Key) = item.Value
+                    attributes.Add(item.Key, item.Value)
                 End If
             Next
         End Sub

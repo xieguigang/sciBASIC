@@ -94,6 +94,10 @@ Namespace FileSystem
             Return TreeParser.Parse(buffer, registry)
         End Function
 
+        Public Function GetObject(fileName As String) As StreamObject
+            Return superBlock.GetObject(New FilePath(fileName))
+        End Function
+
         ''' <summary>
         ''' open a data block for read and write
         ''' 

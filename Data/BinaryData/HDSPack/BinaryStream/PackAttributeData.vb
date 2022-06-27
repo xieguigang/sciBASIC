@@ -3,10 +3,8 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.IO
-Imports Microsoft.VisualBasic.Data.IO.MessagePack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.ValueTypes
 
 Module PackAttributeData
 
@@ -47,9 +45,8 @@ Module PackAttributeData
 
     <Extension>
     Public Function Pack(file As StreamObject, type As Index(Of String)) As Byte()
-        Dim attrs = file.attributes.SafeQuery.ToArray
+        Dim attrs = file.attributes.ToArray
         Dim size As Integer
-        Dim valType As Type
         Dim typeCode As Integer
         Dim buf As Byte()
 
@@ -57,28 +54,20 @@ Module PackAttributeData
             Call bin.Write(attrs.Length)
             Call bin.Write(If(file.description, ""), BinaryStringFormat.ZeroTerminated)
 
-            For Each tuple As KeyValuePair(Of String, Object) In attrs
-                Call bin.Write(tuple.Key, BinaryStringFormat.ZeroTerminated)
+            For Each tuple As AttributeMetadata In attrs
+                Call bin.Write(tuple.name, BinaryStringFormat.ZeroTerminated)
 
-                If tuple.Value Is Nothing Then
+                If tuple.data Is Nothing Then
                     ' null has no type code
                     Call bin.Write(-1)
                     ' null has no data size
                     Call bin.Write(0)
                 Else
-                    valType = tuple.Value.GetType
-                    typeCode = type(valType.FullName)
+                    typeCode = type(tuple.type)
 
                     ' write type code
                     bin.Write(typeCode)
-
-                    If valType Is GetType(Date) Then
-                        buf = BitConverter.GetBytes(DirectCast(tuple.Value, Date).UnixTimeStamp)
-                    Else
-                        ' pack via messagepack
-                        buf = MsgPackSerializer.SerializeObject(tuple.Value)
-                    End If
-
+                    buf = tuple.data
                     size = buf.Length
                     bin.Write(size)
                     bin.Write(buf)
@@ -92,11 +81,10 @@ Module PackAttributeData
     End Function
 
     <Extension>
-    Public Function UnPack(buf As Stream, ByRef desc As String, registry As Dictionary(Of String, String)) As Dictionary(Of String, Object)
+    Public Function UnPack(buf As Stream, ByRef desc As String, registry As Dictionary(Of String, String)) As LazyAttribute
         Using bin As New BinaryDataReader(buf)
             Dim n As Integer = bin.ReadInt32
-            Dim attrs As New Dictionary(Of String, Object)
-            Dim type As Type
+            Dim attrs As New Dictionary(Of String, AttributeMetadata)
             Dim typeName As String
 
             desc = bin.ReadString(BinaryStringFormat.ZeroTerminated)
@@ -106,27 +94,28 @@ Module PackAttributeData
                 Dim code As Integer = bin.ReadInt32
                 Dim buffer As Byte()
                 Dim size As Integer = bin.ReadInt32
-                Dim value As Object
+                Dim value As AttributeMetadata
 
                 If code < 0 Then
-                    attrs.Add(key, Nothing)
+                    value = New AttributeMetadata With {
+                        .name = key,
+                        .type = Nothing,
+                        .data = Nothing
+                    }
                 Else
                     buffer = bin.ReadBytes(size)
                     typeName = registry(code.ToString)
-                    type = Type.GetType(typeName)
-
-                    If type Is GetType(Date) Then
-                        value = BitConverter.ToDouble(buffer, Scan0)
-                        value = FromUnixTimeStamp(CDbl(value))
-                    Else
-                        value = MsgPackSerializer.Deserialize(type, buffer)
-                    End If
-
-                    attrs.Add(key, value)
+                    value = New AttributeMetadata With {
+                        .data = buffer,
+                        .type = typeName,
+                        .name = key
+                    }
                 End If
+
+                attrs.Add(key, value)
             Next
 
-            Return attrs
+            Return New LazyAttribute With {.attributes = attrs}
         End Using
     End Function
 End Module
