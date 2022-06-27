@@ -27,6 +27,10 @@ Public Class StreamGroup : Inherits StreamObject
         tree = New Dictionary(Of String, StreamObject)
     End Sub
 
+    Public Function hasName(nodeName As String) As Boolean
+        Return tree.ContainsKey(nodeName)
+    End Function
+
     Public Function GetDataBlock(filepath As FilePath) As StreamBlock
         Return VisitBlock(filepath)
     End Function
@@ -48,22 +52,23 @@ Public Class StreamGroup : Inherits StreamObject
     End Function
 
     Public Function AddDataGroup(filepath As FilePath) As StreamGroup
-        Dim tree As Dictionary(Of String, StreamObject) = Me.tree
+        Dim dir As StreamGroup = Me
         Dim file As StreamObject
         Dim names As String() = filepath.Components
         Dim name As String
+        Dim targetName As String = filepath.FileName
 
         For i As Integer = 0 To names.Length - 2
             name = names(i)
 
-            If Not tree.ContainsKey(name) Then
-                tree.Add(name, New StreamGroup(filepath.Components.Take(i)))
-                tree = DirectCast(tree(name), StreamGroup).tree
+            If Not dir.hasName(name) Then
+                dir.tree.Add(name, New StreamGroup(filepath.Components.Take(i)))
+                dir = DirectCast(dir.tree(name), StreamGroup)
             Else
-                file = tree(name)
+                file = dir.tree(name)
 
                 If TypeOf file Is StreamGroup Then
-                    tree = DirectCast(file, StreamGroup).tree
+                    dir = DirectCast(file, StreamGroup)
                 Else
                     ' required a folder(file group)
                     ' but a file is exists?
@@ -72,9 +77,9 @@ Public Class StreamGroup : Inherits StreamObject
             End If
         Next
 
-        Call tree.Add(filepath.FileName, New StreamGroup(names))
+        Call dir.tree.Add(targetName, New StreamGroup(names))
 
-        Return tree(filepath.FileName)
+        Return dir.tree(targetName)
     End Function
 
     Private Function VisitBlock(filepath As FilePath) As StreamObject
