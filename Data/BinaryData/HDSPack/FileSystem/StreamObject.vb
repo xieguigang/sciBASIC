@@ -3,6 +3,11 @@
 Public MustInherit Class StreamObject
 
     Public ReadOnly Property referencePath As FilePath
+    Public ReadOnly Property fileName As String
+        Get
+            Return referencePath.FileName
+        End Get
+    End Property
 
     Sub New(path As FilePath)
         referencePath = path

@@ -10,13 +10,16 @@ Friend Module TreeWriter
         Using ms As New MemoryStream, bin As New BinaryDataWriter(ms, encoding:=Encodings.UTF8WithoutBOM)
             Dim buf As Byte()
 
+            Call bin.Write(root.files.Length)
             Call bin.Write(root.referencePath.ToString, BinaryStringFormat.ZeroTerminated)
 
             For Each file As StreamObject In root.files
                 If TypeOf file Is StreamGroup Then
                     buf = DirectCast(file, StreamGroup).GetBuffer
+                    bin.Write(DirectCast(file, StreamGroup).files.Length + 1)
                 Else
                     buf = DirectCast(file, StreamBlock).GetBuffer
+                    bin.Write(0)
                 End If
 
                 bin.Write(buf.Length)
