@@ -4,6 +4,22 @@ Public Class StreamGroup : Inherits StreamObject
 
     Public ReadOnly Property tree As Dictionary(Of String, StreamObject)
 
+    Sub New()
+    End Sub
+
+    ''' <summary>
+    ''' create a new file tree
+    ''' </summary>
+    ''' <param name="directory">
+    ''' the folder directory path
+    ''' </param>
+    Sub New(directory As String)
+        Call MyBase.New(New FilePath(directory))
+
+        ' create a new empty folder tree
+        tree = New Dictionary(Of String, StreamObject)
+    End Sub
+
     Public Function GetDataBlock(filepath As FilePath) As StreamBlock
 
     End Function
@@ -13,7 +29,35 @@ Public Class StreamGroup : Inherits StreamObject
 
         ' then add current file block to the tree
 
+
         Return createNew
+    End Function
+
+    Private Function VisitBlock(filepath As FilePath) As StreamObject
+        Dim tree As Dictionary(Of String, StreamObject) = Me.tree
+        Dim file As StreamObject
+        Dim names As String() = filepath.Components
+        Dim name As String
+
+        For i As Integer = 0 To names.Length - 1
+            name = names(i)
+
+            If Not tree.ContainsKey(name) Then
+                Return Nothing
+            Else
+                file = tree(name)
+
+                If TypeOf file Is StreamGroup Then
+                    tree = DirectCast(file, StreamGroup).tree
+                ElseIf i <> names.Length - 1 Then
+                    ' required a folder(file group)
+                    ' but a file is exists?
+                    Return Nothing
+                End If
+            End If
+        Next
+
+        Return tree(filepath.Components.Last)
     End Function
 
     ''' <summary>
@@ -25,29 +69,10 @@ Public Class StreamGroup : Inherits StreamObject
     ''' </param>
     ''' <returns></returns>
     Public Function BlockExists(filepath As FilePath) As Boolean
-        Dim tree As Dictionary(Of String, StreamObject) = Me.tree
-        Dim file As StreamObject
-        Dim names As String() = filepath.Components
-        Dim name As String
+        Return Not VisitBlock(filepath) Is Nothing
+    End Function
 
-        For i As Integer = 0 To names.Length - 1
-            name = names(i)
-
-            If Not tree.ContainsKey(name) Then
-                Return False
-            Else
-                file = tree(name)
-
-                If TypeOf file Is StreamGroup Then
-                    tree = DirectCast(file, StreamGroup).tree
-                ElseIf i <> names.Length - 1 Then
-                    ' required a folder(file group)
-                    ' but a file is exists?
-                    Return False
-                End If
-            End If
-        Next
-
-        Return True
+    Public Shared Function CreateRootTree() As StreamGroup
+        Return New StreamGroup("/")
     End Function
 End Class

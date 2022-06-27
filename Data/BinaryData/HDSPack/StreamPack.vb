@@ -22,7 +22,11 @@ Public Class StreamPack : Implements IDisposable
         Me.buffer = buffer
         Me.init_size = init_size
 
-        Call ParseTree()
+        If buffer.Length > 0 Then
+            Call ParseTree()
+        Else
+            superBlock = StreamGroup.CreateRootTree
+        End If
     End Sub
 
     Private Sub ParseTree()

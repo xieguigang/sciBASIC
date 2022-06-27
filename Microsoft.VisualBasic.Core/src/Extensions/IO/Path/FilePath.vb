@@ -18,6 +18,22 @@
             End Get
         End Property
 
+        Public ReadOnly Property ParentDirectory As FilePath
+            Get
+                If Components.Length - 1 Then
+                    Return New FilePath("/")
+                Else
+                    Return New FilePath(Components.Take(Components.Length - 1), IsDirectory, IsAbsolutePath)
+                End If
+            End Get
+        End Property
+
+        Private Sub New(tokens As IEnumerable(Of String), isDir As Boolean, isAbs As Boolean)
+            Components = tokens.ToArray
+            IsDirectory = isDir
+            IsAbsolutePath = isAbs
+        End Sub
+
         Sub New(filepath As String)
             If filepath.EndsWith("/"c) OrElse filepath.EndsWith("\"c) Then
                 IsDirectory = True
