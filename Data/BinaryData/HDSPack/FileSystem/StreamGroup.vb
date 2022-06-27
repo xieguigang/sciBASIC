@@ -2,7 +2,7 @@
 
 Public Class StreamGroup : Inherits StreamObject
 
-    Public ReadOnly Property tree As Dictionary(Of String, StreamObject)
+    ReadOnly tree As Dictionary(Of String, StreamObject)
 
     ''' <summary>
     ''' get total data size in current folder
@@ -24,8 +24,11 @@ Public Class StreamGroup : Inherits StreamObject
         End Get
     End Property
 
-    Sub New()
-    End Sub
+    Public ReadOnly Property files As StreamObject()
+        Get
+            Return tree.Values.ToArray
+        End Get
+    End Property
 
     ''' <summary>
     ''' create a new file tree
@@ -45,6 +48,12 @@ Public Class StreamGroup : Inherits StreamObject
         Call MyBase.New(New FilePath(dirs, isDir:=True, isAbs:=True))
         ' create a new empty folder tree
         tree = New Dictionary(Of String, StreamObject)
+    End Sub
+
+    Sub New(path As FilePath, tree As Dictionary(Of String, StreamObject))
+        Call MyBase.New(path)
+        ' assign the exists tree data
+        Me.tree = tree
     End Sub
 
     Public Function hasName(nodeName As String) As Boolean
@@ -82,7 +91,7 @@ Public Class StreamGroup : Inherits StreamObject
             name = names(i)
 
             If Not dir.hasName(name) Then
-                dir.tree.Add(name, New StreamGroup(filepath.Components.Take(i)))
+                dir.tree.Add(name, New StreamGroup(filepath.Components.Take(i + 1)))
                 dir = DirectCast(dir.tree(name), StreamGroup)
             Else
                 file = dir.tree(name)
@@ -96,8 +105,6 @@ Public Class StreamGroup : Inherits StreamObject
                 End If
             End If
         Next
-
-        Call dir.tree.Add(targetName, New StreamGroup(names))
 
         Return dir.tree(targetName)
     End Function

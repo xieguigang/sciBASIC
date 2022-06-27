@@ -79,6 +79,10 @@ Public Class StreamPack : Implements IDisposable
         End If
     End Function
 
+    Public Shared Function CreateNewStream(filepath As String, Optional init_size As Integer = 1024) As StreamPack
+        Return New StreamPack(filepath.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False), init_size)
+    End Function
+
     Protected Overridable Sub Dispose(disposing As Boolean)
         If Not disposedValue Then
             If disposing Then
