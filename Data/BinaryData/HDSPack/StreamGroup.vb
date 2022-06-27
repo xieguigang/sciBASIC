@@ -26,9 +26,11 @@ Public Class StreamGroup : Inherits StreamObject
 
     Public Function AddDataBlock(filepath As FilePath) As StreamBlock
         Dim createNew As New StreamBlock(filepath)
-
         ' then add current file block to the tree
+        Dim dir As FilePath = filepath.ParentDirectory
+        Dim dirBlock As StreamGroup = VisitBlock(dir)
 
+        Call dirBlock.tree.Add(filepath.FileName, createNew)
 
         Return createNew
     End Function
