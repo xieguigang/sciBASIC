@@ -15,7 +15,8 @@ Namespace FileSystem
     ''' </summary>
     Public Class StreamPack : Implements IDisposable
 
-        ReadOnly superBlock As StreamGroup
+        Friend ReadOnly superBlock As StreamGroup
+
         ReadOnly buffer As Stream
         ReadOnly init_size As Integer
         ReadOnly registriedTypes As New Index(Of String)

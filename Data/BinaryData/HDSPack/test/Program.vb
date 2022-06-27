@@ -1,4 +1,5 @@
 ﻿Imports System.Text
+Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
@@ -9,6 +10,15 @@ Module Program
     Sub Main(args As String())
         Call writePackTest()
         Call readPackTest()
+        Call filesystemTest()
+    End Sub
+
+    Sub filesystemTest()
+        Using hds As New StreamPack(testfile)
+            For Each file In hds.ListFiles
+                Call Console.WriteLine(file.ToString)
+            Next
+        End Using
     End Sub
 
     Sub readPackTest()
