@@ -1,4 +1,4 @@
-
+ï»¿
 Imports System.Data
 Imports System.IO
 Imports System.Text
@@ -128,7 +128,7 @@ Namespace FileSystem
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
                 If disposing Then
-                    ' TODO: ÊÍ·ÅÍĞ¹Ü×´Ì¬(ÍĞ¹Ü¶ÔÏó)
+                    ' TODO: é‡Šæ”¾æ‰˜ç®¡çŠ¶æ€(æ‰˜ç®¡å¯¹è±¡)
                     Dim treeMetadata As Byte() = superBlock.GetBuffer(registriedTypes)
                     Dim registeryMetadata As Byte() = registriedTypes.GetTypeCodes
                     Dim size As Byte() = BitConverter.GetBytes(treeMetadata.Length)
@@ -144,21 +144,21 @@ Namespace FileSystem
                     Call buffer.Close()
                 End If
 
-                ' TODO: ÊÍ·ÅÎ´ÍĞ¹ÜµÄ×ÊÔ´(Î´ÍĞ¹ÜµÄ¶ÔÏó)²¢ÖØĞ´ÖÕ½áÆ÷
-                ' TODO: ½«´óĞÍ×Ö¶ÎÉèÖÃÎª null
+                ' TODO: é‡Šæ”¾æœªæ‰˜ç®¡çš„èµ„æº(æœªæ‰˜ç®¡çš„å¯¹è±¡)å¹¶é‡å†™ç»ˆç»“å™¨
+                ' TODO: å°†å¤§å‹å­—æ®µè®¾ç½®ä¸º null
                 disposedValue = True
             End If
         End Sub
 
-        ' ' TODO: ½öµ±¡°Dispose(disposing As Boolean)¡±ÓµÓĞÓÃÓÚÊÍ·ÅÎ´ÍĞ¹Ü×ÊÔ´µÄ´úÂëÊ±²ÅÌæ´úÖÕ½áÆ÷
+        ' ' TODO: ä»…å½“â€œDispose(disposing As Boolean)â€æ‹¥æœ‰ç”¨äºé‡Šæ”¾æœªæ‰˜ç®¡èµ„æºçš„ä»£ç æ—¶æ‰æ›¿ä»£ç»ˆç»“å™¨
         ' Protected Overrides Sub Finalize()
-        '     ' ²»Òª¸ü¸Ä´Ë´úÂë¡£Çë½«ÇåÀí´úÂë·ÅÈë¡°Dispose(disposing As Boolean)¡±·½·¨ÖĞ
+        '     ' ä¸è¦æ›´æ”¹æ­¤ä»£ç ã€‚è¯·å°†æ¸…ç†ä»£ç æ”¾å…¥â€œDispose(disposing As Boolean)â€æ–¹æ³•ä¸­
         '     Dispose(disposing:=False)
         '     MyBase.Finalize()
         ' End Sub
 
         Public Sub Dispose() Implements IDisposable.Dispose
-            ' ²»Òª¸ü¸Ä´Ë´úÂë¡£Çë½«ÇåÀí´úÂë·ÅÈë¡°Dispose(disposing As Boolean)¡±·½·¨ÖĞ
+            ' ä¸è¦æ›´æ”¹æ­¤ä»£ç ã€‚è¯·å°†æ¸…ç†ä»£ç æ”¾å…¥â€œDispose(disposing As Boolean)â€æ–¹æ³•ä¸­
             Dispose(disposing:=True)
             GC.SuppressFinalize(Me)
         End Sub
