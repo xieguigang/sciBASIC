@@ -31,7 +31,7 @@ Public Class StreamPack : Implements IDisposable
             superBlock = StreamGroup.CreateRootTree
 
             Call buffer.Write(Encoding.ASCII.GetBytes(magic), Scan0, magic.Length)
-            Call buffer.Seek(magic.Length + 1024 * 1024, SeekOrigin.Begin)
+            Call buffer.SetLength(magic.Length + 1024 * 1024)
             Call buffer.Flush()
         End If
     End Sub
