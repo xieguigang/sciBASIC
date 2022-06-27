@@ -37,7 +37,7 @@ Module Program
             Call buf.Read(bytes, Scan0, bytes.Length)
 
             Call Console.WriteLine()
-            Call Console.WriteLine(Encoding.Unicode.GetString(bytes))
+            Call Console.WriteLine(Encoding.UTF32.GetString(bytes))
         End Using
     End Sub
 
