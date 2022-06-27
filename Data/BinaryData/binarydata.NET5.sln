@@ -15,8 +15,6 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "test", "HDSPack\test\test.v
 EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "msgpack-netcore5", "msgpack\msgpack-netcore5.vbproj", "{5B8FA242-439F-4721-961F-D8A39F8B80E8}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "datastorage-netcore5", "DataStorage\datastorage-netcore5.vbproj", "{22534D16-29CE-443A-92F5-AAB453133918}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -197,38 +195,6 @@ Global
 		{5B8FA242-439F-4721-961F-D8A39F8B80E8}.Rsharp_app_release|Any CPU.Build.0 = Rsharp_app_release|Any CPU
 		{5B8FA242-439F-4721-961F-D8A39F8B80E8}.Rsharp_app_release|x64.ActiveCfg = Rsharp_app_release|x64
 		{5B8FA242-439F-4721-961F-D8A39F8B80E8}.Rsharp_app_release|x64.Build.0 = Rsharp_app_release|x64
-		{22534D16-29CE-443A-92F5-AAB453133918}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{22534D16-29CE-443A-92F5-AAB453133918}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{22534D16-29CE-443A-92F5-AAB453133918}.Debug|x64.ActiveCfg = Debug|x64
-		{22534D16-29CE-443A-92F5-AAB453133918}.Debug|x64.Build.0 = Debug|x64
-		{22534D16-29CE-443A-92F5-AAB453133918}.LipidSearch|Any CPU.ActiveCfg = Debug|Any CPU
-		{22534D16-29CE-443A-92F5-AAB453133918}.LipidSearch|Any CPU.Build.0 = Debug|Any CPU
-		{22534D16-29CE-443A-92F5-AAB453133918}.LipidSearch|x64.ActiveCfg = Debug|x64
-		{22534D16-29CE-443A-92F5-AAB453133918}.LipidSearch|x64.Build.0 = Debug|x64
-		{22534D16-29CE-443A-92F5-AAB453133918}.mzkit_win32|Any CPU.ActiveCfg = mzkit_win32|Any CPU
-		{22534D16-29CE-443A-92F5-AAB453133918}.mzkit_win32|Any CPU.Build.0 = mzkit_win32|Any CPU
-		{22534D16-29CE-443A-92F5-AAB453133918}.mzkit_win32|x64.ActiveCfg = mzkit_win32|x64
-		{22534D16-29CE-443A-92F5-AAB453133918}.mzkit_win32|x64.Build.0 = mzkit_win32|x64
-		{22534D16-29CE-443A-92F5-AAB453133918}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
-		{22534D16-29CE-443A-92F5-AAB453133918}.mzkit|Any CPU.Build.0 = mzkit|Any CPU
-		{22534D16-29CE-443A-92F5-AAB453133918}.mzkit|x64.ActiveCfg = mzkit|x64
-		{22534D16-29CE-443A-92F5-AAB453133918}.mzkit|x64.Build.0 = mzkit|x64
-		{22534D16-29CE-443A-92F5-AAB453133918}.NPSearch|Any CPU.ActiveCfg = Debug|Any CPU
-		{22534D16-29CE-443A-92F5-AAB453133918}.NPSearch|Any CPU.Build.0 = Debug|Any CPU
-		{22534D16-29CE-443A-92F5-AAB453133918}.NPSearch|x64.ActiveCfg = Debug|x64
-		{22534D16-29CE-443A-92F5-AAB453133918}.NPSearch|x64.Build.0 = Debug|x64
-		{22534D16-29CE-443A-92F5-AAB453133918}.PlantMAT|Any CPU.ActiveCfg = Debug|Any CPU
-		{22534D16-29CE-443A-92F5-AAB453133918}.PlantMAT|Any CPU.Build.0 = Debug|Any CPU
-		{22534D16-29CE-443A-92F5-AAB453133918}.PlantMAT|x64.ActiveCfg = Debug|x64
-		{22534D16-29CE-443A-92F5-AAB453133918}.PlantMAT|x64.Build.0 = Debug|x64
-		{22534D16-29CE-443A-92F5-AAB453133918}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{22534D16-29CE-443A-92F5-AAB453133918}.Release|Any CPU.Build.0 = Release|Any CPU
-		{22534D16-29CE-443A-92F5-AAB453133918}.Release|x64.ActiveCfg = Release|x64
-		{22534D16-29CE-443A-92F5-AAB453133918}.Release|x64.Build.0 = Release|x64
-		{22534D16-29CE-443A-92F5-AAB453133918}.Rsharp_app_release|Any CPU.ActiveCfg = Rsharp_app_release|Any CPU
-		{22534D16-29CE-443A-92F5-AAB453133918}.Rsharp_app_release|Any CPU.Build.0 = Rsharp_app_release|Any CPU
-		{22534D16-29CE-443A-92F5-AAB453133918}.Rsharp_app_release|x64.ActiveCfg = Rsharp_app_release|x64
-		{22534D16-29CE-443A-92F5-AAB453133918}.Rsharp_app_release|x64.Build.0 = Rsharp_app_release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -237,7 +203,6 @@ Global
 		{1BE784B6-E85E-4B9F-A1A1-03A5999958AE} = {C3DF61B5-F64B-420D-983B-2A0176710FAF}
 		{5C58A74D-52F6-4B45-A051-85E9C0744798} = {C3DF61B5-F64B-420D-983B-2A0176710FAF}
 		{5B8FA242-439F-4721-961F-D8A39F8B80E8} = {C3DF61B5-F64B-420D-983B-2A0176710FAF}
-		{22534D16-29CE-443A-92F5-AAB453133918} = {C3DF61B5-F64B-420D-983B-2A0176710FAF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B632F7EB-9C33-4D56-8862-B75FEEE19A18}

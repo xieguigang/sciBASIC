@@ -8,11 +8,7 @@
 
         Public ReadOnly Property DirectoryPath As String
             Get
-                If IsDirectory Then
-                    Return If(IsAbsolutePath, "/", "") & Components.JoinBy("/")
-                Else
-                    Return If(IsAbsolutePath, "/", "") & Components.Take(Components.Length - 1).JoinBy("/")
-                End If
+                Return If(IsAbsolutePath, "/", "") & combineDirectory()
             End Get
         End Property
 
@@ -37,6 +33,20 @@
                 .ToArray
         End Sub
 
+        Private Function combineDirectory() As String
+            If IsDirectory Then
+                Return Components.JoinBy("/")
+            Else
+                Return Components.Take(Components.Length - 1).JoinBy("/")
+            End If
+        End Function
 
+        Public Overrides Function ToString() As String
+            If IsDirectory Then
+                Return DirectoryPath
+            Else
+                Return $"{DirectoryPath}/{FileName}"
+            End If
+        End Function
     End Class
 End Namespace
