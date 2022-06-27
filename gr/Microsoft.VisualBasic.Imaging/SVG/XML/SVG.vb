@@ -160,7 +160,7 @@ Namespace SVG.XML
             End Set
         End Property
 
-        Dim _layers As List(Of g)
+        Dim _layers As New List(Of g)
 
         ''' <summary>
         ''' Graphic layers
@@ -202,6 +202,10 @@ Namespace SVG.XML
         Public Function AddLayer(layer As g) As SVGXml
             _layers.Add(item:=layer)
             Return Me
+        End Function
+
+        Public Function AddLayer(layer As SVG.XML.node) As SVGXml
+            Return AddLayer(New g(layer))
         End Function
 
         ''' <summary>

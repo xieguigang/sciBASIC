@@ -249,6 +249,7 @@ Public Class BinaryDataWriter : Inherits BinaryWriter
         Return New SeekTask(BaseStream, offset, origin)
     End Function
 
+    ''' <inheritdoc />
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <DebuggerStepThrough>
     Public Overrides Sub Write(buffer As Byte()) Implements IByteWriter.Write

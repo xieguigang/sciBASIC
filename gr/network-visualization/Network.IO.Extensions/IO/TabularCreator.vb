@@ -118,16 +118,27 @@ Namespace FileStream
                                 Optional is2D As Boolean = True,
                                 Optional meta As MetaData = Nothing) As NetworkTables
 
-            Dim nodes As Node() = g.createNodesTable(properties, is2D).ToArray
-            Dim edges As New List(Of NetworkEdge)
+            Dim nodes As Node() = g.CreateNodesMetaData(properties, is2D).ToArray
+            Dim edges As NetworkEdge() = g.CreateGraphTable(properties, is2D).ToArray
+
+            Return New NetworkTables With {
+                .edges = edges,
+                .nodes = nodes,
+                .meta = If(meta, New MetaData)
+            }
+        End Function
+
+        <Extension>
+        Public Iterator Function CreateGraphTable(g As NetworkGraph, properties$(), is2Dlayout As Boolean) As IEnumerable(Of NetworkEdge)
             Dim edgeProperties As String() = properties
+            Dim edge As NetworkEdge
 
             If (Not edgeProperties.IsNullOrEmpty) AndAlso edgeProperties.Length = 1 AndAlso edgeProperties(Scan0) = "*" Then
                 edgeProperties = (From e In g.graphEdges Select e.data).GetUnionProperties
             End If
 
             For Each l As Edge In g.graphEdges
-                edges += New NetworkEdge With {
+                edge = New NetworkEdge With {
                     .fromNode = l.U.label,
                     .toNode = l.V.label,
                     .interaction = l.data(names.REFLECTION_ID_MAPPING_INTERACTION_TYPE),
@@ -138,20 +149,16 @@ Namespace FileStream
                     }
                 }
 
-                With edges.Last
+                With edge
                     If Not properties Is Nothing Then
                         For Each key As String In properties.Where(Function(p) l.data.HasProperty(p))
                             .ItemValue(key) = l.data(key)
                         Next
                     End If
                 End With
-            Next
 
-            Return New NetworkTables With {
-                .edges = edges,
-                .nodes = nodes,
-                .meta = If(meta, New MetaData)
-            }
+                Yield edge
+            Next
         End Function
 
         <Extension>
@@ -163,7 +170,7 @@ Namespace FileStream
         End Function
 
         <Extension>
-        Private Iterator Function createNodesTable(g As NetworkGraph, properties$(), is2Dlayout As Boolean) As IEnumerable(Of Node)
+        Public Iterator Function CreateNodesMetaData(g As NetworkGraph, properties$(), is2Dlayout As Boolean) As IEnumerable(Of Node)
             If Not properties.IsNullOrEmpty AndAlso properties.Length = 1 AndAlso properties(Scan0) = "*" Then
                 properties = (From v In g.vertex Select v.data).GetUnionProperties
             End If

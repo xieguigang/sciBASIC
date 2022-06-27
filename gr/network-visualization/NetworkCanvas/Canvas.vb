@@ -91,9 +91,9 @@ Public Class Canvas
     ''' <summary>
     ''' Render and layout engine works in 3D mode?
     ''' </summary>
-    Dim space3D As Boolean
+    Friend space3D As Boolean
 
-    Private Sub setupGraph(net As NetworkGraph, space As Boolean)
+    Private Sub setupGraph(net As NetworkGraph, space3D As Boolean)
         Dim showLabel As Boolean = Me.ShowLabel
 
         Me.net = net
@@ -105,12 +105,13 @@ Public Class Canvas
             inputs = Nothing
         End If
 
-        If space Then
+        If space3D Then
             fdgPhysics = New ForceDirected3D(Me.net, FdgArgs.Stiffness, FdgArgs.Repulsion, FdgArgs.Damping)
             fdgRenderer = New Renderer3D(
                 Function() paper,
                 Function() New Rectangle(New Point, Size),
                 fdgPhysics, DynamicsRadius)
+            DirectCast(fdgRenderer, Renderer3D).ViewDistance = viewDist
             inputs = New Input3D(Me)
         Else
             fdgPhysics = New ForceDirected2D(Me.net, FdgArgs.Stiffness, FdgArgs.Repulsion, FdgArgs.Damping)
@@ -167,6 +168,7 @@ Public Class Canvas
     ''' GDI+ interface for the canvas control.
     ''' </summary>
     Dim paper As Graphics
+    Dim viewDist As Double = -450
 
     Public Property AutoRotate As Boolean = True
     Public Property DynamicsRadius As Boolean = False
@@ -183,6 +185,8 @@ Public Class Canvas
             If space3D Then
                 DirectCast(fdgRenderer, Renderer3D).ViewDistance = value
             End If
+
+            viewDist = value
         End Set
     End Property
 
@@ -281,9 +285,10 @@ Public Class Canvas
     ''' <summary>
     ''' Write the node layout position into its extensions data, for generates the svg graphics.
     ''' </summary>
-    Public Sub WriteLayout()
+    Public Function WriteLayout() As NetworkGraph
         Call Graph.WriteLayouts(fdgPhysics)
-    End Sub
+        Return Graph
+    End Function
 
     Private Sub Canvas_Disposed(sender As Object, e As EventArgs) Handles Me.Disposed
         timer.Dispose()

@@ -191,6 +191,29 @@ Public Module CollectionValueGetter
     End Function
 
     ''' <summary>
+    ''' get value by key and then removes the target 
+    ''' keyed value from the given <paramref name="table"/>.
+    ''' </summary>
+    ''' <typeparam name="TKey"></typeparam>
+    ''' <typeparam name="TValue"></typeparam>
+    ''' <param name="table"></param>
+    ''' <param name="key"></param>
+    ''' <param name="[default]"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function TryPopOut(Of TKey, TValue)(table As Dictionary(Of TKey, TValue), key As TKey, Optional [default] As TValue = Nothing) As TValue
+        If table Is Nothing Then
+            Return [default]
+        ElseIf Not table.ContainsKey(key) Then
+            Return [default]
+        Else
+            Dim value As TValue = table(key)
+            table.Remove(key)
+            Return value
+        End If
+    End Function
+
+    ''' <summary>
     ''' 假若不存在目标键名，则返回空值，默认值为空值
     ''' </summary>
     ''' <typeparam name="TKey"></typeparam>

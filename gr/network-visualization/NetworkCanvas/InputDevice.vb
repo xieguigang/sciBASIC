@@ -1,60 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::747d894adbc62f3cb932678c71c52809, sciBASIC#\gr\network-visualization\NetworkCanvas\InputDevice.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 121
-    '    Code Lines: 69
-    ' Comment Lines: 30
-    '   Blank Lines: 22
-    '     File Size: 4.06 KB
+' Summaries:
 
 
-    ' Class InputDevice
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: getNode, GetPointedNode
-    ' 
-    '     Sub: Canvas_MouseDown, Canvas_MouseMove, Canvas_MouseUp, Canvas_MouseWheel, (+2 Overloads) Dispose
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 121
+'    Code Lines: 69
+' Comment Lines: 30
+'   Blank Lines: 22
+'     File Size: 4.06 KB
+
+
+' Class InputDevice
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: getNode, GetPointedNode
+' 
+'     Sub: Canvas_MouseDown, Canvas_MouseMove, Canvas_MouseUp, Canvas_MouseWheel, (+2 Overloads) Dispose
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce
 
 ''' <summary>
 ''' 使用鼠标左键进行拖拽
@@ -106,7 +107,12 @@ Public Class InputDevice : Implements IDisposable
     Protected Overridable Function getNode(p As Point) As Node
         For Each node As Node In Canvas.Graph.vertex
             Dim r As Single = node.data.size(0)
-            Dim v As FDGVector2 = TryCast(Canvas.fdgPhysics.GetPoint(node).position, FDGVector2)
+            Dim v As AbstractVector = Canvas.fdgPhysics.GetPoint(node).position
+
+            If TypeOf v Is FDGVector3 Then
+                Return Nothing
+            End If
+
             Dim npt As Point = Renderer.GraphToScreen(v, Canvas.fdgRenderer.ClientRegion)
             Dim pt As New Point(CInt(npt.X - r / 2), CInt(npt.Y - r / 2))
             Dim rect As New Rectangle(pt, New Size(CInt(r), CInt(r)))
@@ -138,7 +144,13 @@ Public Class InputDevice : Implements IDisposable
     End Sub
 
     Protected Overridable Sub Canvas_MouseWheel(sender As Object, e As MouseEventArgs) Handles Canvas.MouseWheel
-
+        If Canvas.space3D Then
+            ' adjust view distance
+            Canvas.ViewDistance += e.Delta / 10
+        Else
+            Dim oldArgument = Canvas.FdgArgs
+            Canvas.SetFDGParams(New ForceDirectedArgs With {.Damping = oldArgument.Damping, .Iterations = 0, .Repulsion = oldArgument.Repulsion, .Stiffness = oldArgument.Stiffness + e.Delta / 10})
+        End If
     End Sub
 
 #Region "IDisposable Support"

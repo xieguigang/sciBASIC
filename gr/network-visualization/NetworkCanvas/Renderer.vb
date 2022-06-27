@@ -196,13 +196,17 @@ Public Class Renderer : Inherits AbstractRenderer
         Dim canvas As Graphics = graphicsProvider()
 
         SyncLock canvas
-            Call canvas.DrawLine(
-                edgeStyles(iEdge),
-                pos1.X,
-                pos1.Y,
-                pos2.X,
-                pos2.Y
-            )
+            Try
+                Call canvas.DrawLine(
+                    edgeStyles(iEdge),
+                    pos1.X,
+                    pos1.Y,
+                    pos2.X,
+                    pos2.Y
+                )
+            Catch ex As Exception
+
+            End Try
         End SyncLock
     End Sub
 
@@ -217,15 +221,23 @@ Public Class Renderer : Inherits AbstractRenderer
             Dim pt As New Point(CInt(pos.X - r / 2), CInt(pos.Y - r / 2))
             Dim rect As New Rectangle(pt, New Size(CInt(r), CInt(r)))
 
-            Call canvas.FillPie(n.data.color, rect, 0, 360)
+            Try
+                Call canvas.FillPie(n.data.color, rect, 0, 360)
+            Catch ex As Exception
+
+            End Try
 
             If ShowLabels Then
                 Dim center As Point = rect.Centre
-                Dim sz As SizeF = canvas.MeasureString(n.ID, Font)
+                Dim labelText As String = n.data.label
+                Dim sz As SizeF = canvas.MeasureString(labelText, Font)
+
                 center = New Point(
                     CInt(center.X - sz.Width / 2),
-                    CInt(center.Y - sz.Height / 2))
-                Call canvas.DrawString(n.ID, Font, Brushes.Black, center)
+                    CInt(center.Y - sz.Height / 2)
+                )
+
+                Call canvas.DrawString(labelText, Font, Brushes.Black, center)
             End If
         End SyncLock
     End Sub

@@ -388,33 +388,41 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Data_science\Graph\GraphTheory.vbproj">
-      <Project>{203bc68f-a0cd-443a-ab62-4af4110f752f}</Project>
-      <Name>GraphTheory</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\Math\math-core.vbproj">
-      <Project>{E3367B88-5D0C-495A-8273-331656D4B5AA}</Project>
-      <Name>math-core</Name>
+    <ProjectReference Include="..\..\..\Data_science\Graph\graph-netcore5.vbproj">
+      <Project>{c7f74294-cccb-4b65-809d-523074dfaf4d}</Project>
+      <Name>graph-netcore5</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj">
       <Project>{71ee1973-4663-4286-b1e7-ef8e32cefff9}</Project>
       <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\mime\text%25html\MIME-htmls.vbproj">
-      <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
-      <Name>MIME-htmls</Name>
+    <ProjectReference Include="..\..\..\mime\text%25html\html_netcore5.vbproj">
+      <Project>{0b752d71-2852-4071-ac44-db37195cf8c3}</Project>
+      <Name>html_netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\avi\avi.vbproj">
-      <Project>{5d35e122-11c0-4b18-be08-e658a3f20323}</Project>
-      <Name>avi</Name>
+    <ProjectReference Include="..\..\..\www\Microsoft.VisualBasic.NETProtocol\network-netcore5.vbproj">
+      <Project>{7c84664a-190e-4e09-b33d-59733dbec141}</Project>
+      <Name>network-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Microsoft.VisualBasic.Imaging\Microsoft.VisualBasic.Imaging.vbproj">
-      <Project>{85e71b4b-9276-4ec8-aadc-c849205f1ea8}</Project>
-      <Name>Microsoft.VisualBasic.Imaging</Name>
+    <ProjectReference Include="..\..\avi\AVI.NET5.vbproj">
+      <Project>{c41a8a0a-3e98-4441-a721-0cf2e7f1bbda}</Project>
+      <Name>AVI.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Datavisualization.Network\Network.GraphTheory.vbproj">
-      <Project>{076315ee-b598-40dc-9280-c71cdf9b6a48}</Project>
-      <Name>Network.GraphTheory</Name>
+    <ProjectReference Include="..\..\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj">
+      <Project>{e2caa18e-9705-462a-844d-c809a45d4197}</Project>
+      <Name>imaging.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Datavisualization.Network\network_graph-netcore5.vbproj">
+      <Project>{7c431d4e-e7a3-4cb7-8afa-ce81b611e89f}</Project>
+      <Name>network_graph-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Network.IO.Extensions\network_io-netcore5.vbproj">
+      <Project>{70473ef5-feb8-402d-b5da-bfcdd4a2bfcd}</Project>
+      <Name>network_io-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Visualizer\networkVisualizer.NET5.vbproj">
+      <Project>{10e3a50e-4a2d-42b8-92de-2c0ca297f8a9}</Project>
+      <Name>networkVisualizer.NET5</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -104,13 +104,17 @@ Public Class Renderer3D : Inherits Renderer
         Dim canvas As Graphics = graphicsProvider()
 
         SyncLock canvas
-            Call canvas.DrawLine(
-                edgeStyles(iEdge),
-                pos1.X,
-                pos1.Y,
-                pos2.X,
-                pos2.Y
-            )
+            Try
+                Call canvas.DrawLine(
+                    edgeStyles(iEdge),
+                    pos1.X,
+                    pos1.Y,
+                    pos2.X,
+                    pos2.Y
+                )
+            Catch ex As Exception
+
+            End Try
         End SyncLock
     End Sub
 
@@ -143,11 +147,15 @@ Public Class Renderer3D : Inherits Renderer
 
             If ShowLabels Then
                 Dim center As PointF = rect.Centre
-                Dim sz As SizeF = canvas.MeasureString(n.ID, Font)
+                Dim labeltext As String = n.data.label
+                Dim sz As SizeF = canvas.MeasureString(labeltext, Font)
+
                 center = New PointF(
                     center.X - sz.Width / 2,
-                    center.Y - sz.Height / 2)
-                Call canvas.DrawString(n.ID, Font, Brushes.Gray, center)
+                    center.Y - sz.Height / 2
+                )
+
+                Call canvas.DrawString(labeltext, Font, Brushes.Gray, center)
             End If
         End SyncLock
     End Sub
