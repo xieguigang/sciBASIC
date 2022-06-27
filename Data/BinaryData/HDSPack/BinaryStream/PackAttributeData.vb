@@ -53,7 +53,7 @@ Module PackAttributeData
         Dim buf As Byte()
 
         Using ms As New MemoryStream, bin As New BinaryDataWriter(ms)
-            Call bin.Write(file.description, BinaryStringFormat.ZeroTerminated)
+            Call bin.Write(If(file.description, ""), BinaryStringFormat.ZeroTerminated)
             Call bin.Write(attrs.Length)
 
             For Each tuple As KeyValuePair(Of String, Object) In attrs
