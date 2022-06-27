@@ -1,6 +1,4 @@
-﻿Imports System
-Imports System.Text
-Imports Microsoft.VisualBasic.DataStorage.HDSPack
+﻿Imports System.Text
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
@@ -17,6 +15,7 @@ Module Program
         Using hds As New StreamPack(testfile)
             Dim buf = hds.OpenBlock("/another_folder/text_data/\GCModeller\src\runtime\sciBASIC#\etc\(๑•̀ㅂ•́)و✧.svg")
             Dim bytes As Byte() = New Byte(buf.Length - 1) {}
+            Dim obj = hds.GetObject("/another_folder/text_data/\GCModeller\src\runtime\sciBASIC#\etc\(๑•̀ㅂ•́)و✧.svg")
 
             Call buf.Read(bytes, Scan0, bytes.Length)
 
@@ -30,29 +29,40 @@ Module Program
 
             Call buf.Read(bytes, Scan0, bytes.Length)
 
+            Dim str = Encoding.Unicode.GetString(bytes)
+
             Call Console.WriteLine()
-            Call Console.WriteLine(Encoding.Unicode.GetString(bytes))
+            Call Console.WriteLine(str)
 
             buf = hds.OpenBlock("/root_text.txt")
             bytes = New Byte(buf.Length - 1) {}
 
             Call buf.Read(bytes, Scan0, bytes.Length)
 
+            str = Encoding.UTF32.GetString(bytes)
+
             Call Console.WriteLine()
-            Call Console.WriteLine(Encoding.UTF32.GetString(bytes))
+            Call Console.WriteLine(str)
+
+            Dim obj2 = hds.GetObject("/another_folder\text_data\\\\\\\data.txt")
+
+            Console.WriteLine(obj2.description)
+            Console.WriteLine(obj2.GetAttribute("aabbcc"))
+            Console.WriteLine(obj2.GetAttribute("time"))
+            Console.WriteLine(obj2.GetAttribute("empty"))
         End Using
     End Sub
 
     Sub writePackTest()
         Using hds As StreamPack = StreamPack.CreateNewStream(testfile)
-            Dim image = "D:\GCModeller\src\runtime\sciBASIC#\etc\ch07_18.png".ReadBinary
+            Dim image = "E:\GCModeller\src\runtime\sciBASIC#\etc\ch07_18.png".ReadBinary
             Dim block = hds.OpenBlock("/path/to/the/image/file/ch07-18.png")
 
             Call block.Write(image, Scan0, image.Length)
             Call block.Flush()
             Call block.Dispose()
 
-            Dim textBuf As Byte() = "D:\GCModeller\src\runtime\sciBASIC#\etc\(๑•̀ㅂ•́)و✧.svg".ReadBinary
+            Dim textBuf As Byte() = "E:\GCModeller\src\runtime\sciBASIC#\etc\(๑•̀ㅂ•́)و✧.svg".ReadBinary
             Dim block2 = hds.OpenBlock("/another_folder/text_data/\GCModeller\src\runtime\sciBASIC#\etc\(๑•̀ㅂ•́)و✧.svg")
 
             Call block2.Write(textBuf, Scan0, textBuf.Length)

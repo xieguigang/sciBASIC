@@ -32,6 +32,10 @@ Public Class LazyAttribute
     End Function
 
     Public Shared Function GetValue(attr As AttributeMetadata) As Object
+        If attr.data.IsNullOrEmpty Then
+            Return Nothing
+        End If
+
         Select Case attr.GetUnderlyingType
             Case GetType(Date) : Return FromUnixTimeStamp(BitConverter.ToDouble(attr.data, Scan0))
             Case GetType(String) : Return Encoding.UTF8.GetString(attr.data)
@@ -64,7 +68,11 @@ Public Class AttributeMetadata
 
     Public ReadOnly Property GetUnderlyingType As Type
         Get
-            Return TypeInfo.GetType(type)
+            If type.StringEmpty Then
+                Return GetType(Void)
+            Else
+                Return TypeInfo.GetType(type)
+            End If
         End Get
     End Property
 

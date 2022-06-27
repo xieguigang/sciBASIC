@@ -30,6 +30,16 @@ Namespace FileSystem
         Sub New()
         End Sub
 
+        Public Function GetAttribute(name As String) As Object
+            If Not attributes.attributes.ContainsKey(name) Then
+                Return Nothing
+            Else
+                Return attributes _
+                    .attributes(name) _
+                    .DoCall(AddressOf LazyAttribute.GetValue)
+            End If
+        End Function
+
         Public Sub AddAttributes(attrs As Dictionary(Of String, Object))
             For Each item As KeyValuePair(Of String, Object) In attrs.SafeQuery
                 If item.Key = NameOf(description) Then
