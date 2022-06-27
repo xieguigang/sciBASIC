@@ -1,6 +1,7 @@
 ﻿Imports System
 Imports System.Text
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
+Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Module Program

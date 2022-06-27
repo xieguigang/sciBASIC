@@ -1,19 +1,22 @@
 ﻿Imports Microsoft.VisualBasic.FileIO.Path
 
-Public Class StreamBlock : Inherits StreamObject
+Namespace FileSystem
 
-    Public Property offset As Long
-    Public Property size As Long
+    Public Class StreamBlock : Inherits StreamObject
 
-    Sub New()
-    End Sub
+        Public Property offset As Long
+        Public Property size As Long
 
-    Sub New(filepath As FilePath)
-        Call MyBase.New(filepath)
-    End Sub
+        Sub New()
+        End Sub
 
-    Public Overrides Function ToString() As String
-        Return $"{MyBase.ToString} [offset={offset}, size={StringFormats.Lanudry(size)}]"
-    End Function
+        Sub New(filepath As FilePath)
+            Call MyBase.New(filepath)
+        End Sub
 
-End Class
+        Public Overrides Function ToString() As String
+            Return $"{MyBase.ToString} [offset={offset}, size={StringFormats.Lanudry(size)}]"
+        End Function
+
+    End Class
+End Namespace
