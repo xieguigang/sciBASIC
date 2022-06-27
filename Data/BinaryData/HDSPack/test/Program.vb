@@ -1,10 +1,32 @@
 ﻿Imports System
+Imports System.Text
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
 
 Module Program
 
+    ReadOnly testfile As String = "./test.hds"
+
     Sub Main(args As String())
-        Using hds As StreamPack = StreamPack.CreateNewStream("./test.hds")
+        Call writePackTest()
+        Call readPackTest()
+    End Sub
+
+    Sub readPackTest()
+        Using hds As New StreamPack(testfile)
+            Dim buf = hds.OpenBlock("/another_folder/text_data/\GCModeller\src\runtime\sciBASIC#\etc\(๑•̀ㅂ•́)و✧.svg")
+            Dim bytes As Byte() = New Byte(buf.Length - 1) {}
+
+            Call buf.Read(bytes, Scan0, bytes.Length)
+
+            Dim xml As String = Encoding.UTF8.GetString(bytes)
+
+            Call Console.WriteLine(xml)
+
+        End Using
+    End Sub
+
+    Sub writePackTest()
+        Using hds As StreamPack = StreamPack.CreateNewStream(testfile)
             Dim image = "D:\GCModeller\src\runtime\sciBASIC#\etc\ch07_18.png".ReadBinary
             Dim block = hds.OpenBlock("/path/to/the/image/file/ch07-18.png")
 

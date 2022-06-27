@@ -88,8 +88,10 @@ Public Class StreamPack : Implements IDisposable
             If disposing Then
                 ' TODO: 释放托管状态(托管对象)
                 Dim treeMetadata As Byte() = superBlock.GetBuffer
+                Dim size As Byte() = BitConverter.GetBytes(treeMetadata.Length)
 
                 Call buffer.Seek(magic.Length, SeekOrigin.Begin)
+                Call buffer.Write(size, Scan0, size.Length)
                 Call buffer.Write(treeMetadata, Scan0, treeMetadata.Length)
 
                 Call buffer.Flush()
