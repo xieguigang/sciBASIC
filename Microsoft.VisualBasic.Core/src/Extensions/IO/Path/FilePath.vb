@@ -20,7 +20,7 @@
 
         Public ReadOnly Property ParentDirectory As FilePath
             Get
-                If Components.Length - 1 Then
+                If Components.Length = 1 Then
                     Return New FilePath("/")
                 Else
                     Return New FilePath(Components.Take(Components.Length - 1), IsDirectory, IsAbsolutePath)
