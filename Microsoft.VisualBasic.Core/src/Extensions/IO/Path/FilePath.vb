@@ -59,9 +59,9 @@
 
         Public Overrides Function ToString() As String
             If IsDirectory Then
-                Return DirectoryPath
+                Return DirectoryPath.StringReplace("[/]{2,}", "/")
             Else
-                Return $"{DirectoryPath}/{FileName}"
+                Return $"{DirectoryPath}/{FileName}".StringReplace("[/]{2,}", "/")
             End If
         End Function
     End Class

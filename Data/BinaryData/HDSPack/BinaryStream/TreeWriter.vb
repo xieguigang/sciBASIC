@@ -22,7 +22,6 @@ Friend Module TreeWriter
                     bin.Write(0)
                 End If
 
-                bin.Write(buf.Length)
                 bin.Write(buf)
                 bin.Flush()
             Next

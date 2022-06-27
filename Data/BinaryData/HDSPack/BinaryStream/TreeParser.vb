@@ -9,11 +9,13 @@ Friend Module TreeParser
     Public Function Parse(buffer As Stream) As StreamGroup
         Dim size As Integer
         Dim bin As New BinaryDataReader(buffer)
+        Dim root As StreamGroup
 
         size = bin.ReadInt32
         bin = New BinaryDataReader(New SubStream(buffer, buffer.Position, size))
+        root = bin.getCurrentDirectory
 
-        Return bin.getCurrentDirectory
+        Return root
     End Function
 
     <Extension>
