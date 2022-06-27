@@ -22,6 +22,12 @@ Module Program
 
             Call Console.WriteLine(xml)
             Call xml.SaveTo("./test_text_exports.svg")
+
+            buf = hds.OpenBlock("/another_folder/text_data/data.txt")
+            bytes = New Byte(buf.Length - 1) {}
+
+            Call Console.WriteLine()
+            Call Console.WriteLine(Encoding.Unicode.GetString(bytes))
         End Using
     End Sub
 
@@ -36,6 +42,13 @@ Module Program
 
             Dim textBuf As Byte() = "D:\GCModeller\src\runtime\sciBASIC#\etc\(๑•̀ㅂ•́)و✧.svg".ReadBinary
             Dim block2 = hds.OpenBlock("/another_folder/text_data/\GCModeller\src\runtime\sciBASIC#\etc\(๑•̀ㅂ•́)و✧.svg")
+
+            Call block2.Write(textBuf, Scan0, textBuf.Length)
+            Call block2.Flush()
+            Call block2.Dispose()
+
+            textBuf = Encoding.Unicode.GetBytes("你好，世界（Hello World！）")
+            block2 = hds.OpenBlock("/another_folder/text_data/data.txt")
 
             Call block2.Write(textBuf, Scan0, textBuf.Length)
             Call block2.Flush()

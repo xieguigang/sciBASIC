@@ -124,7 +124,11 @@ Public Class StreamGroup : Inherits StreamObject
                 file = tree(name)
 
                 If TypeOf file Is StreamGroup Then
-                    tree = DirectCast(file, StreamGroup).tree
+                    If i = names.Length - 1 AndAlso filepath.IsDirectory Then
+                        Return file
+                    Else
+                        tree = DirectCast(file, StreamGroup).tree
+                    End If
                 ElseIf i <> names.Length - 1 Then
                     ' required a folder(file group)
                     ' but a file is exists?
