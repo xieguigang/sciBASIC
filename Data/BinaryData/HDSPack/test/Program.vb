@@ -118,7 +118,19 @@ Module Program
             Call block2.Flush()
             Call block2.Dispose()
 
+            image = "E:\GCModeller\src\runtime\sciBASIC#\mime\PDF32000_2008.pdf".ReadBinary
+            block = hds.OpenBlock("/another_folder\lagerfile.pdf")
 
+            Call block.Write(image, Scan0, image.Length)
+            Call block.Flush()
+            Call block.Dispose()
+
+            image = "E:\mzkit\Rscript\Library\mzkit_app\data\KEGG_maps.msgpack".ReadBinary
+            block = hds.OpenBlock("/another_folder\lager2\file.pdf")
+
+            Call block.Write(image, Scan0, image.Length)
+            Call block.Flush()
+            Call block.Dispose()
 
         End Using
     End Sub
