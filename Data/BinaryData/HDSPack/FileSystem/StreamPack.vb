@@ -44,7 +44,7 @@ Namespace FileSystem
             Call Me.New(filepath.Open(FileMode.OpenOrCreate, doClear:=False, [readOnly]:=False), init_size:=init_size)
         End Sub
 
-        Sub New(buffer As Stream, Optional init_size As Integer = 1024)
+        Sub New(buffer As Stream, Optional init_size As Integer = 1024, Optional meta_size As Long = 1024 * 1024)
             Me.buffer = buffer
             Me.init_size = init_size
 
@@ -54,7 +54,7 @@ Namespace FileSystem
                 superBlock = StreamGroup.CreateRootTree
 
                 Call buffer.Write(Encoding.ASCII.GetBytes(magic), Scan0, magic.Length)
-                Call buffer.SetLength(magic.Length + 1024 * 1024)
+                Call buffer.SetLength(magic.Length + meta_size)
                 Call buffer.Flush()
             End If
         End Sub

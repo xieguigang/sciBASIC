@@ -46,7 +46,16 @@ Namespace FileSystem
         ReadOnly buffer As MemoryStream
         ReadOnly block As StreamBlock
 
-        Friend Sub New(buffer As Stream, block As StreamBlock, Optional buffer_size As Integer = 1024)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="buffer"></param>
+        ''' <param name="block"></param>
+        ''' <param name="buffer_size"></param>
+        Friend Sub New(buffer As Stream,
+                       block As StreamBlock,
+                       Optional buffer_size As Integer = 1024)
+
             Me.block = block
             Me.basefile = buffer
             Me.buffer = New MemoryStream(capacity:=buffer_size)

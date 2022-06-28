@@ -4,6 +4,9 @@ Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 
 Namespace FileSystem
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
     Public Class StreamBlock : Inherits StreamObject
 
         Public Property offset As Long

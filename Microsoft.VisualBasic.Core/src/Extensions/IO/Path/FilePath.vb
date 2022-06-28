@@ -29,9 +29,11 @@
         End Property
 
         Public Sub New(tokens As IEnumerable(Of String), isDir As Boolean, isAbs As Boolean)
-            Components = (From name As String In tokens Where Not name.StringEmpty).ToArray
             IsDirectory = isDir
             IsAbsolutePath = isAbs
+            Components = (From name As String
+                          In tokens
+                          Where Not name.StringEmpty).ToArray
         End Sub
 
         Sub New(filepath As String)
