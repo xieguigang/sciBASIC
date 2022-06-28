@@ -45,14 +45,21 @@ Module PackAttributeData
 
     <Extension>
     Public Function Pack(file As StreamObject, type As Index(Of String)) As Byte()
-        Dim attrs = file.attributes.ToArray
+        Dim desc As String = file.description
+        Dim attrs As AttributeMetadata() = file.attributes.ToArray
+
+        Return attrs.Pack(desc, type)
+    End Function
+
+    <Extension>
+    Public Function Pack(attrs As AttributeMetadata(), description As String, type As Index(Of String)) As Byte()
         Dim size As Integer
         Dim typeCode As Integer
         Dim buf As Byte()
 
         Using ms As New MemoryStream, bin As New BinaryDataWriter(ms)
             Call bin.Write(attrs.Length)
-            Call bin.Write(If(file.description, ""), BinaryStringFormat.ZeroTerminated)
+            Call bin.Write(If(description, ""), BinaryStringFormat.ZeroTerminated)
 
             For Each tuple As AttributeMetadata In attrs
                 Call bin.Write(tuple.name, BinaryStringFormat.ZeroTerminated)
