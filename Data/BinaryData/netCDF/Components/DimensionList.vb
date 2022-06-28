@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de276ee1524bc401e3931015077207e9, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\Dimension.vb"
+﻿#Region "Microsoft.VisualBasic::13737a7d8a3c8579738e173c9b569448, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\DimensionList.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 36
-    '    Code Lines: 19
-    ' Comment Lines: 10
+    '   Total Lines: 23
+    '    Code Lines: 16
+    ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 1.02 KB
+    '     File Size: 638.00 B
 
 
-    '     Structure Dimension
+    '     Class DimensionList
     ' 
-    '         Properties: name
+    '         Properties: dimensions, HaveRecordDimension, recordId, recordName
     ' 
-    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
     ' 
     ' 
@@ -54,38 +53,25 @@
 #End Region
 
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 
-Namespace netCDF.Components
+Namespace Components
 
-    ''' <summary>
-    ''' ``[name => size]``
-    ''' </summary>
-    ''' 
-    <XmlType("dim", [Namespace]:=Xml.netCDF)>
-    Public Structure Dimension : Implements INamedValue
+    Public Class DimensionList
 
-        ''' <summary>
-        ''' String with the name of the dimension
-        ''' </summary>
-        <XmlAttribute>
-        Public Property name As String Implements IKeyedEntity(Of String).Key
+        <XmlAttribute> Public Property recordId As Integer?
+        <XmlAttribute> Public Property recordName As String
 
-        ''' <summary>
-        ''' Number with the size of the dimension
-        ''' </summary>
-        <XmlText>
-        Dim size As Integer
+        Public ReadOnly Property HaveRecordDimension As Boolean
+            Get
+                Return Not (recordId Is Nothing AndAlso recordName = "NA")
+            End Get
+        End Property
 
-        Sub New(name As String, size As Integer)
-            Me.name = name
-            Me.size = size
-        End Sub
+        Public Property dimensions As Dimension()
 
         Public Overrides Function ToString() As String
-            Return $"{name}(size={size})"
+            Return $"[{recordId}] {recordName}"
         End Function
-    End Structure
+    End Class
 
 End Namespace

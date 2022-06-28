@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db1cce3408757849d2c26fe9339b0c45, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\CDFData\shorts.vb"
+﻿#Region "Microsoft.VisualBasic::0d486e240d7a99446203db3a23aeb76c, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\CDFData\chars.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 18
-    '    Code Lines: 14
+    '   Total Lines: 33
+    '    Code Lines: 26
     ' Comment Lines: 0
-    '   Blank Lines: 4
-    '     File Size: 554.00 B
+    '   Blank Lines: 7
+    '     File Size: 1.16 KB
 
 
-    '     Class shorts
+    '     Class chars
     ' 
     '         Properties: cdfDataType
+    ' 
+    '         Function: LoadJSON
     ' 
     ' 
     ' /********************************************************************************/
@@ -51,20 +53,35 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace netCDF.Components
+Namespace Components.DataVector
 
-    Public Class shorts : Inherits CDFData(Of Short)
+    Public Class chars : Inherits CDFData(Of Char)
 
         Public Overrides ReadOnly Property cdfDataType As CDFDataTypes
             Get
-                Return CDFDataTypes.SHORT
+                Return CDFDataTypes.CHAR
             End Get
         End Property
 
+        Public Function LoadJSON(Of T)() As T
+            Return New String(Buffer).LoadJSON(Of T)
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overloads Shared Widening Operator CType(data As Short()) As shorts
-            Return New shorts With {.buffer = data}
+        Public Overloads Shared Widening Operator CType(data As String) As chars
+            Return New chars With {.buffer = data.ToArray}
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Widening Operator CType(data As Char()) As chars
+            Return New chars With {.buffer = data}
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Narrowing Operator CType(chars As chars) As String
+            Return New String(chars.buffer)
         End Operator
     End Class
 End Namespace

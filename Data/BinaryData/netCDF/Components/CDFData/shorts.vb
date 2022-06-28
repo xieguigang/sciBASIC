@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::46bcda59aa959a473a7268b5d76156e6, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\CDFData\doubles.vb"
+﻿#Region "Microsoft.VisualBasic::db1cce3408757849d2c26fe9339b0c45, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\CDFData\shorts.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 26
-    '    Code Lines: 20
+    '   Total Lines: 18
+    '    Code Lines: 14
     ' Comment Lines: 0
-    '   Blank Lines: 6
-    '     File Size: 755.00 B
+    '   Blank Lines: 4
+    '     File Size: 554.00 B
 
 
-    '     Class doubles
+    '     Class shorts
     ' 
     '         Properties: cdfDataType
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
     ' 
     ' 
     ' /********************************************************************************/
@@ -53,28 +51,20 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Language.Vectorization
 
-Namespace netCDF.Components
+Namespace Components.DataVector
 
-    Public Class doubles : Inherits CDFData(Of Double)
+    Public Class shorts : Inherits CDFData(Of Short)
 
         Public Overrides ReadOnly Property cdfDataType As CDFDataTypes
             Get
-                Return CDFDataTypes.DOUBLE
+                Return CDFDataTypes.SHORT
             End Get
         End Property
 
-        Sub New()
-        End Sub
-
-        Sub New(data As IEnumerable(Of Double))
-            buffer = data.ToArray
-        End Sub
-
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overloads Shared Widening Operator CType(data As Double()) As doubles
-            Return New doubles With {.buffer = data}
+        Public Overloads Shared Widening Operator CType(data As Short()) As shorts
+            Return New shorts With {.buffer = data}
         End Operator
     End Class
 End Namespace

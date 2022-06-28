@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87abf7461dac8a626699ea60db7bbcb7, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\CDFData\flags.vb"
+﻿#Region "Microsoft.VisualBasic::a00b30e6cce7f5686473b1ca6841747a, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\CDFData\integers.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 18
-    '    Code Lines: 14
+    '   Total Lines: 25
+    '    Code Lines: 19
     ' Comment Lines: 0
-    '   Blank Lines: 4
-    '     File Size: 557.00 B
+    '   Blank Lines: 6
+    '     File Size: 704.00 B
 
 
-    '     Class flags
+    '     Class integers
     ' 
     '         Properties: cdfDataType
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     ' 
     ' /********************************************************************************/
@@ -52,19 +54,26 @@
 
 Imports System.Runtime.CompilerServices
 
-Namespace netCDF.Components
+Namespace Components.DataVector
 
-    Public Class flags : Inherits CDFData(Of Boolean)
+    Public Class integers : Inherits CDFData(Of Integer)
 
         Public Overrides ReadOnly Property cdfDataType As CDFDataTypes
             Get
-                Return CDFDataTypes.BOOLEAN
+                Return CDFDataTypes.INT
             End Get
         End Property
 
+        Sub New()
+        End Sub
+
+        Sub New(data As IEnumerable(Of Integer))
+            Buffer = data.ToArray
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overloads Shared Widening Operator CType(data As Boolean()) As flags
-            Return New flags With {.buffer = data}
+        Public Overloads Shared Widening Operator CType(data As Integer()) As integers
+            Return New integers With {.buffer = data}
         End Operator
     End Class
 End Namespace

@@ -56,7 +56,7 @@ Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
-Namespace netCDF
+Namespace Data
 
     ''' <summary>
     ''' Data reader methods for a given variable data value.
@@ -133,7 +133,7 @@ Namespace netCDF
 
             ' 读取的结果可能是一个T()()矩阵或者T()数组
 
-            If Parallel Then
+            If parallel Then
                 For Each item As SeqValue(Of Object) In mem _
                     .SplitIterator([step]) _
                     .SeqIterator _

@@ -57,7 +57,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Text
 
-Namespace netCDF.Components
+Namespace Components
 
     ''' <summary>
     ''' 属对象性,主要是记录一些注解信息

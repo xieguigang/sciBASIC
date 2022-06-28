@@ -54,7 +54,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.Language
 
-Namespace netCDF
+Namespace Data
 
     ''' <summary>
     ''' 在这个模块之中进行CDF文件的每一个Section的解析操作
@@ -135,7 +135,7 @@ Namespace netCDF
         ''' </returns>
         ''' 
         <Extension>
-        Friend Iterator Function attributesList(buffer As BinaryDataReader) As IEnumerable(Of attribute)
+        Friend Iterator Function attributesList(buffer As BinaryDataReader) As IEnumerable(Of Attribute)
             Dim gAttList = buffer.ReadUInt32()
 
             If (gAttList = ZERO) Then
@@ -167,7 +167,7 @@ Namespace netCDF
                     val = val(Scan0)
                 End If
 
-                Yield New attribute With {
+                Yield New Attribute With {
                     .name = name,
                     .type = type,
                     .value = val

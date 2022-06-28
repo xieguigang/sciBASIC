@@ -63,7 +63,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 
-Namespace netCDF.Components
+Namespace Components
 
     ''' <summary>
     ''' 变量对象,CDF文件之中的实验数据之类的数据都是保存于这个对象之中的
@@ -103,7 +103,7 @@ Namespace netCDF.Components
         ''' Array with the attributes of the variable
         ''' </summary>
         ''' <returns></returns>
-        Public Property attributes As attribute()
+        Public Property attributes As Attribute()
         ''' <summary>
         ''' String with the type of the variable
         ''' </summary>
@@ -136,7 +136,7 @@ Namespace netCDF.Components
         Public Property value As ICDFDataVector
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function FindAttribute(name As String) As attribute
+        Public Function FindAttribute(name As String) As Attribute
             Return attributes.FirstOrDefault(Function(a) a.name = name)
         End Function
 

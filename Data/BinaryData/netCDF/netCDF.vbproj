@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Microsoft.VisualBasic.DataStorage.netCDF</RootNamespace>
+    <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>Microsoft.VisualBasic.DataStorage.netCDF</AssemblyName>
+  </PropertyGroup>
+
+</Project>

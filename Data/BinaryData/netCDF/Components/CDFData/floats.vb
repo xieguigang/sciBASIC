@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13737a7d8a3c8579738e173c9b569448, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\DimensionList.vb"
+﻿#Region "Microsoft.VisualBasic::986c397075dd4b07c9976529950a5502, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\CDFData\floats.vb"
 
     ' Author:
     ' 
@@ -34,44 +34,37 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 23
-    '    Code Lines: 16
+    '   Total Lines: 18
+    '    Code Lines: 14
     ' Comment Lines: 0
-    '   Blank Lines: 7
-    '     File Size: 638.00 B
+    '   Blank Lines: 4
+    '     File Size: 556.00 B
 
 
-    '     Class DimensionList
+    '     Class floats
     ' 
-    '         Properties: dimensions, HaveRecordDimension, recordId, recordName
-    ' 
-    '         Function: ToString
+    '         Properties: cdfDataType
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Xml.Serialization
+Imports System.Runtime.CompilerServices
 
-Namespace netCDF.Components
+Namespace Components.DataVector
 
-    Public Class DimensionList
+    Public Class floats : Inherits CDFData(Of Single)
 
-        <XmlAttribute> Public Property recordId As Integer?
-        <XmlAttribute> Public Property recordName As String
-
-        Public ReadOnly Property HaveRecordDimension As Boolean
+        Public Overrides ReadOnly Property cdfDataType As CDFDataTypes
             Get
-                Return Not (recordId Is Nothing AndAlso recordName = "NA")
+                Return CDFDataTypes.FLOAT
             End Get
         End Property
 
-        Public Property dimensions As Dimension()
-
-        Public Overrides Function ToString() As String
-            Return $"[{recordId}] {recordName}"
-        End Function
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Widening Operator CType(data As Single()) As floats
+            Return New floats With {.buffer = data}
+        End Operator
     End Class
-
 End Namespace

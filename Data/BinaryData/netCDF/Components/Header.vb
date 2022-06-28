@@ -56,7 +56,7 @@
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO
 
-Namespace netCDF.Components
+Namespace Components
 
     ''' <summary>
     ''' Object with the fields:
@@ -102,7 +102,7 @@ Namespace netCDF.Components
         ''' List of global attributes
         ''' </summary>
         ''' <returns></returns>
-        Public Property globalAttributes As attribute()
+        Public Property globalAttributes As Attribute()
         ''' <summary>
         ''' List of variables
         ''' </summary>

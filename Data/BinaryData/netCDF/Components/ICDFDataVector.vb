@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f9d3008788dea1ff4f81b60b3f74392, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\CDFData\longs.vb"
+﻿#Region "Microsoft.VisualBasic::0526298f4c10c6073306857cfa303fa5, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\ICDFDataVector.vb"
 
     ' Author:
     ' 
@@ -34,37 +34,35 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 18
-    '    Code Lines: 14
+    '   Total Lines: 14
+    '    Code Lines: 9
     ' Comment Lines: 0
-    '   Blank Lines: 4
-    '     File Size: 548.00 B
+    '   Blank Lines: 5
+    '     File Size: 338.00 B
 
 
-    '     Class longs
+    '     Interface ICDFDataVector
     ' 
-    '         Properties: cdfDataType
+    '         Properties: cdfDataType, genericValue, length
+    ' 
+    '         Function: GetBuffer
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Runtime.CompilerServices
+Imports System.Text
 
-Namespace netCDF.Components
+Namespace Components
 
-    Public Class longs : Inherits CDFData(Of Long)
+    Public Interface ICDFDataVector
 
-        Public Overrides ReadOnly Property cdfDataType As CDFDataTypes
-            Get
-                Return CDFDataTypes.LONG
-            End Get
-        End Property
+        ReadOnly Property cdfDataType As CDFDataTypes
+        ReadOnly Property genericValue As Array
+        ReadOnly Property length As Integer
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overloads Shared Widening Operator CType(data As Long()) As longs
-            Return New longs With {.buffer = data}
-        End Operator
-    End Class
+        Function GetBuffer(encoding As Encoding) As Byte()
+
+    End Interface
 End Namespace

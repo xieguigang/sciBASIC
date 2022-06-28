@@ -58,7 +58,7 @@ Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Http
 
-Namespace netCDF.Components
+Namespace Components.DataVector
 
     ''' <summary>
     '''  存储在CDF文件之中的数据的统一接口模块
@@ -70,31 +70,31 @@ Namespace netCDF.Components
 
         Public ReadOnly Property genericValue As Array Implements ICDFDataVector.genericValue
             Get
-                Return buffer
+                Return Buffer
             End Get
         End Property
 
         Private ReadOnly Property ICDFDataVector_length As Integer Implements ICDFDataVector.length
             Get
-                Return buffer.Length
+                Return Buffer.Length
             End Get
         End Property
 
         Default Public Overloads Property Item(i As Integer) As T
             Get
-                Return buffer(i)
+                Return Buffer(i)
             End Get
             Set(value As T)
-                buffer(i) = value
+                Buffer(i) = value
             End Set
         End Property
 
         Default Public Overloads Property Item(i As i32) As T
             Get
-                Return buffer(i)
+                Return Buffer(i)
             End Get
             Set(value As T)
-                buffer(i) = value
+                Buffer(i) = value
             End Set
         End Property
 
@@ -109,7 +109,7 @@ Namespace netCDF.Components
                 Dim size As Integer = rangeMax - rangeMin
                 Dim vec As T() = New T(size - 1) {}
 
-                Call System.Array.ConstrainedCopy(buffer, rangeMin, vec, Scan0, size)
+                Call System.Array.ConstrainedCopy(Buffer, rangeMin, vec, Scan0, size)
 
                 Return vec
             End Get

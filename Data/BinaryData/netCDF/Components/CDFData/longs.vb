@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22e663e0b4ea73e976080f93dfd3b0e5, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\CDFData\bytes.vb"
+﻿#Region "Microsoft.VisualBasic::4f9d3008788dea1ff4f81b60b3f74392, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\CDFData\longs.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     '     File Size: 548.00 B
 
 
-    '     Class bytes
+    '     Class longs
     ' 
     '         Properties: cdfDataType
     ' 
@@ -52,19 +52,19 @@
 
 Imports System.Runtime.CompilerServices
 
-Namespace netCDF.Components
+Namespace Components.DataVector
 
-    Public Class bytes : Inherits CDFData(Of Byte)
+    Public Class longs : Inherits CDFData(Of Long)
 
         Public Overrides ReadOnly Property cdfDataType As CDFDataTypes
             Get
-                Return CDFDataTypes.BYTE
+                Return CDFDataTypes.LONG
             End Get
         End Property
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overloads Shared Widening Operator CType(data As Byte()) As bytes
-            Return New bytes With {.buffer = data}
+        Public Overloads Shared Widening Operator CType(data As Long()) As longs
+            Return New longs With {.buffer = data}
         End Operator
     End Class
 End Namespace

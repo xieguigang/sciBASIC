@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a284bd5f6e222f15c47a0ab5a8dd2b31, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\recordDimension.vb"
+﻿#Region "Microsoft.VisualBasic::de276ee1524bc401e3931015077207e9, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\Dimension.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 35
-    '    Code Lines: 12
-    ' Comment Lines: 19
-    '   Blank Lines: 4
-    '     File Size: 1.15 KB
+    '   Total Lines: 36
+    '    Code Lines: 19
+    ' Comment Lines: 10
+    '   Blank Lines: 7
+    '     File Size: 1.02 KB
 
 
-    '     Class recordDimension
+    '     Structure Dimension
     ' 
-    '         Properties: id, length, name, recordStep
+    '         Properties: name
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
     ' 
     ' 
@@ -53,37 +54,38 @@
 #End Region
 
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 
-Namespace netCDF.Components
+Namespace Components
 
     ''' <summary>
-    ''' Metadata for the record dimension
+    ''' ``[name => size]``
     ''' </summary>
-    Public Class recordDimension
+    ''' 
+    <XmlType("dim", [Namespace]:=Xml.netCDF)>
+    Public Structure Dimension : Implements INamedValue
 
         ''' <summary>
-        ''' Number of elements in the record dimension
+        ''' String with the name of the dimension
         ''' </summary>
-        ''' <returns></returns>
-        <XmlAttribute> Public Property length As Integer
+        <XmlAttribute>
+        Public Property name As String Implements IKeyedEntity(Of String).Key
+
         ''' <summary>
-        ''' Id number In the list Of dimensions For the record dimension
+        ''' Number with the size of the dimension
         ''' </summary>
-        ''' <returns></returns>
-        <XmlAttribute> Public Property id As Integer
-        ''' <summary>
-        ''' String with the name of the record dimension
-        ''' </summary>
-        ''' <returns></returns>
-        <XmlAttribute> Public Property name As String
-        ''' <summary>
-        ''' Number with the record variables step size
-        ''' </summary>
-        ''' <returns></returns>
-        <XmlAttribute> Public Property recordStep As Integer
+        <XmlText>
+        Dim size As Integer
+
+        Sub New(name As String, size As Integer)
+            Me.name = name
+            Me.size = size
+        End Sub
 
         Public Overrides Function ToString() As String
-            Return $"[{id}] {name} ({recordStep}x{length})"
+            Return $"{name}(size={size})"
         End Function
-    End Class
+    End Structure
+
 End Namespace

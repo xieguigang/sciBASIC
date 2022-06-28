@@ -58,7 +58,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 
-Namespace netCDF
+Namespace Data
 
     ''' <summary>
     ''' 将netCDF转储为XML文件
@@ -84,7 +84,7 @@ Namespace netCDF
         ''' List of global attributes
         ''' </summary>
         ''' <returns></returns>
-        Public Property globalAttributes As attribute()
+        Public Property globalAttributes As Attribute()
         ''' <summary>
         ''' List of variables
         ''' </summary>

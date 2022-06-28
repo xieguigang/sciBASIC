@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a00b30e6cce7f5686473b1ca6841747a, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\CDFData\integers.vb"
+﻿#Region "Microsoft.VisualBasic::22e663e0b4ea73e976080f93dfd3b0e5, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\CDFData\bytes.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 25
-    '    Code Lines: 19
+    '   Total Lines: 18
+    '    Code Lines: 14
     ' Comment Lines: 0
-    '   Blank Lines: 6
-    '     File Size: 704.00 B
+    '   Blank Lines: 4
+    '     File Size: 548.00 B
 
 
-    '     Class integers
+    '     Class bytes
     ' 
     '         Properties: cdfDataType
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
     ' 
     ' 
     ' /********************************************************************************/
@@ -54,26 +52,19 @@
 
 Imports System.Runtime.CompilerServices
 
-Namespace netCDF.Components
+Namespace Components.DataVector
 
-    Public Class integers : Inherits CDFData(Of Integer)
+    Public Class bytes : Inherits CDFData(Of Byte)
 
         Public Overrides ReadOnly Property cdfDataType As CDFDataTypes
             Get
-                Return CDFDataTypes.INT
+                Return CDFDataTypes.BYTE
             End Get
         End Property
 
-        Sub New()
-        End Sub
-
-        Sub New(data As IEnumerable(Of Integer))
-            buffer = data.ToArray
-        End Sub
-
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overloads Shared Widening Operator CType(data As Integer()) As integers
-            Return New integers With {.buffer = data}
+        Public Overloads Shared Widening Operator CType(data As Byte()) As bytes
+            Return New bytes With {.buffer = data}
         End Operator
     End Class
 End Namespace

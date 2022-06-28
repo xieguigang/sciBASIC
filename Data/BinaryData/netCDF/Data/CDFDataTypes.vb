@@ -55,7 +55,7 @@
 
 Imports System.ComponentModel
 
-Namespace netCDF
+Namespace Data
 
     ''' <summary>
     ''' The enum values of the CDF data types.

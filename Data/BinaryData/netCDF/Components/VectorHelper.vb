@@ -54,7 +54,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
-Namespace netCDF.Components
+Namespace Components
 
     <HideModuleName>
     Public Module VectorHelper

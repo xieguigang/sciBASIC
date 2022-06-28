@@ -54,7 +54,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 
-Namespace netCDF
+Namespace Data
 
     <HideModuleName>
     Public Module TypeExtensions
