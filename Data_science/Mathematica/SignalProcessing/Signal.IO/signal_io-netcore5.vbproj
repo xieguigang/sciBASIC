@@ -99,6 +99,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Data\BinaryData\DataStorage\datastorage-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\..\Data\BinaryData\netCDF\netCDF.vbproj" />
     <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\SignalProcessing\signalprocessing-netcore5.vbproj" />
   </ItemGroup>
