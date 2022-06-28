@@ -52,7 +52,7 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
+Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
 Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
@@ -65,7 +65,8 @@ Module ToStringHelper
     ''' </summary>
     ''' <param name="file"></param>
     ''' <param name="dev"></param>
-    <Extension> Public Sub toString(file As netCDFReader, dev As TextWriter)
+    <Extension>
+    Public Sub toString(file As netCDFReader, dev As TextWriter)
         Dim [dim] As Dimension
         Dim summary$
         Dim record = file.recordDimension
@@ -86,7 +87,7 @@ Module ToStringHelper
         Call dev.WriteLine()
         Call dev.WriteLine("GLOBAL ATTRIBUTES")
 
-        For Each attribute As Attribute In file.globalAttributes
+        For Each attribute As attribute In file.globalAttributes
             Call dev.WriteLine($"  {attribute.name.PadEnd(30)} = {attribute.value}")
         Next
 

@@ -61,11 +61,13 @@
 Imports System.Data
 #End If
 
+Imports System.Data
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Data.IO
-Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
+Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
+Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
@@ -81,7 +83,7 @@ Public Class netCDFReader : Implements IDisposable
 
     Dim buffer As BinaryDataReader
     Dim header As Header
-    Dim globalAttributeTable As Dictionary(Of String, Attribute)
+    Dim globalAttributeTable As Dictionary(Of String, attribute)
     Dim variableTable As Dictionary(Of String, variable)
 
     Public Const Magic$ = "CDF"
@@ -141,7 +143,7 @@ Public Class netCDFReader : Implements IDisposable
     '''  + `value`: A number Or String With the value Of the attribute
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property globalAttributes As Attribute()
+    Public ReadOnly Property globalAttributes As attribute()
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return header.globalAttributes

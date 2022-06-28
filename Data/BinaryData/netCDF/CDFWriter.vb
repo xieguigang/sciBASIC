@@ -59,7 +59,10 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
-Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
+Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
+Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
+Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
@@ -210,7 +213,7 @@ Public Class CDFWriter : Implements IDisposable
 #End Region
 
     ReadOnly output As BinaryDataWriter
-    ReadOnly globalAttrs As New List(Of Attribute)
+    ReadOnly globalAttrs As New List(Of attribute)
 
     Dim variables As New List(Of variable)
     Dim dimensionList As New Dictionary(Of String, SeqValue(Of Dimension))
@@ -241,7 +244,7 @@ Public Class CDFWriter : Implements IDisposable
     ''' </summary>
     ''' <param name="attrs"></param>
     ''' <returns></returns>
-    Public Function GlobalAttributes(ParamArray attrs As Attribute()) As CDFWriter
+    Public Function GlobalAttributes(ParamArray attrs As attribute()) As CDFWriter
         Call globalAttrs.AddRange(attrs)
         Return Me
     End Function
@@ -387,7 +390,7 @@ Public Class CDFWriter : Implements IDisposable
         Return handle
     End Function
 
-    Private Shared Sub writeAttributes(output As BinaryDataWriter, attrs As Attribute())
+    Private Shared Sub writeAttributes(output As BinaryDataWriter, attrs As attribute())
         If attrs Is Nothing Then
             attrs = {}
         End If
@@ -454,14 +457,14 @@ Public Class CDFWriter : Implements IDisposable
     ''' 这个列表必须要是<see cref="CDFWriter.Dimensions(Dimension())"/>之中的
     ''' </param>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Sub AddVariable(name$, data As ICDFDataVector, dims As [Variant](Of String(), String), Optional attrs As [Variant](Of Attribute, Attribute()) = Nothing)
+    Public Sub AddVariable(name$, data As ICDFDataVector, dims As [Variant](Of String(), String), Optional attrs As [Variant](Of attribute, attribute()) = Nothing)
         variables += New variable With {
             .name = name,
-            .Type = data.cdfDataType,
+            .type = data.cdfDataType,
             .size = data.length * sizeof(.type),
             .value = data,
             .attributes = attrs.TryCastArray,
-            .Dimensions = getDimensionList(dims)
+            .dimensions = getDimensionList(dims)
         }
     End Sub
 
@@ -480,11 +483,11 @@ Public Class CDFWriter : Implements IDisposable
             .ToArray
     End Function
 
-    Public Overloads Sub AddVector(name$, vec As IEnumerable(Of Double), [dim] As Dimension, Optional attrs As Attribute() = Nothing)
+    Public Overloads Sub AddVector(name$, vec As IEnumerable(Of Double), [dim] As Dimension, Optional attrs As attribute() = Nothing)
         Call AddVariable(name, CType(vec.ToArray, doubles), [dim], attrs)
     End Sub
 
-    Public Sub AddVariable(name$, data As ICDFDataVector, [dim] As Dimension, Optional attrs As Attribute() = Nothing)
+    Public Sub AddVariable(name$, data As ICDFDataVector, [dim] As Dimension, Optional attrs As attribute() = Nothing)
         Call AddVariable(name, data, {[dim]}, attrs)
     End Sub
 
@@ -496,7 +499,7 @@ Public Class CDFWriter : Implements IDisposable
     ''' <param name="data"></param>
     ''' <param name="dims"></param>
     ''' <param name="attrs"></param>
-    Public Sub AddVariable(name$, data As ICDFDataVector, dims As Dimension(), Optional attrs As Attribute() = Nothing)
+    Public Sub AddVariable(name$, data As ICDFDataVector, dims As Dimension(), Optional attrs As attribute() = Nothing)
         Dim dimNames As New List(Of String)
 
         For Each d As Dimension In dims

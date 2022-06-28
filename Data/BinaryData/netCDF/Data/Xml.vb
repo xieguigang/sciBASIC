@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::66b0996955f0f90ac83217611f39b3de, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Data\Xml.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 71
-    '    Code Lines: 38
-    ' Comment Lines: 24
-    '   Blank Lines: 9
-    '     File Size: 2.50 KB
+' Summaries:
 
 
-    '     Class Xml
-    ' 
-    '         Properties: dimensions, globalAttributes, recordDimension, variables, version
-    ' 
-    '         Function: (+2 Overloads) SaveAsXml
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 71
+'    Code Lines: 38
+' Comment Lines: 24
+'   Blank Lines: 9
+'     File Size: 2.50 KB
+
+
+'     Class Xml
+' 
+'         Properties: dimensions, globalAttributes, recordDimension, variables, version
+' 
+'         Function: (+2 Overloads) SaveAsXml
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -56,7 +56,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
+Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
 
 Namespace Data
 
@@ -84,7 +84,7 @@ Namespace Data
         ''' List of global attributes
         ''' </summary>
         ''' <returns></returns>
-        Public Property globalAttributes As Attribute()
+        Public Property globalAttributes As attribute()
         ''' <summary>
         ''' List of variables
         ''' </summary>
