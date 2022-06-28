@@ -40,9 +40,9 @@ Public Module Debugger
     Private Sub TreeInternal(dir As StreamGroup, text As TextWriter, indent As Integer)
         For Each file As StreamObject In dir.files
             If TypeOf file Is StreamBlock Then
-                Call text.WriteLine($"{New String(" ", indent)}|-" & file.ToString)
+                Call text.WriteLine($"{New String(" "c, indent * 3)}|- " & file.ToString)
             Else
-                Call text.WriteLine($"{New String(" ", indent)}|-" & file.ToString)
+                Call text.WriteLine($"{New String(" "c, indent * 3)}|- " & file.ToString)
                 Call TreeInternal(dir:=file, text, indent + 1)
             End If
         Next
