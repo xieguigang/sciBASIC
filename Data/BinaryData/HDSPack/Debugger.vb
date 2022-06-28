@@ -1,4 +1,5 @@
-﻿Imports System.Runtime.CompilerServices
+﻿Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Linq
 
@@ -23,4 +24,15 @@ Public Module Debugger
             End If
         Next
     End Function
+
+    ''' <summary>
+    ''' a linux tree liked command for show structure 
+    ''' inside of the HDS stream pack file.
+    ''' </summary>
+    ''' <param name="dir"></param>
+    ''' <param name="text"></param>
+    <Extension>
+    Public Sub Tree(dir As StreamGroup, text As TextWriter)
+
+    End Sub
 End Module
