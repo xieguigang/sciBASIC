@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::986c397075dd4b07c9976529950a5502, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\CDFData\floats.vb"
+﻿#Region "Microsoft.VisualBasic::4f9d3008788dea1ff4f81b60b3f74392, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\CDFData\longs.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,10 @@
     '    Code Lines: 14
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 556.00 B
+    '     File Size: 548.00 B
 
 
-    '     Class floats
+    '     Class longs
     ' 
     '         Properties: cdfDataType
     ' 
@@ -52,19 +52,19 @@
 
 Imports System.Runtime.CompilerServices
 
-Namespace Components.DataVector
+Namespace DataVector
 
-    Public Class floats : Inherits CDFData(Of Single)
+    Public Class longs : Inherits CDFData(Of Long)
 
         Public Overrides ReadOnly Property cdfDataType As CDFDataTypes
             Get
-                Return CDFDataTypes.FLOAT
+                Return CDFDataTypes.LONG
             End Get
         End Property
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overloads Shared Widening Operator CType(data As Single()) As floats
-            Return New floats With {.buffer = data}
+        Public Overloads Shared Widening Operator CType(data As Long()) As longs
+            Return New longs With {.buffer = data}
         End Operator
     End Class
 End Namespace

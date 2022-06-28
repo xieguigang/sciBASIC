@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f9d3008788dea1ff4f81b60b3f74392, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\CDFData\longs.vb"
+﻿#Region "Microsoft.VisualBasic::87abf7461dac8a626699ea60db7bbcb7, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\CDFData\flags.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,10 @@
     '    Code Lines: 14
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 548.00 B
+    '     File Size: 557.00 B
 
 
-    '     Class longs
+    '     Class flags
     ' 
     '         Properties: cdfDataType
     ' 
@@ -52,19 +52,19 @@
 
 Imports System.Runtime.CompilerServices
 
-Namespace Components.DataVector
+Namespace DataVector
 
-    Public Class longs : Inherits CDFData(Of Long)
+    Public Class flags : Inherits CDFData(Of Boolean)
 
         Public Overrides ReadOnly Property cdfDataType As CDFDataTypes
             Get
-                Return CDFDataTypes.LONG
+                Return CDFDataTypes.BOOLEAN
             End Get
         End Property
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overloads Shared Widening Operator CType(data As Long()) As longs
-            Return New longs With {.buffer = data}
+        Public Overloads Shared Widening Operator CType(data As Boolean()) As flags
+            Return New flags With {.buffer = data}
         End Operator
     End Class
 End Namespace

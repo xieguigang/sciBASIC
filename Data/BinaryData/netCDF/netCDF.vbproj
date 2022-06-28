@@ -6,4 +6,9 @@
     <AssemblyName>Microsoft.VisualBasic.DataStorage.netCDF</AssemblyName>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\BinaryData\binarydata-netcore5.vbproj" />
+  </ItemGroup>
+
 </Project>

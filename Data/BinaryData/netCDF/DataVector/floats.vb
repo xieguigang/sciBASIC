@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87abf7461dac8a626699ea60db7bbcb7, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\CDFData\flags.vb"
+﻿#Region "Microsoft.VisualBasic::986c397075dd4b07c9976529950a5502, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\CDFData\floats.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,10 @@
     '    Code Lines: 14
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 557.00 B
+    '     File Size: 556.00 B
 
 
-    '     Class flags
+    '     Class floats
     ' 
     '         Properties: cdfDataType
     ' 
@@ -52,19 +52,19 @@
 
 Imports System.Runtime.CompilerServices
 
-Namespace Components.DataVector
+Namespace DataVector
 
-    Public Class flags : Inherits CDFData(Of Boolean)
+    Public Class floats : Inherits CDFData(Of Single)
 
         Public Overrides ReadOnly Property cdfDataType As CDFDataTypes
             Get
-                Return CDFDataTypes.BOOLEAN
+                Return CDFDataTypes.FLOAT
             End Get
         End Property
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overloads Shared Widening Operator CType(data As Boolean()) As flags
-            Return New flags With {.buffer = data}
+        Public Overloads Shared Widening Operator CType(data As Single()) As floats
+            Return New floats With {.buffer = data}
         End Operator
     End Class
 End Namespace

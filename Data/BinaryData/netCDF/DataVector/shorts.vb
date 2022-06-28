@@ -52,7 +52,7 @@
 
 Imports System.Runtime.CompilerServices
 
-Namespace Components.DataVector
+Namespace DataVector
 
     Public Class shorts : Inherits CDFData(Of Short)
 

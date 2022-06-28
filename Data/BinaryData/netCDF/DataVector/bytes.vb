@@ -52,7 +52,7 @@
 
 Imports System.Runtime.CompilerServices
 
-Namespace Components.DataVector
+Namespace DataVector
 
     Public Class bytes : Inherits CDFData(Of Byte)
 
