@@ -15,14 +15,14 @@ Namespace FileSystem
     ''' </summary>
     Public Class StreamPack : Implements IDisposable
 
-        Friend ReadOnly superBlock As StreamGroup
+        Public ReadOnly Property superBlock As StreamGroup
+        Public ReadOnly Property globalAttributes As New LazyAttribute
 
         ReadOnly buffer As Stream
         ReadOnly init_size As Integer
         ReadOnly registriedTypes As New Index(Of String)
 
         Dim disposedValue As Boolean
-        Dim globalAttributes As LazyAttribute
 
         Const magic As String = "HDS"
 
@@ -134,7 +134,8 @@ Namespace FileSystem
                 ' parse global attributes
                 bufSize = bin.ReadInt32
                 buf = bin.ReadBytes(bufSize)
-                globalAttributes = New MemoryStream(buf).UnPack(Nothing, registry)
+                ' unpack global attributes from the HDS stream
+                _globalAttributes = New MemoryStream(buf).UnPack(Nothing, registry)
             End If
 
             ' and then parse filesystem tree
