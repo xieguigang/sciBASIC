@@ -21,7 +21,8 @@ Namespace FileSystem
         ReadOnly init_size As Integer
         ReadOnly registriedTypes As New Index(Of String)
 
-        Private disposedValue As Boolean
+        Dim disposedValue As Boolean
+        Dim globalAttributes As LazyAttribute
 
         Const magic As String = "HDS"
 
@@ -56,6 +57,32 @@ Namespace FileSystem
                 Call buffer.SetLength(magic.Length + 1024 * 1024)
                 Call buffer.Flush()
             End If
+        End Sub
+
+        Public Function GetGlobalAttribute(name As String) As Object
+            If globalAttributes.attributes.ContainsKey(name) Then
+                Return LazyAttribute.GetValue(globalAttributes.attributes(name))
+            Else
+                Return Nothing
+            End If
+        End Function
+
+        ''' <summary>
+        ''' set global attributes
+        ''' </summary>
+        ''' <param name="attrs"></param>
+        Public Sub SetAttribute(ParamArray attrs As NamedValue(Of Object)())
+            For Each val As NamedValue(Of Object) In attrs
+                If Not val.Value Is Nothing Then
+                    Dim code As String = val.GetType.FullName
+
+                    If Not code Like registriedTypes Then
+                        Call registriedTypes.Add(code)
+                    End If
+                End If
+
+                Call globalAttributes.Add(val.Name, val.Value)
+            Next
         End Sub
 
         ''' <summary>
@@ -103,6 +130,11 @@ Namespace FileSystem
                     Call registriedTypes.Add(type.Name, type.Value)
                     Call registry.Add(type.Value.ToString, type.Name)
                 Next
+
+                ' parse global attributes
+                bufSize = bin.ReadInt32
+                buf = bin.ReadBytes(bufSize)
+                globalAttributes = New MemoryStream(buf).UnPack(Nothing, registry)
             End If
 
             ' and then parse filesystem tree
@@ -156,12 +188,16 @@ Namespace FileSystem
                     ' TODO: 释放托管状态(托管对象)
                     Dim treeMetadata As Byte() = superBlock.GetBuffer(registriedTypes)
                     Dim registeryMetadata As Byte() = registriedTypes.GetTypeCodes
+                    Dim globalMetadata As Byte() = globalAttributes.Pack(registriedTypes)
                     Dim size As Byte() = BitConverter.GetBytes(treeMetadata.Length)
                     Dim size2 As Byte() = BitConverter.GetBytes(registeryMetadata.Length)
+                    Dim size3 As Byte() = BitConverter.GetBytes(globalMetadata.Length)
 
                     Call buffer.Seek(magic.Length, SeekOrigin.Begin)
                     Call buffer.Write(size2, Scan0, size2.Length)
                     Call buffer.Write(registeryMetadata, Scan0, registeryMetadata.Length)
+                    Call buffer.Write(size3, Scan0, size3.Length)
+                    Call buffer.Write(globalMetadata, Scan0, globalMetadata.Length)
                     Call buffer.Write(size, Scan0, size.Length)
                     Call buffer.Write(treeMetadata, Scan0, treeMetadata.Length)
 

@@ -52,6 +52,11 @@ Module PackAttributeData
     End Function
 
     <Extension>
+    Public Function Pack(attrs As LazyAttribute, type As Index(Of String)) As Byte()
+        Return attrs.ToArray.Pack("", type)
+    End Function
+
+    <Extension>
     Public Function Pack(attrs As AttributeMetadata(), description As String, type As Index(Of String)) As Byte()
         Dim size As Integer
         Dim typeCode As Integer
