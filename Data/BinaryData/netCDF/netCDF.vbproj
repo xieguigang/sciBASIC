@@ -2,8 +2,11 @@
 
   <PropertyGroup>
     <RootNamespace>Microsoft.VisualBasic.DataStorage.netCDF</RootNamespace>
-    <TargetFramework>net6.0</TargetFramework>
-    <AssemblyName>Microsoft.VisualBasic.DataStorage.netCDF</AssemblyName>
+       <AssemblyName>Microsoft.VisualBasic.DataStorage.netCDF</AssemblyName>
+
+	  <TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
+	  <Platforms>AnyCPU;x64</Platforms>
+	  <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;NPSearch;Rsharp_app_release</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
