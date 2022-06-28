@@ -15,6 +15,16 @@ Namespace FileSystem
             End Get
         End Property
 
+        ''' <summary>
+        ''' tostring of the <see cref="referencePath"/> object.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property fullName As String
+            Get
+                Return referencePath.ToString
+            End Get
+        End Property
+
         Sub New()
         End Sub
 

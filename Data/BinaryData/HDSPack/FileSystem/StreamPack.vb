@@ -25,6 +25,20 @@ Namespace FileSystem
 
         Const magic As String = "HDS"
 
+        ''' <summary>
+        ''' get all data files inside this hds data 
+        ''' pack, not includes directory.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property files As StreamBlock()
+            Get
+                Return superBlock _
+                    .ListFiles _
+                    .Where(Function(f) TypeOf f Is StreamBlock) _
+                    .ToArray
+            End Get
+        End Property
+
         Sub New(filepath As String, Optional init_size As Integer = 1024)
             Call Me.New(filepath.Open(FileMode.OpenOrCreate, doClear:=False, [readOnly]:=False), init_size:=init_size)
         End Sub
@@ -97,6 +111,10 @@ Namespace FileSystem
 
         Public Function GetObject(fileName As String) As StreamObject
             Return superBlock.GetObject(New FilePath(fileName))
+        End Function
+
+        Public Function OpenBlock(block As StreamBlock) As Stream
+            Return New SubStream(buffer, block.offset, block.size)
         End Function
 
         ''' <summary>
