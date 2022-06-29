@@ -12,12 +12,15 @@ Public Module Extensions
                               fileName As String,
                               Optional encoding As Encodings = Encodings.UTF8) As Boolean
 
-        Using buffer As Stream = pack.OpenBlock(fileName),
-            bin As New StreamWriter(buffer, encoding.CodePage)
+        Dim buffer As Stream = pack.OpenBlock(fileName)
+        Dim bin As New StreamWriter(buffer, encoding.CodePage)
 
-            Call bin.WriteLine(text)
-            Call bin.Flush()
-        End Using
+        Call bin.WriteLine(text)
+        Call bin.Flush()
+
+        If TypeOf buffer Is StreamBuffer Then
+            Call buffer.Dispose()
+        End If
 
         Return True
     End Function

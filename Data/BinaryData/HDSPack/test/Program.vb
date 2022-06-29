@@ -18,6 +18,11 @@ Module Program
             For Each file In hds.ListFiles
                 Call Console.WriteLine(file.ToString)
             Next
+
+            Call Console.WriteLine()
+            Call Console.WriteLine()
+            Call Console.WriteLine()
+            Call hds.superBlock.Tree(App.StdOut, pack:=hds)
         End Using
     End Sub
 
@@ -69,6 +74,12 @@ Module Program
             Dim block = hds.OpenBlock("/path/to/the/image/file/ch07-18.png")
 
             Call block.Write(image, Scan0, image.Length)
+            Call block.Flush()
+            Call block.Dispose()
+
+            block = hds.OpenBlock("/path/to/empty.dat")
+
+            Call block.Write({}, Scan0, 0)
             Call block.Flush()
             Call block.Dispose()
 
