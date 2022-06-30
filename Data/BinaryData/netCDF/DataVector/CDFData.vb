@@ -53,6 +53,7 @@
 #End Region
 
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
 Imports Microsoft.VisualBasic.Language
@@ -119,6 +120,8 @@ Namespace DataVector
 
         Public Overrides Function ToString() As String
             Dim stringify$
+            Dim range As DoubleRange = Nothing
+            Dim rangeStr$
 
             Select Case cdfDataType
                 Case CDFDataTypes.BYTE : stringify = DirectCast(genericValue, Byte()).ToBase64String
@@ -133,6 +136,22 @@ Namespace DataVector
                     Return "invalid!"
             End Select
 
+            Select Case cdfDataType
+                Case CDFDataTypes.BYTE : range = DirectCast(genericValue, Byte()).Select(Function(b) CDbl(b)).ToArray
+                Case CDFDataTypes.DOUBLE : range = DirectCast(genericValue, Double()).ToArray
+                Case CDFDataTypes.FLOAT : range = DirectCast(genericValue, Single()).Select(Function(d) CDbl(d)).ToArray
+                Case CDFDataTypes.INT : range = DirectCast(genericValue, Integer()).Select(Function(i) CDbl(i)).ToArray
+                Case CDFDataTypes.SHORT : range = DirectCast(genericValue, Short()).Select(Function(s) CDbl(s)).ToArray
+                Case CDFDataTypes.LONG : range = DirectCast(genericValue, Long()).Select(Function(l) CDbl(l)).ToArray
+                Case Else
+                    ' do nothing
+            End Select
+
+            If Not range Is Nothing Then
+                rangeStr = $"; min:{range.Min}, max:{range.Max}"
+            Else
+                rangeStr = $""
+            End If
             If (stringify.Length > 50) Then
                 stringify = stringify.Substring(0, 50)
             End If
@@ -140,7 +159,7 @@ Namespace DataVector
                 stringify &= $" (length: ${Me.Length})"
             End If
 
-            Return $"[{cdfDataType}] {stringify}"
+            Return $"[{cdfDataType}{range}] {stringify}"
         End Function
 
         Public Function GetBuffer(encoding As Encoding) As Byte() Implements ICDFDataVector.GetBuffer

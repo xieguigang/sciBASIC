@@ -130,6 +130,9 @@ Namespace Data
             Dim i As i32 = Scan0
             Dim parallel As Boolean = size >= 100000
 
+            ' 20220630
+            ' why needs offset of 4 bytes?
+            Call base.Seek(4, SeekOrigin.Current)
             Call base.Read(mem, Scan0, chunkSize)
 
             ' 读取的结果可能是一个T()()矩阵或者T()数组
