@@ -69,10 +69,10 @@ Public Module Debugger
             Dim txt As String = New StreamReader(pack.OpenBlock(readme)).ReadToEnd
             Dim par As String() = txt.SplitParagraph(len:=80).ToArray
 
-            Call Console.WriteLine()
-            Call Console.WriteLine($"{New String("="c, 35)} readme.txt {New String("="c, 35)}")
-            Call par.DoEach(AddressOf Console.WriteLine)
-            Call Console.WriteLine(New String("="c, 35 * 2 + 12))
+            Call text.WriteLine()
+            Call text.WriteLine($"{New String("="c, 35)} readme.txt {New String("="c, 35)}")
+            Call par.DoEach(AddressOf text.WriteLine)
+            Call text.WriteLine(New String("="c, 35 * 2 + 12))
         End If
     End Sub
 End Module

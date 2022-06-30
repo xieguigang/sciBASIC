@@ -95,7 +95,7 @@ Namespace Net.Protocols.ContentTypes
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property UnknownType As New ContentType With {
-            .FileExt = "*.*",
+            .FileExt = ".*",
             .MIMEType = Unknown,
             .Name = NameOf(Unknown)
         }
