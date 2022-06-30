@@ -223,8 +223,12 @@ Namespace Graphic.Axis
             For i As Integer = 0 To candidateSteps.Count - 1
                 steps = candidateSteps(i)
 
+                If (max - min) / steps > 100 Then
+                    Continue For
+                End If
+
                 ' starting value depends on whether Or Not 0 Is in the array
-                If (zeroFlag) Then
+                If zeroFlag Then
                     minSteps = stdNum.Ceiling(stdNum.Abs(min) / steps)
                     stepArray = {-minSteps * steps}.AsList
                 Else
@@ -233,8 +237,8 @@ Namespace Graphic.Axis
 
                 Dim stepnum% = 1
 
-                Do While (stepArray(stepArray.Count - 1) < max)
-                    stepArray.Add((stepArray(0) + steps * stepnum))
+                Do While stepArray(stepArray.Count - 1) < max
+                    stepArray.Add(stepArray(0) + steps * stepnum)
                     stepnum += 1
                 Loop
 
