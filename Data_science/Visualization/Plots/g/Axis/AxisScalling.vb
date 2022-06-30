@@ -262,6 +262,25 @@ Namespace Graphic.Axis
                 ' End If
             Next
 
+            If candidateArray.Count = 0 Then
+                Dim stepsArray As New List(Of Double)
+                Dim minT As Double = If(min = 0, 0, min * 0.85)
+                Dim maxT As Double = If(max = 0, 0, max * 1.125)
+                Dim st As Double = (maxT - minT) / 11
+                Dim tick As Double = minT
+
+                Do While tick < maxT
+                    stepsArray.Add(tick)
+                    tick += st
+                Loop
+
+                If tick = maxT Then
+                    stepArray.Add(tick)
+                End If
+
+                candidateArray.Add(stepsArray.ToArray)
+            End If
+
             ' 通过分别计算ticks的数量差值，是否容纳了输入的[min,max]范围来判断是否合适
             Dim maxSteps = candidateArray.Max(Function(candidate) candidate.Length)
             Dim dSteps = maxSteps - candidateArray.Select(Function(candidate) stdNum.Abs(candidate.Length - ticks)).AsVector
