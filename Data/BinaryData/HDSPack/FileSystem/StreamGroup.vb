@@ -1,4 +1,4 @@
-﻿Imports System.Data
+Imports System.Data
 Imports Microsoft.VisualBasic.FileIO.Path
 
 Namespace FileSystem
