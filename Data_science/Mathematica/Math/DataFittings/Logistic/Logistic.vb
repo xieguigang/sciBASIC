@@ -26,7 +26,8 @@ Public Class Logistic
     ''' <summary>
     ''' the weight to learn 
     ''' </summary>
-    Dim weights As Vector
+    Friend weights As Vector
+
     Dim println As Action(Of String)
 
     Public Sub New(n As Integer, Optional rate As Double = 0.0001, Optional println As Action(Of String) = Nothing)
@@ -47,7 +48,7 @@ Public Class Logistic
         Return 1.0 / (1.0 + stdNum.Exp(-z))
     End Function
 
-    Public Overridable Sub train(instances As IEnumerable(Of Instance))
+    Public Function train(instances As IEnumerable(Of Instance)) As LogisticFit
         Dim matrix As Instance() = instances.ToArray
         Dim weights As Double() = Me.weights.Array
 
@@ -71,7 +72,9 @@ Public Class Logistic
         Next
 
         Me.weights = New Vector(weights)
-    End Sub
+
+        Return LogisticFit.CreateFit(Me, matrix)
+    End Function
 
     Private Function classify(x As Double()) As Double
         Dim logit As Double = (weights * x).Sum
@@ -79,24 +82,4 @@ Public Class Logistic
 
         Return log
     End Function
-
-    Public Class Instance
-
-        Public Property label As Integer
-        Public Property x As Double()
-
-        Public Sub New(label As Integer, x As Integer())
-            Me.label = label
-            Me.x = x.Select(Function(d) CDbl(d)).ToArray
-        End Sub
-
-        Public Sub New(label As Integer, x As Double())
-            Me.label = label
-            Me.x = x
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return $"[{label}] {x.GetJson}"
-        End Function
-    End Class
 End Class
