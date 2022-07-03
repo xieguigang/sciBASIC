@@ -73,11 +73,18 @@ Namespace ApplicationServices
         ''' <param name="sessionID">It is recommended that use <see cref="App.PID"/> for this parameter.</param>
         ''' <returns></returns>
         '''
-        Public Shared Function GetAppSysTempFile(Optional ext$ = ".tmp", Optional sessionID$ = "", Optional prefix$ = Nothing) As String
+        Public Shared Function GetAppSysTempFile(Optional ext$ = ".tmp",
+                                                 Optional sessionID$ = "",
+                                                 Optional prefix$ = Nothing) As String
+
             Return CreateTempFilePath(App.SysTemp, ext, sessionID, prefix)
         End Function
 
-        Public Shared Function CreateTempFilePath(tmpdir$, Optional ext$ = ".tmp", Optional sessionID$ = "", Optional prefix$ = Nothing) As String
+        Public Shared Function CreateTempFilePath(tmpdir$,
+                                                  Optional ext$ = ".tmp",
+                                                  Optional sessionID$ = "",
+                                                  Optional prefix$ = Nothing) As String
+
             Dim tmp As String = tmpdir & "/" & App.GetNextUniqueName(prefix) & ext
 
             If tmp.EndsWith("/"c) OrElse tmp.EndsWith("\"c) Then
@@ -124,7 +131,8 @@ Namespace ApplicationServices
         ''' </summary>
         ''' <returns></returns>
         Friend Shared Function __sysTEMP() As String
-            Dim dir As String = Environment.GetEnvironmentVariable("TMP") ' Linux系统可能没有这个东西
+            ' Linux系统可能没有这个东西
+            Dim dir As String = Environment.GetEnvironmentVariable("TMP")
 
             If String.IsNullOrEmpty(dir) Then
                 dir = Path.GetTempPath
@@ -133,7 +141,8 @@ Namespace ApplicationServices
             Try
                 Call FS.CreateDirectory(dir)
             Catch ex As Exception
-                ' 不知道应该怎样处理，但是由于只是得到一个路径，所以在这里干脆忽略掉这个错误就可以了
+                ' 不知道应该怎样处理，但是由于只是得到一个路径，
+                ' 所以在这里干脆忽略掉这个错误就可以了
                 Call New Exception(dir, ex).PrintException
             End Try
 

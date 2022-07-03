@@ -102,7 +102,8 @@ Namespace FileIO
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function FileOpen(path As String, Optional encoding As Encodings = Encodings.UTF8) As Integer
+        <Extension>
+        Public Function FileOpen(path As String, Optional encoding As Encodings = Encodings.UTF8) As Integer
             Return My.File.OpenHandle(path, encoding)
         End Function
     End Module

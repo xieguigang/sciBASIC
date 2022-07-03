@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::414b2776d52e8143899df9e18c2b1c62, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\Repository\RepositoryFileSystem.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 221
-    '    Code Lines: 139
-    ' Comment Lines: 56
-    '   Blank Lines: 26
-    '     File Size: 10.06 KB
+' Summaries:
 
 
-    '     Module RepositoryFileSystem
-    ' 
-    '         Function: GetFile, GetMostAppreancePath, LoadEntryList, (+3 Overloads) LoadSourceEntryList, SourceCopy
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 221
+'    Code Lines: 139
+' Comment Lines: 56
+'   Blank Lines: 26
+'     File Size: 10.06 KB
+
+
+'     Module RepositoryFileSystem
+' 
+'         Function: GetFile, GetMostAppreancePath, LoadEntryList, (+3 Overloads) LoadSourceEntryList, SourceCopy
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.FileIO.Path
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
@@ -137,7 +137,7 @@ Namespace Data.Repository
                               Function(x)
 
                                   Return LinqAPI.DefaultFirst(Of String) _
- _
+                                                                         _
                                     () <= From path
                                           In x.Group
                                           Let pathValue = path.path
@@ -196,7 +196,7 @@ Namespace Data.Repository
         <ExportAPI("Load.ResourceEntry")>
         <Extension> Public Function LoadEntryList(<Parameter("Dir.Source")> DIR$, ParamArray exts$()) As NamedValue(Of String)()
             Return LinqAPI.Exec(Of NamedValue(Of String)) _
- _
+                                                          _
                 () <= From path As String
                       In ls - l - ShellSyntax.r - wildcards(exts) <= DIR
                       Select New NamedValue(Of String) With {

@@ -223,8 +223,12 @@ Namespace Graphic.Axis
             For i As Integer = 0 To candidateSteps.Count - 1
                 steps = candidateSteps(i)
 
+                If (max - min) / steps > 100 Then
+                    Continue For
+                End If
+
                 ' starting value depends on whether Or Not 0 Is in the array
-                If (zeroFlag) Then
+                If zeroFlag Then
                     minSteps = stdNum.Ceiling(stdNum.Abs(min) / steps)
                     stepArray = {-minSteps * steps}.AsList
                 Else
@@ -233,8 +237,8 @@ Namespace Graphic.Axis
 
                 Dim stepnum% = 1
 
-                Do While (stepArray(stepArray.Count - 1) < max)
-                    stepArray.Add((stepArray(0) + steps * stepnum))
+                Do While stepArray(stepArray.Count - 1) < max
+                    stepArray.Add(stepArray(0) + steps * stepnum)
                     stepnum += 1
                 Loop
 
@@ -257,6 +261,25 @@ Namespace Graphic.Axis
                 candidateArray += stepArray.ToArray
                 ' End If
             Next
+
+            If candidateArray.Count = 0 Then
+                Dim stepsArray As New List(Of Double)
+                Dim minT As Double = If(min = 0, 0, min * 0.85)
+                Dim maxT As Double = If(max = 0, 0, max * 1.125)
+                Dim st As Double = (maxT - minT) / 11
+                Dim tick As Double = minT
+
+                Do While tick < maxT
+                    stepsArray.Add(tick)
+                    tick += st
+                Loop
+
+                If tick = maxT Then
+                    stepArray.Add(tick)
+                End If
+
+                candidateArray.Add(stepsArray.ToArray)
+            End If
 
             ' 通过分别计算ticks的数量差值，是否容纳了输入的[min,max]范围来判断是否合适
             Dim maxSteps = candidateArray.Max(Function(candidate) candidate.Length)
