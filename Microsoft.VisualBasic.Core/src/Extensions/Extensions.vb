@@ -171,11 +171,15 @@ Public Module Extensions
     ''' <summary>
     ''' Get target string's md5 hash code
     ''' </summary>
-    ''' <param name="s$"></param>
-    ''' <returns></returns>
+    ''' <param name="s">
+    ''' any text data
+    ''' </param>
+    ''' <returns>
+    ''' a 32 bit md5 string in lower case
+    ''' </returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function MD5(s$) As String
-        Return s.GetMd5Hash
+        Return s.GetMd5Hash.ToLower
     End Function
 
     ''' <summary>

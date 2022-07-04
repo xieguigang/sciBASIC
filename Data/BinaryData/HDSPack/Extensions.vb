@@ -24,4 +24,13 @@ Public Module Extensions
 
         Return True
     End Function
+
+    <Extension>
+    Public Function ReadText(pack As StreamPack, filename As String, Optional encoding As Encodings = Encodings.UTF8) As String
+        If pack.GetObject(filename) Is Nothing Then
+            Return Nothing
+        Else
+            Return New StreamReader(pack.OpenBlock(filename), encoding.CodePage).ReadToEnd
+        End If
+    End Function
 End Module

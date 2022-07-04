@@ -26,6 +26,16 @@ Public Class LazyAttribute
         Call attributes.Add(name, attr)
     End Sub
 
+    Public Function GetValue(name As String) As Object
+        Dim attr As AttributeMetadata = attributes.TryGetValue(name)
+
+        If attr Is Nothing Then
+            Return Nothing
+        Else
+            Return GetValue(attr)
+        End If
+    End Function
+
     Friend Function ToArray() As AttributeMetadata()
         Return attributes.Values.ToArray
     End Function

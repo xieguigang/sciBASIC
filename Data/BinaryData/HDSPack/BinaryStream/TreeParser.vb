@@ -9,11 +9,11 @@ Friend Module TreeParser
 
     Public Function Parse(buffer As Stream, registry As Dictionary(Of String, String)) As StreamGroup
         Dim size As Integer
-        Dim bin As New BinaryDataReader(buffer)
+        Dim bin As New BinaryDataReader(buffer) With {.ByteOrder = ByteOrder.BigEndian}
         Dim root As StreamGroup
 
         size = bin.ReadInt32
-        bin = New BinaryDataReader(New SubStream(buffer, buffer.Position, size))
+        bin = New BinaryDataReader(New SubStream(buffer, buffer.Position, size)) With {.ByteOrder = ByteOrder.BigEndian}
         root = bin.getCurrentDirectory(registry)
 
         Return root

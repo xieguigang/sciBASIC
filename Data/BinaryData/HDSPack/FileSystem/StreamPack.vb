@@ -20,7 +20,12 @@ Namespace FileSystem
 
         ReadOnly buffer As Stream
         ReadOnly init_size As Integer
-        ReadOnly registriedTypes As New Index(Of String)
+
+        ''' <summary>
+        ''' the type list of the values in the <see cref="globalAttributes"/> data,
+        ''' a messagepack schema should be defined for these types.
+        ''' </summary>
+        ReadOnly _registriedTypes As New Index(Of String)
 
         Dim disposedValue As Boolean
 
@@ -51,12 +56,19 @@ Namespace FileSystem
             If buffer.Length > 0 Then
                 superBlock = ParseTree()
             Else
-                superBlock = StreamGroup.CreateRootTree
-
-                Call buffer.Write(Encoding.ASCII.GetBytes(magic), Scan0, magic.Length)
-                Call buffer.SetLength(magic.Length + meta_size)
-                Call buffer.Flush()
+                Call Clear(meta_size)
             End If
+        End Sub
+
+        Public Sub Clear(Optional meta_size As Long = 1024 * 1024)
+            _superBlock = StreamGroup.CreateRootTree
+            _globalAttributes = New LazyAttribute
+            _registriedTypes.Clear()
+
+            Call buffer.Seek(Scan0, SeekOrigin.Begin)
+            Call buffer.Write(Encoding.ASCII.GetBytes(magic), Scan0, magic.Length)
+            Call buffer.SetLength(magic.Length + meta_size)
+            Call buffer.Flush()
         End Sub
 
         Public Function GetGlobalAttribute(name As String) As Object
@@ -76,8 +88,8 @@ Namespace FileSystem
                 If Not val.Value Is Nothing Then
                     Dim code As String = val.GetType.FullName
 
-                    If Not code Like registriedTypes Then
-                        Call registriedTypes.Add(code)
+                    If Not code Like _registriedTypes Then
+                        Call _registriedTypes.Add(code)
                     End If
                 End If
 
@@ -88,19 +100,22 @@ Namespace FileSystem
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="fileName"></param>
+        ''' <param name="fileName">
+        ''' the dir object its file name must be ends with the symbol '\' or '/'
+        ''' </param>
         ''' <param name="attrs">
         ''' all attribute value will be serialized via messagepack
         ''' </param>
         Public Sub SetAttribute(fileName As String, attrs As Dictionary(Of String, Object))
-            Dim file As StreamObject = superBlock.GetObject(New FilePath(fileName))
+            Dim reference As New FilePath(fileName)
+            Dim file As StreamObject = superBlock.GetObject(reference)
 
             For Each val As Object In attrs.Values
                 If Not val Is Nothing Then
                     Dim code As String = val.GetType.FullName
 
-                    If Not code Like registriedTypes Then
-                        Call registriedTypes.Add(code)
+                    If Not code Like _registriedTypes Then
+                        Call _registriedTypes.Add(code)
                     End If
                 End If
             Next
@@ -122,12 +137,12 @@ Namespace FileSystem
             If Encoding.ASCII.GetString(magic) <> StreamPack.magic Then
                 Throw New FormatException("invalid magic header!")
             Else
-                Dim bin As New BinaryDataReader(buffer)
+                Dim bin As New BinaryDataReader(buffer) With {.ByteOrder = ByteOrder.BigEndian}
                 Dim bufSize As Integer = bin.ReadInt32
                 Dim buf As Byte() = bin.ReadBytes(bufSize)
 
                 For Each type As NamedValue(Of Integer) In New MemoryStream(buf).GetTypeRegistry
-                    Call registriedTypes.Add(type.Name, type.Value)
+                    Call _registriedTypes.Add(type.Name, type.Value)
                     Call registry.Add(type.Value.ToString, type.Name)
                 Next
 
@@ -142,6 +157,13 @@ Namespace FileSystem
             Return TreeParser.Parse(buffer, registry)
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="fileName">
+        ''' the dir object its file name must be ends with the symbol '\' or '/'
+        ''' </param>
+        ''' <returns></returns>
         Public Function GetObject(fileName As String) As StreamObject
             Return superBlock.GetObject(New FilePath(fileName))
         End Function
@@ -156,7 +178,9 @@ Namespace FileSystem
         ''' if the target file block is missing from the tree, then this function will append a new file block
         ''' otherwise a substream object will be returns for read data
         ''' </summary>
-        ''' <param name="fileName"></param>
+        ''' <param name="fileName">
+        ''' the dir object its file name must be ends with the symbol '\' or '/'
+        ''' </param>
         ''' <returns></returns>
         Public Function OpenBlock(fileName As String) As Stream
             Dim path As New FilePath("/" & fileName)
@@ -187,12 +211,12 @@ Namespace FileSystem
             If Not disposedValue Then
                 If disposing Then
                     ' TODO: 释放托管状态(托管对象)
-                    Dim treeMetadata As Byte() = superBlock.GetBuffer(registriedTypes)
-                    Dim registeryMetadata As Byte() = registriedTypes.GetTypeCodes
-                    Dim globalMetadata As Byte() = globalAttributes.Pack(registriedTypes)
-                    Dim size As Byte() = BitConverter.GetBytes(treeMetadata.Length)
-                    Dim size2 As Byte() = BitConverter.GetBytes(registeryMetadata.Length)
-                    Dim size3 As Byte() = BitConverter.GetBytes(globalMetadata.Length)
+                    Dim treeMetadata As Byte() = superBlock.GetBuffer(_registriedTypes)
+                    Dim registeryMetadata As Byte() = _registriedTypes.GetTypeCodes
+                    Dim globalMetadata As Byte() = globalAttributes.Pack(_registriedTypes)
+                    Dim size As Byte() = NetworkByteOrderBitConvertor.GetBytes(treeMetadata.Length)
+                    Dim size2 As Byte() = NetworkByteOrderBitConvertor.GetBytes(registeryMetadata.Length)
+                    Dim size3 As Byte() = NetworkByteOrderBitConvertor.GetBytes(globalMetadata.Length)
 
                     Call buffer.Seek(magic.Length, SeekOrigin.Begin)
                     Call buffer.Write(size2, Scan0, size2.Length)

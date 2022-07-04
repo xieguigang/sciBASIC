@@ -9,7 +9,7 @@ Friend Module TreeWriter
 
     <Extension>
     Public Function GetBuffer(root As StreamGroup, type As Index(Of String)) As Byte()
-        Using ms As New MemoryStream, bin As New BinaryDataWriter(ms, encoding:=Encodings.UTF8WithoutBOM)
+        Using ms As New MemoryStream, bin As New BinaryDataWriter(ms, encoding:=Encodings.UTF8WithoutBOM) With {.ByteOrder = ByteOrder.BigEndian}
             Dim buf As Byte()
             Dim attrs As Byte() = root.Pack(type)
 
@@ -37,7 +37,7 @@ Friend Module TreeWriter
 
     <Extension>
     Private Function GetBuffer(file As StreamBlock, type As Index(Of String)) As Byte()
-        Using ms As New MemoryStream, bin As New BinaryDataWriter(ms, encoding:=Encodings.UTF8WithoutBOM)
+        Using ms As New MemoryStream, bin As New BinaryDataWriter(ms, encoding:=Encodings.UTF8WithoutBOM) With {.ByteOrder = ByteOrder.BigEndian}
             Dim attrs As Byte() = file.Pack(type)
 
             Call bin.Write(file.referencePath.ToString, BinaryStringFormat.ZeroTerminated)

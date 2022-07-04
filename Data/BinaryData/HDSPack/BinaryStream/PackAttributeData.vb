@@ -10,7 +10,7 @@ Module PackAttributeData
 
     <Extension>
     Public Function GetTypeCodes(registry As Index(Of String)) As Byte()
-        Using ms As New MemoryStream, bin As New BinaryDataWriter(ms)
+        Using ms As New MemoryStream, bin As New BinaryDataWriter(ms) With {.ByteOrder = ByteOrder.BigEndian}
             Call bin.Write(registry.Count)
 
             For Each code As SeqValue(Of String) In registry
@@ -26,7 +26,7 @@ Module PackAttributeData
 
     <Extension>
     Public Iterator Function GetTypeRegistry(buffer As Stream) As IEnumerable(Of NamedValue(Of Integer))
-        Using bin As New BinaryDataReader(buffer)
+        Using bin As New BinaryDataReader(buffer) With {.ByteOrder = ByteOrder.BigEndian}
             Dim n As Integer = bin.ReadInt32
             Dim code As Integer
             Dim type As String
@@ -62,7 +62,7 @@ Module PackAttributeData
         Dim typeCode As Integer
         Dim buf As Byte()
 
-        Using ms As New MemoryStream, bin As New BinaryDataWriter(ms)
+        Using ms As New MemoryStream, bin As New BinaryDataWriter(ms) With {.ByteOrder = ByteOrder.BigEndian}
             Call bin.Write(attrs.Length)
             Call bin.Write(If(description, ""), BinaryStringFormat.ZeroTerminated)
 
@@ -94,7 +94,7 @@ Module PackAttributeData
 
     <Extension>
     Public Function UnPack(buf As Stream, ByRef desc As String, registry As Dictionary(Of String, String)) As LazyAttribute
-        Using bin As New BinaryDataReader(buf)
+        Using bin As New BinaryDataReader(buf) With {.ByteOrder = ByteOrder.BigEndian}
             Dim n As Integer = bin.ReadInt32
             Dim attrs As New Dictionary(Of String, AttributeMetadata)
             Dim typeName As String
