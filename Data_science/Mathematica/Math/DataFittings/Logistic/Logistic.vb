@@ -68,7 +68,7 @@ Public Class Logistic
                 lik += label * stdNum.Log(classify(x)) + (1 - label) * stdNum.Log(1 - classify(x))
             Next
 
-            Call println("iteration: " & n & " " & weights.GetJson & " mle: " + lik)
+            Call println("iteration: " & n & " " & weights.GetJson & " mle: " & lik)
         Next
 
         Me.weights = New Vector(weights)
