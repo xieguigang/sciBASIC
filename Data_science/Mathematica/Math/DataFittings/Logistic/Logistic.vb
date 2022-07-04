@@ -44,7 +44,7 @@ Public Class Logistic
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Private Shared Function sigmoid(z As Double) As Double
+    Friend Shared Function sigmoid(z As Double) As Double
         Return 1.0 / (1.0 + stdNum.Exp(-z))
     End Function
 
@@ -76,7 +76,7 @@ Public Class Logistic
         Return LogisticFit.CreateFit(Me, matrix)
     End Function
 
-    Private Function classify(x As Double()) As Double
+    Public Function classify(x As Double()) As Double
         Dim logit As Double = (weights * x).Sum
         Dim log = sigmoid(logit)
 
