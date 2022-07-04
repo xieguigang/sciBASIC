@@ -34,10 +34,6 @@ Public Class Logistic
         Me.rate = rate
         Me.weights = New Vector(New Double(n - 1) {})
         Me.println = println
-
-        If Me.println Is Nothing Then
-            Me.println = AddressOf Console.WriteLine
-        End If
     End Sub
 
     Sub New()
@@ -68,7 +64,9 @@ Public Class Logistic
                 lik += label * stdNum.Log(classify(x)) + (1 - label) * stdNum.Log(1 - classify(x))
             Next
 
-            Call println("iteration: " & n & " " & weights.GetJson & " mle: " & lik)
+            If Not println Is Nothing Then
+                Call println("iteration: " & n & " " & weights.GetJson & " mle: " & lik)
+            End If
         Next
 
         Me.weights = New Vector(weights)
