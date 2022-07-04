@@ -29,7 +29,7 @@ Namespace FileSystem
 
         Dim disposedValue As Boolean
 
-        Const magic As String = "HDS"
+        Public Const Magic As String = "HDS"
 
         ''' <summary>
         ''' get all data files inside this hds data 
@@ -66,8 +66,8 @@ Namespace FileSystem
             _registriedTypes.Clear()
 
             Call buffer.Seek(Scan0, SeekOrigin.Begin)
-            Call buffer.Write(Encoding.ASCII.GetBytes(magic), Scan0, magic.Length)
-            Call buffer.SetLength(magic.Length + meta_size)
+            Call buffer.Write(Encoding.ASCII.GetBytes(Magic), Scan0, Magic.Length)
+            Call buffer.SetLength(Magic.Length + meta_size)
             Call buffer.Flush()
         End Sub
 
@@ -129,12 +129,12 @@ Namespace FileSystem
 
         Private Function ParseTree() As StreamGroup
             ' verify data at first
-            Dim magic As Byte() = New Byte(StreamPack.magic.Length - 1) {}
+            Dim magic As Byte() = New Byte(StreamPack.Magic.Length - 1) {}
             Dim registry As New Dictionary(Of String, String)
 
             Call buffer.Read(magic, Scan0, magic.Length)
 
-            If Encoding.ASCII.GetString(magic) <> StreamPack.magic Then
+            If Encoding.ASCII.GetString(magic) <> StreamPack.Magic Then
                 Throw New FormatException("invalid magic header!")
             Else
                 Dim bin As New BinaryDataReader(buffer) With {.ByteOrder = ByteOrder.BigEndian}
@@ -218,7 +218,7 @@ Namespace FileSystem
                     Dim size2 As Byte() = NetworkByteOrderBitConvertor.GetBytes(registeryMetadata.Length)
                     Dim size3 As Byte() = NetworkByteOrderBitConvertor.GetBytes(globalMetadata.Length)
 
-                    Call buffer.Seek(magic.Length, SeekOrigin.Begin)
+                    Call buffer.Seek(Magic.Length, SeekOrigin.Begin)
                     Call buffer.Write(size2, Scan0, size2.Length)
                     Call buffer.Write(registeryMetadata, Scan0, registeryMetadata.Length)
                     Call buffer.Write(size3, Scan0, size3.Length)
