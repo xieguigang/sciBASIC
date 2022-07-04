@@ -1,4 +1,5 @@
 ﻿Imports System.Text
+Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Data.IO.MessagePack
 Imports Microsoft.VisualBasic.ValueTypes
 
@@ -46,8 +47,14 @@ Public Class LazyAttribute
         End If
 
         Select Case attr.GetUnderlyingType
-            Case GetType(Date) : Return FromUnixTimeStamp(BitConverter.ToDouble(attr.data, Scan0))
+            Case GetType(Date) : Return FromUnixTimeStamp(NetworkByteOrderBitConvertor.ToDouble(attr.data, Scan0))
             Case GetType(String) : Return Encoding.UTF8.GetString(attr.data)
+            Case GetType(Single) : Return NetworkByteOrderBitConvertor.ToSingle(attr.data, Scan0)
+            Case GetType(Double) : Return NetworkByteOrderBitConvertor.ToDouble(attr.data, Scan0)
+            Case GetType(Short) : Return NetworkByteOrderBitConvertor.ToInt16(attr.data, Scan0)
+            Case GetType(Integer) : Return NetworkByteOrderBitConvertor.ToInt32(attr.data, Scan0)
+            Case GetType(Long) : Return NetworkByteOrderBitConvertor.ToInt64(attr.data, Scan0)
+            Case GetType(Byte) : Return attr.data(Scan0)
             Case Else
                 Throw New NotImplementedException(attr.ToString)
         End Select
@@ -55,13 +62,13 @@ Public Class LazyAttribute
 
     Public Shared Function GetBuffer(val As Object) As Byte()
         Select Case val.GetType
-            Case GetType(Date) : Return BitConverter.GetBytes(DirectCast(val, Date).UnixTimeStamp)
+            Case GetType(Date) : Return NetworkByteOrderBitConvertor.GetBytes(DirectCast(val, Date).UnixTimeStamp)
             Case GetType(String) : Return Encoding.UTF8.GetBytes(DirectCast(val, String))
-            Case GetType(Integer) : Return BitConverter.GetBytes(DirectCast(val, Integer))
-            Case GetType(Long) : Return BitConverter.GetBytes(DirectCast(val, Long))
-            Case GetType(Short) : Return BitConverter.GetBytes(DirectCast(val, Short))
-            Case GetType(Single) : Return BitConverter.GetBytes(DirectCast(val, Single))
-            Case GetType(Double) : Return BitConverter.GetBytes(DirectCast(val, Double))
+            Case GetType(Integer) : Return NetworkByteOrderBitConvertor.GetBytes(DirectCast(val, Integer))
+            Case GetType(Long) : Return NetworkByteOrderBitConvertor.GetBytes(DirectCast(val, Long))
+            Case GetType(Short) : Return NetworkByteOrderBitConvertor.GetBytes(DirectCast(val, Short))
+            Case GetType(Single) : Return NetworkByteOrderBitConvertor.GetBytes(DirectCast(val, Single))
+            Case GetType(Double) : Return NetworkByteOrderBitConvertor.GetBytes(DirectCast(val, Double))
             Case GetType(Byte) : Return {DirectCast(val, Byte)}
             Case Else
                 Return MsgPackSerializer.SerializeObject(val)
