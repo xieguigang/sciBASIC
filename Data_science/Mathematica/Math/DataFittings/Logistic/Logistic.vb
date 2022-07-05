@@ -34,17 +34,13 @@ Public Class Logistic
         Me.rate = rate
         Me.weights = New Vector(New Double(n - 1) {})
         Me.println = println
-
-        If Me.println Is Nothing Then
-            Me.println = AddressOf Console.WriteLine
-        End If
     End Sub
 
     Sub New()
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Private Shared Function sigmoid(z As Double) As Double
+    Friend Shared Function sigmoid(z As Double) As Double
         Return 1.0 / (1.0 + stdNum.Exp(-z))
     End Function
 
@@ -68,7 +64,9 @@ Public Class Logistic
                 lik += label * stdNum.Log(classify(x)) + (1 - label) * stdNum.Log(1 - classify(x))
             Next
 
-            Call println("iteration: " & n & " " & weights.GetJson & " mle: " + lik)
+            If Not println Is Nothing Then
+                Call println("iteration: " & n & " " & weights.GetJson & " mle: " & lik)
+            End If
         Next
 
         Me.weights = New Vector(weights)
@@ -76,7 +74,7 @@ Public Class Logistic
         Return LogisticFit.CreateFit(Me, matrix)
     End Function
 
-    Private Function classify(x As Double()) As Double
+    Public Function classify(x As Double()) As Double
         Dim logit As Double = (weights * x).Sum
         Dim log = sigmoid(logit)
 
