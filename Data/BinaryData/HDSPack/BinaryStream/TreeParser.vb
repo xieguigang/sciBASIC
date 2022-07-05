@@ -4,16 +4,32 @@ Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.FileIO.Path
+Imports Microsoft.VisualBasic.Net.Http
 
 Friend Module TreeParser
 
+    ''' <summary>
+    ''' header tree data is compressed in gzip
+    ''' </summary>
+    ''' <param name="buffer"></param>
+    ''' <param name="registry"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' the attribute data in the tree element has 
+    ''' already been unpack from the raw data 
+    ''' buffer.
+    ''' </remarks>
     Public Function Parse(buffer As Stream, registry As Dictionary(Of String, String)) As StreamGroup
         Dim size As Integer
         Dim bin As New BinaryDataReader(buffer) With {.ByteOrder = ByteOrder.BigEndian}
         Dim root As StreamGroup
+        Dim rawStream As Stream
 
         size = bin.ReadInt32
-        bin = New BinaryDataReader(New SubStream(buffer, buffer.Position, size)) With {.ByteOrder = ByteOrder.BigEndian}
+        rawStream = New SubStream(buffer, buffer.Position, size)
+        ' decomparession via gzip
+        rawStream = rawStream.UnGzipStream
+        bin = New BinaryDataReader(rawStream) With {.ByteOrder = ByteOrder.BigEndian}
         root = bin.getCurrentDirectory(registry)
 
         Return root

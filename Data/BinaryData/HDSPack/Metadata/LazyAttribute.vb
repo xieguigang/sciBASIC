@@ -3,7 +3,7 @@ Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Data.IO.MessagePack
 Imports Microsoft.VisualBasic.ValueTypes
 
-Public Class LazyAttribute
+Public Class LazyAttribute : Implements IEnumerable(Of String)
 
     Public Property attributes As New Dictionary(Of String, AttributeMetadata)
 
@@ -56,7 +56,7 @@ Public Class LazyAttribute
             Case GetType(Long) : Return NetworkByteOrderBitConvertor.ToInt64(attr.data, Scan0)
             Case GetType(Byte) : Return attr.data(Scan0)
             Case Else
-                Throw New NotImplementedException(attr.ToString)
+                Return MsgPackSerializer.Deserialize(attr.GetUnderlyingType, attr.data)
         End Select
     End Function
 
@@ -73,6 +73,20 @@ Public Class LazyAttribute
             Case Else
                 Return MsgPackSerializer.SerializeObject(val)
         End Select
+    End Function
+
+    Public Iterator Function GetEnumerator() As IEnumerator(Of String) Implements IEnumerable(Of String).GetEnumerator
+        If attributes.IsNullOrEmpty Then
+            Return
+        End If
+
+        For Each tag As String In attributes.Keys
+            Yield tag
+        Next
+    End Function
+
+    Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+        Yield GetEnumerator()
     End Function
 End Class
 
