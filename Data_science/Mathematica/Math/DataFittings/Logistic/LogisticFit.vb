@@ -23,13 +23,13 @@ Public Class LogisticFit : Implements IFitted
     End Function
 
     Friend Shared Function CreateFit(log As Logistic, matrix As Instance()) As LogisticFit
-        Dim weights As New Polynomial With {.Factors = log.weights.ToArray}
+        Dim weights As New Polynomial With {.Factors = log.theta.ToArray}
         Dim test As IFitError() = matrix _
             .Select(Function(i)
                         Return New [Error] With {
                             .X = i.x.AsVector,
                             .Y = i.label,
-                            .Yfit = log.classify(i.x)
+                            .Yfit = log.predict(i.x)
                         }
                     End Function) _
             .Select(Function(pi) DirectCast(pi, IFitError)) _
