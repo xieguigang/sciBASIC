@@ -1,23 +1,21 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports stdNum = System.Math
 
 ''' <summary>
-''' Performs simple logistic regression.
-''' User: tpeng
-''' Date: 6/22/12
-''' Time: 11:01 PM
-''' 
-''' @author tpeng
-''' @author Matthieu Labas
+''' This method uses Gradient descent algorithm. It uses number of small
+''' steps (iterations) And with each step use New theta values which
+''' results in smaller cost function value. After a while it comes to 
+''' local minima (minimum cost function).
 ''' </summary>
 Public Class Logistic
 
     ''' <summary>
     ''' the learning rate 
     ''' </summary>
-    Public Property rate As Double = 0.0001
+    Public Property ALPHA As Double = 0.0001
     ''' <summary>
     ''' the number of iterations 
     ''' </summary>
@@ -26,58 +24,75 @@ Public Class Logistic
     ''' <summary>
     ''' the weight to learn 
     ''' </summary>
-    Friend weights As Vector
+    Friend theta As Vector
 
     Dim println As Action(Of String)
 
     Public Sub New(n As Integer, Optional rate As Double = 0.0001, Optional println As Action(Of String) = Nothing)
-        Me.rate = rate
-        Me.weights = New Vector(New Double(n - 1) {})
+        Me.ALPHA = rate
+        Me.theta = Vector.rand(n) * n
         Me.println = println
     End Sub
 
     Sub New()
     End Sub
 
+    ''' <summary>
+    ''' Sigmoid function. Formula: g = 1 ./ (1 + (exp(-1 .* z)));
+    ''' </summary>
+    ''' <param name="z">
+    ''' Matrix, for which elements sigmoid function is calculated.
+    ''' </param>
+    ''' <returns>
+    ''' Matrix with elements from sigmoid function.
+    ''' </returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Friend Shared Function sigmoid(z As NumericMatrix) As NumericMatrix
+        Return 1.0 / (1.0 + stdNum.E ^ -z)
+    End Function
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Friend Shared Function sigmoid(z As Double) As Double
-        Return 1.0 / (1.0 + stdNum.Exp(-z))
+        Return 1.0 / (1.0 + stdNum.E ^ -z)
+    End Function
+
+    Friend Shared Function computeCost(features As NumericMatrix, values As NumericMatrix, theta As NumericMatrix) As Double
+        Dim size As Integer = values.RowDimension
+        Dim one As NumericMatrix = NumericMatrix.One(values.ColumnDimension, values.RowDimension)
+        Dim first As NumericMatrix = (-values) * sigmoid(features * theta).Log
+        Dim second As NumericMatrix = (one - values) * (one - sigmoid(features * theta)).Log
+
+        Return (first - second).Sum(Function(v) v.Sum) / size
     End Function
 
     Public Function train(instances As IEnumerable(Of Instance)) As LogisticFit
-        Dim matrix As Instance() = instances.ToArray
-        Dim weights As Double() = Me.weights.Array
+        Dim raw As Instance() = instances.ToArray
+        Dim values As New Vector(raw.Select(Function(r) r.label))
+        Dim size As Integer = values.Length
+        Dim features As New NumericMatrix(raw.Length, raw(Scan0).featureSize)
+        Dim theta As NumericMatrix = NumericMatrix.Zero(features.ColumnDimension, 1)
 
-        For n As Integer = 0 To ITERATIONS - 1
-            Dim lik As Double = 0.0
-
-            For i As Integer = 0 To matrix.Length - 1
-                Dim x = matrix(i).x
-                Dim predicted = classify(x)
-                Dim label = matrix(i).label
-
-                For j As Integer = 0 To weights.Length - 1
-                    weights(j) = weights(j) + rate * (label - predicted) * x(j)
-                Next
-
-                ' not necessary for learning
-                lik += label * stdNum.Log(classify(x)) + (1 - label) * stdNum.Log(1 - classify(x))
-            Next
-
-            If Not println Is Nothing Then
-                Call println("iteration: " & n & " " & weights.GetJson & " mle: " & lik)
-            End If
+        For i As Integer = 0 To raw.Length - 1
+            features.Array(i) = raw(i).x
         Next
 
-        Me.weights = New Vector(weights)
+        For i As Integer = 0 To ITERATIONS - 1
+            Dim featuresTranspose As NumericMatrix = features.Transpose
+            Dim hx = sigmoid(features * theta)
+            Dim delta = (featuresTranspose * hx) - (featuresTranspose * values) / size
 
-        Return LogisticFit.CreateFit(Me, matrix)
+            theta = theta - (delta * ALPHA)
+        Next
+
+        Me.theta = New Vector(theta.Array(0))
+
+        Return LogisticFit.CreateFit(Me, raw)
     End Function
 
-    Public Function classify(x As Double()) As Double
-        Dim logit As Double = (weights * x).Sum
-        Dim log = sigmoid(logit)
+    Public Function predict(x As Double()) As Double
+        Dim logit As Double = (theta * x).Sum
+        Dim p = sigmoid(logit)
 
-        Return log
+        Return 1 - p
     End Function
 End Class

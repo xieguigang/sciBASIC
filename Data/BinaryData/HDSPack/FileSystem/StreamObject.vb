@@ -30,6 +30,15 @@ Namespace FileSystem
         Sub New()
         End Sub
 
+        Public Function hasAttributes() As Boolean
+            Return attributes IsNot Nothing AndAlso Not attributes.attributes.IsNullOrEmpty
+        End Function
+
+        ''' <summary>
+        ''' get attribute value by a given attribute name
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <returns></returns>
         Public Function GetAttribute(name As String) As Object
             If Not attributes.attributes.ContainsKey(name) Then
                 Return Nothing

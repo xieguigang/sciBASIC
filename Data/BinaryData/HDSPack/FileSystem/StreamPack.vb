@@ -7,6 +7,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.FileIO.Path
+Imports Microsoft.VisualBasic.Net.Http
 
 Namespace FileSystem
 
@@ -158,7 +159,8 @@ Namespace FileSystem
         End Function
 
         ''' <summary>
-        ''' 
+        ''' Get target object and its corresponding attributes data
+        ''' which is specified by the given <paramref name="fileName"/>
         ''' </summary>
         ''' <param name="fileName">
         ''' the dir object its file name must be ends with the symbol '\' or '/'
@@ -211,7 +213,7 @@ Namespace FileSystem
             If Not disposedValue Then
                 If disposing Then
                     ' TODO: 释放托管状态(托管对象)
-                    Dim treeMetadata As Byte() = superBlock.GetBuffer(_registriedTypes)
+                    Dim treeMetadata As Byte() = New MemoryStream(superBlock.GetBuffer(_registriedTypes)).GZipStream.ToArray
                     Dim registeryMetadata As Byte() = _registriedTypes.GetTypeCodes
                     Dim globalMetadata As Byte() = globalAttributes.Pack(_registriedTypes)
                     Dim size As Byte() = NetworkByteOrderBitConvertor.GetBytes(treeMetadata.Length)

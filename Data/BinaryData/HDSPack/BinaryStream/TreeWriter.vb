@@ -7,6 +7,12 @@ Imports Microsoft.VisualBasic.Text
 
 Friend Module TreeWriter
 
+    ''' <summary>
+    ''' save tree data into data buffer
+    ''' </summary>
+    ''' <param name="root"></param>
+    ''' <param name="type"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function GetBuffer(root As StreamGroup, type As Index(Of String)) As Byte()
         Using ms As New MemoryStream, bin As New BinaryDataWriter(ms, encoding:=Encodings.UTF8WithoutBOM) With {.ByteOrder = ByteOrder.BigEndian}

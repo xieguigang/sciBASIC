@@ -114,6 +114,7 @@ Namespace Net.Http
             Using gz As New GZipStream(stream, CompressionMode.Decompress)
                 Dim ms As New MemoryStream
                 Call gz.CopyTo(ms)
+                Call ms.Seek(Scan0, SeekOrigin.Begin)
                 Return ms
             End Using
         End Function
