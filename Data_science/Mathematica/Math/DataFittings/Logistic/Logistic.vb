@@ -1,16 +1,14 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports stdNum = System.Math
 
 ''' <summary>
-''' Performs simple logistic regression.
-''' User: tpeng
-''' Date: 6/22/12
-''' Time: 11:01 PM
-''' 
-''' @author tpeng
-''' @author Matthieu Labas
+''' This method uses Gradient descent algorithm. It uses number of small
+''' steps (iterations) And with each step use New theta values which
+''' results in smaller cost function value. After a while it comes to 
+''' local minima (minimum cost function).
 ''' </summary>
 Public Class Logistic
 
@@ -40,53 +38,55 @@ Public Class Logistic
     End Sub
 
     ''' <summary>
-    ''' 1.0 / (1.0 + e ^ -z)
+    ''' Sigmoid function. Formula: g = 1 ./ (1 + (exp(-1 .* z)));
     ''' </summary>
-    ''' <param name="z"></param>
-    ''' <returns></returns>
+    ''' <param name="z">
+    ''' Matrix, for which elements sigmoid function is calculated.
+    ''' </param>
+    ''' <returns>
+    ''' Matrix with elements from sigmoid function.
+    ''' </returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Friend Shared Function sigmoid(z As NumericMatrix) As NumericMatrix
+        Return 1.0 / (1.0 + stdNum.E ^ -z)
+    End Function
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Friend Shared Function sigmoid(z As Double) As Double
         Return 1.0 / (1.0 + stdNum.E ^ -z)
     End Function
 
-    Public Function train(instances As IEnumerable(Of Instance)) As LogisticFit
-        Dim matrix As Instance() = instances.ToArray
-        Dim theta As Double() = Me.theta.Array
-        Dim m As Double = matrix.Length
+    Friend Shared Function computeCost(features As NumericMatrix, values As NumericMatrix, theta As NumericMatrix) As Double
+        Dim size As Integer = values.RowDimension
+        Dim one As NumericMatrix = NumericMatrix.One(values.ColumnDimension, values.RowDimension)
+        Dim first As NumericMatrix = (-values) * sigmoid(features * theta).Log
+        Dim second As NumericMatrix = (one - values) * (one - sigmoid(features * theta)).Log
 
-        For n As Integer = 0 To ITERATIONS - 1
-            Dim grad As Double = 0.0
-            Dim cost As Double = 0.0
-
-            For i As Integer = 0 To matrix.Length - 1
-                Dim x = matrix(i).x
-                Dim h = predict(x, theta)
-                Dim y = matrix(i).label
-
-                For j As Integer = 0 To theta.Length - 1
-                    theta(j) = theta(j) - (ALPHA / m) * ((h - y) * x(j))
-                Next
-
-                'h = predict(x, theta)
-                'cost += (1 / m) * (-y * stdNum.Log(h) - (1 - y) * stdNum.Log(1 - h))
-                'grad += x.Select(Function(xi) xi * (1 / m) * (h - y)).Sum
-            Next
-
-            If Not println Is Nothing Then
-                ' Call println("iteration: " & n & " " & theta.GetJson & " grad: " & grad & " cost: " & cost)
-            End If
-        Next
-
-        Me.theta = New Vector(theta)
-
-        Return LogisticFit.CreateFit(Me, matrix)
+        Return (first - second).Sum(Function(v) v.Sum) / size
     End Function
 
-    Private Function predict(x As Double(), theta As Double()) As Double
-        Dim logit As Double = theta.Select(Function(wi, i) wi * x(i)).Sum
-        Dim p = sigmoid(logit)
+    Public Function train(instances As IEnumerable(Of Instance)) As LogisticFit
+        Dim raw As Instance() = instances.ToArray
+        Dim values As New Vector(raw.Select(Function(r) r.label))
+        Dim size As Integer = values.Length
+        Dim features As New NumericMatrix(raw.Length, raw(Scan0).featureSize)
+        Dim theta As NumericMatrix = NumericMatrix.Zero(features.ColumnDimension, 1)
 
-        Return p
+        For i As Integer = 0 To raw.Length - 1
+            features.Array(i) = raw(i).x
+        Next
+
+        For i As Integer = 0 To ITERATIONS - 1
+            Dim featuresTranspose As NumericMatrix = features.Transpose
+            Dim hx = sigmoid(features * theta)
+            Dim delta = (featuresTranspose * hx) - (featuresTranspose * values) / size
+
+            theta = theta - (delta * ALPHA)
+        Next
+
+        Me.theta = New Vector(theta.Array(0))
+
+        Return LogisticFit.CreateFit(Me, raw)
     End Function
 
     Public Function predict(x As Double()) As Double

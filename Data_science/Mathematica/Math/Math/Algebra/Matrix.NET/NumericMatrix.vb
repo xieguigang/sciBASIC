@@ -1,68 +1,68 @@
 ﻿#Region "Microsoft.VisualBasic::9c7fa8a2533757e6e501c5e9d084e41c, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\NumericMatrix.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1357
-    '    Code Lines: 721
-    ' Comment Lines: 461
-    '   Blank Lines: 175
-    '     File Size: 49.41 KB
+' Summaries:
 
 
-    '     Class NumericMatrix
-    ' 
-    '         Properties: ColumnDimension, ColumnPackedCopy, DiagonalVector, RowDimension, RowPackedCopy
-    ' 
-    '         Constructor: (+7 Overloads) Sub New
-    ' 
-    '         Function: Abs, Add, AddEquals, ArrayLeftDivide, ArrayLeftDivideEquals
-    '                   ArrayMultiply, ArrayMultiplyEquals, ArrayPack, ArrayRightDivide, ArrayRightDivideEquals
-    '                   chol, Clone, Condition, Copy, Create
-    '                   Determinant, Eigen, (+4 Overloads) GetMatrix, Identity, Inverse
-    '                   Log, LUD, (+3 Overloads) Multiply, MultiplyEquals, Norm1
-    '                   Norm2, NormF, NormInf, Number, Power
-    '                   QRD, Rank, Resize, RowApply, RowVectors
-    '                   Solve, SolveTranspose, (+2 Overloads) Subtract, SubtractEquals, SVD
-    '                   ToString, Trace, Transpose
-    ' 
-    '         Sub: CheckMatrixDimensions, (+2 Overloads) Dispose, Finalize, ISerializable_GetObjectData, (+4 Overloads) SetMatrix
-    ' 
-    '         Operators: (+4 Overloads) -, (+3 Overloads) *, /, ^, +
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1357
+'    Code Lines: 721
+' Comment Lines: 461
+'   Blank Lines: 175
+'     File Size: 49.41 KB
+
+
+'     Class NumericMatrix
+' 
+'         Properties: ColumnDimension, ColumnPackedCopy, DiagonalVector, RowDimension, RowPackedCopy
+' 
+'         Constructor: (+7 Overloads) Sub New
+' 
+'         Function: Abs, Add, AddEquals, ArrayLeftDivide, ArrayLeftDivideEquals
+'                   ArrayMultiply, ArrayMultiplyEquals, ArrayPack, ArrayRightDivide, ArrayRightDivideEquals
+'                   chol, Clone, Condition, Copy, Create
+'                   Determinant, Eigen, (+4 Overloads) GetMatrix, Identity, Inverse
+'                   Log, LUD, (+3 Overloads) Multiply, MultiplyEquals, Norm1
+'                   Norm2, NormF, NormInf, Number, Power
+'                   QRD, Rank, Resize, RowApply, RowVectors
+'                   Solve, SolveTranspose, (+2 Overloads) Subtract, SubtractEquals, SVD
+'                   ToString, Trace, Transpose
+' 
+'         Sub: CheckMatrixDimensions, (+2 Overloads) Dispose, Finalize, ISerializable_GetObjectData, (+4 Overloads) SetMatrix
+' 
+'         Operators: (+4 Overloads) -, (+3 Overloads) *, /, ^, +
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -149,10 +149,8 @@ Namespace LinearAlgebra.Matrix
 #Region "Constructors"
 
         ''' <summary>Construct an m-by-n matrix of zeros. </summary>
-        ''' <param name="m">   Number of rows.
-        ''' </param>
-        ''' <param name="n">   Number of colums.
-        ''' </param>
+        ''' <param name="m">Number of rows.</param>
+        ''' <param name="n">Number of colums.</param>
         Public Sub New(m As Integer, n As Integer)
             Me.m = m
             Me.n = n
@@ -1077,13 +1075,24 @@ Namespace LinearAlgebra.Matrix
             Return m1.Add(m2)
         End Operator
 
+        Public Shared Operator +(x As Double, m1 As NumericMatrix) As NumericMatrix
+            Dim y As New NumericMatrix(m1.m, m1.n)
+            Dim C As Double()() = y.Array
+            For i As Integer = 0 To m1.m - 1
+                For j As Integer = 0 To m1.n - 1
+                    C(i)(j) = x + m1(i, j)
+                Next
+            Next
+            Return y
+        End Operator
+
         ''' <summary>
         ''' Subtraction of matrices
         ''' </summary>
         ''' <param name="m1"></param>
         ''' <param name="m2"></param>
         ''' <returns></returns>
-        Public Shared Operator -(m1 As NumericMatrix, m2 As GeneralMatrix) As GeneralMatrix
+        Public Shared Operator -(m1 As NumericMatrix, m2 As GeneralMatrix) As NumericMatrix
             Return m1.Subtract(m2)
         End Operator
 
@@ -1093,6 +1102,19 @@ Namespace LinearAlgebra.Matrix
 
         Public Shared Operator ^(m1 As NumericMatrix, y As Double) As GeneralMatrix
             Return m1.Power(y)
+        End Operator
+
+        Public Shared Operator ^(x As Double, m1 As NumericMatrix) As NumericMatrix
+            Dim exp As New NumericMatrix(m1.m, m1.n)
+            Dim C As Double()() = exp.Array
+
+            For i As Integer = 0 To m1.m - 1
+                For j As Integer = 0 To m1.n - 1
+                    C(i)(j) = x ^ m1.buffer(i)(j)
+                Next
+            Next
+
+            Return exp
         End Operator
 
         Public Shared Operator -(x As Double, m As NumericMatrix) As GeneralMatrix
@@ -1120,8 +1142,47 @@ Namespace LinearAlgebra.Matrix
             Return m1.Multiply(m2)
         End Operator
 
+        Public Shared Operator *(m As NumericMatrix, v As Vector) As NumericMatrix
+            Dim y As New NumericMatrix(m.RowDimension, m.ColumnDimension)
+            Dim x As Double()() = m.Array
+
+            For i As Integer = 0 To x.Length - 1
+                Dim factor As Double = v(i)
+                Dim newV As Vector = x(i).AsVector * factor
+                x(i) = newV
+            Next
+
+            Return y
+        End Operator
+
         Public Shared Operator /(m1 As NumericMatrix, m2 As NumericMatrix) As NumericMatrix
             Return m1.ArrayRightDivide(m2)
+        End Operator
+
+        Public Shared Operator /(x As Double, m1 As NumericMatrix) As NumericMatrix
+            Dim Xmat As New NumericMatrix(m1.RowDimension, m1.ColumnDimension)
+            Dim C As Double()() = Xmat.Array
+
+            For i As Integer = 0 To m1.RowDimension - 1
+                For j As Integer = 0 To m1.ColumnDimension - 1
+                    C(i)(j) = x / m1.buffer(i)(j)
+                Next
+            Next
+
+            Return Xmat
+        End Operator
+
+        Public Shared Operator /(m1 As NumericMatrix, x As Double) As NumericMatrix
+            Dim Xmat As New NumericMatrix(m1.RowDimension, m1.ColumnDimension)
+            Dim C As Double()() = Xmat.Array
+
+            For i As Integer = 0 To m1.RowDimension - 1
+                For j As Integer = 0 To m1.ColumnDimension - 1
+                    C(i)(j) = m1.buffer(i)(j) / x
+                Next
+            Next
+
+            Return Xmat
         End Operator
 
         ''' <summary>
@@ -1420,6 +1481,32 @@ Namespace LinearAlgebra.Matrix
                 Next
                 Return makecopy
             End If
+        End Function
+
+        Public Shared Function One(columnDimension As Integer, rowDimension As Integer) As NumericMatrix
+            Dim m As New NumericMatrix(rowDimension, columnDimension)
+            Dim x = m.Array
+
+            For i As Integer = 0 To rowDimension - 1
+                For j As Integer = 0 To columnDimension - 1
+                    x(i)(j) = 1
+                Next
+            Next
+
+            Return m
+        End Function
+
+        Public Shared Function Zero(columnDimension As Integer, rowDimension As Integer) As NumericMatrix
+            Dim m As New NumericMatrix(rowDimension, columnDimension)
+            Dim x = m.Array
+
+            For i As Integer = 0 To rowDimension - 1
+                For j As Integer = 0 To columnDimension - 1
+                    x(i)(j) = 0
+                Next
+            Next
+
+            Return m
         End Function
     End Class
 End Namespace

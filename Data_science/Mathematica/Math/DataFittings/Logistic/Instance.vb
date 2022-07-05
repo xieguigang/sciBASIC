@@ -16,6 +16,12 @@ Public Class Instance
     ''' <returns></returns>
     Public Property x As Double()
 
+    Public ReadOnly Property featureSize As Integer
+        Get
+            Return x.Length
+        End Get
+    End Property
+
     Public Sub New(label As Integer, x As Integer())
         Me.label = label
         Me.x = x.Select(Function(d) CDbl(d)).ToArray
