@@ -117,15 +117,9 @@ Namespace Drawing2D.Colors
         End Function
 
         Public Shared Function Rainbow() As Color()
-            Return {
-               Color.Red,
-               Color.Orange,
-               Color.Yellow,
-               Color.Green,
-               Color.Lime,
-               Color.Blue,
-               Color.Violet
-            }
+            Return {"#FF0000", "#FFA500", "#FFFF00", "#008000", "#9999ff", "#000066"} _
+                .Select(Function(c) c.TranslateColor) _
+                .ToArray
         End Function
 
         ''' <summary>
