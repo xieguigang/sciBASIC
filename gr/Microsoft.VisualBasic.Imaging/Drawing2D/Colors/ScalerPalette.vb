@@ -98,6 +98,9 @@ Namespace Drawing2D.Colors
         ''' </summary>
         Winter
 
+        Rainbow
+        FlexImaging
+
         <Description("viridis")> viridis
         <Description("viridis:magma")> magma
         <Description("viridis:inferno")> inferno

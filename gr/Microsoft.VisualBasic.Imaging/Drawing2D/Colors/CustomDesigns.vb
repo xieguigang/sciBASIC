@@ -125,6 +125,16 @@ Namespace Drawing2D.Colors
                 .ToArray
         End Function
 
+        Public Shared Function FlexImaging() As Color()
+            Return New String() {
+                "#FF0000FF", "#FF9900FF", "#CCFF00FF", "#33FF00FF", "#00FF66FF",
+                "#00FFFFFF", "#0066FFFF", "#3300FFFF", "#CC00FFFF", "#FF0099FF",
+                "white"
+            } _
+                .Select(Function(c) c.TranslateColor) _
+                .ToArray
+        End Function
+
         ''' <summary>
         ''' 10 category colors for the data object cluster result
         ''' </summary>
