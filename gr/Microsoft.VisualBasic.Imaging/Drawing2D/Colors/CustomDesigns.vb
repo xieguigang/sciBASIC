@@ -117,7 +117,10 @@ Namespace Drawing2D.Colors
         End Function
 
         Public Shared Function Rainbow() As Color()
-            Return {"#FF0000", "#FFA500", "#FFFF00", "#008000", "#9999ff", "#000066"} _
+            Return New String() {
+                "#FF0000FF", "#FF9900FF", "#CCFF00FF", "#33FF00FF", "#00FF66FF",
+                "#00FFFFFF", "#0066FFFF", "#3300FFFF", "#CC00FFFF", "#FF0099FF"
+            } _
                 .Select(Function(c) c.TranslateColor) _
                 .ToArray
         End Function
