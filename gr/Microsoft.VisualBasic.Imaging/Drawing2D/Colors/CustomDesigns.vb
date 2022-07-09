@@ -117,15 +117,22 @@ Namespace Drawing2D.Colors
         End Function
 
         Public Shared Function Rainbow() As Color()
-            Return {
-               Color.Red,
-               Color.Orange,
-               Color.Yellow,
-               Color.Green,
-               Color.Lime,
-               Color.Blue,
-               Color.Violet
-            }
+            Return New String() {
+                "#FF0000FF", "#FF9900FF", "#CCFF00FF", "#33FF00FF", "#00FF66FF",
+                "#00FFFFFF", "#0066FFFF", "#3300FFFF", "#CC00FFFF", "#FF0099FF"
+            } _
+                .Select(Function(c) c.TranslateColor) _
+                .ToArray
+        End Function
+
+        Public Shared Function FlexImaging() As Color()
+            Return New String() {
+                "#FF0000FF", "#FF9900FF", "#CCFF00FF", "#33FF00FF", "#00FF66FF",
+                "#00FFFFFF", "#0066FFFF", "#3300FFFF", "#CC00FFFF", "#FF0099FF",
+                "white"
+            } _
+                .Select(Function(c) c.TranslateColor) _
+                .ToArray
         End Function
 
         ''' <summary>

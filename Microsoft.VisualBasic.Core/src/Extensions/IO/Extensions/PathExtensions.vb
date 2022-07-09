@@ -1029,7 +1029,7 @@ Public Module PathExtensions
     End Function
 
     ''' <summary>
-    ''' 返回``文件名称.拓展名``
+    ''' 返回``文件名称.拓展名``，对于文件夹路径而言，则是返回文件夹名称
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns></returns>
@@ -1043,7 +1043,10 @@ Public Module PathExtensions
         If path.StringEmpty Then
             Return ""
         Else
-            Return path.StringSplit("(\\|/)").Last
+            Return path _
+                .Trim("/"c, "\"c) _
+                .StringSplit("(\\|/)") _
+                .Last
         End If
     End Function
 

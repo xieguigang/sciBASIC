@@ -401,6 +401,7 @@ Namespace Drawing2D.Colors
                 Case "unicorn" : Return CustomDesigns.Unicorn
                 Case "vibrant" : Return CustomDesigns.Vibrant
                 Case "rainbow" : Return CustomDesigns.Rainbow
+                Case "fleximaging" : Return CustomDesigns.FlexImaging
                 Case "paper" : Return CustomDesigns.Paper
                 Case "dotnet.colors" : Return AllDotNetPrefixColors
                 Case "scibasic.chart()" : Return ChartColors
