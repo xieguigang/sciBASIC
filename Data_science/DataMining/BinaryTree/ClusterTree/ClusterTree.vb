@@ -42,6 +42,22 @@ Public Class ClusterTree : Inherits Tree(Of String)
         End If
     End Sub
 
+    Public Shared Function GetClusters(root As ClusterTree) As IEnumerable(Of ClusterTree)
+        Dim links As New List(Of ClusterTree)
+        Call populateNodes(root, links)
+        Return links
+    End Function
+
+    Private Shared Sub populateNodes(root As ClusterTree, ByRef links As List(Of ClusterTree))
+        Call links.Add(root)
+
+        If Not root.Childs.IsNullOrEmpty Then
+            For Each child As Tree(Of String) In root.Childs.Values
+                Call populateNodes(DirectCast(child, ClusterTree), links)
+            Next
+        End If
+    End Sub
+
     Private Overloads Sub Add(label As String)
         Call Add(New ClusterTree With {.label = label})
     End Sub
