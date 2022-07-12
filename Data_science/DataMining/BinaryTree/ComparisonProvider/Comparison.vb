@@ -63,7 +63,7 @@ Public Class Comparison : Inherits ComparisonProvider
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Protected Overrides Function GetSimilarity(x As String, y As String) As Double
+    Public Overrides Function GetSimilarity(x As String, y As String) As Double
         Return d(x, y)
     End Function
 End Class
