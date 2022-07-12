@@ -82,7 +82,7 @@ End Class
 ''' <summary>
 ''' 使用字符串<see cref="String"/>作为键名的树节点
 ''' </summary>
-''' <typeparam name="T"></typeparam>
+''' <typeparam name="T">the value type of the ``Data`` property</typeparam>
 ''' <remarks>
 ''' 在这里如果直接继承<see cref="Tree(Of T, K)"/>类型的话，会导致child的类型错误
 ''' </remarks>
