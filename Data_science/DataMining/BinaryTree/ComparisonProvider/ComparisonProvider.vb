@@ -62,7 +62,7 @@ Public MustInherit Class ComparisonProvider
         Me.gt = gt
     End Sub
 
-    Protected MustOverride Function GetSimilarity(x As String, y As String) As Double
+    Public MustOverride Function GetSimilarity(x As String, y As String) As Double
 
     Public Function Compares(x As String, y As String) As Integer
         Dim similarity As Double = GetSimilarity(x, y)

@@ -121,7 +121,7 @@ Public Class Tree(Of T) : Inherits AbstractTree(Of Tree(Of T), String)
     ''' </summary>
     ''' <param name="child"></param>
     ''' <returns></returns>
-    Public Function Add(child As Tree(Of T)) As Tree(Of T)
+    Public Overridable Function Add(child As Tree(Of T)) As Tree(Of T)
         Childs.Add(child.label, child)
         child.Parent = Me
 
