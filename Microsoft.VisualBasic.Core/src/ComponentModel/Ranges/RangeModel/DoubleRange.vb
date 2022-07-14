@@ -105,6 +105,7 @@ Namespace ComponentModel.Ranges.Model
         ''' 
         ''' <param name="min">Minimum value of the range</param>
         ''' <param name="max">Maximum value of the range</param>
+        <DebuggerStepThrough>
         Public Sub New(min#, max#)
             Me.Min = min
             Me.Max = max
