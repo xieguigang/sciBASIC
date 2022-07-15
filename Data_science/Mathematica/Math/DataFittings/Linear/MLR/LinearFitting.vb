@@ -102,7 +102,7 @@ Namespace Multivariate
             Dim mean# = f.Average
             Dim beta = x.QRD.Solve(Y)
             Dim SST = ((f - mean) ^ 2).Sum
-            Dim residuals As NumericMatrix = x.Multiply(beta) - Y
+            Dim residuals As NumericMatrix = x.Multiply(B:=beta) - Y
             Dim SSE = residuals.Norm2 ^ 2
             Dim MLR As New MLRFit With {
                 .beta = x.ColumnDimension _
