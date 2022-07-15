@@ -152,9 +152,10 @@ Namespace LinearAlgebra.Matrix
         ''' <param name="m">Number of rows.</param>
         ''' <param name="n">Number of colums.</param>
         Public Sub New(m As Integer, n As Integer)
+            Dim A = New Double(m - 1)() {}
+
             Me.m = m
             Me.n = n
-            Dim A = New Double(m - 1)() {}
 
             For i As Integer = 0 To m - 1
                 A(i) = New Double(n - 1) {}
