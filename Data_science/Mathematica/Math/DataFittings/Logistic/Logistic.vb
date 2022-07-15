@@ -79,7 +79,7 @@ Public Class Logistic
         For i As Integer = 0 To ITERATIONS - 1
             Dim featuresTranspose As NumericMatrix = features.Transpose
             Dim hx = sigmoid(features * theta)
-            Dim delta = (featuresTranspose * hx) - (featuresTranspose * values) / size
+            Dim delta = (featuresTranspose.ArrayMultiply(hx)) - (featuresTranspose * values) / size
 
             theta = theta - (delta * ALPHA)
         Next
