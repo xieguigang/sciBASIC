@@ -223,11 +223,14 @@ B21,B22,B23,...
         End Property
 
         ''' <summary>
-        ''' Get all data of a column of a specific column number.(获取文件中的某一列中的所有数据)
+        ''' Get all data of a column of a specific column number.
+        ''' (获取文件中的某一列中的所有数据)
         ''' </summary>
         ''' <param name="Index"></param>
         ''' <value></value>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' the header title has already been excludes
+        ''' </returns>
         ''' <remarks></remarks>
         Public Iterator Property Column(Index As Integer) As IEnumerable(Of String)
             Get
