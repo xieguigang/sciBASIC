@@ -39,8 +39,61 @@
                 Throw New NotImplementedException(type)
         End Select
 
+        '  Error in <globalEnvironment> -> InitializeEnvironment -> "RunAnalysis" -> "RunAnalysis" -> RunAnalysis -> ".workflow" -> ".workflow" -> .workflow -> "autoreport" -> "autoreport" -> "RunMSImaging" -> "RunMSImaging" -> "RunDataVisualization" -> "RunDataVisualization" -> "RunBioDeep" -> "RunBioDeep" -> RunBioDeep -> else_false -> if_closure -> if_closure -> "checkRegionSigIons" -> "checkRegionSigIons" -> checkRegionSigIons -> else_false -> "MSI_single_stat" -> "MSI_single_stat" -> MSI_single_stat -> for_loop_[1] -> else_false -> "MSI_ion_stat" -> "MSI_ion_stat" -> MSI_ion_stat -> plot
+        '   1. IndexOutOfRangeException: Index was outside the bounds of the array.
+        '   2. stackFrames: 
+        '    at Microsoft.VisualBasic.Math.Statistics.Hypothesis.ANOVA.DistributionTable.getCriticalNumber(Int32 numerator, Int32 denominator, String type)
+        '    at Microsoft.VisualBasic.Math.Statistics.Hypothesis.ANOVA.AnovaTest.get_criticalNumber()
+        '    at Microsoft.VisualBasic.Math.Statistics.Hypothesis.ANOVA.AnovaTest.ToString()
+        '    at ggplot.layers.ggplotStatPvalue.plotAnova(ggplotPipeline stream, OrdinalScale x)
+        '    at ggplot.layers.ggplotStatPvalue.PlotOrdinal(ggplotPipeline stream, OrdinalScale x)
+        '    at ggplot.layers.ggplotGroup.Plot(ggplotPipeline stream)
+        '    at ggplot.ggplot.plot2D(ggplotData baseData, IGraphics& g, GraphicsRegion canvas)
+        '    at ggplot.ggplot.PlotInternal(IGraphics& g, GraphicsRegion canvas)
+        '    at ggplot.zzz.plotGGplot(ggplot ggplot, list args, Environment env)
+        '    at ggplot.zzz._Closure$__._Lambda$__R1-1(Object a0, list a1, Environment a2)
+        '    at SMRUCC.Rsharp.Runtime.Internal.generic.invokeGeneric(list args, Object x, Environment env, String funcName, Type type)
+        '    at SMRUCC.Rsharp.Runtime.Internal.generic.invokeGeneric(list args, Object x, Environment env, String funcName)
+        '    at SMRUCC.Rsharp.Runtime.Internal.Invokes.graphics.plot(Object graphics, Object args, Environment env)
+
+        '  R# source: Call "plot"(&bar)
+
+        ' graphics.R#_interop::.plot at REnv.dll:line <unknown>
+        ' MSI.declare_function.MSI_ion_stat at MSI_single_stat.R:line 91
+        ' MSI.call_function."MSI_ion_stat" at MSI_single_stat.R:line 48
+        ' MSI.call_function."MSI_ion_stat" at MSI_single_stat.R:line 48
+        ' MSI.n/a.else_false at MSI_single_stat.R:line 47
+        ' MSI.forloop.for_loop_[1] at MSI_single_stat.R:line 38
+        ' MSI.declare_function.MSI_single_stat at MSI_single_stat.R:line 8
+        ' MSI.call_function."MSI_single_stat" at checkRegionSigIons.R:line 71
+        ' MSI.call_function."MSI_single_stat" at checkRegionSigIons.R:line 71
+        ' MSI.n/a.else_false at checkRegionSigIons.R:line 65
+        ' MSI.declare_function.checkRegionSigIons at checkRegionSigIons.R:line 1
+        ' MSI.call_function."checkRegionSigIons" at biodeep.R:line 23
+        ' MSI.call_function."checkRegionSigIons" at biodeep.R:line 23
+        ' MSI.n/a.if_closure at biodeep.R:line 21
+        ' MSI.n/a.if_closure at biodeep.R:line 21
+        ' MSI.n/a.else_false at biodeep.R:line 11
+        ' MSI.declare_function.RunBioDeep at biodeep.R:line 7
+        ' MSI.call_function."RunBioDeep" at workflow.R:line 36
+        ' MSI.call_function."RunBioDeep" at workflow.R:line 36
+        ' MSI.call_function."RunDataVisualization" at workflow.R:line 39
+        ' MSI.call_function."RunDataVisualization" at workflow.R:line 39
+        ' MSI.call_function."RunMSImaging" at workflow.R:line 43
+        ' MSI.call_function."RunMSImaging" at workflow.R:line 43
+        ' MSI.call_function."autoreport" at workflow.R:line 45
+        ' MSI.call_function."autoreport" at workflow.R:line 45
+        ' MSI.declare_function..workflow at workflow.R:line 8
+        ' MSI.call_function.".workflow" at MSI_analysis.R:line 269
+        ' MSI.call_function.".workflow" at MSI_analysis.R:line 269
+        ' MSI.declare_function.RunAnalysis at MSI_analysis.R:line 49
+        ' SMRUCC/R#.call_function."RunAnalysis" at MSI_analysis.R:line 663
+        ' SMRUCC/R#.call_function."RunAnalysis" at MSI_analysis.R:line 663
+        ' SMRUCC/R#.n/a.InitializeEnvironment at MSI_analysis.R:line 0
+        ' SMRUCC/R#.global.<globalEnvironment> at <globalEnvironment>:line n/a
+
         row = If(n - 1 >= matrix.Length, matrix.Last, matrix(n - 1))
-        criticalNumber = row(d - 1)
+        criticalNumber = If(d - 1 >= row.Length, row.Last, row(d - 1))
 
         Return criticalNumber
     End Function
