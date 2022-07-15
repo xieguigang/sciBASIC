@@ -1018,12 +1018,13 @@ Namespace LinearAlgebra.Matrix
             Return Me
         End Function
 
-        ''' <summary>Multiply a matrix by a scalar, C = s*A</summary>
-        ''' <param name="s">   scalar
+        ''' <summary>Multiply a matrix by a scalar, ``C = s*A``</summary>
+        ''' <param name="s">   
+        ''' scalar
         ''' </param>
-        ''' <returns>     s*A
+        ''' <returns>     
+        ''' s*A
         ''' </returns>
-
         Public Overridable Function Multiply(s As Double) As GeneralMatrix
             Dim X As New NumericMatrix(m, n)
             Dim C As Double()() = X.Array
@@ -1035,24 +1036,18 @@ Namespace LinearAlgebra.Matrix
             Return X
         End Function
 
-        ''' <summary>Multiply a matrix by a scalar, C = s*A</summary>
+        ''' <summary>Multiply a matrix by a scalar, ``C = s*A``</summary>
         ''' <returns>
         ''' s*A
         ''' </returns>
-
         Public Overridable Function Multiply(v As Vector) As GeneralMatrix
-            Dim X As New NumericMatrix(m, n)
-            Dim C As Double()() = X.Array
-
-            For i As Integer = 0 To m - 1
-                Dim vi As Double = v(i)
-
-                For j As Integer = 0 To n - 1
-                    C(i)(j) = vi * buffer(i)(j)
-                Next
-            Next
-
-            Return X
+            If RowDimension = v.Dim Then
+                Return Me.RowMultiply(v)
+            ElseIf ColumnDimension = v.Dim Then
+                Return Me.ColumnMultiply(v)
+            Else
+                Throw New InvalidDataContractException($"the size of the vector(dim={v.Dim}) should be equals to the row dimension({RowDimension}) or column dimension({ColumnDimension}) in your matrix!")
+            End If
         End Function
 
         ''' <summary>Multiply a matrix by a scalar in place, A = s*A</summary>
