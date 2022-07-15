@@ -1056,9 +1056,11 @@ Namespace LinearAlgebra.Matrix
         End Function
 
         ''' <summary>Multiply a matrix by a scalar in place, A = s*A</summary>
-        ''' <param name="s">   scalar
+        ''' <param name="s">   
+        ''' scalar
         ''' </param>
-        ''' <returns>     replace A by s*A
+        ''' <returns>     
+        ''' replace A by s*A
         ''' </returns>
 
         Public Overridable Function MultiplyEquals(s As Double) As GeneralMatrix
