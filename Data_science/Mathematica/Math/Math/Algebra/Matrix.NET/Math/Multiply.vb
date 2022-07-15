@@ -18,10 +18,10 @@ Namespace LinearAlgebra.Matrix
             Dim C As Double()() = X.Array
             Dim buffer As Double()() = m.ArrayPack
 
-            For i As Integer = 0 To X.RowDimension - 1
+            For i As Integer = 0 To X.ColumnDimension - 1
                 Dim vi As Double = v(i)
 
-                For j As Integer = 0 To X.ColumnDimension - 1
+                For j As Integer = 0 To X.RowDimension - 1
                     C(i)(j) = vi * buffer(i)(j)
                 Next
             Next
@@ -41,14 +41,10 @@ Namespace LinearAlgebra.Matrix
         Public Function ColumnMultiply(m As GeneralMatrix, v As Vector) As GeneralMatrix
             Dim X As New NumericMatrix(m.RowDimension, m.ColumnDimension)
             Dim C As Double()() = X.Array
-            Dim buffer As Double()() = m.ArrayPack
+            Dim rows = m.RowVectors.ToArray
 
-            For i As Integer = 0 To m.ColumnDimension - 1
-                Dim vi As Double = v(i)
-
-                For j As Integer = 0 To m.RowDimension - 1
-                    C(i)(j) = vi * buffer(i)(j)
-                Next
+            For i As Integer = 0 To m.RowDimension - 1
+                C(i) = rows(i) * v
             Next
 
             Return X
