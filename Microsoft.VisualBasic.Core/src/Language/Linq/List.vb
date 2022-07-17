@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::772de024f836ad890c4eb4db49dd50da, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Linq\List.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 678
-    '    Code Lines: 363
-    ' Comment Lines: 251
-    '   Blank Lines: 64
-    '     File Size: 26.09 KB
+' Summaries:
 
 
-    '     Class List
-    ' 
-    '         Properties: First, Last
-    ' 
-    '         Constructor: (+5 Overloads) Sub New
-    '         Function: [Default], Poll, Pop, PopAll, ReverseIterator
-    '                   ValuesEnumerator
-    '         Operators: (+5 Overloads) -, *, ^, (+9 Overloads) +, <
-    '                    <=, (+2 Overloads) <>, (+2 Overloads) =, >, >=
-    '                    >>
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 678
+'    Code Lines: 363
+' Comment Lines: 251
+'   Blank Lines: 64
+'     File Size: 26.09 KB
+
+
+'     Class List
+' 
+'         Properties: First, Last
+' 
+'         Constructor: (+5 Overloads) Sub New
+'         Function: [Default], Poll, Pop, PopAll, ReverseIterator
+'                   ValuesEnumerator
+'         Operators: (+5 Overloads) -, *, ^, (+9 Overloads) +, <
+'                    <=, (+2 Overloads) <>, (+2 Overloads) =, >, >=
+'                    >>
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -591,7 +591,7 @@ Namespace Language
         ''' <returns></returns>
         Public Shared Operator ^(list As List(Of T), find As Func(Of T, Boolean)) As T
             Dim LQuery = LinqAPI.DefaultFirst(Of T) _
- _
+                                                    _
                 () <= From x As T
                       In list.AsParallel
                       Where True = find(x)
@@ -721,11 +721,17 @@ Namespace Language
         ''' <summary>
         ''' Get the <see cref="Last"/> element value and then removes the last element.
         ''' </summary>
-        ''' <returns></returns>
-        Public Function Pop() As T
-            Dim out = Last
-            Call Me.RemoveLast
-            Return out
+        ''' <returns>
+        ''' 
+        ''' </returns>
+        Public Function Pop(Optional strict As Boolean = True) As T
+            If Count = 0 AndAlso Not strict Then
+                Return Nothing
+            Else
+                Dim out As T = Last
+                Call Me.RemoveLast
+                Return out
+            End If
         End Function
 
         Public Function Poll() As T

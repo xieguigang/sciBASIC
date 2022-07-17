@@ -82,7 +82,7 @@ End Class
 ''' <summary>
 ''' 使用字符串<see cref="String"/>作为键名的树节点
 ''' </summary>
-''' <typeparam name="T"></typeparam>
+''' <typeparam name="T">the value type of the ``Data`` property</typeparam>
 ''' <remarks>
 ''' 在这里如果直接继承<see cref="Tree(Of T, K)"/>类型的话，会导致child的类型错误
 ''' </remarks>
@@ -121,7 +121,7 @@ Public Class Tree(Of T) : Inherits AbstractTree(Of Tree(Of T), String)
     ''' </summary>
     ''' <param name="child"></param>
     ''' <returns></returns>
-    Public Function Add(child As Tree(Of T)) As Tree(Of T)
+    Public Overridable Function Add(child As Tree(Of T)) As Tree(Of T)
         Childs.Add(child.label, child)
         child.Parent = Me
 

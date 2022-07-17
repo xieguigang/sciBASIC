@@ -191,6 +191,8 @@ Public Module XmlExtensions
         End Using
     End Function
 
+
+
     ''' <summary>
     ''' Serialization the target object type into a XML document.(将一个类对象序列化为XML文档)
     ''' </summary>

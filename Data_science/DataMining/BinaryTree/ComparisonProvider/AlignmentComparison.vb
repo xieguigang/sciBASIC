@@ -77,7 +77,7 @@ Public Class AlignmentComparison : Inherits ComparisonProvider
                           End Function)
     End Sub
 
-    Protected Overrides Function GetSimilarity(x As String, y As String) As Double
+    Public Overrides Function GetSimilarity(x As String, y As String) As Double
         Dim xvec As New Vector(dataIndex(x))
         Dim yvec As New Vector(dataIndex(y))
 
