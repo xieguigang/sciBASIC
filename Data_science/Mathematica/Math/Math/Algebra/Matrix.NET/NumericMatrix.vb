@@ -932,9 +932,11 @@ Namespace LinearAlgebra.Matrix
         End Function
 
         ''' <summary>Element-by-element multiplication in place, A = A.*B</summary>
-        ''' <param name="B">   another matrix
+        ''' <param name="B">   
+        ''' another matrix
         ''' </param>
-        ''' <returns>     A.*B
+        ''' <returns>     
+        ''' A.*B
         ''' </returns>
 
         Public Overridable Function ArrayMultiplyEquals(B As GeneralMatrix) As GeneralMatrix
@@ -948,9 +950,11 @@ Namespace LinearAlgebra.Matrix
         End Function
 
         ''' <summary>Element-by-element right division, C = A./B</summary>
-        ''' <param name="B">   another matrix
+        ''' <param name="B">   
+        ''' another matrix
         ''' </param>
-        ''' <returns>     A./B
+        ''' <returns>     
+        ''' A./B
         ''' </returns>
 
         Public Overridable Function ArrayRightDivide(B As GeneralMatrix) As GeneralMatrix
@@ -970,9 +974,11 @@ Namespace LinearAlgebra.Matrix
         End Function
 
         ''' <summary>Element-by-element right division in place, A = A./B</summary>
-        ''' <param name="B">   another matrix
+        ''' <param name="B">   
+        ''' another matrix
         ''' </param>
-        ''' <returns>     A./B
+        ''' <returns>     
+        ''' A./B
         ''' </returns>
 
         Public Overridable Function ArrayRightDivideEquals(B As GeneralMatrix) As GeneralMatrix
@@ -986,9 +992,11 @@ Namespace LinearAlgebra.Matrix
         End Function
 
         ''' <summary>Element-by-element left division, C = A.\B</summary>
-        ''' <param name="B">   another matrix
+        ''' <param name="B">   
+        ''' another matrix
         ''' </param>
-        ''' <returns>     A.\B
+        ''' <returns>     
+        ''' A.\B
         ''' </returns>
 
         Public Overridable Function ArrayLeftDivide(B As GeneralMatrix) As GeneralMatrix
@@ -1004,9 +1012,11 @@ Namespace LinearAlgebra.Matrix
         End Function
 
         ''' <summary>Element-by-element left division in place, A = A.\B</summary>
-        ''' <param name="B">   another matrix
+        ''' <param name="B">   
+        ''' another matrix
         ''' </param>
-        ''' <returns>     A.\B
+        ''' <returns>     
+        ''' A.\B
         ''' </returns>
 
         Public Overridable Function ArrayLeftDivideEquals(B As GeneralMatrix) As GeneralMatrix
@@ -1135,7 +1145,23 @@ Namespace LinearAlgebra.Matrix
         ''' <param name="m2"></param>
         ''' <returns></returns>
         Public Shared Operator -(m1 As NumericMatrix, m2 As GeneralMatrix) As NumericMatrix
-            Return m1.Subtract(m2)
+            If m1.RowDimension <> m2.RowDimension OrElse m1.ColumnDimension <> m2.ColumnDimension Then
+                If m1.RowDimension = 1 OrElse m2.RowDimension = 1 Then
+                    Throw New NotImplementedException
+                ElseIf m1.ColumnDimension = 1 OrElse m2.ColumnDimension = 1 Then
+                    If m1.ColumnDimension = 1 Then
+                        Dim v As Vector = m1.ColumnVector(Scan0)
+                        Dim m As NumericMatrix = Subtraction.RowSubtraction(v, m2)
+                        Return m
+                    Else
+                        Throw New NotImplementedException
+                    End If
+                Else
+                    Throw New InvalidProgramException("the dimension size of two matrix must be agree!")
+                End If
+            Else
+                Return m1.Subtract(m2)
+            End If
         End Operator
 
         Public Shared Operator -(m1 As NumericMatrix, x As Double) As GeneralMatrix
@@ -1235,6 +1261,17 @@ Namespace LinearAlgebra.Matrix
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator *(x As Double, m2 As NumericMatrix) As GeneralMatrix
+            Return m2.Multiply(x)
+        End Operator
+
+        ''' <summary>
+        ''' Multiplication of matrices
+        ''' </summary>
+        ''' <param name="m2"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator *(m2 As NumericMatrix, x As Double) As GeneralMatrix
             Return m2.Multiply(x)
         End Operator
 
@@ -1539,16 +1576,7 @@ Namespace LinearAlgebra.Matrix
         End Function
 
         Public Shared Function Zero(columnDimension As Integer, rowDimension As Integer) As NumericMatrix
-            Dim m As New NumericMatrix(rowDimension, columnDimension)
-            Dim x = m.Array
-
-            For i As Integer = 0 To rowDimension - 1
-                For j As Integer = 0 To columnDimension - 1
-                    x(i)(j) = 0
-                Next
-            Next
-
-            Return m
+            Return New NumericMatrix(rowDimension, columnDimension)
         End Function
     End Class
 End Namespace

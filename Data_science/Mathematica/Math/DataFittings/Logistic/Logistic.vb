@@ -70,7 +70,7 @@ Public Class Logistic
         Dim values As New Vector(raw.Select(Function(r) r.label))
         Dim size As Integer = values.Length
         Dim features As New NumericMatrix(raw.Length, raw(Scan0).featureSize)
-        Dim theta As NumericMatrix = NumericMatrix.Zero(features.ColumnDimension, 1)
+        Dim theta As NumericMatrix = NumericMatrix.Zero(1, features.ColumnDimension)
 
         For i As Integer = 0 To raw.Length - 1
             features.Array(i) = raw(i).x
@@ -79,12 +79,14 @@ Public Class Logistic
         For i As Integer = 0 To ITERATIONS - 1
             Dim featuresTranspose As NumericMatrix = features.Transpose
             Dim hx = sigmoid(features * theta)
-            Dim delta = (featuresTranspose.ArrayMultiply(hx)) - (featuresTranspose * values) / size
+            Dim A = featuresTranspose * hx
+            Dim B = (featuresTranspose * values) / size
+            Dim delta = A - B
 
             theta = theta - (delta * ALPHA)
         Next
 
-        Me.theta = New Vector(theta.Array(0))
+        Me.theta = theta.ColumnVector(0)
 
         Return LogisticFit.CreateFit(Me, raw)
     End Function
