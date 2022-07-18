@@ -59,11 +59,11 @@ Imports any = Microsoft.VisualBasic.Scripting
 Public Module Deserializer
 
     <Extension>
-    Private Function createVariant(json As JsonObject, parent As ObjectSchema, schema As Type) As Object
+    Private Function createVariant(json As JsonObject, parent As ObjectSchema, schema As Type, decodeMetachar As Boolean) As Object
         Dim jsonVar As [Variant] = Activator.CreateInstance(schema)
 
         schema = jsonVar.which(json)
-        jsonVar.jsonValue = json.createObject(parent, schema)
+        jsonVar.jsonValue = json.createObject(parent, schema, decodeMetachar)
 
         Return jsonVar
     End Function
@@ -77,12 +77,15 @@ Public Module Deserializer
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function CreateObject(json As JsonElement, schema As Type) As Object
-        Return json.CreateObject(Nothing, schema)
+    Public Function CreateObject(json As JsonElement, schema As Type, decodeMetachar As Boolean) As Object
+        Return json.CreateObject(Nothing, schema, decodeMetachar)
     End Function
 
     <Extension>
-    Private Function CreateObject(json As JsonElement, parent As ObjectSchema, schema As Type) As Object
+    Private Function CreateObject(json As JsonElement,
+                                  parent As ObjectSchema,
+                                  schema As Type,
+                                  decodeMetachar As Boolean) As Object
         If json Is Nothing Then
             Return Nothing
         ElseIf TypeOf json Is JsonArray Then
@@ -90,33 +93,37 @@ Public Module Deserializer
                 ' the schema require an object but gives an array
                 Return Nothing
             Else
-                Return DirectCast(json, JsonArray).createArray(parent, schema.GetElementType)
+                Return DirectCast(json, JsonArray).createArray(parent, schema.GetElementType, decodeMetachar)
             End If
         ElseIf TypeOf json Is JsonObject Then
             If schema.IsInheritsFrom(GetType([Variant])) Then
-                Return DirectCast(json, JsonObject).createVariant(parent, schema)
+                Return DirectCast(json, JsonObject).createVariant(parent, schema, decodeMetachar)
             ElseIf Not schema.IsArray AndAlso Not schema.IsPrimitive AndAlso Not schema.IsEnum Then
-                Return DirectCast(json, JsonObject).createObject(parent, schema)
+                Return DirectCast(json, JsonObject).createObject(parent, schema, decodeMetachar)
             Else
                 ' the schema require an array but given an object
                 Return Nothing
             End If
         ElseIf TypeOf json Is JsonValue Then
-            Return DirectCast(json, JsonValue).Literal(schema)
+            Return DirectCast(json, JsonValue).Literal(schema, decodeMetachar)
         Else
             Throw New InvalidCastException
         End If
     End Function
 
     <Extension>
-    Friend Function createArray(json As JsonArray, parent As ObjectSchema, elementType As Type) As Object
+    Friend Function createArray(json As JsonArray,
+                                parent As ObjectSchema,
+                                elementType As Type,
+                                decodeMetachar As Boolean) As Object
+
         Dim array As Array = Array.CreateInstance(elementType, json.Length)
         Dim obj As Object
         Dim element As JsonElement
 
         For i As Integer = 0 To array.Length - 1
             element = json(i)
-            obj = element.CreateObject(parent, elementType)
+            obj = element.CreateObject(parent, elementType, decodeMetachar)
             array.SetValue(obj, i)
         Next
 
@@ -162,7 +169,7 @@ Public Module Deserializer
     ''' <param name="schema"></param>
     ''' <returns></returns>
     <Extension>
-    Friend Function createObject(json As JsonObject, parent As ObjectSchema, schema As Type) As Object
+    Friend Function createObject(json As JsonObject, parent As ObjectSchema, schema As Type, decodeMetachar As Boolean) As Object
         Dim graph As ObjectSchema = ObjectSchema.GetSchema(schema)
         Dim obj As Object = graph.activate(parent:=parent, score:=json)
         Dim inputs As Object()
@@ -176,11 +183,11 @@ Public Module Deserializer
                 writer = writers([property].Name)
 
                 If writer.CanWrite Then
-                    innerVal = [property].Value.CreateObject(parent:=graph, writer.PropertyType)
+                    innerVal = [property].Value.CreateObject(parent:=graph, writer.PropertyType, decodeMetachar)
                     writer.SetValue(obj, innerVal)
                 End If
             ElseIf graph.isTable AndAlso Not addMethod Is Nothing Then
-                innerVal = [property].Value.CreateObject(parent:=graph, graph.valueType)
+                innerVal = [property].Value.CreateObject(parent:=graph, graph.valueType, decodeMetachar)
                 inputs = {
                     any.CTypeDynamic([property].Name, graph.keyType),
                     innerVal
