@@ -120,9 +120,19 @@ Namespace CommandLine.InteropService.Pipeline
             Call Console.WriteLine($"[SET_MESSAGE] {message}")
         End Sub
 
+        Shared m_hookProgress As SetProgressEventHandler
+
+        Public Shared Sub HookProgress(progress As SetProgressEventHandler)
+            m_hookProgress = progress
+        End Sub
+
         Public Shared Sub SendProgress(percentage As Double, message As String)
             Call VBDebugger.WaitOutput()
             Call Console.WriteLine($"[SET_PROGRESS] {percentage} {message}")
+
+            If Not m_hookProgress Is Nothing Then
+                Call m_hookProgress(percentage, message)
+            End If
         End Sub
 
     End Class

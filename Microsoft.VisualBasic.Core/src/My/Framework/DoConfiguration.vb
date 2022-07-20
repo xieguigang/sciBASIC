@@ -115,8 +115,12 @@ Namespace My.FrameworkInternal
             Next
         End Sub
 
-        Public Sub ConfigMemory(load As MemoryLoads)
-            App.m_memoryLoad = load
-        End Sub
+        Public Function ConfigMemory(Optional load As MemoryLoads? = Nothing) As MemoryLoads
+            If Not load Is Nothing Then
+                App.m_memoryLoad = load
+            End If
+
+            Return App.MemoryLoad
+        End Function
     End Module
 End Namespace

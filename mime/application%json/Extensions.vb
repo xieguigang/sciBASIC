@@ -79,18 +79,18 @@ Imports Microsoft.VisualBasic.MIME.application.json.Javascript
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function AsString(obj As JsonElement) As String
-        Return DirectCast(obj, JsonValue).GetStripString
+    Public Function AsString(obj As JsonElement, decodeMetachar As Boolean) As String
+        Return DirectCast(obj, JsonValue).GetStripString(decodeMetachar)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function AsStringVector(array As JsonElement) As String()
+    Public Function AsStringVector(array As JsonElement, decodeMetachar As Boolean) As String()
         If array Is Nothing Then
             Return Nothing
         End If
         If TypeOf array Is JsonValue Then
-            Return {array.AsString}
+            Return New String() {array.AsString(decodeMetachar)}
         End If
 
         Return DirectCast(array, JsonArray) _

@@ -271,7 +271,7 @@ eh:
         End Select
     End Function
 
-    Public Shared Function StripString(str$) As String
+    Public Shared Function StripString(str$, decodeMetaChar As Boolean) As String
         Dim index% = 1
         Dim chr$, code$
         Dim sb As New StringBuilder
@@ -281,32 +281,38 @@ eh:
             Select Case chr
                 Case "\"
                     index += 1
-                    chr = Mid(str, index, 1)
-                    Select Case chr
-                        Case """", "\", "/", """"
-                            sb.Append(chr)
-                            index += 1
-                        Case "b"
-                            sb.Append(vbBack)
-                            index += 1
-                        Case "f"
-                            sb.Append(vbFormFeed)
-                            index += 1
-                        Case "n"
-                            sb.Append(vbLf)
-                            index += 1
-                        Case "r"
-                            sb.Append(vbCr)
-                            index += 1
-                        Case "t"
-                            sb.Append(vbTab)
-                            index += 1
-                        Case "u"
-                            index += 1
-                            code = Mid(str, index, 4)
-                            sb.Append(ChrW(Val("&h" & code)))
-                            index += 4
-                    End Select
+
+                    If decodeMetaChar Then
+                        chr = Mid(str, index, 1)
+
+                        Select Case chr
+                            Case """", "\", "/", """"
+                                sb.Append(chr)
+                                index += 1
+                            Case "b"
+                                sb.Append(vbBack)
+                                index += 1
+                            Case "f"
+                                sb.Append(vbFormFeed)
+                                index += 1
+                            Case "n"
+                                sb.Append(vbLf)
+                                index += 1
+                            Case "r"
+                                sb.Append(vbCr)
+                                index += 1
+                            Case "t"
+                                sb.Append(vbTab)
+                                index += 1
+                            Case "u"
+                                index += 1
+                                code = Mid(str, index, 4)
+                                sb.Append(ChrW(Val("&h" & code)))
+                                index += 4
+                        End Select
+                    Else
+                        sb.Append(chr)
+                    End If
                 Case Else
                     sb.Append(chr)
                     index += 1

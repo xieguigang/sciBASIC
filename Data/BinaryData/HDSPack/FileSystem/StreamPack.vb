@@ -7,6 +7,8 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.FileIO.Path
+Imports Microsoft.VisualBasic.My
+Imports Microsoft.VisualBasic.My.FrameworkInternal
 Imports Microsoft.VisualBasic.Net.Http
 
 Namespace FileSystem
@@ -196,7 +198,19 @@ Namespace FileSystem
                 ' get current object data
                 block = superBlock.GetDataBlock(path)
 
-                Return New SubStream(buffer, block.offset, block.size)
+                If App.MemoryLoad = MemoryLoads.Light Then
+                    Return New SubStream(buffer, block.offset, block.size)
+                Else
+                    Dim ms As New MemoryStream()
+                    Dim buf As Byte() = New Byte(block.size - 1) {}
+
+                    Call buffer.Seek(block.offset, SeekOrigin.Begin)
+                    Call buffer.Read(buf, Scan0, block.size)
+                    Call ms.Write(buf, Scan0, buf.Length)
+                    Call ms.Seek(Scan0, SeekOrigin.Begin)
+
+                    Return ms
+                End If
             Else
                 ' create a new data object
                 block = superBlock.AddDataBlock(path)

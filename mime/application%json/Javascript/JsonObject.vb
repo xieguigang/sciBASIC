@@ -193,18 +193,18 @@ Namespace Javascript
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function CreateObject(Of T)() As T
-            Return CreateObject(type:=GetType(T))
+        Public Function CreateObject(Of T)(decodeMetachar As Boolean) As T
+            Return CreateObject(type:=GetType(T), decodeMetachar)
         End Function
 
-        Public Function CreateObject(type As Type) As Object
+        Public Function CreateObject(type As Type, decodeMetachar As Boolean) As Object
             If type.IsArray AndAlso Me.isArray Then
                 Dim itemType As Type = type.GetElementType
                 Dim graph As ObjectSchema = ObjectSchema.GetSchema(itemType)
 
-                Return ToJsonArray.createArray(graph, itemType)
+                Return ToJsonArray.createArray(graph, itemType, decodeMetachar)
             Else
-                Return Me.createObject(parent:=Nothing, schema:=type)
+                Return Me.createObject(parent:=Nothing, schema:=type, decodeMetachar)
             End If
         End Function
 
