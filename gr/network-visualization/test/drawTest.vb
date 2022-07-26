@@ -96,7 +96,7 @@ Module drawTest
 
     Sub drawKDTreeTest()
         Dim size As New Size(5200, 4500)
-        Dim points2 As Point2D() = 5000.SeqRandom.Select(Function(i) New Point2D(randf.NextInteger(size.Width), randf.NextInteger(size.Height))).ToArray
+        Dim points2 As Point2D() = 500.SeqRandom.Select(Function(i) New Point2D(randf.NextInteger(size.Width), randf.NextInteger(size.Height))).ToArray
         'Dim points As FDGVector3() = {
         '     New FDGVector3(0, 0, 0),
         '     New FDGVector3(10, 10, 10),
