@@ -190,6 +190,9 @@ Namespace Scripting.MetaData
         ''' <param name="throwEx">
         ''' 如果这个参数设置为False的话，则出错的时候会返回空值
         ''' </param>
+        ''' <param name="getException">
+        ''' <see cref="DllNotFoundException"/>
+        ''' </param>
         ''' <returns></returns>
         Public Overloads Function [GetType](Optional knownFirst As Boolean = False,
                                             Optional throwEx As Boolean = True,
