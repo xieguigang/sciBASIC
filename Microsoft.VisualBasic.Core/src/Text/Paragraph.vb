@@ -90,20 +90,20 @@ Namespace Text
             Dim lines$() = text.LineTokens
             Dim delIndex As Index(Of Char) = delimiters.Indexing
 
-            For Each line As String In lines
-                Dim buf As New List(Of Char)
+            For Each line As String In lines.Select(Function(l) l.Trim(delIndex.Objects))
+                Dim buf As New CharBuffer
                 Dim i As New CharPtr(line)
                 Dim c As Char
 
                 Do While Not (i.EndRead OrElse i.NullEnd)
                     c = ++i
-                    buf.Add(c)
+                    buf += c
 
                     If c Like delIndex Then
-                        If buf.Count >= len OrElse len - buf.Count < floatChars Then
-                            Yield buf.PopAll.CharString
+                        If buf.Size >= len OrElse len - buf.Size < floatChars Then
+                            Yield buf.PopAllChars.CharString
                         End If
-                    ElseIf buf.Count >= len Then
+                    ElseIf buf.Size >= len Then
                         Dim floats = Enumerable _
                             .Range(0, floatChars) _
                             .Select(Function(ci) i(ci)) _
@@ -114,13 +114,14 @@ Namespace Text
                         ' if the next 3 chars contains a delimiter
                         ' then not break current line
                         If Not floats Then
-                            Yield buf.PopAll.CharString
+                            Yield buf.PopAllChars.CharString
                         End If
                     End If
                 Loop
 
-                If buf.Count > 0 Then
-                    Yield buf.PopAll.CharString
+                If buf > 0 Then
+                    buf += i.Current
+                    Yield buf.PopAllChars.CharString
                 End If
             Next
         End Function
