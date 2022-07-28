@@ -88,7 +88,10 @@ Namespace Linq
         ''' <typeparam name="T"></typeparam>
         ''' <param name="a">Object collection</param>
         ''' <param name="b">Another object collection.</param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' <paramref name="a"/> or <paramref name="b"/> will be ignored if
+        ''' collection object is nothing
+        ''' </returns>
         <Extension>
         Public Iterator Function JoinIterates(Of T)(a As IEnumerable(Of T), b As IEnumerable(Of T)) As IEnumerable(Of T)
             If Not a Is Nothing Then
