@@ -1,55 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::7446ce066e60856e71d0244476d0b48d, sciBASIC#\Data\BinaryData\DataStorage\SQLite3\Schema\Schema.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 79
-    '    Code Lines: 63
-    ' Comment Lines: 0
-    '   Blank Lines: 16
-    '     File Size: 3.23 KB
+' Summaries:
 
 
-    '     Class Schema
-    ' 
-    '         Properties: columns, RawSql, tableName
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: ParseColumns, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 79
+'    Code Lines: 63
+' Comment Lines: 0
+'   Blank Lines: 16
+'     File Size: 3.23 KB
+
+
+'     Class Schema
+' 
+'         Properties: columns, RawSql, tableName
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: ParseColumns, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -72,6 +72,16 @@ Namespace ManagedSqlite.Core.SQLSchema
             Me.RawSql = sql
             Me.columns = ParseColumns(sql, removeNameEscape).ToArray
         End Sub
+
+        Public Function GetOrdinal(column As String) As Integer
+            For i As Integer = 0 To columns.Length - 1
+                If column = columns(i).Name Then
+                    Return i
+                End If
+            Next
+
+            Return -1
+        End Function
 
         Private Iterator Function ParseColumns(sql$, removeNameEscape As Boolean) As IEnumerable(Of NamedValue(Of String))
             Dim tokens As Token() = New SQLParser(sql).GetTokens.ToArray
@@ -104,6 +114,14 @@ Namespace ManagedSqlite.Core.SQLSchema
                 type = block.ElementAtOrNull(1)?.text
 
                 If name.ToUpper = "UNIQUE" AndAlso block(1).text = "(" AndAlso block.Last.text = ")" Then
+                    Continue For
+                End If
+                If name.ToUpper = "FOREIGN" AndAlso
+                    type.ToUpper = "KEY" AndAlso
+                    block.Length > 4 AndAlso
+                    block(2).text = "(" AndAlso
+                    block.Last.text = ")" Then
+
                     Continue For
                 End If
                 If block(Scan0).text = "PRIMARY" AndAlso block(1).text = "KEY" Then

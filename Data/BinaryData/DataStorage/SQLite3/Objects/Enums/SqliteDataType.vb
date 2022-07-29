@@ -107,7 +107,7 @@ Namespace ManagedSqlite.Core.Objects.Enums
             Select Case Strings.LCase(type).Trim
                 Case "integer", "int", "int64", "[int]", "[bigint]", "bigint"
                     Return SqliteDataType.Integer
-                Case "float", "double", "[float]"
+                Case "float", "double", "[float]", "real"
                     Return SqliteDataType.Float
                 Case "text", "blob_text", "[text]", "varchar"
                     Return SqliteDataType.Text

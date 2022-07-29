@@ -99,6 +99,10 @@ Public Class BinaryDataReader
         Me.New(input, New UTF8Encoding(), False)
     End Sub
 
+    Sub New(data As IEnumerable(Of Byte))
+        Call Me.New(New MemoryStream(data.ToArray))
+    End Sub
+
     ''' <summary>
     ''' Initializes a new instance of the <see cref="BinaryDataReader"/> class based on the specified stream, UTF-8
     ''' encoding and optionally leaves the stream open.
