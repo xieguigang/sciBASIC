@@ -137,7 +137,12 @@ Namespace Scripting.MetaData
         ''' <summary>
         ''' Loads the assembly file which contains this type. 
         ''' </summary>
-        ''' <returns></returns>
+        ''' <param name="searchPath">
+        ''' SetDllDirectory
+        ''' </param>
+        ''' <returns>
+        ''' nothing for dll not found
+        ''' </returns>
         Public Function LoadAssembly(searchPath As String()) As Assembly
             Dim path As Value(Of String) = ""
             Dim assm As Assembly = Nothing
@@ -146,7 +151,7 @@ Namespace Scripting.MetaData
                 Return System.Reflection.Assembly.LoadFile(assembly.GetFullPath)
             End If
 
-            For Each filepath As String In searchPath.SafeQuery.JoinIterates(App.HOME)
+            For Each filepath As String In {App.HOME}.JoinIterates(searchPath)
                 If filepath.FileLength > 0 Then
                     assm = System.Reflection.Assembly.LoadFile(filepath)
                     Exit For
@@ -189,6 +194,9 @@ Namespace Scripting.MetaData
         ''' </param>
         ''' <param name="throwEx">
         ''' 如果这个参数设置为False的话，则出错的时候会返回空值
+        ''' </param>
+        ''' <param name="getException">
+        ''' <see cref="DllNotFoundException"/>
         ''' </param>
         ''' <returns></returns>
         Public Overloads Function [GetType](Optional knownFirst As Boolean = False,
