@@ -65,7 +65,7 @@
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace vbproj
+Namespace vbproj.Xml
 
     Public Class Target
         <XmlAttribute>

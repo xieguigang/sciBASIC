@@ -64,7 +64,7 @@
 
 Imports System.Xml.Serialization
 
-Namespace vbproj
+Namespace vbproj.Xml
 
     Public Class PropertyGroup
 
