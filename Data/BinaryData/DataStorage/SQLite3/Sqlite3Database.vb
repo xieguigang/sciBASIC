@@ -105,7 +105,7 @@ Namespace ManagedSqlite.Core
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function OpenFile(dbFile$, Optional settings As Sqlite3Settings = Nothing) As Sqlite3Database
-            Return New Sqlite3Database(dbFile.Open(FileMode.Open, doClear:=False), settings)
+            Return New Sqlite3Database(dbFile.Open(FileMode.Open, doClear:=False, [readOnly]:=True), settings)
         End Function
 
         Private Sub Initialize()
