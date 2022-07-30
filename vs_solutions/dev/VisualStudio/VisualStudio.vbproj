@@ -428,6 +428,10 @@
       <Project>{6da12323-fb7c-4ac7-9ada-2ce65b0b060d}</Project>
       <Name>Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\mime\application%25xml\xml-netcore5.vbproj">
+      <Project>{e9500cd1-a5e4-4463-9dc2-fead569d430f}</Project>
+      <Name>xml-netcore5</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
