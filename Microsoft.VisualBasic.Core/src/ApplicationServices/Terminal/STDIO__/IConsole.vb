@@ -131,5 +131,10 @@ Namespace ApplicationServices.Terminal.STDIO__
         Property BackgroundColor As ConsoleColor
         Property ForegroundColor As ConsoleColor
 
+        ''' <summary>
+        ''' when &lt;TAB> is pressed
+        ''' </summary>
+        Event Tab()
+
     End Interface
 End Namespace
