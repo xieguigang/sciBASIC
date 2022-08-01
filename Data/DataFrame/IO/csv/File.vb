@@ -166,7 +166,7 @@ B21,B22,B23,...
                 Optional trimBlanks As Boolean = False,
                 Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing)
 
-            _innerTable = loads(path, encoding.CodePage, trimBlanks, skipWhile)
+            _innerTable = loads(path, encoding.CodePage, trimBlanks, False, skipWhile)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -721,9 +721,16 @@ B21,B22,B23,...
         Public Shared Function Load(path$,
                                     Optional encoding As Encoding = Nothing,
                                     Optional trimBlanks As Boolean = False,
-                                    Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing) As File
+                                    Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing,
+                                    Optional isTsv As Boolean = False) As File
 
-            Dim buf As List(Of RowObject) = loads(path, encoding Or TextEncodings.DefaultEncoding, trimBlanks, skipWhile)
+            Dim buf As List(Of RowObject) = loads(
+                path:=path,
+                encoding:=encoding Or TextEncodings.DefaultEncoding,
+                trimBlanks:=trimBlanks,
+                isTsv:=isTsv,
+                skipWhile:=skipWhile
+            )
             Dim csv As New File With {
                 ._innerTable = buf
             }
@@ -738,7 +745,7 @@ B21,B22,B23,...
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function LoadTsv(path$, Optional encoding As Encoding = Nothing) As File
-            Return csv.Imports(path, ASCII.TAB, encoding)
+            Return Load(path, encoding:=encoding, isTsv:=True)
         End Function
 
 
@@ -760,8 +767,16 @@ B21,B22,B23,...
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Shared Function loads(path As String, encoding As Encoding, trimBlanks As Boolean, skipWhile As NamedValue(Of Func(Of String, Boolean))) As List(Of RowObject)
-            Return FileLoader.Load(path.MapNetFile.ReadAllLines(encoding), trimBlanks, skipWhile)
+        Private Shared Function loads(path As String,
+                                      encoding As Encoding,
+                                      trimBlanks As Boolean,
+                                      isTsv As Boolean,
+                                      skipWhile As NamedValue(Of Func(Of String, Boolean))) As List(Of RowObject)
+
+            Dim buf As String() = path.MapNetFile.ReadAllLines(encoding)
+            Dim result As List(Of RowObject) = FileLoader.Load(buf, trimBlanks, skipWhile, isTsv)
+
+            Return result
         End Function
 
         Protected Shared Function loads(file As Stream, encoding As Encoding, trimBlanks As Boolean, skipWhile As NamedValue(Of Func(Of String, Boolean))) As List(Of RowObject)
