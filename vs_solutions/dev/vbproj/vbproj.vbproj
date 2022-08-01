@@ -216,9 +216,9 @@
     <Content Include="ms_visual_studio.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
-      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj">
+      <Project>{6da12323-fb7c-4ac7-9ada-2ce65b0b060d}</Project>
+      <Name>Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\ApplicationServices\ApplicationServices.vbproj">
       <Project>{afc6d861-8063-4549-8dce-746206e852b4}</Project>

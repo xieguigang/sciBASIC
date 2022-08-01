@@ -62,7 +62,7 @@ Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
-Namespace vbproj
+Namespace vbproj.Xml
 
     ''' <summary>
     ''' Visual Studio project XML file
@@ -109,7 +109,7 @@ Namespace vbproj
             End If
 
             Return LinqAPI.DefaultFirst(Of PropertyGroup) _
- _
+                                                          _
                 () <= From x As PropertyGroup
                       In PropertyGroups
                       Where Not x.Condition.StringEmpty AndAlso condition.TextEquals(x.Condition.Trim)

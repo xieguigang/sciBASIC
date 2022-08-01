@@ -265,3 +265,6 @@ storage.ide-wal
 /gr/3DEngineTest/App
 *.stackdump
 /CLI_tools/Apps
+*.vsidx
+*.v2
+*.bin

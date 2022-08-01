@@ -1,66 +1,68 @@
 ﻿#Region "Microsoft.VisualBasic::477663ab5d452c3616594577c897c10d, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\Terminal.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1080
-    '    Code Lines: 364
-    ' Comment Lines: 626
-    '   Blank Lines: 90
-    '     File Size: 60.03 KB
+' Summaries:
 
 
-    '     Class Terminal
-    ' 
-    '         Properties: [Error], [In], BackgroundColor, BufferHeight, BufferWidth
-    '                     CapsLock, CursorLeft, CursorSize, CursorTop, CursorVisible
-    '                     ForegroundColor, InputEncoding, IsErrorRedirected, IsInputRedirected, IsOutputRedirected
-    '                     KeyAvailable, LargestWindowHeight, LargestWindowWidth, NumberLock, Out
-    '                     OutputEncoding, Title, TreatControlCAsInput, WindowHeight, WindowLeft
-    '                     WindowTop, WindowWidth
-    ' 
-    '         Function: (+2 Overloads) OpenStandardError, (+2 Overloads) OpenStandardInput, (+2 Overloads) OpenStandardOutput, Read, (+2 Overloads) ReadKey
-    '                   ReadLine
-    ' 
-    '         Sub: Clear, (+2 Overloads) MoveBufferArea, ResetColor, SetBufferSize, SetCursorPosition
-    '              SetError, SetIn, SetOut, SetWindowPosition, SetWindowSize
-    '              (+17 Overloads) Write, (+18 Overloads) WriteLine
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1080
+'    Code Lines: 364
+' Comment Lines: 626
+'   Blank Lines: 90
+'     File Size: 60.03 KB
+
+
+'     Class Terminal
+' 
+'         Properties: [Error], [In], BackgroundColor, BufferHeight, BufferWidth
+'                     CapsLock, CursorLeft, CursorSize, CursorTop, CursorVisible
+'                     ForegroundColor, InputEncoding, IsErrorRedirected, IsInputRedirected, IsOutputRedirected
+'                     KeyAvailable, LargestWindowHeight, LargestWindowWidth, NumberLock, Out
+'                     OutputEncoding, Title, TreatControlCAsInput, WindowHeight, WindowLeft
+'                     WindowTop, WindowWidth
+' 
+'         Function: (+2 Overloads) OpenStandardError, (+2 Overloads) OpenStandardInput, (+2 Overloads) OpenStandardOutput, Read, (+2 Overloads) ReadKey
+'                   ReadLine
+' 
+'         Sub: Clear, (+2 Overloads) MoveBufferArea, ResetColor, SetBufferSize, SetCursorPosition
+'              SetError, SetIn, SetOut, SetWindowPosition, SetWindowSize
+'              (+17 Overloads) Write, (+18 Overloads) WriteLine
+' 
+' 
+' /********************************************************************************/
 
 #End Region
+
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.STDIO__
 
 Namespace ApplicationServices.Terminal
 
@@ -1139,6 +1141,7 @@ Namespace ApplicationServices.Terminal
         ''' <param name="e"></param>
         ''' <remarks></remarks>
         Public Event CancelKeyPress(sender As Object, e As System.ConsoleCancelEventArgs)
+        Public Event Tab() Implements IConsole.Tab
 #End Region
     End Class
 End Namespace

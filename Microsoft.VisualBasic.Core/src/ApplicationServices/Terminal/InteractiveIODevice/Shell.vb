@@ -72,7 +72,11 @@ Namespace ApplicationServices.Terminal
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property autoCompleteCandidates As New List(Of String)
-        Public ReadOnly Property dev As IConsole
+        Public ReadOnly Property ttyDev As IConsole
+            Get
+                Return dev
+            End Get
+        End Property
 
         ''' <summary>
         ''' Command text for exit the shell loop 
@@ -82,6 +86,8 @@ Namespace ApplicationServices.Terminal
         ''' <returns></returns>
         Public Property Quite As String = ":q"
         Public Property History As String = ":h"
+
+        Dim WithEvents dev As IConsole
 
         ''' <summary>
         ''' 
@@ -115,6 +121,14 @@ Namespace ApplicationServices.Terminal
                     Call _shell(cli)
                 End If
             Loop
+        End Sub
+
+        Private Sub dev_Tab() Handles dev.Tab
+            If autoCompleteCandidates.Count = 0 Then
+                Return
+            End If
+
+
         End Sub
     End Class
 End Namespace
