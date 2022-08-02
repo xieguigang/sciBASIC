@@ -48,8 +48,20 @@ Namespace FileSystem
             End Get
         End Property
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="filepath"></param>
+        ''' <param name="init_size"></param>
         Sub New(filepath As String, Optional init_size As Integer = 1024)
-            Call Me.New(filepath.Open(FileMode.OpenOrCreate, doClear:=False, [readOnly]:=False), init_size:=init_size)
+            Call Me.New(
+                buffer:=filepath.Open(
+                    mode:=FileMode.OpenOrCreate,
+                    doClear:=False,
+                    [readOnly]:=False
+                ),
+                init_size:=init_size
+            )
         End Sub
 
         Sub New(buffer As Stream, Optional init_size As Integer = 1024, Optional meta_size As Long = 1024 * 1024)

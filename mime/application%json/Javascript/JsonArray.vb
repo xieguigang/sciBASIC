@@ -78,6 +78,10 @@ Namespace Javascript
             list = objs.SafeQuery.ToList
         End Sub
 
+        Sub New(values As IEnumerable(Of String))
+            Call Me.New(values.Select(Function(str) New JsonValue(str)))
+        End Sub
+
         Public Sub Add(element As JsonElement)
             Call list.Add(element)
         End Sub

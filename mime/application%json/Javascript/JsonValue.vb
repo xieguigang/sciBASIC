@@ -93,6 +93,10 @@ Namespace Javascript
         Public Sub New()
         End Sub
 
+        ''' <summary>
+        ''' create based on the value literal data
+        ''' </summary>
+        ''' <param name="obj"></param>
         Public Sub New(obj As Object)
             value = obj
         End Sub
