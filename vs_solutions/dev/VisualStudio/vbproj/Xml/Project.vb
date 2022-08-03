@@ -59,7 +59,6 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
 Namespace vbproj.Xml
@@ -126,7 +125,13 @@ Namespace vbproj.Xml
         End Function
 
         Public Shared Function Load(file As String) As Project
-            Return file.LoadXml(Of Project)
+            Dim vbproj As Project = file.LoadXml(Of Project)(throwEx:=False)
+
+            If vbproj Is Nothing Then
+                vbproj = file.ReadAllText.CreateObjectFromXmlFragment(Of Project)
+            End If
+
+            Return vbproj
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
