@@ -85,6 +85,12 @@ Namespace vbproj.Xml
         <XmlElement("Target")>
         Public Property Targets As Target()
 
+        Public ReadOnly Property IsDotNetCoreSDK As Boolean
+            Get
+                Return Sdk = "Microsoft.NET.Sdk" AndAlso ToolsVersion.StringEmpty
+            End Get
+        End Property
+
         Public ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
             Get
                 Return {
@@ -128,10 +134,21 @@ Namespace vbproj.Xml
             Dim vbproj As Project = file.LoadXml(Of Project)(throwEx:=False)
 
             If vbproj Is Nothing Then
-                vbproj = file.ReadAllText.CreateObjectFromXmlFragment(Of Project)
+                vbproj = file _
+                    .ReadAllText _
+                    .CreateObjectFromXmlFragment(Of Project)(
+                        preprocess:=AddressOf ProcessDotNetCoreSDK
+                     )
             End If
 
+            vbproj.FilePath = file
+
             Return vbproj
+        End Function
+
+        Private Shared Function ProcessDotNetCoreSDK(xml As String) As String
+            xml = xml.Replace("Sdk=""Microsoft.NET.Sdk""", "Sdk=""Microsoft.NET.Sdk"" xmlns=""http://schemas.microsoft.com/developer/msbuild/2003""")
+            Return xml
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
