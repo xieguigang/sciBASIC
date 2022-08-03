@@ -268,3 +268,4 @@ storage.ide-wal
 *.vsidx
 *.v2
 *.bin
+*.v5
