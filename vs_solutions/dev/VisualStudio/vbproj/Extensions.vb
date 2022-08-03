@@ -53,6 +53,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.vbproj
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.vbproj.Xml
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
 
 Namespace vbproj
@@ -80,10 +81,31 @@ Namespace vbproj
         Public Function EnumerateSourceFiles(vbproj As Project,
                                              Optional skipAssmInfo As Boolean = False,
                                              Optional fullName As Boolean = False) As IEnumerable(Of String)
-            Dim itemList As ItemGroup() = vbproj.ItemGroups
-            Dim sourceFolder As String = DirectCast(vbproj, IFileReference).FilePath.ParentPath
 
-            Return itemList _
+            Dim sourceFolder As String = DirectCast(vbproj, IFileReference).FilePath.ParentPath
+            Dim sourceList As IEnumerable(Of String)
+
+            If vbproj.IsDotNetCoreSDK Then
+                sourceList = vbproj.newDotNetSDKProjectSource
+            Else
+                sourceList = vbproj.legacyProjectSource
+            End If
+
+            Return sourceList.vbfileFilter(sourceFolder, fullName, skipAssmInfo)
+        End Function
+
+        <Extension>
+        Private Function newDotNetSDKProjectSource(vbproj As Project) As IEnumerable(Of String)
+            Dim sourceDir As String = DirectCast(vbproj, IFileReference).FilePath.ParentPath
+            Dim files As IEnumerable(Of String) = ls - l - r - "*.vb" <= sourceDir
+
+            Return files
+        End Function
+
+        <Extension>
+        Private Function legacyProjectSource(vbproj As Project) As IEnumerable(Of String)
+            Dim itemList As ItemGroup() = vbproj.ItemGroups
+            Dim sourceList As IEnumerable(Of String) = itemList _
                 .Where(Function(items) Not items.Compiles.IsNullOrEmpty) _
                 .Select(Function(items)
                             Return items.Compiles _
@@ -92,16 +114,26 @@ Namespace vbproj
                                       End Function) _
                                .Select(Function(vb)
                                            Return vb.Include.Replace("%28", "(").Replace("%29", ")")
-                                       End Function) _
-                               .Select(Function(relative)
-                                           If fullName Then
-                                               Return $"{sourceFolder}/{relative}"
-                                           Else
-                                               Return relative
-                                           End If
                                        End Function)
                         End Function) _
-                .IteratesALL _
+                .IteratesALL
+
+            Return sourceList
+        End Function
+
+        <Extension>
+        Private Function vbfileFilter(sourcefiles As IEnumerable(Of String),
+                                      sourceFolder As String,
+                                      fullName As Boolean,
+                                      skipAssmInfo As Boolean) As IEnumerable(Of String)
+            Return sourcefiles _
+                .Select(Function(relative)
+                            If fullName Then
+                                Return $"{sourceFolder}/{relative}"
+                            Else
+                                Return relative
+                            End If
+                        End Function) _
                 .Where(Function(vb)
                            If skipAssmInfo Then
                                Return Not vb.EndsWith(Development.AssemblyInfo.ProjectFile)
