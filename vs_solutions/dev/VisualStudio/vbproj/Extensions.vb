@@ -96,10 +96,17 @@ Namespace vbproj
 
         <Extension>
         Private Function newDotNetSDKProjectSource(vbproj As Project) As IEnumerable(Of String)
-            Dim sourceDir As String = DirectCast(vbproj, IFileReference).FilePath.ParentPath
+            Dim sourceDir As String = DirectCast(vbproj, IFileReference).FilePath _
+                .ParentPath _
+                .Replace("\", "/")
             Dim files As IEnumerable(Of String) = ls - l - r - "*.vb" <= sourceDir
+            Dim relative As String() = files _
+                .Select(Function(path)
+                            Return path.Replace("\", "/").Replace(sourceDir, "")
+                        End Function) _
+                .ToArray
 
-            Return files
+            Return relative
         End Function
 
         <Extension>
