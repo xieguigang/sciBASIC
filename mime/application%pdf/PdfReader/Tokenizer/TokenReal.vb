@@ -38,7 +38,7 @@
     '    Code Lines: 17
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 457.00 B
+    '     File Size: 457 B
 
 
     '     Class TokenReal

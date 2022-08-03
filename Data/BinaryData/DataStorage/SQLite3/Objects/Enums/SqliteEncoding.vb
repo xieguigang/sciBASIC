@@ -38,7 +38,7 @@
     '    Code Lines: 7
     ' Comment Lines: 3
     '   Blank Lines: 1
-    '     File Size: 336.00 B
+    '     File Size: 336 B
 
 
     '     Enum SqliteEncoding

@@ -38,7 +38,7 @@
     '    Code Lines: 46
     ' Comment Lines: 16
     '   Blank Lines: 11
-    '     File Size: 2.86 KB
+    '     File Size: 2.85 KB
 
 
     '     Module Search

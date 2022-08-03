@@ -38,7 +38,7 @@
     '    Code Lines: 15
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 672.00 B
+    '     File Size: 672 B
 
 
     '     Class marker

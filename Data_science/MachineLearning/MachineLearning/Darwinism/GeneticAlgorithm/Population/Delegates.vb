@@ -38,7 +38,7 @@
     '    Code Lines: 6
     ' Comment Lines: 6
     '   Blank Lines: 3
-    '     File Size: 731.00 B
+    '     File Size: 731 B
 
 
     '     Delegate Function

@@ -1,57 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::b484dc76025f98ea79a335559a927898, sciBASIC#\mime\application%json\BSON\BSONValue.vb"
+﻿#Region "Microsoft.VisualBasic::54095acdd7aa9944dca1d2bb516dfdd5, sciBASIC#\mime\application%json\BSON\BSONValue.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 300
-'    Code Lines: 258
-' Comment Lines: 1
-'   Blank Lines: 41
-'     File Size: 10.56 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class BSONValue
-' 
-'         Properties: binaryValue, boolValue, dateTimeValue, doubleValue, int32Value
-'                     int64Value, isNone, stringValue, valueType
-' 
-'         Constructor: (+9 Overloads) Sub New
-'         Function: FromValue, GetObjectValue, ToString
-'         Operators: <>, =
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 301
+    '    Code Lines: 259
+    ' Comment Lines: 1
+    '   Blank Lines: 41
+    '     File Size: 10.92 KB
+
+
+    '     Class BSONValue
+    ' 
+    '         Properties: binaryValue, boolValue, dateTimeValue, doubleValue, int32Value
+    '                     int64Value, isNone, stringValue, valueType
+    ' 
+    '         Constructor: (+9 Overloads) Sub New
+    '         Function: FromValue, GetObjectValue, ToString
+    '         Operators: <>, =
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

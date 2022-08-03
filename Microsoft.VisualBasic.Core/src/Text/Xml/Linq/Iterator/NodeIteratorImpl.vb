@@ -38,7 +38,7 @@
     '    Code Lines: 110
     ' Comment Lines: 7
     '   Blank Lines: 29
-    '     File Size: 4.76 KB
+    '     File Size: 4.75 KB
 
 
     '     Class NodeIteratorImpl

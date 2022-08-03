@@ -38,7 +38,7 @@
     '    Code Lines: 6
     ' Comment Lines: 17
     '   Blank Lines: 4
-    '     File Size: 1.32 KB
+    '     File Size: 1.31 KB
 
 
     ' Interface ClusteringAlgorithm

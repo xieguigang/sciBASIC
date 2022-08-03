@@ -38,7 +38,7 @@
     '    Code Lines: 91
     ' Comment Lines: 29
     '   Blank Lines: 20
-    '     File Size: 5.93 KB
+    '     File Size: 5.92 KB
 
 
     '     Module Selector

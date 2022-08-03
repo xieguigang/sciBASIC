@@ -38,7 +38,7 @@
     '    Code Lines: 16
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 606.00 B
+    '     File Size: 606 B
 
 
     '     Class CSSEnvirnment

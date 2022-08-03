@@ -38,7 +38,7 @@
     '    Code Lines: 19
     ' Comment Lines: 3
     '   Blank Lines: 7
-    '     File Size: 934.00 B
+    '     File Size: 934 B
 
 
     '     Class Cylinder

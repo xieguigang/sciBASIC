@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::49f5260714318527643c056ade228b86, sciBASIC#\gr\network-visualization\Visualizer\LayoutLabel.vb"
+﻿#Region "Microsoft.VisualBasic::6d64f3864e053198bf2e705956364aa1, sciBASIC#\gr\network-visualization\Visualizer\LayoutLabel.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 31
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 1.08 KB
+    '     File Size: 1.12 KB
 
 
     ' Class LayoutLabel

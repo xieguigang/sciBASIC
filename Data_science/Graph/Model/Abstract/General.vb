@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b25baf2be827517ea1b242c9274627a5, sciBASIC#\Data_science\Graph\Model\Abstract\General.vb"
+﻿#Region "Microsoft.VisualBasic::547288856942518e0b7241f6eb06c51e, sciBASIC#\Data_science\Graph\Model\Abstract\General.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 33
-    '    Code Lines: 22
+    '   Total Lines: 23
+    '    Code Lines: 13
     ' Comment Lines: 5
-    '   Blank Lines: 6
-    '     File Size: 1.17 KB
+    '   Blank Lines: 5
+    '     File Size: 785 B
 
 
     ' Class VertexEdge
     ' 
-    '     Function: EdgeKey
+    ' 
     ' 
     ' Class Graph
     ' 

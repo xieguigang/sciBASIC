@@ -38,7 +38,7 @@
     '    Code Lines: 22
     ' Comment Lines: 0
     '   Blank Lines: 8
-    '     File Size: 914.00 B
+    '     File Size: 914 B
 
 
     '     Class FactorValue

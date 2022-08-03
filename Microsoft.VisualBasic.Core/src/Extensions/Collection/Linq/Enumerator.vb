@@ -38,7 +38,7 @@
     '    Code Lines: 14
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 681.00 B
+    '     File Size: 681 B
 
 
     '     Class Enumerator

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ccdc43f79ee79a54cd9ba4090539f646, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\NetCore5\deps.json.vb"
+﻿#Region "Microsoft.VisualBasic::7da47dd6cbc0e806cf99b694e0c33f86, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\NetCore5\deps.json.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 150
-    '    Code Lines: 95
+    '   Total Lines: 160
+    '    Code Lines: 104
     ' Comment Lines: 37
-    '   Blank Lines: 18
-    '     File Size: 6.50 KB
+    '   Blank Lines: 19
+    '     File Size: 6.91 KB
 
 
     '     Class deps

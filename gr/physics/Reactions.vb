@@ -38,7 +38,7 @@
     '    Code Lines: 11
     ' Comment Lines: 10
     '   Blank Lines: 3
-    '     File Size: 777.00 B
+    '     File Size: 777 B
 
 
     ' Module Reactions

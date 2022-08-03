@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0dc47c44e3767b9bbea844e57655729, sciBASIC#\Data_science\Mathematica\Math\DataFittings\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::14d1ae2eafedade110753afe75fd54c4, sciBASIC#\Data_science\Mathematica\Math\DataFittings\test\Program.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 19
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 765.00 B
+    '     File Size: 786 B
 
 
     ' Module Program

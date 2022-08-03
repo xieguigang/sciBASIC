@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::172328e6927184c7d59469b10ccf894d, sciBASIC#\Data_science\Visualization\Plots\g\Axis\AxisScalling.vb"
+﻿#Region "Microsoft.VisualBasic::de073167be431a0d2dda5e6d8f357581, sciBASIC#\Data_science\Visualization\Plots\g\Axis\AxisScalling.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 395
-    '    Code Lines: 213
+    '   Total Lines: 429
+    '    Code Lines: 240
     ' Comment Lines: 120
-    '   Blank Lines: 62
-    '     File Size: 16.13 KB
+    '   Blank Lines: 69
+    '     File Size: 17.81 KB
 
 
     '     Module AxisScalling
     ' 
-    '         Function: __fix, __max, AxisExpression, (+3 Overloads) CreateAxisTicks, (+2 Overloads) GetAxisByTick
+    '         Function: __fix, __max, AxisExpression, (+4 Overloads) CreateAxisTicks, (+2 Overloads) GetAxisByTick
     '                   (+2 Overloads) GetAxisValues
     ' 
     ' 

@@ -38,7 +38,7 @@
     '    Code Lines: 6
     ' Comment Lines: 3
     '   Blank Lines: 4
-    '     File Size: 263.00 B
+    '     File Size: 263 B
 
 
     '     Class Fill

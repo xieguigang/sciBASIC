@@ -38,7 +38,7 @@
     '    Code Lines: 19
     ' Comment Lines: 19
     '   Blank Lines: 7
-    '     File Size: 1.26 KB
+    '     File Size: 1.25 KB
 
 
     '     Class MailContents

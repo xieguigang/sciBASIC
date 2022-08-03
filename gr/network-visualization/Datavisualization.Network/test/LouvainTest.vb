@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ce34d03f18a4b7dea6c18dafe5273df, sciBASIC#\gr\network-visualization\Datavisualization.Network\test\LouvainTest.vb"
+﻿#Region "Microsoft.VisualBasic::1076376797fd86ea5ad40d3e609589bf, sciBASIC#\gr\network-visualization\Datavisualization.Network\test\LouvainTest.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 47
     ' Comment Lines: 3
     '   Blank Lines: 23
-    '     File Size: 2.25 KB
+    '     File Size: 2.31 KB
 
 
     ' Module LouvainTest

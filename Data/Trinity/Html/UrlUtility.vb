@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7020fbd4c5fdf0a794fb3012cbca6574, sciBASIC#\Data\Trinity\Html\UrlUtility.vb"
+﻿#Region "Microsoft.VisualBasic::36644267a65f266f15f8569f0c5a816d, sciBASIC#\Data\Trinity\Html\UrlUtility.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 23
     ' Comment Lines: 8
     '   Blank Lines: 8
-    '     File Size: 1.14 KB
+    '     File Size: 1.18 KB
 
 
     ' Class UrlUtility

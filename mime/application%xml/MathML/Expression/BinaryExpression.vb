@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 0
     '   Blank Lines: 9
-    '     File Size: 504.00 B
+    '     File Size: 504 B
 
 
     '     Class BinaryExpression

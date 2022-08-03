@@ -1,55 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::a3116f882254f6dd3ad04ec1d4a538ec, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Math\GeomTransform.vb"
+﻿#Region "Microsoft.VisualBasic::18b578c2eeb11977368975d5c7c56b7e, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Math\GeomTransform.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 529
-'    Code Lines: 286
-' Comment Lines: 189
-'   Blank Lines: 54
-'     File Size: 20.23 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module GeomTransform
-' 
-'         Function: Angle, Area, (+2 Overloads) CalculateAngle, CenterAlign, (+2 Overloads) CentralOffset
-'                   (+4 Overloads) Centre, CircleRectangle, (+5 Overloads) Distance, (+2 Overloads) GetBounds, GetCenter
-'                   (+2 Overloads) InRegion, MirrorX, MirrorY, (+9 Overloads) OffSet2D, (+2 Overloads) Offsets
-'                   (+5 Overloads) Scale, ShapePoints, SquareSize
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 544
+    '    Code Lines: 293
+    ' Comment Lines: 195
+    '   Blank Lines: 56
+    '     File Size: 20.79 KB
+
+
+    '     Module GeomTransform
+    ' 
+    '         Function: Angle, Area, (+2 Overloads) CalculateAngle, CenterAlign, (+2 Overloads) CentralOffset
+    '                   (+4 Overloads) Centre, CircleRectangle, (+5 Overloads) Distance, DistanceTo, (+2 Overloads) GetBounds
+    '                   GetCenter, (+2 Overloads) InRegion, MirrorX, MirrorY, (+9 Overloads) OffSet2D
+    '                   (+2 Overloads) Offsets, (+5 Overloads) Scale, ShapePoints, SquareSize
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

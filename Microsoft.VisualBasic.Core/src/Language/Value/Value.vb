@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32dd697f58fd9ffc2abbfaf70aa0ab51, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\Value.vb"
+﻿#Region "Microsoft.VisualBasic::c4a9c220d62541c3a561a0ffc99dcc23, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\Value.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 146
     ' Comment Lines: 110
     '   Blank Lines: 33
-    '     File Size: 11.09 KB
+    '     File Size: 11.38 KB
 
 
     '     Class Value

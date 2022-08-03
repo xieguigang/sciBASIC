@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e86112081065242e0d82f2b4e8c68feb, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\ZipLib.vb"
+﻿#Region "Microsoft.VisualBasic::3d7ccc8d78fae48cb1511bbe7cb5c478, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\ZipLib.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 344
+    '   Total Lines: 356
     '    Code Lines: 188
-    ' Comment Lines: 107
+    ' Comment Lines: 119
     '   Blank Lines: 49
-    '     File Size: 14.95 KB
+    '     File Size: 15.43 KB
 
 
     '     Module ZipLib

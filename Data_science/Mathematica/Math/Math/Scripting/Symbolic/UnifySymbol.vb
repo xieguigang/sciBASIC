@@ -38,7 +38,7 @@
     '    Code Lines: 16
     ' Comment Lines: 5
     '   Blank Lines: 6
-    '     File Size: 865.00 B
+    '     File Size: 865 B
 
 
     '     Class UnifySymbol

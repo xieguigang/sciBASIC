@@ -38,7 +38,7 @@
     '    Code Lines: 7
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 236.00 B
+    '     File Size: 236 B
 
 
     '     Class Classify

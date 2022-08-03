@@ -38,7 +38,7 @@
     '    Code Lines: 36
     ' Comment Lines: 0
     '   Blank Lines: 9
-    '     File Size: 1.54 KB
+    '     File Size: 1.53 KB
 
 
     '     Class TimeRange

@@ -38,7 +38,7 @@
     '    Code Lines: 10
     ' Comment Lines: 10
     '   Blank Lines: 4
-    '     File Size: 844.00 B
+    '     File Size: 844 B
 
 
     '     Delegate Sub

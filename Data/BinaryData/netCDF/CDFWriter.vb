@@ -1,58 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::ce9090cc91c3ab05117a6b792a1df638, sciBASIC#\Data\BinaryData\DataStorage\netCDF\CDFWriter.vb"
+﻿#Region "Microsoft.VisualBasic::79ff14ec1ef7a8ac3aaa3b4cc7613cc4, sciBASIC#\Data\BinaryData\netCDF\CDFWriter.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 499
-'    Code Lines: 209
-' Comment Lines: 235
-'   Blank Lines: 55
-'     File Size: 23.57 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class CDFWriter
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'         Function: CalcOffsets, Dimensions, getDimension, getDimensionList, getVariableHeaderBuffer
-'                   GlobalAttributes
-' 
-'         Sub: (+3 Overloads) AddVariable, AddVector, (+2 Overloads) Dispose, Flush, Save
-'              writeAttributes
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 499
+    '    Code Lines: 210
+    ' Comment Lines: 235
+    '   Blank Lines: 54
+    '     File Size: 21.97 KB
+
+
+    ' Class CDFWriter
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Function: CalcOffsets, Dimensions, getDimension, getDimensionList, getVariableHeaderBuffer
+    '               GlobalAttributes
+    ' 
+    '     Sub: (+3 Overloads) AddVariable, AddVector, (+2 Overloads) Dispose, Flush, Save
+    '          writeAttributes
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

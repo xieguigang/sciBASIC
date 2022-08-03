@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb0bfed0a21bd377daef46fcc9689940, sciBASIC#\Data_science\MachineLearning\xgboost\TGBoost\ClassList.vb"
+﻿#Region "Microsoft.VisualBasic::9147bb5b869432baf71e04a354f337d2, sciBASIC#\Data_science\MachineLearning\xgboost\TGBoost\ClassList.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 107
     ' Comment Lines: 3
     '   Blank Lines: 19
-    '     File Size: 5.22 KB
+    '     File Size: 5.34 KB
 
 
     '     Class ClassList

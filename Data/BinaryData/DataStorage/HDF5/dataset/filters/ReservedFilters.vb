@@ -38,7 +38,7 @@
     '    Code Lines: 11
     ' Comment Lines: 24
     '   Blank Lines: 1
-    '     File Size: 919.00 B
+    '     File Size: 919 B
 
 
     '     Enum ReservedFilters

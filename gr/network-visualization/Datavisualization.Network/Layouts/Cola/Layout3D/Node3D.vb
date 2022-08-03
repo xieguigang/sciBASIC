@@ -38,7 +38,7 @@
     '    Code Lines: 10
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 312.00 B
+    '     File Size: 312 B
 
 
     '     Class Node3D

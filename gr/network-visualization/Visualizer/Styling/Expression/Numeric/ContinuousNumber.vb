@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e538d670f4aaecba88e575eb8148b868, sciBASIC#\gr\network-visualization\Visualizer\Styling\Expression\Numeric\ContinuousNumber.vb"
+﻿#Region "Microsoft.VisualBasic::797bf5dae1fba00822715c3b2e9c4e31, sciBASIC#\gr\network-visualization\Visualizer\Styling\Expression\Numeric\ContinuousNumber.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 31
+    '   Total Lines: 30
     '    Code Lines: 24
     ' Comment Lines: 0
-    '   Blank Lines: 7
-    '     File Size: 1.11 KB
+    '   Blank Lines: 6
+    '     File Size: 1.13 KB
 
 
     '     Class ContinuousNumber
@@ -50,7 +50,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model

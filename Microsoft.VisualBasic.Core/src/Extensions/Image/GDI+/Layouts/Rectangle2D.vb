@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::748f6ab543b615f34b9d7d441d6fd1f9, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Layouts\Rectangle2D.vb"
+﻿#Region "Microsoft.VisualBasic::90e1f348ec80fb51b47194ee7efff9e6, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Layouts\Rectangle2D.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 404
-    '    Code Lines: 219
+    '   Total Lines: 396
+    '    Code Lines: 215
     ' Comment Lines: 133
-    '   Blank Lines: 52
-    '     File Size: 16.06 KB
+    '   Blank Lines: 48
+    '     File Size: 15.96 KB
 
 
     '     Class Rectangle2D

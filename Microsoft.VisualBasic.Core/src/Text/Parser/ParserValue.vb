@@ -38,7 +38,7 @@
     '    Code Lines: 11
     ' Comment Lines: 5
     '   Blank Lines: 3
-    '     File Size: 634.00 B
+    '     File Size: 634 B
 
 
     '     Structure ParserValue

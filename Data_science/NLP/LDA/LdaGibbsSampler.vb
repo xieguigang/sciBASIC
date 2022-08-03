@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c856bc12e20944182c75892da102fd26, sciBASIC#\Data_science\NLP\LDA\LdaGibbsSampler.vb"
+﻿#Region "Microsoft.VisualBasic::3fe4b313100b241c7eee6ec3270184ee, sciBASIC#\Data_science\NLP\LDA\LdaGibbsSampler.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 177
     ' Comment Lines: 176
     '   Blank Lines: 62
-    '     File Size: 15.05 KB
+    '     File Size: 15.46 KB
 
 
     '     Class LdaGibbsSampler
@@ -471,4 +471,3 @@ Namespace LDA
         End Sub
     End Class
 End Namespace
-

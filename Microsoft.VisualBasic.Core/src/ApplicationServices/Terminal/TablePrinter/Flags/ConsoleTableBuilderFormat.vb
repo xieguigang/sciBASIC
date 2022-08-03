@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9eea68df57c4091e3bfc1a01c0f285bd, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\Flags\ConsoleTableBuilderFormat.vb"
+﻿#Region "Microsoft.VisualBasic::5199fcabe9321e93fdecdfd784fa1e35, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\Flags\ConsoleTableBuilderFormat.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 8
     ' Comment Lines: 0
     '   Blank Lines: 0
-    '     File Size: 222.00 B
+    '     File Size: 220 B
 
 
     '     Enum ConsoleTableBuilderFormat
@@ -61,4 +61,3 @@ Namespace ApplicationServices.Terminal.TablePrinter.Flags
         Minimal = 3
     End Enum
 End Namespace
-

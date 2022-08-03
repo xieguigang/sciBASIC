@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::14c8eef78ed023f1b27ccd480de23fbc, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\scale\IScale.vb"
+﻿#Region "Microsoft.VisualBasic::d515a83bca074e66651fbc3bba52afce, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\scale\IScale.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 108
-    '    Code Lines: 41
+    '   Total Lines: 117
+    '    Code Lines: 48
     ' Comment Lines: 51
-    '   Blank Lines: 16
-    '     File Size: 4.29 KB
+    '   Blank Lines: 18
+    '     File Size: 4.58 KB
 
 
     '     Class Scaler
@@ -47,7 +47,7 @@
     ' 
     '     Class IScale
     ' 
-    '         Properties: rangeMax
+    '         Properties: rangeMax, rangeMin
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: (+3 Overloads) range

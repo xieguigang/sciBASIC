@@ -38,7 +38,7 @@
     '    Code Lines: 56
     ' Comment Lines: 34
     '   Blank Lines: 18
-    '     File Size: 3.41 KB
+    '     File Size: 3.40 KB
 
 
     '     Class Comparer

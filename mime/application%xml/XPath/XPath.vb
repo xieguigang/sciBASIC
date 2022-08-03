@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c479960609f252af4f7a06c135b61218, sciBASIC#\mime\application%xml\XPath\XPath.vb"
+﻿#Region "Microsoft.VisualBasic::ccc7b98d4153d413b2fef299f5e98d9c, sciBASIC#\mime\application%xml\XPath\XPath.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 80
     ' Comment Lines: 26
     '   Blank Lines: 23
-    '     File Size: 3.86 KB
+    '     File Size: 3.99 KB
 
 
     ' Class XPath

@@ -38,7 +38,7 @@
     '    Code Lines: 11
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 350.00 B
+    '     File Size: 350 B
 
 
     '     Enum LayerTypes

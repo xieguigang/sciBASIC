@@ -38,7 +38,7 @@
     '    Code Lines: 147
     ' Comment Lines: 58
     '   Blank Lines: 29
-    '     File Size: 10.16 KB
+    '     File Size: 10.15 KB
 
 
     '     Class Vector

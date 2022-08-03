@@ -1,72 +1,72 @@
-﻿#Region "Microsoft.VisualBasic::b776875a4d85830bd9ef4ed78b840833, sciBASIC#\mime\application%pdf\PdfFileWriter\TextBox.vb"
+﻿#Region "Microsoft.VisualBasic::29e5ac25799ec92508926e90078d5920, sciBASIC#\mime\application%pdf\PdfFileWriter\TextBox.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 847
-'    Code Lines: 440
-' Comment Lines: 287
-'   Blank Lines: 120
-'     File Size: 30.72 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class TextBoxLine
-' 
-'         Properties: Ascent, Descent, EndOfParagraph, LineHeight, SegArray
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-' Class TextBoxSeg
-' 
-'     Properties: AnnotAction, DrawStyle, Font, FontColor, FontSize
-'                 SegWidth, SpaceCount, Text
-' 
-'     Constructor: (+2 Overloads) Sub New
-'     Function: IsEqual
-' 
-'     Class TextBox
-' 
-'         Properties: BoxHeight, BoxWidth, FirstLineIndent, LineCount, LongestLineWidth
-'                     ParagraphCount
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: (+3 Overloads) BoxHeightExtra
-' 
-'         Sub: AddLine, (+8 Overloads) AddText, BreakLine, Clear, Terminate
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 847
+    '    Code Lines: 440
+    ' Comment Lines: 287
+    '   Blank Lines: 120
+    '     File Size: 28.31 KB
+
+
+    ' Class TextBoxLine
+    ' 
+    '     Properties: Ascent, Descent, EndOfParagraph, LineHeight, SegArray
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class TextBoxSeg
+    ' 
+    '     Properties: AnnotAction, DrawStyle, Font, FontColor, FontSize
+    '                 SegWidth, SpaceCount, Text
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    '     Function: IsEqual
+    ' 
+    ' Class TextBox
+    ' 
+    '     Properties: BoxHeight, BoxWidth, FirstLineIndent, LineCount, LongestLineWidth
+    '                 ParagraphCount
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: (+3 Overloads) BoxHeightExtra
+    ' 
+    '     Sub: AddLine, (+8 Overloads) AddText, BreakLine, Clear, Terminate
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

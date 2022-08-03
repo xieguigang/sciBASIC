@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f655d3b4742e387aa2e77066ce81c20, sciBASIC#\Data_science\Visualization\Plots-statistics\VariableWidthBarPlot\VariableWidthBarPlot.vb"
+﻿#Region "Microsoft.VisualBasic::a887af1f2e6e0a43766c4f9990602964, sciBASIC#\Data_science\Visualization\Plots-statistics\VariableWidthBarPlot\VariableWidthBarPlot.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 96
     ' Comment Lines: 8
     '   Blank Lines: 15
-    '     File Size: 5.95 KB
+    '     File Size: 6.07 KB
 
 
     ' Module VariableWidthBarPlot

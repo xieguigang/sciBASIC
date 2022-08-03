@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a4266c379666b7078fbce0270956ef7, sciBASIC#\Data_science\Visualization\Plots\3D\Plot\Scatter3D.vb"
+﻿#Region "Microsoft.VisualBasic::d055e26e87c71dddaf3531018336432f, sciBASIC#\Data_science\Visualization\Plots\3D\Plot\Scatter3D.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 128
     ' Comment Lines: 15
     '   Blank Lines: 19
-    '     File Size: 6.40 KB
+    '     File Size: 6.56 KB
 
 
     '     Class Scatter3D

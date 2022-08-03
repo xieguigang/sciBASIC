@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c0be7f102596271bca4215545a2b914, sciBASIC#\Data_science\Visualization\Plots\Contour\HeatMap\ContourHeatMapPlot.vb"
+﻿#Region "Microsoft.VisualBasic::3ccf004bf1e002d88f22ffcd7a4e1535, sciBASIC#\Data_science\Visualization\Plots\Contour\HeatMap\ContourHeatMapPlot.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 146
     ' Comment Lines: 22
     '   Blank Lines: 21
-    '     File Size: 7.49 KB
+    '     File Size: 7.68 KB
 
 
     '     Class ContourHeatMapPlot

@@ -38,7 +38,7 @@
     '    Code Lines: 47
     ' Comment Lines: 42
     '   Blank Lines: 19
-    '     File Size: 3.74 KB
+    '     File Size: 3.73 KB
 
 
     '     Class BZip2BitOutputStream

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c253ddaef4ff0b04ff16d21fa52fd4ec, sciBASIC#\Data_science\Mathematica\Math\Math\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::0ee0095306f2f14c289e696cf589830d, sciBASIC#\Data_science\Mathematica\Math\Math\Extensions.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 174
     ' Comment Lines: 113
     '   Blank Lines: 36
-    '     File Size: 11.71 KB
+    '     File Size: 12.03 KB
 
 
     ' Module Extensions

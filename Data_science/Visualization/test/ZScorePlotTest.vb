@@ -38,7 +38,7 @@
     '    Code Lines: 108
     ' Comment Lines: 2
     '   Blank Lines: 29
-    '     File Size: 5.40 KB
+    '     File Size: 5.39 KB
 
 
     ' Module ZScorePlotTest

@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 4
     '   Blank Lines: 5
-    '     File Size: 543.00 B
+    '     File Size: 543 B
 
 
     '     Interface ILayoutedObject

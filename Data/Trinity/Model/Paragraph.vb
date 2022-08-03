@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4f2912ffa95899b2184f10096cb1784, sciBASIC#\Data\Trinity\Model\Paragraph.vb"
+﻿#Region "Microsoft.VisualBasic::d2ae1dd5742845fab2fc2a010d657091, sciBASIC#\Data\Trinity\Model\Paragraph.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 52
     ' Comment Lines: 0
     '   Blank Lines: 16
-    '     File Size: 1.96 KB
+    '     File Size: 2.03 KB
 
 
     '     Class Paragraph

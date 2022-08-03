@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b59b89ea1c6310f59de37f82f44d4c44, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\Flags\TableAligntment.vb"
+﻿#Region "Microsoft.VisualBasic::2e75c13de1e9b384f532d8594af4514b, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\Flags\TableAligntment.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 7
     ' Comment Lines: 0
     '   Blank Lines: 0
-    '     File Size: 178.00 B
+    '     File Size: 176 B
 
 
     '     Enum TableAligntment
@@ -60,4 +60,3 @@ Namespace ApplicationServices.Terminal.TablePrinter.Flags
         Center = 2
     End Enum
 End Namespace
-

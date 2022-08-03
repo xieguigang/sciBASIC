@@ -38,7 +38,7 @@
     '    Code Lines: 17
     ' Comment Lines: 3
     '   Blank Lines: 6
-    '     File Size: 662.00 B
+    '     File Size: 662 B
 
 
     ' Class Resource

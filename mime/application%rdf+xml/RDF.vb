@@ -38,7 +38,7 @@
     '    Code Lines: 11
     ' Comment Lines: 14
     '   Blank Lines: 4
-    '     File Size: 1.02 KB
+    '     File Size: 1015 B
 
 
     ' Class RDF

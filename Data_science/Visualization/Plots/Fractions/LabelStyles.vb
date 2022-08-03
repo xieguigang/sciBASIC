@@ -38,7 +38,7 @@
     '    Code Lines: 7
     ' Comment Lines: 0
     '   Blank Lines: 1
-    '     File Size: 128.00 B
+    '     File Size: 128 B
 
 
     '     Enum ValueLabels

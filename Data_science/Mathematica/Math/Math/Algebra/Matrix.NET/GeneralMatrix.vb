@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::152016e95b0c8ab72abc1f82872aecac, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\GeneralMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::e2a5bac2a6675bfe428f3a36bc40697b, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\GeneralMatrix.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 16
     ' Comment Lines: 36
     '   Blank Lines: 8
-    '     File Size: 2.06 KB
+    '     File Size: 2.12 KB
 
 
     '     Interface GeneralMatrix

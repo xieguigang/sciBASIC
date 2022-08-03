@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 4
     '   Blank Lines: 2
-    '     File Size: 753.00 B
+    '     File Size: 753 B
 
 
     '     Module CPOLLicense

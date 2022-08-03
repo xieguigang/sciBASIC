@@ -38,7 +38,7 @@
     '    Code Lines: 10
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 281.00 B
+    '     File Size: 281 B
 
 
     '     Enum mathOperators

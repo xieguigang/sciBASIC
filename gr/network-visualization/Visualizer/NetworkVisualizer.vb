@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba6ffccc47d64d2523291d4f50b7c4c0, sciBASIC#\gr\network-visualization\Visualizer\NetworkVisualizer.vb"
+﻿#Region "Microsoft.VisualBasic::a649574c9030718ea8836402bb143c70, sciBASIC#\gr\network-visualization\Visualizer\NetworkVisualizer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 308
     ' Comment Lines: 82
     '   Blank Lines: 54
-    '     File Size: 20.77 KB
+    '     File Size: 21.22 KB
 
 
     ' Module NetworkVisualizer

@@ -38,7 +38,7 @@
     '    Code Lines: 8
     ' Comment Lines: 1
     '   Blank Lines: 5
-    '     File Size: 331.00 B
+    '     File Size: 331 B
 
 
     '     Class Gradient

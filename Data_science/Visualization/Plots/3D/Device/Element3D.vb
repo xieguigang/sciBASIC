@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c337011795275f8c60c1023ba7b66b31, sciBASIC#\Data_science\Visualization\Plots\3D\Device\Element3D.vb"
+﻿#Region "Microsoft.VisualBasic::8a72bb6ce28682f8b427d4b26e3f44d1, sciBASIC#\Data_science\Visualization\Plots\3D\Device\Element3D.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 146
     ' Comment Lines: 18
     '   Blank Lines: 42
-    '     File Size: 7.48 KB
+    '     File Size: 7.68 KB
 
 
     '     Class Element3D

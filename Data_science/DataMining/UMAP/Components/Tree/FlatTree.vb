@@ -38,7 +38,7 @@
     '    Code Lines: 8
     ' Comment Lines: 0
     '   Blank Lines: 1
-    '     File Size: 281.00 B
+    '     File Size: 281 B
 
 
     '     Class FlatTree

@@ -38,7 +38,7 @@
     '    Code Lines: 20
     ' Comment Lines: 13
     '   Blank Lines: 7
-    '     File Size: 1.11 KB
+    '     File Size: 1.10 KB
 
 
     '     Class RpcResponse

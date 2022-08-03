@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41961069d233b6f4cd08e837517435bb, sciBASIC#\Data_science\Mathematica\Math\ODE\ODESolvers\ODEOutput.vb"
+﻿#Region "Microsoft.VisualBasic::7a79af86e80cedb87d754cb2ad9bece7, sciBASIC#\Data_science\Mathematica\Math\ODE\ODESolvers\ODEOutput.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 42
     ' Comment Lines: 4
     '   Blank Lines: 9
-    '     File Size: 1.58 KB
+    '     File Size: 1.63 KB
 
 
     ' Class ODEOutput

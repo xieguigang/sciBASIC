@@ -38,7 +38,7 @@
     '    Code Lines: 9
     ' Comment Lines: 4
     '   Blank Lines: 4
-    '     File Size: 553.00 B
+    '     File Size: 553 B
 
 
     '     Class Sqlite3Settings

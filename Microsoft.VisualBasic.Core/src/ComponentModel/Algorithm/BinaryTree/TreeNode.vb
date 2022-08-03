@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::941e12527cec9a68430f1b9449934c42, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\TreeNode.vb"
+﻿#Region "Microsoft.VisualBasic::523e6160b6e3ad2429574d55f7ed2f04, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\TreeNode.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 141
-    '    Code Lines: 71
-    ' Comment Lines: 50
-    '   Blank Lines: 20
-    '     File Size: 4.92 KB
+    '   Total Lines: 149
+    '    Code Lines: 76
+    ' Comment Lines: 52
+    '   Blank Lines: 21
+    '     File Size: 5.25 KB
 
 
     '     Class BinaryTree
     ' 
-    '         Properties: Key, Left, Members, QualifiedName, Right
-    '                     Value
+    '         Properties: Key, Left, Members, MemberSize, QualifiedName
+    '                     Right, Value
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

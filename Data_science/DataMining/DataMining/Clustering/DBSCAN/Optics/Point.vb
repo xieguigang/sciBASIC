@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11353639adb2b70b8bf0142f16a56d47, sciBASIC#\Data_science\DataMining\DataMining\Clustering\DBSCAN\Optics\Point.vb"
+﻿#Region "Microsoft.VisualBasic::2bb1e2c8219f1d5b4bbb8d0fef9d9e51, sciBASIC#\Data_science\DataMining\DataMining\Clustering\DBSCAN\Optics\Point.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 11
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 329.00 B
+    '     File Size: 341 B
 
 
     '     Class Point

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f64c610ec46173e61ace65757363e124, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\NumberGroups.vb"
+﻿#Region "Microsoft.VisualBasic::38773331ba8ef32e063980692b4ffd2a, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\NumberGroups.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 379
-    '    Code Lines: 247
+    '   Total Lines: 374
+    '    Code Lines: 243
     ' Comment Lines: 88
-    '   Blank Lines: 44
-    '     File Size: 14.36 KB
+    '   Blank Lines: 43
+    '     File Size: 14.62 KB
 
 
     '     Interface INumericKey

@@ -38,7 +38,7 @@
     '    Code Lines: 17
     ' Comment Lines: 12
     '   Blank Lines: 5
-    '     File Size: 859.00 B
+    '     File Size: 859 B
 
 
     '     Class BiDirectionData

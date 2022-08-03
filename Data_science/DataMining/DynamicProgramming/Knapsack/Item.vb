@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15f5c938fe43f0711a48369a91576c7c, sciBASIC#\Data_science\DataMining\DynamicProgramming\Knapsack\Item.vb"
+﻿#Region "Microsoft.VisualBasic::de902ae2bbe00312b9c74e03b83a78d3, sciBASIC#\Data_science\DataMining\DynamicProgramming\Knapsack\Item.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 17
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 647.00 B
+    '     File Size: 668 B
 
 
     '     Class Item

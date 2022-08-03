@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f74d3ed3b61db6a503dd9d35451ff48, sciBASIC#\gr\network-visualization\Visualizer\Styling\Expression\BrushExpression.vb"
+﻿#Region "Microsoft.VisualBasic::fc7c50a68883962d33f326d549abd907, sciBASIC#\gr\network-visualization\Visualizer\Styling\Expression\BrushExpression.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 52
     ' Comment Lines: 29
     '   Blank Lines: 7
-    '     File Size: 3.88 KB
+    '     File Size: 3.96 KB
 
 
     '     Module BrushExpression

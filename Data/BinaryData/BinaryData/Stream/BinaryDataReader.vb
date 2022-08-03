@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d22fda0ea292b674acca5d2fdc3cf7a, sciBASIC#\Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
+﻿#Region "Microsoft.VisualBasic::b5f226796da8b3bf2429b6b4b4dc3ef5, sciBASIC#\Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 692
-    '    Code Lines: 345
+    '   Total Lines: 696
+    '    Code Lines: 348
     ' Comment Lines: 273
-    '   Blank Lines: 74
-    '     File Size: 30.93 KB
+    '   Blank Lines: 75
+    '     File Size: 31.04 KB
 
 
     ' Class BinaryDataReader
@@ -46,7 +46,7 @@
     '     Properties: BufferView, ByteOrder, Encoding, EndOfStream, Length
     '                 Position
     ' 
-    '     Constructor: (+5 Overloads) Sub New
+    '     Constructor: (+6 Overloads) Sub New
     ' 
     '     Function: DecimalFromBytes, getDebugView, ReadByteLengthPrefixString, ReadDateTime, ReadDecimal
     '               ReadDecimals, ReadDouble, ReadDoubles, ReadDwordLengthPrefixString, ReadDwordLenString

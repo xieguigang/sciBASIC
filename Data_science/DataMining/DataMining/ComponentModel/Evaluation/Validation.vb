@@ -38,7 +38,7 @@
     '    Code Lines: 132
     ' Comment Lines: 64
     '   Blank Lines: 22
-    '     File Size: 8.48 KB
+    '     File Size: 8.47 KB
 
 
     '     Structure Validation

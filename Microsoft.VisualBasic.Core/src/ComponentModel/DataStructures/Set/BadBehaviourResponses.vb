@@ -38,7 +38,7 @@
     '    Code Lines: 6
     ' Comment Lines: 10
     '   Blank Lines: 2
-    '     File Size: 545.00 B
+    '     File Size: 545 B
 
 
     '     Enum BadBehaviourResponses

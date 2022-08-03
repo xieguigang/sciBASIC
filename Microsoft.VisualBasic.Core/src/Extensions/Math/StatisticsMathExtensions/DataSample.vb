@@ -38,7 +38,7 @@
     '    Code Lines: 76
     ' Comment Lines: 12
     '   Blank Lines: 16
-    '     File Size: 3.43 KB
+    '     File Size: 3.42 KB
 
 
     '     Class DataSample

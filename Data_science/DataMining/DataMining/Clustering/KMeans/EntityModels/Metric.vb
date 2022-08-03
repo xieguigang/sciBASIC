@@ -38,7 +38,7 @@
     '    Code Lines: 14
     ' Comment Lines: 0
     '   Blank Lines: 6
-    '     File Size: 597.00 B
+    '     File Size: 597 B
 
 
     '     Class Metric

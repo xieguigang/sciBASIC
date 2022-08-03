@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d47ff2d516ef3483351625ea122bcdd, sciBASIC#\Data_science\MachineLearning\xgboost\util\exception\UTFDataFormatException.vb"
+﻿#Region "Microsoft.VisualBasic::e673410164ded60553ad677454baccef, sciBASIC#\Data_science\MachineLearning\xgboost\util\exception\UTFDataFormatException.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 18
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 572.00 B
+    '     File Size: 594 B
 
 
     '     Class UTFDataFormatException

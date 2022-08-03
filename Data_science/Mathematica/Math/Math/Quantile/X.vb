@@ -38,7 +38,7 @@
     '    Code Lines: 15
     ' Comment Lines: 18
     '   Blank Lines: 5
-    '     File Size: 1.27 KB
+    '     File Size: 1.26 KB
 
 
     '     Class X

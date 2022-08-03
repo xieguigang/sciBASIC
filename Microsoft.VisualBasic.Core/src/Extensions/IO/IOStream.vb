@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35513d1acd839863747dd88607d9ea23, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\IOStream.vb"
+﻿#Region "Microsoft.VisualBasic::e5fa6a06bdb08f22d64257f415082bd9, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\IOStream.vb"
 
     ' Author:
     ' 
@@ -34,8 +34,8 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 52
-    '    Code Lines: 40
+    '   Total Lines: 53
+    '    Code Lines: 41
     ' Comment Lines: 0
     '   Blank Lines: 12
     '     File Size: 1.62 KB

@@ -38,7 +38,7 @@
     '    Code Lines: 6
     ' Comment Lines: 1
     '   Blank Lines: 0
-    '     File Size: 202.00 B
+    '     File Size: 202 B
 
 
     '     Enum FileReadVersion

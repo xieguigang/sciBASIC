@@ -38,7 +38,7 @@
     '    Code Lines: 102
     ' Comment Lines: 13
     '   Blank Lines: 13
-    '     File Size: 5.63 KB
+    '     File Size: 5.62 KB
 
 
     '     Module Symbolic

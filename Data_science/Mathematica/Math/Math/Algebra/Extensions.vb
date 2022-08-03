@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a46964dc0420de8fe22fccf33377f77f, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::56201e68505778628a0ecc55ee7a9ac7, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Extensions.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 53
     ' Comment Lines: 23
     '   Blank Lines: 13
-    '     File Size: 3.31 KB
+    '     File Size: 3.40 KB
 
 
     '     Delegate Function

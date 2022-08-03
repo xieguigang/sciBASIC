@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ea05d24e01bfd08268b14b0fe7aa3bb, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Random\RandomExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::37bce7f261b597873b85b42512b405d5, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Random\RandomExtensions.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 290
-    '    Code Lines: 141
-    ' Comment Lines: 114
-    '   Blank Lines: 35
-    '     File Size: 11.54 KB
+    '   Total Lines: 314
+    '    Code Lines: 148
+    ' Comment Lines: 129
+    '   Blank Lines: 37
+    '     File Size: 12.37 KB
 
 
     '     Delegate Function
@@ -52,8 +52,8 @@
     '         Properties: seeds
     ' 
     '         Function: [Next], GetNextBetween, (+2 Overloads) GetRandomValue, (+2 Overloads) NextBoolean, (+4 Overloads) NextDouble
-    '                   (+2 Overloads) NextGaussian, NextInteger, NextTriangular, Permutation, randf
-    '                   RandomSingle, Seed
+    '                   (+2 Overloads) NextGaussian, NextInteger, NextNumber, NextTriangular, Permutation
+    '                   randf, RandomSingle, Seed
     ' 
     '         Sub: SetSeed, (+3 Overloads) Shuffle
     ' 

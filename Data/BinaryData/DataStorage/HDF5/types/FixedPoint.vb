@@ -38,7 +38,7 @@
     '    Code Lines: 39
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 1.62 KB
+    '     File Size: 1.61 KB
 
 
     '     Class FixedPoint

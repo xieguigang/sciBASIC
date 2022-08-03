@@ -38,7 +38,7 @@
     '    Code Lines: 20
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 935.00 B
+    '     File Size: 935 B
 
 
     ' Module CanvasDrawer

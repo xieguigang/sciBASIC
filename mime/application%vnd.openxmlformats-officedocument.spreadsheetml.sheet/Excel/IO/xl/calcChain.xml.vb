@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 468.00 B
+    '     File Size: 468 B
 
 
     '     Class calcChain

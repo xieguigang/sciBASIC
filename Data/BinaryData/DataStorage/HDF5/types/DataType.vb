@@ -38,7 +38,7 @@
     '    Code Lines: 9
     ' Comment Lines: 4
     '   Blank Lines: 6
-    '     File Size: 497.00 B
+    '     File Size: 497 B
 
 
     '     Class DataType

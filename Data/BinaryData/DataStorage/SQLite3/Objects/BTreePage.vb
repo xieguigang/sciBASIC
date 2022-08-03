@@ -38,7 +38,7 @@
     '    Code Lines: 47
     ' Comment Lines: 3
     '   Blank Lines: 18
-    '     File Size: 2.43 KB
+    '     File Size: 2.42 KB
 
 
     '     Class BTreePage

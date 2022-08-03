@@ -38,7 +38,7 @@
     '    Code Lines: 23
     ' Comment Lines: 4
     '   Blank Lines: 5
-    '     File Size: 780.00 B
+    '     File Size: 780 B
 
 
     '     Class MathToken

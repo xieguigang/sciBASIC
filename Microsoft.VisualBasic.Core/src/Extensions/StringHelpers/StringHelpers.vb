@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57bfe4410fce43ee7b3e2e0db10b2c75, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::c0977a0fd80c7bcf2e5cb8197923326f, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringHelpers.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1302
-    '    Code Lines: 712
-    ' Comment Lines: 443
-    '   Blank Lines: 147
-    '     File Size: 48.81 KB
+    '   Total Lines: 1331
+    '    Code Lines: 729
+    ' Comment Lines: 449
+    '   Blank Lines: 153
+    '     File Size: 49.58 KB
 
 
     ' Module StringHelpers

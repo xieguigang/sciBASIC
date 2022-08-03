@@ -1,52 +1,52 @@
-﻿#Region "Microsoft.VisualBasic::4bb35695fa8f004fa107a6c69d05e7f2, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Data\StructureParser.vb"
+﻿#Region "Microsoft.VisualBasic::903d2eaece9cdb3baa0319f3321f967c, sciBASIC#\Data\BinaryData\netCDF\Data\StructureParser.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 229
-'    Code Lines: 116
-' Comment Lines: 80
-'   Blank Lines: 33
-'     File Size: 8.95 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module StructureParser
-' 
-'         Function: attributesList, dimensionsList, readVariableInternal, variablesList
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 230
+    '    Code Lines: 117
+    ' Comment Lines: 80
+    '   Blank Lines: 33
+    '     File Size: 8.99 KB
+
+
+    '     Module StructureParser
+    ' 
+    '         Function: attributesList, dimensionsList, readVariableInternal, variablesList
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -38,7 +38,7 @@
     '    Code Lines: 3
     ' Comment Lines: 0
     '   Blank Lines: 1
-    '     File Size: 85.00 B
+    '     File Size: 85 B
 
 
     ' Interface IGraphicsEngine

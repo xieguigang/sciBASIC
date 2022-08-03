@@ -38,7 +38,7 @@
     '    Code Lines: 59
     ' Comment Lines: 18
     '   Blank Lines: 12
-    '     File Size: 3.22 KB
+    '     File Size: 3.21 KB
 
 
     '     Module TextRender

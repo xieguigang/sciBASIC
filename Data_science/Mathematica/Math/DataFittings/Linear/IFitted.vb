@@ -38,7 +38,7 @@
     '    Code Lines: 7
     ' Comment Lines: 19
     '   Blank Lines: 5
-    '     File Size: 806.00 B
+    '     File Size: 806 B
 
 
     ' Interface IFitted

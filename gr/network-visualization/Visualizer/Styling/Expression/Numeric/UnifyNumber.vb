@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e50aab3be82edaaab5bf617ac6ce960, sciBASIC#\gr\network-visualization\Visualizer\Styling\Expression\Numeric\UnifyNumber.vb"
+﻿#Region "Microsoft.VisualBasic::e982ef20ba994cefcbc8f85ef733a242, sciBASIC#\gr\network-visualization\Visualizer\Styling\Expression\Numeric\UnifyNumber.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 27
+    '   Total Lines: 26
     '    Code Lines: 18
     ' Comment Lines: 3
-    '   Blank Lines: 6
-    '     File Size: 750.00 B
+    '   Blank Lines: 5
+    '     File Size: 774 B
 
 
     '     Class UnifyNumber
@@ -50,7 +50,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph

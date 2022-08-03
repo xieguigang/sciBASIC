@@ -38,7 +38,7 @@
     '    Code Lines: 41
     ' Comment Lines: 28
     '   Blank Lines: 11
-    '     File Size: 3.05 KB
+    '     File Size: 3.04 KB
 
 
     '     Class PreciseRandom

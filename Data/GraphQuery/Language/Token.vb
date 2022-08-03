@@ -38,7 +38,7 @@
     '    Code Lines: 11
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 404.00 B
+    '     File Size: 404 B
 
 
     '     Class Token

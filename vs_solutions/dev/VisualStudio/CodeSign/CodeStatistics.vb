@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::748dcbdb43a09faf07f4cbdf4a881a50, sciBASIC#\vs_solutions\dev\VisualStudio\CodeSign\CodeStatistics.vb"
+﻿#Region "Microsoft.VisualBasic::78aaa54146dc9f319859217a8792c51f, sciBASIC#\vs_solutions\dev\VisualStudio\CodeSign\CodeStatistics.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 32
-    '    Code Lines: 25
+    '   Total Lines: 38
+    '    Code Lines: 30
     ' Comment Lines: 0
-    '   Blank Lines: 7
-    '     File Size: 1.09 KB
+    '   Blank Lines: 8
+    '     File Size: 1.32 KB
 
 
     '     Class CodeStatics
     ' 
-    '         Properties: blankLines, commentLines, lineOfCodes, size, totalLines
+    '         Properties: [function], [method], [operator], blankLines, classes
+    '                     commentLines, lineOfCodes, properties, size, totalLines
     ' 
     '         Function: StatVB
     ' 

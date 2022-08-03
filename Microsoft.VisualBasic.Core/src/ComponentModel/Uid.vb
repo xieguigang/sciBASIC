@@ -38,7 +38,7 @@
     '    Code Lines: 125
     ' Comment Lines: 72
     '   Blank Lines: 34
-    '     File Size: 8.07 KB
+    '     File Size: 8.06 KB
 
 
     '     Class Uid

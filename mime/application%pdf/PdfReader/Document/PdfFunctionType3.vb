@@ -38,7 +38,7 @@
     '    Code Lines: 47
     ' Comment Lines: 3
     '   Blank Lines: 14
-    '     File Size: 2.51 KB
+    '     File Size: 2.50 KB
 
 
     '     Class PdfFunctionType3

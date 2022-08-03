@@ -1,52 +1,51 @@
-﻿#Region "Microsoft.VisualBasic::6d572a575a1e19f93cdf3eda7581f40a, sciBASIC#\Data\BinaryData\DataStorage\netCDF\ToString.vb"
+﻿#Region "Microsoft.VisualBasic::3b3f96c2fa69bfd98555996ed6740259, sciBASIC#\Data\BinaryData\netCDF\ToString.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 56
-'    Code Lines: 35
-' Comment Lines: 8
-'   Blank Lines: 13
-'     File Size: 1.87 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module ToStringHelper
-' 
-'         Sub: toString
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 54
+    '    Code Lines: 34
+    ' Comment Lines: 8
+    '   Blank Lines: 12
+    '     File Size: 1.69 KB
+
+
+    ' Module ToStringHelper
+    ' 
+    '     Sub: toString
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -38,7 +38,7 @@
     '    Code Lines: 4
     ' Comment Lines: 6
     '   Blank Lines: 2
-    '     File Size: 240.00 B
+    '     File Size: 240 B
 
 
     '     Class tree

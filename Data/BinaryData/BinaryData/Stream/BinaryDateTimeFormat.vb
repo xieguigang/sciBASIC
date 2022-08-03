@@ -38,7 +38,7 @@
     '    Code Lines: 4
     ' Comment Lines: 9
     '   Blank Lines: 1
-    '     File Size: 423.00 B
+    '     File Size: 423 B
 
 
     ' Enum BinaryDateTimeFormat

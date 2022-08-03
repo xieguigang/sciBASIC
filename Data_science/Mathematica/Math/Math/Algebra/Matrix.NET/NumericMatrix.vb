@@ -1,68 +1,68 @@
-﻿#Region "Microsoft.VisualBasic::9c7fa8a2533757e6e501c5e9d084e41c, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\NumericMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::3b5747dd0aacf7623c159d13745a88e9, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\NumericMatrix.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 1357
-'    Code Lines: 721
-' Comment Lines: 461
-'   Blank Lines: 175
-'     File Size: 49.41 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class NumericMatrix
-' 
-'         Properties: ColumnDimension, ColumnPackedCopy, DiagonalVector, RowDimension, RowPackedCopy
-' 
-'         Constructor: (+7 Overloads) Sub New
-' 
-'         Function: Abs, Add, AddEquals, ArrayLeftDivide, ArrayLeftDivideEquals
-'                   ArrayMultiply, ArrayMultiplyEquals, ArrayPack, ArrayRightDivide, ArrayRightDivideEquals
-'                   chol, Clone, Condition, Copy, Create
-'                   Determinant, Eigen, (+4 Overloads) GetMatrix, Identity, Inverse
-'                   Log, LUD, (+3 Overloads) Multiply, MultiplyEquals, Norm1
-'                   Norm2, NormF, NormInf, Number, Power
-'                   QRD, Rank, Resize, RowApply, RowVectors
-'                   Solve, SolveTranspose, (+2 Overloads) Subtract, SubtractEquals, SVD
-'                   ToString, Trace, Transpose
-' 
-'         Sub: CheckMatrixDimensions, (+2 Overloads) Dispose, Finalize, ISerializable_GetObjectData, (+4 Overloads) SetMatrix
-' 
-'         Operators: (+4 Overloads) -, (+3 Overloads) *, /, ^, +
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 1514
+    '    Code Lines: 807
+    ' Comment Lines: 515
+    '   Blank Lines: 192
+    '     File Size: 54.56 KB
+
+
+    '     Class NumericMatrix
+    ' 
+    '         Properties: ColumnDimension, ColumnPackedCopy, DiagonalVector, RowDimension, RowPackedCopy
+    ' 
+    '         Constructor: (+7 Overloads) Sub New
+    ' 
+    '         Function: Abs, Add, AddEquals, ArrayLeftDivide, ArrayLeftDivideEquals
+    '                   ArrayMultiply, ArrayMultiplyEquals, ArrayPack, ArrayRightDivide, ArrayRightDivideEquals
+    '                   chol, Clone, Condition, Copy, Create
+    '                   Determinant, Eigen, (+4 Overloads) GetMatrix, Identity, Inverse
+    '                   Log, LUD, (+3 Overloads) Multiply, MultiplyEquals, Norm1
+    '                   Norm2, NormF, NormInf, Number, One
+    '                   Power, QRD, Rank, Resize, RowApply
+    '                   RowVectors, Solve, SolveTranspose, (+2 Overloads) Subtract, SubtractEquals
+    '                   SVD, ToString, Trace, Transpose, Zero
+    ' 
+    '         Sub: CheckMatrixDimensions, (+2 Overloads) Dispose, Finalize, ISerializable_GetObjectData, (+4 Overloads) SetMatrix
+    ' 
+    '         Operators: (+4 Overloads) -, (+5 Overloads) *, (+3 Overloads) /, (+2 Overloads) ^, (+2 Overloads) +
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

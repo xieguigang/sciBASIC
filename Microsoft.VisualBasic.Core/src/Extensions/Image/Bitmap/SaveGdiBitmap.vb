@@ -38,7 +38,7 @@
     '    Code Lines: 7
     ' Comment Lines: 5
     '   Blank Lines: 3
-    '     File Size: 410.00 B
+    '     File Size: 410 B
 
 
     '     Interface SaveGdiBitmap

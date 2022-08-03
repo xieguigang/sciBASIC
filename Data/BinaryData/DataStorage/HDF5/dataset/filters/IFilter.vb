@@ -38,7 +38,7 @@
     '    Code Lines: 7
     ' Comment Lines: 13
     '   Blank Lines: 5
-    '     File Size: 768.00 B
+    '     File Size: 768 B
 
 
     '     Interface IFilter

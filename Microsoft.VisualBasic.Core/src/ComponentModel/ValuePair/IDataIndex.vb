@@ -38,7 +38,7 @@
     '    Code Lines: 6
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 232.00 B
+    '     File Size: 232 B
 
 
     '     Interface IDataIndex

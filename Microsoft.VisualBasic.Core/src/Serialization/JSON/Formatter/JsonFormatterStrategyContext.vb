@@ -38,7 +38,7 @@
     '    Code Lines: 92
     ' Comment Lines: 0
     '   Blank Lines: 29
-    '     File Size: 3.76 KB
+    '     File Size: 3.75 KB
 
 
     '     Class JsonFormatterStrategyContext

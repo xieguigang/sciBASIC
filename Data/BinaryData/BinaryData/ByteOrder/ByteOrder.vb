@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c827fd1a75721f0943e2ea01ed096e65, sciBASIC#\Data\BinaryData\BinaryData\Stream\ByteOrder.vb"
+﻿#Region "Microsoft.VisualBasic::c827fd1a75721f0943e2ea01ed096e65, sciBASIC#\Data\BinaryData\BinaryData\ByteOrder\ByteOrder.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 5
     ' Comment Lines: 11
     '   Blank Lines: 4
-    '     File Size: 484.00 B
+    '     File Size: 484 B
 
 
     ' Enum ByteOrder

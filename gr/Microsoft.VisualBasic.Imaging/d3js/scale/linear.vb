@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51a2e070829dad871c36fa52e58d36da, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\scale\linear.vb"
+﻿#Region "Microsoft.VisualBasic::e70fe6fdc5d3ae5ddb73eea97c6e018a, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\scale\linear.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 140
-    '    Code Lines: 75
+    '   Total Lines: 146
+    '    Code Lines: 80
     ' Comment Lines: 48
-    '   Blank Lines: 17
-    '     File Size: 4.99 KB
+    '   Blank Lines: 18
+    '     File Size: 5.29 KB
 
 
     '     Class LinearScale
     ' 
-    '         Properties: domainSize, valueDomain, Zero
+    '         Properties: domainSize, type, valueDomain, Zero
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: (+5 Overloads) domain, ToString

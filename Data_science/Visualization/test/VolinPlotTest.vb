@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 0
     '   Blank Lines: 8
-    '     File Size: 921.00 B
+    '     File Size: 921 B
 
 
     ' Module VolinPlotTest

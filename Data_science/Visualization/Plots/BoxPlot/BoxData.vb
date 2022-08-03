@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cdb2a1db1952b6278fe1223fbcfbe876, sciBASIC#\Data_science\Visualization\Plots-statistics\BoxData.vb"
+﻿#Region "Microsoft.VisualBasic::2f35f759fb09b221749ef1d4f31ad972, sciBASIC#\Data_science\Visualization\Plots\BoxPlot\BoxData.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 68
-    '    Code Lines: 40
+    '   Total Lines: 71
+    '    Code Lines: 42
     ' Comment Lines: 21
-    '   Blank Lines: 7
-    '     File Size: 2.27 KB
+    '   Blank Lines: 8
+    '     File Size: 2.53 KB
 
 
-    ' Class BoxData
+    '     Class BoxData
     ' 
-    '     Properties: GroupNames, Groups, SerialName
+    '         Properties: GroupNames, Groups, SerialName
     ' 
-    '     Function: Load, ToString
+    '         Function: Load, ToString
+    ' 
     ' 
     ' /********************************************************************************/
 

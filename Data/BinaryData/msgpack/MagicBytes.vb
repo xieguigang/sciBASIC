@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::138d958168ea902c9f1e51c8ade2069e, sciBASIC#\Data\BinaryData\msgpack\MagicBytes.vb"
+﻿#Region "Microsoft.VisualBasic::b9454b6b28d428b6a9a3a76ef6a80360, sciBASIC#\Data\BinaryData\msgpack\MagicBytes.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 18
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 669.00 B
+    '     File Size: 689 B
 
 
     ' Module MagicBytes

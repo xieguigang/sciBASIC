@@ -38,7 +38,7 @@
     '    Code Lines: 15
     ' Comment Lines: 7
     '   Blank Lines: 6
-    '     File Size: 822.00 B
+    '     File Size: 822 B
 
 
     '     Class ColumnDataMeta

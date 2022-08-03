@@ -38,7 +38,7 @@
     '    Code Lines: 12
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 525.00 B
+    '     File Size: 525 B
 
 
     ' Module test2

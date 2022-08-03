@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1948303beb728ac52d8105fb0f8a22ca, sciBASIC#\Data\GraphQuery\Query\AutoContext.vb"
+﻿#Region "Microsoft.VisualBasic::afcaede2db5e3503a398605c71e96b2c, sciBASIC#\Data\GraphQuery\Query\AutoContext.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 17
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 616.00 B
+    '     File Size: 691 B
 
 
     ' Module AutoContext
@@ -71,4 +71,3 @@ Module AutoContext
     End Function
 
 End Module
-

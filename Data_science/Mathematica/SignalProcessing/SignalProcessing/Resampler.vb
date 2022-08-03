@@ -38,7 +38,7 @@
     '    Code Lines: 58
     ' Comment Lines: 7
     '   Blank Lines: 13
-    '     File Size: 2.28 KB
+    '     File Size: 2.27 KB
 
 
     ' Class Resampler

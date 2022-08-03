@@ -38,7 +38,7 @@
     '    Code Lines: 2
     ' Comment Lines: 4
     '   Blank Lines: 0
-    '     File Size: 244.00 B
+    '     File Size: 244 B
 
 
     ' Module NamespaceDoc

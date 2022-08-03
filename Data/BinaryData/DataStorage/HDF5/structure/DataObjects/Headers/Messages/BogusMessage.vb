@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 6
     '   Blank Lines: 6
-    '     File Size: 796.00 B
+    '     File Size: 796 B
 
 
     '     Class BogusMessage

@@ -38,7 +38,7 @@
     '    Code Lines: 478
     ' Comment Lines: 489
     '   Blank Lines: 143
-    '     File Size: 55.14 KB
+    '     File Size: 55.13 KB
 
 
     '     Class mxOrganicLayout

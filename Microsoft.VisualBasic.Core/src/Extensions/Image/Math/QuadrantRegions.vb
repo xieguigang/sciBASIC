@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 18
     '   Blank Lines: 3
-    '     File Size: 861.00 B
+    '     File Size: 861 B
 
 
     '     Enum QuadrantRegions

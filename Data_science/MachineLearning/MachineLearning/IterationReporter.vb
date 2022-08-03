@@ -38,7 +38,7 @@
     '    Code Lines: 12
     ' Comment Lines: 6
     '   Blank Lines: 7
-    '     File Size: 696.00 B
+    '     File Size: 696 B
 
 
     ' Class IterationReporter

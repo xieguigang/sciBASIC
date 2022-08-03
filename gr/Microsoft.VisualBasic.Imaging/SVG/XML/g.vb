@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b9f30f3c118ab678c0fb810423470b0, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\XML\g.vb"
+﻿#Region "Microsoft.VisualBasic::e2f33c14693bdea6d6ab5dd12de4259b, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\XML\g.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 68
-    '    Code Lines: 56
+    '   Total Lines: 90
+    '    Code Lines: 75
     ' Comment Lines: 6
-    '   Blank Lines: 6
-    '     File Size: 3.13 KB
+    '   Blank Lines: 9
+    '     File Size: 4.07 KB
 
 
     '     Interface ICanvas
@@ -53,6 +53,7 @@
     '                     polygon, polyline, rect, texts, title
     '                     transform
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: ToString
     '         Operators: +
     ' 

@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 6
     '   Blank Lines: 5
-    '     File Size: 678.00 B
+    '     File Size: 678 B
 
 
     '     Class SolutionInfo

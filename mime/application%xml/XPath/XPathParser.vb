@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::284b8ae1b47bc806b424fa6238af490c, sciBASIC#\mime\application%xml\XPath\XPathParser.vb"
+﻿#Region "Microsoft.VisualBasic::f23a0d35cbf208b0f4fd1b78a8138053, sciBASIC#\mime\application%xml\XPath\XPathParser.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 33
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 1.24 KB
+    '     File Size: 1.27 KB
 
 
     ' Class XPathParser

@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 9
     '   Blank Lines: 1
-    '     File Size: 400.00 B
+    '     File Size: 400 B
 
 
     '     Enum Tokens

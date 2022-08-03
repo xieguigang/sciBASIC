@@ -38,7 +38,7 @@
     '    Code Lines: 16
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 805.00 B
+    '     File Size: 805 B
 
 
     '     Class SingleQuoteStrategy

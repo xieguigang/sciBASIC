@@ -38,7 +38,7 @@
     '    Code Lines: 10
     ' Comment Lines: 4
     '   Blank Lines: 4
-    '     File Size: 474.00 B
+    '     File Size: 474 B
 
 
     '     Class AbstractBar

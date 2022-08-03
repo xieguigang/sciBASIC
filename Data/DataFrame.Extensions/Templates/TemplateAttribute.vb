@@ -38,7 +38,7 @@
     '    Code Lines: 14
     ' Comment Lines: 7
     '   Blank Lines: 3
-    '     File Size: 857.00 B
+    '     File Size: 857 B
 
 
     ' Class TemplateAttribute

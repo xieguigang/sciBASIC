@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::88c05bfb0bb1a8ea0f27d302c80d18c7, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::9b87aaa0fbcd8447c91efc10a03d0048, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\KeyValuePair.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 910
+    '   Total Lines: 913
     '    Code Lines: 539
-    ' Comment Lines: 266
+    ' Comment Lines: 269
     '   Blank Lines: 105
-    '     File Size: 38.47 KB
+    '     File Size: 38.59 KB
 
 
     '     Module KeyValuePairExtensions

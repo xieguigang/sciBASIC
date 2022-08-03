@@ -38,7 +38,7 @@
     '    Code Lines: 10
     ' Comment Lines: 2
     '   Blank Lines: 4
-    '     File Size: 954.00 B
+    '     File Size: 954 B
 
 
     ' Module ROCplotTest

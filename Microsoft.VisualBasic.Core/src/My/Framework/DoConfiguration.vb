@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7406e5448a12504df6f55f859547282f, sciBASIC#\Microsoft.VisualBasic.Core\src\My\Framework\DoConfiguration.vb"
+﻿#Region "Microsoft.VisualBasic::355521fa366a3970b84bce97f90be7c7, sciBASIC#\Microsoft.VisualBasic.Core\src\My\Framework\DoConfiguration.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 70
-    '    Code Lines: 45
+    '   Total Lines: 74
+    '    Code Lines: 48
     ' Comment Lines: 16
-    '   Blank Lines: 9
-    '     File Size: 3.03 KB
+    '   Blank Lines: 10
+    '     File Size: 3.18 KB
 
 
     '     Module DoConfiguration
     ' 
-    '         Sub: ConfigFrameworkRuntime, ConfigMemory
+    '         Function: ConfigMemory
+    ' 
+    '         Sub: ConfigFrameworkRuntime
     ' 
     ' 
     ' /********************************************************************************/

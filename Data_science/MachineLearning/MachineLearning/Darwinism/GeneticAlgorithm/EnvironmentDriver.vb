@@ -38,7 +38,7 @@
     '    Code Lines: 105
     ' Comment Lines: 35
     '   Blank Lines: 25
-    '     File Size: 6.52 KB
+    '     File Size: 6.51 KB
 
 
     '     Class EnvironmentDriver

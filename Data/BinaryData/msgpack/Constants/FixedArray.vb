@@ -38,7 +38,7 @@
     '    Code Lines: 6
     ' Comment Lines: 0
     '   Blank Lines: 1
-    '     File Size: 177.00 B
+    '     File Size: 177 B
 
 
     '     Class FixedArray

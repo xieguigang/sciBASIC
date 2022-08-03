@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90900cb335985c2d9db5ab6f2a8126b5, sciBASIC#\Data\GraphQuery\TextParser\BaseInvoke.vb"
+﻿#Region "Microsoft.VisualBasic::a9f7994422a79eae387ae40ab63a50ed, sciBASIC#\Data\GraphQuery\TextParser\BaseInvoke.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 135
     ' Comment Lines: 54
     '   Blank Lines: 29
-    '     File Size: 8.89 KB
+    '     File Size: 9.10 KB
 
 
     '     Module BaseInvoke

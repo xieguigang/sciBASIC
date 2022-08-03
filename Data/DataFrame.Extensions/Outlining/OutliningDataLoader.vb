@@ -38,7 +38,7 @@
     '    Code Lines: 68
     ' Comment Lines: 12
     '   Blank Lines: 14
-    '     File Size: 3.91 KB
+    '     File Size: 3.90 KB
 
 
     '     Module OutliningDataLoader

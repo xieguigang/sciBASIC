@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f200e85bbf24c19c7512d4926ad50f68, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\CharMapDefinition.vb"
+﻿#Region "Microsoft.VisualBasic::3d5a2f5af4447a2a3673b21a39b43899, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\CharMapDefinition.vb"
 
     ' Author:
     ' 
@@ -90,4 +90,3 @@ Namespace ApplicationServices.Terminal.TablePrinter
         }
     End Class
 End Namespace
-

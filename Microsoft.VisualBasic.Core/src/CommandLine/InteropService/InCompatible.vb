@@ -38,7 +38,7 @@
     '    Code Lines: 17
     ' Comment Lines: 8
     '   Blank Lines: 5
-    '     File Size: 1.02 KB
+    '     File Size: 1017 B
 
 
     '     Class InCompatibleAttribute

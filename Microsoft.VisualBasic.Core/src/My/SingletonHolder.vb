@@ -1,68 +1,74 @@
-﻿#Region "Microsoft.VisualBasic::10375cbace45f2956453893b51f96c1f, sciBASIC#\Microsoft.VisualBasic.Core\src\My\SingletonHolder.vb"
+﻿#Region "Microsoft.VisualBasic::de045038e7dbdd5390bce387149e0ccc, sciBASIC#\Microsoft.VisualBasic.Core\src\My\SingletonHolder.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 99
-'    Code Lines: 38
-' Comment Lines: 45
-'   Blank Lines: 16
-'     File Size: 3.17 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class SingletonHolder
-' 
-'         Properties: Instance
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'     Class SharedObject
-' 
-'         Properties: Instance
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: ToString
-' 
-'     Class SharedObject
-' 
-'         Properties: GetObject
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Sub: SetObject
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 121
+    '    Code Lines: 55
+    ' Comment Lines: 45
+    '   Blank Lines: 21
+    '     File Size: 3.96 KB
+
+
+    '     Class SingletonHolder
+    ' 
+    '         Properties: Instance
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Class SingletonList
+    ' 
+    '         Function: ForEach
+    ' 
+    '         Sub: (+2 Overloads) Add, Clear
+    ' 
+    '     Class SharedObject
+    ' 
+    '         Properties: Instance
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    '     Class SharedObject
+    ' 
+    '         Properties: GetObject
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: SetObject
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

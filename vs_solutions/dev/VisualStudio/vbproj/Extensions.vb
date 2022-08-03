@@ -1,51 +1,53 @@
-﻿#Region "Microsoft.VisualBasic::f4ff91d7e8c03fe1c6922c18c8ed05b2, sciBASIC#\vs_solutions\dev\VisualStudio\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::43fb47880c285560d36b560f5f4ac2a2, sciBASIC#\vs_solutions\dev\VisualStudio\vbproj\Extensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 104
-'    Code Lines: 80
-' Comment Lines: 15
-'   Blank Lines: 9
-'     File Size: 4.19 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module Extensions
-' 
-'     Function: AssemblyInfo, (+2 Overloads) EnumerateSourceFiles, GetOutputDirectory, GetOutputName, RootNamespace
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 147
+    '    Code Lines: 115
+    ' Comment Lines: 15
+    '   Blank Lines: 17
+    '     File Size: 6.19 KB
+
+
+    '     Module Extensions
+    ' 
+    '         Function: AssemblyInfo, (+2 Overloads) EnumerateSourceFiles, GetOutputDirectory, GetOutputName, legacyProjectSource
+    '                   newDotNetSDKProjectSource, RootNamespace, vbfileFilter
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -38,7 +38,7 @@
     '    Code Lines: 2
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 45.00 B
+    '     File Size: 45 B
 
 
     ' Module DependencyGraph

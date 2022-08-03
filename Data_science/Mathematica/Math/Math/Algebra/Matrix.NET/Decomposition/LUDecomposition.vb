@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5809d94b0a493bbe804747524575a5ad, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\LUDecomposition.vb"
+﻿#Region "Microsoft.VisualBasic::5809d94b0a493bbe804747524575a5ad, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\LUDecomposition.vb"
 
     ' Author:
     ' 

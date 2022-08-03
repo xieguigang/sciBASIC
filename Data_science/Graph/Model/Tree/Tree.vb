@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36f56a73aa729df2cdaccabeb6075dd4, sciBASIC#\Data_science\Graph\Model\Tree\Tree.vb"
+﻿#Region "Microsoft.VisualBasic::158f0bbd6578a54ae49437566098f2f8, sciBASIC#\Data_science\Graph\Model\Tree\Tree.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 37
     ' Comment Lines: 21
     '   Blank Lines: 12
-    '     File Size: 2.01 KB
+    '     File Size: 2.06 KB
 
 
     ' Class Tree

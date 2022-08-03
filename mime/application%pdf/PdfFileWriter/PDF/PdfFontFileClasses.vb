@@ -38,7 +38,7 @@
     '    Code Lines: 187
     ' Comment Lines: 94
     '   Blank Lines: 42
-    '     File Size: 15.13 KB
+    '     File Size: 15.12 KB
 
 
     '     Class FontFileHeader

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dcbfa223634873b32d843a1eb19d46ba, sciBASIC#\Data_science\MachineLearning\xgboost\gbm\GradBooster.vb"
+﻿#Region "Microsoft.VisualBasic::df2a5da5bf340853f086230dc9943ad9, sciBASIC#\Data_science\MachineLearning\xgboost\gbm\GradBooster.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 37
     ' Comment Lines: 35
     '   Blank Lines: 11
-    '     File Size: 3.58 KB
+    '     File Size: 3.67 KB
 
 
     '     Interface GradBooster

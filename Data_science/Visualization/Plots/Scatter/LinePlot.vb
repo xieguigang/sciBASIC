@@ -38,7 +38,7 @@
     '    Code Lines: 18
     ' Comment Lines: 1
     '   Blank Lines: 4
-    '     File Size: 850.00 B
+    '     File Size: 850 B
 
 
     ' Module LinePlot

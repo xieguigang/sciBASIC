@@ -38,7 +38,7 @@
     '    Code Lines: 16
     ' Comment Lines: 6
     '   Blank Lines: 5
-    '     File Size: 696.00 B
+    '     File Size: 696 B
 
 
     '     Class head_t

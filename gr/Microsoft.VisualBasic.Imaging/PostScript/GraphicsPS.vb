@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4817b4bf3c886d5679c97eec6bc3a6b8, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\PostScript\GraphicsPS.vb"
+﻿#Region "Microsoft.VisualBasic::5b1d1506c295d3102d3c919ee453df89, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\PostScript\GraphicsPS.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 712
     ' Comment Lines: 7
     '   Blank Lines: 223
-    '     File Size: 44.03 KB
+    '     File Size: 44.04 KB
 
 
     '     Class GraphicsPS
@@ -52,7 +52,7 @@
     '         Function: (+3 Overloads) BeginContainer, color, font, GetContextInfo, GetNearestColor
     '                   (+8 Overloads) IsVisible, linewidth, MeasureCharacterRanges, (+7 Overloads) MeasureString, note
     ' 
-    '         Sub: AddMetafileComment, Clear, (+4 Overloads) CopyFromScreen, Dispose, (+4 Overloads) DrawArc
+    '         Sub: AddMetafileComment, ClearCanvas, (+4 Overloads) CopyFromScreen, Dispose, (+4 Overloads) DrawArc
     '              (+3 Overloads) DrawBezier, (+2 Overloads) DrawBeziers, DrawCircle, (+4 Overloads) DrawClosedCurve, (+7 Overloads) DrawCurve
     '              (+4 Overloads) DrawEllipse, (+2 Overloads) DrawIcon, DrawIconUnstretched, (+30 Overloads) DrawImage, (+4 Overloads) DrawImageUnscaled
     '              DrawImageUnscaledAndClipped, (+4 Overloads) DrawLine, (+2 Overloads) DrawLines, DrawPath, (+4 Overloads) DrawPie

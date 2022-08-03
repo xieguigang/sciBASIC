@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2cc6a3604f7c951ad77407c1c965dca, sciBASIC#\Data_science\MachineLearning\xgboost\config\PredictorConfiguration.vb"
+﻿#Region "Microsoft.VisualBasic::762b8970835d4a2c2f134873def34f49, sciBASIC#\Data_science\MachineLearning\xgboost\config\PredictorConfiguration.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 25
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 1.08 KB
+    '     File Size: 1.11 KB
 
 
     '     Class PredictorConfiguration

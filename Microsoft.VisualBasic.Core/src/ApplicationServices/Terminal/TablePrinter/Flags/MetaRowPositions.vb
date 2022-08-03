@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9edac5505030ddb5dcda6718a1b35641, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\Flags\MetaRowPositions.vb"
+﻿#Region "Microsoft.VisualBasic::eac45289a98915aaa9f44b9918eaeb91, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\Flags\MetaRowPositions.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 6
     ' Comment Lines: 0
     '   Blank Lines: 0
-    '     File Size: 159.00 B
+    '     File Size: 157 B
 
 
     '     Enum MetaRowPositions
@@ -59,4 +59,3 @@ Namespace ApplicationServices.Terminal.TablePrinter.Flags
         Bottom = 1
     End Enum
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa017c8df5fd4e9d20fb9ff6198503b4, sciBASIC#\vs_solutions\dev\VisualStudio\vbproj\Mics.vb"
+﻿#Region "Microsoft.VisualBasic::fb2f6d0cf8d3f95dd34f2df18602ff49, sciBASIC#\vs_solutions\dev\VisualStudio\vbproj\Xml\Mics.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 25
     ' Comment Lines: 0
     '   Blank Lines: 8
-    '     File Size: 844.00 B
+    '     File Size: 848 B
 
 
     '     Class Target

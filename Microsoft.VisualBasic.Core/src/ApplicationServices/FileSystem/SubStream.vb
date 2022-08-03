@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da73ff4ab972b01ffb300a7c90ccab1e, WebCloud\SMRUCC.HTTPInternal\Core\HttpRequest\POSTReader\ReadSubStream.vb"
+﻿#Region "Microsoft.VisualBasic::73ead947c4e3fd4e0966bee6b78c2150, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\SubStream.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,20 @@
 
     ' Summaries:
 
-    '     Class ReadSubStream
+
+    ' Code Statistics:
+
+    '   Total Lines: 173
+    '    Code Lines: 132
+    ' Comment Lines: 5
+    '   Blank Lines: 36
+    '     File Size: 4.99 KB
+
+
+    '     Class SubStream
     ' 
-    '         Properties: CanRead, CanSeek, CanWrite, Length, Position
+    '         Properties: BaseStream, CanRead, CanSeek, CanWrite, Length
+    '                     Position
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

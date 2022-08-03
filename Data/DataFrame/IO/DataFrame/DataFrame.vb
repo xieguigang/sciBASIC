@@ -1,69 +1,69 @@
-﻿#Region "Microsoft.VisualBasic::f00cb68c82f76e1d69a1adadeaafcfe4, sciBASIC#\Data\DataFrame\IO\DataFrame\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::944e128341d62a538c1173f3a46c5d01, sciBASIC#\Data\DataFrame\IO\DataFrame\DataFrame.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 657
-'    Code Lines: 421
-' Comment Lines: 135
-'   Blank Lines: 101
-'     File Size: 26.93 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class DataFrame
-' 
-'         Properties: Depth, FieldCount, Headers, HeadTitles, IDataRecord_Item
-'                     IsClosed, Item, RecordsAffected, SchemaOridinal
-' 
-'         Constructor: (+3 Overloads) Sub New
-' 
-'         Function: [Select], __createTableVector, AddAttribute, ColumnRows, CreateDataSource
-'                   CreateObject, createObjectInternal, csv, EnumerateData, EnumerateRowObjects
-'                   Generate, GetBoolean, GetByte, GetBytes, GetChar
-'                   GetChars, getColumnList, GetData, GetDataTypeName, GetDateTime
-'                   GetDecimal, GetDouble, GetEnumerator2, GetFieldType, GetFloat
-'                   GetGuid, GetInt16, GetInt32, GetInt64, GetName
-'                   GetOrdinal, GetOrdinalSchema, GetSchemaTable, GetString, GetValue
-'                   GetValueLambda, GetValues, IDataRecord_GetValue, IsDBNull, Load
-'                   LoadDataSet, MeasureTypeSchema, Parse, Read, reviewColumnHeader
-'                   ToString
-' 
-'         Sub: ChangeMapping, Close, CopyFrom, (+2 Overloads) Dispose, Initialize
-'              Reset
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 667
+    '    Code Lines: 429
+    ' Comment Lines: 135
+    '   Blank Lines: 103
+    '     File Size: 27.49 KB
+
+
+    '     Class DataFrame
+    ' 
+    '         Properties: Depth, FieldCount, Headers, HeadTitles, IDataRecord_Item
+    '                     IsClosed, Item, RecordsAffected, SchemaOridinal
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    ' 
+    '         Function: __createTableVector, [Select], AddAttribute, ColumnRows, CreateDataSource
+    '                   CreateObject, createObjectInternal, csv, EnumerateData, EnumerateRowObjects
+    '                   Generate, GetBoolean, GetByte, GetBytes, GetChar
+    '                   GetChars, getColumnList, GetData, GetDataTypeName, GetDateTime
+    '                   GetDecimal, GetDouble, GetEnumerator2, GetFieldType, GetFloat
+    '                   GetGuid, GetInt16, GetInt32, GetInt64, GetName
+    '                   GetOrdinal, GetOrdinalSchema, GetSchemaTable, GetString, GetValue
+    '                   GetValueLambda, GetValues, IDataRecord_GetValue, IsDBNull, (+2 Overloads) Load
+    '                   LoadDataSet, MeasureTypeSchema, Parse, Read, reviewColumnHeader
+    '                   ToString
+    ' 
+    '         Sub: ChangeMapping, Close, CopyFrom, (+2 Overloads) Dispose, Initialize
+    '              Reset
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

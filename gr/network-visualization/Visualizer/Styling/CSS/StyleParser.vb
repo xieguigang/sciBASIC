@@ -38,7 +38,7 @@
     '    Code Lines: 9
     ' Comment Lines: 3
     '   Blank Lines: 4
-    '     File Size: 374.00 B
+    '     File Size: 374 B
 
 
     '     Module StyleParser

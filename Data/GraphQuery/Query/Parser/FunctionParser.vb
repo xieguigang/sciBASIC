@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b89ed7586f7685ac7fa5a4811f64834f, sciBASIC#\Data\GraphQuery\Query\Parser\FunctionParser.vb"
+﻿#Region "Microsoft.VisualBasic::e0ad02daeca1a7f415446804223c54b1, sciBASIC#\Data\GraphQuery\Query\Parser\FunctionParser.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 9
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 418.00 B
+    '     File Size: 429 B
 
 
     ' Class FunctionParser

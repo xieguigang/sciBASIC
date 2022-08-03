@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cdd2434e35a1049b3ba08d69d9673fff, sciBASIC#\mime\text%html\Parser\TokenIcer.vb"
+﻿#Region "Microsoft.VisualBasic::a8baf821610ad8baf3062dfaaf1a5818, sciBASIC#\mime\text%html\Parser\TokenIcer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 83
     ' Comment Lines: 0
     '   Blank Lines: 18
-    '     File Size: 3.21 KB
+    '     File Size: 3.31 KB
 
 
     '     Class TokenIcer

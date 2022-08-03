@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f471e1a6f3ad5468789b3b3034bb2efb, sciBASIC#\Data_science\DataMining\DataMining\ComponentModel\Evaluation\Metric.vb"
+﻿#Region "Microsoft.VisualBasic::a53d7c541b2a5d0ad7cb56066f5632cf, sciBASIC#\Data_science\DataMining\DataMining\ComponentModel\Evaluation\Metric.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 95
     ' Comment Lines: 15
     '   Blank Lines: 29
-    '     File Size: 4.42 KB
+    '     File Size: 4.55 KB
 
 
     '     Enum Metrics

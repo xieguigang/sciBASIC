@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::394cacda8021e2c830422112d1f974ce, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Math2DHelper.vb"
+﻿#Region "Microsoft.VisualBasic::7ad7d851c9f59bf887d4b02e51108043, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Math2DHelper.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 34
     ' Comment Lines: 7
     '   Blank Lines: 8
-    '     File Size: 1.71 KB
+    '     File Size: 1.76 KB
 
 
     '     Module Math2DHelper

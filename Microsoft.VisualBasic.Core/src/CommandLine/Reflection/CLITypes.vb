@@ -38,7 +38,7 @@
     '    Code Lines: 12
     ' Comment Lines: 38
     '   Blank Lines: 7
-    '     File Size: 2.01 KB
+    '     File Size: 2.00 KB
 
 
     '     Enum CLITypes

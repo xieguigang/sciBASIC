@@ -38,7 +38,7 @@
     '    Code Lines: 22
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 925.00 B
+    '     File Size: 925 B
 
 
     '     Class SampleObservation

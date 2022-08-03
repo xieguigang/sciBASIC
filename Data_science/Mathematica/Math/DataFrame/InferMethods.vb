@@ -38,7 +38,7 @@
     '    Code Lines: 4
     ' Comment Lines: 3
     '   Blank Lines: 0
-    '     File Size: 123.00 B
+    '     File Size: 123 B
 
 
     ' Enum InferMethods

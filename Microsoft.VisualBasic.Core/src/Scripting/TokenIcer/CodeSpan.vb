@@ -38,7 +38,7 @@
     '    Code Lines: 11
     ' Comment Lines: 15
     '   Blank Lines: 5
-    '     File Size: 906.00 B
+    '     File Size: 906 B
 
 
     '     Class CodeSpan

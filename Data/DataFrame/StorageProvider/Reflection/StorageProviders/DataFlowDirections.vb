@@ -38,7 +38,7 @@
     '    Code Lines: 6
     ' Comment Lines: 8
     '   Blank Lines: 1
-    '     File Size: 496.00 B
+    '     File Size: 496 B
 
 
     '     Enum DataFlowDirections

@@ -38,7 +38,7 @@
     '    Code Lines: 19
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 646.00 B
+    '     File Size: 646 B
 
 
     '     Class Cluster
