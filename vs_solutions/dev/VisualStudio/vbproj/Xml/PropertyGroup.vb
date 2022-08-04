@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5dffcf545e9f7dc01bdb8f0f011fbec, sciBASIC#\vs_solutions\dev\VisualStudio\vbproj\PropertyGroup.vb"
+﻿#Region "Microsoft.VisualBasic::853d02106d98223b7f89cde5d831cab6, sciBASIC#\vs_solutions\dev\VisualStudio\vbproj\Xml\PropertyGroup.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 61
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 2.86 KB
+    '     File Size: 2.87 KB
 
 
     '     Class PropertyGroup

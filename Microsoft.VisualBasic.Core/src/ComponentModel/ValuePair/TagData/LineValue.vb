@@ -38,7 +38,7 @@
     '    Code Lines: 17
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 719.00 B
+    '     File Size: 719 B
 
 
     '     Structure LineValue

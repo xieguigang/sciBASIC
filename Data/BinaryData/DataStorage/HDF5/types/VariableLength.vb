@@ -38,7 +38,7 @@
     '    Code Lines: 16
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 597.00 B
+    '     File Size: 597 B
 
 
     '     Class VariableLength

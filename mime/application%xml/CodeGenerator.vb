@@ -38,7 +38,7 @@
     '    Code Lines: 2
     ' Comment Lines: 3
     '   Blank Lines: 1
-    '     File Size: 134.00 B
+    '     File Size: 134 B
 
 
     ' Class CodeGenerator

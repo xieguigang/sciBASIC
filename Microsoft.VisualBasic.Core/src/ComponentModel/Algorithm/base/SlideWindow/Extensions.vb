@@ -43,7 +43,7 @@
 
     '     Module SlideWindowExtensions
     ' 
-    '         Function: (+5 Overloads) [Select], __extendTails, CreateSlideWindows, SlideWindows
+    '         Function: __extendTails, (+5 Overloads) [Select], CreateSlideWindows, SlideWindows
     ' 
     ' 
     ' /********************************************************************************/

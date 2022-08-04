@@ -38,7 +38,7 @@
     '    Code Lines: 5
     ' Comment Lines: 0
     '   Blank Lines: 1
-    '     File Size: 165.00 B
+    '     File Size: 165 B
 
 
     '     Interface IVisualStudioPreviews

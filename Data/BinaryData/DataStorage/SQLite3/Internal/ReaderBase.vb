@@ -38,7 +38,7 @@
     '    Code Lines: 192
     ' Comment Lines: 30
     '   Blank Lines: 70
-    '     File Size: 9.64 KB
+    '     File Size: 9.63 KB
 
 
     '     Class ReaderBase

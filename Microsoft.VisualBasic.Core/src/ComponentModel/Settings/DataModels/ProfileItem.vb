@@ -38,7 +38,7 @@
     '    Code Lines: 35
     ' Comment Lines: 37
     '   Blank Lines: 9
-    '     File Size: 3.18 KB
+    '     File Size: 3.17 KB
 
 
     '     Enum ValueTypes

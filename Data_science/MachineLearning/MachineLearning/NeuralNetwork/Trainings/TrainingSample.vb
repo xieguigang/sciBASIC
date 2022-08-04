@@ -38,7 +38,7 @@
     '    Code Lines: 22
     ' Comment Lines: 3
     '   Blank Lines: 8
-    '     File Size: 929.00 B
+    '     File Size: 929 B
 
 
     '     Structure TrainingSample

@@ -38,7 +38,7 @@
     '    Code Lines: 22
     ' Comment Lines: 4
     '   Blank Lines: 6
-    '     File Size: 1.13 KB
+    '     File Size: 1.12 KB
 
 
     '     Structure DomainName

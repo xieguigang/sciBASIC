@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3abb3bba0115a1cd978c2dce87391631, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\XML\SVG.vb"
+﻿#Region "Microsoft.VisualBasic::976bd850babf535de855fcef641234ef, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\XML\SVG.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 193
-    '    Code Lines: 102
+    '   Total Lines: 197
+    '    Code Lines: 105
     ' Comment Lines: 68
-    '   Blank Lines: 23
-    '     File Size: 7.36 KB
+    '   Blank Lines: 24
+    '     File Size: 7.49 KB
 
 
     '     Class SVGXml
@@ -50,7 +50,7 @@
     '                     viewBox, width, WriterComment
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: AddLayer, GetSVGXml, (+2 Overloads) SaveAsXml, Size, TryLoad
+    '         Function: (+2 Overloads) AddLayer, GetSVGXml, (+2 Overloads) SaveAsXml, Size, TryLoad
     ' 
     ' 
     ' /********************************************************************************/

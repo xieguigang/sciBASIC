@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95ba31adf14e425086534b22a6db35ee, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\XmlDocumentTree.vb"
+﻿#Region "Microsoft.VisualBasic::b68d6bf18c430b9fd63d2d08e0e08576, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\XmlDocumentTree.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 10
     ' Comment Lines: 12
     '   Blank Lines: 8
-    '     File Size: 783.00 B
+    '     File Size: 812 B
 
 
     '     Interface IXmlDocumentTree

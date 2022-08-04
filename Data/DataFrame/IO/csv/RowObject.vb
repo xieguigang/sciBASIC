@@ -38,7 +38,7 @@
     '    Code Lines: 284
     ' Comment Lines: 129
     '   Blank Lines: 57
-    '     File Size: 17.71 KB
+    '     File Size: 17.70 KB
 
 
     '     Class RowObject

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e48dbef1c7694b75ff2b21412ca1b720, sciBASIC#\Data_science\NLP\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::c4153c32fb43fdf439811abed6295fdd, sciBASIC#\Data_science\NLP\test\Program.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 19
+    '   Total Lines: 18
     '    Code Lines: 12
     ' Comment Lines: 4
-    '   Blank Lines: 3
-    '     File Size: 723.00 B
+    '   Blank Lines: 2
+    '     File Size: 719 B
 
 
     ' Module Program
@@ -48,7 +48,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Data.NLP.LDA
 
@@ -68,4 +67,3 @@ Module Program
         Pause()
     End Sub
 End Module
-

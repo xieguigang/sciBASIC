@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf8abbea0af6929e1521de2d2befdc45, sciBASIC#\mime\application%xml\XPath\XPathQuery.vb"
+﻿#Region "Microsoft.VisualBasic::6ec17e2391f6dc39637597adf6f958ee, sciBASIC#\mime\application%xml\XPath\XPathQuery.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 435.00 B
+    '     File Size: 452 B
 
 
     ' Class XPathQuery

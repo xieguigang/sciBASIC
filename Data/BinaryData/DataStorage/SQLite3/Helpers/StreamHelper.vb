@@ -38,7 +38,7 @@
     '    Code Lines: 25
     ' Comment Lines: 0
     '   Blank Lines: 8
-    '     File Size: 1.02 KB
+    '     File Size: 1021 B
 
 
     '     Module StreamHelper

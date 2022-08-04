@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f16f6b3aae88c6b0be7d26a77540b5ef, sciBASIC#\Data_science\Graph\Model\GridNetwork\IPoint2D.vb"
+﻿#Region "Microsoft.VisualBasic::8752f65dddaea2de0ffac65db6a7b855, sciBASIC#\Data_science\Graph\Model\GridNetwork\IPoint2D.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 4
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 112.00 B
+    '     File Size: 116 B
 
 
     ' Interface IPoint2D
@@ -55,4 +55,3 @@ Public Interface IPoint2D
     ReadOnly Property Y As Integer
 
 End Interface
-

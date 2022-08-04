@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e15e7afa07ed0cd78a7e3ea6090cd6e, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::12e1486bedd2a08037d3f375e9bf3dd2, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1407
-    '    Code Lines: 790
-    ' Comment Lines: 485
+    '   Total Lines: 1414
+    '    Code Lines: 791
+    ' Comment Lines: 491
     '   Blank Lines: 132
-    '     File Size: 50.64 KB
+    '     File Size: 52.25 KB
 
 
     ' Module Extensions

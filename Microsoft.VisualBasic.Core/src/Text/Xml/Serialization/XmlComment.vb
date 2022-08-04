@@ -38,7 +38,7 @@
     '    Code Lines: 42
     ' Comment Lines: 0
     '   Blank Lines: 12
-    '     File Size: 1.83 KB
+    '     File Size: 1.82 KB
 
 
     '     Class XmlCommentAttribute

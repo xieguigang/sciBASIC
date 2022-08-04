@@ -38,7 +38,7 @@
     '    Code Lines: 168
     ' Comment Lines: 29
     '   Blank Lines: 37
-    '     File Size: 10.64 KB
+    '     File Size: 10.63 KB
 
 
     '     Module Tree

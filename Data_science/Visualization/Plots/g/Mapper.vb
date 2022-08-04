@@ -38,7 +38,7 @@
     '    Code Lines: 204
     ' Comment Lines: 33
     '   Blank Lines: 39
-    '     File Size: 10.91 KB
+    '     File Size: 10.90 KB
 
 
     '     Class Mapper

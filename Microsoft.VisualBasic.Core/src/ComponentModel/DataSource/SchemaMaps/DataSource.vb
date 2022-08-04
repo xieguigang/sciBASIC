@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d12d7aa15c4f9dbc784b97509156a7b1, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\DataSource.vb"
+﻿#Region "Microsoft.VisualBasic::973a54d34b021fa806ae3445dda395f4, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\DataSource.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 253
-    '    Code Lines: 142
+    '   Total Lines: 250
+    '    Code Lines: 140
     ' Comment Lines: 77
-    '   Blank Lines: 34
-    '     File Size: 10.48 KB
+    '   Blank Lines: 33
+    '     File Size: 10.45 KB
 
 
     '     Class ColumnAttribute

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18405d65aa3be87564e42bfce65fa3a8, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\JsonRPC\RpcRequest.vb"
+﻿#Region "Microsoft.VisualBasic::e7ea1948380fd5753567f01fa14860a1, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\JsonRPC\RpcRequest.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 13
+    '   Total Lines: 11
     '    Code Lines: 8
     ' Comment Lines: 0
-    '   Blank Lines: 5
-    '     File Size: 286.00 B
+    '   Blank Lines: 3
+    '     File Size: 280 B
 
 
     '     Class RpcRequest
@@ -61,6 +61,3 @@ Namespace Net.Http.JsonRPC
 
     End Class
 End Namespace
-
-
-

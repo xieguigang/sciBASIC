@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ce5fe0e9f396ee43fd8663e02ccca5d, sciBASIC#\gr\network-visualization\Visualizer\Styling\Expression\Brush\ImagePassthroughBrush.vb"
+﻿#Region "Microsoft.VisualBasic::14b2f43162bdcbc63fe9426b0d465115, sciBASIC#\gr\network-visualization\Visualizer\Styling\Expression\Brush\ImagePassthroughBrush.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 39
+    '   Total Lines: 38
     '    Code Lines: 28
     ' Comment Lines: 3
-    '   Blank Lines: 8
-    '     File Size: 1.35 KB
+    '   Blank Lines: 7
+    '     File Size: 1.39 KB
 
 
     '     Class ImagePassthroughBrush
@@ -50,7 +50,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel

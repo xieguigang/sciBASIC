@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c46d8827fa47c976eaa8bbb7f9fdd92, sciBASIC#\Data_science\Visualization\Plots\BarPlot\Histogram\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::12e589610e8bed1ff72b0f7ac6994d2a, sciBASIC#\Data_science\Visualization\Plots\BarPlot\Histogram\Extensions.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 33
     ' Comment Lines: 7
     '   Blank Lines: 7
-    '     File Size: 1.54 KB
+    '     File Size: 1.59 KB
 
 
     '     Module Extensions

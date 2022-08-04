@@ -38,7 +38,7 @@
     '    Code Lines: 4
     ' Comment Lines: 3
     '   Blank Lines: 1
-    '     File Size: 199.00 B
+    '     File Size: 199 B
 
 
     '     Class NamespaceDoc

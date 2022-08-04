@@ -38,7 +38,7 @@
     '    Code Lines: 7
     ' Comment Lines: 9
     '   Blank Lines: 4
-    '     File Size: 800.00 B
+    '     File Size: 800 B
 
 
     '     Interface INativeHandle

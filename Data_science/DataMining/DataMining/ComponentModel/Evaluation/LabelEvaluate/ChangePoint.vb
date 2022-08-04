@@ -38,7 +38,7 @@
     '    Code Lines: 14
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 489.00 B
+    '     File Size: 489 B
 
 
     '     Class ChangePoint

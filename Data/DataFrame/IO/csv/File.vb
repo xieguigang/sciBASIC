@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8930cc182cbb31161106d856d41ff8b5, sciBASIC#\Data\DataFrame\IO\csv\File.vb"
+﻿#Region "Microsoft.VisualBasic::af17144d315a49bd331a575e6da55419, sciBASIC#\Data\DataFrame\IO\csv\File.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 927
-    '    Code Lines: 554
-    ' Comment Lines: 253
-    '   Blank Lines: 120
-    '     File Size: 37.24 KB
+    '   Total Lines: 954
+    '    Code Lines: 574
+    ' Comment Lines: 256
+    '   Blank Lines: 124
+    '     File Size: 38.30 KB
 
 
     '     Class File
@@ -61,7 +61,7 @@
     ' 
     '             Function: __LINQ_LOAD, AsMatrix, Contains, Distinct, GetEnumerator
     '                       GetEnumerator1, IndexOf, IsNullOrEmpty, (+2 Overloads) Join, Load
-    '                       loads, (+2 Overloads) LoadTsv, Parse, ReadHeaderRow, Remove
+    '                       (+2 Overloads) loads, (+2 Overloads) LoadTsv, Parse, ReadHeaderRow, Remove
     '                       RemoveSubRow, Save
     ' 
     '             Sub: (+3 Overloads) Add, Clear, CopyTo, Insert, InsertAt

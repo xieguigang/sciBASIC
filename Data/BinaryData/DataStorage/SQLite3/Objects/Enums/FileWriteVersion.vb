@@ -38,7 +38,7 @@
     '    Code Lines: 6
     ' Comment Lines: 1
     '   Blank Lines: 0
-    '     File Size: 203.00 B
+    '     File Size: 203 B
 
 
     '     Enum FileWriteVersion

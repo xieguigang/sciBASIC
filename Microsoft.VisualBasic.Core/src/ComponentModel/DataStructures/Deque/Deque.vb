@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::802129f8ed49dcb64229b2536bd47bc2, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Deque\Deque.vb"
+﻿#Region "Microsoft.VisualBasic::cb4d1f554a42476f3190a53e19dab5ed, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Deque\Deque.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 210
-    '    Code Lines: 101
+    '   Total Lines: 214
+    '    Code Lines: 104
     ' Comment Lines: 85
-    '   Blank Lines: 24
-    '     File Size: 7.70 KB
+    '   Blank Lines: 25
+    '     File Size: 7.86 KB
 
 
     '     Class Deque
@@ -46,7 +46,7 @@
     '         Properties: Count, First, IsReadOnly, Last, version
     ' 
     '         Function: Contains, GetEnumerator, GetEnumerator1, IndexOf, Peek
-    '                   Remove, RemoveHead, RemoveTail, Reverse
+    '                   Remove, RemoveHead, RemoveTail, Reverse, ToString
     ' 
     '         Sub: Add, AddHead, Clear, CopyTo, CopyToReversed
     '              Insert, RemoveAt

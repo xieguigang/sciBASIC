@@ -38,7 +38,7 @@
     '    Code Lines: 16
     ' Comment Lines: 0
     '   Blank Lines: 6
-    '     File Size: 576.00 B
+    '     File Size: 576 B
 
 
     '     Class RangeTagValue

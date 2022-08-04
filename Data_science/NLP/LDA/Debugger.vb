@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc56252a3ccf93d94a42b3cab8c83d93, sciBASIC#\Data_science\NLP\LDA\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::64dbd774208d0153873ba1f828c18892, sciBASIC#\Data_science\NLP\LDA\Debugger.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 105
     ' Comment Lines: 35
     '   Blank Lines: 36
-    '     File Size: 6.30 KB
+    '     File Size: 6.48 KB
 
 
     '     Module Debugger

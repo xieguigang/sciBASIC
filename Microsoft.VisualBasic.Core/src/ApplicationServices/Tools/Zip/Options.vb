@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 9
     '   Blank Lines: 2
-    '     File Size: 542.00 B
+    '     File Size: 542 B
 
 
     '     Enum Overwrite

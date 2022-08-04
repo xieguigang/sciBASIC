@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ae7a68f5e18bc02b07a470ef070de5c, sciBASIC#\mime\application%json\Javascript\JsonObject.vb"
+﻿#Region "Microsoft.VisualBasic::47083c84449f4979e1f53e5a160c5ccd, sciBASIC#\mime\application%json\Javascript\JsonObject.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 130
     ' Comment Lines: 41
     '   Blank Lines: 32
-    '     File Size: 7.19 KB
+    '     File Size: 7.29 KB
 
 
     '     Class JsonObject

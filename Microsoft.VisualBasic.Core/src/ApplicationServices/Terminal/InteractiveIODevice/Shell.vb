@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::354efdba57a08f8ffa12f354e40b0265, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\Shell.vb"
+﻿#Region "Microsoft.VisualBasic::3ce0671f8886c6d39e08d84d5154ddf6, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\Shell.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 64
-    '    Code Lines: 34
+    '   Total Lines: 78
+    '    Code Lines: 44
     ' Comment Lines: 21
-    '   Blank Lines: 9
-    '     File Size: 2.20 KB
+    '   Blank Lines: 13
+    '     File Size: 2.50 KB
 
 
     '     Class Shell
     ' 
-    '         Properties: autoCompleteCandidates, dev, History, ps1, Quite
-    '                     shell
+    '         Properties: autoCompleteCandidates, History, ps1, Quite, shell
+    '                     ttyDev
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Sub: Run
+    '         Sub: dev_Tab, Run
     ' 
     ' 
     ' /********************************************************************************/

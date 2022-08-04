@@ -38,7 +38,7 @@
     '    Code Lines: 11
     ' Comment Lines: 11
     '   Blank Lines: 4
-    '     File Size: 782.00 B
+    '     File Size: 782 B
 
 
     '     Class CssPropertyAttribute

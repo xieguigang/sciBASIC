@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51e244cb0b7b9781d83d07b928383f9f, sciBASIC#\Data_science\DataMining\DataMining\Statistics.vb"
+﻿#Region "Microsoft.VisualBasic::868f4244b0b05a434da46c703f929e87, sciBASIC#\Data_science\DataMining\DataMining\Statistics.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 90
     ' Comment Lines: 178
     '   Blank Lines: 20
-    '     File Size: 9.22 KB
+    '     File Size: 9.51 KB
 
 
     ' Module Statistics

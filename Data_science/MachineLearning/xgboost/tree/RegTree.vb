@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::238fccad110d406c3ba6b19d781720e6, sciBASIC#\Data_science\MachineLearning\xgboost\tree\RegTree.vb"
+﻿#Region "Microsoft.VisualBasic::b40fb8dd20fd391aa9f932d3c7900caf, sciBASIC#\Data_science\MachineLearning\xgboost\tree\RegTree.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 56
     ' Comment Lines: 33
     '   Blank Lines: 16
-    '     File Size: 3.62 KB
+    '     File Size: 3.73 KB
 
 
     '     Class RegTree

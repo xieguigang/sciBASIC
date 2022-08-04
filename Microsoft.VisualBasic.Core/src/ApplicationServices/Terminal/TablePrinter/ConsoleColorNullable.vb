@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51d9c7e7f3ab0a4f99fbf74bc7bad2c3, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\ConsoleColorNullable.vb"
+﻿#Region "Microsoft.VisualBasic::ee360feb76cb8d6958eafb4643ab55c5, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\ConsoleColorNullable.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 20
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 859.00 B
+    '     File Size: 857 B
 
 
     '     Class ConsoleColorNullable
@@ -76,4 +76,3 @@ Namespace ApplicationServices.Terminal.TablePrinter
         Public Property BackgroundColor As ConsoleColor
     End Class
 End Namespace
-

@@ -38,7 +38,7 @@
     '    Code Lines: 53
     ' Comment Lines: 14
     '   Blank Lines: 13
-    '     File Size: 2.84 KB
+    '     File Size: 2.83 KB
 
 
     '     Class Triangle

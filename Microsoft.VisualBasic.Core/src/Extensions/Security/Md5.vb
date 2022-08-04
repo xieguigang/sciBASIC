@@ -1,54 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::641e3aa930e4a4f782144a5806302a36, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Security\Md5.vb"
+﻿#Region "Microsoft.VisualBasic::2de67d1f6236fcaff1a385fc6cd62ea2, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Security\Md5.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 293
-'    Code Lines: 153
-' Comment Lines: 105
-'   Blank Lines: 35
-'     File Size: 11.73 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module MD5Hash
-' 
-'         Function: Fletcher32, GetFileMd5, (+2 Overloads) GetHashCode, (+2 Overloads) GetMd5Hash, GetMd5Hash2
-'                   NewUid, SaltValue, Sha256ByteString, StringToByteArray, (+2 Overloads) ToLong
-'                   VerifyFile, VerifyMd5Hash
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 325
+    '    Code Lines: 171
+    ' Comment Lines: 116
+    '   Blank Lines: 38
+    '     File Size: 13.04 KB
+
+
+    '     Module MD5Hash
+    ' 
+    '         Function: Fletcher32, GetFileMd5, (+2 Overloads) GetHashCode, (+2 Overloads) GetMd5Hash, GetMd5Hash2
+    '                   GetSha1Hash, NewUid, SaltValue, Sha256ByteString, StringToByteArray
+    '                   (+2 Overloads) ToLong, VerifyFile, VerifyMd5Hash
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

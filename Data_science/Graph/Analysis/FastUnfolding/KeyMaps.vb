@@ -38,7 +38,7 @@
     '    Code Lines: 23
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 762.00 B
+    '     File Size: 762 B
 
 
     '     Class KeyMaps

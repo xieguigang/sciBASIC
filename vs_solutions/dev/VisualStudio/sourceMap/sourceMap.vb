@@ -38,7 +38,7 @@
     '    Code Lines: 10
     ' Comment Lines: 8
     '   Blank Lines: 3
-    '     File Size: 569.00 B
+    '     File Size: 569 B
 
 
     '     Class sourceMap

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f37570642f1f5283fe1688d90170e178, sciBASIC#\Data_science\MachineLearning\xgboost\learner\ObjFunction.vb"
+﻿#Region "Microsoft.VisualBasic::7c63fc693df57c0efe131ba9a05d5f8a, sciBASIC#\Data_science\MachineLearning\xgboost\learner\ObjFunction.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 38
     ' Comment Lines: 26
     '   Blank Lines: 11
-    '     File Size: 2.95 KB
+    '     File Size: 3.02 KB
 
 
     '     Class ObjFunction

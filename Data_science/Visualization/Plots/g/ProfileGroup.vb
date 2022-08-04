@@ -38,7 +38,7 @@
     '    Code Lines: 11
     ' Comment Lines: 7
     '   Blank Lines: 4
-    '     File Size: 619.00 B
+    '     File Size: 619 B
 
 
     '     Class ProfileGroup

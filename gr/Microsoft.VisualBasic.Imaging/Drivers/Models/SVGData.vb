@@ -38,7 +38,7 @@
     '    Code Lines: 70
     ' Comment Lines: 13
     '   Blank Lines: 19
-    '     File Size: 3.47 KB
+    '     File Size: 3.46 KB
 
 
     '     Class SVGData

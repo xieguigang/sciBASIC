@@ -38,7 +38,7 @@
     '    Code Lines: 21
     ' Comment Lines: 0
     '   Blank Lines: 6
-    '     File Size: 808.00 B
+    '     File Size: 808 B
 
 
     '     Class Link3D

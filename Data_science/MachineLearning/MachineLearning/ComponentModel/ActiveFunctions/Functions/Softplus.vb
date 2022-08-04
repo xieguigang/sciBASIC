@@ -38,7 +38,7 @@
     '    Code Lines: 23
     ' Comment Lines: 0
     '   Blank Lines: 6
-    '     File Size: 916.00 B
+    '     File Size: 916 B
 
 
     '     Class Softplus

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a833ab8148b9d516325196f6ae3f944e, sciBASIC#\gr\network-visualization\Network.IO.Extensions\NetworkFileIO.vb"
+﻿#Region "Microsoft.VisualBasic::996fa113e507e6d78aeedc18ed1a1d9b, sciBASIC#\gr\network-visualization\Network.IO.Extensions\NetworkFileIO.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 79
-    '    Code Lines: 54
+    '   Total Lines: 81
+    '    Code Lines: 56
     ' Comment Lines: 15
     '   Blank Lines: 10
-    '     File Size: 3.27 KB
+    '     File Size: 3.57 KB
 
 
     ' Module NetworkFileIO

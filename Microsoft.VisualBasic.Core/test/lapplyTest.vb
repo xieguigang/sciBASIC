@@ -38,7 +38,7 @@
     '    Code Lines: 82
     ' Comment Lines: 0
     '   Blank Lines: 11
-    '     File Size: 5.47 KB
+    '     File Size: 5.46 KB
 
 
     ' Module lapplyTest

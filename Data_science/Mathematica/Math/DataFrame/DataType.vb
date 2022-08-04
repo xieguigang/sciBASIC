@@ -38,7 +38,7 @@
     '    Code Lines: 5
     ' Comment Lines: 0
     '   Blank Lines: 0
-    '     File Size: 77.00 B
+    '     File Size: 77 B
 
 
     ' Enum DataType

@@ -38,7 +38,7 @@
     '    Code Lines: 96
     ' Comment Lines: 26
     '   Blank Lines: 19
-    '     File Size: 5.34 KB
+    '     File Size: 5.33 KB
 
 
     ' Module SchemasAPI

@@ -38,7 +38,7 @@
     '    Code Lines: 10
     ' Comment Lines: 14
     '   Blank Lines: 5
-    '     File Size: 895.00 B
+    '     File Size: 895 B
 
 
     '     Module Gaussian

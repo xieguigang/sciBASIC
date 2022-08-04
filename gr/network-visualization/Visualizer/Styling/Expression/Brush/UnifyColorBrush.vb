@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d72140c89db4047ece4e32592f3903d9, sciBASIC#\gr\network-visualization\Visualizer\Styling\Expression\Brush\UnifyColorBrush.vb"
+﻿#Region "Microsoft.VisualBasic::4ac8a91c6d15a7784fcbff353e1beb24, sciBASIC#\gr\network-visualization\Visualizer\Styling\Expression\Brush\UnifyColorBrush.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 20
     ' Comment Lines: 3
     '   Blank Lines: 5
-    '     File Size: 879.00 B
+    '     File Size: 906 B
 
 
     '     Class UnifyColorBrush

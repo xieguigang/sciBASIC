@@ -38,7 +38,7 @@
     '    Code Lines: 14
     ' Comment Lines: 5
     '   Blank Lines: 2
-    '     File Size: 1.01 KB
+    '     File Size: 1010 B
 
 
     '     Class Knot

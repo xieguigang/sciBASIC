@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d061f0ce4b8f2489d888b6653d55f5af, sciBASIC#\gr\network-visualization\Visualizer\Styling\Expression\Brush\CategoryBrush.vb"
+﻿#Region "Microsoft.VisualBasic::da791dd64d4ee2458e9f95c4b28e349c, sciBASIC#\gr\network-visualization\Visualizer\Styling\Expression\Brush\CategoryBrush.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 40
     ' Comment Lines: 9
     '   Blank Lines: 7
-    '     File Size: 2.14 KB
+    '     File Size: 2.19 KB
 
 
     '     Class CategoryBrush

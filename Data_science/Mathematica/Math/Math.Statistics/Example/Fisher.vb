@@ -38,7 +38,7 @@
     '    Code Lines: 14
     ' Comment Lines: 0
     '   Blank Lines: 8
-    '     File Size: 646.00 B
+    '     File Size: 646 B
 
 
     ' Module Fisher

@@ -38,7 +38,7 @@
     '    Code Lines: 9
     ' Comment Lines: 7
     '   Blank Lines: 5
-    '     File Size: 634.00 B
+    '     File Size: 634 B
 
 
     '     Class Convertor

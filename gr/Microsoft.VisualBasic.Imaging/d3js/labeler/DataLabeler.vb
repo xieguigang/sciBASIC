@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f635f989a8b5402d0e31b7c6d363ff1, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\labeler\DataLabeler.vb"
+﻿#Region "Microsoft.VisualBasic::b8efab0111e9deb4c260437e4fd6adb1, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\labeler\DataLabeler.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 96
+    '   Total Lines: 106
     '    Code Lines: 53
-    ' Comment Lines: 28
-    '   Blank Lines: 15
-    '     File Size: 3.18 KB
+    ' Comment Lines: 37
+    '   Blank Lines: 16
+    '     File Size: 3.52 KB
 
 
     '     Class DataLabeler

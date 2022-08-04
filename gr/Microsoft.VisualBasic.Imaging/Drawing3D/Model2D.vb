@@ -38,7 +38,7 @@
     '    Code Lines: 38
     ' Comment Lines: 6
     '   Blank Lines: 8
-    '     File Size: 1.63 KB
+    '     File Size: 1.62 KB
 
 
     '     Class Model2D

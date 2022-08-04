@@ -38,7 +38,7 @@
     '    Code Lines: 16
     ' Comment Lines: 1
     '   Blank Lines: 4
-    '     File Size: 892.00 B
+    '     File Size: 892 B
 
 
     ' Class DistanceFunctions

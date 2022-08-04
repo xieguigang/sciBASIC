@@ -38,7 +38,7 @@
     '    Code Lines: 181
     ' Comment Lines: 82
     '   Blank Lines: 68
-    '     File Size: 14.73 KB
+    '     File Size: 14.72 KB
 
 
     '     Class BZip2HuffmanStageEncoder

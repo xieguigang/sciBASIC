@@ -38,7 +38,7 @@
     '    Code Lines: 20
     ' Comment Lines: 3
     '   Blank Lines: 7
-    '     File Size: 1.13 KB
+    '     File Size: 1.12 KB
 
 
     '     Class DeflatePipelineFilter

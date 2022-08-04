@@ -38,7 +38,7 @@
     '    Code Lines: 10
     ' Comment Lines: 12
     '   Blank Lines: 3
-    '     File Size: 638.00 B
+    '     File Size: 638 B
 
 
     '     Class GridSquare

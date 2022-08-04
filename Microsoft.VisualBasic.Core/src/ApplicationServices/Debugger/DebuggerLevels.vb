@@ -38,7 +38,7 @@
     '    Code Lines: 9
     ' Comment Lines: 18
     '   Blank Lines: 1
-    '     File Size: 837.00 B
+    '     File Size: 837 B
 
 
     '     Enum DebuggerLevels

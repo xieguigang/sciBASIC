@@ -38,7 +38,7 @@
     '    Code Lines: 14
     ' Comment Lines: 4
     '   Blank Lines: 6
-    '     File Size: 586.00 B
+    '     File Size: 586 B
 
 
     '     Class InitPOSTBack

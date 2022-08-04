@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2e43aa0d323b1985a0cd26767ac1a2d, sciBASIC#\gr\PdfImage\PdfImage.vb"
+﻿#Region "Microsoft.VisualBasic::36007936e2a73a5f5b9ad2bfcd6d42e8, sciBASIC#\gr\PdfImage\PdfImage.vb"
 
     ' Author:
     ' 
@@ -106,4 +106,3 @@ Public Class PdfImage : Inherits GraphicsData
         Return True
     End Function
 End Class
-

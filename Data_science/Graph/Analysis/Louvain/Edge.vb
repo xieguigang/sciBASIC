@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf61b741ed84283f3286400061d0ff69, sciBASIC#\Data_science\Graph\Analysis\Louvain\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::7e0c689b978f381c65b0f5aad7b4f226, sciBASIC#\Data_science\Graph\Analysis\Louvain\Edge.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 12
     ' Comment Lines: 6
     '   Blank Lines: 4
-    '     File Size: 555.00 B
+    '     File Size: 576 B
 
 
     '     Class Edge

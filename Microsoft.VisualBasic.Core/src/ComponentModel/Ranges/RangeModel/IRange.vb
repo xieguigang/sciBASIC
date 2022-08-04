@@ -38,7 +38,7 @@
     '    Code Lines: 6
     ' Comment Lines: 6
     '   Blank Lines: 4
-    '     File Size: 349.00 B
+    '     File Size: 349 B
 
 
     '     Interface IRange

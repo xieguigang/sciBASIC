@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::840e123300919eec1d98057f62d9dea8, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Layout\Spring.vb"
+﻿#Region "Microsoft.VisualBasic::0bf69c6e7599a3d80f818be31cd20f5a, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Layout\Spring.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 90
-    '    Code Lines: 39
+    '   Total Lines: 93
+    '    Code Lines: 41
     ' Comment Lines: 38
-    '   Blank Lines: 13
-    '     File Size: 2.84 KB
+    '   Blank Lines: 14
+    '     File Size: 2.92 KB
 
 
     '     Class Spring
     ' 
-    '         Properties: K, length, point1, point2
+    '         Properties: A, B, K, length
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
@@ -51,6 +51,7 @@
     '     Class NearestPoint
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
     ' 
     '     Class BoundingBox
     ' 

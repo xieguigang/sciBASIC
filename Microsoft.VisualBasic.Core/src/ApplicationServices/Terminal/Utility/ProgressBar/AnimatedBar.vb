@@ -38,7 +38,7 @@
     '    Code Lines: 20
     ' Comment Lines: 3
     '   Blank Lines: 7
-    '     File Size: 797.00 B
+    '     File Size: 797 B
 
 
     '     Class AnimatedBar

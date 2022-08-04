@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::14ebd398c3349991ab4978a979ad489b, sciBASIC#\Data\Trinity\Html\Article.vb"
+﻿#Region "Microsoft.VisualBasic::705d1658b3724f42ac0718e6f1e91aa8, sciBASIC#\Data\Trinity\Html\Article.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 19
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1.07 KB
+    '     File Size: 1.11 KB
 
 
     ' Structure Article

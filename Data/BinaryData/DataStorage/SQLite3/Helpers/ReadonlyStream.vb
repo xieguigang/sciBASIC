@@ -38,7 +38,7 @@
     '    Code Lines: 20
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 701.00 B
+    '     File Size: 701 B
 
 
     '     Class ReadonlyStream

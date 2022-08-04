@@ -38,7 +38,7 @@
     '    Code Lines: 12
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 444.00 B
+    '     File Size: 444 B
 
 
     '     Class UsageAttribute

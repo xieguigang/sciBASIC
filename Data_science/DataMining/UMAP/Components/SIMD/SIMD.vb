@@ -38,7 +38,7 @@
     '    Code Lines: 189
     ' Comment Lines: 0
     '   Blank Lines: 50
-    '     File Size: 7.77 KB
+    '     File Size: 7.76 KB
 
 
     ' Module SIMD

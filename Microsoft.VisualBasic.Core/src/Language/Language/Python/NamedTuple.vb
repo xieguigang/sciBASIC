@@ -38,7 +38,7 @@
     '    Code Lines: 12
     ' Comment Lines: 3
     '   Blank Lines: 4
-    '     File Size: 621.00 B
+    '     File Size: 621 B
 
 
     '     Class NamedTuple

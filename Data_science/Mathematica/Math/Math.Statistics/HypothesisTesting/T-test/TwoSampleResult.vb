@@ -38,7 +38,7 @@
     '    Code Lines: 21
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 794.00 B
+    '     File Size: 794 B
 
 
     '     Class TwoSampleResult

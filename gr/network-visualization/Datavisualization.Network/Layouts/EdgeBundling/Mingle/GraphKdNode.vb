@@ -38,7 +38,7 @@
     '    Code Lines: 15
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 459.00 B
+    '     File Size: 459 B
 
 
     '     Class GraphKdNode

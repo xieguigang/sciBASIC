@@ -38,7 +38,7 @@
     '    Code Lines: 27
     ' Comment Lines: 0
     '   Blank Lines: 1
-    '     File Size: 638.00 B
+    '     File Size: 638 B
 
 
     '     Enum ParseKeyword

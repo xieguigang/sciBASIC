@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d34650152d86c0884dcc16b26c8806dc, sciBASIC#\Data\Trinity\POSTagger\PartOfSpeech.vb"
+﻿#Region "Microsoft.VisualBasic::c1729fa951c74553a42dd0d12919398d, sciBASIC#\Data\Trinity\POSTagger\PartOfSpeech.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 17
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 847.00 B
+    '     File Size: 866 B
 
 
     '     Class PartOfSpeech
@@ -73,4 +73,3 @@ Namespace POSTagger
         End Function
     End Class
 End Namespace
-

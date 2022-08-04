@@ -38,7 +38,7 @@
     '    Code Lines: 11
     ' Comment Lines: 4
     '   Blank Lines: 4
-    '     File Size: 581.00 B
+    '     File Size: 581 B
 
 
     '     Class ThreadStart

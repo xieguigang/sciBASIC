@@ -38,7 +38,7 @@
     '    Code Lines: 10
     ' Comment Lines: 9
     '   Blank Lines: 3
-    '     File Size: 778.00 B
+    '     File Size: 778 B
 
 
     '     Module RangeExtensions

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4f5b74c1a5aafa1e090b8bcedfcecd8, sciBASIC#\www\githubAPI\WebAPI\GraphQuery.vb"
+﻿#Region "Microsoft.VisualBasic::7573b60df864014fcb6561f08a3d63b7, sciBASIC#\www\githubAPI\WebAPI\GraphQuery.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 5
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 104.00 B
+    '     File Size: 111 B
 
 
     ' Module GraphQuery

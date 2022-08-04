@@ -38,7 +38,7 @@
     '    Code Lines: 236
     ' Comment Lines: 81
     '   Blank Lines: 49
-    '     File Size: 13.66 KB
+    '     File Size: 13.65 KB
 
 
     '     Module HtmlStrips

@@ -38,7 +38,7 @@
     '    Code Lines: 2
     ' Comment Lines: 0
     '   Blank Lines: 1
-    '     File Size: 39.00 B
+    '     File Size: 39 B
 
 
     ' 

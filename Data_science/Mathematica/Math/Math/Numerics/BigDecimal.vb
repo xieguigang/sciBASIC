@@ -38,7 +38,7 @@
     '    Code Lines: 531
     ' Comment Lines: 61
     '   Blank Lines: 55
-    '     File Size: 26.85 KB
+    '     File Size: 26.84 KB
 
 
     '     Structure BigDecimal

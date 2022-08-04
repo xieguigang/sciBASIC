@@ -38,7 +38,7 @@
     '    Code Lines: 20
     ' Comment Lines: 1
     '   Blank Lines: 6
-    '     File Size: 749.00 B
+    '     File Size: 749 B
 
 
     '     Structure Cubic

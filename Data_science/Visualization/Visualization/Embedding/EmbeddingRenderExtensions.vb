@@ -38,7 +38,7 @@
     '    Code Lines: 102
     ' Comment Lines: 26
     '   Blank Lines: 9
-    '     File Size: 5.77 KB
+    '     File Size: 5.76 KB
 
 
     ' Module EmbeddingRenderExtensions

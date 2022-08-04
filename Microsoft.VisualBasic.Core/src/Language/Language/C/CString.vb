@@ -38,7 +38,7 @@
     '    Code Lines: 108
     ' Comment Lines: 71
     '   Blank Lines: 29
-    '     File Size: 8.14 KB
+    '     File Size: 8.13 KB
 
 
     '     Module CString

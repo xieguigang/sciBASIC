@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d49332076fd5277e12362444dd4a2b9, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\docProps\core.xml.vb"
+﻿#Region "Microsoft.VisualBasic::7a61440abac98801932086a0c7f11fd3, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\docProps\core.xml.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 46
     ' Comment Lines: 0
     '   Blank Lines: 17
-    '     File Size: 2.06 KB
+    '     File Size: 2.09 KB
 
 
     '     Class core

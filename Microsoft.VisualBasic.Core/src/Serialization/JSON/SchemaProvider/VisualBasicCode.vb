@@ -38,7 +38,7 @@
     '    Code Lines: 4
     ' Comment Lines: 3
     '   Blank Lines: 4
-    '     File Size: 203.00 B
+    '     File Size: 203 B
 
 
     '     Class VisualBasicCode

@@ -38,7 +38,7 @@
     '    Code Lines: 6
     ' Comment Lines: 13
     '   Blank Lines: 4
-    '     File Size: 667.00 B
+    '     File Size: 667 B
 
 
     '     Interface IParser

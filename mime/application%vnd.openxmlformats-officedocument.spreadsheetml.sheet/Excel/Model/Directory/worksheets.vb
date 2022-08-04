@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf8a19c7dd385e74723ef6f046e9cd70, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\Directory\worksheets.vb"
+﻿#Region "Microsoft.VisualBasic::b187e5b545fac688dcc4d5ac0baeffab, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\Directory\worksheets.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 84
-    '    Code Lines: 65
+    '   Total Lines: 86
+    '    Code Lines: 67
     ' Comment Lines: 7
     '   Blank Lines: 12
-    '     File Size: 3.30 KB
+    '     File Size: 3.38 KB
 
 
     '     Class worksheets

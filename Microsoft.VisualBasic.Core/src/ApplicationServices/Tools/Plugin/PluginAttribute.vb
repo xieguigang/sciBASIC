@@ -38,7 +38,7 @@
     '    Code Lines: 12
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 482.00 B
+    '     File Size: 482 B
 
 
     '     Class PluginAttribute

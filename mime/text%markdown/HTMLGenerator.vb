@@ -38,7 +38,7 @@
     '    Code Lines: 8
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 371.00 B
+    '     File Size: 371 B
 
 
     ' Module HTMLGenerator

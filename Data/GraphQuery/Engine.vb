@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1c10115b6e5150e0bbb5bd4d01072a07, sciBASIC#\Data\GraphQuery\Engine.vb"
+﻿#Region "Microsoft.VisualBasic::6f41769dd90e7e40fa53836d10219534, sciBASIC#\Data\GraphQuery\Engine.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 103
     ' Comment Lines: 5
     '   Blank Lines: 25
-    '     File Size: 4.40 KB
+    '     File Size: 4.52 KB
 
 
     ' Class Engine

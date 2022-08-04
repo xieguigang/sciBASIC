@@ -1,4 +1,59 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::21f446297389014ddf6d36eed64cf117, sciBASIC#\Data\BinaryData\BinaryData\ByteOrder\NetworkByteOrderBitConvertor.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 270
+    '    Code Lines: 170
+    ' Comment Lines: 73
+    '   Blank Lines: 27
+    '     File Size: 10.37 KB
+
+
+    ' Module NetworkByteOrderBitConvertor
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: f32Bits, f64Bits, (+5 Overloads) GetBytes, getf32, getf64
+    '               geti16, geti32, geti64, i16Bits, i32Bits
+    '               i64Bits, ToDouble, ToInt16, ToInt32, ToInt64
+    '               ToSingle
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 
 Public Module NetworkByteOrderBitConvertor
 
@@ -268,3 +323,4 @@ Public Module NetworkByteOrderBitConvertor
         Return f32Bytes(value)
     End Function
 End Module
+

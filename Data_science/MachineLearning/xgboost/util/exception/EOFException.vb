@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4954158acbfc9e610d3b4875329a4e75, sciBASIC#\Data_science\MachineLearning\xgboost\util\exception\EOFException.vb"
+﻿#Region "Microsoft.VisualBasic::d72d88cbccfc137e36f10a52ac52b635, sciBASIC#\Data_science\MachineLearning\xgboost\util\exception\EOFException.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 18
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 562.00 B
+    '     File Size: 584 B
 
 
     '     Class EOFException

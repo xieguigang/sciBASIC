@@ -38,7 +38,7 @@
     '    Code Lines: 14
     ' Comment Lines: 10
     '   Blank Lines: 4
-    '     File Size: 777.00 B
+    '     File Size: 777 B
 
 
     '     Class CssAnonymousBox

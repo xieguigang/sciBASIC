@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fdd6c21e010d71d9278fac50cb969dc4, sciBASIC#\mime\text%html\Document\Elements\InnerPlantText.vb"
+﻿#Region "Microsoft.VisualBasic::b86dcb5621984a40262d292c2630cb3f, sciBASIC#\mime\text%html\Document\Elements\InnerPlantText.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 11
     '   Blank Lines: 12
-    '     File Size: 1.56 KB
+    '     File Size: 1.62 KB
 
 
     '     Class InnerPlantText

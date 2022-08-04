@@ -38,7 +38,7 @@
     '    Code Lines: 9
     ' Comment Lines: 18
     '   Blank Lines: 0
-    '     File Size: 607.00 B
+    '     File Size: 607 B
 
 
     '     Enum SvmType

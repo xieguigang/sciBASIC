@@ -38,7 +38,7 @@
     '    Code Lines: 15
     ' Comment Lines: 0
     '   Blank Lines: 6
-    '     File Size: 740.00 B
+    '     File Size: 740 B
 
 
     ' Module ColorLegendTest

@@ -38,7 +38,7 @@
     '    Code Lines: 10
     ' Comment Lines: 0
     '   Blank Lines: 1
-    '     File Size: 410.00 B
+    '     File Size: 410 B
 
 
     '     Class RandomProjectionTreeNode

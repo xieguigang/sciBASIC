@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::412ba03a703bc53aec5ef6498d739ca1, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\base\Combination\Permutation.vb"
+﻿#Region "Microsoft.VisualBasic::b8fadaea1b911ab51551b88c631c608f, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\base\Combination\Permutation.vb"
 
     ' Author:
     ' 
@@ -133,4 +133,3 @@ Namespace ComponentModel.Algorithm.base
         End Sub
     End Class
 End Namespace
-

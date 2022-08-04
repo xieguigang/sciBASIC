@@ -38,7 +38,7 @@
     '    Code Lines: 75
     ' Comment Lines: 29
     '   Blank Lines: 15
-    '     File Size: 4.26 KB
+    '     File Size: 4.25 KB
 
 
     ' Class ReaderProvider

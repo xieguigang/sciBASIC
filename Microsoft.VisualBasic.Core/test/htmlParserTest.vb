@@ -38,7 +38,7 @@
     '    Code Lines: 18
     ' Comment Lines: 0
     '   Blank Lines: 12
-    '     File Size: 741.00 B
+    '     File Size: 741 B
 
 
     ' Module htmlParserTest

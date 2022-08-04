@@ -38,7 +38,7 @@
     '    Code Lines: 4
     ' Comment Lines: 0
     '   Blank Lines: 1
-    '     File Size: 132.00 B
+    '     File Size: 132 B
 
 
     ' Class Password

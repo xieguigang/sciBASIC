@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e193d7f7fa7c82de193b2c6c89a2de73, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\InteropService\Pipeline\RunSlavePipeline.vb"
+﻿#Region "Microsoft.VisualBasic::15ca1618eb9f9ccdda256862e7ecb3b6, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\InteropService\Pipeline\RunSlavePipeline.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 62
-    '    Code Lines: 47
+    '   Total Lines: 81
+    '    Code Lines: 61
     ' Comment Lines: 2
-    '   Blank Lines: 13
-    '     File Size: 2.11 KB
+    '   Blank Lines: 18
+    '     File Size: 2.67 KB
 
 
     '     Class RunSlavePipeline
@@ -49,7 +49,7 @@
     ' 
     '         Function: Run, ToString
     ' 
-    '         Sub: ProcessMessage, SendMessage, SendProgress
+    '         Sub: HookProgress, ProcessMessage, SendMessage, SendProgress
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ccb046f4d35b21168dcec712230d5b53, sciBASIC#\gr\network-visualization\Visualizer\Styling\NodeStyles.vb"
+﻿#Region "Microsoft.VisualBasic::b954c98073ba5c7221d9ec2597c94b3c, sciBASIC#\gr\network-visualization\Visualizer\Styling\NodeStyles.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 47
     ' Comment Lines: 7
     '   Blank Lines: 13
-    '     File Size: 2.61 KB
+    '     File Size: 2.67 KB
 
 
     '     Module NodeStyles

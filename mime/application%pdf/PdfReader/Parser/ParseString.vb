@@ -38,7 +38,7 @@
     '    Code Lines: 22
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 710.00 B
+    '     File Size: 710 B
 
 
     '     Class ParseString

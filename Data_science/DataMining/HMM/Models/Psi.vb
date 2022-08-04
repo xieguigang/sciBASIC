@@ -38,7 +38,7 @@
     '    Code Lines: 14
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 458.00 B
+    '     File Size: 458 B
 
 
     '     Class Psi

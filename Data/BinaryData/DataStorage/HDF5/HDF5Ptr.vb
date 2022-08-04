@@ -38,7 +38,7 @@
     '    Code Lines: 18
     ' Comment Lines: 10
     '   Blank Lines: 8
-    '     File Size: 993.00 B
+    '     File Size: 993 B
 
 
     '     Class HDF5Ptr

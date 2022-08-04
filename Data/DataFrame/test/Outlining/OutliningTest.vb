@@ -38,7 +38,7 @@
     '    Code Lines: 7
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 253.00 B
+    '     File Size: 253 B
 
 
     ' Module OutliningTest

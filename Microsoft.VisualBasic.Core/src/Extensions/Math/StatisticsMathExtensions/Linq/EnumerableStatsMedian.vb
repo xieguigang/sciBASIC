@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1aff4cf7af7851153b0ef70f2aa2ffb0, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsMedian.vb"
+﻿#Region "Microsoft.VisualBasic::2ac3e1b08fe079436fbc8635015fc956, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsMedian.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 136
     ' Comment Lines: 410
     '   Blank Lines: 24
-    '     File Size: 20.98 KB
+    '     File Size: 21.55 KB
 
 
     '     Module EnumerableStatsMedian

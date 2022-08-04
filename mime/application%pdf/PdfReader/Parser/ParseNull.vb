@@ -38,7 +38,7 @@
     '    Code Lines: 7
     ' Comment Lines: 0
     '   Blank Lines: 1
-    '     File Size: 156.00 B
+    '     File Size: 156 B
 
 
     '     Class ParseNull

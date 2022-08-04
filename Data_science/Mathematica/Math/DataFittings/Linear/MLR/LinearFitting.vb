@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95ad8ae445ad2ec5a0f2efd47f9442b3, sciBASIC#\Data_science\Mathematica\Math\DataFittings\Linear\MLR\LinearFitting.vb"
+﻿#Region "Microsoft.VisualBasic::b90cb22a2d18e00d87e83e68ef6df784, sciBASIC#\Data_science\Mathematica\Math\DataFittings\Linear\MLR\LinearFitting.vb"
 
     ' Author:
     ' 

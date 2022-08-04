@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::312fa77ea9a67da8bbce3239b3f7e303, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\GDICanvas.vb"
+﻿#Region "Microsoft.VisualBasic::a0b31d6a904cde789c23005e50944205, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\GDICanvas.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 4915
-    '    Code Lines: 672
-    ' Comment Lines: 4074
-    '   Blank Lines: 169
-    '     File Size: 211.52 KB
+    '   Total Lines: 4910
+    '    Code Lines: 673
+    ' Comment Lines: 4067
+    '   Blank Lines: 170
+    '     File Size: 211.19 KB
 
 
     '     Class GDICanvas
@@ -48,19 +48,21 @@
     '                     PageUnit, PixelOffsetMode, RenderingOrigin, SmoothingMode, Stroke
     '                     TextContrast, TextRenderingHint
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: (+3 Overloads) BeginContainer, GetContextInfo, GetNearestColor, (+8 Overloads) IsVisible, MeasureCharacterRanges
     '                   (+8 Overloads) MeasureString
     ' 
-    '         Sub: AddMetafileComment, (+2 Overloads) Clear, (+4 Overloads) CopyFromScreen, Dispose, (+4 Overloads) DrawArc
-    '              DrawB, (+3 Overloads) DrawBezier, (+2 Overloads) DrawBeziers, (+4 Overloads) DrawClosedCurve, (+7 Overloads) DrawCurve
-    '              (+4 Overloads) DrawEllipse, (+2 Overloads) DrawIcon, DrawIconUnstretched, (+30 Overloads) DrawImage, (+4 Overloads) DrawImageUnscaled
-    '              DrawImageUnscaledAndClipped, (+5 Overloads) DrawLine, (+2 Overloads) DrawLines, DrawPath, (+4 Overloads) DrawPie
-    '              (+2 Overloads) DrawPolygon, (+4 Overloads) DrawRectangle, (+2 Overloads) DrawRectangles, (+7 Overloads) DrawString, EndContainer
-    '              (+36 Overloads) EnumerateMetafile, (+2 Overloads) ExcludeClip, (+6 Overloads) FillClosedCurve, (+4 Overloads) FillEllipse, FillPath
-    '              (+3 Overloads) FillPie, (+4 Overloads) FillPolygon, (+4 Overloads) FillRectangle, FillRegion, Finalize
-    '              (+2 Overloads) Flush, (+3 Overloads) IntersectClip, (+2 Overloads) MultiplyTransform, ResetClip, ResetTransform
-    '              (+2 Overloads) RotateTransform, (+2 Overloads) ScaleTransform, (+9 Overloads) SetClip, (+2 Overloads) TransformPoints, (+2 Overloads) TranslateClip
-    '              (+2 Overloads) TranslateTransform
+    '         Sub: AddMetafileComment, Clear, ClearCanvas, (+4 Overloads) CopyFromScreen, Dispose
+    '              (+4 Overloads) DrawArc, DrawB, (+3 Overloads) DrawBezier, (+2 Overloads) DrawBeziers, (+4 Overloads) DrawClosedCurve
+    '              (+7 Overloads) DrawCurve, (+4 Overloads) DrawEllipse, (+2 Overloads) DrawIcon, DrawIconUnstretched, (+30 Overloads) DrawImage
+    '              (+4 Overloads) DrawImageUnscaled, DrawImageUnscaledAndClipped, (+5 Overloads) DrawLine, (+2 Overloads) DrawLines, DrawPath
+    '              (+4 Overloads) DrawPie, (+2 Overloads) DrawPolygon, (+4 Overloads) DrawRectangle, (+2 Overloads) DrawRectangles, (+7 Overloads) DrawString
+    '              EndContainer, (+36 Overloads) EnumerateMetafile, (+2 Overloads) ExcludeClip, (+6 Overloads) FillClosedCurve, (+4 Overloads) FillEllipse
+    '              FillPath, (+3 Overloads) FillPie, (+4 Overloads) FillPolygon, (+4 Overloads) FillRectangle, FillRegion
+    '              Finalize, (+2 Overloads) Flush, (+3 Overloads) IntersectClip, (+2 Overloads) MultiplyTransform, ResetClip
+    '              ResetTransform, (+2 Overloads) RotateTransform, (+2 Overloads) ScaleTransform, (+9 Overloads) SetClip, (+2 Overloads) TransformPoints
+    '              (+2 Overloads) TranslateClip, (+2 Overloads) TranslateTransform
     ' 
     ' 
     ' /********************************************************************************/

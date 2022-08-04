@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d63e6535c1628684fd432142cf9b3b2, sciBASIC#\Data_science\MachineLearning\MachineLearning\RandomForests\Bootstraping.vb"
+﻿#Region "Microsoft.VisualBasic::7d1578a6d1a8a4e72f65503f0e5eff63, sciBASIC#\Data_science\MachineLearning\MachineLearning\RandomForests\Bootstraping.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 15
     '   Blank Lines: 4
-    '     File Size: 1.98 KB
+    '     File Size: 2.03 KB
 
 
     '     Module RandomForestsBootstraping

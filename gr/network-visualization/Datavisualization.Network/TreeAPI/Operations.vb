@@ -43,7 +43,7 @@
 
     '     Module Operations
     ' 
-    '         Function: [GetType], __getEntities, __isLeaf, __isLeafX, BuildTree
+    '         Function: __getEntities, __isLeaf, __isLeafX, [GetType], BuildTree
     '                   ClusterParts
     ' 
     '         Sub: __buildTREE

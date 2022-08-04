@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb5e471fe8bd0f8e9ed7a80dee4e6be0, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\ScriptBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::760f40fe4f1ed74133d713b3ee081bf1, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\ScriptBuilder.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 151
-    '    Code Lines: 78
+    '   Total Lines: 155
+    '    Code Lines: 81
     ' Comment Lines: 54
-    '   Blank Lines: 19
-    '     File Size: 5.61 KB
+    '   Blank Lines: 20
+    '     File Size: 5.74 KB
 
 
     '     Class ScriptBuilder
     ' 
     '         Properties: Preview, script
     ' 
-    '         Constructor: (+5 Overloads) Sub New
+    '         Constructor: (+6 Overloads) Sub New
     '         Function: AppendLine, Replace, (+2 Overloads) Save, ToString
     '         Operators: +
     ' 

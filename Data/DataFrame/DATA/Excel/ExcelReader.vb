@@ -38,7 +38,7 @@
     '    Code Lines: 70
     ' Comment Lines: 19
     '   Blank Lines: 24
-    '     File Size: 4.06 KB
+    '     File Size: 4.05 KB
 
 
     '     Class ExcelReader

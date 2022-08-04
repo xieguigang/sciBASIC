@@ -38,7 +38,7 @@
     '    Code Lines: 10
     ' Comment Lines: 8
     '   Blank Lines: 4
-    '     File Size: 770.00 B
+    '     File Size: 770 B
 
 
     '     Class NoteAttribute

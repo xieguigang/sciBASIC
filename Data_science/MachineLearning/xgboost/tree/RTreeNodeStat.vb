@@ -38,7 +38,7 @@
     '    Code Lines: 16
     ' Comment Lines: 7
     '   Blank Lines: 3
-    '     File Size: 915.00 B
+    '     File Size: 915 B
 
 
     '     Class RTreeNodeStat

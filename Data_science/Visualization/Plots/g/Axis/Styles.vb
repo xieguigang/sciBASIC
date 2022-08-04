@@ -38,7 +38,7 @@
     '    Code Lines: 21
     ' Comment Lines: 27
     '   Blank Lines: 7
-    '     File Size: 1.26 KB
+    '     File Size: 1.25 KB
 
 
     '     Enum XAxisLayoutStyles

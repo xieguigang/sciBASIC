@@ -38,7 +38,7 @@
     '    Code Lines: 12
     ' Comment Lines: 18
     '   Blank Lines: 3
-    '     File Size: 1.01 KB
+    '     File Size: 1014 B
 
 
     '     Enum Drivers

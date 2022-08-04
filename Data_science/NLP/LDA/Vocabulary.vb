@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::46875cc713b32750e4ae3251e7ded359, sciBASIC#\Data_science\NLP\LDA\Vocabulary.vb"
+﻿#Region "Microsoft.VisualBasic::4d269aac013502f8dd76dd5465580275, sciBASIC#\Data_science\NLP\LDA\Vocabulary.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 62
     ' Comment Lines: 5
     '   Blank Lines: 21
-    '     File Size: 2.44 KB
+    '     File Size: 2.52 KB
 
 
     '     Class Vocabulary
@@ -144,4 +144,3 @@ Namespace LDA
         End Function
     End Class
 End Namespace
-

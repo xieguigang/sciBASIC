@@ -38,7 +38,7 @@
     '    Code Lines: 138
     ' Comment Lines: 20
     '   Blank Lines: 39
-    '     File Size: 6.51 KB
+    '     File Size: 6.50 KB
 
 
     '     Class DuplexPipe

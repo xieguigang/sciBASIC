@@ -38,7 +38,7 @@
     '    Code Lines: 17
     ' Comment Lines: 18
     '   Blank Lines: 7
-    '     File Size: 1.02 KB
+    '     File Size: 1022 B
 
 
     '     Class MeasureData

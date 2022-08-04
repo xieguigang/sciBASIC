@@ -38,7 +38,7 @@
     '    Code Lines: 9
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 363.00 B
+    '     File Size: 363 B
 
 
     '     Class BTreeCellData

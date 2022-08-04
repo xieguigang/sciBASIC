@@ -38,7 +38,7 @@
     '    Code Lines: 68
     ' Comment Lines: 6
     '   Blank Lines: 16
-    '     File Size: 3.34 KB
+    '     File Size: 3.33 KB
 
 
     '     Class TripleDES

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6fbda09c70e376c12060aeee8e3b4920, sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Plot\Horizon.vb"
+﻿#Region "Microsoft.VisualBasic::12a0e00e1ed3bdda1070de1e6fe03a14, sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Plot\Horizon.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 113
     ' Comment Lines: 5
     '   Blank Lines: 23
-    '     File Size: 6.17 KB
+    '     File Size: 6.31 KB
 
 
     ' Class Horizon

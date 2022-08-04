@@ -38,7 +38,7 @@
     '    Code Lines: 43
     ' Comment Lines: 11
     '   Blank Lines: 12
-    '     File Size: 2.01 KB
+    '     File Size: 2.00 KB
 
 
     '     Class Sequence

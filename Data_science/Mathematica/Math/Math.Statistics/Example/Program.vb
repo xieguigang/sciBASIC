@@ -38,7 +38,7 @@
     '    Code Lines: 18
     ' Comment Lines: 5
     '   Blank Lines: 6
-    '     File Size: 1.02 KB
+    '     File Size: 1017 B
 
 
     ' Module ExampleMonteCarlo

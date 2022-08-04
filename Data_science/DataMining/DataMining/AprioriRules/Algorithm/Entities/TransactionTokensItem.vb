@@ -38,7 +38,7 @@
     '    Code Lines: 16
     ' Comment Lines: 0
     '   Blank Lines: 8
-    '     File Size: 688.00 B
+    '     File Size: 688 B
 
 
     '     Class TransactionTokensItem

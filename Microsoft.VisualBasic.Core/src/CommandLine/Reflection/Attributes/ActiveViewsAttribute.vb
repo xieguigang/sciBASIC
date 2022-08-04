@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 4
     '   Blank Lines: 4
-    '     File Size: 691.00 B
+    '     File Size: 691 B
 
 
     '     Class ActiveViewsAttribute

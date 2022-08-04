@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03a88f701efa494fa786e83ff7318e72, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\DegreeWeightedPlanner.vb"
+﻿#Region "Microsoft.VisualBasic::7d37100019e03d5e1e357b7a68e38168, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\DegreeWeightedPlanner.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 122
+    '   Total Lines: 121
     '    Code Lines: 87
     ' Comment Lines: 11
-    '   Blank Lines: 24
+    '   Blank Lines: 23
     '     File Size: 4.84 KB
 
 
@@ -50,7 +50,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph

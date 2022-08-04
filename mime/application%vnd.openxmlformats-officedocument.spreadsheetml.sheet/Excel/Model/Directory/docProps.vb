@@ -38,7 +38,7 @@
     '    Code Lines: 19
     ' Comment Lines: 3
     '   Blank Lines: 6
-    '     File Size: 965.00 B
+    '     File Size: 965 B
 
 
     '     Class docProps

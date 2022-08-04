@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5826dd9e971ade6664c30fad7976552e, sciBASIC#\Data_science\DataMining\BinaryTree\BuildTree.vb"
+﻿#Region "Microsoft.VisualBasic::47c2d8ea59928d4307e38d10c2f05d73, sciBASIC#\Data_science\DataMining\BinaryTree\BuildTree.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 42
-    '    Code Lines: 35
+    '   Total Lines: 53
+    '    Code Lines: 43
     ' Comment Lines: 0
-    '   Blank Lines: 7
-    '     File Size: 1.91 KB
+    '   Blank Lines: 10
+    '     File Size: 2.33 KB
 
 
     ' Module BuildTree
     ' 
-    '     Function: (+2 Overloads) BTreeCluster
+    '     Function: (+3 Overloads) BTreeCluster
     ' 
     ' /********************************************************************************/
 

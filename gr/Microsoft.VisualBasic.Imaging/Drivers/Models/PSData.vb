@@ -38,7 +38,7 @@
     '    Code Lines: 21
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 838.00 B
+    '     File Size: 838 B
 
 
     '     Class PSData

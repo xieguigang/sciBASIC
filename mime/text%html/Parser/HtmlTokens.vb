@@ -38,7 +38,7 @@
     '    Code Lines: 9
     ' Comment Lines: 12
     '   Blank Lines: 1
-    '     File Size: 415.00 B
+    '     File Size: 415 B
 
 
     '     Enum HtmlTokens

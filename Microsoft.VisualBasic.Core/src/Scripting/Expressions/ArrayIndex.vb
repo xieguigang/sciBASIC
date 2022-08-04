@@ -38,7 +38,7 @@
     '    Code Lines: 48
     ' Comment Lines: 19
     '   Blank Lines: 8
-    '     File Size: 2.59 KB
+    '     File Size: 2.58 KB
 
 
     '     Module ArrayIndex

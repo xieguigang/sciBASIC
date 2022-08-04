@@ -38,7 +38,7 @@
     '    Code Lines: 19
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 792.00 B
+    '     File Size: 792 B
 
 
     '     Module UserProtocols

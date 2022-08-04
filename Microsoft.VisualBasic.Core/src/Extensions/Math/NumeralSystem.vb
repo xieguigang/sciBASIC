@@ -38,7 +38,7 @@
     '    Code Lines: 15
     ' Comment Lines: 6
     '   Blank Lines: 5
-    '     File Size: 750.00 B
+    '     File Size: 750 B
 
 
     '     Module NumeralSystem

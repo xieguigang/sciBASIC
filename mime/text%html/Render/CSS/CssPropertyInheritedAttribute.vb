@@ -38,7 +38,7 @@
     '    Code Lines: 6
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 166.00 B
+    '     File Size: 166 B
 
 
     '     Class CssPropertyInheritedAttribute

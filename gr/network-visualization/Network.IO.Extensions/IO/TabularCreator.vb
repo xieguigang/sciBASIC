@@ -1,52 +1,52 @@
-﻿#Region "Microsoft.VisualBasic::e73263c1391f44789fc8f4a54caa2607, sciBASIC#\gr\network-visualization\Network.IO.Extensions\IO\TabularCreator.vb"
+﻿#Region "Microsoft.VisualBasic::079b3ddfa29fe165300fc5cbcdde3b21, sciBASIC#\gr\network-visualization\Network.IO.Extensions\IO\TabularCreator.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 160
-'    Code Lines: 113
-' Comment Lines: 25
-'   Blank Lines: 22
-'     File Size: 6.56 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module TabularCreator
-' 
-'         Function: createNodesTable, (+3 Overloads) Tabular
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 187
+    '    Code Lines: 135
+    ' Comment Lines: 25
+    '   Blank Lines: 27
+    '     File Size: 7.69 KB
+
+
+    '     Module TabularCreator
+    ' 
+    '         Function: CreateGraphTable, CreateNodesMetaData, dumpNodeVertex, GetUnionProperties, (+3 Overloads) Tabular
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

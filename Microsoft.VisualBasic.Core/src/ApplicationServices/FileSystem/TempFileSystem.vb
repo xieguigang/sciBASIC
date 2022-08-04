@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc9f0b79bd12b93f7399cac48b5732d8, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\TempFileSystem.vb"
+﻿#Region "Microsoft.VisualBasic::691e08da6cafb964d79d372fe32f8058, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\TempFileSystem.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 90
-    '    Code Lines: 50
-    ' Comment Lines: 23
-    '   Blank Lines: 17
-    '     File Size: 3.56 KB
+    '   Total Lines: 99
+    '    Code Lines: 55
+    ' Comment Lines: 25
+    '   Blank Lines: 19
+    '     File Size: 3.85 KB
 
 
     '     Class TempFileSystem

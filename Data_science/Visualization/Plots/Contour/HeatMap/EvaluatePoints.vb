@@ -38,7 +38,7 @@
     '    Code Lines: 11
     ' Comment Lines: 9
     '   Blank Lines: 6
-    '     File Size: 761.00 B
+    '     File Size: 761 B
 
 
     '     Class EvaluatePoints

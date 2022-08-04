@@ -38,7 +38,7 @@
     '    Code Lines: 18
     ' Comment Lines: 0
     '   Blank Lines: 6
-    '     File Size: 759.00 B
+    '     File Size: 759 B
 
 
     '     Class WaveletConstructor

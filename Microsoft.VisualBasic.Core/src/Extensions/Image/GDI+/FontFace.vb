@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ecfbe2938d1361aab03baf957919d5c, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\FontFace.vb"
+﻿#Region "Microsoft.VisualBasic::660db393f8470245514f78d33a79b651, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\FontFace.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 75
     ' Comment Lines: 31
     '   Blank Lines: 19
-    '     File Size: 5.13 KB
+    '     File Size: 5.25 KB
 
 
     '     Class FontFace

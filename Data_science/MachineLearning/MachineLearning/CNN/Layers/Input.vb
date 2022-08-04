@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5cafe63168e0aad3e297e0dc4d8cc90, sciBASIC#\Data_science\MachineLearning\MachineLearning\CNN\Layers\Input.vb"
+﻿#Region "Microsoft.VisualBasic::bf157e12e1c6ea094c512cb8466dfb86, sciBASIC#\Data_science\MachineLearning\MachineLearning\CNN\Layers\Input.vb"
 
     ' Author:
     ' 
@@ -158,4 +158,3 @@ Namespace Convolutional
         End Function
     End Class
 End Namespace
-

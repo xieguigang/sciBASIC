@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b51a9043432967a5af627a4136fa0490, sciBASIC#\Data_science\DataMining\BinaryTree\ComparisonProvider\ComparisonProvider.vb"
+﻿#Region "Microsoft.VisualBasic::d93f8025b524b76742e09d5c105d4001, sciBASIC#\Data_science\DataMining\BinaryTree\ComparisonProvider\ComparisonProvider.vb"
 
     ' Author:
     ' 

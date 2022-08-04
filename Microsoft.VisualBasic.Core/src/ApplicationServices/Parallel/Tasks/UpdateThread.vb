@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d600fc3bc5d544d05801c901e154e033, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\UpdateThread.vb"
+﻿#Region "Microsoft.VisualBasic::21b986e18bf8b7ec4eeb0f03f336b3ca, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\UpdateThread.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 152
-    '    Code Lines: 81
+    '   Total Lines: 153
+    '    Code Lines: 82
     ' Comment Lines: 52
     '   Blank Lines: 19
-    '     File Size: 5.62 KB
+    '     File Size: 5.67 KB
 
 
     '     Class UpdateThread
@@ -49,7 +49,7 @@
     ' 
     '         Function: GetTicks, Start, ToString
     ' 
-    '         Sub: [Stop], __invoke, __updates, (+2 Overloads) Dispose
+    '         Sub: __invoke, __updates, [Stop], (+2 Overloads) Dispose
     ' 
     ' 
     ' /********************************************************************************/

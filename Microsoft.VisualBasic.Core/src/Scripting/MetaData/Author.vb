@@ -38,7 +38,7 @@
     '    Code Lines: 17
     ' Comment Lines: 0
     '   Blank Lines: 6
-    '     File Size: 730.00 B
+    '     File Size: 730 B
 
 
     '     Class Author

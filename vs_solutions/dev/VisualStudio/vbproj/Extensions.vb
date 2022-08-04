@@ -1,51 +1,53 @@
-﻿#Region "Microsoft.VisualBasic::f4ff91d7e8c03fe1c6922c18c8ed05b2, sciBASIC#\vs_solutions\dev\VisualStudio\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::43fb47880c285560d36b560f5f4ac2a2, sciBASIC#\vs_solutions\dev\VisualStudio\vbproj\Extensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 104
-'    Code Lines: 80
-' Comment Lines: 15
-'   Blank Lines: 9
-'     File Size: 4.19 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module Extensions
-' 
-'     Function: AssemblyInfo, (+2 Overloads) EnumerateSourceFiles, GetOutputDirectory, GetOutputName, RootNamespace
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 147
+    '    Code Lines: 115
+    ' Comment Lines: 15
+    '   Blank Lines: 17
+    '     File Size: 6.19 KB
+
+
+    '     Module Extensions
+    ' 
+    '         Function: AssemblyInfo, (+2 Overloads) EnumerateSourceFiles, GetOutputDirectory, GetOutputName, legacyProjectSource
+    '                   newDotNetSDKProjectSource, RootNamespace, vbfileFilter
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -53,6 +55,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.vbproj
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.vbproj.Xml
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
 
 Namespace vbproj
@@ -80,10 +83,38 @@ Namespace vbproj
         Public Function EnumerateSourceFiles(vbproj As Project,
                                              Optional skipAssmInfo As Boolean = False,
                                              Optional fullName As Boolean = False) As IEnumerable(Of String)
-            Dim itemList As ItemGroup() = vbproj.ItemGroups
-            Dim sourceFolder As String = DirectCast(vbproj, IFileReference).FilePath.ParentPath
 
-            Return itemList _
+            Dim sourceFolder As String = DirectCast(vbproj, IFileReference).FilePath.ParentPath
+            Dim sourceList As IEnumerable(Of String)
+
+            If vbproj.IsDotNetCoreSDK Then
+                sourceList = vbproj.newDotNetSDKProjectSource
+            Else
+                sourceList = vbproj.legacyProjectSource
+            End If
+
+            Return sourceList.vbfileFilter(sourceFolder, fullName, skipAssmInfo)
+        End Function
+
+        <Extension>
+        Private Function newDotNetSDKProjectSource(vbproj As Project) As IEnumerable(Of String)
+            Dim sourceDir As String = DirectCast(vbproj, IFileReference).FilePath _
+                .ParentPath _
+                .Replace("\", "/")
+            Dim files As IEnumerable(Of String) = ls - l - r - "*.vb" <= sourceDir
+            Dim relative As String() = files _
+                .Select(Function(path)
+                            Return path.Replace("\", "/").Replace(sourceDir, "")
+                        End Function) _
+                .ToArray
+
+            Return relative
+        End Function
+
+        <Extension>
+        Private Function legacyProjectSource(vbproj As Project) As IEnumerable(Of String)
+            Dim itemList As ItemGroup() = vbproj.ItemGroups
+            Dim sourceList As IEnumerable(Of String) = itemList _
                 .Where(Function(items) Not items.Compiles.IsNullOrEmpty) _
                 .Select(Function(items)
                             Return items.Compiles _
@@ -92,16 +123,26 @@ Namespace vbproj
                                       End Function) _
                                .Select(Function(vb)
                                            Return vb.Include.Replace("%28", "(").Replace("%29", ")")
-                                       End Function) _
-                               .Select(Function(relative)
-                                           If fullName Then
-                                               Return $"{sourceFolder}/{relative}"
-                                           Else
-                                               Return relative
-                                           End If
                                        End Function)
                         End Function) _
-                .IteratesALL _
+                .IteratesALL
+
+            Return sourceList
+        End Function
+
+        <Extension>
+        Private Function vbfileFilter(sourcefiles As IEnumerable(Of String),
+                                      sourceFolder As String,
+                                      fullName As Boolean,
+                                      skipAssmInfo As Boolean) As IEnumerable(Of String)
+            Return sourcefiles _
+                .Select(Function(relative)
+                            If fullName Then
+                                Return $"{sourceFolder}/{relative}"
+                            Else
+                                Return relative
+                            End If
+                        End Function) _
                 .Where(Function(vb)
                            If skipAssmInfo Then
                                Return Not vb.EndsWith(Development.AssemblyInfo.ProjectFile)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7594c03498533e5eb3a2242927f73c08, sciBASIC#\Data\GraphQuery\TextParser\FunctionModel\ParserFunction.vb"
+﻿#Region "Microsoft.VisualBasic::265ef4cec7a031996ab307e235479dc6, sciBASIC#\Data\GraphQuery\TextParser\FunctionModel\ParserFunction.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 29
     ' Comment Lines: 0
     '   Blank Lines: 9
-    '     File Size: 1.37 KB
+    '     File Size: 1.40 KB
 
 
     '     Delegate Function

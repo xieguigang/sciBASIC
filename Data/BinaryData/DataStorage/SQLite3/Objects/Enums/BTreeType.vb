@@ -38,7 +38,7 @@
     '    Code Lines: 8
     ' Comment Lines: 0
     '   Blank Lines: 0
-    '     File Size: 250.00 B
+    '     File Size: 250 B
 
 
     '     Enum BTreeType

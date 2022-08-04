@@ -38,7 +38,7 @@
     '    Code Lines: 44
     ' Comment Lines: 48
     '   Blank Lines: 12
-    '     File Size: 4.22 KB
+    '     File Size: 4.21 KB
 
 
     ' Module BucketOperators

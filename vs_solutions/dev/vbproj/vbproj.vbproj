@@ -100,15 +100,17 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>./bin</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>vbproj.xml</DocumentationFile>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|AnyCPU'">
     <DefineTrace>true</DefineTrace>
@@ -220,13 +222,17 @@
       <Project>{6da12323-fb7c-4ac7-9ada-2ce65b0b060d}</Project>
       <Name>Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\mime\application%25xml\xml-netcore5.vbproj">
+      <Project>{e9500cd1-a5e4-4463-9dc2-fead569d430f}</Project>
+      <Name>xml-netcore5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ApplicationServices\ApplicationServices.vbproj">
       <Project>{afc6d861-8063-4549-8dce-746206e852b4}</Project>
       <Name>ApplicationServices</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VisualStudio\VisualStudio.vbproj">
-      <Project>{3a65d811-fc5c-4ad9-8456-8f720ff14c16}</Project>
-      <Name>VisualStudio</Name>
+    <ProjectReference Include="..\VisualStudio\VisualStudio.NET5.vbproj">
+      <Project>{dbe17aaf-bb57-4304-92df-3ce85f34d3a0}</Project>
+      <Name>VisualStudio.NET5</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

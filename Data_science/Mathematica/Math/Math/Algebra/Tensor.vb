@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::862e038fc6f732dc583b14b4fc593323, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Tensor.vb"
+﻿#Region "Microsoft.VisualBasic::8dfbeebf282663b7f3aef2899d4b0eb6, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Tensor.vb"
 
     ' Author:
     ' 
@@ -304,4 +304,3 @@ Namespace LinearAlgebra
         End Sub
     End Class
 End Namespace
-

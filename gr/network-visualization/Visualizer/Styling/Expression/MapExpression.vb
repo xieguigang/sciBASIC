@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76f1a06413097c7d80face4dad415825, sciBASIC#\gr\network-visualization\Visualizer\Styling\Expression\MapExpression.vb"
+﻿#Region "Microsoft.VisualBasic::6d4303d7d23e16dd25c4bc9be5d14421, sciBASIC#\gr\network-visualization\Visualizer\Styling\Expression\MapExpression.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 30
     ' Comment Lines: 12
     '   Blank Lines: 6
-    '     File Size: 1.48 KB
+    '     File Size: 1.53 KB
 
 
     '     Enum MapperTypes

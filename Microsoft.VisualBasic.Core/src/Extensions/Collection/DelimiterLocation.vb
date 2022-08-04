@@ -38,7 +38,7 @@
     '    Code Lines: 5
     ' Comment Lines: 12
     '   Blank Lines: 0
-    '     File Size: 446.00 B
+    '     File Size: 446 B
 
 
     ' Enum DelimiterLocation

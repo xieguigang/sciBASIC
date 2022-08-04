@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9fd70ca2ede0fc57e8ae08e117691a35, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\Correlations.vb"
+﻿#Region "Microsoft.VisualBasic::12b5a8d0054957b19b566a20290ad405, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\Correlations.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 301
     ' Comment Lines: 123
     '   Blank Lines: 77
-    '     File Size: 18.93 KB
+    '     File Size: 19.43 KB
 
 
     '     Module Correlations

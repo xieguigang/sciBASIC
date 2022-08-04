@@ -38,7 +38,7 @@
     '    Code Lines: 19
     ' Comment Lines: 4
     '   Blank Lines: 6
-    '     File Size: 837.00 B
+    '     File Size: 837 B
 
 
     '     Class OpenSquareBracketStrategy

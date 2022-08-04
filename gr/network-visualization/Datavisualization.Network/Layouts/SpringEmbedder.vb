@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::566b4932c35f6de00ce6459ff34dc093, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\SpringEmbedder.vb"
+﻿#Region "Microsoft.VisualBasic::2fa52bfeeead6bcaf333c7bd3a6d723b, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\SpringEmbedder.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 183
-    '    Code Lines: 118
+    '   Total Lines: 188
+    '    Code Lines: 121
     ' Comment Lines: 32
-    '   Blank Lines: 33
-    '     File Size: 7.35 KB
+    '   Blank Lines: 35
+    '     File Size: 7.56 KB
 
 
     '     Class SpringEmbedder
@@ -47,7 +47,7 @@
     ' 
     '         Function: ForceDirectedLayout
     ' 
-    '         Sub: doLayout, edgeAttractions, repulsions, setLocation
+    '         Sub: Collide, doLayout, edgeAttractions, repulsions, setLocation
     ' 
     ' 
     ' /********************************************************************************/

@@ -38,7 +38,7 @@
     '    Code Lines: 12
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 486.00 B
+    '     File Size: 486 B
 
 
     ' Class ZScoresPlot

@@ -38,7 +38,7 @@
     '    Code Lines: 74
     ' Comment Lines: 20
     '   Blank Lines: 11
-    '     File Size: 4.10 KB
+    '     File Size: 4.09 KB
 
 
     '     Module CowsayTricks

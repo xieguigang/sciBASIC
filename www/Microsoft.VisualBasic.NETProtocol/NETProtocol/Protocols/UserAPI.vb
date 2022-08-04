@@ -38,7 +38,7 @@
     '    Code Lines: 25
     ' Comment Lines: 11
     '   Blank Lines: 6
-    '     File Size: 1.51 KB
+    '     File Size: 1.50 KB
 
 
     '     Module UserAPI

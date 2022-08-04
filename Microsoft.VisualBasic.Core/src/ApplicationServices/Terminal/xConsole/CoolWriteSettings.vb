@@ -38,7 +38,7 @@
     '    Code Lines: 9
     ' Comment Lines: 9
     '   Blank Lines: 6
-    '     File Size: 663.00 B
+    '     File Size: 663 B
 
 
     '     Class CoolWriteSettings

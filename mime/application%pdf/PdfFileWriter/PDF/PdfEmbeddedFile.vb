@@ -1,59 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::9b9eae0e56e56fc8eb8deaad6eaae71c, sciBASIC#\mime\application%pdf\PdfFileWriter\PDF\PdfEmbeddedFile.vb"
+﻿#Region "Microsoft.VisualBasic::9a4ecfe50ac2f18a6e9dde7d23476422, sciBASIC#\mime\application%pdf\PdfFileWriter\PDF\PdfEmbeddedFile.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 226
-'    Code Lines: 91
-' Comment Lines: 96
-'   Blank Lines: 39
-'     File Size: 8.55 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class PdfEmbeddedFile
-' 
-'         Properties: FileName, MimeType
-' 
-'         Constructor: (+3 Overloads) Sub New
-'         Function: CompareTo, CreateEmbeddedFile
-' 
-'     Class ExtToMime
-' 
-'         Constructor: (+2 Overloads) Sub New
-'         Function: CompareTo, TranslateExtToMime
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 207
+    '    Code Lines: 79
+    ' Comment Lines: 91
+    '   Blank Lines: 37
+    '     File Size: 7.56 KB
+
+
+    ' Class PdfEmbeddedFile
+    ' 
+    '     Properties: FileName, MimeType
+    ' 
+    '     Constructor: (+3 Overloads) Sub New
+    '     Function: CompareTo, CreateEmbeddedFile
+    ' 
+    ' Class ExtToMime
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    '     Function: CompareTo, TranslateExtToMime
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

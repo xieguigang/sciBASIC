@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 56
     '   Blank Lines: 6
-    '     File Size: 5.06 KB
+    '     File Size: 5.05 KB
 
 
     '     Module StructSerializer

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab8f80abb38fb62fb3ff81a733b68a79, sciBASIC#\Data\GraphQuery\Query\Parser\AttributeSelector.vb"
+﻿#Region "Microsoft.VisualBasic::0430b886aff8d2fb842e33732490e334, sciBASIC#\Data\GraphQuery\Query\Parser\AttributeSelector.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 33
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 1.49 KB
+    '     File Size: 1.52 KB
 
 
     ' Class AttributeSelector

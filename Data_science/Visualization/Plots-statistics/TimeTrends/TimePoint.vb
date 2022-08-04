@@ -38,7 +38,7 @@
     '    Code Lines: 9
     ' Comment Lines: 3
     '   Blank Lines: 3
-    '     File Size: 395.00 B
+    '     File Size: 395 B
 
 
     ' Structure TimePoint

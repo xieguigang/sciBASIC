@@ -38,7 +38,7 @@
     '    Code Lines: 6
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 219.00 B
+    '     File Size: 219 B
 
 
     ' Module Partitioning

@@ -38,7 +38,7 @@
     '    Code Lines: 19
     ' Comment Lines: 3
     '   Blank Lines: 7
-    '     File Size: 795.00 B
+    '     File Size: 795 B
 
 
     '     Class Doc

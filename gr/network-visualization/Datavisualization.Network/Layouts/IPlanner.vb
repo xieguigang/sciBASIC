@@ -38,7 +38,7 @@
     '    Code Lines: 7
     ' Comment Lines: 4
     '   Blank Lines: 4
-    '     File Size: 403.00 B
+    '     File Size: 403 B
 
 
     '     Interface IPlanner

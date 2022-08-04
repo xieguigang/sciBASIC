@@ -38,7 +38,7 @@
     '    Code Lines: 45
     ' Comment Lines: 0
     '   Blank Lines: 9
-    '     File Size: 1.84 KB
+    '     File Size: 1.83 KB
 
 
     '     Class SyntaxTokenlizer

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3efc31f206f4f937e726bfc7cc5128e3, sciBASIC#\Data_science\MachineLearning\xgboost\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::4cf37c3d73b6310aaeeccd2f94a24c0e, sciBASIC#\Data_science\MachineLearning\xgboost\test\Program.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 47
     ' Comment Lines: 14
     '   Blank Lines: 13
-    '     File Size: 2.97 KB
+    '     File Size: 3.04 KB
 
 
     ' Module Program

@@ -38,7 +38,7 @@
     '    Code Lines: 103
     ' Comment Lines: 66
     '   Blank Lines: 28
-    '     File Size: 8.40 KB
+    '     File Size: 8.39 KB
 
 
     '     Class NeedlemanWunsch

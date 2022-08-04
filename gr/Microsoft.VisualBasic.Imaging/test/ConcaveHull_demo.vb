@@ -38,7 +38,7 @@
     '    Code Lines: 11
     ' Comment Lines: 7
     '   Blank Lines: 4
-    '     File Size: 738.00 B
+    '     File Size: 738 B
 
 
     ' Module ConcaveHull_demo

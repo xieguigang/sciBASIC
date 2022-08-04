@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a115a84cb0a0b51b9b505ecc35cb8ca2, sciBASIC#\mime\text%html\Document\HtmlCompress.vb"
+﻿#Region "Microsoft.VisualBasic::e861539031f67a025fa0361e75e29edd, sciBASIC#\mime\text%html\Document\HtmlCompress.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 102
     ' Comment Lines: 7
     '   Blank Lines: 25
-    '     File Size: 4.84 KB
+    '     File Size: 4.97 KB
 
 
     '     Module HtmlCompress
