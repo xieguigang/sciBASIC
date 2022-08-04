@@ -458,6 +458,16 @@ Namespace IO
             Return columnList.GetOrdinal(Column)
         End Function
 
+        Public Function GetOrdinal(ParamArray [alias] As String()) As Integer
+            For Each name As String In [alias]
+                Dim i As Integer = GetOrdinal(Column:=name)
+
+                If i > -1 Then
+                    Return i
+                End If
+            Next
+        End Function
+
         ''' <summary>
         ''' Gets the order list of the specific column list, -1 value will be returned when it is not exists in the table.
         ''' (获取列集合的位置列表，不存在的列则返回-1)

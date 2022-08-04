@@ -114,6 +114,10 @@ Public Class File : Implements IFileReference
         End Get
     End Property
 
+    ''' <summary>
+    ''' get all sheet names from current xlsx document
+    ''' </summary>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function SheetNames() As IEnumerable(Of String)
         Return xl _
