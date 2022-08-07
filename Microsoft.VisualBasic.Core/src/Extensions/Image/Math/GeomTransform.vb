@@ -85,8 +85,20 @@ Namespace Imaging.Math2D
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function Area(rect As Rectangle) As Double
+        Public Function Area(rect As Rectangle) As Integer
             Return rect.Width * rect.Height
+        End Function
+
+        ''' <summary>
+        ''' 这个方形区域的面积
+        ''' </summary>
+        ''' <param name="size"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Area(size As Size) As Integer
+            Return size.Width * size.Height
         End Function
 
         ''' <summary>
