@@ -66,7 +66,8 @@ Namespace ComponentModel.Algorithm
 
         ReadOnly sequence As (index As Integer, key As K, T)()
         ReadOnly order As Comparison(Of K)
-        ReadOnly rawOrder As T()
+
+        Friend ReadOnly rawOrder As T()
 
         Default Public ReadOnly Property Item(i As Integer) As T
             Get
