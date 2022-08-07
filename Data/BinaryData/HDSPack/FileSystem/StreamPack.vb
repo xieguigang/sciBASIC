@@ -134,7 +134,7 @@ Namespace FileSystem
             Me.buffer = buffer
             Me.init_size = init_size
 
-            If buffer.Length > 0 Then
+            If buffer.Length > 128 Then
                 superBlock = ParseTree()
             Else
                 Call Clear(meta_size)

@@ -69,6 +69,10 @@ Namespace FileIO.Path
             End Get
         End Property
 
+        ''' <summary>
+        ''' the file basename, not file path
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property FileName As String
             Get
                 Return Components.Last
@@ -116,6 +120,10 @@ Namespace FileIO.Path
             End If
         End Function
 
+        ''' <summary>
+        ''' get full path string
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
             If IsDirectory Then
                 Return DirectoryPath.StringReplace("[/]{2,}", "/")

@@ -68,6 +68,11 @@ Namespace FileSystem
     Public MustInherit Class StreamObject
 
         Public ReadOnly Property referencePath As FilePath
+
+        ''' <summary>
+        ''' get the file basename, not full path
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property fileName As String
             Get
                 Return referencePath.FileName
