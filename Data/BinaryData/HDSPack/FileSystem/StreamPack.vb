@@ -122,17 +122,31 @@ Namespace FileSystem
             )
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="buffer"></param>
+        ''' <param name="init_size"></param>
+        ''' <param name="meta_size">
+        ''' the size in bytes of the tree header data
+        ''' </param>
         Sub New(buffer As Stream, Optional init_size As Integer = 1024, Optional meta_size As Long = 1024 * 1024)
             Me.buffer = buffer
             Me.init_size = init_size
 
-            If buffer.Length > 0 Then
+            If buffer.Length > 128 Then
                 superBlock = ParseTree()
             Else
                 Call Clear(meta_size)
             End If
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="meta_size">
+        ''' the size in bytes of the tree header data
+        ''' </param>
         Public Sub Clear(Optional meta_size As Long = 1024 * 1024)
             _superBlock = StreamGroup.CreateRootTree
             _globalAttributes = New LazyAttribute

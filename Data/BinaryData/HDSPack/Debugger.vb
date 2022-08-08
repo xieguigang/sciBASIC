@@ -64,6 +64,13 @@ Public Module Debugger
         Return New StreamObject() {hds.superBlock}.JoinIterates(hds.superBlock.ListFiles)
     End Function
 
+    ''' <summary>
+    ''' enumerate all data file object inside current group dir
+    ''' </summary>
+    ''' <param name="dir"></param>
+    ''' <returns>
+    ''' contains data file and file group object
+    ''' </returns>
     <Extension>
     Public Iterator Function ListFiles(dir As StreamGroup) As IEnumerable(Of StreamObject)
         For Each file As StreamObject In dir.files

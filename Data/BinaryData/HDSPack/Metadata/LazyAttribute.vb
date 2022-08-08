@@ -63,6 +63,11 @@ Public Class LazyAttribute : Implements IEnumerable(Of String)
 
     Public Property attributes As New Dictionary(Of String, AttributeMetadata)
 
+    ''' <summary>
+    ''' add key-value paired data into the attribute list
+    ''' </summary>
+    ''' <param name="name"></param>
+    ''' <param name="value"></param>
     Public Sub Add(name As String, value As Object)
         Dim attr As AttributeMetadata
 

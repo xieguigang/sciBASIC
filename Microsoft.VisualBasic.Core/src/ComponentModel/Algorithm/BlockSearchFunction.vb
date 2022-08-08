@@ -118,6 +118,20 @@ Namespace ComponentModel.Algorithm
         Dim eval As Func(Of T, Double)
         Dim tolerance As Double
 
+        ''' <summary>
+        ''' get all keys which are evaluated from the input object
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Keys As Double()
+            Get
+                Return binary.rawOrder _
+                    .Select(Function(b) b.block) _
+                    .IteratesALL _
+                    .Select(Function(i) i.tag) _
+                    .ToArray
+            End Get
+        End Property
+
         Sub New(data As IEnumerable(Of T), eval As Func(Of T, Double), tolerance As Double, Optional factor As Double = 2)
             Dim input = getOrderSeq(data, eval).ToArray
             Dim blocks As New List(Of Block(Of T))

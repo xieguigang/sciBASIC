@@ -82,6 +82,10 @@ Namespace Javascript
             Call Me.New(values.Select(Function(str) New JsonValue(str)))
         End Sub
 
+        Sub New(values As IEnumerable(Of Double))
+            Call Me.New(values.Select(Function(d) New JsonValue(d)))
+        End Sub
+
         Public Sub Add(element As JsonElement)
             Call list.Add(element)
         End Sub
