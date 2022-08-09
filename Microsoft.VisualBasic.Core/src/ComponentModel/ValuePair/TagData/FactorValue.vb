@@ -74,6 +74,13 @@ Namespace ComponentModel.TagData
             }
         End Operator
 #End If
+
+        Public Shared Function Create(factor As T, result As V) As FactorValue(Of T, V)
+            Return New FactorValue(Of T, V) With {
+                .factor = factor,
+                .result = result
+            }
+        End Function
     End Class
 
     Public Class FactorString(Of T As {Structure, IComparable(Of T)})
