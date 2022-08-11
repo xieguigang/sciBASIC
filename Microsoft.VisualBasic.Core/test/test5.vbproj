@@ -15,7 +15,7 @@
     <Copyright>Copyright © xie.guigang@live.com 2016</Copyright>
     <PackageReleaseNotes>Data Framework for sciBASIC based on the csv 2D table</PackageReleaseNotes>
     <OutputType>Exe</OutputType>
-    <StartupObject>test.terminalTest</StartupObject>
+    <StartupObject>test.nullTest</StartupObject>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
   </PropertyGroup>

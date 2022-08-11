@@ -193,6 +193,10 @@ Public Module ObjectSerializer
             Else
                 Return New JsonValue(obj)
             End If
+        ElseIf DataFramework.IsNullable(schema) Then
+
+
+
         ElseIf schema.IsEnum Then
             If opt.enumToString Then
                 Return New JsonValue(obj.ToString)
