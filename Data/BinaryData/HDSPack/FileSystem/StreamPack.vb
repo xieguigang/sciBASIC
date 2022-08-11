@@ -111,14 +111,19 @@ Namespace FileSystem
         ''' </summary>
         ''' <param name="filepath"></param>
         ''' <param name="init_size"></param>
-        Sub New(filepath As String, Optional init_size As Integer = 1024)
+        Sub New(filepath As String,
+                Optional init_size As Integer = 1024,
+                Optional meta_size As Long = 1024 * 1024,
+                Optional createNew As Boolean = False)
+
             Call Me.New(
                 buffer:=filepath.Open(
                     mode:=FileMode.OpenOrCreate,
-                    doClear:=False,
+                    doClear:=createNew,
                     [readOnly]:=False
                 ),
-                init_size:=init_size
+                init_size:=init_size,
+                meta_size:=meta_size
             )
         End Sub
 
@@ -130,7 +135,10 @@ Namespace FileSystem
         ''' <param name="meta_size">
         ''' the size in bytes of the tree header data
         ''' </param>
-        Sub New(buffer As Stream, Optional init_size As Integer = 1024, Optional meta_size As Long = 1024 * 1024)
+        Sub New(buffer As Stream,
+                Optional init_size As Integer = 1024,
+                Optional meta_size As Long = 1024 * 1024)
+
             Me.buffer = buffer
             Me.init_size = init_size
 

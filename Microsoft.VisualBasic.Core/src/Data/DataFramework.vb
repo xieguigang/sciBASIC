@@ -316,6 +316,10 @@ Namespace ComponentModel.DataSourceModel
             Return StringBuilders.ContainsKey(type)
         End Function
 
+        Public Function IsNullable(type As Type) As Boolean
+
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function IsNumericType(type As Type) As Boolean

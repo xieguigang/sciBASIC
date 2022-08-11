@@ -1,51 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::09b6fdf9af6facbaf53825b854efff53, sciBASIC#\mime\application%json\Serializer\ObjectSerializer\ObjectSerializer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 172
-    '    Code Lines: 135
-    ' Comment Lines: 16
-    '   Blank Lines: 21
-    '     File Size: 6.51 KB
+' Summaries:
 
 
-    ' Module ObjectSerializer
-    ' 
-    '     Function: GetJsonElement, populateArrayJson, populateObjectJson, populateTableJson
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 172
+'    Code Lines: 135
+' Comment Lines: 16
+'   Blank Lines: 21
+'     File Size: 6.51 KB
+
+
+' Module ObjectSerializer
+' 
+'     Function: GetJsonElement, populateArrayJson, populateObjectJson, populateTableJson
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -60,6 +60,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.ValueTypes
+Imports any = Microsoft.VisualBasic.Scripting
 
 Public Module ObjectSerializer
 
@@ -95,13 +96,39 @@ Public Module ObjectSerializer
                        End If
 
                        Return p.Value.GetAttribute(Of ScriptIgnoreAttribute) Is Nothing
-                   End Function)
+                   End Function) _
+            .ToArray
         Dim [property] As PropertyInfo
         Dim valueType As Type
         Dim json As New JsonObject
         Dim valObj As Object
         Dim graph As ObjectSchema = ObjectSchema.GetSchema(schema)
         Dim jsonVal As JsonElement
+        Dim isNullable As Boolean = False
+
+        If memberReaders.Any(Function(a) a.Value.Name = "HasValue") AndAlso
+            memberReaders.Any(Function(a) a.Value.Name = "Value") Then
+
+            isNullable = True
+        End If
+
+        If isNullable Then
+            Dim elementType As Type = schema.GenericTypeArguments.FirstOrDefault
+
+            obj = memberReaders _
+                .First(Function(a) a.Value.Name = "Value") _
+                .Value _
+                .GetValue(obj, Nothing)
+            schema = obj.GetType
+
+            If Not elementType Is Nothing Then
+                If DataFramework.IsPrimitive(elementType) Then
+                    Return New JsonValue(obj)
+                End If
+            End If
+
+            Return populateObjectJson(schema, obj, opt)
+        End If
 
         For Each reader As KeyValuePair(Of String, PropertyInfo) In memberReaders
             [property] = reader.Value
@@ -193,6 +220,8 @@ Public Module ObjectSerializer
             Else
                 Return New JsonValue(obj)
             End If
+            ' ElseIf DataFramework.IsNullable(schema) Then
+
         ElseIf schema.IsEnum Then
             If opt.enumToString Then
                 Return New JsonValue(obj.ToString)
