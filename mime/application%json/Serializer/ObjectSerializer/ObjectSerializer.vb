@@ -113,7 +113,21 @@ Public Module ObjectSerializer
         End If
 
         If isNullable Then
-            Return New JsonValue(any.ToString(obj))
+            Dim elementType As Type = schema.GenericTypeArguments.FirstOrDefault
+
+            obj = memberReaders _
+                .First(Function(a) a.Value.Name = "Value") _
+                .Value _
+                .GetValue(obj, Nothing)
+            schema = obj.GetType
+
+            If Not elementType Is Nothing Then
+                If DataFramework.IsPrimitive(elementType) Then
+                    Return New JsonValue(obj)
+                End If
+            End If
+
+            Return populateObjectJson(schema, obj, opt)
         End If
 
         For Each reader As KeyValuePair(Of String, PropertyInfo) In memberReaders
