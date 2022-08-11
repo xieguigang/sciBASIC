@@ -96,7 +96,7 @@ Namespace BarPlot
                     canvas.PlotRegion.Right
                 })
             Dim yscale = d3js.scale.linear() _
-                .domain(values:=data.Samples.Select(Function(s) s.data).IteratesALL) _
+                .domain(values:=yTicks) _
                 .range(values:=New Double() {
                     canvas.PlotRegion.Top,
                     canvas.PlotRegion.Bottom
