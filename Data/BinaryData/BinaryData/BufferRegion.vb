@@ -62,6 +62,14 @@ Public Class BufferRegion
         End Get
     End Property
 
+    Sub New()
+    End Sub
+
+    Sub New(scan0 As Long, size As Integer)
+        Me.position = scan0
+        Me.size = size
+    End Sub
+
     Public Overrides Function ToString() As String
         Return $"&{position} [{size} bytes]"
     End Function
