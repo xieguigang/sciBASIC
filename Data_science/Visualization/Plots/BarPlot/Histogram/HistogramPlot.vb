@@ -157,8 +157,14 @@ Namespace BarPlot.Histogram
                     }
 
             Call g.DrawAxis(
-                        canvas, scaler, theme.drawGrid, xlabel:=xlabel, ylabel:=ylabel,
-                        htmlLabel:=False)
+                canvas, scaler, theme.drawGrid,
+                xlabel:=xlabel,
+                ylabel:=ylabel,
+                htmlLabel:=False,
+                XtickFormat:=theme.XaxisTickFormat,
+                YtickFormat:=theme.YaxisTickFormat,
+                xlabelRotate:=theme.xAxisRotate
+            )
 
             If Not main.StringEmpty Then
                 Dim titleFont As Font = CSSFont.TryParse(theme.mainCSS).GDIObject(g.Dpi)
