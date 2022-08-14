@@ -71,8 +71,9 @@ Namespace Imaging.Math2D
     Public Class Polygon2D : Implements Enumeration(Of PointF)
 
         Public ReadOnly Property length As Integer = 0
-        Public ReadOnly Property xpoints As Double() = New Double(3) {}
-        Public ReadOnly Property ypoints As Double() = New Double(3) {}
+
+        Public Property xpoints As Double() = New Double(3) {}
+        Public Property ypoints As Double() = New Double(3) {}
 
         ''' <summary>
         ''' [left, top]
