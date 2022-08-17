@@ -128,9 +128,16 @@ Public Class Tree(Of T) : Inherits AbstractTree(Of Tree(Of T), String)
         Return Me
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <returns>
+    ''' the first element is the tree root node
+    ''' </returns>
     Public Function PopulateAllNodes() As IEnumerable(Of Tree(Of T))
         Dim list As New List(Of Tree(Of T))
 
+        ' add tree root node
         Call list.Add(Me)
 
         For Each node In Childs.Values
