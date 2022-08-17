@@ -83,6 +83,10 @@ Namespace FileSystem
             End Get
         End Property
 
+        ''' <summary>
+        ''' get file list in current dir root
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property files As StreamObject()
             Get
                 Return tree.Values.ToArray

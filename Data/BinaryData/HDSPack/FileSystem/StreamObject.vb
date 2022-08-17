@@ -97,6 +97,14 @@ Namespace FileSystem
             Return attributes IsNot Nothing AndAlso Not attributes.attributes.IsNullOrEmpty
         End Function
 
+        Public Function hasAttribute(name As String) As Boolean
+            If attributes IsNot Nothing AndAlso Not attributes.attributes.IsNullOrEmpty Then
+                Return attributes.attributes.ContainsKey(name)
+            Else
+                Return False
+            End If
+        End Function
+
         ''' <summary>
         ''' get attribute value by a given attribute name
         ''' </summary>

@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::04555cff435ac9f30423b4f6b5bc4acc, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\RawStream.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 196
-    '    Code Lines: 134
-    ' Comment Lines: 33
-    '   Blank Lines: 29
-    '     File Size: 8.64 KB
+' Summaries:
 
 
-    '     Interface ISerializable
-    ' 
-    '         Function: Serialize
-    ' 
-    '     Delegate Function
-    ' 
-    ' 
-    '     Class RawStream
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: BytesInternal, GetBytes, (+2 Overloads) GetData, GetRawStream, readInternal
-    '                   Serialize
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 196
+'    Code Lines: 134
+' Comment Lines: 33
+'   Blank Lines: 29
+'     File Size: 8.64 KB
+
+
+'     Interface ISerializable
+' 
+'         Function: Serialize
+' 
+'     Delegate Function
+' 
+' 
+'     Class RawStream
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: BytesInternal, GetBytes, (+2 Overloads) GetData, GetRawStream, readInternal
+'                   Serialize
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -153,11 +153,36 @@ Namespace Serialization
             End Using
         End Function
 
+        Private Shared Function empty(code As TypeCode) As Array
+            Select Case code
+                Case TypeCode.Boolean : Return New Boolean() {}
+                Case TypeCode.Byte : Return New Byte() {}
+                Case TypeCode.Char : Return New Char() {}
+                Case TypeCode.DateTime : Return New Date() {}
+                Case TypeCode.DBNull : Return New DBNull() {}
+                Case TypeCode.Decimal : Return New Decimal() {}
+                Case TypeCode.Double : Return New Double() {}
+                Case TypeCode.Empty : Return New Object() {}
+                Case TypeCode.SByte : Return New SByte() {}
+                Case TypeCode.Single : Return New Single() {}
+                Case TypeCode.String : Return New String() {}
+                Case TypeCode.UInt16 : Return New UInt16() {}
+                Case TypeCode.UInt32 : Return New UInt32() {}
+                Case TypeCode.UInt64 : Return New UInt64() {}
+                Case Else
+                    Return New Object() {}
+            End Select
+        End Function
+
         Public Shared Function GetData(raw As Stream, code As TypeCode, Optional encoding As Encodings = Encodings.UTF8) As Array
             Dim type As Type = code.CreatePrimitiveType
             Dim bytes As Byte() = New Byte(raw.Length - 1) {}
 
-            Call raw.Read(bytes, Scan0, bytes.Length)
+            If bytes.Length = 0 Then
+                Return empty(code)
+            Else
+                Call raw.Read(bytes, Scan0, bytes.Length)
+            End If
 
             Select Case code
                 Case TypeCode.Boolean
@@ -220,9 +245,21 @@ Namespace Serialization
             Return objs
         End Function
 
+        ''' <summary>
+        ''' this function only works for the primitive data types
+        ''' </summary>
+        ''' <param name="vector"></param>
+        ''' <param name="encoding"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function GetBytes(vector As Array, Optional encoding As Encodings = Encodings.UTF8) As Byte()
-            Return BytesInternal(vector, encoding).IteratesALL.ToArray
+            If vector Is Nothing OrElse vector.Length = 0 Then
+                Return {}
+            Else
+                Return BytesInternal(vector, encoding) _
+                    .IteratesALL _
+                    .ToArray
+            End If
         End Function
 
         Private Shared Function BytesInternal(vector As Array, encoding As Encodings) As IEnumerable(Of Byte())
