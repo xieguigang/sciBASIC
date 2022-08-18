@@ -426,7 +426,8 @@ Namespace Imaging
         ''' <param name="a"></param>
         ''' <param name="b"></param>
         ''' <returns></returns>
-        <Extension> Public Function Equals(a As Color, b As Color, Optional tolerance% = 3) As Boolean
+        <Extension>
+        Public Function Equals(a As Color, b As Color, Optional tolerance% = 3) As Boolean
             If a.IsTransparent AndAlso b.IsTransparent Then
                 Return True
             End If

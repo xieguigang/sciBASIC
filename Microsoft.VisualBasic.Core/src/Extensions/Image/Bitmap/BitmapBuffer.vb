@@ -1,67 +1,68 @@
 ﻿#Region "Microsoft.VisualBasic::d48b5568d40eaf8f6902886e0b5e1fc6, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\BitmapBuffer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 279
-    '    Code Lines: 152
-    ' Comment Lines: 87
-    '   Blank Lines: 40
-    '     File Size: 10.06 KB
+' Summaries:
 
 
-    '     Class BitmapBuffer
-    ' 
-    '         Properties: Height, Size, Stride, Width
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: FromBitmap, FromImage, GetEnumerator, GetImage, (+2 Overloads) GetIndex
-    '                   (+2 Overloads) GetPixel, IEnumerable_GetEnumerator, OutOfRange, ToPixel2D
-    ' 
-    '         Sub: Dispose, (+3 Overloads) SetPixel
-    ' 
-    '         Operators: +
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 279
+'    Code Lines: 152
+' Comment Lines: 87
+'   Blank Lines: 40
+'     File Size: 10.06 KB
+
+
+'     Class BitmapBuffer
+' 
+'         Properties: Height, Size, Stride, Width
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: FromBitmap, FromImage, GetEnumerator, GetImage, (+2 Overloads) GetIndex
+'                   (+2 Overloads) GetPixel, IEnumerable_GetEnumerator, OutOfRange, ToPixel2D
+' 
+'         Sub: Dispose, (+3 Overloads) SetPixel
+' 
+'         Operators: +
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Drawing.Imaging
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 Imports stdNum = System.Math
 
 Namespace Imaging.BitmapImage
@@ -184,6 +185,25 @@ Namespace Imaging.BitmapImage
         End Function
 
         ''' <summary>
+        ''' row scans
+        ''' </summary>
+        ''' <param name="rect"></param>
+        ''' <returns></returns>
+        Public Iterator Function GetPixel(rect As Rectangle) As IEnumerable(Of Color())
+            Dim row As New List(Of Color)
+
+            For y As Integer = rect.Top To rect.Bottom
+                For x As Integer = rect.Left To rect.Right
+                    If Not OutOfRange(x, y) Then
+                        Call row.Add(GetPixel(x, y))
+                    End If
+                Next
+
+                Yield row.PopAll
+            Next
+        End Function
+
+        ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="channel">0r 1g 2b 3a</param>
@@ -273,7 +293,14 @@ Namespace Imaging.BitmapImage
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function FromImage(res As Image) As BitmapBuffer
-            Return BitmapBuffer.FromBitmap(New Bitmap(res))
+            Dim copy As New Bitmap(res.Width, res.Height, format:=PixelFormat.Format32bppArgb)
+            Dim g As Graphics = Graphics.FromImage(copy)
+
+            Call g.DrawImageUnscaled(res, New Point)
+            Call g.Flush()
+            Call g.Dispose()
+
+            Return BitmapBuffer.FromBitmap(copy)
         End Function
 
         ''' <summary>
