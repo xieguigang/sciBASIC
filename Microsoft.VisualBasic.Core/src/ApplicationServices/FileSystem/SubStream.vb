@@ -115,6 +115,12 @@ Namespace ApplicationServices
             End Set
         End Property
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="s"></param>
+        ''' <param name="offset"></param>
+        ''' <param name="length"></param>
         Public Sub New(s As Stream, offset As Long, length As Long)
             Me.s = s
             Me.offset = offset

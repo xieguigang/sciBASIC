@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::59354b5aa80b2f122be95c37bc67c95a, sciBASIC#\Data_science\Visualization\Plots\g\Plot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 172
-    '    Code Lines: 125
-    ' Comment Lines: 22
-    '   Blank Lines: 25
-    '     File Size: 7.05 KB
+' Summaries:
 
 
-    '     Class Plot
-    ' 
-    '         Properties: legendTitle, main, xlabel, ylabel, zlabel
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: EvaluateLayout, (+2 Overloads) Plot
-    ' 
-    '         Sub: DrawLegends, DrawMainTitle, (+2 Overloads) Plot
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 172
+'    Code Lines: 125
+' Comment Lines: 22
+'   Blank Lines: 25
+'     File Size: 7.05 KB
+
+
+'     Class Plot
+' 
+'         Properties: legendTitle, main, xlabel, ylabel, zlabel
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: EvaluateLayout, (+2 Overloads) Plot
+' 
+'         Sub: DrawLegends, DrawMainTitle, (+2 Overloads) Plot
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -65,6 +65,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports Microsoft.VisualBasic.Text
 
 Namespace Graphic
 
@@ -222,9 +223,39 @@ Namespace Graphic
                     color = theme.mainTextColor.GetBrush
                 End If
 
-                Call g.DrawString(main, fontOfTitle, color, position)
+                If titleSize.Width > plotRegion.Width Then
+                    Dim charWidth As Double = titleSize.Width / main.Length
+                    Dim maxChars As Integer = (plotRegion.Width / charWidth - 1) * 0.85
+
+                    Call DrawMultipleLineTitle(g, plotRegion, fontOfTitle, color, maxChars, offsetFactor)
+                Else
+                    Call g.DrawString(main, fontOfTitle, color, position)
+                End If
             End If
         End Sub
 
+        Private Sub DrawMultipleLineTitle(g As IGraphics,
+                                          plotRegion As Rectangle,
+                                          fontOfTitle As Font,
+                                          color As Brush,
+                                          maxChars As Integer,
+                                          offsetFactor As Double)
+
+            Dim lines As String() = main.SplitParagraph(len:=maxChars).ToArray
+            Dim titleSize As SizeF = g.MeasureString("A", fontOfTitle)
+            Dim y As Single = plotRegion.Y - titleSize.Height * offsetFactor * lines.Length
+            Dim position As PointF
+
+            For Each line As String In lines
+                titleSize = g.MeasureString(line, fontOfTitle)
+                position = New PointF With {
+                    .X = plotRegion.X + (plotRegion.Width - titleSize.Width) / 2,
+                    .Y = y
+                }
+
+                y += titleSize.Height + 5
+                g.DrawString(line, fontOfTitle, color, position)
+            Next
+        End Sub
     End Class
 End Namespace

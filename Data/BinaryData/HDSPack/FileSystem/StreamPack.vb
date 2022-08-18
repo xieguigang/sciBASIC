@@ -81,6 +81,7 @@ Namespace FileSystem
 
         ReadOnly buffer As Stream
         ReadOnly init_size As Integer
+        ReadOnly is_readonly As Boolean = False
 
         ''' <summary>
         ''' the type list of the values in the <see cref="globalAttributes"/> data,
@@ -137,8 +138,10 @@ Namespace FileSystem
         ''' </param>
         Sub New(buffer As Stream,
                 Optional init_size As Integer = 1024,
-                Optional meta_size As Long = 1024 * 1024)
+                Optional meta_size As Long = 1024 * 1024,
+                Optional [readonly] As Boolean = False)
 
+            Me.is_readonly = [readonly]
             Me.buffer = buffer
             Me.init_size = init_size
 
@@ -271,8 +274,10 @@ Namespace FileSystem
         ''' <summary>
         ''' open a data block for read and write
         ''' 
-        ''' if the target file block is missing from the tree, then this function will append a new file block
-        ''' otherwise a substream object will be returns for read data
+        ''' if the target file block is missing from the tree, then this function 
+        ''' will append a new file block based on the <see cref="is_readonly"/> 
+        ''' flag is set to false or not, otherwise a substream object will be 
+        ''' returned for read data
         ''' </summary>
         ''' <param name="fileName">
         ''' the dir object its file name must be ends with the symbol '\' or '/'
@@ -303,6 +308,8 @@ Namespace FileSystem
 
                     Return ms
                 End If
+            ElseIf is_readonly Then
+                Throw New ReadOnlyException($"can not create data block for the missing file '{path.ToString}' due to the reason of target stream is set readonly!")
             Else
                 ' create a new data object
                 block = superBlock.AddDataBlock(path)
@@ -315,27 +322,35 @@ Namespace FileSystem
             Return New StreamPack(filepath.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False), init_size)
         End Function
 
+        Private Sub flushStreamPack()
+            Dim treeMetadata As Byte() = New MemoryStream(superBlock.GetBuffer(_registriedTypes)).GZipStream.ToArray
+            Dim registeryMetadata As Byte() = _registriedTypes.GetTypeCodes
+            Dim globalMetadata As Byte() = globalAttributes.Pack(_registriedTypes)
+            Dim size As Byte() = NetworkByteOrderBitConvertor.GetBytes(treeMetadata.Length)
+            Dim size2 As Byte() = NetworkByteOrderBitConvertor.GetBytes(registeryMetadata.Length)
+            Dim size3 As Byte() = NetworkByteOrderBitConvertor.GetBytes(globalMetadata.Length)
+
+            Call buffer.Seek(Magic.Length, SeekOrigin.Begin)
+            Call buffer.Write(size2, Scan0, size2.Length)
+            Call buffer.Write(registeryMetadata, Scan0, registeryMetadata.Length)
+            Call buffer.Write(size3, Scan0, size3.Length)
+            Call buffer.Write(globalMetadata, Scan0, globalMetadata.Length)
+            Call buffer.Write(size, Scan0, size.Length)
+            Call buffer.Write(treeMetadata, Scan0, treeMetadata.Length)
+
+            Call buffer.Flush()
+            Call buffer.Close()
+        End Sub
+
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
                 If disposing Then
                     ' TODO: 释放托管状态(托管对象)
-                    Dim treeMetadata As Byte() = New MemoryStream(superBlock.GetBuffer(_registriedTypes)).GZipStream.ToArray
-                    Dim registeryMetadata As Byte() = _registriedTypes.GetTypeCodes
-                    Dim globalMetadata As Byte() = globalAttributes.Pack(_registriedTypes)
-                    Dim size As Byte() = NetworkByteOrderBitConvertor.GetBytes(treeMetadata.Length)
-                    Dim size2 As Byte() = NetworkByteOrderBitConvertor.GetBytes(registeryMetadata.Length)
-                    Dim size3 As Byte() = NetworkByteOrderBitConvertor.GetBytes(globalMetadata.Length)
-
-                    Call buffer.Seek(Magic.Length, SeekOrigin.Begin)
-                    Call buffer.Write(size2, Scan0, size2.Length)
-                    Call buffer.Write(registeryMetadata, Scan0, registeryMetadata.Length)
-                    Call buffer.Write(size3, Scan0, size3.Length)
-                    Call buffer.Write(globalMetadata, Scan0, globalMetadata.Length)
-                    Call buffer.Write(size, Scan0, size.Length)
-                    Call buffer.Write(treeMetadata, Scan0, treeMetadata.Length)
-
-                    Call buffer.Flush()
-                    Call buffer.Close()
+                    If Not is_readonly Then
+                        Call flushStreamPack()
+                    Else
+                        Call buffer.Dispose()
+                    End If
                 End If
 
                 ' TODO: 释放未托管的资源(未托管的对象)并重写终结器
