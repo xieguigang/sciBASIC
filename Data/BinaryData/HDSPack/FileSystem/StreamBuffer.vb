@@ -105,7 +105,7 @@ Namespace FileSystem
         ReadOnly block As StreamBlock
 
         ''' <summary>
-        ''' 
+        ''' create a new temp stream for write new object data
         ''' </summary>
         ''' <param name="buffer"></param>
         ''' <param name="block"></param>
