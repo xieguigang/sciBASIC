@@ -115,7 +115,8 @@ Namespace FileSystem
         Sub New(filepath As String,
                 Optional init_size As Integer = 1024,
                 Optional meta_size As Long = 1024 * 1024,
-                Optional createNew As Boolean = False)
+                Optional createNew As Boolean = False,
+                Optional [readonly] As Boolean = False)
 
             Call Me.New(
                 buffer:=filepath.Open(
@@ -124,7 +125,8 @@ Namespace FileSystem
                     [readOnly]:=False
                 ),
                 init_size:=init_size,
-                meta_size:=meta_size
+                meta_size:=meta_size,
+                [readonly]:=[readonly]
             )
         End Sub
 
