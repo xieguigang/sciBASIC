@@ -257,6 +257,12 @@ Namespace Parallel.Threads
             Return [short]
         End Function
 
+        Public Sub WaitAll()
+            Do While threads.Any(Function(t) t.RunningTask)
+                Call Thread.Sleep(1)
+            Loop
+        End Sub
+
         Public Overrides Function ToString() As String
             Return threads.GetJson
         End Function
