@@ -132,6 +132,10 @@ Namespace FileIO.Path
             End If
         End Function
 
+        Public Shared Function Parse(path As String) As FilePath
+            Return New FilePath(path)
+        End Function
+
         Public Shared Operator =(file1 As FilePath, file2 As FilePath) As Boolean
             Dim path1 As String = file1.ToString
             Dim path2 As String = file2.ToString
