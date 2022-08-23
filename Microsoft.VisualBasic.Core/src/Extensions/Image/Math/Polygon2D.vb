@@ -255,6 +255,9 @@ Namespace Imaging.Math2D
         ''' @deprecated
         ''' </summary>
         Public Overridable Function inside(x As Double, y As Double) As Boolean
+            If length = 0 Then
+                Return False
+            End If
             If Not boundingInside(x, y) Then
                 Return False
             Else

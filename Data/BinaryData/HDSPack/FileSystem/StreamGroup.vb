@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::5ac37bbfb47c4d5f4dea0458aad74f5e, sciBASIC#\Data\BinaryData\HDSPack\FileSystem\StreamGroup.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 203
-    '    Code Lines: 126
-    ' Comment Lines: 43
-    '   Blank Lines: 34
-    '     File Size: 7.35 KB
+' Summaries:
 
 
-    '     Class StreamGroup
-    ' 
-    '         Properties: files, totalSize
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: AddDataBlock, AddDataGroup, BlockExists, CreateRootTree, GetDataBlock
-    '                   GetDataGroup, GetObject, hasName, ToString, VisitBlock
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 203
+'    Code Lines: 126
+' Comment Lines: 43
+'   Blank Lines: 34
+'     File Size: 7.35 KB
+
+
+'     Class StreamGroup
+' 
+'         Properties: files, totalSize
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Function: AddDataBlock, AddDataGroup, BlockExists, CreateRootTree, GetDataBlock
+'                   GetDataGroup, GetObject, hasName, ToString, VisitBlock
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -129,22 +129,22 @@ Namespace FileSystem
         ''' <param name="filepath"></param>
         ''' <returns></returns>
         Public Function GetDataBlock(filepath As FilePath) As StreamBlock
-            Return VisitBlock(filepath)
+            Return VisitBlock(filepath, checkExists:=False)
         End Function
 
         Public Function GetDataGroup(filepath As FilePath) As StreamGroup
-            Return VisitBlock(filepath)
+            Return VisitBlock(filepath, checkExists:=False)
         End Function
 
         Public Function GetObject(filepath As FilePath) As StreamObject
-            Return VisitBlock(filepath)
+            Return VisitBlock(filepath, checkExists:=False)
         End Function
 
         Public Function AddDataBlock(filepath As FilePath) As StreamBlock
             Dim createNew As New StreamBlock(filepath)
             ' then add current file block to the tree
             Dim dir As FilePath = filepath.ParentDirectory
-            Dim dirBlock As StreamGroup = VisitBlock(dir)
+            Dim dirBlock As StreamGroup = VisitBlock(dir, checkExists:=False)
 
             If dirBlock Is Nothing Then
                 ' no dir tree
@@ -189,10 +189,13 @@ Namespace FileSystem
         ''' get file or directory
         ''' </summary>
         ''' <param name="filepath"></param>
+        ''' <param name="checkExists">
+        ''' just check the file is exists or not, do not throw any exception
+        ''' </param>
         ''' <returns>
         ''' returns nothing if object not found!
         ''' </returns>
-        Private Function VisitBlock(filepath As FilePath) As StreamObject
+        Private Function VisitBlock(filepath As FilePath, checkExists As Boolean) As StreamObject
             Dim tree As Dictionary(Of String, StreamObject) = Me.tree
             Dim file As StreamObject
             Dim names As String() = filepath.Components
@@ -227,7 +230,12 @@ Namespace FileSystem
             Next
 
             If Not tree.ContainsKey(targetName) Then
-                Throw New MissingPrimaryKeyException($"missing folder or file which is named '{targetName}', if you want to find a folder, then you must ensure that your object path is end with symbol '\' or '/'!")
+                If checkExists Then
+                    ' just check file is exists or not
+                    Return Nothing
+                Else
+                    Throw New MissingPrimaryKeyException($"missing folder or file which is named '{targetName}', if you want to find a folder, then you must ensure that your object path is end with symbol '\' or '/'!")
+                End If
             Else
                 Return tree(targetName)
             End If
@@ -242,7 +250,7 @@ Namespace FileSystem
         ''' </param>
         ''' <returns></returns>
         Public Function BlockExists(filepath As FilePath) As Boolean
-            Return Not VisitBlock(filepath) Is Nothing
+            Return Not VisitBlock(filepath, checkExists:=True) Is Nothing
         End Function
 
         Public Overrides Function ToString() As String

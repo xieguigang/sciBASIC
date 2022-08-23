@@ -55,6 +55,9 @@
 
 Imports Microsoft.VisualBasic.Data.GraphTheory
 
+''' <summary>
+''' just provides the reference id of the peaks ms2 object
+''' </summary>
 Public Class ClusterTree : Inherits Tree(Of String)
 
     Public Property Members As New List(Of String)
@@ -66,7 +69,11 @@ Public Class ClusterTree : Inherits Tree(Of String)
     ''' <param name="target"></param>
     ''' <param name="alignment"></param>
     ''' <param name="threshold"></param>
-    Public Overloads Shared Sub Add(tree As ClusterTree, target As String, alignment As ComparisonProvider, threshold As Double)
+    Public Overloads Shared Sub Add(tree As ClusterTree,
+                                    target As String,
+                                    alignment As ComparisonProvider,
+                                    threshold As Double)
+
         If tree.Data.StringEmpty Then
             tree.Data = target
             tree.Childs = New Dictionary(Of String, Tree(Of String))
@@ -113,6 +120,10 @@ Public Class ClusterTree : Inherits Tree(Of String)
         End If
     End Sub
 
+    ''' <summary>
+    ''' add a new child node
+    ''' </summary>
+    ''' <param name="label"></param>
     Private Overloads Sub Add(label As String)
         Call Add(New ClusterTree With {.label = label})
     End Sub
