@@ -249,9 +249,14 @@ Namespace struct
                 Me.currentNode = Nothing
                 Me.currentEntry = 0
                 While Me.currentEntry < Me.numberOfEntries
-                    Me.currentNode = New BTreeNode(sb, Me.layout, Me.childPointer(Me.currentEntry))
-                    Me.currentNode.first([in], sb)
-                    Exit While
+                    Dim ptr& = Me.childPointer(Me.currentEntry)
+
+                    If ptr > 0 Then
+                        Me.currentNode = New BTreeNode(sb, Me.layout, ptr)
+                        Me.currentNode.first([in], sb)
+                        Exit While
+                    End If
+
                     Me.currentEntry += 1
                 End While
 
