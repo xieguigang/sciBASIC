@@ -62,7 +62,7 @@ Namespace CommandLine.InteropService.Pipeline
 
         Public Event SetProgress(percentage As Integer, details As String)
         Public Event SetMessage(message As String)
-        Public Event Finish()
+        Public Event Finish(exitCode As Integer)
 
         ReadOnly app As String
         ReadOnly arguments As String
@@ -88,7 +88,7 @@ Namespace CommandLine.InteropService.Pipeline
                 workdir:=workdir
             )
 
-            RaiseEvent Finish()
+            RaiseEvent Finish(code)
 
             Return code
         End Function
