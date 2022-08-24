@@ -74,7 +74,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net.Http
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.struct
+Namespace struct
 
     ''' <summary>
     ''' The superblock may begin at certain predefined offsets within the HDF5 file, allowing a 

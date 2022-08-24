@@ -68,7 +68,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.struct
+Namespace struct
 
     Public Class DataChunkIterator : Inherits HDF5Ptr
 

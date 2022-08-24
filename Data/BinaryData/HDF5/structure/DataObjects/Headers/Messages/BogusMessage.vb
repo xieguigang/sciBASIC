@@ -55,7 +55,7 @@
 
 Imports System.IO
 
-Namespace HDF5.struct.messages
+Namespace struct.messages
 
     ''' <summary>
     ''' This message is used for testing the HDF5 Library’s response to an “unknown” message 

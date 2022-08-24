@@ -82,7 +82,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO.HDF5.struct
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace HDF5.dataset
+Namespace dataset
 
     ''' <summary>
     ''' Chunked: The array domain is regularly decomposed into chunks, and each chunk is allocated and 

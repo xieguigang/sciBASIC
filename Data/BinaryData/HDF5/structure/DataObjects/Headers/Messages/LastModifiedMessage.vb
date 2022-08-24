@@ -66,7 +66,7 @@
 Imports System.IO
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.struct.messages
+Namespace struct.messages
 
     Public Class LastModifiedMessage : Inherits Message
 

@@ -62,7 +62,7 @@ Imports System.IO
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.SecurityString
 
-Namespace HDF5.dataset.filters
+Namespace dataset.filters
 
     ''' <summary>
     ''' GZip

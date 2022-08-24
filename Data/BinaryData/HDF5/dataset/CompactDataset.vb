@@ -65,7 +65,7 @@
 Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO.HDF5.struct
 
-Namespace HDF5.dataset
+Namespace dataset
 
     ''' <summary>
     ''' Compact: The array is stored in one contiguous block as part of this object header message.

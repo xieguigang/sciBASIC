@@ -65,7 +65,7 @@ Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO.HDF5.device
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.struct.messages
+Namespace struct.messages
 
 
     Public Class ContinueMessage : Inherits Message

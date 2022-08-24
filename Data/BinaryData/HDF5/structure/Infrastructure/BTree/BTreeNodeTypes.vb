@@ -54,7 +54,7 @@
 
 #End Region
 
-Namespace HDF5.struct
+Namespace struct
 
     ''' <summary>
     ''' Each B-tree points to a particular type of data. This field indicates the type of data 

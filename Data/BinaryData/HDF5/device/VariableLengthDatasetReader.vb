@@ -60,7 +60,7 @@ Imports Microsoft.VisualBasic.Data.IO.HDF5.type
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 
-Namespace HDF5.device
+Namespace device
 
     ''' <summary>
     ''' Read helpers of <see cref="VariableLength"/>

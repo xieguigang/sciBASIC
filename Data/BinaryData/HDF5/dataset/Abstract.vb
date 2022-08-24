@@ -69,7 +69,7 @@ Imports Microsoft.VisualBasic.Data.IO.HDF5.struct
 Imports Microsoft.VisualBasic.Data.IO.HDF5.struct.messages
 Imports Microsoft.VisualBasic.Data.IO.HDF5.type
 
-Namespace HDF5.dataset
+Namespace dataset
 
     Public MustInherit Class Hdf5Dataset
 

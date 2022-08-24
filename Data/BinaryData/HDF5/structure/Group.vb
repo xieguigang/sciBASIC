@@ -68,7 +68,7 @@ Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO.HDF5.struct.messages
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace HDF5.struct
+Namespace struct
 
     ''' <summary>
     ''' A group of <see cref="DataObjectFacade"/>. a group is an object header that contains a message 

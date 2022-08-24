@@ -55,7 +55,7 @@
 
 Imports System.Numerics
 
-Namespace HDF5.type
+Namespace type
 
     Public Class FixedPoint : Inherits DataType
 

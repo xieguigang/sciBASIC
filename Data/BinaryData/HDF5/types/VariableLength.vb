@@ -54,7 +54,7 @@
 
 Imports System.Text
 
-Namespace HDF5.type
+Namespace type
 
     Public Class VariableLength : Inherits DataType
 

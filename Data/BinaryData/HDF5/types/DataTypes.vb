@@ -57,7 +57,7 @@
 
 #End Region
 
-Namespace HDF5.type
+Namespace type
 
     ''' <summary>
     ''' The HDF5 primitive data types model, classes representing the data types of HDF5 datasets.

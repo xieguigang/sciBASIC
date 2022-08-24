@@ -52,7 +52,7 @@
 
 #End Region
 
-Namespace HDF5.dataset.filters
+Namespace dataset.filters
 
     ''' <summary>
     ''' Interface to be implemented to be a HDF5 filter.

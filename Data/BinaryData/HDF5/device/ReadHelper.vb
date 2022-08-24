@@ -67,7 +67,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.IO.HDF5.struct
 Imports stdNum = System.Math
 
-Namespace HDF5.device
+Namespace device
 
     <HideModuleName> Public Module ReadHelper
 

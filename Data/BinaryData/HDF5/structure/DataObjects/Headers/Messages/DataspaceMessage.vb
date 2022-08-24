@@ -67,7 +67,7 @@ Imports Microsoft.VisualBasic.Data.IO.HDF5.device
 Imports Microsoft.VisualBasic.Math
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.struct.messages
+Namespace struct.messages
 
     ''' <summary>
     ''' The dataspace message describes the number of dimensions (in other words, “rank”) and size of 

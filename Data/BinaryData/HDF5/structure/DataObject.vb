@@ -65,7 +65,7 @@ Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO.HDF5.struct.messages
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.struct
+Namespace struct
 
     ''' <summary>
     ''' 一个数据块对象

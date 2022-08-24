@@ -54,7 +54,7 @@
 
 #End Region
 
-Namespace HDF5.struct
+Namespace struct
 
     ''' <summary>
     ''' The Data Layout message describes how the elements of a multi-dimensional 

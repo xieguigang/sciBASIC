@@ -53,7 +53,7 @@
 
 #End Region
 
-Namespace HDF5.device
+Namespace device
 
     Public Class GlobalHeapId
 

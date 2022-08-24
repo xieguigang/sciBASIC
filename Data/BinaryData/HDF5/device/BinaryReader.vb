@@ -59,7 +59,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text
 
-Namespace HDF5.device
+Namespace device
 
     Public MustInherit Class BinaryReader : Implements IDisposable
 

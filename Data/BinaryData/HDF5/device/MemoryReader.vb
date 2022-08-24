@@ -58,7 +58,7 @@
 
 Imports System.IO
 
-Namespace HDF5.device
+Namespace device
 
     Public Class MemoryReader : Inherits BinaryReader
 

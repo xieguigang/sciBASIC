@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>Microsoft.VisualBasic.DataStorage.HDF5</RootNamespace>
+    <RootNamespace>Microsoft.VisualBasic.Data.IO.HDF5</RootNamespace>
 	  <TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
 	  <Platforms>AnyCPU;x64</Platforms>
 	  <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;PlantMAT;NPSearch;mzkit_win32</Configurations>

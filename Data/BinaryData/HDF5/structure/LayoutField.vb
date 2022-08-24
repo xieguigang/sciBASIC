@@ -63,7 +63,7 @@
 
 Imports Microsoft.VisualBasic.Data.IO.HDF5.type
 
-Namespace HDF5.struct
+Namespace struct
 
     Public Class LayoutField
 

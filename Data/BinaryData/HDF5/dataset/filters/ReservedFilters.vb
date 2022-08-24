@@ -53,7 +53,7 @@
 
 #End Region
 
-Namespace HDF5.dataset.filters
+Namespace dataset.filters
 
     ''' <summary>
     ''' The filters currently in library version 1.8.0 are listed below:

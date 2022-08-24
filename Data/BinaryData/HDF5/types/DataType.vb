@@ -52,7 +52,7 @@
 
 Imports Microsoft.VisualBasic.Data.IO.HDF5.device
 
-Namespace HDF5.type
+Namespace type
 
     Public MustInherit Class DataType
 

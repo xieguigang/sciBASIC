@@ -71,7 +71,7 @@ Imports Microsoft.VisualBasic.Data.IO.HDF5.struct.messages
 Imports Microsoft.VisualBasic.Data.IO.HDF5.type
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.struct
+Namespace struct
 
     ''' <summary>
     ''' 可能是一个dataset，也可能是一个<see cref="Group"/>

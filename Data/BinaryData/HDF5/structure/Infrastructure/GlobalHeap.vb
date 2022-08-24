@@ -65,7 +65,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.Text
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.struct
+Namespace struct
 
     ''' <summary>
     ''' Each HDF5 file has a global heap which stores various types of information 

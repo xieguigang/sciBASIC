@@ -67,7 +67,7 @@
 ' * Modified by iychoi@email.arizona.edu
 ' 
 
-Namespace HDF5.struct
+Namespace struct
 
     Public Enum ObjectHeaderMessages As Integer
         NIL = &H0

@@ -61,7 +61,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.IO.HDF5.device
 
-Namespace HDF5.struct
+Namespace struct
 
     Public Class DataBTree
 

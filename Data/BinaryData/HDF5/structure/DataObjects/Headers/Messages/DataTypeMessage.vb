@@ -71,7 +71,7 @@ Imports Microsoft.VisualBasic.Data.IO.HDF5.type
 Imports Microsoft.VisualBasic.Linq
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.struct.messages
+Namespace struct.messages
 
     ''' <summary>
     ''' The datatype message defines the datatype for each element of a dataset or 

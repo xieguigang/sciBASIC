@@ -64,7 +64,7 @@
 Imports System.IO
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.struct
+Namespace struct
 
 
     Public Class SymbolicLinkScratchpadFormat : Inherits HDF5Ptr

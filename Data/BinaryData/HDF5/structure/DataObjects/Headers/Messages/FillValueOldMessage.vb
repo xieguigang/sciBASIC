@@ -63,7 +63,7 @@
 Imports System.IO
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.struct.messages
+Namespace struct.messages
 
     ''' <summary>
     ''' The Data Storage - Fill Value (Old) Message

@@ -65,7 +65,7 @@
 Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO.HDF5.struct
 
-Namespace HDF5.dataset
+Namespace dataset
 
     ''' <summary>
     ''' The array is stored in one contiguous area of the file. This layout requires that the size 

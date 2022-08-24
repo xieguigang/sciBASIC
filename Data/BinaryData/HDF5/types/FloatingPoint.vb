@@ -54,7 +54,7 @@
 
 #End Region
 
-Namespace HDF5.type
+Namespace type
 
     Public Class FloatingPoint : Inherits DataType
 

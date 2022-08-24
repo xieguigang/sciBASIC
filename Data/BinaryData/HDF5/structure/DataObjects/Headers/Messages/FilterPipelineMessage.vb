@@ -73,7 +73,7 @@ Imports Microsoft.VisualBasic.Data.IO.HDF5.dataset.filters
 Imports Microsoft.VisualBasic.Language
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
-Namespace HDF5.struct.messages
+Namespace struct.messages
 
     ''' <summary>
     ''' This message describes the filter pipeline which should be applied to 
