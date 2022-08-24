@@ -58,25 +58,22 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 
-Namespace HDF5
+<HideModuleName> Public Module FileDump
 
-    <HideModuleName> Public Module FileDump
+    <Extension>
+    Public Sub CreateFileDump(obj As IFileDump, out As TextWriter)
+        Call obj.printValues(out)
+    End Sub
+End Module
 
-        <Extension>
-        Public Sub CreateFileDump(obj As IFileDump, out As TextWriter)
-            Call obj.printValues(out)
-        End Sub
-    End Module
+Public Interface IFileDump
 
-    Public Interface IFileDump
-
-        ''' <summary>
-        ''' 可以通过下面的两种方法构建出所需要的<paramref name="console"/>参数
-        ''' 
-        ''' + <see cref="StringBuilder"/> => new <see cref="TextWriter"/>
-        ''' + <see cref="StreamWriter"/>
-        ''' </summary>
-        ''' <param name="console"></param>
-        Sub printValues(console As TextWriter)
-    End Interface
-End Namespace
+    ''' <summary>
+    ''' 可以通过下面的两种方法构建出所需要的<paramref name="console"/>参数
+    ''' 
+    ''' + <see cref="StringBuilder"/> => new <see cref="TextWriter"/>
+    ''' + <see cref="StreamWriter"/>
+    ''' </summary>
+    ''' <param name="console"></param>
+    Sub printValues(console As TextWriter)
+End Interface
