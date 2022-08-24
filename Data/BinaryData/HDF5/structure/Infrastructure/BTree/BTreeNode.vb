@@ -92,6 +92,11 @@ Namespace struct
     Public Class BTreeNode : Inherits HDF5Ptr
         Implements IMagicBlock
 
+        ''' <summary>
+        ''' The ASCII character string “TREE” is used to indicate the beginning of a B-tree node. 
+        ''' This gives file consistency checking utilities a better chance of reconstructing a 
+        ''' damaged file.
+        ''' </summary>
         Public Const signature$ = "TREE"
 
         Dim layout As Layout
@@ -176,9 +181,10 @@ Namespace struct
             Call MyBase.New(address)
 
             Dim [in] As BinaryReader = sb.FileReader(address)
+            Dim magic = [in].readBytes(4)
 
             Me.layout = layout
-            Me.magic = Encoding.ASCII.GetString([in].readBytes(4))
+            Me.magic = Encoding.ASCII.GetString(magic)
 
             If Not Me.VerifyMagicSignature(signature) Then
                 ' [in].offset -= 4
@@ -216,7 +222,7 @@ Namespace struct
                 Me.childPointer = New Long(Me.numberOfEntries) {}
 
                 For i As Integer = 0 To Me.numberOfEntries
-                    Call [in].skipBytes(8)
+                    Dim key As Long = [in].readLong
 
                     ' skip size, filterMask
                     For j As Integer = 0 To layout.numberOfDimensions - 1
