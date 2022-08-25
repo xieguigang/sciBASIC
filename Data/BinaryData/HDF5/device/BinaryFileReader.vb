@@ -171,6 +171,10 @@ Namespace device
                 MyBase.offset = 0
             End Try
         End Sub
+
+        Public Overrides Function getBuffer() As ByteBuffer
+            Return New ByteBuffer(randomaccessfile)
+        End Function
     End Class
 
 End Namespace

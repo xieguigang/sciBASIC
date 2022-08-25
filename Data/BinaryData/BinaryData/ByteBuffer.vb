@@ -77,6 +77,7 @@
 
 
 Imports System.IO
+Imports System.Linq.Expressions
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.My.JavaScript
 
@@ -90,7 +91,7 @@ Public Class ByteBuffer : Inherits DataView
         Call Me.New(New MemoryStream)
     End Sub
 
-    Sub New(stream As MemoryStream)
+    Sub New(stream As Stream)
         Call MyBase.New(stream)
 
         Me.reader = New BinaryDataReader(stream)
@@ -116,7 +117,11 @@ Public Class ByteBuffer : Inherits DataView
 
     Public Shared Function allocate(capacity As Integer) As ByteBuffer
         Dim buffer As New ByteBuffer()
-        buffer.stream.Capacity = capacity
+
+        If TypeOf buffer.stream Is MemoryStream Then
+            DirectCast(buffer.stream, MemoryStream).Capacity = capacity
+        End If
+
         buffer.mode = IOWorkModes.Write
         Return buffer
     End Function
@@ -127,7 +132,11 @@ Public Class ByteBuffer : Inherits DataView
     End Function
 
     Public Function capacity() As Integer
-        Return stream.Capacity
+        If TypeOf stream Is MemoryStream Then
+            Return DirectCast(stream, MemoryStream).Capacity
+        Else
+            Return stream.Length
+        End If
     End Function
 
     Public Function flip() As ByteBuffer
@@ -144,7 +153,7 @@ Public Class ByteBuffer : Inherits DataView
     End Function
 
     Public Function compact() As ByteBuffer
-        Dim newStream As New MemoryStream(stream.Capacity)
+        Dim newStream As New MemoryStream(capacity)
         mode = IOWorkModes.Write
         stream.CopyTo(newStream)
         stream = newStream
@@ -158,7 +167,7 @@ Public Class ByteBuffer : Inherits DataView
 
     Public Function limit() As Long
         If mode = IOWorkModes.Write Then
-            Return stream.Capacity
+            Return capacity()
         Else
             Return stream.Length
         End If

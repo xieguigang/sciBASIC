@@ -175,7 +175,10 @@ Namespace struct.messages
                 Case DataTypes.DATATYPE_FIXED_POINT, DataTypes.DATATYPE_FLOATING_POINT
                     Return DatasetReader.readDataset(msg.reader, msg.dataPos, msg.dataSpace, sb, dims)
                 Case DataTypes.DATATYPE_ENUMS
+                    Dim file As BinaryReader = sb.FileReader(msg.dataPos)
+                    Dim buffer As ByteBuffer = file.getBuffer
 
+                    Return EnumDatasetReader.readEnumDataset(msg.reader, buffer, dims)
                 Case Else
                     Throw New NotImplementedException(dataType.ToString)
             End Select

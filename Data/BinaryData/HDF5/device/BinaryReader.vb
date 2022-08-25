@@ -132,6 +132,8 @@ Namespace device
             Me.m_maxOffset = 0
         End Sub
 
+        Public MustOverride Function getBuffer() As ByteBuffer
+
         Public MustOverride Function readByte() As Byte
 
         Public MustOverride Sub close()

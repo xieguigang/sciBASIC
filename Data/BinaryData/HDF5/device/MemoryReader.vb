@@ -123,5 +123,9 @@ Namespace device
 
             Return b
         End Function
+
+        Public Overrides Function getBuffer() As ByteBuffer
+            Return New ByteBuffer(memory)
+        End Function
     End Class
 End Namespace
