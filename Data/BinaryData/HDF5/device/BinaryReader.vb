@@ -72,6 +72,20 @@ Namespace device
 
         Dim markedPos As Long
 
+        Public ReadOnly Property debugView As String
+            Get
+                Dim debug As String
+                Dim pos As Long = offset
+                Dim width As Integer = 32
+
+                ' randomaccessfile.Position = pos - width
+                debug = Helpers.getDebugView(Me, width)
+                offset = pos
+
+                Return debug
+            End Get
+        End Property
+
         Public ReadOnly Property maxOffset As Long
             Get
                 Return Me.m_maxOffset

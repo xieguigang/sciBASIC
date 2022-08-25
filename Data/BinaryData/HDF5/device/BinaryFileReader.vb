@@ -151,8 +151,8 @@ Namespace device
             Dim pos As Long = randomaccessfile.Position
             Dim width As Integer = 32
 
-            randomaccessfile.Position = pos - width
-            debug = Helpers.getDebugView(Me, width * 2)
+            ' randomaccessfile.Position = pos - width
+            debug = Helpers.getDebugView(Me, width)
             randomaccessfile.Position = pos
 
             If TypeOf randomaccessfile Is FileStream Then
