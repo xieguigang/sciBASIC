@@ -86,9 +86,9 @@ Namespace device
 
         Private Shared Function StopIfMissingFile(filepath As String) As FileInfo
             If filepath.StringEmpty Then
-                Throw New ArgumentException("filepath must not be null or empty!")
+                Throw New ArgumentException($"filepath({filepath}) must not be null or empty!")
             ElseIf filepath.FileLength <= 0 Then
-                Throw New FileLoadException("file missing or zero length!")
+                Throw New FileLoadException($"file({filepath}) missing or zero length!")
             End If
 
             Return New FileInfo(filepath)
