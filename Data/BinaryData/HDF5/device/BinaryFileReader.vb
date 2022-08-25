@@ -149,7 +149,7 @@ Namespace device
         Public Overrides Function ToString() As String
             Dim debug As String
             Dim pos As Long = randomaccessfile.Position
-            Dim width As Integer = 32
+            Dim width As Integer = 64
 
             ' randomaccessfile.Position = pos - width
             debug = Helpers.getDebugView(Me, width)

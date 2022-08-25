@@ -189,6 +189,9 @@ Namespace struct
             If Not Me.VerifyMagicSignature(signature) Then
                 ' [in].offset -= 4
                 ' Call "signature is not valid".Warning
+                Call Console.WriteLine("data around 64 bytes nearby:")
+                Call Console.WriteLine([in].debugView)
+
                 Throw New IOException("signature is not valid: the block magic should be 'TREE'!")
             End If
             'Else

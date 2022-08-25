@@ -76,7 +76,7 @@ Namespace device
             Get
                 Dim debug As String
                 Dim pos As Long = offset
-                Dim width As Integer = 32
+                Dim width As Integer = 64
 
                 ' randomaccessfile.Position = pos - width
                 debug = Helpers.getDebugView(Me, width)

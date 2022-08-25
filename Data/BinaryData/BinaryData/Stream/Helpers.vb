@@ -34,7 +34,7 @@ Public Class Helpers
             If ASCII.IsNonPrinting(b) Then
                 c = "*"c
             Else
-                c = Chr(b)
+                c = ChrW(b)
             End If
 
             If c = vbNullChar Then
