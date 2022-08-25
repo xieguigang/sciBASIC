@@ -223,7 +223,7 @@ Namespace Graphic
                     color = theme.mainTextColor.GetBrush
                 End If
 
-                If titleSize.Width > plotRegion.Width Then
+                If theme.mainTextWrap AndAlso titleSize.Width > plotRegion.Width Then
                     Dim charWidth As Double = titleSize.Width / main.Length
                     Dim maxChars As Integer = (plotRegion.Width / charWidth - 1) * 0.85
 

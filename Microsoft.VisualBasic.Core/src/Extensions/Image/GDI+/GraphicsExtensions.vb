@@ -96,7 +96,7 @@ Namespace Imaging
             g.PixelOffsetMode = PixelOffsetMode.HighQuality
             g.CompositingQuality = CompositingQuality.HighQuality
             g.SmoothingMode = SmoothingMode.HighQuality
-            g.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit
+            g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit
 
             With New Graphics2D With {
                 .ImageResource = res,
@@ -654,6 +654,7 @@ Namespace Imaging
             g.PixelOffsetMode = PixelOffsetMode.HighQuality
             g.CompositingQuality = CompositingQuality.HighQuality
             g.SmoothingMode = SmoothingMode.HighQuality
+            g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit
 
             Return Graphics2D.CreateObject(g, bitmap)
         End Function
