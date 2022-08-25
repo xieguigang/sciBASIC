@@ -174,6 +174,8 @@ Namespace struct.messages
                     Return VariableLengthDatasetReader.readDataSet(msg.reader, dims, sb, msg.dataPos)
                 Case DataTypes.DATATYPE_FIXED_POINT, DataTypes.DATATYPE_FLOATING_POINT
                     Return DatasetReader.readDataset(msg.reader, msg.dataPos, msg.dataSpace, sb, dims)
+                Case DataTypes.DATATYPE_ENUMS
+
                 Case Else
                     Throw New NotImplementedException(dataType.ToString)
             End Select

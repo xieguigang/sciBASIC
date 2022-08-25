@@ -15,23 +15,11 @@ Namespace type
     ''' 
     ''' @author James Mudd
     ''' </summary>
-    Public Class EnumDataType
-        Inherits DataType
+    Public Class EnumDataType : Inherits DataType
 
-        Private ReadOnly baseTypeField As DataType
-        Private ReadOnly ordinalToName As IDictionary(Of Integer?, String)
+        Public Property BaseType As DataType
 
-        Public Overridable ReadOnly Property BaseType As DataType
-            Get
-                Return baseTypeField
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property EnumMapping As IDictionary(Of Integer?, String)
-            Get
-                Return ordinalToName
-            End Get
-        End Property
+        Public Property EnumMapping As IDictionary(Of Integer?, String)
 
         Public Overrides ReadOnly Property TypeInfo As System.Type
             Get

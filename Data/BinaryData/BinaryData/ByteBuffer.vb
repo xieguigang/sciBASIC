@@ -185,7 +185,29 @@ Public Class ByteBuffer : Inherits DataView
         Return stream.ReadByte()
     End Function
 
-    Public Function [get](dst As Byte(), offset As Integer, length As Integer) As ByteBuffer
+    Public Sub [get](dst As Long())
+        For i As Integer = 0 To dst.Length - 1
+            dst(i) = getLong()
+        Next
+    End Sub
+
+    Public Sub [get](dst As Integer())
+        For i As Integer = 0 To dst.Length - 1
+            dst(i) = getInt()
+        Next
+    End Sub
+
+    Public Sub [get](dst As Short())
+        For i As Integer = 0 To dst.Length - 1
+            dst(i) = getShort()
+        Next
+    End Sub
+
+    Public Function [get](dst As Byte(), Optional offset As Integer = Scan0, Optional length As Integer = -1) As ByteBuffer
+        If length <= 0 Then
+            length = dst.Length
+        End If
+
         stream.Read(dst, offset, length)
         Return Me
     End Function
