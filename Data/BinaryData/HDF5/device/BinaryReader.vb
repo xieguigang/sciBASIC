@@ -61,7 +61,8 @@ Imports System.Text
 
 Namespace device
 
-    Public MustInherit Class BinaryReader : Implements IDisposable
+    Public MustInherit Class BinaryReader
+        Implements IDisposable
 
         Protected Friend m_littleEndian As Boolean
         Protected Friend m_maxOffset As Long

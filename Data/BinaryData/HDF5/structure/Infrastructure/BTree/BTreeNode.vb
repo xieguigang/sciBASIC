@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::8edf1e4ab19ebbbee95444e553a4a367, sciBASIC#\Data\BinaryData\DataStorage\HDF5\structure\Infrastructure\BTree\BTreeNode.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 248
-    '    Code Lines: 110
-    ' Comment Lines: 102
-    '   Blank Lines: 36
-    '     File Size: 10.37 KB
+' Summaries:
 
 
-    '     Class BTreeNode
-    ' 
-    '         Properties: isLeaf, leftAddress, level, magic, numberOfEntries
-    '                     rightAddress, type
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: [next], hasNext
-    ' 
-    '         Sub: first, printValues
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 248
+'    Code Lines: 110
+' Comment Lines: 102
+'   Blank Lines: 36
+'     File Size: 10.37 KB
+
+
+'     Class BTreeNode
+' 
+'         Properties: isLeaf, leftAddress, level, magic, numberOfEntries
+'                     rightAddress, type
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: [next], hasNext
+' 
+'         Sub: first, printValues
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -92,6 +92,11 @@ Namespace struct
     Public Class BTreeNode : Inherits HDF5Ptr
         Implements IMagicBlock
 
+        ''' <summary>
+        ''' The ASCII character string “TREE” is used to indicate the beginning of a B-tree node. 
+        ''' This gives file consistency checking utilities a better chance of reconstructing a 
+        ''' damaged file.
+        ''' </summary>
         Public Const signature$ = "TREE"
 
         Dim layout As Layout
@@ -176,20 +181,24 @@ Namespace struct
             Call MyBase.New(address)
 
             Dim [in] As BinaryReader = sb.FileReader(address)
+            Dim magic = [in].readBytes(4)
 
             Me.layout = layout
-            Me.magic = Encoding.ASCII.GetString([in].readBytes(4))
+            Me.magic = Encoding.ASCII.GetString(magic)
 
             If Not Me.VerifyMagicSignature(signature) Then
-                Throw New IOException("signature is not valid")
-            Else
-                ' read node type
-                Me.type = [in].readByte
-                ' read node level
-                Me.level = [in].readByte()
-                ' read entries used
-                Me.numberOfEntries = [in].readShort()
+                ' [in].offset -= 4
+                ' Call "signature is not valid".Warning
+                Throw New IOException("signature is not valid: the block magic should be 'TREE'!")
             End If
+            'Else
+            ' read node type
+            Me.type = [in].readByte
+            ' read node level
+            Me.level = [in].readByte()
+            ' read entries used
+            Me.numberOfEntries = [in].readShort()
+            'End If
 
             Dim size As Long = 8 + 2 * sb.sizeOfOffsets + Me.numberOfEntries * (8 + sb.sizeOfOffsets + 8 + layout.numberOfDimensions)
             Dim isLast As Boolean
@@ -213,7 +222,7 @@ Namespace struct
                 Me.childPointer = New Long(Me.numberOfEntries) {}
 
                 For i As Integer = 0 To Me.numberOfEntries
-                    Call [in].skipBytes(8)
+                    Dim key As Long = [in].readLong
 
                     ' skip size, filterMask
                     For j As Integer = 0 To layout.numberOfDimensions - 1
@@ -248,10 +257,16 @@ Namespace struct
             Else
                 Me.currentNode = Nothing
                 Me.currentEntry = 0
+
                 While Me.currentEntry < Me.numberOfEntries
-                    Me.currentNode = New BTreeNode(sb, Me.layout, Me.childPointer(Me.currentEntry))
-                    Me.currentNode.first([in], sb)
-                    Exit While
+                    Dim ptr& = Me.childPointer(Me.currentEntry)
+
+                    If ptr > 0 Then
+                        Me.currentNode = New BTreeNode(sb, Me.layout, ptr)
+                        Me.currentNode.first([in], sb)
+                        Exit While
+                    End If
+
                     Me.currentEntry += 1
                 End While
 

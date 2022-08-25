@@ -203,39 +203,7 @@ Public Class BinaryDataReader
 
     Private Function getDebugView(bufSize As Integer) As String
         Using TemporarySeek()
-            Dim start As Long
-            Dim nsize As Integer
-
-            If Position < bufSize \ 2 Then
-                start = 0
-            Else
-                start = Position - (bufSize \ 2)
-            End If
-
-            If start + bufSize > Length Then
-                nsize = Length - start
-            Else
-                nsize = bufSize
-            End If
-
-            Dim chars As New List(Of Char)
-            Dim c As Char
-
-            For Each b As Byte In ReadBytes(nsize)
-                If ASCII.IsNonPrinting(b) Then
-                    c = "*"c
-                Else
-                    c = Chr(b)
-                End If
-
-                If c = vbNullChar Then
-                    c = "*"
-                End If
-
-                chars.Add(c)
-            Next
-
-            Return chars.CharString
+            Return Helpers.getDebugView(Me, bufSize)
         End Using
     End Function
 
