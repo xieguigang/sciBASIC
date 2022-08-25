@@ -186,8 +186,6 @@ Namespace struct.messages
             ElseIf Me.type = DataTypes.DATATYPE_REFERENCE Then
                 Me.m_referenceType = Me.m_flags(0) And &HF
             ElseIf Me.type = DataTypes.DATATYPE_ENUMS Then
-                ' throw new IOException( "data type enums is not implemented" );
-
                 Dim nMembers As Integer = ReadHelper.bytesToUnsignedInt(Me.m_flags(1), Me.m_flags(0))
                 Me.m_base = New DataTypeMessage(sb, [in].offset)
                 ' base type
@@ -221,6 +219,7 @@ Namespace struct.messages
                 '    map.put(enumValue[i], enumName[i]);
 
                 [in].SetByteOrder(ByteOrder.LittleEndian)
+
             ElseIf Me.type = DataTypes.DATATYPE_VARIABLE_LENGTH Then
                 Dim paddingType = [in].readInt
                 Dim charEncoding = [in].readInt
