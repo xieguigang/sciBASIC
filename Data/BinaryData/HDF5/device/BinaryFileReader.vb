@@ -147,10 +147,18 @@ Namespace device
         End Function
 
         Public Overrides Function ToString() As String
+            Dim debug As String
+            Dim pos As Long = randomaccessfile.Position
+            Dim width As Integer = 32
+
+            randomaccessfile.Position = pos - width
+            debug = Helpers.getDebugView(Me, width * 2)
+            randomaccessfile.Position = pos
+
             If TypeOf randomaccessfile Is FileStream Then
-                Return $"{MyBase.ToString()}  #{DirectCast(randomaccessfile, FileStream).Name.FileName}"
+                Return $"{MyBase.ToString()}  #{DirectCast(randomaccessfile, FileStream).Name.FileName} '{debug}'"
             Else
-                Return $"{MyBase.ToString()}  #{randomaccessfile.ToString}"
+                Return $"{MyBase.ToString()}  #{randomaccessfile.ToString} '{debug}'"
             End If
         End Function
 

@@ -1,8 +1,17 @@
 ﻿Imports Microsoft.VisualBasic.Text
 
+Public Interface IReaderDebugAccess
+
+    ReadOnly Property Length As Long
+    Property Position As Long
+
+    Function ReadBytes(nsize As Integer) As Byte()
+
+End Interface
+
 Public Class Helpers
 
-    Public Shared Function getDebugView(bin As BinaryDataReader, bufSize As Integer) As String
+    Public Shared Function getDebugView(bin As IReaderDebugAccess, bufSize As Integer) As String
         Dim start As Long
         Dim nsize As Integer
 

@@ -71,8 +71,8 @@ Imports Microsoft.VisualBasic.Text
 ''' <summary>
 ''' Represents an extended <see cref="BinaryReader"/> supporting special file format data types.
 ''' </summary>
-Public Class BinaryDataReader
-    Inherits BinaryReader
+Public Class BinaryDataReader : Inherits BinaryReader
+    Implements IReaderDebugAccess
 
     Dim _byteOrder As ByteOrder
     Dim _needsReversion As Boolean
@@ -173,7 +173,7 @@ Public Class BinaryDataReader
     ''' <summary>
     ''' Gets the length in bytes of the stream in bytes. This is a shortcut to the base stream Length property.
     ''' </summary>
-    Public ReadOnly Property Length() As Long
+    Public ReadOnly Property Length() As Long Implements IReaderDebugAccess.Length
         Get
             Return BaseStream.Length
         End Get
@@ -183,7 +183,7 @@ Public Class BinaryDataReader
     ''' Gets or sets the position within the current stream. This is a shortcut to the base stream Position
     ''' property.
     ''' </summary>
-    Public Property Position() As Long
+    Public Property Position() As Long Implements IReaderDebugAccess.Position
         Get
             Return BaseStream.Position
         End Get
@@ -244,6 +244,11 @@ Public Class BinaryDataReader
             Case Else
                 Throw New ArgumentOutOfRangeException("format", "The specified binary datetime format is invalid")
         End Select
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Overrides Function ReadBytes(count As Integer) As Byte() Implements IReaderDebugAccess.ReadBytes
+        Return MyBase.ReadBytes(count)
     End Function
 
     ''' <summary>
