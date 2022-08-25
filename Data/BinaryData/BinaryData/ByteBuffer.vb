@@ -77,7 +77,6 @@
 
 
 Imports System.IO
-Imports System.Linq.Expressions
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.My.JavaScript
 
@@ -94,8 +93,12 @@ Public Class ByteBuffer : Inherits DataView
     Sub New(stream As Stream)
         Call MyBase.New(stream)
 
-        Me.reader = New BinaryDataReader(stream)
-        Me.writer = New BinaryDataWriter(stream)
+        If stream.CanRead Then
+            Me.reader = New BinaryDataReader(stream)
+        End If
+        If stream.CanWrite Then
+            Me.writer = New BinaryDataWriter(stream)
+        End If
     End Sub
 
     Protected Overrides Sub Finalize()
@@ -110,8 +113,8 @@ Public Class ByteBuffer : Inherits DataView
     End Sub
 
     Public Function order(byteOrder As ByteOrder) As ByteBuffer
-        reader.ByteOrder = byteOrder
-        writer.ByteOrder = byteOrder
+        If reader IsNot Nothing Then reader.ByteOrder = byteOrder
+        If writer IsNot Nothing Then writer.ByteOrder = byteOrder
         Return Me
     End Function
 

@@ -163,7 +163,7 @@ Namespace struct.messages
 
         Public Shared Function ReadAttrValue(msg As AttributeMessage, sb As Superblock) As Object
             Dim type As DataTypeMessage = msg.dataType
-            Dim dims = msg.dataSpace.dimensionLength
+            Dim dims As Integer() = msg.dataSpace.dimensionLength
             Dim dataType As DataTypes = type.type
 
             ' 需要在这里移动文件的读取指针到dataPosition才能够正确的读取globalheap数据
@@ -177,6 +177,10 @@ Namespace struct.messages
                 Case DataTypes.DATATYPE_ENUMS
                     Dim file As BinaryReader = sb.FileReader(msg.dataPos)
                     Dim buffer As ByteBuffer = file.getBuffer
+
+                    If dims.Length = 0 Then
+                        dims = {1}
+                    End If
 
                     Return EnumDatasetReader.readEnumDataset(msg.reader, buffer, dims)
                 Case Else
