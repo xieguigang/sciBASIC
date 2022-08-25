@@ -77,10 +77,10 @@ Namespace struct
         Public Sub New(sb As Superblock, layout As Layout)
             Call MyBase.New(layout.dataAddress)
 
-            Dim [in] As BinaryReader = sb.FileReader(address)
+            ' Dim [in] As BinaryReader = sb.FileReader(address)
 
             Me.root = New BTreeNode(sb, layout, Me.m_address)
-            Me.root.first([in], sb)
+            Me.root.first(sb.FileReader(address), sb)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
