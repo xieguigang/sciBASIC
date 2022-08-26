@@ -203,7 +203,7 @@ Namespace LinearAlgebra.Matrix
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"[{RowDimension},{ColumnDimension}]"
+            Return $"[{RowDimension}x{ColumnDimension}]"
         End Function
 
         Public Iterator Function RowVectors() As IEnumerable(Of Vector) Implements GeneralMatrix.RowVectors
@@ -257,7 +257,7 @@ Namespace LinearAlgebra.Matrix
                 matrix.Add(++i, row)
             Next
 
-            Return New SparseMatrix(matrix, m:=i, n:=n)
+            Return New SparseMatrix(matrix, m:=i, n:=n + 1)
         End Function
     End Class
 End Namespace
