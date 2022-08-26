@@ -69,11 +69,27 @@ Namespace Drawing2D.Math2D.MarchingSquares
         Public Property shapes As Polygon2D()
         Public Property dimension As Integer()
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="sample"></param>
+        ''' <param name="epsilon"></param>
+        ''' <param name="interpolateFill"></param>
+        ''' <param name="levels">
+        ''' [0,1]之间的等级值，空值则使用默认等级列表
+        ''' </param>
+        ''' <returns></returns>
         Public Shared Iterator Function GetContours(sample As IEnumerable(Of MeasureData),
                                                     Optional epsilon As Double = 0.00001,
-                                                    Optional interpolateFill As Boolean = True) As IEnumerable(Of GeneralPath)
+                                                    Optional interpolateFill As Boolean = True,
+                                                    Optional levels As Double() = Nothing) As IEnumerable(Of GeneralPath)
+
             Dim matrix As New MapMatrix(sample, interpolateFill:=interpolateFill)
-            Dim level_cutoff As Double() = matrix.GetPercentages
+            Dim level_cutoff As Double() = If(
+                levels.IsNullOrEmpty,
+                matrix.GetPercentages,
+                matrix.GetPercentages(levels)
+            )
             Dim data As Double()() = matrix _
                 .GetMatrixInterpolation _
                 .MatrixTranspose _
