@@ -202,6 +202,10 @@ Namespace LinearAlgebra.Matrix
             Return real
         End Function
 
+        Public Overrides Function ToString() As String
+            Return $"[{RowDimension},{ColumnDimension}]"
+        End Function
+
         Public Iterator Function RowVectors() As IEnumerable(Of Vector) Implements GeneralMatrix.RowVectors
             For Each row As Double() In ArrayPack()
                 Yield row.AsVector
@@ -238,17 +242,18 @@ Namespace LinearAlgebra.Matrix
                 Dim subsetIndex As Integer() = New Integer(blocksize - 1) {}
                 Dim row As New Dictionary(Of Integer, Double)
 
-                Call Array.ConstrainedCopy(xdata, idx, subsetData, Scan0, blocksize)
-                Call Array.ConstrainedCopy(xindices, idx, subsetIndex, Scan0, blocksize)
+                Call Array.ConstrainedCopy(xdata, left, subsetData, Scan0, blocksize)
+                Call Array.ConstrainedCopy(xindices, left, subsetIndex, Scan0, blocksize)
 
                 For j As Integer = 0 To blocksize - 1
-                    row.Add(key:=subsetIndex(j), value:=subsetData(j))
+                    Call row.Add(key:=subsetIndex(j), value:=subsetData(j))
                 Next
 
                 If subsetIndex.Max > n Then
                     n = subsetIndex.Max
                 End If
 
+                left = idx
                 matrix.Add(++i, row)
             Next
 
