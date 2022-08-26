@@ -54,6 +54,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Vectorization
 
 Namespace LinearAlgebra.Matrix
@@ -209,6 +210,49 @@ Namespace LinearAlgebra.Matrix
 
         Public Function GetMatrix(r() As Integer, j0 As Integer, j1 As Integer) As GeneralMatrix Implements GeneralMatrix.GetMatrix
             Throw New NotImplementedException()
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="xdata"></param>
+        ''' <param name="xindices">
+        ''' the corresponding index value of the <paramref name="xdata"/>, this
+        ''' vector size of this parameter must be equals to the <paramref name="xdata"/>!
+        ''' </param>
+        ''' <param name="xindptr"></param>
+        ''' <returns></returns>
+        Public Shared Function UnpackData(xdata As Single(), xindices As Integer(), xindptr As Integer()) As SparseMatrix
+            If xdata.Length <> xindices.Length Then
+                Throw New InvalidProgramException($"the size of xdata({xdata.Length}) is not agree to the size of xindices({xindices.Length})!")
+            End If
+
+            Dim left As Integer = xindptr(Scan0)
+            Dim matrix As New Dictionary(Of Integer, Dictionary(Of Integer, Double))
+            Dim i As i32 = Scan0
+            Dim n As Integer = -1
+
+            For Each idx As Integer In xindptr.Skip(1)
+                Dim blocksize = idx - left
+                Dim subsetData As Single() = New Single(blocksize - 1) {}
+                Dim subsetIndex As Integer() = New Integer(blocksize - 1) {}
+                Dim row As New Dictionary(Of Integer, Double)
+
+                Call Array.ConstrainedCopy(xdata, idx, subsetData, Scan0, blocksize)
+                Call Array.ConstrainedCopy(xindices, idx, subsetIndex, Scan0, blocksize)
+
+                For j As Integer = 0 To blocksize - 1
+                    row.Add(key:=subsetIndex(j), value:=subsetData(j))
+                Next
+
+                If subsetIndex.Max > n Then
+                    n = subsetIndex.Max
+                End If
+
+                matrix.Add(++i, row)
+            Next
+
+            Return New SparseMatrix(matrix, m:=i, n:=n)
         End Function
     End Class
 End Namespace
