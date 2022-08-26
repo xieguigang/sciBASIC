@@ -125,7 +125,7 @@ Namespace Drawing2D.HeatMap
                 Dim paint As SolidBrush
                 Dim defaultPaint As New SolidBrush(defaultColor)
 
-                For Each point As Pixel In ScalePixels(pixels)
+                For Each point As Pixel In ScalePixels(pixels.Select(Function(i) DirectCast(i, Pixel)))
                     level = CInt(point.Scale)
 
                     If level <= 0.0 Then
@@ -139,7 +139,7 @@ Namespace Drawing2D.HeatMap
                 Next
             Else
                 Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(raw, ImageLockMode.WriteOnly)
-                    For Each point As Pixel In ScalePixels(pixels)
+                    For Each point As Pixel In ScalePixels(pixels.Select(Function(i) DirectCast(i, Pixel)))
                         level = CInt(point.Scale)
 
                         If level <= 0.0 Then
