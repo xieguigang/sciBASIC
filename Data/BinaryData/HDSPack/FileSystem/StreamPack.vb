@@ -324,8 +324,14 @@ Namespace FileSystem
             End If
         End Function
 
-        Public Shared Function CreateNewStream(filepath As String, Optional init_size As Integer = 1024) As StreamPack
-            Return New StreamPack(filepath.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False), init_size)
+        Public Shared Function CreateNewStream(filepath As String,
+                                               Optional init_size As Integer = 1024,
+                                               Optional meta_size As Integer = 4096 * 1024) As StreamPack
+            Return New StreamPack(
+                buffer:=filepath.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False),
+                init_size:=init_size,
+                meta_size:=meta_size
+            )
         End Function
 
         Private Sub flushStreamPack()
