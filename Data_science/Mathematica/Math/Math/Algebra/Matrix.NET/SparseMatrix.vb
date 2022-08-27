@@ -1,55 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::af62bba4b3d09bb8a9754fdb3844cd95, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\SparseMatrix.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 159
-    '    Code Lines: 125
-    ' Comment Lines: 10
-    '   Blank Lines: 24
-    '     File Size: 5.92 KB
+' Summaries:
 
 
-    '     Class SparseMatrix
-    ' 
-    '         Properties: ColumnDimension, RowDimension
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    '         Function: ArrayPack, GetMatrix, Resize, RowVectors, Transpose
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 159
+'    Code Lines: 125
+' Comment Lines: 10
+'   Blank Lines: 24
+'     File Size: 5.92 KB
+
+
+'     Class SparseMatrix
+' 
+'         Properties: ColumnDimension, RowDimension
+' 
+'         Constructor: (+4 Overloads) Sub New
+'         Function: ArrayPack, GetMatrix, Resize, RowVectors, Transpose
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -226,7 +226,11 @@ Namespace LinearAlgebra.Matrix
         ''' </param>
         ''' <param name="xindptr"></param>
         ''' <returns></returns>
-        Public Shared Function UnpackData(xdata As Single(), xindices As Integer(), xindptr As Integer()) As SparseMatrix
+        Public Shared Function UnpackData(xdata As Single(),
+                                          xindices As Integer(),
+                                          xindptr As Integer(),
+                                          Optional maxColumns As Integer = -1) As SparseMatrix
+
             If xdata.Length <> xindices.Length Then
                 Throw New InvalidProgramException($"the size of xdata({xdata.Length}) is not agree to the size of xindices({xindices.Length})!")
             End If
@@ -234,7 +238,10 @@ Namespace LinearAlgebra.Matrix
             Dim left As Integer = xindptr(Scan0)
             Dim matrix As New Dictionary(Of Integer, Dictionary(Of Integer, Double))
             Dim i As i32 = Scan0
-            Dim n As Integer = -1
+
+            If maxColumns < 0 Then
+                maxColumns = xindices.Max + 1
+            End If
 
             For Each idx As Integer In xindptr.Skip(1)
                 Dim blocksize = idx - left
@@ -249,15 +256,11 @@ Namespace LinearAlgebra.Matrix
                     Call row.Add(key:=subsetIndex(j), value:=subsetData(j))
                 Next
 
-                If subsetIndex.Max > n Then
-                    n = subsetIndex.Max
-                End If
-
                 left = idx
                 matrix.Add(++i, row)
             Next
 
-            Return New SparseMatrix(matrix, m:=i, n:=n + 1)
+            Return New SparseMatrix(matrix, m:=i, n:=maxColumns)
         End Function
     End Class
 End Namespace
