@@ -160,6 +160,11 @@ Namespace Hypothesis.FishersExact
 
             prob = hyper0(s, n11, n1_, n_1, n)
             sleft = 0.0
+
+            If prob.IsNaNImaginary Then
+                Return (1.0, 1.0, 1.0, 1.0, 1.0, New HyperState)
+            End If
+
             p = hyper(s, min)
             i = min + 1
 
