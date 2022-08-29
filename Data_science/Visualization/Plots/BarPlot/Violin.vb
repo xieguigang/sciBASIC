@@ -168,10 +168,12 @@ Public Class Violin : Inherits Plot
             Call PlotViolin(group,
                             X,
                             yScale,
+                            25,
                             semiWidth,
                             splineDegree,
                             polygonStroke,
                             showStats,
+                            True,
                             labelFont,
                             color:=++colors,
                             g:=g,
@@ -208,10 +210,12 @@ Public Class Violin : Inherits Plot
     Public Shared Sub PlotViolin(group As NamedCollection(Of Double),
                                  x As Single,
                                  yscale As YScaler,
+                                 nbins As Integer,
                                  semiWidth As Double,
                                  splineDegree As Single,
                                  polygonStroke As Pen,
                                  showStats As Boolean,
+                                 zeroBreak As Boolean,
                                  labelFont As Font,
                                  color As Color,
                                  g As IGraphics,
@@ -228,17 +232,21 @@ Public Class Violin : Inherits Plot
         Dim line_l As New List(Of PointF)
         Dim line_r As New List(Of PointF)
         Dim q0 = lowerBound  'group.Min
-        Dim n As Integer = 30
-        Dim dstep = (upperBound - lowerBound) / n ' (group.Max - group.Min) / n
-        Dim dy = stdNum.Abs(upper - lower) / n
+        Dim dstep = (upperBound - lowerBound) / nbins ' (group.Max - group.Min) / n
+        Dim dy = stdNum.Abs(upper - lower) / nbins
 
-        For p As Integer = 0 To n
+        For p As Integer = 0 To nbins
             Dim q1 = q0 + dstep
             Dim range As DoubleRange = {q0, q1}
             Dim density = quartile.ModelSamples.normal.Count(AddressOf range.IsInside)
+            Dim yi As Double = lower - p * dy
 
-            line_l += New PointF With {.X = density, .Y = lower - p * dy}
-            line_r += New PointF With {.X = density, .Y = lower - p * dy}
+            If yi <= 0 AndAlso zeroBreak Then
+                Exit For
+            End If
+
+            line_l += New PointF With {.X = density, .Y = yi}
+            line_r += New PointF With {.X = density, .Y = yi}
             q0 = q1
         Next
 
@@ -276,10 +284,15 @@ Public Class Violin : Inherits Plot
 
         ' 绘制quartile
         Dim yQ1 As Double = yscale.TranslateY(quartile.Q1)
+        Dim wd As Double = semiWidth * 0.65
+
+        If wd > 32 Then
+            wd = 32
+        End If
 
         ' draw IQR
         Dim iqrBox As New RectangleF With {
-            .Width = 32,
+            .Width = wd,
             .X = x - .Width / 2,
             .Y = yscale.TranslateY(quartile.Q3),
             .Height = stdNum.Abs(.Y - yQ1)
@@ -291,14 +304,20 @@ Public Class Violin : Inherits Plot
         upperBound = group.Average + 1.96 * group.SD
         lowerBound = group.Average - 1.96 * group.SD
 
+        Dim lowerDraw As Double = lowerBound
+
+        If zeroBreak AndAlso lowerDraw < 0 Then
+            lowerDraw = 0
+        End If
+
         Call g.DrawLine(
             pen:=polygonStroke,
-            pt1:=New PointF(x, yscale.TranslateY(lowerBound)),
+            pt1:=New PointF(x, yscale.TranslateY(lowerDraw)),
             pt2:=New PointF(x, yscale.TranslateY(upperBound))
         )
 
         ' draw median point
-        Call g.DrawCircle(New PointF(x + 1, yscale.TranslateY(quartile.Q2) - 1), 12, color:=Pens.White)
+        Call g.DrawCircle(New PointF(x + 1, yscale.TranslateY(quartile.Q2) - 1), wd / 4, color:=Pens.White)
 
         If showStats Then
             ' 在右上绘制数据的分布信息
