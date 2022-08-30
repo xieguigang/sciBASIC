@@ -76,11 +76,18 @@ Imports Microsoft.VisualBasic.MIME.application.json.Javascript
     ''' try cast of the json element object as json literal value
     ''' </summary>
     ''' <param name="obj"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' nothing will be returns if the target <paramref name="obj"/>
+    ''' is not a <see cref="JsonValue"/> type.
+    ''' </returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function AsString(obj As JsonElement, decodeMetachar As Boolean) As String
-        Return DirectCast(obj, JsonValue).GetStripString(decodeMetachar)
+        If TypeOf obj Is JsonValue Then
+            Return DirectCast(obj, JsonValue).GetStripString(decodeMetachar)
+        Else
+            Return Nothing
+        End If
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

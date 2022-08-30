@@ -136,7 +136,9 @@ Namespace Javascript
         ''' <summary>
         ''' 处理转义等特殊字符串
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' this function will removes the warpping of quot symbol.
+        ''' </returns>
         Public Function GetStripString(decodeMetachar As Boolean) As String
             Dim s$ = Scripting _
                 .ToString(value, "null") _
