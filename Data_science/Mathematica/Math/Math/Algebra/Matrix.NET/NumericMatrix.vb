@@ -226,6 +226,10 @@ Namespace LinearAlgebra.Matrix
             Call Me.New(rows.Select(Function(v) v.ToArray).ToArray)
         End Sub
 
+        Sub New(rows As IEnumerable(Of Double()))
+            Call Me.New(rows.ToArray)
+        End Sub
+
         Sub New(M As Double(,))
             Call Me.New(M.RowIterator.ToArray)
         End Sub
