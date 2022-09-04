@@ -72,6 +72,22 @@ Namespace Fractions
 
     Public Module PieChart
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="region"></param>
+        ''' <param name="data"></param>
+        ''' <param name="valueLabelFont"></param>
+        ''' <param name="font"></param>
+        ''' <param name="layoutRect"></param>
+        ''' <param name="r!"></param>
+        ''' <param name="shadowDistance#"></param>
+        ''' <param name="shadowAngle#"></param>
+        ''' <param name="valueLabel"></param>
+        ''' <param name="legendAlt">
+        ''' nothing means no legend drawing
+        ''' </param>
         <Extension>
         Public Sub PlotPie(ByRef g As IGraphics, region As GraphicsRegion,
                            data As IEnumerable(Of FractionData),
@@ -81,7 +97,7 @@ Namespace Fractions
                            Optional shadowDistance# = 0,
                            Optional shadowAngle# = 0,
                            Optional valueLabel As ValueLabels = ValueLabels.Percentage,
-                           Optional legendAlt As Boolean = False)
+                           Optional legendAlt As Boolean? = False)
 
             Dim start As New f64
             Dim sweep As New f64
