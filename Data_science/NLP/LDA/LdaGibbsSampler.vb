@@ -298,8 +298,6 @@ Namespace LDA
         ''' <param name="alpha"> symmetric prior parameter on document--topic associations 对称文档——主题先验概率？ </param>
         ''' <param name="beta">  symmetric prior parameter on topic--term associations 对称主题——词语先验概率？ </param> 
         Public Sub gibbs(K As Integer, alpha As Double, beta As Double)
-            Dim zIndex = z.Sequence.ToArray
-
             Me.K = K
             Me.alpha = alpha
             Me.beta = beta
@@ -314,6 +312,9 @@ Namespace LDA
             ' initial state of the Markov chain:
             Call initialState(K)
             Call println("Sampling " & ITERATIONS & " iterations with burn-in of " & BURN_IN & " unique temp var.")
+
+            ' z is initialized after initialState is called
+            Dim zIndex As Integer() = z.Sequence.ToArray
 
             For i As Integer = 0 To ITERATIONS - 1
                 ' for all z_i
