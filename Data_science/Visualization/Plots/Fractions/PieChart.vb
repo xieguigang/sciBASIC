@@ -76,7 +76,6 @@ Namespace Fractions
         ''' 
         ''' </summary>
         ''' <param name="g"></param>
-        ''' <param name="region"></param>
         ''' <param name="data"></param>
         ''' <param name="valueLabelFont"></param>
         ''' <param name="font"></param>
@@ -89,7 +88,7 @@ Namespace Fractions
         ''' nothing means no legend drawing
         ''' </param>
         <Extension>
-        Public Sub PlotPie(ByRef g As IGraphics, region As GraphicsRegion,
+        Public Sub PlotPie(ByRef g As IGraphics, topLeft As Point,
                            data As IEnumerable(Of FractionData),
                            valueLabelFont As Font,
                            font As Font,
@@ -106,22 +105,24 @@ Namespace Fractions
             Dim label$
             Dim br As SolidBrush
             Dim centra As Point
-            Dim topLeft As New Point(region.Padding.Left, region.Padding.Top)
+            Dim drawLegendLable As Boolean = Not legendAlt Is Nothing AndAlso Not legendAlt.Value
 
             layoutRect = New Rectangle(topLeft, New Size(r * 2, r * 2))
             centra = layoutRect.Centre
 
-            ' 首先需要进行阴影的绘制
-            With topLeft.MovePoint(shadowDistance, shadowAngle)
-                Dim circle As New GraphicsPath
+            If shadowDistance > 0 Then
+                ' 首先需要进行阴影的绘制
+                With topLeft.MovePoint(shadowDistance, shadowAngle)
+                    Dim circle As New GraphicsPath
 
-                Call circle.AddEllipse(.X, .Y, CSng(r * 2), CSng(r * 2))
-                Call circle.CloseAllFigures()
-                Call Shadow.DropdownShadows(g, polygon:=circle)
-            End With
+                    Call circle.AddEllipse(.X, .Y, CSng(r * 2), CSng(r * 2))
+                    Call circle.CloseAllFigures()
+                    Call Shadow.DropdownShadows(g, polygon:=circle)
+                End With
 
-            ' 填充浅灰色底层
-            Call g.FillPie(Brushes.LightGray, layoutRect, 0, 360)
+                ' 填充浅灰色底层
+                Call g.FillPie(Brushes.LightGray, layoutRect, 0, 360)
+            End If
 
             For Each x As FractionData In data
                 br = New SolidBrush(x.Color)
@@ -133,13 +134,16 @@ Namespace Fractions
                 ' 在这里r/1.5是因为这些百分比的值的标签需要显示在pie的内部
                 pt = (r / 1.5, alpha).ToCartesianPoint()
                 pt = New PointF(pt.X + centra.X, pt.Y + centra.Y)
-                label = x.GetValueLabel(valueLabel)
-                labelSize = g.MeasureString(label, valueLabelFont)
-                pt = New Point(pt.X - labelSize.Width / 2, pt.Y)
 
-                Call g.DrawString(label, valueLabelFont, Brushes.White, pt)
+                If valueLabel <> ValueLabels.None Then
+                    label = x.GetValueLabel(valueLabel)
+                    labelSize = g.MeasureString(label, valueLabelFont)
+                    pt = New Point(pt.X - labelSize.Width / 2, pt.Y)
 
-                If Not legendAlt Then
+                    Call g.DrawString(label, valueLabelFont, Brushes.White, pt)
+                End If
+
+                If drawLegendLable Then
 
                     ' 标签文本信息跟随pie的值而变化的
                     Dim layout As New PointF With {
@@ -232,10 +236,11 @@ Namespace Fractions
                     Dim r# = stdNum.Min(gSize.Width, gSize.Height - shadowDistance) / 2 ' 最大的半径值
                     Dim valueLabelFont As Font = CSSFont.TryParse(valueLabelStyle).GDIObject(g.Dpi)
                     Dim layoutRect As Rectangle
+                    Dim topLeft As New Point(region.Padding.Left, region.Padding.Top)
 
                     If minRadius <= 0 OrElse CDbl(minRadius) >= r Then  ' 半径固定不变的样式
                         Call g.PlotPie(
-                            region:=region,
+                            topLeft:=topLeft,
                             data:=data,
                             valueLabelFont:=valueLabelFont,
                             font:=font,
@@ -249,7 +254,6 @@ Namespace Fractions
 
                     Else
                         ' 半径也会有变化
-                        Dim topLeft As New Point(margin.Left, margin.Top)
                         Dim a As New Value(Of Single)
                         Dim sweep! = 360 / data.Count
                         Dim maxp# = data.Max(Function(x) x.Percentage)
