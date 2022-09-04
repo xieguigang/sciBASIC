@@ -319,7 +319,7 @@ Namespace LDA
             For i As Integer = 0 To ITERATIONS - 1
                 ' for all z_i
                 Call (From m As Integer
-                      In zIndex.AsParallel
+                      In zIndex
                       Select sampling(zi:=m)).ToArray
 
                 If i < BURN_IN AndAlso i Mod THIN_INTERVAL = 0 Then
