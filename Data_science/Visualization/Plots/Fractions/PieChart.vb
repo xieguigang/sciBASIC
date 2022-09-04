@@ -89,7 +89,7 @@ Namespace Fractions
         ''' </param>
         <Extension>
         Public Sub PlotPie(ByRef g As IGraphics, topLeft As Point,
-                           data As IEnumerable(Of FractionData),
+                           data As FractionData(),
                            valueLabelFont As Font,
                            font As Font,
                            ByRef layoutRect As Rectangle, r!,
@@ -106,6 +106,7 @@ Namespace Fractions
             Dim br As SolidBrush
             Dim centra As Point
             Dim drawLegendLable As Boolean = Not legendAlt Is Nothing AndAlso Not legendAlt.Value
+            Dim sumAll = Aggregate pie As FractionData In data Into Sum(pie.Value)
 
             layoutRect = New Rectangle(topLeft, New Size(r * 2, r * 2))
             centra = layoutRect.Centre
@@ -126,6 +127,8 @@ Namespace Fractions
 
             For Each x As FractionData In data
                 br = New SolidBrush(x.Color)
+                x.Percentage = x.Value / sumAll
+
                 Call g.FillPie(br, layoutRect,
                                CSng(start = ((+start) + (sweep = CSng(360 * x.Percentage)))) - CSng(sweep.Value),
                                CSng(sweep))
@@ -241,7 +244,7 @@ Namespace Fractions
                     If minRadius <= 0 OrElse CDbl(minRadius) >= r Then  ' 半径固定不变的样式
                         Call g.PlotPie(
                             topLeft:=topLeft,
-                            data:=data,
+                            data:=data.ToArray,
                             valueLabelFont:=valueLabelFont,
                             font:=font,
                             layoutRect:=layoutRect,
