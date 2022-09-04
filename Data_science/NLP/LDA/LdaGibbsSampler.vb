@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::3fe4b313100b241c7eee6ec3270184ee, sciBASIC#\Data_science\NLP\LDA\LdaGibbsSampler.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 415
-    '    Code Lines: 177
-    ' Comment Lines: 176
-    '   Blank Lines: 62
-    '     File Size: 15.46 KB
+' Summaries:
 
 
-    '     Class LdaGibbsSampler
-    ' 
-    '         Properties: Phi, Theta
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: sampleFullConditional
-    ' 
-    '         Sub: configure, (+2 Overloads) gibbs, initialState, updateParams
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 415
+'    Code Lines: 177
+' Comment Lines: 176
+'   Blank Lines: 62
+'     File Size: 15.46 KB
+
+
+'     Class LdaGibbsSampler
+' 
+'         Properties: Phi, Theta
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: sampleFullConditional
+' 
+'         Sub: configure, (+2 Overloads) gibbs, initialState, updateParams
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -271,6 +271,24 @@ Namespace LDA
         End Sub
 
         ''' <summary>
+        ''' for all z_i
+        ''' do chain data sampling
+        ''' </summary>
+        ''' <param name="zi"></param>
+        ''' <returns></returns>
+        Private Function sampling(zi As Integer) As Integer
+            ' For m As Integer = 0 To z.Length - 1
+            For n As Integer = 0 To z(zi).Length - 1
+                ' (z_i = z[m][n])
+                ' sample from p(z_i|z_-i, w)
+                z(zi)(n) = sampleFullConditional(zi, n)
+            Next
+            ' Next
+
+            Return zi
+        End Function
+
+        ''' <summary>
         ''' Main method: Select initial state ? Repeat a large number of times: 1.
         ''' Select an element 2. Update conditional on other elements. If
         ''' appropriate, output summary for each run.
@@ -280,6 +298,8 @@ Namespace LDA
         ''' <param name="alpha"> symmetric prior parameter on document--topic associations 对称文档——主题先验概率？ </param>
         ''' <param name="beta">  symmetric prior parameter on topic--term associations 对称主题——词语先验概率？ </param> 
         Public Sub gibbs(K As Integer, alpha As Double, beta As Double)
+            Dim zIndex = z.Sequence.ToArray
+
             Me.K = K
             Me.alpha = alpha
             Me.beta = beta
@@ -297,27 +317,23 @@ Namespace LDA
 
             For i As Integer = 0 To ITERATIONS - 1
                 ' for all z_i
-                For m As Integer = 0 To z.Length - 1
-                    For n As Integer = 0 To z(m).Length - 1
-                        ' (z_i = z[m][n])
-                        ' sample from p(z_i|z_-i, w)
-                        z(m)(n) = sampleFullConditional(m, n)
-                    Next
-                Next
+                Call (From m As Integer
+                      In zIndex.AsParallel
+                      Select sampling(zi:=m)).ToArray
 
                 If i < BURN_IN AndAlso i Mod THIN_INTERVAL = 0 Then
-                    Console.Write("B")
                     dispcol += 1
+                    println($"[{i}/{ITERATIONS}] BURN_IN")
                 End If
                 ' display progress
                 If i > BURN_IN AndAlso i Mod THIN_INTERVAL = 0 Then
-                    Console.Write("S")
                     dispcol += 1
+                    println($"[{i}/{ITERATIONS}] ...")
                 End If
                 ' get statistics after burn-in
                 If i > BURN_IN AndAlso SAMPLE_LAG > 0 AndAlso i Mod SAMPLE_LAG = 0 Then
-                    updateParams()
-                    Console.Write("|")
+                    Call updateParams()
+                    Call println($"[{i}/{ITERATIONS}] get statistics after burn-in!")
 
                     If i Mod THIN_INTERVAL <> 0 Then
                         dispcol += 1
@@ -325,12 +341,9 @@ Namespace LDA
                 End If
 
                 If dispcol >= 100 Then
-                    Console.WriteLine()
                     dispcol = 0
                 End If
             Next
-
-            Console.WriteLine()
         End Sub
 
         ''' <summary>
