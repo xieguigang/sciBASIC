@@ -143,7 +143,7 @@ Public Class File : Implements IFileReference
     End Function
 
     ''' <summary>
-    ''' 如果表明不存在，会追加，否则会直接替换现有的表数据
+    ''' 如果表名不存在，会追加，否则会直接替换现有的表数据
     ''' </summary>
     ''' <param name="table"></param>
     ''' <param name="sheetName$"></param>

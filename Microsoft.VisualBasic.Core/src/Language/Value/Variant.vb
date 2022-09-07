@@ -205,13 +205,21 @@ Namespace Language
         ''' <summary>
         ''' 请注意Like是直接进行比较，不会比较继承关系链的？
         ''' </summary>
-        ''' <param name="var"></param>
+        ''' <param name="var">
+        ''' 为空值的时候，仅当<paramref name="type"/>是Nothing的时候才会返回真
+        ''' </param>
         ''' <param name="type"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
         Public Overloads Shared Operator Like(var As [Variant](Of A, B), type As Type) As Boolean
-            Return var.GetUnderlyingType Is type
+            If var Is Nothing Then
+                Return type Is Nothing OrElse type Is GetType(System.Void)
+            ElseIf type Is Nothing Then
+                Return False
+            Else
+                Return var.GetUnderlyingType Is type
+            End If
         End Operator
     End Class
 End Namespace

@@ -61,6 +61,12 @@ Public Module MsHtml
         Return seq.ToCsvDoc.ToExcel(sheetName)
     End Function
 
+    ''' <summary>
+    ''' excel table in html format
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="sheetName"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function ToExcel(file As Table, sheetName As String) As String
         Dim html As New StringBuilder()
