@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::712f3c822fb45fead01619e6e20cfc73, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\CustomDesigns.vb"
+﻿#Region "Microsoft.VisualBasic::4048fa476e0ce34a06dd4c5f23427ec3, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\CustomDesigns.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 97
-    '    Code Lines: 80
+    '   Total Lines: 104
+    '    Code Lines: 86
     ' Comment Lines: 8
-    '   Blank Lines: 9
-    '     File Size: 3.36 KB
+    '   Blank Lines: 10
+    '     File Size: 3.92 KB
 
 
     '     Class CustomDesigns
     ' 
-    '         Function: ClusterColour, Halloween, Paper, Rainbow, TSF
-    '                   Unicorn, Vibrant
+    '         Function: ClusterColour, FlexImaging, Halloween, Paper, Rainbow
+    '                   TSF, Unicorn, Vibrant
     ' 
     ' 
     ' /********************************************************************************/
@@ -117,15 +117,22 @@ Namespace Drawing2D.Colors
         End Function
 
         Public Shared Function Rainbow() As Color()
-            Return {
-               Color.Red,
-               Color.Orange,
-               Color.Yellow,
-               Color.Green,
-               Color.Lime,
-               Color.Blue,
-               Color.Violet
-            }
+            Return New String() {
+                "#FF0000FF", "#FF9900FF", "#CCFF00FF", "#33FF00FF", "#00FF66FF",
+                "#00FFFFFF", "#0066FFFF", "#3300FFFF", "#CC00FFFF", "#FF0099FF"
+            } _
+                .Select(Function(c) c.TranslateColor) _
+                .ToArray
+        End Function
+
+        Public Shared Function FlexImaging() As Color()
+            Return New String() {
+                "#FF0000FF", "#FF9900FF", "#CCFF00FF", "#33FF00FF", "#00FF66FF",
+                "#00FFFFFF", "#0066FFFF", "#3300FFFF", "#CC00FFFF", "#FF0099FF",
+                "white"
+            } _
+                .Select(Function(c) c.TranslateColor) _
+                .ToArray
         End Function
 
         ''' <summary>

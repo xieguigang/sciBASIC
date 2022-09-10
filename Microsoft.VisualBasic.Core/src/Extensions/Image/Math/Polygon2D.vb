@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aaa13b7b3f8e8da5fb722918d8e3d784, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Polygon2D.vb"
+﻿#Region "Microsoft.VisualBasic::2c0b0855c7c46031028a7f139fdee1b6, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Polygon2D.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 170
     ' Comment Lines: 53
     '   Blank Lines: 43
-    '     File Size: 9.48 KB
+    '     File Size: 9.75 KB
 
 
     '     Class Polygon2D
@@ -60,8 +60,8 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
-Imports stdNum = System.Math
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+Imports stdNum = System.Math
 
 Namespace Imaging.Math2D
 
@@ -71,8 +71,9 @@ Namespace Imaging.Math2D
     Public Class Polygon2D : Implements Enumeration(Of PointF)
 
         Public ReadOnly Property length As Integer = 0
-        Public ReadOnly Property xpoints As Double() = New Double(3) {}
-        Public ReadOnly Property ypoints As Double() = New Double(3) {}
+
+        Public Property xpoints As Double() = New Double(3) {}
+        Public Property ypoints As Double() = New Double(3) {}
 
         ''' <summary>
         ''' [left, top]
@@ -163,7 +164,7 @@ Namespace Imaging.Math2D
         ''' <param name="x"></param>
         ''' <param name="y"></param>
         ''' <param name="n"></param>
-        Friend Overridable Sub calculateBounds(x As Double(), y As Double(), n As Integer)
+        Public Overridable Sub calculateBounds(x As Double(), y As Double(), n As Integer)
             Dim d1 As Double = Double.MaxValue
             Dim d2 As Double = Double.MaxValue
             Dim d3 As Double = Double.MinValue
@@ -254,6 +255,9 @@ Namespace Imaging.Math2D
         ''' @deprecated
         ''' </summary>
         Public Overridable Function inside(x As Double, y As Double) As Boolean
+            If length = 0 Then
+                Return False
+            End If
             If Not boundingInside(x, y) Then
                 Return False
             Else

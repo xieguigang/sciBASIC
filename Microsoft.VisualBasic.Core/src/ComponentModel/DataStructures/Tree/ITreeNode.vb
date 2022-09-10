@@ -38,7 +38,7 @@
     '    Code Lines: 12
     ' Comment Lines: 11
     '   Blank Lines: 5
-    '     File Size: 886.00 B
+    '     File Size: 886 B
 
 
     '     Interface ITreeNode

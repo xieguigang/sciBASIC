@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::14c8eef78ed023f1b27ccd480de23fbc, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\scale\IScale.vb"
+﻿#Region "Microsoft.VisualBasic::d515a83bca074e66651fbc3bba52afce, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\scale\IScale.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 108
-    '    Code Lines: 41
+    '   Total Lines: 117
+    '    Code Lines: 48
     ' Comment Lines: 51
-    '   Blank Lines: 16
-    '     File Size: 4.29 KB
+    '   Blank Lines: 18
+    '     File Size: 4.58 KB
 
 
     '     Class Scaler
@@ -47,7 +47,7 @@
     ' 
     '     Class IScale
     ' 
-    '         Properties: rangeMax
+    '         Properties: rangeMax, rangeMin
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: (+3 Overloads) range
@@ -87,6 +87,27 @@ Namespace d3js.scale
         ''' pixel value in plot range
         ''' </returns>
         Default Public MustOverride ReadOnly Property Value(term$) As Double
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="vector">
+        ''' vector should be a string array or float64 numeric array
+        ''' </param>
+        ''' <returns></returns>
+        Default Public Overridable ReadOnly Property Value(vector As Array) As Double()
+            Get
+                If TypeOf vector Is String() Then
+                    Return DirectCast(vector, String()) _
+                        .Select(Function(t) Me(term:=t)) _
+                        .ToArray
+                Else
+                    Return DirectCast(vector, Double()) _
+                        .Select(Function(xi) Me(x:=xi)) _
+                        .ToArray
+                End If
+            End Get
+        End Property
 
         ''' <summary>
         ''' 返回用户作图数据为零的时候的绘图位置映射结果数据

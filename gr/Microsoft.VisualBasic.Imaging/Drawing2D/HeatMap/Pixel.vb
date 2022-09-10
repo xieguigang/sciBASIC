@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25a299c5687992efbdfe843fabbf6e7b, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\Pixel.vb"
+﻿#Region "Microsoft.VisualBasic::0ca87b32785822fcba8410a4a210103f, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\Pixel.vb"
 
 ' Author:
 ' 
@@ -34,21 +34,29 @@
 
 ' Code Statistics:
 
-'   Total Lines: 10
-'    Code Lines: 7
+'   Total Lines: 21
+'    Code Lines: 15
 ' Comment Lines: 0
-'   Blank Lines: 3
-'     File Size: 204.00 B
+'   Blank Lines: 6
+'     File Size: 581 B
 
 
-'     Class Pixel
+'     Interface Pixel
 ' 
 '         Properties: Scale, X, Y
+' 
+'     Structure PixelData
+' 
+'         Properties: Scale, X, Y
+' 
+'         Function: ToString
 ' 
 ' 
 ' /********************************************************************************/
 
 #End Region
+
+Imports System.Drawing
 
 Namespace Drawing2D.HeatMap
 
@@ -64,6 +72,18 @@ Namespace Drawing2D.HeatMap
         Public Property X As Integer Implements Pixel.X
         Public Property Y As Integer Implements Pixel.Y
         Public Property Scale As Double Implements Pixel.Scale
+
+        Sub New(p As Point, data As Double)
+            X = p.X
+            Y = p.Y
+            Scale = data
+        End Sub
+
+        Sub New(x As Integer, y As Integer, scale As Double)
+            Me.X = x
+            Me.Y = y
+            Me.Scale = scale
+        End Sub
 
         Public Overrides Function ToString() As String
             Return $"[{X},{Y} = {Scale.ToString("G4")}]"

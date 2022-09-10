@@ -1,19 +1,86 @@
-﻿Imports System.IO
+﻿#Region "Microsoft.VisualBasic::cc4cf97c0c21c9def2b3f7d3f6cf3636, sciBASIC#\Data\BinaryData\HDSPack\BinaryStream\TreeParser.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 80
+    '    Code Lines: 56
+    ' Comment Lines: 14
+    '   Blank Lines: 10
+    '     File Size: 3.05 KB
+
+
+    ' Module TreeParser
+    ' 
+    '     Function: getCurrentDirectory, getCurrentFile, Parse
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.FileIO.Path
+Imports Microsoft.VisualBasic.Net.Http
 
 Friend Module TreeParser
 
+    ''' <summary>
+    ''' header tree data is compressed in gzip
+    ''' </summary>
+    ''' <param name="buffer"></param>
+    ''' <param name="registry"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' the attribute data in the tree element has 
+    ''' already been unpack from the raw data 
+    ''' buffer.
+    ''' </remarks>
     Public Function Parse(buffer As Stream, registry As Dictionary(Of String, String)) As StreamGroup
         Dim size As Integer
-        Dim bin As New BinaryDataReader(buffer)
+        Dim bin As New BinaryDataReader(buffer) With {.ByteOrder = ByteOrder.BigEndian}
         Dim root As StreamGroup
+        Dim rawStream As Stream
 
         size = bin.ReadInt32
-        bin = New BinaryDataReader(New SubStream(buffer, buffer.Position, size))
+        rawStream = New SubStream(buffer, buffer.Position, size)
+        ' decomparession via gzip
+        rawStream = rawStream.UnGzipStream
+        bin = New BinaryDataReader(rawStream) With {.ByteOrder = ByteOrder.BigEndian}
         root = bin.getCurrentDirectory(registry)
 
         Return root
@@ -62,3 +129,4 @@ Friend Module TreeParser
         Return file
     End Function
 End Module
+

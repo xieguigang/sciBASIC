@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7775aa187b21d0285abbc48a2aae815f, sciBASIC#\Data_science\DataMining\HMM\Algorithm\HMMChainAlgorithm\HMMChainAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::68400bbec7653f2fa118550a3a3e68e9, sciBASIC#\Data_science\DataMining\HMM\Algorithm\HMMChainAlgorithm\HMMChainAlgorithm.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 9
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 319.00 B
+    '     File Size: 331 B
 
 
     '     Class HMMChainAlgorithm

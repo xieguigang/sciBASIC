@@ -38,7 +38,7 @@
     '    Code Lines: 27
     ' Comment Lines: 0
     '   Blank Lines: 6
-    '     File Size: 941.00 B
+    '     File Size: 941 B
 
 
     '     Class PdfInteger

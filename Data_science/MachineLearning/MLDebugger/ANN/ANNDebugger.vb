@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::8d70f0cb203c19c7c6b523d90471e118, sciBASIC#\Data_science\MachineLearning\MLDebugger\ANN\ANNDebugger.vb"
+﻿#Region "Microsoft.VisualBasic::d650d70caf166e629784207b0a846cb8, sciBASIC#\Data_science\MachineLearning\MLDebugger\ANN\ANNDebugger.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 247
-'    Code Lines: 195
-' Comment Lines: 15
-'   Blank Lines: 37
-'     File Size: 11.32 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class ANNDebugger
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: createLocationTable
-' 
-'     Sub: Save, WriteCDF, writeErrors, WriteFrame, writeIndex
-'          writeNodeBias, writeUnixtime, writeWeight
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 248
+    '    Code Lines: 196
+    ' Comment Lines: 15
+    '   Blank Lines: 37
+    '     File Size: 11.38 KB
+
+
+    ' Class ANNDebugger
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: createLocationTable
+    ' 
+    '     Sub: Save, WriteCDF, writeErrors, WriteFrame, writeIndex
+    '          writeNodeBias, writeUnixtime, writeWeight
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 495.00 B
+    '     File Size: 495 B
 
 
     '     Module Numerics

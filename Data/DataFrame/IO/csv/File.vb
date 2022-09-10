@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8930cc182cbb31161106d856d41ff8b5, sciBASIC#\Data\DataFrame\IO\csv\File.vb"
+﻿#Region "Microsoft.VisualBasic::af17144d315a49bd331a575e6da55419, sciBASIC#\Data\DataFrame\IO\csv\File.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 927
-    '    Code Lines: 554
-    ' Comment Lines: 253
-    '   Blank Lines: 120
-    '     File Size: 37.24 KB
+    '   Total Lines: 954
+    '    Code Lines: 574
+    ' Comment Lines: 256
+    '   Blank Lines: 124
+    '     File Size: 38.30 KB
 
 
     '     Class File
@@ -61,7 +61,7 @@
     ' 
     '             Function: __LINQ_LOAD, AsMatrix, Contains, Distinct, GetEnumerator
     '                       GetEnumerator1, IndexOf, IsNullOrEmpty, (+2 Overloads) Join, Load
-    '                       loads, (+2 Overloads) LoadTsv, Parse, ReadHeaderRow, Remove
+    '                       (+2 Overloads) loads, (+2 Overloads) LoadTsv, Parse, ReadHeaderRow, Remove
     '                       RemoveSubRow, Save
     ' 
     '             Sub: (+3 Overloads) Add, Clear, CopyTo, Insert, InsertAt
@@ -166,7 +166,7 @@ B21,B22,B23,...
                 Optional trimBlanks As Boolean = False,
                 Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing)
 
-            _innerTable = loads(path, encoding.CodePage, trimBlanks, skipWhile)
+            _innerTable = loads(path, encoding.CodePage, trimBlanks, False, skipWhile)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -223,11 +223,14 @@ B21,B22,B23,...
         End Property
 
         ''' <summary>
-        ''' Get all data of a column of a specific column number.(获取文件中的某一列中的所有数据)
+        ''' Get all data of a column of a specific column number.
+        ''' (获取文件中的某一列中的所有数据)
         ''' </summary>
         ''' <param name="Index"></param>
         ''' <value></value>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' the header title has already been excludes
+        ''' </returns>
         ''' <remarks></remarks>
         Public Iterator Property Column(Index As Integer) As IEnumerable(Of String)
             Get
@@ -718,9 +721,16 @@ B21,B22,B23,...
         Public Shared Function Load(path$,
                                     Optional encoding As Encoding = Nothing,
                                     Optional trimBlanks As Boolean = False,
-                                    Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing) As File
+                                    Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing,
+                                    Optional isTsv As Boolean = False) As File
 
-            Dim buf As List(Of RowObject) = loads(path, encoding Or TextEncodings.DefaultEncoding, trimBlanks, skipWhile)
+            Dim buf As List(Of RowObject) = loads(
+                path:=path,
+                encoding:=encoding Or TextEncodings.DefaultEncoding,
+                trimBlanks:=trimBlanks,
+                isTsv:=isTsv,
+                skipWhile:=skipWhile
+            )
             Dim csv As New File With {
                 ._innerTable = buf
             }
@@ -735,7 +745,7 @@ B21,B22,B23,...
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function LoadTsv(path$, Optional encoding As Encoding = Nothing) As File
-            Return csv.Imports(path, ASCII.TAB, encoding)
+            Return Load(path, encoding:=encoding, isTsv:=True)
         End Function
 
 
@@ -757,8 +767,16 @@ B21,B22,B23,...
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Shared Function loads(path As String, encoding As Encoding, trimBlanks As Boolean, skipWhile As NamedValue(Of Func(Of String, Boolean))) As List(Of RowObject)
-            Return FileLoader.Load(path.MapNetFile.ReadAllLines(encoding), trimBlanks, skipWhile)
+        Private Shared Function loads(path As String,
+                                      encoding As Encoding,
+                                      trimBlanks As Boolean,
+                                      isTsv As Boolean,
+                                      skipWhile As NamedValue(Of Func(Of String, Boolean))) As List(Of RowObject)
+
+            Dim buf As String() = path.MapNetFile.ReadAllLines(encoding)
+            Dim result As List(Of RowObject) = FileLoader.Load(buf, trimBlanks, skipWhile, isTsv)
+
+            Return result
         End Function
 
         Protected Shared Function loads(file As Stream, encoding As Encoding, trimBlanks As Boolean, skipWhile As NamedValue(Of Func(Of String, Boolean))) As List(Of RowObject)

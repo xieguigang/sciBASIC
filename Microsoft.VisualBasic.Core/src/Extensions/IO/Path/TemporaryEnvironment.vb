@@ -38,7 +38,7 @@
     '    Code Lines: 31
     ' Comment Lines: 23
     '   Blank Lines: 11
-    '     File Size: 2.36 KB
+    '     File Size: 2.35 KB
 
 
     '     Class TemporaryEnvironment

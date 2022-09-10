@@ -38,7 +38,7 @@
     '    Code Lines: 5
     ' Comment Lines: 7
     '   Blank Lines: 2
-    '     File Size: 324.00 B
+    '     File Size: 324 B
 
 
     '     Interface ITaskDriver

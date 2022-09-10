@@ -38,7 +38,7 @@
     '    Code Lines: 19
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 783.00 B
+    '     File Size: 783 B
 
 
     '     Class ColonCharacterStrategy

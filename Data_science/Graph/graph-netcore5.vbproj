@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>Microsoft.VisualBasic.Data.GraphTheory</RootNamespace>
-	  <TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
+	  <TargetFrameworks>net6.0;net5.0;net48;net6.0-windows</TargetFrameworks>
     <AssemblyName>Microsoft.VisualBasic.Data.GraphTheory</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;NPSearch;mzkit_win32</Configurations>

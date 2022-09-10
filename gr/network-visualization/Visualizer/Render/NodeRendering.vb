@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1654a2f12652611d4e1c910916b6e7f3, sciBASIC#\gr\network-visualization\Visualizer\Render\NodeRendering.vb"
+﻿#Region "Microsoft.VisualBasic::0e434d7f771b74081aa2a1799e729f83, sciBASIC#\gr\network-visualization\Visualizer\Render\NodeRendering.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 196
-    '    Code Lines: 171
+    '   Total Lines: 176
+    '    Code Lines: 151
     ' Comment Lines: 4
     '   Blank Lines: 21
-    '     File Size: 7.33 KB
+    '     File Size: 6.49 KB
 
 
     ' Class NodeRendering
@@ -226,4 +226,3 @@ Friend Class NodeRendering
         End If
     End Function
 End Class
-

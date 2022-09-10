@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0716a5b05dcf2fc8058026ce23068067, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\base\Combination\Combination.vb"
+﻿#Region "Microsoft.VisualBasic::e29877b3056274bb9eeacf5b756fd66c, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\base\Combination\Combination.vb"
 
     ' Author:
     ' 
@@ -118,4 +118,3 @@ Namespace ComponentModel.Algorithm.base
         End Function
     End Class
 End Namespace
-

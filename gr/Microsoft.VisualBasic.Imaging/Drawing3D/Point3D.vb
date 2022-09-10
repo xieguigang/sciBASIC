@@ -38,7 +38,7 @@
     '    Code Lines: 102
     ' Comment Lines: 45
     '   Blank Lines: 25
-    '     File Size: 6.68 KB
+    '     File Size: 6.67 KB
 
 
     '     Structure Point3D

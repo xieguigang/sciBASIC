@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38ad75527683d33b2a3644e4d0b372e6, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\Flags\CharMapPositions.vb"
+﻿#Region "Microsoft.VisualBasic::d2558d37f971711556c19c24ffaed47e, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\Flags\CharMapPositions.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 19
     ' Comment Lines: 3
     '   Blank Lines: 0
-    '     File Size: 584.00 B
+    '     File Size: 582 B
 
 
     '     Enum CharMapPositions
@@ -78,4 +78,3 @@ Namespace ApplicationServices.Terminal.TablePrinter.Flags
         DividerY
     End Enum
 End Namespace
-

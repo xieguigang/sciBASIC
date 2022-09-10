@@ -38,7 +38,7 @@
     '    Code Lines: 7
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 330.00 B
+    '     File Size: 330 B
 
 
     ' Class JSONSerializerOptions

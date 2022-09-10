@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf5cbde397fefa05a86d05a92addcfee, sciBASIC#\Data_science\DataMining\BinaryTree\ComparisonProvider\AlignmentComparison.vb"
+﻿#Region "Microsoft.VisualBasic::44468638d24a6499a42028ee1fbd3194, sciBASIC#\Data_science\DataMining\BinaryTree\ComparisonProvider\AlignmentComparison.vb"
 
     ' Author:
     ' 
@@ -77,7 +77,7 @@ Public Class AlignmentComparison : Inherits ComparisonProvider
                           End Function)
     End Sub
 
-    Protected Overrides Function GetSimilarity(x As String, y As String) As Double
+    Public Overrides Function GetSimilarity(x As String, y As String) As Double
         Dim xvec As New Vector(dataIndex(x))
         Dim yvec As New Vector(dataIndex(y))
 

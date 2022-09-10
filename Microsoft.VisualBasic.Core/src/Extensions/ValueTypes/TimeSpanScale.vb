@@ -38,7 +38,7 @@
     '    Code Lines: 11
     ' Comment Lines: 3
     '   Blank Lines: 1
-    '     File Size: 288.00 B
+    '     File Size: 288 B
 
 
     '     Enum TimeSpanScale

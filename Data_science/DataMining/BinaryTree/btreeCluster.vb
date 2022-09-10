@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd44689dd45f801d606a5c637b1d14f0, sciBASIC#\Data_science\DataMining\BinaryTree\btreeCluster.vb"
+﻿#Region "Microsoft.VisualBasic::f318b146e4efcd307636f7c99f1b62d0, sciBASIC#\Data_science\DataMining\BinaryTree\btreeCluster.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 33
-    '    Code Lines: 23
+    '   Total Lines: 37
+    '    Code Lines: 26
     ' Comment Lines: 4
-    '   Blank Lines: 6
-    '     File Size: 1.12 KB
+    '   Blank Lines: 7
+    '     File Size: 1.27 KB
 
 
     ' Class BTreeCluster
     ' 
     '     Properties: left, members, right, uuid
     ' 
-    '     Function: (+2 Overloads) GetClusters
+    '     Function: (+2 Overloads) GetClusters, ToString
     ' 
     ' /********************************************************************************/
 

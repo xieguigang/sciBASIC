@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e193d7f7fa7c82de193b2c6c89a2de73, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\InteropService\Pipeline\RunSlavePipeline.vb"
+﻿#Region "Microsoft.VisualBasic::15ca1618eb9f9ccdda256862e7ecb3b6, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\InteropService\Pipeline\RunSlavePipeline.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 62
-    '    Code Lines: 47
+    '   Total Lines: 81
+    '    Code Lines: 61
     ' Comment Lines: 2
-    '   Blank Lines: 13
-    '     File Size: 2.11 KB
+    '   Blank Lines: 18
+    '     File Size: 2.67 KB
 
 
     '     Class RunSlavePipeline
@@ -49,7 +49,7 @@
     ' 
     '         Function: Run, ToString
     ' 
-    '         Sub: ProcessMessage, SendMessage, SendProgress
+    '         Sub: HookProgress, ProcessMessage, SendMessage, SendProgress
     ' 
     ' 
     ' /********************************************************************************/
@@ -62,7 +62,7 @@ Namespace CommandLine.InteropService.Pipeline
 
         Public Event SetProgress(percentage As Integer, details As String)
         Public Event SetMessage(message As String)
-        Public Event Finish()
+        Public Event Finish(exitCode As Integer)
 
         ReadOnly app As String
         ReadOnly arguments As String
@@ -88,7 +88,7 @@ Namespace CommandLine.InteropService.Pipeline
                 workdir:=workdir
             )
 
-            RaiseEvent Finish()
+            RaiseEvent Finish(code)
 
             Return code
         End Function
@@ -120,9 +120,19 @@ Namespace CommandLine.InteropService.Pipeline
             Call Console.WriteLine($"[SET_MESSAGE] {message}")
         End Sub
 
+        Shared m_hookProgress As SetProgressEventHandler
+
+        Public Shared Sub HookProgress(progress As SetProgressEventHandler)
+            m_hookProgress = progress
+        End Sub
+
         Public Shared Sub SendProgress(percentage As Double, message As String)
             Call VBDebugger.WaitOutput()
             Call Console.WriteLine($"[SET_PROGRESS] {percentage} {message}")
+
+            If Not m_hookProgress Is Nothing Then
+                Call m_hookProgress(percentage, message)
+            End If
         End Sub
 
     End Class

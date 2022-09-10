@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a350b4ab279c82c2e04b2e1203d9074, sciBASIC#\mime\text%html\CSS\Padding.vb"
+﻿#Region "Microsoft.VisualBasic::62a3e01161326aab2d727201963f6aeb, sciBASIC#\mime\text%html\CSS\Padding.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 283
-    '    Code Lines: 151
+    '   Total Lines: 289
+    '    Code Lines: 156
     ' Comment Lines: 98
-    '   Blank Lines: 34
-    '     File Size: 11.32 KB
+    '   Blank Lines: 35
+    '     File Size: 11.47 KB
 
 
     '     Structure Padding
     ' 
     '         Properties: Bottom, Horizontal, IsEmpty, LayoutVector, Left
-    '                     Right, Top, Vertical
+    '                     Right, Top, Vertical, Zero
     ' 
     '         Constructor: (+5 Overloads) Sub New
     '         Function: Equals, GetCanvasRegion, Offset2D, ToString, TryParse

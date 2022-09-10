@@ -38,7 +38,7 @@
     '    Code Lines: 16
     ' Comment Lines: 6
     '   Blank Lines: 5
-    '     File Size: 865.00 B
+    '     File Size: 865 B
 
 
     '     Class EdgeSet

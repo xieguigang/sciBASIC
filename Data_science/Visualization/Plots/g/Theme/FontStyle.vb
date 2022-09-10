@@ -38,7 +38,7 @@
     '    Code Lines: 7
     ' Comment Lines: 4
     '   Blank Lines: 3
-    '     File Size: 356.00 B
+    '     File Size: 356 B
 
 
     '     Class FontStyle

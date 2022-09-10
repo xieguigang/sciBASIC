@@ -64,7 +64,8 @@
 	  <DefineTrace>true</DefineTrace>
 	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
 	  <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
-	  <OutputPath />
+	  
+	  <OutputPath>/mzkit/dist/bin</OutputPath>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NPSearch|x64'">
@@ -124,6 +125,8 @@
 	  <DefineDebug>false</DefineDebug>
 	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
 	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'" />
 
 	<ItemGroup>
 		<Compile Remove="test\**" />

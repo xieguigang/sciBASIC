@@ -38,7 +38,7 @@
     '    Code Lines: 21
     ' Comment Lines: 0
     '   Blank Lines: 6
-    '     File Size: 677.00 B
+    '     File Size: 677 B
 
 
     ' Class FixLengthString

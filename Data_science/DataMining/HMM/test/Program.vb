@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16742838b0809e6d55bbc6b7905226a3, sciBASIC#\Data_science\DataMining\HMM\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::efa83513f1ec16969f85eca7f1b7e70d, sciBASIC#\Data_science\DataMining\HMM\test\Program.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 45
     ' Comment Lines: 8
     '   Blank Lines: 16
-    '     File Size: 2.84 KB
+    '     File Size: 2.91 KB
 
 
     ' Module Program

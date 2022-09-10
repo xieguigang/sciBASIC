@@ -38,7 +38,7 @@
     '    Code Lines: 9
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 247.00 B
+    '     File Size: 247 B
 
 
     ' Class MyCustomDatasetItem

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5223993073b5bccf35a611da8958d7ca, sciBASIC#\mime\application%json\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::4117d0e838a740403ec49cb3e8fd230d, sciBASIC#\mime\application%json\Extensions.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 33
     ' Comment Lines: 11
     '   Blank Lines: 6
-    '     File Size: 1.60 KB
+    '     File Size: 1.70 KB
 
 
     ' Module Extensions
@@ -76,21 +76,28 @@ Imports Microsoft.VisualBasic.MIME.application.json.Javascript
     ''' try cast of the json element object as json literal value
     ''' </summary>
     ''' <param name="obj"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' nothing will be returns if the target <paramref name="obj"/>
+    ''' is not a <see cref="JsonValue"/> type.
+    ''' </returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function AsString(obj As JsonElement) As String
-        Return DirectCast(obj, JsonValue).GetStripString
+    Public Function AsString(obj As JsonElement, decodeMetachar As Boolean) As String
+        If TypeOf obj Is JsonValue Then
+            Return DirectCast(obj, JsonValue).GetStripString(decodeMetachar)
+        Else
+            Return Nothing
+        End If
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function AsStringVector(array As JsonElement) As String()
+    Public Function AsStringVector(array As JsonElement, decodeMetachar As Boolean) As String()
         If array Is Nothing Then
             Return Nothing
         End If
         If TypeOf array Is JsonValue Then
-            Return {array.AsString}
+            Return New String() {array.AsString(decodeMetachar)}
         End If
 
         Return DirectCast(array, JsonArray) _

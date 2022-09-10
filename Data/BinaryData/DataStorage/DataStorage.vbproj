@@ -836,32 +836,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="netCDF\CDFWriter.vb" />
-    <Compile Include="netCDF\Components\CDFData\CDFData.vb" />
-    <Compile Include="netCDF\Components\CDFData\chars.vb" />
-    <Compile Include="netCDF\Components\CDFData\bytes.vb" />
-    <Compile Include="netCDF\Components\VectorHelper.vb" />
-    <Compile Include="netCDF\Components\recordDimension.vb" />
-    <Compile Include="netCDF\Components\ICDFDataVector.vb" />
-    <Compile Include="netCDF\Components\CDFData\flags.vb" />
-    <Compile Include="netCDF\Components\CDFData\longs.vb" />
-    <Compile Include="netCDF\Components\CDFData\doubles.vb" />
-    <Compile Include="netCDF\Components\CDFData\floats.vb" />
-    <Compile Include="netCDF\Components\CDFData\shorts.vb" />
-    <Compile Include="netCDF\Components\CDFData\integers.vb" />
-    <Compile Include="netCDF\Components\DimensionList.vb" />
-    <Compile Include="netCDF\Components\attribute.vb" />
-    <Compile Include="netCDF\Components\Dimension.vb" />
-    <Compile Include="netCDF\Components\variable.vb" />
-    <Compile Include="netCDF\Components\Header.vb" />
-    <Compile Include="netCDF\Data\CDFDataTypes.vb" />
-    <Compile Include="netCDF\Data\DataReader.vb" />
-    <Compile Include="netCDF\Data\StructureParser.vb" />
-    <Compile Include="netCDF\Data\TypeExtensions.vb" />
-    <Compile Include="netCDF\Data\Xml.vb" />
-    <Compile Include="netCDF\netCDFReader.vb" />
-    <Compile Include="netCDF\ToString.vb" />
-    <Compile Include="netCDF\Utils.vb" />
     <Compile Include="SQLite3\Extensions.vb" />
     <Compile Include="SQLite3\Helpers\BTreeTools.vb" />
     <Compile Include="SQLite3\Helpers\ReadonlyStream.vb" />

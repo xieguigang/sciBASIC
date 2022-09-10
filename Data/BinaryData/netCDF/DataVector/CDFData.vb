@@ -1,58 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::639eb9a3c7245147eb6d7d06a390e293, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\CDFData\CDFData.vb"
+﻿#Region "Microsoft.VisualBasic::eb065e625b7649b46bf1f9cc3efcac56, sciBASIC#\Data\BinaryData\netCDF\DataVector\CDFData.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 134
-'    Code Lines: 108
-' Comment Lines: 9
-'   Blank Lines: 17
-'     File Size: 5.56 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class CDFData
-' 
-'         Properties: genericValue, ICDFDataVector_length
-' 
-'         Function: GetBuffer, ToString
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 155
+    '    Code Lines: 127
+    ' Comment Lines: 10
+    '   Blank Lines: 18
+    '     File Size: 6.94 KB
+
+
+    '     Class CDFData
+    ' 
+    '         Properties: genericValue, ICDFDataVector_length
+    ' 
+    '         Function: GetBuffer, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
 Imports Microsoft.VisualBasic.Language
@@ -119,6 +120,8 @@ Namespace DataVector
 
         Public Overrides Function ToString() As String
             Dim stringify$
+            Dim range As DoubleRange = Nothing
+            Dim rangeStr$
 
             Select Case cdfDataType
                 Case CDFDataTypes.BYTE : stringify = DirectCast(genericValue, Byte()).ToBase64String
@@ -133,6 +136,22 @@ Namespace DataVector
                     Return "invalid!"
             End Select
 
+            Select Case cdfDataType
+                Case CDFDataTypes.BYTE : range = DirectCast(genericValue, Byte()).Select(Function(b) CDbl(b)).ToArray
+                Case CDFDataTypes.DOUBLE : range = DirectCast(genericValue, Double()).ToArray
+                Case CDFDataTypes.FLOAT : range = DirectCast(genericValue, Single()).Select(Function(d) CDbl(d)).ToArray
+                Case CDFDataTypes.INT : range = DirectCast(genericValue, Integer()).Select(Function(i) CDbl(i)).ToArray
+                Case CDFDataTypes.SHORT : range = DirectCast(genericValue, Short()).Select(Function(s) CDbl(s)).ToArray
+                Case CDFDataTypes.LONG : range = DirectCast(genericValue, Long()).Select(Function(l) CDbl(l)).ToArray
+                Case Else
+                    ' do nothing
+            End Select
+
+            If Not range Is Nothing Then
+                rangeStr = $"; min:{range.Min}, max:{range.Max}"
+            Else
+                rangeStr = $""
+            End If
             If (stringify.Length > 50) Then
                 stringify = stringify.Substring(0, 50)
             End If
@@ -140,7 +159,7 @@ Namespace DataVector
                 stringify &= $" (length: ${Me.Length})"
             End If
 
-            Return $"[{cdfDataType}] {stringify}"
+            Return $"[{cdfDataType}{range}] {stringify}"
         End Function
 
         Public Function GetBuffer(encoding As Encoding) As Byte() Implements ICDFDataVector.GetBuffer

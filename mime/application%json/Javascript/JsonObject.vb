@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ae7a68f5e18bc02b07a470ef070de5c, sciBASIC#\mime\application%json\Javascript\JsonObject.vb"
+﻿#Region "Microsoft.VisualBasic::47083c84449f4979e1f53e5a160c5ccd, sciBASIC#\mime\application%json\Javascript\JsonObject.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 130
     ' Comment Lines: 41
     '   Blank Lines: 32
-    '     File Size: 7.19 KB
+    '     File Size: 7.29 KB
 
 
     '     Class JsonObject
@@ -193,18 +193,18 @@ Namespace Javascript
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function CreateObject(Of T)() As T
-            Return CreateObject(type:=GetType(T))
+        Public Function CreateObject(Of T)(decodeMetachar As Boolean) As T
+            Return CreateObject(type:=GetType(T), decodeMetachar)
         End Function
 
-        Public Function CreateObject(type As Type) As Object
+        Public Function CreateObject(type As Type, decodeMetachar As Boolean) As Object
             If type.IsArray AndAlso Me.isArray Then
                 Dim itemType As Type = type.GetElementType
                 Dim graph As ObjectSchema = ObjectSchema.GetSchema(itemType)
 
-                Return ToJsonArray.createArray(graph, itemType)
+                Return ToJsonArray.createArray(graph, itemType, decodeMetachar)
             Else
-                Return Me.createObject(parent:=Nothing, schema:=type)
+                Return Me.createObject(parent:=Nothing, schema:=type, decodeMetachar)
             End If
         End Function
 

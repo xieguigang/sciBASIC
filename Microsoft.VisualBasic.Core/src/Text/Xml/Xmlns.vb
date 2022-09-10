@@ -49,7 +49,7 @@
     ' 
     '         Function: RootParser, ToString
     ' 
-    '         Sub: [Set], __replace, Clear, WriteNamespace
+    '         Sub: __replace, [Set], Clear, WriteNamespace
     ' 
     ' 
     ' /********************************************************************************/

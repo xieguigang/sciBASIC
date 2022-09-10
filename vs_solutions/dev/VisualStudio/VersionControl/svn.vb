@@ -38,7 +38,7 @@
     '    Code Lines: 11
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 405.00 B
+    '     File Size: 405 B
 
 
     '     Module svn

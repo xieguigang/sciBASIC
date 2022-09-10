@@ -38,7 +38,7 @@
     '    Code Lines: 25
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 1.06 KB
+    '     File Size: 1.05 KB
 
 
     '     Structure [Error]

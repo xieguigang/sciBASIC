@@ -38,7 +38,7 @@
     '    Code Lines: 25
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 928.00 B
+    '     File Size: 928 B
 
 
     ' Module DijkstraTest

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7cde2e270826bc13dc990f4160b8f568, sciBASIC#\Data_science\MachineLearning\MachineLearning\CNN\Layers\Pool.vb"
+﻿#Region "Microsoft.VisualBasic::140d56f23cf3834e143458bfb9153009, sciBASIC#\Data_science\MachineLearning\MachineLearning\CNN\Layers\Pool.vb"
 
     ' Author:
     ' 
@@ -144,4 +144,3 @@ Namespace Convolutional
         End Function
     End Class
 End Namespace
-

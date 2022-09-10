@@ -38,7 +38,7 @@
     '    Code Lines: 91
     ' Comment Lines: 8
     '   Blank Lines: 32
-    '     File Size: 3.72 KB
+    '     File Size: 3.71 KB
 
 
     ' Module numberParserTest

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82c01fae1c423f3fa850e68521c410d4, sciBASIC#\Data_science\MachineLearning\xgboost\util\FVec\FVec.vb"
+﻿#Region "Microsoft.VisualBasic::2c3c8c0f39eaa7133a69d9bae7c9dc5a, sciBASIC#\Data_science\MachineLearning\xgboost\util\FVec\FVec.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 5
     ' Comment Lines: 8
     '   Blank Lines: 4
-    '     File Size: 367.00 B
+    '     File Size: 383 B
 
 
     '     Interface FVec

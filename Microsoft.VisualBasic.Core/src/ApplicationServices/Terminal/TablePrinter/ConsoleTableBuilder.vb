@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd094f761977d4ebef69308b9a3921dc, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\ConsoleTableBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::54daeb70382bc450503286f9b08eab85, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\ConsoleTableBuilder.vb"
 
     ' Author:
     ' 
@@ -732,4 +732,3 @@ Namespace ApplicationServices.Terminal.TablePrinter
         End Function
     End Class
 End Namespace
-

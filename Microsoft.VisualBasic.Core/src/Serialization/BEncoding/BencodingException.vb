@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 5
-    '     File Size: 927.00 B
+    '     File Size: 927 B
 
 
     '     Class BencodingException

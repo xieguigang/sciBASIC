@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d4f27b1b42fcbeb8ed0e524e2db8fa0, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\Flags\TextAligntment.vb"
+﻿#Region "Microsoft.VisualBasic::41fcb3d158778e021944369498739218, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\Flags\TextAligntment.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 7
     ' Comment Lines: 0
     '   Blank Lines: 0
-    '     File Size: 177.00 B
+    '     File Size: 175 B
 
 
     '     Enum TextAligntment
@@ -60,4 +60,3 @@ Namespace ApplicationServices.Terminal.TablePrinter.Flags
         Center = 2
     End Enum
 End Namespace
-

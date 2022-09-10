@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::547ce8fdd9ed4bc6019b90c035446e56, sciBASIC#\Data\BinaryData\msgpack\Constants\MsgPackFormats.vb"
+﻿#Region "Microsoft.VisualBasic::8a82bedaeac21f69a31f2da7a127dd05, sciBASIC#\Data\BinaryData\msgpack\Constants\MsgPackFormats.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 47
     ' Comment Lines: 9
     '   Blank Lines: 4
-    '     File Size: 2.32 KB
+    '     File Size: 2.38 KB
 
 
     '     Class MsgPackFormats

@@ -38,7 +38,7 @@
     '    Code Lines: 61
     ' Comment Lines: 6
     '   Blank Lines: 11
-    '     File Size: 2.99 KB
+    '     File Size: 2.98 KB
 
 
     ' Module Extensions

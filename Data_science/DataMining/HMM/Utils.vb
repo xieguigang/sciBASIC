@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73ece96517b8d9a1e000c5c30f660da3, sciBASIC#\Data_science\DataMining\HMM\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::3bc740b0e6c822ca72528443b9a0abf4, sciBASIC#\Data_science\DataMining\HMM\Utils.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 21
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 954.00 B
+    '     File Size: 978 B
 
 
     ' Module Utils

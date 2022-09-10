@@ -1,4 +1,61 @@
-﻿Namespace FileIO.Path
+﻿#Region "Microsoft.VisualBasic::30b4289465de6999f3c24814f3e15812, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\Path\FilePath.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 83
+    '    Code Lines: 70
+    ' Comment Lines: 0
+    '   Blank Lines: 13
+    '     File Size: 2.93 KB
+
+
+    '     Class FilePath
+    ' 
+    '         Properties: Components, DirectoryPath, FileName, IsAbsolutePath, IsDirectory
+    '                     ParentDirectory
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: combineDirectory, ToString
+    '         Operators: <>, =
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Namespace FileIO.Path
 
     Public Class FilePath
 
@@ -12,6 +69,10 @@
             End Get
         End Property
 
+        ''' <summary>
+        ''' the file basename, not file path
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property FileName As String
             Get
                 Return Components.Last
@@ -59,12 +120,20 @@
             End If
         End Function
 
+        ''' <summary>
+        ''' get full path string
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
             If IsDirectory Then
                 Return DirectoryPath.StringReplace("[/]{2,}", "/")
             Else
                 Return $"{DirectoryPath}/{FileName}".StringReplace("[/]{2,}", "/")
             End If
+        End Function
+
+        Public Shared Function Parse(path As String) As FilePath
+            Return New FilePath(path)
         End Function
 
         Public Shared Operator =(file1 As FilePath, file2 As FilePath) As Boolean

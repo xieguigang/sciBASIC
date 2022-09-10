@@ -38,7 +38,7 @@
     '    Code Lines: 248
     ' Comment Lines: 72
     '   Blank Lines: 60
-    '     File Size: 16.85 KB
+    '     File Size: 16.84 KB
 
 
     '     Class VisualBasic

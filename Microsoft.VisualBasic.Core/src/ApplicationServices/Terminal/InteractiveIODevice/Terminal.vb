@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::477663ab5d452c3616594577c897c10d, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\Terminal.vb"
+﻿#Region "Microsoft.VisualBasic::86da936a4731fb4542a289a6f7bf6b99, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\Terminal.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1080
-    '    Code Lines: 364
+    '   Total Lines: 1083
+    '    Code Lines: 366
     ' Comment Lines: 626
-    '   Blank Lines: 90
-    '     File Size: 60.03 KB
+    '   Blank Lines: 91
+    '     File Size: 60.15 KB
 
 
     '     Class Terminal
@@ -61,6 +61,8 @@
     ' /********************************************************************************/
 
 #End Region
+
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.STDIO__
 
 Namespace ApplicationServices.Terminal
 
@@ -1139,6 +1141,7 @@ Namespace ApplicationServices.Terminal
         ''' <param name="e"></param>
         ''' <remarks></remarks>
         Public Event CancelKeyPress(sender As Object, e As System.ConsoleCancelEventArgs)
+        Public Event Tab() Implements IConsole.Tab
 #End Region
     End Class
 End Namespace

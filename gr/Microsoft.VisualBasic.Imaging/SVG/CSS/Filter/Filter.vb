@@ -38,7 +38,7 @@
     '    Code Lines: 22
     ' Comment Lines: 6
     '   Blank Lines: 6
-    '     File Size: 1.09 KB
+    '     File Size: 1.08 KB
 
 
     '     Class Filter

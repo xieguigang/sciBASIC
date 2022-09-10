@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ec6e0c967db0d273610991962a4683d, sciBASIC#\mime\application%json\Parser\JsonParser.vb"
+﻿#Region "Microsoft.VisualBasic::597f043c74672854d267f0d5d02a105f, sciBASIC#\mime\application%json\Parser\JsonParser.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 498
-    '    Code Lines: 330
+    '   Total Lines: 504
+    '    Code Lines: 334
     ' Comment Lines: 107
-    '   Blank Lines: 61
-    '     File Size: 16.03 KB
+    '   Blank Lines: 63
+    '     File Size: 16.30 KB
 
 
     ' Class JsonParser
@@ -271,7 +271,7 @@ eh:
         End Select
     End Function
 
-    Public Shared Function StripString(str$) As String
+    Public Shared Function StripString(str$, decodeMetaChar As Boolean) As String
         Dim index% = 1
         Dim chr$, code$
         Dim sb As New StringBuilder
@@ -281,32 +281,38 @@ eh:
             Select Case chr
                 Case "\"
                     index += 1
-                    chr = Mid(str, index, 1)
-                    Select Case chr
-                        Case """", "\", "/", """"
-                            sb.Append(chr)
-                            index += 1
-                        Case "b"
-                            sb.Append(vbBack)
-                            index += 1
-                        Case "f"
-                            sb.Append(vbFormFeed)
-                            index += 1
-                        Case "n"
-                            sb.Append(vbLf)
-                            index += 1
-                        Case "r"
-                            sb.Append(vbCr)
-                            index += 1
-                        Case "t"
-                            sb.Append(vbTab)
-                            index += 1
-                        Case "u"
-                            index += 1
-                            code = Mid(str, index, 4)
-                            sb.Append(ChrW(Val("&h" & code)))
-                            index += 4
-                    End Select
+
+                    If decodeMetaChar Then
+                        chr = Mid(str, index, 1)
+
+                        Select Case chr
+                            Case """", "\", "/", """"
+                                sb.Append(chr)
+                                index += 1
+                            Case "b"
+                                sb.Append(vbBack)
+                                index += 1
+                            Case "f"
+                                sb.Append(vbFormFeed)
+                                index += 1
+                            Case "n"
+                                sb.Append(vbLf)
+                                index += 1
+                            Case "r"
+                                sb.Append(vbCr)
+                                index += 1
+                            Case "t"
+                                sb.Append(vbTab)
+                                index += 1
+                            Case "u"
+                                index += 1
+                                code = Mid(str, index, 4)
+                                sb.Append(ChrW(Val("&h" & code)))
+                                index += 4
+                        End Select
+                    Else
+                        sb.Append(chr)
+                    End If
                 Case Else
                     sb.Append(chr)
                     index += 1

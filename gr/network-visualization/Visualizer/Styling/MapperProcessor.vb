@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7fe7b8937310893c85a10e615529785e, sciBASIC#\gr\network-visualization\Visualizer\Styling\MapperProcessor.vb"
+﻿#Region "Microsoft.VisualBasic::f8f2444cf2296bbe95a601dfb460a552, sciBASIC#\gr\network-visualization\Visualizer\Styling\MapperProcessor.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 12
     ' Comment Lines: 15
     '   Blank Lines: 4
-    '     File Size: 1.10 KB
+    '     File Size: 1.13 KB
 
 
     '     Module MapperProcessor

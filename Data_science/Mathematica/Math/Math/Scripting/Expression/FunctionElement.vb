@@ -38,7 +38,7 @@
     '    Code Lines: 16
     ' Comment Lines: 3
     '   Blank Lines: 5
-    '     File Size: 635.00 B
+    '     File Size: 635 B
 
 
     '     Class FunctionElement

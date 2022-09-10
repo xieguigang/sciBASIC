@@ -38,7 +38,7 @@
     '    Code Lines: 24
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 820.00 B
+    '     File Size: 820 B
 
 
     '     Class PdfIdentifier

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2afca569265af380001c0a094bb9c7e, sciBASIC#\gr\network-visualization\Visualizer\Styling\Expression\Syntax.vb"
+﻿#Region "Microsoft.VisualBasic::1a3cda5b05fbef224e26ef4c8550dc97, sciBASIC#\gr\network-visualization\Visualizer\Styling\Expression\Syntax.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 56
     ' Comment Lines: 24
     '   Blank Lines: 7
-    '     File Size: 3.54 KB
+    '     File Size: 3.63 KB
 
 
     '     Module SyntaxExtensions

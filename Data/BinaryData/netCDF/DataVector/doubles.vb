@@ -1,54 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::46bcda59aa959a473a7268b5d76156e6, sciBASIC#\Data\BinaryData\DataStorage\netCDF\Components\CDFData\doubles.vb"
+﻿#Region "Microsoft.VisualBasic::4740e32877e1fccdcce5c5550ba7db2d, sciBASIC#\Data\BinaryData\netCDF\DataVector\doubles.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 26
-'    Code Lines: 20
-' Comment Lines: 0
-'   Blank Lines: 6
-'     File Size: 755.00 B
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class doubles
-' 
-'         Properties: cdfDataType
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 27
+    '    Code Lines: 21
+    ' Comment Lines: 0
+    '   Blank Lines: 6
+    '     File Size: 803 B
+
+
+    '     Class doubles
+    ' 
+    '         Properties: cdfDataType
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

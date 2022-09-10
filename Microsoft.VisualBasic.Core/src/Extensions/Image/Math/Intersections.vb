@@ -38,7 +38,7 @@
     '    Code Lines: 8
     ' Comment Lines: 12
     '   Blank Lines: 1
-    '     File Size: 448.00 B
+    '     File Size: 448 B
 
 
     '     Enum Intersections

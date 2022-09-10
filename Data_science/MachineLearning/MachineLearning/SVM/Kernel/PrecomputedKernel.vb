@@ -38,7 +38,7 @@
     '    Code Lines: 37
     ' Comment Lines: 62
     '   Blank Lines: 20
-    '     File Size: 4.65 KB
+    '     File Size: 4.64 KB
 
 
     '     Class PrecomputedKernel

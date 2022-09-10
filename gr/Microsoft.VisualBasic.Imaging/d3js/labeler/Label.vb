@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0470850ab4d6fda23098237dacccf69, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Label.vb"
+﻿#Region "Microsoft.VisualBasic::3b81d4414d3a93508ae53bf218c590a7, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Label.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 127
-    '    Code Lines: 74
+    '   Total Lines: 132
+    '    Code Lines: 78
     ' Comment Lines: 36
-    '   Blank Lines: 17
-    '     File Size: 3.95 KB
+    '   Blank Lines: 18
+    '     File Size: 4.29 KB
 
 
     '     Class Label
@@ -47,7 +47,7 @@
     '                     width, X, Y
     ' 
     '         Constructor: (+4 Overloads) Sub New
-    '         Function: ToString
+    '         Function: distanceTo, ToString
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09ccca1fa7bf748ebbf1934f005889ff, sciBASIC#\Data_science\MachineLearning\xgboost\TGBoost\Tree.vb"
+﻿#Region "Microsoft.VisualBasic::5bf71fc126ff2f1b24ede275c770dade, sciBASIC#\Data_science\MachineLearning\xgboost\TGBoost\Tree.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 340
     ' Comment Lines: 48
     '   Blank Lines: 81
-    '     File Size: 21.71 KB
+    '     File Size: 22.17 KB
 
 
     '     Class Tree

@@ -38,7 +38,7 @@
     '    Code Lines: 19
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 896.00 B
+    '     File Size: 896 B
 
 
     '     Class Backward

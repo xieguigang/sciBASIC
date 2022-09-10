@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a627612711bea0a09f37de2d1815a4d, sciBASIC#\gr\network-visualization\Visualizer\Styling\CSS\StyleCreator.vb"
+﻿#Region "Microsoft.VisualBasic::c978f7d92b9a31d21d23af67f74f499d, sciBASIC#\gr\network-visualization\Visualizer\Styling\CSS\StyleCreator.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 22
     ' Comment Lines: 18
     '   Blank Lines: 6
-    '     File Size: 1.50 KB
+    '     File Size: 1.54 KB
 
 
     '     Structure StyleCreator

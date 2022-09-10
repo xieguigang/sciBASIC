@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4cdd35368f0b17c116e9fb389d699f08, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BElements\BInteger.vb"
+﻿#Region "Microsoft.VisualBasic::0a03ed1f2498dcdf0be5178912b024c4, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BElements\BInteger.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 40
     ' Comment Lines: 29
     '   Blank Lines: 12
-    '     File Size: 2.65 KB
+    '     File Size: 2.73 KB
 
 
     '     Class BInteger

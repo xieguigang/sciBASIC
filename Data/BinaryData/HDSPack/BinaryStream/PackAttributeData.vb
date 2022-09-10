@@ -1,4 +1,55 @@
-﻿Imports System.IO
+﻿#Region "Microsoft.VisualBasic::99222b4ba496557f6e54d7553cb7187e, sciBASIC#\Data\BinaryData\HDSPack\BinaryStream\PackAttributeData.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 133
+    '    Code Lines: 106
+    ' Comment Lines: 3
+    '   Blank Lines: 24
+    '     File Size: 4.84 KB
+
+
+    ' Module PackAttributeData
+    ' 
+    '     Function: GetTypeCodes, GetTypeRegistry, (+3 Overloads) Pack, UnPack
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -10,7 +61,7 @@ Module PackAttributeData
 
     <Extension>
     Public Function GetTypeCodes(registry As Index(Of String)) As Byte()
-        Using ms As New MemoryStream, bin As New BinaryDataWriter(ms)
+        Using ms As New MemoryStream, bin As New BinaryDataWriter(ms) With {.ByteOrder = ByteOrder.BigEndian}
             Call bin.Write(registry.Count)
 
             For Each code As SeqValue(Of String) In registry
@@ -26,7 +77,7 @@ Module PackAttributeData
 
     <Extension>
     Public Iterator Function GetTypeRegistry(buffer As Stream) As IEnumerable(Of NamedValue(Of Integer))
-        Using bin As New BinaryDataReader(buffer)
+        Using bin As New BinaryDataReader(buffer) With {.ByteOrder = ByteOrder.BigEndian}
             Dim n As Integer = bin.ReadInt32
             Dim code As Integer
             Dim type As String
@@ -62,7 +113,7 @@ Module PackAttributeData
         Dim typeCode As Integer
         Dim buf As Byte()
 
-        Using ms As New MemoryStream, bin As New BinaryDataWriter(ms)
+        Using ms As New MemoryStream, bin As New BinaryDataWriter(ms) With {.ByteOrder = ByteOrder.BigEndian}
             Call bin.Write(attrs.Length)
             Call bin.Write(If(description, ""), BinaryStringFormat.ZeroTerminated)
 
@@ -94,7 +145,7 @@ Module PackAttributeData
 
     <Extension>
     Public Function UnPack(buf As Stream, ByRef desc As String, registry As Dictionary(Of String, String)) As LazyAttribute
-        Using bin As New BinaryDataReader(buf)
+        Using bin As New BinaryDataReader(buf) With {.ByteOrder = ByteOrder.BigEndian}
             Dim n As Integer = bin.ReadInt32
             Dim attrs As New Dictionary(Of String, AttributeMetadata)
             Dim typeName As String
@@ -131,3 +182,4 @@ Module PackAttributeData
         End Using
     End Function
 End Module
+

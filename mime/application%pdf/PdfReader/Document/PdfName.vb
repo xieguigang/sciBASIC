@@ -38,7 +38,7 @@
     '    Code Lines: 28
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 922.00 B
+    '     File Size: 922 B
 
 
     '     Class PdfName

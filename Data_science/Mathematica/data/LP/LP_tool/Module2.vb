@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f311c963e242bec89a8730bf5e07a079, sciBASIC#\Data_science\Mathematica\data\LP\LP_tool\Module2.vb"
+﻿#Region "Microsoft.VisualBasic::4d38f7308785f2a3ebe3d2cfb5aacc1e, sciBASIC#\Data_science\Mathematica\data\LP\LP_tool\Module2.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 9
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 339.00 B
+    '     File Size: 354 B
 
 
     ' Module Module2

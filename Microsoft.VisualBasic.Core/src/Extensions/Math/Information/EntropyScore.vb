@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80455afd9f7b9c2b4478b6c06b7118e8, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Information\EntropyScore.vb"
+﻿#Region "Microsoft.VisualBasic::19fa0c055ab84fffbb32da43d8534268, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Information\EntropyScore.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 50
+    '   Total Lines: 49
     '    Code Lines: 31
     ' Comment Lines: 10
-    '   Blank Lines: 9
+    '   Blank Lines: 8
     '     File Size: 1.73 KB
 
 
@@ -49,7 +49,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq

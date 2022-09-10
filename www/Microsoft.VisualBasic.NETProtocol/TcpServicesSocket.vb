@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9bfbc9550954786a17bba017682937bc, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\TcpServicesSocket.vb"
+﻿#Region "Microsoft.VisualBasic::dc8717e1efb9b478fd19b6a45a3a61e9, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\TcpServicesSocket.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 264
     ' Comment Lines: 126
     '   Blank Lines: 76
-    '     File Size: 19.35 KB
+    '     File Size: 19.37 KB
 
 
     '     Class TcpServicesSocket

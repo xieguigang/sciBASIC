@@ -38,7 +38,7 @@
     '    Code Lines: 15
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 951.00 B
+    '     File Size: 951 B
 
 
     ' Class HtmlWriter

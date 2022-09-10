@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::772de024f836ad890c4eb4db49dd50da, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Linq\List.vb"
+﻿#Region "Microsoft.VisualBasic::84ed604f08606c59ec093c670b1a15e9, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Linq\List.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 678
-    '    Code Lines: 363
-    ' Comment Lines: 251
+    '   Total Lines: 684
+    '    Code Lines: 367
+    ' Comment Lines: 253
     '   Blank Lines: 64
-    '     File Size: 26.09 KB
+    '     File Size: 26.34 KB
 
 
     '     Class List
@@ -591,7 +591,7 @@ Namespace Language
         ''' <returns></returns>
         Public Shared Operator ^(list As List(Of T), find As Func(Of T, Boolean)) As T
             Dim LQuery = LinqAPI.DefaultFirst(Of T) _
- _
+                                                    _
                 () <= From x As T
                       In list.AsParallel
                       Where True = find(x)
@@ -721,11 +721,17 @@ Namespace Language
         ''' <summary>
         ''' Get the <see cref="Last"/> element value and then removes the last element.
         ''' </summary>
-        ''' <returns></returns>
-        Public Function Pop() As T
-            Dim out = Last
-            Call Me.RemoveLast
-            Return out
+        ''' <returns>
+        ''' 
+        ''' </returns>
+        Public Function Pop(Optional strict As Boolean = True) As T
+            If Count = 0 AndAlso Not strict Then
+                Return Nothing
+            Else
+                Dim out As T = Last
+                Call Me.RemoveLast
+                Return out
+            End If
         End Function
 
         Public Function Poll() As T

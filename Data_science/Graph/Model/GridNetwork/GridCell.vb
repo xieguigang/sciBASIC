@@ -38,7 +38,7 @@
     '    Code Lines: 22
     ' Comment Lines: 4
     '   Blank Lines: 8
-    '     File Size: 704.00 B
+    '     File Size: 704 B
 
 
     ' Class GridCell

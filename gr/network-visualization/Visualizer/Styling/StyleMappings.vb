@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::278c3a9051d595f22510a56add8cb458, sciBASIC#\gr\network-visualization\Visualizer\Styling\StyleMappings.vb"
+﻿#Region "Microsoft.VisualBasic::444a7d64c3dad9b20aee9c0349b26334, sciBASIC#\gr\network-visualization\Visualizer\Styling\StyleMappings.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 109
     ' Comment Lines: 19
     '   Blank Lines: 20
-    '     File Size: 5.95 KB
+    '     File Size: 6.10 KB
 
 
     '     Module StyleMappings

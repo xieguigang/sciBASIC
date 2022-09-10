@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8015f72bbe522acbb9da056a46cc1f75, sciBASIC#\mime\text%html\Parser\CSS\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::2c3fc6f4babdf446082c89fec874cd8b, sciBASIC#\mime\text%html\Parser\CSS\Parser.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 189
-    '    Code Lines: 123
+    '   Total Lines: 198
+    '    Code Lines: 131
     ' Comment Lines: 42
-    '   Blank Lines: 24
-    '     File Size: 6.88 KB
+    '   Blank Lines: 25
+    '     File Size: 7.33 KB
 
 
     '     Module CssParser
     ' 
-    '         Function: BuildSelector, GetProperty, GetTagWithCSS, IndivisualTags, ParseStyle
-    '                   RemoveWhitespace, RemoveWitespaceFormStartAndEnd
+    '         Function: BuildSelector, GetProperty, GetTagWithCSS, IndivisualTags, IsNullOrEmpty
+    '                   ParseStyle, RemoveWhitespace, RemoveWitespaceFormStartAndEnd
     ' 
     ' 
     ' /********************************************************************************/

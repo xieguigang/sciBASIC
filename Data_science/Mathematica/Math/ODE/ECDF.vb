@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d0347e737a73041b2c351b9366daf8f, sciBASIC#\Data_science\Mathematica\Math\ODE\ECDF.vb"
+﻿#Region "Microsoft.VisualBasic::453e093b2ec0cc369e5e17f6f49ac3a3, sciBASIC#\Data_science\Mathematica\Math\ODE\ECDF.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 29
     ' Comment Lines: 0
     '   Blank Lines: 9
-    '     File Size: 1.26 KB
+    '     File Size: 1.30 KB
 
 
     ' Class ECDF
@@ -88,4 +88,3 @@ Public Class ECDF
         Return p
     End Function
 End Class
-

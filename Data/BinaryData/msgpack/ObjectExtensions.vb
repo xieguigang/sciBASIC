@@ -38,7 +38,7 @@
     '    Code Lines: 12
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 409.00 B
+    '     File Size: 409 B
 
 
     ' Module ObjectExtensions

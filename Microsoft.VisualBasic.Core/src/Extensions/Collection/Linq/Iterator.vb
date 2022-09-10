@@ -60,16 +60,12 @@ Namespace Linq
     <HideModuleName>
     Public Module IteratorExtensions
 
-#If NET_48 Or netcore5 = 1 Then
-
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         <DebuggerStepThrough>
         Public Function Tuples(Of T)(seq As IEnumerable(Of SeqValue(Of T))) As IEnumerable(Of (i%, val As T))
             Return seq.Select(Function(i) (i.i, i.value))
         End Function
-
-#End If
 
         ''' <summary>
         ''' 

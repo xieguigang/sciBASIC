@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3796033e7bc9af556dc26bd7b750913, sciBASIC#\gr\network-visualization\Visualizer\Render\EdgeRendering.vb"
+﻿#Region "Microsoft.VisualBasic::e63e010c8aed261b862cdeb48301f785, sciBASIC#\gr\network-visualization\Visualizer\Render\EdgeRendering.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 152
     ' Comment Lines: 12
     '   Blank Lines: 27
-    '     File Size: 7.08 KB
+    '     File Size: 7.27 KB
 
 
     ' Class EdgeRendering

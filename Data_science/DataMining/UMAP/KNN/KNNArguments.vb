@@ -38,7 +38,7 @@
     '    Code Lines: 21
     ' Comment Lines: 4
     '   Blank Lines: 7
-    '     File Size: 888.00 B
+    '     File Size: 888 B
 
 
     '     Structure KNNArguments

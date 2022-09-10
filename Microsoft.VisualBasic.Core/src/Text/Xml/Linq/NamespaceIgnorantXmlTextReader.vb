@@ -38,7 +38,7 @@
     '    Code Lines: 18
     ' Comment Lines: 3
     '   Blank Lines: 5
-    '     File Size: 664.00 B
+    '     File Size: 664 B
 
 
     '     Class NamespaceIgnorantXmlTextReader

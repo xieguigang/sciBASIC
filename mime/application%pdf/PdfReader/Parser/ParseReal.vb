@@ -38,7 +38,7 @@
     '    Code Lines: 20
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 562.00 B
+    '     File Size: 562 B
 
 
     '     Class ParseReal

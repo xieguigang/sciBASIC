@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36f56a73aa729df2cdaccabeb6075dd4, sciBASIC#\Data_science\Graph\Model\Tree\Tree.vb"
+﻿#Region "Microsoft.VisualBasic::158f0bbd6578a54ae49437566098f2f8, sciBASIC#\Data_science\Graph\Model\Tree\Tree.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 37
     ' Comment Lines: 21
     '   Blank Lines: 12
-    '     File Size: 2.01 KB
+    '     File Size: 2.06 KB
 
 
     ' Class Tree
@@ -82,7 +82,7 @@ End Class
 ''' <summary>
 ''' 使用字符串<see cref="String"/>作为键名的树节点
 ''' </summary>
-''' <typeparam name="T"></typeparam>
+''' <typeparam name="T">the value type of the ``Data`` property</typeparam>
 ''' <remarks>
 ''' 在这里如果直接继承<see cref="Tree(Of T, K)"/>类型的话，会导致child的类型错误
 ''' </remarks>
@@ -121,10 +121,29 @@ Public Class Tree(Of T) : Inherits AbstractTree(Of Tree(Of T), String)
     ''' </summary>
     ''' <param name="child"></param>
     ''' <returns></returns>
-    Public Function Add(child As Tree(Of T)) As Tree(Of T)
+    Public Overridable Function Add(child As Tree(Of T)) As Tree(Of T)
         Childs.Add(child.label, child)
         child.Parent = Me
 
         Return Me
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <returns>
+    ''' the first element is the tree root node
+    ''' </returns>
+    Public Function PopulateAllNodes() As IEnumerable(Of Tree(Of T))
+        Dim list As New List(Of Tree(Of T))
+
+        ' add tree root node
+        Call list.Add(Me)
+
+        For Each node In Childs.Values
+            Call list.AddRange(node.PopulateAllNodes)
+        Next
+
+        Return list
     End Function
 End Class

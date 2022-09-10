@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f42d4a1144410a0221b547340f7eee85, sciBASIC#\Data_science\Graph\Model\GridNetwork\Grid2D.vb"
+﻿#Region "Microsoft.VisualBasic::b0431f9c66e934b09dbe13ddbb83a517, sciBASIC#\Data_science\Graph\Model\GridNetwork\Grid2D.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 205
-    '    Code Lines: 136
+    '   Total Lines: 212
+    '    Code Lines: 142
     ' Comment Lines: 44
-    '   Blank Lines: 25
-    '     File Size: 7.19 KB
+    '   Blank Lines: 26
+    '     File Size: 7.62 KB
 
 
     ' Class Grid
@@ -113,6 +113,10 @@ Public Class Grid(Of T)
     ''' this constructor will removed duplicated pixels
     ''' </summary>
     ''' <param name="points"></param>
+    ''' <param name="toPoint">
+    ''' just works for the <see cref="Add"/> method, this 
+    ''' parameter can be omit is the grid is readonly.
+    ''' </param>
     Private Sub New(points As IEnumerable(Of GridCell(Of T)), toPoint As Func(Of T, Point))
         Me.toPoint = toPoint
         Me.matrix2D = points _
@@ -127,6 +131,12 @@ Public Class Grid(Of T)
                                                 End Function)
                           End Function)
     End Sub
+
+    Public Function Cells() As IEnumerable(Of GridCell(Of T))
+        Return matrix2D _
+            .Select(Function(row) row.Value.Values) _
+            .IteratesALL
+    End Function
 
     Public Sub Add(point As T)
         Dim xy As Point = toPoint(point)
@@ -221,6 +231,19 @@ Public Class Grid(Of T)
                 End If
             Next
         Next
+    End Function
+
+    Public Shared Function CreateReadOnly(data As IEnumerable(Of GridCell(Of T))) As Grid(Of T)
+        Return New Grid(Of T)(data, toPoint:=Nothing)
+    End Function
+
+    Public Shared Function Create(data As IEnumerable(Of (T, x%, y%))) As Grid(Of T)
+        Dim cells As GridCell(Of T)() = data _
+            .Select(Function(i) New GridCell(Of T)(i.x, i.y, i.Item1)) _
+            .ToArray
+        Dim grid As New Grid(Of T)(cells, toPoint:=Nothing)
+
+        Return grid
     End Function
 
     ''' <summary>

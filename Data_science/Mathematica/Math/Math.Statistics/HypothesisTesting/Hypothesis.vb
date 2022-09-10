@@ -38,7 +38,7 @@
     '    Code Lines: 8
     ' Comment Lines: 9
     '   Blank Lines: 2
-    '     File Size: 498.00 B
+    '     File Size: 498 B
 
 
     '     Enum Hypothesis

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e25019e5782153aaae9645412a0ff613, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Information\Entropy.vb"
+﻿#Region "Microsoft.VisualBasic::98e776edd36166a7d24bce7c75e57f27, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Information\Entropy.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 102
+    '   Total Lines: 104
     '    Code Lines: 28
-    ' Comment Lines: 68
+    ' Comment Lines: 70
     '   Blank Lines: 6
-    '     File Size: 4.58 KB
+    '     File Size: 4.73 KB
 
 
     '     Module Entropy

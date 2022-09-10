@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d22fda0ea292b674acca5d2fdc3cf7a, sciBASIC#\Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
+﻿#Region "Microsoft.VisualBasic::b5f226796da8b3bf2429b6b4b4dc3ef5, sciBASIC#\Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 692
-    '    Code Lines: 345
+    '   Total Lines: 696
+    '    Code Lines: 348
     ' Comment Lines: 273
-    '   Blank Lines: 74
-    '     File Size: 30.93 KB
+    '   Blank Lines: 75
+    '     File Size: 31.04 KB
 
 
     ' Class BinaryDataReader
@@ -46,7 +46,7 @@
     '     Properties: BufferView, ByteOrder, Encoding, EndOfStream, Length
     '                 Position
     ' 
-    '     Constructor: (+5 Overloads) Sub New
+    '     Constructor: (+6 Overloads) Sub New
     ' 
     '     Function: DecimalFromBytes, getDebugView, ReadByteLengthPrefixString, ReadDateTime, ReadDecimal
     '               ReadDecimals, ReadDouble, ReadDoubles, ReadDwordLengthPrefixString, ReadDwordLenString
@@ -71,8 +71,8 @@ Imports Microsoft.VisualBasic.Text
 ''' <summary>
 ''' Represents an extended <see cref="BinaryReader"/> supporting special file format data types.
 ''' </summary>
-Public Class BinaryDataReader
-    Inherits BinaryReader
+Public Class BinaryDataReader : Inherits BinaryReader
+    Implements IReaderDebugAccess
 
     Dim _byteOrder As ByteOrder
     Dim _needsReversion As Boolean
@@ -97,6 +97,10 @@ Public Class BinaryDataReader
     ''' </exception>
     Public Sub New(input As Stream)
         Me.New(input, New UTF8Encoding(), False)
+    End Sub
+
+    Sub New(data As IEnumerable(Of Byte))
+        Call Me.New(New MemoryStream(data.ToArray))
     End Sub
 
     ''' <summary>
@@ -169,7 +173,7 @@ Public Class BinaryDataReader
     ''' <summary>
     ''' Gets the length in bytes of the stream in bytes. This is a shortcut to the base stream Length property.
     ''' </summary>
-    Public ReadOnly Property Length() As Long
+    Public ReadOnly Property Length() As Long Implements IReaderDebugAccess.Length
         Get
             Return BaseStream.Length
         End Get
@@ -179,7 +183,7 @@ Public Class BinaryDataReader
     ''' Gets or sets the position within the current stream. This is a shortcut to the base stream Position
     ''' property.
     ''' </summary>
-    Public Property Position() As Long
+    Public Property Position() As Long Implements IReaderDebugAccess.Position
         Get
             Return BaseStream.Position
         End Get
@@ -199,39 +203,7 @@ Public Class BinaryDataReader
 
     Private Function getDebugView(bufSize As Integer) As String
         Using TemporarySeek()
-            Dim start As Long
-            Dim nsize As Integer
-
-            If Position < bufSize \ 2 Then
-                start = 0
-            Else
-                start = Position - (bufSize \ 2)
-            End If
-
-            If start + bufSize > Length Then
-                nsize = Length - start
-            Else
-                nsize = bufSize
-            End If
-
-            Dim chars As New List(Of Char)
-            Dim c As Char
-
-            For Each b As Byte In ReadBytes(nsize)
-                If ASCII.IsNonPrinting(b) Then
-                    c = "*"c
-                Else
-                    c = Chr(b)
-                End If
-
-                If c = vbNullChar Then
-                    c = "*"
-                End If
-
-                chars.Add(c)
-            Next
-
-            Return chars.CharString
+            Return Helpers.getDebugView(Me, bufSize)
         End Using
     End Function
 
@@ -272,6 +244,11 @@ Public Class BinaryDataReader
             Case Else
                 Throw New ArgumentOutOfRangeException("format", "The specified binary datetime format is invalid")
         End Select
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Overrides Function ReadBytes(count As Integer) As Byte() Implements IReaderDebugAccess.ReadBytes
+        Return MyBase.ReadBytes(count)
     End Function
 
     ''' <summary>

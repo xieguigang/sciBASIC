@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::354efdba57a08f8ffa12f354e40b0265, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\Shell.vb"
+﻿#Region "Microsoft.VisualBasic::3ce0671f8886c6d39e08d84d5154ddf6, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\Shell.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 64
-    '    Code Lines: 34
+    '   Total Lines: 78
+    '    Code Lines: 44
     ' Comment Lines: 21
-    '   Blank Lines: 9
-    '     File Size: 2.20 KB
+    '   Blank Lines: 13
+    '     File Size: 2.50 KB
 
 
     '     Class Shell
     ' 
-    '         Properties: autoCompleteCandidates, dev, History, ps1, Quite
-    '                     shell
+    '         Properties: autoCompleteCandidates, History, ps1, Quite, shell
+    '                     ttyDev
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Sub: Run
+    '         Sub: dev_Tab, Run
     ' 
     ' 
     ' /********************************************************************************/
@@ -72,7 +72,11 @@ Namespace ApplicationServices.Terminal
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property autoCompleteCandidates As New List(Of String)
-        Public ReadOnly Property dev As IConsole
+        Public ReadOnly Property ttyDev As IConsole
+            Get
+                Return dev
+            End Get
+        End Property
 
         ''' <summary>
         ''' Command text for exit the shell loop 
@@ -82,6 +86,8 @@ Namespace ApplicationServices.Terminal
         ''' <returns></returns>
         Public Property Quite As String = ":q"
         Public Property History As String = ":h"
+
+        Dim WithEvents dev As IConsole
 
         ''' <summary>
         ''' 
@@ -115,6 +121,14 @@ Namespace ApplicationServices.Terminal
                     Call _shell(cli)
                 End If
             Loop
+        End Sub
+
+        Private Sub dev_Tab() Handles dev.Tab
+            If autoCompleteCandidates.Count = 0 Then
+                Return
+            End If
+
+
         End Sub
     End Class
 End Namespace

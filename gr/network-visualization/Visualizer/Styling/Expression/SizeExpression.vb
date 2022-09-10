@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7aa243332e972a245eeb436cff522d63, sciBASIC#\gr\network-visualization\Visualizer\Styling\Expression\SizeExpression.vb"
+﻿#Region "Microsoft.VisualBasic::c91b1a915e0eb7962ca70d47043b52ae, sciBASIC#\gr\network-visualization\Visualizer\Styling\Expression\SizeExpression.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 27
     ' Comment Lines: 16
     '   Blank Lines: 5
-    '     File Size: 1.65 KB
+    '     File Size: 1.70 KB
 
 
     '     Module SizeExpression

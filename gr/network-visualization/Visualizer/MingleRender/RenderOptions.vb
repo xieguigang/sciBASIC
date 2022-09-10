@@ -38,7 +38,7 @@
     '    Code Lines: 8
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 276.00 B
+    '     File Size: 276 B
 
 
     ' Class RenderOptions

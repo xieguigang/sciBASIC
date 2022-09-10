@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d1e9faa67f179c7742031c492853bacc, sciBASIC#\Data_science\MachineLearning\MachineLearning\CNN\Layers\Output.vb"
+﻿#Region "Microsoft.VisualBasic::43d872ba2f7b55b4d6a436c402d76f7e, sciBASIC#\Data_science\MachineLearning\MachineLearning\CNN\Layers\Output.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 38
     ' Comment Lines: 4
     '   Blank Lines: 12
-    '     File Size: 1.95 KB
+    '     File Size: 1.94 KB
 
 
     '     Class Output
@@ -107,4 +107,3 @@ Namespace Convolutional
         End Function
     End Class
 End Namespace
-

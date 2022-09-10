@@ -38,7 +38,7 @@
     '    Code Lines: 14
     ' Comment Lines: 3
     '   Blank Lines: 3
-    '     File Size: 926.00 B
+    '     File Size: 926 B
 
 
     ' Module InternalHelpers

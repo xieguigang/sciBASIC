@@ -38,7 +38,7 @@
     '    Code Lines: 17
     ' Comment Lines: 11
     '   Blank Lines: 5
-    '     File Size: 1.01 KB
+    '     File Size: 1014 B
 
 
     '     Class WeightedChar

@@ -38,7 +38,7 @@
     '    Code Lines: 73
     ' Comment Lines: 0
     '   Blank Lines: 16
-    '     File Size: 2.95 KB
+    '     File Size: 2.94 KB
 
 
     '     Module GrahamScan

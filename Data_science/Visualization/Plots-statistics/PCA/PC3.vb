@@ -38,7 +38,7 @@
     '    Code Lines: 14
     ' Comment Lines: 9
     '   Blank Lines: 4
-    '     File Size: 1.05 KB
+    '     File Size: 1.04 KB
 
 
     '     Module PCAPlot

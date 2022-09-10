@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::edbab21a6407b39f9b56a50f6fe26bbf, sciBASIC#\Data_science\Visualization\Plots\BarPlot\Histogram\HistogramPlot.vb"
+﻿#Region "Microsoft.VisualBasic::96ccf2e3967db30e8d3034f76fada02c, sciBASIC#\Data_science\Visualization\Plots\BarPlot\Histogram\HistogramPlot.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 120
     ' Comment Lines: 2
     '   Blank Lines: 26
-    '     File Size: 6.12 KB
+    '     File Size: 6.27 KB
 
 
     '     Class HistogramPlot
@@ -157,8 +157,14 @@ Namespace BarPlot.Histogram
                     }
 
             Call g.DrawAxis(
-                        canvas, scaler, theme.drawGrid, xlabel:=xlabel, ylabel:=ylabel,
-                        htmlLabel:=False)
+                canvas, scaler, theme.drawGrid,
+                xlabel:=xlabel,
+                ylabel:=ylabel,
+                htmlLabel:=False,
+                XtickFormat:=theme.XaxisTickFormat,
+                YtickFormat:=theme.YaxisTickFormat,
+                xlabelRotate:=theme.xAxisRotate
+            )
 
             If Not main.StringEmpty Then
                 Dim titleFont As Font = CSSFont.TryParse(theme.mainCSS).GDIObject(g.Dpi)

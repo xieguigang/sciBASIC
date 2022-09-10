@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 3
     '   Blank Lines: 5
-    '     File Size: 519.00 B
+    '     File Size: 519 B
 
 
     '     Class RegressionClassify

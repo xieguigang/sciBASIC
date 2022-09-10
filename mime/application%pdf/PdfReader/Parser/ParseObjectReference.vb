@@ -38,7 +38,7 @@
     '    Code Lines: 26
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 766.00 B
+    '     File Size: 766 B
 
 
     '     Class ParseObjectReference

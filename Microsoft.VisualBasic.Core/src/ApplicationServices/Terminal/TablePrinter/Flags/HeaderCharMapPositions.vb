@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50549c1391d46cbf821299b8fd479c58, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\Flags\HeaderCharMapPositions.vb"
+﻿#Region "Microsoft.VisualBasic::0316a6523ff83aff596540db7e435104, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\Flags\HeaderCharMapPositions.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 15
     ' Comment Lines: 3
     '   Blank Lines: 0
-    '     File Size: 514.00 B
+    '     File Size: 512 B
 
 
     '     Enum HeaderCharMapPositions
@@ -74,4 +74,3 @@ Namespace ApplicationServices.Terminal.TablePrinter.Flags
         Divider
     End Enum
 End Namespace
-

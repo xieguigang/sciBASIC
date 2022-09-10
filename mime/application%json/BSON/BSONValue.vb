@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b484dc76025f98ea79a335559a927898, sciBASIC#\mime\application%json\BSON\BSONValue.vb"
+﻿#Region "Microsoft.VisualBasic::54095acdd7aa9944dca1d2bb516dfdd5, sciBASIC#\mime\application%json\BSON\BSONValue.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 300
-    '    Code Lines: 258
+    '   Total Lines: 301
+    '    Code Lines: 259
     ' Comment Lines: 1
     '   Blank Lines: 41
-    '     File Size: 10.56 KB
+    '     File Size: 10.92 KB
 
 
     '     Class BSONValue
@@ -57,6 +57,7 @@
 
 Imports System.Text
 Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Text
 Imports stdNum = System.Math
 
 Namespace BSON
@@ -243,9 +244,9 @@ Namespace BSON
             _double = v
         End Sub
 
-        Public Sub New(v As [String])
-            valueType = ValueType.[String]
-            _string = v
+        Public Sub New(v As String)
+            valueType = ValueType.String
+            _string = Strings.Trim(v).Trim(ASCII.NUL)
         End Sub
 
         Public Sub New(v As Byte())

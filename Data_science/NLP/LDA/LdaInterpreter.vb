@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b40e0985504a8853796cbc603ba295e, sciBASIC#\Data_science\NLP\LDA\LdaInterpreter.vb"
+﻿#Region "Microsoft.VisualBasic::32697dc7f3b90c305c46a4b9860a69ba, sciBASIC#\Data_science\NLP\LDA\LdaInterpreter.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 48
     ' Comment Lines: 12
     '   Blank Lines: 14
-    '     File Size: 2.65 KB
+    '     File Size: 2.72 KB
 
 
     '     Class LdaInterpreter
@@ -126,4 +126,3 @@ Namespace LDA
         End Sub
     End Class
 End Namespace
-

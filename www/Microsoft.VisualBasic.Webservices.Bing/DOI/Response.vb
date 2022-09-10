@@ -38,7 +38,7 @@
     '    Code Lines: 24
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 796.00 B
+    '     File Size: 796 B
 
 
     '     Class Response

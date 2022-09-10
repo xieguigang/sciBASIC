@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::937c98cd40b35f55c2fde67a46ef9b5d, sciBASIC#\Data_science\Mathematica\Math\Math\Distributions\BinBox\DataBinBox.vb"
+﻿#Region "Microsoft.VisualBasic::970e45dbb52eba0c47fe509e3a96f482, sciBASIC#\Data_science\Mathematica\Math\Math\Distributions\BinBox\DataBinBox.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 89
     ' Comment Lines: 11
     '   Blank Lines: 18
-    '     File Size: 4.20 KB
+    '     File Size: 4.31 KB
 
 
     '     Class DataBinBox

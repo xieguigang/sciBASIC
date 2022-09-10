@@ -38,7 +38,7 @@
     '    Code Lines: 22
     ' Comment Lines: 0
     '   Blank Lines: 8
-    '     File Size: 914.00 B
+    '     File Size: 914 B
 
 
     '     Class FactorValue
@@ -74,6 +74,13 @@ Namespace ComponentModel.TagData
             }
         End Operator
 #End If
+
+        Public Shared Function Create(factor As T, result As V) As FactorValue(Of T, V)
+            Return New FactorValue(Of T, V) With {
+                .factor = factor,
+                .result = result
+            }
+        End Function
     End Class
 
     Public Class FactorString(Of T As {Structure, IComparable(Of T)})

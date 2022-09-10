@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45c2219496530e8e675231fb11c6e4de, sciBASIC#\gr\network-visualization\Datavisualization.Network\Analysis\Statistics.vb"
+﻿#Region "Microsoft.VisualBasic::e17dc055e4c40f181e522cabed55da23, sciBASIC#\gr\network-visualization\Datavisualization.Network\Analysis\Statistics.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 124
-    '    Code Lines: 88
+    '   Total Lines: 129
+    '    Code Lines: 93
     ' Comment Lines: 20
     '   Blank Lines: 16
-    '     File Size: 6.35 KB
+    '     File Size: 6.51 KB
 
 
     '     Module Statistics

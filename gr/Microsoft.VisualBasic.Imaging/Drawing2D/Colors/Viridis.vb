@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c889edb78339cb2bfedc4413c9064502, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Viridis.vb"
+﻿#Region "Microsoft.VisualBasic::56cb293f4b305e37cf08aa0416aa0015, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Viridis.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 34
     ' Comment Lines: 32
     '   Blank Lines: 13
-    '     File Size: 3.44 KB
+    '     File Size: 3.52 KB
 
 
     '     Class Viridis

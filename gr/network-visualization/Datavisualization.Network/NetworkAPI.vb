@@ -38,7 +38,7 @@
     '    Code Lines: 47
     ' Comment Lines: 6
     '   Blank Lines: 8
-    '     File Size: 2.34 KB
+    '     File Size: 2.33 KB
 
 
     ' Module NetworkAPI

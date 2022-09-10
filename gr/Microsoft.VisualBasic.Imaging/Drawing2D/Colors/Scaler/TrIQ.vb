@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c333a1b747acdeb1a376bf27cbdc3ad5, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Scaler\TrIQ.vb"
+﻿#Region "Microsoft.VisualBasic::deff0d278f13dcd8ff38ddfa6b1e332c, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Scaler\TrIQ.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 177
+    '   Total Lines: 186
     '    Code Lines: 77
-    ' Comment Lines: 76
+    ' Comment Lines: 85
     '   Blank Lines: 24
-    '     File Size: 6.37 KB
+    '     File Size: 6.87 KB
 
 
     '     Module TrIQ

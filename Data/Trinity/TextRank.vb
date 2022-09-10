@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ca856751ed844a17db9444720af58b6, sciBASIC#\Data\Trinity\TextRank.vb"
+﻿#Region "Microsoft.VisualBasic::bba5a8d8a1df3c9f1069f946038617da, sciBASIC#\Data\Trinity\TextRank.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 163
     ' Comment Lines: 50
     '   Blank Lines: 35
-    '     File Size: 9.49 KB
+    '     File Size: 9.74 KB
 
 
     ' Module TextRank

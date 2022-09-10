@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3deae6cd348ee1415999124641e973cb, sciBASIC#\gr\network-visualization\NetworkCanvas\Renderer.vb"
+﻿#Region "Microsoft.VisualBasic::fc39a545922a1503b3a6caac253c4d2e, sciBASIC#\gr\network-visualization\NetworkCanvas\Renderer.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 175
-    '    Code Lines: 117
+    '   Total Lines: 187
+    '    Code Lines: 125
     ' Comment Lines: 29
-    '   Blank Lines: 29
-    '     File Size: 6.61 KB
+    '   Blank Lines: 33
+    '     File Size: 6.87 KB
 
 
     ' Class Renderer

@@ -38,7 +38,7 @@
     '    Code Lines: 10
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 286.00 B
+    '     File Size: 286 B
 
 
     '     Structure UnitTag

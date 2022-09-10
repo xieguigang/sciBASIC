@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19d2cb30f708ad6551a547a228963539, sciBASIC#\gr\network-visualization\Datavisualization.Network\Graph\Selector.vb"
+﻿#Region "Microsoft.VisualBasic::bf2df1deb25f008e0c0400d292caef07, sciBASIC#\gr\network-visualization\Datavisualization.Network\Graph\Selector.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 45
     ' Comment Lines: 20
     '   Blank Lines: 7
-    '     File Size: 2.95 KB
+    '     File Size: 3.02 KB
 
 
     '     Module Selector

@@ -38,7 +38,7 @@
     '    Code Lines: 106
     ' Comment Lines: 68
     '   Blank Lines: 20
-    '     File Size: 7.18 KB
+    '     File Size: 7.17 KB
 
 
     '     Class Node

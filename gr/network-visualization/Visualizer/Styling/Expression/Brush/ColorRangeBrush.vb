@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d87fa37831f20e651cf59701c6339e23, sciBASIC#\gr\network-visualization\Visualizer\Styling\Expression\Brush\ColorRangeBrush.vb"
+﻿#Region "Microsoft.VisualBasic::dbdddf1c49ea465cc41f8bc987d47cb9, sciBASIC#\gr\network-visualization\Visualizer\Styling\Expression\Brush\ColorRangeBrush.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 39
     ' Comment Lines: 4
     '   Blank Lines: 7
-    '     File Size: 1.75 KB
+    '     File Size: 1.80 KB
 
 
     '     Class ColorRangeBrush

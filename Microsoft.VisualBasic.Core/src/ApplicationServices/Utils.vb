@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3100a7ea38a12470f719ea40466d9db7, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::f495164c377836d0377229566998c765, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Utils.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 256
-    '    Code Lines: 147
+    '   Total Lines: 258
+    '    Code Lines: 149
     ' Comment Lines: 75
     '   Blank Lines: 34
-    '     File Size: 9.85 KB
+    '     File Size: 9.86 KB
 
 
     '     Module Utils

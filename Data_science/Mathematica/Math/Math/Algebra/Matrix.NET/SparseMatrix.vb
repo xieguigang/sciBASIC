@@ -1,59 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::af62bba4b3d09bb8a9754fdb3844cd95, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\SparseMatrix.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 159
-    '    Code Lines: 125
-    ' Comment Lines: 10
-    '   Blank Lines: 24
-    '     File Size: 5.92 KB
+' Summaries:
 
 
-    '     Class SparseMatrix
-    ' 
-    '         Properties: ColumnDimension, RowDimension
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    '         Function: ArrayPack, GetMatrix, Resize, RowVectors, Transpose
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 159
+'    Code Lines: 125
+' Comment Lines: 10
+'   Blank Lines: 24
+'     File Size: 5.92 KB
+
+
+'     Class SparseMatrix
+' 
+'         Properties: ColumnDimension, RowDimension
+' 
+'         Constructor: (+4 Overloads) Sub New
+'         Function: ArrayPack, GetMatrix, Resize, RowVectors, Transpose
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Vectorization
 
 Namespace LinearAlgebra.Matrix
@@ -201,6 +202,10 @@ Namespace LinearAlgebra.Matrix
             Return real
         End Function
 
+        Public Overrides Function ToString() As String
+            Return $"[{RowDimension}x{ColumnDimension}]"
+        End Function
+
         Public Iterator Function RowVectors() As IEnumerable(Of Vector) Implements GeneralMatrix.RowVectors
             For Each row As Double() In ArrayPack()
                 Yield row.AsVector
@@ -209,6 +214,53 @@ Namespace LinearAlgebra.Matrix
 
         Public Function GetMatrix(r() As Integer, j0 As Integer, j1 As Integer) As GeneralMatrix Implements GeneralMatrix.GetMatrix
             Throw New NotImplementedException()
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="xdata"></param>
+        ''' <param name="xindices">
+        ''' the corresponding index value of the <paramref name="xdata"/>, this
+        ''' vector size of this parameter must be equals to the <paramref name="xdata"/>!
+        ''' </param>
+        ''' <param name="xindptr"></param>
+        ''' <returns></returns>
+        Public Shared Function UnpackData(xdata As Single(),
+                                          xindices As Integer(),
+                                          xindptr As Integer(),
+                                          Optional maxColumns As Integer = -1) As SparseMatrix
+
+            If xdata.Length <> xindices.Length Then
+                Throw New InvalidProgramException($"the size of xdata({xdata.Length}) is not agree to the size of xindices({xindices.Length})!")
+            End If
+
+            Dim left As Integer = xindptr(Scan0)
+            Dim matrix As New Dictionary(Of Integer, Dictionary(Of Integer, Double))
+            Dim i As i32 = Scan0
+
+            If maxColumns < 0 Then
+                maxColumns = xindices.Max + 1
+            End If
+
+            For Each idx As Integer In xindptr.Skip(1)
+                Dim blocksize = idx - left
+                Dim subsetData As Single() = New Single(blocksize - 1) {}
+                Dim subsetIndex As Integer() = New Integer(blocksize - 1) {}
+                Dim row As New Dictionary(Of Integer, Double)
+
+                Call Array.ConstrainedCopy(xdata, left, subsetData, Scan0, blocksize)
+                Call Array.ConstrainedCopy(xindices, left, subsetIndex, Scan0, blocksize)
+
+                For j As Integer = 0 To blocksize - 1
+                    Call row.Add(key:=subsetIndex(j), value:=subsetData(j))
+                Next
+
+                left = idx
+                matrix.Add(++i, row)
+            Next
+
+            Return New SparseMatrix(matrix, m:=i, n:=maxColumns)
         End Function
     End Class
 End Namespace

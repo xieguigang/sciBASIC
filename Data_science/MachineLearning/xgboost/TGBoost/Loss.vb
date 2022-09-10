@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::08e4eb604a1cbb2a7ac2779c47ada40c, sciBASIC#\Data_science\MachineLearning\xgboost\TGBoost\Loss.vb"
+﻿#Region "Microsoft.VisualBasic::2627f896ba46ee2b8beb9adb95d22b6e, sciBASIC#\Data_science\MachineLearning\xgboost\TGBoost\Loss.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 60
     ' Comment Lines: 0
     '   Blank Lines: 21
-    '     File Size: 2.40 KB
+    '     File Size: 2.48 KB
 
 
     '     Class Loss

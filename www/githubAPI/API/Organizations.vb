@@ -38,7 +38,7 @@
     '    Code Lines: 18
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 815.00 B
+    '     File Size: 815 B
 
 
     '     Class Organizations

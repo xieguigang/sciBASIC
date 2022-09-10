@@ -38,7 +38,7 @@
     '    Code Lines: 2
     ' Comment Lines: 15
     '   Blank Lines: 1
-    '     File Size: 808.00 B
+    '     File Size: 808 B
 
 
     ' Module MSWindows

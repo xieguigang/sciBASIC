@@ -38,7 +38,7 @@
     '    Code Lines: 101
     ' Comment Lines: 14
     '   Blank Lines: 27
-    '     File Size: 4.55 KB
+    '     File Size: 4.54 KB
 
 
     '     Class DistanceMap

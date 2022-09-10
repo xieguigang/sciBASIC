@@ -38,7 +38,7 @@
     '    Code Lines: 18
     ' Comment Lines: 0
     '   Blank Lines: 9
-    '     File Size: 725.00 B
+    '     File Size: 725 B
 
 
     '     Class StatesObject

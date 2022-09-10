@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68211912c7d9b3df929a045a3de78e3e, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\ConsoleTableBuilderExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::d104bb84812e274d5eda9f4107e46b28, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\ConsoleTableBuilderExtensions.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 479
     ' Comment Lines: 31
     '   Blank Lines: 108
-    '     File Size: 28.19 KB
+    '     File Size: 28.18 KB
 
 
     '     Module ConsoleTableBuilderExtensions
@@ -674,4 +674,3 @@ Namespace ApplicationServices.Terminal.TablePrinter
         End Function
     End Module
 End Namespace
-

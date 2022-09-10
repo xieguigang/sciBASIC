@@ -38,7 +38,7 @@
     '    Code Lines: 41
     ' Comment Lines: 0
     '   Blank Lines: 10
-    '     File Size: 2.07 KB
+    '     File Size: 2.06 KB
 
 
     '     Module LPPDebugView

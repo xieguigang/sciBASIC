@@ -38,7 +38,7 @@
     '    Code Lines: 6
     ' Comment Lines: 7
     '   Blank Lines: 4
-    '     File Size: 416.00 B
+    '     File Size: 416 B
 
 
     '     Class KNNState

@@ -38,7 +38,7 @@
     '    Code Lines: 10
     ' Comment Lines: 4
     '   Blank Lines: 3
-    '     File Size: 537.00 B
+    '     File Size: 537 B
 
 
     '     Class RLanguage

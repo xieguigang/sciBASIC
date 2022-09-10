@@ -38,7 +38,7 @@
     '    Code Lines: 12
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 367.00 B
+    '     File Size: 367 B
 
 
     ' Class BufferRegion
@@ -61,6 +61,14 @@ Public Class BufferRegion
             Return position + size
         End Get
     End Property
+
+    Sub New()
+    End Sub
+
+    Sub New(scan0 As Long, size As Integer)
+        Me.position = scan0
+        Me.size = size
+    End Sub
 
     Public Overrides Function ToString() As String
         Return $"&{position} [{size} bytes]"

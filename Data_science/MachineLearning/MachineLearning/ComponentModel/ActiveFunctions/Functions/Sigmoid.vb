@@ -38,7 +38,7 @@
     '    Code Lines: 40
     ' Comment Lines: 69
     '   Blank Lines: 12
-    '     File Size: 4.18 KB
+    '     File Size: 4.17 KB
 
 
     '     Class Sigmoid

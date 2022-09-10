@@ -38,7 +38,7 @@
     '    Code Lines: 20
     ' Comment Lines: 7
     '   Blank Lines: 7
-    '     File Size: 924.00 B
+    '     File Size: 924 B
 
 
     '     Class StringValue

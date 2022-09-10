@@ -38,7 +38,7 @@
     '    Code Lines: 26
     ' Comment Lines: 0
     '   Blank Lines: 13
-    '     File Size: 924.00 B
+    '     File Size: 924 B
 
 
     '     Class runtime

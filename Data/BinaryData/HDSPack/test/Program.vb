@@ -1,4 +1,55 @@
-﻿Imports System.Text
+﻿#Region "Microsoft.VisualBasic::e9afa0b9880c1b099326b7df8cd1c7d2, sciBASIC#\Data\BinaryData\HDSPack\test\Program.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 150
+    '    Code Lines: 108
+    ' Comment Lines: 0
+    '   Blank Lines: 42
+    '     File Size: 5.66 KB
+
+
+    ' Module Program
+    ' 
+    '     Sub: filesystemTest, Main, readPackTest, writePackTest
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Text
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Text.Xml.Models
@@ -18,6 +69,11 @@ Module Program
             For Each file In hds.ListFiles
                 Call Console.WriteLine(file.ToString)
             Next
+
+            Call Console.WriteLine()
+            Call Console.WriteLine()
+            Call Console.WriteLine()
+            Call hds.superBlock.Tree(App.StdOut, pack:=hds)
         End Using
     End Sub
 
@@ -65,21 +121,27 @@ Module Program
 
     Sub writePackTest()
         Using hds As StreamPack = StreamPack.CreateNewStream(testfile)
-            Dim image = "E:\GCModeller\src\runtime\sciBASIC#\etc\ch07_18.png".ReadBinary
+            Dim image = "/GCModeller\src\runtime\sciBASIC#\etc\ch07_18.png".ReadBinary
             Dim block = hds.OpenBlock("/path/to/the/image/file/ch07-18.png")
 
             Call block.Write(image, Scan0, image.Length)
             Call block.Flush()
             Call block.Dispose()
 
-            image = "E:\GCModeller\src\runtime\sciBASIC#\etc\ggplot2.png".ReadBinary
+            block = hds.OpenBlock("/path/to/empty.dat")
+
+            Call block.Write({}, Scan0, 0)
+            Call block.Flush()
+            Call block.Dispose()
+
+            image = "/GCModeller\src\runtime\sciBASIC#\etc\ggplot2.png".ReadBinary
             block = hds.OpenBlock("/another_folder\ggplot-logo.png")
 
             Call block.Write(image, Scan0, image.Length)
             Call block.Flush()
             Call block.Dispose()
 
-            image = "E:\GCModeller\src\GCModeller.sln".ReadBinary
+            image = "/GCModeller\src\GCModeller.sln".ReadBinary
 
             block = hds.OpenBlock("/another_folder/git/////////////\gcmodeller.sln")
 
@@ -87,7 +149,7 @@ Module Program
             Call block.Flush()
             Call block.Dispose()
 
-            Dim textBuf As Byte() = "E:\GCModeller\src\runtime\sciBASIC#\etc\(๑•̀ㅂ•́)و✧.svg".ReadBinary
+            Dim textBuf As Byte() = "/GCModeller\src\runtime\sciBASIC#\etc\(๑•̀ㅂ•́)و✧.svg".ReadBinary
             Dim block2 = hds.OpenBlock("/another_folder/text_data/\GCModeller\src\runtime\sciBASIC#\etc\(๑•̀ㅂ•́)و✧.svg")
 
             Call block2.Write(textBuf, Scan0, textBuf.Length)
@@ -118,19 +180,21 @@ Module Program
             Call block2.Flush()
             Call block2.Dispose()
 
-            image = "E:\GCModeller\src\runtime\sciBASIC#\mime\PDF32000_2008.pdf".ReadBinary
+            image = "/GCModeller\src\runtime\sciBASIC#\mime\PDF32000_2008.pdf".ReadBinary
             block = hds.OpenBlock("/another_folder\lagerfile.pdf")
 
             Call block.Write(image, Scan0, image.Length)
             Call block.Flush()
             Call block.Dispose()
 
-            image = "E:\mzkit\Rscript\Library\mzkit_app\data\KEGG_maps.msgpack".ReadBinary
+            image = "/mzkit\Rscript\Library\mzkit_app\data\KEGG_maps.msgpack".ReadBinary
             block = hds.OpenBlock("/another_folder\lager2\file.pdf")
 
             Call block.Write(image, Scan0, image.Length)
             Call block.Flush()
             Call block.Dispose()
+
+            Call hds.WriteText("Hello world! this is a note text about the root directory!", "/readme.txt")
 
         End Using
     End Sub

@@ -38,7 +38,7 @@
     '    Code Lines: 29
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 984.00 B
+    '     File Size: 984 B
 
 
     ' Class package

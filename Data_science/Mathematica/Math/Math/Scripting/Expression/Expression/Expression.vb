@@ -38,7 +38,7 @@
     '    Code Lines: 5
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 198.00 B
+    '     File Size: 198 B
 
 
     '     Class Expression

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::919e452450838cfe27a252cd8313eb23, sciBASIC#\mime\text%html\Test\MarkdownTranslate.vb"
+﻿#Region "Microsoft.VisualBasic::919e452450838cfe27a252cd8313eb23, sciBASIC#\mime\text%html\test\MarkdownTranslate.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 39
     ' Comment Lines: 1
     '   Blank Lines: 27
-    '     File Size: 954.00 B
+    '     File Size: 954 B
 
 
     ' Module MarkdownTranslate

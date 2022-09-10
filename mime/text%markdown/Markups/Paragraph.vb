@@ -38,7 +38,7 @@
     '    Code Lines: 23
     ' Comment Lines: 3
     '   Blank Lines: 10
-    '     File Size: 814.00 B
+    '     File Size: 814 B
 
 
     ' Class ParagraphText

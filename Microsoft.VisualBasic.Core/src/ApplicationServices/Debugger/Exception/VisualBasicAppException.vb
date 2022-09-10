@@ -38,7 +38,7 @@
     '    Code Lines: 18
     ' Comment Lines: 20
     '   Blank Lines: 6
-    '     File Size: 1.63 KB
+    '     File Size: 1.62 KB
 
 
     '     Class VisualBasicAppException

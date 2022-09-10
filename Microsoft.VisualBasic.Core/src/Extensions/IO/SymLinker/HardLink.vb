@@ -38,7 +38,7 @@
     '    Code Lines: 8
     ' Comment Lines: 3
     '   Blank Lines: 3
-    '     File Size: 443.00 B
+    '     File Size: 443 B
 
 
     '     Module HardLink

@@ -38,7 +38,7 @@
     '    Code Lines: 11
     ' Comment Lines: 4
     '   Blank Lines: 6
-    '     File Size: 495.00 B
+    '     File Size: 495 B
 
 
     '     Class Topt

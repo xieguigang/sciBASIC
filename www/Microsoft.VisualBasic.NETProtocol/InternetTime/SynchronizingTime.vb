@@ -43,7 +43,7 @@
 
     '     Module SetSystemTime
     ' 
-    '         Function: [Set], __syncTime, SetSystemTime
+    '         Function: __syncTime, [Set], SetSystemTime
     ' 
     ' 
     ' /********************************************************************************/

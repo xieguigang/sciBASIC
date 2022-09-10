@@ -1,56 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::ceb4d40b78ab6fcac3c4091faaffdc5e, sciBASIC#\Data_science\Graph\Model\Abstract\Graph.vb"
+﻿#Region "Microsoft.VisualBasic::e1e0b4a6a52a0c6fdb30750ff3b7a62f, sciBASIC#\Data_science\Graph\Model\Abstract\Graph.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 267
-'    Code Lines: 149
-' Comment Lines: 84
-'   Blank Lines: 34
-'     File Size: 9.43 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class Graph
-' 
-'     Properties: graphEdges, size, vertex
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: (+3 Overloads) AddEdge, AddEdges, (+2 Overloads) AddVertex, CreateEdge, (+3 Overloads) Delete
-'               ExistEdge, ExistVertex, GetConnectedVertex, GetEnumerator, IEnumerable_GetEnumerator
-'               Insert
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 346
+    '    Code Lines: 188
+    ' Comment Lines: 115
+    '   Blank Lines: 43
+    '     File Size: 11.84 KB
+
+
+    ' Class Graph
+    ' 
+    '     Properties: graphEdges, size, vertex
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: (+3 Overloads) AddEdge, AddEdges, (+2 Overloads) AddVertex, CreateEdge, (+4 Overloads) Delete
+    '               (+2 Overloads) ExistEdge, ExistVertex, GetConnectedVertex, GetEnumerator, IEnumerable_GetEnumerator
+    '               Insert, QueryEdge
+    ' 
+    '     Sub: clearEdges
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

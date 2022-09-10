@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6d7c41367c40729566616ba95e43aae, sciBASIC#\Data_science\Visualization\Plots\BarPlot\Histogram\Histogram.vb"
+﻿#Region "Microsoft.VisualBasic::be03f686b83fb42da7cf55e097dd99f5, sciBASIC#\Data_science\Visualization\Plots\BarPlot\Histogram\Histogram.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 283
-    '    Code Lines: 195
+    '   Total Lines: 288
+    '    Code Lines: 200
     ' Comment Lines: 69
     '   Blank Lines: 19
-    '     File Size: 12.62 KB
+    '     File Size: 13.18 KB
 
 
     '     Module Histogram
@@ -216,6 +216,9 @@ Namespace BarPlot.Histogram
                              Optional xAxis$ = Nothing,
                              Optional title$ = Nothing,
                              Optional titleCss$ = CSSFont.PlotTitle,
+                             Optional xlabelRotate As Double = 0,
+                             Optional xTickFormat As String = "F2",
+                             Optional yTickFormat As String = "F0",
                              Optional dpi As Integer = 100) As GraphicsData
 
             Dim theme As New Theme With {
@@ -225,7 +228,10 @@ Namespace BarPlot.Histogram
                 .mainCSS = titleCss,
                 .drawLegend = showLegend,
                 .legendBoxStroke = If(legendBorder Is Nothing, Nothing, legendBorder.ToString),
-                .drawGrid = showGrid
+                .drawGrid = showGrid,
+                .XaxisTickFormat = xTickFormat,
+                .YaxisTickFormat = yTickFormat,
+                .xAxisRotate = xlabelRotate
             }
             Dim app As New HistogramPlot(groups, alpha, drawRect, theme) With {
                 .xlabel = xlabel,
@@ -268,6 +274,9 @@ Namespace BarPlot.Histogram
                                       Optional xLabel$ = "X",
                                       Optional yLabel$ = "Y",
                                       Optional xAxis$ = Nothing,
+                                      Optional xlabelRotate As Double = 0,
+                                      Optional xTickFormat As String = "F2",
+                                      Optional yTickFormat As String = "F0",
                                       Optional showLegend As Boolean = True,
                                       Optional dpi As Integer = 100) As GraphicsData
             Return data.ToArray _
@@ -283,7 +292,10 @@ Namespace BarPlot.Histogram
                                yLabel:=yLabel,
                                xAxis:=xAxis,
                                showLegend:=showLegend,
-                               dpi:=dpi
+                               dpi:=dpi,
+                               xTickFormat:=xTickFormat,
+                               yTickFormat:=yTickFormat,
+                               xlabelRotate:=xlabelRotate
                 )
         End Function
 
@@ -310,6 +322,9 @@ Namespace BarPlot.Histogram
                                       Optional yLabel$ = "Y",
                                       Optional xAxis$ = Nothing,
                                       Optional showLegend As Boolean = True,
+                                      Optional xlabelRotate As Double = 0,
+                                      Optional xTickFormat As String = "F2",
+                                      Optional yTickFormat As String = "F0",
                                       Optional dpi As Integer = 100) As GraphicsData
 
             Dim histLegend As New LegendObject With {
@@ -333,7 +348,10 @@ Namespace BarPlot.Histogram
                 xlabel:=xLabel, Ylabel:=yLabel,
                 xAxis:=xAxis,
                 showLegend:=showLegend,
-                dpi:=dpi
+                dpi:=dpi,
+                xTickFormat:=xTickFormat,
+                yTickFormat:=yTickFormat,
+                xlabelRotate:=xlabelRotate
             )
         End Function
     End Module

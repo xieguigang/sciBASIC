@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::329d8044a89bba31c9765298f645197d, sciBASIC#\Data_science\MachineLearning\MachineLearning\CNN\Layers\Layer.vb"
+﻿#Region "Microsoft.VisualBasic::c714f7020aae9693c4627a6800f729bd, sciBASIC#\Data_science\MachineLearning\MachineLearning\CNN\Layers\Layer.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 126
+    '   Total Lines: 125
     '    Code Lines: 81
     ' Comment Lines: 20
-    '   Blank Lines: 25
+    '   Blank Lines: 24
     '     File Size: 4.45 KB
 
 
@@ -56,7 +56,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -183,4 +182,3 @@ Namespace Convolutional
         End Sub
     End Class
 End Namespace
-

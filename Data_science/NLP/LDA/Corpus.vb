@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3b219cebdb3716a0e7447c76b8bda516, sciBASIC#\Data_science\NLP\LDA\Corpus.vb"
+﻿#Region "Microsoft.VisualBasic::af55dd35d3f1ab24c9f6e3cc80e0161d, sciBASIC#\Data_science\NLP\LDA\Corpus.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 53
     ' Comment Lines: 12
     '   Blank Lines: 18
-    '     File Size: 2.44 KB
+    '     File Size: 2.52 KB
 
 
     '     Class Corpus
@@ -136,4 +136,3 @@ Namespace LDA
         End Function
     End Class
 End Namespace
-

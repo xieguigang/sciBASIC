@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b625d888ad097a1c355b31d3adc6bf3, sciBASIC#\Data_science\DataMining\DataMining\Clustering\KMeans\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::476d3178d49fdffc8cff14ba81fb8b14, sciBASIC#\Data_science\DataMining\DataMining\Clustering\KMeans\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 132
-    '    Code Lines: 107
+    '   Total Lines: 152
+    '    Code Lines: 125
     ' Comment Lines: 13
-    '   Blank Lines: 12
-    '     File Size: 5.84 KB
+    '   Blank Lines: 14
+    '     File Size: 6.96 KB
 
 
     '     Module Extensions
     ' 
-    '         Function: (+2 Overloads) Kmeans, ToKMeansModels, ValueGroups
+    '         Function: (+2 Overloads) Kmeans, (+2 Overloads) ToKMeansModels, ValueGroups
     ' 
     ' 
     ' /********************************************************************************/

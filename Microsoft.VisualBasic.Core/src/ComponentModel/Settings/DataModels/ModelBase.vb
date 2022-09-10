@@ -38,7 +38,7 @@
     '    Code Lines: 6
     ' Comment Lines: 3
     '   Blank Lines: 4
-    '     File Size: 377.00 B
+    '     File Size: 377 B
 
 
     '     Interface IProfile

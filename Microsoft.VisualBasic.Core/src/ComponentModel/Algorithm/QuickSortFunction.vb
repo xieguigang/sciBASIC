@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2589894d8f2bd706be8f10b439a7585c, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\QuickSortFunction.vb"
+﻿#Region "Microsoft.VisualBasic::4c3c0691bf257492bda54a0151c01aeb, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\QuickSortFunction.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 60
-    '    Code Lines: 46
+    '   Total Lines: 56
+    '    Code Lines: 44
     ' Comment Lines: 3
-    '   Blank Lines: 11
-    '     File Size: 2.03 KB
+    '   Blank Lines: 9
+    '     File Size: 1.97 KB
 
 
     '     Class QuickSortFunction

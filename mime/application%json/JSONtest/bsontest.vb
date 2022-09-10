@@ -38,7 +38,7 @@
     '    Code Lines: 22
     ' Comment Lines: 0
     '   Blank Lines: 9
-    '     File Size: 821.00 B
+    '     File Size: 821 B
 
 
     ' Module bsontest

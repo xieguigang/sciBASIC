@@ -38,7 +38,7 @@
     '    Code Lines: 10
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 327.00 B
+    '     File Size: 327 B
 
 
     '     Class ParseArray

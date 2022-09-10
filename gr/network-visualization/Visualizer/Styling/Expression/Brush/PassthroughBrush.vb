@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca1aea5f5dd28ef31f830abe939b20b3, sciBASIC#\gr\network-visualization\Visualizer\Styling\Expression\Brush\PassthroughBrush.vb"
+﻿#Region "Microsoft.VisualBasic::7578d500f6246583fda1c117b1c71c2e, sciBASIC#\gr\network-visualization\Visualizer\Styling\Expression\Brush\PassthroughBrush.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 25
     ' Comment Lines: 4
     '   Blank Lines: 7
-    '     File Size: 1.13 KB
+    '     File Size: 1.16 KB
 
 
     '     Class PassthroughBrush

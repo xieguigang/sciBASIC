@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6332442c76b47c99e473f2a03b4e688d, sciBASIC#\Data\Trinity\POSTagger\BrillTransformationRules.vb"
+﻿#Region "Microsoft.VisualBasic::351d2554aafa50a92b5cb337133f19ac, sciBASIC#\Data\Trinity\POSTagger\BrillTransformationRules.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 78
     ' Comment Lines: 16
     '   Blank Lines: 18
-    '     File Size: 4.79 KB
+    '     File Size: 4.90 KB
 
 
     '     Class BrillTransformationRules
@@ -166,4 +166,3 @@ Namespace POSTagger
         End Sub
     End Class
 End Namespace
-

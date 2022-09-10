@@ -38,7 +38,7 @@
     '    Code Lines: 46
     ' Comment Lines: 24
     '   Blank Lines: 15
-    '     File Size: 2.80 KB
+    '     File Size: 2.79 KB
 
 
     '     Class LocalHSPMatch

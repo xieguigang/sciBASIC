@@ -38,7 +38,7 @@
     '    Code Lines: 10
     ' Comment Lines: 11
     '   Blank Lines: 6
-    '     File Size: 822.00 B
+    '     File Size: 822 B
 
 
     '     Interface IMatched

@@ -38,7 +38,7 @@
     '    Code Lines: 48
     ' Comment Lines: 41
     '   Blank Lines: 13
-    '     File Size: 3.63 KB
+    '     File Size: 3.62 KB
 
 
     '     Interface IKeyValuePairObject

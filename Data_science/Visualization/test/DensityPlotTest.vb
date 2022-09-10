@@ -38,7 +38,7 @@
     '    Code Lines: 19
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 784.00 B
+    '     File Size: 784 B
 
 
     ' Module DensityPlotTest

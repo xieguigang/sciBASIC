@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d33ec5ec3d2b60d568e7ad3064a2b217, sciBASIC#\Data_science\MachineLearning\xgboost\TGBoost\TreeNode.vb"
+﻿#Region "Microsoft.VisualBasic::26e484aa14744d4499745d7296e3a9a4, sciBASIC#\Data_science\MachineLearning\xgboost\TGBoost\TreeNode.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 148
     ' Comment Lines: 24
     '   Blank Lines: 24
-    '     File Size: 7.63 KB
+    '     File Size: 7.83 KB
 
 
     '     Class TreeNode

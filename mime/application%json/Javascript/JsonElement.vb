@@ -38,7 +38,7 @@
     '    Code Lines: 16
     ' Comment Lines: 8
     '   Blank Lines: 5
-    '     File Size: 923.00 B
+    '     File Size: 923 B
 
 
     '     Class JsonElement

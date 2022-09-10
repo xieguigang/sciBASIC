@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74151514bf42f16b59f52948b4ccf8e8, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\HttpHeaderName.vb"
+﻿#Region "Microsoft.VisualBasic::90bb1cf86dad89664ec9d7cf56d45643, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\HttpHeaderName.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 79
     ' Comment Lines: 101
     '   Blank Lines: 19
-    '     File Size: 7.04 KB
+    '     File Size: 7.24 KB
 
 
     '     Enum HttpHeaderName

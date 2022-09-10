@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9c274fbf56dd553a30606db3f04f22a, sciBASIC#\Data_science\Mathematica\Math\ODE\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::3a9a243c9ab5f920be8b3c46bcb91215, sciBASIC#\Data_science\Mathematica\Math\ODE\test\Module1.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 46
     ' Comment Lines: 0
     '   Blank Lines: 15
-    '     File Size: 1.51 KB
+    '     File Size: 1.57 KB
 
 
     ' Module Module1

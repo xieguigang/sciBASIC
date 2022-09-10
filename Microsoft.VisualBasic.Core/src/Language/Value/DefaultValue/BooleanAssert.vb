@@ -38,7 +38,7 @@
     '    Code Lines: 46
     ' Comment Lines: 0
     '   Blank Lines: 13
-    '     File Size: 2.16 KB
+    '     File Size: 2.15 KB
 
 
     '     Structure BooleanAssert

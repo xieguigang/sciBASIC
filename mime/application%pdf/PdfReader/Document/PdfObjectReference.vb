@@ -38,7 +38,7 @@
     '    Code Lines: 26
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 898.00 B
+    '     File Size: 898 B
 
 
     '     Class PdfObjectReference

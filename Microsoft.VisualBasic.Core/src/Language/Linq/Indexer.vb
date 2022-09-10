@@ -38,7 +38,7 @@
     '    Code Lines: 33
     ' Comment Lines: 5
     '   Blank Lines: 6
-    '     File Size: 1.81 KB
+    '     File Size: 1.80 KB
 
 
     '     Module Indexer

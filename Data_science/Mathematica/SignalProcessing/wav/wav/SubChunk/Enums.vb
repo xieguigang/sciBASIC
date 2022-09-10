@@ -38,7 +38,7 @@
     '    Code Lines: 16
     ' Comment Lines: 15
     '   Blank Lines: 2
-    '     File Size: 652.00 B
+    '     File Size: 652 B
 
 
     ' Enum wFormatTag

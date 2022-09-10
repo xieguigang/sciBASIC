@@ -1,61 +1,61 @@
-﻿#Region "Microsoft.VisualBasic::b54e739e2da8205133bd52e712f89c34, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Layout\Layout\ForceDirected.vb"
+﻿#Region "Microsoft.VisualBasic::c5d512f83db9061d75f4d85fb5b9a5fc, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Layout\Layout\ForceDirected.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 332
-'    Code Lines: 218
-' Comment Lines: 62
-'   Blank Lines: 52
-'     File Size: 13.69 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class ForceDirected
-' 
-'         Properties: damping, graph, repulsion, stiffness, threshold
-'                     withinThreshold
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: createSpring, GetSpring, getTotalEnergy, Nearest
-' 
-'         Sub: (+2 Overloads) applyCoulombsLaw, applyHookesLaw, attractToCentre, Calculate, Clear
-'              (+2 Overloads) Dispose, EachEdge, EachNode, Flush, SetPhysics
-'              updatePosition, updateVelocity
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 367
+    '    Code Lines: 252
+    ' Comment Lines: 60
+    '   Blank Lines: 55
+    '     File Size: 15.11 KB
+
+
+    '     Class ForceDirected
+    ' 
+    '         Properties: damping, graph, interactiveMode, repulsion, stiffness
+    '                     threshold, withinThreshold
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: createSpring, GetSpring, getTotalEnergy, Nearest
+    ' 
+    '         Sub: (+2 Overloads) applyCoulombsLaw, applyHookesLaw, attractToCentre, Calculate, Clear
+    '              (+2 Overloads) Dispose, EachEdge, EachNode, Flush, SetPhysics
+    '              updatePosition, updateVelocity
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

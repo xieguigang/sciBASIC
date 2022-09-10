@@ -71,7 +71,7 @@ Namespace My.JavaScript
         ''' </summary>
         Public Const LITTLE_ENDIAN As UShort = &HFFFE
 
-        Protected stream As MemoryStream
+        Protected stream As Stream
 
         Public Overridable ReadOnly Property byteLength As Integer
             Get
@@ -87,7 +87,7 @@ Namespace My.JavaScript
             Call Me.New(CType(CObj(bytes), Byte()))
         End Sub
 
-        Sub New(bytes As MemoryStream)
+        Sub New(bytes As Stream)
             Me.stream = bytes
         End Sub
 

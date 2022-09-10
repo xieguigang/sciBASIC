@@ -38,7 +38,7 @@
     '    Code Lines: 9
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 269.00 B
+    '     File Size: 269 B
 
 
     '     Class ParseResolveEventArgs

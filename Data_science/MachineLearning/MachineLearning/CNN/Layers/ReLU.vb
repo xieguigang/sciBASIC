@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4632be7be71646f5e615977f0f45fd5, sciBASIC#\Data_science\MachineLearning\MachineLearning\CNN\Layers\ReLU.vb"
+﻿#Region "Microsoft.VisualBasic::e24f459a902f62eaa9f8eb17e98f522e, sciBASIC#\Data_science\MachineLearning\MachineLearning\CNN\Layers\ReLU.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 52
+    '   Total Lines: 51
     '    Code Lines: 37
     ' Comment Lines: 0
-    '   Blank Lines: 15
-    '     File Size: 1.42 KB
+    '   Blank Lines: 14
+    '     File Size: 1.41 KB
 
 
     '     Class ReLU
@@ -52,7 +52,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace Convolutional
 
@@ -105,4 +104,3 @@ Namespace Convolutional
         End Function
     End Class
 End Namespace
-

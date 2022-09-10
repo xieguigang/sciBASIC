@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1888de8262862635928f08bbd68c4c19, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BElements\BElement.vb"
+﻿#Region "Microsoft.VisualBasic::129b1f547a88240045919827921939cc, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BElements\BElement.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 7
     ' Comment Lines: 12
     '   Blank Lines: 4
-    '     File Size: 741.00 B
+    '     File Size: 763 B
 
 
     '     Interface BElement

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13c59f5c2f28c7b56cb27e431d2df395, sciBASIC#\gr\network-visualization\Visualizer\Styling\Expression\Numeric\PassthroughNumber.vb"
+﻿#Region "Microsoft.VisualBasic::99d4860696406b9714b25f7b08166abb, sciBASIC#\gr\network-visualization\Visualizer\Styling\Expression\Numeric\PassthroughNumber.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 50
+    '   Total Lines: 49
     '    Code Lines: 22
     ' Comment Lines: 18
-    '   Blank Lines: 10
-    '     File Size: 1.58 KB
+    '   Blank Lines: 9
+    '     File Size: 1.62 KB
 
 
     '     Interface IGetSize
@@ -54,7 +54,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph

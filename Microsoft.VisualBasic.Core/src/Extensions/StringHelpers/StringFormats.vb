@@ -1,51 +1,51 @@
-﻿#Region "Microsoft.VisualBasic::54558a2e78e9ffa4cb6cb38f3142387c, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringFormats.vb"
+﻿#Region "Microsoft.VisualBasic::52cfd0a3aa09e27e45d05d7bbf938c41, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringFormats.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 83
-'    Code Lines: 60
-' Comment Lines: 11
-'   Blank Lines: 12
-'     File Size: 2.70 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module StringFormats
-' 
-'     Function: FormatTime, (+2 Overloads) Lanudry, ReadableElapsedTime
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 85
+    '    Code Lines: 62
+    ' Comment Lines: 11
+    '   Blank Lines: 12
+    '     File Size: 2.85 KB
+
+
+    ' Module StringFormats
+    ' 
+    '     Function: FormatTime, (+2 Overloads) Lanudry, ReadableElapsedTime
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

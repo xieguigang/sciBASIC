@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e31ac5fd4966fe66c048abf9b9f41ce0, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\LogLikelihood.vb"
+﻿#Region "Microsoft.VisualBasic::bbad7ee164ecfc13ba78d7a6d0651a8e, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\LogLikelihood.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 24
     ' Comment Lines: 12
     '   Blank Lines: 6
-    '     File Size: 1.80 KB
+    '     File Size: 1.79 KB
 
 
     ' Module LogLikelihood
@@ -91,4 +91,3 @@ Public Module LogLikelihood
     End Function
 
 End Module
-

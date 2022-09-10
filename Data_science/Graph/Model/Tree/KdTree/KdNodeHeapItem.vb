@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 447.00 B
+    '     File Size: 447 B
 
 
     '     Class KdNodeHeapItem

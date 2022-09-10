@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aaeb40c7587c7f93da1f1abbaf688210, sciBASIC#\Microsoft.VisualBasic.Core\src\My\File.vb"
+﻿#Region "Microsoft.VisualBasic::5bbf60ba82e21abb67dc071ccadd5061, sciBASIC#\Microsoft.VisualBasic.Core\src\My\File.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 124
-    '    Code Lines: 80
+    '   Total Lines: 122
+    '    Code Lines: 78
     ' Comment Lines: 25
     '   Blank Lines: 19
-    '     File Size: 4.19 KB
+    '     File Size: 4.16 KB
 
 
     '     Module File

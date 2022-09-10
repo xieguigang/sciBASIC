@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a6c0bcd9fcda91e60779de861630c48, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\FisherTest.vb"
+﻿#Region "Microsoft.VisualBasic::184dd2aa1bb228959cd83f4723104cce, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\FisherTest.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 115
-    '    Code Lines: 56
-    ' Comment Lines: 47
-    '   Blank Lines: 12
-    '     File Size: 4.44 KB
+    '   Total Lines: 131
+    '    Code Lines: 64
+    ' Comment Lines: 52
+    '   Blank Lines: 15
+    '     File Size: 4.79 KB
 
 
     ' Module FisherTest
     ' 
-    '     Function: FactorialDivide, FisherPvalue, product, ProductALL
+    '     Function: fact, FactorialDivide, FisherPvalue, product, ProductALL
     ' 
     ' /********************************************************************************/
 

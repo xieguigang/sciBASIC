@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9c20c1b93f3a8ae15f0263ab00defd3, sciBASIC#\gr\network-visualization\Visualizer\Styling\Expression\Numeric\DiscreteNumber.vb"
+﻿#Region "Microsoft.VisualBasic::f6feb0c76bac225b1e541cf349aa60fd, sciBASIC#\gr\network-visualization\Visualizer\Styling\Expression\Numeric\DiscreteNumber.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 29
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 1.23 KB
+    '     File Size: 1.26 KB
 
 
     '     Class DiscreteNumber

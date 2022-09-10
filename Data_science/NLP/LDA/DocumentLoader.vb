@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ca896b39f0a54ad4974714ee6afcd80, sciBASIC#\Data_science\NLP\LDA\DocumentLoader.vb"
+﻿#Region "Microsoft.VisualBasic::0591523c79c4c0b1558258a78df2d97e, sciBASIC#\Data_science\NLP\LDA\DocumentLoader.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 56
     ' Comment Lines: 6
     '   Blank Lines: 19
-    '     File Size: 2.49 KB
+    '     File Size: 2.57 KB
 
 
     '     Module DocumentLoader

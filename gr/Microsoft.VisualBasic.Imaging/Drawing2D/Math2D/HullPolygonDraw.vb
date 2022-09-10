@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7bebe67715883c89948caddf616b8084, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\HullPolygonDraw.vb"
+﻿#Region "Microsoft.VisualBasic::e835ce4afafb9b91f1e42738e53da6d6, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\HullPolygonDraw.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 78
+    '   Total Lines: 83
     '    Code Lines: 53
-    ' Comment Lines: 14
+    ' Comment Lines: 19
     '   Blank Lines: 11
-    '     File Size: 3.11 KB
+    '     File Size: 3.32 KB
 
 
     '     Module HullPolygonDraw

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a85638fe9ced3dd36346aa78049db551, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Set\Set.vb"
+﻿#Region "Microsoft.VisualBasic::5384001635965f3a1d4704d580db9a38, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Set\Set.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 197
     ' Comment Lines: 132
     '   Blank Lines: 49
-    '     File Size: 14.53 KB
+    '     File Size: 14.91 KB
 
 
     '     Class [Set]

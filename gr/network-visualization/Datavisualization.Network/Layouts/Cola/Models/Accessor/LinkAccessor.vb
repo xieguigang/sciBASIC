@@ -38,7 +38,7 @@
     '    Code Lines: 16
     ' Comment Lines: 4
     '   Blank Lines: 7
-    '     File Size: 889.00 B
+    '     File Size: 889 B
 
 
     '     Class LinkAccessor

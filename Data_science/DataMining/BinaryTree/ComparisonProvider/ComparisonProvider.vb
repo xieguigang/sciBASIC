@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b51a9043432967a5af627a4136fa0490, sciBASIC#\Data_science\DataMining\BinaryTree\ComparisonProvider\ComparisonProvider.vb"
+﻿#Region "Microsoft.VisualBasic::d93f8025b524b76742e09d5c105d4001, sciBASIC#\Data_science\DataMining\BinaryTree\ComparisonProvider\ComparisonProvider.vb"
 
     ' Author:
     ' 
@@ -62,7 +62,7 @@ Public MustInherit Class ComparisonProvider
         Me.gt = gt
     End Sub
 
-    Protected MustOverride Function GetSimilarity(x As String, y As String) As Double
+    Public MustOverride Function GetSimilarity(x As String, y As String) As Double
 
     Public Function Compares(x As String, y As String) As Integer
         Dim similarity As Double = GetSimilarity(x, y)

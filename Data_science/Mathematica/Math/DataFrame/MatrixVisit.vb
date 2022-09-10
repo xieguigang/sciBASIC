@@ -38,7 +38,7 @@
     '    Code Lines: 4
     ' Comment Lines: 0
     '   Blank Lines: 0
-    '     File Size: 58.00 B
+    '     File Size: 58 B
 
 
     ' Enum MatrixVisit

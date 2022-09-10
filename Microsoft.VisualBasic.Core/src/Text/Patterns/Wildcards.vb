@@ -38,7 +38,7 @@
     '    Code Lines: 47
     ' Comment Lines: 32
     '   Blank Lines: 13
-    '     File Size: 3.63 KB
+    '     File Size: 3.62 KB
 
 
     '     Module WildcardsExtension

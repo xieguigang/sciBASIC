@@ -38,7 +38,7 @@
     '    Code Lines: 19
     ' Comment Lines: 24
     '   Blank Lines: 8
-    '     File Size: 1.78 KB
+    '     File Size: 1.77 KB
 
 
     '     Class LinguisticVariableCollection

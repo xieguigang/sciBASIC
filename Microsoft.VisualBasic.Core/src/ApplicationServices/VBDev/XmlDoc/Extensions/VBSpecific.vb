@@ -38,7 +38,7 @@
     '    Code Lines: 10
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 422.00 B
+    '     File Size: 422 B
 
 
     '     Module VBSpecific

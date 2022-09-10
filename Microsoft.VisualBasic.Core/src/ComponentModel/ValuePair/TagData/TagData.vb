@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ef04bbf0ea5d7bbdf559d7ad9abfa02, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\TagData\TagData.vb"
+﻿#Region "Microsoft.VisualBasic::e176dfff2224ee642a4cfd5299a867f1, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\TagData\TagData.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 44
     ' Comment Lines: 34
     '   Blank Lines: 19
-    '     File Size: 3.11 KB
+    '     File Size: 3.21 KB
 
 
     '     Class TagData

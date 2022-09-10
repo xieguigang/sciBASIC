@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0fcab9518601c082e09a289fb4e51256, sciBASIC#\Data_science\MachineLearning\MachineLearning\CNN\CeNiN.vb"
+﻿#Region "Microsoft.VisualBasic::5e957d215ed83b17cea435b04555b244, sciBASIC#\Data_science\MachineLearning\MachineLearning\CNN\CeNiN.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 148
     ' Comment Lines: 11
     '   Blank Lines: 49
-    '     File Size: 6.84 KB
+    '     File Size: 6.83 KB
 
 
     '     Class CeNiN
@@ -261,4 +261,3 @@ Namespace Convolutional
         End Function
     End Class
 End Namespace
-

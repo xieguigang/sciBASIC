@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b75cb570aecdffb43f98defe03cfe51, sciBASIC#\Data\Trinity\Model\Segment.vb"
+﻿#Region "Microsoft.VisualBasic::3f56a89136816ee092e94f8807f38ae5, sciBASIC#\Data\Trinity\Model\Segment.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 27
     ' Comment Lines: 14
     '   Blank Lines: 9
-    '     File Size: 1.42 KB
+    '     File Size: 1.46 KB
 
 
     '     Class Segment

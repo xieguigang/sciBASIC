@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a92b01ffc835904dc29cc5c0d471eb6c, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\Variant.vb"
+﻿#Region "Microsoft.VisualBasic::efe8fead0c7ae51dff054e2438cd0f85, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\Variant.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 109
     ' Comment Lines: 32
     '   Blank Lines: 20
-    '     File Size: 5.55 KB
+    '     File Size: 5.71 KB
 
 
     '     Class [Variant]
@@ -205,13 +205,21 @@ Namespace Language
         ''' <summary>
         ''' 请注意Like是直接进行比较，不会比较继承关系链的？
         ''' </summary>
-        ''' <param name="var"></param>
+        ''' <param name="var">
+        ''' 为空值的时候，仅当<paramref name="type"/>是Nothing的时候才会返回真
+        ''' </param>
         ''' <param name="type"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
         Public Overloads Shared Operator Like(var As [Variant](Of A, B), type As Type) As Boolean
-            Return var.GetUnderlyingType Is type
+            If var Is Nothing Then
+                Return type Is Nothing OrElse type Is GetType(System.Void)
+            ElseIf type Is Nothing Then
+                Return False
+            Else
+                Return var.GetUnderlyingType Is type
+            End If
         End Operator
     End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c6ca75dcc1eb7246ce283095af2db7d, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drivers\MockGDIPlusGraphics.vb"
+﻿#Region "Microsoft.VisualBasic::640ac23b9e04bf13472a1ffb38ae143c, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drivers\MockGDIPlusGraphics.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 87
+    '   Total Lines: 85
     '    Code Lines: 65
     ' Comment Lines: 3
-    '   Blank Lines: 19
+    '   Blank Lines: 17
     '     File Size: 3.94 KB
 
 
@@ -138,6 +138,3 @@ Namespace Driver
         End Function
     End Class
 End Namespace
-
-
-

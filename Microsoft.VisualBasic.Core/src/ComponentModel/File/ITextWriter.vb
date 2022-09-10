@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf224ff65901053e9fb6116958decea1, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\File\ITextWriter.vb"
+﻿#Region "Microsoft.VisualBasic::c0b636574e2ea60742b329b13e62b244, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\File\ITextWriter.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 7
     ' Comment Lines: 3
     '   Blank Lines: 4
-    '     File Size: 297.00 B
+    '     File Size: 310 B
 
 
     '     Class ITextWriter

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d41bab3b0b274a8f99bef08afae5c602, sciBASIC#\Data\Trinity\Model\Sentence.vb"
+﻿#Region "Microsoft.VisualBasic::d18920e9770fef11cc65e003d51d3825, sciBASIC#\Data\Trinity\Model\Sentence.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 70
     ' Comment Lines: 10
     '   Blank Lines: 20
-    '     File Size: 2.89 KB
+    '     File Size: 2.98 KB
 
 
     '     Class Sentence

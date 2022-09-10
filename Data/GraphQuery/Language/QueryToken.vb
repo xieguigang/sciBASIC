@@ -38,7 +38,7 @@
     '    Code Lines: 31
     ' Comment Lines: 0
     '   Blank Lines: 6
-    '     File Size: 937.00 B
+    '     File Size: 937 B
 
 
     '     Class QueryToken

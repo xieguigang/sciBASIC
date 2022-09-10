@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::740e604127136539029f8ee9599dfb50, sciBASIC#\Data_science\Visualization\Plots\g\Theme\Theme.vb"
+﻿#Region "Microsoft.VisualBasic::1ba1a4dd4f302534f183e113caae4b2f, sciBASIC#\Data_science\Visualization\Plots\g\Theme\Theme.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 181
-    '    Code Lines: 71
-    ' Comment Lines: 80
+    '   Total Lines: 191
+    '    Code Lines: 73
+    ' Comment Lines: 88
     '   Blank Lines: 30
-    '     File Size: 6.01 KB
+    '     File Size: 6.60 KB
 
 
     '     Class Theme
@@ -49,8 +49,8 @@
     '                     legendBoxBackground, legendBoxStroke, legendLabelCSS, legendLayout, legendSplitSize
     '                     legendTickAxisStroke, legendTickCSS, legendTickFormat, legendTitleCSS, lineStroke
     '                     mainCSS, mainTextColor, padding, pointSize, subtitleCSS
-    '                     tagColor, tagCSS, tagLinkStroke, xAxisLayout, xAxisRotate
-    '                     XaxisTickFormat, yAxisLayout, YaxisTickFormat
+    '                     tagColor, tagCSS, tagFormat, tagLinkStroke, xAxisLayout
+    '                     xAxisRotate, XaxisTickFormat, yAxislabelPosition, yAxisLayout, YaxisTickFormat
     ' 
     '         Function: Clone, GetLegendPosition, NewColorSet, ToString
     ' 
@@ -86,6 +86,7 @@ Namespace Graphic.Canvas
         ''' <returns></returns>
         Public Property mainCSS As String = CSSFont.PlotTitle
         Public Property mainTextColor As String = "black"
+        Public Property mainTextWrap As Boolean = False
 
         ''' <summary>
         ''' 副标题字体样式

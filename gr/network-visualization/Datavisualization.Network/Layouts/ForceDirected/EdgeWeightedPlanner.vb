@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd5c21ee346535a2d0aafe17a9d04fc2, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\EdgeWeightedPlanner.vb"
+﻿#Region "Microsoft.VisualBasic::aff151a0c296bc6c83772a21543ee254, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\EdgeWeightedPlanner.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 94
     ' Comment Lines: 11
     '   Blank Lines: 19
-    '     File Size: 4.84 KB
+    '     File Size: 4.96 KB
 
 
     '     Class EdgeWeightedPlanner

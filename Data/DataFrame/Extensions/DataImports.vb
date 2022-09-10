@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5219f93ae994a22f4d71499b8bc6d0e2, sciBASIC#\Data\DataFrame\Extensions\DataImports.vb"
+﻿#Region "Microsoft.VisualBasic::4cacf8f21670cc474af178f4d26c8f13, sciBASIC#\Data\DataFrame\Extensions\DataImports.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 195
-    '    Code Lines: 99
+    '   Total Lines: 201
+    '    Code Lines: 105
     ' Comment Lines: 76
     '   Blank Lines: 20
-    '     File Size: 7.93 KB
+    '     File Size: 8.18 KB
 
 
     ' Module DataImports
