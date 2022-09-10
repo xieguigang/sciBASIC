@@ -79,7 +79,9 @@ Namespace QLearning
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
-            Return $"[ {EnvirState} ] {vbTab}--> {Qvalues.GetJson}"
+            SyncLock Qvalues
+                Return $"[ {EnvirState} ] {vbTab}--> {Qvalues.GetJson}"
+            End SyncLock
         End Function
 
     End Class
