@@ -105,6 +105,10 @@ Namespace QLearning
         Protected MustOverride Sub reset(i As Integer)
 
         Public Sub RunLearningLoop(n As Integer)
+            If n <= 0 Then
+                n = Integer.MaxValue
+            End If
+
             For iteration As Integer = 0 To n
                 Call reset(iteration)
 
