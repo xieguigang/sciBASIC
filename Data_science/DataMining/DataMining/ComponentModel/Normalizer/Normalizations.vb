@@ -74,6 +74,15 @@ Namespace ComponentModel.Normalizer
 
         ReadOnly normalRange As DoubleRange = {0, 1}
 
+        ''' <summary>
+        ''' z-score
+        ''' </summary>
+        ''' <param name="samples">
+        ''' the sample value of <see cref="SampleDistribution.average"/> and 
+        ''' <see cref="SampleDistribution.stdErr"/> should not be empty.
+        ''' </param>
+        ''' <param name="x#"></param>
+        ''' <returns></returns>
         Public Function ZScoreNormalize(samples As SampleDistribution, x#) As Double
             Return pnorm.Z(x, samples.average, samples.stdErr)
         End Function
