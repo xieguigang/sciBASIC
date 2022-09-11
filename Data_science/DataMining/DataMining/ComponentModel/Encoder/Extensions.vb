@@ -70,7 +70,11 @@ Namespace ComponentModel.Encoder
             Dim unique As Index(Of String) = raw.Distinct.Indexing
 
             With Imaging.AllDotNetPrefixColors.AsLoop
-                Dim colors As String() = unique.Objects.Select(Function(a) .Next.ToHtmlColor).ToArray
+                Dim colors As String() = unique.Objects _
+                    .Select(Function(a)
+                                Return .Next.ToHtmlColor
+                            End Function) _
+                    .ToArray
 
                 For Each label As String In raw
                     Yield New ColorClass With {
