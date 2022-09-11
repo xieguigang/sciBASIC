@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<RootNamespace>Microsoft.VisualBasic.MachineLearning.Debugger</RootNamespace>
+		<RootNamespace>Microsoft.VisualBasic.MachineLearning.Data</RootNamespace>
 		<TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
-		<AssemblyName>Microsoft.VisualBasic.MachineLearning.Debugger</AssemblyName>
+		<AssemblyName>Microsoft.VisualBasic.MachineLearning.Data.Extensions</AssemblyName>
 		<Authors>xie.guigang@live.com</Authors>
 		<Company>sciBASIC.NET</Company>
 		<Version>5.0.1.2389</Version>
@@ -116,16 +116,6 @@
 
   <ItemGroup>
     <Import Include="System.Data" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\Data\BinaryData\netCDF\netCDF.vbproj" />
-    <ProjectReference Include="..\..\..\Data\DataFrame\dataframework-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
-    <ProjectReference Include="..\..\DataMining\DataMining\DataMining.NET5.vbproj" />
-    <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
-    <ProjectReference Include="..\MachineLearning\machine_learning-netcore5.vbproj" />
   </ItemGroup>
 
 </Project>
