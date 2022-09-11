@@ -10,11 +10,9 @@ Public Module Encoder
     ''' <returns></returns>
     <Extension>
     Public Function Encoding(data As DataFrame) As DataFrame
-        Dim encoder As New FeatureEncoder
-
         For Each name As String In data.features.Keys.ToArray
             Dim v As FeatureVector = data(name)
-            Dim extends As DataFrame = encoder.Encode(v)
+            Dim extends As DataFrame = FeatureEncoder.Encode(v, name)
 
             data.features.Remove(name)
             data = data.Union(extends)

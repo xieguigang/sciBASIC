@@ -64,6 +64,12 @@ Public Class FeatureVector
         End Get
     End Property
 
+    Public ReadOnly Property size As Integer
+        Get
+            Return vector.Length
+        End Get
+    End Property
+
     Sub New(ints As IEnumerable(Of Integer))
         vector = ints.ToArray
         type = GetType(Integer)

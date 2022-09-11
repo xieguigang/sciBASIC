@@ -66,6 +66,12 @@ Public Class DataFrame
         End Get
     End Property
 
+    Public ReadOnly Property featureNames As String()
+        Get
+            Return features.Keys.ToArray
+        End Get
+    End Property
+
     Public ReadOnly Property nsamples As Integer
         Get
             Return rownames.Length
@@ -92,7 +98,16 @@ Public Class DataFrame
             Throw New InvalidConstraintException("the sample number between two matrix is not agree!")
         End If
 
+        Dim join As New Dictionary(Of String, FeatureVector)(features)
 
+        For Each key As String In append.featureNames
+            Call join.Add(key, append(featureName:=key))
+        Next
+
+        Return New DataFrame With {
+            .features = join,
+            .rownames = rownames.ToArray
+        }
     End Function
 
     Public Overrides Function ToString() As String
