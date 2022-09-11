@@ -29,6 +29,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "math", "math", "{1949500E-0
 EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "MachineLearning.Data.Extensions", "..\MachineLearning.Data.Extensions\MachineLearning.Data.Extensions.vbproj", "{E9512269-5C0A-42A9-9232-6D23053E4070}"
 EndProject
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "DeepLearning.NET6", "..\DeepLearning\DeepLearning.NET6.vbproj", "{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -369,6 +371,38 @@ Global
 		{E9512269-5C0A-42A9-9232-6D23053E4070}.Rsharp_app_release|Any CPU.Build.0 = Rsharp_app_release|Any CPU
 		{E9512269-5C0A-42A9-9232-6D23053E4070}.Rsharp_app_release|x64.ActiveCfg = Rsharp_app_release|x64
 		{E9512269-5C0A-42A9-9232-6D23053E4070}.Rsharp_app_release|x64.Build.0 = Rsharp_app_release|x64
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.Debug|x64.ActiveCfg = Debug|x64
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.Debug|x64.Build.0 = Debug|x64
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.LipidSearch|Any CPU.ActiveCfg = LipidSearch|Any CPU
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.LipidSearch|Any CPU.Build.0 = LipidSearch|Any CPU
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.LipidSearch|x64.ActiveCfg = LipidSearch|x64
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.LipidSearch|x64.Build.0 = LipidSearch|x64
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.mzkit_win32|Any CPU.ActiveCfg = mzkit_win32|Any CPU
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.mzkit_win32|Any CPU.Build.0 = mzkit_win32|Any CPU
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.mzkit_win32|x64.ActiveCfg = mzkit_win32|x64
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.mzkit_win32|x64.Build.0 = mzkit_win32|x64
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.mzkit|Any CPU.Build.0 = mzkit|Any CPU
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.mzkit|x64.ActiveCfg = mzkit|x64
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.mzkit|x64.Build.0 = mzkit|x64
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.NPSearch|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.NPSearch|Any CPU.Build.0 = Debug|Any CPU
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.NPSearch|x64.ActiveCfg = Debug|x64
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.NPSearch|x64.Build.0 = Debug|x64
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.PlantMAT|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.PlantMAT|Any CPU.Build.0 = Debug|Any CPU
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.PlantMAT|x64.ActiveCfg = Debug|x64
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.PlantMAT|x64.Build.0 = Debug|x64
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.Release|x64.ActiveCfg = Release|x64
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.Release|x64.Build.0 = Release|x64
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.Rsharp_app_release|Any CPU.ActiveCfg = Rsharp_app_release|Any CPU
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.Rsharp_app_release|Any CPU.Build.0 = Rsharp_app_release|Any CPU
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.Rsharp_app_release|x64.ActiveCfg = Rsharp_app_release|x64
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF}.Rsharp_app_release|x64.Build.0 = Rsharp_app_release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -384,6 +418,7 @@ Global
 		{2E9C7777-7C43-4440-B486-F26A99FA42B3} = {1949500E-06E0-4930-B5C2-F5EAEDC70590}
 		{3D042CA8-B3B3-401D-BFFD-F2AF5B0CAFAB} = {73DBF490-876A-4038-9315-9A2C2BAB7119}
 		{1949500E-06E0-4930-B5C2-F5EAEDC70590} = {73DBF490-876A-4038-9315-9A2C2BAB7119}
+		{DCE9F638-3FEF-4FEC-96F1-DCDFEA242BFF} = {1949500E-06E0-4930-B5C2-F5EAEDC70590}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {328C8707-B635-4CDA-BD09-40F85A4954BA}
