@@ -14,7 +14,7 @@ Public Module Encoder
             Dim v As FeatureVector = data(name)
             Dim extends As DataFrame = FeatureEncoder.Encode(v, name)
 
-            data.features.Remove(name)
+            data.delete(featureName:=name)
             data = data.Union(extends)
         Next
 
