@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dc60230cc062d820209b398435e851e8, sciBASIC#\Data\DataFrame\test\My Project\Application.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::2f560b88ef6ef660399bf1150ab8b6b5, sciBASIC#\Data\DataFrame\test\My Project\Application.Designer.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 13
+    '   Total Lines: 12
     '    Code Lines: 2
     ' Comment Lines: 9
-    '   Blank Lines: 2
-    '     File Size: 455 B
+    '   Blank Lines: 1
+    '     File Size: 451 B
 
 
     ' 
@@ -58,5 +58,3 @@
 
 Option Strict On
 Option Explicit On
-
-

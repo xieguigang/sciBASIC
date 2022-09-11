@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b4323df93df5e83c6ba8d12ae531aef, sciBASIC#\Data_science\Mathematica\Math\ODESolver.Extensions\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::3423c742b0b8c2bdea9a5eca416bd196, sciBASIC#\Data_science\Mathematica\Math\ODESolver.Extensions\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -113,4 +113,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8b1b818318661fd37fda6ece8139dda, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\FTest.vb"
+﻿#Region "Microsoft.VisualBasic::cfb249db5266f8a6d021fcc96eabf313, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\FTest.vb"
 
     ' Author:
     ' 
@@ -153,4 +153,3 @@ ratio of variances
 "
     End Function
 End Class
-

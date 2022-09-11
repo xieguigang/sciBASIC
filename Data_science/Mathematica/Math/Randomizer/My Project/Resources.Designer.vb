@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4afe6c9f524de1e4235315916b9b326c, sciBASIC#\Data_science\Mathematica\Math\Randomizer\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::65a747f564bb5e081974d67c1d674644, sciBASIC#\Data_science\Mathematica\Math\Randomizer\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -144,4 +144,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

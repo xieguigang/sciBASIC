@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ebd54c319b2bb70a2b83d6e33e32ac07, sciBASIC#\Data_science\Visualization\Plots\BarPlot\Violin.vb"
+﻿#Region "Microsoft.VisualBasic::cb66f8bcc8bb48e0f77578d9c4d6b8fc, sciBASIC#\Data_science\Visualization\Plots\BarPlot\Violin.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 258
-    '    Code Lines: 202
+    '   Total Lines: 277
+    '    Code Lines: 217
     ' Comment Lines: 17
-    '   Blank Lines: 39
-    '     File Size: 10.64 KB
+    '   Blank Lines: 43
+    '     File Size: 11.17 KB
 
 
     ' Class Violin
@@ -332,4 +332,3 @@ Public Class Violin : Inherits Plot
         End If
     End Sub
 End Class
-

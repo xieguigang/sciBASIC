@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4bb4dee4d8f7f99c72392f453a7689f3, sciBASIC#\Data_science\MachineLearning\MachineLearning\NeuralNetwork\Trainings\DarwinismHybrid\NetworkIndividual.vb"
+﻿#Region "Microsoft.VisualBasic::4bb4dee4d8f7f99c72392f453a7689f3, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Trainings\DarwinismHybrid\NetworkIndividual.vb"
 
     ' Author:
     ' 

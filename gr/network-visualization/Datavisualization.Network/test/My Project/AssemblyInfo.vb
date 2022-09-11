@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a6051b0363f50e11cd81c95be56c5db, sciBASIC#\gr\network-visualization\Datavisualization.Network\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::1e211799dc529bcf1cf56c2ff4dfbf89, sciBASIC#\gr\network-visualization\Datavisualization.Network\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -81,4 +81,3 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
-

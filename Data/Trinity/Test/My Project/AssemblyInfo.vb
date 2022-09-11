@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::373a9876f3dd35998f8aa76065491598, sciBASIC#\Data\Trinity\Test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::e28bee4194673775294b40d355a3cfb3, sciBASIC#\Data\Trinity\Test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1.15 KB
+    '     File Size: 1.14 KB
 
 
     ' 
@@ -81,4 +81,3 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
-

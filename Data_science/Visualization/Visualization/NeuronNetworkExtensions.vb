@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0bb77c13457b0ddc6571909eb0a93837, sciBASIC#\Data_science\Visualization\Visualization\NeuronNetworkExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::1d16312d40e88a5526647ef94a621bce, sciBASIC#\Data_science\Visualization\Visualization\NeuronNetworkExtensions.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 103
-    '    Code Lines: 80
+    '   Total Lines: 104
+    '    Code Lines: 81
     ' Comment Lines: 14
     '   Blank Lines: 9
-    '     File Size: 4.05 KB
+    '     File Size: 4.06 KB
 
 
     ' Module NeuronNetworkExtensions
@@ -86,7 +86,8 @@ Public Module NeuronNetworkExtensions
     ''' </summary>
     ''' <param name="net"></param>
     ''' <returns></returns>
-    <Extension> Public Function VisualizeModel(net As NeuronNetwork, Optional connectionCutoff# = 0.6) As NetworkTables
+    <Extension>
+    Public Function VisualizeModel(net As NeuronNetwork, Optional connectionCutoff# = 0.6) As NetworkTables
         Dim model = NeuralNetwork.Snapshot(net)
         Dim inputLayer = model.inputlayer.neurons.Indexing
         Dim outputLayer = model.outputlayer.neurons.Indexing

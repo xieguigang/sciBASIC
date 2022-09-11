@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0bf73d80ff99b62217491ef5755c6175, sciBASIC#\gr\network-visualization\NetworkCanvas\Styling\UI\ColorMaps.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::fc1771086c71a4c6bcd5e0817f43a7fc, sciBASIC#\gr\network-visualization\NetworkCanvas\Styling\UI\ColorMaps.Designer.vb"
 
     ' Author:
     ' 
@@ -185,4 +185,3 @@ Partial Class ColorMaps
     Friend WithEvents ComboBox1 As ComboBox
     Friend WithEvents PictureBox2 As PictureBox
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::44ad1cb8c1ba8971ecff74b4bbb1e5cf, sciBASIC#\Data_science\Mathematica\Math\ANOVA\TableFivepercent.vb"
+﻿#Region "Microsoft.VisualBasic::10cafb0f870b96ece21a300289ae76b0, sciBASIC#\Data_science\Mathematica\Math\ANOVA\TableFivepercent.vb"
 
     ' Author:
     ' 
@@ -93,4 +93,3 @@ Friend Class TableFivepercent : Inherits DistributionTable
         Yield New Double() {3.8415, 2.9957, 2.6049, 2.3719, 2.2141, 2.0986, 2.0096, 1.9384, 1.8799, 1.8307, 1.7522, 1.6664, 1.5705, 1.5173, 1.4591, 1.394, 1.318, 1.2214, 1}
     End Function
 End Class
-

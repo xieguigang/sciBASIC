@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da3a4f1f6ac6222a3f3bb1d3186036ba, sciBASIC#\gr\physics\physics_Test\Form1.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::897f3f5b7a8e74103f3c11edcb0db9cd, sciBASIC#\gr\physics\physics_Test\Form1.Designer.vb"
 
     ' Author:
     ' 
@@ -86,4 +86,3 @@ Partial Class Form1
 
     End Sub
 End Class
-

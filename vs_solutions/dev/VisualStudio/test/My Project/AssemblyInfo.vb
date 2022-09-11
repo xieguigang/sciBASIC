@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ca656a001d0e98dad259053619f7b30, sciBASIC#\vs_solutions\dev\VisualStudio\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::764cce62b0e44407fbbe51e6e0a4cf74, sciBASIC#\vs_solutions\dev\VisualStudio\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1021 B
+    '     File Size: 1019 B
 
 
     ' 
@@ -81,4 +81,3 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
-

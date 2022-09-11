@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32d1c3c79540e48f6cdace403fda903f, sciBASIC#\gr\network-visualization\NetworkCanvas\Canvas.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::7328ad94047fcdfd961e1810c1e2fd3d, sciBASIC#\gr\network-visualization\NetworkCanvas\Canvas.Designer.vb"
 
     ' Author:
     ' 
@@ -89,4 +89,3 @@ Partial Class Canvas
 
     End Sub
 End Class
-

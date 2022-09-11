@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8029c25b55de1ca56f37cc4c1388bf63, sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::d866f8861df3711e55d27af3e817a936, sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -113,4 +113,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

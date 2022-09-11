@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::678f2462a3b99381db3a84b181b6680f, sciBASIC#\Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\GroupMessage.vb"
+﻿#Region "Microsoft.VisualBasic::8cdd832248f3427b45b6f9676cb7aebd, sciBASIC#\Data\BinaryData\HDF5\structure\DataObjects\Headers\Messages\GroupMessage.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 25
     ' Comment Lines: 19
     '   Blank Lines: 13
-    '     File Size: 1.89 KB
+    '     File Size: 1.88 KB
 
 
     '     Class GroupMessage

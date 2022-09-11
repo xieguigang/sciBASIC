@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f88aae559bc0787d8bd3bdf1b242727, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Example\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::4bfba9ecfb30460e15688392e453c13c, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Example\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -113,4 +113,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

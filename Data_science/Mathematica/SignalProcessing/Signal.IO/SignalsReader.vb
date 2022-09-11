@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c63c8edfa29e34dd12b561fc2b4f4010, sciBASIC#\Data_science\Mathematica\SignalProcessing\Signal.IO\SignalsReader.vb"
+﻿#Region "Microsoft.VisualBasic::611faf49792ea19832576432b5d3127b, sciBASIC#\Data_science\Mathematica\SignalProcessing\Signal.IO\SignalsReader.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 57
     ' Comment Lines: 0
     '   Blank Lines: 9
-    '     File Size: 3.11 KB
+    '     File Size: 3.10 KB
 
 
     ' Module SignalsReader
@@ -115,4 +115,3 @@ Public Module SignalsReader
     End Function
 
 End Module
-

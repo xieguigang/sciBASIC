@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d830da1a599d6d80ad70cb113011bf3d, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::29c13c36980dd0eb8cd382e6b38141e8, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -81,4 +81,3 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
-

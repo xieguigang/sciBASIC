@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a872fe89329e9164735438573bd575cf, sciBASIC#\Data_science\DataMining\BinaryTree\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::367990ecee811d4114a641e9ce531846, sciBASIC#\Data_science\DataMining\BinaryTree\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.84 KB
+    '     File Size: 2.83 KB
 
 
     '     Module Resources
@@ -113,4 +113,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

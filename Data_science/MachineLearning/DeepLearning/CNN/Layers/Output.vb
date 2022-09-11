@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43d872ba2f7b55b4d6a436c402d76f7e, sciBASIC#\Data_science\MachineLearning\MachineLearning\CNN\Layers\Output.vb"
+﻿#Region "Microsoft.VisualBasic::43d872ba2f7b55b4d6a436c402d76f7e, sciBASIC#\Data_science\MachineLearning\DeepLearning\CNN\Layers\Output.vb"
 
     ' Author:
     ' 

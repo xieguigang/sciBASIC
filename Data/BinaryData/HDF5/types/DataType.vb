@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::79e9de4aaf28d505eb76b6bc22fecb18, sciBASIC#\Data\BinaryData\DataStorage\HDF5\types\DataType.vb"
+﻿#Region "Microsoft.VisualBasic::33793f18c487a1be335f6c34fb40741a, sciBASIC#\Data\BinaryData\HDF5\types\DataType.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 9
     ' Comment Lines: 4
     '   Blank Lines: 6
-    '     File Size: 497 B
+    '     File Size: 492 B
 
 
     '     Class DataType

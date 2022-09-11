@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c707e4e78041d3750446784f4ac7902, sciBASIC#\mime\text%html\test\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::aed608a423d673ae36dcb762edbebd95, sciBASIC#\mime\text%html\test\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 51
     ' Comment Lines: 9
     '   Blank Lines: 13
-    '     File Size: 2.96 KB
+    '     File Size: 2.95 KB
 
 
     '     Class MySettings
@@ -129,4 +129,3 @@ Namespace My
         End Property
     End Module
 End Namespace
-

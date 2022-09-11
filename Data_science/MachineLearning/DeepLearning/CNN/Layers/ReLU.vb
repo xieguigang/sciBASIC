@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e24f459a902f62eaa9f8eb17e98f522e, sciBASIC#\Data_science\MachineLearning\MachineLearning\CNN\Layers\ReLU.vb"
+﻿#Region "Microsoft.VisualBasic::e24f459a902f62eaa9f8eb17e98f522e, sciBASIC#\Data_science\MachineLearning\DeepLearning\CNN\Layers\ReLU.vb"
 
     ' Author:
     ' 

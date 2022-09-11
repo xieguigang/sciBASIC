@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec9a4590da7427b4bbfc56d573b422d9, sciBASIC#\Data_science\DataMining\BinaryTree\ClusterTree\ClusterTree.vb"
+﻿#Region "Microsoft.VisualBasic::47a836cc7b44a6ca0a4a20ab85505e6b, sciBASIC#\Data_science\DataMining\BinaryTree\ClusterTree\ClusterTree.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 65
-    '    Code Lines: 47
-    ' Comment Lines: 8
-    '   Blank Lines: 10
-    '     File Size: 2.26 KB
+    '   Total Lines: 76
+    '    Code Lines: 50
+    ' Comment Lines: 15
+    '   Blank Lines: 11
+    '     File Size: 2.57 KB
 
 
     ' Class ClusterTree
@@ -129,4 +129,3 @@ Public Class ClusterTree : Inherits Tree(Of String)
     End Sub
 
 End Class
-

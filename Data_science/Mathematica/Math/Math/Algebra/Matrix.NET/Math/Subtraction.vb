@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c002e9944fe8a142f6c4bcc2980a4669, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Math\Subtraction.vb"
+﻿#Region "Microsoft.VisualBasic::40c740ce307b247baf9dfc001e135437, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Math\Subtraction.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 36
+    '   Total Lines: 35
     '    Code Lines: 20
     ' Comment Lines: 9
-    '   Blank Lines: 7
+    '   Blank Lines: 6
     '     File Size: 1.07 KB
 
 
@@ -49,7 +49,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21f446297389014ddf6d36eed64cf117, sciBASIC#\Data\BinaryData\BinaryData\ByteOrder\NetworkByteOrderBitConvertor.vb"
+﻿#Region "Microsoft.VisualBasic::028d0ec9fc8f066239bc0bc3e07c7eea, sciBASIC#\Data\BinaryData\BinaryData\ByteOrder\NetworkByteOrderBitConvertor.vb"
 
     ' Author:
     ' 
@@ -323,4 +323,3 @@ Public Module NetworkByteOrderBitConvertor
         Return f32Bytes(value)
     End Function
 End Module
-

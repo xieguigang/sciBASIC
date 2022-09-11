@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15a8b28dce6cb6ab8148810ec595ec42, sciBASIC#\Data\BinaryData\DataStorage\HDF5\device\VariableLengthDatasetReader.vb"
+﻿#Region "Microsoft.VisualBasic::464b4c2e0d4bfebfea1e80cd4e60ef15, sciBASIC#\Data\BinaryData\HDF5\device\datasetReader\VariableLengthDatasetReader.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 79
     ' Comment Lines: 27
     '   Blank Lines: 20
-    '     File Size: 5.07 KB
+    '     File Size: 5.06 KB
 
 
     '     Module VariableLengthDatasetReader

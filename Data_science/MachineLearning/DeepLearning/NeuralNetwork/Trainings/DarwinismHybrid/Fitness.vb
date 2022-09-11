@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4957f3550b06a141ef110989dccc4401, sciBASIC#\Data_science\MachineLearning\MachineLearning\NeuralNetwork\Trainings\DarwinismHybrid\Fitness.vb"
+﻿#Region "Microsoft.VisualBasic::4957f3550b06a141ef110989dccc4401, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Trainings\DarwinismHybrid\Fitness.vb"
 
     ' Author:
     ' 

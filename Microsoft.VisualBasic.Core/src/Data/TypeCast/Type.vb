@@ -1,4 +1,68 @@
-﻿Imports System.Text
+﻿#Region "Microsoft.VisualBasic::962ccfdd7e020538d869b8d55f9201a4, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\TypeCast\Type.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 83
+    '    Code Lines: 61
+    ' Comment Lines: 0
+    '   Blank Lines: 22
+    '     File Size: 2.90 KB
+
+
+    '     Class StringCaster
+    ' 
+    '         Function: GetBytes, GetString, ParseObject, ToObject
+    ' 
+    '     Class IntegerCaster
+    ' 
+    '         Function: GetBytes, GetString, ParseObject, ToObject
+    ' 
+    '     Class DoubleCaster
+    ' 
+    '         Function: GetBytes, GetString, ParseObject, ToObject
+    ' 
+    '     Class DateCaster
+    ' 
+    '         Function: GetBytes, GetString, ParseObject, ToObject
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Text
 Imports Microsoft.VisualBasic.Text
 
 Namespace ComponentModel.DataSourceModel.TypeCast

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9eae19ec81621c6613186207286dbc75, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\MsHtml.vb"
+﻿#Region "Microsoft.VisualBasic::5698ccf60ac600c88e18c594d6432177, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\MsHtml.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 47
+    '   Total Lines: 53
     '    Code Lines: 40
-    ' Comment Lines: 0
+    ' Comment Lines: 6
     '   Blank Lines: 7
-    '     File Size: 1.72 KB
+    '     File Size: 1.90 KB
 
 
     ' Module MsHtml

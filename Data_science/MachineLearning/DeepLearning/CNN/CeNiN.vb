@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e957d215ed83b17cea435b04555b244, sciBASIC#\Data_science\MachineLearning\MachineLearning\CNN\CeNiN.vb"
+﻿#Region "Microsoft.VisualBasic::5e957d215ed83b17cea435b04555b244, sciBASIC#\Data_science\MachineLearning\DeepLearning\CNN\CeNiN.vb"
 
     ' Author:
     ' 

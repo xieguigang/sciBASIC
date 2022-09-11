@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f3d71a383a30b4e4060ca7422d59698, sciBASIC#\Data_science\MachineLearning\MachineLearning\CNN\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::2f3d71a383a30b4e4060ca7422d59698, sciBASIC#\Data_science\MachineLearning\DeepLearning\CNN\NamespaceDoc.vb"
 
     ' Author:
     ' 

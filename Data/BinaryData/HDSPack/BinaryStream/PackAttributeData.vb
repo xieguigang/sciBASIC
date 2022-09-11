@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99222b4ba496557f6e54d7553cb7187e, sciBASIC#\Data\BinaryData\HDSPack\BinaryStream\PackAttributeData.vb"
+﻿#Region "Microsoft.VisualBasic::01b2330f227cbcaff173d9480966c533, sciBASIC#\Data\BinaryData\HDSPack\BinaryStream\PackAttributeData.vb"
 
     ' Author:
     ' 
@@ -182,4 +182,3 @@ Module PackAttributeData
         End Using
     End Function
 End Module
-

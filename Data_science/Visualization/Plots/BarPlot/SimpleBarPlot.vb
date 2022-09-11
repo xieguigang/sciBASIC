@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::39bfe9df93a003d841137d9bf7606ab3, sciBASIC#\Data_science\Visualization\Plots\BarPlot\SimpleBarPlot.vb"
+﻿#Region "Microsoft.VisualBasic::7f4d963c03dbeda8c599e5c7d62cb5d9, sciBASIC#\Data_science\Visualization\Plots\BarPlot\SimpleBarPlot.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 136
     ' Comment Lines: 5
     '   Blank Lines: 21
-    '     File Size: 6.67 KB
+    '     File Size: 6.63 KB
 
 
     '     Class SimpleBarPlot

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4abbf8d01d384ea498c02ef2937721d4, sciBASIC#\Data_science\Mathematica\Math\DataFittings\Logistic\LogisticFit.vb"
+﻿#Region "Microsoft.VisualBasic::d16d718703edc78a2cd0651f423fe6a1, sciBASIC#\Data_science\Mathematica\Math\DataFittings\Logistic\LogisticFit.vb"
 
     ' Author:
     ' 
@@ -94,4 +94,3 @@ Public Class LogisticFit : Implements IFitted
         }
     End Function
 End Class
-

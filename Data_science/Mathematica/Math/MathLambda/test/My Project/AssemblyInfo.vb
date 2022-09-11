@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f11737734e392b3652a8a63aac33c46b, sciBASIC#\Data_science\Mathematica\Math\MathLambda\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::12f22bd2b7833fb1278864ba9430b191, sciBASIC#\Data_science\Mathematica\Math\MathLambda\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1.15 KB
+    '     File Size: 1.14 KB
 
 
     ' 
@@ -81,4 +81,3 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
-

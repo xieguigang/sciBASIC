@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58c68a222e9473324c6c128238b698fd, sciBASIC#\Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\ContinueMessage.vb"
+﻿#Region "Microsoft.VisualBasic::fdd1f38f42e63e4615dab85b7cc28cd1, sciBASIC#\Data\BinaryData\HDF5\structure\DataObjects\Headers\Messages\ContinueMessage.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 25
     ' Comment Lines: 6
     '   Blank Lines: 11
-    '     File Size: 1.49 KB
+    '     File Size: 1.48 KB
 
 
     '     Class ContinueMessage

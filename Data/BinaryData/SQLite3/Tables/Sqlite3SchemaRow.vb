@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd513f5e628b87f17a6b8fbca002f2a5, sciBASIC#\Data\BinaryData\DataStorage\SQLite3\Tables\Sqlite3SchemaRow.vb"
+﻿#Region "Microsoft.VisualBasic::cd513f5e628b87f17a6b8fbca002f2a5, sciBASIC#\Data\BinaryData\SQLite3\Tables\Sqlite3SchemaRow.vb"
 
     ' Author:
     ' 

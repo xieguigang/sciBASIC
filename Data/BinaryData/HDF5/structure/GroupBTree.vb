@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::446c2a782a96b83c27a4a88faaa10b2b, sciBASIC#\Data\BinaryData\DataStorage\HDF5\structure\GroupBTree.vb"
+﻿#Region "Microsoft.VisualBasic::33e00dbb22de5be0100aa8d6782e5564, sciBASIC#\Data\BinaryData\HDF5\structure\GroupBTree.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 57
     ' Comment Lines: 9
     '   Blank Lines: 23
-    '     File Size: 2.96 KB
+    '     File Size: 2.95 KB
 
 
     '     Class GroupBTree

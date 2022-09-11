@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b4c800143d908281daa63edcb5925068, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Authenticator\FormAuth.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::27553b7b1045bacc5103bffa912f6feb, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Authenticator\FormAuth.Designer.vb"
 
     ' Author:
     ' 
@@ -130,4 +130,3 @@ Partial Class FormAuth
     Friend WithEvents ProgressBar1 As ProgressBar
     Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
 End Class
-

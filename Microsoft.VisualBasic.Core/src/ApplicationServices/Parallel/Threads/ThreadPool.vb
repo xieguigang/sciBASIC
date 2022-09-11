@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3350a4c5a4d9cbbdbe5ed02e0cac093, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\ThreadPool.vb"
+﻿#Region "Microsoft.VisualBasic::db44a550f50691edda1a911cfa7f9b49, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\ThreadPool.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 240
-    '    Code Lines: 139
+    '   Total Lines: 246
+    '    Code Lines: 144
     ' Comment Lines: 64
-    '   Blank Lines: 37
-    '     File Size: 8.62 KB
+    '   Blank Lines: 38
+    '     File Size: 8.78 KB
 
 
     '     Class ThreadPool
@@ -50,6 +50,7 @@
     '         Function: GetAvaliableThread, GetStatus, Start, ToString
     ' 
     '         Sub: [Exit], allocate, (+2 Overloads) Dispose, OperationTimeOut, RunTask
+    '              WaitAll
     '         Structure __taskInvoke
     ' 
     '             Function: Run

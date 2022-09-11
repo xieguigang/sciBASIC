@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82d0ca5b3fff553210640883a152d738, sciBASIC#\Data_science\Mathematica\Math\ANOVA\Group.vb"
+﻿#Region "Microsoft.VisualBasic::89ca5c4768685dd68fe4e47530859103, sciBASIC#\Data_science\Mathematica\Math\ANOVA\Group.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 8
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 194 B
+    '     File Size: 192 B
 
 
     ' Class Group
@@ -59,4 +59,3 @@ Public Class Group
         Me.ary = ary
     End Sub
 End Class
-

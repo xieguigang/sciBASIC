@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb98c1b0d964cae0b419f1a9c4f57d55, sciBASIC#\Data\BinaryData\DataStorage\HDF5\structure\Infrastructure\LocalHeap.vb"
+﻿#Region "Microsoft.VisualBasic::8c2105f35fb9ff44552c829999b8ab84, sciBASIC#\Data\BinaryData\HDF5\structure\Infrastructure\LocalHeap.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 81
     ' Comment Lines: 15
     '   Blank Lines: 27
-    '     File Size: 4.68 KB
+    '     File Size: 4.67 KB
 
 
     '     Class LocalHeap

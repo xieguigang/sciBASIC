@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a097b7466682b9a3ec00870f98fb93d, sciBASIC#\gr\physics\physics_Test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::b52fdcfc8a9d9731815c313c5b66cdef, sciBASIC#\gr\physics\physics_Test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -81,4 +81,3 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
-

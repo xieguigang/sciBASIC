@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a6a334608ebe0762f84c3822b1d41d9, sciBASIC#\Data_science\MachineLearning\MachineLearning\QLearning\Maze-Q-Learning\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::ad2e8ed806f55d9ee760d46bfbf889ac, sciBASIC#\Data_science\MachineLearning\MachineLearning\QLearning\Maze-Q-Learning\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -129,4 +129,3 @@ Namespace My
         End Property
     End Module
 End Namespace
-

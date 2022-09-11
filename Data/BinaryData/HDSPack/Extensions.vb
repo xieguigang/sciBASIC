@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4834642d279fac95aaefdb15b338b176, sciBASIC#\Data\BinaryData\HDSPack\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::8b65d049e85fd5ca6e0205fb3d6a0de6, sciBASIC#\Data\BinaryData\HDSPack\Extensions.vb"
 
     ' Author:
     ' 
@@ -85,4 +85,3 @@ Public Module Extensions
         End If
     End Function
 End Module
-

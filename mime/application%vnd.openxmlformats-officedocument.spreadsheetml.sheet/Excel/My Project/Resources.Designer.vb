@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec545eec1c4cacbea34c9e7519f24f1b, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::93339ae1a6e2a899f68183843be0205b, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -123,4 +123,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

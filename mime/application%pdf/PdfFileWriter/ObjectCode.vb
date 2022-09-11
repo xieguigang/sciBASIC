@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2bdf422dc375fdd63bef8b62389ebac, sciBASIC#\mime\application%pdf\PdfFileWriter\ObjectCode.vb"
+﻿#Region "Microsoft.VisualBasic::37f62d8f6babc3846e1249794087a938, sciBASIC#\mime\application%pdf\PdfFileWriter\ObjectCode.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 20
+    '   Total Lines: 19
     '    Code Lines: 14
     ' Comment Lines: 4
-    '   Blank Lines: 2
-    '     File Size: 288 B
+    '   Blank Lines: 1
+    '     File Size: 286 B
 
 
     ' Enum ResCode
@@ -61,7 +61,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' Resource code enumeration

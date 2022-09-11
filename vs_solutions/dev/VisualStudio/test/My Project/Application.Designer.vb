@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0bd157d89c9b1457fa8a746e7fadb277, sciBASIC#\vs_solutions\dev\VisualStudio\test\My Project\Application.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::694b0c9f3261c95224d10f94bba4c539, sciBASIC#\vs_solutions\dev\VisualStudio\test\My Project\Application.Designer.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 13
+    '   Total Lines: 12
     '    Code Lines: 2
     ' Comment Lines: 9
-    '   Blank Lines: 2
-    '     File Size: 438 B
+    '   Blank Lines: 1
+    '     File Size: 434 B
 
 
     ' 
@@ -58,5 +58,3 @@
 
 Option Strict On
 Option Explicit On
-
-

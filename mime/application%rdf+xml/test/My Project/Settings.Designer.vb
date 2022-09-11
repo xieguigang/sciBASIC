@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8113f36ae6e069c609395d718a189ec7, sciBASIC#\mime\application%rdf+xml\test\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::979bc2f4ab4b4b72bb9867a882fe8837, sciBASIC#\mime\application%rdf+xml\test\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -129,4 +129,3 @@ Namespace My
         End Property
     End Module
 End Namespace
-

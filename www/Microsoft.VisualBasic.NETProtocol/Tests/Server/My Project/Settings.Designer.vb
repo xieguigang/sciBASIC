@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dcf69572bb0f3c06aab2fb6201367888, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Tests\Server\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::2631ccbacbb775517fd438721fad5667, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Tests\Server\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -129,4 +129,3 @@ Namespace My
         End Property
     End Module
 End Namespace
-

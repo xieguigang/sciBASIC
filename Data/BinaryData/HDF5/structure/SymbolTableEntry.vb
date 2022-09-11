@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e23833117986edfc9fb6234ef77f8780, sciBASIC#\Data\BinaryData\DataStorage\HDF5\structure\SymbolTableEntry.vb"
+﻿#Region "Microsoft.VisualBasic::4d7ee32be68a44ea7e4f6eea2bf7bcc5, sciBASIC#\Data\BinaryData\HDF5\structure\SymbolTableEntry.vb"
 
     ' Author:
     ' 
