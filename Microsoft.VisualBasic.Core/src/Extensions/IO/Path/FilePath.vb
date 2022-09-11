@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30b4289465de6999f3c24814f3e15812, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\Path\FilePath.vb"
+﻿#Region "Microsoft.VisualBasic::9722b3caa306a703ca684fbfa4d8ecdf, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\Path\FilePath.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 83
-    '    Code Lines: 70
-    ' Comment Lines: 0
-    '   Blank Lines: 13
-    '     File Size: 2.93 KB
+    '   Total Lines: 95
+    '    Code Lines: 73
+    ' Comment Lines: 8
+    '   Blank Lines: 14
+    '     File Size: 3.30 KB
 
 
     '     Class FilePath
@@ -47,7 +47,7 @@
     '                     ParentDirectory
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: combineDirectory, ToString
+    '         Function: combineDirectory, Parse, ToString
     '         Operators: <>, =
     ' 
     ' 

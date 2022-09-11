@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::423227ed50175723c3dcfe2ea64f56f6, sciBASIC#\Data_science\DataMining\DensityQuery\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::949bb3705b6a51b3a7de57569eb71c15, sciBASIC#\Data_science\DataMining\DensityQuery\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -113,4 +113,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

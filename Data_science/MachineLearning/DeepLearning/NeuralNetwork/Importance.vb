@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65cd86fde2a509436126c3fdf80bfe45, sciBASIC#\Data_science\MachineLearning\MachineLearning\NeuralNetwork\Importance.vb"
+﻿#Region "Microsoft.VisualBasic::65cd86fde2a509436126c3fdf80bfe45, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Importance.vb"
 
     ' Author:
     ' 

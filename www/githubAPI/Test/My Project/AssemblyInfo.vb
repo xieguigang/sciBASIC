@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::39962484a3dcc6854f236a3ba8ca023a, sciBASIC#\www\githubAPI\Test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::b2d9ad60ba49c02ad8cd05409c343765, sciBASIC#\www\githubAPI\Test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1.15 KB
+    '     File Size: 1.14 KB
 
 
     ' 
@@ -81,4 +81,3 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
-

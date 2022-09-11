@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b47d8b668bcdfd3ce6fbfefe7f4e2b49, sciBASIC#\Data\BinaryData\DataStorage\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::95fcdf8c0db2e3311aa272103a57bf70, sciBASIC#\Data\BinaryData\DataStorage\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.80 KB
+    '     File Size: 2.79 KB
 
 
     '     Module Resources
@@ -113,4 +113,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::08007f7c21a72984c3e56cd66103de35, sciBASIC#\Microsoft.VisualBasic.Core\test\terminalTest.vb"
+﻿#Region "Microsoft.VisualBasic::ba9be9847e875ea4731244d81f214db8, sciBASIC#\Microsoft.VisualBasic.Core\test\terminalTest.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 9
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 372 B
+    '     File Size: 370 B
 
 
     ' Module terminalTest
@@ -61,4 +61,3 @@ Module terminalTest
         shell.Run()
     End Sub
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a2d25fc0a0b8cbd60333e507bac2ea4, sciBASIC#\Data_science\MachineLearning\MachineLearning\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::dae3be78f0c294d03bbf1716d1aa1255, sciBASIC#\Data_science\MachineLearning\MachineLearning\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -113,4 +113,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::020aeb7b6d34ab149487c00a18a07821, sciBASIC#\Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\Models\NeuralNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::020aeb7b6d34ab149487c00a18a07821, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\StoreProcedure\Models\NeuralNetwork.vb"
 
     ' Author:
     ' 

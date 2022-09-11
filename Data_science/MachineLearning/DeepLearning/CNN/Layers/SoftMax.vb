@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1098ec88fd340f40621aa4dce43d64c, sciBASIC#\Data_science\MachineLearning\MachineLearning\CNN\Layers\SoftMax.vb"
+﻿#Region "Microsoft.VisualBasic::a1098ec88fd340f40621aa4dce43d64c, sciBASIC#\Data_science\MachineLearning\DeepLearning\CNN\Layers\SoftMax.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15ca1618eb9f9ccdda256862e7ecb3b6, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\InteropService\Pipeline\RunSlavePipeline.vb"
+﻿#Region "Microsoft.VisualBasic::5fa080914fb7045953b17c401ce9aa69, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\InteropService\Pipeline\RunSlavePipeline.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 61
     ' Comment Lines: 2
     '   Blank Lines: 18
-    '     File Size: 2.67 KB
+    '     File Size: 2.70 KB
 
 
     '     Class RunSlavePipeline

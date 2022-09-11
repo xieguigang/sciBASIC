@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4746040b50c9ced8a291f90b2091ae6, sciBASIC#\Data_science\Visualization\Visualization\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::9aaa6ca3b91e4e93054e5df6f2cf2ec2, sciBASIC#\Data_science\Visualization\Visualization\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -113,4 +113,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

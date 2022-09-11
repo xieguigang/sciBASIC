@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::735f742457f39da947dddd31c90d46f7, sciBASIC#\Data_science\MachineLearning\MachineLearning\test\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::6410bb579f55ac1d8bc70774b849d88a, sciBASIC#\Data_science\MachineLearning\MachineLearning\test\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.78 KB
+    '     File Size: 2.77 KB
 
 
     '     Module Resources
@@ -113,4 +113,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

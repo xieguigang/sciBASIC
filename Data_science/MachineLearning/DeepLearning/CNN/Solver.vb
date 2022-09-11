@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ebf94f25164153f02dbc85f88719283d, sciBASIC#\Data_science\MachineLearning\MachineLearning\CNN\Solver.vb"
+﻿#Region "Microsoft.VisualBasic::ebf94f25164153f02dbc85f88719283d, sciBASIC#\Data_science\MachineLearning\DeepLearning\CNN\Solver.vb"
 
     ' Author:
     ' 

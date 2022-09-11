@@ -1,51 +1,51 @@
-﻿#Region "Microsoft.VisualBasic::09b6fdf9af6facbaf53825b854efff53, sciBASIC#\mime\application%json\Serializer\ObjectSerializer\ObjectSerializer.vb"
+﻿#Region "Microsoft.VisualBasic::5ace9fa17d622cfb1e1f1418572cd2fe, sciBASIC#\mime\application%json\Serializer\ObjectSerializer\ObjectSerializer.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 172
-'    Code Lines: 135
-' Comment Lines: 16
-'   Blank Lines: 21
-'     File Size: 6.51 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module ObjectSerializer
-' 
-'     Function: GetJsonElement, populateArrayJson, populateObjectJson, populateTableJson
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 201
+    '    Code Lines: 156
+    ' Comment Lines: 17
+    '   Blank Lines: 28
+    '     File Size: 7.48 KB
+
+
+    ' Module ObjectSerializer
+    ' 
+    '     Function: GetJsonElement, populateArrayJson, populateObjectJson, populateTableJson
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

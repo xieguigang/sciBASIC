@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::158f0bbd6578a54ae49437566098f2f8, sciBASIC#\Data_science\Graph\Model\Tree\Tree.vb"
+﻿#Region "Microsoft.VisualBasic::bd4dd3ff341aa52cbe7d7255b8bcaf86, sciBASIC#\Data_science\Graph\Model\Tree\Tree.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 70
-    '    Code Lines: 37
-    ' Comment Lines: 21
-    '   Blank Lines: 12
-    '     File Size: 2.06 KB
+    '   Total Lines: 89
+    '    Code Lines: 45
+    ' Comment Lines: 28
+    '   Blank Lines: 16
+    '     File Size: 2.52 KB
 
 
     ' Class Tree
@@ -52,7 +52,7 @@
     '     Properties: Data
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    '     Function: Add, FindNode, hasNode
+    '     Function: Add, FindNode, hasNode, PopulateAllNodes
     ' 
     ' /********************************************************************************/
 

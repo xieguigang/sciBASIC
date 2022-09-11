@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6fd27f240ff57c16f12d1b1095913e9, sciBASIC#\Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\ObjectHeaderMessageType.vb"
+﻿#Region "Microsoft.VisualBasic::4cbb3be3ea9b306a033f1d1c22ea2415, sciBASIC#\Data\BinaryData\HDF5\structure\DataObjects\Headers\ObjectHeaderMessageType.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 83
     ' Comment Lines: 85
     '   Blank Lines: 15
-    '     File Size: 8.64 KB
+    '     File Size: 8.63 KB
 
 
     '     Enum ObjectHeaderMessages

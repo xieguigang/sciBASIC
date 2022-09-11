@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::37363582b80a458a14c2d9a6b88ca0ef, sciBASIC#\Data_science\MachineLearning\MachineLearning\CNN\ImageProcessor.vb"
+﻿#Region "Microsoft.VisualBasic::37363582b80a458a14c2d9a6b88ca0ef, sciBASIC#\Data_science\MachineLearning\DeepLearning\CNN\ImageProcessor.vb"
 
     ' Author:
     ' 

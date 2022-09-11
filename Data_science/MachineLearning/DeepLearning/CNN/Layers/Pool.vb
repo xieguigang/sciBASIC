@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::140d56f23cf3834e143458bfb9153009, sciBASIC#\Data_science\MachineLearning\MachineLearning\CNN\Layers\Pool.vb"
+﻿#Region "Microsoft.VisualBasic::140d56f23cf3834e143458bfb9153009, sciBASIC#\Data_science\MachineLearning\DeepLearning\CNN\Layers\Pool.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c32cd0384c54bbca9cad8f9527bdf726, sciBASIC#\Data_science\Mathematica\data\LP\LP_tool\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::941debd6c972a3923f120b427fa92586, sciBASIC#\Data_science\Mathematica\data\LP\LP_tool\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -113,4 +113,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

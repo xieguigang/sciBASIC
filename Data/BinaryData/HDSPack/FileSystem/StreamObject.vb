@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b933318a87c88fb1b443e445de511239, sciBASIC#\Data\BinaryData\HDSPack\FileSystem\StreamObject.vb"
+﻿#Region "Microsoft.VisualBasic::93c647f10462883593099fa32a7fc1b6, sciBASIC#\Data\BinaryData\HDSPack\FileSystem\StreamObject.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 67
-    '    Code Lines: 44
-    ' Comment Lines: 12
-    '   Blank Lines: 11
-    '     File Size: 2.15 KB
+    '   Total Lines: 80
+    '    Code Lines: 51
+    ' Comment Lines: 16
+    '   Blank Lines: 13
+    '     File Size: 2.60 KB
 
 
     '     Class StreamObject
@@ -47,7 +47,7 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: GetAttribute, hasAttributes, ToString
+    '         Function: GetAttribute, hasAttribute, hasAttributes, ToString
     ' 
     '         Sub: AddAttributes
     ' 

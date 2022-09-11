@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1ab0930d8d88c012834fddf300b486c, sciBASIC#\Data\BinaryData\DataStorage\HDF5\structure\DataChunkIterator.vb"
+﻿#Region "Microsoft.VisualBasic::ae37a122da796c6789a2c34abd7bd3ce, sciBASIC#\Data\BinaryData\HDF5\structure\DataChunkIterator.vb"
 
     ' Author:
     ' 
@@ -35,10 +35,10 @@
     ' Code Statistics:
 
     '   Total Lines: 43
-    '    Code Lines: 25
-    ' Comment Lines: 6
+    '    Code Lines: 24
+    ' Comment Lines: 7
     '   Blank Lines: 12
-    '     File Size: 1.27 KB
+    '     File Size: 1.29 KB
 
 
     '     Class DataChunkIterator

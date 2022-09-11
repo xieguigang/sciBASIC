@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6ca73978764f3ca6fa927a257e05757, sciBASIC#\Data_science\MachineLearning\MachineLearning\CNN\LayerTypes.vb"
+﻿#Region "Microsoft.VisualBasic::e6ca73978764f3ca6fa927a257e05757, sciBASIC#\Data_science\MachineLearning\DeepLearning\CNN\LayerTypes.vb"
 
     ' Author:
     ' 

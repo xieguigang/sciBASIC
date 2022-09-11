@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b29d4a98f728cba6bfb1a056571876c2, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\TagData\FactorValue.vb"
+﻿#Region "Microsoft.VisualBasic::2cd3b1840d07a8ed247240c4bb741fd2, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\TagData\FactorValue.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 30
-    '    Code Lines: 22
+    '   Total Lines: 37
+    '    Code Lines: 28
     ' Comment Lines: 0
-    '   Blank Lines: 8
-    '     File Size: 914 B
+    '   Blank Lines: 9
+    '     File Size: 1.16 KB
 
 
     '     Class FactorValue
     ' 
     '         Properties: factor, result
+    ' 
+    '         Function: Create
     ' 
     '     Class FactorString
     ' 

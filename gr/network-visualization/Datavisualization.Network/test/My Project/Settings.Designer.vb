@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b18664925229e94eea03d942578de5c, sciBASIC#\gr\network-visualization\Datavisualization.Network\test\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::d46ad9dbfdfe52b801bf50164ae9c0cf, sciBASIC#\gr\network-visualization\Datavisualization.Network\test\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -129,4 +129,3 @@ Namespace My
         End Property
     End Module
 End Namespace
-

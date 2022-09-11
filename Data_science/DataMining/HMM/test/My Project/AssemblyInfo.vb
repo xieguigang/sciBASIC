@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5aab3e3585dd0310dbb5bfcde851fc59, sciBASIC#\Data_science\DataMining\HMM\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::3ef21f2e9bf9f105e3847d2b2c2dd5e1, sciBASIC#\Data_science\DataMining\HMM\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1021 B
+    '     File Size: 1019 B
 
 
     ' 
@@ -81,4 +81,3 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
-

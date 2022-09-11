@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ed7a83939f80aeff4bd32660502ba69, sciBASIC#\Data\BinaryData\DataStorage\HDF5\structure\GroupNode.vb"
+﻿#Region "Microsoft.VisualBasic::6dc5607b697bfaa6ad9a7c2034b2a414, sciBASIC#\Data\BinaryData\HDF5\structure\GroupNode.vb"
 
     ' Author:
     ' 

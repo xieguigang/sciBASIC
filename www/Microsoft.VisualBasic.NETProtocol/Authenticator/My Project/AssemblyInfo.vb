@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6b69842e58ef4b5eac4b9f890fa00e0, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Authenticator\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::ebbd27624a6297ae8ee14259e87c0be4, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Authenticator\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -81,4 +81,3 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
-

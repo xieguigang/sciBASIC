@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::81f35e60efd9fedc6fdc50ace229990a, sciBASIC#\Data_science\MachineLearning\MachineLearning\NeuralNetwork\Trainings\Helpers.vb"
+﻿#Region "Microsoft.VisualBasic::81f35e60efd9fedc6fdc50ace229990a, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Trainings\Helpers.vb"
 
     ' Author:
     ' 

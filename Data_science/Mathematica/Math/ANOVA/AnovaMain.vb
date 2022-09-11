@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8109791e43a199a92a433abb446a1e2, sciBASIC#\Data_science\Mathematica\Math\ANOVA\AnovaMain.vb"
+﻿#Region "Microsoft.VisualBasic::8ac7c54e4924fed834aa457292d39658, sciBASIC#\Data_science\Mathematica\Math\ANOVA\AnovaMain.vb"
 
     ' Author:
     ' 
@@ -110,4 +110,3 @@ Namespace stats
     End Class
 
 End Namespace
-

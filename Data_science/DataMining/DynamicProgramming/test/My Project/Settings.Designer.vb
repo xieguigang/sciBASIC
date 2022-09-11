@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97afd1b49d10e8958edf99480c076735, sciBASIC#\Data_science\DataMining\DynamicProgramming\test\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::95c02b53638bf2d910b32d5b746d742a, sciBASIC#\Data_science\DataMining\DynamicProgramming\test\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -129,4 +129,3 @@ Namespace My
         End Property
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b48a5bed0100c59c8c7c4151bff658b, sciBASIC#\Data_science\Mathematica\SignalProcessing\Signal.IO\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::a664c94f40b000ecdb3326c8b8487bed, sciBASIC#\Data_science\Mathematica\SignalProcessing\Signal.IO\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -113,4 +113,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

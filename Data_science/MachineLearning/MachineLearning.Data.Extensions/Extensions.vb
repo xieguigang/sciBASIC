@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::785de2126341df562b89a6b78bf9932f, sciBASIC#\Data_science\MachineLearning\MachineLearning.Data.Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::8bf27c98fd18342c7c9d1aab9925ecaa, sciBASIC#\Data_science\MachineLearning\MachineLearning.Data.Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 46
-    '    Code Lines: 35
+    '   Total Lines: 22
+    '    Code Lines: 15
     ' Comment Lines: 5
-    '   Blank Lines: 6
-    '     File Size: 1.64 KB
+    '   Blank Lines: 2
+    '     File Size: 802 B
 
 
     ' Module Extensions
     ' 
     '     Function: GetInput
-    ' 
-    ' Class QTableDump
-    ' 
-    '     Sub: Dump, Save
     ' 
     ' /********************************************************************************/
 

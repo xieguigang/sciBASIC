@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ec0bd4f46454abd9f29618e49e84850, sciBASIC#\mime\application%json\JSONtest\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::9118a06e5c1cb0410175074b188af5f3, sciBASIC#\mime\application%json\JSONtest\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -129,4 +129,3 @@ Namespace My
         End Property
     End Module
 End Namespace
-

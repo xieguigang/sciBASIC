@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7344cef4fa9e83ffc02b4af5705d356f, sciBASIC#\Data\BinaryData\BinaryData\BufferRegion.vb"
+﻿#Region "Microsoft.VisualBasic::65c671a96095f6dff3443e53fd83efa3, sciBASIC#\Data\BinaryData\BinaryData\BufferRegion.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 16
-    '    Code Lines: 12
+    '   Total Lines: 24
+    '    Code Lines: 18
     ' Comment Lines: 0
-    '   Blank Lines: 4
-    '     File Size: 367 B
+    '   Blank Lines: 6
+    '     File Size: 510 B
 
 
     ' Class BufferRegion
     ' 
     '     Properties: nextBlock, position, size
     ' 
+    '     Constructor: (+2 Overloads) Sub New
     '     Function: ToString
     ' 
     ' /********************************************************************************/

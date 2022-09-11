@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd1fb5eed37631e0b02f294328a546a2, sciBASIC#\Data\DataFrame\IO\DataFrame\DataImports.vb"
+﻿#Region "Microsoft.VisualBasic::dee39e2541a900622895ded4fbdbb174, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\TypeCast\DataImports.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 62
     ' Comment Lines: 0
     '   Blank Lines: 11
-    '     File Size: 2.63 KB
+    '     File Size: 2.69 KB
 
 
     '     Module DataImports

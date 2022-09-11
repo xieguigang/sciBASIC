@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::33521cc73dc7b484f98f62d987a96de4, sciBASIC#\www\githubAPI\github-vcard\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::129a6ba0c80156d0a76e46857b657ee0, sciBASIC#\www\githubAPI\github-vcard\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -113,4 +113,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

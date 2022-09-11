@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2d9c2ec4692978fa968e1addfa768ab, sciBASIC#\Data\GraphQuery\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::c693beeaa7bf611d96454ce910d735a2, sciBASIC#\Data\GraphQuery\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -113,4 +113,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

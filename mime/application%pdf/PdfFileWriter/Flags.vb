@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::634af5c78bddc13822b928ccffe56e4d, sciBASIC#\mime\application%pdf\PdfFileWriter\Flags.vb"
+﻿#Region "Microsoft.VisualBasic::a8e417f9a11fd7f90ef6d2a5c9a438b5, sciBASIC#\mime\application%pdf\PdfFileWriter\Flags.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 315
+    '   Total Lines: 314
     '    Code Lines: 72
     ' Comment Lines: 200
-    '   Blank Lines: 43
+    '   Blank Lines: 42
     '     File Size: 5.48 KB
 
 
@@ -118,7 +118,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' PDF font style flags enumeration

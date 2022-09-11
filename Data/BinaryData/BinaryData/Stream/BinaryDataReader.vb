@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5f226796da8b3bf2429b6b4b4dc3ef5, sciBASIC#\Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
+﻿#Region "Microsoft.VisualBasic::e738652c4c97b7b82287d3904ae1677d, sciBASIC#\Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 696
-    '    Code Lines: 348
+    '   Total Lines: 669
+    '    Code Lines: 327
     ' Comment Lines: 273
-    '   Blank Lines: 75
-    '     File Size: 31.04 KB
+    '   Blank Lines: 69
+    '     File Size: 30.57 KB
 
 
     ' Class BinaryDataReader
@@ -48,13 +48,13 @@
     ' 
     '     Constructor: (+6 Overloads) Sub New
     ' 
-    '     Function: DecimalFromBytes, getDebugView, ReadByteLengthPrefixString, ReadDateTime, ReadDecimal
-    '               ReadDecimals, ReadDouble, ReadDoubles, ReadDwordLengthPrefixString, ReadDwordLenString
-    '               ReadInt16, ReadInt16s, ReadInt32, ReadInt32s, ReadInt64
-    '               ReadInt64s, ReadMultiple, ReadSBytes, ReadSingle, ReadSingles
-    '               (+5 Overloads) ReadString, ReadUInt16, ReadUInt16s, ReadUInt32, ReadUInt32s
-    '               ReadUInt64, ReadUInt64s, ReadWordLengthPrefixString, ReadZeroTerminatedString, (+2 Overloads) Seek
-    '               (+3 Overloads) TemporarySeek, ToString
+    '     Function: DecimalFromBytes, getDebugView, ReadByteLengthPrefixString, ReadBytes, ReadDateTime
+    '               ReadDecimal, ReadDecimals, ReadDouble, ReadDoubles, ReadDwordLengthPrefixString
+    '               ReadDwordLenString, ReadInt16, ReadInt16s, ReadInt32, ReadInt32s
+    '               ReadInt64, ReadInt64s, ReadMultiple, ReadSBytes, ReadSingle
+    '               ReadSingles, (+5 Overloads) ReadString, ReadUInt16, ReadUInt16s, ReadUInt32
+    '               ReadUInt32s, ReadUInt64, ReadUInt64s, ReadWordLengthPrefixString, ReadZeroTerminatedString
+    '               (+2 Overloads) Seek, (+3 Overloads) TemporarySeek, ToString
     ' 
     '     Sub: Align, Mark, Reset, TemporarySeek
     ' 

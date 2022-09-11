@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::970d7c223a4c6f699825b8989a776e4f, sciBASIC#\Data_science\MachineLearning\MachineLearning\NeuralNetwork\Trainings\TrainingSample.vb"
+﻿#Region "Microsoft.VisualBasic::970d7c223a4c6f699825b8989a776e4f, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Trainings\TrainingSample.vb"
 
     ' Author:
     ' 

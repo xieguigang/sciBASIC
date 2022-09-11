@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::72c194c292e451125b6dc923f7ff848c, sciBASIC#\Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\CreateSnapshot.vb"
+﻿#Region "Microsoft.VisualBasic::72c194c292e451125b6dc923f7ff848c, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\StoreProcedure\CreateSnapshot.vb"
 
     ' Author:
     ' 

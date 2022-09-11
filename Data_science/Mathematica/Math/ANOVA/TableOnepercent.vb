@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60a5238d5a8ab58a925e40767b35cbc3, sciBASIC#\Data_science\Mathematica\Math\ANOVA\TableOnepercent.vb"
+﻿#Region "Microsoft.VisualBasic::908cd1699f096ae75afbd0b6ef67ba89, sciBASIC#\Data_science\Mathematica\Math\ANOVA\TableOnepercent.vb"
 
     ' Author:
     ' 
@@ -93,4 +93,3 @@ Friend Class TableOnepercent : Inherits DistributionTable
         Yield New Double() {6.635, 4.605, 3.782, 3.319, 3.017, 2.802, 2.639, 2.511, 2.407, 2.321, 2.185, 2.039, 1.878, 1.791, 1.696, 1.592, 1.473, 1.325, 1}
     End Function
 End Class
-

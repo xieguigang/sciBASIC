@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2309b3a2b5f032485138d0ad2bb0012d, sciBASIC#\Data_science\MachineLearning\MachineLearning\CNN\Layers\Convolution.vb"
+﻿#Region "Microsoft.VisualBasic::2309b3a2b5f032485138d0ad2bb0012d, sciBASIC#\Data_science\MachineLearning\DeepLearning\CNN\Layers\Convolution.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f3fb534744efcfca18130f1c6aa6d99f, sciBASIC#\Data_science\MachineLearning\MachineLearning\NeuralNetwork\Models\HiddenLayers.vb"
+﻿#Region "Microsoft.VisualBasic::f3fb534744efcfca18130f1c6aa6d99f, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Models\HiddenLayers.vb"
 
     ' Author:
     ' 

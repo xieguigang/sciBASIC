@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1252d9670496db340c33164b464a4d2d, sciBASIC#\Data\Trinity\Test\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::69abc7b6f7f7be07f2b5d32c09aaa9ad, sciBASIC#\Data\Trinity\Test\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -113,4 +113,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

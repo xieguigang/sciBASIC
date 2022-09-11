@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc4cf97c0c21c9def2b3f7d3f6cf3636, sciBASIC#\Data\BinaryData\HDSPack\BinaryStream\TreeParser.vb"
+﻿#Region "Microsoft.VisualBasic::af3eb77769a2e76ecf5b4afc0de390c3, sciBASIC#\Data\BinaryData\HDSPack\BinaryStream\TreeParser.vb"
 
     ' Author:
     ' 
@@ -129,4 +129,3 @@ Friend Module TreeParser
         Return file
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed37fa6f2fd3606c015ca28614a01b62, sciBASIC#\Data\DataFrame.Extensions\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::aa113a65ebd06a6494d1db2793dd191e, sciBASIC#\Data\DataFrame.Extensions\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.80 KB
+    '     File Size: 2.79 KB
 
 
     '     Module Resources
@@ -113,4 +113,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

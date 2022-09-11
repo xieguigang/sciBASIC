@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b14ca562326c18eb54496842d9bf5715, sciBASIC#\Data\BinaryData\DataStorage\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::f079e3537a0cdebf4558167d5b28d657, sciBASIC#\Data\BinaryData\DataStorage\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -81,4 +81,3 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
-

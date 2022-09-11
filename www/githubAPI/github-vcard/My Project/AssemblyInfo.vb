@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d8dbfea55fe5b4e0ad805e1c78f1121, sciBASIC#\www\githubAPI\github-vcard\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::b7b4464530d4fd57d5d480ead7aa8d9f, sciBASIC#\www\githubAPI\github-vcard\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -81,4 +81,3 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
-

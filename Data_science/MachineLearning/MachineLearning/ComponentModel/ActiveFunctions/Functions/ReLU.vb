@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::afd5a6c876213af8f6fcbcd0dd246f72, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\ReLU.vb"
+﻿#Region "Microsoft.VisualBasic::3b25c5ca051f8e378326426b36edb0b5, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\ReLU.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 63
-    '    Code Lines: 53
+    '   Total Lines: 62
+    '    Code Lines: 52
     ' Comment Lines: 0
     '   Blank Lines: 10
-    '     File Size: 1.89 KB
+    '     File Size: 1.81 KB
 
 
     '     Class ReLU

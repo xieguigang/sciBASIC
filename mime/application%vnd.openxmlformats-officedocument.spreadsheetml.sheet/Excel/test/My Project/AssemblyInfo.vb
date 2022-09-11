@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2742dbf8bac7274bd189929ff7b4bbd4, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::6a1051fc8a74ca98a95d99a976e8c8f4, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -81,4 +81,3 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
-

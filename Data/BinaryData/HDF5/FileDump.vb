@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1b87093e3dae4b826410dffe724fc66, sciBASIC#\Data\BinaryData\DataStorage\HDF5\FileDump.vb"
+﻿#Region "Microsoft.VisualBasic::7ba0e559571e994ae0de9f8fb1ae7235, sciBASIC#\Data\BinaryData\HDF5\FileDump.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 26
-    '    Code Lines: 14
+    '   Total Lines: 23
+    '    Code Lines: 12
     ' Comment Lines: 7
-    '   Blank Lines: 5
-    '     File Size: 751 B
+    '   Blank Lines: 4
+    '     File Size: 654 B
 
 
-    '     Module FileDump
+    ' Module FileDump
     ' 
-    '         Sub: CreateFileDump
+    '     Sub: CreateFileDump
     ' 
-    '     Interface IFileDump
+    ' Interface IFileDump
     ' 
-    '         Sub: printValues
-    ' 
+    '     Sub: printValues
     ' 
     ' /********************************************************************************/
 

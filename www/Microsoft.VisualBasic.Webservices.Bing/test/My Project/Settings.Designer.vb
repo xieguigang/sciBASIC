@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::acd4d7501514c0b2e05f64190cb605d8, sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\test\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::88142e72bf6a05ac99b36c994159e1c8, sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\test\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -129,4 +129,3 @@ Namespace My
         End Property
     End Module
 End Namespace
-

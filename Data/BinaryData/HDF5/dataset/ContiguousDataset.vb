@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a3274de9d3dd2c8f365d39d0abadc33, sciBASIC#\Data\BinaryData\DataStorage\HDF5\dataset\ContiguousDataset.vb"
+﻿#Region "Microsoft.VisualBasic::7a36aa2203a9b4cd3d81a6617aa2a6f2, sciBASIC#\Data\BinaryData\HDF5\dataset\ContiguousDataset.vb"
 
     ' Author:
     ' 

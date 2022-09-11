@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::169ea22ae1fb00df7d1dc08473253da2, sciBASIC#\mime\application%json\JSONtest\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::81c870766159d40858ad0110e4948f8e, sciBASIC#\mime\application%json\JSONtest\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -81,4 +81,3 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
-

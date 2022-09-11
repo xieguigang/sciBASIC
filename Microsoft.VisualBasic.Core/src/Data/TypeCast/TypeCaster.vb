@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c129a449557dee3f9aea51c4e14c1d3, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\TypeCaster.vb"
+﻿#Region "Microsoft.VisualBasic::557fdd33cac4103a207d5c5f9a1771ad, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\TypeCast\TypeCaster.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 143
-    '    Code Lines: 107
+    '   Total Lines: 64
+    '    Code Lines: 48
     ' Comment Lines: 0
-    '   Blank Lines: 36
-    '     File Size: 5.35 KB
+    '   Blank Lines: 16
+    '     File Size: 2.52 KB
 
 
     '     Module Extensions
@@ -56,22 +56,6 @@
     '     Class TypeCaster
     ' 
     '         Properties: sizeOf, type
-    ' 
-    '     Class StringCaster
-    ' 
-    '         Function: GetBytes, GetString, ParseObject, ToObject
-    ' 
-    '     Class IntegerCaster
-    ' 
-    '         Function: GetBytes, GetString, ParseObject, ToObject
-    ' 
-    '     Class DoubleCaster
-    ' 
-    '         Function: GetBytes, GetString, ParseObject, ToObject
-    ' 
-    '     Class DateCaster
-    ' 
-    '         Function: GetBytes, GetString, ParseObject, ToObject
     ' 
     ' 
     ' /********************************************************************************/

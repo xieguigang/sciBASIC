@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c240a28fab6a5e4bfc4a6b6ba5e3c0c, sciBASIC#\Data_science\DataMining\UMAP\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::0d1061c951719b63617cf6afd2e30cea, sciBASIC#\Data_science\DataMining\UMAP\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -113,4 +113,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-
