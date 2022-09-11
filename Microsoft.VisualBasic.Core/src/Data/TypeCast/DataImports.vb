@@ -56,7 +56,7 @@ Namespace ComponentModel.DataSourceModel.TypeCast
 
     Public Module DataImports
 
-        Public Function SampleForType(column As String()) As Type
+        Public Function SampleForType(column As IReadOnlyCollection(Of String)) As Type
             Dim typeHits As New Dictionary(Of Type, Integer)
 
             For Each type As Type In New Type() {

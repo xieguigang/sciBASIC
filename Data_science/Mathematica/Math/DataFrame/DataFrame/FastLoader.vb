@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.TypeCast
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Values
 Imports Microsoft.VisualBasic.Text
@@ -72,6 +73,14 @@ Public Module FastLoader
 
     <Extension>
     Private Function ParseFeature(data As List(Of String)) As FeatureVector
+        Dim type As Type = DataImports.SampleForType(data)
+        Dim parser = type.ParseObject
+        Dim array As Array = Array.CreateInstance(type, length:=data.Count)
 
+        For i As Integer = 0 To data.Count - 1
+            Call array.SetValue(parser(data(i)), index:=i)
+        Next
+
+        Return FeatureVector.FromGeneral(array)
     End Function
 End Module
