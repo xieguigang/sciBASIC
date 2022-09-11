@@ -74,6 +74,14 @@ Namespace Distributions
         <XmlAttribute> Public Property min As Double
         <XmlAttribute> Public Property max As Double
         <XmlAttribute> Public Property average As Double
+
+        ''' <summary>
+        ''' standard deviation of the population
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' evaluated from the <see cref="SD"/> function.
+        ''' </remarks>
         <XmlAttribute> Public Property stdErr As Double
 
         ''' <summary>
