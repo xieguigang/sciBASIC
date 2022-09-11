@@ -54,7 +54,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Namespace ComponentModel.Activations

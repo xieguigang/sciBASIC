@@ -62,7 +62,6 @@
 '
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports stdNum = System.Math
 
