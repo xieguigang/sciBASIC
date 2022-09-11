@@ -7,6 +7,26 @@ Imports Microsoft.VisualBasic.Math.DataFrame
 ''' </summary>
 Public Class FeatureEncoder
 
+    Public Delegate Function EncodeFeature(feature As FeatureVector, name As String) As DataFrame
+
+    ReadOnly encodings As New Dictionary(Of String, EncodeFeature)
+
+    Public Sub AddEncodingRule(field As String, encoder As EncodeFeature)
+        encodings(field) = encoder
+    End Sub
+
+    Public Function Encoding(data As DataFrame) As DataFrame
+        For Each name As String In data.features.Keys.ToArray
+            Dim v As FeatureVector = data(name)
+            Dim extends As DataFrame = encodings(name)(v, name)
+
+            data.delete(featureName:=name)
+            data = data.Union(extends)
+        Next
+
+        Return data
+    End Function
+
     ''' <summary>
     ''' auto encoder
     ''' </summary>
@@ -19,10 +39,7 @@ Public Class FeatureEncoder
             Case GetType(String) : Return EnumEncoder(feature, name)
             Case GetType(Boolean) : Return FlagEncoder(feature, name)
             Case GetType(Single), GetType(Double), GetType(Short), GetType(Integer), GetType(Long)
-                Return New DataFrame With {
-                    .features = New Dictionary(Of String, FeatureVector) From {{name, feature}},
-                    .rownames = IndexNames(feature)
-                }
+                Return NumericEncoder(feature, name)
             Case Else
                 Throw New NotImplementedException(feature.type.Name)
         End Select
@@ -33,6 +50,17 @@ Public Class FeatureEncoder
             .Sequence _
             .Select(Function(i) (i + 1).ToString) _
             .ToArray
+    End Function
+
+    Public Shared Function NumericBinsEncoder(feature As FeatureVector, name As String) As DataFrame
+
+    End Function
+
+    Public Shared Function NumericEncoder(feature As FeatureVector, name As String) As DataFrame
+        Return New DataFrame With {
+            .features = New Dictionary(Of String, FeatureVector) From {{name, feature}},
+            .rownames = IndexNames(feature)
+        }
     End Function
 
     ''' <summary>

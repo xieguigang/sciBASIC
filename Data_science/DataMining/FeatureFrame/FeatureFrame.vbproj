@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>Microsoft.VisualBasic.DataMining</RootNamespace>
+    <RootNamespace>Microsoft.VisualBasic.DataMining.FeatureFrame</RootNamespace>
     <TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
-    <AssemblyName>Microsoft.VisualBasic.DataMining.Framework</AssemblyName>
+    <AssemblyName>Microsoft.VisualBasic.DataMining.FeatureFrame</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;mzkit_win32</Configurations>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
