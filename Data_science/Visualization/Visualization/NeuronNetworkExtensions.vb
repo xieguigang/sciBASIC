@@ -86,7 +86,8 @@ Public Module NeuronNetworkExtensions
     ''' </summary>
     ''' <param name="net"></param>
     ''' <returns></returns>
-    <Extension> Public Function VisualizeModel(net As NeuronNetwork, Optional connectionCutoff# = 0.6) As NetworkTables
+    <Extension>
+    Public Function VisualizeModel(net As NeuronNetwork, Optional connectionCutoff# = 0.6) As NetworkTables
         Dim model = NeuralNetwork.Snapshot(net)
         Dim inputLayer = model.inputlayer.neurons.Indexing
         Dim outputLayer = model.outputlayer.neurons.Indexing
