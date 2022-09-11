@@ -54,6 +54,8 @@
 
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.ValueTypes
 
 Public Class FeatureVector
 
@@ -113,7 +115,15 @@ Public Class FeatureVector
         Else
             Select Case GetType(T)
                 Case GetType(Double)
-
+                    ' cast value to double [target]
+                    Select Case type
+                        Case GetType(Integer), GetType(Short), GetType(Long), GetType(Single)
+                            Return CObj(vector.AsObjectEnumerator.Select(Function(o) CDbl(o)).ToArray)
+                        Case GetType(Boolean)
+                            Return CObj(vector.AsObjectEnumerator(Of Boolean).Select(Function(b) If(b, 1.0, 0.0)).ToArray)
+                        Case GetType(Date)
+                            Return CObj(vector.AsObjectEnumerator(Of Date).Select(Function(d) d.UnixTimeStamp).ToArray)
+                    End Select
             End Select
 
             Throw New NotImplementedException
