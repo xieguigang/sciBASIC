@@ -1,5 +1,8 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Values
 Imports Microsoft.VisualBasic.Text
 
 Public Module FastLoader
@@ -25,6 +28,37 @@ Public Module FastLoader
         Dim read As New StreamReader(file, encoding.CodePage)
         Dim rowHeaders As New List(Of String)
         Dim features As New Dictionary(Of String, List(Of String))
+        Dim ordinals As Index(Of String) = read _
+            .ReadLine _
+            .Split(delimiter) _
+            .Indexing
+        Dim line As Value(Of String) = ""
+        Dim tokens As String()
+        Dim i As i32 = 1
+
+        If rowHeader Then
+            For Each name As String In ordinals.Objects.Skip(1)
+                Call features.Add(name, New List(Of String))
+            Next
+        Else
+            For Each name As String In ordinals.Objects
+                Call features.Add(name, New List(Of String))
+            Next
+        End If
+
+        Do While Not (line = read.ReadLine) Is Nothing
+            tokens = line.Split(delimiter)
+
+            If rowHeader Then
+                rowHeaders.Add(tokens(Scan0))
+            Else
+                rowHeaders.Add(++i)
+            End If
+
+            For Each name As String In features.Keys
+                Call features(name).Add(tokens(ordinals(x:=name)))
+            Next
+        Loop
 
         Return New DataFrame With {
             .features = features _
