@@ -74,7 +74,7 @@
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports stdNum = System.Math
 
-Namespace ComponentModel.Evaluation
+Namespace Evaluation
 
     Public Enum Metrics
         none

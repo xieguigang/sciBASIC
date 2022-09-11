@@ -59,7 +59,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
-Namespace ComponentModel.Evaluation
+Namespace Evaluation
 
     ''' <summary>
     ''' 验证结果描述

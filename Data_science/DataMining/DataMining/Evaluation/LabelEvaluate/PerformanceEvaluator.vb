@@ -75,7 +75,7 @@
 
 Imports System.Drawing
 
-Namespace ComponentModel.Evaluation
+Namespace Evaluation
 
     ''' <summary>
     ''' Class which evaluates an SVM model using several standard techniques.
@@ -170,15 +170,15 @@ Namespace ComponentModel.Evaluation
         End Function
 
         Private Sub computePR()
-            _prCurve = New List(Of PointF)()
-            _prCurve.Add(New PointF(0, 1))
+            _PRCurve = New List(Of PointF)()
+            _PRCurve.Add(New PointF(0, 1))
             Dim precision = computePrecision(_changes(0))
             Dim recall = computeRecall(_changes(0))
             Dim precisionSum As Single = 0
 
             If _changes(0).TP > 0 Then
                 precisionSum += precision
-                _prCurve.Add(New PointF(recall, precision))
+                _PRCurve.Add(New PointF(recall, precision))
             End If
 
             For i = 1 To _changes.Count - 1
@@ -187,7 +187,7 @@ Namespace ComponentModel.Evaluation
 
                 If _changes(i).TP > _changes(i - 1).TP Then
                     precisionSum += precision
-                    _prCurve.Add(New PointF(recall, precision))
+                    _PRCurve.Add(New PointF(recall, precision))
                 End If
             Next
 
@@ -225,7 +225,7 @@ Namespace ComponentModel.Evaluation
                 Dim newFPR = computeFPR(_changes(i))
 
                 If _changes(i).TP > _changes(i - 1).TP Then
-                    _auc += tpr * (newFPR - fpr) + 0.5 * (newTPR - tpr) * (newFPR - fpr)
+                    _AuC += tpr * (newFPR - fpr) + 0.5 * (newTPR - tpr) * (newFPR - fpr)
                     tpr = newTPR
                     fpr = newFPR
                     _ROCCurve.Add(New PointF(fpr, tpr))

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12f68beff145abc54992cb580461db7a, sciBASIC#\Data_science\DataMining\DataMining\ComponentModel\Evaluation\LabelEvaluate\ChangePoint.vb"
+﻿#Region "Microsoft.VisualBasic::b322d411c1fb3ff3889d3460c9da2449, sciBASIC#\Data_science\DataMining\DataMining\ComponentModel\Evaluation\RegressionClassify.vb"
 
     ' Author:
     ' 
@@ -34,38 +34,40 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 18
-    '    Code Lines: 14
-    ' Comment Lines: 0
-    '   Blank Lines: 4
-    '     File Size: 489 B
+    '   Total Lines: 21
+    '    Code Lines: 13
+    ' Comment Lines: 3
+    '   Blank Lines: 5
+    '     File Size: 519 B
 
 
-    '     Class ChangePoint
+    '     Class RegressionClassify
     ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString
+    '         Properties: actual, errors, predicts, sampleID
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Namespace ComponentModel.Evaluation
+Imports stdNum = System.Math
 
-    Friend Class ChangePoint
+Namespace Evaluation
 
-        Public Sub New(tp As Integer, fp As Integer, tn As Integer, fn As Integer)
-            Me.TP = tp
-            Me.FP = fp
-            Me.TN = tn
-            Me.FN = fn
-        End Sub
+    ''' <summary>
+    ''' The regression classifier result.
+    ''' </summary>
+    Public Class RegressionClassify
 
-        Public TP, FP, TN, FN As Integer
+        Public Property sampleID As String
+        Public Property actual As Double
+        Public Property predicts As Double
 
-        Public Overrides Function ToString() As String
-            Return String.Format("{0}:{1}:{2}:{3}", TP, FP, TN, FN)
-        End Function
+        Public ReadOnly Property errors As Double
+            Get
+                Return stdNum.Abs(predicts - actual)
+            End Get
+        End Property
+
     End Class
 End Namespace

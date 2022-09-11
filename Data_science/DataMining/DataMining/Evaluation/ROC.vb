@@ -58,7 +58,7 @@ Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting.Rscript
 
-Namespace ComponentModel.Evaluation
+Namespace Evaluation
 
     ''' <summary>
     ''' The ROC math module

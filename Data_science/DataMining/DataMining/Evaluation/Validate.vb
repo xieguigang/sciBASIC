@@ -59,7 +59,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports stdNum = System.Math
 
-Namespace ComponentModel.Evaluation
+Namespace Evaluation
 
     ''' <summary>
     ''' 一个包含有多维度验证结果输出的样本验证结果
