@@ -87,7 +87,7 @@ Namespace Serialization.BinaryDumping
 
                 If DataFramework.IsPrimitive(type) Then
                     ' 基础类型,直接写入数据
-                    buffer += Caster.GetBytes(type)(value)
+                    buffer += TypeCast.GetBytes(type)(value)
                 ElseIf type.IsArray Then
 
                 Else

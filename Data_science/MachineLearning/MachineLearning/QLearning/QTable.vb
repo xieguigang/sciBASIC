@@ -72,10 +72,7 @@ Namespace QLearning
     Public MustInherit Class QTable(Of T As ICloneable)
         Implements IQTable
 
-        ''' <summary>
-        ''' for creating random numbers
-        ''' </summary>
-        Protected ReadOnly randomGenerator As Random
+        ReadOnly randomGenerator As Random
 
         ''' <summary>
         ''' the table variable stores the Q-table, where the state is saved

@@ -53,7 +53,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 Imports stdNum = System.Math
 
 Namespace ComponentModel.Activations

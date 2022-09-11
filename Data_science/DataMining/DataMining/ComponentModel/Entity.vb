@@ -62,7 +62,7 @@ Namespace ComponentModel
     ''' An abstract property vector 
     ''' </summary>
     ''' <typeparam name="T">只允许数值类型</typeparam>
-    Public MustInherit Class EntityBase(Of T)
+    Public MustInherit Class EntityBase(Of T As {IComparable, IConvertible})
 
         ''' <summary>
         ''' Properties vector of current entity.

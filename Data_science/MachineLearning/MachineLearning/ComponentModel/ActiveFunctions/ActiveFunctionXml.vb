@@ -57,9 +57,6 @@ Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language.Default
-Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
-Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Namespace ComponentModel.Activations

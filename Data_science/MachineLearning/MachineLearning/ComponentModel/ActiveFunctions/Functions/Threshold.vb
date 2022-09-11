@@ -62,7 +62,6 @@
 '
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 
 Namespace ComponentModel.Activations
 

@@ -60,7 +60,6 @@
 '
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace ComponentModel.Activations

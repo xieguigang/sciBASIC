@@ -62,9 +62,11 @@ Imports stdNum = System.Math
     ''' 对值进行约束剪裁
     ''' </summary>
     ''' <param name="value#"></param>
-    ''' <param name="truncate">修建的阈值应该是一个正实数来的</param>
+    ''' <param name="truncate">
+    ''' the absolute value of the limitation.(修建的阈值应该是一个正实数来的)
+    ''' </param>
     ''' <returns></returns>
-    Friend Function ValueTruncate(value#, truncate#) As Double
+    Public Function ValueTruncate(value#, truncate#) As Double
         If Double.IsNegativeInfinity(value) Then
             value = -truncate
         ElseIf Double.IsPositiveInfinity(value) Then

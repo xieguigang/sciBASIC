@@ -53,7 +53,6 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace QLearning
 
@@ -79,7 +78,9 @@ Namespace QLearning
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
-            Return $"[ {EnvirState} ] {vbTab}--> {Qvalues.GetJson}"
+            SyncLock Qvalues
+                Return $"[ {EnvirState} ] {vbTab}--> [{Qvalues.Select(Function(di) di.ToString("F4")).JoinBy(vbTab)}]"
+            End SyncLock
         End Function
 
     End Class
