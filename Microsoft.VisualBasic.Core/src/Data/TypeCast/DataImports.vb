@@ -52,7 +52,7 @@
 
 Imports System.Runtime.CompilerServices
 
-Namespace IO
+Namespace ComponentModel.DataSourceModel.TypeCast
 
     Public Module DataImports
 
