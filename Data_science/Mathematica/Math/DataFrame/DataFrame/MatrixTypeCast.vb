@@ -2,6 +2,11 @@
 
 Public Module MatrixTypeCast
 
+    ''' <summary>
+    ''' cast a named NxN data matrix into a dataframe object
+    ''' </summary>
+    ''' <param name="mat"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function GetDataFrame(mat As DataMatrix) As DataFrame
         Dim table As New Dictionary(Of String, FeatureVector)
