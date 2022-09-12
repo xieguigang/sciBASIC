@@ -4,9 +4,9 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.DataFrame
 
 ''' <summary>
-''' 
+''' the base abstract data type of the vector encoder
 ''' </summary>
-Public Class FeatureEncoder
+Public MustInherit Class FeatureEncoder
 
     Public Delegate Function EncodeFeature(feature As FeatureVector, name As String) As DataFrame
 
@@ -15,6 +15,10 @@ Public Class FeatureEncoder
     Public Sub AddEncodingRule(field As String, encoder As EncodeFeature)
         encodings(field) = encoder
     End Sub
+
+    Public Function Encode()
+
+    End Function
 
     ''' <summary>
     ''' 
@@ -58,36 +62,11 @@ Public Class FeatureEncoder
         End Select
     End Function
 
-    Private Shared Function IndexNames(feature As FeatureVector) As String()
+    Protected Shared Function IndexNames(feature As FeatureVector) As String()
         Return feature.size _
             .Sequence _
             .Select(Function(i) (i + 1).ToString) _
             .ToArray
-    End Function
-
-    Public Shared Function NumericBinsEncoder(feature As FeatureVector, name As String) As DataFrame
-        Dim raw As Double() = feature.TryCast(Of Double)
-        Dim encoder As New Discretizer(raw, levels:=5)
-        Dim extends As New Dictionary(Of String, Integer())
-        Dim key As String
-
-        For i As Integer = 1 To encoder.binSize
-            Call extends.Add(i, New Integer(raw.Length - 1) {})
-        Next
-
-        For i As Integer = 0 To raw.Length - 1
-            key = encoder.GetLevel(raw(i)) + 1
-            extends(key)(i) = 1
-        Next
-
-        Return New DataFrame With {
-            .features = extends _
-                .ToDictionary(Function(v) $"{name}.{v.Key}",
-                              Function(v)
-                                  Return New FeatureVector(v.Value)
-                              End Function),
-            .rownames = IndexNames(feature)
-        }
     End Function
 
     Public Shared Function NumericEncoder(feature As FeatureVector, name As String) As DataFrame

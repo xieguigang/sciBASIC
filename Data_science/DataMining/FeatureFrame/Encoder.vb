@@ -9,7 +9,7 @@ Public Module Encoder
     ''' <param name="data"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function Encoding(data As DataFrame) As DataFrame
+    Public Function AutoEncoding(data As DataFrame) As DataFrame
         For Each name As String In data.features.Keys.ToArray
             Dim v As FeatureVector = data(name)
             Dim extends As DataFrame = FeatureEncoder.Encode(v, name)
