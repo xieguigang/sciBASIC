@@ -116,14 +116,14 @@ Public Module FastLoader
             .features = features _
                 .ToDictionary(Function(a) a.Key,
                               Function(a)
-                                  Return a.Value.ParseFeature
+                                  Return a.Value.ParseFeature(a.Key)
                               End Function),
             .rownames = rowHeaders.ToArray
         }
     End Function
 
     <Extension>
-    Private Function ParseFeature(data As List(Of String)) As FeatureVector
+    Private Function ParseFeature(data As List(Of String), name As String) As FeatureVector
         Dim type As Type = DataImports.SampleForType(data)
         Dim parser = type.ParseObject
         Dim array As Array = Array.CreateInstance(type, length:=data.Count)
@@ -132,7 +132,7 @@ Public Module FastLoader
             Call array.SetValue(parser(data(i)), index:=i)
         Next
 
-        Return FeatureVector.FromGeneral(array)
+        Return FeatureVector.FromGeneral(name, array)
     End Function
 End Module
 

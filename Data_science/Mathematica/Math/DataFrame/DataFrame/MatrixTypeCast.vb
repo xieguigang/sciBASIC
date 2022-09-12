@@ -13,7 +13,7 @@ Public Module MatrixTypeCast
         Dim keys As String() = mat.names.Objects
 
         For i As Integer = 0 To keys.Length - 1
-            table(keys(i)) = New FeatureVector(mat.matrix(i))
+            table(keys(i)) = New FeatureVector(keys(i), mat.matrix(i))
         Next
 
         Return New DataFrame With {
