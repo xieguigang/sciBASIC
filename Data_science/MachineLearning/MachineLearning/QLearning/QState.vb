@@ -55,10 +55,22 @@
 Namespace QLearning
 
     ''' <summary>
+    ''' interface helper for write cdf model file
+    ''' </summary>
+    Public Interface IQStateFeatureSet
+
+        ReadOnly Property stateFeatures As IEnumerable(Of String)
+        ReadOnly Property QValueNames As IEnumerable(Of String)
+
+        Function ExtractStateVector(stat As Object) As Double()
+
+    End Interface
+
+    ''' <summary>
     ''' 
     ''' </summary>
     ''' <typeparam name="T">Status object</typeparam>
-    Public MustInherit Class QState(Of T As ICloneable)
+    Public MustInherit Class QState(Of T As ICloneable) : Implements IQStateFeatureSet
 
         Protected stateValue As T
 
@@ -87,6 +99,9 @@ Namespace QLearning
             End Get
         End Property
 
+        Public MustOverride ReadOnly Property stateFeatures As IEnumerable(Of String) Implements IQStateFeatureSet.stateFeatures
+        Public MustOverride ReadOnly Property QValueNames As IEnumerable(Of String) Implements IQStateFeatureSet.QValueNames
+
         ''' <summary>
         ''' Gets the <see cref="Current"/> states.
         ''' Returns the map state which results from an initial map state after an
@@ -95,5 +110,7 @@ Namespace QLearning
         ''' <param name="action"> taken by the avatar ('@') </param>
         ''' <returns> resulting map after the action is taken </returns>
         Public MustOverride Function GetNextState(action As Integer) As T
+
+        Public MustOverride Function ExtractStateVector(stat As Object) As Double() Implements IQStateFeatureSet.ExtractStateVector
     End Class
 End Namespace
