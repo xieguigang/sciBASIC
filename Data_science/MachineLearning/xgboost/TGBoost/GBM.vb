@@ -57,7 +57,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
-Imports Microsoft.VisualBasic.DataMining.ComponentModel.Evaluation
+Imports Microsoft.VisualBasic.DataMining.Evaluation
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Java
 Imports Microsoft.VisualBasic.My

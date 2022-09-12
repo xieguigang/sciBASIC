@@ -87,6 +87,10 @@ Public Class DataFrame
         End Set
     End Property
 
+    Public Function delete(featureName As String) As Boolean
+        Return features.Remove(featureName)
+    End Function
+
     ''' <summary>
     ''' current dataframe object append the additional data 
     ''' to right side and then create a new dataframe
