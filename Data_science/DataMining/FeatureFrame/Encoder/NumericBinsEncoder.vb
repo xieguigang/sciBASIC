@@ -23,7 +23,7 @@ Public Class NumericBinsEncoder : Inherits FeatureEncoder
         Dim name As String = feature.name
         Dim binNames As String() = encoder.binList _
             .Select(Function(r)
-                        Return $"{name} [{r.Min.ToString(format)},{r.Max.ToString(format)}]"
+                        Return $"{name} [{r.Min.ToString(format)}~{r.Max.ToString(format)}]"
                     End Function) _
             .ToArray
 
