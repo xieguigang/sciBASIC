@@ -56,6 +56,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
 Imports Microsoft.VisualBasic.MachineLearning.QLearning
 Imports Microsoft.VisualBasic.MachineLearning.QLearning.DataModel
@@ -92,12 +93,30 @@ Public Module Extensions
             cdf.GlobalAttributes(attrs.ToArray)
 
             Dim featureSet As NamedValue(Of List(Of Double))() = features.stateFeatures _
+                .JoinIterates(features.QValueNames) _
                 .Select(Function(name)
                             Return New NamedValue(Of List(Of Double))(name, New List(Of Double))
                         End Function) _
                 .ToArray
 
+            For Each stat As Object In features.AllQStates
+                Dim vStat As Double() = features.ExtractStateVector(stat)
+                Dim solve As Single() = Q.Table(stat.ToString).Qvalues
+                Dim i As Integer = 0
 
+                For i = 0 To vStat.Length - 1
+                    featureSet(i).Value.Add(vStat(i))
+                Next
+                For i = 0 To solve.Length - 1
+                    featureSet(i + vStat.Length).Value.Add(solve(i))
+                Next
+            Next
+
+            For Each vec In featureSet
+                Call cdf.AddVector(vec.Name, vec.Value, New Dimension With {.name = $"sizeof_{vec.Name}", .size = vec.Value.Count})
+            Next
         End Using
+
+        Return True
     End Function
 End Module

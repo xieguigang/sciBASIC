@@ -61,6 +61,7 @@ Namespace QLearning
 
         ReadOnly Property stateFeatures As IEnumerable(Of String)
         ReadOnly Property QValueNames As IEnumerable(Of String)
+        ReadOnly Property AllQStates As IEnumerable
 
         Function ExtractStateVector(stat As Object) As Double()
 
@@ -73,10 +74,18 @@ Namespace QLearning
     Public MustInherit Class QState(Of T As ICloneable) : Implements IQStateFeatureSet
 
         Protected stateValue As T
+        Protected allStates As New Dictionary(Of String, T)
 
         Public Sub SetState(x As T)
             stateValue = x
+            allStates(x.ToString) = x
         End Sub
+
+        Public ReadOnly Property AllQStates As IEnumerable Implements IQStateFeatureSet.AllQStates
+            Get
+                Return allStates.Values
+            End Get
+        End Property
 
         ''' <summary>
         ''' 假若操作不会涉及到数据修改，请使用这个属性来减少性能的损失，<see cref="Current"/>属性返回的值和本属性是一样的，
