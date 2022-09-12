@@ -78,6 +78,12 @@ Namespace ComponentModel.Discretion
             End Get
         End Property
 
+        Public ReadOnly Property binList As IEnumerable(Of DoubleRange)
+            Get
+                Return bins.Select(Function(a) New DoubleRange(a))
+            End Get
+        End Property
+
         Sub New(sample As IEnumerable(Of Double), levels As Integer)
             With sample.ToArray
                 min = .Min
