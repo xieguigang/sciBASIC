@@ -64,6 +64,10 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.Serialization.JSON
 
+''' <summary>
+''' A NxN data matrix which can be convert to graph object
+''' under a certain cutoff value.
+''' </summary>
 Public Class DataMatrix : Implements IBucketVector
 
     Protected Friend ReadOnly names As Index(Of String)

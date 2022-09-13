@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e60c2b7f79d56e51d824cabf0c6c462, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\BinaryWriter.vb"
+﻿#Region "Microsoft.VisualBasic::c1373f92f4a1b5e6eb10f162af7c801c, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\BinaryWriter.vb"
 
     ' Author:
     ' 
@@ -87,7 +87,7 @@ Namespace Serialization.BinaryDumping
 
                 If DataFramework.IsPrimitive(type) Then
                     ' 基础类型,直接写入数据
-                    buffer += Caster.GetBytes(type)(value)
+                    buffer += TypeCast.GetBytes(type)(value)
                 ElseIf type.IsArray Then
 
                 Else

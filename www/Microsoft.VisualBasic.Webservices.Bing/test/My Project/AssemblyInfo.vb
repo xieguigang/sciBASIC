@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6027bbd9a1b70f5e5a7d7fd2fabbc19f, sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::0cebd5fd04884f5efee5e6df8df181b7, sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -81,4 +81,3 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
-

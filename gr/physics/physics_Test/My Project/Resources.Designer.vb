@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::656ad7ae0a814e6b48bab40952e88598, sciBASIC#\gr\physics\physics_Test\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::a64cbe6860eea6946f766ad31315c867, sciBASIC#\gr\physics\physics_Test\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -113,4 +113,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

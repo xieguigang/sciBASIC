@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63c7d1ed801b56c7cace89f710b93057, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Authenticator\My Project\Application.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::ffa276dc5aaa6e6322d024f91446be51, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Authenticator\My Project\Application.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 18
     ' Comment Lines: 14
     '   Blank Lines: 6
-    '     File Size: 1.52 KB
+    '     File Size: 1.51 KB
 
 
     '     Class MyApplication
@@ -89,4 +89,3 @@ Namespace My
         End Sub
     End Class
 End Namespace
-

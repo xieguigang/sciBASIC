@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25afe604c7875525e7d4dd799101de3e, sciBASIC#\Data_science\Mathematica\Math\ANOVA\Anova.vb"
+﻿#Region "Microsoft.VisualBasic::423c757aab61c6fcfa00491d4aaa90c6, sciBASIC#\Data_science\Mathematica\Math\ANOVA\Anova.vb"
 
     ' Author:
     ' 
@@ -258,4 +258,3 @@ Critical number: {criticalNumber}
 "
     End Function
 End Class
-

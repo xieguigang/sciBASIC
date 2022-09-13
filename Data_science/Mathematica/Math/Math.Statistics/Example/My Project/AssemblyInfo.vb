@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb0f3303b2902e3ee65ad325fd294c92, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Example\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::ce18b31570ebe9d9ef87c55c37b9df63, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Example\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1.16 KB
+    '     File Size: 1.15 KB
 
 
     ' 
@@ -81,4 +81,3 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ab856fb1ed8f27793f1d3f1e70e4d25, sciBASIC#\vs_solutions\dev\VisualStudio\test\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::06330ea748e4430c537ea963de85b17e, sciBASIC#\vs_solutions\dev\VisualStudio\test\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -113,4 +113,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

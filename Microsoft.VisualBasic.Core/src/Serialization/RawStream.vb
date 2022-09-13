@@ -1,62 +1,62 @@
-﻿#Region "Microsoft.VisualBasic::04555cff435ac9f30423b4f6b5bc4acc, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\RawStream.vb"
+﻿#Region "Microsoft.VisualBasic::c9ce596ff577194100f45213b43a0674, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\RawStream.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 196
-'    Code Lines: 134
-' Comment Lines: 33
-'   Blank Lines: 29
-'     File Size: 8.64 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Interface ISerializable
-' 
-'         Function: Serialize
-' 
-'     Delegate Function
-' 
-' 
-'     Class RawStream
-' 
-'         Constructor: (+2 Overloads) Sub New
-'         Function: BytesInternal, GetBytes, (+2 Overloads) GetData, GetRawStream, readInternal
-'                   Serialize
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 233
+    '    Code Lines: 164
+    ' Comment Lines: 39
+    '   Blank Lines: 30
+    '     File Size: 10.26 KB
+
+
+    '     Interface ISerializable
+    ' 
+    '         Function: Serialize
+    ' 
+    '     Delegate Function
+    ' 
+    ' 
+    '     Class RawStream
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: BytesInternal, empty, GetBytes, (+2 Overloads) GetData, GetRawStream
+    '                   readInternal, Serialize
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

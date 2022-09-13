@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3b5747dd0aacf7623c159d13745a88e9, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\NumericMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::398647b2bb9682eef65eb9079580a51a, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\NumericMatrix.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1514
-    '    Code Lines: 807
+    '   Total Lines: 1518
+    '    Code Lines: 810
     ' Comment Lines: 515
-    '   Blank Lines: 192
-    '     File Size: 54.56 KB
+    '   Blank Lines: 193
+    '     File Size: 54.67 KB
 
 
     '     Class NumericMatrix
     ' 
     '         Properties: ColumnDimension, ColumnPackedCopy, DiagonalVector, RowDimension, RowPackedCopy
     ' 
-    '         Constructor: (+7 Overloads) Sub New
+    '         Constructor: (+8 Overloads) Sub New
     ' 
     '         Function: Abs, Add, AddEquals, ArrayLeftDivide, ArrayLeftDivideEquals
     '                   ArrayMultiply, ArrayMultiplyEquals, ArrayPack, ArrayRightDivide, ArrayRightDivideEquals

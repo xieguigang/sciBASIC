@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::998e21f7394b64655c7651ad5434eef6, sciBASIC#\www\githubAPI\Visualizer\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::8b28ea85ccd11ef47d9b901bf00e2adc, sciBASIC#\www\githubAPI\Visualizer\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -129,4 +129,3 @@ Namespace My
         End Property
     End Module
 End Namespace
-

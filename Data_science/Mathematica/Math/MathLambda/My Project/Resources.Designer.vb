@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2908abe57fbf70974e27701cf314b641, sciBASIC#\Data_science\Mathematica\Math\MathLambda\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::df8f20c86cf6090bdd3528ffebf737b8, sciBASIC#\Data_science\Mathematica\Math\MathLambda\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -113,4 +113,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

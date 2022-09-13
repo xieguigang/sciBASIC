@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2238d203960300c988d39e18bb025f4e, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::ab2e833121cf305ab09bcad8c10ab929, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -113,4 +113,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

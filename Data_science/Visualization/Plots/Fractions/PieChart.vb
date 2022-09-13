@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::40a4b0db1c1bf6367d66c4cce99898f5, sciBASIC#\Data_science\Visualization\Plots\Fractions\PieChart.vb"
+﻿#Region "Microsoft.VisualBasic::a4470d2e4746cd796dbf7a530036df55, sciBASIC#\Data_science\Visualization\Plots\Fractions\PieChart.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 301
-    '    Code Lines: 211
-    ' Comment Lines: 54
-    '   Blank Lines: 36
-    '     File Size: 13.81 KB
+    '   Total Lines: 351
+    '    Code Lines: 241
+    ' Comment Lines: 70
+    '   Blank Lines: 40
+    '     File Size: 15.41 KB
 
 
     '     Module PieChart
     ' 
     '         Function: Fractions, FromData, FromPercentages, Plot
+    ' 
+    '         Sub: PlotPie
     ' 
     ' 
     ' /********************************************************************************/

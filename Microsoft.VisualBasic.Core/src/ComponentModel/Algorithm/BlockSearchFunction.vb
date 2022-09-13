@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e777bacd301979e73e0776494df7fe4, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BlockSearchFunction.vb"
+﻿#Region "Microsoft.VisualBasic::98ebe7e34dc7080d3b163132280877c3, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BlockSearchFunction.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 146
-    '    Code Lines: 112
-    ' Comment Lines: 9
-    '   Blank Lines: 25
-    '     File Size: 5.10 KB
+    '   Total Lines: 160
+    '    Code Lines: 121
+    ' Comment Lines: 13
+    '   Blank Lines: 26
+    '     File Size: 5.57 KB
 
 
     '     Structure Block
@@ -51,6 +51,8 @@
     '         Function: ToString
     ' 
     '     Class BlockSearchFunction
+    ' 
+    '         Properties: Keys
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: getOrderSeq, Search
