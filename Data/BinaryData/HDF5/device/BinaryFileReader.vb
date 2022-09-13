@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31f36bd5119b9e4c596b4a7f964ce94d, sciBASIC#\Data\BinaryData\DataStorage\HDF5\device\BinaryFileReader.vb"
+﻿#Region "Microsoft.VisualBasic::a55a6f28838f80970a55a5a8e990529d, sciBASIC#\Data\BinaryData\HDF5\device\BinaryFileReader.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 110
-    '    Code Lines: 85
-    ' Comment Lines: 2
-    '   Blank Lines: 23
-    '     File Size: 3.49 KB
+    '   Total Lines: 122
+    '    Code Lines: 93
+    ' Comment Lines: 3
+    '   Blank Lines: 26
+    '     File Size: 3.95 KB
 
 
     '     Class BinaryFileReader
@@ -47,7 +47,7 @@
     ' 
     '         Constructor: (+3 Overloads) Sub New
     ' 
-    '         Function: readByte, StopIfMissingFile, ToString
+    '         Function: getBuffer, readByte, StopIfMissingFile, ToString
     ' 
     '         Sub: close, setPosition
     ' 

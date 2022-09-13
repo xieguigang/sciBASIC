@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0fdc7c254a6f971337bc13093261487e, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\IActivationFunction.vb"
+﻿#Region "Microsoft.VisualBasic::697e6d54c59a9f1be052e6fa6abfdf2b, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\IActivationFunction.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 82
-    '    Code Lines: 31
+    '   Total Lines: 81
+    '    Code Lines: 30
     ' Comment Lines: 39
     '   Blank Lines: 12
-    '     File Size: 3.00 KB
+    '     File Size: 2.92 KB
 
 
     '     Class IActivationFunction
@@ -60,7 +60,6 @@
 '
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace ComponentModel.Activations

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a377c5d95e27db1829ec07f5418041d, sciBASIC#\Data\BinaryData\DataStorage\HDF5\device\MemoryReader.vb"
+﻿#Region "Microsoft.VisualBasic::4d2424e570ebc63a35013f6c9b404ce5, sciBASIC#\Data\BinaryData\HDF5\device\MemoryReader.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 69
-    '    Code Lines: 50
+    '   Total Lines: 73
+    '    Code Lines: 53
     ' Comment Lines: 2
-    '   Blank Lines: 17
-    '     File Size: 1.90 KB
+    '   Blank Lines: 18
+    '     File Size: 2.02 KB
 
 
     '     Class MemoryReader
@@ -47,7 +47,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: readByte
+    '         Function: getBuffer, readByte
     ' 
     '         Sub: close, setPosition
     ' 

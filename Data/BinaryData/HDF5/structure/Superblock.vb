@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::299bd25e73f89c097bd367ddb7888b90, sciBASIC#\Data\BinaryData\DataStorage\HDF5\structure\Superblock.vb"
+﻿#Region "Microsoft.VisualBasic::806232cc522de1f4e6195df0f114f7c8, sciBASIC#\Data\BinaryData\HDF5\structure\Superblock.vb"
 
     ' Author:
     ' 

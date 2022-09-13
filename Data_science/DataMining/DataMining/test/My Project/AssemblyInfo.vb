@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9a4007c410bfdc84e5552219aae2df2, sciBASIC#\Data_science\DataMining\DataMining\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::066a9ab47b31a581ddeda06901206365, sciBASIC#\Data_science\DataMining\DataMining\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -81,4 +81,3 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")> 
 <Assembly: AssemblyFileVersion("1.0.0.0")> 
-

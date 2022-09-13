@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::819fdb35674d3f0ce0698073f4c4d742, sciBASIC#\Data\Trinity\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::d513adc6ba26e7cbec300da35a5228ef, sciBASIC#\Data\Trinity\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.80 KB
+    '     File Size: 2.79 KB
 
 
     '     Module Resources
@@ -113,4 +113,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

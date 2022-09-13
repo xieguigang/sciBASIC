@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::748bc18ab0b51bfcce4e4c18269f2364, sciBASIC#\Data\BinaryData\DataStorage\HDF5\dataset\filters\IFilter.vb"
+﻿#Region "Microsoft.VisualBasic::5ad8e7cc90455bdeb5d1ca8d3fe0cee6, sciBASIC#\Data\BinaryData\HDF5\dataset\filters\IFilter.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 7
     ' Comment Lines: 13
     '   Blank Lines: 5
-    '     File Size: 768 B
+    '     File Size: 763 B
 
 
     '     Interface IFilter

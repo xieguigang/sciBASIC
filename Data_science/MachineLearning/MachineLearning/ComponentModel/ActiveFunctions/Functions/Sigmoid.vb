@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c69a1e47f0d3ff31da4d3ebfd971fe8d, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\Sigmoid.vb"
+﻿#Region "Microsoft.VisualBasic::ed292d339fd6a91761e37230f35808ad, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\Sigmoid.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 121
-    '    Code Lines: 40
+    '   Total Lines: 120
+    '    Code Lines: 39
     ' Comment Lines: 69
     '   Blank Lines: 12
-    '     File Size: 4.17 KB
+    '     File Size: 4.10 KB
 
 
     '     Class Sigmoid
@@ -62,7 +62,6 @@
 '
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports stdNum = System.Math
 

@@ -1,64 +1,65 @@
-﻿#Region "Microsoft.VisualBasic::785de2126341df562b89a6b78bf9932f, sciBASIC#\Data_science\MachineLearning\MachineLearning.Data.Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::8bf27c98fd18342c7c9d1aab9925ecaa, sciBASIC#\Data_science\MachineLearning\MachineLearning.Data.Extensions\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-    ' Code Statistics:
 
-    '   Total Lines: 46
-    '    Code Lines: 35
-    ' Comment Lines: 5
-    '   Blank Lines: 6
-    '     File Size: 1.64 KB
+' /********************************************************************************/
+
+' Summaries:
 
 
-    ' Module Extensions
-    ' 
-    '     Function: GetInput
-    ' 
-    ' Class QTableDump
-    ' 
-    '     Sub: Dump, Save
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 22
+'    Code Lines: 15
+' Comment Lines: 5
+'   Blank Lines: 2
+'     File Size: 802 B
+
+
+' Module Extensions
+' 
+'     Function: GetInput
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.DataStorage.netCDF
+Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
+Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
+Imports Microsoft.VisualBasic.MachineLearning.QLearning
 Imports Microsoft.VisualBasic.MachineLearning.QLearning.DataModel
-Imports Microsoft.VisualBasic.Text
 Imports row = Microsoft.VisualBasic.Data.csv.IO.DataSet
 
 Public Module Extensions
@@ -77,25 +78,45 @@ Public Module Extensions
             .Select(Function(key) data(key)) _
             .ToArray
     End Function
-End Module
 
-Public Class QTableDump
+    <Extension>
+    Public Function ExportQTable(Q As IQTable, features As IQStateFeatureSet, file As Stream) As Boolean
+        Using cdf As New CDFWriter(file)
+            Dim attrs As New List(Of attribute)
 
-    ReadOnly __buffer As New Dictionary(Of IndexCurve)
+            attrs.Add(New attribute With {.name = NameOf(Q.ActionRange), .type = CDFDataTypes.INT, .value = Q.ActionRange})
+            attrs.Add(New attribute With {.name = NameOf(Q.ExplorationChance), .type = CDFDataTypes.FLOAT, .value = Q.ExplorationChance})
+            attrs.Add(New attribute With {.name = NameOf(Q.GammaValue), .type = CDFDataTypes.FLOAT, .value = Q.GammaValue})
+            attrs.Add(New attribute With {.name = NameOf(Q.LearningRate), .type = CDFDataTypes.FLOAT, .value = Q.LearningRate})
+            attrs.Add(New attribute With {.name = "QTable_size", .type = CDFDataTypes.INT, .value = Q.Table.Count})
 
-    Public Sub Dump(table As IQTable, iteration As Integer)
-        For Each o In table.Table.Values
-            For i As Integer = 0 To table.ActionRange - 1
-                Dim uid As String = $"[{i}] {o.EnvirState}"
-                If Not __buffer.ContainsKey(uid) Then
-                    Call __buffer.Add(uid, New IndexCurve(uid))
-                End If
-                Call __buffer(uid).Properties.Add(iteration, o.Qvalues(i))
+            cdf.GlobalAttributes(attrs.ToArray)
+
+            Dim featureSet As NamedValue(Of List(Of Double))() = features.stateFeatures _
+                .JoinIterates(features.QValueNames) _
+                .Select(Function(name)
+                            Return New NamedValue(Of List(Of Double))(name, New List(Of Double))
+                        End Function) _
+                .ToArray
+
+            For Each stat As Object In features.AllQStates
+                Dim vStat As Double() = features.ExtractStateVector(stat)
+                Dim solve As Single() = Q.Table(stat.ToString).Qvalues
+                Dim i As Integer = 0
+
+                For i = 0 To vStat.Length - 1
+                    featureSet(i).Value.Add(vStat(i))
+                Next
+                For i = 0 To solve.Length - 1
+                    featureSet(i + vStat.Length).Value.Add(solve(i))
+                Next
             Next
-        Next
-    End Sub
 
-    Public Sub Save(path As String)
-        Call __buffer.Values.SaveTo(path, Encodings.ASCII)
-    End Sub
-End Class
+            For Each vec In featureSet
+                Call cdf.AddVector(vec.Name, vec.Value, New Dimension With {.name = $"sizeof_{vec.Name}", .size = vec.Value.Count})
+            Next
+        End Using
+
+        Return True
+    End Function
+End Module

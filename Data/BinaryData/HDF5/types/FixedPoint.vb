@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a1b655e13d4faf88e1a0094c8519ba3, sciBASIC#\Data\BinaryData\DataStorage\HDF5\types\FixedPoint.vb"
+﻿#Region "Microsoft.VisualBasic::55b7048f639616105ec34961ebfdeb43, sciBASIC#\Data\BinaryData\HDF5\types\FixedPoint.vb"
 
     ' Author:
     ' 

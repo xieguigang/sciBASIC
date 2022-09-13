@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4cacf8f21670cc474af178f4d26c8f13, sciBASIC#\Data\DataFrame\Extensions\DataImports.vb"
+﻿#Region "Microsoft.VisualBasic::c85e27c770875c94733c6a668f19c530, sciBASIC#\Data\DataFrame\Extensions\DataImports.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 201
-    '    Code Lines: 105
+    '   Total Lines: 202
+    '    Code Lines: 106
     ' Comment Lines: 76
     '   Blank Lines: 20
-    '     File Size: 8.18 KB
+    '     File Size: 8.31 KB
 
 
     ' Module DataImports
@@ -55,6 +55,7 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -210,7 +211,7 @@ Public Module DataImports
 
         Dim Lines As String() = txtPath.ReadAllLines(encoding)
         Dim LQuery As RowObject() = LinqAPI.Exec(Of RowObject) <=
- _
+                                                                 _
             From line As String
             In Lines
             Select RowParsing(line, length:=length)
@@ -248,6 +249,6 @@ Public Module DataImports
     <Extension>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function SampleForType(column As IEnumerable(Of String)) As Type
-        Return IO.DataImports.SampleForType(column.ToArray)
+        Return TypeCast.DataImports.SampleForType(column.ToArray)
     End Function
 End Module

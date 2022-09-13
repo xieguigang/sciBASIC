@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::88e5423f5886b52e9dac4d0700c7992a, sciBASIC#\Data_science\MachineLearning\MachineLearning\QLearning\Maze-Q-Learning\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::0bec9924546eb2138f32383afeae4fef, sciBASIC#\Data_science\MachineLearning\MachineLearning\QLearning\Maze-Q-Learning\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -81,4 +81,3 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20dd7d9c5cb56c6cde9fe3d2272263d1, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\Sinc.vb"
+﻿#Region "Microsoft.VisualBasic::8eaa030ce9f9ab63b93aaf98effe07a5, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\Sinc.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 37
-    '    Code Lines: 31
+    '   Total Lines: 36
+    '    Code Lines: 30
     ' Comment Lines: 0
     '   Blank Lines: 6
-    '     File Size: 1.11 KB
+    '     File Size: 1.03 KB
 
 
     '     Class Sinc
@@ -52,7 +52,6 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 Imports stdNum = System.Math
 
 Namespace ComponentModel.Activations

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::781db7d6380295f0213f7597d4d2ff43, sciBASIC#\Data\BinaryData\DataStorage\HDF5\structure\LayoutField.vb"
+﻿#Region "Microsoft.VisualBasic::60d39a262667e6eaaf9b15e3277d4962, sciBASIC#\Data\BinaryData\HDF5\structure\LayoutField.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 20
     ' Comment Lines: 6
     '   Blank Lines: 8
-    '     File Size: 1.04 KB
+    '     File Size: 1.03 KB
 
 
     '     Class LayoutField

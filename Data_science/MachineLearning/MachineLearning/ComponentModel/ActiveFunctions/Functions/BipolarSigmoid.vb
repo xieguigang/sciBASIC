@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c31cdcdc50b4a0a000b1aa71769af0fe, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\BipolarSigmoid.vb"
+﻿#Region "Microsoft.VisualBasic::ac4159cf97bc059eed1ca0144d767aaf, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\BipolarSigmoid.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 115
-    '    Code Lines: 36
+    '   Total Lines: 114
+    '    Code Lines: 35
     ' Comment Lines: 69
     '   Blank Lines: 10
-    '     File Size: 4.05 KB
+    '     File Size: 3.98 KB
 
 
     '     Class BipolarSigmoid
@@ -62,7 +62,6 @@
 '
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports stdNum = System.Math
 

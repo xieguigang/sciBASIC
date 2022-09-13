@@ -1,60 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::83d0fe8c591a9d05bd083ddff685902b, sciBASIC#\Data\BinaryData\DataStorage\HDF5\HDF5Reader.vb"
+﻿#Region "Microsoft.VisualBasic::a9deed247308230ebef5e212d69cb4e6, sciBASIC#\Data\BinaryData\HDF5\HDF5Reader.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 208
-'    Code Lines: 140
-' Comment Lines: 38
-'   Blank Lines: 30
-'     File Size: 8.07 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class HDF5Reader
-' 
-'         Properties: attributes, chunks, data, dataBTree, dataGroup
-'                     dataset, datasetName, dataSpace, dataType, headerSize
-'                     isDataSet, layout, reader, superblock
-' 
-'         Constructor: (+3 Overloads) Sub New
-' 
-'         Function: ParseDataObject, parserObject, ToString
-' 
-'         Sub: parseHeader, printValues
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 205
+    '    Code Lines: 138
+    ' Comment Lines: 38
+    '   Blank Lines: 29
+    '     File Size: 7.37 KB
+
+
+    ' Class HDF5Reader
+    ' 
+    '     Properties: attributes, chunks, data, dataBTree, dataGroup
+    '                 dataset, datasetName, dataSpace, dataType, headerSize
+    '                 isDataSet, layout, reader, superblock
+    ' 
+    '     Constructor: (+3 Overloads) Sub New
+    ' 
+    '     Function: ParseDataObject, parserObject, ToString
+    ' 
+    '     Sub: parseHeader, printValues
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

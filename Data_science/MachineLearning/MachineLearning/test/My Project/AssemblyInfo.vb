@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed401ee9cc1d00c0def3de941418b4ba, sciBASIC#\Data_science\MachineLearning\MachineLearning\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::d59bd4edfa067e1bfd472e8c448d986d, sciBASIC#\Data_science\MachineLearning\MachineLearning\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1.15 KB
+    '     File Size: 1.14 KB
 
 
     ' 
@@ -81,4 +81,3 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
-

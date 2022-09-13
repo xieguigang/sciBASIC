@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce30196d88981937e889b82a16e866bb, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\Softplus.vb"
+﻿#Region "Microsoft.VisualBasic::78c3917113ef656296ac73d2e93fe5a2, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\Softplus.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 29
-    '    Code Lines: 23
+    '   Total Lines: 28
+    '    Code Lines: 22
     ' Comment Lines: 0
     '   Blank Lines: 6
-    '     File Size: 916 B
+    '     File Size: 840 B
 
 
     '     Class Softplus
@@ -52,7 +52,6 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 Imports stdNum = System.Math
 
 Namespace ComponentModel.Activations

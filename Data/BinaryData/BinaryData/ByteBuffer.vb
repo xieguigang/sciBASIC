@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bbc36ff4794afe8d0596d329d849f590, sciBASIC#\Data\BinaryData\BinaryData\ByteBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::8166359c32d430200f9b557c41c3c2e6, sciBASIC#\Data\BinaryData\BinaryData\ByteBuffer.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 302
-    '    Code Lines: 250
+    '   Total Lines: 336
+    '    Code Lines: 278
     ' Comment Lines: 19
-    '   Blank Lines: 33
-    '     File Size: 10.08 KB
+    '   Blank Lines: 39
+    '     File Size: 11.02 KB
 
 
     ' Class ByteBuffer
@@ -52,7 +52,7 @@
     '               (+2 Overloads) putDouble, (+2 Overloads) putFloat, (+2 Overloads) putInt, (+2 Overloads) putLong, (+2 Overloads) putShort
     '               remaining, rewind, (+2 Overloads) wrap
     ' 
-    '     Sub: Finalize
+    '     Sub: (+3 Overloads) [get], Finalize
     ' 
     ' /********************************************************************************/
 

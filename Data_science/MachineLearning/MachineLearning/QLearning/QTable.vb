@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a145b3a13b06e4df284099aa9cfd285, sciBASIC#\Data_science\MachineLearning\MachineLearning\QLearning\QTable.vb"
+﻿#Region "Microsoft.VisualBasic::fb1f03fa650b27f4ce482addb8b13146, sciBASIC#\Data_science\MachineLearning\MachineLearning\QLearning\QTable.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 239
+    '   Total Lines: 236
     '    Code Lines: 85
-    ' Comment Lines: 120
+    ' Comment Lines: 117
     '   Blank Lines: 34
-    '     File Size: 10.92 KB
+    '     File Size: 10.82 KB
 
 
     '     Class QTable
@@ -72,10 +72,7 @@ Namespace QLearning
     Public MustInherit Class QTable(Of T As ICloneable)
         Implements IQTable
 
-        ''' <summary>
-        ''' for creating random numbers
-        ''' </summary>
-        Protected ReadOnly randomGenerator As Random
+        ReadOnly randomGenerator As Random
 
         ''' <summary>
         ''' the table variable stores the Q-table, where the state is saved

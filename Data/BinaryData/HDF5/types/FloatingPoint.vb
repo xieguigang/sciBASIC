@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe6396cba2e821cca57a1464bd3c7ec3, sciBASIC#\Data\BinaryData\DataStorage\HDF5\types\FloatingPoint.vb"
+﻿#Region "Microsoft.VisualBasic::93aabb6720b0e557cb95331a3921247f, sciBASIC#\Data\BinaryData\HDF5\types\FloatingPoint.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 1.40 KB
+    '     File Size: 1.39 KB
 
 
     '     Class FloatingPoint

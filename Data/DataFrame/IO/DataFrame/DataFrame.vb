@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::944e128341d62a538c1173f3a46c5d01, sciBASIC#\Data\DataFrame\IO\DataFrame\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::18f6dc0331ad726eebc327854cc6fe71, sciBASIC#\Data\DataFrame\IO\DataFrame\DataFrame.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 667
-    '    Code Lines: 429
+    '   Total Lines: 677
+    '    Code Lines: 437
     ' Comment Lines: 135
-    '   Blank Lines: 103
-    '     File Size: 27.49 KB
+    '   Blank Lines: 105
+    '     File Size: 27.80 KB
 
 
     '     Class DataFrame
@@ -54,7 +54,7 @@
     '                   GetChars, getColumnList, GetData, GetDataTypeName, GetDateTime
     '                   GetDecimal, GetDouble, GetEnumerator2, GetFieldType, GetFloat
     '                   GetGuid, GetInt16, GetInt32, GetInt64, GetName
-    '                   GetOrdinal, GetOrdinalSchema, GetSchemaTable, GetString, GetValue
+    '                   (+2 Overloads) GetOrdinal, GetOrdinalSchema, GetSchemaTable, GetString, GetValue
     '                   GetValueLambda, GetValues, IDataRecord_GetValue, IsDBNull, (+2 Overloads) Load
     '                   LoadDataSet, MeasureTypeSchema, Parse, Read, reviewColumnHeader
     '                   ToString

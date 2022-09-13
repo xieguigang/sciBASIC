@@ -1,4 +1,58 @@
-﻿' 
+﻿#Region "Microsoft.VisualBasic::70f54a64c7324df5f47df46cdfb65b43, sciBASIC#\Data\BinaryData\HDF5\device\datasetReader\EnumDatasetReader.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 131
+    '    Code Lines: 93
+    ' Comment Lines: 25
+    '   Blank Lines: 13
+    '     File Size: 6.16 KB
+
+
+    '     Class EnumDatasetReader
+    ' 
+    '         Function: readEnumDataset, stripLeadingIndex
+    ' 
+    '         Sub: fillDataUnsigned, fillDataUnsignedInt32, fillDataUnsignedInt64, fillDataUnsignedShort
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+' 
 '  This file is part of jHDF. A pure Java library for accessing HDF5 files.
 ' 
 '  http://jhdf.io
@@ -129,3 +183,4 @@ Namespace device
     End Class
 
 End Namespace
+

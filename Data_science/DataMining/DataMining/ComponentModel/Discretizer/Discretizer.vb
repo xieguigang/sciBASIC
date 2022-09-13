@@ -72,6 +72,18 @@ Namespace ComponentModel.Discretion
 
         Dim bins As DoubleRange()
 
+        Public ReadOnly Property binSize As Integer
+            Get
+                Return bins.Length
+            End Get
+        End Property
+
+        Public ReadOnly Property binList As IEnumerable(Of DoubleRange)
+            Get
+                Return bins.Select(Function(a) New DoubleRange(a))
+            End Get
+        End Property
+
         Sub New(sample As IEnumerable(Of Double), levels As Integer)
             With sample.ToArray
                 min = .Min
@@ -96,6 +108,14 @@ Namespace ComponentModel.Discretion
             Loop
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns>
+        ''' full value range of this level function is [0, <see cref="binSize"/>],
+        ''' source sample value range is [0, <see cref="binSize"/> - 1].
+        ''' </returns>
         Public Function GetLevel(x As Double) As Integer
             If bins Is Nothing Then
                 bins = createBins.ToArray

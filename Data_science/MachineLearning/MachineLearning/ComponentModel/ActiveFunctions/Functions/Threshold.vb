@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a165ee70d21e8b609fcc2bfbf43a070d, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\Threshold.vb"
+﻿#Region "Microsoft.VisualBasic::91b96c3ba6701e84b45f7ff89ea2c8eb, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\Threshold.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 86
-    '    Code Lines: 31
+    '   Total Lines: 85
+    '    Code Lines: 30
     ' Comment Lines: 46
     '   Blank Lines: 9
-    '     File Size: 2.80 KB
+    '     File Size: 2.73 KB
 
 
     '     Class Threshold
@@ -62,7 +62,6 @@
 '
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 
 Namespace ComponentModel.Activations
 

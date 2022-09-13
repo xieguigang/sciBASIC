@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff249dbdad6da08fb3f914b60dc16124, sciBASIC#\Data_science\Graph\test\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::264918116ee51566376431e2d8a17606, sciBASIC#\Data_science\Graph\test\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.79 KB
+    '     File Size: 2.78 KB
 
 
     '     Module Resources
@@ -113,4 +113,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

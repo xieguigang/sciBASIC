@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36db57a04e5860d132afaea725629e65, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\ActiveFunctionXml.vb"
+﻿#Region "Microsoft.VisualBasic::11c3e4ec30f411dbe46c6dda9f41152c, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\ActiveFunctionXml.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 144
-    '    Code Lines: 104
+    '   Total Lines: 141
+    '    Code Lines: 101
     ' Comment Lines: 28
     '   Blank Lines: 12
-    '     File Size: 5.92 KB
+    '     File Size: 5.73 KB
 
 
     '     Class ActiveFunction
@@ -57,9 +57,6 @@ Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language.Default
-Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
-Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Namespace ComponentModel.Activations
