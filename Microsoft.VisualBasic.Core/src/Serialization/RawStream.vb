@@ -282,7 +282,7 @@ Namespace Serialization
 
                 Return DirectCast(vector, String()) _
                     .Select(Function(str)
-                                Dim bytes As Byte() = codepage.GetBytes(str)
+                                Dim bytes As Byte() = If(str Is Nothing, {}, codepage.GetBytes(str))
                                 Dim size As Byte() = BitConverter.GetBytes(bytes.Length)
 
                                 Return size.JoinIterates(bytes).ToArray
