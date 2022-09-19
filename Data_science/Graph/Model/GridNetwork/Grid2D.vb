@@ -218,6 +218,13 @@ Public Class Grid(Of T)
         Return Query(x, y, New Size(gridSize, gridSize))
     End Function
 
+    ''' <summary>
+    ''' [<paramref name="x"/>, <paramref name="y"/>] is the center point of the target rectangle region.
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="y"></param>
+    ''' <param name="gridSize"></param>
+    ''' <returns></returns>
     Public Iterator Function Query(x As Integer, y As Integer, gridSize As Size) As IEnumerable(Of T)
         Dim q As T
         Dim hit As Boolean = False

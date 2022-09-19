@@ -68,7 +68,11 @@ Public Class ClusterTree : Inherits Tree(Of String)
     ''' <param name="tree"></param>
     ''' <param name="target"></param>
     ''' <param name="alignment"></param>
-    ''' <param name="threshold"></param>
+    ''' <param name="threshold">
+    ''' the cutoff value for set current element 
+    ''' <paramref name="target"/> as the member of
+    ''' current node <paramref name="tree"/>.
+    ''' </param>
     Public Overloads Shared Sub Add(tree As ClusterTree,
                                     target As String,
                                     alignment As ComparisonProvider,
