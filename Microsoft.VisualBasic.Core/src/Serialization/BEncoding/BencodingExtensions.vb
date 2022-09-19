@@ -74,6 +74,11 @@ Namespace Serialization.Bencoding
             Return Decode(s)
         End Function
 
+        <Extension>
+        Public Function ToList(b As BElement) As BElement()
+            Return DirectCast(b, BList).ToArray
+        End Function
+
         ''' <summary>
         ''' Generates the bencoded equivalent of the element.
         ''' </summary>

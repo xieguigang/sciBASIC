@@ -34,6 +34,8 @@ Public Module LabeledData
         Dim featureNames As String() = bin _
             .ReadString(BinaryStringFormat.ZeroTerminated) _
             .BDecode _
+            .First _
+            .ToList _
             .Select(Function(b) b.ToString) _
             .ToArray
 
