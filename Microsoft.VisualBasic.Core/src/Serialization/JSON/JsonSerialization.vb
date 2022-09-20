@@ -205,10 +205,11 @@ Namespace Serialization.JSON
         ''' </remarks>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function GetJson(Of T)(obj As T,
-                                                  Optional indent As Boolean = False,
-                                                  Optional simpleDict As Boolean = True,
-                                                  Optional knownTypes As IEnumerable(Of Type) = Nothing) As String
+        <Extension>
+        Public Function GetJson(Of T)(obj As T,
+                                      Optional indent As Boolean = False,
+                                      Optional simpleDict As Boolean = True,
+                                      Optional knownTypes As IEnumerable(Of Type) = Nothing) As String
             Dim schema As Type
 
             If GetType(T) Is GetType(Array) AndAlso Not obj Is Nothing Then
