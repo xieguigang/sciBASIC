@@ -386,15 +386,7 @@ Namespace LinearAlgebra
             ElseIf v2.Length = 1 Then
                 Return v1 + v2(Scan0)
             Else
-                ' 获取变量维数
-                Dim N0 As Integer = v1.[Dim]
-                Dim v3 As New Vector(N0)
-
-                For j As Integer = 0 To N0 - 1
-                    v3(j) = v1(j) + v2(j)
-                Next
-
-                Return v3
+                Return New Vector(SIMD.Add(v1.buffer, v2.buffer))
             End If
         End Operator
 

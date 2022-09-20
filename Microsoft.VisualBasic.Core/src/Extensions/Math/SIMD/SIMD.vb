@@ -5,14 +5,16 @@ Imports System.Runtime.Intrinsics
 Imports System.Runtime.Intrinsics.X86
 #End If
 
-Imports Microsoft.VisualBasic.Math.SIMDIntrinsics
-
 Namespace Math
 
     Public Enum SIMDConfiguration
         disable
         enable
         legacy
+
+        ''' <summary>
+        ''' disable or legacy based on the vector size
+        ''' </summary>
         auto
     End Enum
 
@@ -31,7 +33,7 @@ Namespace Math
         ''' This option only works for .NET core runtime
         ''' </summary>
         ''' <returns></returns>
-        Public Shared Property config As SIMDConfiguration = SIMDConfiguration.disable
+        Public Shared Property config As SIMDConfiguration = SIMDConfiguration.auto
 
         Friend Shared ReadOnly countDouble As Integer = Vector(Of Double).Count
         Friend Shared ReadOnly countFloat As Integer = Vector(Of Single).Count
