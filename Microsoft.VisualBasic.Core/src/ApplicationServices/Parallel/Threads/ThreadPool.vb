@@ -213,7 +213,11 @@ Namespace Parallel.Threads
                         Dim task As TaskBinding = pendings.Dequeue
                         Dim h As Func(Of Long) = AddressOf New __taskInvoke With {.task = task.Bind}.Run
                         Dim callback As Action(Of Long) = task.Target
-                        Call GetAvaliableThread.Enqueue(h, callback)  ' 当线程池里面的线程数量非常多的时候，这个事件会变长，所以讲分配的代码单独放在线程里面执行，以提神web服务器的响应效率
+
+                        ' 当线程池里面的线程数量非常多的时候，这个事件会变长，
+                        ' 所以讲分配的代码单独放在线程里面执行，以提神web
+                        ' 服务器的响应效率
+                        Call GetAvaliableThread.Enqueue(h, callback)
                     Else
                         Call Thread.Sleep(1)
                     End If

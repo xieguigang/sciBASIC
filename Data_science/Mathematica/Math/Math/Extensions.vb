@@ -188,9 +188,10 @@ Imports stdNum = System.Math
     ''' <param name="pvalue"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function FDR(pvalue As IEnumerable(Of Double)) As Vector
+    Public Function FDR(pvalue As IEnumerable(Of Double), Optional n As Integer? = Nothing) As Vector
         Dim x As New Vector(pvalue)
-        Dim fdr_result = (x.Dim * x) / x.FractionalRanking
+        Dim fdr_result = (If(n, x.Dim) * x) / x.FractionalRanking
+
         Return fdr_result
     End Function
 
