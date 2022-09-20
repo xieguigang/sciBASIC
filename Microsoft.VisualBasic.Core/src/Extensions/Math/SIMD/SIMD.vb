@@ -5,7 +5,16 @@ Imports System.Runtime.Intrinsics
 Imports System.Runtime.Intrinsics.X86
 #End If
 
+Imports Microsoft.VisualBasic.Math.SIMDIntrinsics
+
 Namespace Math
+
+    Public Enum SIMDConfiguration
+        disable
+        enable
+        legacy
+        auto
+    End Enum
 
     ''' <summary>
     ''' SIMD(Single Instruction Multiple Data)即单指令流多数据流，
@@ -22,7 +31,7 @@ Namespace Math
         ''' This option only works for .NET core runtime
         ''' </summary>
         ''' <returns></returns>
-        Public Shared Property enable As Boolean = True
+        Public Shared Property config As SIMDConfiguration = SIMDConfiguration.disable
 
         Friend Shared ReadOnly countDouble As Integer = Vector(Of Double).Count
         Friend Shared ReadOnly countFloat As Integer = Vector(Of Single).Count
@@ -34,43 +43,53 @@ Namespace Math
         End Sub
 
         Public Shared Function Add(v1 As Double(), v2 As Double()) As Double()
-            If enable Then
+            Select Case SIMD.config
+                Case SIMDConfiguration.disable
+none:               Dim out As Double() = New Double(v1.Length - 1) {}
+
+                    For i As Integer = 0 To v1.Length - 1
+                        out(i) = v1(i) + v2(i)
+                    Next
+
+                    Return out
+                Case SIMDConfiguration.enable
 #If NET48 Then
-                Dim x1 As Vector(Of Double)
-                Dim x2 As Vector(Of Double)
-                Dim out As Double() = New Double(v1.Length - 1) {}
-                Dim remaining As Integer = v1.Length Mod SIMD.countDouble
-
-                For i As Integer = 0 To v1.Length - remaining - 1
-                    x1 = New Vector(Of Double)(v1, i)
-                    x2 = New Vector(Of Double)(v2, i)
-
-                    Call (x1 + x2).CopyTo(out, i)
-                Next
-
-                For i As Integer = v1.Length - remaining To v1.Length - 1
-                    out(i) = v1(i) + v2(i)
-                Next
-
-                Return out
+                    GoTo legacy
 #Else
-                If Avx.IsSupported Then
-                    Return AvxIntrinsics.Add(v1, v2, AddressOf Avx.Add)
-                ElseIf Sse.IsSupported Then
-                    Throw New NotImplementedException
-                Else
-                    GoTo FALLBACK
-                End If
+                    If Avx2.IsSupported Then
+                        Return SIMDIntrinsics.Vector2(v1, v2, AddressOf Avx2.Add)
+                    ElseIf Avx.IsSupported Then
+                        Return SIMDIntrinsics.Vector2(v1, v2, AddressOf Avx.Add)
+                    Else
+                        GoTo legacy
+                    End If
 #End If
-            Else
-FALLBACK:       Dim out As Double() = New Double(v1.Length - 1) {}
+                Case SIMDConfiguration.legacy
+legacy:             Dim x1 As Vector(Of Double)
+                    Dim x2 As Vector(Of Double)
+                    Dim vec As Double() = New Double(v1.Length - 1) {}
+                    Dim remaining As Integer = v1.Length Mod SIMD.countDouble
+                    Dim ends As Integer = v1.Length - remaining - 1
 
-                For i As Integer = 0 To v1.Length - 1
-                    out(i) = v1(i) + v2(i)
-                Next
+                    For i As Integer = 0 To ends Step SIMD.countDouble
+                        x1 = New Vector(Of Double)(v1, i)
+                        x2 = New Vector(Of Double)(v2, i)
 
-                Return out
-            End If
+                        Call (x1 + x2).CopyTo(vec, i)
+                    Next
+
+                    For i As Integer = v1.Length - remaining To v1.Length - 1
+                        vec(i) = v1(i) + v2(i)
+                    Next
+
+                    Return vec
+                Case Else
+                    If v1.Length < 10000 Then
+                        GoTo none
+                    Else
+                        GoTo legacy
+                    End If
+            End Select
         End Function
     End Class
 End Namespace
