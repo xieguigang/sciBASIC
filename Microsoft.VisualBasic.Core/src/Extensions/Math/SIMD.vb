@@ -35,10 +35,10 @@ Namespace Math
 
         Public Shared Function Add(v1 As Double(), v2 As Double()) As Double()
             Dim out As Double() = New Double(v1.Length - 1) {}
+            Dim remaining As Integer = v1.Length Mod countDouble
 
             If enable Then
 #If NET48 Then
-                Dim remaining As Integer = v1.Length Mod countDouble
                 Dim x1 As Vector(Of Double)
                 Dim x2 As Vector(Of Double)
 
