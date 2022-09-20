@@ -24,23 +24,22 @@ Namespace Math
         ''' <returns></returns>
         Public Shared Property enable As Boolean = True
 
-        Shared ReadOnly countDouble As Integer = Vector(Of Double).Count
-        Shared ReadOnly countFloat As Integer = Vector(Of Single).Count
-        Shared ReadOnly countInteger As Integer = Vector(Of Integer).Count
-        Shared ReadOnly countLong As Integer = Vector(Of Long).Count
-        Shared ReadOnly countShort As Integer = Vector(Of Short).Count
+        Friend Shared ReadOnly countDouble As Integer = Vector(Of Double).Count
+        Friend Shared ReadOnly countFloat As Integer = Vector(Of Single).Count
+        Friend Shared ReadOnly countInteger As Integer = Vector(Of Integer).Count
+        Friend Shared ReadOnly countLong As Integer = Vector(Of Long).Count
+        Friend Shared ReadOnly countShort As Integer = Vector(Of Short).Count
 
         Private Sub New()
         End Sub
 
         Public Shared Function Add(v1 As Double(), v2 As Double()) As Double()
-            Dim out As Double() = New Double(v1.Length - 1) {}
-            Dim remaining As Integer = v1.Length Mod countDouble
-
             If enable Then
 #If NET48 Then
                 Dim x1 As Vector(Of Double)
                 Dim x2 As Vector(Of Double)
+                Dim out As Double() = New Double(v1.Length - 1) {}
+                Dim remaining As Integer = v1.Length Mod SIMD.countDouble
 
                 For i As Integer = 0 To v1.Length - remaining - 1
                     x1 = New Vector(Of Double)(v1, i)
@@ -48,35 +47,30 @@ Namespace Math
 
                     Call (x1 + x2).CopyTo(out, i)
                 Next
-#Else
-                Dim i1, i2, i3 As Integer
-                Dim a, b, c As Vector256(Of Double)
 
-                For i As Integer = 0 To v1.Length - 1 Step 4
-                    i1 = i + 1
-                    i2 = i + 2
-                    i3 = i + 3
-
-                    a = Vector256.Create(v1(i), v1(i1), v1(i2), v1(i3))
-                    b = Vector256.Create(v2(i), v2(i1), v2(i2), v2(i3))
-                    c = Avx.Add(a, b)
-
-                    out(i) = c.GetElement(0)
-                    out(i1) = c.GetElement(1)
-                    out(i2) = c.GetElement(2)
-                    out(i3) = c.GetElement(3)
-                Next
-#End If
                 For i As Integer = v1.Length - remaining To v1.Length - 1
                     out(i) = v1(i) + v2(i)
                 Next
+
+                Return out
+#Else
+                If Avx.IsSupported Then
+                    Return AvxIntrinsics.Add(v1, v2, AddressOf Avx.Add)
+                ElseIf Sse.IsSupported Then
+                    Throw New NotImplementedException
+                Else
+                    GoTo FALLBACK
+                End If
+#End If
             Else
+FALLBACK:       Dim out As Double() = New Double(v1.Length - 1) {}
+
                 For i As Integer = 0 To v1.Length - 1
                     out(i) = v1(i) + v2(i)
                 Next
-            End If
 
-            Return out
+                Return out
+            End If
         End Function
     End Class
 End Namespace
