@@ -130,23 +130,13 @@ Namespace Math.Statistics.Linq
 
             Return Nothing
         End Function
-        '
-        ' Summary:
-        '     Computes the Pearson of a sequence of System.Double values.
-        '
-        ' Parameters:
-        '   source:
-        '     A sequence of System.Double values to calculate the Pearson of.
-        '
-        ' Returns:
-        '     The Pearson of the sequence of values.
-        '
-        ' Exceptions:
-        '   System.ArgumentNullException:
-        '     source is null.
-        '
-        '   System.InvalidOperationException:
-        '     source contains no elements.
+
+        ''' <summary>
+        ''' Computes the Pearson of a sequence of System.Double values.
+        ''' </summary>
+        ''' <param name="source">A sequence of System.Double values to calculate the Pearson of.</param>
+        ''' <param name="other"></param>
+        ''' <returns>The Pearson of the sequence of values.</returns>
         <Extension>
         Public Function Pearson(source As IEnumerable(Of Double), other As IEnumerable(Of Double)) As Double
             If source.Count() <> other.Count() Then
@@ -155,21 +145,14 @@ Namespace Math.Statistics.Linq
 
             Return source.Covariance(other) / (source.StandardDeviationP() * other.StandardDeviationP())
         End Function
-        '
-        ' Summary:
-        '     Computes the Pearson of a sequence of nullable System.Single values.
-        '
-        ' Parameters:
-        '   source:
-        '     A sequence of nullable System.Single values to calculate the Pearson of.
-        '
-        ' Returns:
-        '     The Pearson of the sequence of values, or null if the source sequence is
-        '     empty or contains only values that are null.
-        '
-        ' Exceptions:
-        '   System.ArgumentNullException:
-        '     source is null.
+
+        ''' <summary>
+        ''' Computes the Pearson of a sequence of nullable System.Single values.
+        ''' </summary>
+        ''' <param name="source">A sequence of nullable System.Single values to calculate the Pearson of.</param>
+        ''' <param name="other"></param>
+        ''' <returns>The Pearson of the sequence of values, or null if the source sequence is
+        ''' empty or contains only values that are null.</returns>
         <Extension>
         Public Function Pearson(source As IEnumerable(Of Single?), other As IEnumerable(Of Single?)) As Single
             Dim values As IEnumerable(Of Single) = source.Coalesce()
