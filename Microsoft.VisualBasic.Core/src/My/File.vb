@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::5bbf60ba82e21abb67dc071ccadd5061, sciBASIC#\Microsoft.VisualBasic.Core\src\My\File.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 122
-    '    Code Lines: 78
-    ' Comment Lines: 25
-    '   Blank Lines: 19
-    '     File Size: 4.16 KB
+' Summaries:
 
 
-    '     Module File
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: FileOpened, GetHandle, OpenHandle, OpenTemp, Wait
-    ' 
-    '         Sub: Close
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 122
+'    Code Lines: 78
+' Comment Lines: 25
+'   Blank Lines: 19
+'     File Size: 4.16 KB
+
+
+'     Module File
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: FileOpened, GetHandle, OpenHandle, OpenTemp, Wait
+' 
+'         Sub: Close
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -107,27 +107,32 @@ Namespace My
         ''' <param name="file"></param>
         ''' <param name="encoding"></param>
         ''' <returns></returns>
-        <Extension> Public Function OpenHandle(file$, Optional encoding As Encodings = Encodings.UTF8) As Integer
+        <Extension>
+        Public Function OpenHandle(file$, Optional encoding As Encodings = Encodings.UTF8) As Integer
+            Dim n As Integer
+
             If String.IsNullOrEmpty(file) Then
                 Throw New NullReferenceException("File handle null pointer!")
+            Else
+                SyncLock My.File.handle
+                    My.File.handle.Value += 1
+                    n = My.File.handle
+                End SyncLock
             End If
 
+            Dim handle As New FileHandle With {
+                .encoding = encoding.CodePage,
+                .FileName = file,
+                .handle = n
+            }
+
             SyncLock opendHandles
-                SyncLock handle
-                    My.File.handle.Value += 1
-
-                    Dim handle As New FileHandle With {
-                        .encoding = encoding.CodePage,
-                        .FileName = file,
-                        .handle = My.File.handle.Value
-                    }
-
-                    Call opendHandles.Add(My.File.handle.Value, handle)
-                    Call FileIO.FileSystem.CreateDirectory(file.ParentPath)
-
-                    Return My.File.handle.Value
-                End SyncLock
+                Call opendHandles.Add(n, handle)
             End SyncLock
+
+            Call FileIO.FileSystem.CreateDirectory(file.ParentPath)
+
+            Return n
         End Function
 
         Public Function OpenTemp() As Integer
