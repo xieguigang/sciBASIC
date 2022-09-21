@@ -282,8 +282,10 @@ Namespace Parallel.Threads
         End Function
 
         Public Sub WaitAll()
+            Call Thread.Sleep(1000)
+
             Do While threads.Any(Function(t) t.RunningTask)
-                Call Thread.Sleep(1)
+                Call Thread.Sleep(10)
             Loop
         End Sub
 
