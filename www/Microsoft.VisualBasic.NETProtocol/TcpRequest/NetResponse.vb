@@ -737,9 +737,11 @@ Namespace HTTP
         ''' </summary>
         ''' <param name="response"></param>
         ''' <returns></returns>
-        <Extension> Public Function IsHTTP_RFC(response As RequestStream) As Boolean
+        <Extension>
+        Public Function IsHTTP_RFC(response As RequestStream) As Boolean
             Dim data As String = response.GetUTF8String
-            Dim isHTTP As Boolean = String.Equals(Regex.Match(data, "HTTP[/]\d{3}").Value, data)
+            Dim isHTTP As Boolean = String.Equals(Regex.Match(data, "HTTP[/]\d{3}").Value, data) OrElse data.StartsWith("HTTP/")
+
             Return isHTTP AndAlso response.Protocol <> HTTP_RFC.RFC_OK
         End Function
     End Module
