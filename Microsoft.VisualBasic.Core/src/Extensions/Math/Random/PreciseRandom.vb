@@ -104,7 +104,8 @@ Namespace Math
         End Function
 
         Private Function rand() As Double
-            SyncLock __rnd  ' 线程不安全，所以需要加锁，不然无法得到随机数
+            SyncLock __rnd
+                ' 线程不安全，所以需要加锁，不然无法得到随机数
                 ' 因为多线程的时候不加锁在不同的线程之间同时调用会得到相同的数
                 Return __rnd.NextDouble
             End SyncLock

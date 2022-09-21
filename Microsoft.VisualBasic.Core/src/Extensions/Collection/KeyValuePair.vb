@@ -158,9 +158,9 @@ Namespace ComponentModel.Collection
                 If Not table.ContainsKey(key) OrElse table(key:=key) Is Nothing Then
                     table(key:=key) = lazyValue(key)
                 End If
-
-                Return table(key:=key)
             End SyncLock
+
+            Return table(key:=key)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
