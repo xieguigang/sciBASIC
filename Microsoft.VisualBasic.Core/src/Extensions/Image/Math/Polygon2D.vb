@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::2606f70a84ab8b368f7f9420b71b7e42, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Polygon2D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 270
-    '    Code Lines: 173
-    ' Comment Lines: 53
-    '   Blank Lines: 44
-    '     File Size: 9.81 KB
+' Summaries:
 
 
-    '     Class Polygon2D
-    ' 
-    '         Properties: length, xpoints, ypoints
-    ' 
-    '         Constructor: (+5 Overloads) Sub New
-    ' 
-    '         Function: boundingInside, checkInside, GenericEnumerator, GetArea, GetEnumerator
-    '                   GetRandomPoint, GetShoelaceArea, (+3 Overloads) inside
-    ' 
-    '         Sub: calculateBounds
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 270
+'    Code Lines: 173
+' Comment Lines: 53
+'   Blank Lines: 44
+'     File Size: 9.81 KB
+
+
+'     Class Polygon2D
+' 
+'         Properties: length, xpoints, ypoints
+' 
+'         Constructor: (+5 Overloads) Sub New
+' 
+'         Function: boundingInside, checkInside, GenericEnumerator, GetArea, GetEnumerator
+'                   GetRandomPoint, GetShoelaceArea, (+3 Overloads) inside
+' 
+'         Sub: calculateBounds
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -83,6 +83,12 @@ Namespace Imaging.Math2D
         ''' [right, bottom]
         ''' </summary>
         Protected Friend bounds2 As Vector2D = Nothing
+
+        Public ReadOnly Property height As Double
+            Get
+                Return ypoints.Max - ypoints.Min
+            End Get
+        End Property
 
         Default Public Property Item(index As Integer) As PointF
             Get
@@ -119,6 +125,10 @@ Namespace Imaging.Math2D
                 x:=points.Select(Function(p) CDbl(p.X)).ToArray,
                 y:=points.Select(Function(p) CDbl(p.Y)).ToArray
             )
+        End Sub
+
+        Public Sub New(points As IEnumerable(Of Point))
+            Call Me.New(points.Select(Function(p) New PointF(p.X, p.Y)).ToArray)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
