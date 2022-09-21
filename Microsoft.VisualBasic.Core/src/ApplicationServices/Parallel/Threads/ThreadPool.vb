@@ -192,20 +192,39 @@ Namespace Parallel.Threads
             End SyncLock
         End Sub
 
-        Public Sub OperationTimeOut(task As Action, timeout As Integer)
+        ''' <summary>
+        ''' Run a speicifc task with assert of operation 
+        ''' is time out or not.
+        ''' </summary>
+        ''' <param name="task">
+        ''' A specific task to run
+        ''' </param>
+        ''' <param name="timeout">
+        ''' wait timeout in unit milliseconds
+        ''' </param>
+        ''' <returns>
+        ''' + true means timeout, the task has not been finished;
+        ''' + false means the task has been execute success without timeout
+        ''' </returns>
+        Public Function OperationTimeOut(task As Action, timeout As Integer) As Boolean
             Dim done As Boolean = False
 
-            Call RunTask(task, Sub() done = True)
+            Call RunTask(task, callback:=Sub() done = True)
 
             For i As Integer = 0 To timeout
                 If done Then
-                    Exit For
+                    Return False
                 Else
-                    Thread.Sleep(1)
+                    Call Thread.Sleep(1)
                 End If
             Next
-        End Sub
 
+            Return True
+        End Function
+
+        ''' <summary>
+        ''' allocate the task into the task thread pool
+        ''' </summary>
         Private Sub allocate()
             Do While Not Me.disposedValue
                 SyncLock pendings
