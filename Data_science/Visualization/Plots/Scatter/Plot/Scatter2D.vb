@@ -97,12 +97,14 @@ Namespace Plots
         Friend ylim As Double = -1
         Friend XaxisAbsoluteScalling As Boolean = False
         Friend YaxisAbsoluteScalling As Boolean = False
+        Friend verbose As Boolean = False
 
         Public Sub New(data As IEnumerable(Of SerialData), theme As Theme,
                        Optional scatterReorder As Boolean = False,
                        Optional fillPie As Boolean = True,
                        Optional ablines As Line() = Nothing,
-                       Optional hullConvexList As IEnumerable(Of String) = Nothing)
+                       Optional hullConvexList As IEnumerable(Of String) = Nothing,
+                       Optional verbose As Boolean = False)
 
             Call MyBase.New(theme)
 
@@ -111,15 +113,29 @@ Namespace Plots
             Me.scatterReorder = scatterReorder
             Me.fillPie = fillPie
             Me.ablines = ablines
+            Me.verbose = verbose
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="rect"></param>
+        ''' <param name="verbose">
+        ''' show debug message if verbose
+        ''' </param>
+        ''' <returns></returns>
         Public Function GetDataScaler(ByRef g As IGraphics, rect As GraphicsRegion) As DataScaler
             Dim XTicks#(), YTicks#()
 
             XTicks = array.Select(Function(s) s.pts).IteratesALL.Select(Function(p) CDbl(p.pt.X)).ToArray
             YTicks = array.Select(Function(s) s.pts).IteratesALL.Select(Function(p) CDbl(p.pt.Y)).ToArray
 
-            Call Console.WriteLine($"xlim: {xlim}; ylim: {ylim}")
+            If verbose Then
+                Call Console.WriteLine("set [x,y] axis range manually:")
+                Call Console.WriteLine($"xlim: {xlim};")
+                Call Console.WriteLine($"ylim: {ylim};")
+            End If
 
             If (Not xlim.IsNaNImaginary) AndAlso xlim > 0 Then
                 XTicks = XTicks.JoinIterates({xlim}).ToArray

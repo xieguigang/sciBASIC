@@ -60,6 +60,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 ''' <summary>
 ''' Initializes a new instance of the <see cref="List"/>`1 class that
@@ -140,18 +141,12 @@ Public Module ListExtensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="collection"></param>
     ''' <param name="[do]"></param>
-    <Extension> Public Sub DoEach(Of T)(collection As IEnumerable(Of T), [do] As Action(Of T))
+    <Extension>
+    Public Sub DoEach(Of T)(collection As IEnumerable(Of T), [do] As Action(Of T))
         For Each x As T In collection.SafeQuery
             Call [do](x)
         Next
     End Sub
-
-    Private Function rand(min%, max%) As Integer
-        Static rnd As New Random
-        SyncLock rnd
-            Return rnd.Next(min, max)
-        End SyncLock
-    End Function
 
     ''' <summary>
     ''' 返回数组集合之中的一个随机位置的元素
@@ -159,8 +154,9 @@ Public Module ListExtensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="v"></param>
     ''' <returns></returns>
-    <Extension> Public Function Random(Of T)(v As T()) As T
-        Dim l% = rand(0, v.Length)
+    <Extension>
+    Public Function Random(Of T)(v As T()) As T
+        Dim l% = randf.NextInteger(v.Length)
         Return v(l)
     End Function
 

@@ -77,6 +77,10 @@ Namespace Imaging
     Public MustInherit Class IGraphics
         Implements IDisposable
 
+        ''' <summary>
+        ''' the current canvas size in pixels: [width, height]
+        ''' </summary>
+        ''' <returns></returns>
         Public MustOverride ReadOnly Property Size As Size
 
         ''' <summary>

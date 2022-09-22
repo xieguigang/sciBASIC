@@ -177,7 +177,8 @@ Namespace Parallel.Threads
         End Function
 
         ''' <summary>
-        ''' 使用线程池里面的空闲线程来执行任务
+        ''' Push a new task into the parallel task queue.
+        ''' (使用线程池里面的空闲线程来执行任务)
         ''' </summary>
         ''' <param name="task"></param>
         ''' <param name="callback">回调函数里面的参数是任务的执行的时间长度</param>
@@ -282,8 +283,10 @@ Namespace Parallel.Threads
         End Function
 
         Public Sub WaitAll()
+            Call Thread.Sleep(1000)
+
             Do While threads.Any(Function(t) t.RunningTask)
-                Call Thread.Sleep(1)
+                Call Thread.Sleep(10)
             Loop
         End Sub
 

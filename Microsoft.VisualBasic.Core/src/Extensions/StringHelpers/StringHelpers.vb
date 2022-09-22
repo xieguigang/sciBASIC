@@ -1,66 +1,66 @@
 ﻿#Region "Microsoft.VisualBasic::c0977a0fd80c7bcf2e5cb8197923326f, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringHelpers.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1331
-    '    Code Lines: 729
-    ' Comment Lines: 449
-    '   Blank Lines: 153
-    '     File Size: 49.58 KB
+' Summaries:
 
 
-    ' Module StringHelpers
-    ' 
-    '     Properties: EmptyString, NonStrictCompares, StrictCompares
-    ' 
-    '     Function: __json, AllEquals, AsciiBytes, (+4 Overloads) ByteString, CharAtOrDefault
-    '               CharString, (+3 Overloads) Count, CreateBuilder, DistinctIgnoreCase, EqualsAny
-    '               First, FormatString, FormatZero, GetBetween, GetEMails
-    '               GetStackValue, GetString, (+2 Overloads) GetTagValue, GetURLs, IgnoreCase
-    '               InStrAny, (+2 Overloads) Intersection, IsEmptyStringVector, JoinBy, LineTokens
-    '               Located, Lookup, Lookups, (+2 Overloads) Match, Matches
-    '               MatchPattern, (+2 Overloads) MaxLengthString, MinLengthString, NotEmpty, PadEnd
-    '               Parts, RepeatString, ReplaceChars, (+2 Overloads) Reverse, RNull
-    '               SaveTo, (+2 Overloads) Split, SplitBy, StartsWith, StringEmpty
-    '               StringHashCode, StringReplace, (+2 Overloads) StringSplit, StripBlank, Strips
-    '               SubstringSpecial, TextEquals, TextLast, TokenCount, TokenCountIgnoreCase
-    '               TrimNewLine, TrimNull, WildcardsLocated
-    ' 
-    '     Sub: Parts, RemoveLast
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1331
+'    Code Lines: 729
+' Comment Lines: 449
+'   Blank Lines: 153
+'     File Size: 49.58 KB
+
+
+' Module StringHelpers
+' 
+'     Properties: EmptyString, NonStrictCompares, StrictCompares
+' 
+'     Function: __json, AllEquals, AsciiBytes, (+4 Overloads) ByteString, CharAtOrDefault
+'               CharString, (+3 Overloads) Count, CreateBuilder, DistinctIgnoreCase, EqualsAny
+'               First, FormatString, FormatZero, GetBetween, GetEMails
+'               GetStackValue, GetString, (+2 Overloads) GetTagValue, GetURLs, IgnoreCase
+'               InStrAny, (+2 Overloads) Intersection, IsEmptyStringVector, JoinBy, LineTokens
+'               Located, Lookup, Lookups, (+2 Overloads) Match, Matches
+'               MatchPattern, (+2 Overloads) MaxLengthString, MinLengthString, NotEmpty, PadEnd
+'               Parts, RepeatString, ReplaceChars, (+2 Overloads) Reverse, RNull
+'               SaveTo, (+2 Overloads) Split, SplitBy, StartsWith, StringEmpty
+'               StringHashCode, StringReplace, (+2 Overloads) StringSplit, StripBlank, Strips
+'               SubstringSpecial, TextEquals, TextLast, TokenCount, TokenCountIgnoreCase
+'               TrimNewLine, TrimNull, WildcardsLocated
+' 
+'     Sub: Parts, RemoveLast
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -935,10 +935,11 @@ Public Module StringHelpers
                          Select key = ustr.Group.First.data, count
                          Order By count Descending
 
-            Dim result = LQuery.ToDictionary(
-                Function(x) x.key,
-                Function(x) x.count)
-
+            Dim result As Dictionary(Of String, Integer) = LQuery _
+                .ToDictionary(Function(x) x.key,
+                              Function(x)
+                                  Return x.count
+                              End Function)
             Return result
         End With
     End Function
@@ -956,28 +957,29 @@ Public Module StringHelpers
                                 Optional trimTrailingEmptyStrings As Boolean = False,
                                 Optional opt As RegexOptions = RegexICSng) As String()
 
+        Dim internalCache As Dictionary(Of String, Regex)
+
         If source.StringEmpty Then
             Return {}
         Else
-            Static patternCache As New Dictionary(Of RegexOptions, Dictionary(Of String, Regex))
+            Static patternCache As New Dictionary(Of RegexOptions, Dictionary(Of String, r))
 
             SyncLock patternCache
-                Dim internalCache As Dictionary(Of String, Regex)
-                Dim r As Regex
-
                 If Not patternCache.ContainsKey(opt) Then
                     Call patternCache.Add(opt, New Dictionary(Of String, r))
                 End If
 
                 internalCache = patternCache(opt)
-
-                If Not internalCache.ContainsKey(pattern) Then
-                    Call internalCache.Add(pattern, New Regex(pattern, opt))
-                End If
-
-                Return source.StringSplit(internalCache(pattern), trimTrailingEmptyStrings)
             End SyncLock
         End If
+
+        SyncLock internalCache
+            If Not internalCache.ContainsKey(pattern) Then
+                Call internalCache.Add(pattern, New Regex(pattern, opt))
+            End If
+        End SyncLock
+
+        Return source.StringSplit(internalCache(pattern), trimTrailingEmptyStrings)
     End Function
 
     ''' <summary>

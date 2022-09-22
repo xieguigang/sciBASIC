@@ -356,7 +356,8 @@ Namespace LDA
         ''' <param name="m"> document </param>
         ''' <param name="n"> word </param> 
         Private Function sampleFullConditional(m As Integer, n As Integer) As Integer
-            ' remove z_i from the count variables  先将这个词从计数器中抹掉
+            ' remove z_i from the count variables
+            ' 先将这个词从计数器中抹掉
             Dim topic As Integer = z(m)(n)
 
             nw(documents(m)(n))(topic) -= 1
@@ -370,7 +371,8 @@ Namespace LDA
             For K As Integer = 0 To Me.K - 1
                 p(K) = (nw(documents(m)(n))(K) + beta) / (nwsum(K) + V * beta) * (nd(m)(K) + alpha) / (ndsum(m) + Me.K * alpha)
             Next
-            ' cumulate multinomial parameters  累加多项式分布的参数
+            ' cumulate multinomial parameters
+            ' 累加多项式分布的参数
             For K As Integer = 1 To p.Length - 1
                 p(K) += p(K - 1)
             Next
