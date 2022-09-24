@@ -499,6 +499,23 @@ Public Module App
         App.StdOut = Console.OpenStandardOutput.OpenTextWriter(New UTF8Encoding(encoderShouldEmitUTF8Identifier:=False))
     End Sub
 
+    ''' <summary>
+    ''' set log file that write text to <paramref name="file"/>
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <remarks>
+    ''' this method is usefull for debug current process run as a pipeline sub-process
+    ''' </remarks>
+    Public Sub RedirectLogging(file As String)
+        Dim buffer = file.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+        Dim writer As New StreamWriter(buffer, Encoding.UTF8) With {
+            .AutoFlush = True,
+            .NewLine = vbLf
+        }
+
+        Call Console.SetOut(writer)
+    End Sub
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetAppLocalData(app$, assemblyName$, <CallerMemberName> Optional track$ = Nothing) As String
 #If netcore5 = 0 Then
