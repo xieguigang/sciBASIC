@@ -1341,7 +1341,9 @@ Public Module StringHelpers
         End If
 
         If lf AndAlso cr Then
-            If trim Then  ' 假若将这个换行替换掉，在Csv文件读取模块会出现bug。。。。。不清楚是怎么回事
+            If trim Then
+                ' 假若将这个换行替换掉，在Csv文件读取模块会出现bug。。。。。
+                ' 不清楚是怎么回事
                 s = s.Replace(vbCr, "")
             End If
 
