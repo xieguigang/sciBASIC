@@ -506,7 +506,7 @@ Public Module App
     ''' <remarks>
     ''' this method is usefull for debug current process run as a pipeline sub-process
     ''' </remarks>
-    Public Sub RedirectLogging(file As String)
+    Public Function RedirectLogging(file As String) As StreamWriter
         Dim buffer = file.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
         Dim writer As New StreamWriter(buffer, Encoding.UTF8) With {
             .AutoFlush = True,
@@ -514,7 +514,9 @@ Public Module App
         }
 
         Call Console.SetOut(writer)
-    End Sub
+
+        Return writer
+    End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetAppLocalData(app$, assemblyName$, <CallerMemberName> Optional track$ = Nothing) As String

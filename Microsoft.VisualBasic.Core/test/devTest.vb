@@ -55,8 +55,27 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Module devTest
 
     Sub Main()
+        Call logfileTest()
+
         Dim deps = "D:\GCModeller\src\R-sharp\App\net5.0\base.deps.json".LoadJsonFile(Of deps)
         Dim ref = deps.GetReferenceProject.ToArray
+
+        Pause()
+    End Sub
+
+    Sub logfileTest()
+        Dim log = App.RedirectLogging("E:\VB_GamePads\src\framework\Microsoft.VisualBasic.Core\test\bin\Debug.txt")
+
+        Call Console.WriteLine("sdfsdfsdfsdf")
+        Call Console.Write("adfasdas")
+        Call Console.Write("  ")
+        Call Console.Write("!!!!!")
+        Call Console.WriteLine("--------")
+
+        Call log.Flush()
+        Call log.Close()
+
+        Call Console.OpenStandardOutput()
 
         Pause()
     End Sub
