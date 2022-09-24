@@ -177,7 +177,8 @@ Namespace Parallel.Threads
         End Function
 
         ''' <summary>
-        ''' 使用线程池里面的空闲线程来执行任务
+        ''' Push a new task into the parallel task queue.
+        ''' (使用线程池里面的空闲线程来执行任务)
         ''' </summary>
         ''' <param name="task"></param>
         ''' <param name="callback">回调函数里面的参数是任务的执行的时间长度</param>
@@ -192,20 +193,39 @@ Namespace Parallel.Threads
             End SyncLock
         End Sub
 
-        Public Sub OperationTimeOut(task As Action, timeout As Integer)
+        ''' <summary>
+        ''' Run a speicifc task with assert of operation 
+        ''' is time out or not.
+        ''' </summary>
+        ''' <param name="task">
+        ''' A specific task to run
+        ''' </param>
+        ''' <param name="timeout">
+        ''' wait timeout in unit milliseconds
+        ''' </param>
+        ''' <returns>
+        ''' + true means timeout, the task has not been finished;
+        ''' + false means the task has been execute success without timeout
+        ''' </returns>
+        Public Function OperationTimeOut(task As Action, timeout As Integer) As Boolean
             Dim done As Boolean = False
 
-            Call RunTask(task, Sub() done = True)
+            Call RunTask(task, callback:=Sub() done = True)
 
             For i As Integer = 0 To timeout
                 If done Then
-                    Exit For
+                    Return False
                 Else
-                    Thread.Sleep(1)
+                    Call Thread.Sleep(1)
                 End If
             Next
-        End Sub
 
+            Return True
+        End Function
+
+        ''' <summary>
+        ''' allocate the task into the task thread pool
+        ''' </summary>
         Private Sub allocate()
             Do While Not Me.disposedValue
                 SyncLock pendings
@@ -213,7 +233,11 @@ Namespace Parallel.Threads
                         Dim task As TaskBinding = pendings.Dequeue
                         Dim h As Func(Of Long) = AddressOf New __taskInvoke With {.task = task.Bind}.Run
                         Dim callback As Action(Of Long) = task.Target
-                        Call GetAvaliableThread.Enqueue(h, callback)  ' 当线程池里面的线程数量非常多的时候，这个事件会变长，所以讲分配的代码单独放在线程里面执行，以提神web服务器的响应效率
+
+                        ' 当线程池里面的线程数量非常多的时候，这个事件会变长，
+                        ' 所以讲分配的代码单独放在线程里面执行，以提神web
+                        ' 服务器的响应效率
+                        Call GetAvaliableThread.Enqueue(h, callback)
                     Else
                         Call Thread.Sleep(1)
                     End If
@@ -259,8 +283,10 @@ Namespace Parallel.Threads
         End Function
 
         Public Sub WaitAll()
+            Call Thread.Sleep(1000)
+
             Do While threads.Any(Function(t) t.RunningTask)
-                Call Thread.Sleep(1)
+                Call Thread.Sleep(10)
             Loop
         End Sub
 

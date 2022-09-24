@@ -219,6 +219,9 @@ Namespace Graphic
                 }
                 Dim color As Brush = Brushes.Black
 
+                If position.Y < 0 Then
+                    position = New PointF(position.X, 10)
+                End If
                 If Not theme.mainTextColor.StringEmpty Then
                     color = theme.mainTextColor.GetBrush
                 End If

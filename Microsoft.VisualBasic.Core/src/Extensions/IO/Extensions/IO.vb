@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::c8753e81312c89c7258f450b7ab3537a, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\IO.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 245
-    '    Code Lines: 128
-    ' Comment Lines: 93
-    '   Blank Lines: 24
-    '     File Size: 10.07 KB
+' Summaries:
 
 
-    ' Module IOExtensions
-    ' 
-    '     Function: FixPath, FlushAllLines, (+3 Overloads) FlushStream, Open, OpenReader
-    '               OpenTextWriter, ReadBinary, ReadVector
-    ' 
-    '     Sub: ClearFileBytes, FlushTo
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 245
+'    Code Lines: 128
+' Comment Lines: 93
+'   Blank Lines: 24
+'     File Size: 10.07 KB
+
+
+' Module IOExtensions
+' 
+'     Function: FixPath, FlushAllLines, (+3 Overloads) FlushStream, Open, OpenReader
+'               OpenTextWriter, ReadBinary, ReadVector
+' 
+'     Sub: ClearFileBytes, FlushTo
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -191,11 +191,13 @@ Public Module IOExtensions
             Throw New PathTooLongException(path)
         End If
 
-        With path.ParentPath
-            If Not .DirectoryExists Then
-                Call .MakeDir()
-            End If
-        End With
+        If mode <> FileMode.Open Then
+            With path.ParentPath
+                If Not .DirectoryExists Then
+                    Call .MakeDir()
+                End If
+            End With
+        End If
 
         If doClear Then
             ' 在这里调用FlushStream函数的话会导致一个循环引用的问题
@@ -242,16 +244,35 @@ Public Module IOExtensions
     End Function
 
     ''' <summary>
-    ''' <see cref="IO.File.ReadAllBytes"/>, if the file is not exists on the filesystem, then a empty array will be return.
+    ''' <see cref="File.ReadAllBytes"/>, if the file is not exists
+    ''' on the filesystem, then a empty array will be return.
     ''' </summary>
     ''' <param name="path"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' this method can not read data file when its size is greater 
+    ''' than or equals to 2GB size.
+    ''' </returns>
     <Extension>
     Public Function ReadBinary(path As String) As Byte()
         If Not path.FileExists Then
             Return {}
         Else
-            Return IO.File.ReadAllBytes(path)
+            ' 20220922
+            '
+            ' this function call may not shared file access
+            ' it is unwanted on read common library file
+            ' when run parallel, for each process read the
+            ' same library data file
+            '
+            ' Return IO.File.ReadAllBytes(path)
+            Using file As New FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, App.BufferSize)
+                Dim buffer_size As Integer = file.Length
+                Dim buffer As Byte() = New Byte(buffer_size - 1) {}
+
+                Call file.Read(buffer, Scan0, buffer_size)
+
+                Return buffer
+            End Using
         End If
     End Function
 
@@ -265,7 +286,8 @@ Public Module IOExtensions
     ''' <returns></returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function FlushAllLines(Of T)(data As IEnumerable(Of T), saveTo$, Optional encoding As Encodings = Encodings.Default) As Boolean
+    <Extension>
+    Public Function FlushAllLines(Of T)(data As IEnumerable(Of T), saveTo$, Optional encoding As Encodings = Encodings.Default) As Boolean
         Return data.FlushAllLines(saveTo, encoding.CodePage)
     End Function
 
@@ -278,7 +300,8 @@ Public Module IOExtensions
     ''' <remarks></remarks>
     '''
     <ExportAPI("FlushStream")>
-    <Extension> Public Function FlushStream(buf As IEnumerable(Of Byte), path$) As Boolean
+    <Extension>
+    Public Function FlushStream(buf As IEnumerable(Of Byte), path$) As Boolean
         Using write As New BinaryWriter(path.Open)
             For Each b As Byte In buf
                 Call write.Write(b)
@@ -289,7 +312,8 @@ Public Module IOExtensions
     End Function
 
     <ExportAPI("FlushStream")>
-    <Extension> Public Function FlushStream(stream As ISerializable, savePath$) As Boolean
+    <Extension>
+    Public Function FlushStream(stream As ISerializable, savePath$) As Boolean
         Dim rawStream As Byte() = stream.Serialize
         If rawStream Is Nothing Then
             rawStream = New Byte() {}

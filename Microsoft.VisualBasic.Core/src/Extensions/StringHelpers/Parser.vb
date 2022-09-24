@@ -201,6 +201,21 @@ Public Module PrimitiveParser
             End If
         Next
 
+        ' 20220922 handling of 2147483647
+        If num.Length = 10 Then
+            If Integer.Parse(num.First) > 2 Then
+                ' is long
+                Return False
+            Else
+                ' is possibably an integer
+                ' may be long
+                Return True
+            End If
+        ElseIf num.Length > 10 Then
+            ' is long
+            Return False
+        End If
+
         Return True
     End Function
 #End Region
