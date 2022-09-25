@@ -228,20 +228,25 @@ Namespace Parallel.Threads
         ''' </summary>
         Private Sub allocate()
             Do While Not Me.disposedValue
+                Dim task As TaskBinding = Nothing
+
                 SyncLock pendings
                     If pendings.Count > 0 Then
-                        Dim task As TaskBinding = pendings.Dequeue
-                        Dim h As Func(Of Long) = AddressOf New __taskInvoke With {.task = task.Bind}.Run
-                        Dim callback As Action(Of Long) = task.Target
-
-                        ' 当线程池里面的线程数量非常多的时候，这个事件会变长，
-                        ' 所以讲分配的代码单独放在线程里面执行，以提神web
-                        ' 服务器的响应效率
-                        Call GetAvaliableThread.Enqueue(h, callback)
-                    Else
-                        Call Thread.Sleep(1)
+                        task = pendings.Dequeue
                     End If
                 End SyncLock
+
+                If Not task.IsEmpty Then
+                    Dim h As Func(Of Long) = AddressOf New __taskInvoke With {.task = task.Bind}.Run
+                    Dim callback As Action(Of Long) = task.Target
+
+                    ' 当线程池里面的线程数量非常多的时候，这个事件会变长，
+                    ' 所以讲分配的代码单独放在线程里面执行，以提神web
+                    ' 服务器的响应效率
+                    Call GetAvaliableThread.Enqueue(h, callback)
+                End If
+
+                Call Thread.Sleep(1)
             Loop
         End Sub
 
@@ -282,16 +287,18 @@ Namespace Parallel.Threads
             Return [short]
         End Function
 
-        Public Sub WaitAll()
+        Public Sub WaitAll(Optional verbose As Boolean = False)
             Call Thread.Sleep(1000)
 
             Do While threads.Any(Function(t) t.RunningTask)
-                Call Thread.Sleep(10)
+                Call Thread.Sleep(5000)
+                Call Console.WriteLine()
+                Call Console.WriteLine(ToString)
             Loop
         End Sub
 
         Public Overrides Function ToString() As String
-            Return threads.GetJson
+            Return threads.JoinBy(vbCrLf)
         End Function
 
         Public Sub [Exit]()
