@@ -112,6 +112,10 @@ Namespace Parallel.Tasks
             Call RunTask(AddressOf __taskQueueEXEC)
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return $"[{uid.ToHexString}] {If(RunningTask, "running", "stop")}, queue {Tasks} tasks."
+        End Function
+
         ''' <summary>
         ''' 函数会被插入一个队列之中，之后线程会被阻塞在这里直到函数执行完毕，这个主要是用来控制服务器上面的任务并发的
         ''' 一般情况下不会使用这个方法，这个方法主要是控制服务器资源的利用程序的，当线程处于忙碌的状态的时候，
@@ -188,7 +192,8 @@ Namespace Parallel.Tasks
                     End If
                     _RunningTask = False
                 Else
-                    Call Thread.Sleep(1) ' 当前的线程处于空闲的状态
+                    ' 当前的线程处于空闲的状态
+                    Call Thread.Sleep(1)
                 End If
             Loop
         End Sub
