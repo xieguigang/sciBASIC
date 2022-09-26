@@ -518,6 +518,18 @@ Public Module App
         Return writer
     End Function
 
+    Public Function RedirectErrLogging(file As String) As StreamWriter
+        Dim buffer = file.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+        Dim writer As New StreamWriter(buffer, Encoding.UTF8) With {
+            .AutoFlush = True,
+            .NewLine = vbLf
+        }
+
+        Call Console.SetError(writer)
+
+        Return writer
+    End Function
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetAppLocalData(app$, assemblyName$, <CallerMemberName> Optional track$ = Nothing) As String
 #If netcore5 = 0 Then
@@ -1469,7 +1481,15 @@ Public Module App
         Call My.InnerQueue.WaitQueue()
 
         If Not internalPipelineMode.TextEquals("TRUE") Then
-            Call Console.WriteLine()
+            Try
+                Call Console.WriteLine()
+            Catch ex As Exception
+                ' `appExitHooks` may contains some code to
+                ' redirect the stdout and close the stdout
+                ' this will cause the I/O exception at here
+                ' no needs to handling this exception any
+                ' more just eat it and keeps silent at here
+            End Try
         End If
 
 #If DEBUG Then
