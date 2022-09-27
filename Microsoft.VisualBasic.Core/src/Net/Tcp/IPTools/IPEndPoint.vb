@@ -170,8 +170,8 @@ Namespace Net
             Return ipAddress & ":" & port.ToString
         End Function
 
-        Public Shared Function CreateLocal(localPort As Integer) As IPEndPoint
-            Return New IPEndPoint("localhost", localPort)
+        Public Shared Function CreateLocal(localPort As Integer, Optional host As String = "localhost") As IPEndPoint
+            Return New IPEndPoint(host, localPort)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

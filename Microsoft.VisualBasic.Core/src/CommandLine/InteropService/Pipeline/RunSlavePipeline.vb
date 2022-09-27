@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::5fa080914fb7045953b17c401ce9aa69, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\InteropService\Pipeline\RunSlavePipeline.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 81
-    '    Code Lines: 61
-    ' Comment Lines: 2
-    '   Blank Lines: 18
-    '     File Size: 2.70 KB
+' Summaries:
 
 
-    '     Class RunSlavePipeline
-    ' 
-    '         Properties: CommandLine
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: Run, ToString
-    ' 
-    '         Sub: HookProgress, ProcessMessage, SendMessage, SendProgress
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 81
+'    Code Lines: 61
+' Comment Lines: 2
+'   Blank Lines: 18
+'     File Size: 2.70 KB
+
+
+'     Class RunSlavePipeline
+' 
+'         Properties: CommandLine
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: Run, ToString
+' 
+'         Sub: HookProgress, ProcessMessage, SendMessage, SendProgress
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -65,25 +65,26 @@ Namespace CommandLine.InteropService.Pipeline
         Public Event Finish(exitCode As Integer)
 
         ReadOnly app As String
-        ReadOnly arguments As String
         ReadOnly workdir As String
 
         Public ReadOnly Property CommandLine As String
             Get
-                Return $"{app} {arguments}"
+                Return $"{app} {Arguments}"
             End Get
         End Property
 
+        Public ReadOnly Property Arguments As String
+
         Sub New(app$, arguments$, Optional workdir As String = Nothing)
             Me.app = app
-            Me.arguments = arguments
+            Me.Arguments = arguments
             Me.workdir = workdir
         End Sub
 
         Public Function Run() As Integer
             Dim code As Integer = PipelineProcess.ExecSub(
                 app:=app,
-                args:=arguments,
+                args:=Arguments,
                 onReadLine:=AddressOf ProcessMessage,
                 workdir:=workdir
             )
