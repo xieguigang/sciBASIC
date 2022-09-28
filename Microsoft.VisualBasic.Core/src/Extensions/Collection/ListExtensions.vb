@@ -205,7 +205,11 @@ Public Module ListExtensions
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' returns an empty index collection if the given 
+    ''' <paramref name="source"/> id set is empty or 
+    ''' nothing.
+    ''' </returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Indexing(Of T)(source As IEnumerable(Of T)) As Index(Of T)
