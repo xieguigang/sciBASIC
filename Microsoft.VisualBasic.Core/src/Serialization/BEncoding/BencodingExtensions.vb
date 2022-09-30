@@ -126,9 +126,10 @@ Namespace Serialization.Bencoding
         ''' <param name="digest"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function ToBEncode(obj As Object, digest As Func(Of Object, Object)) As BElement
+        Public Function ToBEncode(obj As Object, Optional digest As Func(Of Object, Object) = Nothing) As BElement
             Dim type As Type
 
+            digest = If(digest, theSampleObjectDigest.DefaultValue)
             obj = digest(obj)
             type = obj.GetType
 
