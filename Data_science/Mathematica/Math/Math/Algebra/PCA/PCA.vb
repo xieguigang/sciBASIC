@@ -97,6 +97,10 @@ Namespace LinearAlgebra.Prcomp
         Dim S As Vector
 
         Dim center, scale As Boolean
+        ''' <summary>
+        ''' the raw input data
+        ''' </summary>
+        Dim matrix As Vector()
 
         Public ReadOnly Property Eigenvalues As Vector
             Get
@@ -178,6 +182,7 @@ Namespace LinearAlgebra.Prcomp
 
             Me.center = center
             Me.scale = scale
+            Me.matrix = matrix
 
             ' svd.rightSingularVectors;
             Me.U = svd.V
@@ -192,9 +197,8 @@ Namespace LinearAlgebra.Prcomp
         ''' Project the dataset into the PCA space.
         ''' (使用<see cref="Loadings"/>矩阵对所输入的原始数据进行线性变换，降低数据维度)
         ''' </summary>
-        ''' <param name="data"></param>
         ''' <returns></returns>
-        Public Function Project(data As Vector(), nPC%) As Vector()
+        Public Function Project(nPC%) As Vector()
             'If center Then
             '    data = data _
             '        .Select(Function(r) r - means) _
@@ -208,7 +212,7 @@ Namespace LinearAlgebra.Prcomp
             'End If
             Dim idx = nPC.Sequence.ToArray
             Dim U As GeneralMatrix = Me.Loadings(idx)
-            Dim X As New NumericMatrix(data)
+            Dim X As New NumericMatrix(matrix)
             Dim P As Vector() = (X * U) _
                 .RowVectors _
                 .ToArray

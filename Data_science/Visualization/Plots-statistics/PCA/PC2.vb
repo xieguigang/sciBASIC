@@ -78,17 +78,18 @@ Namespace PCA
         ''' <param name="size$"></param>
         ''' <param name="colorSchema$"></param>
         ''' <returns></returns>
-        <Extension> Public Function PC2(input As GeneralMatrix,
-                                        sampleGroup%,
-                                        Optional labels$() = Nothing,
-                                        Optional size$ = "2000,1800",
-                                        Optional colorSchema$ = "Set1:c8") As GraphicsData
+        <Extension>
+        Public Function PC2(input As GeneralMatrix,
+                            sampleGroup%,
+                            Optional labels$() = Nothing,
+                            Optional size$ = "2000,1800",
+                            Optional colorSchema$ = "Set1:c8") As GraphicsData
 
             Dim result = New PCA_analysis(input)  ' x, y
             Dim x As Vector
             Dim y As Vector
 
-            With result.Project(input.RowVectors.ToArray, nPC:=2)
+            With result.Project(nPC:=2)
                 x = .ByRef(0)
                 y = .ByRef(1)
             End With
