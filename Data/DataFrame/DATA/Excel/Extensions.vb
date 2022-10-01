@@ -55,7 +55,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.csv.IO
 
-#If netcore5 = 0 Then
+#If Not NETCOREAPP Then
 
 Namespace Excel
 
