@@ -97,6 +97,10 @@ Namespace LinearAlgebra.Prcomp
         Dim S As Vector
 
         Dim center, scale As Boolean
+        ''' <summary>
+        ''' the raw input data
+        ''' </summary>
+        Dim matrix As Vector()
 
         Public ReadOnly Property Eigenvalues As Vector
             Get
@@ -173,11 +177,12 @@ Namespace LinearAlgebra.Prcomp
         End Sub
 
         Sub New(vectors As IEnumerable(Of Vector), Optional center As Boolean = True, Optional scale As Boolean = False)
-            Dim matrix = adjust(vectors.ToArray, center, scale)
+            Dim matrix = adjust(vectors.ToArray, center, scale, means, stdevs)
             Dim svd = New NumericMatrix(matrix).SVD()
 
             Me.center = center
             Me.scale = scale
+            Me.matrix = matrix
 
             ' svd.rightSingularVectors;
             Me.U = svd.V
@@ -192,9 +197,8 @@ Namespace LinearAlgebra.Prcomp
         ''' Project the dataset into the PCA space.
         ''' (使用<see cref="Loadings"/>矩阵对所输入的原始数据进行线性变换，降低数据维度)
         ''' </summary>
-        ''' <param name="data"></param>
         ''' <returns></returns>
-        Public Function Project(data As Vector(), nPC%) As Vector()
+        Public Function Project(nPC%) As Vector()
             'If center Then
             '    data = data _
             '        .Select(Function(r) r - means) _
@@ -206,9 +210,9 @@ Namespace LinearAlgebra.Prcomp
             '            .ToArray
             '    End If
             'End If
-
-            Dim U As GeneralMatrix = Me.Loadings(nPC.Sequence)
-            Dim X As New NumericMatrix(data)
+            Dim idx = nPC.Sequence.ToArray
+            Dim U As GeneralMatrix = Me.Loadings(idx)
+            Dim X As New NumericMatrix(matrix)
             Dim P As Vector() = (X * U) _
                 .RowVectors _
                 .ToArray
@@ -223,7 +227,7 @@ Namespace LinearAlgebra.Prcomp
         ''' <param name="center"></param>
         ''' <param name="scale"></param>
         ''' <returns></returns>
-        Private Function adjust(dataset As Vector(), center As Boolean, scale As Boolean) As Vector()
+        Private Shared Function adjust(dataset As Vector(), center As Boolean, scale As Boolean, ByRef means As Vector, ByRef stdevs As Vector) As Vector()
             If center Then
                 Dim columns = dataset(0) _
                     .Sequence _
@@ -233,20 +237,23 @@ Namespace LinearAlgebra.Prcomp
                                     .AsVector
                             End Function) _
                     .ToArray
+                Dim mu, std As Vector
 
                 means = columns.Select(Function(c) c.Average).AsVector
+                mu = means
                 stdevs = columns.Select(Function(c) c.SD).AsVector
+                std = stdevs
                 dataset = dataset _
                     .Select(Function(r)
                                 ' 在这里每一行数据减去每一列的平均值
                                 ' 就是相当于这一行的每一个元素减去对应的列的平均值
-                                Return r - means
+                                Return r - mu
                             End Function) _
                     .ToArray
 
                 If scale Then
                     dataset = dataset _
-                        .Select(Function(r) r / stdevs) _
+                        .Select(Function(r) r / std) _
                         .ToArray
                 End If
             End If
@@ -255,8 +262,8 @@ Namespace LinearAlgebra.Prcomp
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Function adjust(data As Double()(), center As Boolean, scale As Boolean) As Vector()
-            Return adjust(data.Select(Function(r) r.AsVector).ToArray, center, scale)
+        Public Shared Function adjust(data As Double()(), center As Boolean, scale As Boolean) As Vector()
+            Return adjust(data.Select(Function(r) r.AsVector).ToArray, center, scale, Nothing, Nothing)
         End Function
     End Class
 End Namespace
