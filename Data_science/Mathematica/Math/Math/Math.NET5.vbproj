@@ -15,7 +15,7 @@
 		<Platforms>AnyCPU;x64</Platforms>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release;PlantMAT;mzkit;NPSearch;mzkit_win32</Configurations>
+		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release;PlantMAT;mzkit;NPSearch;mzkit_win32;gcmodeller_desktop</Configurations>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -141,6 +141,222 @@
 	  <DefineDebug>false</DefineDebug>
 	  <DefineTrace>true</DefineTrace>
 	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net6.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PlantMAT|net6.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net6.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net6.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net6.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net6.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net6.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PlantMAT|net6.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net6.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net6.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net6.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net6.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net5.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net5.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net5.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net5.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PlantMAT|net5.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net5.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net5.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net5.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net5.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net5.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net5.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net5.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net5.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PlantMAT|net5.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net5.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net5.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net5.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net5.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net48|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net48|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net48|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net48|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PlantMAT|net48|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net48|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net48|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net48|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net48|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net48|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net48|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net48|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net48|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PlantMAT|net48|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net48|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net48|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net48|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net48|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	</PropertyGroup>
 
   <ItemGroup>

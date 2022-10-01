@@ -5,7 +5,7 @@
 	  <AssemblyName>Microsoft.VisualBasic.Data.IO.HDF5</AssemblyName>
 	  <TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
 	  <Platforms>AnyCPU;x64</Platforms>
-	  <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;PlantMAT;NPSearch;mzkit_win32</Configurations>
+	  <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;PlantMAT;NPSearch;mzkit_win32;gcmodeller_desktop</Configurations>
 	  <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
