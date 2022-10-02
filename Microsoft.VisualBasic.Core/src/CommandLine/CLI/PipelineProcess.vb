@@ -131,12 +131,13 @@ Namespace CommandLine
         Public Function ExecSub(app$, args$, onReadLine As Action(Of String),
                                 Optional in$ = "",
                                 Optional ByRef stdErr As String = Nothing,
-                                Optional workdir As String = Nothing) As Integer
+                                Optional workdir As String = Nothing,
+                                Optional shell As Boolean = False) As Integer
 
             Dim p As Process = CreatePipeline(
                 appPath:=app,
                 args:=args,
-                it:=(Not app.ExtensionSuffix("sh")) OrElse app.FileExists,
+                it:=(Not app.ExtensionSuffix("sh")) OrElse (Not shell) OrElse app.FileExists,
                 workdir:=workdir
             )
 

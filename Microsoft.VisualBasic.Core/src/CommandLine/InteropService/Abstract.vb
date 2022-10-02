@@ -180,11 +180,11 @@ Namespace CommandLine.InteropService
             Return ExceptionData.CreateInstance(message, tracess, typeINF)
         End Function
 
-        Public Function CreateSlave(args As String) As RunSlavePipeline
+        Public Function CreateSlave(args As String, Optional workdir As String = Nothing) As RunSlavePipeline
             If dotnetcoreApp Then
-                Return New RunSlavePipeline("dotnet", $"""{_executableDll}"" {args}")
+                Return New RunSlavePipeline("dotnet", $"""{_executableDll}"" {args}", workdir)
             Else
-                Return New RunSlavePipeline(_executableAssembly, args)
+                Return New RunSlavePipeline(_executableAssembly, args, workdir)
             End If
         End Function
 
