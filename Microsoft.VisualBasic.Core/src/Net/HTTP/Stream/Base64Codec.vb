@@ -92,8 +92,17 @@ Namespace Net.Http
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function Base64String(text$, Optional encoding As Encoding = Nothing) As String
-            Return (encoding Or UTF8).GetBytes(text).ToBase64String
+        Public Function Base64String(text$,
+                                     Optional encoding As Encoding = Nothing,
+                                     Optional gzip As Boolean = False) As String
+
+            Dim bytes As Byte() = (encoding Or UTF8).GetBytes(text)
+
+            If gzip Then
+                bytes = New MemoryStream(bytes).GZipStream.ToArray
+            End If
+
+            Return bytes.ToBase64String
         End Function
 
         ''' <summary>
@@ -104,8 +113,17 @@ Namespace Net.Http
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function DecodeBase64(base64$, Optional encoding As Encoding = Nothing) As String
-            Return (encoding Or UTF8).GetString(Convert.FromBase64String(base64))
+        Public Function DecodeBase64(base64$,
+                                     Optional encoding As Encoding = Nothing,
+                                     Optional ungzip As Boolean = False) As String
+
+            Dim bytes As Byte() = Convert.FromBase64String(base64)
+
+            If ungzip Then
+                bytes = bytes.UnGzipStream.ToArray
+            End If
+
+            Return (encoding Or UTF8).GetString(bytes)
         End Function
 
         ''' <summary>
