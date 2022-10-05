@@ -157,8 +157,15 @@ Namespace IO
                 Call out.WriteLine(line)
             Next
 
+            ' 20221005
+            '
+            ' data must be flush at here
+            ' or the file stream still leaves
+            ' empty if the table file is
+            ' small in size
+            Call out.Flush()
+
             If autoCloseFile Then
-                Call out.Flush()
                 Call out.Dispose()
             End If
 
