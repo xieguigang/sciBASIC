@@ -292,7 +292,7 @@ Namespace ApplicationServices.Zip
 
             End Select
 
-            'Opens the zip file in the mode we specified
+            ' Opens the zip file in the mode we specified
             Using zipFile As ZipArchive = IO.Compression.ZipFile.Open(archiveFullName, mode)
                 Call zipFile.WriteFiles(files.ToArray, mode, fileOverwrite, compression, relativeDir)
             End Using
