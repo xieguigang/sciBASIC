@@ -197,7 +197,9 @@ Namespace LinearAlgebra.Prcomp
         ''' Project the dataset into the PCA space.
         ''' (使用<see cref="Loadings"/>矩阵对所输入的原始数据进行线性变换，降低数据维度)
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' Each vector is a row in the input matrix
+        ''' </returns>
         Public Function Project(nPC%) As Vector()
             'If center Then
             '    data = data _
