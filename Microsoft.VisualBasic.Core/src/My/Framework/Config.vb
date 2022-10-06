@@ -154,12 +154,22 @@ Namespace My.FrameworkInternal
             Call deps.TryHandleNetCore5AssemblyBugs(package:=assembly)
 #End If
 
-            Dim configNames As FrameworkConfigAttribute() = assembly.GetTypes _
-                .Select(Function(type)
-                            Return type.GetCustomAttributes(Of FrameworkConfigAttribute)
-                        End Function) _
-                .IteratesALL _
-                .ToArray
+            Dim configNames As FrameworkConfigAttribute()
+
+            Try
+                ' 20221006
+                ' System.Reflection.ReflectionTypeLoadException:
+                ' Unable to load one or more of the requested types.
+                ' Retrieve the LoaderExceptions property for more information.
+                configNames = assembly.GetTypes _
+                    .Select(Function(type)
+                                Return type.GetCustomAttributes(Of FrameworkConfigAttribute)
+                            End Function) _
+                    .IteratesALL _
+                    .ToArray
+            Catch ex As Exception
+                configNames = {}
+            End Try
 
             For Each configName As FrameworkConfigAttribute In configNames
                 config.environment(configName.Name) = ""
