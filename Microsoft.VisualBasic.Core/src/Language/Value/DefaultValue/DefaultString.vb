@@ -118,8 +118,8 @@ Namespace Language.Default
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Base64Decode() As String
-            Return Base64Codec.DecodeBase64(DefaultValue)
+        Public Function Base64Decode(Optional ungzip As Boolean = False) As String
+            Return Base64Codec.DecodeBase64(DefaultValue, ungzip:=ungzip)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
