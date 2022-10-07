@@ -74,6 +74,7 @@ Namespace CommandLine.InteropService.Pipeline
         End Property
 
         Public ReadOnly Property Arguments As String
+        Public Property Shell As Boolean = False
 
         Sub New(app$, arguments$, Optional workdir As String = Nothing)
             Me.app = app
@@ -86,7 +87,8 @@ Namespace CommandLine.InteropService.Pipeline
                 app:=app,
                 args:=Arguments,
                 onReadLine:=AddressOf ProcessMessage,
-                workdir:=workdir
+                workdir:=workdir,
+                shell:=Shell
             )
 
             RaiseEvent Finish(code)

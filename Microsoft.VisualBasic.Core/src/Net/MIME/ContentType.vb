@@ -73,6 +73,12 @@ Namespace Net.Protocols.ContentTypes
         ''' MIME Type / Internet Media Type
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' example as:
+        ''' 
+        ''' plain/text
+        ''' text/html
+        ''' </remarks>
         Public Property MIMEType As String
 
         ''' <summary>

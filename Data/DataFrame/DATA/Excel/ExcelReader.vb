@@ -56,7 +56,7 @@ Imports System.Data
 Imports System.Data.OleDb
 Imports System.Text
 
-#If netcore5 = 0 Then
+#If Not NETCOREAPP Then
 
 Namespace Excel
 

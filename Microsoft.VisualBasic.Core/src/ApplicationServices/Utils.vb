@@ -291,28 +291,30 @@ Namespace ApplicationServices
         ''' <summary>
         ''' ``*.txt -> text``，这个函数是作用于文件的拓展名之上的
         ''' </summary>
-        ''' <param name="ext$"></param>
+        ''' <param name="ext"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function GetMIMEDescrib(ext$) As ContentType
+        Public Function GetMIMEDescrib(ext$, Optional defaultUnknown As Boolean = True) As ContentType
             Dim key$ = LCase(ext).Trim("*"c)
 
             If MIME.SuffixTable.ContainsKey(key) Then
                 Return MIME.SuffixTable(key)
-            Else
+            ElseIf defaultUnknown Then
                 Return MIME.UnknownType
+            Else
+                Return Nothing
             End If
         End Function
 
         ''' <summary>
-        ''' 与<see cref="GetMIMEDescrib(String)"/>所不同的是，这个函数是直接作用于文件路径之上的。
+        ''' 与<see cref="GetMIMEDescrib(String,Boolean)"/>所不同的是，这个函数是直接作用于文件路径之上的。
         ''' </summary>
         ''' <param name="path"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function FileMimeType(path As String) As ContentType
-            Return ("*." & path.ExtensionSuffix).GetMIMEDescrib
+        Public Function FileMimeType(path As String, Optional defaultUnknown As Boolean = True) As ContentType
+            Return ("*." & path.ExtensionSuffix).GetMIMEDescrib(defaultUnknown)
         End Function
     End Module
 End Namespace
