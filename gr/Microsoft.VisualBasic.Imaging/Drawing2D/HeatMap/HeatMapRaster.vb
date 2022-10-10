@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports stdNum = System.Math
 
-Namespace HeatMap
+Namespace Drawing2D.HeatMap
 
     ''' <summary>
     ''' A helper class or produce heatmap raster matrix data

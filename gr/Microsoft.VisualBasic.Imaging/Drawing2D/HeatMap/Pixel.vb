@@ -61,6 +61,9 @@ Imports System.Drawing
 
 Namespace Drawing2D.HeatMap
 
+    ''' <summary>
+    ''' a generic data model for <see cref="HeatMapRaster(Of T)"/>
+    ''' </summary>
     Public Interface Pixel
 
         ''' <summary>
