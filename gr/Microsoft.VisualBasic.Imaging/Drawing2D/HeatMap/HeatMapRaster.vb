@@ -62,7 +62,7 @@ Namespace Drawing2D.HeatMap
         ''' </summary>
         ''' <param name="gSize">gaussian kernel size</param>
         ''' <param name="gSigma">gaussian kernel sigma</param>
-        Public Sub New(Optional gSize As Integer = 200, Optional gSigma As Double = 50)
+        Public Sub New(Optional gSize As Integer = 8, Optional gSigma As Double = 16)
             ' 对高斯核尺寸进行判断
             If gSize < 3 OrElse gSize > 400 Then
                 Throw New Exception("Kernel size is invalid")
