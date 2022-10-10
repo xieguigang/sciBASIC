@@ -116,10 +116,9 @@ Namespace Drawing2D.HeatMap
             ' 初始化高斯累加图
             m_heatMatrix = New Double(hField - 1, wField - 1) {}
 
-            For Each data As Pixel In datas
+            For Each data As Pixel In PopulateDenseRasterMatrix(datas, wField, hField)
                 Dim i, j, tx, ty, ir, jr As Integer
                 Dim radius = gSize >> 1
-
                 Dim x = data.X
                 Dim y = data.Y
                 Dim kernelMultiplied = MultiplyKernel(data.Scale)
@@ -156,6 +155,39 @@ Namespace Drawing2D.HeatMap
             Next
 
             Return Me
+        End Function
+
+        Public Shared Iterator Function PopulateDenseRasterMatrix(datas As List(Of T), w As Integer, h As Integer) As IEnumerable(Of Pixel)
+            Dim matrix = datas _
+                .GroupBy(Function(a) a.X) _
+                .ToDictionary(Function(x) x.Key,
+                              Function(a)
+                                  Return a _
+                                      .GroupBy(Function(b) b.Y) _
+                                      .ToDictionary(Function(y) y.Key,
+                                                    Function(g)
+                                                        If g.Count = 1 Then
+                                                            Return g.First.Scale
+                                                        Else
+                                                            Return g.Average(Function(p) p.Scale)
+                                                        End If
+                                                    End Function)
+                              End Function)
+            Dim data As Double
+
+            For i As Integer = 0 To w - 1
+                For j As Integer = 0 To h - 1
+                    data = 0
+
+                    If matrix.ContainsKey(i) Then
+                        If matrix(key:=i).ContainsKey(j) Then
+                            data = matrix(key:=i)(key:=j)
+                        End If
+                    End If
+
+                    Yield New PixelData With {.X = i, .Y = j, .Scale = data}
+                Next
+            Next
         End Function
 
         Public Iterator Function GetRasterPixels(activator As Func(Of Integer, Integer, Double, T)) As IEnumerable(Of T)
