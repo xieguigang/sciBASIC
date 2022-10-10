@@ -114,7 +114,7 @@ Namespace Drawing2D.HeatMap
             Dim full As New Rectangle(0, 0, raw.Width, raw.Height)
             Dim pixel As RectangleF
             Dim g As IGraphics = raw.CreateCanvas2D(directAccess:=True)
-            Dim raster As IEnumerable(Of Pixel) = New HeatMapRaster(Of T)().SetDatas(pixels).HeatMatrix
+            Dim raster As IEnumerable(Of Pixel) = New HeatMapRaster(Of T)().SetDatas(pixels).GetRasterPixels
 
             Call g.Clear(defaultColor)
             '

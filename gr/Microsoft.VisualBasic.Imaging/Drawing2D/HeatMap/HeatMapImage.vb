@@ -192,7 +192,15 @@ Namespace HeatMap
         End Function
 
         Public Iterator Function GetRasterPixels() As IEnumerable(Of Pixel)
-
+            For i = 0 To m_heatMatrix.GetLength(0) - 1
+                For j = 0 To m_heatMatrix.GetLength(1) - 1
+                    Yield New PixelData With {
+                        .X = i,
+                        .Y = j,
+                        .Scale = m_heatMatrix(i, j)
+                    }
+                Next
+            Next
         End Function
     End Class
 End Namespace
