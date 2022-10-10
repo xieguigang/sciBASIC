@@ -158,7 +158,7 @@ Namespace Drawing2D.HeatMap
             Return Me
         End Function
 
-        Public Iterator Function GetRasterPixels(activator As Func(Of Integer, Integer, Double, T)) As IEnumerable(Of Pixel)
+        Public Iterator Function GetRasterPixels(activator As Func(Of Integer, Integer, Double, T)) As IEnumerable(Of T)
             For i = 0 To m_heatMatrix.GetLength(0) - 1
                 For j = 0 To m_heatMatrix.GetLength(1) - 1
                     Yield activator(j, i, m_heatMatrix(i, j))
