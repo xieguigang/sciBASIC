@@ -86,7 +86,11 @@ Namespace Imaging.Math2D
 
         Public ReadOnly Property height As Double
             Get
-                Return ypoints.Max - ypoints.Min
+                If ypoints.Length = 0 Then
+                    Return 0
+                Else
+                    Return ypoints.Max - ypoints.Min
+                End If
             End Get
         End Property
 
@@ -262,8 +266,14 @@ Namespace Imaging.Math2D
         End Function
 
         ''' <summary>
-        ''' @deprecated
+        ''' Check the given target point is inside of this polygon object or not
         ''' </summary>
+        ''' <param name="x">
+        ''' p.x of the target point
+        ''' </param>
+        ''' <param name="y">
+        ''' p.y of the target point
+        ''' </param>
         Public Overridable Function inside(x As Double, y As Double) As Boolean
             If length = 0 Then
                 Return False
