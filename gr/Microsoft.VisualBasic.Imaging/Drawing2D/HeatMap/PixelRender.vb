@@ -81,10 +81,8 @@ Namespace Drawing2D.HeatMap
         ''' scale raw data into <see cref="indexRange"/> for get 
         ''' corresponding color data.
         ''' </summary>
-        ''' <param name="raw"></param>
         ''' <returns></returns>
-        Public Iterator Function ScalePixels(raw As IEnumerable(Of Pixel)) As IEnumerable(Of Pixel)
-            Dim allPixels As Pixel() = raw.ToArray
+        Public Iterator Function ScalePixels(allPixels As Pixel()) As IEnumerable(Of Pixel)
             Dim range As DoubleRange = allPixels _
                 .Select(Function(p) p.Scale) _
                 .ToArray
@@ -114,7 +112,10 @@ Namespace Drawing2D.HeatMap
             Dim full As New Rectangle(0, 0, raw.Width, raw.Height)
             Dim pixel As RectangleF
             Dim g As IGraphics = raw.CreateCanvas2D(directAccess:=True)
-            Dim raster As IEnumerable(Of Pixel) = New HeatMapRaster(Of T)().SetDatas(pixels).GetRasterPixels
+            Dim raster As Pixel() = New HeatMapRaster(Of T)() _
+                .SetDatas(pixels.ToList) _
+                .GetRasterPixels _
+                .ToArray
 
             Call g.Clear(defaultColor)
             '

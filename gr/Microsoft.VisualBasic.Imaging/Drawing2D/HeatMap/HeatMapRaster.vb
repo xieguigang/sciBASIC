@@ -12,16 +12,6 @@ Namespace HeatMap
     Public Class HeatMapRaster(Of T As Pixel)
 
         ''' <summary>
-        ''' width of img
-        ''' </summary>
-        Private wField As Integer
-
-        ''' <summary>
-        ''' height of img
-        ''' </summary>
-        Private hField As Integer
-
-        ''' <summary>
         ''' gaussian kernel size
         ''' </summary>
         Private gSize As Integer
@@ -50,30 +40,6 @@ Namespace HeatMap
         Private m_kernelField As Double(,)
 
         ''' <summary>
-        ''' width of img
-        ''' </summary>
-        Public Property W As Integer
-            Get
-                Return wField
-            End Get
-            Set(value As Integer)
-                wField = value
-            End Set
-        End Property
-
-        ''' <summary>
-        ''' height of img
-        ''' </summary>
-        Public Property H As Integer
-            Get
-                Return hField
-            End Get
-            Set(value As Integer)
-                hField = value
-            End Set
-        End Property
-
-        ''' <summary>
         ''' gaussian kernel
         ''' </summary>
         Public ReadOnly Property Kernel As Double(,)
@@ -94,27 +60,22 @@ Namespace HeatMap
         ''' <summary>
         ''' construction
         ''' </summary>
-        ''' <param name="width">image width</param>
-        ''' <param name="height">image height</param>
         ''' <param name="gSize">gaussian kernel size</param>
         ''' <param name="gSigma">gaussian kernel sigma</param>
-        Public Sub New(width As Integer, height As Integer, gSize As Integer, gSigma As Double)
-            wField = width
-            hField = height
-
-            '对高斯核尺寸进行判断
+        Public Sub New(Optional gSize As Integer = 200, Optional gSigma As Double = 50)
+            ' 对高斯核尺寸进行判断
             If gSize < 3 OrElse gSize > 400 Then
                 Throw New Exception("Kernel size is invalid")
             End If
+
             Me.gSize = If(gSize Mod 2 = 0, gSize + 1, gSize)
             '高斯的sigma值，计算半径r
-            r = Me.gSize / 2
+            Me.r = Me.gSize / 2
             Me.gSigma = gSigma
             '计算高斯核
-            m_kernelField = New Double(Me.gSize - 1, Me.gSize - 1) {}
-            gaussiankernel()
-            '初始化高斯累加图
-            m_heatMatrix = New Double(hField - 1, wField - 1) {}
+            Me.m_kernelField = New Double(Me.gSize - 1, Me.gSize - 1) {}
+
+            Call gaussiankernel()
         End Sub
 
         Private Sub gaussiankernel()
@@ -149,6 +110,12 @@ Namespace HeatMap
         ''' </summary>
         ''' <param name="datas"></param>
         Public Function SetDatas(datas As List(Of T)) As HeatMapRaster(Of T)
+            Dim hField As Integer = datas.Select(Function(p) p.Y).Max
+            Dim wField As Integer = datas.Select(Function(p) p.X).Max
+
+            ' 初始化高斯累加图
+            m_heatMatrix = New Double(hField - 1, wField - 1) {}
+
             For Each data As Pixel In datas
                 Dim i, j, tx, ty, ir, jr As Integer
                 Dim radius = gSize >> 1
