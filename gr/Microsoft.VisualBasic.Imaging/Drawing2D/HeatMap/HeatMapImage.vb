@@ -1,12 +1,16 @@
-﻿Imports System.Drawing
-Imports System.Drawing.Drawing2D
-Imports System.Drawing.Imaging
-Imports System.Runtime.InteropServices
+﻿Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
+Imports stdNum = System.Math
 
 Namespace HeatMap
 
-	' https://github.com/RainkLH/HeatMapSharp
-    Public Class HeatMapImage
+    ''' <summary>
+    ''' A helper class or produce heatmap raster matrix data
+    ''' </summary>
+    ''' <remarks>
+    ''' https://github.com/RainkLH/HeatMapSharp
+    ''' </remarks>
+    Public Class HeatMapRaster(Of T As Pixel)
+
         ''' <summary>
         ''' width of img
         ''' </summary>
@@ -34,23 +38,16 @@ Namespace HeatMap
 
         ''' <summary>
         ''' Two dimensional matrix corresponding to data list
+        ''' 
+        ''' the heatmap cells data, transform color scale from
+        ''' this matrix data
         ''' </summary>
-        Private heatValsField As Double(,)
-
-        ''' <summary>
-        ''' Color map matrix
-        ''' </summary>
-        Private ColorMaps As Color()
+        Private m_heatMatrix As Double(,)
 
         ''' <summary>
         ''' gaussian kernel
         ''' </summary>
-        Private kernelField As Double(,)
-
-        ''' <summary>
-        ''' color numbers
-        ''' </summary>
-        Private Const NUMCOLORS As Integer = 1000
+        Private m_kernelField As Double(,)
 
         ''' <summary>
         ''' width of img
@@ -59,7 +56,7 @@ Namespace HeatMap
             Get
                 Return wField
             End Get
-            Set(ByVal value As Integer)
+            Set(value As Integer)
                 wField = value
             End Set
         End Property
@@ -71,7 +68,7 @@ Namespace HeatMap
             Get
                 Return hField
             End Get
-            Set(ByVal value As Integer)
+            Set(value As Integer)
                 hField = value
             End Set
         End Property
@@ -81,27 +78,27 @@ Namespace HeatMap
         ''' </summary>
         Public ReadOnly Property Kernel As Double(,)
             Get
-                Return kernelField
+                Return m_kernelField
             End Get
         End Property
 
         ''' <summary>
         ''' Two dimensional matrix corresponding to data list
         ''' </summary>
-        Public ReadOnly Property HeatVals As Double(,)
+        Public ReadOnly Property HeatMatrix As Double(,)
             Get
-                Return heatValsField
+                Return m_heatMatrix
             End Get
         End Property
 
         ''' <summary>
         ''' construction
         ''' </summary>
-        ''' <paramname="width">image width</param>
-        ''' <paramname="height">image height</param>
-        ''' <paramname="gSize">gaussian kernel size</param>
-        ''' <paramname="gSigma">gaussian kernel sigma</param>
-        Public Sub New(ByVal width As Integer, ByVal height As Integer, ByVal gSize As Integer, ByVal gSigma As Double)
+        ''' <param name="width">image width</param>
+        ''' <param name="height">image height</param>
+        ''' <param name="gSize">gaussian kernel size</param>
+        ''' <param name="gSigma">gaussian kernel sigma</param>
+        Public Sub New(width As Integer, height As Integer, gSize As Integer, gSigma As Double)
             wField = width
             hField = height
 
@@ -114,10 +111,10 @@ Namespace HeatMap
             r = Me.gSize / 2
             Me.gSigma = gSigma
             '计算高斯核
-            kernelField = New Double(Me.gSize - 1, Me.gSize - 1) {}
+            m_kernelField = New Double(Me.gSize - 1, Me.gSize - 1) {}
             gaussiankernel()
             '初始化高斯累加图
-            heatValsField = New Double(hField - 1, wField - 1) {}
+            m_heatMatrix = New Double(hField - 1, wField - 1) {}
         End Sub
 
         Private Sub gaussiankernel()
@@ -127,7 +124,7 @@ Namespace HeatMap
                 Dim x = -r, j = 0
 
                 While j < gSize
-                    kernelField(i, j) = Math.Exp((x * x + y * y) / (-2 * gSigma * gSigma)) / (2 * Math.PI * gSigma * gSigma)
+                    m_kernelField(i, j) = stdNum.Exp((x * x + y * y) / (-2 * gSigma * gSigma)) / (2 * stdNum.PI * gSigma * gSigma)
                     x += 1
                     j += 1
                 End While
@@ -137,8 +134,8 @@ Namespace HeatMap
             End While
         End Sub
 
-        Private Function MultiplyKernel(ByVal weight As Double) As Double(,)
-            Dim wKernel As Double(,) = CType(kernelField.Clone(), Double(,))
+        Private Function MultiplyKernel(weight As Double) As Double(,)
+            Dim wKernel As Double(,) = CType(m_kernelField.Clone(), Double(,))
             For i = 0 To gSize - 1
                 For j = 0 To gSize - 1
                     wKernel(i, j) *= weight
@@ -147,32 +144,18 @@ Namespace HeatMap
             Return wKernel
         End Function
 
-        Private Sub RescaleArray()
-            Dim max As Single = 0
-            For Each value As Single In heatValsField
-                If value > max Then
-                    max = value
-                End If
-            Next
-
-            For i = 0 To heatValsField.GetLength(0) - 1
-                For j = 0 To heatValsField.GetLength(1) - 1
-                    heatValsField(i, j) *= (NUMCOLORS - 1) / max
-                    If heatValsField(i, j) > NUMCOLORS - 1 Then
-                        heatValsField(i, j) = NUMCOLORS - 1
-                    End If
-                Next
-            Next
-        End Sub
-
-        Public Sub SetDatas(ByVal datas As List(Of DataType))
-            For Each data As DataType In datas
+        ''' <summary>
+        ''' set imaging raster pixels data to generate heatmap matrix
+        ''' </summary>
+        ''' <param name="datas"></param>
+        Public Function SetDatas(datas As List(Of T)) As HeatMapRaster(Of T)
+            For Each data As Pixel In datas
                 Dim i, j, tx, ty, ir, jr As Integer
                 Dim radius = gSize >> 1
 
                 Dim x = data.X
                 Dim y = data.Y
-                Dim kernelMultiplied = MultiplyKernel(data.Weight)
+                Dim kernelMultiplied = MultiplyKernel(data.Scale)
 
                 For i = 0 To gSize - 1
                     ir = i - radius
@@ -199,85 +182,17 @@ Namespace HeatMap
                         End If
 
                         If tx < wField Then
-                            heatValsField(ty, tx) += kernelMultiplied(i, j)
+                            m_heatMatrix(ty, tx) += kernelMultiplied(i, j)
                         End If
                     Next
                 Next
             Next
 
-        End Sub
+            Return Me
+        End Function
 
-        Public Sub SetAData(ByVal data As DataType)
-            Dim i, j, tx, ty, ir, jr As Integer
-            Dim radius = gSize >> 1
+        Public Iterator Function GetRasterPixels() As IEnumerable(Of Pixel)
 
-            Dim x = data.X
-            Dim y = data.Y
-            Dim kernelMultiplied = MultiplyKernel(data.Weight)
-
-            For i = 0 To gSize - 1
-                ir = i - radius
-                ty = y + ir
-
-                ' skip row
-                If ty < 0 Then
-                    Continue For
-                End If
-
-                ' break Height
-                If ty >= hField Then
-                    Exit For
-                End If
-
-                ' for each kernel column
-                For j = 0 To gSize - 1
-                    jr = j - radius
-                    tx = x + jr
-
-                    ' skip column
-                    If tx < 0 Then
-                        Continue For
-                    End If
-
-                    If tx < wField Then
-                        heatValsField(ty, tx) += kernelMultiplied(i, j)
-                    End If
-                Next
-            Next
-        End Sub
-
-        Public Sub ProcessUsingLockbits(ByVal processedBitmap As Bitmap)
-            Dim rect As Rectangle = New Rectangle(0, 0, processedBitmap.Width, processedBitmap.Height)
-
-            Dim heatMapData = processedBitmap.LockBits(rect, ImageLockMode.WriteOnly, processedBitmap.PixelFormat)
-
-            Dim ptrw = heatMapData.Scan0
-
-            Dim wbytes = Math.Abs(heatMapData.Stride) * processedBitmap.Height
-
-            Dim argbValuesW = New Byte(wbytes - 1) {}
-
-            Marshal.Copy(ptrw, argbValuesW, 0, wbytes)
-
-
-            For i = 0 To hField - 1
-                For j = 0 To wField - 1
-                    Dim colorIndex = If(Double.IsNaN(heatValsField(i, j)), 0, CInt(heatValsField(i, j)))
-                    Dim index = (i * processedBitmap.Width + j) * 4
-                    argbValuesW(index) = ColorMaps(4 * colorIndex)
-                    argbValuesW(index + 1) = ColorMaps(4 * colorIndex + 1)
-                    argbValuesW(index + 2) = ColorMaps(4 * colorIndex + 2)
-                    argbValuesW(index + 3) = ColorMaps(4 * colorIndex + 3)
-                Next
-            Next
-            Marshal.Copy(argbValuesW, 0, ptrw, wbytes)
-            processedBitmap.UnlockBits(heatMapData)
-        End Sub
-        Public Function GetHeatMap() As Bitmap
-            RescaleArray()
-            Dim heatMap As Bitmap = New Bitmap(W, H, PixelFormat.Format32bppArgb)
-            ProcessUsingLockbits(heatMap)
-            Return heatMap
         End Function
     End Class
 End Namespace
