@@ -57,6 +57,9 @@ Imports Microsoft.VisualBasic.Imaging.BitmapImage
 
 Namespace Drawing2D.HeatMap
 
+    ''' <summary>
+    ''' do image size scaling
+    ''' </summary>
     Public Class RasterScaler : Implements IDisposable
 
         Dim disposedValue As Boolean
