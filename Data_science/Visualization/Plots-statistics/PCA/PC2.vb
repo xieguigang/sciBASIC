@@ -62,7 +62,6 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.MIME.HTML.CSS
-Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports PCA_analysis = Microsoft.VisualBasic.Math.LinearAlgebra.Prcomp.PCA
 
 Namespace PCA
@@ -70,10 +69,12 @@ Namespace PCA
     Public Module PCAPlot
 
         ''' <summary>
+        ''' Plot for PCA + kmeans clustering
+        ''' 
         ''' 将目标数据集通过PCA降维到二维数据，然后绘制散点图
         ''' </summary>
         ''' <param name="input"></param>
-        ''' <param name="sampleGroup%"></param>
+        ''' <param name="sampleGroup">k parameter for kmeans</param>
         ''' <param name="labels$"></param>
         ''' <param name="size$"></param>
         ''' <param name="colorSchema$"></param>
@@ -154,6 +155,18 @@ Namespace PCA
             Dim xaxis = $"({x.Min - dx / 5},{x.Max + dx / 5}),n=10"
 
             Return Bubble.Plot(serials, size, xAxis:=xaxis, strokeColorAsMainColor:=True)
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="data">row is the samples</param>
+        ''' <param name="groups">the data group labels of each row, 
+        ''' this array size should be equals to the rows of 
+        ''' <see cref="data"/></param>
+        ''' <returns></returns>
+        Public Function PlotPC2(data As GeneralMatrix, groups As String()) As GraphicsData
+
         End Function
     End Module
 End Namespace
