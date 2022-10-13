@@ -56,7 +56,6 @@ Imports System.Drawing.Imaging
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
-Imports Microsoft.VisualBasic.Imaging.HeatMap
 
 Namespace Drawing2D.HeatMap
 

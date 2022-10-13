@@ -97,6 +97,10 @@ Namespace Plots
         Friend ylim As Double = -1
         Friend XaxisAbsoluteScalling As Boolean = False
         Friend YaxisAbsoluteScalling As Boolean = False
+
+        ''' <summary>
+        ''' show debug message if verbose
+        ''' </summary>
         Friend verbose As Boolean = False
 
         Public Sub New(data As IEnumerable(Of SerialData), theme As Theme,
@@ -116,15 +120,6 @@ Namespace Plots
             Me.verbose = verbose
         End Sub
 
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="g"></param>
-        ''' <param name="rect"></param>
-        ''' <param name="verbose">
-        ''' show debug message if verbose
-        ''' </param>
-        ''' <returns></returns>
         Public Function GetDataScaler(ByRef g As IGraphics, rect As GraphicsRegion) As DataScaler
             Dim XTicks#(), YTicks#()
 
