@@ -109,7 +109,7 @@ Namespace Scripting.Runtime
         Public Iterator Function [As](Of T)(source As IEnumerable) As IEnumerable(Of T)
             Dim l As New List(Of Object)
 
-            For Each x In source
+            For Each x As Object In source
                 l.Add(x)
 
                 If l.Count > 1 Then
