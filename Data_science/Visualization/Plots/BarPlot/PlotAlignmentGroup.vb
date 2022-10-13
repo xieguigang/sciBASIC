@@ -424,7 +424,7 @@ Namespace BarPlot
             Dim sh = subject.createHits(isHighlight)
             Dim out As New List(Of (xmin#, xmax#, query#, subject#))
 
-            For Each x In highlights
+            For Each x As Double In highlights
                 If Not qh.ContainsKey(x) OrElse Not sh.ContainsKey(x) Then
                     Continue For
                 End If
