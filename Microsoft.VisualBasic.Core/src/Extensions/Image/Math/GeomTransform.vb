@@ -64,7 +64,7 @@ Imports stdNum = System.Math
 
 Namespace Imaging.Math2D
 
-    <Package("GDI.Transform")> Public Module GeomTransform
+    Public Module GeomTransform
 
         ''' <summary>
         ''' Returns a size value that its width equals height. 
@@ -514,7 +514,8 @@ Namespace Imaging.Math2D
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function Scale(rect As Rectangle, factor As SizeF) As Rectangle
+        <Extension>
+        Public Function Scale(rect As Rectangle, factor As SizeF) As Rectangle
             With rect
                 With New RectangleF(.Location.PointF, .Size.SizeF).Scale(factor)
                     Return New Rectangle(.Location.ToPoint, .Size.ToSize)
@@ -523,7 +524,8 @@ Namespace Imaging.Math2D
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function Scale(rect As Rectangle, factorX!, factorY!) As Rectangle
+        <Extension>
+        Public Function Scale(rect As Rectangle, factorX!, factorY!) As Rectangle
             With rect
                 With New RectangleF(.Location.PointF, .Size.SizeF).Scale(New SizeF(factorX, factorY))
                     Return New Rectangle(.Location.ToPoint, .Size.ToSize)
