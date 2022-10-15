@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.Intrinsics
 
-Namespace Math
+Namespace Math.SIMD
 #If NETCOREAPP Then
 
     Public Class SIMDIntrinsics
@@ -13,7 +13,7 @@ Namespace Math
             Dim c As Vector256(Of Double)
             Dim size As Integer = v1.Length
             Dim vec As Double() = New Double(size - 1) {}
-            Dim remaining As Integer = v1.Length Mod SIMD.countDouble
+            Dim remaining As Integer = v1.Length Mod SIMDEnvironment.countDouble
             Dim ends = vec.Length - remaining - 1
 
             For i As Integer = 0 To ends Step 4

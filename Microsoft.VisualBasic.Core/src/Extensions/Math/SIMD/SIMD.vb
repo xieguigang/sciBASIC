@@ -5,7 +5,7 @@ Imports System.Runtime.Intrinsics
 Imports System.Runtime.Intrinsics.X86
 #End If
 
-Namespace Math
+Namespace Math.SIMD
 
     Public Enum SIMDConfiguration
         disable
@@ -27,7 +27,7 @@ Namespace Math
     ''' <remarks>
     ''' 在这个模块中的代码都不会进行安全检查，默认都是符合计算条件的
     ''' </remarks>
-    Public NotInheritable Class SIMD
+    Public NotInheritable Class SIMDEnvironment
 
         ''' <summary>
         ''' This option only works for .NET core runtime
@@ -43,55 +43,5 @@ Namespace Math
 
         Private Sub New()
         End Sub
-
-        Public Shared Function Add(v1 As Double(), v2 As Double()) As Double()
-            Select Case SIMD.config
-                Case SIMDConfiguration.disable
-none:               Dim out As Double() = New Double(v1.Length - 1) {}
-
-                    For i As Integer = 0 To v1.Length - 1
-                        out(i) = v1(i) + v2(i)
-                    Next
-
-                    Return out
-                Case SIMDConfiguration.enable
-#If NET48 Then
-                    GoTo legacy
-#Else
-                    If Avx2.IsSupported Then
-                        Return SIMDIntrinsics.Vector2(v1, v2, AddressOf Avx2.Add)
-                    ElseIf Avx.IsSupported Then
-                        Return SIMDIntrinsics.Vector2(v1, v2, AddressOf Avx.Add)
-                    Else
-                        GoTo legacy
-                    End If
-#End If
-                Case SIMDConfiguration.legacy
-legacy:             Dim x1 As Vector(Of Double)
-                    Dim x2 As Vector(Of Double)
-                    Dim vec As Double() = New Double(v1.Length - 1) {}
-                    Dim remaining As Integer = v1.Length Mod SIMD.countDouble
-                    Dim ends As Integer = v1.Length - remaining - 1
-
-                    For i As Integer = 0 To ends Step SIMD.countDouble
-                        x1 = New Vector(Of Double)(v1, i)
-                        x2 = New Vector(Of Double)(v2, i)
-
-                        Call (x1 + x2).CopyTo(vec, i)
-                    Next
-
-                    For i As Integer = v1.Length - remaining To v1.Length - 1
-                        vec(i) = v1(i) + v2(i)
-                    Next
-
-                    Return vec
-                Case Else
-                    If v1.Length < 10000 Then
-                        GoTo none
-                    Else
-                        GoTo legacy
-                    End If
-            End Select
-        End Function
     End Class
 End Namespace
