@@ -35,11 +35,17 @@ Namespace Math.SIMD
         ''' <returns></returns>
         Public Shared Property config As SIMDConfiguration = SIMDConfiguration.auto
 
-        Friend Shared ReadOnly countDouble As Integer = Vector(Of Double).Count
-        Friend Shared ReadOnly countFloat As Integer = Vector(Of Single).Count
-        Friend Shared ReadOnly countInteger As Integer = Vector(Of Integer).Count
-        Friend Shared ReadOnly countLong As Integer = Vector(Of Long).Count
-        Friend Shared ReadOnly countShort As Integer = Vector(Of Short).Count
+        ''' <summary>
+        ''' Vector(Of <see cref="Double"/>).Count
+        ''' </summary>
+        Public Shared ReadOnly countDouble As Integer = Vector(Of Double).Count
+        Public Shared ReadOnly countFloat As Integer = Vector(Of Single).Count
+        ''' <summary>
+        ''' Vector(Of <see cref="Integer"/>).Count
+        ''' </summary>
+        Public Shared ReadOnly countInteger As Integer = Vector(Of Integer).Count
+        Public Shared ReadOnly countLong As Integer = Vector(Of Long).Count
+        Public Shared ReadOnly countShort As Integer = Vector(Of Short).Count
 
         Private Sub New()
         End Sub
