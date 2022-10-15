@@ -66,8 +66,11 @@ Friend Structure RowCol : Implements IEquatable(Of RowCol)
         Return $"[{Row}, {Col}]"
     End Function
 
-    ' 2019-06-24 DWR: Structs get default Equals and GetHashCode implementations but they can be slow - having these versions makes the code run much quicker
-    ' and it seems a good practice to throw in IEquatable<RowCol> to avoid boxing when Equals is called
+    ' 2019-06-24 DWR: Structs get default Equals and GetHashCode
+    ' implementations but they can be slow - having these versions
+    ' makes the code run much quicker and it seems a good practice
+    ' to throw in IEquatable<RowCol> to avoid boxing when Equals
+    ' is called
     Public Overloads Function Equals(other As RowCol) As Boolean Implements IEquatable(Of RowCol).Equals
         Return other.Row = Row AndAlso other.Col = Col
     End Function
