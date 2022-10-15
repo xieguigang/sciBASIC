@@ -13,7 +13,7 @@ Namespace Math.SIMD
         legacy
 
         ''' <summary>
-        ''' disable or legacy based on the vector size
+        ''' disable or SIMD **legacy** mode based on the vector size
         ''' </summary>
         auto
     End Enum
