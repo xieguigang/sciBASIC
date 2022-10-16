@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec05834571a015d9aac7b6745d3bfe2e, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\DefaultValue\DefaultString.vb"
+﻿#Region "Microsoft.VisualBasic::8995d88d364acb05722601b93a37265b, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\DefaultValue\DefaultString.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 130
     ' Comment Lines: 29
     '   Blank Lines: 30
-    '     File Size: 7.29 KB
+    '     File Size: 7.34 KB
 
 
     '     Structure DefaultString

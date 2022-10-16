@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4dc58ec87bf71221dcd6afe624e304dd, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Random\PreciseRandom.vb"
+﻿#Region "Microsoft.VisualBasic::ccad36780681f41eafaab177d6e947fd, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Random\PreciseRandom.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 80
+    '   Total Lines: 81
     '    Code Lines: 41
-    ' Comment Lines: 28
+    ' Comment Lines: 29
     '   Blank Lines: 11
-    '     File Size: 3.04 KB
+    '     File Size: 3.06 KB
 
 
     '     Class PreciseRandom

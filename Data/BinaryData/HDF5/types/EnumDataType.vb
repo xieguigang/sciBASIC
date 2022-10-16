@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ba7cc50dce238a0ec6b205679937d04, sciBASIC#\Data\BinaryData\HDF5\types\EnumDataType.vb"
+﻿#Region "Microsoft.VisualBasic::a3cb10a192ce0db76c45d36cabd4a1e1, sciBASIC#\Data\BinaryData\HDF5\types\EnumDataType.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 11
     ' Comment Lines: 14
     '   Blank Lines: 6
-    '     File Size: 710 B
+    '     File Size: 708 B
 
 
     '     Class EnumDataType
@@ -81,4 +81,3 @@ Namespace type
     End Class
 
 End Namespace
-

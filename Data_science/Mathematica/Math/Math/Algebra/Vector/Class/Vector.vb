@@ -1,65 +1,65 @@
-﻿#Region "Microsoft.VisualBasic::dd03b3dcaa3ca8e36b663f172ade2e03, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::43ef04259e4b66ac43a94654c07269bf, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 1007
-'    Code Lines: 511
-' Comment Lines: 354
-'   Blank Lines: 142
-'     File Size: 35.70 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Vector
-' 
-'         Properties: [Mod], Data, Inf, IsNumeric, NAN
-'                     Range, SumMagnitude, Unit, Zero
-' 
-'         Constructor: (+12 Overloads) Sub New
-' 
-'         Function: Abs, AsSparse, CumSum, DotProduct, Ones
-'                   Order, Product, (+2 Overloads) rand, ScaleToRange, seq
-'                   slice, SumMagnitudes, (+2 Overloads) ToString
-' 
-'         Sub: (+3 Overloads) CopyTo
-' 
-'         Operators: (+4 Overloads) -, (+6 Overloads) *, (+3 Overloads) /, (+3 Overloads) ^, (+4 Overloads) +
-'                    <, (+3 Overloads) <=, (+2 Overloads) <>, (+2 Overloads) =, >
-'                    (+3 Overloads) >=, (+2 Overloads) Or, (+2 Overloads) Xor
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 1000
+    '    Code Lines: 507
+    ' Comment Lines: 353
+    '   Blank Lines: 140
+    '     File Size: 35.56 KB
+
+
+    '     Class Vector
+    ' 
+    '         Properties: [Mod], Data, Inf, IsNumeric, NAN
+    '                     Range, SumMagnitude, Unit, Zero
+    ' 
+    '         Constructor: (+12 Overloads) Sub New
+    ' 
+    '         Function: Abs, AsSparse, CumSum, DotProduct, Ones
+    '                   Order, Product, (+2 Overloads) rand, ScaleToRange, seq
+    '                   slice, SumMagnitudes, (+2 Overloads) ToString
+    ' 
+    '         Sub: (+3 Overloads) CopyTo
+    ' 
+    '         Operators: (+4 Overloads) -, (+6 Overloads) *, (+3 Overloads) /, (+3 Overloads) ^, (+4 Overloads) +
+    '                    <, (+3 Overloads) <=, (+2 Overloads) <>, (+2 Overloads) =, >
+    '                    (+3 Overloads) >=, (+2 Overloads) Or, (+2 Overloads) Xor
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

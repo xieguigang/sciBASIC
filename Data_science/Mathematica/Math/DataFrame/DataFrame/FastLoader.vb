@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0309e897c974db2c45453eadebb7c424, sciBASIC#\Data_science\Mathematica\Math\DataFrame\DataFrame\FastLoader.vb"
+﻿#Region "Microsoft.VisualBasic::50319dface387165b1eff40309a4e45e, sciBASIC#\Data_science\Mathematica\Math\DataFrame\DataFrame\FastLoader.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 63
     ' Comment Lines: 12
     '   Blank Lines: 11
-    '     File Size: 3.17 KB
+    '     File Size: 3.20 KB
 
 
     ' Module FastLoader
@@ -135,4 +135,3 @@ Public Module FastLoader
         Return FeatureVector.FromGeneral(name, array)
     End Function
 End Module
-

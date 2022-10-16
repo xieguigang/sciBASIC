@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d905c75c6a19898f5417868a2e7c335a, sciBASIC#\Data_science\MachineLearning\MachineLearning\QLearning\QState.vb"
+﻿#Region "Microsoft.VisualBasic::38db7f194f62b5cf3172d0da708b2383, sciBASIC#\Data_science\MachineLearning\MachineLearning\QLearning\QState.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 45
-    '    Code Lines: 19
-    ' Comment Lines: 20
-    '   Blank Lines: 6
-    '     File Size: 1.73 KB
+    '   Total Lines: 71
+    '    Code Lines: 35
+    ' Comment Lines: 23
+    '   Blank Lines: 13
+    '     File Size: 2.86 KB
 
 
+    '     Interface IQStateFeatureSet
+    ' 
+    '         Properties: AllQStates, QValueNames, stateFeatures
+    ' 
+    '         Function: ExtractStateVector
+    ' 
     '     Class QState
     ' 
-    '         Properties: Current, State
+    '         Properties: AllQStates, Current, State
     ' 
     '         Sub: SetState
     ' 

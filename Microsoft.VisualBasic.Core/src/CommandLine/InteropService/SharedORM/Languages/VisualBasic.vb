@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f73b7e898668a458c9d4dc7a3b38b7e, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\InteropService\SharedORM\Languages\VisualBasic.vb"
+﻿#Region "Microsoft.VisualBasic::aeb358e8499bbd9140c6456c36fa2915, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\InteropService\SharedORM\Languages\VisualBasic.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 248
     ' Comment Lines: 72
     '   Blank Lines: 60
-    '     File Size: 16.84 KB
+    '     File Size: 16.81 KB
 
 
     '     Class VisualBasic

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12b382a5d580c3fff9baacc62b669fad, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\Tcp\IPTools\IPEndPoint.vb"
+﻿#Region "Microsoft.VisualBasic::024c40a340e242f0d62827527230e787, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\Tcp\IPTools\IPEndPoint.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 73
     ' Comment Lines: 46
     '   Blank Lines: 23
-    '     File Size: 4.94 KB
+    '     File Size: 4.97 KB
 
 
     '     Class IPEndPoint

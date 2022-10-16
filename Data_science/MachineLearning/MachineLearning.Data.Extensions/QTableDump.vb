@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d28ef99f6839acfa5209f9db088ce425, sciBASIC#\Data_science\MachineLearning\MachineLearning.Data.Extensions\QTableDump.vb"
+﻿#Region "Microsoft.VisualBasic::47029061b0222090f779ae578a4e56f0, sciBASIC#\Data_science\MachineLearning\MachineLearning.Data.Extensions\QTableDump.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 21
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 898 B
+    '     File Size: 896 B
 
 
     ' Class QTableDump
@@ -74,4 +74,3 @@ Public Class QTableDump
         Call __buffer.Values.SaveTo(path, Encodings.ASCII)
     End Sub
 End Class
-

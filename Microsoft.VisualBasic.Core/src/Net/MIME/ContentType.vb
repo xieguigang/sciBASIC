@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b39c20ab78117ce7e79e11a5f29c5c71, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\MIME\ContentType.vb"
+﻿#Region "Microsoft.VisualBasic::ba3d66170f3cba105d18b9a45d3ae4e3, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\MIME\ContentType.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 68
+    '   Total Lines: 74
     '    Code Lines: 38
-    ' Comment Lines: 19
+    ' Comment Lines: 25
     '   Blank Lines: 11
-    '     File Size: 2.10 KB
+    '     File Size: 2.23 KB
 
 
     '     Structure ContentType

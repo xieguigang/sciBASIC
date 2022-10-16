@@ -1,52 +1,53 @@
-﻿#Region "Microsoft.VisualBasic::c1373f92f4a1b5e6eb10f162af7c801c, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\BinaryWriter.vb"
+﻿#Region "Microsoft.VisualBasic::4268f7e4958e1e091b5d6d7499c73f70, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\NetworkByteOrderBuffer.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 50
-'    Code Lines: 37
-' Comment Lines: 3
-'   Blank Lines: 10
-'     File Size: 1.98 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module BinaryWriter
-' 
-'         Function: (+2 Overloads) Serialization, serializeInternal
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 72
+    '    Code Lines: 51
+    ' Comment Lines: 2
+    '   Blank Lines: 19
+    '     File Size: 2.39 KB
+
+
+    '     Class NetworkByteOrderBuffer
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: defaultDecoder, defaultEncoder, networkByteOrderDecoder, networkByteOrderEncoder
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

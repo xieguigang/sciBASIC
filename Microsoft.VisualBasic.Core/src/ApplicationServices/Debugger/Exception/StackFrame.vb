@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82ecd271dd553aa30f81cc8c154dd810, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\StackFrame.vb"
+﻿#Region "Microsoft.VisualBasic::b1dcca44b61f51f96039a76ff90db4fa, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\StackFrame.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 91
+    '   Total Lines: 95
     '    Code Lines: 62
-    ' Comment Lines: 17
+    ' Comment Lines: 21
     '   Blank Lines: 12
-    '     File Size: 2.93 KB
+    '     File Size: 3.10 KB
 
 
     '     Class StackFrame

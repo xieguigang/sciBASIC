@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42ab668d81d321a063ced7ada88421dc, sciBASIC#\Data_science\DataMining\DataMining\ComponentModel\Discretizer\Discretizer.vb"
+﻿#Region "Microsoft.VisualBasic::87d2d39ad9ae6597043e4c2ff484c42d, sciBASIC#\Data_science\DataMining\DataMining\ComponentModel\Discretizer\Discretizer.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 64
-    '    Code Lines: 42
-    ' Comment Lines: 9
-    '   Blank Lines: 13
-    '     File Size: 1.80 KB
+    '   Total Lines: 84
+    '    Code Lines: 52
+    ' Comment Lines: 17
+    '   Blank Lines: 15
+    '     File Size: 2.46 KB
 
 
     '     Class Discretizer
     ' 
-    '         Properties: delta, max, min
+    '         Properties: binList, binSize, delta, max, min
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: createBins, GetLevel

@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::5bbf60ba82e21abb67dc071ccadd5061, sciBASIC#\Microsoft.VisualBasic.Core\src\My\File.vb"
+﻿#Region "Microsoft.VisualBasic::25b92c203a2378a7e45ae2b9c1ed6062, sciBASIC#\Microsoft.VisualBasic.Core\src\My\File.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 122
-'    Code Lines: 78
-' Comment Lines: 25
-'   Blank Lines: 19
-'     File Size: 4.16 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module File
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: FileOpened, GetHandle, OpenHandle, OpenTemp, Wait
-' 
-'         Sub: Close
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 127
+    '    Code Lines: 82
+    ' Comment Lines: 25
+    '   Blank Lines: 20
+    '     File Size: 4.15 KB
+
+
+    '     Module File
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: FileOpened, GetHandle, OpenHandle, OpenTemp, Wait
+    ' 
+    '         Sub: Close
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
