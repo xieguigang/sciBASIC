@@ -22,7 +22,8 @@ Namespace Mailto
             Dim raw As Dictionary(Of String, String) = ContentLoader(file.LineIterators.ToArray)
             Dim mail As New EmlReader With {
                 .BodyContent = raw("Body"),
-                .Encoding = raw("Content-Transfer-Encoding")
+                .Encoding = raw("Content-Transfer-Encoding"),
+                .[Date] = DateParser(raw("Date"))
             }
 
             If mail.Encoding.TextEquals("base64") Then
@@ -30,6 +31,14 @@ Namespace Mailto
             End If
 
             Return mail
+        End Function
+
+        Private Shared Function DateParser(val As String) As Date
+            Dim text = val.Split(","c).Last.Trim
+            Dim ddmmyyyy = text.Split.Take(3).JoinBy("/")
+            Dim d As Date = Date.Parse(ddmmyyyy)
+
+            Return d
         End Function
 
         Private Shared Function ContentLoader(lines As String()) As Dictionary(Of String, String)

@@ -22,8 +22,8 @@ Public Module emailParser
                                      End Function).Where(Function(r) r.Length > 3) _
                 .ToArray
 
-            Using book As New StreamWriter(raw.ChangeSuffix("txt").Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False))
-                For Each line In data.Where(Function(n) n.Length = 8)
+            Using book As New StreamWriter($"{raw.ParentPath}/{email.Date.ToString("yyyy-MM-dd")}.txt".Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False))
+                For Each line In data.Where(Function(n) n.Length = 8 OrElse n(Scan0).StartsWith("人民币(CNY)"))
                     Call book.WriteLine(line.JoinBy(vbTab))
                 Next
             End Using
