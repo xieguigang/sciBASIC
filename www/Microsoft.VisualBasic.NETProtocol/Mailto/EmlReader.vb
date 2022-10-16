@@ -1,5 +1,7 @@
 ﻿Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.Net.HTTP
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
+Imports Microsoft.VisualBasic.Text
 
 Namespace Mailto
 
@@ -14,33 +16,55 @@ Namespace Mailto
         Public Property [From]
         Public Property [To]
         Public Property Encoding As String
-        Public Property Content As String
+        Public Property BodyContent As String
 
         Public Shared Function ParseEMail(file As String) As EmlReader
             Dim raw As Dictionary(Of String, String) = ContentLoader(file.LineIterators.ToArray)
+            Dim mail As New EmlReader With {
+                .BodyContent = raw("Body"),
+                .Encoding = raw("Content-Transfer-Encoding")
+            }
 
+            If mail.Encoding.TextEquals("base64") Then
+                mail.BodyContent = Encodings.GB2312.GetString(mail.BodyContent.Base64RawBytes)
+            End If
+
+            Return mail
         End Function
 
         Private Shared Function ContentLoader(lines As String()) As Dictionary(Of String, String)
             Dim data As String = ""
             Dim tagHeader As New Regex("[^:]+[:]\s", RegexICSng)
             Dim contents As New Dictionary(Of String, String)
+            Dim body As String = ""
+            Dim loadBody As Boolean = False
 
             For Each line As String In lines
-                If tagHeader.Match(line).Success Then
-                    If Not data.StringEmpty Then
-                        Call AppendContent(contents, tagHeader, data)
+                If loadBody Then
+                    body = body & line
+                Else
+                    If tagHeader.Match(line).Success Then
+                        If Not data.StringEmpty Then
+                            Call AppendContent(contents, tagHeader, data)
+                        End If
+
+                        data = line
+                    Else
+                        data = data & line
                     End If
 
-                    data = line
-                Else
-                    data = data & line
+                    If line.StringEmpty Then
+                        If Not data.StringEmpty Then
+                            Call AppendContent(contents, tagHeader, data)
+                        End If
+
+                        ' begin email body
+                        loadBody = True
+                    End If
                 End If
             Next
 
-            If Not data.StringEmpty Then
-                Call AppendContent(contents, tagHeader, data)
-            End If
+            contents.Add("Body", body)
 
             Return contents
         End Function

@@ -244,7 +244,8 @@ Namespace Text
         ''' <param name="encoding">名称的大小写不敏感</param>
         ''' <param name="onFailure"></param>
         ''' <returns></returns>
-        <Extension> Public Function ParseEncodingsName(encoding$, Optional onFailure As Encodings = Encodings.ASCII) As Encodings
+        <Extension>
+        Public Function ParseEncodingsName(encoding$, Optional onFailure As Encodings = Encodings.ASCII) As Encodings
             For Each key In TextEncodings.Keys
                 If encoding.TextEquals(key.ToString) Then
                     Return key
@@ -252,6 +253,12 @@ Namespace Text
             Next
 
             Return onFailure
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function GetString(encoding As Encodings, bytes As Byte()) As String
+            Return encoding.CodePage.GetString(bytes)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
