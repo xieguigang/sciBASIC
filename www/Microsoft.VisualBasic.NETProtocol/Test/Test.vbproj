@@ -107,13 +107,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
-      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj">
+      <Project>{75980f7a-67cf-49d2-a832-39461563a900}</Project>
+      <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Microsoft.VisualBasic.NETwork.vbproj">
-      <Project>{a60240d1-e78b-4b96-85e3-45256571c2cb}</Project>
-      <Name>Microsoft.VisualBasic.NETProtocol</Name>
+    <ProjectReference Include="..\network-netcore5.vbproj">
+      <Project>{8a8eda74-6344-487a-ad40-bbcaad714661}</Project>
+      <Name>network-netcore5</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
