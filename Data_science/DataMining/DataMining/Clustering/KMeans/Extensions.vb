@@ -122,7 +122,9 @@ Namespace KMeans
         ''' </summary>
         ''' <param name="source"></param>
         ''' <param name="expected"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' 输出的元素和输入相比较是乱序的
+        ''' </returns>
         <Extension>
         Public Function Kmeans(source As IEnumerable(Of EntityClusterModel),
                                expected%,

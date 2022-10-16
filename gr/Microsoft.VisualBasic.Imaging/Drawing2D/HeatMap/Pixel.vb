@@ -61,9 +61,25 @@ Imports System.Drawing
 
 Namespace Drawing2D.HeatMap
 
+    ''' <summary>
+    ''' a generic data model for <see cref="HeatMapRaster(Of T)"/>
+    ''' </summary>
     Public Interface Pixel
+
+        ''' <summary>
+        ''' the x axis data
+        ''' </summary>
+        ''' <returns></returns>
         Property X As Integer
+        ''' <summary>
+        ''' the y axis data
+        ''' </summary>
+        ''' <returns></returns>
         Property Y As Integer
+        ''' <summary>
+        ''' the color scale data
+        ''' </summary>
+        ''' <returns></returns>
         Property Scale As Double
 
     End Interface

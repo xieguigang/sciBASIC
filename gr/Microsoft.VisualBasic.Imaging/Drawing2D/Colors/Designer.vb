@@ -225,9 +225,10 @@ Namespace Drawing2D.Colors
                     .LoadJSON(Of Dictionary(Of String, String()))
                 Dim valids As New Dictionary(Of Color, Color())
 
-                For Each x In colors
-                    valids(ColorTranslator.FromHtml(x.Key)) =
-                        x.Value.Select(AddressOf ColorTranslator.FromHtml).ToArray
+                For Each x As KeyValuePair(Of String, String()) In colors
+                    valids(ColorTranslator.FromHtml(x.Key)) = x.Value _
+                        .Select(AddressOf ColorTranslator.FromHtml) _
+                        .ToArray
                 Next
 
                 AvailableInterpolates = valids

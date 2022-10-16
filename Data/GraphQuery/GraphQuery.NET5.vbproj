@@ -5,7 +5,7 @@
 	  <TargetFrameworks>net6.0;net5.0;net48</TargetFrameworks>
     <AssemblyName>Microsoft.VisualBasic.Data.GraphQuery</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
-    <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;PlantMAT;mzkit;NPSearch;mzkit_win32</Configurations>
+    <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;PlantMAT;mzkit;NPSearch;mzkit_win32;gcmodeller_desktop</Configurations>
     <PackageId>Microsoft.VisualBasic.Data.GraphQuery</PackageId>
     <Version>5.0.123</Version>
     <Description>GraphQuery is a query language and execution engine tied to any backend service. It is back-end language independent.</Description>

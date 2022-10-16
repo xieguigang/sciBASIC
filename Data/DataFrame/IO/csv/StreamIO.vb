@@ -146,16 +146,28 @@ Namespace IO
                                       file As Stream,
                                       Optional encoding As Encoding = Nothing,
                                       Optional tsv As Boolean = False,
-                                      Optional silent As Boolean = False) As Boolean
+                                      Optional silent As Boolean = False,
+                                      Optional autoCloseFile As Boolean = True) As Boolean
 
             Dim stopwatch As Stopwatch = Stopwatch.StartNew
             Dim del As Char = ","c Or ASCII.TAB.AsDefault(Function() tsv)
+            Dim out As New StreamWriter(file, encoding Or UTF8)
 
-            Using out As New StreamWriter(file, encoding Or UTF8)
-                For Each line$ In csv.Select(Function(r) r.AsLine(del))
-                    Call out.WriteLine(line)
-                Next
-            End Using
+            For Each line$ In csv.Select(Function(r) r.AsLine(del))
+                Call out.WriteLine(line)
+            Next
+
+            ' 20221005
+            '
+            ' data must be flush at here
+            ' or the file stream still leaves
+            ' empty if the table file is
+            ' small in size
+            Call out.Flush()
+
+            If autoCloseFile Then
+                Call out.Dispose()
+            End If
 
             If Not silent Then
                 Call $"Generate csv file document using time {stopwatch.ElapsedMilliseconds} ms.".__INFO_ECHO

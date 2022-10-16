@@ -15,7 +15,7 @@
 		<Platforms>AnyCPU;x64</Platforms>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit</Configurations>
+		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;gcmodeller_desktop</Configurations>
 		<Description>UMap</Description>
 		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>
@@ -45,6 +45,10 @@
 	  <DocumentationFile>Microsoft.VisualBasic.DataMining.UMAP.xml</DocumentationFile>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='gcmodeller_desktop|AnyCPU'">
+	  <DocumentationFile>Microsoft.VisualBasic.DataMining.UMAP.xml</DocumentationFile>
+	</PropertyGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|AnyCPU'">
 	  <DocumentationFile>Microsoft.VisualBasic.DataMining.UMAP.xml</DocumentationFile>
 	</PropertyGroup>
@@ -64,6 +68,18 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
+	  <DocumentationFile>Microsoft.VisualBasic.DataMining.UMAP.xml</DocumentationFile>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+	  <Optimize>false</Optimize>
+	  <DebugSymbols>true</DebugSymbols>
+	  <DebugType>full</DebugType>
+	  <DefineDebug>false</DefineDebug>
+	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+	  <OutputPath>D:\GCModeller\src\R-sharp\App\</OutputPath>
+	  <DefineTrace>true</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='gcmodeller_desktop|x64'">
 	  <DocumentationFile>Microsoft.VisualBasic.DataMining.UMAP.xml</DocumentationFile>
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <Optimize>false</Optimize>

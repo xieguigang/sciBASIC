@@ -107,7 +107,7 @@ Namespace CommandLine.InteropService.SharedORM
             Call vb.AppendLine($"    Public Const App$ = ""{exe}.exe""")
             Call vb.AppendLine()
             Call vb.AppendLine("    Sub New(App$)")
-            Call vb.AppendLine($"        MyBase.{NameOf(InteropService._executableAssembly)} = App$")
+            Call vb.AppendLine($"        Call MyBase.New(app:=App$)")
             Call vb.AppendLine("    End Sub")
             Call vb.AppendLine("        
 ''' <summary>

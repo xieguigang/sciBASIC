@@ -148,16 +148,16 @@ Namespace StorageProvider.Reflection
                 )
             End If
 
-#If netcore5 = 0 Then
-            ' 请注意，由于这个属性之间有继承关系，这一最基本的类型会放在最后以防止出现重复
-            attrs = [Property].GetCustomAttributes(attributeType:=GetType(System.Data.Linq.Mapping.ColumnAttribute), inherit:=True)
+            '#If NET48 Then
+            '            ' 请注意，由于这个属性之间有继承关系，这一最基本的类型会放在最后以防止出现重复
+            '            attrs = [Property].GetCustomAttributes(attributeType:=GetType(System.Data.Linq.Mapping.ColumnAttribute), inherit:=True)
 
-            If Not attrs.IsNullOrEmpty Then
-                ' 也可能是别名属性
-                Dim attr = DirectCast(attrs(Scan0), System.Data.Linq.Mapping.ColumnAttribute)
-                Return __generateMask([Property], [alias]:=attr.Name, forcePrimitive:=forcePrimitive)
-            End If
-#Else
+            '            If Not attrs.IsNullOrEmpty Then
+            '                ' 也可能是别名属性
+            '                Dim attr = DirectCast(attrs(Scan0), System.Data.Linq.Mapping.ColumnAttribute)
+            '                Return __generateMask([Property], [alias]:=attr.Name, forcePrimitive:=forcePrimitive)
+            '            End If
+            '#Else
             ' 请注意，由于这个属性之间有继承关系，这一最基本的类型会放在最后以防止出现重复
             attrs = [Property].GetCustomAttributes(attributeType:=GetType(SchemaMaps.ColumnAttribute), inherit:=True)
 
@@ -166,7 +166,7 @@ Namespace StorageProvider.Reflection
                 Dim attr = DirectCast(attrs(Scan0), SchemaMaps.ColumnAttribute)
                 Return __generateMask([Property], [alias]:=attr.Name, forcePrimitive:=forcePrimitive)
             End If
-#End If
+            ' #End If
 
             If Not Explicit Then
                 Return __generateMask([Property], "", forcePrimitive)

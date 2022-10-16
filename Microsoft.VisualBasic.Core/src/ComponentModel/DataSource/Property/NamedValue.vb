@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::fcb8c2d1d9fb662733bd1a9325f5eca6, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\NamedValue.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 200
-    '    Code Lines: 124
-    ' Comment Lines: 50
-    '   Blank Lines: 26
-    '     File Size: 7.72 KB
+' Summaries:
 
 
-    '     Structure NamedValue
-    ' 
-    '         Properties: Description, IsEmpty, Name, Value, ValueType
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: FixValue, ToString
-    '         Operators: (+2 Overloads) +, <>, =
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 200
+'    Code Lines: 124
+' Comment Lines: 50
+'   Blank Lines: 26
+'     File Size: 7.72 KB
+
+
+'     Structure NamedValue
+' 
+'         Properties: Description, IsEmpty, Name, Value, ValueType
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: FixValue, ToString
+'         Operators: (+2 Overloads) +, <>, =
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-#If NET48 Then
+#If NET48 And Not NETCOREAPP Then
 Imports System.Web.Script.Serialization
 #End If
 

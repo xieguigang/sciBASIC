@@ -57,6 +57,10 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace ApplicationServices.Debugging.Diagnostics
 
+    ''' <summary>
+    ''' Contains the necessary function calls information, source
+    ''' file location information for traceback the runtime error
+    ''' </summary>
     Public Class StackFrame
 
         ''' <summary>

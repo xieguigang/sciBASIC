@@ -77,9 +77,15 @@ Namespace BSON
         End Function
 
         Public Function Load(buf As Stream) As JsonObject
-            Using decoder As New Decoder(buf)
-                Return decoder.decodeDocument()
-            End Using
+            If buf.Length = 0 Then
+                ' 20221008
+                ' is empty object?
+                Return New JsonObject
+            Else
+                Using decoder As New Decoder(buf)
+                    Return decoder.decodeDocument()
+                End Using
+            End If
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

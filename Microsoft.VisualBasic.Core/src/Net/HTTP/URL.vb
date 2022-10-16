@@ -81,6 +81,13 @@ Namespace Net.Http
         ''' <returns></returns>
         Public Property hashcode As String
 
+        ''' <summary>
+        ''' get url query parameter
+        ''' </summary>
+        ''' <param name="query">
+        ''' the parameter name inside the url query list
+        ''' </param>
+        ''' <returns></returns>
         Default Public ReadOnly Property getArgumentVal(query As String) As String
             Get
                 With GetValues(query)

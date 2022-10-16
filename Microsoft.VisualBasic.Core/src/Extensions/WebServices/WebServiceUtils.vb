@@ -110,7 +110,8 @@ Public Module WebServiceUtils
     ''' <returns></returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function isURL(url As String) As Boolean
+    <Extension>
+    Public Function isURL(url As String) As Boolean
         Return url.IndexOfAny({ASCII.LF, ASCII.CR}) = -1 AndAlso url.InStrAny(DirectCast(Protocols, String())) = 1
     End Function
 
@@ -120,7 +121,8 @@ Public Module WebServiceUtils
     ''' <param name="str"></param>
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function IsURLPattern(str As String) As Boolean
+    <Extension>
+    Public Function IsURLPattern(str As String) As Boolean
         Return str.isURL OrElse str.IsPattern(URLPattern)
     End Function
 
@@ -161,7 +163,8 @@ Public Module WebServiceUtils
     ''' </summary>
     ''' <param name="ex"></param>
     ''' <returns></returns>
-    <Extension> Public Function IsSocketPortOccupied(ex As Exception) As Boolean
+    <Extension>
+    Public Function IsSocketPortOccupied(ex As Exception) As Boolean
         If TypeOf ex Is System.Net.Sockets.SocketException AndAlso
             InStr(ex.ToString, PortOccupied, CompareMethod.Text) Then
             Return True

@@ -1,64 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::43f21e7cf32f2481c06cd8b909b25488, sciBASIC#\Data_science\DataMining\UMAP\Components\SIMD\SIMDInt.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 61
-    '    Code Lines: 51
-    ' Comment Lines: 0
-    '   Blank Lines: 10
-    '     File Size: 2.04 KB
+' Summaries:
 
 
-    ' Module SIMDint
-    ' 
-    '     Sub: Uniform, Zero
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 61
+'    Code Lines: 51
+' Comment Lines: 0
+'   Blank Lines: 10
+'     File Size: 2.04 KB
+
+
+' Module SIMDint
+' 
+'     Sub: Uniform, Zero
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Numerics
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.SIMD
 
 Friend Module SIMDint
 
-    Private ReadOnly _vs1 As Integer = 8 ' Vector(Of Integer).Count
-    Private ReadOnly _vs2 As Integer = 2 * _vs1 ' Vector(Of Integer).Count
-    Private ReadOnly _vs3 As Integer = 3 * _vs1 ' Vector(Of Integer).Count
-    Private ReadOnly _vs4 As Integer = 4 * _vs1 ' Vector(Of Integer).Count
+    Private ReadOnly _vs1 As Integer = SIMDEnvironment.countInteger
+    Private ReadOnly _vs2 As Integer = 2 * _vs1
+    Private ReadOnly _vs3 As Integer = 3 * _vs1
+    Private ReadOnly _vs4 As Integer = 4 * _vs1
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub Zero(ByRef lhs As Integer())
@@ -66,25 +67,25 @@ Friend Module SIMDint
         Dim offset = 0
 
         While count >= SIMDint._vs4
-            Vector.Zero.CopyTo(lhs, offset)
-            Vector.Zero.CopyTo(lhs, offset + SIMDint._vs1)
-            Vector.Zero.CopyTo(lhs, offset + SIMDint._vs2)
-            Vector.Zero.CopyTo(lhs, offset + SIMDint._vs3)
+            Vector(Of Integer).Zero.CopyTo(lhs, offset)
+            Vector(Of Integer).Zero.CopyTo(lhs, offset + SIMDint._vs1)
+            Vector(Of Integer).Zero.CopyTo(lhs, offset + SIMDint._vs2)
+            Vector(Of Integer).Zero.CopyTo(lhs, offset + SIMDint._vs3)
             If count = SIMDint._vs4 Then Return
             count -= SIMDint._vs4
             offset += SIMDint._vs4
         End While
 
         If count >= SIMDint._vs2 Then
-            Vector.Zero.CopyTo(lhs, offset)
-            Vector.Zero.CopyTo(lhs, offset + SIMDint._vs1)
+            Vector(Of Integer).Zero.CopyTo(lhs, offset)
+            Vector(Of Integer).Zero.CopyTo(lhs, offset + SIMDint._vs1)
             If count = SIMDint._vs2 Then Return
             count -= SIMDint._vs2
             offset += SIMDint._vs2
         End If
 
         If count >= SIMDint._vs1 Then
-            Vector.Zero.CopyTo(lhs, offset)
+            Vector(Of Integer).Zero.CopyTo(lhs, offset)
             If count = SIMDint._vs1 Then Return
             count -= SIMDint._vs1
             offset += SIMDint._vs1
