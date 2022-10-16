@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::49ab79e2e3613208fc9b83ccc783cf6e, sciBASIC#\Data_science\DataMining\FeatureFrame\Encoder.vb"
+﻿#Region "Microsoft.VisualBasic::b25d7e6ffe7007cb7d58785d5027f25b, sciBASIC#\Data_science\DataMining\FeatureFrame\Encoder.vb"
 
     ' Author:
     ' 
@@ -128,4 +128,3 @@ Public Class Encoder
         End Select
     End Function
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de15146dbbcf84939502c268459aea5a, sciBASIC#\Data_science\DataMining\FeatureFrame\Encoder\FlagEncoder.vb"
+﻿#Region "Microsoft.VisualBasic::533168820eda735e3874e560fbeb7618, sciBASIC#\Data_science\DataMining\FeatureFrame\Encoder\FlagEncoder.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 16
     ' Comment Lines: 3
     '   Blank Lines: 5
-    '     File Size: 787 B
+    '     File Size: 785 B
 
 
     ' Class FlagEncoder
@@ -73,4 +73,3 @@ Public Class FlagEncoder : Inherits FeatureEncoder
         }
     End Function
 End Class
-

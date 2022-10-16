@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10e49d06ca7afdeb8283c7118ce4c5fc, sciBASIC#\Data_science\DataMining\FeatureFrame\Encoder\EnumEncoder.vb"
+﻿#Region "Microsoft.VisualBasic::a61c9331e7394af012d6c7c0f49acf0b, sciBASIC#\Data_science\DataMining\FeatureFrame\Encoder\EnumEncoder.vb"
 
     ' Author:
     ' 
@@ -82,4 +82,3 @@ Public Class EnumEncoder : Inherits FeatureEncoder
         }
     End Function
 End Class
-

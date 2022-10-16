@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d3d30d1fa08952c6e5ea9b3af5f75284, sciBASIC#\Data_science\DataMining\FeatureFrame\Encoder\NumericBinsEncoder.vb"
+﻿#Region "Microsoft.VisualBasic::086220f969fdd10c6274126670277338, sciBASIC#\Data_science\DataMining\FeatureFrame\Encoder\NumericBinsEncoder.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 40
     ' Comment Lines: 0
     '   Blank Lines: 9
-    '     File Size: 1.87 KB
+    '     File Size: 1.86 KB
 
 
     ' Class NumericBinsEncoder
@@ -99,4 +99,3 @@ Public Class NumericBinsEncoder : Inherits FeatureEncoder
     End Function
 
 End Class
-

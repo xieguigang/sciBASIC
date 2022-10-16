@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8cf1178f4a2d35680400a7fd73ed6935, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\HeatMapRaster.vb"
+﻿#Region "Microsoft.VisualBasic::36146b499919f88361538b28c0f49d68, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\HeatMapRaster.vb"
 
     ' Author:
     ' 
@@ -269,4 +269,3 @@ Namespace Drawing2D.HeatMap
         End Function
     End Class
 End Namespace
-

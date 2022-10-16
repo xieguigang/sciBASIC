@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8cfa5504a5d26ddaeeebcdb8fc49440, sciBASIC#\Data_science\Mathematica\Math\DataFrame\DataFrame\MatrixTypeCast.vb"
+﻿#Region "Microsoft.VisualBasic::54db153efb468a8a71c3e0c1be46d2b7, sciBASIC#\Data_science\Mathematica\Math\DataFrame\DataFrame\MatrixTypeCast.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 15
     ' Comment Lines: 5
     '   Blank Lines: 4
-    '     File Size: 716 B
+    '     File Size: 714 B
 
 
     ' Module MatrixTypeCast
@@ -73,4 +73,3 @@ Public Module MatrixTypeCast
         }
     End Function
 End Module
-

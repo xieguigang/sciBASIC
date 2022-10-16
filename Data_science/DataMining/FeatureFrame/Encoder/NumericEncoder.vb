@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::227d7f936e4d6866b9b939bf10d84a66, sciBASIC#\Data_science\DataMining\FeatureFrame\Encoder\NumericEncoder.vb"
+﻿#Region "Microsoft.VisualBasic::58d0c4456f566c0361dca7e54948959e, sciBASIC#\Data_science\DataMining\FeatureFrame\Encoder\NumericEncoder.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 12
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 553 B
+    '     File Size: 551 B
 
 
     ' Class NumericEncoder
@@ -65,4 +65,3 @@ Public Class NumericEncoder : Inherits FeatureEncoder
         }
     End Function
 End Class
-

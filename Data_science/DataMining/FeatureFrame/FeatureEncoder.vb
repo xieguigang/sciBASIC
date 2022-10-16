@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::00bbb6f0ed8e4715ff6be66bdeec771a, sciBASIC#\Data_science\DataMining\FeatureFrame\FeatureEncoder.vb"
+﻿#Region "Microsoft.VisualBasic::6e48861c59c395a6a0fffe4251eb582a, sciBASIC#\Data_science\DataMining\FeatureFrame\FeatureEncoder.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 12
     ' Comment Lines: 3
     '   Blank Lines: 3
-    '     File Size: 592 B
+    '     File Size: 590 B
 
 
     ' Class FeatureEncoder
@@ -67,4 +67,3 @@ Public MustInherit Class FeatureEncoder
             .ToArray
     End Function
 End Class
-
