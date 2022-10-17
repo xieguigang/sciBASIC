@@ -85,7 +85,7 @@ Namespace Distributions.BinBox
         ''' <remarks>
         ''' 宽度是自动计算的
         ''' </remarks>
-        Public Function FixedWidthBins(Of T)(data As IEnumerable(Of T), k%, eval As Evaluate(Of T)) As IEnumerable(Of DataBinBox(Of T))
+        Public Function FixedWidthBins(Of T)(data As IEnumerable(Of T), k%, eval As Evaluate(Of T), Optional eps As Double = 0.001) As IEnumerable(Of DataBinBox(Of T))
             ' 升序排序方便进行快速计算
             Dim v = data.OrderBy(Function(d) eval(d)).ToArray
             Dim min# = eval(v.First)
@@ -94,9 +94,24 @@ Namespace Distributions.BinBox
 
             If width = 0.0 Then
                 Return {}
-            End If
+            ElseIf width < eps Then
+                ' 20221017
+                ' the width is too small, split into k parts directly!
+                ' or the entire process may takes a very long time to run
+                Dim bins = v.Split(partitionSize:=v.Length / k + 1)
+                Dim boxes = bins _
+                    .Select(Function(part)
+                                Dim lowerbound As Double = eval(part.First)
+                                Dim upbound As Double = eval(part.Last)
 
-            Return FixedWidthBins(v, width, eval, min, max)
+                                Return New DataBinBox(Of T)(part, eval, lowerbound, upbound)
+                            End Function) _
+                    .ToArray
+
+                Return boxes
+            Else
+                Return FixedWidthBins(v, width, eval, min, max)
+            End If
         End Function
 
         ''' <summary>
