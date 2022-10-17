@@ -1,51 +1,51 @@
-﻿#Region "Microsoft.VisualBasic::15cfcf1029c042c0477ffb2ecc8cd008, sciBASIC#\Data_science\DataMining\DataMining\ValueMapping.vb"
+﻿#Region "Microsoft.VisualBasic::3c4f462dd3198974583933ba03d16a6c, sciBASIC#\Data_science\DataMining\DataMining\ValueMapping.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 41
-'    Code Lines: 21
-' Comment Lines: 15
-'   Blank Lines: 5
-'     File Size: 1.55 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module ValueMapping
-' 
-'     Function: Discretization, ModalNumber
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 76
+    '    Code Lines: 47
+    ' Comment Lines: 20
+    '   Blank Lines: 9
+    '     File Size: 2.74 KB
+
+
+    ' Module ValueMapping
+    ' 
+    '     Function: Discretization, ModalNumber, Z
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::108621f4f8dcada4bf68eafe1f52d6be, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\Pixel.vb"
+﻿#Region "Microsoft.VisualBasic::184b0fb94490452b6703afd95f9f9d2c, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\Pixel.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 35
+    '   Total Lines: 51
     '    Code Lines: 26
-    ' Comment Lines: 0
-    '   Blank Lines: 9
-    '     File Size: 894 B
+    ' Comment Lines: 15
+    '   Blank Lines: 10
+    '     File Size: 1.33 KB
 
 
     '     Interface Pixel

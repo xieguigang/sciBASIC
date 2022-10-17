@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::144564bcd3ab2be38a1a037dcff99d98, sciBASIC#\mime\application%json\BSON\BSON.vb"
+﻿#Region "Microsoft.VisualBasic::25b3b0256c1dcc3a95046b555ec29ab2, sciBASIC#\mime\application%json\BSON\BSON.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 73
-    '    Code Lines: 50
-    ' Comment Lines: 10
+    '   Total Lines: 79
+    '    Code Lines: 54
+    ' Comment Lines: 12
     '   Blank Lines: 13
-    '     File Size: 2.29 KB
+    '     File Size: 2.48 KB
 
 
     '     Module BSONFormat

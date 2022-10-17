@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4de1f1769ae6ce3de1bd62f9056eddfc, sciBASIC#\Microsoft.VisualBasic.Core\test\devTest.vb"
+﻿#Region "Microsoft.VisualBasic::f7f080a3937977b0bc3d8232641b57f7, sciBASIC#\Microsoft.VisualBasic.Core\test\devTest.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 12
-    '    Code Lines: 9
+    '   Total Lines: 31
+    '    Code Lines: 22
     ' Comment Lines: 0
-    '   Blank Lines: 3
-    '     File Size: 348 B
+    '   Blank Lines: 9
+    '     File Size: 856 B
 
 
     ' Module devTest
     ' 
-    '     Sub: Main
+    '     Sub: logfileTest, Main
     ' 
     ' /********************************************************************************/
 

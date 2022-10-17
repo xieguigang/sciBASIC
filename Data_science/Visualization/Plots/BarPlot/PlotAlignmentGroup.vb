@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::376f89b15b6ec65728ad4bc98d04eb85, sciBASIC#\Data_science\Visualization\Plots\BarPlot\PlotAlignmentGroup.vb"
+﻿#Region "Microsoft.VisualBasic::703a48350fcde2b7d933f7afca3e9499, sciBASIC#\Data_science\Visualization\Plots\BarPlot\PlotAlignmentGroup.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 320
     ' Comment Lines: 16
     '   Blank Lines: 68
-    '     File Size: 17.54 KB
+    '     File Size: 17.55 KB
 
 
     '     Class PlotAlignmentGroup

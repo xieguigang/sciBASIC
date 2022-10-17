@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b2f1f4372d00ddb31d26466a8bc3a0f, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\IO\TextEncodings.vb"
+﻿#Region "Microsoft.VisualBasic::f84888c84b9d4838ac4fe8aa2fd5dd20, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\IO\TextEncodings.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 247
-    '    Code Lines: 121
+    '   Total Lines: 254
+    '    Code Lines: 127
     ' Comment Lines: 99
-    '   Blank Lines: 27
-    '     File Size: 12.27 KB
+    '   Blank Lines: 28
+    '     File Size: 12.52 KB
 
 
     '     Module TextEncodings
@@ -47,7 +47,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: __gbk2312_encoding, CodeArray, (+2 Overloads) CodePage, codePageTable, GetEncodings
-    '                   ParseEncodingsName, TransEncoding
+    '                   GetString, ParseEncodingsName, TransEncoding
     ' 
     ' 
     ' /********************************************************************************/
@@ -244,7 +244,8 @@ Namespace Text
         ''' <param name="encoding">名称的大小写不敏感</param>
         ''' <param name="onFailure"></param>
         ''' <returns></returns>
-        <Extension> Public Function ParseEncodingsName(encoding$, Optional onFailure As Encodings = Encodings.ASCII) As Encodings
+        <Extension>
+        Public Function ParseEncodingsName(encoding$, Optional onFailure As Encodings = Encodings.ASCII) As Encodings
             For Each key In TextEncodings.Keys
                 If encoding.TextEquals(key.ToString) Then
                     Return key
@@ -252,6 +253,12 @@ Namespace Text
             Next
 
             Return onFailure
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function GetString(encoding As Encodings, bytes As Byte()) As String
+            Return encoding.CodePage.GetString(bytes)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47a836cc7b44a6ca0a4a20ab85505e6b, sciBASIC#\Data_science\DataMining\BinaryTree\ClusterTree\ClusterTree.vb"
+﻿#Region "Microsoft.VisualBasic::12a499948b960c10c7059dbec582e36c, sciBASIC#\Data_science\DataMining\BinaryTree\ClusterTree\ClusterTree.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 76
+    '   Total Lines: 80
     '    Code Lines: 50
-    ' Comment Lines: 15
+    ' Comment Lines: 19
     '   Blank Lines: 11
-    '     File Size: 2.57 KB
+    '     File Size: 2.73 KB
 
 
     ' Class ClusterTree

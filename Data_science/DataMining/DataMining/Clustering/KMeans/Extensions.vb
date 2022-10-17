@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::476d3178d49fdffc8cff14ba81fb8b14, sciBASIC#\Data_science\DataMining\DataMining\Clustering\KMeans\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::91247300cba05097dd20b0fdad501687, sciBASIC#\Data_science\DataMining\DataMining\Clustering\KMeans\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 152
+    '   Total Lines: 154
     '    Code Lines: 125
-    ' Comment Lines: 13
+    ' Comment Lines: 15
     '   Blank Lines: 14
-    '     File Size: 6.96 KB
+    '     File Size: 7.03 KB
 
 
     '     Module Extensions

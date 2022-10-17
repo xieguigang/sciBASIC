@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e56018c1e94db7648183289009cac8f0, sciBASIC#\Data_science\DataMining\UMAP\Components\Tree\Tree.vb"
+﻿#Region "Microsoft.VisualBasic::84fb518c368899760372dd0343fc8a07, sciBASIC#\Data_science\DataMining\UMAP\Components\Tree\Tree.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 234
-    '    Code Lines: 168
-    ' Comment Lines: 29
-    '   Blank Lines: 37
-    '     File Size: 10.63 KB
+    '   Total Lines: 256
+    '    Code Lines: 178
+    ' Comment Lines: 40
+    '   Blank Lines: 38
+    '     File Size: 11.23 KB
 
 
     '     Module Tree
@@ -67,7 +67,12 @@ Namespace Tree
             Return Tree.MakeEuclideanTree(data, indices, leafSize, n, random)
         End Function
 
-        Private Function MakeEuclideanTree(data As Double()(), indices As Integer(), leafSize As Integer, q As Integer, random As IProvideRandomValues) As RandomProjectionTreeNode
+        Private Function MakeEuclideanTree(data As Double()(),
+                                           indices As Integer(),
+                                           leafSize As Integer,
+                                           q As Integer,
+                                           random As IProvideRandomValues) As RandomProjectionTreeNode
+
             If indices.Length > leafSize Then
                 Dim any = Tree.EuclideanRandomProjectionSplit(data, indices, random)
                 Dim leftChild = Tree.MakeEuclideanTree(data, any.indicesLeft, leafSize, q + 1, random)
@@ -114,10 +119,12 @@ Namespace Tree
         End Function
 
         ''' <summary>
-        ''' Given a set of ``indices`` for data points from ``data``, create a random hyperplane to split the data, 
-        ''' returning two arrays indices that fall on either side of the hyperplane. This is the basis for a random 
-        ''' projection tree, which simply uses this splitting recursively. This particular split uses euclidean 
-        ''' distance to determine the hyperplane and which side each data sample falls on.
+        ''' Given a set of ``indices`` for data points from ``data``, create 
+        ''' a random hyperplane to split the data, returning two arrays indices 
+        ''' that fall on either side of the hyperplane. This is the basis for
+        ''' a random projection tree, which simply uses this splitting recursively.
+        ''' This particular split uses euclidean distance to determine the 
+        ''' hyperplane and which side each data sample falls on.
         ''' </summary>
         Private Function EuclideanRandomProjectionSplit(data As Double()(), indices As Integer(), random As IProvideRandomValues) As (indicesLeft As Integer(), IndicesRight As Integer(), HyperplaneVector As Double(), HyperplaneOffset As Double)
             Dim [dim] = data(0).Length
@@ -130,7 +137,8 @@ Namespace Tree
             Dim left = indices(leftIndex)
             Dim right = indices(rightIndex)
 
-            ' Compute the normal vector to the hyperplane (the vector between the two points) and the offset from the origin
+            ' Compute the normal vector to the hyperplane (the vector between the
+            ' two points) and the offset from the origin
             Dim hyperplaneOffset = 0F
             Dim hyperplaneVector = New Double([dim] - 1) {}
 
@@ -140,7 +148,9 @@ Namespace Tree
             Next
 
             ' For each point compute the margin (project into normal vector)
-            ' If we are on lower side of the hyperplane put in one pile, otherwise put it in the other pile (if we hit hyperplane on the nose, flip a coin)
+            ' If we are on lower side of the hyperplane put in one pile,
+            ' otherwise put it in the other pile (if we hit hyperplane on the
+            ' nose, flip a coin)
             Dim nLeft = 0
             Dim nRight = 0
             Dim side = New Integer(indices.Length - 1) {}
@@ -173,7 +183,8 @@ Namespace Tree
             Dim indicesLeft = New Integer(nLeft - 1) {}
             Dim indicesRight = New Integer(nRight - 1) {}
 
-            ' Populate the arrays with indices according to which side they fell on
+            ' Populate the arrays with indices according to which
+            ' side they fell on
             nLeft = 0
             nRight = 0
 
@@ -191,7 +202,13 @@ Namespace Tree
             Return (indicesLeft, indicesRight, hyperplaneVector, hyperplaneOffset)
         End Function
 
-        Private Function RecursiveFlatten(tree As RandomProjectionTreeNode, hyperplanes As Double()(), offsets As Double(), children As Integer()(), indices As Integer()(), nodeNum As Integer, leafNum As Integer) As (nodeNum As Integer, leafNum As Integer)
+        Private Function RecursiveFlatten(tree As RandomProjectionTreeNode,
+                                          hyperplanes As Double()(),
+                                          offsets As Double(),
+                                          children As Integer()(),
+                                          indices As Integer()(),
+                                          nodeNum As Integer,
+                                          leafNum As Integer) As (nodeNum As Integer, leafNum As Integer)
             If tree.IsLeaf Then
                 children(nodeNum)(0) = -leafNum
 
@@ -225,9 +242,14 @@ Namespace Tree
         End Function
 
         ''' <summary>
-        ''' Generate an array of sets of candidate nearest neighbors by constructing a random projection forest and taking the leaves of all the trees. Any given tree has leaves that are
-        ''' a set of potential nearest neighbors.Given enough trees the set of all such leaves gives a good likelihood of getting a good set of nearest neighbors in composite. Since such
-        ''' a random projection forest is inexpensive to compute, this can be a useful means of seeding other nearest neighbor algorithms.
+        ''' Generate an array of sets of candidate nearest neighbors by 
+        ''' constructing a random projection forest and taking the leaves
+        ''' of all the trees. Any given tree has leaves that are a set 
+        ''' of potential nearest neighbors.Given enough trees the set of
+        ''' all such leaves gives a good likelihood of getting a good set
+        ''' of nearest neighbors in composite. Since such a random 
+        ''' projection forest is inexpensive to compute, this can be a 
+        ''' useful means of seeding other nearest neighbor algorithms.
         ''' </summary>
         Public Function MakeLeafArray(forest As FlatTree()) As Integer()()
             If forest.Length > 0 Then

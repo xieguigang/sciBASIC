@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b322d411c1fb3ff3889d3460c9da2449, sciBASIC#\Data_science\DataMining\DataMining\ComponentModel\Evaluation\RegressionClassify.vb"
+﻿#Region "Microsoft.VisualBasic::bfa656ca82f533d81923905c33d68e06, sciBASIC#\Data_science\DataMining\DataMining\Evaluation\RegressionClassify.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 3
     '   Blank Lines: 5
-    '     File Size: 519 B
+    '     File Size: 504 B
 
 
     '     Class RegressionClassify

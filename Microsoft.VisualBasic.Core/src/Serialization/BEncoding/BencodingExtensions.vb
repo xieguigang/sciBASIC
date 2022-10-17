@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e6b2953cfc1559fa0aa5848ed5fcf14, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BencodingExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::1fa08d256792837b4c330bca2ab7e315, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BencodingExtensions.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 134
-    '    Code Lines: 72
+    '   Total Lines: 140
+    '    Code Lines: 77
     ' Comment Lines: 43
-    '   Blank Lines: 19
-    '     File Size: 5.38 KB
+    '   Blank Lines: 20
+    '     File Size: 5.62 KB
 
 
     '     Module BencodingExtensions
     ' 
     '         Function: BDecode, encodeList, encodeObject, theSameObject, ToBEncode
-    '                   ToBEncodeString
+    '                   ToBEncodeString, ToList
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01dbbf525abada87951888cf1a5b3a25, sciBASIC#\Data_science\DataMining\DataMining\ComponentModel\Encoder\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::b4683f8e6efcb516e248339a7f1aec3a, sciBASIC#\Data_science\DataMining\DataMining\ComponentModel\Encoder\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 38
-    '    Code Lines: 31
+    '   Total Lines: 42
+    '    Code Lines: 35
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 1.52 KB
+    '     File Size: 1.65 KB
 
 
     '     Module Extensions

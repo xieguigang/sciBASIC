@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd03b3dcaa3ca8e36b663f172ade2e03, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::43ef04259e4b66ac43a94654c07269bf, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1007
-    '    Code Lines: 511
-    ' Comment Lines: 354
-    '   Blank Lines: 142
-    '     File Size: 35.70 KB
+    '   Total Lines: 1000
+    '    Code Lines: 507
+    ' Comment Lines: 353
+    '   Blank Lines: 140
+    '     File Size: 35.56 KB
 
 
     '     Class Vector
@@ -72,6 +72,7 @@ Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.Math.Scripting.Rscript
+Imports Microsoft.VisualBasic.Math.SIMD
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports numpy = Microsoft.VisualBasic.Language.Python
@@ -386,7 +387,7 @@ Namespace LinearAlgebra
             ElseIf v2.Length = 1 Then
                 Return v1 + v2(Scan0)
             Else
-                Return New Vector(SIMD.Add(v1.buffer, v2.buffer))
+                Return New Vector(SIMD.Add.f64_op_add_f64(v1.buffer, v2.buffer))
             End If
         End Operator
 

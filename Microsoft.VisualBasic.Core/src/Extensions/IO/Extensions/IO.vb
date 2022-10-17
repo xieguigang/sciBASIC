@@ -1,54 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::c8753e81312c89c7258f450b7ab3537a, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\IO.vb"
+﻿#Region "Microsoft.VisualBasic::699189e6db364c1dd900bdad4a0ba512, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\IO.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 245
-'    Code Lines: 128
-' Comment Lines: 93
-'   Blank Lines: 24
-'     File Size: 10.07 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module IOExtensions
-' 
-'     Function: FixPath, FlushAllLines, (+3 Overloads) FlushStream, Open, OpenReader
-'               OpenTextWriter, ReadBinary, ReadVector
-' 
-'     Sub: ClearFileBytes, FlushTo
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 269
+    '    Code Lines: 138
+    ' Comment Lines: 105
+    '   Blank Lines: 26
+    '     File Size: 10.91 KB
+
+
+    ' Module IOExtensions
+    ' 
+    '     Function: FixPath, FlushAllLines, (+3 Overloads) FlushStream, Open, OpenReader
+    '               OpenTextWriter, ReadBinary, ReadVector
+    ' 
+    '     Sub: ClearFileBytes, FlushTo
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

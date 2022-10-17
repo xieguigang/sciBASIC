@@ -1,72 +1,73 @@
-﻿#Region "Microsoft.VisualBasic::fb2e9cf5f020d33d874747003f7ba81b, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::1ecd20224b7830442d0c802f72a8fad9, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\App.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 1467
-'    Code Lines: 708
-' Comment Lines: 593
-'   Blank Lines: 166
-'     File Size: 63.90 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module App
-' 
-'     Properties: AppSystemTemp, AssemblyName, BufferSize, Command, CommandLine
-'                 CPUCoreNumbers, CurrentDirectory, CurrentProcessTemp, Desktop, DoNothing
-'                 ExceptionLogFile, ExecutablePath, GetLastError, Github, HOME
-'                 Info, InputFile, IsConsoleApp, IsMicrosoftPlatform, LocalData
-'                 LocalDataTemp, LogErrDIR, MemoryLoad, n_threads, NanoTime
-'                 NextTempName, OutFile, PID, Platform, PreviousDirectory
-'                 Process, ProductName, ProductProgramData, ProductSharedDIR, ProductSharedTemp
-'                 Running, RunningInGitBash, RunTimeDirectory, StartTime, StartupDirectory
-'                 StdErr, StdInput, StdOut, SysTemp, UnixTimeStamp
-'                 UserHOME, Version
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: __listFiles, (+2 Overloads) Argument, checkIsMicrosoftPlatform, CLICode, (+2 Overloads) ElapsedMilliseconds
-'               Exit, finalizeCLI, FormatTime, (+2 Overloads) GetAppLocalData, GetAppVariables
-'               GetFile, GetNextUniqueName, GetProductSharedDIR, GetProductSharedTemp, GetTempFile
-'               GetVariable, (+3 Overloads) LogException, NullDevice, (+12 Overloads) RunCLI, RunCLIInternal
-'               SelfFolk, Shell, tempCode, TemporaryEnvironment, TraceBugs
-' 
-'     Sub: __GCThreadInvoke, __removesTEMP, [Stop], AddExitCleanHook, FlushMemory
-'          Free, JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println
-'          SetBufferSize, StartGC, StopGC
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 1507
+    '    Code Lines: 729
+    ' Comment Lines: 606
+    '   Blank Lines: 172
+    '     File Size: 65.36 KB
+
+
+    ' Module App
+    ' 
+    '     Properties: AppSystemTemp, AssemblyName, BufferSize, Command, CommandLine
+    '                 CPUCoreNumbers, CurrentDirectory, CurrentProcessTemp, Desktop, DoNothing
+    '                 ExceptionLogFile, ExecutablePath, GetLastError, Github, HOME
+    '                 Info, InputFile, IsConsoleApp, IsMicrosoftPlatform, LocalData
+    '                 LocalDataTemp, LogErrDIR, MemoryLoad, n_threads, NanoTime
+    '                 NextTempName, OutFile, PID, Platform, PreviousDirectory
+    '                 Process, ProductName, ProductProgramData, ProductSharedDIR, ProductSharedTemp
+    '                 Running, RunningInGitBash, RunTimeDirectory, StartTime, StartupDirectory
+    '                 StdErr, StdInput, StdOut, SysTemp, UnixTimeStamp
+    '                 UserHOME, Version
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: __listFiles, (+2 Overloads) Argument, checkIsMicrosoftPlatform, CLICode, (+2 Overloads) ElapsedMilliseconds
+    '               Exit, finalizeCLI, FormatTime, (+2 Overloads) GetAppLocalData, GetAppVariables
+    '               GetFile, GetNextUniqueName, GetProductSharedDIR, GetProductSharedTemp, GetTempFile
+    '               GetVariable, (+3 Overloads) LogException, NullDevice, RedirectErrLogging, RedirectLogging
+    '               (+12 Overloads) RunCLI, RunCLIInternal, SelfFolk, Shell, tempCode
+    '               TemporaryEnvironment, TraceBugs
+    ' 
+    '     Sub: __GCThreadInvoke, __removesTEMP, [Stop], AddExitCleanHook, FlushMemory
+    '          Free, JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println
+    '          SetBufferSize, StartGC, StopGC
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0657e0101c1ebd692f0f3b841ff97c3, sciBASIC#\Data_science\DataMining\DataMining\ComponentModel\Evaluation\ROC.vb"
+﻿#Region "Microsoft.VisualBasic::6023db2572a4a1ecab337ee8bdde388a, sciBASIC#\Data_science\DataMining\DataMining\Evaluation\ROC.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 68
     ' Comment Lines: 30
     '   Blank Lines: 13
-    '     File Size: 4.29 KB
+    '     File Size: 4.28 KB
 
 
     '     Module ROC

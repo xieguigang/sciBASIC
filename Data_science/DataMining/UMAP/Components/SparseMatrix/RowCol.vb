@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f0b0b2e2e586470118f09f5562dd933, sciBASIC#\Data_science\DataMining\UMAP\Components\SparseMatrix\RowCol.vb"
+﻿#Region "Microsoft.VisualBasic::572bfff23f1ca1f98a0fc5d9875d3869, sciBASIC#\Data_science\DataMining\UMAP\Components\SparseMatrix\RowCol.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 42
+    '   Total Lines: 45
     '    Code Lines: 27
-    ' Comment Lines: 7
+    ' Comment Lines: 10
     '   Blank Lines: 8
-    '     File Size: 1.42 KB
+    '     File Size: 1.45 KB
 
 
     ' Structure RowCol
@@ -66,8 +66,11 @@ Friend Structure RowCol : Implements IEquatable(Of RowCol)
         Return $"[{Row}, {Col}]"
     End Function
 
-    ' 2019-06-24 DWR: Structs get default Equals and GetHashCode implementations but they can be slow - having these versions makes the code run much quicker
-    ' and it seems a good practice to throw in IEquatable<RowCol> to avoid boxing when Equals is called
+    ' 2019-06-24 DWR: Structs get default Equals and GetHashCode
+    ' implementations but they can be slow - having these versions
+    ' makes the code run much quicker and it seems a good practice
+    ' to throw in IEquatable<RowCol> to avoid boxing when Equals
+    ' is called
     Public Overloads Function Equals(other As RowCol) As Boolean Implements IEquatable(Of RowCol).Equals
         Return other.Row = Row AndAlso other.Col = Col
     End Function

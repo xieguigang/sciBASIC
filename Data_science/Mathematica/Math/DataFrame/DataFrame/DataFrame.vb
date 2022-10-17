@@ -1,53 +1,53 @@
-﻿#Region "Microsoft.VisualBasic::d1beee87cd78002fa903c31cea166ceb, sciBASIC#\Data_science\Mathematica\Math\DataFrame\DataFrame\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::8b6820478ebbfdd13ca8f4548d5b7b12, sciBASIC#\Data_science\Mathematica\Math\DataFrame\DataFrame\DataFrame.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 26
-'    Code Lines: 21
-' Comment Lines: 0
-'   Blank Lines: 5
-'     File Size: 828 B
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class DataFrame
-' 
-'     Properties: dims, features, rownames
-' 
-'     Function: ToString
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 75
+    '    Code Lines: 56
+    ' Comment Lines: 6
+    '   Blank Lines: 13
+    '     File Size: 2.29 KB
+
+
+    ' Class DataFrame
+    ' 
+    '     Properties: dims, featureNames, features, nsamples, rownames
+    ' 
+    '     Function: delete, ToString, Union
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -126,4 +126,3 @@ Public Class DataFrame
         Return $"[{size.Width}x{size.Height}] {featureSet}"
     End Function
 End Class
-

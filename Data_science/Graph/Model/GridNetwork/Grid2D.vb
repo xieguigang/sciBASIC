@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c25c4936253cd9a45e2a02bfbfd926a, sciBASIC#\Data_science\Graph\Model\GridNetwork\Grid2D.vb"
+﻿#Region "Microsoft.VisualBasic::0580f650ae28c2f77f420342b54ffa98, sciBASIC#\Data_science\Graph\Model\GridNetwork\Grid2D.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 235
+    '   Total Lines: 242
     '    Code Lines: 157
-    ' Comment Lines: 48
+    ' Comment Lines: 55
     '   Blank Lines: 30
-    '     File Size: 8.48 KB
+    '     File Size: 8.77 KB
 
 
     ' Class Grid

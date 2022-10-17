@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c80413780993bfaa875bfcf3388c0817, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\MemoryStreamPool.vb"
+﻿#Region "Microsoft.VisualBasic::2618d1233ef96d3e933da3df9f1c8696, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\MemoryStreamPool.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 66
+    '   Total Lines: 65
     '    Code Lines: 52
     ' Comment Lines: 0
-    '   Blank Lines: 14
+    '   Blank Lines: 13
     '     File Size: 1.91 KB
 
 
@@ -53,7 +53,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.IO
 

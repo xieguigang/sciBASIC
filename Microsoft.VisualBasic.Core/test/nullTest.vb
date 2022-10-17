@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ff2863be49159292bc5a22c199247f0, sciBASIC#\Microsoft.VisualBasic.Core\test\nullTest.vb"
+﻿#Region "Microsoft.VisualBasic::d0018ae9aeb8ef0ab8fa10a08fe86d4f, sciBASIC#\Microsoft.VisualBasic.Core\test\nullTest.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 7
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 144 B
+    '     File Size: 142 B
 
 
     ' Module nullTest
@@ -59,4 +59,3 @@ Module nullTest
         Pause()
     End Sub
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::434eb7185b38106167ebbcc7e621d042, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\ListExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::34a59bb2beb26834f7b92d78fe833793, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\ListExtensions.vb"
 
     ' Author:
     ' 
@@ -35,17 +35,17 @@
     ' Code Statistics:
 
     '   Total Lines: 282
-    '    Code Lines: 156
-    ' Comment Lines: 93
-    '   Blank Lines: 33
-    '     File Size: 10.54 KB
+    '    Code Lines: 153
+    ' Comment Lines: 97
+    '   Blank Lines: 32
+    '     File Size: 10.57 KB
 
 
     ' Module ListExtensions
     ' 
     '     Function: AppendAfter, AsHashList, AsHashSet, AsList, AsLoop
-    '               Count, HasKey, Indexing, rand, Random
-    '               ReorderByKeys, (+2 Overloads) ToList, TopMostFrequent
+    '               Count, HasKey, Indexing, Random, ReorderByKeys
+    '               (+2 Overloads) ToList, TopMostFrequent
     ' 
     '     Sub: DoEach, ForEach, Swap
     ' 
