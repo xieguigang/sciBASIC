@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e54c1d02a2196a4e9a5a4dce5eecf67, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\DataFramework.vb"
+﻿#Region "Microsoft.VisualBasic::01c41184a26978c0f79a08df004be29e, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\DataFramework.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 266
     ' Comment Lines: 98
     '   Blank Lines: 55
-    '     File Size: 18.76 KB
+    '     File Size: 18.34 KB
 
 
     '     Module DataFramework

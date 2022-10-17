@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e92223cb2024c55eca44f2de2a1da06, sciBASIC#\Data\BinaryData\SQLite3\Objects\BTreePage.vb"
+﻿#Region "Microsoft.VisualBasic::0a1c5f4048cb66ac19d0aa900f48f396, sciBASIC#\Data\BinaryData\SQLite3\Objects\BTreePage.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 47
     ' Comment Lines: 3
     '   Blank Lines: 18
-    '     File Size: 2.42 KB
+    '     File Size: 2.36 KB
 
 
     '     Class BTreePage

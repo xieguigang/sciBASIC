@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe77f0629061d33bb2b1f61b3c3d770c, sciBASIC#\www\githubAPI\github-vcard\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::29fb86c4e50b210261b0c5765f2709e9, sciBASIC#\www\githubAPI\github-vcard\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 51
     ' Comment Lines: 9
     '   Blank Lines: 13
-    '     File Size: 2.98 KB
+    '     File Size: 2.91 KB
 
 
     '     Class MySettings

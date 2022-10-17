@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea9b88abb8c3d93cf1789bc384604b04, sciBASIC#\Data\BinaryData\msgpack\Serialization\Default\FrameworkInternal.vb"
+﻿#Region "Microsoft.VisualBasic::59adc9411dcc6dab984c10fa88de782c, sciBASIC#\Data\BinaryData\msgpack\Serialization\Default\FrameworkInternal.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 14
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 763 B
+    '     File Size: 745 B
 
 
     '     Class NamedValueSchema

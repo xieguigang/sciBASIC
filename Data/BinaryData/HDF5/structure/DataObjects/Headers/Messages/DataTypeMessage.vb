@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d867f01dc620b8b29e8c0cbf2d9b52f, sciBASIC#\Data\BinaryData\HDF5\structure\DataObjects\Headers\Messages\DataTypeMessage.vb"
+﻿#Region "Microsoft.VisualBasic::65d5d46409247d1ff7234ca4890adaf5, sciBASIC#\Data\BinaryData\HDF5\structure\DataObjects\Headers\Messages\DataTypeMessage.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 157
     ' Comment Lines: 30
     '   Blank Lines: 33
-    '     File Size: 9.33 KB
+    '     File Size: 9.12 KB
 
 
     '     Class DataTypeMessage

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7b4464530d4fd57d5d480ead7aa8d9f, sciBASIC#\www\githubAPI\github-vcard\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::49ee9f1eb9a648e5718b32d5b2812889, sciBASIC#\www\githubAPI\github-vcard\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1.16 KB
+    '     File Size: 1.12 KB
 
 
     ' 

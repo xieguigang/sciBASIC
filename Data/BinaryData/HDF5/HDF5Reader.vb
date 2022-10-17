@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9deed247308230ebef5e212d69cb4e6, sciBASIC#\Data\BinaryData\HDF5\HDF5Reader.vb"
+﻿#Region "Microsoft.VisualBasic::f2f6f0c3a3506a4bd06c77de5d03238f, sciBASIC#\Data\BinaryData\HDF5\HDF5Reader.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 138
     ' Comment Lines: 38
     '   Blank Lines: 29
-    '     File Size: 7.37 KB
+    '     File Size: 7.17 KB
 
 
     ' Class HDF5Reader

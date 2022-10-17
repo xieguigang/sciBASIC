@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67c92bbcb37fdfceb876fe78a811a6bc, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\StoreProcedure\Models\Neuron.vb"
+﻿#Region "Microsoft.VisualBasic::8e7e14a209964c474ce9c75b521fa3df, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\StoreProcedure\Models\Neuron.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 24
     ' Comment Lines: 15
     '   Blank Lines: 8
-    '     File Size: 1.59 KB
+    '     File Size: 1.54 KB
 
 
     '     Class Synapse

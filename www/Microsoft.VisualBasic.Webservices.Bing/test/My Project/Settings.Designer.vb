@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::88142e72bf6a05ac99b36c994159e1c8, sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\test\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::212783bd920bbdcbff920ecd3156bd92, sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\test\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 51
     ' Comment Lines: 9
     '   Blank Lines: 13
-    '     File Size: 2.97 KB
+    '     File Size: 2.89 KB
 
 
     '     Class MySettings

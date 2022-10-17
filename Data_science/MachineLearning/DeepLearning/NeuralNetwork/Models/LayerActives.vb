@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3399628be965507adc35af828e7ea82d, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Models\LayerActives.vb"
+﻿#Region "Microsoft.VisualBasic::4fda38dda69d21f4c91eadee44b8109e, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Models\LayerActives.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 37
     ' Comment Lines: 19
     '   Blank Lines: 7
-    '     File Size: 2.33 KB
+    '     File Size: 2.27 KB
 
 
     '     Class LayerActives

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dba9809c05934589d7e8f61da17f40b9, sciBASIC#\gr\physics\physics_Test\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::459f102d2bfec5dbaecbc74ee2d30591, sciBASIC#\gr\physics\physics_Test\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 51
     ' Comment Lines: 9
     '   Blank Lines: 13
-    '     File Size: 2.97 KB
+    '     File Size: 2.90 KB
 
 
     '     Class MySettings

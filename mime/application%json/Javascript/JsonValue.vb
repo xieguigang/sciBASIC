@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b82c312c418140223a3d4be0f20adfd, sciBASIC#\mime\application%json\Javascript\JsonValue.vb"
+﻿#Region "Microsoft.VisualBasic::22c1937db4fe21ff627984cb0e13edd5, sciBASIC#\mime\application%json\Javascript\JsonValue.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 69
     ' Comment Lines: 16
     '   Blank Lines: 14
-    '     File Size: 3.29 KB
+    '     File Size: 3.19 KB
 
 
     '     Class JsonValue

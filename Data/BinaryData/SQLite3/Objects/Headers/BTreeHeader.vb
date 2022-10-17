@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e60943fa235537b1e6a63dd9725bb07, sciBASIC#\Data\BinaryData\SQLite3\Objects\Headers\BTreeHeader.vb"
+﻿#Region "Microsoft.VisualBasic::223afce54abf25ab1033bb0453047ec3, sciBASIC#\Data\BinaryData\SQLite3\Objects\Headers\BTreeHeader.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 29
     ' Comment Lines: 0
     '   Blank Lines: 9
-    '     File Size: 1.35 KB
+    '     File Size: 1.31 KB
 
 
     '     Structure BTreeHeader

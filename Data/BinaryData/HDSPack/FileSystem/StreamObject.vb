@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93c647f10462883593099fa32a7fc1b6, sciBASIC#\Data\BinaryData\HDSPack\FileSystem\StreamObject.vb"
+﻿#Region "Microsoft.VisualBasic::3958c2d9baaa931849224f326b800506, sciBASIC#\Data\BinaryData\HDSPack\FileSystem\StreamObject.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 51
     ' Comment Lines: 16
     '   Blank Lines: 13
-    '     File Size: 2.60 KB
+    '     File Size: 2.52 KB
 
 
     '     Class StreamObject

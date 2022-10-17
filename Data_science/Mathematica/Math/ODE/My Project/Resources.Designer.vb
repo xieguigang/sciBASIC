@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3423c742b0b8c2bdea9a5eca416bd196, sciBASIC#\Data_science\Mathematica\Math\ODE\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::8065184148538d5adfa7b23b28869ad2, sciBASIC#\Data_science\Mathematica\Math\ODE\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.80 KB
+    '     File Size: 2.74 KB
 
 
     '     Module Resources

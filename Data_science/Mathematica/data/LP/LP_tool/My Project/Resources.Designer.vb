@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::941debd6c972a3923f120b427fa92586, sciBASIC#\Data_science\Mathematica\data\LP\LP_tool\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::92037e7c83a81a8579e208d240ddb2be, sciBASIC#\Data_science\Mathematica\data\LP\LP_tool\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.77 KB
+    '     File Size: 2.71 KB
 
 
     '     Module Resources

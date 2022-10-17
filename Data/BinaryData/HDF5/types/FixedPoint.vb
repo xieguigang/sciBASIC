@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::55b7048f639616105ec34961ebfdeb43, sciBASIC#\Data\BinaryData\HDF5\types\FixedPoint.vb"
+﻿#Region "Microsoft.VisualBasic::4e5cdf96e4f3060657a08b5ba647d03c, sciBASIC#\Data\BinaryData\HDF5\types\FixedPoint.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 39
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 1.61 KB
+    '     File Size: 1.57 KB
 
 
     '     Class FixedPoint

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f11982dd849a68c251d535b9de0cfc1d, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\test\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::c54c62757a30d755736c441708a3d5c0, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\test\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 51
     ' Comment Lines: 9
     '   Blank Lines: 13
-    '     File Size: 2.95 KB
+    '     File Size: 2.88 KB
 
 
     '     Class MySettings

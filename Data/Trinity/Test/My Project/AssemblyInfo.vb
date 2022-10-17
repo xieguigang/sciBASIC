@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e28bee4194673775294b40d355a3cfb3, sciBASIC#\Data\Trinity\Test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::cde7ca55569c48f1614446dd58bc34ab, sciBASIC#\Data\Trinity\Test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1.14 KB
+    '     File Size: 1.11 KB
 
 
     ' 

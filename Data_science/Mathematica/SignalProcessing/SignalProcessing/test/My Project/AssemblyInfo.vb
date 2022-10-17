@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29c13c36980dd0eb8cd382e6b38141e8, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::8ce2a4aea6534baf8d6f8dfeb45ddec6, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1.04 KB
+    '     File Size: 1009 B
 
 
     ' 

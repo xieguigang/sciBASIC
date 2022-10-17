@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::326a3ece44b86bba486b732fb43802fa, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Test\emailParser.vb"
+﻿#Region "Microsoft.VisualBasic::7992fa5d604c8ad89f6e2300dcf49175, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Test\emailParser.vb"
 
     ' Author:
     ' 
@@ -97,4 +97,3 @@ Public Module emailParser
         Return Nothing
     End Function
 End Module
-

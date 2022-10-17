@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75b02da5ab5d30d22e0004527bc8e023, sciBASIC#\Data\BinaryData\HDF5\types\StringData.vb"
+﻿#Region "Microsoft.VisualBasic::5462ef39583dd961e64d0b4a689217a5, sciBASIC#\Data\BinaryData\HDF5\types\StringData.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 9
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 265 B
+    '     File Size: 255 B
 
 
     '     Class StringData

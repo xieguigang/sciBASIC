@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::710f4834beffe3618fa812d814e4aefa, sciBASIC#\Data_science\Visualization\Visualization\Testing\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::45b2de0473d30024ae7fcd9696deb389, sciBASIC#\Data_science\Visualization\Visualization\Testing\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 51
     ' Comment Lines: 9
     '   Blank Lines: 13
-    '     File Size: 2.96 KB
+    '     File Size: 2.89 KB
 
 
     '     Class MySettings

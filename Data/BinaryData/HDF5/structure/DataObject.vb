@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef2b84ea515f6e67950286caee101be0, sciBASIC#\Data\BinaryData\HDF5\structure\DataObject.vb"
+﻿#Region "Microsoft.VisualBasic::413f9b450976ce7afc1cfc899ec64d07, sciBASIC#\Data\BinaryData\HDF5\structure\DataObject.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 35
     ' Comment Lines: 14
     '   Blank Lines: 15
-    '     File Size: 2.04 KB
+    '     File Size: 1.98 KB
 
 
     '     Class DataObject

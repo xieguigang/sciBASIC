@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68bb340d1e34a67b2b4fe324c39fdebb, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Trainings\IndividualParallelTraining.vb"
+﻿#Region "Microsoft.VisualBasic::63f1703a11ae75a138577fd34d1c1ada, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Trainings\IndividualParallelTraining.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 119
     ' Comment Lines: 4
     '   Blank Lines: 28
-    '     File Size: 6.16 KB
+    '     File Size: 6.01 KB
 
 
     '     Class ParallelNetwork

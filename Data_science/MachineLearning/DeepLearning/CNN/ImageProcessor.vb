@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::37363582b80a458a14c2d9a6b88ca0ef, sciBASIC#\Data_science\MachineLearning\DeepLearning\CNN\ImageProcessor.vb"
+﻿#Region "Microsoft.VisualBasic::bd9a435cb869268b65c576cfd7270830, sciBASIC#\Data_science\MachineLearning\DeepLearning\CNN\ImageProcessor.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 42
     ' Comment Lines: 0
     '   Blank Lines: 12
-    '     File Size: 2.01 KB
+    '     File Size: 1.96 KB
 
 
     '     Class ImageProcessor

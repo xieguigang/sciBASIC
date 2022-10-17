@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df65db5b2e8fdf3b8ed05686d9fc2f6b, sciBASIC#\Data\BinaryData\SQLite3\Objects\Enums\SqliteEncoding.vb"
+﻿#Region "Microsoft.VisualBasic::470aa2d380a7c456989e0ef3cd710545, sciBASIC#\Data\BinaryData\SQLite3\Objects\Enums\SqliteEncoding.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 7
     ' Comment Lines: 3
     '   Blank Lines: 1
-    '     File Size: 336 B
+    '     File Size: 326 B
 
 
     '     Enum SqliteEncoding

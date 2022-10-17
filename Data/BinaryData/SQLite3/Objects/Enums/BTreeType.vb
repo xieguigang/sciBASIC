@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::37b6d5a7270f5537fb17e5fe853143b6, sciBASIC#\Data\BinaryData\SQLite3\Objects\Enums\BTreeType.vb"
+﻿#Region "Microsoft.VisualBasic::cf26db31430580f854f7a227b391366a, sciBASIC#\Data\BinaryData\SQLite3\Objects\Enums\BTreeType.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 8
     ' Comment Lines: 0
     '   Blank Lines: 0
-    '     File Size: 250 B
+    '     File Size: 243 B
 
 
     '     Enum BTreeType

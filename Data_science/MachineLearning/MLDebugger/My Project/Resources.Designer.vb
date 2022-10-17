@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64f7bdcabce9a6b9ef4858462593f1df, sciBASIC#\Data_science\MachineLearning\MLDebugger\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::b8641a39b754f49cfc68c76831d5fa82, sciBASIC#\Data_science\MachineLearning\MLDebugger\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.81 KB
+    '     File Size: 2.75 KB
 
 
     '     Module Resources

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b81e0ae883b2b5ad6ccc269de8b12ad, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\test\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::5f18b73b910d9b6c76909f867e1f3ed6, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\test\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 51
     ' Comment Lines: 9
     '   Blank Lines: 13
-    '     File Size: 2.97 KB
+    '     File Size: 2.89 KB
 
 
     '     Class MySettings

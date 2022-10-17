@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c02eb62e3a9a53ab6ccccb658126de28, sciBASIC#\Data\BinaryData\HDF5\types\VariableLength.vb"
+﻿#Region "Microsoft.VisualBasic::108ffe91d6ada475c0ebaf49e059f3e9, sciBASIC#\Data\BinaryData\HDF5\types\VariableLength.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 16
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 592 B
+    '     File Size: 572 B
 
 
     '     Class VariableLength

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43d872ba2f7b55b4d6a436c402d76f7e, sciBASIC#\Data_science\MachineLearning\DeepLearning\CNN\Layers\Output.vb"
+﻿#Region "Microsoft.VisualBasic::e98097e5b4841f08e92f210e3deebb81, sciBASIC#\Data_science\MachineLearning\DeepLearning\CNN\Layers\Output.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 38
     ' Comment Lines: 4
     '   Blank Lines: 12
-    '     File Size: 1.94 KB
+    '     File Size: 1.89 KB
 
 
     '     Class Output

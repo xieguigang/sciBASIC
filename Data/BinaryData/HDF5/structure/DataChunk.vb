@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a2890fd82f08f569f5bd3d18059f82b, sciBASIC#\Data\BinaryData\HDF5\structure\DataChunk.vb"
+﻿#Region "Microsoft.VisualBasic::31db2b38e95100aa4bdc8f61d0993b22, sciBASIC#\Data\BinaryData\HDF5\structure\DataChunk.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 36
     ' Comment Lines: 47
     '   Blank Lines: 17
-    '     File Size: 4.08 KB
+    '     File Size: 3.98 KB
 
 
     '     Class DataChunk

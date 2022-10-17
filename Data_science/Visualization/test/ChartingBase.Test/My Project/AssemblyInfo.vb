@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::622b7354def3e6e298d67efbe9548050, sciBASIC#\Data_science\Visualization\test\ChartingBase.Test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::8cadbf1b94ec3ab2ae1860eacc1a3dc5, sciBASIC#\Data_science\Visualization\test\ChartingBase.Test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1.17 KB
+    '     File Size: 1.14 KB
 
 
     ' 

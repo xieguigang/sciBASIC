@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::857d6062ede0d396c80d967c8d6dc8fb, sciBASIC#\Data_science\DataMining\DataMining\test\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::899610c569773ae1f4a95f40c76a2807, sciBASIC#\Data_science\DataMining\DataMining\test\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 51
     ' Comment Lines: 9
     '   Blank Lines: 13
-    '     File Size: 2.96 KB
+    '     File Size: 2.89 KB
 
 
     '     Class MySettings

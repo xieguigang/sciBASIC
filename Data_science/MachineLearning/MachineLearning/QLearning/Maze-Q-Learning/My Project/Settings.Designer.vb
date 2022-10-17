@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad2e8ed806f55d9ee760d46bfbf889ac, sciBASIC#\Data_science\MachineLearning\MachineLearning\QLearning\Maze-Q-Learning\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::c2d700abbc452f64c8995e3a9176888f, sciBASIC#\Data_science\MachineLearning\MachineLearning\QLearning\Maze-Q-Learning\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 51
     ' Comment Lines: 9
     '   Blank Lines: 13
-    '     File Size: 2.99 KB
+    '     File Size: 2.92 KB
 
 
     '     Class MySettings

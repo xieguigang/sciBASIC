@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a16df08c8a433d0d79218ff5413430f0, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Authenticator\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::a77a40550c4aed559274d6e0176e6f2e, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Authenticator\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 51
     ' Comment Lines: 9
     '   Blank Lines: 13
-    '     File Size: 2.98 KB
+    '     File Size: 2.91 KB
 
 
     '     Class MySettings

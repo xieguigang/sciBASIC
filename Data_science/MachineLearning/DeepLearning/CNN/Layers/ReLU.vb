@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e24f459a902f62eaa9f8eb17e98f522e, sciBASIC#\Data_science\MachineLearning\DeepLearning\CNN\Layers\ReLU.vb"
+﻿#Region "Microsoft.VisualBasic::c66aba300e4d57f62a82db671b3377c5, sciBASIC#\Data_science\MachineLearning\DeepLearning\CNN\Layers\ReLU.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 37
     ' Comment Lines: 0
     '   Blank Lines: 14
-    '     File Size: 1.41 KB
+    '     File Size: 1.36 KB
 
 
     '     Class ReLU

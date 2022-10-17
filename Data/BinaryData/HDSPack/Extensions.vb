@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8b65d049e85fd5ca6e0205fb3d6a0de6, sciBASIC#\Data\BinaryData\HDSPack\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::a950292c6970151701a2913144199067, sciBASIC#\Data\BinaryData\HDSPack\Extensions.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 29
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 1.17 KB
+    '     File Size: 1.13 KB
 
 
     ' Module Extensions

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::908cd1699f096ae75afbd0b6ef67ba89, sciBASIC#\Data_science\Mathematica\Math\ANOVA\TableOnepercent.vb"
+﻿#Region "Microsoft.VisualBasic::cdd66cd328d2fee7ffa62fa75a503617, sciBASIC#\Data_science\Mathematica\Math\ANOVA\TableOnepercent.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 41
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 5.81 KB
+    '     File Size: 5.77 KB
 
 
     ' Class TableOnepercent

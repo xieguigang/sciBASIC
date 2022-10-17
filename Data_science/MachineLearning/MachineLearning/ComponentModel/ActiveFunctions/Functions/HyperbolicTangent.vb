@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0748dc17bfa88a15051a4ad455c57fd3, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\HyperbolicTangent.vb"
+﻿#Region "Microsoft.VisualBasic::2785f3e4bdaa0f39e8292f2107f18be4, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\HyperbolicTangent.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 27
     ' Comment Lines: 22
     '   Blank Lines: 7
-    '     File Size: 1.64 KB
+    '     File Size: 1.59 KB
 
 
     '     Class HyperbolicTangent

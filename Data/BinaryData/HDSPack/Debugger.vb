@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3fe003d327f655f5b1b541febb5782bc, sciBASIC#\Data\BinaryData\HDSPack\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::b502105277aa6e6562ee3c266cd7a3c3, sciBASIC#\Data\BinaryData\HDSPack\Debugger.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 64
     ' Comment Lines: 13
     '   Blank Lines: 12
-    '     File Size: 3.46 KB
+    '     File Size: 3.37 KB
 
 
     ' Module Debugger

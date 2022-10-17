@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d16312d40e88a5526647ef94a621bce, sciBASIC#\Data_science\Visualization\Visualization\NeuronNetworkExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::787ff1114942f66ef6b63b33549f4338, sciBASIC#\Data_science\Visualization\Visualization\NeuronNetworkExtensions.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 81
     ' Comment Lines: 14
     '   Blank Lines: 9
-    '     File Size: 4.06 KB
+    '     File Size: 3.95 KB
 
 
     ' Module NeuronNetworkExtensions

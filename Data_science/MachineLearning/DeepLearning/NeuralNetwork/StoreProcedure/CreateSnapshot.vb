@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::72c194c292e451125b6dc923f7ff848c, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\StoreProcedure\CreateSnapshot.vb"
+﻿#Region "Microsoft.VisualBasic::335f700c9944bdaf3b7afc82700b2626, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\StoreProcedure\CreateSnapshot.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 83
     ' Comment Lines: 10
     '   Blank Lines: 13
-    '     File Size: 4.02 KB
+    '     File Size: 3.92 KB
 
 
     '     Module CreateSnapshot

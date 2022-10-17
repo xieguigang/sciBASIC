@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3a7c4395b77a39a38cfa13e2767bcd5, sciBASIC#\Data\BinaryData\SQLite3\Objects\Enums\SqliteDataType.vb"
+﻿#Region "Microsoft.VisualBasic::cf900dc947c20edb1ee333752fa415a9, sciBASIC#\Data\BinaryData\SQLite3\Objects\Enums\SqliteDataType.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 37
     ' Comment Lines: 32
     '   Blank Lines: 3
-    '     File Size: 3.95 KB
+    '     File Size: 3.88 KB
 
 
     '     Enum SqliteDataType

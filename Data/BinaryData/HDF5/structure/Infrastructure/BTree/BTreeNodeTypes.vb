@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e8912bbf5bf11cdfbd0c609327373012, sciBASIC#\Data\BinaryData\HDF5\structure\Infrastructure\BTree\BTreeNodeTypes.vb"
+﻿#Region "Microsoft.VisualBasic::7d32d9a4171102ce1480853024fac62d, sciBASIC#\Data\BinaryData\HDF5\structure\Infrastructure\BTree\BTreeNodeTypes.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 6
     ' Comment Lines: 10
     '   Blank Lines: 3
-    '     File Size: 541 B
+    '     File Size: 523 B
 
 
     '     Enum BTreeNodeTypes

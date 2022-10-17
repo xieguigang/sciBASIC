@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::697e6d54c59a9f1be052e6fa6abfdf2b, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\IActivationFunction.vb"
+﻿#Region "Microsoft.VisualBasic::3b0696dd308c2615cb22392317d4696c, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\IActivationFunction.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 30
     ' Comment Lines: 39
     '   Blank Lines: 12
-    '     File Size: 2.92 KB
+    '     File Size: 2.84 KB
 
 
     '     Class IActivationFunction

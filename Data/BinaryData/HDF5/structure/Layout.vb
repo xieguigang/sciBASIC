@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6945eba6d7909a581cd5b3953b40efb2, sciBASIC#\Data\BinaryData\HDF5\structure\Layout.vb"
+﻿#Region "Microsoft.VisualBasic::d9167512736e43010ec12a8ecb791958, sciBASIC#\Data\BinaryData\HDF5\structure\Layout.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 68
     ' Comment Lines: 24
     '   Blank Lines: 14
-    '     File Size: 3.77 KB
+    '     File Size: 3.67 KB
 
 
     '     Class Layout

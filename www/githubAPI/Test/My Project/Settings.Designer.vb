@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eee01365dc468ad24502ddb411cd65ae, sciBASIC#\www\githubAPI\Test\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::51990140eb9c13a09e290d69ef24b2a4, sciBASIC#\www\githubAPI\Test\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 51
     ' Comment Lines: 9
     '   Blank Lines: 13
-    '     File Size: 2.97 KB
+    '     File Size: 2.89 KB
 
 
     '     Class MySettings

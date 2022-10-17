@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c7f179288410560a5a77eab2a59f8be, sciBASIC#\Data_science\Graph\test\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::0ad4756e5d67c3e61465f42e1b403333, sciBASIC#\Data_science\Graph\test\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 51
     ' Comment Lines: 9
     '   Blank Lines: 13
-    '     File Size: 2.97 KB
+    '     File Size: 2.90 KB
 
 
     '     Class MySettings

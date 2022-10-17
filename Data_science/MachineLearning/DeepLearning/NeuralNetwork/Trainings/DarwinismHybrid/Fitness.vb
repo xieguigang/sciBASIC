@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4957f3550b06a141ef110989dccc4401, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Trainings\DarwinismHybrid\Fitness.vb"
+﻿#Region "Microsoft.VisualBasic::d5b1fef2b943bf319bba197739c48387, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Trainings\DarwinismHybrid\Fitness.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 26
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 1.19 KB
+    '     File Size: 1.15 KB
 
 
     '     Class Fitness

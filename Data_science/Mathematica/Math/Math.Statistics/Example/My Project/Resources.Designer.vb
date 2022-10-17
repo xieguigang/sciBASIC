@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4bfba9ecfb30460e15688392e453c13c, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Example\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::396bab0935711b2dcf37a59825a4c8b4, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Example\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.80 KB
+    '     File Size: 2.74 KB
 
 
     '     Module Resources

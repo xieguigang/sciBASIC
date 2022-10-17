@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc1771086c71a4c6bcd5e0817f43a7fc, sciBASIC#\gr\network-visualization\NetworkCanvas\Styling\UI\ColorMaps.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::f4d136d1ebf4b7ddcc266c623ec0e2af, sciBASIC#\gr\network-visualization\NetworkCanvas\Styling\UI\ColorMaps.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 99
     ' Comment Lines: 32
     '   Blank Lines: 5
-    '     File Size: 5.37 KB
+    '     File Size: 5.23 KB
 
 
     ' Class ColorMaps

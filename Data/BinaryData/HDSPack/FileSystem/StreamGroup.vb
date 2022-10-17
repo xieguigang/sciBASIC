@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70b2299ebcde60692449e2f1b374da1d, sciBASIC#\Data\BinaryData\HDSPack\FileSystem\StreamGroup.vb"
+﻿#Region "Microsoft.VisualBasic::b3d3010b6747b8d771d5c14b0780ffe4, sciBASIC#\Data\BinaryData\HDSPack\FileSystem\StreamGroup.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 130
     ' Comment Lines: 51
     '   Blank Lines: 34
-    '     File Size: 7.92 KB
+    '     File Size: 7.70 KB
 
 
     '     Class StreamGroup

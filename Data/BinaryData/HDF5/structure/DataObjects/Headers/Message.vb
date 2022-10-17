@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4aa41e4311773c30c9fce9633e03095, sciBASIC#\Data\BinaryData\HDF5\structure\DataObjects\Headers\Message.vb"
+﻿#Region "Microsoft.VisualBasic::dc59500d4f67293f2641465cbd27ae8e, sciBASIC#\Data\BinaryData\HDF5\structure\DataObjects\Headers\Message.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 7
     ' Comment Lines: 13
     '   Blank Lines: 2
-    '     File Size: 1.13 KB
+    '     File Size: 1.11 KB
 
 
     '     Class Message

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1098ec88fd340f40621aa4dce43d64c, sciBASIC#\Data_science\MachineLearning\DeepLearning\CNN\Layers\SoftMax.vb"
+﻿#Region "Microsoft.VisualBasic::8ffecb3b65b04dfe599b7c750fbf2f6d, sciBASIC#\Data_science\MachineLearning\DeepLearning\CNN\Layers\SoftMax.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 35
     ' Comment Lines: 0
     '   Blank Lines: 11
-    '     File Size: 1.34 KB
+    '     File Size: 1.29 KB
 
 
     '     Class SoftMax

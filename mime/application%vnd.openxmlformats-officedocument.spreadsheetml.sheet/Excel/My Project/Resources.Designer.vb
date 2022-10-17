@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93339ae1a6e2a899f68183843be0205b, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::55f8bc0aefaaa491af04a0a8f3595cb4, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 38
     ' Comment Lines: 26
     '   Blank Lines: 9
-    '     File Size: 3.17 KB
+    '     File Size: 3.10 KB
 
 
     '     Module Resources

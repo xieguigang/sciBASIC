@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::98f6e41ac26ac2b662225b4c92b93346, sciBASIC#\mime\application%json\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::ed385e3d1132a9e90df98043b936aa37, sciBASIC#\mime\application%json\Extensions.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 37
     ' Comment Lines: 14
     '   Blank Lines: 6
-    '     File Size: 1.93 KB
+    '     File Size: 1.88 KB
 
 
     ' Module Extensions

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fed5336b0cbc338077fab099ba8d0961, sciBASIC#\Data\BinaryData\HDF5\structure\DataObjects\Headers\Messages\FillValueMessage.vb"
+﻿#Region "Microsoft.VisualBasic::7ba8f6d323b24a317129c5475771f506, sciBASIC#\Data\BinaryData\HDF5\structure\DataObjects\Headers\Messages\FillValueMessage.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 48
     ' Comment Lines: 11
     '   Blank Lines: 16
-    '     File Size: 2.72 KB
+    '     File Size: 2.65 KB
 
 
     '     Class FillValueMessage

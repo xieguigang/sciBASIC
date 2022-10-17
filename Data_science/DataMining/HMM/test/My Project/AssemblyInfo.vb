@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ef21f2e9bf9f105e3847d2b2c2dd5e1, sciBASIC#\Data_science\DataMining\HMM\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::ad0158c1731e919ddcc3c3dd44ccfa27, sciBASIC#\Data_science\DataMining\HMM\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1019 B
+    '     File Size: 985 B
 
 
     ' 

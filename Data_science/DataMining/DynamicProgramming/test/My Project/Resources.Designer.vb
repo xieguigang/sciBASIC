@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84276a59b5ce54ad21fad48c8a832d41, sciBASIC#\Data_science\DataMining\DynamicProgramming\test\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::8887a09b0ad026af13e0c79be005ad3f, sciBASIC#\Data_science\DataMining\DynamicProgramming\test\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.80 KB
+    '     File Size: 2.73 KB
 
 
     '     Module Resources

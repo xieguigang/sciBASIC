@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27553b7b1045bacc5103bffa912f6feb, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Authenticator\FormAuth.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::831649b781125e370c7a5b8044d171e4, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Authenticator\FormAuth.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 59
     ' Comment Lines: 17
     '   Blank Lines: 5
-    '     File Size: 3.56 KB
+    '     File Size: 3.48 KB
 
 
     ' Class FormAuth

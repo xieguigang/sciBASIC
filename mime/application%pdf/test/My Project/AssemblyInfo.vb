@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05b37e844520a19c8b0b38add3ae9a83, sciBASIC#\mime\application%pdf\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::cfe6769a4e620c1590e1c14eaa9ef897, sciBASIC#\mime\application%pdf\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1.14 KB
+    '     File Size: 1.11 KB
 
 
     ' 

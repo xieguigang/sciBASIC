@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78c3917113ef656296ac73d2e93fe5a2, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\Softplus.vb"
+﻿#Region "Microsoft.VisualBasic::8a58863afa664415884987ac30101b18, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\Softplus.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 22
     ' Comment Lines: 0
     '   Blank Lines: 6
-    '     File Size: 840 B
+    '     File Size: 813 B
 
 
     '     Class Softplus

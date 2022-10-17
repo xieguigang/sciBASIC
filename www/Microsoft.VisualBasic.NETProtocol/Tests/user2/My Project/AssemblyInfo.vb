@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11d2d2daf482a0e655f54efabdd26cdf, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Tests\user2\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::8d44e878bf0fe545d94ce46370761031, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Tests\user2\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1.15 KB
+    '     File Size: 1.11 KB
 
 
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43fb47880c285560d36b560f5f4ac2a2, sciBASIC#\vs_solutions\dev\VisualStudio\vbproj\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::e3ce5a47abd922ccd1869ab1a24cfa56, sciBASIC#\vs_solutions\dev\VisualStudio\vbproj\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 147
-    '    Code Lines: 115
+    '   Total Lines: 150
+    '    Code Lines: 118
     ' Comment Lines: 15
     '   Blank Lines: 17
-    '     File Size: 6.19 KB
+    '     File Size: 6.36 KB
 
 
     '     Module Extensions
@@ -149,6 +149,9 @@ Namespace vbproj
                            Else
                                Return True
                            End If
+                       End Function) _
+                .Where(Function(vb)
+                           Return Not vb.Split("\"c, "/"c).Any(Function(name) name = "obj")
                        End Function)
         End Function
 

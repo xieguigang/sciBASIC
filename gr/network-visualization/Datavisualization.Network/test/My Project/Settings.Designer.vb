@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d46ad9dbfdfe52b801bf50164ae9c0cf, sciBASIC#\gr\network-visualization\Datavisualization.Network\test\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::df2f995d1c4d332cb2f80a5e4d49d7fd, sciBASIC#\gr\network-visualization\Datavisualization.Network\test\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 51
     ' Comment Lines: 9
     '   Blank Lines: 13
-    '     File Size: 2.97 KB
+    '     File Size: 2.90 KB
 
 
     '     Class MySettings

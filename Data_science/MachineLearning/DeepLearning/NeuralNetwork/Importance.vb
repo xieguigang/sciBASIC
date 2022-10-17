@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65cd86fde2a509436126c3fdf80bfe45, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Importance.vb"
+﻿#Region "Microsoft.VisualBasic::9d50b13e13a763f8fba89c53b771310a, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Importance.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 40
     ' Comment Lines: 20
     '   Blank Lines: 10
-    '     File Size: 2.94 KB
+    '     File Size: 2.87 KB
 
 
     '     Module Helpers

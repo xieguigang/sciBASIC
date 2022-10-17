@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::49926b555242b3d5810c86196797cfe1, sciBASIC#\Data\BinaryData\HDF5\structure\Infrastructure\BTree\BTreeEntry.vb"
+﻿#Region "Microsoft.VisualBasic::d16ca0a06dfb096db01477f76409d9a0, sciBASIC#\Data\BinaryData\HDF5\structure\Infrastructure\BTree\BTreeEntry.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 25
     ' Comment Lines: 6
     '   Blank Lines: 13
-    '     File Size: 1.32 KB
+    '     File Size: 1.28 KB
 
 
     '     Class BTreeEntry

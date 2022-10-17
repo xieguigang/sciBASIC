@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4bb4dee4d8f7f99c72392f453a7689f3, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Trainings\DarwinismHybrid\NetworkIndividual.vb"
+﻿#Region "Microsoft.VisualBasic::66faf8d0f4392636482d1abdd1973399, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Trainings\DarwinismHybrid\NetworkIndividual.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 154
     ' Comment Lines: 10
     '   Blank Lines: 40
-    '     File Size: 7.91 KB
+    '     File Size: 7.70 KB
 
 
     '     Class NetworkIndividual

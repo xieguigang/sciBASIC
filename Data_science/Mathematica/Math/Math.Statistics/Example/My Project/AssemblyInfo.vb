@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce18b31570ebe9d9ef87c55c37b9df63, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Example\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::7e3ec7304c21ca4d0ecacbc6603b3cac, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Example\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1.15 KB
+    '     File Size: 1.12 KB
 
 
     ' 

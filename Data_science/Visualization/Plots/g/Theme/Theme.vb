@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4f519c32c89fb58f52867446a1673de, sciBASIC#\Data_science\Visualization\Plots\g\Theme\Theme.vb"
+﻿#Region "Microsoft.VisualBasic::dbba32f52c8534a7969a17299c55c712, sciBASIC#\Data_science\Visualization\Plots\g\Theme\Theme.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 74
     ' Comment Lines: 88
     '   Blank Lines: 30
-    '     File Size: 6.65 KB
+    '     File Size: 6.46 KB
 
 
     '     Class Theme

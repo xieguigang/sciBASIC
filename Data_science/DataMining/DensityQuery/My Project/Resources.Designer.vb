@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::949bb3705b6a51b3a7de57569eb71c15, sciBASIC#\Data_science\DataMining\DensityQuery\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::ea387d3bcd3dd64af33e96f400a053d0, sciBASIC#\Data_science\DataMining\DensityQuery\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.81 KB
+    '     File Size: 2.75 KB
 
 
     '     Module Resources

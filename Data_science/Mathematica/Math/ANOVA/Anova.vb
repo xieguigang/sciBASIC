@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::423c757aab61c6fcfa00491d4aaa90c6, sciBASIC#\Data_science\Mathematica\Math\ANOVA\Anova.vb"
+﻿#Region "Microsoft.VisualBasic::5e068a63640f257ef55fa2e02c9a0a68, sciBASIC#\Data_science\Mathematica\Math\ANOVA\Anova.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 128
     ' Comment Lines: 38
     '   Blank Lines: 39
-    '     File Size: 6.43 KB
+    '     File Size: 6.22 KB
 
 
     ' Class AnovaTest

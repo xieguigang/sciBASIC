@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2cd3b1840d07a8ed247240c4bb741fd2, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\TagData\FactorValue.vb"
+﻿#Region "Microsoft.VisualBasic::fdd0f5c0ece7a9068c902114d2caa1b5, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\TagData\FactorValue.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 28
     ' Comment Lines: 0
     '   Blank Lines: 9
-    '     File Size: 1.16 KB
+    '     File Size: 1.13 KB
 
 
     '     Class FactorValue

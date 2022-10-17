@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf157e12e1c6ea094c512cb8466dfb86, sciBASIC#\Data_science\MachineLearning\DeepLearning\CNN\Layers\Input.vb"
+﻿#Region "Microsoft.VisualBasic::24fe9150c2f14275c86ce34271a463fa, sciBASIC#\Data_science\MachineLearning\DeepLearning\CNN\Layers\Input.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 75
     ' Comment Lines: 11
     '   Blank Lines: 16
-    '     File Size: 3.61 KB
+    '     File Size: 3.51 KB
 
 
     '     Class Input

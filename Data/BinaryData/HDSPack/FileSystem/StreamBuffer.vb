@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d744e1a292443a1f21a79f02ae4099c7, sciBASIC#\Data\BinaryData\HDSPack\FileSystem\StreamBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::e2dde5eb6e42e42a1c901cf497ec05a3, sciBASIC#\Data\BinaryData\HDSPack\FileSystem\StreamBuffer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 71
     ' Comment Lines: 21
     '   Blank Lines: 17
-    '     File Size: 3.35 KB
+    '     File Size: 3.24 KB
 
 
     '     Class StreamBuffer
