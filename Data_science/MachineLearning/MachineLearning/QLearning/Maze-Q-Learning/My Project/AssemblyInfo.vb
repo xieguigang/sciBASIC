@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0bec9924546eb2138f32383afeae4fef, sciBASIC#\Data_science\MachineLearning\MachineLearning\QLearning\Maze-Q-Learning\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::cb2f343a816d00a5f8d01ed620d606c9, sciBASIC#\Data_science\MachineLearning\MachineLearning\QLearning\Maze-Q-Learning\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1.17 KB
+    '     File Size: 1.14 KB
 
 
     ' 

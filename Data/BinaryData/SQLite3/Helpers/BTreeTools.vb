@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8b87e48927d79dbf31a5f3010c7a4181, sciBASIC#\Data\BinaryData\SQLite3\Helpers\BTreeTools.vb"
+﻿#Region "Microsoft.VisualBasic::4d44bb0f0b15b5ab3c4d9f24f4bae902, sciBASIC#\Data\BinaryData\SQLite3\Helpers\BTreeTools.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 39
     ' Comment Lines: 3
     '   Blank Lines: 12
-    '     File Size: 2.17 KB
+    '     File Size: 2.11 KB
 
 
     '     Module BTreeTools

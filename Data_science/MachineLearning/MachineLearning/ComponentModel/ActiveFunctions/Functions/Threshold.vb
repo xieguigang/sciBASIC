@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91b96c3ba6701e84b45f7ff89ea2c8eb, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\Threshold.vb"
+﻿#Region "Microsoft.VisualBasic::e11575803d7b38334ecc3a7eeebc2c21, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\Threshold.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 30
     ' Comment Lines: 46
     '   Blank Lines: 9
-    '     File Size: 2.73 KB
+    '     File Size: 2.64 KB
 
 
     '     Class Threshold

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f7ac4d064eca3aaae853a1d48ea52e7, sciBASIC#\Data_science\DataMining\UMAP\test\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::c969bf7cf02c073f09b4d5fc3ad3e629, sciBASIC#\Data_science\DataMining\UMAP\test\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 31
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.76 KB
+    '     File Size: 2.70 KB
 
 
     '     Module Resources

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2fe735b6df65338a8fb2f6d4779b8714, sciBASIC#\Data\BinaryData\HDF5\dataset\filters\filters.vb"
+﻿#Region "Microsoft.VisualBasic::7dc65d632a09852feb39bfd93ae80b63, sciBASIC#\Data\BinaryData\HDF5\dataset\filters\filters.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 20
     ' Comment Lines: 3
     '   Blank Lines: 7
-    '     File Size: 1.12 KB
+    '     File Size: 1.09 KB
 
 
     '     Class DeflatePipelineFilter

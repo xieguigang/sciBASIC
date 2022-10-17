@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d59bd4edfa067e1bfd472e8c448d986d, sciBASIC#\Data_science\MachineLearning\MachineLearning\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::3faed8046ce90acc95db37ff15ff4eea, sciBASIC#\Data_science\MachineLearning\MachineLearning\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1.14 KB
+    '     File Size: 1.11 KB
 
 
     ' 

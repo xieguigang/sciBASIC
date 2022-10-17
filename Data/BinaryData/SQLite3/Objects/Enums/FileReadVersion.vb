@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce68c96ba5390d9d2112133230e80981, sciBASIC#\Data\BinaryData\SQLite3\Objects\Enums\FileReadVersion.vb"
+﻿#Region "Microsoft.VisualBasic::fe890e03891b12a5be6a033c0136b80e, sciBASIC#\Data\BinaryData\SQLite3\Objects\Enums\FileReadVersion.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 6
     ' Comment Lines: 1
     '   Blank Lines: 0
-    '     File Size: 202 B
+    '     File Size: 196 B
 
 
     '     Enum FileReadVersion

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9118a06e5c1cb0410175074b188af5f3, sciBASIC#\mime\application%json\JSONtest\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::5a326b985d645fca98345c00bf8dd5cb, sciBASIC#\mime\application%json\JSONtest\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 51
     ' Comment Lines: 9
     '   Blank Lines: 13
-    '     File Size: 2.96 KB
+    '     File Size: 2.89 KB
 
 
     '     Class MySettings

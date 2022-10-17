@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e957d215ed83b17cea435b04555b244, sciBASIC#\Data_science\MachineLearning\DeepLearning\CNN\CeNiN.vb"
+﻿#Region "Microsoft.VisualBasic::57767154bfe9f1fab63b7d59d9b63b72, sciBASIC#\Data_science\MachineLearning\DeepLearning\CNN\CeNiN.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 148
     ' Comment Lines: 11
     '   Blank Lines: 49
-    '     File Size: 6.83 KB
+    '     File Size: 6.63 KB
 
 
     '     Class CeNiN

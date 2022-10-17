@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b3b2d800541fbdd2bd3529c8f1458d4, sciBASIC#\Data\BinaryData\SQLite3\Sqlite3Settings.vb"
+﻿#Region "Microsoft.VisualBasic::bc65c136d98bcbfb25f8aad8db843dda, sciBASIC#\Data\BinaryData\SQLite3\Sqlite3Settings.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 9
     ' Comment Lines: 4
     '   Blank Lines: 4
-    '     File Size: 553 B
+    '     File Size: 537 B
 
 
     '     Class Sqlite3Settings

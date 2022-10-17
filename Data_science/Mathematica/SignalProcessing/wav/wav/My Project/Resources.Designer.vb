@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e49236122d402c71a68158d9aac1f667, sciBASIC#\Data_science\Mathematica\SignalProcessing\wav\wav\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::186c385b63dc66da018b8f42f8bee109, sciBASIC#\Data_science\Mathematica\SignalProcessing\wav\wav\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.80 KB
+    '     File Size: 2.74 KB
 
 
     '     Module Resources

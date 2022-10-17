@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe148b9d11f9452541b0e46403ff1df7, sciBASIC#\Data\BinaryData\HDF5\structure\Group.vb"
+﻿#Region "Microsoft.VisualBasic::69f02806729562e759f3af35d4adb424, sciBASIC#\Data\BinaryData\HDF5\structure\Group.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 52
     ' Comment Lines: 20
     '   Blank Lines: 19
-    '     File Size: 3.06 KB
+    '     File Size: 2.97 KB
 
 
     '     Class Group

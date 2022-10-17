@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f3d71a383a30b4e4060ca7422d59698, sciBASIC#\Data_science\MachineLearning\DeepLearning\CNN\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::4f0d7b5ec7c434157f215ff4a9359535, sciBASIC#\Data_science\MachineLearning\DeepLearning\CNN\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 4
     ' Comment Lines: 5
     '   Blank Lines: 1
-    '     File Size: 247 B
+    '     File Size: 238 B
 
 
     '     Class NamespaceDoc

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8da96e8fdfca61fa0ed2a1a60e676486, sciBASIC#\Data\BinaryData\HDF5\structure\DataObjects\Headers\LayoutClass.vb"
+﻿#Region "Microsoft.VisualBasic::8b028294a4420493ab8c7c53531a0e14, sciBASIC#\Data\BinaryData\HDF5\structure\DataObjects\Headers\LayoutClass.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 8
     ' Comment Lines: 32
     '   Blank Lines: 1
-    '     File Size: 2.10 KB
+    '     File Size: 2.06 KB
 
 
     '     Enum LayoutClass

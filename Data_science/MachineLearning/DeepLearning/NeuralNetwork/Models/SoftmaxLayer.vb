@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a64ef044f25e040d95cc37d2d30a9452, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Models\SoftmaxLayer.vb"
+﻿#Region "Microsoft.VisualBasic::572c8d6f27f591132930c7e4ff2a6807, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Models\SoftmaxLayer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 39
     ' Comment Lines: 10
     '   Blank Lines: 11
-    '     File Size: 2.27 KB
+    '     File Size: 2.21 KB
 
 
     '     Class SoftmaxLayer

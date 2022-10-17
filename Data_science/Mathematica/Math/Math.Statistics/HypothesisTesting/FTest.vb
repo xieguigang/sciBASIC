@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfb249db5266f8a6d021fcc96eabf313, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\FTest.vb"
+﻿#Region "Microsoft.VisualBasic::f201109fcaa927125ba685a930c0f9c2, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\FTest.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 74
     ' Comment Lines: 10
     '   Blank Lines: 16
-    '     File Size: 2.52 KB
+    '     File Size: 2.42 KB
 
 
     ' Class FTest

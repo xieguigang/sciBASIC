@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d866f8861df3711e55d27af3e817a936, sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::9231e02837edb73609286bcf77a2ef86, sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.81 KB
+    '     File Size: 2.75 KB
 
 
     '     Module Resources

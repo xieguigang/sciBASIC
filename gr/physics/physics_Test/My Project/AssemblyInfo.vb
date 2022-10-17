@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b52fdcfc8a9d9731815c313c5b66cdef, sciBASIC#\gr\physics\physics_Test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::251c0c347586ccd20ea303ebd57de97e, sciBASIC#\gr\physics\physics_Test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1.16 KB
+    '     File Size: 1.12 KB
 
 
     ' 

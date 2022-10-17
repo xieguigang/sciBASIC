@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6d82c51e03b36f10fb04ab48e71f437, sciBASIC#\Data\BinaryData\SQLite3\Objects\Headers\DatabaseHeader.vb"
+﻿#Region "Microsoft.VisualBasic::b56de0be6aff2963038ad53f61d0ba9c, sciBASIC#\Data\BinaryData\SQLite3\Objects\Headers\DatabaseHeader.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 57
     ' Comment Lines: 6
     '   Blank Lines: 34
-    '     File Size: 3.39 KB
+    '     File Size: 3.29 KB
 
 
     '     Class DatabaseHeader

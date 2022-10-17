@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::787a498735ee436063134d1d7b05a54c, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\StoreProcedure\Formats\IntegralLoader.vb"
+﻿#Region "Microsoft.VisualBasic::41cf58fef3378bdaa3fda0af7cd5ec56, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\StoreProcedure\Formats\IntegralLoader.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 132
     ' Comment Lines: 22
     '   Blank Lines: 25
-    '     File Size: 7.82 KB
+    '     File Size: 7.64 KB
 
 
     '     Module IntegralLoader

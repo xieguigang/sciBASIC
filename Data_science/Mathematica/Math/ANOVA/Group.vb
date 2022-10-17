@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::89ca5c4768685dd68fe4e47530859103, sciBASIC#\Data_science\Mathematica\Math\ANOVA\Group.vb"
+﻿#Region "Microsoft.VisualBasic::c111de9e083778c1e813ab4615de7ec5, sciBASIC#\Data_science\Mathematica\Math\ANOVA\Group.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 8
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 192 B
+    '     File Size: 183 B
 
 
     ' Class Group

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12e4e5b6ea562a7fd4948f86ee9c0d43, sciBASIC#\mime\application%json\JSONtest\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::32eb1b7428ce9babaa264b6c7b9b8a16, sciBASIC#\mime\application%json\JSONtest\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.77 KB
+    '     File Size: 2.71 KB
 
 
     '     Module Resources

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::919e452450838cfe27a252cd8313eb23, sciBASIC#\mime\text%html\test\MarkdownTranslate.vb"
+﻿#Region "Microsoft.VisualBasic::919e452450838cfe27a252cd8313eb23, sciBASIC#\mime\text%html\Test\MarkdownTranslate.vb"
 
     ' Author:
     ' 

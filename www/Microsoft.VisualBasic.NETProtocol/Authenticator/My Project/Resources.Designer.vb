@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19f18e6459d2aff5a9663cfce0ea0f67, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Authenticator\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::86179b5faba0f70c61a91ffb234af7a6, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Authenticator\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.78 KB
+    '     File Size: 2.71 KB
 
 
     '     Module Resources

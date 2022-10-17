@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0cebd5fd04884f5efee5e6df8df181b7, sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::33cb1990e17193d614b6593d091d714f, sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1.04 KB
+    '     File Size: 1005 B
 
 
     ' 

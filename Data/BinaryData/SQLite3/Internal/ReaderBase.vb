@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a320dac69f99058840ad0f4a14860f0a, sciBASIC#\Data\BinaryData\SQLite3\Internal\ReaderBase.vb"
+﻿#Region "Microsoft.VisualBasic::6cbb26778bed7000fb6a84d24144dc56, sciBASIC#\Data\BinaryData\SQLite3\Internal\ReaderBase.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 192
     ' Comment Lines: 30
     '   Blank Lines: 70
-    '     File Size: 9.63 KB
+    '     File Size: 9.34 KB
 
 
     '     Class ReaderBase

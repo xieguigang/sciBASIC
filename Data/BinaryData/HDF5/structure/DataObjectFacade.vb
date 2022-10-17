@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fec9897acf571402da089a52c1779c89, sciBASIC#\Data\BinaryData\HDF5\structure\DataObjectFacade.vb"
+﻿#Region "Microsoft.VisualBasic::ddd0ab37a2c236882c916bef65e814ba, sciBASIC#\Data\BinaryData\HDF5\structure\DataObjectFacade.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 166
     ' Comment Lines: 42
     '   Blank Lines: 49
-    '     File Size: 10.55 KB
+    '     File Size: 10.29 KB
 
 
     '     Class DataObjectFacade

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ebbd27624a6297ae8ee14259e87c0be4, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Authenticator\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::ae9d0b8549ee405cd3c456928da5709b, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Authenticator\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1.17 KB
+    '     File Size: 1.13 KB
 
 
     ' 

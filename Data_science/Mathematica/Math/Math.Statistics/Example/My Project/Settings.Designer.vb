@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca128dfcb9d9a147bae78be39ca19579, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Example\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::3c3f62eef82ce0650c381611e865c2cc, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Example\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 51
     ' Comment Lines: 9
     '   Blank Lines: 13
-    '     File Size: 2.97 KB
+    '     File Size: 2.90 KB
 
 
     '     Class MySettings

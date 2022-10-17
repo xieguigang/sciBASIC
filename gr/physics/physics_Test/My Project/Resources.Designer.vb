@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a64cbe6860eea6946f766ad31315c867, sciBASIC#\gr\physics\physics_Test\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::7a67322884c2540b8412d47095c359c0, sciBASIC#\gr\physics\physics_Test\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.78 KB
+    '     File Size: 2.71 KB
 
 
     '     Module Resources

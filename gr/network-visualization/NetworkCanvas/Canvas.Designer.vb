@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7328ad94047fcdfd961e1810c1e2fd3d, sciBASIC#\gr\network-visualization\NetworkCanvas\Canvas.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::a9c6719add4253f3dc6093c8ea2b8e1d, sciBASIC#\gr\network-visualization\NetworkCanvas\Canvas.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 28
     ' Comment Lines: 8
     '   Blank Lines: 4
-    '     File Size: 1.67 KB
+    '     File Size: 1.63 KB
 
 
     ' Class Canvas

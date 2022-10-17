@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8fa064850ce9e9f183238e31d68491ce, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\MeasureData.vb"
+﻿#Region "Microsoft.VisualBasic::012a87a646d2389cc5114bcc9a379b49, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\MeasureData.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 23
     ' Comment Lines: 18
     '   Blank Lines: 9
-    '     File Size: 1.28 KB
+    '     File Size: 1.23 KB
 
 
     '     Class MeasureData

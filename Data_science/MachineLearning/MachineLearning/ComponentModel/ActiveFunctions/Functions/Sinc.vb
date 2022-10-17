@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8eaa030ce9f9ab63b93aaf98effe07a5, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\Sinc.vb"
+﻿#Region "Microsoft.VisualBasic::fac2a0e871feda1809ddd12668f71358, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\Sinc.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 30
     ' Comment Lines: 0
     '   Blank Lines: 6
-    '     File Size: 1.03 KB
+    '     File Size: 996 B
 
 
     '     Class Sinc

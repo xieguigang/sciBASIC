@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a1051fc8a74ca98a95d99a976e8c8f4, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::29406df6af30d33546a87326978d7691, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1.04 KB
+    '     File Size: 1009 B
 
 
     ' 

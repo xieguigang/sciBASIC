@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ace9fa17d622cfb1e1f1418572cd2fe, sciBASIC#\mime\application%json\Serializer\ObjectSerializer\ObjectSerializer.vb"
+﻿#Region "Microsoft.VisualBasic::da5dcc24dc854663783f1f0ce6384aa7, sciBASIC#\mime\application%json\Serializer\ObjectSerializer\ObjectSerializer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 156
     ' Comment Lines: 17
     '   Blank Lines: 28
-    '     File Size: 7.48 KB
+    '     File Size: 7.28 KB
 
 
     ' Module ObjectSerializer

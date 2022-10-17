@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::40c740ce307b247baf9dfc001e135437, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Math\Subtraction.vb"
+﻿#Region "Microsoft.VisualBasic::e703e3b306182c0c59ab94b1358257b5, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Math\Subtraction.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 20
     ' Comment Lines: 9
     '   Blank Lines: 6
-    '     File Size: 1.07 KB
+    '     File Size: 1.04 KB
 
 
     '     Module Subtraction

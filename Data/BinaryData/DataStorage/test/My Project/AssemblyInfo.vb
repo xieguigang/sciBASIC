@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f079e3537a0cdebf4558167d5b28d657, sciBASIC#\Data\BinaryData\DataStorage\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::2af87a8e855bee9e96dbc7c2bb5f7523, sciBASIC#\Data\BinaryData\DataStorage\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1.04 KB
+    '     File Size: 1009 B
 
 
     ' 

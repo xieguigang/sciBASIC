@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c35c169c86b8136878dd380bf4578817, sciBASIC#\gr\network-visualization\Datavisualization.Network\test\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::9be995879b906ec2b232b4bfebe08e0b, sciBASIC#\gr\network-visualization\Datavisualization.Network\test\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.78 KB
+    '     File Size: 2.71 KB
 
 
     '     Module Resources

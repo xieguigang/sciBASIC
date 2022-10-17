@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47c19f624f8a723d30a8ec3d35c5361e, sciBASIC#\Data\BinaryData\HDF5\device\GlobalHeapId.vb"
+﻿#Region "Microsoft.VisualBasic::167678ee27d46183fbadf214b649660b, sciBASIC#\Data\BinaryData\HDF5\device\GlobalHeapId.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 22
     ' Comment Lines: 0
     '   Blank Lines: 6
-    '     File Size: 721 B
+    '     File Size: 694 B
 
 
     '     Class GlobalHeapId

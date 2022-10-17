@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a36aa2203a9b4cd3d81a6617aa2a6f2, sciBASIC#\Data\BinaryData\HDF5\dataset\ContiguousDataset.vb"
+﻿#Region "Microsoft.VisualBasic::b51d5fabfe4226d33b5dfba05b1e9e5f, sciBASIC#\Data\BinaryData\HDF5\dataset\ContiguousDataset.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 16
     ' Comment Lines: 25
     '   Blank Lines: 6
-    '     File Size: 1.87 KB
+    '     File Size: 1.82 KB
 
 
     '     Class ContiguousDataset

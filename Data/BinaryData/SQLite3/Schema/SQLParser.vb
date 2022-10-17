@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::269e6d7fe7f8917e88765ee6fffd309f, sciBASIC#\Data\BinaryData\SQLite3\Schema\SQLParser.vb"
+﻿#Region "Microsoft.VisualBasic::77866fbe65730f30ccabba36f687eeb2, sciBASIC#\Data\BinaryData\SQLite3\Schema\SQLParser.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 160
     ' Comment Lines: 3
     '   Blank Lines: 26
-    '     File Size: 6.33 KB
+    '     File Size: 6.14 KB
 
 
     '     Enum TokenTypes

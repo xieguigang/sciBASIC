@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10cafb0f870b96ece21a300289ae76b0, sciBASIC#\Data_science\Mathematica\Math\ANOVA\TableFivepercent.vb"
+﻿#Region "Microsoft.VisualBasic::6a66ec231b1b54fd291b0ba0210aa8fa, sciBASIC#\Data_science\Mathematica\Math\ANOVA\TableFivepercent.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 41
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 6.39 KB
+    '     File Size: 6.34 KB
 
 
     ' Class TableFivepercent

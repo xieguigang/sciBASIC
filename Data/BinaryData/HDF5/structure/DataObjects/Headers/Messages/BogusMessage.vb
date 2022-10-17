@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4627b6ede024c440e8cf9bffd1a8b63, sciBASIC#\Data\BinaryData\HDF5\structure\DataObjects\Headers\Messages\BogusMessage.vb"
+﻿#Region "Microsoft.VisualBasic::1cf4012d9e05cc88496fcdddbe68654b, sciBASIC#\Data\BinaryData\HDF5\structure\DataObjects\Headers\Messages\BogusMessage.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 6
     '   Blank Lines: 6
-    '     File Size: 791 B
+    '     File Size: 767 B
 
 
     '     Class BogusMessage

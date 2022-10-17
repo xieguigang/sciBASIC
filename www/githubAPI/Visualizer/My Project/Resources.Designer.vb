@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b4779a0e3bde1c3e6497f2eac95548b, sciBASIC#\www\githubAPI\Visualizer\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::cf2cef728b3343528959c8d21224c775, sciBASIC#\www\githubAPI\Visualizer\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.83 KB
+    '     File Size: 2.77 KB
 
 
     '     Module Resources

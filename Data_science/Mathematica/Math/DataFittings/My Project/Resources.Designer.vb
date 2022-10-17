@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e56982cee0108fd62b62107bf38b27a, sciBASIC#\Data_science\Mathematica\Math\DataFittings\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::1325ea8e1a14edcf15036792687c5bda, sciBASIC#\Data_science\Mathematica\Math\DataFittings\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.81 KB
+    '     File Size: 2.74 KB
 
 
     '     Module Resources

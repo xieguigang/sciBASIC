@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e94f5a3e6241501f8507c645bd360b0, sciBASIC#\Data\BinaryData\SQLite3\Objects\Enums\FileWriteVersion.vb"
+﻿#Region "Microsoft.VisualBasic::c7831325d0e79d77c8c9402de7bffe82, sciBASIC#\Data\BinaryData\SQLite3\Objects\Enums\FileWriteVersion.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 6
     ' Comment Lines: 1
     '   Blank Lines: 0
-    '     File Size: 203 B
+    '     File Size: 197 B
 
 
     '     Enum FileWriteVersion

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f201a4684cccb42f1f8c49e0f2f4061, sciBASIC#\Data\BinaryData\HDF5\structure\DataObjects\Headers\Messages\AttributeMessage.vb"
+﻿#Region "Microsoft.VisualBasic::7fc9c033ae591824b4e3fb4068613b82, sciBASIC#\Data\BinaryData\HDF5\structure\DataObjects\Headers\Messages\AttributeMessage.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 104
     ' Comment Lines: 17
     '   Blank Lines: 35
-    '     File Size: 5.67 KB
+    '     File Size: 5.52 KB
 
 
     '     Class AttributeMessage

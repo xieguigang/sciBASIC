@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd6f945e33e1ee3140e0d6e29af3e70e, sciBASIC#\Data\BinaryData\HDSPack\BinaryStream\TreeWriter.vb"
+﻿#Region "Microsoft.VisualBasic::a57bc1926f95e3c9157ba9149377781a, sciBASIC#\Data\BinaryData\HDSPack\BinaryStream\TreeWriter.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 44
     ' Comment Lines: 6
     '   Blank Lines: 10
-    '     File Size: 2.25 KB
+    '     File Size: 2.20 KB
 
 
     ' Module TreeWriter

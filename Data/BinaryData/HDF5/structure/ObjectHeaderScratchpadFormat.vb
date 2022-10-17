@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::184ff99a78c7620296f6a9d50566fd74, sciBASIC#\Data\BinaryData\HDF5\structure\ObjectHeaderScratchpadFormat.vb"
+﻿#Region "Microsoft.VisualBasic::4aabce90b8d6f60d1961ff13dcc39363, sciBASIC#\Data\BinaryData\HDF5\structure\ObjectHeaderScratchpadFormat.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 28
     ' Comment Lines: 6
     '   Blank Lines: 12
-    '     File Size: 1.71 KB
+    '     File Size: 1.67 KB
 
 
     '     Class ObjectHeaderScratchpadFormat

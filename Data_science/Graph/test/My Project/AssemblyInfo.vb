@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2621ea76bddb21a7f8244cfc22deb63, sciBASIC#\Data_science\Graph\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::6d78d8e45faf4e88fcb9fa6e0f11078b, sciBASIC#\Data_science\Graph\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1.05 KB
+    '     File Size: 1015 B
 
 
     ' 

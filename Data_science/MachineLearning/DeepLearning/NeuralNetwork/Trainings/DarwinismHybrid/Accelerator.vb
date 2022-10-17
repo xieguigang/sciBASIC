@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0be7e78148f7fb0fef13b9ee5e2c244, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Trainings\DarwinismHybrid\Accelerator.vb"
+﻿#Region "Microsoft.VisualBasic::796cf737e8a5d35031fdcb21cdcbb5e0, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Trainings\DarwinismHybrid\Accelerator.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 43
     ' Comment Lines: 4
     '   Blank Lines: 9
-    '     File Size: 2.40 KB
+    '     File Size: 2.35 KB
 
 
     '     Module Accelerator

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::33f840c01fb5827d9a35e405d1d32d0a, sciBASIC#\gr\network-visualization\NetworkCanvas\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::394ec5ce801ea8f95db707d2fcf1492e, sciBASIC#\gr\network-visualization\NetworkCanvas\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.82 KB
+    '     File Size: 2.75 KB
 
 
     '     Module Resources

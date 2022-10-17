@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::028d0ec9fc8f066239bc0bc3e07c7eea, sciBASIC#\Data\BinaryData\BinaryData\ByteOrder\NetworkByteOrderBitConvertor.vb"
+﻿#Region "Microsoft.VisualBasic::1e63ea171b1f7653fc683cfc3f0ac0b4, sciBASIC#\Data\BinaryData\BinaryData\ByteOrder\NetworkByteOrderBitConvertor.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 170
     ' Comment Lines: 73
     '   Blank Lines: 27
-    '     File Size: 10.37 KB
+    '     File Size: 10.10 KB
 
 
     ' Module NetworkByteOrderBitConvertor

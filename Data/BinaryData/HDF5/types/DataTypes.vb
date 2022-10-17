@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d45a6445ca7d8d53966a92f60e206c37, sciBASIC#\Data\BinaryData\HDF5\types\DataTypes.vb"
+﻿#Region "Microsoft.VisualBasic::1f2187a3858f2a12a22b87ad8130c53c, sciBASIC#\Data\BinaryData\HDF5\types\DataTypes.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 17
     ' Comment Lines: 39
     '   Blank Lines: 2
-    '     File Size: 1.52 KB
+    '     File Size: 1.47 KB
 
 
     '     Class NamespaceDoc

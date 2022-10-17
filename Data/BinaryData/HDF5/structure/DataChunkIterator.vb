@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae37a122da796c6789a2c34abd7bd3ce, sciBASIC#\Data\BinaryData\HDF5\structure\DataChunkIterator.vb"
+﻿#Region "Microsoft.VisualBasic::633790328e6f18cd5c023ce1fd3d23ce, sciBASIC#\Data\BinaryData\HDF5\structure\DataChunkIterator.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 24
     ' Comment Lines: 7
     '   Blank Lines: 12
-    '     File Size: 1.29 KB
+    '     File Size: 1.24 KB
 
 
     '     Class DataChunkIterator

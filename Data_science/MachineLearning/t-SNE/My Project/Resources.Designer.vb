@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb9cde4a85311f0bca4085c5ac21b584, sciBASIC#\Data_science\MachineLearning\t-SNE\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::dab01108c267868bdd6464e00b69e456, sciBASIC#\Data_science\MachineLearning\t-SNE\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.81 KB
+    '     File Size: 2.75 KB
 
 
     '     Module Resources

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::970d7c223a4c6f699825b8989a776e4f, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Trainings\TrainingSample.vb"
+﻿#Region "Microsoft.VisualBasic::ac442cb35288897d3132aa4faaf48721, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Trainings\TrainingSample.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 22
     ' Comment Lines: 3
     '   Blank Lines: 8
-    '     File Size: 929 B
+    '     File Size: 897 B
 
 
     '     Structure TrainingSample

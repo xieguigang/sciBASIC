@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65a747f564bb5e081974d67c1d674644, sciBASIC#\Data_science\Mathematica\Math\Randomizer\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::80b08ed5107feb0061c79e60a74a2658, sciBASIC#\Data_science\Mathematica\Math\Randomizer\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 42
     ' Comment Lines: 42
     '   Blank Lines: 10
-    '     File Size: 4.65 KB
+    '     File Size: 4.56 KB
 
 
     '     Module Resources

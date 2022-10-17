@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1297c1cc342515bd59373d169a359386, sciBASIC#\Data_science\Mathematica\Math\MathLambda\test\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::0d96468d55c4583d05ed1c2eee26eb57, sciBASIC#\Data_science\Mathematica\Math\MathLambda\test\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 31
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.77 KB
+    '     File Size: 2.71 KB
 
 
     '     Module Resources

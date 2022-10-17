@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c1902d968b5f0de21ddf252dc5088fc, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Trainings\ANNTrainer.vb"
+﻿#Region "Microsoft.VisualBasic::d8b439993678cddd4d9cf9735d24b066, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Trainings\ANNTrainer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 296
     ' Comment Lines: 88
     '   Blank Lines: 64
-    '     File Size: 17.82 KB
+    '     File Size: 17.37 KB
 
 
     '     Class ANNTrainer

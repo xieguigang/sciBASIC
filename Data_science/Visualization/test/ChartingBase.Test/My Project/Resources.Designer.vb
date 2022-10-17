@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc3657b56a4f406e33c5b156b672f676, sciBASIC#\Data_science\Visualization\test\ChartingBase.Test\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::dfe47cb8a31c1edb634c462d82578dbc, sciBASIC#\Data_science\Visualization\test\ChartingBase.Test\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.78 KB
+    '     File Size: 2.72 KB
 
 
     '     Module Resources

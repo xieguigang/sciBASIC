@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7b31f86dd5cad6acc079a6648b00d5b, sciBASIC#\Data\BinaryData\HDF5\dataset\CompactDataset.vb"
+﻿#Region "Microsoft.VisualBasic::e4a7aa73b0cf0c84f3891e994aeb5c41, sciBASIC#\Data\BinaryData\HDF5\dataset\CompactDataset.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 16
     ' Comment Lines: 20
     '   Blank Lines: 6
-    '     File Size: 1.40 KB
+    '     File Size: 1.36 KB
 
 
     '     Class CompactDataset

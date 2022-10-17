@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::55e9947d73644166fbdb95a212de04d8, sciBASIC#\Data\BinaryData\HDSPack\Metadata\LazyAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::0f41ae6b9f24f2f1d585e36631ddcde6, sciBASIC#\Data\BinaryData\HDSPack\Metadata\LazyAttribute.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 77
     ' Comment Lines: 5
     '   Blank Lines: 14
-    '     File Size: 4.02 KB
+    '     File Size: 3.92 KB
 
 
     ' Class LazyAttribute

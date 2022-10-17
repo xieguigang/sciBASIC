@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e211799dc529bcf1cf56c2ff4dfbf89, sciBASIC#\gr\network-visualization\Datavisualization.Network\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::f3ffe9c3c67501c763465d36af065bf2, sciBASIC#\gr\network-visualization\Datavisualization.Network\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1.18 KB
+    '     File Size: 1.14 KB
 
 
     ' 

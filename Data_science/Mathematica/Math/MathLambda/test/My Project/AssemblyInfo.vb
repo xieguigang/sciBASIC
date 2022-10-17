@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12f22bd2b7833fb1278864ba9430b191, sciBASIC#\Data_science\Mathematica\Math\MathLambda\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::fdbf2ea58c9bf24a2ebfda88a676a6f8, sciBASIC#\Data_science\Mathematica\Math\MathLambda\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1.14 KB
+    '     File Size: 1.11 KB
 
 
     ' 

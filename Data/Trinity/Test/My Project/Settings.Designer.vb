@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aed608a423d673ae36dcb762edbebd95, sciBASIC#\Data\Trinity\Test\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::6fd65ccd8a80ee0004f68babb3683170, sciBASIC#\Data\Trinity\Test\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 51
     ' Comment Lines: 9
     '   Blank Lines: 13
-    '     File Size: 2.95 KB
+    '     File Size: 2.88 KB
 
 
     '     Class MySettings

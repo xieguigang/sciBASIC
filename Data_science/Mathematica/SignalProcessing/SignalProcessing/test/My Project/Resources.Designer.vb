@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::deab62002143211fc75b8d8cce318326, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\test\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::000ca2762c852a9f1d594d29c3e06303, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\test\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.77 KB
+    '     File Size: 2.71 KB
 
 
     '     Module Resources

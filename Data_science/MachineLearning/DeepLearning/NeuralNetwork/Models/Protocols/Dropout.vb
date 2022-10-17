@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f719d8d2d778d891f41996af8c770eb1, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Models\Protocols\Dropout.vb"
+﻿#Region "Microsoft.VisualBasic::78e20e7e6d389e22aee722618d36c3fd, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Models\Protocols\Dropout.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 17
     ' Comment Lines: 10
     '   Blank Lines: 3
-    '     File Size: 1.18 KB
+    '     File Size: 1.15 KB
 
 
     '     Module Dropout

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0894c472c213a7e02cb6966791621a2, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\Repository\FNV1a.vb"
+﻿#Region "Microsoft.VisualBasic::276543f25bf457a438df802cb3d06404, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\Repository\FNV1a.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 68
     ' Comment Lines: 25
     '   Blank Lines: 16
-    '     File Size: 4.02 KB
+    '     File Size: 3.91 KB
 
 
     '     Module FNV1a

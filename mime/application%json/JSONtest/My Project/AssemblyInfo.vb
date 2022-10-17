@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::81c870766159d40858ad0110e4948f8e, sciBASIC#\mime\application%json\JSONtest\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::6a3029b4c866ff5dcd6dbfe37c759422, sciBASIC#\mime\application%json\JSONtest\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1.16 KB
+    '     File Size: 1.12 KB
 
 
     ' 

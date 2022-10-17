@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48de20b48b7aa960612d06c2697891d3, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Tests\App\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::71fde693819a72469a1a365a41b2d4ec, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Tests\App\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.77 KB
+    '     File Size: 2.71 KB
 
 
     '     Module Resources

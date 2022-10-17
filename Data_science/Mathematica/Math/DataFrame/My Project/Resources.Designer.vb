@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2d74cdc597b510c9cd4cf4aae0d364c, sciBASIC#\Data_science\Mathematica\Math\DataFrame\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::dc45c31444292addb43f451586cc8b20, sciBASIC#\Data_science\Mathematica\Math\DataFrame\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.80 KB
+    '     File Size: 2.74 KB
 
 
     '     Module Resources

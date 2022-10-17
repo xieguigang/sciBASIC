@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f51a9adaf56c5aba31e0aa236fe6af1, sciBASIC#\Data\BinaryData\DataStorage\test\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::495e78c423d0bfe67b4c14d529310836, sciBASIC#\Data\BinaryData\DataStorage\test\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 51
     ' Comment Lines: 9
     '   Blank Lines: 13
-    '     File Size: 2.95 KB
+    '     File Size: 2.88 KB
 
 
     '     Class MySettings

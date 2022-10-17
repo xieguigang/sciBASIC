@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d16d718703edc78a2cd0651f423fe6a1, sciBASIC#\Data_science\Mathematica\Math\DataFittings\Logistic\LogisticFit.vb"
+﻿#Region "Microsoft.VisualBasic::c5593a77bcdefe8d0ae908273f958daa, sciBASIC#\Data_science\Mathematica\Math\DataFittings\Logistic\LogisticFit.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 36
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 1.50 KB
+    '     File Size: 1.46 KB
 
 
     ' Class LogisticFit

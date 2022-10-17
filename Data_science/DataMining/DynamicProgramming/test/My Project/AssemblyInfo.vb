@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd5664ed0171df4c8b70987ef14b587e, sciBASIC#\Data_science\DataMining\DynamicProgramming\test\My Project\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::8b9b5e6d46884a8dd15e42a392e39520, sciBASIC#\Data_science\DataMining\DynamicProgramming\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1.16 KB
+    '     File Size: 1.13 KB
 
 
     ' 

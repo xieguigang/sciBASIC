@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01b2330f227cbcaff173d9480966c533, sciBASIC#\Data\BinaryData\HDSPack\BinaryStream\PackAttributeData.vb"
+﻿#Region "Microsoft.VisualBasic::6525c42238c12beaa1afaac349ad08ee, sciBASIC#\Data\BinaryData\HDSPack\BinaryStream\PackAttributeData.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 106
     ' Comment Lines: 3
     '   Blank Lines: 24
-    '     File Size: 4.84 KB
+    '     File Size: 4.71 KB
 
 
     ' Module PackAttributeData

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c693beeaa7bf611d96454ce910d735a2, sciBASIC#\Data\GraphQuery\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::1310b24b98207feb5a6b1b16498a1c02, sciBASIC#\Data\GraphQuery\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 23
     '   Blank Lines: 8
-    '     File Size: 2.80 KB
+    '     File Size: 2.74 KB
 
 
     '     Module Resources

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8166359c32d430200f9b557c41c3c2e6, sciBASIC#\Data\BinaryData\BinaryData\ByteBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::70edaace1c1baa44428c7c2cb13c7126, sciBASIC#\Data\BinaryData\BinaryData\ByteBuffer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 278
     ' Comment Lines: 19
     '   Blank Lines: 39
-    '     File Size: 11.02 KB
+    '     File Size: 10.69 KB
 
 
     ' Class ByteBuffer
