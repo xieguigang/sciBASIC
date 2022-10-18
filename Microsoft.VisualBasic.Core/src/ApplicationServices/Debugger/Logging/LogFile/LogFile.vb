@@ -122,12 +122,18 @@ Namespace ApplicationServices.Debugging.Logging
                        Optional autoFlush As Boolean = True,
                        Optional bufferSize As Integer = 1024,
                        Optional append As Boolean = True,
+                       Optional appendHeader As Boolean = True,
                        Optional split As LoggingDriver = Nothing)
 
             Me.buffer = New StreamWriter(openFile(path, append), Encoding.UTF8, bufferSize) With {
                 .AutoFlush = autoFlush
             }
-            Me.buffer.WriteLine($"//{vbTab}[{Now.ToString}]{vbTab}{New String("=", 25)}  START WRITE LOGGING SECTION  {New String("=", 25)}" & vbCrLf)
+
+            If appendHeader Then
+                Me.buffer.WriteLine(value:=$"//{vbTab}[{Now.ToString}]{vbTab}{New String("=", 25)}  START WRITE LOGGING SECTION  {New String("=", 25)}")
+                Me.buffer.WriteLine()
+            End If
+
             Me.filePath = FileIO.FileSystem.GetFileInfo(path).FullName
             Me.split = split
         End Sub
@@ -139,7 +145,7 @@ Namespace ApplicationServices.Debugging.Logging
                 Call "".SaveTo(path)
             End If
 
-            Return New FileStream(path, If(append, FileMode.Append, FileMode.Truncate))
+            Return New FileStream(path, If(append, FileMode.Append, FileMode.Truncate), access:=FileAccess.Write, share:=FileShare.ReadWrite)
         End Function
 
         Public Sub Trace(toString As Func(Of String, Byte(), String), format As String, ParamArray bytes As Byte())
