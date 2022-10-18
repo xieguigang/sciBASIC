@@ -155,7 +155,9 @@ Namespace Linq
         ''' numeric (logical, integer or double) vector or an R object for which the internal coercion to 
         ''' double works whose min or max is searched for.
         ''' </param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' returns -1 means empty collection
+        ''' </returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Max(Of T As IComparable)(x As IEnumerable(Of T)) As Integer
