@@ -87,7 +87,7 @@ Namespace Parallel.Tasks
         ''' 如果直接在这里使用<see cref="App.BufferSize"/>的话，极端的情况下会导致服务器的内存直接被耗尽
         ''' 所以在这里使用一个较小的常数值
         ''' </summary>
-        ReadOnly __tasks As New Queue(Of __task)(4096)
+        ReadOnly __tasks As Queue(Of __task)
 
         ''' <summary>
         ''' 返回当前的任务池之中的任务数量
@@ -99,6 +99,12 @@ Namespace Parallel.Tasks
                 SyncLock __tasks
                     Return __tasks.Count
                 End SyncLock
+            End Get
+        End Property
+
+        Public ReadOnly Property MaximumQueue As Boolean
+            Get
+                Return __tasks.Count >= queueSize
             End Get
         End Property
 
@@ -117,16 +123,20 @@ Namespace Parallel.Tasks
         ''' the name of the task is running
         ''' </summary>
         Dim task_name As String
+        Dim queueSize As Integer
 
         ''' <summary>
         ''' 会单独启动一条新的线程来用来执行任务队列
         ''' </summary>
-        Sub New(Optional name As String = Nothing)
+        Sub New(Optional name As String = Nothing, Optional queueSize As Integer = 16)
+            __tasks = New Queue(Of __task)(queueSize)
+
 #If DEBUG Then
             Call $"Using default buffer_size={App.BufferSize}".__DEBUG_ECHO
 #End If
             Call RunTask(AddressOf __taskQueueEXEC)
 
+            Me.queueSize = queueSize
             Me.uid = If(name, Me.GetHashCode.ToHexString)
         End Sub
 

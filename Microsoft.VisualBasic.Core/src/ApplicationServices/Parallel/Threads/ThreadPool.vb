@@ -141,16 +141,16 @@ Namespace Parallel.Threads
         Dim totalTask As Integer
         Dim popoutTask As Integer
 
-        Sub New(maxThread As Integer)
+        Sub New(maxThread As Integer, Optional maxQueueSize As Integer = 2)
             threads = New TaskQueue(Of Long)(maxThread) {}
 
             For i As Integer = 0 To threads.Length - 1
-                threads(i) = New TaskQueue(Of Long)
+                threads(i) = New TaskQueue(Of Long)(queueSize:=maxQueueSize)
             Next
         End Sub
 
-        Sub New()
-            Me.New(LQuerySchedule.Recommended_NUM_THREADS)
+        Sub New(Optional maxQueueSize As Integer = 2)
+            Me.New(LQuerySchedule.Recommended_NUM_THREADS, maxQueueSize)
         End Sub
 
         Public Function Start() As ThreadPool
@@ -239,22 +239,25 @@ Namespace Parallel.Threads
         Private Sub allocate()
             Do While Not Me.disposedValue
                 Dim task As TaskBinding = Nothing
+                Dim taskThread As TaskQueue(Of Long) = GetAvaliableThread()
 
-                SyncLock pendings
-                    If pendings.Count > 0 Then
-                        task = pendings.Dequeue
-                        popoutTask += 1
+                If Not taskThread.MaximumQueue Then
+                    SyncLock pendings
+                        If pendings.Count > 0 Then
+                            task = pendings.Dequeue
+                            popoutTask += 1
+                        End If
+                    End SyncLock
+
+                    If Not task.IsEmpty Then
+                        Dim h As Func(Of Long) = AddressOf New __taskInvoke With {.task = task.Bind}.Run
+                        Dim callback As Action(Of Long) = task.Target
+
+                        ' 当线程池里面的线程数量非常多的时候，这个事件会变长，
+                        ' 所以讲分配的代码单独放在线程里面执行，以提神web
+                        ' 服务器的响应效率
+                        Call taskThread.Enqueue(h, callback, name:=task.name)
                     End If
-                End SyncLock
-
-                If Not task.IsEmpty Then
-                    Dim h As Func(Of Long) = AddressOf New __taskInvoke With {.task = task.Bind}.Run
-                    Dim callback As Action(Of Long) = task.Target
-
-                    ' 当线程池里面的线程数量非常多的时候，这个事件会变长，
-                    ' 所以讲分配的代码单独放在线程里面执行，以提神web
-                    ' 服务器的响应效率
-                    Call GetAvaliableThread.Enqueue(h, callback, name:=task.name)
                 End If
 
                 Call Thread.Sleep(1)
@@ -285,9 +288,11 @@ Namespace Parallel.Threads
         Private Function GetAvaliableThread() As TaskQueue(Of Long)
             Dim [short] As TaskQueue(Of Long) = threads.First
 
-            For Each t In threads
+            For Each t As TaskQueue(Of Long) In threads
                 If Not t.RunningTask Then
                     Return t
+                ElseIf t.MaximumQueue Then
+                    Continue For
                 Else
                     If [short].Tasks > t.Tasks Then
                         [short] = t
