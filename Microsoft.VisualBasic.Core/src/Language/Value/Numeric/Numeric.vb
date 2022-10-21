@@ -103,14 +103,29 @@ Namespace Language
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' -1 means empty collection
+        ''' </returns>
         <Extension>
         Public Function MaxIndex(Of T As IComparable)(source As IEnumerable(Of T)) As Integer
             Dim i As Integer = 0
-            Dim max As T = source.First
+            Dim max As T
             Dim maxInd As Integer = 0
+            Dim loops As T()
 
-            For Each x As T In source.Skip(1)
+            If source Is Nothing Then
+                Return -1
+            Else
+                loops = If(TypeOf source Is T(), DirectCast(source, T()), source.ToArray)
+
+                If loops.Length = 0 Then
+                    Return -1
+                Else
+                    max = loops(0)
+                End If
+            End If
+
+            For Each x As T In loops.Skip(1)
                 i += 1
 
                 If x.CompareTo(max) > 0 Then

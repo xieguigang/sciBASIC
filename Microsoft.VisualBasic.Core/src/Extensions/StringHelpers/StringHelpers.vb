@@ -831,10 +831,12 @@ Public Module StringHelpers
         Else
             Static cache As New Dictionary(Of String, Regex)
 
-            Return cache _
-                .ComputeIfAbsent(pattern, lazyValue:=Function() New Regex(pattern, options)) _
-                .Match(input) _
-                .Value
+            SyncLock cache
+                Return cache _
+                    .ComputeIfAbsent(pattern, lazyValue:=Function() New Regex(pattern, options)) _
+                    .Match(input) _
+                    .Value
+            End SyncLock
         End If
     End Function
 

@@ -1,72 +1,73 @@
 ﻿#Region "Microsoft.VisualBasic::5928ca39ca30cb8db9c054c08f8bc515, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\ThreadPool.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 279
-    '    Code Lines: 150
-    ' Comment Lines: 85
-    '   Blank Lines: 44
-    '     File Size: 9.84 KB
+' Summaries:
 
 
-    '     Class ThreadPool
-    ' 
-    '         Properties: FullCapacity, NumOfThreads, WorkingThreads
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: GetAvaliableThread, GetStatus, OperationTimeOut, Start, ToString
-    ' 
-    '         Sub: [Exit], allocate, (+2 Overloads) Dispose, RunTask, WaitAll
-    '         Structure __taskInvoke
-    ' 
-    '             Function: Run
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 279
+'    Code Lines: 150
+' Comment Lines: 85
+'   Blank Lines: 44
+'     File Size: 9.84 KB
+
+
+'     Class ThreadPool
+' 
+'         Properties: FullCapacity, NumOfThreads, WorkingThreads
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: GetAvaliableThread, GetStatus, OperationTimeOut, Start, ToString
+' 
+'         Sub: [Exit], allocate, (+2 Overloads) Dispose, RunTask, WaitAll
+'         Structure __taskInvoke
+' 
+'             Function: Run
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports System.Threading
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Parallel.Linq
 Imports Microsoft.VisualBasic.Parallel.Tasks
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports TaskBinding = Microsoft.VisualBasic.ComponentModel.Binding(Of System.Action, System.Action(Of Long))
 
 Namespace Parallel.Threads
@@ -137,11 +138,14 @@ Namespace Parallel.Threads
             End Get
         End Property
 
-        Sub New(maxThread As Integer)
+        Dim totalTask As Integer
+        Dim popoutTask As Integer
+
+        Sub New(maxThread As Integer, Optional maxQueueSize As Integer = 2)
             threads = New TaskQueue(Of Long)(maxThread) {}
 
             For i As Integer = 0 To threads.Length - 1
-                threads(i) = New TaskQueue(Of Long)
+                threads(i) = New TaskQueue(Of Long)(queueSize:=maxQueueSize)
             Next
         End Sub
 
@@ -181,11 +185,18 @@ Namespace Parallel.Threads
         ''' </summary>
         ''' <param name="task"></param>
         ''' <param name="callback">回调函数里面的参数是任务的执行的时间长度</param>
-        Public Sub RunTask(task As Action, Optional callback As Action(Of Long) = Nothing)
+        ''' <param name="name">the name of current task</param>
+        Public Sub RunTask(task As Action,
+                           Optional callback As Action(Of Long) = Nothing,
+                           Optional name As String = Nothing)
+
             Dim pends As New TaskBinding With {
                 .Bind = task,
-                .Target = callback
+                .Target = callback,
+                .name = name
             }
+
+            totalTask += 1
 
             SyncLock pendings
                 Call pendings.Enqueue(pends)
@@ -228,21 +239,25 @@ Namespace Parallel.Threads
         Private Sub allocate()
             Do While Not Me.disposedValue
                 Dim task As TaskBinding = Nothing
+                Dim taskThread As TaskQueue(Of Long) = GetAvaliableThread()
 
-                SyncLock pendings
-                    If pendings.Count > 0 Then
-                        task = pendings.Dequeue
+                If Not taskThread.MaximumQueue Then
+                    SyncLock pendings
+                        If pendings.Count > 0 Then
+                            task = pendings.Dequeue
+                            popoutTask += 1
+                        End If
+                    End SyncLock
+
+                    If Not task.IsEmpty Then
+                        Dim h As Func(Of Long) = AddressOf New __taskInvoke With {.task = task.Bind}.Run
+                        Dim callback As Action(Of Long) = task.Target
+
+                        ' 当线程池里面的线程数量非常多的时候，这个事件会变长，
+                        ' 所以讲分配的代码单独放在线程里面执行，以提神web
+                        ' 服务器的响应效率
+                        Call taskThread.Enqueue(h, callback, name:=task.name)
                     End If
-                End SyncLock
-
-                If Not task.IsEmpty Then
-                    Dim h As Func(Of Long) = AddressOf New __taskInvoke With {.task = task.Bind}.Run
-                    Dim callback As Action(Of Long) = task.Target
-
-                    ' 当线程池里面的线程数量非常多的时候，这个事件会变长，
-                    ' 所以讲分配的代码单独放在线程里面执行，以提神web
-                    ' 服务器的响应效率
-                    Call GetAvaliableThread.Enqueue(h, callback)
                 End If
 
                 Call Thread.Sleep(1)
@@ -273,9 +288,15 @@ Namespace Parallel.Threads
         Private Function GetAvaliableThread() As TaskQueue(Of Long)
             Dim [short] As TaskQueue(Of Long) = threads.First
 
-            For Each t In threads
-                If Not t.RunningTask Then
+            If [short].Tasks = 0 Then
+                Return [short]
+            End If
+
+            For Each t As TaskQueue(Of Long) In threads
+                If t.Tasks = 0 OrElse Not t.RunningTask Then
                     Return t
+                ElseIf t.MaximumQueue Then
+                    Continue For
                 Else
                     If [short].Tasks > t.Tasks Then
                         [short] = t
@@ -297,7 +318,19 @@ Namespace Parallel.Threads
         End Sub
 
         Public Overrides Function ToString() As String
-            Return threads.JoinBy(vbCrLf)
+            Dim sb As New StringBuilder
+
+            Call sb.AppendLine($"   ------========== {Now.ToString} ==========------")
+            Call sb.AppendLine($"{NameOf(Me.FullCapacity)}: {FullCapacity}")
+            Call sb.AppendLine($"{NameOf(Me.NumOfThreads)}: {NumOfThreads}")
+            Call sb.AppendLine($"{NameOf(Me.WorkingThreads)}: {WorkingThreads}")
+            Call sb.AppendLine($"{NameOf(Me.pendings)}: {pendings.Count}")
+            Call sb.AppendLine($"{NameOf(Me.totalTask)}: {totalTask}")
+            Call sb.AppendLine($"Progress: [{Program.ProgressText(popoutTask / totalTask, 32)}] {(100 * popoutTask / totalTask).ToString("F2")}%")
+            Call sb.AppendLine()
+            Call sb.AppendLine(threads.JoinBy(vbCrLf))
+
+            Return sb.ToString
         End Function
 
         Public Sub [Exit]()
