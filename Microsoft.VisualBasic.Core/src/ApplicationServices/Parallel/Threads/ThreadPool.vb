@@ -326,7 +326,7 @@ Namespace Parallel.Threads
             Call sb.AppendLine($"{NameOf(Me.WorkingThreads)}: {WorkingThreads}")
             Call sb.AppendLine($"{NameOf(Me.pendings)}: {pendings.Count}")
             Call sb.AppendLine($"{NameOf(Me.totalTask)}: {totalTask}")
-            Call sb.AppendLine($"Progress: [{Program.ProgressText(popoutTask / totalTask)}] {(100 * popoutTask / totalTask).ToString("F2")}%")
+            Call sb.AppendLine($"Progress: [{Program.ProgressText(popoutTask / totalTask, 32)}] {(100 * popoutTask / totalTask).ToString("F2")}%")
             Call sb.AppendLine()
             Call sb.AppendLine(threads.JoinBy(vbCrLf))
 
