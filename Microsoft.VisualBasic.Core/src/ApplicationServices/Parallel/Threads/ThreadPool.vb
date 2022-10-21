@@ -149,8 +149,8 @@ Namespace Parallel.Threads
             Next
         End Sub
 
-        Sub New(Optional maxQueueSize As Integer = 2)
-            Me.New(LQuerySchedule.Recommended_NUM_THREADS, maxQueueSize)
+        Sub New()
+            Me.New(LQuerySchedule.Recommended_NUM_THREADS)
         End Sub
 
         Public Function Start() As ThreadPool
@@ -288,8 +288,12 @@ Namespace Parallel.Threads
         Private Function GetAvaliableThread() As TaskQueue(Of Long)
             Dim [short] As TaskQueue(Of Long) = threads.First
 
+            If [short].Tasks = 0 Then
+                Return [short]
+            End If
+
             For Each t As TaskQueue(Of Long) In threads
-                If Not t.RunningTask Then
+                If t.Tasks = 0 OrElse Not t.RunningTask Then
                     Return t
                 ElseIf t.MaximumQueue Then
                     Continue For
