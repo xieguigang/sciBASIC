@@ -103,17 +103,35 @@ Namespace Parallel.Tasks
         End Property
 
         ''' <summary>
+        ''' 当这个属性为False的时候说明没有任务在执行，此时为空闲状态
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property RunningTask As Boolean
+        ''' <summary>
+        ''' the unique name of current task
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property uid As String
+
+        ''' <summary>
+        ''' the name of the task is running
+        ''' </summary>
+        Dim task_name As String
+
+        ''' <summary>
         ''' 会单独启动一条新的线程来用来执行任务队列
         ''' </summary>
-        Sub New()
+        Sub New(Optional name As String = Nothing)
 #If DEBUG Then
             Call $"Using default buffer_size={App.BufferSize}".__DEBUG_ECHO
 #End If
             Call RunTask(AddressOf __taskQueueEXEC)
+
+            Me.uid = If(name, Me.GetHashCode.ToHexString)
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"[{uid.ToHexString}] {If(RunningTask, "running", "stop")}, queue {Tasks} tasks."
+            Return $"[{uid}{task_name}] {If(RunningTask, "running", "stop")}, queue {Tasks} tasks."
         End Function
 
         ''' <summary>
@@ -148,13 +166,17 @@ Namespace Parallel.Tasks
         End Sub
 
         ''' <summary>
-        ''' 这个函数只会讲任务添加到队列之中，而不会阻塞线程
+        ''' 这个函数只会任务添加到队列之中，而不会阻塞线程
         ''' </summary>
         ''' <param name="handle"></param>
-        Public Sub Enqueue(handle As Func(Of T), Optional callback As Action(Of T) = Nothing)
+        Public Sub Enqueue(handle As Func(Of T),
+                           Optional callback As Action(Of T) = Nothing,
+                           Optional name As String = Nothing)
+
             Dim task As New __task With {
                 .handle = handle,
-                .callback = callback
+                .callback = callback,
+                .name = name
             }
 
             SyncLock __tasks
@@ -163,34 +185,12 @@ Namespace Parallel.Tasks
         End Sub
 
         ''' <summary>
-        ''' 当这个属性为False的时候说明没有任务在执行，此时为空闲状态
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property RunningTask As Boolean
-        Public ReadOnly Property uid As Integer
-            Get
-                Return Me.GetHashCode
-            End Get
-        End Property
-
-        ''' <summary>
         ''' 有一条线程单独执行这个任务队列
         ''' </summary>
         Private Sub __taskQueueEXEC()
             Do While Not disposedValue
                 If Not Tasks = 0 Then
-                    Dim task As __task
-
-                    SyncLock __tasks
-                        task = __tasks.Dequeue
-                    End SyncLock
-
-                    _RunningTask = True
-                    Call task.Run()
-                    If Not task.receiveDone Is Nothing Then
-                        Call task.receiveDone.Set()
-                    End If
-                    _RunningTask = False
+                    Call __calls()
                 Else
                     ' 当前的线程处于空闲的状态
                     Call Thread.Sleep(1)
@@ -198,11 +198,28 @@ Namespace Parallel.Tasks
             Loop
         End Sub
 
+        Private Sub __calls()
+            Dim task As __task
+
+            SyncLock __tasks
+                task = __tasks.Dequeue
+            End SyncLock
+
+            task_name = If(task.name.StringEmpty, "", $"::{task.name}")
+            _RunningTask = True
+            Call task.Run()
+            If Not task.receiveDone Is Nothing Then
+                Call task.receiveDone.Set()
+            End If
+            _RunningTask = False
+        End Sub
+
         Private Structure __task
 
             Public callback As Action(Of T)
             Public handle As Func(Of T)
             Public receiveDone As ManualResetEvent
+            Public name As String
 
             Public ReadOnly Property Value As T
 
