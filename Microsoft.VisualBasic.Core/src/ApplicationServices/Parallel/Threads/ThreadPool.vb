@@ -64,10 +64,10 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Threading
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Parallel.Linq
 Imports Microsoft.VisualBasic.Parallel.Tasks
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports TaskBinding = Microsoft.VisualBasic.ComponentModel.Binding(Of System.Action, System.Action(Of Long))
 
 Namespace Parallel.Threads
@@ -138,6 +138,9 @@ Namespace Parallel.Threads
             End Get
         End Property
 
+        Dim totalTask As Integer
+        Dim popoutTask As Integer
+
         Sub New(maxThread As Integer)
             threads = New TaskQueue(Of Long)(maxThread) {}
 
@@ -193,6 +196,8 @@ Namespace Parallel.Threads
                 .name = name
             }
 
+            totalTask += 1
+
             SyncLock pendings
                 Call pendings.Enqueue(pends)
             End SyncLock
@@ -238,6 +243,7 @@ Namespace Parallel.Threads
                 SyncLock pendings
                     If pendings.Count > 0 Then
                         task = pendings.Dequeue
+                        popoutTask += 1
                     End If
                 End SyncLock
 
@@ -310,6 +316,8 @@ Namespace Parallel.Threads
             Call sb.AppendLine($"{NameOf(Me.NumOfThreads)}: {NumOfThreads}")
             Call sb.AppendLine($"{NameOf(Me.WorkingThreads)}: {WorkingThreads}")
             Call sb.AppendLine($"{NameOf(Me.pendings)}: {pendings.Count}")
+            Call sb.AppendLine($"{NameOf(Me.totalTask)}: {totalTask}")
+            Call sb.AppendLine($"Progress: [{Program.ProgressText(popoutTask / totalTask)}] {(100 * popoutTask / totalTask).ToString("F2")}%")
             Call sb.AppendLine()
             Call sb.AppendLine(threads.JoinBy(vbCrLf))
 
