@@ -1,58 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::b1dcca44b61f51f96039a76ff90db4fa, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\StackFrame.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 95
-    '    Code Lines: 62
-    ' Comment Lines: 21
-    '   Blank Lines: 12
-    '     File Size: 3.10 KB
+' Summaries:
 
 
-    '     Class StackFrame
-    ' 
-    '         Properties: File, Line, Method
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: FromUnknownLocation, Parser, parserImpl, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 95
+'    Code Lines: 62
+' Comment Lines: 21
+'   Blank Lines: 12
+'     File Size: 3.10 KB
+
+
+'     Class StackFrame
+' 
+'         Properties: File, Line, Method
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: FromUnknownLocation, Parser, parserImpl, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.Linq
 
 Namespace ApplicationServices.Debugging.Diagnostics
@@ -61,6 +62,9 @@ Namespace ApplicationServices.Debugging.Diagnostics
     ''' Contains the necessary function calls information, source
     ''' file location information for traceback the runtime error
     ''' </summary>
+    ''' 
+    <ClassInterface(ClassInterfaceType.AutoDual)>
+    <ComVisible(True)>
     Public Class StackFrame
 
         ''' <summary>
