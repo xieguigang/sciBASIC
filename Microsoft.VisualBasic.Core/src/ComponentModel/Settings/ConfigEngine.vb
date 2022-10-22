@@ -307,9 +307,22 @@ Namespace ComponentModel.Settings
             Return profilesData.FilePath
         End Function
 
+        ''' <summary>
+        ''' save the settings data in xml file format
+        ''' </summary>
+        ''' <param name="FilePath"></param>
+        ''' <param name="Encoding"></param>
+        ''' <returns></returns>
         <ExportAPI("Save")>
         Public Function Save(FilePath$, Encoding As Encoding) As Boolean Implements ISaveHandle.Save
-            Dim Xml As String = profilesData.GetXml
+            ' 20221022
+            '
+            ' due to the reason of profilesData object is 
+            ' an interface, then getxml on this interface 
+            ' will throw exceptions, change the getxml extension
+            ' to the object general function to fix 
+            ' this error
+            Dim xml As String = XmlExtensions.GetXml(profilesData, profilesData.GetType(), throwEx:=False)
             Return Xml.SaveTo(FilePath Or Me.FilePath.When(FilePath.StringEmpty), Encoding)
         End Function
 
