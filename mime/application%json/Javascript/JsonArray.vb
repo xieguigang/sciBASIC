@@ -71,6 +71,29 @@ Namespace Javascript
             End Get
         End Property
 
+        ''' <summary>
+        ''' the array base element type
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property UnderlyingType As Type
+            Get
+                If list.IsNullOrEmpty Then
+                    Return GetType(Object)
+                ElseIf list.All(Function(o) TypeOf o Is JsonValue) Then
+                    Return list _
+                        .Select(Function(o) DirectCast(o, JsonValue)) _
+                        .Where(Function(o) Not o.IsLiteralNull) _
+                        .Select(Function(o) o.UnderlyingType) _
+                        .GroupBy(Function(a) a) _
+                        .OrderByDescending(Function(a) a.Count) _
+                        .First _
+                        .Key
+                Else
+                    Return GetType(Object)
+                End If
+            End Get
+        End Property
+
         Public Sub New()
         End Sub
 
