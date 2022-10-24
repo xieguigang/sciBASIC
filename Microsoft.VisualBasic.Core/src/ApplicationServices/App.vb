@@ -945,26 +945,27 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Private Function checkIsMicrosoftPlatform() As Boolean
-#If NET5_0_OR_GREATER Then
-        Return False
-#End If
-#If NET48 Then
-        Return True
-#Else
-#If UNIX Then
-#If DEBUG Then
-        Return True
-#Else
-        Return False
-#End If
-#Else
-#If NET_48 Or netcore5 = 1 Then
+        '#If NET5_0_OR_GREATER Then
+        '        Return False
+        '#End If
+        '#If NET48 Then
+        '        Return True
+        '#Else
+        '#If UNIX Then
+        '#If DEBUG Then
+        '        Return True
+        '#Else
+        '        Return False
+        '#End If
+        '#Else
+        '#If NET_48 Or netcore5 = 1 Then
+        '        Return RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+        '#Else
+        '        Return True
+        '#End If
+        '#End If
+        '#End If
         Return RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-#Else
-        Return True
-#End If
-#End If
-#End If
     End Function
 
     ''' <summary>
