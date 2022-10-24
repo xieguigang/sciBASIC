@@ -259,6 +259,7 @@ Namespace CommandLine
             [Call](path, "", "")
 #End If
 #End If
+            Call path.__DEBUG_ECHO
             ' Call path.DeleteFile
 
             Return exitCode
