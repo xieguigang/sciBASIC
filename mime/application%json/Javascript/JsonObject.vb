@@ -60,6 +60,7 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.My.JavaScript
 
 Namespace Javascript
 
@@ -226,6 +227,10 @@ Namespace Javascript
         Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
             Yield GetEnumerator()
         End Function
+
+        Public Shared Widening Operator CType(json As JsonObject) As JavaScriptObject
+            Return json.CreateJsObject
+        End Operator
 
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
