@@ -124,11 +124,15 @@ Namespace Parallel.Tasks
         ''' </summary>
         Dim task_name As String
         Dim queueSize As Integer
+        Dim exceptionCallback As Action(Of String, Exception)
 
         ''' <summary>
         ''' 会单独启动一条新的线程来用来执行任务队列
         ''' </summary>
-        Sub New(Optional name As String = Nothing, Optional queueSize As Integer = 16)
+        Sub New(Optional name As String = Nothing,
+                Optional queueSize As Integer = 16,
+                Optional exceptionCallback As Action(Of String, Exception) = Nothing)
+
             __tasks = New Queue(Of __task)(queueSize)
 
 #If DEBUG Then
@@ -136,6 +140,7 @@ Namespace Parallel.Tasks
 #End If
             Call RunTask(AddressOf __taskQueueEXEC)
 
+            Me.exceptionCallback = exceptionCallback
             Me.queueSize = queueSize
             Me.uid = If(name, Me.GetHashCode.ToHexString)
         End Sub
@@ -217,7 +222,7 @@ Namespace Parallel.Tasks
 
             task_name = If(task.name.StringEmpty, "", $"::{task.name}")
             _RunningTask = True
-            Call task.Run()
+            Call task.Run(Me)
             If Not task.receiveDone Is Nothing Then
                 Call task.receiveDone.Set()
             End If
@@ -233,12 +238,16 @@ Namespace Parallel.Tasks
 
             Public ReadOnly Property Value As T
 
-            Sub Run()
+            Sub Run(q As TaskQueue(Of T))
                 Try
                     _Value = handle()
                 Catch ex As Exception
                     Call App.LogException(ex)
                     Call ex.PrintException
+
+                    If Not q.exceptionCallback Is Nothing Then
+                        Call q.exceptionCallback(name, ex)
+                    End If
                 End Try
 
                 If Not callback Is Nothing Then

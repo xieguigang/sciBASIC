@@ -141,16 +141,22 @@ Namespace Parallel.Threads
         Dim totalTask As Integer
         Dim popoutTask As Integer
 
-        Sub New(maxThread As Integer, Optional maxQueueSize As Integer = 2)
+        Sub New(maxThread As Integer,
+                Optional maxQueueSize As Integer = 2,
+                Optional exceptionCallback As Action(Of String, Exception) = Nothing)
+
             threads = New TaskQueue(Of Long)(maxThread) {}
 
             For i As Integer = 0 To threads.Length - 1
-                threads(i) = New TaskQueue(Of Long)(queueSize:=maxQueueSize)
+                threads(i) = New TaskQueue(Of Long)(
+                    queueSize:=maxQueueSize,
+                    exceptionCallback:=exceptionCallback
+                )
             Next
         End Sub
 
-        Sub New()
-            Me.New(LQuerySchedule.Recommended_NUM_THREADS)
+        Sub New(Optional exceptionCallback As Action(Of String, Exception) = Nothing)
+            Me.New(LQuerySchedule.Recommended_NUM_THREADS, exceptionCallback:=exceptionCallback)
         End Sub
 
         Public Function Start() As ThreadPool
