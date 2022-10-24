@@ -259,7 +259,7 @@ Namespace CommandLine
             [Call](path, "", "")
 #End If
 #End If
-            Call path.DeleteFile
+            ' Call path.DeleteFile
 
             Return exitCode
         End Function
