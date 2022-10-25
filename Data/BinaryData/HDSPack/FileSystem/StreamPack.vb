@@ -103,6 +103,7 @@ Namespace FileSystem
                 Return superBlock _
                     .ListFiles _
                     .Where(Function(f) TypeOf f Is StreamBlock) _
+                    .Select(Function(f) DirectCast(f, StreamBlock)) _
                     .ToArray
             End Get
         End Property

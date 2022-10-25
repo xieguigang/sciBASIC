@@ -81,6 +81,7 @@ Namespace CommandLine
         ''' </summary>
         ''' <remarks>当使用.tmp拓展名的时候会由于APP框架里面的GC线程里面的自动临时文件清理而产生冲突，所以这里需要其他的文件拓展名来避免这个冲突</remarks>
         Protected ReadOnly _TempRedirect As String = TempFileSystem.GetAppSysTempFile(".proc_IO_std.out", App.PID)
+        Protected ReadOnly _win_os As Boolean
 
         ''' <summary>
         ''' shell文件接口
@@ -158,7 +159,8 @@ Namespace CommandLine
                 Optional stdRedirect$ = "",
                 Optional stdin$ = Nothing,
                 Optional debug As Boolean = True,
-                Optional isShellCommand As Boolean = False)
+                Optional isShellCommand As Boolean = False,
+                Optional win_os As Boolean? = Nothing)
 
             If Not String.IsNullOrEmpty(stdRedirect) Then
                 _TempRedirect = stdRedirect.CLIPath
@@ -182,6 +184,7 @@ Namespace CommandLine
             Bin = file
             argv = $"{app_argv} > {_TempRedirect}"
             CLIArguments = argv
+            _win_os = If(win_os Is Nothing, App.IsMicrosoftPlatform, CBool(win_os))
 
             ' 系统可能不会自动创建文件夹，则需要在这里使用这个方法来手工创建，
             ' 避免出现无法找到文件的问题
@@ -189,7 +192,7 @@ Namespace CommandLine
             ' 在Unix平台上面这个文件不会被自动创建？？？
             Call "".SaveTo(_TempRedirect)
 
-            If App.IsMicrosoftPlatform Then
+            If _win_os Then
                 shellScript = ScriptingExtensions.Cmd(file, argv, environment, folkNew, stdin, isShellCommand)
             Else
                 shellScript = ScriptingExtensions.Bash(file, argv, environment, folkNew, stdin, isShellCommand)
@@ -256,13 +259,14 @@ Namespace CommandLine
             [Call](path, "", "")
 #End If
 #End If
-            Call path.DeleteFile
+            Call path.__DEBUG_ECHO
+            ' Call path.DeleteFile
 
             Return exitCode
         End Function
 
         Private Function writeScript() As String
-            Dim ext$ = If(App.IsMicrosoftPlatform, ".bat", ".sh")
+            Dim ext$ = If(_win_os, ".bat", ".sh")
             Dim path$ = TempFileSystem.GetAppSysTempFile(ext, App.PID)
             Call shellScript.SaveTo(path, Encodings.UTF8WithoutBOM.CodePage)
             Return path
