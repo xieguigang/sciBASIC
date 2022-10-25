@@ -283,7 +283,9 @@ Namespace FileSystem
         ''' <param name="fileName">
         ''' the dir object its file name must be ends with the symbol '\' or '/'
         ''' </param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' returns nothing if object is not found!
+        ''' </returns>
         Public Function GetObject(fileName As String) As StreamObject
             Return superBlock.GetObject(New FilePath(fileName))
         End Function
