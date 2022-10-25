@@ -242,16 +242,22 @@ Namespace FileSystem
                 Dim bufSize As Integer = bin.ReadInt32
                 Dim buf As Byte() = bin.ReadBytes(bufSize)
 
-                For Each type As NamedValue(Of Integer) In New MemoryStream(buf).GetTypeRegistry
-                    Call _registriedTypes.Add(type.Name, type.Value)
-                    Call registry.Add(type.Value.ToString, type.Name)
-                Next
+                If Not buf.IsNullOrEmpty Then
+                    For Each type As NamedValue(Of Integer) In New MemoryStream(buf).GetTypeRegistry
+                        Call _registriedTypes.Add(type.Name, type.Value)
+                        Call registry.Add(type.Value.ToString, type.Name)
+                    Next
+                End If
 
-                ' parse global attributes
-                bufSize = bin.ReadInt32
-                buf = bin.ReadBytes(bufSize)
-                ' unpack global attributes from the HDS stream
-                _globalAttributes = New MemoryStream(buf).UnPack(Nothing, registry)
+                If Not bin.EndOfStream Then
+                    ' parse global attributes
+                    bufSize = bin.ReadInt32
+                    buf = bin.ReadBytes(bufSize)
+                    ' unpack global attributes from the HDS stream
+                    _globalAttributes = New MemoryStream(buf).UnPack(Nothing, registry)
+                Else
+                    _globalAttributes = New LazyAttribute
+                End If
             End If
 
             ' and then parse filesystem tree
