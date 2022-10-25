@@ -167,10 +167,12 @@ Namespace FileSystem
             _globalAttributes = New LazyAttribute
             _registriedTypes.Clear()
 
-            Call buffer.Seek(Scan0, SeekOrigin.Begin)
-            Call buffer.Write(Encoding.ASCII.GetBytes(Magic), Scan0, Magic.Length)
-            Call buffer.SetLength(Magic.Length + meta_size)
-            Call buffer.Flush()
+            If Not is_readonly Then
+                Call buffer.Seek(Scan0, SeekOrigin.Begin)
+                Call buffer.Write(Encoding.ASCII.GetBytes(Magic), Scan0, Magic.Length)
+                Call buffer.SetLength(Magic.Length + meta_size)
+                Call buffer.Flush()
+            End If
         End Sub
 
         Public Function GetGlobalAttribute(name As String) As Object
