@@ -977,7 +977,7 @@ Public Module App
         Static tempHashCode As Uid = Uid.GetRandomId
 
         SyncLock tempHashCode
-            Return FormatZero(++tempHashCode, "00000")
+            Return FormatZero(++tempHashCode, "000000")
         End SyncLock
     End Function
 
