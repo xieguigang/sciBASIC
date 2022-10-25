@@ -58,9 +58,11 @@ Imports Microsoft.VisualBasic.Text
 
 Namespace ApplicationServices.Debugging.Diagnostics
 
+#Disable Warning BC40000 ' Type or member is obsolete
     <ClassInterface(ClassInterfaceType.AutoDual)>
     <ComVisible(True)>
     Public Class ExceptionData
+#Enable Warning BC40000 ' Type or member is obsolete
 
         Public Property TypeFullName As String
         Public Property Message As String()

@@ -57,9 +57,11 @@ Imports System.Runtime.InteropServices
 
 Namespace ApplicationServices.Debugging.Diagnostics
 
+#Disable Warning BC40000 ' Type or member is obsolete
     <ClassInterface(ClassInterfaceType.AutoDual)>
     <ComVisible(True)>
     Public Class Method
+#Enable Warning BC40000 ' Type or member is obsolete
 
         Public Property [Namespace] As String
         Public Property [Module] As String

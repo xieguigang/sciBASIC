@@ -55,12 +55,16 @@
 #End Region
 
 Imports System.Data
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.FileIO.Path
 
 Namespace FileSystem
 
     Public Class StreamGroup : Inherits StreamObject
 
+        ''' <summary>
+        ''' indexed by <see cref="FilePath.FileName"/>
+        ''' </summary>
         ReadOnly tree As Dictionary(Of String, StreamObject)
 
         ''' <summary>
@@ -88,6 +92,7 @@ Namespace FileSystem
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property files As StreamObject()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return tree.Values.ToArray
             End Get
@@ -99,6 +104,8 @@ Namespace FileSystem
         ''' <param name="directory">
         ''' the folder directory path
         ''' </param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(directory As String)
             Call Me.New(directory.Split("/"c))
         End Sub
@@ -119,23 +126,33 @@ Namespace FileSystem
             Me.tree = tree
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function hasName(nodeName As String) As Boolean
             Return tree.ContainsKey(nodeName)
         End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub DeleteNode(nodeName As String)
+            Call tree.Remove(nodeName)
+        End Sub
 
         ''' <summary>
         ''' get file
         ''' </summary>
         ''' <param name="filepath"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetDataBlock(filepath As FilePath) As StreamBlock
             Return VisitBlock(filepath, checkExists:=False)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetDataGroup(filepath As FilePath) As StreamGroup
             Return VisitBlock(filepath, checkExists:=False)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetObject(filepath As FilePath) As StreamObject
             Return VisitBlock(filepath, checkExists:=False)
         End Function
@@ -249,6 +266,8 @@ Namespace FileSystem
         ''' to current file tree node.
         ''' </param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function BlockExists(filepath As FilePath) As Boolean
             Return Not VisitBlock(filepath, checkExists:=True) Is Nothing
         End Function
@@ -263,6 +282,7 @@ Namespace FileSystem
             Return $"{MyBase.ToString} [{StringFormats.Lanudry(totalSize)}, {ndirs} dirs, {nfiles} files]"
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function CreateRootTree() As StreamGroup
             Return New StreamGroup("/")
         End Function
