@@ -2,7 +2,7 @@
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.Linq
-
+Imports System.Runtime.CompilerServices
 
 Namespace Imaging.BitmapImage
 
@@ -19,7 +19,7 @@ Namespace Imaging.BitmapImage
         ''' </summary>
         ''' <param name="mimeType"></param>
         ''' <returns></returns>
-        Public Function GetEncoderInfo(ByVal mimeType As String) As ImageCodecInfo
+        Public Function GetEncoderInfo(mimeType As String) As ImageCodecInfo
             Return ImageCodecInfo.GetImageEncoders().FirstOrDefault(Function(t) Equals(t.MimeType, mimeType))
         End Function
 
@@ -31,7 +31,7 @@ Namespace Imaging.BitmapImage
         ''' <param name="height">canvas height</param>
         ''' <param name="canvasColor">canvas color</param>
         ''' <returns></returns>
-        Public Function PutOnCanvas(ByVal image As Image, ByVal width As Integer, ByVal height As Integer, ByVal canvasColor As Color) As Image
+        Public Function PutOnCanvas(image As Image, width As Integer, height As Integer, canvasColor As Color) As Image
             Dim res = New Bitmap(width, height)
             Using g = Graphics.FromImage(res)
                 g.Clear(canvasColor)
@@ -50,7 +50,7 @@ Namespace Imaging.BitmapImage
         ''' <param name="width">canvas width</param>
         ''' <param name="height">canvas height</param>
         ''' <returns></returns>
-        Public Function PutOnWhiteCanvas(ByVal image As Image, ByVal width As Integer, ByVal height As Integer) As Image
+        Public Function PutOnWhiteCanvas(image As Image, width As Integer, height As Integer) As Image
             Return PutOnCanvas(image, width, height, Color.White)
         End Function
 
@@ -62,7 +62,12 @@ Namespace Imaging.BitmapImage
         ''' <param name="maxHeight">max height</param>
         ''' <param name="onlyResizeIfWider">if image width is smaller than newWidth use image width</param>
         ''' <returns>resized image</returns>
-        Public Function Resize(ByVal image As Image, ByVal newWidth As Integer, ByVal maxHeight As Integer, ByVal onlyResizeIfWider As Boolean) As Image
+        ''' 
+        <Extension>
+        Public Function Resize(image As Image, newWidth As Integer,
+                               Optional maxHeight As Integer = Integer.MaxValue,
+                               Optional onlyResizeIfWider As Boolean = False) As Image
+
             If onlyResizeIfWider AndAlso image.Width <= newWidth Then newWidth = image.Width
 
             Dim newHeight As Integer = image.Height * newWidth / image.Width
@@ -92,7 +97,9 @@ Namespace Imaging.BitmapImage
         ''' <param name="img">image to crop</param>
         ''' <param name="cropArea">rectangle to crop</param>
         ''' <returns>resulting image</returns>
-        Public Function Crop(ByVal img As Image, ByVal cropArea As Rectangle) As Image
+        ''' 
+        <Extension>
+        Public Function ImageCrop(img As Image, cropArea As Rectangle) As Image
             Dim bmpImage = New Bitmap(img)
             Dim bmpCrop = bmpImage.Clone(cropArea, bmpImage.PixelFormat)
             Return bmpCrop

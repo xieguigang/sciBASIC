@@ -65,69 +65,16 @@ Namespace Imaging.BitmapImage
     ''' </summary>
     Public Module Utils
 
-        ''' <summary>
-        ''' 图片剪裁小方块区域
-        ''' </summary>
-        ''' <param name="pos">左上角的坐标位置</param>
-        ''' <param name="size">剪裁的区域的大小</param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <ExportAPI("Image.Corp")>
-        <Extension> Public Function ImageCrop(source As Image, pos As Point, size As Size) As Image
-            Return source.ImageCrop(New Rectangle(pos, size))
-        End Function
-
-        <Extension>
-        Public Function ImageCrop(source As Image, rect As Rectangle) As Image
-            SyncLock source
-                With CType(source.Clone, Bitmap)
-                    Try
-                        Return .Clone(rect, source.PixelFormat)
-                    Catch ex As Exception
-                        Throw New InvalidExpressionException($"Image size: {source.Size.ToString} AND clone rectangle: {rect.ToString}")
-                    End Try
-                End With
-            End SyncLock
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function ImageCrop(source As Bitmap, rect As RectangleF) As Bitmap
-            Return source.Clone(rect, source.PixelFormat)
-        End Function
-
-        ''' <summary>
-        ''' resize image to a new pixel size
-        ''' </summary>
-        ''' <param name="Image"></param>
-        ''' <param name="newSize"></param>
-        ''' <returns></returns>
-        <ExportAPI("Image.Resize")>
-        <Extension>
-        Public Function Resize(Image As Image, newSize As Size) As Image
-            SyncLock Image
-                ' 在这里不适用默认的白色做填充，而是使用透明色来进行填充
-                ' 因为图片可能会是透明的，使用默认的白色填充会导致结果图片失去了透明
-                Using g As Graphics2D = newSize.CreateGDIDevice(Color.Transparent)
-                    With g
-                        Call .DrawImage(Image, 0, 0, newSize.Width, newSize.Height)
-                        Return .ImageResource
-                    End With
-                End Using
-            End SyncLock
-        End Function
-
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ResizeUnscaled(image As Image, width%) As Image
-            Return image.Resize(New Size(width, image.Height * (width / image.Width)))
+            Return image.Resize(width, image.Height * (width / image.Width), onlyResizeIfWider:=width > image.Width)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ResizeUnscaledByHeight(image As Image, height%) As Image
-            Return image.Resize(New Size(image.Width * (height / image.Height), height))
+            Return image.ResizeUnscaled(image.Width * (height / image.Height))
         End Function
 
         ''' <summary>
@@ -137,7 +84,8 @@ Namespace Imaging.BitmapImage
         ''' <param name="OutSize"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Extension> Public Function TrimRoundAvatar(resAvatar As Image, OutSize As Integer) As Image
+        <Extension>
+        Public Function TrimRoundAvatar(resAvatar As Image, OutSize As Integer) As Image
             If resAvatar Is Nothing Then
                 Return Nothing
             End If
@@ -146,7 +94,7 @@ Namespace Imaging.BitmapImage
                 Dim Bitmap As New Bitmap(OutSize, OutSize)
 
                 resAvatar = DirectCast(resAvatar.Clone, Image)
-                resAvatar = Resize(resAvatar, Bitmap.Size)
+                resAvatar = resAvatar.ResizeUnscaledByHeight(OutSize)
 
                 Using g = Graphics.FromImage(Bitmap)
                     Dim image As New TextureBrush(resAvatar)
@@ -173,11 +121,12 @@ Namespace Imaging.BitmapImage
         ''' <param name="blankColor">默认白色为空白色</param>
         ''' <returns></returns>
         <ExportAPI("Image.CorpBlank")>
-        <Extension> Public Function CorpBlank(res As Image,
-                                              Optional margin% = 0,
-                                              Optional blankColor As Color = Nothing,
-                                              <CallerMemberName>
-                                              Optional trace$ = Nothing) As Image
+        <Extension>
+        Public Function CorpBlank(res As Image,
+                                  Optional margin% = 0,
+                                  Optional blankColor As Color = Nothing,
+                                  <CallerMemberName>
+                                  Optional trace$ = Nothing) As Image
 
             If blankColor.IsNullOrEmpty Then
                 blankColor = Color.White
@@ -231,7 +180,7 @@ Namespace Imaging.BitmapImage
             Next
 
             Dim region As New Rectangle(0, top, res.Width, res.Height - top)
-            res = res.ImageCrop(region.Location, region.Size)
+            res = res.ImageCrop(New Rectangle(region.Location, region.Size))
             bmp = BitmapBuffer.FromImage(res)
 
             ' left
@@ -258,7 +207,7 @@ Namespace Imaging.BitmapImage
             Next
 
             region = New Rectangle(left, 0, res.Width - left, res.Height)
-            res = res.ImageCrop(region.Location, region.Size)
+            res = res.ImageCrop(New Rectangle(region.Location, region.Size))
             bmp = BitmapBuffer.FromImage(res)
 
             Dim right As Integer
@@ -286,7 +235,7 @@ Namespace Imaging.BitmapImage
             Next
 
             region = New Rectangle(0, 0, res.Width, bottom)
-            res = res.ImageCrop(region.Location, region.Size)
+            res = res.ImageCrop(New Rectangle(region.Location, region.Size))
             bmp = BitmapBuffer.FromImage(res)
 
             ' right
@@ -310,7 +259,7 @@ Namespace Imaging.BitmapImage
             Next
 
             region = New Rectangle(0, 0, right, res.Height)
-            res = res.ImageCrop(region.Location, region.Size)
+            res = res.ImageCrop(New Rectangle(region.Location, region.Size))
 
             If margin > 0 Then
                 With New Size(res.Width + margin * 2, res.Height + margin * 2).CreateGDIDevice
