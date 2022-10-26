@@ -60,6 +60,7 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.Abstract
 
 Namespace ComponentModel.DataSourceModel.SchemaMaps
@@ -105,10 +106,11 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         End Property
 
         Private Sub New(type As Type, member As MemberInfo)
-            If Scripting.CasterString.ContainsKey(type) Then
-                caster = Scripting.CasterString(type)
+            If InputHandler.CasterString.ContainsKey(type) Then
+                caster = InputHandler.CasterString(type)
             End If
 
+            Me.Type = type
             Me.member = member
         End Sub
 
