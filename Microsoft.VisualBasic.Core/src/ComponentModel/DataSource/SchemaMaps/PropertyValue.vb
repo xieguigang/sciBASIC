@@ -145,5 +145,17 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
                 handleGetValue = Function(obj) method.Invoke(obj, {})
             End With
         End Sub
+
+        ''' <summary>
+        ''' parse string as the target type value by 
+        ''' using the specific caster method.
+        ''' </summary>
+        ''' <param name="val"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Parse(val As String) As Object
+            Return caster(val)
+        End Function
     End Class
 End Namespace
