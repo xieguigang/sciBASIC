@@ -75,7 +75,7 @@ Public Module TextureResourceLoader
         Dim Y As Integer
 
         Do While True
-            Dim resToken As Image = Resource.ImageCrop(New Point(X, Y), Size)
+            Dim resToken As Image = Resource.ImageCrop(New Rectangle(New Point(X, Y), Size))
 
             list += resToken
             X += IntervalWidth + Size.Width
