@@ -76,8 +76,8 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' <summary>
         ''' The flag for this field binding.
         ''' </summary>
-        Friend field As T
-        Friend name As String
+        Public field As T
+        Public name As String
 
 #Region "Property List"
 
