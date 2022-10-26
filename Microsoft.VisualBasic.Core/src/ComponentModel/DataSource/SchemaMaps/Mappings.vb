@@ -143,7 +143,9 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' ```
         ''' </param>
         ''' <returns></returns>
-        Public Function FieldNameMappings(Of T)(Optional explict As Boolean = False, Optional reversed As Boolean = False) As Dictionary(Of String, String)
+        Public Function FieldNameMappings(Of T)(Optional explict As Boolean = False,
+                                                Optional reversed As Boolean = False) As Dictionary(Of String, String)
+
             Dim fields As BindProperty(Of ColumnAttribute)() = GetFields(Of T)(explict)
             Dim table As Dictionary(Of String, String)
 
