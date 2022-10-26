@@ -91,18 +91,18 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Function GetFields(Of T As {Attribute})(type As Type, getName As Func(Of T, String), Optional explict As Boolean = False) As BindProperty(Of T)()
-            Dim out As New List(Of BindProperty(Of T))
-
+        Public Iterator Function GetFields(Of T As {Attribute})(type As Type,
+                                                                getName As Func(Of T, String),
+                                                                Optional explict As Boolean = False) As IEnumerable(Of BindProperty(Of T))
             For Each field As FieldInfo In type.GetFields
                 Dim attr As T = field.GetCustomAttribute(Of T)
 
                 If attr Is Nothing Then
                     If explict Then
-                        out += New BindProperty(Of T)(field)
+                        Yield New BindProperty(Of T)(field)
                     End If
                 Else
-                    out += New BindProperty(Of T)(attr, field) With {
+                    Yield New BindProperty(Of T)(attr, field) With {
                         .Identity = getName(attr)
                     }
                 End If
@@ -113,21 +113,27 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
 
                 If attr Is Nothing Then
                     If explict Then
-                        out += New BindProperty(Of T)([property])
+                        Yield New BindProperty(Of T)([property])
                     End If
                 Else
-                    out += New BindProperty(Of T)(attr, [property]) With {
+                    Yield New BindProperty(Of T)(attr, [property]) With {
                         .Identity = getName(attr)
                     }
                 End If
             Next
-
-            Return out
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="explict">
+        ''' construct the default masked <see cref="ColumnAttribute"/> if this parameter value is set to True
+        ''' </param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetFields(Of T)(Optional explict As Boolean = True) As BindProperty(Of ColumnAttribute)()
-            Return GetType(T).GetFields(Of ColumnAttribute)(Function(o) o.Name, explict:=explict)
+            Return GetType(T).GetFields(Of ColumnAttribute)(Function(o) o.Name, explict:=explict).ToArray
         End Function
 
         ''' <summary>
@@ -144,31 +150,61 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' </param>
         ''' <returns></returns>
         Public Function FieldNameMappings(Of T)(Optional explict As Boolean = False,
-                                                Optional reversed As Boolean = False) As Dictionary(Of String, String)
+                                                Optional reversed As Boolean = False,
+                                                Optional includesAliasNames As Boolean = False) As Dictionary(Of String, String)
 
-            Dim fields As BindProperty(Of ColumnAttribute)() = GetFields(Of T)(explict)
-            Dim table As Dictionary(Of String, String)
+            Return GetFields(Of T)(explict).FieldNameMappings(Of T)(reversed, includesAliasNames)
+        End Function
 
-            If Not reversed Then
-                table = fields.ToDictionary(Function(field)
-                                                ' 获取类型定义之中的成员的属性的反射名称
-                                                Return field.member.Name
-                                            End Function,
-                                            Function(map)
-                                                ' 获取该成员上面的自定义属性之中所记录的名称
-                                                Return map.GetColumnName
-                                            End Function)
-            Else
-                table = fields _
-                    .ToDictionary(Function(map)
-                                      ' 获取该成员上面的自定义属性之中所记录的名称
-                                      Return map.GetColumnName
-                                  End Function,
-                                  Function(field)
-                                      ' 获取类型定义之中的成员的属性的反射名称
-                                      Return field.member.Name
-                                  End Function)
+        <Extension>
+        Public Iterator Function GetAliasNames(map As BindProperty(Of ColumnAttribute)) As IEnumerable(Of String)
+            Yield map.memberName
+            Yield map.GetColumnName
+
+            If Not map.field.alias.IsNullOrEmpty Then
+                For Each name As String In map.field.alias
+                    Yield name
+                Next
             End If
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="fields">raw mapping</param>
+        ''' <param name="reversed"></param>
+        ''' <param name="includesAliasNames"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function FieldNameMappings(Of T)(fields As IEnumerable(Of BindProperty(Of ColumnAttribute)),
+                                                Optional reversed As Boolean = False,
+                                                Optional includesAliasNames As Boolean = False) As Dictionary(Of String, String)
+
+            Dim table As New Dictionary(Of String, String)
+            Dim memberName As String
+
+            For Each map As BindProperty(Of ColumnAttribute) In fields
+                ' 获取类型定义之中的成员的属性的反射名称
+                memberName = map.memberName
+
+                If Not reversed Then
+                    ' 获取该成员上面的自定义属性之中所记录的名称
+                    table(memberName) = map.GetColumnName
+                Else
+                    If includesAliasNames Then
+                        table(map.GetColumnName) = memberName
+
+                        If Not map.field.alias.IsNullOrEmpty Then
+                            For Each name As String In map.field.alias
+                                table(name) = memberName
+                            Next
+                        End If
+                    Else
+                        table(map.GetColumnName) = memberName
+                    End If
+                End If
+            Next
 
             Return table
         End Function
@@ -191,7 +227,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
 
             Return New Schema(Of TField) With {
                 .SchemaName = type.GetSchemaName(Of TTable)(getTableName, explict),
-                .Fields = type.GetFields(Of TField)(getField, explict)
+                .Fields = type.GetFields(Of TField)(getField, explict).ToArray
             }
         End Function
     End Module

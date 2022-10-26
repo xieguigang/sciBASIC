@@ -72,7 +72,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         End Sub
 
         Sub New(type As Type, Optional getName As Func(Of T, String) = Nothing, Optional explict As Boolean = False)
-            Fields = type.GetFields(Of T)(getName Or Scripting.GetString(Of T), explict)
+            Fields = type.GetFields(getName Or Scripting.GetString(Of T), explict).ToArray
             SchemaName = type.Name
             [Namespace] = type.Namespace
         End Sub
