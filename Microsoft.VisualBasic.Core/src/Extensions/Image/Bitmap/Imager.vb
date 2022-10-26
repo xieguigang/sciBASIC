@@ -66,7 +66,8 @@ Namespace Imaging.BitmapImage
         <Extension>
         Public Function Resize(image As Image, newWidth As Integer,
                                Optional maxHeight As Integer = Integer.MaxValue,
-                               Optional onlyResizeIfWider As Boolean = False) As Image
+                               Optional onlyResizeIfWider As Boolean = False,
+                               Optional scale As InterpolationMode = InterpolationMode.HighQualityBicubic) As Image
 
             If onlyResizeIfWider AndAlso image.Width <= newWidth Then newWidth = image.Width
 
@@ -81,7 +82,7 @@ Namespace Imaging.BitmapImage
             Dim res As New Bitmap(width:=newWidth, height:=newHeight)
 
             Using graphic = Graphics.FromImage(res)
-                graphic.InterpolationMode = InterpolationMode.HighQualityBicubic
+                graphic.InterpolationMode = scale
                 graphic.SmoothingMode = SmoothingMode.HighQuality
                 graphic.PixelOffsetMode = PixelOffsetMode.HighQuality
                 graphic.CompositingQuality = CompositingQuality.HighQuality
