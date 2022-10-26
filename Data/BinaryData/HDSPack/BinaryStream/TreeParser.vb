@@ -80,8 +80,13 @@ Friend Module TreeParser
         rawStream = New SubStream(buffer, buffer.Position, size)
         ' decomparession via gzip
         rawStream = rawStream.UnGzipStream
-        bin = New BinaryDataReader(rawStream) With {.ByteOrder = ByteOrder.BigEndian}
-        root = bin.getCurrentDirectory(registry)
+
+        If DirectCast(rawStream, MemoryStream).Length = 0 Then
+            root = StreamGroup.CreateRootTree
+        Else
+            bin = New BinaryDataReader(rawStream) With {.ByteOrder = ByteOrder.BigEndian}
+            root = bin.getCurrentDirectory(registry)
+        End If
 
         Return root
     End Function

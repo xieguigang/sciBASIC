@@ -58,6 +58,7 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace ApplicationServices.Debugging.Diagnostics
 
+#Disable Warning BC40000 ' Type or member is obsolete
     ''' <summary>
     ''' Contains the necessary function calls information, source
     ''' file location information for traceback the runtime error
@@ -66,6 +67,7 @@ Namespace ApplicationServices.Debugging.Diagnostics
     <ClassInterface(ClassInterfaceType.AutoDual)>
     <ComVisible(True)>
     Public Class StackFrame
+#Enable Warning BC40000 ' Type or member is obsolete
 
         ''' <summary>
         ''' Method call

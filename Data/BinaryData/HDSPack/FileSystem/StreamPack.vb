@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::c25bd5134149877fc891eba718207fb8, sciBASIC#\Data\BinaryData\HDSPack\FileSystem\StreamPack.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 328
-    '    Code Lines: 201
-    ' Comment Lines: 80
-    '   Blank Lines: 47
-    '     File Size: 12.84 KB
+' Summaries:
 
 
-    '     Class StreamPack
-    ' 
-    '         Properties: files, globalAttributes, superBlock
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: CreateNewStream, FileExists, GetGlobalAttribute, GetObject, (+2 Overloads) OpenBlock
-    '                   ParseTree
-    ' 
-    '         Sub: Clear, (+2 Overloads) Dispose, flushStreamPack, (+2 Overloads) SetAttribute
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 328
+'    Code Lines: 201
+' Comment Lines: 80
+'   Blank Lines: 47
+'     File Size: 12.84 KB
+
+
+'     Class StreamPack
+' 
+'         Properties: files, globalAttributes, superBlock
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: CreateNewStream, FileExists, GetGlobalAttribute, GetObject, (+2 Overloads) OpenBlock
+'                   ParseTree
+' 
+'         Sub: Clear, (+2 Overloads) Dispose, flushStreamPack, (+2 Overloads) SetAttribute
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -68,6 +68,7 @@ Imports Microsoft.VisualBasic.FileIO.Path
 Imports Microsoft.VisualBasic.My
 Imports Microsoft.VisualBasic.My.FrameworkInternal
 Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.Win32
 
 Namespace FileSystem
 
@@ -166,10 +167,12 @@ Namespace FileSystem
             _globalAttributes = New LazyAttribute
             _registriedTypes.Clear()
 
-            Call buffer.Seek(Scan0, SeekOrigin.Begin)
-            Call buffer.Write(Encoding.ASCII.GetBytes(Magic), Scan0, Magic.Length)
-            Call buffer.SetLength(Magic.Length + meta_size)
-            Call buffer.Flush()
+            If Not is_readonly Then
+                Call buffer.Seek(Scan0, SeekOrigin.Begin)
+                Call buffer.Write(Encoding.ASCII.GetBytes(Magic), Scan0, Magic.Length)
+                Call buffer.SetLength(Magic.Length + meta_size)
+                Call buffer.Flush()
+            End If
         End Sub
 
         Public Function GetGlobalAttribute(name As String) As Object
@@ -238,25 +241,40 @@ Namespace FileSystem
             If Encoding.ASCII.GetString(magic) <> StreamPack.Magic Then
                 Throw New FormatException("invalid magic header!")
             Else
-                Dim bin As New BinaryDataReader(buffer) With {.ByteOrder = ByteOrder.BigEndian}
-                Dim bufSize As Integer = bin.ReadInt32
-                Dim buf As Byte() = bin.ReadBytes(bufSize)
-
-                For Each type As NamedValue(Of Integer) In New MemoryStream(buf).GetTypeRegistry
-                    Call _registriedTypes.Add(type.Name, type.Value)
-                    Call registry.Add(type.Value.ToString, type.Name)
-                Next
-
-                ' parse global attributes
-                bufSize = bin.ReadInt32
-                buf = bin.ReadBytes(bufSize)
-                ' unpack global attributes from the HDS stream
-                _globalAttributes = New MemoryStream(buf).UnPack(Nothing, registry)
+                Call ParseMetadata(buffer, registry)
             End If
 
             ' and then parse filesystem tree
             Return TreeParser.Parse(buffer, registry)
         End Function
+
+        Private Sub ParseMetadata(buffer As Stream, registry As Dictionary(Of String, String))
+            Dim bin As New BinaryDataReader(buffer) With {.ByteOrder = ByteOrder.BigEndian}
+            Dim bufSize As Integer = bin.ReadInt32
+            Dim buf As Byte() = bin.ReadBytes(bufSize)
+
+            If Not buf.IsNullOrEmpty Then
+                For Each type As NamedValue(Of Integer) In New MemoryStream(buf).GetTypeRegistry
+                    Call _registriedTypes.Add(type.Name, type.Value)
+                    Call registry.Add(type.Value.ToString, type.Name)
+                Next
+            End If
+
+            If Not bin.EndOfStream Then
+                ' parse global attributes
+                bufSize = bin.ReadInt32
+                buf = bin.ReadBytes(bufSize)
+
+                If buf.Length = 0 Then
+                    _globalAttributes = New LazyAttribute
+                Else
+                    ' unpack global attributes from the HDS stream
+                    _globalAttributes = New MemoryStream(buf).UnPack(Nothing, registry)
+                End If
+            Else
+                _globalAttributes = New LazyAttribute
+            End If
+        End Sub
 
         ''' <summary>
         ''' Get target object and its corresponding attributes data
@@ -265,7 +283,9 @@ Namespace FileSystem
         ''' <param name="fileName">
         ''' the dir object its file name must be ends with the symbol '\' or '/'
         ''' </param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' returns nothing if object is not found!
+        ''' </returns>
         Public Function GetObject(fileName As String) As StreamObject
             Return superBlock.GetObject(New FilePath(fileName))
         End Function

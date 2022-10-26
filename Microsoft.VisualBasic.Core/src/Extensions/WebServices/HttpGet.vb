@@ -76,17 +76,18 @@ Public Module HttpGet
     ''' <returns>失败或者错误会返回空字符串</returns>
     ''' <remarks>这个工具只适合于文本数据的传输操作</remarks>
     ''' 
-    <Extension> Public Function [GET](url As String,
-                                      <Parameter("Request.TimeOut")>
-                                      Optional retry As UInt16 = 0,
-                                      Optional headers As Dictionary(Of String, String) = Nothing,
-                                      Optional proxy As String = Nothing,
-                                      Optional doNotRetry404 As Boolean = True,
-                                      Optional UA$ = Nothing,
-                                      Optional refer$ = Nothing,
-                                      Optional ByRef is404 As Boolean = False,
-                                      Optional echo As Boolean = True,
-                                      Optional timeoutSec As Long = 6000) As String
+    <Extension>
+    Public Function [GET](url As String,
+                          <Parameter("Request.TimeOut")>
+                          Optional retry As UInt16 = 0,
+                          Optional headers As Dictionary(Of String, String) = Nothing,
+                          Optional proxy As String = Nothing,
+                          Optional doNotRetry404 As Boolean = True,
+                          Optional UA$ = Nothing,
+                          Optional refer$ = Nothing,
+                          Optional ByRef is404 As Boolean = False,
+                          Optional echo As Boolean = True,
+                          Optional timeoutSec As Long = 6000) As String
 
         Dim isFileUrl As String = (InStr(url, "http://", CompareMethod.Text) <> 1) AndAlso (InStr(url, "https://", CompareMethod.Text) <> 1)
 
