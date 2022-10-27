@@ -92,6 +92,12 @@ Imports Microsoft.VisualBasic.My.JavaScript
         End If
     End Function
 
+    ''' <summary>
+    ''' this function auto encode the scalar value to array data
+    ''' </summary>
+    ''' <param name="array">should be json array or json literal value</param>
+    ''' <param name="decodeMetachar"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function AsStringVector(array As JsonElement, decodeMetachar As Boolean) As String()

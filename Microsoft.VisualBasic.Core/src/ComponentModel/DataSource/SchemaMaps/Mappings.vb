@@ -159,12 +159,15 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         <Extension>
         Public Iterator Function GetAliasNames(map As BindProperty(Of ColumnAttribute)) As IEnumerable(Of String)
             Yield map.memberName
-            Yield map.GetColumnName
 
-            If Not map.field.alias.IsNullOrEmpty Then
-                For Each name As String In map.field.alias
-                    Yield name
-                Next
+            If Not map.field Is Nothing Then
+                Yield map.GetColumnName
+
+                If Not map.field.alias.IsNullOrEmpty Then
+                    For Each name As String In map.field.alias
+                        Yield name
+                    Next
+                End If
             End If
         End Function
 
@@ -195,10 +198,12 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
                     If includesAliasNames Then
                         table(map.GetColumnName) = memberName
 
-                        If Not map.field.alias.IsNullOrEmpty Then
-                            For Each name As String In map.field.alias
-                                table(name) = memberName
-                            Next
+                        If Not map.field Is Nothing Then
+                            If Not map.field.alias.IsNullOrEmpty Then
+                                For Each name As String In map.field.alias
+                                    table(name) = memberName
+                                Next
+                            End If
                         End If
                     Else
                         table(map.GetColumnName) = memberName
@@ -209,6 +214,11 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             Return table
         End Function
 
+        ''' <summary>
+        ''' get name value from <see cref="ColumnAttribute.Name"/>
+        ''' </summary>
+        ''' <param name="[property]"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function GetColumnName([property] As BindProperty(Of ColumnAttribute)) As String
             If [property].field Is Nothing OrElse [property].field.Name.StringEmpty Then

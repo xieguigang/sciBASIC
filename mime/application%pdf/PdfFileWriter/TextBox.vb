@@ -100,28 +100,20 @@ Imports System.Collections.Generic
 Imports System.Drawing
 Imports System.Runtime.InteropServices
 
-
 ''' <summary>
 ''' TextBoxLine class
 ''' </summary>
 Public Class TextBoxLine
-    ''' <summary>
-    ''' Gets line ascent.
-    ''' </summary>
 
-    ''' <summary>
-    ''' Gets line descent.
-    ''' </summary>
-
-    ''' <summary>
-    ''' Line is end of paragraph.
-    ''' </summary>
 
     ''' <summary>
     ''' Gets array of line segments.
     ''' </summary>
     Private _Ascent As Double, _Descent As Double, _EndOfParagraph As Boolean, _SegArray As TextBoxSeg()
 
+    ''' <summary>
+    ''' Gets line ascent.
+    ''' </summary>
     Public Property Ascent As Double
         Get
             Return _Ascent
@@ -131,6 +123,9 @@ Public Class TextBoxLine
         End Set
     End Property
 
+    ''' <summary>
+    ''' Gets line descent.
+    ''' </summary>
     Public Property Descent As Double
         Get
             Return _Descent
@@ -140,6 +135,9 @@ Public Class TextBoxLine
         End Set
     End Property
 
+    ''' <summary>
+    ''' Line is end of paragraph.
+    ''' </summary>
     Public Property EndOfParagraph As Boolean
         Get
             Return _EndOfParagraph
@@ -179,7 +177,6 @@ Public Class TextBoxLine
         Me.Descent = Descent
         Me.EndOfParagraph = EndOfParagraph
         Me.SegArray = SegArray
-        Return
     End Sub
 End Class
 
@@ -187,39 +184,12 @@ End Class
 ''' TextBox line segment class
 ''' </summary>
 Public Class TextBoxSeg
+
+    Private _Font As PdfFont, _FontSize As Double, _DrawStyle As DrawStyle, _FontColor As System.Drawing.Color, _SegWidth As Double, _SpaceCount As Integer, _Text As String, _AnnotAction As AnnotAction
+
     ''' <summary>
     ''' Gets segment font.
     ''' </summary>
-
-    ''' <summary>
-    ''' Gets segment font size.
-    ''' </summary>
-
-    ''' <summary>
-    ''' Gets segment drawing style.
-    ''' </summary>
-
-    ''' <summary>
-    ''' Gets segment color.
-    ''' </summary>
-
-    ''' <summary>
-    ''' Gets segment width.
-    ''' </summary>
-
-    ''' <summary>
-    ''' Gets segment space character count.
-    ''' </summary>
-
-    ''' <summary>
-    ''' Gets segment text.
-    ''' </summary>
-
-    ''' <summary>
-    ''' Gets annotation action
-    ''' </summary>
-    Private _Font As PdfFont, _FontSize As Double, _DrawStyle As DrawStyle, _FontColor As System.Drawing.Color, _SegWidth As Double, _SpaceCount As Integer, _Text As String, _AnnotAction As AnnotAction
-
     Public Property Font As PdfFont
         Get
             Return _Font
@@ -228,7 +198,9 @@ Public Class TextBoxSeg
             _Font = value
         End Set
     End Property
-
+    ''' <summary>
+    ''' Gets segment font size.
+    ''' </summary>
     Public Property FontSize As Double
         Get
             Return _FontSize
@@ -237,7 +209,9 @@ Public Class TextBoxSeg
             _FontSize = value
         End Set
     End Property
-
+    ''' <summary>
+    ''' Gets segment drawing style.
+    ''' </summary>
     Public Property DrawStyle As DrawStyle
         Get
             Return _DrawStyle
@@ -247,6 +221,9 @@ Public Class TextBoxSeg
         End Set
     End Property
 
+    ''' <summary>
+    ''' Gets segment color.
+    ''' </summary>
     Public Property FontColor As Color
         Get
             Return _FontColor
@@ -256,6 +233,9 @@ Public Class TextBoxSeg
         End Set
     End Property
 
+    ''' <summary>
+    ''' Gets segment width.
+    ''' </summary>
     Public Property SegWidth As Double
         Get
             Return _SegWidth
@@ -264,7 +244,9 @@ Public Class TextBoxSeg
             _SegWidth = value
         End Set
     End Property
-
+    ''' <summary>
+    ''' Gets segment space character count.
+    ''' </summary>
     Public Property SpaceCount As Integer
         Get
             Return _SpaceCount
@@ -274,6 +256,9 @@ Public Class TextBoxSeg
         End Set
     End Property
 
+    ''' <summary>
+    ''' Gets segment text.
+    ''' </summary>
     Public Property Text As String
         Get
             Return _Text
@@ -283,6 +268,9 @@ Public Class TextBoxSeg
         End Set
     End Property
 
+    ''' <summary>
+    ''' Gets annotation action
+    ''' </summary>
     Public Property AnnotAction As AnnotAction
         Get
             Return _AnnotAction
