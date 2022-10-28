@@ -155,7 +155,8 @@ Public Module StringHelpers
     ''' <param name="src"></param>
     ''' <param name="replacement"></param>
     ''' <returns></returns>
-    <Extension> Public Function TrimNewLine(src$, <Parameter("vbCrLf.Replaced")> Optional replacement$ = " ") As String
+    <Extension>
+    Public Function TrimNewLine(src$, <Parameter("vbCrLf.Replaced")> Optional replacement$ = " ") As String
         If src Is Nothing Then
             Return ""
         End If
@@ -184,7 +185,8 @@ Public Module StringHelpers
     ''' </summary>
     ''' <param name="s$">字符串数组</param>
     ''' <returns></returns>
-    <Extension> Public Function IsEmptyStringVector(s$(), Optional RNull As Boolean = False) As Boolean
+    <Extension>
+    Public Function IsEmptyStringVector(s$(), Optional RNull As Boolean = False) As Boolean
         If RNull Then
             Return s _
                 .Where(AddressOf StringHelpers.RNull) _
@@ -213,6 +215,13 @@ Public Module StringHelpers
         Return Encoding.ASCII.GetBytes(str)
     End Function
 
+    ''' <summary>
+    ''' all of the string in <paramref name="s"/> collection equals 
+    ''' to the scalar string <paramref name="str"/>?
+    ''' </summary>
+    ''' <param name="s"></param>
+    ''' <param name="str"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function AllEquals(s As IEnumerable(Of String), str$) As Boolean
@@ -453,19 +462,30 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
-    ''' Shortcuts for method <see cref="System.String.Equals"/>(s1, s2, <see cref="StringComparison.OrdinalIgnoreCase"/>)
+    ''' Shortcuts for method <see cref="String.Equals"/>
+    ''' (s1, s2, <see cref="StringComparison.OrdinalIgnoreCase"/>).
     ''' </summary>
     ''' <param name="s1"></param>
     ''' <param name="s2"></param>
     ''' <returns></returns>
-    ''' 
+    ''' <remarks>
+    ''' the parameters configuration of <paramref name="empty_equals"/> and
+    ''' <paramref name="null_equals"/> is usually apply for the database
+    ''' cross-reference id equals test in bioinformatics area.
+    ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function TextEquals(s1$, s2$) As Boolean
-        'If {s1, s2}.All(Function(s) s Is Nothing) Then
-        '    Return True ' null = null ??
-        'End If
-        Return String.Equals(s1, s2, StringComparison.OrdinalIgnoreCase)
+    Public Function TextEquals(s1$, s2$,
+                               Optional null_equals As Boolean = False,
+                               Optional empty_equals As Boolean = True) As Boolean
+
+        If s1 Is Nothing OrElse s2 Is Nothing Then
+            Return null_equals
+        ElseIf s1 = "" AndAlso s2 = "" Then
+            Return empty_equals
+        Else
+            Return String.Equals(s1, s2, StringComparison.OrdinalIgnoreCase)
+        End If
     End Function
 
     ''' <summary>
