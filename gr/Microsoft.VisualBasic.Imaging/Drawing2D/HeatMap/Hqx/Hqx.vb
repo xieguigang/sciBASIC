@@ -24,33 +24,30 @@
 '  You should have received a copy of the GNU Lesser General Public License
 '  along with hqx-java. If not, see <http://www.gnu.org/licenses/>.
 ' 
+Imports stdNum = System.Math
 
 Namespace Drawing2D.HeatMap.hqx
-    Public MustInherit Class Hqx
-        Private Const Ymask As Integer = &H00FF0000
-        Private Const Umask As Integer = &H0000FF00
-        Private Const Vmask As Integer = &H000000FF
+
+    Public MustInherit Class HqxScaling
+
+        Private Const Ymask As Integer = &HFF0000
+        Private Const Umask As Integer = &HFF00
+        Private Const Vmask As Integer = &HFF
 
         ''' <summary>
         ''' Compares two ARGB colors according to the provided Y, U, V and A thresholds. </summary>
-        ''' <paramname="c1"> an ARGB color </param>
-        ''' <paramname="c2"> a second ARGB color </param>
-        ''' <paramname="trY"> the Y (luminance) threshold </param>
-        ''' <paramname="trU"> the U (chrominance) threshold </param>
-        ''' <paramname="trV"> the V (chrominance) threshold </param>
-        ''' <paramname="trA"> the A (transparency) threshold </param>
+        ''' <param name="c1"> an ARGB color </param>
+        ''' <param name="c2"> a second ARGB color </param>
+        ''' <param name="trY"> the Y (luminance) threshold </param>
+        ''' <param name="trU"> the U (chrominance) threshold </param>
+        ''' <param name="trV"> the V (chrominance) threshold </param>
+        ''' <param name="trA"> the A (transparency) threshold </param>
         ''' <returns> true if colors differ more than the thresholds permit, false otherwise </returns>
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: 'final' parameters are not available in .NET:
-        'ORIGINAL LINE: protected static boolean diff(final int c1, final int c2, final int trY, final int trU, final int trV, final int trA)
-        Protected Friend Shared Function diff(ByVal c1 As Integer, ByVal c2 As Integer, ByVal [trY] As Integer, ByVal trU As Integer, ByVal trV As Integer, ByVal trA As Integer) As Boolean
-            'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: The original Java variable was marked 'final':
-            'ORIGINAL LINE: final int YUV1 = RgbYuv.getYuv(c1);
-            Dim YUV1 As Integer = hqx.RgbYuv.getYuv(c1)
-            'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: The original Java variable was marked 'final':
-            'ORIGINAL LINE: final int YUV2 = RgbYuv.getYuv(c2);
-            Dim YUV2 As Integer = hqx.RgbYuv.getYuv(c2)
+        Protected Friend Shared Function diff(c1 As Integer, c2 As Integer, [trY] As Integer, trU As Integer, trV As Integer, trA As Integer) As Boolean
+            Dim YUV1 As Integer = RgbYuv.getYuv(c1)
+            Dim YUV2 As Integer = RgbYuv.getYuv(c2)
 
-            Return Math.Abs((YUV1 And hqx.Hqx.Ymask) - (YUV2 And hqx.Hqx.Ymask)) > [trY] OrElse Math.Abs((YUV1 And hqx.Hqx.Umask) - (YUV2 And hqx.Hqx.Umask)) > trU OrElse Math.Abs((YUV1 And hqx.Hqx.Vmask) - (YUV2 And hqx.Hqx.Vmask)) > trV OrElse Math.Abs((c1 >> 24) - (c2 >> 24)) > trA
+            Return stdNum.Abs((YUV1 And HqxScaling.Ymask) - (YUV2 And HqxScaling.Ymask)) > [trY] OrElse stdNum.Abs((YUV1 And HqxScaling.Umask) - (YUV2 And HqxScaling.Umask)) > trU OrElse stdNum.Abs((YUV1 And HqxScaling.Vmask) - (YUV2 And HqxScaling.Vmask)) > trV OrElse stdNum.Abs((c1 >> 24) - (c2 >> 24)) > trA
         End Function
 
     End Class

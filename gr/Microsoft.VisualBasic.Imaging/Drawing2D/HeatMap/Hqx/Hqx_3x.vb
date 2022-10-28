@@ -25,40 +25,40 @@
 
 Namespace Drawing2D.HeatMap.hqx
     Public Class Hqx_3x
-        Inherits Hqx
+        Inherits HqxScaling
         ''' <summary>
         ''' This is the extended Java port of the hq3x algorithm.
         ''' <b>The destination image must be exactly 3 times as large in both dimensions as the source image</b>
         ''' The Y, U, V, A parameters will be set as 48, 7, 6 and 0, respectively. Also, wrapping will be false.
         ''' </summary>
-        ''' <paramname="sp"> the source image data array in ARGB format </param>
-        ''' <paramname="dp"> the destination image data array in ARGB format </param>
-        ''' <paramname="Xres"> the horizontal resolution of the source image </param>
-        ''' <paramname="Yres"> the vertical resolution of the source image
+        ''' <param name="sp"> the source image data array in ARGB format </param>
+        ''' <param name="dp"> the destination image data array in ARGB format </param>
+        ''' <param name="Xres"> the horizontal resolution of the source image </param>
+        ''' <param name="Yres"> the vertical resolution of the source image
         ''' </param>
         ''' <seealsocref=""/> </seealso>
         'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: 'final' parameters are not available in .NET:
         'ORIGINAL LINE: public static void hq3x_32_rb(final int[] sp, final int[] dp, final int Xres, final int Yres)
-        Public Shared Sub hq3x_32_rb(ByVal sp As Integer(), ByVal dp As Integer(), ByVal Xres As Integer, ByVal Yres As Integer)
+        Public Shared Sub hq3x_32_rb(sp As Integer(), dp As Integer(), Xres As Integer, Yres As Integer)
             hq3x_32_rb(sp, dp, Xres, Yres, 48, 7, 6, 0, False, False)
         End Sub
 
         ''' <summary>
         ''' This is the extended Java port of the hq3x algorithm.
         ''' <b>The destination image must be exactly 3 times as large in both dimensions as the source image</b> </summary>
-        ''' <paramname="sp"> the source image data array in ARGB format </param>
-        ''' <paramname="dp"> the destination image data array in ARGB format </param>
-        ''' <paramname="Xres"> the horizontal resolution of the source image </param>
-        ''' <paramname="Yres"> the vertical resolution of the source image </param>
-        ''' <paramname="trY"> the Y (luminance) threshold </param>
-        ''' <paramname="trU"> the U (chrominance) threshold </param>
-        ''' <paramname="trV"> the V (chrominance) threshold </param>
-        ''' <paramname="trA"> the A (transparency) threshold </param>
-        ''' <paramname="wrapX"> used for images that can be seamlessly repeated horizontally </param>
-        ''' <paramname="wrapY"> used for images that can be seamlessly repeated vertically </param>
+        ''' <param name="sp"> the source image data array in ARGB format </param>
+        ''' <param name="dp"> the destination image data array in ARGB format </param>
+        ''' <param name="Xres"> the horizontal resolution of the source image </param>
+        ''' <param name="Yres"> the vertical resolution of the source image </param>
+        ''' <param name="trY"> the Y (luminance) threshold </param>
+        ''' <param name="trU"> the U (chrominance) threshold </param>
+        ''' <param name="trV"> the V (chrominance) threshold </param>
+        ''' <param name="trA"> the A (transparency) threshold </param>
+        ''' <param name="wrapX"> used for images that can be seamlessly repeated horizontally </param>
+        ''' <param name="wrapY"> used for images that can be seamlessly repeated vertically </param>
         'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: 'final' parameters are not available in .NET:
         'ORIGINAL LINE: public static void hq3x_32_rb(final int[] sp, final int[] dp, final int Xres, final int Yres, int trY, int trU, final int trV, final int trA, final boolean wrapX, final boolean wrapY)
-        Public Shared Sub hq3x_32_rb(ByVal sp As Integer(), ByVal dp As Integer(), ByVal Xres As Integer, ByVal Yres As Integer, ByVal [trY] As Integer, ByVal trU As Integer, ByVal trV As Integer, ByVal trA As Integer, ByVal wrapX As Boolean, ByVal wrapY As Boolean)
+        Public Shared Sub hq3x_32_rb(sp As Integer(), dp As Integer(), Xres As Integer, Yres As Integer, [trY] As Integer, trU As Integer, trV As Integer, trA As Integer, wrapX As Boolean, wrapY As Boolean)
             Dim spIdx = 0, dpIdx = 0
             'Don't shift trA, as it uses shift right instead of a mask for comparisons.
             [trY] <<= 2 * 8
@@ -121,7 +121,7 @@ Namespace Drawing2D.HeatMap.hqx
                         End If
 
                         If w(k) <> w(4) Then
-                            If Hqx.Hqx.diff(w(4), w(k), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(4), w(k), [trY], trU, trV, trA) Then
                                 pattern = pattern Or flag
                             End If
                         End If
@@ -129,2670 +129,2670 @@ Namespace Drawing2D.HeatMap.hqx
                     Next
                     Select Case pattern
                         Case 0, 1, 4, 32, 128, 5, 132, 160, 33, 129, 36, 133, 164, 161, 37, 165
-                            dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             Exit Select
                         Case 2, 34, 130, 162
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             Exit Select
                         Case 16, 17, 48, 49
-                            dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 64, 65, 68, 69
-                            dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 8, 12, 136, 140
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             Exit Select
                         Case 3, 35, 131, 163
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             Exit Select
                         Case 6, 38, 134, 166
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             Exit Select
                         Case 20, 21, 52, 53
-                            dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 144, 145, 176, 177
-                            dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             Exit Select
                         Case 192, 193, 196, 197
-                            dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             Exit Select
                         Case 96, 97, 100, 101
-                            dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 40, 44, 168, 172
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             Exit Select
                         Case 9, 13, 137, 141
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             Exit Select
                         Case 18, 50
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
                                 dp(dpIdx + 1) = w(4)
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                                 dp(dpIdx + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix7To1(w(4), w(1))
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(1), w(5))
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix7To1(w(4), w(5))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(1))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(1), w(5))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix7To1(w(4), w(5))
                             End If
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 80, 81
-                            dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + 2) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Else
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix7To1(w(4), w(5))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix7To1(w(4), w(7))
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix7To1(w(4), w(5))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 72, 76
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL) = w(4)
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                             Else
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix7To1(w(4), w(3))
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To7To7(w(4), w(7), w(3))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix7To1(w(4), w(7))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix7To1(w(4), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(7))
                             End If
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 10, 138
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
-                                dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + dpL) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To7To7(w(4), w(3), w(1))
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix7To1(w(4), w(1))
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix7To1(w(4), w(3))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(3), w(1))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(1))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix7To1(w(4), w(3))
                             End If
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             Exit Select
                         Case 66
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 24
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 7, 39, 135
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             Exit Select
                         Case 148, 149, 180
-                            dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             Exit Select
                         Case 224, 228, 225
-                            dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             Exit Select
                         Case 41, 169, 45
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             Exit Select
                         Case 22, 54
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + 2) = w(4)
                                 dp(dpIdx + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix7To1(w(4), w(1))
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(1), w(5))
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix7To1(w(4), w(5))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(1))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(1), w(5))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix7To1(w(4), w(5))
                             End If
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 208, 209
-                            dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + 2) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                                 dp(dpIdx + dpL + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix7To1(w(4), w(5))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix7To1(w(4), w(7))
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix7To1(w(4), w(5))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 104, 108
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                             Else
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix7To1(w(4), w(3))
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To7To7(w(4), w(7), w(3))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix7To1(w(4), w(7))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix7To1(w(4), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(7))
                             End If
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 11, 139
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + dpL) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To7To7(w(4), w(3), w(1))
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix7To1(w(4), w(1))
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix7To1(w(4), w(3))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(3), w(1))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(1))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix7To1(w(4), w(3))
                             End If
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             Exit Select
                         Case 19, 51
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
-                                dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                                 dp(dpIdx + 1) = w(4)
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                                 dp(dpIdx + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(1), w(4))
-                                dp(dpIdx + 2) = Hqx.Interpolation.MixEven(w(1), w(5))
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(1), w(4))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.MixEven(w(1), w(5))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             End If
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 146, 178
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
                                 dp(dpIdx + 1) = w(4)
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                                 dp(dpIdx + dpL + 2) = w(4)
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             Else
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                                dp(dpIdx + 2) = Hqx.Interpolation.MixEven(w(1), w(5))
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(5), w(4))
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.MixEven(w(1), w(5))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(5), w(4))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             Exit Select
                         Case 84, 85
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(1))
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
                                 dp(dpIdx + dpL + 2) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Else
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(5), w(4))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.MixEven(w(5), w(7))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(5), w(4))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.MixEven(w(5), w(7))
                             End If
-                            dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             Exit Select
                         Case 112, 113
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + 2) = w(4)
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Else
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(7), w(4))
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.MixEven(w(5), w(7))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(7), w(4))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.MixEven(w(5), w(7))
                             End If
-                            dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
                             Exit Select
                         Case 200, 204
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL) = w(4)
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             Else
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.MixEven(w(7), w(3))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(7), w(4))
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.MixEven(w(7), w(3))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(7), w(4))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             Exit Select
                         Case 73, 77
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
-                                dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(1))
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
                                 dp(dpIdx + dpL) = w(4)
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(3), w(4))
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.MixEven(w(7), w(3))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(3), w(4))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.MixEven(w(7), w(3))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             End If
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 42, 170
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
-                                dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + dpL) = w(4)
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.MixEven(w(3), w(1))
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(3), w(4))
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                                dp(dpIdx) = HqxScaling.Interpolation.MixEven(w(3), w(1))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(3), w(4))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             Exit Select
                         Case 14, 142
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
-                                dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                                 dp(dpIdx + 1) = w(4)
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                                 dp(dpIdx + dpL) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.MixEven(w(3), w(1))
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(1), w(4))
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                                dp(dpIdx) = HqxScaling.Interpolation.MixEven(w(3), w(1))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(1), w(4))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             End If
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             Exit Select
                         Case 67
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 70
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 28
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 152
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             Exit Select
                         Case 194
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             Exit Select
                         Case 98
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 56
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 25
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 26, 31
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
                                 dp(dpIdx + dpL) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To7To7(w(4), w(3), w(1))
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix7To1(w(4), w(3))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(3), w(1))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix7To1(w(4), w(3))
                             End If
                             dp(dpIdx + 1) = w(4)
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
                                 dp(dpIdx + 2) = w(4)
                                 dp(dpIdx + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(1), w(5))
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix7To1(w(4), w(5))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(1), w(5))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix7To1(w(4), w(5))
                             End If
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 82, 214
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + 2) = w(4)
                             Else
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix7To1(w(4), w(1))
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(1), w(5))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(1))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(1), w(5))
                             End If
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                                 dp(dpIdx + dpL + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix7To1(w(4), w(7))
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 88, 248
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL + 1) = w(4)
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL) = w(4)
                             Else
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix7To1(w(4), w(3))
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To7To7(w(4), w(7), w(3))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix7To1(w(4), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + 2) = w(4)
                                 dp(dpIdx + dpL + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix7To1(w(4), w(5))
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix7To1(w(4), w(5))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 74, 107
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
                                 dp(dpIdx + 1) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To7To7(w(4), w(3), w(1))
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix7To1(w(4), w(1))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(3), w(1))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(1))
                             End If
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                             Else
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To7To7(w(4), w(7), w(3))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix7To1(w(4), w(7))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(7))
                             End If
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 27
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + dpL) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To7To7(w(4), w(3), w(1))
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix7To1(w(4), w(1))
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix7To1(w(4), w(3))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(3), w(1))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(1))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix7To1(w(4), w(3))
                             End If
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 86
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + 2) = w(4)
                                 dp(dpIdx + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix7To1(w(4), w(1))
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(1), w(5))
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix7To1(w(4), w(5))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(1))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(1), w(5))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix7To1(w(4), w(5))
                             End If
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 216
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + 2) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                                 dp(dpIdx + dpL + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix7To1(w(4), w(5))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix7To1(w(4), w(7))
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix7To1(w(4), w(5))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 106
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                             Else
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix7To1(w(4), w(3))
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To7To7(w(4), w(7), w(3))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix7To1(w(4), w(7))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix7To1(w(4), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(7))
                             End If
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 30
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + 2) = w(4)
                                 dp(dpIdx + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix7To1(w(4), w(1))
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(1), w(5))
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix7To1(w(4), w(5))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(1))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(1), w(5))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix7To1(w(4), w(5))
                             End If
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 210
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + 2) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                                 dp(dpIdx + dpL + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix7To1(w(4), w(5))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix7To1(w(4), w(7))
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix7To1(w(4), w(5))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 120
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                             Else
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix7To1(w(4), w(3))
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To7To7(w(4), w(7), w(3))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix7To1(w(4), w(7))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix7To1(w(4), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(7))
                             End If
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 75
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + dpL) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To7To7(w(4), w(3), w(1))
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix7To1(w(4), w(1))
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix7To1(w(4), w(3))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(3), w(1))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(1))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix7To1(w(4), w(3))
                             End If
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 29
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 198
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             Exit Select
                         Case 184
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             Exit Select
                         Case 99
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 57
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 71
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 156
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             Exit Select
                         Case 226
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             Exit Select
                         Case 60
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 195
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             Exit Select
                         Case 102
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 153
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             Exit Select
                         Case 58
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
-                                dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             End If
                             dp(dpIdx + 1) = w(4)
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             Else
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             End If
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 83
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = w(4)
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             Else
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             End If
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Else
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 92
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             Else
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Else
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 202
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
-                                dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             End If
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             Else
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             Exit Select
                         Case 78
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
-                                dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             End If
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             Else
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 154
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
-                                dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             End If
                             dp(dpIdx + 1) = w(4)
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             Else
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             End If
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             Exit Select
                         Case 114
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                             dp(dpIdx + 1) = w(4)
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             Else
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             End If
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Else
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 89
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             Else
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Else
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 90
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
-                                dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             End If
                             dp(dpIdx + 1) = w(4)
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             Else
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             End If
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             Else
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Else
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 55, 23
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
-                                dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + 2) = w(4)
                                 dp(dpIdx + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(1), w(4))
-                                dp(dpIdx + 2) = Hqx.Interpolation.MixEven(w(1), w(5))
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(1), w(4))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.MixEven(w(1), w(5))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             End If
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 182, 150
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + 2) = w(4)
                                 dp(dpIdx + dpL + 2) = w(4)
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             Else
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                                dp(dpIdx + 2) = Hqx.Interpolation.MixEven(w(1), w(5))
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(5), w(4))
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.MixEven(w(1), w(5))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(5), w(4))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             Exit Select
                         Case 213, 212
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(1))
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
                                 dp(dpIdx + dpL + 2) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                                 dp(dpIdx + dpL + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(5), w(4))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.MixEven(w(5), w(7))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(5), w(4))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.MixEven(w(5), w(7))
                             End If
-                            dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             Exit Select
                         Case 241, 240
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + 2) = w(4)
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                                 dp(dpIdx + dpL + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(7), w(4))
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.MixEven(w(5), w(7))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(7), w(4))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.MixEven(w(5), w(7))
                             End If
-                            dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
                             Exit Select
                         Case 236, 232
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             Else
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.MixEven(w(7), w(3))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(7), w(4))
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.MixEven(w(7), w(3))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(7), w(4))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             Exit Select
                         Case 109, 105
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
-                                dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(1))
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
                                 dp(dpIdx + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(3), w(4))
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.MixEven(w(7), w(3))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(3), w(4))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.MixEven(w(7), w(3))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             End If
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 171, 43
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + dpL) = w(4)
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.MixEven(w(3), w(1))
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(3), w(4))
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                                dp(dpIdx) = HqxScaling.Interpolation.MixEven(w(3), w(1))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(3), w(4))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             Exit Select
                         Case 143, 15
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
                                 dp(dpIdx + 1) = w(4)
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                                 dp(dpIdx + dpL) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.MixEven(w(3), w(1))
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(1), w(4))
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                                dp(dpIdx) = HqxScaling.Interpolation.MixEven(w(3), w(1))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(1), w(4))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             End If
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             Exit Select
                         Case 124
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                             Else
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix7To1(w(4), w(3))
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To7To7(w(4), w(7), w(3))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix7To1(w(4), w(7))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix7To1(w(4), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(7))
                             End If
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 203
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + dpL) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To7To7(w(4), w(3), w(1))
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix7To1(w(4), w(1))
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix7To1(w(4), w(3))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(3), w(1))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(1))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix7To1(w(4), w(3))
                             End If
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             Exit Select
                         Case 62
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + 2) = w(4)
                                 dp(dpIdx + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix7To1(w(4), w(1))
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(1), w(5))
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix7To1(w(4), w(5))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(1))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(1), w(5))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix7To1(w(4), w(5))
                             End If
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 211
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + 2) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                                 dp(dpIdx + dpL + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix7To1(w(4), w(5))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix7To1(w(4), w(7))
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix7To1(w(4), w(5))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 118
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + 2) = w(4)
                                 dp(dpIdx + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix7To1(w(4), w(1))
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(1), w(5))
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix7To1(w(4), w(5))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(1))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(1), w(5))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix7To1(w(4), w(5))
                             End If
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 217
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + 2) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                                 dp(dpIdx + dpL + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix7To1(w(4), w(5))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix7To1(w(4), w(7))
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix7To1(w(4), w(5))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 110
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                             Else
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix7To1(w(4), w(3))
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To7To7(w(4), w(7), w(3))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix7To1(w(4), w(7))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix7To1(w(4), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(7))
                             End If
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 155
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + dpL) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To7To7(w(4), w(3), w(1))
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix7To1(w(4), w(1))
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix7To1(w(4), w(3))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(3), w(1))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(1))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix7To1(w(4), w(3))
                             End If
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             Exit Select
                         Case 188
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             Exit Select
                         Case 185
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             Exit Select
                         Case 61
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 157
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             Exit Select
                         Case 103
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 227
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             Exit Select
                         Case 230
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             Exit Select
                         Case 199
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             Exit Select
                         Case 220
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             Else
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + 2) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                                 dp(dpIdx + dpL + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix7To1(w(4), w(5))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix7To1(w(4), w(7))
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix7To1(w(4), w(5))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 158
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
-                                dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             End If
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + 2) = w(4)
                                 dp(dpIdx + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix7To1(w(4), w(1))
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(1), w(5))
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix7To1(w(4), w(5))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(1))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(1), w(5))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix7To1(w(4), w(5))
                             End If
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             Exit Select
                         Case 234
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
-                                dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             End If
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                             Else
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix7To1(w(4), w(3))
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To7To7(w(4), w(7), w(3))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix7To1(w(4), w(7))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix7To1(w(4), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(7))
                             End If
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             Exit Select
                         Case 242
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                             dp(dpIdx + 1) = w(4)
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             Else
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             End If
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + 2) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                                 dp(dpIdx + dpL + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix7To1(w(4), w(5))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix7To1(w(4), w(7))
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix7To1(w(4), w(5))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 59
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + dpL) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To7To7(w(4), w(3), w(1))
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix7To1(w(4), w(1))
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix7To1(w(4), w(3))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(3), w(1))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(1))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix7To1(w(4), w(3))
                             End If
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             Else
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             End If
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 121
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                             Else
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix7To1(w(4), w(3))
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To7To7(w(4), w(7), w(3))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix7To1(w(4), w(7))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix7To1(w(4), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(7))
                             End If
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Else
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 87
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(3))
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + 2) = w(4)
                                 dp(dpIdx + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix7To1(w(4), w(1))
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(1), w(5))
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix7To1(w(4), w(5))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(1))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(1), w(5))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix7To1(w(4), w(5))
                             End If
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Else
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 79
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + dpL) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To7To7(w(4), w(3), w(1))
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix7To1(w(4), w(1))
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix7To1(w(4), w(3))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(3), w(1))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(1))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix7To1(w(4), w(3))
                             End If
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             Else
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 122
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
-                                dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             End If
                             dp(dpIdx + 1) = w(4)
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             Else
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             End If
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                             Else
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix7To1(w(4), w(3))
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To7To7(w(4), w(7), w(3))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix7To1(w(4), w(7))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix7To1(w(4), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(7))
                             End If
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Else
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 94
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
-                                dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             End If
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + 2) = w(4)
                                 dp(dpIdx + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix7To1(w(4), w(1))
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(1), w(5))
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix7To1(w(4), w(5))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(1))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(1), w(5))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix7To1(w(4), w(5))
                             End If
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             Else
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Else
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 218
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
-                                dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             End If
                             dp(dpIdx + 1) = w(4)
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             Else
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             End If
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             Else
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + 2) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                                 dp(dpIdx + dpL + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix7To1(w(4), w(5))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix7To1(w(4), w(7))
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix7To1(w(4), w(5))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 91
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + dpL) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To7To7(w(4), w(3), w(1))
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix7To1(w(4), w(1))
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix7To1(w(4), w(3))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(3), w(1))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(1))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix7To1(w(4), w(3))
                             End If
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             Else
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             End If
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             Else
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Else
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 229
-                            dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             Exit Select
                         Case 167
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             Exit Select
                         Case 173
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             Exit Select
                         Case 181
-                            dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             Exit Select
                         Case 186
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
-                                dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             End If
                             dp(dpIdx + 1) = w(4)
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             Else
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             End If
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             Exit Select
                         Case 115
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = w(4)
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             Else
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             End If
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Else
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 93
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             Else
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Else
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 206
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
-                                dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             End If
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             Else
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             Exit Select
                         Case 205, 201
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             Else
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             Exit Select
                         Case 174, 46
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
-                                dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             End If
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             Exit Select
                         Case 179, 147
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = w(4)
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             Else
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             End If
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             Exit Select
                         Case 117, 116
-                            dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Else
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 189
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             Exit Select
                         Case 231
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             Exit Select
                         Case 126
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + 2) = w(4)
                                 dp(dpIdx + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix7To1(w(4), w(1))
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(1), w(5))
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix7To1(w(4), w(5))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(1))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(1), w(5))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix7To1(w(4), w(5))
                             End If
                             dp(dpIdx + dpL + 1) = w(4)
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                             Else
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix7To1(w(4), w(3))
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To7To7(w(4), w(7), w(3))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix7To1(w(4), w(7))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix7To1(w(4), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(7))
                             End If
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 219
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + dpL) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To7To7(w(4), w(3), w(1))
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix7To1(w(4), w(1))
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix7To1(w(4), w(3))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(3), w(1))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(1))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix7To1(w(4), w(3))
                             End If
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + 2) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                                 dp(dpIdx + dpL + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix7To1(w(4), w(5))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix7To1(w(4), w(7))
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix7To1(w(4), w(5))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 125
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
-                                dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(1))
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
                                 dp(dpIdx + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(3), w(4))
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.MixEven(w(7), w(3))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(3), w(4))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.MixEven(w(7), w(3))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             End If
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 221
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(1))
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
                                 dp(dpIdx + dpL + 2) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                                 dp(dpIdx + dpL + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(5), w(4))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.MixEven(w(5), w(7))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(5), w(4))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.MixEven(w(5), w(7))
                             End If
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             Exit Select
                         Case 207
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
                                 dp(dpIdx + 1) = w(4)
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                                 dp(dpIdx + dpL) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.MixEven(w(3), w(1))
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(1), w(4))
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                                dp(dpIdx) = HqxScaling.Interpolation.MixEven(w(3), w(1))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(1), w(4))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             End If
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             Exit Select
                         Case 238
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             Else
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.MixEven(w(7), w(3))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(7), w(4))
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.MixEven(w(7), w(3))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(7), w(4))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             Exit Select
                         Case 190
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + 2) = w(4)
                                 dp(dpIdx + dpL + 2) = w(4)
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             Else
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                                dp(dpIdx + 2) = Hqx.Interpolation.MixEven(w(1), w(5))
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(5), w(4))
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.MixEven(w(1), w(5))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(5), w(4))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             Exit Select
                         Case 187
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + dpL) = w(4)
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.MixEven(w(3), w(1))
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(3), w(4))
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                                dp(dpIdx) = HqxScaling.Interpolation.MixEven(w(3), w(1))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(3), w(4))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             Exit Select
                         Case 243
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + 2) = w(4)
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                                 dp(dpIdx + dpL + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(7), w(4))
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.MixEven(w(5), w(7))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(7), w(4))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.MixEven(w(5), w(7))
                             End If
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
                             Exit Select
                         Case 119
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
-                                dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + 2) = w(4)
                                 dp(dpIdx + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(1), w(4))
-                                dp(dpIdx + 2) = Hqx.Interpolation.MixEven(w(1), w(5))
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(1), w(4))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.MixEven(w(1), w(5))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             End If
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 237, 233
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + dpL) = w(4)
                             Else
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             Exit Select
                         Case 175, 47
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             End If
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             Exit Select
                         Case 183, 151
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = w(4)
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
                                 dp(dpIdx + 2) = w(4)
                             Else
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             End If
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             Exit Select
                         Case 245, 244
-                            dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 250
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL + 1) = w(4)
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL) = w(4)
                             Else
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix7To1(w(4), w(3))
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To7To7(w(4), w(7), w(3))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix7To1(w(4), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + 2) = w(4)
                                 dp(dpIdx + dpL + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix7To1(w(4), w(5))
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix7To1(w(4), w(5))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 123
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
                                 dp(dpIdx + 1) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To7To7(w(4), w(3), w(1))
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix7To1(w(4), w(1))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(3), w(1))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(1))
                             End If
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                             Else
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To7To7(w(4), w(7), w(3))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix7To1(w(4), w(7))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(7))
                             End If
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 95
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
                                 dp(dpIdx + dpL) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To7To7(w(4), w(3), w(1))
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix7To1(w(4), w(3))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(3), w(1))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix7To1(w(4), w(3))
                             End If
                             dp(dpIdx + 1) = w(4)
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
                                 dp(dpIdx + 2) = w(4)
                                 dp(dpIdx + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(1), w(5))
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix7To1(w(4), w(5))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(1), w(5))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix7To1(w(4), w(5))
                             End If
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 222
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + 2) = w(4)
                             Else
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix7To1(w(4), w(1))
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(1), w(5))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(1))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(1), w(5))
                             End If
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                                 dp(dpIdx + dpL + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix7To1(w(4), w(7))
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 252
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL) = w(4)
                             Else
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix7To1(w(4), w(3))
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To7To7(w(4), w(7), w(3))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix7To1(w(4), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 249
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + dpL) = w(4)
                             Else
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + 2) = w(4)
                                 dp(dpIdx + dpL + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix7To1(w(4), w(5))
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix7To1(w(4), w(5))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 235
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
                                 dp(dpIdx + 1) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To7To7(w(4), w(3), w(1))
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix7To1(w(4), w(1))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(3), w(1))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(1))
                             End If
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + dpL) = w(4)
                             Else
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             Exit Select
                         Case 111
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             End If
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                             Else
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To7To7(w(4), w(7), w(3))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix7To1(w(4), w(7))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(7))
                             End If
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 63
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             End If
                             dp(dpIdx + 1) = w(4)
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
                                 dp(dpIdx + 2) = w(4)
                                 dp(dpIdx + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(1), w(5))
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix7To1(w(4), w(5))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(1), w(5))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix7To1(w(4), w(5))
                             End If
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 159
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
                                 dp(dpIdx + dpL) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To7To7(w(4), w(3), w(1))
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix7To1(w(4), w(3))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(3), w(1))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix7To1(w(4), w(3))
                             End If
                             dp(dpIdx + 1) = w(4)
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
                                 dp(dpIdx + 2) = w(4)
                             Else
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             End If
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             Exit Select
                         Case 215
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = w(4)
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
                                 dp(dpIdx + 2) = w(4)
                             Else
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             End If
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                                 dp(dpIdx + dpL + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix7To1(w(4), w(7))
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 246
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + 2) = w(4)
                             Else
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix7To1(w(4), w(1))
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(1), w(5))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(1))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(1), w(5))
                             End If
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 254
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(0))
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(0))
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + 2) = w(4)
                             Else
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix7To1(w(4), w(1))
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(1), w(5))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(1))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(1), w(5))
                             End If
                             dp(dpIdx + dpL + 1) = w(4)
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL) = w(4)
                             Else
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix7To1(w(4), w(3))
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To7To7(w(4), w(7), w(3))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix7To1(w(4), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(7), w(3))
                             End If
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + 2) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                                 dp(dpIdx + dpL + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix7To1(w(4), w(5))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix7To1(w(4), w(7))
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix7To1(w(4), w(5))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 253
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 1) = Hqx.Interpolation.Mix3To1(w(4), w(1))
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + dpL) = w(4)
                             Else
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 251
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
                                 dp(dpIdx + 1) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To7To7(w(4), w(3), w(1))
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix7To1(w(4), w(1))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(3), w(1))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(1))
                             End If
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(2))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL + 1) = w(4)
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                             Else
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix7To1(w(4), w(3))
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix7To1(w(4), w(7))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix7To1(w(4), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(7))
                             End If
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + 2) = w(4)
                                 dp(dpIdx + dpL + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix7To1(w(4), w(5))
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix7To1(w(4), w(5))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 239
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             End If
                             dp(dpIdx + 1) = w(4)
-                            dp(dpIdx + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                            dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + dpL) = w(4)
                             Else
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(5))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(5))
                             Exit Select
                         Case 127
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + dpL) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix7To1(w(4), w(1))
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix7To1(w(4), w(3))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(1))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix7To1(w(4), w(3))
                             End If
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
                                 dp(dpIdx + 2) = w(4)
                                 dp(dpIdx + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(1), w(5))
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix7To1(w(4), w(5))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(1), w(5))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix7To1(w(4), w(5))
                             End If
                             dp(dpIdx + dpL + 1) = w(4)
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + dpL) = w(4)
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                             Else
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To7To7(w(4), w(7), w(3))
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix7To1(w(4), w(7))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(7))
                             End If
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(8))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(8))
                             Exit Select
                         Case 191
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             End If
                             dp(dpIdx + 1) = w(4)
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
                                 dp(dpIdx + 2) = w(4)
                             Else
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             End If
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix3To1(w(4), w(7))
-                            dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
+                            dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix3To1(w(4), w(7))
                             Exit Select
                         Case 223
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
                                 dp(dpIdx + dpL) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To7To7(w(4), w(3), w(1))
-                                dp(dpIdx + dpL) = Hqx.Interpolation.Mix7To1(w(4), w(3))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(3), w(1))
+                                dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix7To1(w(4), w(3))
                             End If
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
                                 dp(dpIdx + 1) = w(4)
                                 dp(dpIdx + 2) = w(4)
                                 dp(dpIdx + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + 1) = Hqx.Interpolation.Mix7To1(w(4), w(1))
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
-                                dp(dpIdx + dpL + 2) = Hqx.Interpolation.Mix7To1(w(4), w(5))
+                                dp(dpIdx + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(1))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                                dp(dpIdx + dpL + 2) = HqxScaling.Interpolation.Mix7To1(w(4), w(5))
                             End If
                             dp(dpIdx + dpL + 1) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(6))
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(6))
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + dpL + 1) = w(4)
                                 dp(dpIdx + dpL + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + dpL + dpL + 1) = Hqx.Interpolation.Mix7To1(w(4), w(7))
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To7To7(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + dpL + 1) = HqxScaling.Interpolation.Mix7To1(w(4), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To7To7(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 247
-                            dp(dpIdx) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = w(4)
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
                                 dp(dpIdx + 2) = w(4)
                             Else
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             End If
-                            dp(dpIdx + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix3To1(w(4), w(3))
+                            dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
                             Exit Select
                         Case 255
-                            If Hqx.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
                             Else
-                                dp(dpIdx) = Hqx.Interpolation.Mix2To1To1(w(4), w(3), w(1))
+                                dp(dpIdx) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             End If
                             dp(dpIdx + 1) = w(4)
-                            If Hqx.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(1), w(5), [trY], trU, trV, trA) Then
                                 dp(dpIdx + 2) = w(4)
                             Else
-                                dp(dpIdx + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(1), w(5))
+                                dp(dpIdx + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             End If
                             dp(dpIdx + dpL) = w(4)
                             dp(dpIdx + dpL + 1) = w(4)
                             dp(dpIdx + dpL + 2) = w(4)
-                            If Hqx.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(7), w(3), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + dpL) = w(4)
                             Else
-                                dp(dpIdx + dpL + dpL) = Hqx.Interpolation.Mix2To1To1(w(4), w(7), w(3))
+                                dp(dpIdx + dpL + dpL) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + dpL + 1) = w(4)
-                            If Hqx.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
+                            If HqxScaling.Hqx.diff(w(5), w(7), [trY], trU, trV, trA) Then
                                 dp(dpIdx + dpL + dpL + 2) = w(4)
                             Else
-                                dp(dpIdx + dpL + dpL + 2) = Hqx.Interpolation.Mix2To1To1(w(4), w(5), w(7))
+                                dp(dpIdx + dpL + dpL + 2) = HqxScaling.Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
                             Exit Select
                     End Select

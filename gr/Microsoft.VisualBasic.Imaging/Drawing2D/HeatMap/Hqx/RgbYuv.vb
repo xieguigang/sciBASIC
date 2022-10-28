@@ -32,11 +32,11 @@ Namespace Drawing2D.HeatMap.hqx
         ''' <summary>
         ''' Returns the 24bit YUV equivalent of the provided 24bit RGB color.<b>Any alpha component is dropped</b>
         ''' </summary>
-        ''' <paramname="rgb"> a 24bit rgb color </param>
+        ''' <param name="rgb"> a 24bit rgb color </param>
         ''' <returns> the corresponding 24bit YUV color </returns>
         'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: 'final' parameters are not available in .NET:
         'ORIGINAL LINE: static int getYuv(final int rgb)
-        Friend Shared Function getYuv(ByVal rgb As Integer) As Integer
+        Friend Shared Function getYuv(rgb As Integer) As Integer
             Return RGBtoYUV(rgb And rgbMask)
         End Function
 
