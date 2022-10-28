@@ -54,6 +54,7 @@
 Imports System.Drawing
 Imports System.Drawing.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap.hqx
 
 Namespace Drawing2D.HeatMap
 
@@ -97,6 +98,34 @@ Namespace Drawing2D.HeatMap
                 Next
             Next
         End Sub
+
+        Public Function Scale(hqx As HqxScales) As Bitmap
+            If hqx = HqxScales.None Then
+                ' no scale
+                ' returns the raw image directly
+                Return buffer.GetImage
+            Else
+                Dim scales As New Bitmap(buffer.Width * hqx, buffer.Height * hqx, format:=PixelFormat.Format32bppArgb)
+                Dim p As BitmapBuffer = BitmapBuffer.FromBitmap(scales, ImageLockMode.ReadWrite)
+                Dim sp As Integer() = buffer.GetARGBStream
+                Dim dp As Integer() = New Integer(p.Length - 1) {}
+
+                Select Case hqx
+                    Case HqxScales.Hqx_2x : Call Hqx_2x.hq2x_32_rb(sp, dp, buffer.Width, buffer.Height)
+                    Case HqxScales.Hqx_3x : Call Hqx_3x.hq3x_32_rb(sp, dp, buffer.Width, buffer.Height)
+                    Case HqxScales.Hqx_4x : Call Hqx_4x.hq4x_32_rb(sp, dp, buffer.Width, buffer.Height)
+                    Case Else
+                        Throw New InvalidProgramException($"invalid scale name: {hqx.ToString}!")
+                End Select
+
+                Call p.WriteARGBStream(dp)
+
+                Erase sp
+                Erase dp
+
+                Return p.GetImage(flush:=True)
+            End If
+        End Function
 
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not disposedValue Then

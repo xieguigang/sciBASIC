@@ -109,7 +109,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
 
                             If a(i)(j).flipped Then
                                 s.Append("x\ ")
-                                Exit Select
+                                
                             End If
 
                         Case 7
@@ -124,7 +124,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
 
                             If a(i)(j).flipped Then
                                 s.Append(" /x")
-                                Exit Select
+                                
                             End If
 
                         Case 11

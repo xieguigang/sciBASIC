@@ -68,7 +68,8 @@ Imports stdNum = System.Math
 Namespace Imaging.BitmapImage
 
     ''' <summary>
-    ''' Unsafe memory pointer of the <see cref="Bitmap"/> data buffer.(线程不安全的图片数据对象)
+    ''' Unsafe memory pointer of the <see cref="Bitmap"/> data buffer.
+    ''' (线程不安全的图片数据对象)
     ''' </summary>
     Public Class BitmapBuffer : Inherits Emit.Marshal.Byte
         Implements IDisposable
@@ -135,7 +136,7 @@ Namespace Imaging.BitmapImage
         ''' </summary>
         ''' <param name="x"></param>
         ''' <param name="y"></param>
-        ''' <returns>B, G, R</returns>
+        ''' <returns>B, G, R, [A]</returns>
         ''' <remarks>
         ''' ###### 2017-11-29 
         ''' 经过测试，对第一行的数据的计算没有问题
@@ -183,6 +184,51 @@ Namespace Imaging.BitmapImage
 
             Return Color.FromArgb(CInt(iA), CInt(iR), CInt(iG), CInt(iB))
         End Function
+
+        ''' <summary>
+        ''' get image data array in ARGB format
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function GetARGBStream() As Integer()
+            Dim ints As Integer() = New Integer(buffer.Length - 1) {}
+
+            If channels = 4 Then
+                For i As Integer = 0 To buffer.Length - 1 Step 4
+                    ints(i) = buffer(i + 3) ' A
+                    ints(i + 1) = buffer(i + 2) ' R
+                    ints(i + 2) = buffer(i + 1) ' G
+                    ints(i + 3) = buffer(i + 0) ' B
+                Next
+            Else
+                ' channels = 3
+                For i As Integer = 0 To buffer.Length - 1 Step 3
+                    ints(i) = 255 ' A
+                    ints(i + 1) = buffer(i + 2) ' R
+                    ints(i + 2) = buffer(i + 1) ' G
+                    ints(i + 3) = buffer(i + 0) ' B
+                Next
+            End If
+
+            Return ints
+        End Function
+
+        Public Sub WriteARGBStream(ints As Integer())
+            If channels = 4 Then
+                For i As Integer = 0 To buffer.Length - 1 Step 4
+                    buffer(i + 3) = ints(i)  ' A
+                    buffer(i + 2) = ints(i + 1)  ' R
+                    buffer(i + 1) = ints(i + 2)  ' G
+                    buffer(i + 0) = ints(i + 3)  ' B
+                Next
+            Else
+                ' channels = 3
+                For i As Integer = 0 To buffer.Length - 1 Step 3
+                    buffer(i + 2) = ints(i + 1)  ' R
+                    buffer(i + 1) = ints(i + 2)  ' G
+                    buffer(i + 0) = ints(i + 3)  ' B
+                Next
+            End If
+        End Sub
 
         ''' <summary>
         ''' row scans
