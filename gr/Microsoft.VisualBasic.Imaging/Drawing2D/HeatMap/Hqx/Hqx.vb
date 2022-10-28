@@ -25,7 +25,7 @@
 '  along with hqx-java. If not, see <http://www.gnu.org/licenses/>.
 ' 
 
-Namespace hqx
+Namespace Drawing2D.HeatMap.hqx
     Public MustInherit Class Hqx
         Private Const Ymask As Integer = &H00FF0000
         Private Const Umask As Integer = &H0000FF00

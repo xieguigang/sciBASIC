@@ -23,9 +23,10 @@
 '  along with hqx-java. If not, see <http://www.gnu.org/licenses/>.
 ' 
 
-Namespace hqx
+Namespace Drawing2D.HeatMap.hqx
+
     Public NotInheritable Class RgbYuv
-        Private Const rgbMask As Integer = &H00FFFFFF
+        Private Const rgbMask As Integer = &HFFFFFF
         Private Shared RGBtoYUV As Integer() = New Integer(16777215) {}
 
         ''' <summary>
@@ -47,11 +48,11 @@ Namespace hqx
             Dim r, g, b, y, u, v As Integer
             For c = &H1000000 - 1 To 0 Step -1
                 r = (c And &HFF0000) >> 16
-                g = (c And &H00FF00) >> 8
-                b = c And &H0000FF
+                g = (c And &HFF00) >> 8
+                b = c And &HFF
                 y = CInt(+0.299R * r + 0.587R * g + 0.114R * b)
-                u = CInt(-0.169R * r - 0.331R * g + 0.500R * b) + 128
-                v = CInt(+0.500R * r - 0.419R * g - 0.081R * b) + 128
+                u = CInt(-0.169R * r - 0.331R * g + 0.5R * b) + 128
+                v = CInt(+0.5R * r - 0.419R * g - 0.081R * b) + 128
                 RGBtoYUV(c) = y << 16 Or u << 8 Or v
             Next
         End Sub

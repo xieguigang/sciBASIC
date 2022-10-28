@@ -23,7 +23,7 @@
 '  along with hqx-java. If not, see <http://www.gnu.org/licenses/>.
 ' 
 
-Namespace hqx
+Namespace Drawing2D.HeatMap.hqx
     ''' <summary>
     ''' Helper class to interpolate colors. Nothing to see here, move along...
     ''' </summary>
