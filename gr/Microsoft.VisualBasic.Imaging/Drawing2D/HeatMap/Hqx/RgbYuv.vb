@@ -30,7 +30,15 @@ Namespace Drawing2D.HeatMap.hqx
     Public NotInheritable Class RgbYuv
 
         Private Const rgbMask As Integer = &HFFFFFF
-        Private Shared RGBtoYUV As Integer() = New Integer(16777215) {}
+
+        Shared RGBtoYUV As Integer() = New Integer(16777215) {}
+        Shared allocated As Boolean = False
+
+        Public Shared ReadOnly Property IsAllocated As Boolean
+            Get
+                Return allocated
+            End Get
+        End Property
 
         ''' <summary>
         ''' Returns the 24bit YUV equivalent of the provided 24bit RGB color.<b>Any alpha component is dropped</b>
