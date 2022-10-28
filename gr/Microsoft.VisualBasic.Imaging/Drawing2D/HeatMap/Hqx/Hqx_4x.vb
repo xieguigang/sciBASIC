@@ -369,8 +369,6 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix5To3(w(4), w(7))
         End Sub
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: 'final' parameters are not available in .NET:
-        'ORIGINAL LINE: private static final void case224(final int[] dp, final int dpIdx, final int dpL, final int[] w)
         Private Shared Sub case224(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(1), w(3))
             dp(dpIdx + 1) = Interpolation.Mix4To2To1(w(4), w(1), w(3))
@@ -409,8 +407,6 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix2To1To1(w(4), w(7), w(5))
         End Sub
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: 'final' parameters are not available in .NET:
-        'ORIGINAL LINE: private static final void case67(final int[] dp, final int dpIdx, final int dpL, final int[] w)
         Private Shared Sub case67(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
             dp(dpIdx) = Interpolation.Mix5To3(w(4), w(3))
             dp(dpIdx + 1) = Interpolation.Mix7To1(w(4), w(3))
@@ -430,8 +426,7 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix5To3(w(4), w(8))
         End Sub
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: 'final' parameters are not available in .NET:
-        'ORIGINAL LINE: private static final void case70(final int[] dp, final int dpIdx, final int dpL, final int[] w)
+
         Private Shared Sub case70(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
             dp(dpIdx) = Interpolation.Mix5To3(w(4), w(0))
             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(0))
@@ -451,8 +446,6 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix5To3(w(4), w(8))
         End Sub
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: 'final' parameters are not available in .NET:
-        'ORIGINAL LINE: private static final void case28(final int[] dp, final int dpIdx, final int dpL, final int[] w)
         Private Shared Sub case28(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
             dp(dpIdx) = Interpolation.Mix5To3(w(4), w(0))
             dp(dpIdx + 1) = Interpolation.Mix4To2To1(w(4), w(1), w(0))
@@ -472,8 +465,6 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix5To3(w(4), w(8))
         End Sub
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: 'final' parameters are not available in .NET:
-        'ORIGINAL LINE: private static final void case152(final int[] dp, final int dpIdx, final int dpL, final int[] w)
         Private Shared Sub case152(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
             dp(dpIdx) = Interpolation.Mix5To3(w(4), w(0))
             dp(dpIdx + 1) = Interpolation.Mix4To2To1(w(4), w(1), w(0))
@@ -493,8 +484,6 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix5To3(w(4), w(7))
         End Sub
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: 'final' parameters are not available in .NET:
-        'ORIGINAL LINE: private static final void case194(final int[] dp, final int dpIdx, final int dpL, final int[] w)
         Private Shared Sub case194(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
             dp(dpIdx) = Interpolation.Mix5To3(w(4), w(0))
             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(0))
@@ -514,8 +503,6 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix5To3(w(4), w(5))
         End Sub
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: 'final' parameters are not available in .NET:
-        'ORIGINAL LINE: private static final void case98(final int[] dp, final int dpIdx, final int dpL, final int[] w)
         Private Shared Sub case98(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
             dp(dpIdx) = Interpolation.Mix5To3(w(4), w(0))
             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(0))
@@ -535,8 +522,6 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix5To3(w(4), w(8))
         End Sub
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: 'final' parameters are not available in .NET:
-        'ORIGINAL LINE: private static final void case56(final int[] dp, final int dpIdx, final int dpL, final int[] w)
         Private Shared Sub case56(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
             dp(dpIdx) = Interpolation.Mix5To3(w(4), w(0))
             dp(dpIdx + 1) = Interpolation.Mix4To2To1(w(4), w(1), w(0))
@@ -556,8 +541,6 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix5To3(w(4), w(8))
         End Sub
 
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: 'final' parameters are not available in .NET:
-        'ORIGINAL LINE: private static final void case25(final int[] dp, final int dpIdx, final int dpL, final int[] w)
         Private Shared Sub case25(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
             dp(dpIdx) = Interpolation.Mix5To3(w(4), w(1))
             dp(dpIdx + 1) = Interpolation.Mix5To3(w(4), w(1))

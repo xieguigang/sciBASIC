@@ -36,9 +36,6 @@ Namespace Drawing2D.HeatMap.hqx
         ''' <param name="Xres"> the horizontal resolution of the source image </param>
         ''' <param name="Yres"> the vertical resolution of the source image
         ''' </param>
-        ''' <seealsocref=""/> </seealso>
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: 'final' parameters are not available in .NET:
-        'ORIGINAL LINE: public static void hq3x_32_rb(final int[] sp, final int[] dp, final int Xres, final int Yres)
         Public Shared Sub hq3x_32_rb(sp As Integer(), dp As Integer(), Xres As Integer, Yres As Integer)
             hq3x_32_rb(sp, dp, Xres, Yres, 48, 7, 6, 0, False, False)
         End Sub
@@ -56,20 +53,16 @@ Namespace Drawing2D.HeatMap.hqx
         ''' <param name="trA"> the A (transparency) threshold </param>
         ''' <param name="wrapX"> used for images that can be seamlessly repeated horizontally </param>
         ''' <param name="wrapY"> used for images that can be seamlessly repeated vertically </param>
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: 'final' parameters are not available in .NET:
-        'ORIGINAL LINE: public static void hq3x_32_rb(final int[] sp, final int[] dp, final int Xres, final int Yres, int trY, int trU, final int trV, final int trA, final boolean wrapX, final boolean wrapY)
         Public Shared Sub hq3x_32_rb(sp As Integer(), dp As Integer(), Xres As Integer, Yres As Integer, [trY] As Integer, trU As Integer, trV As Integer, trA As Integer, wrapX As Boolean, wrapY As Boolean)
             Dim spIdx = 0, dpIdx = 0
             'Don't shift trA, as it uses shift right instead of a mask for comparisons.
             [trY] <<= 2 * 8
             trU <<= 1 * 8
-            'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: The original Java variable was marked 'final':
-            'ORIGINAL LINE: final int dpL = Xres * 3;
+
             Dim dpL = Xres * 3
 
             Dim prevline, nextline As Integer
-            'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: The original Java variable was marked 'final':
-            'ORIGINAL LINE: final int[] w = new int[9];
+
             Dim w = New Integer(8) {}
 
             For j = 0 To Yres - 1
