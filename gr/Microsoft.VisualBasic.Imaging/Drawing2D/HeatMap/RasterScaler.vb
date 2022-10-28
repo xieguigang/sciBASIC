@@ -107,8 +107,8 @@ Namespace Drawing2D.HeatMap
             Else
                 Dim scales As New Bitmap(buffer.Width * hqx, buffer.Height * hqx, format:=PixelFormat.Format32bppArgb)
                 Dim p As BitmapBuffer = BitmapBuffer.FromBitmap(scales, ImageLockMode.ReadWrite)
-                Dim sp As Integer()
-                Dim dp As Integer()
+                Dim sp As Integer() = buffer.GetARGBStream
+                Dim dp As Integer() = New Integer(p.Length - 1) {}
 
                 Select Case hqx
                     Case HqxScales.Hqx_2x : Call Hqx_2x.hq2x_32_rb(sp, dp, buffer.Width, buffer.Height)
@@ -117,6 +117,11 @@ Namespace Drawing2D.HeatMap
                     Case Else
                         Throw New InvalidProgramException($"invalid scale name: {hqx.ToString}!")
                 End Select
+
+                Call p.WriteARGBStream(dp)
+
+                Erase sp
+                Erase dp
 
                 Return p.GetImage(flush:=True)
             End If

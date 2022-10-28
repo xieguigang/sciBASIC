@@ -96,7 +96,7 @@ Namespace Emit.Marshal
         ''' <summary>
         ''' Memory block size
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>buffer.Length</returns>
         Public ReadOnly Property Length As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
