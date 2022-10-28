@@ -24,8 +24,8 @@
 ' 
 
 Namespace Drawing2D.HeatMap.hqx
-    Public Class Hqx_3x
-        Inherits HqxScaling
+    Public Class Hqx_3x : Inherits HqxScaling
+
         ''' <summary>
         ''' This is the extended Java port of the hq3x algorithm.
         ''' <b>The destination image must be exactly 3 times as large in both dimensions as the source image</b>

@@ -23,9 +23,12 @@
 '  along with hqx-java. If not, see <http://www.gnu.org/licenses/>.
 ' 
 
+Imports System.Runtime.CompilerServices
+
 Namespace Drawing2D.HeatMap.hqx
 
     Public NotInheritable Class RgbYuv
+
         Private Const rgbMask As Integer = &HFFFFFF
         Private Shared RGBtoYUV As Integer() = New Integer(16777215) {}
 
@@ -42,9 +45,10 @@ Namespace Drawing2D.HeatMap.hqx
         ''' Calculates the lookup table. <b>MUST</b> be called (only once) before doing anything else
         ''' </summary>
         Public Shared Sub hqxInit()
-            ' Initalize RGB to YUV lookup table 
             Dim r, g, b, y, u, v As Integer
-            For c = &H1000000 - 1 To 0 Step -1
+
+            For c As Integer = &H1000000 - 1 To 0 Step -1
+                ' Initalize RGB to YUV lookup table 
                 r = (c And &HFF0000) >> 16
                 g = (c And &HFF00) >> 8
                 b = c And &HFF
@@ -59,8 +63,10 @@ Namespace Drawing2D.HeatMap.hqx
         ''' Releases the reference to the lookup table.
         ''' <para>The table has to be calculated again for the next lookup.</para>
         ''' </summary>
-        Public Shared Sub hqxDeinit()
-            RGBtoYUV = Nothing
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Sub Release()
+            Erase RGBtoYUV
         End Sub
     End Class
 

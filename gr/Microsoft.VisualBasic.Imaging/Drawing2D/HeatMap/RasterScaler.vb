@@ -54,6 +54,7 @@
 Imports System.Drawing
 Imports System.Drawing.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap.hqx
 
 Namespace Drawing2D.HeatMap
 
@@ -96,6 +97,10 @@ Namespace Drawing2D.HeatMap
                     End If
                 Next
             Next
+        End Sub
+
+        Public Sub Scale(g As IGraphics, hqx As HqxScales)
+
         End Sub
 
         Protected Overridable Sub Dispose(disposing As Boolean)

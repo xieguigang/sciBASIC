@@ -29,6 +29,7 @@ Namespace Drawing2D.HeatMap.hqx
     ''' Helper class to interpolate colors. Nothing to see here, move along...
     ''' </summary>
     Friend NotInheritable Class Interpolation
+
         Private Const Mask4 As Integer = &HFF000000UI
         Private Const Mask2 As Integer = &HFF00
         Private Const Mask13 As Integer = &HFF00FF

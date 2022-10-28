@@ -28,6 +28,11 @@ Imports stdNum = System.Math
 
 Namespace Drawing2D.HeatMap.hqx
 
+    ''' <summary>
+    ''' + wikipedia: https://en.wikipedia.org/wiki/Hqx
+    ''' + [Tamschi/hqxSharp](https://github.com/Tamschi/hqxSharp): hqxSharp is a C# port of hqx, a fast, high-quality magnification filter designed for pixel art.
+    ''' + [Arcnor/hqx-java](https://github.com/Arcnor/hqx-java): hqx-java is a Java port of hqx, a fast, high-quality magnification filter designed for pixel art.
+    ''' </summary>
     Public MustInherit Class HqxScaling
 
         Private Const Ymask As Integer = &HFF0000
