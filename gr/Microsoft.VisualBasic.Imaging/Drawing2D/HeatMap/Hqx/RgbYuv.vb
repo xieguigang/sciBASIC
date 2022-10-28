@@ -27,14 +27,18 @@ Imports System.Runtime.CompilerServices
 
 Namespace Drawing2D.HeatMap.hqx
 
-    Public NotInheritable Class RgbYuv
+    Public Module RgbYuv
 
         Private Const rgbMask As Integer = &HFFFFFF
 
-        Shared RGBtoYUV As Integer() = New Integer(16777215) {}
-        Shared allocated As Boolean = False
+        ''' <summary>
+        ''' this array is readonly to public
+        ''' </summary>
+        Dim RGBtoYUV As Integer()
+        Dim allocated As Boolean = False
 
-        Public Shared ReadOnly Property IsAllocated As Boolean
+        Public ReadOnly Property IsAllocated As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return allocated
             End Get
@@ -45,15 +49,19 @@ Namespace Drawing2D.HeatMap.hqx
         ''' </summary>
         ''' <param name="rgb"> a 24bit rgb color </param>
         ''' <returns> the corresponding 24bit YUV color </returns>
-        Friend Shared Function getYuv(rgb As Integer) As Integer
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Friend Function getYuv(rgb As Integer) As Integer
             Return RGBtoYUV(rgb And rgbMask)
         End Function
 
         ''' <summary>
         ''' Calculates the lookup table. <b>MUST</b> be called (only once) before doing anything else
         ''' </summary>
-        Public Shared Sub hqxInit()
+        Public Sub hqxInit()
             Dim r, g, b, y, u, v As Integer
+
+            RGBtoYUV = New Integer(16777215) {}
 
             For c As Integer = &H1000000 - 1 To 0 Step -1
                 ' Initalize RGB to YUV lookup table 
@@ -65,6 +73,8 @@ Namespace Drawing2D.HeatMap.hqx
                 v = CInt(+0.5R * r - 0.419R * g - 0.081R * b) + 128
                 RGBtoYUV(c) = y << 16 Or u << 8 Or v
             Next
+
+            allocated = True
         End Sub
 
         ''' <summary>
@@ -73,9 +83,10 @@ Namespace Drawing2D.HeatMap.hqx
         ''' </summary>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Sub Release()
+        Public Sub Release()
             Erase RGBtoYUV
+            allocated = False
         End Sub
-    End Class
+    End Module
 
 End Namespace
