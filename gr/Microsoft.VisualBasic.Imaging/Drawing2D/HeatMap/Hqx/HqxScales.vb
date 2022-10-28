@@ -2,8 +2,8 @@
 
     Public Enum HqxScales
         None
-        Hqx_2x
-        Hqx_3x
-        Hqx_4x
+        Hqx_2x = 2
+        Hqx_3x = 3
+        Hqx_4x = 4
     End Enum
 End Namespace
