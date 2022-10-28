@@ -59,9 +59,6 @@ Namespace Drawing2D.HeatMap.hqx
         ''' Releases the reference to the lookup table.
         ''' <para>The table has to be calculated again for the next lookup.</para>
         ''' </summary>
-        ''' <summary>
-        ''' Releases the reference to the lookup table. <b>The table has to be calculated again for the next lookup.</b>
-        ''' </summary>
         Public Shared Sub hqxDeinit()
             RGBtoYUV = Nothing
         End Sub

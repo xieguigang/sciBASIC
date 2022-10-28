@@ -127,79 +127,79 @@ Namespace Drawing2D.HeatMap.hqx
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
-                            Exit Select
+
                         Case 2, 34, 130, 162
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(3))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
-                            Exit Select
+
                         Case 16, 17, 48, 49
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(1))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(7))
-                            Exit Select
+
                         Case 64, 65, 68, 69
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(5))
-                            Exit Select
+
                         Case 8, 12, 136, 140
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
-                            Exit Select
+
                         Case 3, 35, 131, 163
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
-                            Exit Select
+
                         Case 6, 38, 134, 166
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(3))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
-                            Exit Select
+
                         Case 20, 21, 52, 53
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(7))
-                            Exit Select
+
                         Case 144, 145, 176, 177
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(1))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(7))
-                            Exit Select
+
                         Case 192, 193, 196, 197
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(5))
-                            Exit Select
+
                         Case 96, 97, 100, 101
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(5))
-                            Exit Select
+
                         Case 40, 44, 168, 172
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
-                            Exit Select
+
                         Case 9, 13, 137, 141
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
-                            Exit Select
+
                         Case 18, 50
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(3))
                             If HqxScaling.diff(w(1), w(5), [trY], trU, trV, trA) Then
@@ -209,7 +209,7 @@ Namespace Drawing2D.HeatMap.hqx
                             End If
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(7))
-                            Exit Select
+
                         Case 80, 81
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(1))
@@ -219,7 +219,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 72, 76
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(1), w(5))
@@ -229,7 +229,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(5))
-                            Exit Select
+
                         Case 10, 138
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = Interpolation.Mix3To1(w(4), w(0))
@@ -239,43 +239,43 @@ Namespace Drawing2D.HeatMap.hqx
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
-                            Exit Select
+
                         Case 66
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(3))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(5))
-                            Exit Select
+
                         Case 24
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(1))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(7))
-                            Exit Select
+
                         Case 7, 39, 135
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
-                            Exit Select
+
                         Case 148, 149, 180
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(7))
-                            Exit Select
+
                         Case 224, 228, 225
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(5))
-                            Exit Select
+
                         Case 41, 169, 45
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
-                            Exit Select
+
                         Case 22, 54
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(3))
                             If HqxScaling.diff(w(1), w(5), [trY], trU, trV, trA) Then
@@ -285,7 +285,7 @@ Namespace Drawing2D.HeatMap.hqx
                             End If
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(7))
-                            Exit Select
+
                         Case 208, 209
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(1))
@@ -295,7 +295,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 104, 108
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(1), w(5))
@@ -305,7 +305,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(5))
-                            Exit Select
+
                         Case 11, 139
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
@@ -315,7 +315,7 @@ Namespace Drawing2D.HeatMap.hqx
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
-                            Exit Select
+
                         Case 19, 51
                             If HqxScaling.diff(w(1), w(5), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = Interpolation.Mix3To1(w(4), w(3))
@@ -326,7 +326,7 @@ Namespace Drawing2D.HeatMap.hqx
                             End If
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(7))
-                            Exit Select
+
                         Case 146, 178
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(3))
                             If HqxScaling.diff(w(1), w(5), [trY], trU, trV, trA) Then
@@ -337,7 +337,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix4To2To1(w(4), w(5), w(7))
                             End If
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(7), w(3))
-                            Exit Select
+
                         Case 84, 85
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             If HqxScaling.diff(w(5), w(7), [trY], trU, trV, trA) Then
@@ -348,7 +348,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix2To3To3(w(4), w(5), w(7))
                             End If
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(3))
-                            Exit Select
+
                         Case 112, 113
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(1))
@@ -359,7 +359,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL) = Interpolation.Mix4To2To1(w(4), w(7), w(3))
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix2To3To3(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 200, 204
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(1), w(5))
@@ -370,7 +370,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL) = Interpolation.Mix2To3To3(w(4), w(7), w(3))
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix4To2To1(w(4), w(7), w(5))
                             End If
-                            Exit Select
+
                         Case 73, 77
                             If HqxScaling.diff(w(7), w(3), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = Interpolation.Mix3To1(w(4), w(1))
@@ -381,7 +381,7 @@ Namespace Drawing2D.HeatMap.hqx
                             End If
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(5))
-                            Exit Select
+
                         Case 42, 170
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = Interpolation.Mix3To1(w(4), w(0))
@@ -392,7 +392,7 @@ Namespace Drawing2D.HeatMap.hqx
                             End If
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(5))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
-                            Exit Select
+
                         Case 14, 142
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = Interpolation.Mix3To1(w(4), w(0))
@@ -403,55 +403,55 @@ Namespace Drawing2D.HeatMap.hqx
                             End If
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
-                            Exit Select
+
                         Case 67
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(5))
-                            Exit Select
+
                         Case 70
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(3))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(5))
-                            Exit Select
+
                         Case 28
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(7))
-                            Exit Select
+
                         Case 152
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(1))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(7))
-                            Exit Select
+
                         Case 194
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(3))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(5))
-                            Exit Select
+
                         Case 98
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(3))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(5))
-                            Exit Select
+
                         Case 56
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(1))
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(7))
-                            Exit Select
+
                         Case 25
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(1))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(7))
-                            Exit Select
+
                         Case 26, 31
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
@@ -465,7 +465,7 @@ Namespace Drawing2D.HeatMap.hqx
                             End If
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(7))
-                            Exit Select
+
                         Case 82, 214
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(3))
                             If HqxScaling.diff(w(1), w(5), [trY], trU, trV, trA) Then
@@ -479,7 +479,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 88, 248
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(1))
@@ -493,7 +493,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 74, 107
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
@@ -507,7 +507,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(5))
-                            Exit Select
+
                         Case 27
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
@@ -517,7 +517,7 @@ Namespace Drawing2D.HeatMap.hqx
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(7))
-                            Exit Select
+
                         Case 86
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(3))
                             If HqxScaling.diff(w(1), w(5), [trY], trU, trV, trA) Then
@@ -527,7 +527,7 @@ Namespace Drawing2D.HeatMap.hqx
                             End If
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(8))
-                            Exit Select
+
                         Case 216
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(1))
@@ -537,7 +537,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 106
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(0))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(5))
@@ -547,7 +547,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(5))
-                            Exit Select
+
                         Case 30
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(0))
                             If HqxScaling.diff(w(1), w(5), [trY], trU, trV, trA) Then
@@ -557,7 +557,7 @@ Namespace Drawing2D.HeatMap.hqx
                             End If
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(7))
-                            Exit Select
+
                         Case 210
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(3))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(2))
@@ -567,7 +567,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 120
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(1))
@@ -577,7 +577,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(8))
-                            Exit Select
+
                         Case 75
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
@@ -587,79 +587,79 @@ Namespace Drawing2D.HeatMap.hqx
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(6))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(5))
-                            Exit Select
+
                         Case 29
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(7))
-                            Exit Select
+
                         Case 198
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(3))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(5))
-                            Exit Select
+
                         Case 184
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(1))
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(7))
-                            Exit Select
+
                         Case 99
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(5))
-                            Exit Select
+
                         Case 57
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(1))
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(7))
-                            Exit Select
+
                         Case 71
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(5))
-                            Exit Select
+
                         Case 156
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(7))
-                            Exit Select
+
                         Case 226
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(3))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(5))
-                            Exit Select
+
                         Case 60
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(7))
-                            Exit Select
+
                         Case 195
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(5))
-                            Exit Select
+
                         Case 102
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(3))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(5))
-                            Exit Select
+
                         Case 153
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(1))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(7))
-                            Exit Select
+
                         Case 58
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = Interpolation.Mix3To1(w(4), w(0))
@@ -673,7 +673,7 @@ Namespace Drawing2D.HeatMap.hqx
                             End If
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(7))
-                            Exit Select
+
                         Case 83
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(3))
                             If HqxScaling.diff(w(1), w(5), [trY], trU, trV, trA) Then
@@ -687,7 +687,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix6To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 92
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(1))
@@ -701,7 +701,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix6To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 202
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = Interpolation.Mix3To1(w(4), w(0))
@@ -715,7 +715,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL) = Interpolation.Mix6To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(5))
-                            Exit Select
+
                         Case 78
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = Interpolation.Mix3To1(w(4), w(0))
@@ -729,7 +729,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL) = Interpolation.Mix6To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(5))
-                            Exit Select
+
                         Case 154
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = Interpolation.Mix3To1(w(4), w(0))
@@ -743,7 +743,7 @@ Namespace Drawing2D.HeatMap.hqx
                             End If
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(7))
-                            Exit Select
+
                         Case 114
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(3))
                             If HqxScaling.diff(w(1), w(5), [trY], trU, trV, trA) Then
@@ -757,7 +757,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix6To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 89
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(1))
@@ -771,7 +771,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix6To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 90
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = Interpolation.Mix3To1(w(4), w(0))
@@ -793,7 +793,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix6To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 55, 23
                             If HqxScaling.diff(w(1), w(5), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = Interpolation.Mix3To1(w(4), w(3))
@@ -804,7 +804,7 @@ Namespace Drawing2D.HeatMap.hqx
                             End If
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(7))
-                            Exit Select
+
                         Case 182, 150
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(3))
                             If HqxScaling.diff(w(1), w(5), [trY], trU, trV, trA) Then
@@ -815,7 +815,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix4To2To1(w(4), w(5), w(7))
                             End If
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(7), w(3))
-                            Exit Select
+
                         Case 213, 212
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             If HqxScaling.diff(w(5), w(7), [trY], trU, trV, trA) Then
@@ -826,7 +826,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix2To3To3(w(4), w(5), w(7))
                             End If
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(3))
-                            Exit Select
+
                         Case 241, 240
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(1))
@@ -837,7 +837,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL) = Interpolation.Mix4To2To1(w(4), w(7), w(3))
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix2To3To3(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 236, 232
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(1), w(5))
@@ -848,7 +848,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL) = Interpolation.Mix2To3To3(w(4), w(7), w(3))
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix4To2To1(w(4), w(7), w(5))
                             End If
-                            Exit Select
+
                         Case 109, 105
                             If HqxScaling.diff(w(7), w(3), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = Interpolation.Mix3To1(w(4), w(1))
@@ -859,7 +859,7 @@ Namespace Drawing2D.HeatMap.hqx
                             End If
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(5))
-                            Exit Select
+
                         Case 171, 43
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
@@ -870,7 +870,7 @@ Namespace Drawing2D.HeatMap.hqx
                             End If
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(5))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
-                            Exit Select
+
                         Case 143, 15
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
@@ -881,7 +881,7 @@ Namespace Drawing2D.HeatMap.hqx
                             End If
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
-                            Exit Select
+
                         Case 124
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(1))
@@ -891,7 +891,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(8))
-                            Exit Select
+
                         Case 203
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
@@ -901,7 +901,7 @@ Namespace Drawing2D.HeatMap.hqx
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(6))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(5))
-                            Exit Select
+
                         Case 62
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(0))
                             If HqxScaling.diff(w(1), w(5), [trY], trU, trV, trA) Then
@@ -911,7 +911,7 @@ Namespace Drawing2D.HeatMap.hqx
                             End If
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(7))
-                            Exit Select
+
                         Case 211
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(2))
@@ -921,7 +921,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 118
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(3))
                             If HqxScaling.diff(w(1), w(5), [trY], trU, trV, trA) Then
@@ -931,7 +931,7 @@ Namespace Drawing2D.HeatMap.hqx
                             End If
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(8))
-                            Exit Select
+
                         Case 217
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(1))
@@ -941,7 +941,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 110
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(0))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(5))
@@ -951,7 +951,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(5))
-                            Exit Select
+
                         Case 155
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
@@ -961,55 +961,55 @@ Namespace Drawing2D.HeatMap.hqx
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(7))
-                            Exit Select
+
                         Case 188
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(7))
-                            Exit Select
+
                         Case 185
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(1))
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(7))
-                            Exit Select
+
                         Case 61
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(7))
-                            Exit Select
+
                         Case 157
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(7))
-                            Exit Select
+
                         Case 103
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(5))
-                            Exit Select
+
                         Case 227
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(5))
-                            Exit Select
+
                         Case 230
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(3))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(5))
-                            Exit Select
+
                         Case 199
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(5))
-                            Exit Select
+
                         Case 220
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(1))
@@ -1023,7 +1023,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 158
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = Interpolation.Mix3To1(w(4), w(0))
@@ -1037,7 +1037,7 @@ Namespace Drawing2D.HeatMap.hqx
                             End If
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(7))
-                            Exit Select
+
                         Case 234
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = Interpolation.Mix3To1(w(4), w(0))
@@ -1051,7 +1051,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(5))
-                            Exit Select
+
                         Case 242
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(3))
                             If HqxScaling.diff(w(1), w(5), [trY], trU, trV, trA) Then
@@ -1065,7 +1065,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 59
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
@@ -1079,7 +1079,7 @@ Namespace Drawing2D.HeatMap.hqx
                             End If
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(7))
-                            Exit Select
+
                         Case 121
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(1))
@@ -1093,7 +1093,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix6To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 87
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(3))
                             If HqxScaling.diff(w(1), w(5), [trY], trU, trV, trA) Then
@@ -1107,7 +1107,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix6To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 79
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
@@ -1121,7 +1121,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL) = Interpolation.Mix6To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(5))
-                            Exit Select
+
                         Case 122
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = Interpolation.Mix3To1(w(4), w(0))
@@ -1143,7 +1143,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix6To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 94
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = Interpolation.Mix3To1(w(4), w(0))
@@ -1165,7 +1165,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix6To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 218
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = Interpolation.Mix3To1(w(4), w(0))
@@ -1187,7 +1187,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 91
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
@@ -1209,31 +1209,31 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix6To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 229
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(5))
-                            Exit Select
+
                         Case 167
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
-                            Exit Select
+
                         Case 173
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(1), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
-                            Exit Select
+
                         Case 181
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(7))
-                            Exit Select
+
                         Case 186
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = Interpolation.Mix3To1(w(4), w(0))
@@ -1247,7 +1247,7 @@ Namespace Drawing2D.HeatMap.hqx
                             End If
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(7))
-                            Exit Select
+
                         Case 115
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(3))
                             If HqxScaling.diff(w(1), w(5), [trY], trU, trV, trA) Then
@@ -1261,7 +1261,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix6To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 93
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(1))
@@ -1275,7 +1275,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix6To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 206
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = Interpolation.Mix3To1(w(4), w(0))
@@ -1289,7 +1289,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL) = Interpolation.Mix6To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(5))
-                            Exit Select
+
                         Case 205, 201
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(1), w(5))
@@ -1299,7 +1299,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL) = Interpolation.Mix6To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(5))
-                            Exit Select
+
                         Case 174, 46
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = Interpolation.Mix3To1(w(4), w(0))
@@ -1309,7 +1309,7 @@ Namespace Drawing2D.HeatMap.hqx
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
-                            Exit Select
+
                         Case 179, 147
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(3))
                             If HqxScaling.diff(w(1), w(5), [trY], trU, trV, trA) Then
@@ -1319,7 +1319,7 @@ Namespace Drawing2D.HeatMap.hqx
                             End If
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(7))
-                            Exit Select
+
                         Case 117, 116
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(1))
@@ -1329,19 +1329,19 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix6To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 189
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(7))
-                            Exit Select
+
                         Case 231
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(5))
-                            Exit Select
+
                         Case 126
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(0))
                             If HqxScaling.diff(w(1), w(5), [trY], trU, trV, trA) Then
@@ -1355,7 +1355,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(8))
-                            Exit Select
+
                         Case 219
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
@@ -1369,7 +1369,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 125
                             If HqxScaling.diff(w(7), w(3), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = Interpolation.Mix3To1(w(4), w(1))
@@ -1380,7 +1380,7 @@ Namespace Drawing2D.HeatMap.hqx
                             End If
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(8))
-                            Exit Select
+
                         Case 221
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(1))
                             If HqxScaling.diff(w(5), w(7), [trY], trU, trV, trA) Then
@@ -1391,7 +1391,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix2To3To3(w(4), w(5), w(7))
                             End If
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(6))
-                            Exit Select
+
                         Case 207
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
@@ -1402,7 +1402,7 @@ Namespace Drawing2D.HeatMap.hqx
                             End If
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(6))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(5))
-                            Exit Select
+
                         Case 238
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(0))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(5))
@@ -1413,7 +1413,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL) = Interpolation.Mix2To3To3(w(4), w(7), w(3))
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix4To2To1(w(4), w(7), w(5))
                             End If
-                            Exit Select
+
                         Case 190
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(0))
                             If HqxScaling.diff(w(1), w(5), [trY], trU, trV, trA) Then
@@ -1424,7 +1424,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix4To2To1(w(4), w(5), w(7))
                             End If
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(7))
-                            Exit Select
+
                         Case 187
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
@@ -1435,7 +1435,7 @@ Namespace Drawing2D.HeatMap.hqx
                             End If
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(2))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(7))
-                            Exit Select
+
                         Case 243
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(2))
@@ -1446,7 +1446,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL) = Interpolation.Mix4To2To1(w(4), w(7), w(3))
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix2To3To3(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 119
                             If HqxScaling.diff(w(1), w(5), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = Interpolation.Mix3To1(w(4), w(3))
@@ -1457,7 +1457,7 @@ Namespace Drawing2D.HeatMap.hqx
                             End If
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(8))
-                            Exit Select
+
                         Case 237, 233
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(1), w(5))
@@ -1467,7 +1467,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL) = Interpolation.Mix14To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(5))
-                            Exit Select
+
                         Case 175, 47
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
@@ -1477,7 +1477,7 @@ Namespace Drawing2D.HeatMap.hqx
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(5))
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
-                            Exit Select
+
                         Case 183, 151
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(3))
                             If HqxScaling.diff(w(1), w(5), [trY], trU, trV, trA) Then
@@ -1487,7 +1487,7 @@ Namespace Drawing2D.HeatMap.hqx
                             End If
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(7))
-                            Exit Select
+
                         Case 245, 244
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(3), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(1))
@@ -1497,7 +1497,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix14To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 250
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(0))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(2))
@@ -1511,7 +1511,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 123
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
@@ -1525,7 +1525,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(8))
-                            Exit Select
+
                         Case 95
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
@@ -1539,7 +1539,7 @@ Namespace Drawing2D.HeatMap.hqx
                             End If
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(6))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(8))
-                            Exit Select
+
                         Case 222
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(0))
                             If HqxScaling.diff(w(1), w(5), [trY], trU, trV, trA) Then
@@ -1553,7 +1553,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 252
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(1))
@@ -1567,7 +1567,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix14To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 249
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix2To1To1(w(4), w(2), w(1))
@@ -1581,7 +1581,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 235
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
@@ -1595,7 +1595,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL) = Interpolation.Mix14To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(5))
-                            Exit Select
+
                         Case 111
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
@@ -1609,7 +1609,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(5))
-                            Exit Select
+
                         Case 63
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
@@ -1623,7 +1623,7 @@ Namespace Drawing2D.HeatMap.hqx
                             End If
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(8), w(7))
-                            Exit Select
+
                         Case 159
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
@@ -1637,7 +1637,7 @@ Namespace Drawing2D.HeatMap.hqx
                             End If
                             dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(6), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(7))
-                            Exit Select
+
                         Case 215
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(3))
                             If HqxScaling.diff(w(1), w(5), [trY], trU, trV, trA) Then
@@ -1651,7 +1651,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 246
                             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(0), w(3))
                             If HqxScaling.diff(w(1), w(5), [trY], trU, trV, trA) Then
@@ -1665,7 +1665,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix14To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 254
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(0))
                             If HqxScaling.diff(w(1), w(5), [trY], trU, trV, trA) Then
@@ -1683,7 +1683,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix14To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 253
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(1))
                             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(1))
@@ -1697,7 +1697,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix14To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 251
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
@@ -1715,7 +1715,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 239
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
@@ -1729,7 +1729,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL) = Interpolation.Mix14To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(5))
-                            Exit Select
+
                         Case 127
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
@@ -1747,7 +1747,7 @@ Namespace Drawing2D.HeatMap.hqx
                                 dp(dpIdx + dpL) = Interpolation.Mix2To1To1(w(4), w(7), w(3))
                             End If
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(8))
-                            Exit Select
+
                         Case 191
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
@@ -1761,7 +1761,7 @@ Namespace Drawing2D.HeatMap.hqx
                             End If
                             dp(dpIdx + dpL) = Interpolation.Mix3To1(w(4), w(7))
                             dp(dpIdx + dpL + 1) = Interpolation.Mix3To1(w(4), w(7))
-                            Exit Select
+
                         Case 223
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
@@ -1779,7 +1779,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix2To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 247
                             dp(dpIdx) = Interpolation.Mix3To1(w(4), w(3))
                             If HqxScaling.diff(w(1), w(5), [trY], trU, trV, trA) Then
@@ -1793,7 +1793,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix14To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                         Case 255
                             If HqxScaling.diff(w(3), w(1), [trY], trU, trV, trA) Then
                                 dp(dpIdx) = w(4)
@@ -1815,7 +1815,7 @@ Namespace Drawing2D.HeatMap.hqx
                             Else
                                 dp(dpIdx + dpL + 1) = Interpolation.Mix14To1To1(w(4), w(5), w(7))
                             End If
-                            Exit Select
+
                     End Select
                     spIdx += 1
                     dpIdx += 2
