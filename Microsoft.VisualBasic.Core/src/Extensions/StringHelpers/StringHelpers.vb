@@ -1079,11 +1079,15 @@ Public Module StringHelpers
     ''' <param name="delimiter">
     ''' Using ``String.Equals`` or Regular expression function to determined this delimiter 
     ''' </param>
-    ''' <returns></returns>
-    <Extension> Public Function Split(source As IEnumerable(Of String),
-                                      delimiter$,
-                                      Optional regex As Boolean = False,
-                                      Optional opt As RegexOptions = RegexOptions.Singleline) As IEnumerable(Of String())
+    ''' <returns>
+    ''' the <paramref name="delimiter"/> string will not be included in the
+    ''' result data set
+    ''' </returns>
+    <Extension>
+    Public Function Split(source As IEnumerable(Of String),
+                          delimiter$,
+                          Optional regex As Boolean = False,
+                          Optional opt As RegexOptions = RegexOptions.Singleline) As IEnumerable(Of String())
 
         Dim delimiterTest As Predicate(Of String)
 
