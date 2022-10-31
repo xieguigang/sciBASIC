@@ -194,18 +194,18 @@ Namespace Imaging.BitmapImage
 
             If channels = 4 Then
                 For i As Integer = 0 To buffer.Length - 1 Step 4
-                    ints(i) = buffer(i + 3) ' A
-                    ints(i + 1) = buffer(i + 2) ' R
-                    ints(i + 2) = buffer(i + 1) ' G
-                    ints(i + 3) = buffer(i + 0) ' B
+                    ints(i) = buffer(i) ' A
+                    ints(i + 1) = buffer(i + 1) ' R
+                    ints(i + 2) = buffer(i + 2) ' G
+                    ints(i + 3) = buffer(i + 3) ' B
                 Next
             Else
                 ' channels = 3
                 For i As Integer = 0 To buffer.Length - 1 Step 3
                     ints(i) = 255 ' A
-                    ints(i + 1) = buffer(i + 2) ' R
+                    ints(i + 1) = buffer(i + 0) ' R
                     ints(i + 2) = buffer(i + 1) ' G
-                    ints(i + 3) = buffer(i + 0) ' B
+                    ints(i + 3) = buffer(i + 2) ' B
                 Next
             End If
 
@@ -215,17 +215,17 @@ Namespace Imaging.BitmapImage
         Public Sub WriteARGBStream(ints As Integer())
             If channels = 4 Then
                 For i As Integer = 0 To buffer.Length - 1 Step 4
-                    buffer(i + 3) = ints(i)  ' A
-                    buffer(i + 2) = ints(i + 1)  ' R
-                    buffer(i + 1) = ints(i + 2)  ' G
-                    buffer(i + 0) = ints(i + 3)  ' B
+                    buffer(i) = ints(i)  ' A
+                    buffer(i + 1) = ints(i + 1)  ' R
+                    buffer(i + 2) = ints(i + 2)  ' G
+                    buffer(i + 3) = ints(i + 3)  ' B
                 Next
             Else
                 ' channels = 3
                 For i As Integer = 0 To buffer.Length - 1 Step 3
-                    buffer(i + 2) = ints(i + 1)  ' R
+                    buffer(i + 0) = ints(i + 1)  ' R
                     buffer(i + 1) = ints(i + 2)  ' G
-                    buffer(i + 0) = ints(i + 3)  ' B
+                    buffer(i + 2) = ints(i + 3)  ' B
                 Next
             End If
         End Sub
