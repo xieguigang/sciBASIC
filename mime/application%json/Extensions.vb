@@ -81,12 +81,29 @@ Imports Microsoft.VisualBasic.My.JavaScript
     ''' <returns>
     ''' nothing will be returns if the target <paramref name="obj"/>
     ''' is not a <see cref="JsonValue"/> type.
+    ''' 
+    ''' the first not-null value will be returns if the input data 
+    ''' is an array.
     ''' </returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function AsString(obj As JsonElement, decodeMetachar As Boolean) As String
         If TypeOf obj Is JsonValue Then
             Return DirectCast(obj, JsonValue).GetStripString(decodeMetachar)
+        ElseIf TypeOf obj Is JsonArray Then
+            Dim array As JsonArray = DirectCast(obj, JsonArray)
+
+            If array.Length = 0 Then
+                Return Nothing
+            Else
+                For i As Integer = 0 To array.Length - 1
+                    If Not array(i) Is Nothing Then
+                        Return array(i).AsString(decodeMetachar)
+                    End If
+                Next
+
+                Return Nothing
+            End If
         Else
             Return Nothing
         End If

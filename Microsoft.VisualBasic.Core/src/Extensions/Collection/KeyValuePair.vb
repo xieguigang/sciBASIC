@@ -680,13 +680,20 @@ Namespace ComponentModel.Collection
         ''' <summary>
         ''' 获取得到的集合对象是一个安全的集合对象，不存在的键名会直接返回空值
         ''' </summary>
-        ''' <param name="maps"></param>
-        ''' <returns></returns>
+        ''' <param name="maps">
+        ''' the duplicated keys in this tuple list can be existed
+        ''' </param>
+        ''' <returns>
+        ''' the duplicated key can be existed
+        ''' </returns>
         <Extension>
         Public Function NameValueCollection(maps As IEnumerable(Of NamedValue(Of String))) As NameValueCollection
             Dim nc As New NameValueCollection
 
             For Each m As NamedValue(Of String) In maps
+                ' 20221031 for the tuple value with duplicated name
+                ' that will add to the exists array list to
+                ' create a data array
                 Call nc.Add(m.Name, m.Value)
             Next
 
