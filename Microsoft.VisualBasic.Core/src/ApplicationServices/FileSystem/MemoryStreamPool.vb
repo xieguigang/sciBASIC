@@ -55,6 +55,7 @@
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 
 Namespace ApplicationServices
 
@@ -74,18 +75,21 @@ Namespace ApplicationServices
         ReadOnly buffer_size As Integer
 
         Public Overrides ReadOnly Property CanRead As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return True
             End Get
         End Property
 
         Public Overrides ReadOnly Property CanSeek As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return True
             End Get
         End Property
 
         Public Overrides ReadOnly Property CanWrite As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return False
             End Get
@@ -96,6 +100,7 @@ Namespace ApplicationServices
         ''' </summary>
         ''' <returns></returns>
         Public Overrides ReadOnly Property Length As Long
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Aggregate ms As MemoryStream
                        In pool
@@ -103,12 +108,20 @@ Namespace ApplicationServices
             End Get
         End Property
 
+        Dim p As Long
+        ''' <summary>
+        ''' the block index of <see cref="pool"/>.
+        ''' </summary>
+        Dim block As Integer
+
         Public Overrides Property Position As Long
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Throw New NotImplementedException()
+                Return p
             End Get
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Set(value As Long)
-                Throw New NotImplementedException()
+                Call Seek(value, SeekOrigin.Begin)
             End Set
         End Property
 
@@ -124,11 +137,11 @@ Namespace ApplicationServices
         End Sub
 
         Public Overrides Sub SetLength(value As Long)
-            Throw New NotImplementedException()
+            Throw New InvalidProgramException("is a readonly stream!")
         End Sub
 
         Public Overrides Sub Write(buffer() As Byte, offset As Integer, count As Integer)
-            Throw New NotImplementedException()
+            Throw New InvalidProgramException("is a readonly stream!")
         End Sub
 
         Public Overrides Function Read(buffer() As Byte, offset As Integer, count As Integer) As Integer
@@ -136,7 +149,15 @@ Namespace ApplicationServices
         End Function
 
         Public Overrides Function Seek(offset As Long, origin As SeekOrigin) As Long
-            Throw New NotImplementedException()
+            Select Case origin
+                Case SeekOrigin.Current : offset += Position
+                Case SeekOrigin.End : offset += Length
+                Case Else
+                    ' from scan0, no transform
+            End Select
+
+            block = offset / buffer_size
+
         End Function
 
         ''' <summary>
@@ -165,6 +186,7 @@ Namespace ApplicationServices
 
                     If file.Length - file.Position < buffer_size Then
                         size = file.Length - file.Position
+                        buffer = New Byte(size - 1) {}
                     End If
                 Loop
             End If

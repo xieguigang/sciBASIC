@@ -21,6 +21,9 @@ Module streamTest
 
         Dim stream = MemoryStreamPool.FromFile(test_file, buffer_size:=1024)
 
+        ' seek test
+        stream.Position = 1026
+
         Pause()
     End Sub
 End Module
