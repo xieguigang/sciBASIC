@@ -146,8 +146,30 @@ Namespace ApplicationServices
         End Sub
 
         Public Overrides Function Read(buffer() As Byte, offset As Integer, count As Integer) As Integer
-            Throw New NotImplementedException()
+            Dim current As MemoryStream = pool(block)
+            Dim buffer_size As Long = If(current.Length < Me.buffer_size, current.Length, Me.buffer_size)
+            Dim [end] As Long = count + current.Position
+
+            If [end] > buffer_size Then
+                Throw New NotImplementedException()
+            Else
+                Call pool(block).Read(buffer, offset, count)
+            End If
+
+            Call Seek(count, SeekOrigin.Current)
+
+            Return count
         End Function
+
+        ''' <summary>
+        ''' move from zero
+        ''' </summary>
+        ''' <param name="offset"></param>
+        Private Sub Move(ByRef offset As Long)
+            block = stdNum.Floor(offset / buffer_size)
+            p = offset
+            offset = offset - buffer_size * block
+        End Sub
 
         Public Overrides Function Seek(offset As Long, origin As SeekOrigin) As Long
             Select Case origin
@@ -157,10 +179,7 @@ Namespace ApplicationServices
                     ' from scan0, no transform
             End Select
 
-            block = stdNum.Floor(offset / buffer_size)
-            p = offset
-            offset = offset - buffer_size * block
-
+            Call Move(offset)
             Call pool(block).Seek(offset, loc:=SeekOrigin.Begin)
 
             Return Position
