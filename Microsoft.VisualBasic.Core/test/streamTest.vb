@@ -17,12 +17,25 @@ Module streamTest
             End If
         Next
 
+        demo(1026) = 199
+        demo(1027) = 1
+
         Call demo.FlushStream(test_file)
 
         Dim stream = MemoryStreamPool.FromFile(test_file, buffer_size:=1024)
 
         ' seek test
-        stream.Position = 1026
+        stream.Position = 1025
+        ' p++
+        stream.ReadByte()
+
+        ' test stream reader
+        Dim b199_1026 As Byte = stream.ReadByte
+        Dim b1_1027 As Byte = stream.ReadByte
+
+        If b199_1026 <> 199 OrElse b1_1027 <> 1 Then
+            Throw New InvalidProgramException
+        End If
 
         Pause()
     End Sub

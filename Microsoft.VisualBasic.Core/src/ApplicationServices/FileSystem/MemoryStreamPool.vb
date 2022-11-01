@@ -56,6 +56,7 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports stdNum = System.Math
 
 Namespace ApplicationServices
 
@@ -156,8 +157,13 @@ Namespace ApplicationServices
                     ' from scan0, no transform
             End Select
 
-            block = offset / buffer_size
+            block = stdNum.Ceiling(offset / buffer_size)
+            p = offset
+            offset = offset - buffer_size * block
 
+            Call pool(block).Seek(offset, loc:=SeekOrigin.Begin)
+
+            Return Position
         End Function
 
         ''' <summary>
