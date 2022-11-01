@@ -160,7 +160,7 @@ Namespace ApplicationServices
                 Dim buf2 As Byte() = New Byte(count - delta - 1) {}
 
                 Call current.Read(smallBuf, Scan0, smallBuf.Length)
-                Call Seek(buffer_size * block + 1, SeekOrigin.Begin)
+                Call Seek(buffer_size * (block + 1), SeekOrigin.Begin)
                 Call Read(buf2, Scan0, buf2.Length)
 
                 Call Array.ConstrainedCopy(smallBuf, Scan0, buffer, Scan0, smallBuf.Length)
