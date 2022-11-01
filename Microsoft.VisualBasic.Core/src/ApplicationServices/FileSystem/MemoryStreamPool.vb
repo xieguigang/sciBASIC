@@ -156,20 +156,19 @@ Namespace ApplicationServices
 
             If [end] > buffer_size Then
                 Dim delta As Integer = buffer_size - current.Position
+                Dim smallBuf As Byte() = New Byte(delta - 1) {}
+                Dim buf2 As Byte() = New Byte(count - delta - 1) {}
 
-                block += 1
-                pool(block).Seek(Scan0, SeekOrigin.Begin)
+                Call current.Read(smallBuf, Scan0, smallBuf.Length)
+                Call Seek(buffer_size * block + 1, SeekOrigin.Begin)
+                Call Read(buf2, Scan0, buf2.Length)
 
-                Call current.Read(buffer, offset:=Scan0, count:=delta)
-                Call pool()
-
-
-                Throw New NotImplementedException()
+                Call Array.ConstrainedCopy(smallBuf, Scan0, buffer, Scan0, smallBuf.Length)
+                Call Array.ConstrainedCopy(buf2, Scan0, buffer, smallBuf.Length, buf2.Length)
             Else
                 Call pool(block).Read(buffer, offset, count)
+                Call Seek(count, SeekOrigin.Current)
             End If
-
-            Call Seek(count, SeekOrigin.Current)
 
             Return count
         End Function
