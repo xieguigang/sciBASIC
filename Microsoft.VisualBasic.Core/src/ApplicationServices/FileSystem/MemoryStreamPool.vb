@@ -161,16 +161,6 @@ Namespace ApplicationServices
             Return count
         End Function
 
-        ''' <summary>
-        ''' move from zero
-        ''' </summary>
-        ''' <param name="offset"></param>
-        Private Sub Move(ByRef offset As Long)
-            block = stdNum.Floor(offset / buffer_size)
-            p = offset
-            offset = offset - buffer_size * block
-        End Sub
-
         Public Overrides Function Seek(offset As Long, origin As SeekOrigin) As Long
             Select Case origin
                 Case SeekOrigin.Current : offset += Position
@@ -179,7 +169,10 @@ Namespace ApplicationServices
                     ' from scan0, no transform
             End Select
 
-            Call Move(offset)
+            block = stdNum.Floor(offset / buffer_size)
+            p = offset
+            offset = offset - buffer_size * block
+
             Call pool(block).Seek(offset, loc:=SeekOrigin.Begin)
 
             Return Position
