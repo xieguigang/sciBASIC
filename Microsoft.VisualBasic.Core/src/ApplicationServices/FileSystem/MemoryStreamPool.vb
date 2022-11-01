@@ -157,7 +157,7 @@ Namespace ApplicationServices
                     ' from scan0, no transform
             End Select
 
-            block = stdNum.Ceiling(offset / buffer_size)
+            block = stdNum.Floor(offset / buffer_size)
             p = offset
             offset = offset - buffer_size * block
 
