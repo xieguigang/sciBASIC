@@ -51,7 +51,7 @@
 
 Module sqltest
 
-    Sub Main()
+    Sub Main1()
         Dim names = "C:\Users\Administrator\Desktop\list.txt".ReadAllLines.Select(AddressOf Strings.LCase).ToArray
         Dim queryMeta = $"SELECT * FROM biodeepDB.metadb where lower(`name`) in ({names.Select(Function(a) $"""{a}""").JoinBy(", ")});"
 

@@ -52,7 +52,7 @@
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 
 Module markdownDisplayTest
-    Sub Main()
+    Sub Main1()
         Call MarkdownRender.Print("# title
 
 This is a inline ``code`` span. **bold** font style test.

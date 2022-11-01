@@ -56,7 +56,7 @@ Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Module SIMDTest
 
-    Sub Main()
+    Sub Main1()
         Dim nsize = 90000001
         Dim a As Double() = nsize.Sequence.Select(Function(i) randf.NextDouble).ToArray
         Dim b As Double() = nsize.Sequence.Select(Function(i) randf.NextDouble).ToArray

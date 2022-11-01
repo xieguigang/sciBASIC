@@ -54,7 +54,7 @@ Imports Microsoft.VisualBasic.Imaging
 
 Module wmfTest
 
-    Sub Main()
+    Sub Main1()
         Using wmf As New Wmf(New Size(1200, 500), "./test.wmf", backgroundColor:="white")
             Call wmf.DrawString("Hello world", New Font("Microsoft YaHei", 64, FontStyle.Bold), Brushes.Red, New PointF(100, 100))
         End Using

@@ -63,7 +63,7 @@ Module Module1
 
     End Sub
 
-    Sub Main()
+    Sub Main1()
         Call iniTest()
     End Sub
 

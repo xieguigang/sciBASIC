@@ -54,7 +54,7 @@ Imports Microsoft.VisualBasic.Data.Trinity
 
 Module indexTest
 
-    Sub Main()
+    Sub Main1()
         Call stringTest()
 
         Dim index As New WordSimilarityIndex(Of String)

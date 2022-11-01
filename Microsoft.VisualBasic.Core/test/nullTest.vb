@@ -51,7 +51,7 @@
 
 Module nullTest
 
-    Sub Main()
+    Sub Main1()
         Dim a As Integer? = 555
 
         Dim type = a.GetType

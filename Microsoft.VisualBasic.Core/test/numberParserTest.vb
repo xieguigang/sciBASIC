@@ -71,7 +71,7 @@ Module numberParserTest
         Pause()
     End Sub
 
-    Sub Main()
+    Sub Main1()
 
         Call hexTest()
 

@@ -83,7 +83,7 @@ Module TypeTest
         Pause()
     End Sub
 
-    Sub Main()
+    Sub Main1()
         Call descriptionTest()
         Call patternMatch()
 

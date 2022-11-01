@@ -59,7 +59,7 @@
 
 Module objToStringTest
 
-    Sub Main()
+    Sub Main1()
         Dim m1 = GetType(overridesToString).GetMethods.Where(Function(m) m.Name = "ToString" AndAlso m.GetParameters.IsNullOrEmpty AndAlso m.GetGenericArguments.IsNullOrEmpty).First
         Dim m2 = GetType(notOverridesToString).GetMethods.Where(Function(m) m.Name = "ToString" AndAlso m.GetParameters.IsNullOrEmpty AndAlso m.GetGenericArguments.IsNullOrEmpty).First
         Dim objToString = GetType(Object).GetMethod("ToString")

@@ -99,7 +99,7 @@ Module lapplyTest
         }).IteratesALL.ToArray
     End Sub
 
-    Sub Main()
+    Sub Main1()
 
         Call testApply()
         Call testSelectLinq()
