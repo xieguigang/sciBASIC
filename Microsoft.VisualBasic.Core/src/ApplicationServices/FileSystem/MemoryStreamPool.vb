@@ -155,6 +155,15 @@ Namespace ApplicationServices
             Dim [end] As Long = count + current.Position
 
             If [end] > buffer_size Then
+                Dim delta As Integer = buffer_size - current.Position
+
+                block += 1
+                pool(block).Seek(Scan0, SeekOrigin.Begin)
+
+                Call current.Read(buffer, offset:=Scan0, count:=delta)
+                Call pool()
+
+
                 Throw New NotImplementedException()
             Else
                 Call pool(block).Read(buffer, offset, count)
