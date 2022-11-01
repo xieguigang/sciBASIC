@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ApplicationServices
+﻿Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices
 
 Module streamTest
 
@@ -19,6 +20,13 @@ Module streamTest
 
         demo(1026) = 199
         demo(1027) = 1
+
+        Dim helloWorld As Byte() = Encoding.ASCII.GetBytes("Hello World!!!")
+        Dim offset As Integer = 2045
+
+        For i As Integer = 0 To helloWorld.Length - 1
+            demo(offset + i) = helloWorld(i)
+        Next
 
         Call demo.FlushStream(test_file)
 
@@ -51,17 +59,19 @@ Module streamTest
         End If
 
         ' read region across different blocks
-        stream.Position = 1023
+        stream.Position = offset
 
-        Dim buf As Byte() = New Byte(16 - 1) {}
-        Dim base As Integer = 1023
+        Dim buf As Byte() = New Byte(helloWorld.Length - 1) {}
+        Dim base As Integer = offset
 
         Call stream.Read(buf, Scan0, buf.Length)
 
         For i As Integer = 0 To buf.Length - 1
-            Call Console.WriteLine($"[{base}] {buf(i)}")
+            Call Console.WriteLine($"[{base}] {buf(i)} {Encoding.ASCII.GetString({buf(i)})}")
             base += 1
         Next
+
+        Call Console.WriteLine(Encoding.ASCII.GetString(buf))
 
         Pause()
     End Sub
