@@ -150,7 +150,7 @@ Namespace ApplicationServices
         Public Shared Function FromFile(path As String, Optional buffer_size As Integer = 1024 * 1024 * 1024 * 1) As MemoryStreamPool
             Dim pool As New List(Of MemoryStream)
             Dim buffer As Byte() = New Byte(buffer_size - 1) {}
-            Dim file As Stream = New FileStream(path, access:=FileAccess.Read)
+            Dim file As Stream = New FileStream(path:=path, mode:=FileMode.Open, access:=FileAccess.Read)
 
             If file.Length < buffer_size Then
                 buffer = New Byte(file.Length - 1) {}
