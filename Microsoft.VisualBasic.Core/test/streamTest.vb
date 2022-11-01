@@ -73,6 +73,10 @@ Module streamTest
 
         Call Console.WriteLine(Encoding.ASCII.GetString(buf))
 
+        If Not buf.SequenceEqual(helloWorld) Then
+            Throw New InvalidProgramException
+        End If
+
         Pause()
     End Sub
 End Module
