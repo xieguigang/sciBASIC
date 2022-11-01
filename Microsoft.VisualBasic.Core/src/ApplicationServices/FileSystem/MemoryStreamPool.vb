@@ -58,9 +58,19 @@ Imports System.IO
 
 Namespace ApplicationServices
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <remarks>
+    ''' just recommended apply this object for fast binary data read
+    ''' </remarks>
     Public Class MemoryStreamPool : Inherits Stream
 
         ReadOnly pool As MemoryStream()
+
+        ''' <summary>
+        ''' size of each stream object in pool
+        ''' </summary>
         ReadOnly buffer_size As Integer
 
         Public Overrides ReadOnly Property CanRead As Boolean
@@ -102,6 +112,11 @@ Namespace ApplicationServices
             End Set
         End Property
 
+        Private Sub New(pool As IEnumerable(Of MemoryStream), size As Integer)
+            Me.pool = pool.ToArray
+            Me.buffer_size = size
+        End Sub
+
         Public Overrides Sub Flush()
             For Each ms As MemoryStream In pool
                 Call ms.Flush()
@@ -122,6 +137,41 @@ Namespace ApplicationServices
 
         Public Overrides Function Seek(offset As Long, origin As SeekOrigin) As Long
             Throw New NotImplementedException()
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <param name="buffer_size">
+        ''' default buffer size is 1GB
+        ''' </param>
+        ''' <returns></returns>
+        Public Shared Function FromFile(path As String, Optional buffer_size As Integer = 1024 * 1024 * 1024 * 1) As MemoryStreamPool
+            Dim pool As New List(Of MemoryStream)
+            Dim buffer As Byte() = New Byte(buffer_size - 1) {}
+            Dim file As Stream = New FileStream(path, access:=FileAccess.Read)
+
+            If file.Length < buffer_size Then
+                buffer = New Byte(file.Length - 1) {}
+                file.Read(buffer, Scan0, file.Length)
+                pool.Add(New MemoryStream(buffer))
+            Else
+                Dim size As Integer = buffer_size
+
+                Do While file.Position < file.Length - 1
+                    Call file.Read(buffer, Scan0, count:=size)
+                    Call pool.Add(New MemoryStream(buffer))
+
+                    If file.Length - file.Position < buffer_size Then
+                        size = file.Length - file.Position
+                    End If
+                Loop
+            End If
+
+            Call file.Dispose()
+
+            Return New MemoryStreamPool(pool, buffer_size)
         End Function
     End Class
 End Namespace
