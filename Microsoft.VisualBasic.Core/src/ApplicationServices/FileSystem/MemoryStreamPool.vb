@@ -81,9 +81,15 @@ Namespace ApplicationServices
             End Get
         End Property
 
+        ''' <summary>
+        ''' the total size in bytes of the stream pool
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides ReadOnly Property Length As Long
             Get
-                Return pool.Sum(Function(ms) ms.Length)
+                Return Aggregate ms As MemoryStream
+                       In pool
+                       Into Sum(ms.Length)
             End Get
         End Property
 
