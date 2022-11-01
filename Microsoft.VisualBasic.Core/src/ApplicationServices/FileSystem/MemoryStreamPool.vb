@@ -131,6 +131,10 @@ Namespace ApplicationServices
             Me.buffer_size = size
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return $"[{Position}/{Length}, block_numbers={pool.Length}, buffer_size={buffer_size} Byte] current_section={block}, section_offset={pool(block).Position}"
+        End Function
+
         Public Overrides Sub Flush()
             For Each ms As MemoryStream In pool
                 Call ms.Flush()
@@ -204,6 +208,13 @@ Namespace ApplicationServices
 
                     If file.Length - file.Position < buffer_size Then
                         size = file.Length - file.Position
+                        buffer = New Byte(size - 1) {}
+                    Else
+                        ' 20221101 the memorystream object just assign
+                        ' the input array into the internal variable
+                        ' directly
+                        ' we needs to create a new array to break the 
+                        ' class object reference
                         buffer = New Byte(size - 1) {}
                     End If
                 Loop
