@@ -143,6 +143,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)|$(TargetFramework)'=='mzkit_win32|x64|net48'">
@@ -156,6 +157,7 @@
 	  <DefineDebug>false</DefineDebug>
 	  <DefineTrace>true</DefineTrace>
 	  <OutputPath>../../../../../..\mzkit\dist\bin\</OutputPath>
+	  <WarningLevel>0</WarningLevel>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|x64'">
@@ -235,6 +237,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <BaseAddress>4194304</BaseAddress>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows|AnyCPU'">
@@ -242,6 +245,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|AnyCPU'">
@@ -249,6 +253,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net5.0|AnyCPU'">
@@ -256,6 +261,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net48|AnyCPU'">
@@ -263,6 +269,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net6.0-windows|AnyCPU'">
@@ -270,6 +277,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net6.0|AnyCPU'">
@@ -277,6 +285,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net5.0|AnyCPU'">
@@ -284,6 +293,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net48|AnyCPU'">
@@ -291,6 +301,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows|AnyCPU'">
@@ -298,6 +309,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0-windows|AnyCPU'">
@@ -305,6 +317,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net6.0-windows|AnyCPU'">
@@ -312,6 +325,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net6.0-windows|AnyCPU'">
@@ -319,6 +333,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PlantMAT|net6.0-windows|AnyCPU'">
@@ -326,6 +341,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net6.0-windows|AnyCPU'">
@@ -333,6 +349,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net6.0-windows|AnyCPU'">
@@ -340,6 +357,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows|x64'">
@@ -347,6 +365,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows|x64'">
@@ -354,6 +373,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0-windows|x64'">
@@ -361,6 +381,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net6.0-windows|x64'">
@@ -368,6 +389,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net6.0-windows|x64'">
@@ -375,6 +397,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PlantMAT|net6.0-windows|x64'">
@@ -382,6 +405,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net6.0-windows|x64'">
@@ -389,6 +413,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net6.0-windows|x64'">
@@ -396,6 +421,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">
@@ -403,6 +429,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0|AnyCPU'">
@@ -410,6 +437,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net6.0|AnyCPU'">
@@ -417,6 +445,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net6.0|AnyCPU'">
@@ -424,6 +453,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PlantMAT|net6.0|AnyCPU'">
@@ -431,6 +461,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net6.0|AnyCPU'">
@@ -438,6 +469,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net6.0|AnyCPU'">
@@ -445,6 +477,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|x64'">
@@ -452,6 +485,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|x64'">
@@ -459,6 +493,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0|x64'">
@@ -466,6 +501,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net6.0|x64'">
@@ -473,6 +509,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net6.0|x64'">
@@ -480,6 +517,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PlantMAT|net6.0|x64'">
@@ -487,6 +525,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net6.0|x64'">
@@ -494,6 +533,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net6.0|x64'">
@@ -501,6 +541,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net5.0|AnyCPU'">
@@ -508,6 +549,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net5.0|AnyCPU'">
@@ -515,6 +557,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net5.0|AnyCPU'">
@@ -522,6 +565,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net5.0|AnyCPU'">
@@ -529,6 +573,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PlantMAT|net5.0|AnyCPU'">
@@ -536,6 +581,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net5.0|AnyCPU'">
@@ -543,6 +589,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net5.0|AnyCPU'">
@@ -550,6 +597,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net5.0|x64'">
@@ -557,6 +605,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net5.0|x64'">
@@ -564,6 +613,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net5.0|x64'">
@@ -571,6 +621,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net5.0|x64'">
@@ -578,6 +629,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net5.0|x64'">
@@ -585,6 +637,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PlantMAT|net5.0|x64'">
@@ -592,6 +645,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net5.0|x64'">
@@ -599,6 +653,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net5.0|x64'">
@@ -606,6 +661,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net5.0|x64'">
@@ -613,6 +669,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net48|AnyCPU'">
@@ -620,6 +677,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net48|AnyCPU'">
@@ -627,6 +685,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net48|AnyCPU'">
@@ -634,6 +693,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net48|AnyCPU'">
@@ -641,6 +701,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PlantMAT|net48|AnyCPU'">
@@ -648,6 +709,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net48|AnyCPU'">
@@ -655,6 +717,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net48|AnyCPU'">
@@ -662,6 +725,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net48|x64'">
@@ -669,6 +733,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net48|x64'">
@@ -676,6 +741,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net48|x64'">
@@ -683,6 +749,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net48|x64'">
@@ -690,6 +757,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net48|x64'">
@@ -697,6 +765,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PlantMAT|net48|x64'">
@@ -704,6 +773,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net48|x64'">
@@ -711,6 +781,7 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net48|x64'">
@@ -718,6 +789,79 @@
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
     <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0|AnyCPU'">
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0|AnyCPU'">
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net7.0|AnyCPU'">
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net7.0|AnyCPU'">
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PlantMAT|net7.0|AnyCPU'">
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net7.0|AnyCPU'">
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net7.0|AnyCPU'">
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net7.0|AnyCPU'">
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net7.0|AnyCPU'">
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0|x64'">
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0|x64'">
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net7.0|x64'">
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net7.0|x64'">
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PlantMAT|net7.0|x64'">
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net7.0|x64'">
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net7.0|x64'">
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net7.0|x64'">
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net7.0|x64'">
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <ItemGroup>
