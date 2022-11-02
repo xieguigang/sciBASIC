@@ -13,13 +13,16 @@ Module hqx_test
 
     Sub bufferTest()
         Dim img As Bitmap = New Bitmap(sourcePixels.LoadImage)
+        Dim blank As New Bitmap(img.Width, img.Height)
         Dim buffer As BitmapBuffer = BitmapBuffer.FromBitmap(img)
         Dim bytes = buffer.GetARGBStream
 
-        Call buffer.WriteARGBStream(bytes)
-        Call buffer.Dispose()
+        Dim anotherBlank As BitmapBuffer = BitmapBuffer.FromBitmap(blank)
 
-        Call img.SaveAs($"{App.HOME}/pixels.png")
+        Call anotherBlank.WriteARGBStream(bytes)
+        Call anotherBlank.Dispose()
+
+        Call blank.SaveAs($"{App.HOME}/pixels.png")
     End Sub
 
 End Module
