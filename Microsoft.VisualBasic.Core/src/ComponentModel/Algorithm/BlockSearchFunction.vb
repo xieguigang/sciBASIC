@@ -134,7 +134,23 @@ Namespace ComponentModel.Algorithm
             End Get
         End Property
 
-        Sub New(data As IEnumerable(Of T), eval As Func(Of T, Double), tolerance As Double, Optional factor As Double = 2)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="eval"></param>
+        ''' <param name="tolerance"></param>
+        ''' <param name="factor"></param>
+        ''' <param name="fuzzy">
+        ''' 20221101       
+        ''' works for the continues numeric sequence
+        ''' </param>
+        Sub New(data As IEnumerable(Of T),
+                eval As Func(Of T, Double),
+                tolerance As Double,
+                Optional factor As Double = 2,
+                Optional fuzzy As Boolean = False)
+
             Dim input = getOrderSeq(data, eval).ToArray
             Dim blocks As New List(Of Block(Of T))
             Dim block As Block(Of T)
@@ -162,7 +178,12 @@ Namespace ComponentModel.Algorithm
 
             Me.tolerance = tolerance
             Me.eval = eval
-            Me.binary = New BinarySearchFunction(Of Block(Of T), Block(Of T))(blocks, Function(any) any, compares)
+            Me.binary = New BinarySearchFunction(Of Block(Of T), Block(Of T))(
+                source:=blocks,
+                key:=Function(any) any,
+                compares:=compares,
+                allowFuzzy:=fuzzy
+            )
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

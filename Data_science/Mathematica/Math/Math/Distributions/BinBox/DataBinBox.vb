@@ -64,6 +64,10 @@ Namespace Distributions.BinBox
     ''' </summary>
     Public Class DataBinBox(Of T)
 
+        ''' <summary>
+        ''' get the raw data points in current data bin box.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Raw As T()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get

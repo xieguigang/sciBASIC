@@ -73,7 +73,12 @@ Namespace ApplicationServices
         ''' <summary>
         ''' size of each stream object in pool
         ''' </summary>
-        ReadOnly buffer_size As Integer
+        ''' <remarks>
+        ''' 20221101 data type should be int64, or math overflow 
+        ''' maybe happends if the offset value is greater than 
+        ''' 2GB.
+        ''' </remarks>
+        ReadOnly buffer_size As Long
 
         Public Overrides ReadOnly Property CanRead As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -132,7 +137,7 @@ Namespace ApplicationServices
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"[{Position}/{Length}, block_numbers={pool.Length}, buffer_size={buffer_size} Byte] current_section={block}, section_offset={pool(block).Position}"
+            Return $"[{Position}/{Length}, block_numbers={pool.Length}, buffer_size={StringFormats.Lanudry(CDbl(buffer_size))}] current_section={block}, section_offset={pool(block).Position}"
         End Function
 
         Public Overrides Sub Flush()

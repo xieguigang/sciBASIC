@@ -227,6 +227,39 @@ Namespace Math
         ''' <summary>
         ''' 将一维的数据按照一定的偏移量分组输出
         ''' </summary>
+        ''' <param name="numbers"></param>
+        ''' <param name="offset"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Iterator Function GroupBy(source As IEnumerable(Of Double), offset As Double) As IEnumerable(Of NamedCollection(Of Double))
+            ' 先进行预处理：求值然后进行排序
+            Dim tagValues = source _
+                .OrderBy(Function(o) o) _
+                .ToArray
+            Dim means As New Average
+
+            ' 根据分组的平均值来进行分组操作
+            For Each x As Double In tagValues
+                If means.N = 0 Then
+                    means.Add(x)
+                Else
+                    If stdNum.Abs(means.Average - x) < offset Then
+                        means += x
+                    Else
+                        Yield New NamedCollection(Of Double)(CStr(means.Average), means.getRaw)
+                        means = New Average({x})
+                    End If
+                End If
+            Next
+
+            If means.N > 0 Then
+                Yield New NamedCollection(Of Double)(CStr(means.Average), means.getRaw)
+            End If
+        End Function
+
+        ''' <summary>
+        ''' 将一维的数据按照一定的偏移量分组输出
+        ''' </summary>
         ''' <param name="source"></param>
         ''' <returns></returns>
         <Extension>
@@ -269,10 +302,11 @@ Namespace Math
         ''' </summary>
         ''' <param name="source"></param>
         ''' <returns></returns>
-        <Extension> Public Iterator Function GroupByParallel(Of T)(source As IEnumerable(Of T),
-                                                                   evaluate As Func(Of T, Double),
-                                                                   equals As GenericLambda(Of Double).IEquals,
-                                                                   Optional chunkSize% = 20000) As IEnumerable(Of NamedCollection(Of T))
+        <Extension>
+        Public Iterator Function GroupByParallel(Of T)(source As IEnumerable(Of T),
+                                                       evaluate As Func(Of T, Double),
+                                                       equals As GenericLambda(Of Double).IEquals,
+                                                       Optional chunkSize% = 20000) As IEnumerable(Of NamedCollection(Of T))
             Dim partitions = source _
                 .SplitIterator(partitionSize:=chunkSize) _
                 .AsParallel _
@@ -355,18 +389,6 @@ Namespace Math
         <Extension>
         Public Function GroupBy(Of T)(source As IEnumerable(Of T), evaluate As Func(Of T, Double), offsets#) As IEnumerable(Of NamedCollection(Of T))
             Return source.GroupBy(evaluate, equals:=Function(a, b) stdNum.Abs(a - b) <= offsets)
-        End Function
-
-        ''' <summary>
-        ''' 将一维的数据按照一定的偏移量分组输出
-        ''' </summary>
-        ''' <param name="numbers"></param>
-        ''' <param name="offsets#"></param>
-        ''' <returns></returns>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function GroupBy(numbers As IEnumerable(Of Double), offsets#) As IEnumerable(Of NamedCollection(Of Double))
-            Return numbers.GroupBy(Self(Of Double), Function(a, b) stdNum.Abs(a - b) <= offsets)
         End Function
 
         ''' <summary>
