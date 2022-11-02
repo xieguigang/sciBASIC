@@ -575,17 +575,16 @@ Namespace Drawing2D.HeatMap.hqx
         ''' <param name="wrapY"> used for images that can be seamlessly repeated vertically </param>
         Public Shared Sub hq4x_32_rb(sp As Integer(), dp As Integer(), Xres As Integer, Yres As Integer, [trY] As Integer, trU As Integer, trV As Integer, trA As Integer, wrapX As Boolean, wrapY As Boolean)
             Dim spIdx = 0, dpIdx = 0
+
             'Don't shift trA, as it uses shift right instead of a mask for comparisons.
             [trY] <<= 2 * 8
             trU <<= 1 * 8
 
             Dim dpL = Xres * 4
-
             Dim prevline, nextline As Integer
-
             Dim w = New Integer(8) {}
 
-            For j = 0 To Yres - 1
+            For j As Integer = 0 To Yres - 1
                 prevline = If(j > 0, -Xres, If(wrapY, Xres * (Yres - 1), 0))
                 nextline = If(j < Yres - 1, Xres, If(wrapY, -(Xres * (Yres - 1)), 0))
                 For i = 0 To Xres - 1
