@@ -76,6 +76,10 @@ Namespace Drawing2D.HeatMap
             buffer = BitmapBuffer.FromBitmap(heatmap, ImageLockMode.ReadOnly)
         End Sub
 
+        Shared Sub New()
+            Call RgbYuv.hqxInit()
+        End Sub
+
         Public Sub ScaleTo(g As IGraphics, region As Rectangle)
             Call Scale(g, region.Size, region.Location)
         End Sub
@@ -106,7 +110,8 @@ Namespace Drawing2D.HeatMap
                 Return buffer.GetImage
             Else
                 Dim scales As New Bitmap(buffer.Width * hqx, buffer.Height * hqx, format:=PixelFormat.Format32bppArgb)
-                Dim p As BitmapBuffer = BitmapBuffer.FromBitmap(scales, ImageLockMode.ReadWrite)
+                Dim p As BitmapBuffer = BitmapBuffer.FromBitmap(scales)
+                ' get source data
                 Dim sp As Integer() = buffer.GetARGBStream
                 Dim dp As Integer() = New Integer(p.Length - 1) {}
 
@@ -119,11 +124,12 @@ Namespace Drawing2D.HeatMap
                 End Select
 
                 Call p.WriteARGBStream(dp)
+                Call p.Dispose()
 
                 Erase sp
                 Erase dp
 
-                Return p.GetImage(flush:=True)
+                Return scales
             End If
         End Function
 

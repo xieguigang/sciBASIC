@@ -27,7 +27,7 @@ Imports System.Runtime.CompilerServices
 
 Namespace Drawing2D.HeatMap.hqx
 
-    Public Module RgbYuv
+    Module RgbYuv
 
         Private Const rgbMask As Integer = &HFFFFFF
 
