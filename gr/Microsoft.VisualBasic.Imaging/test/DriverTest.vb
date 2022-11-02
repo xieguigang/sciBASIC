@@ -58,7 +58,7 @@ Imports Microsoft.VisualBasic.MIME.Html.Language.CSS
 Imports VB = Microsoft.VisualBasic.Language.Runtime
 
 Module DriverTest
-    Sub Main()
+    Sub Main1()
 
         Dim cssfile As CSSFile = CssParser.GetTagWithCSS("G:\GCModeller\src\runtime\sciBASIC#\gr\SVG\demo.css".ReadAllText)
 

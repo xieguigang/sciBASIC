@@ -59,7 +59,7 @@ Imports Microsoft.VisualBasic.Imaging.SVG.XML
 
 Module SVGTest
 
-    Sub Main()
+    Sub Main1()
         Call pathParserTest()
         '   Call IOtest()
         Call Test()

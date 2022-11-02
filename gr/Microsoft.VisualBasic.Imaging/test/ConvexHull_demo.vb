@@ -108,7 +108,7 @@ Module ConvexHull_demo
         End Using
     End Sub
 
-    Public Sub Main()
+    Public Sub Main1()
 
         Call Randomize()
 

@@ -125,6 +125,7 @@ Module Program
 
     Sub Main()
 
+        Call hqx_test.Main1()
 
         Call ASCIIArt_test()
 

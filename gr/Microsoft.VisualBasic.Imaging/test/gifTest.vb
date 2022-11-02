@@ -55,7 +55,7 @@ Imports Microsoft.VisualBasic.Imaging
 
 Module gifTest
 
-    Sub Main()
+    Sub Main1()
         Using file As FileStream = "./test.gif".Open, gif As New GifEncoder(file)
             Dim frame1 As Graphics2D = New Size(200, 200).CreateGDIDevice
             Dim frame2 As Graphics2D = New Size(200, 200).CreateGDIDevice
