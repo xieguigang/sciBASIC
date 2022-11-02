@@ -22,6 +22,7 @@
 '  You should have received a copy of the GNU Lesser General Public License
 '  along with hqx-java. If not, see <http://www.gnu.org/licenses/>.
 ' 
+Option Strict On
 
 Imports System.Runtime.CompilerServices
 
@@ -29,7 +30,7 @@ Namespace Drawing2D.HeatMap.hqx
 
     Module RgbYuv
 
-        Private Const rgbMask As Integer = &HFFFFFF
+        Private Const rgbMask As UInteger = &HFFFFFF
 
         ''' <summary>
         ''' this array is readonly to public
@@ -51,8 +52,8 @@ Namespace Drawing2D.HeatMap.hqx
         ''' <returns> the corresponding 24bit YUV color </returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Friend Function getYuv(rgb As Integer) As Integer
-            Return RGBtoYUV(rgb And rgbMask)
+        Friend Function getYuv(rgb As UInteger) As Integer
+            Return RGBtoYUV(CInt(rgb And rgbMask))
         End Function
 
         ''' <summary>
