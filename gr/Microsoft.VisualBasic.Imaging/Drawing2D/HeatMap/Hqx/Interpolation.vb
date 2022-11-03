@@ -35,7 +35,7 @@ Namespace Drawing2D.HeatMap.hqx
         Const MaskAlpha As UInteger = &HFF000000
         Const MaskGreen As UInteger = &HFF00
         Const MaskRedBlue As UInteger = &HFF00FF
-        Const AlphaShift As Integer = 24
+        Const AlphaShift As UInteger = 24
 
         ' return statements:
         '	 1. line: green

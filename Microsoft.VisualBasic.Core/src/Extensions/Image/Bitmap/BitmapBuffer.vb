@@ -190,22 +190,37 @@ Namespace Imaging.BitmapImage
         ''' </summary>
         ''' <returns></returns>
         Public Function GetARGBStream() As UInteger()
-            Dim ints As UInteger() = New UInteger(buffer.Length - 1) {}
+            Dim ints As UInteger() = New UInteger(buffer.Length / 4 - 1) {}
+            Dim uint As Byte() = New Byte(4 - 1) {}
+            Dim p As i32 = 0
 
             If channels = 4 Then
                 For i As Integer = 0 To buffer.Length - 1 Step 4
-                    ints(i) = buffer(i + 3) ' A
-                    ints(i + 1) = buffer(i + 2) ' R
-                    ints(i + 2) = buffer(i + 1) ' G
-                    ints(i + 3) = buffer(i + 0) ' B
+                    'ints(i) = buffer(i + 3) ' A
+                    'ints(i + 1) = buffer(i + 2) ' R
+                    'ints(i + 2) = buffer(i + 1) ' G
+                    'ints(i + 3) = buffer(i + 0) ' B
+                    uint(0) = buffer(i) ' A
+                    uint(1) = buffer(i + 1) ' R
+                    uint(2) = buffer(i + 2) ' G
+                    uint(3) = buffer(i + 3) ' B
+
+                    ints(++p) = BitConverter.ToUInt32(uint, 0)
                 Next
             Else
                 ' channels = 3
                 For i As Integer = 0 To buffer.Length - 1 Step 3
-                    ints(i) = 255 ' A
-                    ints(i + 1) = buffer(i + 2) ' R
-                    ints(i + 2) = buffer(i + 1) ' G
-                    ints(i + 3) = buffer(i + 0) ' B
+                    'ints(i) = 255 ' A
+                    'ints(i + 1) = buffer(i + 2) ' R
+                    'ints(i + 2) = buffer(i + 1) ' G
+                    'ints(i + 3) = buffer(i + 0) ' B
+
+                    uint(0) = 255 ' A
+                    uint(1) = buffer(i) ' R
+                    uint(2) = buffer(i + 1) ' G
+                    uint(3) = buffer(i + 2) ' B
+
+                    ints(++p) = BitConverter.ToUInt32(uint, 0)
                 Next
             End If
 
@@ -213,19 +228,25 @@ Namespace Imaging.BitmapImage
         End Function
 
         Public Sub WriteARGBStream(ints As UInteger())
+            Dim p As i32 = 0
+
             If channels = 4 Then
                 For i As Integer = 0 To buffer.Length - 1 Step 4
-                    buffer(i + 3) = ints(i)  ' A
-                    buffer(i + 2) = ints(i + 1)  ' R
-                    buffer(i + 1) = ints(i + 2)  ' G
-                    buffer(i + 0) = ints(i + 3)  ' B
+                    Dim uint As Byte() = BitConverter.GetBytes(ints(++p))
+
+                    buffer(i) = uint(0)  ' A
+                    buffer(i + 1) = uint(1)  ' R
+                    buffer(i + 2) = uint(2)  ' G
+                    buffer(i + 3) = uint(3)  ' B
                 Next
             Else
                 ' channels = 3
                 For i As Integer = 0 To buffer.Length - 1 Step 3
-                    buffer(i + 2) = ints(i + 1)  ' R
-                    buffer(i + 1) = ints(i + 2)  ' G
-                    buffer(i + 0) = ints(i + 3)  ' B
+                    Dim uint As Byte() = BitConverter.GetBytes(ints(++p))
+
+                    buffer(i) = uint(1)  ' R
+                    buffer(i + 1) = uint(2)  ' G
+                    buffer(i + 2) = uint(3)  ' B
                 Next
             End If
         End Sub

@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports System.Drawing.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 
@@ -14,6 +15,11 @@ Module hqx_test
     Sub hqx_4()
         Dim img As Bitmap = New Bitmap(sourcePixels.LoadImage)
         Dim raster As New RasterScaler(img)
+
+        'Dim bmpData = img.LockBits(New Rectangle(Point.Empty, img.Size), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb)
+        'Dim destData = img.LockBits(New Rectangle(Point.Empty, img.Size), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb)
+        'Dim sp As IntPtr = destData.Scan0
+
 
         Call raster.Scale(hqx:=hqx.HqxScales.Hqx_4x).SaveAs($"{App.HOME}/pixels_hqx_4x.png")
 
