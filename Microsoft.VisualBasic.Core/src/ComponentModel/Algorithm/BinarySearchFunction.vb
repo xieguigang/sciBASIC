@@ -66,26 +66,40 @@ Namespace ComponentModel.Algorithm
 
         ReadOnly sequence As (index As Integer, key As K, T)()
         ReadOnly order As Comparison(Of K)
+        ReadOnly fuzzy As Boolean = False
 
         Friend ReadOnly rawOrder As T()
 
+        ''' <summary>
+        ''' negative index value means read from reverse seqeucne
+        ''' </summary>
+        ''' <param name="i"></param>
+        ''' <returns></returns>
         Default Public ReadOnly Property Item(i As Integer) As T
             Get
-                If i = -1 Then
-                    Return Nothing
+                If i < 0 Then
+                    Return rawOrder(rawOrder.Length + i)
                 Else
                     Return rawOrder(i)
                 End If
             End Get
         End Property
 
+        ''' <summary>
+        ''' the length of the input sequence data
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property size As Integer
             Get
                 Return rawOrder.Length
             End Get
         End Property
 
-        Sub New(source As IEnumerable(Of T), key As Func(Of T, K), compares As Comparison(Of K))
+        Sub New(source As IEnumerable(Of T),
+                key As Func(Of T, K),
+                compares As Comparison(Of K),
+                Optional allowFuzzy As Boolean = False)
+
             order = compares
             rawOrder = source.ToArray
             sequence = rawOrder _
@@ -96,6 +110,7 @@ Namespace ComponentModel.Algorithm
                                 key:=Function(i) i.Item2
                             )
                         End Function)
+            fuzzy = allowFuzzy
         End Sub
 
         ''' <summary>
@@ -141,6 +156,8 @@ Namespace ComponentModel.Algorithm
                 Return sequence(min).index
             ElseIf 0 = order(sequence(max).key, target) Then
                 Return sequence(max).index
+            ElseIf fuzzy Then
+                Return x.index
             Else
                 Return -1
             End If

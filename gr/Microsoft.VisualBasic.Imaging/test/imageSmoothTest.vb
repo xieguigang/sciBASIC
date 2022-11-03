@@ -56,7 +56,7 @@ Imports Microsoft.VisualBasic.Linq
 
 Module imageSmoothTest
 
-    Sub Main()
+    Sub Main1()
 
         Call gaussBlurTest()
 

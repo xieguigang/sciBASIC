@@ -550,16 +550,21 @@ Namespace Imaging
         ''' 除非你将<paramref name="directAccess"/>参数设置为真，函数才不会自动克隆图像对象
         ''' </summary>
         ''' <param name="res"></param>
+        ''' <param name="bg">
+        ''' the color string literal value of the default background color
+        ''' </param>
         ''' <returns></returns>
-        <ExportAPI("GDI+.Create")>
-        <Extension> Public Function CreateCanvas2D(res As Image,
-                                                   Optional directAccess As Boolean = False,
-                                <CallerMemberName> Optional caller$ = "") As Graphics2D
+        <Extension>
+        Public Function CreateCanvas2D(res As Image,
+                                       Optional directAccess As Boolean = False,
+                                       Optional bg As String = Nothing,
+                                       <CallerMemberName>
+                                       Optional caller$ = "") As Graphics2D
 
             If directAccess Then
                 Return Graphics2D.CreateObject(Graphics.FromImage(res), res)
             Else
-                With res.Size.CreateGDIDevice
+                With res.Size.CreateGDIDevice(filled:=bg.TranslateColor)
                     Call .DrawImage(res, 0, 0, .Width, .Height)
                     Return .ByRef
                 End With

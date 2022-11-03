@@ -51,7 +51,7 @@
 
 Module LinqExpressiontest
 
-    Sub Main()
+    Sub Main1()
 
         Dim any = <exec <%= From x In 100.SeqRandom Select x + 100 %>/>
 

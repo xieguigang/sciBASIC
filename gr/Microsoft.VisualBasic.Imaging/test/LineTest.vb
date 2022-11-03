@@ -55,7 +55,7 @@ Imports Microsoft.VisualBasic.Imaging
 
 Module LineTest
 
-    Sub Main()
+    Sub Main1()
         Using g = New Size(1600, 900).CreateGDIDevice
             Dim line As New Line(0, 0, 100, 0)
             Dim down = line.ParallelShift(20)

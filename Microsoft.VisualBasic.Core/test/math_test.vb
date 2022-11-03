@@ -51,7 +51,7 @@
 
 Module math_test
 
-    Sub Main()
+    Sub Main1()
 
     End Sub
 End Module

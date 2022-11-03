@@ -55,6 +55,7 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language.Default
@@ -210,11 +211,21 @@ Public Module IOExtensions
         End If
 
         If mode = FileMode.Open AndAlso [readOnly] = True AndAlso App.MemoryLoad = My.FrameworkInternal.MemoryLoads.Heavy Then
+            ' should reads all data into memory!
             If path.FileLength < 1024& * 1024& * 1024& * 2& Then
                 Call Console.WriteLine($"read all({StringFormats.Lanudry(path.FileLength)}) {path}")
                 Call Console.WriteLine($"loads all binary data into memory for max performance!")
 
+                ' use a single memorystream object when file size 
+                ' is smaller than 2GB
                 Return New MemoryStream(path.ReadBinary)
+            Else
+                ' 20221101
+                '
+                ' use a memorystream pool object when the file size
+                ' is greater than 2GB
+                ' default buffer size is 1GB
+                Return MemoryStreamPool.FromFile(path)
             End If
         End If
 

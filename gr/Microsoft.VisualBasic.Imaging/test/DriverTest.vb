@@ -58,7 +58,7 @@ Imports Microsoft.VisualBasic.MIME.Html.Language.CSS
 Imports VB = Microsoft.VisualBasic.Language.Runtime
 
 Module DriverTest
-    Sub Main()
+    Sub Main1()
 
         Dim cssfile As CSSFile = CssParser.GetTagWithCSS("G:\GCModeller\src\runtime\sciBASIC#\gr\SVG\demo.css".ReadAllText)
 
@@ -102,7 +102,7 @@ Module DriverTest
     ''' <param name="A!"></param>
     ''' <param name="b!"></param>
     ''' <returns></returns>
-    <Driver("test.plot")>
+   ' <Driver("test.plot")>
     Public Function testPlot(A!, b!, Optional bg$ = "1234", Optional testFont$ = CSSFont.Win7LargerBold) As GraphicsData
         Call Console.WriteLine(A)
         Call Console.WriteLine(b)

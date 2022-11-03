@@ -62,7 +62,7 @@ Public Module HtmlRenderTest
             2<sup>333333</sup> + X<sub>i</sub> = <span style="font-size: 36;">6666666</span>
          </div>).ToString
 
-    Sub Main()
+    Sub Main1()
 
         Dim content = TextAPI.TryParse(testHTML).ToArray
 

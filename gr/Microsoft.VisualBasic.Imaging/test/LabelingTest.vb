@@ -59,7 +59,7 @@ Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Module LabelingTest
 
-    Sub Main()
+    Sub Main1()
         Using g As Graphics2D = New Size(1024, 1024).CreateGDIDevice(filled:=Color.White)
             Dim labelFont As Font = CSSFont _
                 .TryParse(CSSFont.PlotLabelNormal) _

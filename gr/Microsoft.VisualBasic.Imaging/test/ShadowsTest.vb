@@ -55,7 +55,7 @@ Imports Microsoft.VisualBasic.Imaging
 
 Module ShadowsTest
 
-    Sub Main()
+    Sub Main1()
 
         Using Graphics As Graphics2D = New Size(500, 500).CreateGDIDevice(Color.White)
 
@@ -70,7 +70,7 @@ Module ShadowsTest
             ' this Is where we create the shadow effect, so we will use a 
             ' pathgradientbursh And assign our GraphicsPath that we created of a 
             ' Rounded Rectangle
-            Using _Brush As New PathGradientBrush(_Path)
+            Using _Brush As New PathGradientBrush(_path)
 
                 ' set the wrapmode so that the colors will layer themselves
                 ' from the outer edge in

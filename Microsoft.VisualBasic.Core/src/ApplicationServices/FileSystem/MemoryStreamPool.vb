@@ -55,46 +55,90 @@
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
+Imports stdNum = System.Math
 
 Namespace ApplicationServices
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <remarks>
+    ''' just recommended apply this object for fast binary data read
+    ''' </remarks>
     Public Class MemoryStreamPool : Inherits Stream
 
         ReadOnly pool As MemoryStream()
-        ReadOnly buffer_size As Integer
+
+        ''' <summary>
+        ''' size of each stream object in pool
+        ''' </summary>
+        ''' <remarks>
+        ''' 20221101 data type should be int64, or math overflow 
+        ''' maybe happends if the offset value is greater than 
+        ''' 2GB.
+        ''' </remarks>
+        ReadOnly buffer_size As Long
 
         Public Overrides ReadOnly Property CanRead As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return True
             End Get
         End Property
 
         Public Overrides ReadOnly Property CanSeek As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return True
             End Get
         End Property
 
         Public Overrides ReadOnly Property CanWrite As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return False
             End Get
         End Property
 
+        ''' <summary>
+        ''' the total size in bytes of the stream pool
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides ReadOnly Property Length As Long
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return pool.Sum(Function(ms) ms.Length)
+                Return Aggregate ms As MemoryStream
+                       In pool
+                       Into Sum(ms.Length)
             End Get
         End Property
 
+        Dim p As Long
+        ''' <summary>
+        ''' the block index of <see cref="pool"/>.
+        ''' </summary>
+        Dim block As Integer
+
         Public Overrides Property Position As Long
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Throw New NotImplementedException()
+                Return p
             End Get
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Set(value As Long)
-                Throw New NotImplementedException()
+                Call Seek(value, SeekOrigin.Begin)
             End Set
         End Property
+
+        Private Sub New(pool As IEnumerable(Of MemoryStream), size As Integer)
+            Me.pool = pool.ToArray
+            Me.buffer_size = size
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"[{Position}/{Length}, block_numbers={pool.Length}, buffer_size={StringFormats.Lanudry(CDbl(buffer_size))}] current_section={block}, section_offset={pool(block).Position}"
+        End Function
 
         Public Overrides Sub Flush()
             For Each ms As MemoryStream In pool
@@ -103,19 +147,95 @@ Namespace ApplicationServices
         End Sub
 
         Public Overrides Sub SetLength(value As Long)
-            Throw New NotImplementedException()
+            Throw New InvalidProgramException("is a readonly stream!")
         End Sub
 
         Public Overrides Sub Write(buffer() As Byte, offset As Integer, count As Integer)
-            Throw New NotImplementedException()
+            Throw New InvalidProgramException("is a readonly stream!")
         End Sub
 
         Public Overrides Function Read(buffer() As Byte, offset As Integer, count As Integer) As Integer
-            Throw New NotImplementedException()
+            Dim current As MemoryStream = pool(block)
+            Dim buffer_size As Long = If(current.Length < Me.buffer_size, current.Length, Me.buffer_size)
+            Dim [end] As Long = count + current.Position
+
+            If [end] > buffer_size Then
+                Dim delta As Integer = buffer_size - current.Position
+                Dim smallBuf As Byte() = New Byte(delta - 1) {}
+                Dim buf2 As Byte() = New Byte(count - delta - 1) {}
+
+                Call current.Read(smallBuf, Scan0, smallBuf.Length)
+                Call Seek(buffer_size * (block + 1), SeekOrigin.Begin)
+                Call Read(buf2, Scan0, buf2.Length)
+
+                Call Array.ConstrainedCopy(smallBuf, Scan0, buffer, Scan0, smallBuf.Length)
+                Call Array.ConstrainedCopy(buf2, Scan0, buffer, smallBuf.Length, buf2.Length)
+            Else
+                Call pool(block).Read(buffer, offset, count)
+                Call Seek(count, SeekOrigin.Current)
+            End If
+
+            Return count
         End Function
 
         Public Overrides Function Seek(offset As Long, origin As SeekOrigin) As Long
-            Throw New NotImplementedException()
+            Select Case origin
+                Case SeekOrigin.Current : offset += Position
+                Case SeekOrigin.End : offset += Length
+                Case Else
+                    ' from scan0, no transform
+            End Select
+
+            block = stdNum.Floor(offset / buffer_size)
+            p = offset
+            offset = offset - buffer_size * block
+
+            Call pool(block).Seek(offset, loc:=SeekOrigin.Begin)
+
+            Return Position
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <param name="buffer_size">
+        ''' default buffer size is 1GB
+        ''' </param>
+        ''' <returns></returns>
+        Public Shared Function FromFile(path As String, Optional buffer_size As Integer = 1024 * 1024 * 1024 * 1) As MemoryStreamPool
+            Dim pool As New List(Of MemoryStream)
+            Dim buffer As Byte() = New Byte(buffer_size - 1) {}
+            Dim file As Stream = New FileStream(path:=path, mode:=FileMode.Open, access:=FileAccess.Read)
+
+            If file.Length < buffer_size Then
+                buffer = New Byte(file.Length - 1) {}
+                file.Read(buffer, Scan0, file.Length)
+                pool.Add(New MemoryStream(buffer))
+            Else
+                Dim size As Integer = buffer_size
+
+                Do While file.Position < file.Length - 1
+                    Call file.Read(buffer, Scan0, count:=size)
+                    Call pool.Add(New MemoryStream(buffer))
+
+                    If file.Length - file.Position < buffer_size Then
+                        size = file.Length - file.Position
+                        buffer = New Byte(size - 1) {}
+                    Else
+                        ' 20221101 the memorystream object just assign
+                        ' the input array into the internal variable
+                        ' directly
+                        ' we needs to create a new array to break the 
+                        ' class object reference
+                        buffer = New Byte(size - 1) {}
+                    End If
+                Loop
+            End If
+
+            Call file.Dispose()
+
+            Return New MemoryStreamPool(pool, buffer_size)
         End Function
     End Class
 End Namespace

@@ -53,7 +53,7 @@ Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 
 Module htmlParserTest
 
-    Sub Main()
+    Sub Main1()
 
         Call UrlescapeTest()
 

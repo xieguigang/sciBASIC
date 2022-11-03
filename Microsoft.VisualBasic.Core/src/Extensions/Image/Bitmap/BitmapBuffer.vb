@@ -189,43 +189,43 @@ Namespace Imaging.BitmapImage
         ''' get image data array in ARGB format
         ''' </summary>
         ''' <returns></returns>
-        Public Function GetARGBStream() As Integer()
-            Dim ints As Integer() = New Integer(buffer.Length - 1) {}
+        Public Function GetARGBStream() As UInteger()
+            Dim ints As UInteger() = New UInteger(buffer.Length - 1) {}
 
             If channels = 4 Then
                 For i As Integer = 0 To buffer.Length - 1 Step 4
-                    ints(i) = buffer(i) ' A
-                    ints(i + 1) = buffer(i + 1) ' R
-                    ints(i + 2) = buffer(i + 2) ' G
-                    ints(i + 3) = buffer(i + 3) ' B
+                    ints(i) = buffer(i + 3) ' A
+                    ints(i + 1) = buffer(i + 2) ' R
+                    ints(i + 2) = buffer(i + 1) ' G
+                    ints(i + 3) = buffer(i + 0) ' B
                 Next
             Else
                 ' channels = 3
                 For i As Integer = 0 To buffer.Length - 1 Step 3
                     ints(i) = 255 ' A
-                    ints(i + 1) = buffer(i + 0) ' R
+                    ints(i + 1) = buffer(i + 2) ' R
                     ints(i + 2) = buffer(i + 1) ' G
-                    ints(i + 3) = buffer(i + 2) ' B
+                    ints(i + 3) = buffer(i + 0) ' B
                 Next
             End If
 
             Return ints
         End Function
 
-        Public Sub WriteARGBStream(ints As Integer())
+        Public Sub WriteARGBStream(ints As UInteger())
             If channels = 4 Then
                 For i As Integer = 0 To buffer.Length - 1 Step 4
-                    buffer(i) = ints(i)  ' A
-                    buffer(i + 1) = ints(i + 1)  ' R
-                    buffer(i + 2) = ints(i + 2)  ' G
-                    buffer(i + 3) = ints(i + 3)  ' B
+                    buffer(i + 3) = ints(i)  ' A
+                    buffer(i + 2) = ints(i + 1)  ' R
+                    buffer(i + 1) = ints(i + 2)  ' G
+                    buffer(i + 0) = ints(i + 3)  ' B
                 Next
             Else
                 ' channels = 3
                 For i As Integer = 0 To buffer.Length - 1 Step 3
-                    buffer(i + 0) = ints(i + 1)  ' R
+                    buffer(i + 2) = ints(i + 1)  ' R
                     buffer(i + 1) = ints(i + 2)  ' G
-                    buffer(i + 2) = ints(i + 3)  ' B
+                    buffer(i + 0) = ints(i + 3)  ' B
                 Next
             End If
         End Sub

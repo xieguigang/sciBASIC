@@ -1,6 +1,4 @@
-﻿Imports System
-
-' 
+﻿' 
 '  Copyright © 2003 Maxim Stepin (maxst@hiend3d.com)
 ' 
 '  Copyright © 2010 Cameron Zemek (grom@zeminvaders.net)
@@ -24,6 +22,9 @@
 '  You should have received a copy of the GNU Lesser General Public License
 '  along with hqx-java. If not, see <http://www.gnu.org/licenses/>.
 ' 
+
+Option Strict On
+
 Imports stdNum = System.Math
 
 Namespace Drawing2D.HeatMap.hqx
@@ -48,7 +49,7 @@ Namespace Drawing2D.HeatMap.hqx
         ''' <param name="trV"> the V (chrominance) threshold </param>
         ''' <param name="trA"> the A (transparency) threshold </param>
         ''' <returns> true if colors differ more than the thresholds permit, false otherwise </returns>
-        Protected Friend Shared Function diff(c1 As Integer, c2 As Integer, [trY] As Integer, trU As Integer, trV As Integer, trA As Integer) As Boolean
+        Protected Friend Shared Function diff(c1 As UInteger, c2 As UInteger, [trY] As UInteger, trU As UInteger, trV As UInteger, trA As UInteger) As Boolean
             Dim YUV1 As Integer = RgbYuv.getYuv(c1)
             Dim YUV2 As Integer = RgbYuv.getYuv(c2)
 

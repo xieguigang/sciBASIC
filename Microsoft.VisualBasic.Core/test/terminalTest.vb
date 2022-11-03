@@ -54,7 +54,7 @@ Imports Microsoft.VisualBasic.Language.UnixBash
 
 Module terminalTest
 
-    Sub Main()
+    Sub Main1()
         Dim shell As New Shell(PS1.Fedora12, AddressOf Console.WriteLine)
 
         shell.autoCompleteCandidates.Add("file.copy", "file.delete", "file.cache", "file.rename")

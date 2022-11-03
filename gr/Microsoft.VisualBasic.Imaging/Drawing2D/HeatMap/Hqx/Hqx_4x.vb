@@ -23,6 +23,8 @@
 '  along with hqx-java. If not, see <http://www.gnu.org/licenses/>.
 ' 
 
+Option Strict On
+
 Namespace Drawing2D.HeatMap.hqx
     Public Class Hqx_4x : Inherits HqxScaling
 
@@ -36,7 +38,7 @@ Namespace Drawing2D.HeatMap.hqx
         ''' <param name="Xres"> the horizontal resolution of the source image </param>
         ''' <param name="Yres"> the vertical resolution of the source image
         ''' </param>
-        Public Shared Sub hq4x_32_rb(sp As Integer(), dp As Integer(), Xres As Integer, Yres As Integer)
+        Public Shared Sub hq4x_32_rb(sp As UInteger(), dp As UInteger(), Xres As Integer, Yres As Integer)
             hq4x_32_rb(sp, dp, Xres, Yres, 48, 7, 6, 0, False, False)
         End Sub
 
@@ -46,7 +48,7 @@ Namespace Drawing2D.HeatMap.hqx
         ''' Only the necessary methods were created, to leave the maximum code on the original one to avoid excessive calling.
         ''' However, this is a very bad design (too much code in the same method)
         ''' </summary>
-        Private Shared Sub case0(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
+        Private Shared Sub case0(dp As UInteger(), dpIdx As Integer, dpL As Integer, w As UInteger())
             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(1), w(3))
             dp(dpIdx + 1) = Interpolation.Mix4To2To1(w(4), w(1), w(3))
             dp(dpIdx + 2) = Interpolation.Mix4To2To1(w(4), w(1), w(5))
@@ -65,7 +67,7 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix2To1To1(w(4), w(7), w(5))
         End Sub
 
-        Private Shared Sub case2(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
+        Private Shared Sub case2(dp As UInteger(), dpIdx As Integer, dpL As Integer, w As UInteger())
             dp(dpIdx) = Interpolation.Mix5To3(w(4), w(0))
             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(0))
             dp(dpIdx + 2) = Interpolation.Mix3To1(w(4), w(2))
@@ -84,7 +86,7 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix2To1To1(w(4), w(7), w(5))
         End Sub
 
-        Private Shared Sub case16(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
+        Private Shared Sub case16(dp As UInteger(), dpIdx As Integer, dpL As Integer, w As UInteger())
             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(1), w(3))
             dp(dpIdx + 1) = Interpolation.Mix4To2To1(w(4), w(1), w(3))
             dp(dpIdx + 2) = Interpolation.Mix4To2To1(w(4), w(1), w(2))
@@ -103,7 +105,7 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix5To3(w(4), w(8))
         End Sub
 
-        Private Shared Sub case64(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
+        Private Shared Sub case64(dp As UInteger(), dpIdx As Integer, dpL As Integer, w As UInteger())
             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(1), w(3))
             dp(dpIdx + 1) = Interpolation.Mix4To2To1(w(4), w(1), w(3))
             dp(dpIdx + 2) = Interpolation.Mix4To2To1(w(4), w(1), w(5))
@@ -122,7 +124,7 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix5To3(w(4), w(8))
         End Sub
 
-        Private Shared Sub case8(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
+        Private Shared Sub case8(dp As UInteger(), dpIdx As Integer, dpL As Integer, w As UInteger())
             dp(dpIdx) = Interpolation.Mix5To3(w(4), w(0))
             dp(dpIdx + 1) = Interpolation.Mix4To2To1(w(4), w(1), w(0))
             dp(dpIdx + 2) = Interpolation.Mix4To2To1(w(4), w(1), w(5))
@@ -141,7 +143,7 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix2To1To1(w(4), w(7), w(5))
         End Sub
 
-        Private Shared Sub case3(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
+        Private Shared Sub case3(dp As UInteger(), dpIdx As Integer, dpL As Integer, w As UInteger())
             dp(dpIdx) = Interpolation.Mix5To3(w(4), w(3))
             dp(dpIdx + 1) = Interpolation.Mix7To1(w(4), w(3))
             dp(dpIdx + 2) = Interpolation.Mix3To1(w(4), w(2))
@@ -160,7 +162,7 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix2To1To1(w(4), w(7), w(5))
         End Sub
 
-        Private Shared Sub case6(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
+        Private Shared Sub case6(dp As UInteger(), dpIdx As Integer, dpL As Integer, w As UInteger())
             dp(dpIdx) = Interpolation.Mix5To3(w(4), w(0))
             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(0))
             dp(dpIdx + 2) = Interpolation.Mix7To1(w(4), w(5))
@@ -179,7 +181,7 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix2To1To1(w(4), w(7), w(5))
         End Sub
 
-        Private Shared Sub case20(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
+        Private Shared Sub case20(dp As UInteger(), dpIdx As Integer, dpL As Integer, w As UInteger())
             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(1), w(3))
             dp(dpIdx + 1) = Interpolation.Mix4To2To1(w(4), w(1), w(3))
             dp(dpIdx + 2) = Interpolation.Mix5To3(w(4), w(1))
@@ -198,7 +200,7 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix5To3(w(4), w(8))
         End Sub
 
-        Private Shared Sub case144(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
+        Private Shared Sub case144(dp As UInteger(), dpIdx As Integer, dpL As Integer, w As UInteger())
             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(1), w(3))
             dp(dpIdx + 1) = Interpolation.Mix4To2To1(w(4), w(1), w(3))
             dp(dpIdx + 2) = Interpolation.Mix4To2To1(w(4), w(1), w(2))
@@ -217,7 +219,7 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix5To3(w(4), w(7))
         End Sub
 
-        Private Shared Sub case192(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
+        Private Shared Sub case192(dp As UInteger(), dpIdx As Integer, dpL As Integer, w As UInteger())
             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(1), w(3))
             dp(dpIdx + 1) = Interpolation.Mix4To2To1(w(4), w(1), w(3))
             dp(dpIdx + 2) = Interpolation.Mix4To2To1(w(4), w(1), w(5))
@@ -236,7 +238,7 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix5To3(w(4), w(5))
         End Sub
 
-        Private Shared Sub case96(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
+        Private Shared Sub case96(dp As UInteger(), dpIdx As Integer, dpL As Integer, w As UInteger())
             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(1), w(3))
             dp(dpIdx + 1) = Interpolation.Mix4To2To1(w(4), w(1), w(3))
             dp(dpIdx + 2) = Interpolation.Mix4To2To1(w(4), w(1), w(5))
@@ -255,7 +257,7 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix5To3(w(4), w(8))
         End Sub
 
-        Private Shared Sub case40(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
+        Private Shared Sub case40(dp As UInteger(), dpIdx As Integer, dpL As Integer, w As UInteger())
             dp(dpIdx) = Interpolation.Mix5To3(w(4), w(0))
             dp(dpIdx + 1) = Interpolation.Mix4To2To1(w(4), w(1), w(0))
             dp(dpIdx + 2) = Interpolation.Mix4To2To1(w(4), w(1), w(5))
@@ -274,7 +276,7 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix2To1To1(w(4), w(7), w(5))
         End Sub
 
-        Private Shared Sub case9(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
+        Private Shared Sub case9(dp As UInteger(), dpIdx As Integer, dpL As Integer, w As UInteger())
             dp(dpIdx) = Interpolation.Mix5To3(w(4), w(1))
             dp(dpIdx + 1) = Interpolation.Mix5To3(w(4), w(1))
             dp(dpIdx + 2) = Interpolation.Mix4To2To1(w(4), w(1), w(5))
@@ -293,7 +295,7 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix2To1To1(w(4), w(7), w(5))
         End Sub
 
-        Private Shared Sub case66(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
+        Private Shared Sub case66(dp As UInteger(), dpIdx As Integer, dpL As Integer, w As UInteger())
             dp(dpIdx) = Interpolation.Mix5To3(w(4), w(0))
             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(0))
             dp(dpIdx + 2) = Interpolation.Mix3To1(w(4), w(2))
@@ -312,7 +314,7 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix5To3(w(4), w(8))
         End Sub
 
-        Private Shared Sub case24(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
+        Private Shared Sub case24(dp As UInteger(), dpIdx As Integer, dpL As Integer, w As UInteger())
             dp(dpIdx) = Interpolation.Mix5To3(w(4), w(0))
             dp(dpIdx + 1) = Interpolation.Mix4To2To1(w(4), w(1), w(0))
             dp(dpIdx + 2) = Interpolation.Mix4To2To1(w(4), w(1), w(2))
@@ -331,7 +333,7 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix5To3(w(4), w(8))
         End Sub
 
-        Private Shared Sub case7(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
+        Private Shared Sub case7(dp As UInteger(), dpIdx As Integer, dpL As Integer, w As UInteger())
             dp(dpIdx) = Interpolation.Mix5To3(w(4), w(3))
             dp(dpIdx + 1) = Interpolation.Mix7To1(w(4), w(3))
             dp(dpIdx + 2) = Interpolation.Mix7To1(w(4), w(5))
@@ -350,7 +352,7 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix2To1To1(w(4), w(7), w(5))
         End Sub
 
-        Private Shared Sub case148(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
+        Private Shared Sub case148(dp As UInteger(), dpIdx As Integer, dpL As Integer, w As UInteger())
             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(1), w(3))
             dp(dpIdx + 1) = Interpolation.Mix4To2To1(w(4), w(1), w(3))
             dp(dpIdx + 2) = Interpolation.Mix5To3(w(4), w(1))
@@ -369,7 +371,7 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix5To3(w(4), w(7))
         End Sub
 
-        Private Shared Sub case224(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
+        Private Shared Sub case224(dp As UInteger(), dpIdx As Integer, dpL As Integer, w As UInteger())
             dp(dpIdx) = Interpolation.Mix2To1To1(w(4), w(1), w(3))
             dp(dpIdx + 1) = Interpolation.Mix4To2To1(w(4), w(1), w(3))
             dp(dpIdx + 2) = Interpolation.Mix4To2To1(w(4), w(1), w(5))
@@ -388,7 +390,7 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix5To3(w(4), w(5))
         End Sub
 
-        Private Shared Sub case41(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
+        Private Shared Sub case41(dp As UInteger(), dpIdx As Integer, dpL As Integer, w As UInteger())
             dp(dpIdx) = Interpolation.Mix5To3(w(4), w(1))
             dp(dpIdx + 1) = Interpolation.Mix5To3(w(4), w(1))
             dp(dpIdx + 2) = Interpolation.Mix4To2To1(w(4), w(1), w(5))
@@ -407,7 +409,7 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix2To1To1(w(4), w(7), w(5))
         End Sub
 
-        Private Shared Sub case67(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
+        Private Shared Sub case67(dp As UInteger(), dpIdx As Integer, dpL As Integer, w As UInteger())
             dp(dpIdx) = Interpolation.Mix5To3(w(4), w(3))
             dp(dpIdx + 1) = Interpolation.Mix7To1(w(4), w(3))
             dp(dpIdx + 2) = Interpolation.Mix3To1(w(4), w(2))
@@ -427,7 +429,7 @@ Namespace Drawing2D.HeatMap.hqx
         End Sub
 
 
-        Private Shared Sub case70(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
+        Private Shared Sub case70(dp As UInteger(), dpIdx As Integer, dpL As Integer, w As UInteger())
             dp(dpIdx) = Interpolation.Mix5To3(w(4), w(0))
             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(0))
             dp(dpIdx + 2) = Interpolation.Mix7To1(w(4), w(5))
@@ -446,7 +448,7 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix5To3(w(4), w(8))
         End Sub
 
-        Private Shared Sub case28(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
+        Private Shared Sub case28(dp As UInteger(), dpIdx As Integer, dpL As Integer, w As UInteger())
             dp(dpIdx) = Interpolation.Mix5To3(w(4), w(0))
             dp(dpIdx + 1) = Interpolation.Mix4To2To1(w(4), w(1), w(0))
             dp(dpIdx + 2) = Interpolation.Mix5To3(w(4), w(1))
@@ -465,7 +467,7 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix5To3(w(4), w(8))
         End Sub
 
-        Private Shared Sub case152(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
+        Private Shared Sub case152(dp As UInteger(), dpIdx As Integer, dpL As Integer, w As UInteger())
             dp(dpIdx) = Interpolation.Mix5To3(w(4), w(0))
             dp(dpIdx + 1) = Interpolation.Mix4To2To1(w(4), w(1), w(0))
             dp(dpIdx + 2) = Interpolation.Mix4To2To1(w(4), w(1), w(2))
@@ -484,7 +486,7 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix5To3(w(4), w(7))
         End Sub
 
-        Private Shared Sub case194(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
+        Private Shared Sub case194(dp As UInteger(), dpIdx As Integer, dpL As Integer, w As UInteger())
             dp(dpIdx) = Interpolation.Mix5To3(w(4), w(0))
             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(0))
             dp(dpIdx + 2) = Interpolation.Mix3To1(w(4), w(2))
@@ -503,7 +505,7 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix5To3(w(4), w(5))
         End Sub
 
-        Private Shared Sub case98(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
+        Private Shared Sub case98(dp As UInteger(), dpIdx As Integer, dpL As Integer, w As UInteger())
             dp(dpIdx) = Interpolation.Mix5To3(w(4), w(0))
             dp(dpIdx + 1) = Interpolation.Mix3To1(w(4), w(0))
             dp(dpIdx + 2) = Interpolation.Mix3To1(w(4), w(2))
@@ -522,7 +524,7 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix5To3(w(4), w(8))
         End Sub
 
-        Private Shared Sub case56(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
+        Private Shared Sub case56(dp As UInteger(), dpIdx As Integer, dpL As Integer, w As UInteger())
             dp(dpIdx) = Interpolation.Mix5To3(w(4), w(0))
             dp(dpIdx + 1) = Interpolation.Mix4To2To1(w(4), w(1), w(0))
             dp(dpIdx + 2) = Interpolation.Mix4To2To1(w(4), w(1), w(2))
@@ -541,7 +543,7 @@ Namespace Drawing2D.HeatMap.hqx
             dp(dpIdx + dpL + dpL + dpL + 3) = Interpolation.Mix5To3(w(4), w(8))
         End Sub
 
-        Private Shared Sub case25(dp As Integer(), dpIdx As Integer, dpL As Integer, w As Integer())
+        Private Shared Sub case25(dp As UInteger(), dpIdx As Integer, dpL As Integer, w As UInteger())
             dp(dpIdx) = Interpolation.Mix5To3(w(4), w(1))
             dp(dpIdx + 1) = Interpolation.Mix5To3(w(4), w(1))
             dp(dpIdx + 2) = Interpolation.Mix4To2To1(w(4), w(1), w(2))
@@ -573,19 +575,18 @@ Namespace Drawing2D.HeatMap.hqx
         ''' <param name="trA"> the A (transparency) threshold </param>
         ''' <param name="wrapX"> used for images that can be seamlessly repeated horizontally </param>
         ''' <param name="wrapY"> used for images that can be seamlessly repeated vertically </param>
-        Public Shared Sub hq4x_32_rb(sp As Integer(), dp As Integer(), Xres As Integer, Yres As Integer, [trY] As Integer, trU As Integer, trV As Integer, trA As Integer, wrapX As Boolean, wrapY As Boolean)
+        Public Shared Sub hq4x_32_rb(sp As UInteger(), dp As UInteger(), Xres As Integer, Yres As Integer, [trY] As UInteger, trU As UInteger, trV As UInteger, trA As UInteger, wrapX As Boolean, wrapY As Boolean)
             Dim spIdx = 0, dpIdx = 0
+
             'Don't shift trA, as it uses shift right instead of a mask for comparisons.
             [trY] <<= 2 * 8
             trU <<= 1 * 8
 
             Dim dpL = Xres * 4
-
             Dim prevline, nextline As Integer
+            Dim w = New UInteger(8) {}
 
-            Dim w = New Integer(8) {}
-
-            For j = 0 To Yres - 1
+            For j As Integer = 0 To Yres - 1
                 prevline = If(j > 0, -Xres, If(wrapY, Xres * (Yres - 1), 0))
                 nextline = If(j < Yres - 1, Xres, If(wrapY, -(Xres * (Yres - 1)), 0))
                 For i = 0 To Xres - 1

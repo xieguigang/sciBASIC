@@ -2,10 +2,11 @@
 
 	<PropertyGroup>
 		<RootNamespace>Microsoft.VisualBasic.Imaging</RootNamespace>
-		<TargetFramework>net5.0</TargetFramework>
+		<TargetFramework>net6.0</TargetFramework>
 		<AssemblyName>test</AssemblyName>
 		<Platforms>AnyCPU;x64</Platforms>
 		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;NPSearch</Configurations>
+		<OutputType>Exe</OutputType>
 
 	</PropertyGroup>
 
@@ -111,7 +112,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="System.Drawing.Common" Version="6.0.0-preview.6.21352.12" />
+		<PackageReference Include="System.Drawing.Common" Version="6.0.0" />
 		<PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
 		<PackageReference Include="System.Resources.Extensions" Version="6.0.0" />
 	</ItemGroup>

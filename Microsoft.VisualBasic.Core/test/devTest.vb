@@ -54,7 +54,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module devTest
 
-    Sub Main()
+    Sub Main1()
         Call logfileTest()
 
         Dim deps = "D:\GCModeller\src\R-sharp\App\net5.0\base.deps.json".LoadJsonFile(Of deps)

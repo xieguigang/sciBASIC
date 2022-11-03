@@ -72,10 +72,11 @@ Namespace Math.Statistics
         Protected MustOverride Sub addObservation(observation As Double)
         Protected MustOverride Function getEigenvalue() As Double
 
-        Protected Iterator Function getRaw() As IEnumerable(Of Double)
-            For Each obs As Double In samples
-                Yield obs
-            Next
+        Public Function getRaw() As IEnumerable(Of Double)
+            'For Each obs As Double In samples
+            '    Yield obs
+            'Next
+            Return samples
         End Function
 
         Public Shared Narrowing Operator CType(observation As SampleObservation) As Double

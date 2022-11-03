@@ -1,61 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::30f17f344d57a1898a216d42773aa58c, sciBASIC#\Microsoft.VisualBasic.Core\test\SIMDTest.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 56
-    '    Code Lines: 42
-    ' Comment Lines: 0
-    '   Blank Lines: 14
-    '     File Size: 1.81 KB
+' Summaries:
 
 
-    ' Module SIMDTest
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 56
+'    Code Lines: 42
+' Comment Lines: 0
+'   Blank Lines: 14
+'     File Size: 1.81 KB
+
+
+' Module SIMDTest
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.SIMD
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Module SIMDTest
 
-    Sub Main()
+    Sub Main1()
         Dim nsize = 90000001
         Dim a As Double() = nsize.Sequence.Select(Function(i) randf.NextDouble).ToArray
         Dim b As Double() = nsize.Sequence.Select(Function(i) randf.NextDouble).ToArray
@@ -63,22 +64,22 @@ Module SIMDTest
         Dim samplesAvx As New List(Of Double)
 
         For i As Integer = 0 To 100
-            SIMD.config = SIMDConfiguration.enable
+            SIMDEnvironment.config = SIMDConfiguration.enable
 
             Dim t1 = App.NanoTime
-            Dim c = SIMD.Add(a, b)
+            Dim c = SIMD.Add.f64_op_add_f64(a, b)
             Dim t2 = App.NanoTime
 
-            SIMD.config = SIMDConfiguration.disable
+            SIMDEnvironment.config = SIMDConfiguration.disable
 
             Dim t3 = App.NanoTime
-            Dim d = SIMD.Add(a, b)
+            Dim d = SIMD.Add.f64_op_add_f64(a, b)
             Dim t4 = App.NanoTime
 
-            SIMD.config = SIMDConfiguration.legacy
+            SIMDEnvironment.config = SIMDConfiguration.legacy
 
             Dim t5 = App.NanoTime
-            Dim e = SIMD.Add(a, b)
+            Dim e = SIMD.Add.f64_op_add_f64(a, b)
             Dim t6 = App.NanoTime
 
             Call Console.WriteLine(c.SequenceEqual(d))
