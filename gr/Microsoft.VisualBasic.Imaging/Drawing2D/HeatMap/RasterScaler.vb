@@ -113,11 +113,11 @@ Namespace Drawing2D.HeatMap
                 Dim p As BitmapBuffer = BitmapBuffer.FromBitmap(scales)
                 ' get source data
                 Dim sp As UInteger() = buffer.GetARGBStream
-                Dim dp As UInteger() = New UInteger(p.Length - 1) {}
+                Dim dp As UInteger() = p.GetARGBStream
 
                 Select Case hqx
-                    Case HqxScales.Hqx_2x : Call Hqx_2x.hq2x_32_rb(CObj(sp), CObj(dp), buffer.Width, buffer.Height)
-                    Case HqxScales.Hqx_3x : Call Hqx_3x.hq3x_32_rb(CObj(sp), CObj(dp), buffer.Width, buffer.Height)
+                    Case HqxScales.Hqx_2x : Call Hqx_2x.hq2x_32_rb(sp, dp, buffer.Width, buffer.Height)
+                    Case HqxScales.Hqx_3x : Call Hqx_3x.hq3x_32_rb(sp, dp, buffer.Width, buffer.Height)
                     Case HqxScales.Hqx_4x : Call Hqx_4x.hq4x_32_rb(sp, dp, buffer.Width, buffer.Height)
                     Case Else
                         Throw New InvalidProgramException($"invalid scale name: {hqx.ToString}!")

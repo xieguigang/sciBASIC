@@ -23,8 +23,6 @@
 '  along with hqx-java. If not, see <http://www.gnu.org/licenses/>.
 ' 
 
-Imports System.Drawing
-
 Namespace Drawing2D.HeatMap.hqx
 
     ''' <summary>
@@ -108,11 +106,11 @@ Namespace Drawing2D.HeatMap.hqx
             Dim totalGreen As UInteger = 0
             Dim totalRedBlue As UInteger = 0
             Dim totalAlpha As UInteger = 0
-            Dim nsize As Integer = weightingsAndColours.Length / 2 - 1
+            Dim nsize As Integer = CInt(weightingsAndColours.Length / 2)
 
-            For i As Integer = 0 To nsize
+            For i As Integer = 0 To nsize - 1
                 Dim weighting = weightingsAndColours(i)
-                Dim colour = weightingsAndColours(weightingsAndColours.Length / 2 + i)
+                Dim colour = weightingsAndColours(nsize + i)
 
                 If (weighting > 0) Then
                     Dim alpha = (colour >> AlphaShift) * weighting

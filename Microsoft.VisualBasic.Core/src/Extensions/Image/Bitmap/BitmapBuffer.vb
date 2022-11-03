@@ -188,7 +188,12 @@ Namespace Imaging.BitmapImage
         ''' <summary>
         ''' get image data array in ARGB format
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' scan0.ToPointer
+        ''' </returns>
+        ''' <remarks>
+        ''' helper function for hqx algorithm module
+        ''' </remarks>
         Public Function GetARGBStream() As UInteger()
             Dim ints As UInteger() = New UInteger(buffer.Length / 4 - 1) {}
             Dim uint As Byte() = New Byte(4 - 1) {}
@@ -227,6 +232,10 @@ Namespace Imaging.BitmapImage
             Return ints
         End Function
 
+        ''' <summary>
+        ''' helper function for hqx algorithm module
+        ''' </summary>
+        ''' <param name="ints"></param>
         Public Sub WriteARGBStream(ints As UInteger())
             Dim p As i32 = 0
 
