@@ -80,10 +80,21 @@ Namespace Drawing2D.HeatMap
             Call RgbYuv.hqxInit()
         End Sub
 
+        ''' <summary>
+        ''' scale image size via rectangle drawing
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="region"></param>
         Public Sub ScaleTo(g As IGraphics, region As Rectangle)
             Call Scale(g, region.Size, region.Location)
         End Sub
 
+        ''' <summary>
+        ''' scale image size via rectangle drawing
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="newSize"></param>
+        ''' <param name="offset"></param>
         Public Sub Scale(g As IGraphics, newSize As Size, Optional offset As Point = Nothing)
             Dim width As Single = newSize.Width / buffer.Width
             Dim height As Single = newSize.Height / buffer.Height
