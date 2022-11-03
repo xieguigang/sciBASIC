@@ -107,9 +107,17 @@ Namespace Drawing2D.HeatMap
         Public Sub Scale(g As IGraphics, newSize As Size, Optional offset As Point = Nothing)
             Dim width As Single = newSize.Width / buffer.Width
             Dim height As Single = newSize.Height / buffer.Height
-            Dim cellSize As New SizeF(width, height)
+            Dim cellSize As New SizeF(width * 1.125, height * 1.125)
+            Dim pixel As RectangleF
             Dim color As SolidBrush
             Dim c As Color
+
+            If cellSize.Width < 1 Then
+                cellSize = New SizeF(1, cellSize.Height)
+            End If
+            If cellSize.Height < 1 Then
+                cellSize = New SizeF(cellSize.Width, 1)
+            End If
 
             For x As Integer = 0 To buffer.Width - 1
                 For y As Integer = 0 To buffer.Height - 1
@@ -117,7 +125,9 @@ Namespace Drawing2D.HeatMap
 
                     If Not c.IsTransparent Then
                         color = New SolidBrush(c)
-                        g.FillRectangle(color, x * width + offset.X, y * width + offset.Y, cellSize)
+                        pixel = New RectangleF(New PointF(x * width + offset.X, y * height + offset.Y), cellSize)
+
+                        g.FillRectangle(color, pixel)
                     End If
                 Next
             Next
