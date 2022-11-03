@@ -107,7 +107,7 @@ Namespace Drawing2D.HeatMap
         Public Sub Scale(g As IGraphics, newSize As Size, Optional offset As Point = Nothing)
             Dim width As Single = newSize.Width / buffer.Width
             Dim height As Single = newSize.Height / buffer.Height
-            Dim cellSize As New SizeF(width * 1.125, height * 1.125)
+            Dim cellSize As New SizeF(width * 1.0125, height * 1.0125)
             Dim pixel As RectangleF
             Dim color As SolidBrush
             Dim c As Color
