@@ -23,6 +23,8 @@
 '  along with hqx-java. If not, see <http://www.gnu.org/licenses/>.
 ' 
 
+Option Strict On
+
 Namespace Drawing2D.HeatMap.hqx
 
     Public Class Hqx_2x : Inherits HqxScaling
@@ -37,7 +39,7 @@ Namespace Drawing2D.HeatMap.hqx
         ''' <param name="Xres"> the horizontal resolution of the source image </param>
         ''' <param name="Yres"> the vertical resolution of the source image
         ''' </param>
-        Public Shared Sub hq2x_32_rb(ByRef sp As Integer(), ByRef dp As Integer(), Xres As Integer, Yres As Integer)
+        Public Shared Sub hq2x_32_rb(ByRef sp As UInteger(), ByRef dp As UInteger(), Xres As Integer, Yres As Integer)
             hq2x_32_rb(sp, dp, Xres, Yres, 48, 7, 6, 0, False, False)
         End Sub
 
@@ -54,7 +56,8 @@ Namespace Drawing2D.HeatMap.hqx
         ''' <param name="trA"> the A (transparency) threshold </param>
         ''' <param name="wrapX"> used for images that can be seamlessly repeated horizontally </param>
         ''' <param name="wrapY"> used for images that can be seamlessly repeated vertically </param>
-        Public Shared Sub hq2x_32_rb(ByRef sp As Integer(), ByRef dp As Integer(), Xres As Integer, Yres As Integer, [trY] As Integer, trU As Integer, trV As Integer, trA As Integer, wrapX As Boolean, wrapY As Boolean)
+        Public Shared Sub hq2x_32_rb(ByRef sp As UInteger(),
+                                     ByRef dp As UInteger(), Xres As Integer, Yres As Integer, [trY] As UInteger, trU As UInteger, trV As UInteger, trA As UInteger, wrapX As Boolean, wrapY As Boolean)
             Dim spIdx = 0, dpIdx = 0
             'Don't shift trA, as it uses shift right instead of a mask for comparisons.
             [trY] <<= 2 * 8
@@ -64,7 +67,7 @@ Namespace Drawing2D.HeatMap.hqx
 
             Dim prevline, nextline As Integer
 
-            Dim w = New Integer(8) {}
+            Dim w = New UInteger(8) {}
 
             For j = 0 To Yres - 1
                 prevline = If(j > 0, -Xres, If(wrapY, Xres * (Yres - 1), 0))

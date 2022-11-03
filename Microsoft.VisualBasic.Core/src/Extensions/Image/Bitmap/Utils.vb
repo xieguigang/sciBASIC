@@ -276,8 +276,8 @@ Namespace Imaging.BitmapImage
         ''' <summary>
         ''' A, R, G, B
         ''' </summary>
-        Public Const PixelSize% = 4
-        Public Const RGBSize% = 3
+        Friend Const PixelSize% = 4
+        Friend Const RGBSize% = 3
 
         ''' <summary>
         ''' Color replace using memory pointer

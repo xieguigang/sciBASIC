@@ -49,11 +49,20 @@ Namespace Drawing2D.HeatMap.hqx
         ''' <param name="trV"> the V (chrominance) threshold </param>
         ''' <param name="trA"> the A (transparency) threshold </param>
         ''' <returns> true if colors differ more than the thresholds permit, false otherwise </returns>
-        Protected Friend Shared Function diff(c1 As UInteger, c2 As UInteger, [trY] As UInteger, trU As UInteger, trV As UInteger, trA As UInteger) As Boolean
+        Protected Friend Shared Function diff(c1 As UInteger,
+                                              c2 As UInteger,
+                                              [trY] As UInteger,
+                                              [trU] As UInteger,
+                                              [trV] As UInteger,
+                                              [trA] As UInteger) As Boolean
+
             Dim YUV1 As Integer = RgbYuv.getYuv(c1)
             Dim YUV2 As Integer = RgbYuv.getYuv(c2)
 
-            Return stdNum.Abs((YUV1 And HqxScaling.Ymask) - (YUV2 And HqxScaling.Ymask)) > [trY] OrElse stdNum.Abs((YUV1 And HqxScaling.Umask) - (YUV2 And HqxScaling.Umask)) > trU OrElse stdNum.Abs((YUV1 And HqxScaling.Vmask) - (YUV2 And HqxScaling.Vmask)) > trV OrElse stdNum.Abs((c1 >> 24) - (c2 >> 24)) > trA
+            Return stdNum.Abs((YUV1 And HqxScaling.Ymask) - (YUV2 And HqxScaling.Ymask)) > [trY] OrElse
+                stdNum.Abs((YUV1 And HqxScaling.Umask) - (YUV2 And HqxScaling.Umask)) > trU OrElse
+                stdNum.Abs((YUV1 And HqxScaling.Vmask) - (YUV2 And HqxScaling.Vmask)) > trV OrElse
+                stdNum.Abs((c1 >> 24) - (c2 >> 24)) > trA
         End Function
 
     End Class

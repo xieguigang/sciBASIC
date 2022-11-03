@@ -80,16 +80,44 @@ Namespace Drawing2D.HeatMap
             Call RgbYuv.hqxInit()
         End Sub
 
+        ''' <summary>
+        ''' scale image size via rectangle drawing
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="region"></param>
         Public Sub ScaleTo(g As IGraphics, region As Rectangle)
             Call Scale(g, region.Size, region.Location)
         End Sub
 
+        Public Function Scale(newWidth As Integer, newHeight As Integer) As Bitmap
+            Dim canvas As IGraphics = New Size(newWidth, newHeight).CreateGDIDevice(filled:=Color.Transparent)
+
+            Call Scale(canvas, New Size(newWidth, newHeight))
+            Call canvas.Flush()
+
+            Return DirectCast(canvas, Graphics2D).ImageResource
+        End Function
+
+        ''' <summary>
+        ''' scale image size via rectangle drawing
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="newSize"></param>
+        ''' <param name="offset"></param>
         Public Sub Scale(g As IGraphics, newSize As Size, Optional offset As Point = Nothing)
             Dim width As Single = newSize.Width / buffer.Width
             Dim height As Single = newSize.Height / buffer.Height
-            Dim cellSize As New SizeF(width, height)
+            Dim cellSize As New SizeF(width * 1.0125, height * 1.0125)
+            Dim pixel As RectangleF
             Dim color As SolidBrush
             Dim c As Color
+
+            If cellSize.Width < 1 Then
+                cellSize = New SizeF(1, cellSize.Height)
+            End If
+            If cellSize.Height < 1 Then
+                cellSize = New SizeF(cellSize.Width, 1)
+            End If
 
             For x As Integer = 0 To buffer.Width - 1
                 For y As Integer = 0 To buffer.Height - 1
@@ -97,7 +125,9 @@ Namespace Drawing2D.HeatMap
 
                     If Not c.IsTransparent Then
                         color = New SolidBrush(c)
-                        g.FillRectangle(color, x * width + offset.X, y * width + offset.Y, cellSize)
+                        pixel = New RectangleF(New PointF(x * width + offset.X, y * height + offset.Y), cellSize)
+
+                        g.FillRectangle(color, pixel)
                     End If
                 Next
             Next
@@ -113,11 +143,11 @@ Namespace Drawing2D.HeatMap
                 Dim p As BitmapBuffer = BitmapBuffer.FromBitmap(scales)
                 ' get source data
                 Dim sp As UInteger() = buffer.GetARGBStream
-                Dim dp As UInteger() = New UInteger(p.Length - 1) {}
+                Dim dp As UInteger() = p.GetARGBStream
 
                 Select Case hqx
-                    Case HqxScales.Hqx_2x : Call Hqx_2x.hq2x_32_rb(CObj(sp), CObj(dp), buffer.Width, buffer.Height)
-                    Case HqxScales.Hqx_3x : Call Hqx_3x.hq3x_32_rb(CObj(sp), CObj(dp), buffer.Width, buffer.Height)
+                    Case HqxScales.Hqx_2x : Call Hqx_2x.hq2x_32_rb(sp, dp, buffer.Width, buffer.Height)
+                    Case HqxScales.Hqx_3x : Call Hqx_3x.hq3x_32_rb(sp, dp, buffer.Width, buffer.Height)
                     Case HqxScales.Hqx_4x : Call Hqx_4x.hq4x_32_rb(sp, dp, buffer.Width, buffer.Height)
                     Case Else
                         Throw New InvalidProgramException($"invalid scale name: {hqx.ToString}!")

@@ -30,9 +30,10 @@ Namespace Drawing2D.HeatMap.hqx
     ''' </summary>
     Friend NotInheritable Class Interpolation
 
-        Private Const Mask4 As UInteger = &HFF000000UI
-        Private Const Mask2 As UInteger = &HFF00
-        Private Const Mask13 As UInteger = &HFF00FF
+        Const MaskAlpha As UInteger = &HFF000000
+        Const MaskGreen As UInteger = &HFF00
+        Const MaskRedBlue As UInteger = &HFF00FF
+        Const AlphaShift As UInteger = 24
 
         ' return statements:
         '	 1. line: green
@@ -41,64 +42,102 @@ Namespace Drawing2D.HeatMap.hqx
 
         Friend Shared Function Mix3To1(c1 As UInteger, c2 As UInteger) As UInteger
             'return (c1*3+c2) >> 2;
-            If c1 = c2 Then
-                Return c1
-            End If
-            Return (c1 And Mask2) * 3 + (c2 And Mask2) >> 2 And Mask2 Or (c1 And Mask13) * 3 + (c2 And Mask13) >> 2 And Mask13 Or ((c1 And Mask4) >> 2) * 3 + ((c2 And Mask4) >> 2) And Mask4
+            Return MixColours(3, 1, c1, c2)
         End Function
 
         Friend Shared Function Mix2To1To1(c1 As UInteger, c2 As UInteger, c3 As UInteger) As UInteger
             'return (c1*2+c2+c3) >> 2;
-            Return (c1 And Mask2) * 2 + (c2 And Mask2) + (c3 And Mask2) >> 2 And Mask2 Or (c1 And Mask13) * 2 + (c2 And Mask13) + (c3 And Mask13) >> 2 And Mask13 Or ((c1 And Mask4) >> 2) * 2 + ((c2 And Mask4) >> 2) + ((c3 And Mask4) >> 2) And Mask4
+            Return MixColours(2, 1, 1, c1, c2, c3)
         End Function
 
         Friend Shared Function Mix7To1(c1 As UInteger, c2 As UInteger) As UInteger
             'return (c1*7+c2)/8;
-            If c1 = c2 Then
-                Return c1
-            End If
-            Return (c1 And Mask2) * 7 + (c2 And Mask2) >> 3 And Mask2 Or (c1 And Mask13) * 7 + (c2 And Mask13) >> 3 And Mask13 Or ((c1 And Mask4) >> 3) * 7 + ((c2 And Mask4) >> 3) And Mask4
+            Return MixColours(7, 1, c1, c2)
         End Function
 
         Friend Shared Function Mix2To7To7(c1 As UInteger, c2 As UInteger, c3 As UInteger) As UInteger
             'return (c1*2+(c2+c3)*7)/16;
-            Return (c1 And Mask2) * 2 + (c2 And Mask2) * 7 + (c3 And Mask2) * 7 >> 4 And Mask2 Or (c1 And Mask13) * 2 + (c2 And Mask13) * 7 + (c3 And Mask13) * 7 >> 4 And Mask13 Or ((c1 And Mask4) >> 4) * 2 + ((c2 And Mask4) >> 4) * 7 + ((c3 And Mask4) >> 4) * 7 And Mask4
+            Return MixColours(2, 7, 7, c1, c2, c3)
         End Function
 
         Friend Shared Function MixEven(c1 As UInteger, c2 As UInteger) As UInteger
             'return (c1+c2) >> 1;
-            If c1 = c2 Then
-                Return c1
-            End If
-            Return (c1 And Mask2) + (c2 And Mask2) >> 1 And Mask2 Or (c1 And Mask13) + (c2 And Mask13) >> 1 And Mask13 Or ((c1 And Mask4) >> 1) + ((c2 And Mask4) >> 1) And Mask4
+            Return MixColours(1, 1, c1, c2)
         End Function
 
         Friend Shared Function Mix4To2To1(c1 As UInteger, c2 As UInteger, c3 As UInteger) As UInteger
             'return (c1*5+c2*2+c3)/8;
-            Return (c1 And Mask2) * 5 + (c2 And Mask2) * 2 + (c3 And Mask2) >> 3 And Mask2 Or (c1 And Mask13) * 5 + (c2 And Mask13) * 2 + (c3 And Mask13) >> 3 And Mask13 Or ((c1 And Mask4) >> 3) * 5 + ((c2 And Mask4) >> 3) * 2 + ((c3 And Mask4) >> 3) And Mask4
+            Return MixColours(5, 2, 1, c1, c2, c3)
         End Function
 
         Friend Shared Function Mix6To1To1(c1 As UInteger, c2 As UInteger, c3 As UInteger) As UInteger
             'return (c1*6+c2+c3)/8;
-            Return (c1 And Mask2) * 6 + (c2 And Mask2) + (c3 And Mask2) >> 3 And Mask2 Or (c1 And Mask13) * 6 + (c2 And Mask13) + (c3 And Mask13) >> 3 And Mask13 Or ((c1 And Mask4) >> 3) * 6 + ((c2 And Mask4) >> 3) + ((c3 And Mask4) >> 3) And Mask4
+            Return MixColours(6, 1, 1, c1, c2, c3)
         End Function
 
         Friend Shared Function Mix5To3(c1 As UInteger, c2 As UInteger) As UInteger
             'return (c1*5+c2*3)/8;
-            If c1 = c2 Then
-                Return c1
-            End If
-            Return (c1 And Mask2) * 5 + (c2 And Mask2) * 3 >> 3 And Mask2 Or (c1 And Mask13) * 5 + (c2 And Mask13) * 3 >> 3 And Mask13 Or ((c1 And Mask4) >> 3) * 5 + ((c2 And Mask4) >> 3) * 3 And Mask4
+            Return MixColours(5, 3, c1, c2)
         End Function
 
         Friend Shared Function Mix2To3To3(c1 As UInteger, c2 As UInteger, c3 As UInteger) As UInteger
             'return (c1*2+(c2+c3)*3)/8;
-            Return (c1 And Mask2) * 2 + (c2 And Mask2) * 3 + (c3 And Mask2) * 3 >> 3 And Mask2 Or (c1 And Mask13) * 2 + (c2 And Mask13) * 3 + (c3 And Mask13) * 3 >> 3 And Mask13 Or ((c1 And Mask4) >> 3) * 2 + ((c2 And Mask4) >> 3) * 3 + ((c3 And Mask4) >> 3) * 3 And Mask4
+            Return MixColours(2, 3, 3, c1, c2, c3)
         End Function
 
         Friend Shared Function Mix14To1To1(c1 As UInteger, c2 As UInteger, c3 As UInteger) As UInteger
             'return (c1*14+c2+c3)/16;
-            Return (c1 And Mask2) * 14 + (c2 And Mask2) + (c3 And Mask2) >> 4 And Mask2 Or (c1 And Mask13) * 14 + (c2 And Mask13) + (c3 And Mask13) >> 4 And Mask13 Or ((c1 And Mask4) >> 4) * 14 + ((c2 And Mask4) >> 4) + ((c3 And Mask4) >> 4) And Mask4
+            Return MixColours(14, 1, 1, c1, c2, c3)
+        End Function
+
+        ''' <summary>
+        ''' This method can overflow between blue and red and from red 
+        ''' to nothing when the sum of all weightings is higher than 255.
+        ''' It only works for weightings with a sum that Is a power of 
+        ''' two, otherwise the blue value Is corrupted.
+        ''' </summary>
+        ''' <param name="weightingsAndColours">
+        ''' weighting0, weighting1[, ...], colour0, colour1[, ...]
+        ''' </param>
+        ''' <returns></returns>
+        Public Shared Function MixColours(ParamArray weightingsAndColours As UInteger()) As UInteger
+            Dim totalPartsColour As UInteger = 0
+            Dim totalPartsAlpha As UInteger = 0
+            Dim totalGreen As UInteger = 0
+            Dim totalRedBlue As UInteger = 0
+            Dim totalAlpha As UInteger = 0
+            Dim nsize As Integer = CInt(weightingsAndColours.Length / 2)
+
+            For i As Integer = 0 To nsize - 1
+                Dim weighting = weightingsAndColours(i)
+                Dim colour = weightingsAndColours(nsize + i)
+
+                If (weighting > 0) Then
+                    Dim alpha = (colour >> AlphaShift) * weighting
+
+                    totalPartsAlpha += weighting
+                    If (alpha <> 0) Then
+                        totalAlpha += alpha
+
+                        totalPartsColour += weighting
+                        totalGreen += (colour And MaskGreen) * weighting
+                        totalRedBlue += (colour And MaskRedBlue) * weighting
+                    End If
+                End If
+            Next
+
+            totalAlpha /= totalPartsAlpha
+            totalAlpha <<= AlphaShift
+
+            If (totalPartsColour > 0) Then
+                totalGreen /= totalPartsColour
+                totalGreen = totalGreen And MaskGreen
+
+                totalRedBlue /= totalPartsColour
+                totalRedBlue = totalRedBlue And MaskRedBlue
+            End If
+
+            Return totalAlpha Or totalGreen Or totalRedBlue
         End Function
     End Class
 
