@@ -89,6 +89,15 @@ Namespace Drawing2D.HeatMap
             Call Scale(g, region.Size, region.Location)
         End Sub
 
+        Public Function Scale(newWidth As Integer, newHeight As Integer) As Bitmap
+            Dim canvas As IGraphics = New Size(newWidth, newHeight).CreateGDIDevice(filled:=Color.Transparent)
+
+            Call Scale(canvas, New Size(newWidth, newHeight))
+            Call canvas.Flush()
+
+            Return DirectCast(canvas, Graphics2D).ImageResource
+        End Function
+
         ''' <summary>
         ''' scale image size via rectangle drawing
         ''' </summary>
