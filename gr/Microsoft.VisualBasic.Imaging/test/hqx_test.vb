@@ -5,7 +5,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 
 Module hqx_test
 
-    Dim sourcePixels As String = "D:\GCModeller\src\R-sharp\test\demo\imageProcessing\hqx\tumblr_lqb1p7EIoF1qcsurn.png"
+    Dim sourcePixels As String = "D:\GCModeller\src\R-sharp\test\demo\imageProcessing\hqx\pixel.bmp"
 
     Sub Main1()
         ' Call bufferTest()
