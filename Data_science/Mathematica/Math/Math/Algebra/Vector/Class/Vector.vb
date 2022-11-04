@@ -1043,6 +1043,11 @@ Namespace LinearAlgebra
             Return result
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function Scalar(x As Double) As Vector
+            Return New Vector(data:={x})
+        End Function
+
         ''' <summary>
         ''' 
         ''' </summary>
