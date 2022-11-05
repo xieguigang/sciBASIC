@@ -183,6 +183,7 @@ Namespace FileSystem
             For i As Integer = 0 To names.Length - 1
                 name = names(i)
 
+                ' name is a file path component token
                 If Not dir.hasName(name) Then
                     dir.tree.Add(name, New StreamGroup(filepath.Components.Take(i + 1)))
                     dir = DirectCast(dir.tree(name), StreamGroup)
