@@ -155,7 +155,12 @@ Friend Class LabelRendering
 
             If iteration > 0 Then
                 If label.offsetDistance >= stdNum.Max(g.Size.Width, g.Size.Height) * 0.01 Then
-                    Call g.DrawLine(New Pen(Brushes.Gray, 2) With {.DashStyle = DashStyle.Dash}, label.anchor, label.GetTextAnchor)
+                    Try
+                        Call g.DrawLine(New Pen(Brushes.Gray, 2) With {.DashStyle = DashStyle.Dash}, label.anchor, label.GetTextAnchor)
+                    Catch ex As Exception
+                        ' 20221107
+                        ' just ignores of this error?
+                    End Try
                 End If
             End If
 

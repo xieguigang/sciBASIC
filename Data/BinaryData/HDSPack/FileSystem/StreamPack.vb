@@ -156,6 +156,21 @@ Namespace FileSystem
             End If
         End Sub
 
+        Public Sub Delete(path As String)
+            Dim dir As String = path.ParentPath & "/"
+            Dim name As String = path.FileName
+            Dim folder = GetObject(dir)
+
+            If folder Is Nothing Then
+                ' folder is already missing, skip
+                Return
+            End If
+
+            If TypeOf folder Is StreamGroup Then
+                Call DirectCast(folder, StreamGroup).DeleteNode(name)
+            End If
+        End Sub
+
         ''' <summary>
         ''' 
         ''' </summary>
