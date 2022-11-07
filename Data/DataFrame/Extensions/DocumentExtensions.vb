@@ -448,6 +448,14 @@ Public Module DocumentExtensions
         End If
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="csv">the csv document text</param>
+    ''' <param name="removesBlank">
+    ''' removes blank row which is all content is looks like ``,,,,,,``?
+    ''' </param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ParseDoc(csv$, Optional removesBlank As Boolean = False) As IO.File
