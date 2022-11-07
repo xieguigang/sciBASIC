@@ -120,6 +120,14 @@ Public Module StreamHelper
         Loop
     End Function
 
+    ''' <summary>
+    ''' write target string <paramref name="value"/> into the 
+    ''' given <paramref name="stream"/> in no size prefix and
+    ''' zero terminator.
+    ''' </summary>
+    ''' <param name="stream"></param>
+    ''' <param name="value">target string value to write into the given <paramref name="stream"/></param>
+    ''' <param name="encoding"></param>
     <Extension>
     Public Sub Write(stream As Stream, value$, Optional encoding As Encoding = Nothing)
         With (encoding Or UTF8).GetBytes(value)
