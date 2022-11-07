@@ -210,7 +210,7 @@ Public Module IOExtensions
             access = FileShare.Read
         End If
 
-        If mode = FileMode.Open AndAlso [readOnly] = True AndAlso App.MemoryLoad = My.FrameworkInternal.MemoryLoads.Heavy Then
+        If mode = FileMode.Open AndAlso [readOnly] = True AndAlso App.MemoryLoad > My.FrameworkInternal.MemoryLoads.Light Then
             ' should reads all data into memory!
             If path.FileLength < 1024& * 1024& * 1024& * 2& Then
                 Call Console.WriteLine($"read all({StringFormats.Lanudry(path.FileLength)}) {path}")
