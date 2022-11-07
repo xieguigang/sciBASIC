@@ -67,7 +67,8 @@ Public Module StreamHelper
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("Stream.Copy")>
-    <Extension> Public Function CopyStream(stream As Stream, Optional target As Stream = Nothing, Optional bufferSize% = 64 * 1024) As Stream
+    <Extension>
+    Public Function CopyStream(stream As Stream, Optional target As Stream = Nothing, Optional bufferSize% = 64 * 1024) As Stream
         If stream Is Nothing Then
             Return If(target, New MemoryStream)
         End If
@@ -135,6 +136,26 @@ Public Module StreamHelper
             Call stream.Flush()
         End With
     End Sub
+
+    ''' <summary>
+    ''' read current stream data until read a byte flag ZERO
+    ''' </summary>
+    ''' <param name="bin"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Iterator Function ReadZEROBlock(bin As BinaryReader) As IEnumerable(Of Byte)
+        Dim [byte] As Value(Of Byte) = 0
+
+        Do While ([byte] = bin.ReadByte) <> 0
+            Yield [byte].Value
+        Loop
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ReadStringZero(file As BinaryReader, encoding As Encoding) As String
+        Return encoding.GetString(file.ReadZEROBlock.ToArray)
+    End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
