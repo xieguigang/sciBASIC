@@ -129,42 +129,29 @@ Namespace Data
             Dim mem As Byte() = New Byte(chunkSize - 1) {}
             Dim i As i32 = Scan0
             Dim parallel As Boolean = size >= 100000
-            Dim b4 As Byte() = New Byte(3) {}
 
             ' 20220630
             ' why needs offset of 4 bytes?
-            Call base.Read(b4, Scan0, 4)
+            Call base.Seek(4, SeekOrigin.Current)
             Call base.Read(mem, Scan0, chunkSize)
 
             ' 读取的结果可能是一个T()()矩阵或者T()数组
-            If Utils.reverse AndAlso Utils.IsNumeric(type:=variable.type) Then
-                Call Array.Reverse(mem)
-            End If
-
-            Dim blocks = mem.Split([step])
 
             If parallel Then
-                For Each item As SeqValue(Of Object) In blocks _
+                For Each item As SeqValue(Of Object) In mem _
+                    .SplitIterator([step]) _
                     .SeqIterator _
-                    .Split(data.Length / App.CPUCoreNumbers - 1) _
                     .AsParallel _
-                    .Select(Iterator Function(j)
-                                For Each block As SeqValue(Of Byte()) In j
-                                    Yield New SeqValue(Of Object)(block.i, reader(block.value))
-                                Next
-                            End Function) _
-                    .IteratesALL
+                    .Select(Function(j)
+                                Return New SeqValue(Of Object)(j.i, reader(j.value))
+                            End Function)
 
                     data(item.i) = item.value
                 Next
             Else
-                For Each block As Byte() In blocks
+                For Each block As Byte() In mem.SplitIterator([step])
                     data(++i) = reader(block)
                 Next
-            End If
-
-            If Utils.reverse AndAlso Utils.IsNumeric(type:=variable.type) Then
-                Array.Reverse(data)
             End If
 
             Return data
