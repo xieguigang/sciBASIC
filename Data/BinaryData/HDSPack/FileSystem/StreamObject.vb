@@ -72,7 +72,7 @@ Namespace FileSystem
         ''' <summary>
         ''' get the file basename, not full path
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>file name with extension suffix</returns>
         Public ReadOnly Property fileName As String
             Get
                 Return referencePath.FileName

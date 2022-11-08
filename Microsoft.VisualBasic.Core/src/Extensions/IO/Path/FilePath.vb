@@ -59,6 +59,10 @@ Namespace FileIO.Path
 
     Public Class FilePath
 
+        ''' <summary>
+        ''' the file path components, parse by path string split by delimiter symbol ``/``.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Components As String()
         Public ReadOnly Property IsDirectory As Boolean = False
         Public ReadOnly Property IsAbsolutePath As Boolean = False
@@ -72,7 +76,9 @@ Namespace FileIO.Path
         ''' <summary>
         ''' the file basename, not file path
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' file name with extension suffix
+        ''' </returns>
         Public ReadOnly Property FileName As String
             Get
                 Return Components.Last
