@@ -75,14 +75,15 @@ Namespace FileSystem
     ''' <summary>
     ''' Hierarchical Data Stream Pack, A hdf5 liked file format
     ''' </summary>
-    Public Class StreamPack : Implements IDisposable
+    Public Class StreamPack : Implements IFileSystemEnvironment
+        Implements IDisposable
 
         Public ReadOnly Property superBlock As StreamGroup
         Public ReadOnly Property globalAttributes As New LazyAttribute
+        Public ReadOnly Property is_readonly As Boolean Implements IFileSystemEnvironment.readonly
 
         ReadOnly buffer As Stream
         ReadOnly init_size As Integer
-        ReadOnly is_readonly As Boolean = False
 
         ''' <summary>
         ''' the type list of the values in the <see cref="globalAttributes"/> data,
