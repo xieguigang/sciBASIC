@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::fcf16e54ef3a3892dd5575fcd474a9e1, sciBASIC#\Data\BinaryData\netCDF\Utils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 211
-    '    Code Lines: 127
-    ' Comment Lines: 58
-    '   Blank Lines: 26
-    '     File Size: 8.39 KB
+' Summaries:
 
 
-    ' Module Utils
-    ' 
-    '     Function: CastNumber, GetRecordReader, notNetcdf, readName, readNumber
-    '               readType, readVector
-    ' 
-    '     Sub: padding, writeName, writePadding
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 211
+'    Code Lines: 127
+' Comment Lines: 58
+'   Blank Lines: 26
+'     File Size: 8.39 KB
+
+
+' Module Utils
+' 
+'     Function: CastNumber, GetRecordReader, notNetcdf, readName, readNumber
+'               readType, readVector
+' 
+'     Sub: padding, writeName, writePadding
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -177,15 +177,18 @@ Module Utils
         End Select
     End Function
 
+    Friend ReadOnly reverse As Boolean = ByteOrderHelper.NeedsReversion(ByteOrder.BigEndian)
+
     ''' <summary>
     ''' Parse record type
     ''' </summary>
     ''' <param name="type"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' the bytes data is already been reversed for the numeric data type
+    ''' </remarks>
     <Extension>
-    Public Function GetRecordReader(type As CDFDataTypes) As Func(Of Byte(), Object)
-        Dim reverse As Boolean = ByteOrderHelper.NeedsReversion(ByteOrder.BigEndian)
-
+    Friend Function GetRecordReader(type As CDFDataTypes) As Func(Of Byte(), Object)
         Select Case type
             Case CDFDataTypes.BYTE : Return Function(buffer) buffer(Scan0)
             Case CDFDataTypes.CHAR : Return Function(buffer) Encoding.UTF8.GetString(buffer)
@@ -194,11 +197,11 @@ Module Utils
                 ' 20210212 bytes flags for maps boolean
                 Return Function(buffer) buffer(Scan0) <> 0
 
-            Case CDFDataTypes.DOUBLE : Return CastNumber(Of Double)(reverse, AddressOf BitConverter.ToDouble)
-            Case CDFDataTypes.FLOAT : Return CastNumber(Of Single)(reverse, AddressOf BitConverter.ToSingle)
-            Case CDFDataTypes.INT : Return CastNumber(Of Integer)(reverse, AddressOf BitConverter.ToInt32)
-            Case CDFDataTypes.LONG : Return CastNumber(Of Long)(reverse, AddressOf BitConverter.ToInt64)
-            Case CDFDataTypes.SHORT : Return CastNumber(Of Short)(reverse, AddressOf BitConverter.ToInt16)
+            Case CDFDataTypes.DOUBLE : Return Function(bytes) BitConverter.ToDouble(bytes, Scan0)
+            Case CDFDataTypes.FLOAT : Return Function(bytes) BitConverter.ToSingle(bytes, Scan0)
+            Case CDFDataTypes.INT : Return Function(bytes) BitConverter.ToInt32(bytes, Scan0)
+            Case CDFDataTypes.LONG : Return Function(bytes) BitConverter.ToInt64(bytes, Scan0)
+            Case CDFDataTypes.SHORT : Return Function(bytes) BitConverter.ToInt16(bytes, Scan0)
 
             Case Else
                 ' istanbul ignore next
@@ -206,15 +209,13 @@ Module Utils
         End Select
     End Function
 
-    Private Function CastNumber(Of T)(reverse As Boolean, bitConvert As Func(Of Byte(), Integer, T)) As Func(Of Byte(), Object)
-        If reverse Then
-            Return Function(buffer)
-                       Call Array.Reverse(buffer)
-                       Return bitConvert(buffer, Scan0)
-                   End Function
-        Else
-            Return Function(buffer) bitConvert(buffer, Scan0)
-        End If
+    Public Function IsNumeric(type As CDFDataTypes) As Boolean
+        Select Case type
+            Case CDFDataTypes.BYTE, CDFDataTypes.CHAR, CDFDataTypes.BOOLEAN
+                Return False
+            Case Else
+                Return True
+        End Select
     End Function
 
     ''' <summary>
