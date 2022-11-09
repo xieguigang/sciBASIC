@@ -318,6 +318,13 @@ Namespace Imaging
             Call g.DrawCircle(New PointF(x, y), r, color, fill)
         End Sub
 
+        ''' <summary>
+        ''' a helper method for fill pie
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="centra"></param>
+        ''' <param name="r!"></param>
+        ''' <param name="color"></param>
         <Extension>
         Public Sub DrawCircle(ByRef g As IGraphics, centra As PointF, r!, color As Brush)
             Dim d = r * 2
