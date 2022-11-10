@@ -79,7 +79,18 @@ Namespace Net.Http
             Me.prefix = AddressOf contextPrefix
         End Sub
 
+        ''' <summary>
+        ''' generate url for run data query
+        ''' </summary>
+        ''' <param name="context"></param>
+        ''' <returns></returns>
         Protected MustOverride Function doParseUrl(context As Context) As String
+        ''' <summary>
+        ''' parse query text to data object
+        ''' </summary>
+        ''' <param name="html"></param>
+        ''' <param name="schema"></param>
+        ''' <returns></returns>
         Protected MustOverride Function doParseObject(html As String, schema As Type) As Object
 
         ''' <summary>

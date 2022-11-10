@@ -234,6 +234,7 @@ Namespace Net.Http
 
             If cache.FileSize(cache_path) <= 0 AndAlso Not offlineMode Then
                 Call cache.WriteText(url.GET(is404:=is404), cache_path)
+                Call cache.Flush()
                 Call Thread.Sleep(sleepInterval)
 
                 If is404 Then
