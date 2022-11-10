@@ -58,7 +58,9 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Threading
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.Perl
@@ -99,7 +101,7 @@ Namespace Net.Http
         ''' <summary>
         ''' 原始请求结果数据的缓存文件夹,同时也可以用这个文件夹来存放错误日志
         ''' </summary>
-        Protected cache$
+        Protected cache As IFileSystemEnvironment
         Protected sleepInterval As Integer
 
         Protected Shared debug As Boolean = True
@@ -152,7 +154,17 @@ Namespace Net.Http
             Me.prefix = prefix
         End Sub
 
+        ''' <summary>
+        ''' create workspace from a local filesystem
+        ''' </summary>
+        ''' <param name="cache"></param>
+        ''' <param name="interval%"></param>
+        ''' <param name="offline"></param>
         Friend Sub New(cache$, interval%, offline As Boolean)
+            Call Me.New(New Directory(cache), interval, offline)
+        End Sub
+
+        Friend Sub New(cache As IFileSystemEnvironment, interval%, offline As Boolean)
             Me.cache = cache
             Me.sleepInterval = interval Or WebQuery(Of Context).interval
             Me.offlineMode = offline
@@ -183,7 +195,8 @@ Namespace Net.Http
 
                 Dim url = Me.url(context)
                 Dim id$ = Me.contextGuid(context)
-                Dim cache$
+                ' the cache path
+                Dim cache_file$
                 ' 如果是进行一些分子名称的查询,可能会因为分子名称超长而导致文件系统api调用出错
                 ' 所以在这里需要截短一下文件名称
                 ' 因为路径的总长度不能超过260个字符,所以文件名这里截短到200字符以内,留给文件夹名称一些长度
@@ -191,26 +204,36 @@ Namespace Net.Http
                 Dim hitCache As Boolean = True
 
                 If prefix Is Nothing Then
-                    cache = $"{Me.cache}/{baseName}.{type.Trim("."c, "*"c)}"
+                    cache_file = $"/{baseName}.{type.Trim("."c, "*"c)}"
                 Else
-                    cache = $"{Me.cache}/{prefix(id)}/{baseName}.{type.Trim("."c, "*"c)}"
+                    cache_file = $"/{prefix(id)}/{baseName}.{type.Trim("."c, "*"c)}"
                 End If
 
                 If Not url Like url404 Then
-                    Call runHttpGet(cache, url, hitCache)
+                    Call runHttpGet(cache_file, url, hitCache)
                 ElseIf debug Then
                     Call $"{id} 404 Not Found!".PrintException
                 End If
 
-                Yield (cache, hitCache)
+                If TypeOf Me.cache Is Directory Then
+                    cache_file = $"{DirectCast(cache, Directory).folder}/{cache_file}"
+                End If
+
+                Yield (cache_file, hitCache)
             Next
         End Function
 
-        Private Sub runHttpGet(cache As String, url$, ByRef hitCache As Boolean)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="cache_path">a relative cache path</param>
+        ''' <param name="url$"></param>
+        ''' <param name="hitCache"></param>
+        Private Sub runHttpGet(cache_path As String, url$, ByRef hitCache As Boolean)
             Dim is404 As Boolean = False
 
-            If cache.FileLength <= 0 AndAlso Not offlineMode Then
-                Call url.GET(is404:=is404).SaveTo(cache)
+            If cache.FileSize(cache_path) <= 0 AndAlso Not offlineMode Then
+                Call cache.WriteText(url.GET(is404:=is404), cache_path)
                 Call Thread.Sleep(sleepInterval)
 
                 If is404 Then
@@ -245,10 +268,10 @@ Namespace Net.Http
                 Return Nothing
             Else
                 Dim result As (cache$, hitCache As Boolean) = queryText({context}, cacheType).First
-                Dim cache As String = result.cache.ReadAllText(throwEx:=False)
+                Dim cache As String = Me.cache.ReadAllText(result.cache)
 
                 hitCache = result.hitCache
-
+                ' get cache text data
                 Return cache
             End If
         End Function

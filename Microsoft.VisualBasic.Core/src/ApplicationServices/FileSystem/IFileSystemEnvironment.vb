@@ -40,6 +40,20 @@ Namespace ApplicationServices
         ''' <param name="path"></param>
         ''' <returns></returns>
         Function FileExists(path As String) As Boolean
+        ''' <summary>
+        ''' get file size
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <returns>-1 means file is not exists on the filesystem</returns>
+        Function FileSize(path As String) As Long
+        ''' <summary>
+        ''' write text content to a specific file
+        ''' </summary>
+        ''' <param name="text"></param>
+        ''' <param name="path"></param>
+        ''' <returns></returns>
+        Function WriteText(text As String, path As String) As Boolean
+        Function ReadAllText(path As String) As String
 
         ''' <summary>
         ''' close current filesystem session
@@ -48,6 +62,13 @@ Namespace ApplicationServices
         ''' apply for the zip archive/HDS streampack
         ''' </remarks>
         Sub Close()
+        ''' <summary>
+        ''' save stream data
+        ''' </summary>
+        ''' <remarks>
+        ''' apply for the zip archive/HDS streampack
+        ''' </remarks>
+        Sub Flush()
 
     End Interface
 End Namespace

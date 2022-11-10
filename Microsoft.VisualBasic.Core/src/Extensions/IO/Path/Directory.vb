@@ -221,5 +221,24 @@ Namespace FileIO
         Public Sub Close() Implements IFileSystemEnvironment.Close
             ' do nothing
         End Sub
+
+        Public Function FileSize(path As String) As Long Implements IFileSystemEnvironment.FileSize
+            Dim fullPath As String = $"{folder}/{path}"
+            Return fullPath.FileLength
+        End Function
+
+        Public Function WriteText(text As String, path As String) As Boolean Implements IFileSystemEnvironment.WriteText
+            Dim fullPath As String = $"{folder}/{path}"
+            Return text.SaveTo(path)
+        End Function
+
+        Public Function ReadAllText(path As String) As String Implements IFileSystemEnvironment.ReadAllText
+            Dim fullPath As String = $"{folder}/{path}"
+            Return fullPath.ReadAllText
+        End Function
+
+        Public Sub Flush() Implements IFileSystemEnvironment.Flush
+            ' do nothing
+        End Sub
     End Class
 End Namespace
