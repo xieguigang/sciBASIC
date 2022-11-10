@@ -29,14 +29,14 @@ Namespace Drawing2D.Math2D.PolylineSimplify
         ''' <param name="p1"></param>
         ''' <param name="p2"></param>
         ''' <returns></returns>
-        Private Function GetSquareDistance(ByVal p1 As Point, ByVal p2 As Point) As Double
+        Private Function GetSquareDistance(p1 As Point, p2 As Point) As Double
             Dim dx = p1.X - p2.X, dy = p1.Y - p2.Y, dz = p1.Z - p2.Z
 
             Return dx * dx + dy * dy + dz * dz
         End Function
 
         ' square distance from a point to a segment
-        Private Function GetSquareSegmentDistance(ByVal p As Point, ByVal p1 As Point, ByVal p2 As Point) As Double
+        Private Function GetSquareSegmentDistance(p As Point, p1 As Point, p2 As Point) As Double
             Dim x = p1.X
             Dim y = p1.Y
             Dim z = p1.Z
@@ -68,7 +68,7 @@ Namespace Drawing2D.Math2D.PolylineSimplify
         ' rest of the code doesn't care about point format
 
         ' basic distance-based simplification
-        Private Function SimplifyRadialDistance(ByVal points As Point(), ByVal sqTolerance As Double) As List(Of Point)
+        Private Function SimplifyRadialDistance(points As Point(), sqTolerance As Double) As List(Of Point)
             Dim prevPoint = points(0)
             Dim newPoints = New List(Of Point) From {
                 prevPoint
@@ -90,7 +90,7 @@ Namespace Drawing2D.Math2D.PolylineSimplify
         End Function
 
         ' simplification using optimized Douglas-Peucker algorithm with recursion elimination
-        Private Function SimplifyDouglasPeucker(ByVal points As Point(), ByVal sqTolerance As Double) As List(Of Point)
+        Private Function SimplifyDouglasPeucker(points As Point(), sqTolerance As Double) As List(Of Point)
             Dim len = points.Length
             Dim markers = New Integer?(len - 1) {}
             Dim first As Integer? = 0
@@ -149,7 +149,10 @@ Namespace Drawing2D.Math2D.PolylineSimplify
         ''' <param name="tolerance">Tolerance tolerance in the same measurement as the point coordinates</param>
         ''' <param name="highestQuality">Enable highest quality for using Douglas-Peucker, set false for Radial-Distance algorithm</param>
         ''' <returns>Simplified list of points</returns>
-        Public Function Simplify(ByVal points As Point(), ByVal Optional tolerance As Double = 0.3, ByVal Optional highestQuality As Boolean = False) As List(Of Point) Implements ISimplifyUtility.Simplify
+        Public Function Simplify(points As Point(),
+                                 Optional tolerance As Double = 0.3,
+                                 Optional highestQuality As Boolean = False) As List(Of Point) Implements ISimplifyUtility.Simplify
+
             If points Is Nothing OrElse points.Length = 0 Then Return New List(Of Point)()
 
             Dim sqTolerance = tolerance * tolerance
@@ -169,7 +172,10 @@ Namespace Drawing2D.Math2D.PolylineSimplify
         ''' <param name="tolerance">Tolerance tolerance in the same measurement as the point coordinates</param>
         ''' <param name="highestQuality">Enable highest quality for using Douglas-Peucker, set false for Radial-Distance algorithm</param>
         ''' <returns>Simplified list of points</returns>
-        Public Shared Function SimplifyArray(ByVal points As Point(), ByVal Optional tolerance As Double = 0.3, ByVal Optional highestQuality As Boolean = False) As List(Of Point)
+        Public Shared Function SimplifyArray(points As Point(),
+                                             Optional tolerance As Double = 0.3,
+                                             Optional highestQuality As Boolean = False) As List(Of Point)
+
             Return New SimplifyUtility().Simplify(points, tolerance, highestQuality)
         End Function
     End Class

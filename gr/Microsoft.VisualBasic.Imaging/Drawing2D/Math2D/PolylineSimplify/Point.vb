@@ -21,7 +21,7 @@ Namespace Drawing2D.Math2D.PolylineSimplify
         Public Y As Double
         Public Z As Double
 
-        Public Sub New(ByVal x As Double, ByVal y As Double, ByVal Optional z As Double = 0)
+        Public Sub New(x As Double, y As Double, Optional z As Double = 0)
             Me.X = x
             Me.Y = y
             Me.Z = z
@@ -33,14 +33,14 @@ Namespace Drawing2D.Math2D.PolylineSimplify
             End Get
         End Property
 
-        Public Overrides Function Equals(ByVal obj As Object) As Boolean
+        Public Overrides Function Equals(obj As Object) As Boolean
             If ReferenceEquals(Nothing, obj) Then Return False
             If ReferenceEquals(Me, obj) Then Return True
             If obj.GetType() IsNot GetType(Point) AndAlso obj.GetType() IsNot GetType(Point) Then Return False
             Return Equals(TryCast(obj, Point))
         End Function
 
-        Public Overloads Function Equals(ByVal other As Point) As Boolean Implements IEquatable(Of Point).Equals
+        Public Overloads Function Equals(other As Point) As Boolean Implements IEquatable(Of Point).Equals
             If ReferenceEquals(Nothing, other) Then Return False
             If ReferenceEquals(Me, other) Then Return True
             Return other.X.Equals(X) AndAlso other.Y.Equals(Y) AndAlso other.Z.Equals(Z)
