@@ -98,6 +98,10 @@ Namespace Drawing2D.Colors
         ''' </summary>
         Winter
 
+        <Description("red_channel")> Red
+        <Description("green_channel")> Green
+        <Description("blue_channel")> Blue
+
         Rainbow
         FlexImaging
 

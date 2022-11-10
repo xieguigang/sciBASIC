@@ -314,7 +314,13 @@ Namespace Drawing2D.Colors
                 End If
             ElseIf Strings.LCase(exp) Like dotnetColorNames Then
                 ' is a single color name
-                Return True
+                ' gray may be is not a single color while this
+                ' function is apply for test color name list
+                If exp.TextEquals(ScalerPalette.Gray.Description) Then
+                    Return False
+                Else
+                    Return True
+                End If
             Else
                 Return False
             End If
@@ -409,6 +415,10 @@ Namespace Drawing2D.Colors
                 Case "scibasic.category31()" : Return Category31
                 Case "clusters" : Return CustomDesigns.ClusterColour
                 Case "blackgreenred" : Return BlackGreenRed
+
+                Case "red_channel" : Return {Color.FromArgb(0, 0, 0), Color.FromArgb(128, 0, 0), Color.FromArgb(255, 0, 0)}
+                Case "green_channel" : Return {Color.FromArgb(0, 0, 0), Color.FromArgb(0, 128, 0), Color.FromArgb(0, 255, 0)}
+                Case "blue_channel" : Return {Color.FromArgb(0, 0, 0), Color.FromArgb(0, 0, 128), Color.FromArgb(0, 0, 255)}
 
                     ' d3.js colors
                 Case "d3.scale.category10()" : Return d3js.category10
