@@ -20,9 +20,9 @@ Namespace Drawing2D.Math2D.PolylineSimplify
         ''' <summary>
         ''' Simplifies a list of points to a shorter list of points.
         ''' </summary>
-        ''' <paramname="points">Points original list of points</param>
-        ''' <paramname="tolerance">Tolerance tolerance in the same measurement as the point coordinates</param>
-        ''' <paramname="highestQuality">Enable highest quality for using Douglas-Peucker, set false for Radial-Distance algorithm</param>
+        ''' <param name="points">Points original list of points</param>
+        ''' <param name="tolerance">Tolerance tolerance in the same measurement as the point coordinates</param>
+        ''' <param name="highestQuality">Enable highest quality for using Douglas-Peucker, set false for Radial-Distance algorithm</param>
         ''' <returns>Simplified list of points</returns>
         Function Simplify(ByVal points As Point(), ByVal Optional tolerance As Double = 0.3, ByVal Optional highestQuality As Boolean = False) As List(Of Point)
     End Interface
