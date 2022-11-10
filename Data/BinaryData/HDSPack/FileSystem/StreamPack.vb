@@ -395,6 +395,9 @@ Namespace FileSystem
             )
         End Function
 
+        ''' <summary>
+        ''' just write stream header data
+        ''' </summary>
         Private Sub flushStreamPack()
             Dim treeMetadata As Byte() = New MemoryStream(superBlock.GetBuffer(_registriedTypes)).GZipStream.ToArray
             Dim registeryMetadata As Byte() = _registriedTypes.GetTypeCodes
@@ -412,7 +415,6 @@ Namespace FileSystem
             Call buffer.Write(treeMetadata, Scan0, treeMetadata.Length)
 
             Call buffer.Flush()
-            Call buffer.Close()
         End Sub
 
         Protected Overridable Sub Dispose(disposing As Boolean)
@@ -421,6 +423,7 @@ Namespace FileSystem
                     ' TODO: 释放托管状态(托管对象)
                     If Not is_readonly Then
                         Call flushStreamPack()
+                        Call buffer.Close()
                     Else
                         Call buffer.Dispose()
                     End If
@@ -447,6 +450,28 @@ Namespace FileSystem
 
         Public Sub Close() Implements IFileSystemEnvironment.Close
             Call Me.Dispose()
+        End Sub
+
+        Public Function FileSize(path As String) As Long Implements IFileSystemEnvironment.FileSize
+            Dim stream As StreamBlock = Me.GetObject(path)
+
+            If stream Is Nothing Then
+                Return -1
+            Else
+                Return stream.size
+            End If
+        End Function
+
+        Private Function WriteText(text As String, path As String) As Boolean Implements IFileSystemEnvironment.WriteText
+            Return Extensions.WriteText(Me, text, path)
+        End Function
+
+        Private Function ReadAllText(path As String) As String Implements IFileSystemEnvironment.ReadAllText
+            Return Extensions.ReadText(Me, path)
+        End Function
+
+        Public Sub Flush() Implements IFileSystemEnvironment.Flush
+            Call flushStreamPack()
         End Sub
     End Class
 End Namespace
