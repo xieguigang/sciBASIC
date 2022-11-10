@@ -65,10 +65,8 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.FileIO.Path
-Imports Microsoft.VisualBasic.My
 Imports Microsoft.VisualBasic.My.FrameworkInternal
 Imports Microsoft.VisualBasic.Net.Http
-Imports Microsoft.Win32
 
 Namespace FileSystem
 
@@ -157,20 +155,22 @@ Namespace FileSystem
             End If
         End Sub
 
-        Public Sub Delete(path As String)
+        Public Function Delete(path As String) As Boolean Implements IFileSystemEnvironment.DeleteFile
             Dim dir As String = path.ParentPath & "/"
             Dim name As String = path.FileName
             Dim folder = GetObject(dir)
 
             If folder Is Nothing Then
                 ' folder is already missing, skip
-                Return
+                Return True
             End If
 
             If TypeOf folder Is StreamGroup Then
                 Call DirectCast(folder, StreamGroup).DeleteNode(name)
             End If
-        End Sub
+
+            Return True
+        End Function
 
         ''' <summary>
         ''' 
@@ -310,8 +310,32 @@ Namespace FileSystem
             Return New SubStream(buffer, block.offset, block.size)
         End Function
 
-        Public Function FileExists(path As String) As Boolean
+        Public Function FileExists(path As String) As Boolean Implements IFileSystemEnvironment.FileExists
             Return superBlock.BlockExists(FilePath.Parse(path))
+        End Function
+
+        ''' <summary>
+        ''' a more advanced wrapper for <see cref="OpenBlock(String)"/> function
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <param name="mode">this parameter is no use in streampack</param>
+        ''' <param name="access"></param>
+        ''' <returns></returns>
+        Public Function OpenFile(path As String,
+                                 Optional mode As FileMode = FileMode.OpenOrCreate,
+                                 Optional access As FileAccess = FileAccess.Read) As Stream Implements IFileSystemEnvironment.OpenFile
+
+            If access = FileAccess.ReadWrite Then
+                Throw New InvalidOperationException("HDS Streampack is not supports read/write stream mode!")
+            ElseIf access = FileAccess.Read Then
+                Return OpenBlock(path)
+            Else
+                ' for write data
+                ' delete file at first
+                ' and then open new file for write?
+                Delete(path)
+                Return OpenBlock(path)
+            End If
         End Function
 
         ''' <summary>
@@ -419,6 +443,10 @@ Namespace FileSystem
             ' 不要更改此代码。请将清理代码放入“Dispose(disposing As Boolean)”方法中
             Dispose(disposing:=True)
             GC.SuppressFinalize(Me)
+        End Sub
+
+        Public Sub Close() Implements IFileSystemEnvironment.Close
+            Call Me.Dispose()
         End Sub
     End Class
 End Namespace

@@ -1,76 +1,86 @@
 ﻿#Region "Microsoft.VisualBasic::fd4eea6a026c054e1b97ca8c78f98bd8, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\Path\Directory.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 132
-    '    Code Lines: 61
-    ' Comment Lines: 54
-    '   Blank Lines: 17
-    '     File Size: 5.18 KB
+' Summaries:
 
 
-    '     Class Directory
-    ' 
-    '         Properties: folder
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: CopyTo, Exists, GetFullPath, GetRelativePath, GetSubDirectories
-    '                   IsAbsolutePath, ToString
-    ' 
-    '         Sub: CreateDirectory, Delete
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 132
+'    Code Lines: 61
+' Comment Lines: 54
+'   Blank Lines: 17
+'     File Size: 5.18 KB
+
+
+'     Class Directory
+' 
+'         Properties: folder
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: CopyTo, Exists, GetFullPath, GetRelativePath, GetSubDirectories
+'                   IsAbsolutePath, ToString
+' 
+'         Sub: CreateDirectory, Delete
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices
 
 Namespace FileIO
 
     ''' <summary>
     ''' A wrapper object for the processing of relative file path. 
     ''' </summary>
-    Public Class Directory
+    ''' <remarks>
+    ''' a local filesystem implementation for <see cref="IFileSystemEnvironment"/>
+    ''' </remarks>
+    Public Class Directory : Implements IFileSystemEnvironment
 
         ''' <summary>
         ''' 当前的这个文件夹对象的文件路径
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property folder As String
+        Public ReadOnly Property [readonly] As Boolean Implements IFileSystemEnvironment.readonly
+            Get
+                Return False
+            End Get
+        End Property
 
         ''' <summary>
         ''' Construct a directory object from the specific Dir path value.
@@ -186,6 +196,30 @@ Namespace FileIO
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Sub Delete(DIR As String)
             Call IO.Directory.Delete(DIR)
+        End Sub
+
+        Public Function OpenFile(path As String,
+                                 Optional mode As FileMode = FileMode.OpenOrCreate,
+                                 Optional access As FileAccess = FileAccess.Read) As Stream Implements IFileSystemEnvironment.OpenFile
+
+            Dim fullPath As String = $"{folder}/{path}"
+            Dim file As Stream = fullPath.Open(mode:=mode, doClear:=False, [readOnly]:=access = FileAccess.Read)
+
+            Return file
+        End Function
+
+        Public Function DeleteFile(path As String) As Boolean Implements IFileSystemEnvironment.DeleteFile
+            Dim fullPath As String = $"{folder}/{path}"
+            Return fullPath.DeleteFile
+        End Function
+
+        Public Function FileExists(path As String) As Boolean Implements IFileSystemEnvironment.FileExists
+            Dim fullPath As String = $"{folder}/{path}"
+            Return fullPath.FileExists(ZERO_Nonexists:=True)
+        End Function
+
+        Public Sub Close() Implements IFileSystemEnvironment.Close
+            ' do nothing
         End Sub
     End Class
 End Namespace

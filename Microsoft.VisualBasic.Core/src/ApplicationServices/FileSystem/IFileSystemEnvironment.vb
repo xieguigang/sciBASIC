@@ -44,6 +44,9 @@ Namespace ApplicationServices
         ''' <summary>
         ''' close current filesystem session
         ''' </summary>
+        ''' <remarks>
+        ''' apply for the zip archive/HDS streampack
+        ''' </remarks>
         Sub Close()
 
     End Interface

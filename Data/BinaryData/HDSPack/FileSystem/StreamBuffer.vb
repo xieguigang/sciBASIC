@@ -60,6 +60,12 @@ Imports System.IO
 
 Namespace FileSystem
 
+    ''' <summary>
+    ''' an in-memory stream buffer for write new file data
+    ''' </summary>
+    ''' <remarks>
+    ''' size is limited to 2GB
+    ''' </remarks>
     Public Class StreamBuffer : Inherits Stream
 
         ''' <inheritdoc />
@@ -158,6 +164,10 @@ Namespace FileSystem
             basefile.Flush()
         End Sub
 
+        ''' <summary>
+        ''' write the in-memory data to local file
+        ''' </summary>
+        ''' <param name="disposing"></param>
         Protected Overrides Sub Dispose(disposing As Boolean)
             writeBuffer()
             buffer.Dispose()
