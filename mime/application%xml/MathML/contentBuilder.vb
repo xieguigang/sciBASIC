@@ -53,7 +53,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
 
 Namespace MathML

@@ -58,6 +58,11 @@ Namespace MathML
     ''' <summary>
     ''' 
     ''' </summary>
+    ''' <remarks>
+    ''' the math xml data should be parsed via the method:
+    ''' 
+    ''' <see cref="ContentBuilder.ParseXml(XmlElement)"/>
+    ''' </remarks>
     Public Class Apply : Inherits symbols
 
         Public Property divide As mathOperator
