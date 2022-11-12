@@ -82,6 +82,11 @@ Namespace MathML
                 End If
             End Get
         End Property
+
+        Public Overrides Function ToString() As String
+            Return $"({apply.JoinBy([operator])})"
+        End Function
+
     End Class
 
 End Namespace

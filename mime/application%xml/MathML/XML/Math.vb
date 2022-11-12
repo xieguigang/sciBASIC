@@ -104,6 +104,11 @@ Namespace MathML
         <XmlElement("bvar")>
         Public Property bvar As symbols()
         Public Property apply As Apply
+
+        Public Overrides Function ToString() As String
+            Return bvar.JoinBy(", ") & " => " & apply.ToString
+        End Function
+
     End Class
 
     Public Class symbols
