@@ -81,6 +81,13 @@ Namespace MathML
         Public Property apply As Apply
         Public Property lambda As lambda
 
+        Public Shared Function BuildExpressionString(exp As Apply) As String
+            Dim data = exp.apply.Select(Function(a) BuildExpressionString(a)).ToArray
+            Dim op As String = exp.operator
+
+            Return $"({data.JoinBy(op)})"
+        End Function
+
     End Class
 
     Public Class mathOperator
@@ -106,7 +113,7 @@ Namespace MathML
         Public Property apply As Apply
 
         Public Overrides Function ToString() As String
-            Return bvar.JoinBy(", ") & " => " & apply.ToString
+            Return bvar.JoinBy(", ") & " => " & Math.BuildExpressionString(apply)
         End Function
 
     End Class

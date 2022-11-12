@@ -55,6 +55,9 @@ Imports System.Xml.Serialization
 
 Namespace MathML
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
     Public Class Apply : Inherits symbols
 
         Public Property divide As mathOperator
@@ -63,6 +66,11 @@ Namespace MathML
         Public Property power As mathOperator
 
         Public Property cn As constant
+
+        ' 20221113 基于xml反序列化具有一个bug：
+        ' 当节点同时存在ci符号名称以及apply表达式的时候
+        ' xml反序列化是无法了解到具体的顺序的
+        ' 这个会导致出现错误的表达式构建结果
 
         <XmlElement("apply")>
         Public Property apply As Apply()
