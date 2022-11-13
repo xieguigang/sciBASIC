@@ -80,16 +80,16 @@ Namespace MathML
 
             If Not lambda.applyright Is Nothing Then
                 If TypeOf lambda.applyright Is SymbolExpression Then
-                    right = $"( {lambda.applyright} )"
+                    right = $"{lambda.applyright}"
                 Else
                     right = lambda.applyright.ToString
                 End If
             End If
 
             If lambda.applyright Is Nothing Then
-                Return $"{safeGetOperator(lambda)} {left}"
+                Return $"({safeGetOperator(lambda)} {left})"
             Else
-                Return $"{left} {safeGetOperator(lambda)} {right}"
+                Return $"({left} {safeGetOperator(lambda)} {right})"
             End If
         End Function
 
