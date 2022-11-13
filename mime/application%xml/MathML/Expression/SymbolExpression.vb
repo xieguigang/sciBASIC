@@ -59,6 +59,13 @@ Namespace MathML
         Public Property text As String
         Public Property isNumericLiteral As Boolean
 
+        Sub New()
+        End Sub
+
+        Sub New(symbol As String)
+            text = symbol
+        End Sub
+
         Public Overrides Function ToString() As String
             Return text
         End Function
