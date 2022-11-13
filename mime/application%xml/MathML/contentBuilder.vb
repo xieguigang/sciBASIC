@@ -118,7 +118,10 @@ Namespace MathML
             End If
 
             If lambdaElement Is Nothing Then
-                Return Nothing
+                Return New LambdaExpression With {
+                    .parameters = parameters,
+                    .lambda = Nothing
+                }
             Else
                 Return New LambdaExpression With {
                     .parameters = parameters,
