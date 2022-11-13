@@ -54,6 +54,7 @@
 Imports System.Data
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 
 Namespace MathML
@@ -145,7 +146,7 @@ Namespace MathML
         ''' <summary>
         ''' a list of standard math function
         ''' </summary>
-        ReadOnly stdMathFunc As Index(Of String) = {"abs", "cos", "sin", "tan", "max", "min"}
+        ReadOnly stdMathFunc As Index(Of String) = {"abs", "cos", "sin", "tan", "max", "min", "exp"}
 
         <Extension>
         Private Function parseInternal(apply As XmlElement) As MathExpression
