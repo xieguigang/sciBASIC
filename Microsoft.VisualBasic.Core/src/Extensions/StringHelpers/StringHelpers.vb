@@ -479,10 +479,24 @@ Public Module StringHelpers
                                Optional null_equals As Boolean = False,
                                Optional empty_equals As Boolean = True) As Boolean
 
+        Static empty_factor As Index(Of String) = {"NA", "n/a", "NULL", "null"}
+
         If s1 Is Nothing OrElse s2 Is Nothing Then
-            Return null_equals
-        ElseIf s1 = "" AndAlso s2 = "" Then
-            Return empty_equals
+            If s1 Is Nothing AndAlso s2 Is Nothing Then
+                Return null_equals
+            Else
+                Return False
+            End If
+        ElseIf (s1 = "" AndAlso s2 = "") OrElse (s1 Like empty_factor AndAlso s2 Like empty_factor) Then
+            If empty_equals Then
+                ' means:
+                ' NA equals to NA
+                ' n/a equals to n/a
+                '
+                Return String.Equals(s1, s2, StringComparison.OrdinalIgnoreCase)
+            Else
+                Return empty_equals
+            End If
         Else
             Return String.Equals(s1, s2, StringComparison.OrdinalIgnoreCase)
         End If

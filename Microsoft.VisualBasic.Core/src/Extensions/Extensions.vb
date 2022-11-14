@@ -129,7 +129,7 @@ Public Module Extensions
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Average(range As DoubleRange) As Double
-        Return {range.Min, range.Max}.Average
+        Return (range.Min + range.Max) / 2
     End Function
 
     ''' <summary>
