@@ -99,7 +99,8 @@ Namespace FileIO
         ''' Gets the full path of the target file based on the path relative to this directory object.
         ''' </summary>
         ''' <param name="file">
-        ''' The relative path of the target file, and this parameter is also compatible with absolute file path.
+        ''' The relative path of the target file, and this parameter is 
+        ''' also compatible with absolute file path.
         ''' (相对路径)</param>
         ''' <returns></returns>
         Public Function GetFullPath(file As String) As String
