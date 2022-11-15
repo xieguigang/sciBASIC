@@ -221,6 +221,13 @@ Namespace CommandLine
             Dim path$ = writeScript()
             Dim exitCode As Integer
 
+#If NET48 Then
+            exitCode = Interaction.Shell(
+                path,
+                Style:=AppWinStyle.Hide,
+                Wait:=True
+            )
+#Else
 #If UNIX Then
             ' xdg-open: file '/tmp/gut_16s/15201/tmp00003.sh' does not exist
             With New Process() With {
@@ -249,13 +256,6 @@ Namespace CommandLine
             '   at System.Reflection.MethodBase.Invoke (System.Object obj, System.Object[] parameters) [0x00000] in <902ab9e386384bec9c07fa19aa938869>:0
             '   at Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints.APIEntryPoint.__directInvoke (System.Object[] callParameters, System.Object target, System.Boolean Throw) [0x0000c] in <d9cf6734998c48a092e8a1528ac0142f>:0
             '    --- End of inner exception stack trace ---
-#If netcore5 = 0 Then
-            exitCode = Interaction.Shell(
-                path,
-                Style:=AppWinStyle.Hide,
-                Wait:=True
-            )
-#Else
             [Call](path, "", "")
 #End If
 #End If
