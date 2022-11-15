@@ -160,7 +160,14 @@ Namespace Net.Http
                 protocol = "http://"
                 port = 80
                 hostName = "localhost"
-                path = url.Trim("/"c)
+                ' 20221115
+                ' trim / symbol will removes the root directory information
+                ' and the directory identification, will make the filesystem
+                ' can not redirect to the index.html or readme.txt
+                '
+                ' so we must comment this code line
+                ' path = url.Trim("/"c)
+                path = url
             Else
                 url = url.Substring(protocol.Length)
 
