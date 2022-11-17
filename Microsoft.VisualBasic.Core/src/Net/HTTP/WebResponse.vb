@@ -100,6 +100,10 @@ Namespace Net.Http
             Return New ResponseHeaders
         End Function
 
+        Public Shared Function Header200() As ResponseHeaders
+            Return New ResponseHeaders
+        End Function
+
         Public Function TryGetValue(header As HttpHeaderName) As String
             Return headers.TryGetValue(header)
         End Function

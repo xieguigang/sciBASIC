@@ -462,7 +462,18 @@ Namespace FileSystem
             End If
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="text"></param>
+        ''' <param name="path"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' this method is a safe method, it alwasy delete the 
+        ''' target file stream at first and then do text write
+        ''' </remarks>
         Private Function WriteText(text As String, path As String) As Boolean Implements IFileSystemEnvironment.WriteText
+            Call Delete(path)
             Return Extensions.WriteText(Me, text, path)
         End Function
 
