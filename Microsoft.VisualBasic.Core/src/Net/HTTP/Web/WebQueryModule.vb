@@ -57,6 +57,12 @@ Imports Microsoft.VisualBasic.FileIO
 
 Namespace Net.Http
 
+    Public Interface IHttpGet
+
+        Function GetText(url As String) As String
+
+    End Interface
+
     Public MustInherit Class WebQueryModule(Of Context) : Inherits WebQuery(Of Context)
 
         Sub New(<CallerMemberName>
