@@ -94,6 +94,16 @@ Namespace Imaging.Math2D
             End Get
         End Property
 
+        Public ReadOnly Property width As Double
+            Get
+                If xpoints.Length = 0 Then
+                    Return 0
+                Else
+                    Return xpoints.Max - xpoints.Min
+                End If
+            End Get
+        End Property
+
         Default Public Property Item(index As Integer) As PointF
             Get
                 Return New PointF(xpoints(index), ypoints(index))
