@@ -404,7 +404,8 @@ Public Module XmlExtensions
     ''' <remarks></remarks>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function CreateObjectFromXmlFragment(Of T)(xml$, Optional preprocess As Func(Of String, String) = Nothing) As T
+    <Extension>
+    Public Function CreateObjectFromXmlFragment(Of T)(xml$, Optional preprocess As Func(Of String, String) = Nothing) As T
         Dim xmlDoc$ =
             "<?xml version=""1.0"" encoding=""UTF-8""?>" &
             ASCII.LF &
@@ -427,4 +428,14 @@ Public Module XmlExtensions
             Throw New Exception("Details at file dump: " & file, ex)
         End Try
     End Function
+
+    ''' <summary>
+    ''' Write a xml content as text into the target file data
+    ''' </summary>
+    ''' <param name="file">a text file writer</param>
+    ''' <param name="xml">xml literal</param>
+    <Extension>
+    Public Sub WriteXml(file As StreamWriter, xml As XElement)
+        Call file.WriteLine(xml.ToString)
+    End Sub
 End Module
