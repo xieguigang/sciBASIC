@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <RootNamespace>Microsoft.VisualBasic.Data.visualize.Network.Canvas</RootNamespace>
-	  <TargetFrameworks>net6.0-windows;net5.0-windows;net48</TargetFrameworks>
+    <TargetFrameworks>net6.0-windows;net48</TargetFrameworks>
     <AssemblyName>Microsoft.VisualBasic.Data.visualize.Network.Canvas</AssemblyName>
    
     <Platforms>AnyCPU;x64</Platforms>
