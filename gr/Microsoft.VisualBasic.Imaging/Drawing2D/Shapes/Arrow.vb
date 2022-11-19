@@ -94,7 +94,14 @@ Namespace Drawing2D.Shapes
 
         Sub New(source As Arrow)
             Call MyBase.New(source.Location)
-            Call Microsoft.VisualBasic.Serialization.ShadowCopy(source, Me)
+
+            Me.BodyHeightPercentage = source.BodyHeightPercentage
+            Me.BodySize = source.BodySize
+            Me.Color = source.Color
+            Me.DirectionLeft = source.DirectionLeft
+            Me.EnableAutoLayout = source.EnableAutoLayout
+            Me.HeadLengthPercentage = source.HeadLengthPercentage
+            Me.TooltipTag = source.TooltipTag
         End Sub
 
         ''' <summary>
