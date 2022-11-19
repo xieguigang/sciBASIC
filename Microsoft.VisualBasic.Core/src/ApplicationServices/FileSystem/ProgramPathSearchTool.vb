@@ -207,7 +207,7 @@ Namespace ApplicationServices
             Dim scriptsDIR As String = $"{dir}/scripts"
 
             For Each folder As String In {binDIR, programDIR, scriptsDIR}
-                If FileIO.FileSystem.DirectoryExists(folder) Then
+                If Directory.Exists(folder) Then
                     For Each file As String In ls - l - rules <= folder
                         Yield file
                     Next
