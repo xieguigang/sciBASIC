@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a59375363005739182add8546eaa2fa8, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\test\ConvexHull_demo.vb"
+﻿#Region "Microsoft.VisualBasic::0f9c2a7b5ffa65682cd9143edff9ab21, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\test\ConvexHull_demo.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
 
     ' Module ConvexHull_demo
     ' 
-    '     Sub: Draw, GrahamScanDemo, JarvisMarchDemo, Main
+    '     Sub: Draw, GrahamScanDemo, JarvisMarchDemo, Main1
     ' 
     ' /********************************************************************************/
 

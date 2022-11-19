@@ -1,59 +1,61 @@
-﻿#Region "Microsoft.VisualBasic::c25bd5134149877fc891eba718207fb8, sciBASIC#\Data\BinaryData\HDSPack\FileSystem\StreamPack.vb"
+﻿#Region "Microsoft.VisualBasic::fb8d6eea1f2afa78d57b46e58541e705, sciBASIC#\Data\BinaryData\HDSPack\FileSystem\StreamPack.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 328
-'    Code Lines: 201
-' Comment Lines: 80
-'   Blank Lines: 47
-'     File Size: 12.84 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class StreamPack
-' 
-'         Properties: files, globalAttributes, superBlock
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'         Function: CreateNewStream, FileExists, GetGlobalAttribute, GetObject, (+2 Overloads) OpenBlock
-'                   ParseTree
-' 
-'         Sub: Clear, (+2 Overloads) Dispose, flushStreamPack, (+2 Overloads) SetAttribute
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 429
+    '    Code Lines: 262
+    ' Comment Lines: 106
+    '   Blank Lines: 61
+    '     File Size: 17.13 KB
+
+
+    '     Class StreamPack
+    ' 
+    '         Properties: files, globalAttributes, is_readonly, superBlock
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: CreateNewStream, Delete, FileExists, FileSize, GetGlobalAttribute
+    '                   GetObject, (+2 Overloads) OpenBlock, OpenFile, ParseTree, ReadAllText
+    '                   WriteText
+    ' 
+    '         Sub: Clear, Close, (+2 Overloads) Dispose, Flush, flushStreamPack
+    '              ParseMetadata, (+2 Overloads) SetAttribute
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef4776a88a99e3c598855493b2821bf6, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\Path\FilePath.vb"
+﻿#Region "Microsoft.VisualBasic::5d4fb1468b35cb8c057247866f5532ef, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\Path\FilePath.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 95
+    '   Total Lines: 101
     '    Code Lines: 73
-    ' Comment Lines: 8
+    ' Comment Lines: 14
     '   Blank Lines: 14
-    '     File Size: 3.21 KB
+    '     File Size: 3.53 KB
 
 
     '     Class FilePath

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82e5ab754bdb2b8baf0e49898f5245bc, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\test\SVGTest.vb"
+﻿#Region "Microsoft.VisualBasic::2c893d313c5e8914106eceda10b4fa30, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\test\SVGTest.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
 
     ' Module SVGTest
     ' 
-    '     Sub: IOtest, Main, pathParserTest, Test
+    '     Sub: IOtest, Main1, pathParserTest, Test
     ' 
     ' /********************************************************************************/
 

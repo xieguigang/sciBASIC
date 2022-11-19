@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99bcd70494d7881dd2097db6484e32f6, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\Program.vb"
+﻿#Region "Microsoft.VisualBasic::bd6fc27bb8051524cf72344dd62c1dc9, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\Program.vb"
 
     ' Author:
     ' 
@@ -34,14 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 21
-    '    Code Lines: 12
-    ' Comment Lines: 6
-    '   Blank Lines: 3
-    '     File Size: 641 B
+    '   Total Lines: 38
+    '    Code Lines: 21
+    ' Comment Lines: 11
+    '   Blank Lines: 6
+    '     File Size: 1.30 KB
 
 
     '     Module Program
+    ' 
+    '         Function: ProgressText
     ' 
     '         Sub: Run
     ' 

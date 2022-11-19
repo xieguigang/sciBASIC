@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04428dbb9221b2784b2417c3c322d2a6, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Logging\LogFile\LogFile.vb"
+﻿#Region "Microsoft.VisualBasic::8f54efee5d53e50df4269b8e3e76c2fb, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Logging\LogFile\LogFile.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 247
-    '    Code Lines: 149
+    '   Total Lines: 253
+    '    Code Lines: 153
     ' Comment Lines: 59
-    '   Blank Lines: 39
-    '     File Size: 10.47 KB
+    '   Blank Lines: 41
+    '     File Size: 10.69 KB
 
 
     '     Class LogFile

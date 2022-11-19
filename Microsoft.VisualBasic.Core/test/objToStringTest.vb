@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59482f83f24ebc0fbbd22756c6544618, sciBASIC#\Microsoft.VisualBasic.Core\test\objToStringTest.vb"
+﻿#Region "Microsoft.VisualBasic::99119a63f12643437907543ea0afd405, sciBASIC#\Microsoft.VisualBasic.Core\test\objToStringTest.vb"
 
     ' Author:
     ' 
@@ -38,12 +38,12 @@
     '    Code Lines: 17
     ' Comment Lines: 0
     '   Blank Lines: 6
-    '     File Size: 853 B
+    '     File Size: 854 B
 
 
     ' Module objToStringTest
     ' 
-    '     Sub: Main
+    '     Sub: Main1
     ' 
     ' Class overridesToString
     ' 

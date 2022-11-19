@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1971450e48038a381377a4f976fa00da, sciBASIC#\Microsoft.VisualBasic.Core\test\indexTest.vb"
+﻿#Region "Microsoft.VisualBasic::19550160d12739be889a364350134ee8, sciBASIC#\Microsoft.VisualBasic.Core\test\indexTest.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
 
     ' Module indexTest
     ' 
-    '     Sub: Main, stringTest
+    '     Sub: Main1, stringTest
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,59 @@
-﻿' High-performance polyline simplification library
+﻿#Region "Microsoft.VisualBasic::4ea56df4644cc40696ccde06f9a55516, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\PolylineSimplify\Point.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 57
+    '    Code Lines: 34
+    ' Comment Lines: 14
+    '   Blank Lines: 9
+    '     File Size: 2.18 KB
+
+
+    '     Class Point
+    ' 
+    '         Properties: IsValid
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: (+2 Overloads) Equals, GetHashCode, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+' High-performance polyline simplification library
 '
 ' This is a port of simplify-js by Vladimir Agafonkin, Copyright (c) 2012
 ' https://github.com/mourner/simplify-js
@@ -55,3 +110,4 @@ Namespace Drawing2D.Math2D.PolylineSimplify
         End Function
     End Class
 End Namespace
+

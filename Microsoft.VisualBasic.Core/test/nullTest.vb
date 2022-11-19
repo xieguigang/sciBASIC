@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0018ae9aeb8ef0ab8fa10a08fe86d4f, sciBASIC#\Microsoft.VisualBasic.Core\test\nullTest.vb"
+﻿#Region "Microsoft.VisualBasic::70c7348c44b0fa403b2f8c4205de98c6, sciBASIC#\Microsoft.VisualBasic.Core\test\nullTest.vb"
 
     ' Author:
     ' 
@@ -38,12 +38,12 @@
     '    Code Lines: 7
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 142 B
+    '     File Size: 143 B
 
 
     ' Module nullTest
     ' 
-    '     Sub: Main
+    '     Sub: Main1
     ' 
     ' /********************************************************************************/
 

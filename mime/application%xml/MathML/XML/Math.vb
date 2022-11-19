@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::daea8d1568fd6a0d367f5b39b6a0f8b5, sciBASIC#\mime\application%xml\MathML\XML\Math.vb"
+﻿#Region "Microsoft.VisualBasic::47511c9eb9388412ff6e9292c8f42992, sciBASIC#\mime\application%xml\MathML\XML\Math.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 46
-    '    Code Lines: 32
+    '   Total Lines: 58
+    '    Code Lines: 40
     ' Comment Lines: 0
-    '   Blank Lines: 14
-    '     File Size: 1.06 KB
+    '   Blank Lines: 18
+    '     File Size: 1.51 KB
 
 
     '     Class Math
     ' 
     '         Properties: apply, lambda
+    ' 
+    '         Function: BuildExpressionString
     ' 
     '     Class mathOperator
     ' 
@@ -58,6 +60,8 @@
     '     Class lambda
     ' 
     '         Properties: apply, bvar
+    ' 
+    '         Function: ToString
     ' 
     '     Class symbols
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a94ecfad960541ae8fd168cc94730d77, sciBASIC#\Data\BinaryData\HDSPack\BinaryStream\TreeParser.vb"
+﻿#Region "Microsoft.VisualBasic::5021cb21334bb902d6d727c27963d906, sciBASIC#\Data\BinaryData\HDSPack\BinaryStream\TreeParser.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 80
-    '    Code Lines: 56
+    '   Total Lines: 85
+    '    Code Lines: 60
     ' Comment Lines: 14
-    '   Blank Lines: 10
-    '     File Size: 2.97 KB
+    '   Blank Lines: 11
+    '     File Size: 3.20 KB
 
 
     ' Module TreeParser

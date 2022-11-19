@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43ef04259e4b66ac43a94654c07269bf, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::2b2fa304c5b890cc97e70567db31e949, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1000
-    '    Code Lines: 507
+    '   Total Lines: 1005
+    '    Code Lines: 511
     ' Comment Lines: 353
-    '   Blank Lines: 140
-    '     File Size: 35.56 KB
+    '   Blank Lines: 141
+    '     File Size: 35.74 KB
 
 
     '     Class Vector
@@ -49,8 +49,8 @@
     '         Constructor: (+12 Overloads) Sub New
     ' 
     '         Function: Abs, AsSparse, CumSum, DotProduct, Ones
-    '                   Order, Product, (+2 Overloads) rand, ScaleToRange, seq
-    '                   slice, SumMagnitudes, (+2 Overloads) ToString
+    '                   Order, Product, (+2 Overloads) rand, Scalar, ScaleToRange
+    '                   seq, slice, SumMagnitudes, (+2 Overloads) ToString
     ' 
     '         Sub: (+3 Overloads) CopyTo
     ' 

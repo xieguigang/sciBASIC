@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d09a6532805a77f1268619f944e55b36, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\test\DriverTest.vb"
+﻿#Region "Microsoft.VisualBasic::02c1005091c0e2303dbde521355501f0, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\test\DriverTest.vb"
 
     ' Author:
     ' 
@@ -35,8 +35,8 @@
     ' Code Statistics:
 
     '   Total Lines: 61
-    '    Code Lines: 31
-    ' Comment Lines: 13
+    '    Code Lines: 30
+    ' Comment Lines: 14
     '   Blank Lines: 17
     '     File Size: 2.04 KB
 
@@ -45,7 +45,7 @@
     ' 
     '     Function: testPlot
     ' 
-    '     Sub: Main
+    '     Sub: Main1
     ' 
     ' /********************************************************************************/
 

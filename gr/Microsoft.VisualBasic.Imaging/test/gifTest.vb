@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::79e35472b64eb1b4a17ef3f226248879, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\test\gifTest.vb"
+﻿#Region "Microsoft.VisualBasic::33c9de8bb0b38ba734b8aa0f9e5c51ac, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\test\gifTest.vb"
 
     ' Author:
     ' 
@@ -38,12 +38,12 @@
     '    Code Lines: 15
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 769 B
+    '     File Size: 770 B
 
 
     ' Module gifTest
     ' 
-    '     Sub: Main
+    '     Sub: Main1
     ' 
     ' /********************************************************************************/
 

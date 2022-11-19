@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::699189e6db364c1dd900bdad4a0ba512, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\IO.vb"
+﻿#Region "Microsoft.VisualBasic::553b66cf925ef44b2d0a8c1c6b36478f, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\IO.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 269
-    '    Code Lines: 138
-    ' Comment Lines: 105
+    '   Total Lines: 280
+    '    Code Lines: 141
+    ' Comment Lines: 113
     '   Blank Lines: 26
-    '     File Size: 10.91 KB
+    '     File Size: 11.40 KB
 
 
     ' Module IOExtensions

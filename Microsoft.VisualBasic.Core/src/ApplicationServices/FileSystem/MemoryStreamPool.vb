@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2618d1233ef96d3e933da3df9f1c8696, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\MemoryStreamPool.vb"
+﻿#Region "Microsoft.VisualBasic::2e95aea8bbe05df02d4cd6816f12446e, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\MemoryStreamPool.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 65
-    '    Code Lines: 52
-    ' Comment Lines: 0
-    '   Blank Lines: 13
-    '     File Size: 1.91 KB
+    '   Total Lines: 185
+    '    Code Lines: 120
+    ' Comment Lines: 35
+    '   Blank Lines: 30
+    '     File Size: 6.70 KB
 
 
     '     Class MemoryStreamPool
     ' 
     '         Properties: CanRead, CanSeek, CanWrite, Length, Position
     ' 
-    '         Function: Read, Seek
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: FromFile, Read, Seek, ToString
     ' 
     '         Sub: Flush, SetLength, Write
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::030f7829ee69a1b7385ed6984920e083, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\test\ShadowsTest.vb"
+﻿#Region "Microsoft.VisualBasic::68397ce361c70fd984f3a930cff75325, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\test\ShadowsTest.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
 
     ' Module ShadowsTest
     ' 
-    '     Sub: Main
+    '     Sub: Main1
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64ffbe2b0f4342416ec525f31523837f, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::6004c228798a107fdd01c9739bc50627, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\Utils.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 310
-    '    Code Lines: 198
-    ' Comment Lines: 59
-    '   Blank Lines: 53
-    '     File Size: 11.77 KB
+    '   Total Lines: 259
+    '    Code Lines: 166
+    ' Comment Lines: 44
+    '   Blank Lines: 49
+    '     File Size: 9.51 KB
 
 
     '     Module Utils
     ' 
-    '         Function: (+2 Overloads) ColorReplace, CorpBlank, (+3 Overloads) ImageCrop, Resize, ResizeUnscaled
-    '                   ResizeUnscaledByHeight, TrimRoundAvatar
+    '         Function: (+2 Overloads) ColorReplace, CorpBlank, ResizeUnscaled, ResizeUnscaledByHeight, TrimRoundAvatar
     ' 
     ' 
     ' /********************************************************************************/

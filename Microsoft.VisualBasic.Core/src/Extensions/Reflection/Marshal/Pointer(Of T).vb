@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59bb251d4d5fe61aa37da49576a3ca5e, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Reflection\Marshal\Pointer(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::a4fce389f53155538146f74498b2878d, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Reflection\Marshal\Pointer(Of T).vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 192
     ' Comment Lines: 129
     '   Blank Lines: 50
-    '     File Size: 13.33 KB
+    '     File Size: 13.35 KB
 
 
     '     Class Pointer

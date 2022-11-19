@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::093f3951c2aa495d4aba8c68c2da5396, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Uid.vb"
+﻿#Region "Microsoft.VisualBasic::e3f030f0b7bcf2cc2151826a729f2f2b, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Uid.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 231
+    '   Total Lines: 232
     '    Code Lines: 125
-    ' Comment Lines: 72
+    ' Comment Lines: 73
     '   Blank Lines: 34
-    '     File Size: 8.06 KB
+    '     File Size: 8.12 KB
 
 
     '     Class Uid

@@ -1,4 +1,60 @@
-﻿' 
+﻿#Region "Microsoft.VisualBasic::107e3533a4fc7739b71d00445a87c0ad, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\Hqx\RgbYuv.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 93
+    '    Code Lines: 38
+    ' Comment Lines: 42
+    '   Blank Lines: 13
+    '     File Size: 3.27 KB
+
+
+    '     Module RgbYuv
+    ' 
+    '         Properties: IsAllocated
+    ' 
+    '         Function: getYuv
+    ' 
+    '         Sub: hqxInit, Release
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+' 
 '  Copyright © 2003 Maxim Stepin (maxst@hiend3d.com)
 ' 
 '  Copyright © 2010 Cameron Zemek (grom@zeminvaders.net)
@@ -91,3 +147,4 @@ Namespace Drawing2D.HeatMap.hqx
     End Module
 
 End Namespace
+

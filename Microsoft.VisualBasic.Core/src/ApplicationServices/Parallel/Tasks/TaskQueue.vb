@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d8a49b26c05dd9adecd11e2f0c4491a4, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\TaskQueue.vb"
+﻿#Region "Microsoft.VisualBasic::b5148df1a3c3b3445636ec0d53ba3fb3, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\TaskQueue.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 192
-    '    Code Lines: 113
-    ' Comment Lines: 50
-    '   Blank Lines: 29
-    '     File Size: 7.02 KB
+    '   Total Lines: 228
+    '    Code Lines: 134
+    ' Comment Lines: 57
+    '   Blank Lines: 37
+    '     File Size: 8.00 KB
 
 
     '     Interface ITaskHandle
@@ -47,13 +47,13 @@
     ' 
     '     Class TaskQueue
     ' 
-    '         Properties: RunningTask, Tasks, uid
+    '         Properties: MaximumQueue, RunningTask, Tasks, uid
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
     '         Function: (+2 Overloads) Join, ToString
     ' 
-    '         Sub: __taskQueueEXEC, (+2 Overloads) Dispose, (+2 Overloads) Enqueue
+    '         Sub: __calls, __taskQueueEXEC, (+2 Overloads) Dispose, (+2 Overloads) Enqueue
     '         Structure __task
     ' 
     '             Properties: Value

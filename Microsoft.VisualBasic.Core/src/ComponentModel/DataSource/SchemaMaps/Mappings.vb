@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e869aad3ff463b28eda2fe64724352c4, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\Mappings.vb"
+﻿#Region "Microsoft.VisualBasic::46919f9cf92212593ddc4d150ab1e293, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\Mappings.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 144
-    '    Code Lines: 99
-    ' Comment Lines: 27
-    '   Blank Lines: 18
-    '     File Size: 6.29 KB
+    '   Total Lines: 192
+    '    Code Lines: 122
+    ' Comment Lines: 46
+    '   Blank Lines: 24
+    '     File Size: 7.87 KB
 
 
     '     Module Mappings
     ' 
-    '         Function: FieldNameMappings, GetColumnName, (+2 Overloads) GetFields, GetSchema, GetSchemaName
+    '         Function: (+2 Overloads) FieldNameMappings, GetAliasNames, GetColumnName, (+2 Overloads) GetFields, GetSchema
+    '                   GetSchemaName
     ' 
     ' 
     ' /********************************************************************************/

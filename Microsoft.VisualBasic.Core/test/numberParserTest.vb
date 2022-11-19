@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2837da591b3a42593fa8b0826396567b, sciBASIC#\Microsoft.VisualBasic.Core\test\numberParserTest.vb"
+﻿#Region "Microsoft.VisualBasic::8ba5eca678615f088cd3d52fc2d87cde, sciBASIC#\Microsoft.VisualBasic.Core\test\numberParserTest.vb"
 
     ' Author:
     ' 
@@ -38,14 +38,14 @@
     '    Code Lines: 91
     ' Comment Lines: 8
     '   Blank Lines: 32
-    '     File Size: 3.71 KB
+    '     File Size: 3.72 KB
 
 
     ' Module numberParserTest
     ' 
     '     Function: IsDoubleNumber, IsInteger
     ' 
-    '     Sub: hexTest, Main, testInt, testInt2
+    '     Sub: hexTest, Main1, testInt, testInt2
     ' 
     ' /********************************************************************************/
 

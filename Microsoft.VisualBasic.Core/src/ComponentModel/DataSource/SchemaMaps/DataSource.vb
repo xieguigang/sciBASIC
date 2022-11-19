@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::973a54d34b021fa806ae3445dda395f4, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\DataSource.vb"
+﻿#Region "Microsoft.VisualBasic::f8ac78a1e8eb3ffd77efd86c89cf9fc8, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\DataSource.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 250
-    '    Code Lines: 140
-    ' Comment Lines: 77
-    '   Blank Lines: 33
-    '     File Size: 10.45 KB
+    '   Total Lines: 259
+    '    Code Lines: 145
+    ' Comment Lines: 80
+    '   Blank Lines: 34
+    '     File Size: 10.48 KB
 
 
     '     Class ColumnAttribute
     ' 
-    '         Properties: Name
+    '         Properties: [alias], Name
     ' 
     '         Constructor: (+2 Overloads) Sub New
+    '         Function: ToString
     ' 
     '     Class Field
     ' 

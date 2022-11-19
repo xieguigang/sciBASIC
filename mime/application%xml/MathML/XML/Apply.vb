@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::920759a2b3cc9ff083af085f97622086, sciBASIC#\mime\application%xml\MathML\XML\Apply.vb"
+﻿#Region "Microsoft.VisualBasic::0e2bee6de84b7e0d2dee354b2f23fff5, sciBASIC#\mime\application%xml\MathML\XML\Apply.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 34
-    '    Code Lines: 27
-    ' Comment Lines: 0
-    '   Blank Lines: 7
-    '     File Size: 955 B
+    '   Total Lines: 52
+    '    Code Lines: 30
+    ' Comment Lines: 12
+    '   Blank Lines: 10
+    '     File Size: 1.57 KB
 
 
     '     Class Apply
     ' 
     '         Properties: [operator], apply, cn, divide, plus
     '                     power, times
+    ' 
+    '         Function: ToString
     ' 
     ' 
     ' /********************************************************************************/

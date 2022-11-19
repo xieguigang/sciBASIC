@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::46c658934339d6b9cddc6a8b7954205b, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Settings\ConfigEngine.vb"
+﻿#Region "Microsoft.VisualBasic::a533c58b8a26ecb2e234987b65f9c5d9, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Settings\ConfigEngine.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 303
+    '   Total Lines: 316
     '    Code Lines: 203
-    ' Comment Lines: 55
+    ' Comment Lines: 68
     '   Blank Lines: 45
-    '     File Size: 12.19 KB
+    '     File Size: 12.78 KB
 
 
     '     Class ConfigEngine

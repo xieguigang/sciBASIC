@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9e9acc095d23340143b6f3f8fb3bfd2, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\StreamHelper.vb"
+﻿#Region "Microsoft.VisualBasic::911a6f6699df0dd2e31f6fa4130e9794, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\StreamHelper.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 107
-    '    Code Lines: 73
-    ' Comment Lines: 17
-    '   Blank Lines: 17
-    '     File Size: 3.57 KB
+    '   Total Lines: 136
+    '    Code Lines: 86
+    ' Comment Lines: 30
+    '   Blank Lines: 20
+    '     File Size: 4.63 KB
 
 
     ' Module StreamHelper
     ' 
-    '     Function: CastByte, CastSByte, CopyStream, PopulateBlocks
+    '     Function: CastByte, CastSByte, CopyStream, PopulateBlocks, ReadStringZero
+    '               ReadZEROBlock
     ' 
     '     Sub: Write, WriteLine
     ' 

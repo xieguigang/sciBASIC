@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e50cdd4a72f1acc460812513a74d054, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\RasterScaler.vb"
+﻿#Region "Microsoft.VisualBasic::704df0d2f8dd6d2ea82cf98f24382d31, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\RasterScaler.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 74
-    '    Code Lines: 43
-    ' Comment Lines: 19
-    '   Blank Lines: 12
-    '     File Size: 2.76 KB
+    '   Total Lines: 139
+    '    Code Lines: 83
+    ' Comment Lines: 33
+    '   Blank Lines: 23
+    '     File Size: 5.35 KB
 
 
     '     Class RasterScaler
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: (+2 Overloads) Scale
+    ' 
     '         Sub: (+2 Overloads) Dispose, Scale, ScaleTo
     ' 
     ' 

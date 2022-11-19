@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::725a04e44dcee328006987807ccbd11a, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\test\imageSmoothTest.vb"
+﻿#Region "Microsoft.VisualBasic::d7a18dc6a573709d3f1a0407d47fc859, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\test\imageSmoothTest.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
 
     ' Module imageSmoothTest
     ' 
-    '     Sub: gaussBlurTest, Main
+    '     Sub: gaussBlurTest, Main1
     ' 
     ' /********************************************************************************/
 

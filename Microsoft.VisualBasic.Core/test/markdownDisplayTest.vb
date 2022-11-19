@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c38e228fdfb9f1eb2b7d551066cabd8a, sciBASIC#\Microsoft.VisualBasic.Core\test\markdownDisplayTest.vb"
+﻿#Region "Microsoft.VisualBasic::28f67a3757cdc1b3252dfc5d6901a650, sciBASIC#\Microsoft.VisualBasic.Core\test\markdownDisplayTest.vb"
 
     ' Author:
     ' 
@@ -38,12 +38,12 @@
     '    Code Lines: 16
     ' Comment Lines: 0
     '   Blank Lines: 8
-    '     File Size: 412 B
+    '     File Size: 413 B
 
 
     ' Module markdownDisplayTest
     ' 
-    '     Sub: Main
+    '     Sub: Main1
     ' 
     ' /********************************************************************************/
 

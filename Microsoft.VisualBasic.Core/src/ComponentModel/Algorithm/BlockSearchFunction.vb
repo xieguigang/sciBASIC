@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb70d01538bd330813eeddd2ee254839, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BlockSearchFunction.vb"
+﻿#Region "Microsoft.VisualBasic::ce38d213a771b10a6babea9fae11cc3f, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BlockSearchFunction.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 160
-    '    Code Lines: 121
-    ' Comment Lines: 13
-    '   Blank Lines: 26
-    '     File Size: 5.41 KB
+    '   Total Lines: 181
+    '    Code Lines: 130
+    ' Comment Lines: 24
+    '   Blank Lines: 27
+    '     File Size: 5.99 KB
 
 
     '     Structure Block

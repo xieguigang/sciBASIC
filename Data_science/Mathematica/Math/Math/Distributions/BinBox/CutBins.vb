@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::88612b2f32a3314370ef2c1bb84245f8, sciBASIC#\Data_science\Mathematica\Math\Math\Distributions\BinBox\CutBins.vb"
+﻿#Region "Microsoft.VisualBasic::57449cb57ccccd3896bdd4b200dbd1d0, sciBASIC#\Data_science\Mathematica\Math\Math\Distributions\BinBox\CutBins.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 133
-    '    Code Lines: 61
-    ' Comment Lines: 56
-    '   Blank Lines: 16
-    '     File Size: 5.13 KB
+    '   Total Lines: 148
+    '    Code Lines: 72
+    ' Comment Lines: 59
+    '   Blank Lines: 17
+    '     File Size: 5.75 KB
 
 
     '     Module CutBins

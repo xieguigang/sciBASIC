@@ -1,4 +1,61 @@
-﻿' 
+﻿#Region "Microsoft.VisualBasic::8024c9aaeb3f1dd1a2c45d7056230fd3, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\Hqx\Hqx_4x.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 4276
+    '    Code Lines: 4019
+    ' Comment Lines: 54
+    '   Blank Lines: 203
+    '     File Size: 310.03 KB
+
+
+    '     Class Hqx_4x
+    ' 
+    '         Sub: case0, case144, case148, case152, case16
+    '              case192, case194, case2, case20, case224
+    '              case24, case25, case28, case3, case40
+    '              case41, case56, case6, case64, case66
+    '              case67, case7, case70, case8, case9
+    '              case96, case98, (+2 Overloads) hq4x_32_rb
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+' 
 '  Copyright © 2003 Maxim Stepin (maxst@hiend3d.com)
 ' 
 '  Copyright © 2010 Cameron Zemek (grom@zeminvaders.net)
@@ -4274,3 +4331,4 @@ Namespace Drawing2D.HeatMap.hqx
     End Class
 
 End Namespace
+

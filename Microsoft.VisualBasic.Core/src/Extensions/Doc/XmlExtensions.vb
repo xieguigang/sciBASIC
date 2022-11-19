@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9bcf434fb792ee636d04faa80a2263a, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Doc\XmlExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::048ac3a6281cfaa8b1e9e25240f81829, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Doc\XmlExtensions.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 374
-    '    Code Lines: 236
-    ' Comment Lines: 89
-    '   Blank Lines: 49
-    '     File Size: 14.99 KB
+    '   Total Lines: 385
+    '    Code Lines: 241
+    ' Comment Lines: 94
+    '   Blank Lines: 50
+    '     File Size: 15.33 KB
 
 
     ' Module XmlExtensions
@@ -48,7 +48,7 @@
     '     Function: CreateObjectFromXml, CreateObjectFromXmlFragment, (+2 Overloads) GetXml, (+2 Overloads) LoadFromXml, (+2 Overloads) LoadXml
     '               SafeLoadXml, SaveAsXml
     ' 
-    '     Sub: WriteXML
+    '     Sub: WriteXml, WriteXML
     ' 
     ' /********************************************************************************/
 

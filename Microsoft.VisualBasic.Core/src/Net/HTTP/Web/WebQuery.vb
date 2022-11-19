@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3de31e6b3a15e82d4c248771a43714cb, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\Web\WebQuery.vb"
+﻿#Region "Microsoft.VisualBasic::7412063fd775c917ca42cadbbe52a6e4, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\Web\WebQuery.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 223
-    '    Code Lines: 131
-    ' Comment Lines: 57
-    '   Blank Lines: 35
-    '     File Size: 9.35 KB
+    '   Total Lines: 247
+    '    Code Lines: 140
+    ' Comment Lines: 71
+    '   Blank Lines: 36
+    '     File Size: 10.39 KB
 
 
     '     Class WebQuery
     ' 
     '         Properties: offlineMode
     ' 
-    '         Constructor: (+3 Overloads) Sub New
+    '         Constructor: (+4 Overloads) Sub New
     ' 
     '         Function: IsNullKey, (+2 Overloads) Query, QueryCacheText, queryText
     ' 

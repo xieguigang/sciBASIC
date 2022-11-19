@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3d3010b6747b8d771d5c14b0780ffe4, sciBASIC#\Data\BinaryData\HDSPack\FileSystem\StreamGroup.vb"
+﻿#Region "Microsoft.VisualBasic::b3519746eca79815461443c10a55ba30, sciBASIC#\Data\BinaryData\HDSPack\FileSystem\StreamGroup.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 215
-    '    Code Lines: 130
-    ' Comment Lines: 51
-    '   Blank Lines: 34
-    '     File Size: 7.70 KB
+    '   Total Lines: 236
+    '    Code Lines: 143
+    ' Comment Lines: 58
+    '   Blank Lines: 35
+    '     File Size: 8.81 KB
 
 
     '     Class StreamGroup
@@ -46,8 +46,11 @@
     '         Properties: files, totalSize
     ' 
     '         Constructor: (+3 Overloads) Sub New
+    ' 
     '         Function: AddDataBlock, AddDataGroup, BlockExists, CreateRootTree, GetDataBlock
     '                   GetDataGroup, GetObject, hasName, ToString, VisitBlock
+    ' 
+    '         Sub: DeleteNode
     ' 
     ' 
     ' /********************************************************************************/

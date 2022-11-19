@@ -1,4 +1,58 @@
-﻿' 
+﻿#Region "Microsoft.VisualBasic::b0fd1db003c1f10ad2a07c60612d7635, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\Hqx\Interpolation.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 144
+    '    Code Lines: 69
+    ' Comment Lines: 51
+    '   Blank Lines: 24
+    '     File Size: 5.64 KB
+
+
+    '     Class Interpolation
+    ' 
+    '         Function: Mix14To1To1, Mix2To1To1, Mix2To3To3, Mix2To7To7, Mix3To1
+    '                   Mix4To2To1, Mix5To3, Mix6To1To1, Mix7To1, MixColours
+    '                   MixEven
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+' 
 '  Copyright © 2003 Maxim Stepin (maxst@hiend3d.com)
 ' 
 '  Copyright © 2010 Cameron Zemek (grom@zeminvaders.net)
@@ -142,3 +196,4 @@ Namespace Drawing2D.HeatMap.hqx
     End Class
 
 End Namespace
+

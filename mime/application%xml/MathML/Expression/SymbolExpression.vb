@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b34a783130de145ba76fe129dc0385a, sciBASIC#\mime\application%xml\MathML\Expression\SymbolExpression.vb"
+﻿#Region "Microsoft.VisualBasic::f2e51564a50588022581eac8ea8521f6, sciBASIC#\mime\application%xml\MathML\Expression\SymbolExpression.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 13
-    '    Code Lines: 9
+    '   Total Lines: 20
+    '    Code Lines: 14
     ' Comment Lines: 0
-    '   Blank Lines: 4
-    '     File Size: 311 B
+    '   Blank Lines: 6
+    '     File Size: 430 B
 
 
     '     Class SymbolExpression
     ' 
     '         Properties: isNumericLiteral, text
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: ToString
     ' 
     ' 

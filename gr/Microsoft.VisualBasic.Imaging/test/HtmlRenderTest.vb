@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::79c9503f4bf9c59c1e3c7e89a39076fd, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\test\HtmlRenderTest.vb"
+﻿#Region "Microsoft.VisualBasic::e2f4ef919d6e2046e3176eaef0c08040, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\test\HtmlRenderTest.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
 
     ' Module HtmlRenderTest
     ' 
-    '     Sub: Main
+    '     Sub: Main1
     ' 
     ' /********************************************************************************/
 

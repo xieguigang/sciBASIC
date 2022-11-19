@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29e5ac25799ec92508926e90078d5920, sciBASIC#\mime\application%pdf\PdfFileWriter\TextBox.vb"
+﻿#Region "Microsoft.VisualBasic::f1f3b86d8d8d1bd40259b846d1da569c, sciBASIC#\mime\application%pdf\PdfFileWriter\TextBox.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 847
-    '    Code Lines: 440
+    '   Total Lines: 835
+    '    Code Lines: 439
     ' Comment Lines: 287
-    '   Blank Lines: 120
-    '     File Size: 28.31 KB
+    '   Blank Lines: 109
+    '     File Size: 27.44 KB
 
 
     ' Class TextBoxLine

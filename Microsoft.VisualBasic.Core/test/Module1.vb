@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4943544b9dbbfa61d047f49d765bd551, sciBASIC#\Microsoft.VisualBasic.Core\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::059c951ca286d9afcfaed66a4aa5c35f, sciBASIC#\Microsoft.VisualBasic.Core\test\Module1.vb"
 
     ' Author:
     ' 
@@ -38,12 +38,12 @@
     '    Code Lines: 21
     ' Comment Lines: 0
     '   Blank Lines: 12
-    '     File Size: 779 B
+    '     File Size: 780 B
 
 
     ' Module Module1
     ' 
-    '     Sub: iniTest, Main, mytest2
+    '     Sub: iniTest, Main1, mytest2
     ' 
     ' /********************************************************************************/
 

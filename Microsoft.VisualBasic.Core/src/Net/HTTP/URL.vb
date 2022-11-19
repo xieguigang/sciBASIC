@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3317734712f2fda2f9855ea06e829132, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\URL.vb"
+﻿#Region "Microsoft.VisualBasic::8103ad98e3a87e175788d6c79efea969, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\URL.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 159
+    '   Total Lines: 166
     '    Code Lines: 124
-    ' Comment Lines: 15
+    ' Comment Lines: 22
     '   Blank Lines: 20
-    '     File Size: 5.87 KB
+    '     File Size: 6.22 KB
 
 
     '     Class URL

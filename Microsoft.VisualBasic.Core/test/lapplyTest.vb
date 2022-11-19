@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4578ffe1b5f6837efb3c1994bc9a23ee, sciBASIC#\Microsoft.VisualBasic.Core\test\lapplyTest.vb"
+﻿#Region "Microsoft.VisualBasic::95cadc0d9c1ac8ab5566911ac44427ab, sciBASIC#\Microsoft.VisualBasic.Core\test\lapplyTest.vb"
 
     ' Author:
     ' 
@@ -38,13 +38,13 @@
     '    Code Lines: 82
     ' Comment Lines: 0
     '   Blank Lines: 11
-    '     File Size: 5.46 KB
+    '     File Size: 5.47 KB
 
 
     ' Module lapplyTest
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    '     Sub: Main, testApply, testSelectLinq
+    '     Sub: Main1, testApply, testSelectLinq
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e198295c9d16c03622f8b2993eb4f71, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\test\LabelingTest.vb"
+﻿#Region "Microsoft.VisualBasic::0dc1acb63ba04eafcf3b371f704582aa, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\test\LabelingTest.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
 
     ' Module LabelingTest
     ' 
-    '     Sub: Main
+    '     Sub: Main1
     ' 
     ' /********************************************************************************/
 

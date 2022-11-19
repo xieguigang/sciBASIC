@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::127d85c8ae8ca614fe863f4df0569911, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\WebResponse.vb"
+﻿#Region "Microsoft.VisualBasic::af2a1d9931655c545603c4984f7c8cea, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\WebResponse.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 52
-    '    Code Lines: 37
+    '   Total Lines: 56
+    '    Code Lines: 40
     ' Comment Lines: 0
-    '   Blank Lines: 15
-    '     File Size: 1.53 KB
+    '   Blank Lines: 16
+    '     File Size: 1.66 KB
 
 
     '     Class WebResponseResult
@@ -50,7 +50,7 @@
     '         Properties: customHeaders, headers
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: Header404NotFound, (+2 Overloads) TryGetValue
+    '         Function: Header200, Header404NotFound, (+2 Overloads) TryGetValue
     ' 
     ' 
     ' /********************************************************************************/

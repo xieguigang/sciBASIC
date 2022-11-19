@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8b20f60021e53a82d2796cdc6743fee, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ScalerPalette.vb"
+﻿#Region "Microsoft.VisualBasic::b539378823b3b27f0809dbcc63dc646b, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ScalerPalette.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 58
-    '    Code Lines: 23
+    '   Total Lines: 62
+    '    Code Lines: 26
     ' Comment Lines: 27
-    '   Blank Lines: 8
-    '     File Size: 1.54 KB
+    '   Blank Lines: 9
+    '     File Size: 1.67 KB
 
 
     '     Enum ScalerPalette

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff28d3e4d44aac06bdfc2d8d7e1a3ec0, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\SampleObservation.vb"
+﻿#Region "Microsoft.VisualBasic::2006274e9e8d845db6dd649688b80320, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\SampleObservation.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 29
-    '    Code Lines: 22
-    ' Comment Lines: 0
+    '   Total Lines: 30
+    '    Code Lines: 20
+    ' Comment Lines: 3
     '   Blank Lines: 7
-    '     File Size: 925 B
+    '     File Size: 915 B
 
 
     '     Class SampleObservation

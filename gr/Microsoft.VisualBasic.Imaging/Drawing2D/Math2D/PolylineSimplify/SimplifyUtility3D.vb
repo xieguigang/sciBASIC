@@ -1,4 +1,57 @@
-﻿' High-performance polyline simplification library
+﻿#Region "Microsoft.VisualBasic::1a4e862f43fcff4425f2e41fd44c0034, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\PolylineSimplify\SimplifyUtility3D.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 182
+    '    Code Lines: 105
+    ' Comment Lines: 44
+    '   Blank Lines: 33
+    '     File Size: 7.19 KB
+
+
+    '     Class SimplifyUtility3D
+    ' 
+    '         Function: GetSquareDistance, GetSquareSegmentDistance, Simplify, SimplifyArray, SimplifyDouglasPeucker
+    '                   SimplifyRadialDistance
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+' High-performance polyline simplification library
 '
 ' This is a port of simplify-js by Vladimir Agafonkin, Copyright (c) 2012
 ' https://github.com/mourner/simplify-js
@@ -180,3 +233,4 @@ Namespace Drawing2D.Math2D.PolylineSimplify
         End Function
     End Class
 End Namespace
+
