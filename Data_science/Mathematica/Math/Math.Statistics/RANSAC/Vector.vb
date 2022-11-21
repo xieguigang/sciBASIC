@@ -2,8 +2,8 @@
 
 Namespace RANSAC
 
-    Friend Class Vector
-        Inherits Point
+    Friend Class Vector : Inherits Point
+
         Public ReadOnly Property magnitude As Double
             Get
                 Return stdNum.Sqrt(stdNum.Pow(x, 2) + stdNum.Pow(y, 2) + stdNum.Pow(z, 2))
