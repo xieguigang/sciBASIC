@@ -4,6 +4,37 @@ Imports stdNum = System.Math
 
 Namespace RANSAC
 
+    Public Class SampleOutput
+
+        Public Property bestPlane As Double()
+        Public Property bestSupport As Double
+        Public Property bestStd As Double
+        Public Property inliersPercentage As Double
+        Public Property N As Integer
+
+        Public ReadOnly Property lost_points As Double
+            Get
+                Return N * inliersPercentage - bestSupport
+            End Get
+        End Property
+
+        Public ReadOnly Property Accuracy As Double
+            Get
+                Return bestSupport / (N * inliersPercentage)
+            End Get
+        End Property
+
+        Public Shared Sub Print(x As SampleOutput)
+            Console.WriteLine("###OUTPUT###")
+            Console.ForegroundColor = ConsoleColor.Green
+            Console.WriteLine("Best plane: {0:F6} {1:F6} {2:F6} {3:F6}", x.bestPlane(0), x.bestPlane(1), x.bestPlane(2), x.bestPlane(3))
+            Console.ResetColor()
+            Console.WriteLine("Best support (i.e. matched points): {0}", x.bestSupport)
+            Console.WriteLine("Best standard deviation: {0}" & vbLf, x.bestStd)
+            Console.WriteLine("Lost points: {0}" & vbLf & "Accuracy: {1:F6}" & vbLf, x.lost_points, x.Accuracy)
+        End Sub
+    End Class
+
     ''' <summary>
     ''' RANSAC (RANdom SAmple Consensus) is an algorithm for measuring 
     ''' system parameters for some input data.
@@ -51,7 +82,10 @@ Namespace RANSAC
         ''' <param name="w">
         ''' probability of choosing an inlier from the set of data
         ''' </param>
-        Public Sub Evaluate(Optional w As Double = 0.5, Optional alpha As Double = 0.999, Optional seed As Integer = 9956)
+        Public Function Evaluate(Optional w As Double = 0.5,
+                                 Optional alpha As Double = 0.999,
+                                 Optional seed As Integer = 9956) As SampleOutput
+
             Dim bestSupport As Integer = 0
             Dim bestPlane = New Double(3) {}
             Dim bestStd = Double.PositiveInfinity
@@ -82,15 +116,14 @@ Namespace RANSAC
             End While
 
             'outputting results
-            Console.WriteLine("###OUTPUT###")
-            Console.ForegroundColor = ConsoleColor.Green
-            Console.WriteLine("Best plane: {0:F6} {1:F6} {2:F6} {3:F6}", bestPlane(0), bestPlane(1), bestPlane(2), bestPlane(3))
-            Console.ResetColor()
-            Console.WriteLine("Best support (i.e. matched points): {0}", bestSupport)
-            Console.WriteLine("Best standard deviation: {0}" & vbLf, bestStd)
-
-            Console.WriteLine("Lost points: {0}" & vbLf & "Accuracy: {1:F6}" & vbLf, CInt(N * inliersPercentage) - bestSupport, bestSupport / (N * inliersPercentage))
-        End Sub
+            Return New SampleOutput With {
+                .bestPlane = bestPlane,
+                .bestStd = bestStd,
+                .bestSupport = bestSupport,
+                .inliersPercentage = inliersPercentage,
+                .N = N
+            }
+        End Function
 
         Private Function GetPoints(ByVal rng As Random) As Tuple(Of Point, Point, Point)
             Dim indices As List(Of Integer) = New List(Of Integer)()
