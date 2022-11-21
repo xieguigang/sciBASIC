@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.Language
 Imports stdNum = System.Math
 
 Namespace RANSAC
@@ -28,33 +29,39 @@ Namespace RANSAC
         Private inliersPercentage As Double
         Private lowLine As Double() = New Double(1) {}, highLine As Double() = New Double(1) {}
 
-        Private Sub Main(p As Double, points As Point())
+        Sub New(p As Double, points As Point())
             Me.p = p
             Me.N = points.Length
             Me.points = points
 
-            Console.WriteLine("Threshold (p): {0:F6}" & Microsoft.VisualBasic.Constants.vbLf & "Points' amount (N): {1}", p, N)
+            Console.WriteLine("Threshold (p): {0:F6}" & vbLf & "Points' amount (N): {1}", p, N)
             Console.WriteLine("Points (first 10):")
             For i = 0 To If(points.Length < 10, points.Length, 10) - 1
-                Console.WriteLine("{0:F6}" & Microsoft.VisualBasic.Constants.vbTab & "{1:F6}" & Microsoft.VisualBasic.Constants.vbTab & "{2:F6}", points(CInt(i)).x, points(CInt(i)).y, points(CInt(i)).z)
+                Console.WriteLine("{0:F6}" & vbTab & "{1:F6}" & vbTab & "{2:F6}", points(CInt(i)).x, points(CInt(i)).y, points(CInt(i)).z)
             Next
             Console.WriteLine()
+        End Sub
 
-            'RANSAC algorithm implementation
-            Dim w As Double = 0.5F  'probability of choosing an inlier from the set of data
-            Dim alpha As Double = 0.999F  'probability of finding best-fitting plane
-
-            Dim bestSupport = 0
+        ''' <summary>
+        ''' RANSAC algorithm implementation
+        ''' </summary>
+        ''' <param name="alpha">
+        ''' probability of finding best-fitting plane
+        ''' </param>
+        ''' <param name="w">
+        ''' probability of choosing an inlier from the set of data
+        ''' </param>
+        Public Sub Evaluate(Optional w As Double = 0.5, Optional alpha As Double = 0.999, Optional seed As Integer = 9956)
+            Dim bestSupport As Integer = 0
             Dim bestPlane = New Double(3) {}
             Dim bestStd = Double.PositiveInfinity
             Dim trials As Integer = stdNum.Round(stdNum.Log(1 - alpha) / stdNum.Log(1 - stdNum.Pow(w, 3)), MidpointRounding.AwayFromZero)
-
-            Dim rng As Random = New Random()
-            Dim j = 0
-
+            Dim rng As New Random(seed)
+            Dim j As i32 = 0
             'getting all valid points, as well as their distances to the plane
             Dim qualifiedDistances As Double() = Nothing
-            While stdNum.Min(Threading.Interlocked.Increment(j), j - 1) <= trials
+
+            While ++j <= trials
                 'retrieving 3 random points from the list
                 Dim planePoints = GetPoints(rng)
 
@@ -80,9 +87,9 @@ Namespace RANSAC
             Console.WriteLine("Best plane: {0:F6} {1:F6} {2:F6} {3:F6}", bestPlane(0), bestPlane(1), bestPlane(2), bestPlane(3))
             Console.ResetColor()
             Console.WriteLine("Best support (i.e. matched points): {0}", bestSupport)
-            Console.WriteLine("Best standard deviation: {0}" & Microsoft.VisualBasic.Constants.vbLf, bestStd)
+            Console.WriteLine("Best standard deviation: {0}" & vbLf, bestStd)
 
-            Console.WriteLine("Lost points: {0}" & Microsoft.VisualBasic.Constants.vbLf & "Accuracy: {1:F6}" & Microsoft.VisualBasic.Constants.vbLf, CInt(N * inliersPercentage) - bestSupport, bestSupport / (N * inliersPercentage))
+            Console.WriteLine("Lost points: {0}" & vbLf & "Accuracy: {1:F6}" & vbLf, CInt(N * inliersPercentage) - bestSupport, bestSupport / (N * inliersPercentage))
         End Sub
 
         Private Function GetPoints(ByVal rng As Random) As Tuple(Of Point, Point, Point)
@@ -152,100 +159,6 @@ Namespace RANSAC
 
             Return stdNum.Sqrt(variance)
         End Function
-
-        '        Private Shared Sub GenerateData()
-        '            Dim rng As Random = New Random()
-
-        '            p = rng.NextDouble()
-        '            If p > 0.5 Then p -= 0.5
-        '            If p < 0.01 Then p += 0.01
-
-        '            Program.N = rng.Next(25000, 25001)
-
-        '            Dim p1 As Point = New Point With {
-        '    .x = rng.NextDouble() * 200 - 100,
-        '    .y = rng.NextDouble() * 200 - 100,
-        '    .z = rng.NextDouble() * 200 - 100
-        '}
-        '            Dim p2 As Point = New Point With {
-        '    .x = rng.NextDouble() * 200 - 100,
-        '    .y = rng.NextDouble() * 200 - 100,
-        '    .z = rng.NextDouble() * 200 - 100
-        '}
-        '            Dim p3 As Point = New Point With {
-        '    .x = rng.NextDouble() * 200 - 100,
-        '    .y = rng.NextDouble() * 200 - 100,
-        '    .z = rng.NextDouble() * 200 - 100
-        '}
-
-        '            genPlane = Points2Plane(Tuple.Create(p1, p2, p3))
-
-        '            Dim n As Vector = New Vector(genPlane(0), genPlane(1), genPlane(2))
-
-        '            Dim bounds = GetBounds(genPlane)
-        '            Dim x_l = bounds.Item1, x_h = bounds.Item2
-        '            Dim y_l = bounds.Item3, y_h = bounds.Item4
-        '            Dim z_l = bounds.Item5, z_h = bounds.Item6
-
-        '            inliersPercentage = 1 - rng.NextDouble()
-        '            If inliersPercentage < 0.5 Then inliersPercentage += 0.5
-
-        '            Dim genPoints As List(Of Point) = New List(Of Point)()
-        '            For i = 0 To Program.N - 1
-        '                Dim distance As Double
-        '                If i <= inliersPercentage * Program.N Then
-        '                    distance = rng.NextDouble() * p
-        '                Else
-        '                    distance = (1 - rng.NextDouble()) * 2 * p + p
-        '                End If
-
-        '                Dim x As Double = 0, y As Double = 0, z As Double = 0
-        '                If genPlane(0) <> 0 AndAlso genPlane(1) <> 0 AndAlso genPlane(2) <> 0 Then
-        '                    x = rng.NextDouble() * (x_h - x_l) + x_l
-
-        '                    y_l = lowLine(0) * x + lowLine(1)
-        '                    If y_l < -100 Then y_l = -100
-
-        '                    y_h = highLine(0) * x + highLine(1)
-        '                    If y_h > 100 Then y_h = 100
-
-        '                    y = rng.NextDouble() * (y_h - y_l) + y_l
-
-        '                    z = -(genPlane(0) * x + genPlane(1) * y + genPlane(3)) / genPlane(2)
-        '                ElseIf genPlane(0) = 0 AndAlso genPlane(1) = 0 Then
-        '                    x = rng.NextDouble() * 200 - 100
-        '                    y = rng.NextDouble() * 200 - 100
-        '                    z = -genPlane(3) / genPlane(2)
-        '                ElseIf genPlane(1) = 0 AndAlso genPlane(2) = 0 Then
-        '                    y = rng.NextDouble() * 200 - 100
-        '                    z = rng.NextDouble() * 200 - 100
-        '                    x = -genPlane(3) / genPlane(0)
-        '                ElseIf genPlane(2) = 0 AndAlso genPlane(0) = 0 Then
-        '                    x = rng.NextDouble() * 200 - 100
-        '                    z = rng.NextDouble() * 200 - 100
-        '                    y = -genPlane(3) / genPlane(1)
-        '                ElseIf genPlane(0) = 0 Then
-        '                    x = rng.NextDouble() * 200 - 100
-        '                    y = rng.NextDouble() * (y_h - y_l) + y_l
-        '                    z = -(genPlane(1) * y + genPlane(3)) / genPlane(2)
-        '                ElseIf genPlane(1) = 0 Then
-        '                    y = rng.NextDouble() * 200 - 100
-        '                    x = rng.NextDouble() * (x_h - x_l) + x_l
-        '                    z = -(genPlane(0) * x + genPlane(3)) / genPlane(2)
-        '                ElseIf genPlane(2) = 0 Then
-        '                    z = rng.NextDouble() * 200 - 100
-        '                    x = rng.NextDouble() * (x_h - x_l) + x_l
-        '                    y = -(genPlane(0) * x + genPlane(3)) / genPlane(1)
-        '                End If
-
-        '                Dim point As Vector = New Vector(x, y, z)
-        '                point += n.normalized * distance * If(rng.Next(0, 2) = 0, 1, -1)
-
-        '                genPoints.Add(point)
-        '            Next
-
-        '            points = genPoints.ToArray()
-        '        End Sub
 
         Public Function GetBounds(ByVal plane As Double()) As Tuple(Of Double, Double, Double, Double, Double, Double)
             Dim p = New Double(2) {}
