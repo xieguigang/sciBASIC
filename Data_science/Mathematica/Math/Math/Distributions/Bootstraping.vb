@@ -100,7 +100,9 @@ Namespace Distributions
         ''' <param name="replace">
         ''' 是否为有放回的进行抽样？默认是有放回的。设置这个参数为False表示不重复的采样，即抽取过后的元素将不会再出现在后面的采样结果之中
         ''' </param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' index of the returns value <see cref="SeqValue(Of T()).i"/> is zero based.
+        ''' </returns>
         ''' <remarks>
         ''' this method can be affected by the <see cref="randf2.SetSeed(Integer)"/> method.
         ''' </remarks>
