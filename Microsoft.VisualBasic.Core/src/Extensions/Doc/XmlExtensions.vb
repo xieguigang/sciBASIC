@@ -325,12 +325,19 @@ Public Module XmlExtensions
     End Function
 
     ''' <summary>
-    ''' Generate a specific type object from a xml document stream.(使用一个XML文本内容创建一个XML映射对象)
+    ''' Generate a specific type object from a xml document stream.
+    ''' (使用一个XML文本内容创建一个XML映射对象)
     ''' </summary>
-    ''' <param name="Xml">This parameter value is the document text of the xml file, not the file path of the xml file.(是Xml文件的文件内容而非文件路径)</param>
-    ''' <param name="throwEx">Should this program throw the exception when the xml deserialization error happens?
-    ''' if False then this function will returns a null value instead of throw exception.
-    ''' (在进行Xml反序列化的时候是否抛出错误，默认抛出错误，否则返回一个空对象)</param>
+    ''' <param name="Xml">
+    ''' This parameter value is the document text of the xml file, 
+    ''' not the file path of the xml file.
+    ''' (是Xml文件的文件内容而非文件路径)</param>
+    ''' <param name="throwEx">Should this program throw the exception 
+    ''' when the xml deserialization error happens?
+    ''' if False then this function will returns a null value instead 
+    ''' of throw exception.
+    ''' (在进行Xml反序列化的时候是否抛出错误，默认抛出错误，否则返回一个空对象)
+    ''' </param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     ''' 
@@ -345,8 +352,9 @@ Public Module XmlExtensions
             Else
                 Return Nothing
             End If
+        Else
+            xml = xml.StripInvalidUTF8Code
         End If
-
 
         Try
             If doNamespaceIgnorant Then
