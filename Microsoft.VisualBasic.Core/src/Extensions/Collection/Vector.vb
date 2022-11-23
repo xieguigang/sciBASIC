@@ -167,7 +167,9 @@ Public Module VectorExtensions
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="template"></param>
-    ''' <param name="n"></param>
+    ''' <param name="n">
+    ''' the size of the generated sequence
+    ''' </param>
     ''' <returns></returns>
     <Extension>
     Public Iterator Function Replicate(Of T)(template As T, n%) As IEnumerable(Of T)
