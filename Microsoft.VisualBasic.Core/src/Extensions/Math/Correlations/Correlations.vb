@@ -338,7 +338,11 @@ Namespace Math.Correlations
         ''' checked by Excel
         ''' </remarks>
         <ExportAPI("Pearson")>
-        Public Function GetPearson(x#(), y#(), Optional ByRef prob# = 0, Optional ByRef prob2# = 0, Optional ByRef z# = 0, Optional throwMaxIterError As Boolean = True) As Double
+        Public Function GetPearson(x#(), y#(),
+                                   Optional ByRef prob# = 0,
+                                   Optional ByRef prob2# = 0,
+                                   Optional ByRef z# = 0,
+                                   Optional throwMaxIterError As Boolean = True) As Double
             Dim t#, df#
             Dim pcc As Double = GetPearson(x, y)
             Dim n As Integer = x.Length

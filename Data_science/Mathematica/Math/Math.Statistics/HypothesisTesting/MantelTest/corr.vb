@@ -85,7 +85,7 @@ Namespace Hypothesis.Mantel
 
         Public Function Pearson(x As Double(), y As Double()) As (cor#, pvalue#)
             Dim pvalue As Double
-            Dim corVal = Correlations.GetPearson(x, y, prob:=pvalue)
+            Dim corVal = Correlations.GetPearson(x, y, prob:=pvalue, throwMaxIterError:=False)
 
             Return (corVal, pvalue)
         End Function

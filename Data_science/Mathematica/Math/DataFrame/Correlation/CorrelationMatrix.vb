@@ -59,6 +59,9 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports stdNum = System.Math
 
+''' <summary>
+''' the correlation matrix join the pvalue matrix
+''' </summary>
 Public Class CorrelationMatrix : Inherits DataMatrix
 
     ReadOnly pvalueMat As Double()()
