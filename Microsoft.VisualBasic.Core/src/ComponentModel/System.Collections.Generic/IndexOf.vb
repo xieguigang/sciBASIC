@@ -214,6 +214,14 @@ Namespace ComponentModel.Collection
             Return items.Select(Function(element) Me(element)).ToArray
         End Function
 
+        Public Sub [Set](index As Integer, val As T)
+            Me.maps(val) = index
+            Me.index.Item(index) = New SeqValue(Of T) With {
+                .i = index,
+                .value = val
+            }
+        End Sub
+
         Public Sub Delete(index As T)
             Dim i = Me.IndexOf(index)
 
