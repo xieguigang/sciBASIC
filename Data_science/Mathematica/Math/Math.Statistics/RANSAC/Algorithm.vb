@@ -94,7 +94,7 @@ Namespace RANSAC
             }
         End Function
 
-        Private Function GetPoints(ByVal rng As Random) As Tuple(Of Point, Point, Point)
+        Private Function GetPoints(rng As Random) As Tuple(Of Point, Point, Point)
             Dim indices As List(Of Integer) = New List(Of Integer)()
 
             While indices.Count < 3
@@ -107,7 +107,7 @@ Namespace RANSAC
             Return Tuple.Create(point1, point2, point3)
         End Function
 
-        Private Function Points2Plane(ByVal points As Tuple(Of Point, Point, Point)) As Double()
+        Private Function Points2Plane(points As Tuple(Of Point, Point, Point)) As Double()
             Dim point1 = points.Item1
             Dim point2 = points.Item2
             Dim point3 = points.Item3
@@ -129,7 +129,7 @@ Namespace RANSAC
             Return plane
         End Function
 
-        Private Shared Function Qualify(ByVal plane As Double(), ByVal points As Point(), ByVal threshold As Double, <Out> ByRef distances As Double()) As Point()
+        Private Shared Function Qualify(plane As Double(), points As Point(), threshold As Double, <Out> ByRef distances As Double()) As Point()
             Dim validPoints As List(Of Point) = New List(Of Point)()
             Dim validDistances As List(Of Double) = New List(Of Double)()
 
@@ -146,7 +146,7 @@ Namespace RANSAC
             Return validPoints.ToArray()
         End Function
 
-        Private Shared Function StandardDeviation(ByVal [set] As Double()) As Double
+        Private Shared Function StandardDeviation([set] As Double()) As Double
             Dim mean As Double = 0, variance As Double = 0
 
             For i = 0 To [set].Length - 1
@@ -162,7 +162,7 @@ Namespace RANSAC
             Return stdNum.Sqrt(variance)
         End Function
 
-        Public Function GetBounds(ByVal plane As Double()) As Tuple(Of Double, Double, Double, Double, Double, Double)
+        Public Function GetBounds(plane As Double()) As Tuple(Of Double, Double, Double, Double, Double, Double)
             Dim p = New Double(2) {}
             Dim bounds As List(Of Point) = New List(Of Point)()
             Dim line1 = New Double(1) {}, line2 = New Double(1) {}

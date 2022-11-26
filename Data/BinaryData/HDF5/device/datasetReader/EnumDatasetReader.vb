@@ -81,11 +81,11 @@ Namespace device
         ''' </summary>
         ''' <paramname="dims"> the array to strip </param>
         ''' <returns> dims with the zeroth element removed </returns>
-        Public Shared Function stripLeadingIndex(ByVal dims As Integer()) As Integer()
+        Public Shared Function stripLeadingIndex(dims As Integer()) As Integer()
             Return Arrays.copyOfRange(dims, 1, dims.Length)
         End Function
 
-        Public Shared Function readEnumDataset(ByVal enumDataType As EnumDataType, ByVal buffer As ByteBuffer, ByVal dimensions As Integer()) As Object
+        Public Shared Function readEnumDataset(enumDataType As EnumDataType, buffer As ByteBuffer, dimensions As Integer()) As Object
             Dim baseType = enumDataType.BaseType
             If TypeOf baseType Is FixedPoint Then
                 Dim data As Array = Array.CreateInstance(GetType(String), dimensions)
@@ -110,7 +110,7 @@ Namespace device
             End If
         End Function
 
-        Private Shared Sub fillDataUnsigned(ByVal data As Array, ByVal dims As Integer(), ByVal buffer As ByteBuffer, ByVal enumMapping As IDictionary(Of Integer?, String))
+        Private Shared Sub fillDataUnsigned(data As Array, dims As Integer(), buffer As ByteBuffer, enumMapping As IDictionary(Of Integer?, String))
             If dims.Length > 1 Then
                 For i = 0 To dims(0) - 1
                     Dim newArray As Object = data(i)
@@ -127,7 +127,7 @@ Namespace device
             End If
         End Sub
 
-        Private Shared Sub fillDataUnsignedShort(ByVal data As Array, ByVal dims As Integer(), ByVal buffer As ByteBuffer, ByVal enumMapping As IDictionary(Of Integer?, String))
+        Private Shared Sub fillDataUnsignedShort(data As Array, dims As Integer(), buffer As ByteBuffer, enumMapping As IDictionary(Of Integer?, String))
             If dims.Length > 1 Then
                 For i = 0 To dims(0) - 1
                     Dim newArray As Object = data(i)
@@ -144,7 +144,7 @@ Namespace device
             End If
         End Sub
 
-        Private Shared Sub fillDataUnsignedInt32(ByVal data As Array, ByVal dims As Integer(), ByVal buffer As ByteBuffer, ByVal enumMapping As IDictionary(Of Integer?, String))
+        Private Shared Sub fillDataUnsignedInt32(data As Array, dims As Integer(), buffer As ByteBuffer, enumMapping As IDictionary(Of Integer?, String))
             If dims.Length > 1 Then
                 For i = 0 To dims(0) - 1
                     Dim newArray As Object = data(i)
@@ -161,7 +161,7 @@ Namespace device
             End If
         End Sub
 
-        Private Shared Sub fillDataUnsignedInt64(ByVal data As Array, ByVal dims As Integer(), ByVal buffer As ByteBuffer, ByVal enumMapping As IDictionary(Of Integer?, String))
+        Private Shared Sub fillDataUnsignedInt64(data As Array, dims As Integer(), buffer As ByteBuffer, enumMapping As IDictionary(Of Integer?, String))
             If dims.Length > 1 Then
                 For i = 0 To dims(0) - 1
                     Dim newArray As Object = data(i)
