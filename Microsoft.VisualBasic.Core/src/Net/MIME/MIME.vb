@@ -117,7 +117,7 @@ Namespace Net.Protocols.ContentTypes
                                   Return x.MIMEType.ToLower
                               End Function)
 
-            Call DirectCast(SuffixTable, Dictionary(Of String, ContentType)).Add("dzi", New ContentType With {.Details = "Deep Zoom Image", .FileExt = ".dzi", .MIMEType = "application/xml", .Name = "Deep Zoom Image"})
+            Call DirectCast(SuffixTable, Dictionary(Of String, ContentType)).Add(".dzi", New ContentType With {.Details = "Deep Zoom Image", .FileExt = ".dzi", .MIMEType = "application/xml", .Name = "Deep Zoom Image"})
         End Sub
 
         <Extension>
