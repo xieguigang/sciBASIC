@@ -90,6 +90,12 @@ Namespace Drawing2D.HeatMap
         Public Property Y As Integer Implements Pixel.Y
         Public Property Scale As Double Implements Pixel.Scale
 
+        Public ReadOnly Property isEmpty As Boolean
+            Get
+                Return X = 0 AndAlso Y = 0 AndAlso Scale = 0.0
+            End Get
+        End Property
+
         Sub New(p As Point, data As Double)
             X = p.X
             Y = p.Y

@@ -336,12 +336,24 @@ Public Module DocumentExtensions
         Next
     End Function
 
+    ''' <summary>
+    ''' get a specific column value by name
+    ''' </summary>
+    ''' <param name="csv"></param>
+    ''' <param name="column"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function GetColumnValues(csv As IO.File, column$) As IEnumerable(Of String)
         Dim index As Integer = csv.Headers.IndexOf(column)
         Dim out As New List(Of String)
+        Dim offset As Integer = 1
 
-        For Each r As RowObject In csv.Skip(1)
+        ' 20221127 the dataframe object is already skip the title row
+        If TypeOf csv Is DataFrame Then
+            offset = 0
+        End If
+
+        For Each r As RowObject In csv.Skip(offset)
             Call out.Add(r(index))
         Next
 

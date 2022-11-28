@@ -95,7 +95,9 @@ Namespace IO
     ''' A comma character seperate table file that can be read and write in the EXCEL.
     ''' (一个能够被Excel程序所读取的表格文件)
     ''' </summary>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' csv object will enumerates all of the row objects in the <see cref="_innerTable"/>.
+    ''' </remarks>
     ''' 
     <ActiveViews(File.ActiveViews)>
     Public Class File
