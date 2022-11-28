@@ -351,7 +351,14 @@ Namespace FileSystem
         ''' <param name="fileName">
         ''' the dir object its file name must be ends with the symbol '\' or '/'
         ''' </param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' this function returns two type of the stream:
+        ''' 
+        ''' 1. <see cref="SubStream"/> for readonly
+        ''' 2. <see cref="StreamBuffer"/> for writeonly
+        ''' 
+        ''' based on the target file object is existsed or not
+        ''' </returns>
         Public Function OpenBlock(fileName As String) As Stream
             Dim path As New FilePath("/" & fileName)
             Dim block As StreamBlock
