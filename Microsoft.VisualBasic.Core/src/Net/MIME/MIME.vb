@@ -108,10 +108,16 @@ Namespace Net.Protocols.ContentTypes
                 .Where(Function(x) Not x.IsEmpty) _
                 .GroupBy(Function(x) x.FileExt.ToLower) _
                 .ToDictionary(Function(x) x.Key,
-                              Function(x) x.First)
+                              Function(x)
+                                  Return x.First
+                              End Function)
             ContentTypes = SuffixTable _
                 .Values _
-                .ToDictionary(Function(x) x.MIMEType.ToLower)
+                .ToDictionary(Function(x)
+                                  Return x.MIMEType.ToLower
+                              End Function)
+
+            Call DirectCast(SuffixTable, Dictionary(Of String, ContentType)).Add(".dzi", New ContentType With {.Details = "Deep Zoom Image", .FileExt = ".dzi", .MIMEType = "application/xml", .Name = "Deep Zoom Image"})
         End Sub
 
         <Extension>
