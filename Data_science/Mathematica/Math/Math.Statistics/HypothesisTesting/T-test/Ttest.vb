@@ -153,6 +153,10 @@ Namespace Hypothesis
                 .mu = mu
             }
 
+            If pvalue = 0.0 Then
+                pvalue = 1.0E-100
+            End If
+
             Return New TwoSampleResult With {
                 .DegreeFreedom = df,
                 .Mean = mu,
@@ -223,7 +227,9 @@ Namespace Hypothesis
         Public Function Tcdf(t#, v#) As Double
             Dim x# = v / (v + t ^ 2)
             Dim inc = SpecialFunctions.RegularizedIncompleteBetaFunction(v / 2, 0.5, x)
-            Dim cdf# = 1 - 0.5 * inc
+            Dim halfInc As Double = inc / 2
+            Dim cdf# = 1.0 - halfInc
+
             Return cdf
         End Function
 
