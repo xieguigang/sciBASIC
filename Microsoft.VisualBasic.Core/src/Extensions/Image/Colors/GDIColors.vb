@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::da4a6337270c29dad20ea20152d3b1f2, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Colors\GDIColors.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 406
-    '    Code Lines: 251
-    ' Comment Lines: 108
-    '   Blank Lines: 47
-    '     File Size: 16.07 KB
+' Summaries:
 
 
-    '     Module GDIColors
-    ' 
-    '         Properties: AllDotNetColorNames, AllDotNetPrefixColors, ChartColors
-    ' 
-    '         Function: __getDotNetColors, (+2 Overloads) Alpha, ARGBExpression, AsDefaultColor, Average
-    '                   ColorTranslatorInternal, Darken, Equals, EuclideanDistance, Greyscale
-    '                   HTMLColors, IsColorExpression, IsNullOrEmpty, IsTransparent, Lighten
-    '                   Middle, RGBExpression, ToColor, TranslateColor
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 406
+'    Code Lines: 251
+' Comment Lines: 108
+'   Blank Lines: 47
+'     File Size: 16.07 KB
+
+
+'     Module GDIColors
+' 
+'         Properties: AllDotNetColorNames, AllDotNetPrefixColors, ChartColors
+' 
+'         Function: __getDotNetColors, (+2 Overloads) Alpha, ARGBExpression, AsDefaultColor, Average
+'                   ColorTranslatorInternal, Darken, Equals, EuclideanDistance, Greyscale
+'                   HTMLColors, IsColorExpression, IsNullOrEmpty, IsTransparent, Lighten
+'                   Middle, RGBExpression, ToColor, TranslateColor
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -348,14 +348,74 @@ Namespace Imaging
 
             If exp.StringEmpty Then
                 success = False
-                Return Color.Black
-            ElseIf cache.ContainsKey(exp) Then
-                success = Not cache(exp).IsEmpty
-                Return cache(exp)
-            Else
-                cache(exp) = ColorTranslatorInternal(exp, throwEx, success)
-                Return cache(exp)
+                Return Drawing.Color.Black
             End If
+
+            ' 20221127 fix multiple threading error
+            '
+            ' Error in <globalEnvironment> -> InitializeEnvironment -> "RunAnalysis"("raw" <- &rawPack, "sample_maps"...) -> R_invoke$RunAnalysis -> ".workflow"(...)(Call ".setOutput"(Call ".MSI_met...) -> R_invoke$.workflow -> "autoreport"(...)(Call "progress"(Call "RunMSImagi...) -> "progress"("[***All of the MSI_analysis JOB...)(Call "RunMSImaging"(Call "Patter...) -> progress -> "RunMSImaging"(...)(Call "PatternAnalysis"(Call "Run...) -> "PatternAnalysis"(...)(Call "RunDataVisualization"(Call...) -> "RunDataVisualization"(...)(Call "RunBioDeep"(Call "featureD...) -> "RunBioDeep"(...)(Call "featureDetection"(Call "MS...) -> R_invoke$RunBioDeep -> R_invoke$else_branch_internal -> if_closure -> R_invoke$if_closure_internal -> "checkRegionSigIons"(&args...)(&args...) -> R_invoke$checkRegionSigIons -> R_invoke$else_branch_internal -> if_closure -> R_invoke$if_closure_internal -> "MSI_single_stat"(Call "as.list"(&data, "byrow" <-...)(Call "as.list"(&data, "byrow" <-...) -> R_invoke$MSI_single_stat -> for_loop_[1] -> R_invoke$else_branch_internal -> "MSI_ionStatPlot"(&mz, &met, &sampleinfo, "ionName...)(&mzpack, &mz, &met, &sampleinfo,...) -> R_invoke$MSI_ionStatPlot -> "ggplot"(&data, Call "aes"("x" <- "region...)(&data, Call "aes"("x" <- "region...) -> ggplot
+            ' 1. InvalidOperationException: Operations that change non-concurrent collections must have exclusive access. A concurrent update was performed on this collection and corrupted its state. The collection's state is no longer correct.
+            ' 2. stackFrames: 
+            ' at System.Collections.Generic.Dictionary`2.FindValue(TKey key)
+            ' at System.Collections.Generic.Dictionary`2.ContainsKey(TKey key)
+            ' at Microsoft.VisualBasic.Imaging.GDIColors.TranslateColor(String exp, Boolean throwEx, Boolean& success)
+            ' at Microsoft.VisualBasic.Imaging.Drawing2D.Colors.Viridis._Closure$__._Lambda$__1-0(String value)
+            ' at System.Linq.Enumerable.SelectArrayIterator`2.ToArray()
+            ' at Microsoft.VisualBasic.Imaging.Drawing2D.Colors.CustomDesigns.Paper()
+            ' at Microsoft.VisualBasic.Imaging.Drawing2D.Colors.Designer.getColorsInternal(String term)
+            ' at Microsoft.VisualBasic.Imaging.Drawing2D.Colors.Designer.GetColors(String exp)
+            ' at ggplot.ggplot..ctor(Theme theme)
+            ' at ggplot.ggplot.CreateRender(Object driver, Theme theme)
+            ' at ggplot.ggplot2.ggplot(Object data, Object mapping, Object colorSet, list args, Environment environment)
+
+            ' "bar" <- (((((((((Call "ggplot"(&data, Call "aes"("x" <- "region_group", "y" <- "intensity"), "padding" <- &layout_left) + Call "geom_hline"("yintercept" <- Call "mean"(&data["intensity"]), "linetype" <- "dash", "line.width" <- 6, "color" <- "red")) + Call "ggStatPlot"(&colorMap)) + Call "geom_jitter"("width" <- 0.3, "radius" <- &jitter_size, "color" <- &colorMap)) + Call "ylab"("intensity")) + Call "xlab"("")) + Call "scale_y_continuous"("labels" <- "G2")) + Call "stat_compare_means"("method" <- "anova", "label.y" <- 1600)) + Call "stat_compare_means"("label" <- "p.signif", "method" <- "t.test", "ref.group" <- ".all.", "hide.ns" <- True)) + Call "theme"("axis.text.x" <- Call "element_text"("angle" <- 45), "plot.title" <- Call "element_text"("family" <- "Cambria Math", "size" <- 16)))
+            ' ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+            ' ggplot2.R#_interop::.ggplot at ggplot.dll:line <unknown>
+            ' MSImaging.call_function."ggplot"(&data, Call "aes"("x" <- "region...)(&data, Call "aes"("x" <- "region...) at MSI_ionStatPlot.R:line 94
+            ' MSImaging.declare_function.R_invoke$MSI_ionStatPlot at MSI_ionStatPlot.R:line 45
+            ' MSI.call_function."MSI_ionStatPlot"(&mz, &met, &sampleinfo, "ionName...)(&mzpack, &mz, &met, &sampleinfo,...) at MSI_single_stat.R:line 57
+            ' unknown.unknown.R_invoke$else_branch_internal at n/a:line n/a
+            ' MSI.forloop.for_loop_[1] at MSI_single_stat.R:line 45
+            ' MSI.declare_function.R_invoke$MSI_single_stat at MSI_single_stat.R:line 8
+            ' MSI.call_function."MSI_single_stat"(Call "as.list"(&data, "byrow" <-...)(Call "as.list"(&data, "byrow" <-...) at checkRegionSigIons.R:line 73
+            ' unknown.unknown.R_invoke$if_closure_internal at n/a:line n/a
+            ' MSI.n/a.if_closure at checkRegionSigIons.R:line 72
+            ' unknown.unknown.R_invoke$else_branch_internal at n/a:line n/a
+            ' MSI.declare_function.R_invoke$checkRegionSigIons at checkRegionSigIons.R:line 1
+            ' MSI.call_function."checkRegionSigIons"(&args...)(&args...) at biodeep.R:line 23
+            ' unknown.unknown.R_invoke$if_closure_internal at n/a:line n/a
+            ' MSI.n/a.if_closure at biodeep.R:line 21
+            ' unknown.unknown.R_invoke$else_branch_internal at n/a:line n/a
+            ' MSI.declare_function.R_invoke$RunBioDeep at biodeep.R:line 7
+            ' MSI.call_function."RunBioDeep"(...)(Call "featureDetection"(Call "MS...) at workflow.R:line 36
+            ' MSI.call_function."RunDataVisualization"(...)(Call "RunBioDeep"(Call "featureD...) at workflow.R:line 40
+            ' MSI.call_function."PatternAnalysis"(...)(Call "RunDataVisualization"(Call...) at workflow.R:line 41
+            ' MSI.call_function."RunMSImaging"(...)(Call "PatternAnalysis"(Call "Run...) at workflow.R:line 45
+            ' linq.R#_interop::.progress at REnv.dll:line <unknown>
+            ' MSI.call_function."progress"("[***All of the MSI_analysis JOB...)(Call "RunMSImaging"(Call "Patter...) at workflow.R:line 47
+            ' MSI.call_function."autoreport"(...)(Call "progress"(Call "RunMSImagi...) at workflow.R:line 48
+            ' MSI.declare_function.R_invoke$.workflow at workflow.R:line 8
+            ' MSI.call_function.".workflow"(...)(Call ".setOutput"(Call ".MSI_met...) at MSI_analysis.R:line 294
+            ' MSI.declare_function.R_invoke$RunAnalysis at MSI_analysis.R:line 49
+            ' SMRUCC/R#.call_function."RunAnalysis"("raw" <- &rawPack, "sample_maps"...) at MSI_analysis.R:line 826
+            ' SMRUCC/R#.n/a.InitializeEnvironment at MSI_analysis.R:line 0
+            ' SMRUCC/R#.global.<globalEnvironment> at <globalEnvironment>:line n/a
+
+            SyncLock cache
+                If cache.ContainsKey(exp) Then
+                    success = Not cache(exp).IsEmpty
+                    Return cache(exp)
+                End If
+            End SyncLock
+
+            Dim color As Color = ColorTranslatorInternal(exp, throwEx, success)
+
+            SyncLock cache
+                cache(exp) = color
+            End SyncLock
+
+            Return color
         End Function
 
         Private Function ColorTranslatorInternal(exp$, throwEx As Boolean, ByRef success As Boolean) As Color
