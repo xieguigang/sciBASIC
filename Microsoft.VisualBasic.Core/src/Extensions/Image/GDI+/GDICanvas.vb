@@ -2315,38 +2315,26 @@ Namespace Imaging
         Public Overrides Sub DrawPolygon(pen As Pen, points() As Point)
             Call Graphics.DrawPolygon(pen, points)
         End Sub
-        '
-        ' Summary:
-        '     Draws a polygon defined by an array of System.Drawing.PointF structures.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen that determines the color, width, and style of the polygon.
-        '
-        '   points:
-        '     Array of System.Drawing.PointF structures that represent the vertices of the
-        '     polygon.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.-or-points is null.
+
+        ''' <summary>
+        ''' Draws a polygon defined by an array of System.Drawing.PointF structures.
+        ''' </summary>
+        ''' <param name="pen">System.Drawing.Pen that determines the color, width, and style of the polygon.</param>
+        ''' <param name="points">Array of System.Drawing.PointF structures that represent the vertices of the
+        ''' polygon.</param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub DrawPolygon(pen As Pen, points() As PointF)
             Call Graphics.DrawPolygon(pen, points)
         End Sub
-        '
-        ' Summary:
-        '     Draws a rectangle specified by a System.Drawing.Rectangle structure.
-        '
-        ' Parameters:
-        '   pen:
-        '     A System.Drawing.Pen that determines the color, width, and style of the rectangle.
-        '
-        '   rect:
-        '     A System.Drawing.Rectangle structure that represents the rectangle to draw.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.
+
+        ''' <summary>
+        ''' Draws a rectangle specified by a System.Drawing.Rectangle structure.
+        ''' </summary>
+        ''' <param name="pen">A System.Drawing.Pen that determines the color, width, and style of the rectangle.</param>
+        ''' <param name="rect">A System.Drawing.Rectangle structure that represents the rectangle to draw.</param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub DrawRectangle(pen As Pen, rect As Rectangle)
             Call Graphics.DrawRectangle(pen, rect)
         End Sub
@@ -4203,77 +4191,61 @@ Namespace Imaging
 
         End Sub
 
-        '
-        ' Summary:
-        '     Resets the clip region of this System.Drawing.Graphics to an infinite region.
+        ''' <summary>
+        ''' Resets the clip region of this System.Drawing.Graphics to an infinite region.
+        ''' </summary>
         Public Overrides Sub ResetClip()
-
+            Call Graphics.ResetClip()
         End Sub
-        '
-        ' Summary:
-        '     Resets the world transformation matrix of this System.Drawing.Graphics to the
-        '     identity matrix.
+
+        ''' <summary>
+        ''' Resets the world transformation matrix of this System.Drawing.Graphics to the
+        ''' identity matrix.
+        ''' </summary>
         Public Overrides Sub ResetTransform()
             Call Graphics.ResetTransform()
         End Sub
 
-        '
-        ' Summary:
-        '     Applies the specified rotation to the transformation matrix of this System.Drawing.Graphics.
-        '
-        ' Parameters:
-        '   angle:
-        '     Angle of rotation in degrees.
+        ''' <summary>
+        ''' Applies the specified rotation to the transformation matrix of this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <param name="angle">Angle of rotation in degrees.</param>
         Public Overrides Sub RotateTransform(angle As Single)
             Call Graphics.RotateTransform(angle)
         End Sub
-        '
-        ' Summary:
-        '     Applies the specified rotation to the transformation matrix of this System.Drawing.Graphics
-        '     in the specified order.
-        '
-        ' Parameters:
-        '   angle:
-        '     Angle of rotation in degrees.
-        '
-        '   order:
-        '     Member of the System.Drawing.Drawing2D.MatrixOrder enumeration that specifies
-        '     whether the rotation is appended or prepended to the matrix transformation.
+
+        ''' <summary>
+        ''' Applies the specified rotation to the transformation matrix of this System.Drawing.Graphics
+        ''' in the specified order.
+        ''' </summary>
+        ''' <param name="angle">Angle of rotation in degrees.</param>
+        ''' <param name="order">Member of the System.Drawing.Drawing2D.MatrixOrder enumeration that specifies
+        ''' whether the rotation is appended or prepended to the matrix transformation.</param>
         Public Overrides Sub RotateTransform(angle As Single, order As MatrixOrder)
-
+            Call Graphics.RotateTransform(angle, order)
         End Sub
-        '
-        ' Summary:
-        '     Applies the specified scaling operation to the transformation matrix of this
-        '     System.Drawing.Graphics by prepending it to the object's transformation matrix.
-        '
-        ' Parameters:
-        '   sx:
-        '     Scale factor in the x direction.
-        '
-        '   sy:
-        '     Scale factor in the y direction.
+
+        ''' <summary>
+        ''' Applies the specified scaling operation to the transformation matrix of this
+        ''' System.Drawing.Graphics by prepending it to the object's transformation matrix.
+        ''' </summary>
+        ''' <param name="sx">Scale factor in the x direction.</param>
+        ''' <param name="sy">Scale factor in the y direction.</param>
         Public Overrides Sub ScaleTransform(sx As Single, sy As Single)
-
+            Call Graphics.ScaleTransform(sx, sy)
         End Sub
-        '
-        ' Summary:
-        '     Applies the specified scaling operation to the transformation matrix of this
-        '     System.Drawing.Graphics in the specified order.
-        '
-        ' Parameters:
-        '   sx:
-        '     Scale factor in the x direction.
-        '
-        '   sy:
-        '     Scale factor in the y direction.
-        '
-        '   order:
-        '     Member of the System.Drawing.Drawing2D.MatrixOrder enumeration that specifies
-        '     whether the scaling operation is prepended or appended to the transformation
-        '     matrix.
-        Public Overrides Sub ScaleTransform(sx As Single, sy As Single, order As MatrixOrder)
 
+        ''' <summary>
+        ''' Applies the specified scaling operation to the transformation matrix of this
+        ''' System.Drawing.Graphics in the specified order.
+        ''' </summary>
+        ''' <param name="sx">Scale factor in the x direction.</param>
+        ''' <param name="sy">Scale factor in the y direction.</param>
+        ''' <param name="order">Member of the System.Drawing.Drawing2D.MatrixOrder enumeration that specifies
+        ''' whether the scaling operation is prepended or appended to the transformation
+        ''' matrix.</param>
+        Public Overrides Sub ScaleTransform(sx As Single, sy As Single, order As MatrixOrder)
+            Call Graphics.ScaleTransform(sx, sy, order)
         End Sub
         '
         ' Summary:
