@@ -1477,7 +1477,11 @@ Public Module App
         End If
 
         For Each hook As Action In appExitHooks
-            Call hook()
+            Try
+                Call hook()
+            Catch ex As Exception
+                ' just ignores of the cleanup events
+            End Try
         Next
 
         Call My.InnerQueue.WaitQueue()
