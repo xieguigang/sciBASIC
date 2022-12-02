@@ -4462,17 +4462,13 @@ Namespace Imaging
         Public Overrides Sub TranslateClip(dx As Single, dy As Single)
 
         End Sub
-        '
-        ' Summary:
-        '     Changes the origin of the coordinate system by prepending the specified translation
-        '     to the transformation matrix of this System.Drawing.Graphics.
-        '
-        ' Parameters:
-        '   dx:
-        '     The x-coordinate of the translation.
-        '
-        '   dy:
-        '     The y-coordinate of the translation.
+
+        ''' <summary>
+        ''' Changes the origin of the coordinate system by prepending the specified translation
+        ''' to the transformation matrix of this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <param name="dx">The x-coordinate of the translation.</param>
+        ''' <param name="dy">The y-coordinate of the translation.</param>
         Public Overrides Sub TranslateTransform(dx As Single, dy As Single)
             Call Graphics.TranslateTransform(dx, dy)
         End Sub
