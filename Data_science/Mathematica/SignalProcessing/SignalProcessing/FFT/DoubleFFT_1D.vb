@@ -168,7 +168,7 @@ Namespace FFT
         ''' <code>a</code>d Complex number is stored as two double values in
         ''' sequence: the real and imaginary part, i.ed the size of the input array
         ''' must be greater or equal 2*nd The physical layout of the input data has
-        ''' to be as follows:<br>
+        ''' to be as follows:&lt;br>
         ''' 
         ''' <pre>
         ''' a[2*k] = Re[k],
@@ -187,7 +187,7 @@ Namespace FFT
         ''' <code>a</code>d Complex number is stored as two double values in
         ''' sequence: the real and imaginary part, i.ed the size of the input array
         ''' must be greater or equal 2*nd The physical layout of the input data has
-        ''' to be as follows:<br>
+        ''' to be as follows:&lt;br>
         ''' 
         ''' <pre>
         ''' a[offa+2*k] = Re[k],
@@ -218,7 +218,7 @@ Namespace FFT
         ''' <code>a</code>d Complex number is stored as two double values in
         ''' sequence: the real and imaginary part, i.ed the size of the input array
         ''' must be greater or equal 2*nd The physical layout of the input data has
-        ''' to be as follows:<br>
+        ''' to be as follows:&lt;br>
         ''' 
         ''' <pre>
         ''' a[2*k] = Re[k],
@@ -226,10 +226,10 @@ Namespace FFT
         ''' </pre>
         ''' 
         ''' </summary>
-        ''' <param name="a"></param>
-        '''            data to transform
-        ''' <param name="scale"></param>
-        '''            if true then scaling is performed</summary>  
+        ''' <param name="a">
+        '''            data to transform</param>
+        ''' <param name="scale">
+        '''            if true then scaling is performed</param> 
         Public Sub ComplexInverse(a As Double(), scale As Boolean)
             ComplexInverse(a, 0, scale)
         End Sub
@@ -239,7 +239,7 @@ Namespace FFT
         ''' <code>a</code>d Complex number is stored as two double values in
         ''' sequence: the real and imaginary part, i.ed the size of the input array
         ''' must be greater or equal 2*nd The physical layout of the input data has
-        ''' to be as follows:<br>
+        ''' to be as follows:&lt;br>
         ''' 
         ''' <pre>
         ''' a[offa+2*k] = Re[k],
@@ -247,12 +247,12 @@ Namespace FFT
         ''' </pre>
         ''' 
         ''' </summary>
-        ''' <param name="a"></param>
-        '''            data to transform
-        ''' <param name="offa"></param>
-        '''            index of the first element in array <code>a</code>
-        ''' <param name="scale"></param>
-        '''            if true then scaling is performed</summary>    
+        ''' <param name="a">
+        '''            data to transform</param>
+        ''' <param name="offa">
+        '''            index of the first element in array <code>a</code></param>
+        ''' <param name="isScale">
+        '''            if true then scaling is performed    </param>
         Public Sub ComplexInverse(a As Double(), offa As Integer, isScale As Boolean)
             If n = 1 Then Return
             Select Case plan
@@ -272,7 +272,7 @@ Namespace FFT
 #Region "Real Forward"
         ''' <summary>
         ''' Computes 1D forward DFT of real data leaving the result in <code>a</code>
-        ''' d The physical layout of the output data is as follows:<br>
+        ''' d The physical layout of the output data is as follows:&lt;br>
         ''' 
         ''' if n is even then
         ''' 
@@ -296,15 +296,15 @@ Namespace FFT
         ''' original data, use <code>realInverse</code> on the output of this method.
         ''' 
         ''' </summary>
-        ''' <param name="a"></param>
-        '''            data to transform</summary>    
+        ''' <param name="a">
+        '''            data to transform   </param>
         Public Sub RealForward(a As Double())
             RealForward(a, 0)
         End Sub
 
         ''' <summary>
         ''' Computes 1D forward DFT of real data leaving the result in <code>a</code>
-        ''' d The physical layout of the output data is as follows:<br>
+        ''' d The physical layout of the output data is as follows:&lt;br>
         ''' 
         ''' if n is even then
         ''' 
@@ -328,10 +328,10 @@ Namespace FFT
         ''' original data, use <code>realInverse</code> on the output of this method.
         ''' 
         ''' </summary>
-        ''' <param name="a"></param>
-        '''            data to transform
-        ''' <param name="offa"></param>
-        '''            index of the first element in array <code>a</code></summary>   
+        ''' <param name="a">
+        '''            data to transform</param>
+        ''' <param name="offa">
+        '''            index of the first element in array <code>a</code> </param>
         Public Sub RealForward(a As Double(), offa As Integer)
             If n = 1 Then Return
 
@@ -461,7 +461,7 @@ Namespace FFT
 #Region "Real Inverse"
         ''' <summary>
         ''' Computes 1D inverse DFT of real data leaving the result in <code>a</code>
-        ''' d The physical layout of the input data has to be as follows:<br>
+        ''' d The physical layout of the input data has to be as follows:&lt;br>
         ''' 
         ''' if n is even then
         ''' 
@@ -484,19 +484,17 @@ Namespace FFT
         ''' inverse transform, use <code>realInverseFull</code>.
         ''' 
         ''' </summary>
-        ''' <param name="a"></param>
-        '''            data to transform
+        ''' <param name="a">data to transform</param>
+        '''            
         ''' 
-        ''' <param name="scale"></param>
-        '''            if true then scaling is performed
-        ''' </summary>    
+        ''' <param name="scale">if true then scaling is performed</param>   
         Public Sub RealInverse(a As Double(), scale As Boolean)
             RealInverse(a, 0, scale)
         End Sub
 
         ''' <summary>
         ''' Computes 1D inverse DFT of real data leaving the result in <code>a</code>
-        ''' d The physical layout of the input data has to be as follows:<br>
+        ''' d The physical layout of the input data has to be as follows:&lt;br>
         ''' 
         ''' if n is even then
         ''' 
@@ -519,13 +517,12 @@ Namespace FFT
         ''' inverse transform, use <code>realInverseFull</code>.
         ''' 
         ''' </summary>
-        ''' <param name="a"></param>
-        '''            data to transform
-        ''' <param name="offa"></param>
-        '''            index of the first element in array <code>a</code>
-        ''' <param name="scale"></param>
-        '''            if true then scaling is performed
-        ''' </summary>     
+        ''' <param name="a">
+        '''            data to transform</param>
+        ''' <param name="offa">
+        '''            index of the first element in array <code>a</code></param>
+        ''' <param name="isScale">
+        '''            if true then scaling is performed  </param>
         Public Sub RealInverse(a As Double(), offa As Integer, isScale As Boolean)
             If n = 1 Then Return
             Select Case plan
@@ -587,12 +584,12 @@ Namespace FFT
         ''' first n elements filled with real data.
         ''' 
         ''' </summary>
-        ''' <param name="a"></param>
-        '''            data to transform
-        ''' <param name="offa"></param>
-        '''            index of the first element in array <code>a</code>
-        ''' <param name="scale"></param>
-        '''            if true then scaling is performed
+        ''' <param name="a"> data to transform</param>
+        '''           
+        ''' <param name="offa">index of the first element in array <code>a</code></param>
+        '''            
+        ''' <param name="isScale">if true then scaling is performed</param>
+        '''            
         Public Sub RealInverseFull(a As Double(), offa As Integer, isScale As Boolean)
             Dim twon = 2 * n
             Select Case plan
