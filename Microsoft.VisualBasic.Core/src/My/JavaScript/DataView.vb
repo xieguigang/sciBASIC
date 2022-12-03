@@ -54,6 +54,7 @@
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 
 Namespace My.JavaScript
 
@@ -73,7 +74,12 @@ Namespace My.JavaScript
 
         Protected stream As Stream
 
+        ''' <summary>
+        ''' the <see cref="System.IO.Stream.Length"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public Overridable ReadOnly Property byteLength As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return stream.Length
             End Get
