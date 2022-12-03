@@ -3765,22 +3765,14 @@ Namespace Imaging
         Public Overrides Sub FillEllipse(brush As Brush, rect As Rectangle)
             Call Graphics.FillEllipse(brush, rect)
         End Sub
-        '
-        ' Summary:
-        '     Fills the interior of an ellipse defined by a bounding rectangle specified by
-        '     a System.Drawing.RectangleF structure.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   rect:
-        '     System.Drawing.RectangleF structure that represents the bounding rectangle that
-        '     defines the ellipse.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.
+
+        ''' <summary>
+        ''' Fills the interior of an ellipse defined by a bounding rectangle specified by
+        ''' a System.Drawing.RectangleF structure.
+        ''' </summary>
+        ''' <param name="brush">System.Drawing.Brush that determines the characteristics of the fill.</param>
+        ''' <param name="rect">System.Drawing.RectangleF structure that represents the bounding rectangle that
+        ''' defines the ellipse.</param>
         Public Overrides Sub FillEllipse(brush As Brush, rect As RectangleF)
             Call Graphics.FillEllipse(brush, rect)
         End Sub
