@@ -314,10 +314,15 @@ Public Module FourierTransform
     Private Const maxLength As Integer = 16384
     Private Const minBits As Integer = 1
     Private Const maxBits As Integer = 14
+
     Private reversedBits As Integer()() = New Integer(maxBits - 1)() {}
     Private complexRotation As Complex(,)() = New Complex(maxBits - 1, 1)() {}
 
-    ' Get array, indicating which data members should be swapped before FFT
+    ''' <summary>
+    ''' Get array, indicating which data members should be swapped before FFT
+    ''' </summary>
+    ''' <param name="numberOfBits"></param>
+    ''' <returns></returns>
     Private Function GetReversedBits(numberOfBits As Integer) As Integer()
         If (numberOfBits < minBits) OrElse (numberOfBits > maxBits) Then
             Throw New ArgumentOutOfRangeException()
@@ -344,7 +349,12 @@ Public Module FourierTransform
         Return reversedBits(numberOfBits - 1)
     End Function
 
-    ' Get rotation of complex number
+    ''' <summary>
+    ''' Get rotation of complex number
+    ''' </summary>
+    ''' <param name="numberOfBits"></param>
+    ''' <param name="direction__1"></param>
+    ''' <returns></returns>
     Private Function GetComplexRotation(numberOfBits As Integer, direction__1 As Direction) As Complex()
         Dim directionIndex As Integer = If((direction__1 = Direction.Forward), 0, 1)
 
@@ -371,7 +381,10 @@ Public Module FourierTransform
         Return complexRotation(numberOfBits - 1, directionIndex)
     End Function
 
-    ' Reorder data for FFT using
+    ''' <summary>
+    ''' Reorder data for FFT using
+    ''' </summary>
+    ''' <param name="data"></param>
     Private Sub ReorderData(data As Complex())
         Dim len As Integer = data.Length
 
