@@ -132,8 +132,8 @@ Namespace d3js.scale
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function LinearScale(domain As IEnumerable(Of Double)) As LinearScale
-            Return d3js.scale.linear.domain(domain)
+        Public Function LinearScale(domain As IEnumerable(Of Double), Optional reverse As Boolean = False) As LinearScale
+            Return d3js.scale.linear(reverse:=reverse).domain(domain)
         End Function
     End Module
 End Namespace

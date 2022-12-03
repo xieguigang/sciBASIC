@@ -167,6 +167,7 @@ Namespace Graphic.Canvas
         Public Property xAxisLayout As XAxisLayoutStyles = XAxisLayoutStyles.Bottom
 
         Public Property xAxisRotate As Double = 0
+        Public Property xAxisReverse As Boolean = False
 
         ''' <summary>
         ''' Y坐标轴的布局
