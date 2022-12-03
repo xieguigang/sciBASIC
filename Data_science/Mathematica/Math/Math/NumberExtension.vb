@@ -20,6 +20,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' https://github.com/cobaltblueocean/Mercury.Language.Extensions
@@ -63,24 +64,6 @@ Public Module NumberExtension
         Return Convert.ChangeType(i, GetType(T))
     End Function
 
-    <Extension()>
-    Public Function IsNumber(Of T As {Structure, IEquatable(Of T), IFormattable})(value As T) As Boolean
-        'return value is sbyte
-        '    || value is byte
-        '    || value is short
-        '    || value is ushort
-        '    || value is int
-        '    || value is uint
-        '    || value is long
-        '    || value is ulong
-        '    || value is float
-        '    || value is double
-        '    || value is decimal;
-
-        Dim num As Double = Nothing
-        Return Double.TryParse(value.ToString(), num)
-    End Function
-
     ''' <summary>
     ''' This is the Taylor expansion of $$\frac{\exp(x)-1}{x}$$ - note for $$|x| > 10^{-10}$$ the expansion is note used
     ''' </summary>
@@ -88,7 +71,7 @@ Public Module NumberExtension
     ''' <returns>result</returns>
     <Extension()>
     Public Function Epsilon(x As Double) As Double
-        If Math.Abs(x) > 0.0000000001 Then
+        If stdNum.Abs(x) > 0.0000000001 Then
             Return Expm1(x) / x
         End If
         Return x.Taylor(COEFF1)
@@ -102,7 +85,7 @@ Public Module NumberExtension
     <Extension()>
     Public Function EpsilonP(x As Double) As Double
 
-        If Math.Abs(x) > 0.0000001 Then
+        If stdNum.Abs(x) > 0.0000001 Then
             Return ((x - 1) * Expm1(x) + x) / x / x
         End If
         Return x.Taylor(COEFF2)
@@ -116,7 +99,7 @@ Public Module NumberExtension
     <Extension()>
     Public Function EpsilonPP(x As Double) As Double
 
-        If Math.Abs(x) > 0.00001 Then
+        If stdNum.Abs(x) > 0.00001 Then
             Dim x2 = x * x
             Dim x3 = x * x2
             Return (Expm1(x) * (x2 - 2 * x + 2) + x2 - 2 * x) / x3
@@ -135,30 +118,13 @@ Public Module NumberExtension
     End Function
 
     <Extension()>
-    Public Function IsPowerOf2(n As Integer) As Boolean
-        If n > 0 AndAlso (n And n - 1) = 0 Then
-            Return True
-        Else
-            Return False
-        End If
-    End Function
+    Public Function LeadingZeros(x As Integer) As Integer
+        ' compile time constant
+        Static numIntBits As Integer = Marshal.SizeOf(GetType(Integer)) * 8
 
-    <Extension()>
-    Public Function IsPowerOf2(n As Long) As Boolean
-        If n > 0 AndAlso (n And n - 1) = 0 Then
-            Return True
-        Else
-            Return False
-        End If
-    End Function
-
-    <Extension()>
-    Public Function LeadingZeros(x As Integer) As Integer 'compile time constant
-        Const numIntBits As Integer = Marshal.SizeOf(GetType(Integer)) * 8; //compile time constant
-
-            ''' 
-            'do the smearing
-            x = x Or x >> 1
+        ''' 
+        'do the smearing
+        x = x Or x >> 1
         x = x Or x >> 2
         x = x Or x >> 4
         x = x Or x >> 8
@@ -307,23 +273,23 @@ Public Module NumberExtension
             nwh = nw >> 1
             delta = 0.78539816339744828 / nwh
             delta2 = delta * 2
-            wn4r = Math.Cos(delta * nwh)
+            wn4r = stdNum.Cos(delta * nwh)
             w(0) = 1
             w(1) = wn4r
             If nwh = 4 Then
-                w(2) = Math.Cos(delta2)
-                w(3) = Math.Sin(delta2)
+                w(2) = stdNum.Cos(delta2)
+                w(3) = stdNum.Sin(delta2)
             ElseIf nwh > 4 Then
                 nw.MakeIPT(ip)
-                w(2) = 0.5 / Math.Cos(delta2)
-                w(3) = 0.5 / Math.Cos(delta * 6)
+                w(2) = 0.5 / stdNum.Cos(delta2)
+                w(3) = 0.5 / stdNum.Cos(delta * 6)
                 For j = 4 To nwh - 1 Step 4
                     deltaj = delta * j
                     deltaj3 = 3 * deltaj
-                    w(j) = Math.Cos(deltaj)
-                    w(j + 1) = Math.Sin(deltaj)
-                    w(j + 2) = Math.Cos(deltaj3)
-                    w(j + 3) = -Math.Sin(deltaj3)
+                    w(j) = stdNum.Cos(deltaj)
+                    w(j + 1) = stdNum.Sin(deltaj)
+                    w(j + 2) = stdNum.Cos(deltaj3)
+                    w(j + 3) = -stdNum.Sin(deltaj3)
                 Next
             End If
             nw0 = 0
@@ -370,12 +336,12 @@ Public Module NumberExtension
         If nc > 1 Then
             nch = nc >> 1
             delta = 0.78539816339744828 / nch
-            c(startc) = Math.Cos(delta * nch)
+            c(startc) = stdNum.Cos(delta * nch)
             c(startc + nch) = 0.5 * c(startc)
             For j = 1 To nch - 1
                 deltaj = delta * j
-                c(startc + j) = 0.5 * Math.Cos(deltaj)
-                c(startc + nc - j) = 0.5 * Math.Sin(deltaj)
+                c(startc + j) = 0.5 * stdNum.Cos(deltaj)
+                c(startc + nc - j) = 0.5 * stdNum.Sin(deltaj)
             Next
         End If
     End Sub
@@ -389,12 +355,12 @@ Public Module NumberExtension
         If nc > 1 Then
             nch = nc >> 1
             delta = 0.78539816339744828 / nch
-            c(startc) = Math.Cos(delta * nch)
+            c(startc) = stdNum.Cos(delta * nch)
             c(startc + nch) = 0.5 * c(startc)
             For j = 1 To nch - 1
                 deltaj = delta * j
-                c(startc + j) = 0.5 * Math.Cos(deltaj)
-                c(startc + nc - j) = 0.5 * Math.Sin(deltaj)
+                c(startc + j) = 0.5 * stdNum.Cos(deltaj)
+                c(startc + nc - j) = 0.5 * stdNum.Sin(deltaj)
             Next
         End If
     End Sub
@@ -409,12 +375,12 @@ Public Module NumberExtension
         If nc > 1 Then
             nch = nc >> 1
             delta = 0.7853982F / nch
-            c(startc) = CSng(Math.Cos(delta * nch))
+            c(startc) = CSng(stdNum.Cos(delta * nch))
             c(startc + nch) = 0.5F * c(startc)
             For j = 1 To nch - 1
                 deltaj = delta * j
-                c(startc + j) = 0.5F * CSng(Math.Cos(deltaj))
-                c(startc + nc - j) = 0.5F * CSng(Math.Sin(deltaj))
+                c(startc + j) = 0.5F * CSng(stdNum.Cos(deltaj))
+                c(startc + nc - j) = 0.5F * CSng(stdNum.Sin(deltaj))
             Next
         End If
     End Sub
@@ -455,7 +421,6 @@ Public Module NumberExtension
     ''' </summary>
     ''' <param name="x">the argument to <em>e</em><sup>x</sup> - 1.</param>
     ''' <returns><em>e</em> raised to the power <code>x</code> minus one.</returns>
-    ''' <seecref=""></see>
     Public Function Expm1(x As Double) As Double
         ' Method
         '   1d Argument reduction:
@@ -538,7 +503,7 @@ Public Module NumberExtension
         Dim l_bits As ULong
 
         c = 0.0
-        y = Math.Abs(x)
+        y = stdNum.Abs(x)
 
         bits = BitConverter.DoubleToInt64Bits(y)
         h_bits = GetHighDWord(bits)
@@ -681,8 +646,10 @@ Public Module NumberExtension
     ''' <param name="x"></param>
     ''' <returns></returns>
     Private Function GetHighDWord(x As Long) As ULong
-        Return (CULng(x) And &HFFFFFFFF00000000LUL) >> 32    ' Java is using 0xffffffff00000000L (ulong) since the data type is different.
-        End Function
+        ' Java is using 0xffffffff00000000L (ulong) since the data type is different.
+        Const hdw As ULong = &HFFFFFFFF00000000L
+        Return (CULng(x) And hdw) >> 32
+    End Function
 
     Private Function BuildDouble(lowDWord As ULong, highDWord As ULong) As Double
         Return BitConverter.Int64BitsToDouble((highDWord And &HFFFFFFFFL) << 32 Or lowDWord And &HFFFFFFFFL)

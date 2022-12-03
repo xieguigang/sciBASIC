@@ -18,35 +18,32 @@
 ' See the License for the specific language governing permissions and
 ' limitations under the License.
 
-''' **** BEGIN LICENSE BLOCK ****
-''' JTransforms
-''' Copyright (c) 2007 onward, Piotr Wendykier
-''' All rights reserved.
-''' 
-''' Redistribution and use in source and binary forms, with or without
-''' modification, are permitted provided that the following conditions are met:
-''' 
-''' 1d Redistributions of source code must retain the above copyright notice, this
-'''    list of conditions and the following disclaimerd 
-''' 2d Redistributions in binary form must reproduce the above copyright notice,
-'''    this list of conditions and the following disclaimer in the documentation
-'''    and/or other materials provided with the distribution.
-'''
-''' THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-''' ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-''' WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-''' DISCLAIMEDd IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-''' ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-''' (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-''' LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-''' ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-''' (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-''' SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-'''
-''' **** END LICENSE BLOCK ****////
-Imports System
-Imports System.Diagnostics
-Imports System.Threading.Tasks
+' **** BEGIN LICENSE BLOCK ****
+' JTransforms
+' Copyright (c) 2007 onward, Piotr Wendykier
+' All rights reserved.
+' 
+' Redistribution and use in source and binary forms, with or without
+' modification, are permitted provided that the following conditions are met:
+' 
+' 1d Redistributions of source code must retain the above copyright notice, this
+'    list of conditions and the following disclaimerd 
+' 2d Redistributions in binary form must reproduce the above copyright notice,
+'    this list of conditions and the following disclaimer in the documentation
+'    and/or other materials provided with the distribution.
+'
+' THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+' ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+' WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+' DISCLAIMEDd IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+' ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+' (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+' LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+' ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+' (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+' SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+'
+' **** END LICENSE BLOCK ****////
 
 Namespace FFT
 
@@ -96,7 +93,7 @@ Namespace FFT
 
         'private double[] bk2l;
 
-        Private plan As FFT.Plans
+        Private plan As Plans
 
         'private Boolean useLargeArrays;
 
@@ -122,7 +119,7 @@ Namespace FFT
 
             If Not n.IsPowerOf2() Then
                 If GetReminder(n, factors) >= 211 Then
-                    plan = FFT.Plans.BLUESTEIN
+                    plan = Plans.BLUESTEIN
                     nBluestein = (n * 2 - 1).NextPowerOf2()
                     bk1 = New Double(2 * nBluestein - 1) {}
                     bk2 = New Double(2 * nBluestein - 1) {}
@@ -141,14 +138,14 @@ Namespace FFT
                     End If
                     bluesteini()
                 Else
-                    plan = FFT.Plans.MIXED_RADIX
+                    plan = Plans.MIXED_RADIX
                     wtable = New Double(4 * n + 15 - 1) {}
                     wtable_r = New Double(2 * n + 15 - 1) {}
                     cffti()
                     rffti()
                 End If
             Else
-                plan = FFT.Plans.SPLIT_RADIX
+                plan = Plans.SPLIT_RADIX
                 ip = New Integer(2 + CInt(System.Math.Ceiling(2 + CDbl(1 << CInt(System.Math.Log(n + 0.5) / System.Math.Log(2)) / 2))) - 1) {}
                 w = New Double(n - 1) {}
                 Dim twon = 2 * n
@@ -179,8 +176,9 @@ Namespace FFT
         ''' </pre>
         ''' 
         ''' </summary>
-        ''' <param name="a"></param>
-        '''            data to transform</summary>        Public Sub ComplexForward(a As Double())
+        ''' <param name="a"> data to transform</param>
+        '''            
+        Public Sub ComplexForward(a As Double())
             ComplexForward(a, 0)
         End Sub
 
@@ -200,14 +198,15 @@ Namespace FFT
         ''' <param name="a"></param>
         '''            data to transform
         ''' <param name="offa"></param>
-        '''            index of the first element in array <code>a</code></summary>        Public Sub ComplexForward(a As Double(), offa As Integer)
-        If n = 1 Then Return
+        '''            index of the first element in array <code>a</code>  
+        Public Sub ComplexForward(a As Double(), offa As Integer)
+            If n = 1 Then Return
             Select Case plan
-        Case FFT.Plans.SPLIT_RADIX
+                Case Plans.SPLIT_RADIX
                     cftbsub(2 * n, a, offa, ip, nw, w)
-                Case FFT.Plans.MIXED_RADIX
+                Case Plans.MIXED_RADIX
                     cfftf(a, offa, -1)
-                Case FFT.Plans.BLUESTEIN
+                Case Plans.BLUESTEIN
                     bluestein_complex(a, offa, -1)
             End Select
         End Sub
@@ -230,7 +229,8 @@ Namespace FFT
         ''' <param name="a"></param>
         '''            data to transform
         ''' <param name="scale"></param>
-        '''            if true then scaling is performed</summary>        Public Sub ComplexInverse(a As Double(), scale As Boolean)
+        '''            if true then scaling is performed</summary>  
+        Public Sub ComplexInverse(a As Double(), scale As Boolean)
             ComplexInverse(a, 0, scale)
         End Sub
 
@@ -252,17 +252,18 @@ Namespace FFT
         ''' <param name="offa"></param>
         '''            index of the first element in array <code>a</code>
         ''' <param name="scale"></param>
-        '''            if true then scaling is performed</summary>        Public Sub ComplexInverse(a As Double(), offa As Integer, isScale As Boolean)
-        If n = 1 Then Return
+        '''            if true then scaling is performed</summary>    
+        Public Sub ComplexInverse(a As Double(), offa As Integer, isScale As Boolean)
+            If n = 1 Then Return
             Select Case plan
-        Case FFT.Plans.SPLIT_RADIX
+                Case Plans.SPLIT_RADIX
                     cftfsub(2 * n, a, offa, ip, nw, w)
-                Case FFT.Plans.MIXED_RADIX
+                Case Plans.MIXED_RADIX
                     cfftf(a, offa, +1)
-                Case FFT.Plans.BLUESTEIN
+                Case Plans.BLUESTEIN
                     bluestein_complex(a, offa, 1)
             End Select
-        If isScale Then
+            If isScale Then
                 scale(n, a, offa, True)
             End If
         End Sub
@@ -296,7 +297,8 @@ Namespace FFT
         ''' 
         ''' </summary>
         ''' <param name="a"></param>
-        '''            data to transform</summary>        Public Sub RealForward(a As Double())
+        '''            data to transform</summary>    
+        Public Sub RealForward(a As Double())
             RealForward(a, 0)
         End Sub
 
@@ -329,14 +331,15 @@ Namespace FFT
         ''' <param name="a"></param>
         '''            data to transform
         ''' <param name="offa"></param>
-        '''            index of the first element in array <code>a</code></summary>        Public Sub RealForward(a As Double(), offa As Integer)
-        If n = 1 Then Return
+        '''            index of the first element in array <code>a</code></summary>   
+        Public Sub RealForward(a As Double(), offa As Integer)
+            If n = 1 Then Return
 
             Select Case plan
-        Case FFT.Plans.SPLIT_RADIX
-        Dim xi As Double
+                Case Plans.SPLIT_RADIX
+                    Dim xi As Double
 
-        If n > 4 Then
+                    If n > 4 Then
                         cftfsub(n, a, offa, ip, nw, w)
                         rftfsub(n, a, offa, nc, w, nw)
                     ElseIf n = 4 Then
@@ -345,15 +348,15 @@ Namespace FFT
                     xi = a(offa) - a(offa + 1)
                     a(offa) += a(offa + 1)
                     a(offa + 1) = xi
-                Case FFT.Plans.MIXED_RADIX
+                Case Plans.MIXED_RADIX
                     rfftf(a, offa)
                     For k = n - 1 To 2 Step -1
-        Dim idx = offa + k
-        Dim tmp = a(idx)
+                        Dim idx = offa + k
+                        Dim tmp = a(idx)
                         a(idx) = a(idx - 1)
                         a(idx - 1) = tmp
                     Next
-        Case FFT.Plans.BLUESTEIN
+                Case Plans.BLUESTEIN
                     bluestein_real_forward(a, offa)
             End Select
         End Sub
@@ -392,10 +395,10 @@ Namespace FFT
 
             Dim twon = 2 * n
             Select Case plan
-                Case FFT.Plans.SPLIT_RADIX
+                Case Plans.SPLIT_RADIX
                     RealForward(a, offa)
                     Dim nthreads As Integer = Process.GetCurrentProcess().Threads.Count
-                    If nthreads > 1 AndAlso n / 2 > System.TransformCore.THREADS_BEGIN_N_1D_FFT_2THREADS Then
+                    If nthreads > 1 AndAlso n / 2 > TransformCore.THREADS_BEGIN_N_1D_FFT_2THREADS Then
                         Dim taskArray = New Task(nthreads - 1) {}
                         Dim k As Integer = n / 2 / nthreads
                         For i = 0 To nthreads - 1
@@ -428,7 +431,7 @@ Namespace FFT
                     End If
                     a(offa + n) = -a(offa + 1)
                     a(offa + 1) = 0
-                Case FFT.Plans.MIXED_RADIX
+                Case Plans.MIXED_RADIX
                     rfftf(a, offa)
                     Dim m As Integer
                     If n Mod 2 = 0 Then
@@ -449,7 +452,7 @@ Namespace FFT
                         a(idx) = tmp
                     Next
                     a(offa + 1) = 0
-                Case FFT.Plans.BLUESTEIN
+                Case Plans.BLUESTEIN
                     bluestein_real_full(a, offa, -1)
             End Select
         End Sub
@@ -486,7 +489,8 @@ Namespace FFT
         ''' 
         ''' <param name="scale"></param>
         '''            if true then scaling is performed
-        ''' </summary>        Public Sub RealInverse(a As Double(), scale As Boolean)
+        ''' </summary>    
+        Public Sub RealInverse(a As Double(), scale As Boolean)
             RealInverse(a, 0, scale)
         End Sub
 
@@ -521,10 +525,11 @@ Namespace FFT
         '''            index of the first element in array <code>a</code>
         ''' <param name="scale"></param>
         '''            if true then scaling is performed
-        ''' </summary>        Public Sub RealInverse(a As Double(), offa As Integer, isScale As Boolean)
-        If n = 1 Then Return
+        ''' </summary>     
+        Public Sub RealInverse(a As Double(), offa As Integer, isScale As Boolean)
+            If n = 1 Then Return
             Select Case plan
-        Case FFT.Plans.SPLIT_RADIX
+                Case Plans.SPLIT_RADIX
                     a(offa + 1) = 0.5 * (a(offa) - a(offa + 1))
                     a(offa) -= a(offa + 1)
                     If n > 4 Then
@@ -533,13 +538,13 @@ Namespace FFT
                     ElseIf n = 4 Then
                         cftxc020(a, offa)
                     End If
-        If isScale Then
+                    If isScale Then
                         scale(n / 2, a, offa, False)
                     End If
-        Case FFT.Plans.MIXED_RADIX
-        For k = 2 To n - 1
-        Dim idx = offa + k
-        Dim tmp = a(idx - 1)
+                Case Plans.MIXED_RADIX
+                    For k = 2 To n - 1
+                        Dim idx = offa + k
+                        Dim tmp = a(idx - 1)
                         a(idx - 1) = a(idx)
                         a(idx) = tmp
                     Next
@@ -547,12 +552,12 @@ Namespace FFT
                     If isScale Then
                         scale(n, a, offa, False)
                     End If
-        Case FFT.Plans.BLUESTEIN
+                Case Plans.BLUESTEIN
                     bluestein_real_inverse(a, offa)
                     If isScale Then
                         scale(n, a, offa, False)
                     End If
-        End Select
+            End Select
 
         End Sub
 
@@ -567,8 +572,8 @@ Namespace FFT
         ''' </summary>
         ''' <param name="a"></param>
         '''            data to transform
-        ''' <param name="scale"></param>
-        '''            if true then scaling is performed
+        ''' <param name="isScale">
+        '''            if true then scaling is performed</param>
         Public Sub RealInverseFull(a As Double(), isScale As Boolean)
             RealInverseFull(a, 0, isScale)
         End Sub
@@ -591,10 +596,10 @@ Namespace FFT
         Public Sub RealInverseFull(a As Double(), offa As Integer, isScale As Boolean)
             Dim twon = 2 * n
             Select Case plan
-                Case FFT.Plans.SPLIT_RADIX
+                Case Plans.SPLIT_RADIX
                     RealInverse2(a, offa, isScale)
                     Dim nthreads As Integer = Process.GetCurrentProcess().Threads.Count
-                    If nthreads > 1 AndAlso n / 2 > System.TransformCore.THREADS_BEGIN_N_1D_FFT_2THREADS Then
+                    If nthreads > 1 AndAlso n / 2 > TransformCore.THREADS_BEGIN_N_1D_FFT_2THREADS Then
                         Dim taskArray = New Task(nthreads - 1) {}
                         Dim k As Integer = n / 2 / nthreads
                         For i = 0 To nthreads - 1
@@ -626,7 +631,7 @@ Namespace FFT
                     End If
                     a(offa + n) = -a(offa + 1)
                     a(offa + 1) = 0
-                Case FFT.Plans.MIXED_RADIX
+                Case Plans.MIXED_RADIX
                     rfftf(a, offa)
                     If isScale Then
                         scale(n, a, offa, False)
@@ -651,7 +656,7 @@ Namespace FFT
                         a(idx) = tmp
                     Next
                     a(offa + 1) = 0
-                Case FFT.Plans.BLUESTEIN
+                Case Plans.BLUESTEIN
                     bluestein_real_full(a, offa, 1)
                     If isScale Then
                         scale(n, a, offa, True)
@@ -662,7 +667,7 @@ Namespace FFT
         Public Sub RealInverse2(a As Double(), offa As Integer, isScale As Boolean)
             If n = 1 Then Return
             Select Case plan
-                Case FFT.Plans.SPLIT_RADIX
+                Case Plans.SPLIT_RADIX
                     Dim xi As Double
 
                     If n > 4 Then
@@ -677,7 +682,7 @@ Namespace FFT
                     If isScale Then
                         scale(n, a, offa, False)
                     End If
-                Case FFT.Plans.MIXED_RADIX
+                Case Plans.MIXED_RADIX
                     rfftf(a, offa)
                     For k = n - 1 To 2 Step -1
                         Dim idx = offa + k
@@ -702,7 +707,7 @@ Namespace FFT
                             a(idx) = -a(idx)
                         Next
                     End If
-                Case FFT.Plans.BLUESTEIN
+                Case Plans.BLUESTEIN
                     bluestein_real_inverse2(a, offa)
                     If isScale Then
                         scale(n, a, offa, False)
@@ -735,8 +740,8 @@ Namespace FFT
         ' -------- initializing routines -------- 
 
         ' ---------------------------------------------------------
-cffti: initialization of Complex FFT
-          --------------------------------------------------------
+        ' cffti: initialization of Complex FFT
+        ' --------------------------------------------------------
 
         Private Sub cffti(n As Integer, offw As Integer)
             If n = 1 Then Return
@@ -1123,37 +1128,37 @@ factorize_loop:
             Dim ak = New Double(2 * nBluestein - 1) {}
             Dim nthreads = 1
             Dim threads As Integer = Process.GetCurrentProcess().Threads.Count
-            If threads > 1 AndAlso n > System.TransformCore.THREADS_BEGIN_N_1D_FFT_2THREADS Then
+            If threads > 1 AndAlso n > TransformCore.THREADS_BEGIN_N_1D_FFT_2THREADS Then
                 nthreads = 2
-                If threads >= 4 AndAlso n > System.TransformCore.THREADS_BEGIN_N_1D_FFT_4THREADS Then
+                If threads >= 4 AndAlso n > TransformCore.THREADS_BEGIN_N_1D_FFT_4THREADS Then
                     nthreads = 4
                 End If
                 Dim taskArray = New Task(nthreads - 1) {}
                 Dim k As Integer = n / nthreads
-                For i = 0 To nthreads - 1
-                    Dim firstIdx = i * k
-                    Dim lastIdx = If(i = nthreads - 1, n, firstIdx + k)
-                    taskArray(i) = Task.Factory.StartNew(Sub()
-                                                             If isign > 0 Then
-                                                                 For i = firstIdx To lastIdx - 1
-                                                                     Dim idx1 = 2 * i
-                                                                     Dim idx2 = idx1 + 1
-                                                                     Dim idx3 = offa + idx1
-                                                                     Dim idx4 = offa + idx2
-                                                                     ak(idx1) = a(idx3) * bk1(idx1) - a(idx4) * bk1(idx2)
-                                                                     ak(idx2) = a(idx3) * bk1(idx2) + a(idx4) * bk1(idx1)
-                                                                 Next
-                                                             Else
-                                                                 For i = firstIdx To lastIdx - 1
-                                                                     Dim idx1 = 2 * i
-                                                                     Dim idx2 = idx1 + 1
-                                                                     Dim idx3 = offa + idx1
-                                                                     Dim idx4 = offa + idx2
-                                                                     ak(idx1) = a(idx3) * bk1(idx1) + a(idx4) * bk1(idx2)
-                                                                     ak(idx2) = -a(idx3) * bk1(idx2) + a(idx4) * bk1(idx1)
-                                                                 Next
-                                                             End If
-                                                         End Sub)
+                For idx As Integer = 0 To nthreads - 1
+                    Dim firstIdx = idx * k
+                    Dim lastIdx = If(idx = nthreads - 1, n, firstIdx + k)
+                    taskArray(idx) = Task.Factory.StartNew(Sub()
+                                                               If isign > 0 Then
+                                                                   For i = firstIdx To lastIdx - 1
+                                                                       Dim idx1 = 2 * i
+                                                                       Dim idx2 = idx1 + 1
+                                                                       Dim idx3 = offa + idx1
+                                                                       Dim idx4 = offa + idx2
+                                                                       ak(idx1) = a(idx3) * bk1(idx1) - a(idx4) * bk1(idx2)
+                                                                       ak(idx2) = a(idx3) * bk1(idx2) + a(idx4) * bk1(idx1)
+                                                                   Next
+                                                               Else
+                                                                   For i = firstIdx To lastIdx - 1
+                                                                       Dim idx1 = 2 * i
+                                                                       Dim idx2 = idx1 + 1
+                                                                       Dim idx3 = offa + idx1
+                                                                       Dim idx4 = offa + idx2
+                                                                       ak(idx1) = a(idx3) * bk1(idx1) + a(idx4) * bk1(idx2)
+                                                                       ak(idx2) = -a(idx3) * bk1(idx2) + a(idx4) * bk1(idx1)
+                                                                   Next
+                                                               End If
+                                                           End Sub)
                 Next
                 Try
                     Task.WaitAll(taskArray)
@@ -1164,28 +1169,28 @@ factorize_loop:
                 cftbsub(2 * nBluestein, ak, 0, ip, nw, w)
 
                 k = nBluestein / nthreads
-                For i = 0 To nthreads - 1
-                    Dim firstIdx = i * k
-                    Dim lastIdx = If(i = nthreads - 1, nBluestein, firstIdx + k)
-                    taskArray(i) = Task.Factory.StartNew(Sub()
-                                                             If isign > 0 Then
-                                                                 For i = firstIdx To lastIdx - 1
-                                                                     Dim idx1 = 2 * i
-                                                                     Dim idx2 = idx1 + 1
-                                                                     Dim im = -ak(idx1) * bk2(idx2) + ak(idx2) * bk2(idx1)
-                                                                     ak(idx1) = ak(idx1) * bk2(idx1) + ak(idx2) * bk2(idx2)
-                                                                     ak(idx2) = im
-                                                                 Next
-                                                             Else
-                                                                 For i = firstIdx To lastIdx - 1
-                                                                     Dim idx1 = 2 * i
-                                                                     Dim idx2 = idx1 + 1
-                                                                     Dim im = ak(idx1) * bk2(idx2) + ak(idx2) * bk2(idx1)
-                                                                     ak(idx1) = ak(idx1) * bk2(idx1) - ak(idx2) * bk2(idx2)
-                                                                     ak(idx2) = im
-                                                                 Next
-                                                             End If
-                                                         End Sub)
+                For idx As Integer = 0 To nthreads - 1
+                    Dim firstIdx = idx * k
+                    Dim lastIdx = If(idx = nthreads - 1, nBluestein, firstIdx + k)
+                    taskArray(idx) = Task.Factory.StartNew(Sub()
+                                                               If isign > 0 Then
+                                                                   For i = firstIdx To lastIdx - 1
+                                                                       Dim idx1 = 2 * i
+                                                                       Dim idx2 = idx1 + 1
+                                                                       Dim im = -ak(idx1) * bk2(idx2) + ak(idx2) * bk2(idx1)
+                                                                       ak(idx1) = ak(idx1) * bk2(idx1) + ak(idx2) * bk2(idx2)
+                                                                       ak(idx2) = im
+                                                                   Next
+                                                               Else
+                                                                   For i = firstIdx To lastIdx - 1
+                                                                       Dim idx1 = 2 * i
+                                                                       Dim idx2 = idx1 + 1
+                                                                       Dim im = ak(idx1) * bk2(idx2) + ak(idx2) * bk2(idx1)
+                                                                       ak(idx1) = ak(idx1) * bk2(idx1) - ak(idx2) * bk2(idx2)
+                                                                       ak(idx2) = im
+                                                                   Next
+                                                               End If
+                                                           End Sub)
                 Next
                 Try
                     Task.WaitAll(taskArray)
@@ -1196,30 +1201,30 @@ factorize_loop:
                 cftfsub(2 * nBluestein, ak, 0, ip, nw, w)
 
                 k = n / nthreads
-                For i = 0 To nthreads - 1
-                    Dim firstIdx = i * k
-                    Dim lastIdx = If(i = nthreads - 1, n, firstIdx + k)
-                    taskArray(i) = Task.Factory.StartNew(Sub()
-                                                             If isign > 0 Then
-                                                                 For i = firstIdx To lastIdx - 1
-                                                                     Dim idx1 = 2 * i
-                                                                     Dim idx2 = idx1 + 1
-                                                                     Dim idx3 = offa + idx1
-                                                                     Dim idx4 = offa + idx2
-                                                                     a(idx3) = bk1(idx1) * ak(idx1) - bk1(idx2) * ak(idx2)
-                                                                     a(idx4) = bk1(idx2) * ak(idx1) + bk1(idx1) * ak(idx2)
-                                                                 Next
-                                                             Else
-                                                                 For i = firstIdx To lastIdx - 1
-                                                                     Dim idx1 = 2 * i
-                                                                     Dim idx2 = idx1 + 1
-                                                                     Dim idx3 = offa + idx1
-                                                                     Dim idx4 = offa + idx2
-                                                                     a(idx3) = bk1(idx1) * ak(idx1) + bk1(idx2) * ak(idx2)
-                                                                     a(idx4) = -bk1(idx2) * ak(idx1) + bk1(idx1) * ak(idx2)
-                                                                 Next
-                                                             End If
-                                                         End Sub)
+                For idx As Integer = 0 To nthreads - 1
+                    Dim firstIdx = idx * k
+                    Dim lastIdx = If(idx = nthreads - 1, n, firstIdx + k)
+                    taskArray(idx) = Task.Factory.StartNew(Sub()
+                                                               If isign > 0 Then
+                                                                   For i = firstIdx To lastIdx - 1
+                                                                       Dim idx1 = 2 * i
+                                                                       Dim idx2 = idx1 + 1
+                                                                       Dim idx3 = offa + idx1
+                                                                       Dim idx4 = offa + idx2
+                                                                       a(idx3) = bk1(idx1) * ak(idx1) - bk1(idx2) * ak(idx2)
+                                                                       a(idx4) = bk1(idx2) * ak(idx1) + bk1(idx1) * ak(idx2)
+                                                                   Next
+                                                               Else
+                                                                   For i = firstIdx To lastIdx - 1
+                                                                       Dim idx1 = 2 * i
+                                                                       Dim idx2 = idx1 + 1
+                                                                       Dim idx3 = offa + idx1
+                                                                       Dim idx4 = offa + idx2
+                                                                       a(idx3) = bk1(idx1) * ak(idx1) + bk1(idx2) * ak(idx2)
+                                                                       a(idx4) = -bk1(idx2) * ak(idx1) + bk1(idx1) * ak(idx2)
+                                                                   Next
+                                                               End If
+                                                           End Sub)
                 Next
                 Try
                     Task.WaitAll(taskArray)
@@ -1295,36 +1300,36 @@ factorize_loop:
             Dim ak = New Double(2 * nBluestein - 1) {}
             Dim nthreads = 1
             Dim threads As Integer = Process.GetCurrentProcess().Threads.Count
-            If threads > 1 AndAlso n > System.TransformCore.THREADS_BEGIN_N_1D_FFT_2THREADS Then
+            If threads > 1 AndAlso n > TransformCore.THREADS_BEGIN_N_1D_FFT_2THREADS Then
                 nthreads = 2
-                If threads >= 4 AndAlso n > System.TransformCore.THREADS_BEGIN_N_1D_FFT_4THREADS Then
+                If threads >= 4 AndAlso n > TransformCore.THREADS_BEGIN_N_1D_FFT_4THREADS Then
                     nthreads = 4
                 End If
                 Dim taskArray = New Task(nthreads - 1) {}
                 Dim k As Integer = n / nthreads
-                For i = 0 To nthreads - 1
-                    Dim firstIdx = i * k
-                    Dim lastIdx = If(i = nthreads - 1, n, firstIdx + k)
-                    taskArray(i) = Task.Factory.StartNew(Sub()
-                                                             If isign > 0 Then
-                                                                 For i = firstIdx To lastIdx - 1
-                                                                     Dim idx1 = 2 * i
-                                                                     Dim idx2 = idx1 + 1
-                                                                     Dim idx3 = offa + i
-                                                                     ak(idx1) = a(idx3) * bk1(idx1)
-                                                                     ak(idx2) = a(idx3) * bk1(idx2)
-                                                                 Next
-                                                             Else
-                                                                 For i = firstIdx To lastIdx - 1
-                                                                     Dim idx1 = 2 * i
-                                                                     Dim idx2 = idx1 + 1
-                                                                     Dim idx3 = offa + i
-                                                                     ak(idx1) = a(idx3) * bk1(idx1)
-                                                                     ak(idx2) = -a(idx3) * bk1(idx2)
-                                                                 Next
-                                                             End If
+                For idx As Integer = 0 To nthreads - 1
+                    Dim firstIdx = idx * k
+                    Dim lastIdx = If(idx = nthreads - 1, n, firstIdx + k)
+                    taskArray(idx) = Task.Factory.StartNew(Sub()
+                                                               If isign > 0 Then
+                                                                   For i = firstIdx To lastIdx - 1
+                                                                       Dim idx1 = 2 * i
+                                                                       Dim idx2 = idx1 + 1
+                                                                       Dim idx3 = offa + i
+                                                                       ak(idx1) = a(idx3) * bk1(idx1)
+                                                                       ak(idx2) = a(idx3) * bk1(idx2)
+                                                                   Next
+                                                               Else
+                                                                   For i = firstIdx To lastIdx - 1
+                                                                       Dim idx1 = 2 * i
+                                                                       Dim idx2 = idx1 + 1
+                                                                       Dim idx3 = offa + i
+                                                                       ak(idx1) = a(idx3) * bk1(idx1)
+                                                                       ak(idx2) = -a(idx3) * bk1(idx2)
+                                                                   Next
+                                                               End If
 
-                                                         End Sub)
+                                                           End Sub)
                 Next
                 Try
                     Task.WaitAll(taskArray)
@@ -1335,28 +1340,28 @@ factorize_loop:
                 cftbsub(2 * nBluestein, ak, 0, ip, nw, w)
 
                 k = nBluestein / nthreads
-                For i = 0 To nthreads - 1
-                    Dim firstIdx = i * k
-                    Dim lastIdx = If(i = nthreads - 1, nBluestein, firstIdx + k)
-                    taskArray(i) = Task.Factory.StartNew(Sub()
-                                                             If isign > 0 Then
-                                                                 For i = firstIdx To lastIdx - 1
-                                                                     Dim idx1 = 2 * i
-                                                                     Dim idx2 = idx1 + 1
-                                                                     Dim im = -ak(idx1) * bk2(idx2) + ak(idx2) * bk2(idx1)
-                                                                     ak(idx1) = ak(idx1) * bk2(idx1) + ak(idx2) * bk2(idx2)
-                                                                     ak(idx2) = im
-                                                                 Next
-                                                             Else
-                                                                 For i = firstIdx To lastIdx - 1
-                                                                     Dim idx1 = 2 * i
-                                                                     Dim idx2 = idx1 + 1
-                                                                     Dim im = ak(idx1) * bk2(idx2) + ak(idx2) * bk2(idx1)
-                                                                     ak(idx1) = ak(idx1) * bk2(idx1) - ak(idx2) * bk2(idx2)
-                                                                     ak(idx2) = im
-                                                                 Next
-                                                             End If
-                                                         End Sub)
+                For idx As Integer = 0 To nthreads - 1
+                    Dim firstIdx = idx * k
+                    Dim lastIdx = If(idx = nthreads - 1, nBluestein, firstIdx + k)
+                    taskArray(idx) = Task.Factory.StartNew(Sub()
+                                                               If isign > 0 Then
+                                                                   For i = firstIdx To lastIdx - 1
+                                                                       Dim idx1 = 2 * i
+                                                                       Dim idx2 = idx1 + 1
+                                                                       Dim im = -ak(idx1) * bk2(idx2) + ak(idx2) * bk2(idx1)
+                                                                       ak(idx1) = ak(idx1) * bk2(idx1) + ak(idx2) * bk2(idx2)
+                                                                       ak(idx2) = im
+                                                                   Next
+                                                               Else
+                                                                   For i = firstIdx To lastIdx - 1
+                                                                       Dim idx1 = 2 * i
+                                                                       Dim idx2 = idx1 + 1
+                                                                       Dim im = ak(idx1) * bk2(idx2) + ak(idx2) * bk2(idx1)
+                                                                       ak(idx1) = ak(idx1) * bk2(idx1) - ak(idx2) * bk2(idx2)
+                                                                       ak(idx2) = im
+                                                                   Next
+                                                               End If
+                                                           End Sub)
                 Next
                 Try
                     Task.WaitAll(taskArray)
@@ -1367,27 +1372,27 @@ factorize_loop:
                 cftfsub(2 * nBluestein, ak, 0, ip, nw, w)
 
                 k = n / nthreads
-                For i = 0 To nthreads - 1
-                    Dim firstIdx = i * k
-                    Dim lastIdx = If(i = nthreads - 1, n, firstIdx + k)
-                    taskArray(i) = Task.Factory.StartNew(Sub()
-                                                             If isign > 0 Then
-                                                                 For i = firstIdx To lastIdx - 1
-                                                                     Dim idx1 = 2 * i
-                                                                     Dim idx2 = idx1 + 1
-                                                                     a(offa + idx1) = bk1(idx1) * ak(idx1) - bk1(idx2) * ak(idx2)
-                                                                     a(offa + idx2) = bk1(idx2) * ak(idx1) + bk1(idx1) * ak(idx2)
-                                                                 Next
-                                                             Else
-                                                                 For i = firstIdx To lastIdx - 1
-                                                                     Dim idx1 = 2 * i
-                                                                     Dim idx2 = idx1 + 1
-                                                                     a(offa + idx1) = bk1(idx1) * ak(idx1) + bk1(idx2) * ak(idx2)
-                                                                     a(offa + idx2) = -bk1(idx2) * ak(idx1) + bk1(idx1) * ak(idx2)
-                                                                 Next
-                                                             End If
+                For idx As Integer = 0 To nthreads - 1
+                    Dim firstIdx = idx * k
+                    Dim lastIdx = If(idx = nthreads - 1, n, firstIdx + k)
+                    taskArray(idx) = Task.Factory.StartNew(Sub()
+                                                               If isign > 0 Then
+                                                                   For i = firstIdx To lastIdx - 1
+                                                                       Dim idx1 = 2 * i
+                                                                       Dim idx2 = idx1 + 1
+                                                                       a(offa + idx1) = bk1(idx1) * ak(idx1) - bk1(idx2) * ak(idx2)
+                                                                       a(offa + idx2) = bk1(idx2) * ak(idx1) + bk1(idx1) * ak(idx2)
+                                                                   Next
+                                                               Else
+                                                                   For i = firstIdx To lastIdx - 1
+                                                                       Dim idx1 = 2 * i
+                                                                       Dim idx2 = idx1 + 1
+                                                                       a(offa + idx1) = bk1(idx1) * ak(idx1) + bk1(idx2) * ak(idx2)
+                                                                       a(offa + idx2) = -bk1(idx2) * ak(idx1) + bk1(idx1) * ak(idx2)
+                                                                   Next
+                                                               End If
 
-                                                         End Sub)
+                                                           End Sub)
                 Next
                 Try
                     Task.WaitAll(taskArray)
@@ -1457,25 +1462,25 @@ factorize_loop:
             Dim ak = New Double(2 * nBluestein - 1) {}
             Dim nthreads = 1
             Dim threads As Integer = Process.GetCurrentProcess().Threads.Count
-            If threads > 1 AndAlso n > System.TransformCore.THREADS_BEGIN_N_1D_FFT_2THREADS Then
+            If threads > 1 AndAlso n > TransformCore.THREADS_BEGIN_N_1D_FFT_2THREADS Then
                 nthreads = 2
-                If threads >= 4 AndAlso n > System.TransformCore.THREADS_BEGIN_N_1D_FFT_4THREADS Then
+                If threads >= 4 AndAlso n > TransformCore.THREADS_BEGIN_N_1D_FFT_4THREADS Then
                     nthreads = 4
                 End If
                 Dim taskArray = New Task(nthreads - 1) {}
                 Dim k As Integer = n / nthreads
-                For i = 0 To nthreads - 1
-                    Dim firstIdx = i * k
-                    Dim lastIdx = If(i = nthreads - 1, n, firstIdx + k)
-                    taskArray(i) = Task.Factory.StartNew(Sub()
-                                                             For i = firstIdx To lastIdx - 1
-                                                                 Dim idx1 = 2 * i
-                                                                 Dim idx2 = idx1 + 1
-                                                                 Dim idx3 = offa + i
-                                                                 ak(idx1) = a(idx3) * bk1(idx1)
-                                                                 ak(idx2) = -a(idx3) * bk1(idx2)
-                                                             Next
-                                                         End Sub)
+                For idx As Integer = 0 To nthreads - 1
+                    Dim firstIdx = idx * k
+                    Dim lastIdx = If(idx = nthreads - 1, n, firstIdx + k)
+                    taskArray(idx) = Task.Factory.StartNew(Sub()
+                                                               For i = firstIdx To lastIdx - 1
+                                                                   Dim idx1 = 2 * i
+                                                                   Dim idx2 = idx1 + 1
+                                                                   Dim idx3 = offa + i
+                                                                   ak(idx1) = a(idx3) * bk1(idx1)
+                                                                   ak(idx2) = -a(idx3) * bk1(idx2)
+                                                               Next
+                                                           End Sub)
                 Next
                 Try
                     Task.WaitAll(taskArray)
@@ -1486,18 +1491,18 @@ factorize_loop:
                 cftbsub(2 * nBluestein, ak, 0, ip, nw, w)
 
                 k = nBluestein / nthreads
-                For i = 0 To nthreads - 1
-                    Dim firstIdx = i * k
-                    Dim lastIdx = If(i = nthreads - 1, nBluestein, firstIdx + k)
-                    taskArray(i) = Task.Factory.StartNew(Sub()
-                                                             For i = firstIdx To lastIdx - 1
-                                                                 Dim idx1 = 2 * i
-                                                                 Dim idx2 = idx1 + 1
-                                                                 Dim im = ak(idx1) * bk2(idx2) + ak(idx2) * bk2(idx1)
-                                                                 ak(idx1) = ak(idx1) * bk2(idx1) - ak(idx2) * bk2(idx2)
-                                                                 ak(idx2) = im
-                                                             Next
-                                                         End Sub)
+                For idx As Integer = 0 To nthreads - 1
+                    Dim firstIdx = idx * k
+                    Dim lastIdx = If(idx = nthreads - 1, nBluestein, firstIdx + k)
+                    taskArray(idx) = Task.Factory.StartNew(Sub()
+                                                               For i = firstIdx To lastIdx - 1
+                                                                   Dim idx1 = 2 * i
+                                                                   Dim idx2 = idx1 + 1
+                                                                   Dim im = ak(idx1) * bk2(idx2) + ak(idx2) * bk2(idx1)
+                                                                   ak(idx1) = ak(idx1) * bk2(idx1) - ak(idx2) * bk2(idx2)
+                                                                   ak(idx2) = im
+                                                               Next
+                                                           End Sub)
                 Next
                 Try
                     Task.WaitAll(taskArray)
@@ -1608,25 +1613,25 @@ factorize_loop:
 
             Dim nthreads = 1
             Dim threads As Integer = Process.GetCurrentProcess().Threads.Count
-            If threads > 1 AndAlso n > System.TransformCore.THREADS_BEGIN_N_1D_FFT_2THREADS Then
+            If threads > 1 AndAlso n > TransformCore.THREADS_BEGIN_N_1D_FFT_2THREADS Then
                 nthreads = 2
-                If threads >= 4 AndAlso n > System.TransformCore.THREADS_BEGIN_N_1D_FFT_4THREADS Then
+                If threads >= 4 AndAlso n > TransformCore.THREADS_BEGIN_N_1D_FFT_4THREADS Then
                     nthreads = 4
                 End If
                 Dim taskArray = New Task(nthreads - 1) {}
                 Dim k As Integer = nBluestein / nthreads
-                For i = 0 To nthreads - 1
-                    Dim firstIdx = i * k
-                    Dim lastIdx = If(i = nthreads - 1, nBluestein, firstIdx + k)
-                    taskArray(i) = Task.Factory.StartNew(Sub()
-                                                             For i = firstIdx To lastIdx - 1
-                                                                 Dim idx1 = 2 * i
-                                                                 Dim idx2 = idx1 + 1
-                                                                 Dim im = -ak(idx1) * bk2(idx2) + ak(idx2) * bk2(idx1)
-                                                                 ak(idx1) = ak(idx1) * bk2(idx1) + ak(idx2) * bk2(idx2)
-                                                                 ak(idx2) = im
-                                                             Next
-                                                         End Sub)
+                For idx As Integer = 0 To nthreads - 1
+                    Dim firstIdx = idx * k
+                    Dim lastIdx = If(idx = nthreads - 1, nBluestein, firstIdx + k)
+                    taskArray(idx) = Task.Factory.StartNew(Sub()
+                                                               For i = firstIdx To lastIdx - 1
+                                                                   Dim idx1 = 2 * i
+                                                                   Dim idx2 = idx1 + 1
+                                                                   Dim im = -ak(idx1) * bk2(idx2) + ak(idx2) * bk2(idx1)
+                                                                   ak(idx1) = ak(idx1) * bk2(idx1) + ak(idx2) * bk2(idx2)
+                                                                   ak(idx2) = im
+                                                               Next
+                                                           End Sub)
                 Next
                 Try
                     Task.WaitAll(taskArray)
@@ -1637,16 +1642,16 @@ factorize_loop:
                 cftfsub(2 * nBluestein, ak, 0, ip, nw, w)
 
                 k = n / nthreads
-                For i = 0 To nthreads - 1
-                    Dim firstIdx = i * k
-                    Dim lastIdx = If(i = nthreads - 1, n, firstIdx + k)
-                    taskArray(i) = Task.Factory.StartNew(Sub()
-                                                             For i = firstIdx To lastIdx - 1
-                                                                 Dim idx1 = 2 * i
-                                                                 Dim idx2 = idx1 + 1
-                                                                 a(offa + i) = bk1(idx1) * ak(idx1) - bk1(idx2) * ak(idx2)
-                                                             Next
-                                                         End Sub)
+                For idx As Integer = 0 To nthreads - 1
+                    Dim firstIdx = idx * k
+                    Dim lastIdx = If(idx = nthreads - 1, n, firstIdx + k)
+                    taskArray(idx) = Task.Factory.StartNew(Sub()
+                                                               For i = firstIdx To lastIdx - 1
+                                                                   Dim idx1 = 2 * i
+                                                                   Dim idx2 = idx1 + 1
+                                                                   a(offa + i) = bk1(idx1) * ak(idx1) - bk1(idx2) * ak(idx2)
+                                                               Next
+                                                           End Sub)
                 Next
                 Try
                     Task.WaitAll(taskArray)
@@ -1676,26 +1681,26 @@ factorize_loop:
             Dim ak = New Double(2 * nBluestein - 1) {}
             Dim nthreads = 1
             Dim threads As Integer = Process.GetCurrentProcess().Threads.Count
-            If threads > 1 AndAlso n > System.TransformCore.THREADS_BEGIN_N_1D_FFT_2THREADS Then
+            If threads > 1 AndAlso n > TransformCore.THREADS_BEGIN_N_1D_FFT_2THREADS Then
                 nthreads = 2
-                If threads >= 4 AndAlso n > System.TransformCore.THREADS_BEGIN_N_1D_FFT_4THREADS Then
+                If threads >= 4 AndAlso n > TransformCore.THREADS_BEGIN_N_1D_FFT_4THREADS Then
                     nthreads = 4
                 End If
                 Dim taskArray = New Task(nthreads - 1) {}
                 Dim k As Integer = n / nthreads
-                For i = 0 To nthreads - 1
-                    Dim firstIdx = i * k
-                    Dim lastIdx = If(i = nthreads - 1, n, firstIdx + k)
-                    taskArray(i) = Task.Factory.StartNew(Sub()
-                                                             For i = firstIdx To lastIdx - 1
-                                                                 Dim idx1 = 2 * i
-                                                                 Dim idx2 = idx1 + 1
-                                                                 Dim idx3 = offa + i
-                                                                 ak(idx1) = a(idx3) * bk1(idx1)
-                                                                 ak(idx2) = a(idx3) * bk1(idx2)
-                                                             Next
+                For idx As Integer = 0 To nthreads - 1
+                    Dim firstIdx = idx * k
+                    Dim lastIdx = If(idx = nthreads - 1, n, firstIdx + k)
+                    taskArray(idx) = Task.Factory.StartNew(Sub()
+                                                               For i = firstIdx To lastIdx - 1
+                                                                   Dim idx1 = 2 * i
+                                                                   Dim idx2 = idx1 + 1
+                                                                   Dim idx3 = offa + i
+                                                                   ak(idx1) = a(idx3) * bk1(idx1)
+                                                                   ak(idx2) = a(idx3) * bk1(idx2)
+                                                               Next
 
-                                                         End Sub)
+                                                           End Sub)
                 Next
                 Try
                     Task.WaitAll(taskArray)
@@ -1706,19 +1711,19 @@ factorize_loop:
                 cftbsub(2 * nBluestein, ak, 0, ip, nw, w)
 
                 k = nBluestein / nthreads
-                For i = 0 To nthreads - 1
-                    Dim firstIdx = i * k
-                    Dim lastIdx = If(i = nthreads - 1, nBluestein, firstIdx + k)
-                    taskArray(i) = Task.Factory.StartNew(Sub()
-                                                             For i = firstIdx To lastIdx - 1
-                                                                 Dim idx1 = 2 * i
-                                                                 Dim idx2 = idx1 + 1
-                                                                 Dim im = -ak(idx1) * bk2(idx2) + ak(idx2) * bk2(idx1)
-                                                                 ak(idx1) = ak(idx1) * bk2(idx1) + ak(idx2) * bk2(idx2)
-                                                                 ak(idx2) = im
-                                                             Next
+                For idx As Integer = 0 To nthreads - 1
+                    Dim firstIdx = idx * k
+                    Dim lastIdx = If(idx = nthreads - 1, nBluestein, firstIdx + k)
+                    taskArray(idx) = Task.Factory.StartNew(Sub()
+                                                               For i = firstIdx To lastIdx - 1
+                                                                   Dim idx1 = 2 * i
+                                                                   Dim idx2 = idx1 + 1
+                                                                   Dim im = -ak(idx1) * bk2(idx2) + ak(idx2) * bk2(idx1)
+                                                                   ak(idx1) = ak(idx1) * bk2(idx1) + ak(idx2) * bk2(idx2)
+                                                                   ak(idx2) = im
+                                                               Next
 
-                                                         End Sub)
+                                                           End Sub)
                 Next
                 Try
                     Task.WaitAll(taskArray)
@@ -1770,8 +1775,8 @@ factorize_loop:
         End Sub
 
         ' ---------------------------------------------------------
-rfftf1: further processing Of Real forward FFT
-          --------------------------------------------------------
+        ' rfftf1: further processing Of Real forward FFT
+        ' --------------------------------------------------------
         Private Sub rfftf(a As Double(), offa As Integer)
             If n = 1 Then Return
             Dim l1, l2, na, kh, nf, ip, iw, ido, idl1 As Integer
@@ -1836,8 +1841,8 @@ rfftf1: further processing Of Real forward FFT
         End Sub
 
         ' ---------------------------------------------------------
-rfftb1: further processing Of Real backward FFT
-          --------------------------------------------------------
+        ' rfftb1: further processing Of Real backward FFT
+        ' --------------------------------------------------------
         Private Sub rfftb(a As Double(), offa As Integer)
             If n = 1 Then Return
             Dim l1, l2, na, nf, ip, iw, ido, idl1 As Integer
@@ -1898,8 +1903,8 @@ rfftb1: further processing Of Real backward FFT
         End Sub
 
         ' -------------------------------------------------
-radf2: Real FFT 's forward processing of factor 2
-          -------------------------------------------------
+        ' radf2: Real FFT 's forward processing of factor 2
+        ' -------------------------------------------------
         Private Sub radf2(ido As Integer, l1 As Integer, inp As Double(), in_off As Integer, outp As Double(), out_off As Integer, offset As Integer)
             Dim i, ic, idx0, idx1, idx2, idx3, idx4 As Integer
             Dim t1i, t1r, w1r, w1i As Double
@@ -1966,8 +1971,8 @@ radf2: Real FFT 's forward processing of factor 2
         End Sub
 
         ' -------------------------------------------------
-radb2: Real FFT 's backward processing of factor 2
-          -------------------------------------------------
+        ' radb2: Real FFT 's backward processing of factor 2
+        ' -------------------------------------------------
         Private Sub radb2(ido As Integer, l1 As Integer, inp As Double(), in_off As Integer, outp As Double(), out_off As Integer, offset As Integer)
             Dim i, ic As Integer
             Dim t1i, t1r, w1r, w1i As Double
@@ -2035,8 +2040,8 @@ radb2: Real FFT 's backward processing of factor 2
         End Sub
 
         ' -------------------------------------------------
-radf3: Real FFT 's forward processing of factor 3 
-          -------------------------------------------------
+        ' radf3: Real FFT 's forward processing of factor 3 
+        ' -------------------------------------------------
         Private Sub radf3(ido As Integer, l1 As Integer, inp As Double(), in_off As Integer, outp As Double(), out_off As Integer, offset As Integer)
             Dim taur = -0.5
             Dim taui = 0.86602540378443871
@@ -2120,8 +2125,8 @@ radf3: Real FFT 's forward processing of factor 3
         End Sub
 
         ' -------------------------------------------------
-radb3: Real FFT 's backward processing of factor 3
-          -------------------------------------------------
+        ' radb3: Real FFT 's backward processing of factor 3
+        ' -------------------------------------------------
         Private Sub radb3(ido As Integer, l1 As Integer, inp As Double(), in_off As Integer, outp As Double(), out_off As Integer, offset As Integer)
             Dim taur = -0.5
             Dim taui = 0.86602540378443871
@@ -2204,8 +2209,8 @@ radb3: Real FFT 's backward processing of factor 3
         End Sub
 
         ' -------------------------------------------------
-radf4: Real FFT 's forward processing of factor 4
-          -------------------------------------------------
+        ' radf4: Real FFT 's forward processing of factor 4
+        ' -------------------------------------------------
         Private Sub radf4(ido As Integer, l1 As Integer, inp As Double(), in_off As Integer, outp As Double(), out_off As Integer, offset As Integer)
             Dim hsqt2 = 0.70710678118654757
             Dim i, ic As Integer
@@ -2338,8 +2343,8 @@ radf4: Real FFT 's forward processing of factor 4
         End Sub
 
         ' -------------------------------------------------
-radb4: Real FFT 's backward processing of factor 4
-          -------------------------------------------------
+        ' radb4: Real FFT 's backward processing of factor 4
+        ' -------------------------------------------------
         Private Sub radb4(ido As Integer, l1 As Integer, inp As Double(), in_off As Integer, outp As Double(), out_off As Integer, offset As Integer)
             Dim sqrt2 = 1.4142135623730951
             Dim i, ic As Integer
@@ -2483,8 +2488,8 @@ radb4: Real FFT 's backward processing of factor 4
         End Sub
 
         ' -------------------------------------------------
-radf5: Real FFT 's forward processing of factor 5
-          -------------------------------------------------
+        ' radf5: Real FFT 's forward processing of factor 5
+        ' -------------------------------------------------
         Private Sub radf5(ido As Integer, l1 As Integer, inp As Double(), in_off As Integer, outp As Double(), out_off As Integer, offset As Integer)
             Dim tr11 = 0.30901699437494745
             Dim ti11 = 0.95105651629515353
@@ -2499,8 +2504,8 @@ radf5: Real FFT 's forward processing of factor 5
             iw4 = iw3 + ido
 
             Dim idx0 = l1 * ido
-            For k = 0 To l1 - 1
-                Dim idx1 = k * ido
+            For k1 As Integer = 0 To l1 - 1
+                Dim idx1 = k1 * ido
                 Dim idx2 = 5 * idx1
                 Dim idx3 = idx2 + ido
                 Dim idx4 = idx3 + ido
@@ -2629,8 +2634,8 @@ radf5: Real FFT 's forward processing of factor 5
         End Sub
 
         ' -------------------------------------------------
-radb5: Real FFT 's backward processing of factor 5
-          -------------------------------------------------
+        ' radb5: Real FFT 's backward processing of factor 5
+        ' -------------------------------------------------
         Private Sub radb5(ido As Integer, l1 As Integer, inp As Double(), in_off As Integer, outp As Double(), out_off As Integer, offset As Integer)
             Dim tr11 = 0.30901699437494745
             Dim ti11 = 0.95105651629515353
@@ -2645,8 +2650,8 @@ radb5: Real FFT 's backward processing of factor 5
             iw4 = iw3 + ido
 
             Dim idx0 = l1 * ido
-            For k = 0 To l1 - 1
-                Dim idx1 = k * ido
+            For k1 = 0 To l1 - 1
+                Dim idx1 = k1 * ido
                 Dim idx2 = 5 * idx1
                 Dim idx3 = idx2 + ido
                 Dim idx4 = idx3 + ido
@@ -2774,8 +2779,8 @@ radb5: Real FFT 's backward processing of factor 5
         End Sub
 
         ' ---------------------------------------------------------
-radfg: Real FFT 's forward processing of general factor
-          --------------------------------------------------------
+        ' radfg: Real FFT 's forward processing of general factor
+        ' --------------------------------------------------------
         Private Sub radfg(ido As Integer, ip As Integer, l1 As Integer, idl1 As Integer, inp As Double(), in_off As Integer, outp As Double(), out_off As Integer, offset As Integer)
             Dim idij, ipph, j2, ic, jc, lc, ies, nbd As Integer
             Dim dc2, ai1, ai2, ar1, ar2, ds2, dcp, arg, dsp, ar1h, ar2h, w1r, w1i As Double
@@ -3063,8 +3068,8 @@ radfg: Real FFT 's forward processing of general factor
         End Sub
 
         ' ---------------------------------------------------------
-radbg: Real FFT 's backward processing of general factor
-          --------------------------------------------------------
+        ' radbg: Real FFT 's backward processing of general factor
+        ' --------------------------------------------------------
         Private Sub radbg(ido As Integer, ip As Integer, l1 As Integer, idl1 As Integer, inp As Double(), in_off As Integer, outp As Double(), out_off As Integer, offset As Integer)
             Dim idij, ipph, j2, ic, jc, lc, ies As Integer
             Dim dc2, ai1, ai2, ar1, ar2, ds2, w1r, w1i As Double
@@ -3357,8 +3362,8 @@ radbg: Real FFT 's backward processing of general factor
         End Sub
 
         ' ---------------------------------------------------------
-cfftf1: further processing Of Complex forward FFT
-          --------------------------------------------------------
+        ' cfftf1: further processing Of Complex forward FFT
+        ' --------------------------------------------------------
         Private Sub cfftf(a As Double(), offa As Integer, isign As Integer)
             Dim idot As Integer
             Dim l1, l2 As Integer
@@ -3428,9 +3433,9 @@ cfftf1: further processing Of Complex forward FFT
         End Sub
 
         ' ----------------------------------------------------------------------
-passf2: Complex FFT 's forward/backward processing of factor 2;
-           isign Is +1 for backward And -1 for forward transforms
-          ----------------------------------------------------------------------
+        ' passf2: Complex FFT 's forward/backward processing of factor 2;
+        ' isign Is +1 for backward And -1 for forward transforms
+        ' ----------------------------------------------------------------------
 
         Private Sub passf2(ido As Integer, l1 As Integer, inp As Double(), in_off As Integer, outp As Double(), out_off As Integer, offset As Integer, isign As Integer)
             Dim t1i, t1r As Double
@@ -3484,9 +3489,9 @@ passf2: Complex FFT 's forward/backward processing of factor 2;
         End Sub
 
         ' ----------------------------------------------------------------------
-passf3: Complex FFT 's forward/backward processing of factor 3;
-           isign Is +1 for backward And -1 for forward transforms
-          ----------------------------------------------------------------------
+        ' passf3: Complex FFT 's forward/backward processing of factor 3;
+        ' isign Is +1 for backward And -1 for forward transforms
+        ' ----------------------------------------------------------------------
         Private Sub passf3(ido As Integer, l1 As Integer, inp As Double(), in_off As Integer, outp As Double(), out_off As Integer, offset As Integer, isign As Integer)
             Dim taur = -0.5
             Dim taui = 0.86602540378443871
@@ -3575,9 +3580,9 @@ passf3: Complex FFT 's forward/backward processing of factor 3;
         End Sub
 
         ' ----------------------------------------------------------------------
-passf4: Complex FFT 's forward/backward processing of factor 4;
-           isign Is +1 for backward And -1 for forward transforms
-          ----------------------------------------------------------------------
+        ' passf4: Complex FFT 's forward/backward processing of factor 4;
+        ' isign Is +1 for backward And -1 for forward transforms
+        ' ----------------------------------------------------------------------
         Private Sub passf4(ido As Integer, l1 As Integer, inp As Double(), in_off As Integer, outp As Double(), out_off As Integer, offset As Integer, isign As Integer)
             Dim ci2, ci3, ci4, cr2, cr3, cr4, ti1, ti2, ti3, ti4, tr1, tr2, tr3, tr4 As Double
             Dim iw1, iw2, iw3 As Integer
@@ -3686,9 +3691,9 @@ passf4: Complex FFT 's forward/backward processing of factor 4;
         End Sub
 
         ' ----------------------------------------------------------------------
-passf5: Complex FFT 's forward/backward processing of factor 5;
-           isign Is +1 for backward And -1 for forward transforms
-          ----------------------------------------------------------------------
+        ' passf5: Complex FFT 's forward/backward processing of factor 5;
+        ' isign Is +1 for backward And -1 for forward transforms
+        ' ----------------------------------------------------------------------
         ' isign==-1 for forward transform and+1 for backward transform 
         Private Sub passf5(ido As Integer, l1 As Integer, inp As Double(), in_off As Integer, outp As Double(), out_off As Integer, offset As Integer, isign As Integer)
             Dim tr11 = 0.30901699437494745
@@ -3840,9 +3845,9 @@ passf5: Complex FFT 's forward/backward processing of factor 5;
         End Sub
 
         ' ----------------------------------------------------------------------
-passfg: Complex FFT 's forward/backward processing of general factor;
-           isign Is +1 for backward And -1 for forward transforms
-          ----------------------------------------------------------------------
+        ' passfg: Complex FFT 's forward/backward processing of general factor;
+        ' isign Is +1 for backward And -1 for forward transforms
+        ' ----------------------------------------------------------------------
         Private Sub passfg(nac As Integer(), ido As Integer, ip As Integer, l1 As Integer, idl1 As Integer, inp As Double(), in_off As Integer, outp As Double(), out_off As Integer, offset As Integer, isign As Integer)
             Dim idij, idlj, idot, ipph, l, jc, lc, idj, idl, inc, idp As Integer
             Dim w1r, w1i, w2i, w2r As Double
@@ -4038,7 +4043,7 @@ passfg: Complex FFT 's forward/backward processing of general factor;
             If n > 8 Then
                 If n > 32 Then
                     cftf1st(n, a, offa, w, nw - (n >> 2))
-                    If (Process.GetCurrentProcess().Threads.Count > 1) AndAlso n > System.TransformCore.THREADS_BEGIN_N_1D_FFT_2THREADS Then
+                    If (Process.GetCurrentProcess().Threads.Count > 1) AndAlso n > TransformCore.THREADS_BEGIN_N_1D_FFT_2THREADS Then
                         cftrec4_th(n, a, offa, nw, w)
                     ElseIf n > 512 Then
                         cftrec4(n, a, offa, nw, w)
@@ -4066,7 +4071,7 @@ passfg: Complex FFT 's forward/backward processing of general factor;
             If n > 8 Then
                 If n > 32 Then
                     cftb1st(n, a, offa, w, nw - (n >> 2))
-                    If (Process.GetCurrentProcess().Threads.Count > 1) AndAlso n > System.TransformCore.THREADS_BEGIN_N_1D_FFT_2THREADS Then
+                    If (Process.GetCurrentProcess().Threads.Count > 1) AndAlso n > TransformCore.THREADS_BEGIN_N_1D_FFT_2THREADS Then
                         cftrec4_th(n, a, offa, nw, w)
                     ElseIf n > 512 Then
                         cftrec4(n, a, offa, nw, w)
@@ -5539,20 +5544,20 @@ passfg: Complex FFT 's forward/backward processing of general factor;
 
         Private Sub cftrec4_th(n As Integer, a As Double(), offa As Integer, nw As Integer, w As Double())
             Dim i As Integer
-            Dim idiv4, m, nthreads As Integer
+            Dim idiv4, m1, nthreads As Integer
             'int idx = 0;
             nthreads = 2
             idiv4 = 0
-            m = n >> 1
-            If n > System.TransformCore.THREADS_BEGIN_N_1D_FFT_4THREADS Then
+            m1 = n >> 1
+            If n > TransformCore.THREADS_BEGIN_N_1D_FFT_4THREADS Then
                 nthreads = 4
                 idiv4 = 1
-                m >>= 1
+                m1 >>= 1
             End If
             Dim taskArray = New Task(nthreads - 1) {}
-            Dim mf = m
+            Dim mf = m1
             For i = 0 To nthreads - 1
-                Dim firstIdx = offa + i * m
+                Dim firstIdx = offa + i * m1
                 If i <> idiv4 Then
                     taskArray(i) = Task.Factory.StartNew(Sub()
                                                              Dim isplt, j, k, m As Integer
@@ -6600,15 +6605,15 @@ passfg: Complex FFT 's forward/backward processing of general factor;
                 n2 = n
             End If
             Dim nthreads As Integer = Process.GetCurrentProcess().Threads.Count
-            If nthreads > 1 AndAlso n2 >= System.TransformCore.THREADS_BEGIN_N_1D_FFT_2THREADS Then
+            If nthreads > 1 AndAlso n2 >= TransformCore.THREADS_BEGIN_N_1D_FFT_2THREADS Then
                 Dim k As Integer = n2 / nthreads
                 Dim taskArray = New Task(nthreads - 1) {}
                 For i = 0 To nthreads - 1
                     Dim firstIdx = offa + i * k
                     Dim lastIdx = If(i = nthreads - 1, offa + n2, firstIdx + k)
                     taskArray(i) = Task.Factory.StartNew(Sub()
-                                                             For i = firstIdx To lastIdx - 1
-                                                                 a(i) *= norm
+                                                             For idx = firstIdx To lastIdx - 1
+                                                                 a(idx) *= norm
                                                              Next
 
                                                          End Sub)
