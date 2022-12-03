@@ -39,32 +39,32 @@ Public Module NumberExtension
     End Sub
 
     <Extension()>
-    Public Function [To](Of T As Structure)(ByVal i As Integer) As T
+    Public Function [To](Of T As Structure)(i As Integer) As T
         Return Convert.ChangeType(i, GetType(T))
     End Function
 
     <Extension()>
-    Public Function [To](Of T As Structure)(ByVal i As Double) As T
+    Public Function [To](Of T As Structure)(i As Double) As T
         Return Convert.ChangeType(i, GetType(T))
     End Function
 
     <Extension()>
-    Public Function [To](Of T As Structure)(ByVal i As Single) As T
+    Public Function [To](Of T As Structure)(i As Single) As T
         Return Convert.ChangeType(i, GetType(T))
     End Function
 
     <Extension()>
-    Public Function [To](Of T As Structure)(ByVal i As Long) As T
+    Public Function [To](Of T As Structure)(i As Long) As T
         Return Convert.ChangeType(i, GetType(T))
     End Function
 
     <Extension()>
-    Public Function [To](Of T As Structure)(ByVal i As Decimal) As T
+    Public Function [To](Of T As Structure)(i As Decimal) As T
         Return Convert.ChangeType(i, GetType(T))
     End Function
 
     <Extension()>
-    Public Function IsNumber(Of T As {Structure, IEquatable(Of T), IFormattable})(ByVal value As T) As Boolean
+    Public Function IsNumber(Of T As {Structure, IEquatable(Of T), IFormattable})(value As T) As Boolean
         'return value is sbyte
         '    || value is byte
         '    || value is short
@@ -84,10 +84,10 @@ Public Module NumberExtension
     ''' <summary>
     ''' This is the Taylor expansion of $$\frac{\exp(x)-1}{x}$$ - note for $$|x| > 10^{-10}$$ the expansion is note used
     ''' </summary>
-    ''' <paramname="x">value</param>
+    ''' <param name="x">value</param>
     ''' <returns>result</returns>
     <Extension()>
-    Public Function Epsilon(ByVal x As Double) As Double
+    Public Function Epsilon(x As Double) As Double
         If Math.Abs(x) > 0.0000000001 Then
             Return Expm1(x) / x
         End If
@@ -97,10 +97,10 @@ Public Module NumberExtension
     ''' <summary>
     ''' This is the Taylor expansion of the first derivative of $$\frac{\exp(x)-1}{x}$$
     ''' </summary>
-    ''' <paramname="x">value</param>
+    ''' <param name="x">value</param>
     ''' <returns>result</returns>
     <Extension()>
-    Public Function EpsilonP(ByVal x As Double) As Double
+    Public Function EpsilonP(x As Double) As Double
 
         If Math.Abs(x) > 0.0000001 Then
             Return ((x - 1) * Expm1(x) + x) / x / x
@@ -111,10 +111,10 @@ Public Module NumberExtension
     ''' <summary>
     ''' This is the Taylor expansion of the second derivative of $$\frac{\exp(x)-1}{x}$$
     ''' </summary>
-    ''' <paramname="x">value</param>
+    ''' <param name="x">value</param>
     ''' <returns>result</returns>
     <Extension()>
-    Public Function EpsilonPP(ByVal x As Double) As Double
+    Public Function EpsilonPP(x As Double) As Double
 
         If Math.Abs(x) > 0.00001 Then
             Dim x2 = x * x
@@ -125,7 +125,7 @@ Public Module NumberExtension
     End Function
 
     <Extension()>
-    Private Function Taylor(ByVal x As Double, ByVal coeff As Double()) As Double
+    Private Function Taylor(x As Double, coeff As Double()) As Double
         Dim sum = coeff(0)
         Dim n = coeff.Length
         For i = 1 To n - 1
@@ -135,7 +135,7 @@ Public Module NumberExtension
     End Function
 
     <Extension()>
-    Public Function IsPowerOf2(ByVal n As Integer) As Boolean
+    Public Function IsPowerOf2(n As Integer) As Boolean
         If n > 0 AndAlso (n And n - 1) = 0 Then
             Return True
         Else
@@ -144,7 +144,7 @@ Public Module NumberExtension
     End Function
 
     <Extension()>
-    Public Function IsPowerOf2(ByVal n As Long) As Boolean
+    Public Function IsPowerOf2(n As Long) As Boolean
         If n > 0 AndAlso (n And n - 1) = 0 Then
             Return True
         Else
@@ -153,7 +153,7 @@ Public Module NumberExtension
     End Function
 
     <Extension()>
-    Public Function LeadingZeros(ByVal x As Integer) As Integer 'compile time constant
+    Public Function LeadingZeros(x As Integer) As Integer 'compile time constant
         Const numIntBits As Integer = Marshal.SizeOf(GetType(Integer)) * 8; //compile time constant
 
             ''' 
@@ -173,33 +173,33 @@ Public Module NumberExtension
     End Function
 
     <Extension()>
-    Public Function NextPowerOf2(ByVal x As Integer) As Integer
+    Public Function NextPowerOf2(x As Integer) As Integer
         If x < 0 Then Throw New ArgumentException()
 
         Return If(x = 0, 0, 32 - x - 1.LeadingZeros())
     End Function
 
     <Extension()>
-    Public Function NextPowerOf2(ByVal x As Long) As Integer
+    Public Function NextPowerOf2(x As Long) As Integer
         If x < 0 Then Throw New ArgumentException()
 
         Return If(x = 0, 0, 32 - CInt(x - 1).LeadingZeros())
     End Function
 
     <Extension()>
-    Public Function GetRemainder(ByVal n As Integer, ByVal factors As Integer()) As Long
+    Public Function GetRemainder(n As Integer, factors As Integer()) As Long
         Return CLng(n).GetRemainder(factors)
     End Function
 
     <Extension()>
-    Public Function GetRemainder(ByVal n As Long, ByVal factors As Integer()) As Long
-        Dim longfactors = Array.ConvertAll(Of Integer, Long)(factors, Function(ByVal i) i)
+    Public Function GetRemainder(n As Long, factors As Integer()) As Long
+        Dim longfactors = Array.ConvertAll(Of Integer, Long)(factors, Function(i) i)
 
         Return n.GetRemainder(longfactors)
     End Function
 
     <Extension()>
-    Public Function GetRemainder(ByVal n As Long, ByVal factors As Long()) As Long
+    Public Function GetRemainder(n As Long, factors As Long()) As Long
         Dim reminder = n
 
         If n <= 0 Then
@@ -220,7 +220,7 @@ Public Module NumberExtension
     End Function
 
     <Extension()>
-    Public Sub MakeIPT(ByVal nw As Integer, ByRef ip As Long())
+    Public Sub MakeIPT(nw As Integer, ByRef ip As Long())
         Dim j, l, m, m2, p, q As Long
 
         ip(2) = 0
@@ -242,7 +242,7 @@ Public Module NumberExtension
     End Sub
 
     <Extension()>
-    Public Sub MakeIPT(ByVal nw As Long, ByRef ip As Long())
+    Public Sub MakeIPT(nw As Long, ByRef ip As Long())
         Dim j, l, m, m2, p, q As Long
 
         ip(2) = 0
@@ -265,7 +265,7 @@ Public Module NumberExtension
 
 
     <Extension()>
-    Public Sub MakeIPT(ByVal nw As Integer, ByRef ip As Integer())
+    Public Sub MakeIPT(nw As Integer, ByRef ip As Integer())
         Dim j, l, m, m2, p, q As Integer
 
         ip(2) = 0
@@ -287,16 +287,16 @@ Public Module NumberExtension
     End Sub
 
     <Extension()>
-    Public Sub MakeWT(ByVal nw As Integer, ByRef ip As Integer(), ByRef w As Double())
-        Dim lip = Array.ConvertAll(Of Integer, Long)(ip, Function(ByVal i) i)
+    Public Sub MakeWT(nw As Integer, ByRef ip As Integer(), ByRef w As Double())
+        Dim lip = Array.ConvertAll(Of Integer, Long)(ip, Function(i) i)
 
         MakeWT(nw, lip, w)
 
-        ip = Array.ConvertAll(Of Long, Integer)(lip, Function(ByVal i) i)
+        ip = Array.ConvertAll(Of Long, Integer)(lip, Function(i) i)
     End Sub
 
     <Extension()>
-    Public Sub MakeWT(ByVal nw As Long, ByRef ip As Long(), ByRef w As Double())
+    Public Sub MakeWT(nw As Long, ByRef ip As Long(), ByRef w As Double())
         Dim j, nwh, nw0, nw1 As Long
         Dim delta, wn4r, wk1r, wk1i, wk3r, wk3i As Double
         Dim delta2, deltaj, deltaj3 As Double
@@ -362,7 +362,7 @@ Public Module NumberExtension
 
 
     <Extension()>
-    Public Sub MakeCT(ByVal nc As Integer, ByRef c As Double(), ByVal startc As Integer, ByRef ip As Integer())
+    Public Sub MakeCT(nc As Integer, ByRef c As Double(), startc As Integer, ByRef ip As Integer())
         Dim j, nch As Integer
         Dim delta, deltaj As Double
 
@@ -381,7 +381,7 @@ Public Module NumberExtension
     End Sub
 
     <Extension()>
-    Public Sub MakeCT(ByVal nc As Long, ByRef c As Double(), ByVal startc As Long, ByRef ipl As Long())
+    Public Sub MakeCT(nc As Long, ByRef c As Double(), startc As Long, ByRef ipl As Long())
         Dim j, nch As Long
         Dim delta, deltaj As Double
 
@@ -401,7 +401,7 @@ Public Module NumberExtension
 
 
     <Extension()>
-    Public Sub MakeCT(ByVal nc As Integer, ByRef c As Single(), ByVal startc As Integer, ByRef ip As Integer())
+    Public Sub MakeCT(nc As Integer, ByRef c As Single(), startc As Integer, ByRef ip As Integer())
         Dim j, nch As Integer
         Dim delta, deltaj As Single
 
@@ -453,10 +453,10 @@ Public Module NumberExtension
     ''' </ul>
     ''' 
     ''' </summary>
-    ''' <paramName="x">the argument to <em>e</em><sup>x</sup> - 1.</param>
+    ''' <param name="x">the argument to <em>e</em><sup>x</sup> - 1.</param>
     ''' <returns><em>e</em> raised to the power <code>x</code> minus one.</returns>
     ''' <seecref=""></see>
-    Public Function Expm1(ByVal x As Double) As Double
+    Public Function Expm1(x As Double) As Double
         ' Method
         '   1d Argument reduction:
         '    Given x, find r and integer k such that
@@ -669,7 +669,7 @@ Public Module NumberExtension
     ''' used like this: 
     ''' <code>getLowDWord(Double.doubleToLongBits(x))</code>.
     ''' </summary>
-    Private Function GetLowDWord(ByVal x As Long) As ULong
+    Private Function GetLowDWord(x As Long) As ULong
         Return x And &HFFFFFFFFL
     End Function
 
@@ -678,13 +678,13 @@ Public Module NumberExtension
     ''' used like this:
     ''' <code>getHighDWord(Double.doubleToLongBits(x))</code>.
     ''' </summary>
-    ''' <paramname="x"></param>
+    ''' <param name="x"></param>
     ''' <returns></returns>
-    Private Function GetHighDWord(ByVal x As Long) As ULong
+    Private Function GetHighDWord(x As Long) As ULong
         Return (CULng(x) And &HFFFFFFFF00000000LUL) >> 32    ' Java is using 0xffffffff00000000L (ulong) since the data type is different.
         End Function
 
-    Private Function BuildDouble(ByVal lowDWord As ULong, ByVal highDWord As ULong) As Double
+    Private Function BuildDouble(lowDWord As ULong, highDWord As ULong) As Double
         Return BitConverter.Int64BitsToDouble((highDWord And &HFFFFFFFFL) << 32 Or lowDWord And &HFFFFFFFFL)
     End Function
 End Module

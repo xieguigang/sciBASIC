@@ -112,9 +112,9 @@ Namespace FFT
         ''' Creates new instance of DoubleFFT_1D.
         ''' 
         ''' </summary>
-        ''' <paramname="n"></param>
+        ''' <param name="n"></param>
         '''            size of data
-        Public Sub New(ByVal n As Integer)
+        Public Sub New(n As Integer)
             If n < 1 Then
                 Throw New ArgumentException("n must be greater than 0")
             End If
@@ -179,8 +179,8 @@ Namespace FFT
         ''' </pre>
         ''' 
         ''' </summary>
-        ''' <paramname="a"></param>
-        '''            data to transform</summary>        Public Sub ComplexForward(ByVal a As Double())
+        ''' <param name="a"></param>
+        '''            data to transform</summary>        Public Sub ComplexForward(a As Double())
             ComplexForward(a, 0)
         End Sub
 
@@ -197,10 +197,10 @@ Namespace FFT
         ''' </pre>
         ''' 
         ''' </summary>
-        ''' <paramname="a"></param>
+        ''' <param name="a"></param>
         '''            data to transform
-        ''' <paramname="offa"></param>
-        '''            index of the first element in array <code>a</code></summary>        Public Sub ComplexForward(ByVal a As Double(), ByVal offa As Integer)
+        ''' <param name="offa"></param>
+        '''            index of the first element in array <code>a</code></summary>        Public Sub ComplexForward(a As Double(), offa As Integer)
         If n = 1 Then Return
             Select Case plan
         Case FFT.Plans.SPLIT_RADIX
@@ -227,10 +227,10 @@ Namespace FFT
         ''' </pre>
         ''' 
         ''' </summary>
-        ''' <paramname="a"></param>
+        ''' <param name="a"></param>
         '''            data to transform
-        ''' <paramname="scale"></param>
-        '''            if true then scaling is performed</summary>        Public Sub ComplexInverse(ByVal a As Double(), ByVal scale As Boolean)
+        ''' <param name="scale"></param>
+        '''            if true then scaling is performed</summary>        Public Sub ComplexInverse(a As Double(), scale As Boolean)
             ComplexInverse(a, 0, scale)
         End Sub
 
@@ -247,12 +247,12 @@ Namespace FFT
         ''' </pre>
         ''' 
         ''' </summary>
-        ''' <paramname="a"></param>
+        ''' <param name="a"></param>
         '''            data to transform
-        ''' <paramname="offa"></param>
+        ''' <param name="offa"></param>
         '''            index of the first element in array <code>a</code>
-        ''' <paramname="scale"></param>
-        '''            if true then scaling is performed</summary>        Public Sub ComplexInverse(ByVal a As Double(), ByVal offa As Integer, ByVal isScale As Boolean)
+        ''' <param name="scale"></param>
+        '''            if true then scaling is performed</summary>        Public Sub ComplexInverse(a As Double(), offa As Integer, isScale As Boolean)
         If n = 1 Then Return
             Select Case plan
         Case FFT.Plans.SPLIT_RADIX
@@ -295,8 +295,8 @@ Namespace FFT
         ''' original data, use <code>realInverse</code> on the output of this method.
         ''' 
         ''' </summary>
-        ''' <paramname="a"></param>
-        '''            data to transform</summary>        Public Sub RealForward(ByVal a As Double())
+        ''' <param name="a"></param>
+        '''            data to transform</summary>        Public Sub RealForward(a As Double())
             RealForward(a, 0)
         End Sub
 
@@ -326,10 +326,10 @@ Namespace FFT
         ''' original data, use <code>realInverse</code> on the output of this method.
         ''' 
         ''' </summary>
-        ''' <paramname="a"></param>
+        ''' <param name="a"></param>
         '''            data to transform
-        ''' <paramname="offa"></param>
-        '''            index of the first element in array <code>a</code></summary>        Public Sub RealForward(ByVal a As Double(), ByVal offa As Integer)
+        ''' <param name="offa"></param>
+        '''            index of the first element in array <code>a</code></summary>        Public Sub RealForward(a As Double(), offa As Integer)
         If n = 1 Then Return
 
             Select Case plan
@@ -368,9 +368,9 @@ Namespace FFT
         ''' use <code>complexInverse</code> on the output of this method.
         ''' 
         ''' </summary>
-        ''' <paramname="a"></param>
+        ''' <param name="a"></param>
         '''            data to transform
-        Public Sub RealForwardFull(ByVal a As Double())
+        Public Sub RealForwardFull(a As Double())
             RealForwardFull(a, 0)
         End Sub
 
@@ -384,11 +384,11 @@ Namespace FFT
         ''' use <code>complexInverse</code> on the output of this method.
         ''' 
         ''' </summary>
-        ''' <paramname="a"></param>
+        ''' <param name="a"></param>
         '''            data to transform
-        ''' <paramname="offa"></param>
+        ''' <param name="offa"></param>
         '''            index of the first element in array <code>a</code>
-        Public Sub RealForwardFull(ByVal a As Double(), ByVal offa As Integer)
+        Public Sub RealForwardFull(a As Double(), offa As Integer)
 
             Dim twon = 2 * n
             Select Case plan
@@ -481,12 +481,12 @@ Namespace FFT
         ''' inverse transform, use <code>realInverseFull</code>.
         ''' 
         ''' </summary>
-        ''' <paramname="a"></param>
+        ''' <param name="a"></param>
         '''            data to transform
         ''' 
-        ''' <paramname="scale"></param>
+        ''' <param name="scale"></param>
         '''            if true then scaling is performed
-        ''' </summary>        Public Sub RealInverse(ByVal a As Double(), ByVal scale As Boolean)
+        ''' </summary>        Public Sub RealInverse(a As Double(), scale As Boolean)
             RealInverse(a, 0, scale)
         End Sub
 
@@ -515,13 +515,13 @@ Namespace FFT
         ''' inverse transform, use <code>realInverseFull</code>.
         ''' 
         ''' </summary>
-        ''' <paramname="a"></param>
+        ''' <param name="a"></param>
         '''            data to transform
-        ''' <paramname="offa"></param>
+        ''' <param name="offa"></param>
         '''            index of the first element in array <code>a</code>
-        ''' <paramname="scale"></param>
+        ''' <param name="scale"></param>
         '''            if true then scaling is performed
-        ''' </summary>        Public Sub RealInverse(ByVal a As Double(), ByVal offa As Integer, ByVal isScale As Boolean)
+        ''' </summary>        Public Sub RealInverse(a As Double(), offa As Integer, isScale As Boolean)
         If n = 1 Then Return
             Select Case plan
         Case FFT.Plans.SPLIT_RADIX
@@ -565,11 +565,11 @@ Namespace FFT
         ''' first n elements filled with real data.
         ''' 
         ''' </summary>
-        ''' <paramname="a"></param>
+        ''' <param name="a"></param>
         '''            data to transform
-        ''' <paramname="scale"></param>
+        ''' <param name="scale"></param>
         '''            if true then scaling is performed
-        Public Sub RealInverseFull(ByVal a As Double(), ByVal isScale As Boolean)
+        Public Sub RealInverseFull(a As Double(), isScale As Boolean)
             RealInverseFull(a, 0, isScale)
         End Sub
 
@@ -582,13 +582,13 @@ Namespace FFT
         ''' first n elements filled with real data.
         ''' 
         ''' </summary>
-        ''' <paramname="a"></param>
+        ''' <param name="a"></param>
         '''            data to transform
-        ''' <paramname="offa"></param>
+        ''' <param name="offa"></param>
         '''            index of the first element in array <code>a</code>
-        ''' <paramname="scale"></param>
+        ''' <param name="scale"></param>
         '''            if true then scaling is performed
-        Public Sub RealInverseFull(ByVal a As Double(), ByVal offa As Integer, ByVal isScale As Boolean)
+        Public Sub RealInverseFull(a As Double(), offa As Integer, isScale As Boolean)
             Dim twon = 2 * n
             Select Case plan
                 Case FFT.Plans.SPLIT_RADIX
@@ -659,7 +659,7 @@ Namespace FFT
             End Select
         End Sub
 
-        Public Sub RealInverse2(ByVal a As Double(), ByVal offa As Integer, ByVal isScale As Boolean)
+        Public Sub RealInverse2(a As Double(), offa As Integer, isScale As Boolean)
             If n = 1 Then Return
             Select Case plan
                 Case FFT.Plans.SPLIT_RADIX
@@ -712,7 +712,7 @@ Namespace FFT
 #End Region
 
 #Region "Private Methods"
-        Private Shared Function GetReminder(ByVal n As Integer, ByVal factors As Integer()) As Integer
+        Private Shared Function GetReminder(n As Integer, factors As Integer()) As Integer
             Dim reminder = n
 
             If n <= 0 Then
@@ -738,7 +738,7 @@ Namespace FFT
 cffti: initialization of Complex FFT
           --------------------------------------------------------
 
-        Private Sub cffti(ByVal n As Integer, ByVal offw As Integer)
+        Private Sub cffti(n As Integer, offw As Integer)
             If n = 1 Then Return
 
             Dim twon = 2 * n
@@ -1016,7 +1016,7 @@ factorize_loop:
             cftbsub(2 * nBluestein, bk2, 0, ip, nw, w)
         End Sub
 
-        Private Sub makewt(ByVal nw As Integer)
+        Private Sub makewt(nw As Integer)
             Dim j, nwh, nw0, nw1 As Integer
             Dim delta, wn4r, wk1r, wk1i, wk3r, wk3i As Double
             Dim delta2, deltaj, deltaj3 As Double
@@ -1080,7 +1080,7 @@ factorize_loop:
             End If
         End Sub
 
-        Private Sub makeipt(ByVal nw As Integer)
+        Private Sub makeipt(nw As Integer)
             Dim j, l, m, m2, p, q As Integer
 
             ip(2) = 0
@@ -1101,7 +1101,7 @@ factorize_loop:
             End While
         End Sub
 
-        Private Sub makect(ByVal nc As Integer, ByVal c As Double(), ByVal startc As Integer)
+        Private Sub makect(nc As Integer, c As Double(), startc As Integer)
             Dim j, nch As Integer
             Dim delta, deltaj As Double
 
@@ -1119,7 +1119,7 @@ factorize_loop:
             End If
         End Sub
 
-        Private Sub bluestein_complex(ByVal a As Double(), ByVal offa As Integer, ByVal isign As Integer)
+        Private Sub bluestein_complex(a As Double(), offa As Integer, isign As Integer)
             Dim ak = New Double(2 * nBluestein - 1) {}
             Dim nthreads = 1
             Dim threads As Integer = Process.GetCurrentProcess().Threads.Count
@@ -1291,7 +1291,7 @@ factorize_loop:
         End Sub
 
 
-        Private Sub bluestein_real_full(ByVal a As Double(), ByVal offa As Integer, ByVal isign As Integer)
+        Private Sub bluestein_real_full(a As Double(), offa As Integer, isign As Integer)
             Dim ak = New Double(2 * nBluestein - 1) {}
             Dim nthreads = 1
             Dim threads As Integer = Process.GetCurrentProcess().Threads.Count
@@ -1453,7 +1453,7 @@ factorize_loop:
             End If
         End Sub
 
-        Private Sub bluestein_real_forward(ByVal a As Double(), ByVal offa As Integer)
+        Private Sub bluestein_real_forward(a As Double(), offa As Integer)
             Dim ak = New Double(2 * nBluestein - 1) {}
             Dim nthreads = 1
             Dim threads As Integer = Process.GetCurrentProcess().Threads.Count
@@ -1549,7 +1549,7 @@ factorize_loop:
             End If
         End Sub
 
-        Private Sub bluestein_real_inverse(ByVal a As Double(), ByVal offa As Integer)
+        Private Sub bluestein_real_inverse(a As Double(), offa As Integer)
             Dim ak = New Double(2 * nBluestein - 1) {}
             If n Mod 2 = 0 Then
                 ak(0) = a(offa) * bk1(0)
@@ -1672,7 +1672,7 @@ factorize_loop:
             End If
         End Sub
 
-        Private Sub bluestein_real_inverse2(ByVal a As Double(), ByVal offa As Integer)
+        Private Sub bluestein_real_inverse2(a As Double(), offa As Integer)
             Dim ak = New Double(2 * nBluestein - 1) {}
             Dim nthreads = 1
             Dim threads As Integer = Process.GetCurrentProcess().Threads.Count
@@ -1772,7 +1772,7 @@ factorize_loop:
         ' ---------------------------------------------------------
 rfftf1: further processing Of Real forward FFT
           --------------------------------------------------------
-        Private Sub rfftf(ByVal a As Double(), ByVal offa As Integer)
+        Private Sub rfftf(a As Double(), offa As Integer)
             If n = 1 Then Return
             Dim l1, l2, na, kh, nf, ip, iw, ido, idl1 As Integer
 
@@ -1838,7 +1838,7 @@ rfftf1: further processing Of Real forward FFT
         ' ---------------------------------------------------------
 rfftb1: further processing Of Real backward FFT
           --------------------------------------------------------
-        Private Sub rfftb(ByVal a As Double(), ByVal offa As Integer)
+        Private Sub rfftb(a As Double(), offa As Integer)
             If n = 1 Then Return
             Dim l1, l2, na, nf, ip, iw, ido, idl1 As Integer
 
@@ -1900,7 +1900,7 @@ rfftb1: further processing Of Real backward FFT
         ' -------------------------------------------------
 radf2: Real FFT 's forward processing of factor 2
           -------------------------------------------------
-        Private Sub radf2(ByVal ido As Integer, ByVal l1 As Integer, ByVal inp As Double(), ByVal in_off As Integer, ByVal outp As Double(), ByVal out_off As Integer, ByVal offset As Integer)
+        Private Sub radf2(ido As Integer, l1 As Integer, inp As Double(), in_off As Integer, outp As Double(), out_off As Integer, offset As Integer)
             Dim i, ic, idx0, idx1, idx2, idx3, idx4 As Integer
             Dim t1i, t1r, w1r, w1i As Double
             Dim iw1 As Integer
@@ -1968,7 +1968,7 @@ radf2: Real FFT 's forward processing of factor 2
         ' -------------------------------------------------
 radb2: Real FFT 's backward processing of factor 2
           -------------------------------------------------
-        Private Sub radb2(ByVal ido As Integer, ByVal l1 As Integer, ByVal inp As Double(), ByVal in_off As Integer, ByVal outp As Double(), ByVal out_off As Integer, ByVal offset As Integer)
+        Private Sub radb2(ido As Integer, l1 As Integer, inp As Double(), in_off As Integer, outp As Double(), out_off As Integer, offset As Integer)
             Dim i, ic As Integer
             Dim t1i, t1r, w1r, w1i As Double
             Dim iw1 = offset
@@ -2037,7 +2037,7 @@ radb2: Real FFT 's backward processing of factor 2
         ' -------------------------------------------------
 radf3: Real FFT 's forward processing of factor 3 
           -------------------------------------------------
-        Private Sub radf3(ByVal ido As Integer, ByVal l1 As Integer, ByVal inp As Double(), ByVal in_off As Integer, ByVal outp As Double(), ByVal out_off As Integer, ByVal offset As Integer)
+        Private Sub radf3(ido As Integer, l1 As Integer, inp As Double(), in_off As Integer, outp As Double(), out_off As Integer, offset As Integer)
             Dim taur = -0.5
             Dim taui = 0.86602540378443871
             Dim i, ic As Integer
@@ -2122,7 +2122,7 @@ radf3: Real FFT 's forward processing of factor 3
         ' -------------------------------------------------
 radb3: Real FFT 's backward processing of factor 3
           -------------------------------------------------
-        Private Sub radb3(ByVal ido As Integer, ByVal l1 As Integer, ByVal inp As Double(), ByVal in_off As Integer, ByVal outp As Double(), ByVal out_off As Integer, ByVal offset As Integer)
+        Private Sub radb3(ido As Integer, l1 As Integer, inp As Double(), in_off As Integer, outp As Double(), out_off As Integer, offset As Integer)
             Dim taur = -0.5
             Dim taui = 0.86602540378443871
             Dim i, ic As Integer
@@ -2206,7 +2206,7 @@ radb3: Real FFT 's backward processing of factor 3
         ' -------------------------------------------------
 radf4: Real FFT 's forward processing of factor 4
           -------------------------------------------------
-        Private Sub radf4(ByVal ido As Integer, ByVal l1 As Integer, ByVal inp As Double(), ByVal in_off As Integer, ByVal outp As Double(), ByVal out_off As Integer, ByVal offset As Integer)
+        Private Sub radf4(ido As Integer, l1 As Integer, inp As Double(), in_off As Integer, outp As Double(), out_off As Integer, offset As Integer)
             Dim hsqt2 = 0.70710678118654757
             Dim i, ic As Integer
             Dim ci2, ci3, ci4, cr2, cr3, cr4, ti1, ti2, ti3, ti4, tr1, tr2, tr3, tr4, w1r, w1i, w2r, w2i, w3r, w3i As Double
@@ -2340,7 +2340,7 @@ radf4: Real FFT 's forward processing of factor 4
         ' -------------------------------------------------
 radb4: Real FFT 's backward processing of factor 4
           -------------------------------------------------
-        Private Sub radb4(ByVal ido As Integer, ByVal l1 As Integer, ByVal inp As Double(), ByVal in_off As Integer, ByVal outp As Double(), ByVal out_off As Integer, ByVal offset As Integer)
+        Private Sub radb4(ido As Integer, l1 As Integer, inp As Double(), in_off As Integer, outp As Double(), out_off As Integer, offset As Integer)
             Dim sqrt2 = 1.4142135623730951
             Dim i, ic As Integer
             Dim ci2, ci3, ci4, cr2, cr3, cr4 As Double
@@ -2485,7 +2485,7 @@ radb4: Real FFT 's backward processing of factor 4
         ' -------------------------------------------------
 radf5: Real FFT 's forward processing of factor 5
           -------------------------------------------------
-        Private Sub radf5(ByVal ido As Integer, ByVal l1 As Integer, ByVal inp As Double(), ByVal in_off As Integer, ByVal outp As Double(), ByVal out_off As Integer, ByVal offset As Integer)
+        Private Sub radf5(ido As Integer, l1 As Integer, inp As Double(), in_off As Integer, outp As Double(), out_off As Integer, offset As Integer)
             Dim tr11 = 0.30901699437494745
             Dim ti11 = 0.95105651629515353
             Dim tr12 = -0.80901699437494734
@@ -2631,7 +2631,7 @@ radf5: Real FFT 's forward processing of factor 5
         ' -------------------------------------------------
 radb5: Real FFT 's backward processing of factor 5
           -------------------------------------------------
-        Private Sub radb5(ByVal ido As Integer, ByVal l1 As Integer, ByVal inp As Double(), ByVal in_off As Integer, ByVal outp As Double(), ByVal out_off As Integer, ByVal offset As Integer)
+        Private Sub radb5(ido As Integer, l1 As Integer, inp As Double(), in_off As Integer, outp As Double(), out_off As Integer, offset As Integer)
             Dim tr11 = 0.30901699437494745
             Dim ti11 = 0.95105651629515353
             Dim tr12 = -0.80901699437494734
@@ -2776,7 +2776,7 @@ radb5: Real FFT 's backward processing of factor 5
         ' ---------------------------------------------------------
 radfg: Real FFT 's forward processing of general factor
           --------------------------------------------------------
-        Private Sub radfg(ByVal ido As Integer, ByVal ip As Integer, ByVal l1 As Integer, ByVal idl1 As Integer, ByVal inp As Double(), ByVal in_off As Integer, ByVal outp As Double(), ByVal out_off As Integer, ByVal offset As Integer)
+        Private Sub radfg(ido As Integer, ip As Integer, l1 As Integer, idl1 As Integer, inp As Double(), in_off As Integer, outp As Double(), out_off As Integer, offset As Integer)
             Dim idij, ipph, j2, ic, jc, lc, ies, nbd As Integer
             Dim dc2, ai1, ai2, ar1, ar2, ds2, dcp, arg, dsp, ar1h, ar2h, w1r, w1i As Double
             Dim iw1 = offset
@@ -3065,7 +3065,7 @@ radfg: Real FFT 's forward processing of general factor
         ' ---------------------------------------------------------
 radbg: Real FFT 's backward processing of general factor
           --------------------------------------------------------
-        Private Sub radbg(ByVal ido As Integer, ByVal ip As Integer, ByVal l1 As Integer, ByVal idl1 As Integer, ByVal inp As Double(), ByVal in_off As Integer, ByVal outp As Double(), ByVal out_off As Integer, ByVal offset As Integer)
+        Private Sub radbg(ido As Integer, ip As Integer, l1 As Integer, idl1 As Integer, inp As Double(), in_off As Integer, outp As Double(), out_off As Integer, offset As Integer)
             Dim idij, ipph, j2, ic, jc, lc, ies As Integer
             Dim dc2, ai1, ai2, ar1, ar2, ds2, w1r, w1i As Double
             Dim nbd As Integer
@@ -3359,7 +3359,7 @@ radbg: Real FFT 's backward processing of general factor
         ' ---------------------------------------------------------
 cfftf1: further processing Of Complex forward FFT
           --------------------------------------------------------
-        Private Sub cfftf(ByVal a As Double(), ByVal offa As Integer, ByVal isign As Integer)
+        Private Sub cfftf(a As Double(), offa As Integer, isign As Integer)
             Dim idot As Integer
             Dim l1, l2 As Integer
             Dim na, nf, ip, iw, ido, idl1 As Integer
@@ -3432,7 +3432,7 @@ passf2: Complex FFT 's forward/backward processing of factor 2;
            isign Is +1 for backward And -1 for forward transforms
           ----------------------------------------------------------------------
 
-        Private Sub passf2(ByVal ido As Integer, ByVal l1 As Integer, ByVal inp As Double(), ByVal in_off As Integer, ByVal outp As Double(), ByVal out_off As Integer, ByVal offset As Integer, ByVal isign As Integer)
+        Private Sub passf2(ido As Integer, l1 As Integer, inp As Double(), in_off As Integer, outp As Double(), out_off As Integer, offset As Integer, isign As Integer)
             Dim t1i, t1r As Double
             Dim iw1 As Integer
             iw1 = offset
@@ -3487,7 +3487,7 @@ passf2: Complex FFT 's forward/backward processing of factor 2;
 passf3: Complex FFT 's forward/backward processing of factor 3;
            isign Is +1 for backward And -1 for forward transforms
           ----------------------------------------------------------------------
-        Private Sub passf3(ByVal ido As Integer, ByVal l1 As Integer, ByVal inp As Double(), ByVal in_off As Integer, ByVal outp As Double(), ByVal out_off As Integer, ByVal offset As Integer, ByVal isign As Integer)
+        Private Sub passf3(ido As Integer, l1 As Integer, inp As Double(), in_off As Integer, outp As Double(), out_off As Integer, offset As Integer, isign As Integer)
             Dim taur = -0.5
             Dim taui = 0.86602540378443871
             Dim ci2, ci3, di2, di3, cr2, cr3, dr2, dr3, ti2, tr2 As Double
@@ -3578,7 +3578,7 @@ passf3: Complex FFT 's forward/backward processing of factor 3;
 passf4: Complex FFT 's forward/backward processing of factor 4;
            isign Is +1 for backward And -1 for forward transforms
           ----------------------------------------------------------------------
-        Private Sub passf4(ByVal ido As Integer, ByVal l1 As Integer, ByVal inp As Double(), ByVal in_off As Integer, ByVal outp As Double(), ByVal out_off As Integer, ByVal offset As Integer, ByVal isign As Integer)
+        Private Sub passf4(ido As Integer, l1 As Integer, inp As Double(), in_off As Integer, outp As Double(), out_off As Integer, offset As Integer, isign As Integer)
             Dim ci2, ci3, ci4, cr2, cr3, cr4, ti1, ti2, ti3, ti4, tr1, tr2, tr3, tr4 As Double
             Dim iw1, iw2, iw3 As Integer
             iw1 = offset
@@ -3690,7 +3690,7 @@ passf5: Complex FFT 's forward/backward processing of factor 5;
            isign Is +1 for backward And -1 for forward transforms
           ----------------------------------------------------------------------
         ' isign==-1 for forward transform and+1 for backward transform 
-        Private Sub passf5(ByVal ido As Integer, ByVal l1 As Integer, ByVal inp As Double(), ByVal in_off As Integer, ByVal outp As Double(), ByVal out_off As Integer, ByVal offset As Integer, ByVal isign As Integer)
+        Private Sub passf5(ido As Integer, l1 As Integer, inp As Double(), in_off As Integer, outp As Double(), out_off As Integer, offset As Integer, isign As Integer)
             Dim tr11 = 0.30901699437494745
             Dim ti11 = 0.95105651629515353
             Dim tr12 = -0.80901699437494734
@@ -3843,7 +3843,7 @@ passf5: Complex FFT 's forward/backward processing of factor 5;
 passfg: Complex FFT 's forward/backward processing of general factor;
            isign Is +1 for backward And -1 for forward transforms
           ----------------------------------------------------------------------
-        Private Sub passfg(ByVal nac As Integer(), ByVal ido As Integer, ByVal ip As Integer, ByVal l1 As Integer, ByVal idl1 As Integer, ByVal inp As Double(), ByVal in_off As Integer, ByVal outp As Double(), ByVal out_off As Integer, ByVal offset As Integer, ByVal isign As Integer)
+        Private Sub passfg(nac As Integer(), ido As Integer, ip As Integer, l1 As Integer, idl1 As Integer, inp As Double(), in_off As Integer, outp As Double(), out_off As Integer, offset As Integer, isign As Integer)
             Dim idij, idlj, idot, ipph, l, jc, lc, idj, idl, inc, idp As Integer
             Dim w1r, w1i, w2i, w2r As Double
             Dim iw1 As Integer
@@ -4034,7 +4034,7 @@ passfg: Complex FFT 's forward/backward processing of general factor;
             End If
         End Sub
 
-        Private Sub cftfsub(ByVal n As Integer, ByVal a As Double(), ByVal offa As Integer, ByVal ip As Integer(), ByVal nw As Integer, ByVal w As Double())
+        Private Sub cftfsub(n As Integer, a As Double(), offa As Integer, ip As Integer(), nw As Integer, w As Double())
             If n > 8 Then
                 If n > 32 Then
                     cftf1st(n, a, offa, w, nw - (n >> 2))
@@ -4062,7 +4062,7 @@ passfg: Complex FFT 's forward/backward processing of general factor;
             End If
         End Sub
 
-        Private Sub cftbsub(ByVal n As Integer, ByVal a As Double(), ByVal offa As Integer, ByVal ip As Integer(), ByVal nw As Integer, ByVal w As Double())
+        Private Sub cftbsub(n As Integer, a As Double(), offa As Integer, ip As Integer(), nw As Integer, w As Double())
             If n > 8 Then
                 If n > 32 Then
                     cftb1st(n, a, offa, w, nw - (n >> 2))
@@ -4090,7 +4090,7 @@ passfg: Complex FFT 's forward/backward processing of general factor;
             End If
         End Sub
 
-        Private Sub bitrv2(ByVal n As Integer, ByVal ip As Integer(), ByVal a As Double(), ByVal offa As Integer)
+        Private Sub bitrv2(n As Integer, ip As Integer(), a As Double(), offa As Integer)
             Dim j1, k1, l, m, nh, nm As Integer
             Dim xr, xi, yr, yi As Double
             Dim idx0, idx1, idx2 As Integer
@@ -4505,7 +4505,7 @@ passfg: Complex FFT 's forward/backward processing of general factor;
             End If
         End Sub
 
-        Private Sub bitrv2conj(ByVal n As Integer, ByVal ip As Integer(), ByVal a As Double(), ByVal offa As Integer)
+        Private Sub bitrv2conj(n As Integer, ip As Integer(), a As Double(), offa As Integer)
             Dim j1, k1, l, m, nh, nm As Integer
             Dim xr, xi, yr, yi As Double
             Dim idx0, idx1, idx2 As Integer
@@ -4928,7 +4928,7 @@ passfg: Complex FFT 's forward/backward processing of general factor;
             End If
         End Sub
 
-        Private Sub bitrv216(ByVal a As Double(), ByVal offa As Integer)
+        Private Sub bitrv216(a As Double(), offa As Integer)
             Dim x1r, x1i, x2r, x2i, x3r, x3i, x4r, x4i, x5r, x5i, x7r, x7i, x8r, x8i, x10r, x10i, x11r, x11i, x12r, x12i, x13r, x13i, x14r, x14i As Double
 
             x1r = a(offa + 2)
@@ -4981,7 +4981,7 @@ passfg: Complex FFT 's forward/backward processing of general factor;
             a(offa + 29) = x7i
         End Sub
 
-        Private Sub bitrv216neg(ByVal a As Double(), ByVal offa As Integer)
+        Private Sub bitrv216neg(a As Double(), offa As Integer)
             Dim x1r, x1i, x2r, x2i, x3r, x3i, x4r, x4i, x5r, x5i, x6r, x6i, x7r, x7i, x8r, x8i, x9r, x9i, x10r, x10i, x11r, x11i, x12r, x12i, x13r, x13i, x14r, x14i, x15r, x15i As Double
 
             x1r = a(offa + 2)
@@ -5046,7 +5046,7 @@ passfg: Complex FFT 's forward/backward processing of general factor;
             a(offa + 31) = x8i
         End Sub
 
-        Private Sub bitrv208(ByVal a As Double(), ByVal offa As Integer)
+        Private Sub bitrv208(a As Double(), offa As Integer)
             Dim x1r, x1i, x3r, x3i, x4r, x4i, x6r, x6i As Double
 
             x1r = a(offa + 2)
@@ -5067,7 +5067,7 @@ passfg: Complex FFT 's forward/backward processing of general factor;
             a(offa + 13) = x3i
         End Sub
 
-        Private Sub bitrv208neg(ByVal a As Double(), ByVal offa As Integer)
+        Private Sub bitrv208neg(a As Double(), offa As Integer)
             Dim x1r, x1i, x2r, x2i, x3r, x3i, x4r, x4i, x5r, x5i, x6r, x6i, x7r, x7i As Double
 
             x1r = a(offa + 2)
@@ -5100,7 +5100,7 @@ passfg: Complex FFT 's forward/backward processing of general factor;
             a(offa + 15) = x4i
         End Sub
 
-        Private Sub cftf1st(ByVal n As Integer, ByVal a As Double(), ByVal offa As Integer, ByVal w As Double(), ByVal startw As Integer)
+        Private Sub cftf1st(n As Integer, a As Double(), offa As Integer, w As Double(), startw As Integer)
             Dim j0, j1, j2, j3, k, m, mh As Integer
             Dim wn4r, csc1, csc3, wk1r, wk1i, wk3r, wk3i, wd1r, wd1i, wd3r, wd3i As Double
             Dim x0r, x0i, x1r, x1i, x2r, x2i, x3r, x3i, y0r, y0i, y1r, y1i, y2r, y2i, y3r, y3i As Double
@@ -5318,7 +5318,7 @@ passfg: Complex FFT 's forward/backward processing of general factor;
             a(idx3 + 3) = wk3i * x0i - wk3r * x0r
         End Sub
 
-        Private Sub cftb1st(ByVal n As Integer, ByVal a As Double(), ByVal offa As Integer, ByVal w As Double(), ByVal startw As Integer)
+        Private Sub cftb1st(n As Integer, a As Double(), offa As Integer, w As Double(), startw As Integer)
             Dim j0, j1, j2, j3, k, m, mh As Integer
             Dim wn4r, csc1, csc3, wk1r, wk1i, wk3r, wk3i, wd1r, wd1i, wd3r, wd3i As Double
             Dim x0r, x0i, x1r, x1i, x2r, x2i, x3r, x3i, y0r, y0i, y1r, y1i, y2r, y2i, y3r, y3i As Double
@@ -5537,7 +5537,7 @@ passfg: Complex FFT 's forward/backward processing of general factor;
             a(idx3 + 3) = wk3i * x0i - wk3r * x0r
         End Sub
 
-        Private Sub cftrec4_th(ByVal n As Integer, ByVal a As Double(), ByVal offa As Integer, ByVal nw As Integer, ByVal w As Double())
+        Private Sub cftrec4_th(n As Integer, a As Double(), offa As Integer, nw As Integer, w As Double())
             Dim i As Integer
             Dim idiv4, m, nthreads As Integer
             'int idx = 0;
@@ -5608,7 +5608,7 @@ passfg: Complex FFT 's forward/backward processing of general factor;
             End Try
         End Sub
 
-        Private Sub cftrec4(ByVal n As Integer, ByVal a As Double(), ByVal offa As Integer, ByVal nw As Integer, ByVal w As Double())
+        Private Sub cftrec4(n As Integer, a As Double(), offa As Integer, nw As Integer, w As Double())
             Dim isplt, j, k, m As Integer
 
             m = n
@@ -5630,7 +5630,7 @@ passfg: Complex FFT 's forward/backward processing of general factor;
             End While
         End Sub
 
-        Private Function cfttree(ByVal n As Integer, ByVal j As Integer, ByVal k As Integer, ByVal a As Double(), ByVal offa As Integer, ByVal nw As Integer, ByVal w As Double()) As Integer
+        Private Function cfttree(n As Integer, j As Integer, k As Integer, a As Double(), offa As Integer, nw As Integer, w As Double()) As Integer
             Dim i, isplt, m As Integer
             Dim idx1 = offa - n
             If (k And 3) <> 0 Then
@@ -5665,7 +5665,7 @@ passfg: Complex FFT 's forward/backward processing of general factor;
             Return isplt
         End Function
 
-        Private Sub cftleaf(ByVal n As Integer, ByVal isplt As Integer, ByVal a As Double(), ByVal offa As Integer, ByVal nw As Integer, ByVal w As Double())
+        Private Sub cftleaf(n As Integer, isplt As Integer, a As Double(), offa As Integer, nw As Integer, w As Double())
             If n = 512 Then
                 cftmdl1(128, a, offa, w, nw - 64)
                 cftf161(a, offa, w, nw - 8)
@@ -5721,7 +5721,7 @@ passfg: Complex FFT 's forward/backward processing of general factor;
             End If
         End Sub
 
-        Private Sub cftmdl1(ByVal n As Integer, ByVal a As Double(), ByVal offa As Integer, ByVal w As Double(), ByVal startw As Integer)
+        Private Sub cftmdl1(n As Integer, a As Double(), offa As Integer, w As Double(), startw As Integer)
             Dim j0, j1, j2, j3, k, m, mh As Integer
             Dim wn4r, wk1r, wk1i, wk3r, wk3i As Double
             Dim x0r, x0i, x1r, x1i, x2r, x2i, x3r, x3i As Double
@@ -5846,7 +5846,7 @@ passfg: Complex FFT 's forward/backward processing of general factor;
             a(idx3 + 1) = -wn4r * (x0i - x0r)
         End Sub
 
-        Private Sub cftmdl2(ByVal n As Integer, ByVal a As Double(), ByVal offa As Integer, ByVal w As Double(), ByVal startw As Integer)
+        Private Sub cftmdl2(n As Integer, a As Double(), offa As Integer, w As Double(), startw As Integer)
             Dim j0, j1, j2, j3, k, kr, m, mh As Integer
             Dim wn4r, wk1r, wk1i, wk3r, wk3i, wd1r, wd1i, wd3r, wd3i As Double
             Dim x0r, x0i, x1r, x1i, x2r, x2i, x3r, x3i, y0r, y0i, y2r, y2i As Double
@@ -5996,7 +5996,7 @@ passfg: Complex FFT 's forward/backward processing of general factor;
             a(idx3 + 1) = y0i + y2i
         End Sub
 
-        Private Sub cftfx41(ByVal n As Integer, ByVal a As Double(), ByVal offa As Integer, ByVal nw As Integer, ByVal w As Double())
+        Private Sub cftfx41(n As Integer, a As Double(), offa As Integer, nw As Integer, w As Double())
             If n = 128 Then
                 cftf161(a, offa, w, nw - 8)
                 cftf162(a, offa + 32, w, nw - 32)
@@ -6010,7 +6010,7 @@ passfg: Complex FFT 's forward/backward processing of general factor;
             End If
         End Sub
 
-        Private Sub cftf161(ByVal a As Double(), ByVal offa As Integer, ByVal w As Double(), ByVal startw As Integer)
+        Private Sub cftf161(a As Double(), offa As Integer, w As Double(), startw As Integer)
             Dim wn4r, wk1r, wk1i, x0r, x0i, x1r, x1i, x2r, x2i, x3r, x3i, y0r, y0i, y1r, y1i, y2r, y2i, y3r, y3i, y4r, y4i, y5r, y5i, y6r, y6i, y7r, y7i, y8r, y8i, y9r, y9i, y10r, y10i, y11r, y11i, y12r, y12i, y13r, y13i, y14r, y14i, y15r, y15i As Double
 
             wn4r = w(startw + 1)
@@ -6163,7 +6163,7 @@ passfg: Complex FFT 's forward/backward processing of general factor;
             a(offa + 7) = x1i - x3r
         End Sub
 
-        Private Sub cftf162(ByVal a As Double(), ByVal offa As Integer, ByVal w As Double(), ByVal startw As Integer)
+        Private Sub cftf162(a As Double(), offa As Integer, w As Double(), startw As Integer)
             Dim wn4r, wk1r, wk1i, wk2r, wk2i, wk3r, wk3i, x0r, x0i, x1r, x1i, x2r, x2i, y0r, y0i, y1r, y1i, y2r, y2i, y3r, y3i, y4r, y4i, y5r, y5i, y6r, y6i, y7r, y7i, y8r, y8i, y9r, y9i, y10r, y10i, y11r, y11i, y12r, y12i, y13r, y13i, y14r, y14i, y15r, y15i As Double
 
             wn4r = w(startw + 1)
@@ -6339,7 +6339,7 @@ passfg: Complex FFT 's forward/backward processing of general factor;
             a(offa + 31) = x1i - x2r
         End Sub
 
-        Private Sub cftf081(ByVal a As Double(), ByVal offa As Integer, ByVal w As Double(), ByVal startw As Integer)
+        Private Sub cftf081(a As Double(), offa As Integer, w As Double(), startw As Integer)
             Dim wn4r, x0r, x0i, x1r, x1i, x2r, x2i, x3r, x3i, y0r, y0i, y1r, y1i, y2r, y2i, y3r, y3i, y4r, y4i, y5r, y5i, y6r, y6i, y7r, y7i As Double
 
             wn4r = w(startw + 1)
@@ -6397,7 +6397,7 @@ passfg: Complex FFT 's forward/backward processing of general factor;
             a(offa + 7) = y2i - y6r
         End Sub
 
-        Private Sub cftf082(ByVal a As Double(), ByVal offa As Integer, ByVal w As Double(), ByVal startw As Integer)
+        Private Sub cftf082(a As Double(), offa As Integer, w As Double(), startw As Integer)
             Dim wn4r, wk1r, wk1i, x0r, x0i, x1r, x1i, y0r, y0i, y1r, y1i, y2r, y2i, y3r, y3i, y4r, y4i, y5r, y5i, y6r, y6i, y7r, y7i As Double
 
             wn4r = w(startw + 1)
@@ -6465,7 +6465,7 @@ passfg: Complex FFT 's forward/backward processing of general factor;
             a(offa + 15) = x0i - x1r
         End Sub
 
-        Private Sub cftf040(ByVal a As Double(), ByVal offa As Integer)
+        Private Sub cftf040(a As Double(), offa As Integer)
             Dim x0r, x0i, x1r, x1i, x2r, x2i, x3r, x3i As Double
 
             x0r = a(offa) + a(offa + 4)
@@ -6486,7 +6486,7 @@ passfg: Complex FFT 's forward/backward processing of general factor;
             a(offa + 7) = x1i - x3r
         End Sub
 
-        Private Sub cftb040(ByVal a As Double(), ByVal offa As Integer)
+        Private Sub cftb040(a As Double(), offa As Integer)
             Dim x0r, x0i, x1r, x1i, x2r, x2i, x3r, x3i As Double
 
             x0r = a(offa) + a(offa + 4)
@@ -6507,7 +6507,7 @@ passfg: Complex FFT 's forward/backward processing of general factor;
             a(offa + 7) = x1i + x3r
         End Sub
 
-        Private Sub cftx020(ByVal a As Double(), ByVal offa As Integer)
+        Private Sub cftx020(a As Double(), offa As Integer)
             Dim x0r, x0i As Double
             x0r = a(offa) - a(offa + 2)
             x0i = -a(offa + 1) + a(offa + 3)
@@ -6517,7 +6517,7 @@ passfg: Complex FFT 's forward/backward processing of general factor;
             a(offa + 3) = x0i
         End Sub
 
-        Private Sub cftxb020(ByVal a As Double(), ByVal offa As Integer)
+        Private Sub cftxb020(a As Double(), offa As Integer)
             Dim x0r, x0i As Double
 
             x0r = a(offa) - a(offa + 2)
@@ -6528,7 +6528,7 @@ passfg: Complex FFT 's forward/backward processing of general factor;
             a(offa + 3) = x0i
         End Sub
 
-        Private Sub cftxc020(ByVal a As Double(), ByVal offa As Integer)
+        Private Sub cftxc020(a As Double(), offa As Integer)
             Dim x0r, x0i As Double
             x0r = a(offa) - a(offa + 2)
             x0i = a(offa + 1) + a(offa + 3)
@@ -6538,7 +6538,7 @@ passfg: Complex FFT 's forward/backward processing of general factor;
             a(offa + 3) = x0i
         End Sub
 
-        Private Sub rftfsub(ByVal n As Integer, ByVal a As Double(), ByVal offa As Integer, ByVal nc As Integer, ByVal c As Double(), ByVal startc As Integer)
+        Private Sub rftfsub(n As Integer, a As Double(), offa As Integer, nc As Integer, c As Double(), startc As Integer)
             Dim k, kk, ks, m As Integer
             Dim wkr, wki, xr, xi, yr, yi As Double
             Dim idx1, idx2 As Integer
@@ -6565,7 +6565,7 @@ passfg: Complex FFT 's forward/backward processing of general factor;
             a(offa + m + 1) = -a(offa + m + 1)
         End Sub
 
-        Private Sub rftbsub(ByVal n As Integer, ByVal a As Double(), ByVal offa As Integer, ByVal nc As Integer, ByVal c As Double(), ByVal startc As Integer)
+        Private Sub rftbsub(n As Integer, a As Double(), offa As Integer, nc As Integer, c As Double(), startc As Integer)
             Dim k, kk, ks, m As Integer
             Dim wkr, wki, xr, xi, yr, yi As Double
             Dim idx1, idx2 As Integer
@@ -6591,7 +6591,7 @@ passfg: Complex FFT 's forward/backward processing of general factor;
             Next
         End Sub
 
-        Private Sub scale(ByVal m As Double, ByVal a As Double(), ByVal offa As Integer, ByVal complex As Boolean)
+        Private Sub scale(m As Double, a As Double(), offa As Integer, complex As Boolean)
             Dim norm = 1.0 / m
             Dim n2 As Integer
             If complex Then
