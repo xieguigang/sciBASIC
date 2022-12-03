@@ -18,11 +18,12 @@
 ' See the License for the specific language governing permissions and
 ' limitations under the License.
 
-Namespace System
+Namespace FFT
+
     ''' <summary>
     ''' Core utility class to provide general utility methods
     ''' </summary>
-    Public Class TransformCore
+    Friend Class TransformCore
         Public Shared ReadOnly THREADS_BEGIN_N_1D_FFT_2THREADS As Integer = 8192
 
         Public Shared ReadOnly THREADS_BEGIN_N_1D_FFT_4THREADS As Integer = 65536
