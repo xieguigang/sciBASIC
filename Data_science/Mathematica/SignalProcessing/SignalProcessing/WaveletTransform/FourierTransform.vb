@@ -101,9 +101,9 @@ Public Module FourierTransform
     ''' </summary>
     ''' 
     ''' <param name="data">Data to transform.</param>
-    ''' <param name="direction__1">Transformation direction.</param>
+    ''' <param name="direction">Transformation direction.</param>
     ''' 
-    Public Sub DFT(data As Complex(), direction__1 As Direction)
+    Public Sub DFT(data As Complex(), direction As Direction)
         Dim n As Integer = data.Length
         Dim arg As Double
         Dim dst As Complex() = New Complex(n - 1) {}
@@ -112,7 +112,7 @@ Public Module FourierTransform
         For i As Integer = 0 To n - 1
             dst(i) = Complex.Zero
 
-            arg = -CInt(direction__1) * 2.0 * System.Math.PI * CDbl(i) / CDbl(n)
+            arg = -CInt(direction) * 2.0 * System.Math.PI * CDbl(i) / CDbl(n)
 
             ' sum source elements
             For j As Integer = 0 To n - 1
@@ -121,7 +121,7 @@ Public Module FourierTransform
         Next
 
         ' copy elements
-        If direction__1 = Direction.Forward Then
+        If direction = Direction.Forward Then
             ' devide also for forward transform
             For i As Integer = 0 To n - 1
                 data(i) = dst(i) / n
@@ -138,9 +138,9 @@ Public Module FourierTransform
     ''' </summary>
     ''' 
     ''' <param name="data">Data to transform.</param>
-    ''' <param name="direction__1">Transformation direction.</param>
+    ''' <param name="direction">Transformation direction.</param>
     ''' 
-    Public Sub DFT2(data As Complex(,), direction__1 As Direction)
+    Public Sub DFT2(data As Complex(,), direction As Direction)
         Dim n As Integer = data.GetLength(0)
         ' rows
         Dim m As Integer = data.GetLength(1)
@@ -153,7 +153,7 @@ Public Module FourierTransform
             For j As Integer = 0 To m - 1
                 dst(j) = Complex.Zero
 
-                arg = -CInt(direction__1) * 2.0 * System.Math.PI * CDbl(j) / CDbl(m)
+                arg = -CInt(direction) * 2.0 * System.Math.PI * CDbl(j) / CDbl(m)
 
                 ' sum source elements
                 For k As Integer = 0 To m - 1
@@ -162,7 +162,7 @@ Public Module FourierTransform
             Next
 
             ' copy elements
-            If direction__1 = Direction.Forward Then
+            If direction = Direction.Forward Then
                 ' devide also for forward transform
                 For j As Integer = 0 To m - 1
                     data(i, j) = dst(j) / m
@@ -179,7 +179,7 @@ Public Module FourierTransform
             For i As Integer = 0 To n - 1
                 dst(i) = Complex.Zero
 
-                arg = -CInt(direction__1) * 2.0 * System.Math.PI * CDbl(i) / CDbl(n)
+                arg = -CInt(direction) * 2.0 * System.Math.PI * CDbl(i) / CDbl(n)
 
                 ' sum source elements
                 For k As Integer = 0 To n - 1
@@ -188,7 +188,7 @@ Public Module FourierTransform
             Next
 
             ' copy elements
-            If direction__1 = Direction.Forward Then
+            If direction = Direction.Forward Then
                 ' devide also for forward transform
                 For i As Integer = 0 To n - 1
                     data(i, j) = dst(i) / n
@@ -207,14 +207,14 @@ Public Module FourierTransform
     ''' </summary>
     ''' 
     ''' <param name="data">Data to transform.</param>
-    ''' <param name="direction__1">Transformation direction.</param>
+    ''' <param name="direction">Transformation direction.</param>
     ''' 
     ''' <remarks><para><note>The method accepts <paramref name="data"/> array of 2<sup>n</sup> size
     ''' only, where <b>n</b> may vary in the [1, 14] range.</note></para></remarks>
     ''' 
     ''' <exception cref="ArgumentException">Incorrect data length.</exception>
     ''' 
-    Public Sub FFT(data As Complex(), direction__1 As Direction)
+    Public Sub FFT(data As Complex(), direction As Direction)
         Dim n As Integer = data.Length
         Dim m As Integer = Log2(n)
 
@@ -225,7 +225,7 @@ Public Module FourierTransform
         Dim tn As Integer = 1, tm As Integer
 
         For k As Integer = 1 To m
-            Dim rotation As Complex() = FourierTransform.GetComplexRotation(k, direction__1)
+            Dim rotation As Complex() = FourierTransform.GetComplexRotation(k, direction)
 
             tm = tn
             tn <<= 1
@@ -246,7 +246,7 @@ Public Module FourierTransform
             Next
         Next
 
-        If direction__1 = Direction.Forward Then
+        If direction = Direction.Forward Then
             For i As Integer = 0 To n - 1
                 data(i) /= CDbl(n)
             Next
