@@ -317,7 +317,7 @@ Namespace Plots
                         .range(integers:={region.Left, region.Right})
                 Else
                     X = d3js.scale _
-                        .linear _
+                        .linear(reverse:=theme.xAxisReverse) _
                         .domain(values:=XTicks) _
                         .range(integers:={region.Left, region.Right})
                 End If
