@@ -61,6 +61,8 @@ Imports stdNum = System.Math
 ' 参考：http://blog.csdn.net/maozefa/article/details/1725535
 
 ''' <summary>
+''' LinearInterpolator
+''' 
 ''' 曲线拟合类，只适用于线性拟合：
 ''' 
 ''' + ``y = a*x + b``

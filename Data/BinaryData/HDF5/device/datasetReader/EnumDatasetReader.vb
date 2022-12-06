@@ -79,7 +79,7 @@ Namespace device
         ''' <summary>
         ''' Removes the zeroth (leading) index. e.g [1,2,3] → [2,3]
         ''' </summary>
-        ''' <paramname="dims"> the array to strip </param>
+        ''' <param name="dims"> the array to strip </param>
         ''' <returns> dims with the zeroth element removed </returns>
         Public Shared Function stripLeadingIndex(dims As Integer()) As Integer()
             Return Arrays.copyOfRange(dims, 1, dims.Length)

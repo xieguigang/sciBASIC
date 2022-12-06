@@ -407,6 +407,15 @@ Namespace Math
             Return If((x > 0), ((x And (x - 1)) = 0), False)
         End Function
 
+        <Extension()>
+        Public Function IsPowerOf2(n As Long) As Boolean
+            If n > 0 AndAlso (n And n - 1) = 0 Then
+                Return True
+            Else
+                Return False
+            End If
+        End Function
+
         ''' <summary>
         ''' Logical true values are regarded as one, false values as zero. For historical reasons, NULL is accepted and treated as if it were integer(0).
         ''' </summary>
