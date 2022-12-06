@@ -219,7 +219,12 @@ Namespace IO.Linq
         ''' Write a object into the table file.
         ''' </summary>
         ''' <param name="obj"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' false will be return if the given object is nothing, else true
+        ''' </returns>
+        ''' <remarks>
+        ''' this method just write data line, not invoke of the <see cref="Stream.Flush()"/>
+        ''' </remarks>
         Public Function Flush(obj As T) As Boolean
             If obj Is Nothing Then
                 Return False
@@ -297,8 +302,8 @@ Namespace IO.Linq
             If Not Me.disposedValue Then
                 If disposing Then
                     Call _fileIO.Flush()
-                    Call _fileIO.Close()
-                    Call _fileIO.Dispose()    ' TODO: dispose managed state (managed objects).
+                    ' Call _fileIO.Close()
+                    ' Call _fileIO.Dispose()    ' TODO: dispose managed state (managed objects).
                 End If
 
                 ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.

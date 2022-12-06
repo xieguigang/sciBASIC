@@ -231,7 +231,7 @@ Namespace FileIO
 
         Public Function WriteText(text As String, path As String) As Boolean Implements IFileSystemEnvironment.WriteText
             Dim fullPath As String = $"{folder}/{path}"
-            Return text.SaveTo(path)
+            Return text.SaveTo(fullPath)
         End Function
 
         Public Function ReadAllText(path As String) As String Implements IFileSystemEnvironment.ReadAllText

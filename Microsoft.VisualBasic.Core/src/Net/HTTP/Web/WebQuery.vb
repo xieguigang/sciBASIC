@@ -215,9 +215,9 @@ Namespace Net.Http
                     Call $"{id} 404 Not Found!".PrintException
                 End If
 
-                If TypeOf Me.cache Is Directory Then
-                    cache_file = $"{DirectCast(cache, Directory).folder}/{cache_file}"
-                End If
+                'If TypeOf Me.cache Is Directory Then
+                '    cache_file = $"{DirectCast(cache, Directory).folder}/{cache_file}"
+                'End If
 
                 Yield (cache_file, hitCache)
             Next
