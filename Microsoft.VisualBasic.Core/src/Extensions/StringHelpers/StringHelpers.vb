@@ -467,6 +467,13 @@ Public Module StringHelpers
     ''' </summary>
     ''' <param name="s1"></param>
     ''' <param name="s2"></param>
+    ''' <param name="null_equals">
+    ''' does the two string value should be equals when both two string is nothing?
+    ''' </param>
+    ''' <param name="empty_equals">
+    ''' does the two string value should be equals when both of them is a 
+    ''' literal of empty, example like '', NULL, NA, etc
+    ''' </param>
     ''' <returns></returns>
     ''' <remarks>
     ''' the parameters configuration of <paramref name="empty_equals"/> and
