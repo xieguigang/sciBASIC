@@ -188,7 +188,9 @@ Namespace Linq
         ''' Return all of the indices which is True
         ''' </summary>
         ''' <param name="v"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' the result index is zero-based by default
+        ''' </returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function IsTrue(v As IEnumerable(Of Boolean), Optional offset% = 0) As Integer()

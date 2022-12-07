@@ -438,6 +438,11 @@ Namespace ComponentModel.Collection
             Return list.Where(Function(i) Not i Like filter).ToArray
         End Operator
 
+        ''' <summary>
+        ''' create a zero-based object index
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
         Public Shared Function Indexing(data As IEnumerable(Of T)) As Dictionary(Of T, Integer)
             Dim i As Integer = Scan0
             Dim index As New Dictionary(Of T, Integer)
