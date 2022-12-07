@@ -213,11 +213,14 @@ Namespace LinearAlgebra
             End Get
         End Property
 
-        Protected Overridable ReadOnly Property Data As Double() Implements IVector.Data
+        Protected Overridable Property Data As Double() Implements IVector.Data
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return buffer
             End Get
+            Set(value As Double())
+                buffer = value
+            End Set
         End Property
 #End Region
 

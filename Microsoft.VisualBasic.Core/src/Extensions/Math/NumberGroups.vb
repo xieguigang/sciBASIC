@@ -452,7 +452,13 @@ Namespace Math
     ''' The numeric vector model
     ''' </summary>
     Public Interface IVector
-        ReadOnly Property Data As Double()
+
+        ''' <summary>
+        ''' the vector data
+        ''' </summary>
+        ''' <returns></returns>
+        Property Data As Double()
+
     End Interface
 
     Public Interface INumberTag

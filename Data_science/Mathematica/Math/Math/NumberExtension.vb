@@ -122,7 +122,6 @@ Public Module NumberExtension
         ' compile time constant
         Static numIntBits As Integer = Marshal.SizeOf(GetType(Integer)) * 8
 
-        ''' 
         'do the smearing
         x = x Or x >> 1
         x = x Or x >> 2

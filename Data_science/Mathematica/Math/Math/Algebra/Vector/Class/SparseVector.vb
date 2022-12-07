@@ -130,10 +130,13 @@ Namespace LinearAlgebra
         ''' returns all data values in current vector object.
         ''' </summary>
         ''' <returns></returns>
-        Protected Overrides ReadOnly Property Data As Double()
+        Protected Overrides Property Data As Double()
             Get
                 Return Me.ToArray
             End Get
+            Set(value As Double())
+                Throw New Exception("read only!")
+            End Set
         End Property
 
         Public Overrides ReadOnly Property Array As Double()
