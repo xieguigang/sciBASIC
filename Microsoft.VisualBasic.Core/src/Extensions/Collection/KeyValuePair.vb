@@ -285,8 +285,10 @@ Namespace ComponentModel.Collection
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
-        ''' <param name="key$"></param>
-        ''' <returns></returns>
+        ''' <param name="key"></param>
+        ''' <returns>
+        ''' nothing will be return if the <paramref name="key"/> is not exists
+        ''' </returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function KeyItem(Of T As INamedValue)(source As IEnumerable(Of T), key$) As T
