@@ -117,6 +117,13 @@ Namespace Imaging.Math2D
         Sub New()
         End Sub
 
+        Sub New(x As Integer(), y As Integer())
+            Call Me.New(
+                x:=x.Select(Function(i) CDbl(i)).ToArray,
+                y:=y.Select(Function(i) CDbl(i)).ToArray
+            )
+        End Sub
+
         Sub New(x As Double(), y As Double())
             If x.Length <> y.Length Then
                 Throw New InvalidProgramException($"the point size of x should be equals to y!")
@@ -305,6 +312,10 @@ Namespace Imaging.Math2D
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetArea() As Double
             Return GetShoelaceArea(xpoints, ypoints)
+        End Function
+
+        Public Function GetRectangle() As RectangleF
+            Return New RectangleF(xpoints.Min, ypoints.Min, width, height)
         End Function
 
         ''' <summary>
