@@ -244,7 +244,7 @@ Namespace Drawing2D
         ''' 请注意，这个是围绕坐标轴远点进行的旋转，如果想要围绕指定点进行旋转，还需要进行平移操作
         ''' </summary>
         ''' <param name="shape"></param>
-        ''' <param name="alpha#"></param>
+        ''' <param name="alpha">angle in radius</param>
         ''' <returns></returns>
         <Extension>
         Public Function Rotate(shape As IEnumerable(Of PointF), alpha#) As PointF()
@@ -253,6 +253,25 @@ Namespace Drawing2D
             Dim y0 As New Vector(vector.Select(Function(pt) pt.Y))
             Dim x1 = x0 * stdNum.Cos(alpha) + y0 * stdNum.Sin(alpha)
             Dim y1 = -x0 * stdNum.Sin(alpha) + y0 * stdNum.Cos(alpha)
+            Return (x1, y1).Point2D.ToArray
+        End Function
+
+        ' theta * stdNum.PI / 180
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="shape"></param>
+        ''' <param name="center"></param>
+        ''' <param name="alpha"></param>
+        ''' <returns></returns>
+        Public Function Rotate(shape As IEnumerable(Of PointF), center As PointF, alpha#) As PointF()
+            Dim vector = shape.ToArray
+            Dim x0 As New Vector(vector.Select(Function(pt) pt.X))
+            Dim y0 As New Vector(vector.Select(Function(pt) pt.Y))
+            Dim x1 As Vector = center.X + (x0 - center.X) * stdNum.Cos(alpha) - (y0 - center.Y) * stdNum.Sin(alpha)
+            Dim y1 As Vector = center.Y + (x0 - center.X) * stdNum.Sin(alpha) + (y0 - center.Y) * stdNum.Cos(alpha)
+
             Return (x1, y1).Point2D.ToArray
         End Function
 

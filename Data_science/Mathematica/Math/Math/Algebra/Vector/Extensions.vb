@@ -72,6 +72,10 @@ Namespace LinearAlgebra
         ''' <param name="y"></param>
         ''' <returns></returns>
         Public Iterator Function Points(x As Vector, y As Vector) As IEnumerable(Of PointF)
+            If x.Length <> y.Length Then
+                Throw New ArgumentException($"size of vector x({x.Length}) should be equals to the size of vector y({y.Length})!")
+            End If
+
             For i As Integer = 0 To x.Length - 1
                 Yield New PointF(x(i), y(i))
             Next
@@ -83,6 +87,13 @@ Namespace LinearAlgebra
             Return Points(point.x, point.y)
         End Function
 
+        ''' <summary>
+        ''' iterates a set of point from the given vector tuple
+        ''' </summary>
+        ''' <param name="polygon">
+        ''' two vector should be in size equals
+        ''' </param>
+        ''' <returns></returns>
         <Extension>
         Public Function Point2D(polygon As (X As Vector, Y As Vector)) As IEnumerable(Of PointF)
             With polygon
