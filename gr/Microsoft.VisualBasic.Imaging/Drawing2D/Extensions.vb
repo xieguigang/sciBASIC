@@ -263,8 +263,10 @@ Namespace Drawing2D
         ''' </summary>
         ''' <param name="shape"></param>
         ''' <param name="center"></param>
-        ''' <param name="alpha"></param>
+        ''' <param name="alpha">the angle in radius</param>
         ''' <returns></returns>
+        ''' 
+        <Extension>
         Public Function Rotate(shape As IEnumerable(Of PointF), center As PointF, alpha#) As PointF()
             Dim vector = shape.ToArray
             Dim x0 As New Vector(vector.Select(Function(pt) pt.X))
