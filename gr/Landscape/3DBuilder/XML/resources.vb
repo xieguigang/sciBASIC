@@ -72,7 +72,6 @@
 #End Region
 
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.Imaging.Drawing3D.Landscape
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Vendor_3mf.XML
