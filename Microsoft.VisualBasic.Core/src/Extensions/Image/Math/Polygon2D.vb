@@ -220,6 +220,14 @@ Namespace Imaging.Math2D
             Return (x >= Me.bounds1.x) AndAlso (x <= Me.bounds2.x) AndAlso (y >= Me.bounds1.y) AndAlso (y <= Me.bounds2.y)
         End Function
 
+        Public Function inside(par2d As Point) As Boolean
+            If Not boundingInside(par2d.X, par2d.Y) Then
+                Return False
+            Else
+                Return checkInside(par2d.X, par2d.Y)
+            End If
+        End Function
+
         Public Function inside(par2D As PointF) As Boolean
             If Not boundingInside(par2D.X, par2D.Y) Then
                 Return False
