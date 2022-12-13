@@ -22,7 +22,7 @@ Public Class GridBox(Of T)
         For x As Integer = rect.Left To rect.Right Step gridSize.Width
             For y As Integer = rect.Top To rect.Bottom Step gridSize.Height
                 center = New Point(x + dw, y + dh)
-                block = grid.Query(center.X, center.Y, gridSize)
+                block = grid.Query(center.X, center.Y, gridSize).ToArray
 
                 Yield block
             Next
