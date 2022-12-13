@@ -148,6 +148,13 @@ Namespace Imaging.Math2D
             )
         End Sub
 
+        Sub New(points As Layout2D())
+            Call Me.New(
+                x:=points.Select(Function(p) p.X).ToArray,
+                y:=points.Select(Function(p) p.Y).ToArray
+            )
+        End Sub
+
         Public Sub New(points As IEnumerable(Of Point))
             Call Me.New(points.Select(Function(p) New PointF(p.X, p.Y)).ToArray)
         End Sub
