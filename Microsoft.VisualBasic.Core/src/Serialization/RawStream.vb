@@ -139,7 +139,7 @@ Namespace Serialization
         ''' </summary>
         Public Const INT32 As Integer = 4
         ''' <summary>
-        ''' System.Double
+        ''' sizeof <see cref="Double"/>
         ''' </summary>
         Public Const DblFloat As Integer = 8
         Public Const ShortInt As Integer = 2
