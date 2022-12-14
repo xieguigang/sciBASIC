@@ -31,7 +31,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <BaseAddress>4194304</BaseAddress>
-    <OutputPath>D:\GCModeller\src\R-sharp\App\</OutputPath>
+  
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NPSearch|x64'">
@@ -44,7 +44,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <BaseAddress>4194304</BaseAddress>
-    <OutputPath>D:\biodeep\biodeepdb_v3\metaCluster\NPSearch\assembly\</OutputPath>
+   
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|x64'">

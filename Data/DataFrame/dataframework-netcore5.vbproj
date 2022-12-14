@@ -61,7 +61,7 @@
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DefineTrace>true</DefineTrace>
     <DocumentationFile>Microsoft.VisualBasic.Data.Framework.xml</DocumentationFile>
-    <OutputPath>D:\GCModeller\src\R-sharp\App\</OutputPath>
+  
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|x64'">
@@ -74,7 +74,7 @@
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DefineTrace>true</DefineTrace>
     <DocumentationFile>Microsoft.VisualBasic.Data.Framework.xml</DocumentationFile>
-    <OutputPath>D:\mzkit\Rscript\Library\mzkit_app\assembly\</OutputPath>
+   
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|x64'">
@@ -87,7 +87,7 @@
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DefineTrace>true</DefineTrace>
     <DocumentationFile>Microsoft.VisualBasic.Data.Framework.xml</DocumentationFile>
-    <OutputPath>D:\PlantMAT\PlantMAT\assembly\</OutputPath>
+  
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NPSearch|x64'">
@@ -100,7 +100,7 @@
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DefineTrace>true</DefineTrace>
     <DocumentationFile>Microsoft.VisualBasic.Data.Framework.xml</DocumentationFile>
-    <OutputPath>D:\biodeep\biodeepdb_v3\metaCluster\NPSearch\assembly\</OutputPath>
+  
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|x64'">
@@ -113,7 +113,7 @@
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DefineTrace>true</DefineTrace>
     <DocumentationFile>Microsoft.VisualBasic.Data.Framework.xml</DocumentationFile>
-    <OutputPath>D:\biodeep\biodeepdb_v3\metaCluster\NPSearch\assembly\</OutputPath>
+ 
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

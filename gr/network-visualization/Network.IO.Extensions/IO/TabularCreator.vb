@@ -150,11 +150,13 @@ Namespace FileStream
                 }
 
                 With edge
-                    If Not properties Is Nothing Then
-                        For Each key As String In properties.Where(Function(p) l.data.HasProperty(p))
+                    If Not edgeProperties.IsNullOrEmpty Then
+                        For Each key As String In edgeProperties.Where(Function(p) l.data.HasProperty(p))
                             .ItemValue(key) = l.data(key)
                         Next
                     End If
+
+                    .Properties.Remove(names.REFLECTION_ID_MAPPING_INTERACTION_TYPE)
                 End With
 
                 Yield edge

@@ -60,7 +60,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>../../../../../../\R-sharp\App\</OutputPath>
+    <OutputPath>../../../../../\R-sharp\App\</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|x64'">
@@ -72,7 +72,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>D:\GCModeller\src\R-sharp\App\</OutputPath>
+ 
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|x64'">
@@ -84,7 +84,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>D:\mzkit\Rscript\Library\mzkit_app\assembly\</OutputPath>
+  
   </PropertyGroup>
 
   <ItemGroup>

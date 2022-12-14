@@ -233,6 +233,7 @@ Public Module TextDoc
             Return
         End If
 
+        ' path.Open is affects by the memory configuration
         Using fs As Stream = path.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
             Using reader As New StreamReader(fs, encoding Or DefaultEncoding)
                 Do While Not reader.EndOfStream

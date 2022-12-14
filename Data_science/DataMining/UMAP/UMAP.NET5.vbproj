@@ -75,7 +75,7 @@
 	  <DebugType>full</DebugType>
 	  <DefineDebug>false</DefineDebug>
 	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-	  <OutputPath>D:\GCModeller\src\R-sharp\App\</OutputPath>
+	
 	  <DefineTrace>true</DefineTrace>
 	</PropertyGroup>
 
@@ -87,7 +87,7 @@
 	  <DebugType>full</DebugType>
 	  <DefineDebug>false</DefineDebug>
 	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-	  <OutputPath>D:\GCModeller\src\R-sharp\App\</OutputPath>
+	
 	  <DefineTrace>true</DefineTrace>
 	</PropertyGroup>
 
@@ -99,7 +99,7 @@
 	  <DebugType>full</DebugType>
 	  <DefineDebug>false</DefineDebug>
 	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-	  <OutputPath>D:\GCModeller\src\R-sharp\App\</OutputPath>
+	
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|x64'">

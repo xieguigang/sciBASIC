@@ -85,7 +85,7 @@ Namespace FileStream
         ''' <returns></returns>
         <XmlAttribute("value")>
         Public Overridable Property value As Double Implements INetworkEdge.value
-        <Column(Name:="interaction_type"), XmlText>
+        <Column(Name:=NamesOf.REFLECTION_ID_MAPPING_INTERACTION_TYPE), XmlText>
         Public Overridable Property interaction As String Implements INetworkEdge.Interaction
 
         ''' <summary>

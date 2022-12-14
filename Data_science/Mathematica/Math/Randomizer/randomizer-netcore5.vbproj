@@ -33,7 +33,7 @@
     <DefineTrace>true</DefineTrace>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DocumentationFile>Microsoft.VisualBasic.Math.Randomizer.xml</DocumentationFile>
-    <OutputPath>D:\GCModeller\src\R-sharp\App\</OutputPath>
+  
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='gcmodeller_desktop|x64'">
@@ -45,7 +45,7 @@
     <DefineTrace>true</DefineTrace>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DocumentationFile>Microsoft.VisualBasic.Math.Randomizer.xml</DocumentationFile>
-    <OutputPath>D:\GCModeller\src\R-sharp\App\</OutputPath>
+  
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|x64'">
@@ -57,7 +57,7 @@
     <DefineTrace>true</DefineTrace>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DocumentationFile>Microsoft.VisualBasic.Math.Randomizer.xml</DocumentationFile>
-    <OutputPath>D:\GCModeller\src\R-sharp\App\</OutputPath>
+   
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
