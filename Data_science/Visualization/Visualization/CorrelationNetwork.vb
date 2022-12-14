@@ -95,7 +95,7 @@ Public Module CorrelationNetwork
                 cor = matrix(id, partner)
                 prob = matrix.pvalue(id, partner)
 
-                If stdNum.Abs(cor) >= cutoff AndAlso prob <= pvalue Then
+                If stdNum.Abs(cor) > cutoff AndAlso prob < pvalue Then
                     uid$ = {partner, id}.OrderBy(Function(s) s).JoinBy(" - ")
                     linkdata = New EdgeData With {
                         .label = uid,
