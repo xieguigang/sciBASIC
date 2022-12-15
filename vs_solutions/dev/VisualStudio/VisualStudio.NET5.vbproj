@@ -56,7 +56,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <BaseAddress>4194304</BaseAddress>
-    <OutputPath>D:\GCModeller\src\R-sharp\App\</OutputPath>
+   
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|x64'">
@@ -69,7 +69,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <BaseAddress>4194304</BaseAddress>
-    <OutputPath>D:\GCModeller\src\R-sharp\App\</OutputPath>
+ 
   </PropertyGroup>
 
   <ItemGroup>

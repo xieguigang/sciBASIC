@@ -93,7 +93,9 @@ Namespace LinearAlgebra
         ''' <param name="polygon">
         ''' two vector should be in size equals
         ''' </param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' a set of the point data in float data type
+        ''' </returns>
         <Extension>
         Public Function Point2D(polygon As (X As Vector, Y As Vector)) As IEnumerable(Of PointF)
             With polygon

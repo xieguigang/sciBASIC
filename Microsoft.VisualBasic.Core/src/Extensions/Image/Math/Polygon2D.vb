@@ -148,6 +148,13 @@ Namespace Imaging.Math2D
             )
         End Sub
 
+        Sub New(points As Layout2D())
+            Call Me.New(
+                x:=points.Select(Function(p) p.X).ToArray,
+                y:=points.Select(Function(p) p.Y).ToArray
+            )
+        End Sub
+
         Public Sub New(points As IEnumerable(Of Point))
             Call Me.New(points.Select(Function(p) New PointF(p.X, p.Y)).ToArray)
         End Sub
@@ -218,6 +225,14 @@ Namespace Imaging.Math2D
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Friend Overridable Function boundingInside(x As Double, y As Double) As Boolean
             Return (x >= Me.bounds1.x) AndAlso (x <= Me.bounds2.x) AndAlso (y >= Me.bounds1.y) AndAlso (y <= Me.bounds2.y)
+        End Function
+
+        Public Function inside(par2d As Point) As Boolean
+            If Not boundingInside(par2d.X, par2d.Y) Then
+                Return False
+            Else
+                Return checkInside(par2d.X, par2d.Y)
+            End If
         End Function
 
         Public Function inside(par2D As PointF) As Boolean

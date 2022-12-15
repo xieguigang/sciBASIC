@@ -81,6 +81,9 @@ Namespace ComponentModel.Collection
 
         Dim maps As New Dictionary(Of T, Integer)
         Dim index As HashList(Of SeqValue(Of T))
+        ''' <summary>
+        ''' the index offset value ,zero by default
+        ''' </summary>
         Dim base%
 
         ''' <summary>
@@ -157,8 +160,7 @@ Namespace ComponentModel.Collection
         ''' <param name="maps">如果是json加载，可能会出现空值的字典</param>
         ''' <param name="base%"></param>
         Sub New(maps As IDictionary(Of T, Integer), Optional base% = 0)
-            Static emptyIndex As [Default](Of IDictionary(Of String, Integer)) =
-                New Dictionary(Of String, Integer)
+            Static emptyIndex As [Default](Of IDictionary(Of String, Integer)) = New Dictionary(Of String, Integer)
 
             Me.base = base
             Me.maps = New Dictionary(Of T, Integer)(dictionary:=maps Or emptyIndex)
@@ -169,7 +171,10 @@ Namespace ComponentModel.Collection
         ''' 获取目标对象在本索引之中的位置编号，不存在则返回-1
         ''' </summary>
         ''' <param name="x"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' this function always returns -1(ignores of the <see cref="base"/> offset value) 
+        ''' if the target element is not found.
+        ''' </returns>
         Default Public ReadOnly Property IndexOf(x As T) As Integer
             Get
                 If maps.ContainsKey(x) Then
@@ -277,6 +282,11 @@ Namespace ComponentModel.Collection
             Return maps(x)
         End Function
 
+        ''' <summary>
+        ''' insert the specific element into the specific location of the index
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="index"></param>
         Public Sub Add(x As T, index As Integer)
             Call Me.maps.Add(x, index)
             Call Me.index.Add(New SeqValue(Of T) With {
@@ -285,12 +295,20 @@ Namespace ComponentModel.Collection
             })
         End Sub
 
+        ''' <summary>
+        ''' add a collection of the unique items into current index object
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
         Public Iterator Function Add(x As T()) As IEnumerable(Of Integer)
             For Each xi As T In x
                 Yield Add(xi)
             Next
         End Function
 
+        ''' <summary>
+        ''' clear mapping and reset the index offset
+        ''' </summary>
         Public Sub Clear()
             Call maps.Clear()
             Call index.Clear()

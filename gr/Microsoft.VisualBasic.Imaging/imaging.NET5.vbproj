@@ -16,6 +16,8 @@
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 
 		<PackageLicenseExpression>GPL</PackageLicenseExpression>
+
+		<Title>GDI+ data visualization math core module</Title>
 		
 	</PropertyGroup>
 
@@ -90,7 +92,7 @@
 	  <DefineTrace>true</DefineTrace>
 	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
 	  <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
-	  <OutputPath>\GCModeller\src\R-sharp\App\</OutputPath>
+	
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

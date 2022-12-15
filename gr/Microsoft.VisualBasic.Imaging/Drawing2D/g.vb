@@ -269,7 +269,10 @@ Namespace Drawing2D
             Dim dpiXY As Size = dpi.SizeParser
 
             size = size Or defaultSize
-            padding = padding Or defaultPaddingValue
+            ' 20221211 default config will makes the zero-padding
+            ' invalid, so we must removes this line
+            '
+            ' padding = padding Or defaultPaddingValue
 
             Return New DeviceDescription(bg) With {
                 .dpi = dpiXY,

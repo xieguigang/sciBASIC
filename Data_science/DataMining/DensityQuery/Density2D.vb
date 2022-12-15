@@ -58,6 +58,11 @@ Imports Microsoft.VisualBasic.Data.GraphTheory
 Public Module Density2D
 
     <Extension>
+    Public Function WindowSize(Of T)(grid As Grid(Of T), w As Integer, h As Integer) As GridBox(Of T)
+        Return New GridBox(Of T)(grid, w, h)
+    End Function
+
+    <Extension>
     Public Function Density(Of T As INamedValue)(data As IEnumerable(Of T),
                                                  getX As Func(Of T, Integer),
                                                  getY As Func(Of T, Integer),

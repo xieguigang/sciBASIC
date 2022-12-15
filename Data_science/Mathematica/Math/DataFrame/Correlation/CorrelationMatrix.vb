@@ -55,6 +55,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports stdNum = System.Math
@@ -146,4 +147,39 @@ Public Class CorrelationMatrix : Inherits DataMatrix
                         Return New FastRankQuantile(q)
                     End Function)
     End Function
+
+    ''' <summary>
+    ''' cor ^ exp
+    ''' </summary>
+    ''' <param name="exp"></param>
+    ''' <returns></returns>
+    Public Function Power(exp As Double) As CorrelationMatrix
+        Dim cor As Double()() = matrix.ToArray
+        Dim pow As Double()() = cor _
+            .Select(Function(c)
+                        Return c.Select(Function(ci) ci ^ exp).ToArray
+                    End Function) _
+            .ToArray
+
+        Return New CorrelationMatrix(names, pow, pvalueMat)
+    End Function
+
+    Public Function Sign() As Double()()
+        Return matrix _
+            .Select(Function(c)
+                        Return c.Select(Function(ci) CDbl(stdNum.Sign(ci))).ToArray
+                    End Function) _
+            .ToArray
+    End Function
+
+    Public Shared Operator *(x As Double()(), y As CorrelationMatrix) As CorrelationMatrix
+        Dim cor As Double()() = y.matrix
+        Dim mul As Double()() = x _
+            .Select(Function(xi, i)
+                        Return (New Vector(xi) * New Vector(cor(i))).ToArray
+                    End Function) _
+            .ToArray
+
+        Return New CorrelationMatrix(y.names, mul, y.pvalueMat)
+    End Operator
 End Class

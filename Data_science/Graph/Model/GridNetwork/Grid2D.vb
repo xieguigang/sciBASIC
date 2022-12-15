@@ -58,6 +58,8 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
@@ -71,6 +73,19 @@ Public Class Grid(Of T)
     ''' </summary>
     ReadOnly matrix2D As Dictionary(Of Long, Dictionary(Of Long, GridCell(Of T)))
     ReadOnly toPoint As Func(Of T, Point)
+
+    Public ReadOnly Property rectangle As Rectangle
+        Get
+            Dim points As Layout2D() = matrix2D.Values _
+                .Select(Function(a) a.Values) _
+                .IteratesALL _
+                .Select(Function(c) DirectCast(c, Layout2D)) _
+                .ToArray
+            Dim rectf = New Polygon2D(points).GetRectangle
+
+            Return New Rectangle(rectf.X, rectf.Y, rectf.Width, rectf.Height)
+        End Get
+    End Property
 
     Public ReadOnly Property width As Integer
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -219,6 +234,8 @@ Public Class Grid(Of T)
     End Function
 
     ''' <summary>
+    ''' Query a block of the data points
+    ''' 
     ''' [<paramref name="x"/>, <paramref name="y"/>] is the center point of the target rectangle region.
     ''' </summary>
     ''' <param name="x"></param>
@@ -292,6 +309,12 @@ Public Class Grid(Of T)
                     End Function)
     End Function
 
+    ''' <summary>
+    ''' a generic grid constructor for <see cref="IPoint2D"/>
+    ''' </summary>
+    ''' <typeparam name="Point"></typeparam>
+    ''' <param name="data"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function Create(Of Point As IPoint2D)(data As IEnumerable(Of Point)) As Grid(Of Point)
         Return Grid(Of Point).Create(data, Function(p) p.X, Function(p) p.Y)
