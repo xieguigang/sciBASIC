@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::c7bb9a605d9989add50296a21e8d0e32, sciBASIC#\gr\network-visualization\Datavisualization.Network\Analysis\Communities.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 131
-    '    Code Lines: 86
-    ' Comment Lines: 17
-    '   Blank Lines: 28
-    '     File Size: 4.88 KB
+' Summaries:
 
 
-    '     Class Communities
-    ' 
-    '         Function: Analysis, AnalysisUnweighted, Community, GetCommunitySet, Modularity
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 131
+'    Code Lines: 86
+' Comment Lines: 17
+'   Blank Lines: 28
+'     File Size: 4.88 KB
+
+
+'     Class Communities
+' 
+'         Function: Analysis, AnalysisUnweighted, Community, GetCommunitySet, Modularity
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -67,11 +67,17 @@ Namespace Analysis
                               End Function)
         End Function
 
+        ''' <summary>
+        ''' just group the node vertex via the data property <see cref="NamesOf.REFLECTION_ID_MAPPING_NODETYPE"/>
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <returns></returns>
         Public Shared Function GetCommunitySet(g As NetworkGraph) As Dictionary(Of String, Node())
             Dim [set] As New Dictionary(Of String, List(Of Node))
+            Dim community As String
 
             For Each v As Node In g.vertex
-                Dim community As String = v.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)
+                community = v.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)
 
                 If community.StringEmpty Then
                     community = "n/a"
@@ -84,44 +90,65 @@ Namespace Analysis
                 [set](community).Add(v)
             Next
 
-            Return [set].ToDictionary(Function(v) v.Key, Function(list) list.Value.ToArray)
+            Return [set].ToDictionary(Function(v) v.Key,
+                                      Function(list)
+                                          Return list.Value.ToArray
+                                      End Function)
         End Function
 
         ''' <summary>
         ''' compute the modularity of the network comminity
         ''' </summary>
-        ''' <param name="g"></param>
+        ''' <param name="g">
+        ''' the graph data should be assign into multiple node
+        ''' cluster via some algorithm at first, before calling 
+        ''' this modularity evalution function.
+        ''' </param>
         ''' <returns></returns>
-        Public Shared Function Modularity(g As NetworkGraph) As Double
+        Public Shared Function Modularity(g As NetworkGraph, Optional ByRef qsub As Double() = Nothing) As Double
             Dim m As Double = g.ComputeNodeDegrees.Values.Sum / 2
-            Dim q As Double = 0
+            Dim qset As New List(Of Double)
             Dim communitySet = GetCommunitySet(g)
 
-            For Each entry In communitySet
+            For Each entry As KeyValuePair(Of String, Node()) In communitySet
                 Dim Cset As Node() = entry.Value
+                Dim subQ As Double = EvaluateCommunity(Cset, m)
 
-                For i As Integer = 0 To Cset.Length - 1
-                    Dim u As Node = Cset(i)
-
-                    For j As Integer = 0 To Cset.Length - 1
-                        Dim v As Node = Cset(j)
-                        Dim auv As Double = 0
-
-                        If u.adjacencies.hasNeighbor(v) Then
-                            auv = 1
-                        End If
-
-                        Dim ku = u.degree.In + u.degree.Out
-                        Dim kv = v.degree.In + u.degree.Out
-                        Dim subQ As Double = auv - ((ku * kv) / (2 * m))
-
-                        q += subQ
-                    Next
-                Next
+                Call qset.Add(subQ)
             Next
 
+            Dim q As Double = qset.Sum
             Dim mov As Double = (1.0 / (2.0 * m)) * q
+
+            qsub = qset.ToArray
+
             Return mov
+        End Function
+
+        Private Shared Function EvaluateCommunity(Cset As Node(), m As Double) As Double
+            Return Cset _
+                .AsParallel _
+                .Select(Function(u, i)
+                            Dim q As Double
+
+                            For j As Integer = 0 To Cset.Length - 1
+                                Dim v As Node = Cset(j)
+                                Dim auv As Double = 0
+
+                                If u.adjacencies.hasNeighbor(v) Then
+                                    auv = 1
+                                End If
+
+                                Dim ku = u.degree.In + u.degree.Out
+                                Dim kv = v.degree.In + u.degree.Out
+                                Dim subQ As Double = auv - ((ku * kv) / (2 * m))
+
+                                q += subQ
+                            Next
+
+                            Return q
+                        End Function) _
+                .Sum
         End Function
 
         Public Shared Function AnalysisUnweighted(ByRef g As NetworkGraph, Optional directed As Boolean = True) As NetworkGraph

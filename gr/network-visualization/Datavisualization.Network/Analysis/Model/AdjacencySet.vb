@@ -88,6 +88,12 @@ Namespace Analysis.Model
             End Get
         End Property
 
+        ''' <summary>
+        ''' check the input node <paramref name="i"/> is a 
+        ''' connected adjacent node to current node vertex.
+        ''' </summary>
+        ''' <param name="i"></param>
+        ''' <returns></returns>
         Public Function hasNeighbor(i As Node) As Boolean
             Return EnumerateAllEdges.Any(Function(link) link.source = i.label OrElse link.target = i.label)
         End Function
