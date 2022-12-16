@@ -83,12 +83,18 @@ Namespace KdTree
 
         Public Function FindNeighbors(data As GeneralMatrix, Optional k As Integer = 30) As IEnumerable(Of (size As Integer, indices As Integer(), weights As Double()))
             Return data _
-                .RowVectors _
-                .SeqIterator _
-                .Select(Function(d)
-                            Return New TagVector With {.index = d.i, .vector = CType(d, Vector).ToArray}
-                        End Function) _
+                .PopulateVectors _
                 .FindNeighbors(k)
+        End Function
+
+        <Extension>
+        Public Iterator Function PopulateVectors(data As GeneralMatrix) As IEnumerable(Of TagVector)
+            For Each d In data.RowVectors.SeqIterator
+                Yield New TagVector With {
+                    .index = d.i,
+                    .vector = CType(d, Vector).ToArray
+                }
+            Next
         End Function
 
         ''' <summary>
