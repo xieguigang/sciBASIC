@@ -140,13 +140,19 @@ Namespace Layouts.SpringForce
         Public MustOverride Function GetPoint(iNode As Node) As LayoutPoint Implements IForceDirected.GetPoint
 
         Public Function GetSpring(edge As Edge) As Spring
+            Dim check As Boolean
+
             SyncLock edgeSprings
-                If Not edgeSprings.ContainsKey(edge.ID) Then
-                    Return createSpring(edge)
-                Else
-                    Return edgeSprings(edge.ID)
-                End If
+                check = edgeSprings.ContainsKey(edge.ID)
             End SyncLock
+
+            If Not check Then
+                Return createSpring(edge)
+            Else
+                SyncLock edgeSprings
+                    Return edgeSprings(edge.ID)
+                End SyncLock
+            End If
         End Function
 
         Private Function createSpring(edge As Edge) As Spring
@@ -186,9 +192,10 @@ Namespace Layouts.SpringForce
             Dim V = GetPoint(edge.V)
             Dim link As New Spring(U, V, length, stiffness)
 
-            Call edgeSprings.Add(edge.ID, link)
-
-            Return edgeSprings(edge.ID)
+            SyncLock edgeSprings
+                Call edgeSprings.Add(edge.ID, link)
+                Return edgeSprings(edge.ID)
+            End SyncLock
         End Function
 
         ''' <summary>
