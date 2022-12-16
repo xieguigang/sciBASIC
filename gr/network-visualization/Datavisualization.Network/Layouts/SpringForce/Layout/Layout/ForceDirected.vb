@@ -113,6 +113,7 @@ Namespace Layouts.SpringForce
         Public Property damping As Double Implements IForceDirected.Damping
         Public Property threshold As Double Implements IForceDirected.Threshold
         Public Property withinThreshold As Boolean Implements IForceDirected.WithinThreshold
+        Public Property parallel As Boolean = False
 
         Protected nodePoints As New Dictionary(Of String, LayoutPoint)
         Protected edgeSprings As New Dictionary(Of String, Spring)
@@ -194,9 +195,19 @@ Namespace Layouts.SpringForce
         ''' 库仑法则，所有的节点之间都存在着斥力
         ''' </summary>
         Protected Sub applyCoulombsLaw()
-            For Each n1 As Node In graph.vertex
-                Call applyCoulombsLaw(n1, GetPoint(n1))
-            Next
+            If parallel Then
+                Call graph.vertex _
+                    .AsParallel _
+                    .Select(Function(n1)
+                                Call applyCoulombsLaw(n1, GetPoint(n1))
+                                Return True
+                            End Function) _
+                    .ToArray
+            Else
+                For Each n1 As Node In graph.vertex
+                    Call applyCoulombsLaw(n1, GetPoint(n1))
+                Next
+            End If
         End Sub
 
         Private Sub applyCoulombsLaw(n1 As Node, partner As LayoutPoint)
@@ -229,26 +240,40 @@ Namespace Layouts.SpringForce
         ''' 弹簧力，所有的通过边连接的节点间都存在着弹簧的牵引力
         ''' </summary>
         Protected Sub applyHookesLaw()
-            For Each e As Edge In graph.graphEdges
-                Dim spring As Spring = GetSpring(e)
-                Dim d As AbstractVector = spring.B.position - spring.A.position
-                Dim displacement As Double = spring.length - d.Magnitude()
-                Dim direction As AbstractVector = d.Normalize()
+            If parallel Then
+                Call graph.graphEdges _
+                    .AsParallel _
+                    .Select(Function(e)
+                                Call applyHookesLaw(e)
+                                Return True
+                            End Function) _
+                    .ToArray
+            Else
+                For Each e As Edge In graph.graphEdges
+                    Call applyHookesLaw(e)
+                Next
+            End If
+        End Sub
 
-                If spring.A.node.pinned AndAlso spring.B.node.pinned Then
-                    spring.A.ApplyForce(direction * 0F)
-                    spring.B.ApplyForce(direction * 0F)
-                ElseIf spring.A.node.pinned Then
-                    spring.A.ApplyForce(direction * 0F)
-                    spring.B.ApplyForce(direction * (spring.K * displacement))
-                ElseIf spring.B.node.pinned Then
-                    spring.A.ApplyForce(direction * (spring.K * displacement * -1.0F))
-                    spring.B.ApplyForce(direction * 0F)
-                Else
-                    spring.A.ApplyForce(direction * (spring.K * displacement * -0.5F))
-                    spring.B.ApplyForce(direction * (spring.K * displacement * 0.5F))
-                End If
-            Next
+        Private Sub applyHookesLaw(e As Edge)
+            Dim spring As Spring = GetSpring(e)
+            Dim d As AbstractVector = spring.B.position - spring.A.position
+            Dim displacement As Double = spring.length - d.Magnitude()
+            Dim direction As AbstractVector = d.Normalize()
+
+            If spring.A.node.pinned AndAlso spring.B.node.pinned Then
+                spring.A.ApplyForce(direction * 0F)
+                spring.B.ApplyForce(direction * 0F)
+            ElseIf spring.A.node.pinned Then
+                spring.A.ApplyForce(direction * 0F)
+                spring.B.ApplyForce(direction * (spring.K * displacement))
+            ElseIf spring.B.node.pinned Then
+                spring.A.ApplyForce(direction * (spring.K * displacement * -1.0F))
+                spring.B.ApplyForce(direction * 0F)
+            Else
+                spring.A.ApplyForce(direction * (spring.K * displacement * -0.5F))
+                spring.B.ApplyForce(direction * (spring.K * displacement * 0.5F))
+            End If
         End Sub
 
         Protected Sub attractToCentre()

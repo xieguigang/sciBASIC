@@ -66,20 +66,29 @@ Namespace Layouts.SpringForce
 
         Public Overrides Function GetPoint(v As Node) As LayoutPoint
             Dim init0 As FDGVector2
+            Dim has As Boolean
 
-            If Not nodePoints.ContainsKey(v.label) Then
+            SyncLock nodePoints
+                has = nodePoints.ContainsKey(v.label)
+            End SyncLock
+
+            If Not has Then
                 init0 = TryCast(v.data.initialPostion, FDGVector2)
 
                 If init0 Is Nothing Then
                     init0 = TryCast(FDGVector2.Random(), FDGVector2)
                 End If
 
-                nodePoints(v.label) = New LayoutPoint(
+                Dim v1 As New LayoutPoint(
                     position:=init0,
                     velocity:=FDGVector2.Zero(),
                     acceleration:=FDGVector2.Zero(),
                     node:=v
                 )
+
+                SyncLock nodePoints
+                    Call nodePoints.Add(v.label, v1)
+                End SyncLock
             End If
 
             Return nodePoints(v.label)
