@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::8c68ddf0bb4e89991a94bbd8809b55aa, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 176
-    '    Code Lines: 112
-    ' Comment Lines: 41
-    '   Blank Lines: 23
-    '     File Size: 6.62 KB
+' Summaries:
 
 
-    '     Module Extensions
-    ' 
-    '         Function: (+2 Overloads) GetScaler, (+2 Overloads) RangeTransform, SymmetricalRange, Union
-    ' 
-    '         Sub: Parser
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 176
+'    Code Lines: 112
+' Comment Lines: 41
+'   Blank Lines: 23
+'     File Size: 6.62 KB
+
+
+'     Module Extensions
+' 
+'         Function: (+2 Overloads) GetScaler, (+2 Overloads) RangeTransform, SymmetricalRange, Union
+' 
+'         Sub: Parser
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -57,6 +57,7 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports r = System.Text.RegularExpressions.Regex
 Imports stdNum = System.Math
@@ -178,7 +179,9 @@ Namespace ComponentModel.Ranges
             Dim percentages#() = vector.Select(scale).ToArray
             Dim length# = [to].Length
             Dim min# = [to].Min
-            Dim maps#() = percentages.Select(Function(x) x * length + min).ToArray
+            ' length * percentage + min
+            Dim maps#() = SIMD.Add.f64_op_add_f64_scalar(SIMD.Multiply.f64_scalar_op_multiply_f64(length, percentages), min)
+
             Return maps
         End Function
 

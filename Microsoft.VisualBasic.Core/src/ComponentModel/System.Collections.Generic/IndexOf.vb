@@ -451,7 +451,9 @@ Namespace ComponentModel.Collection
         ''' </summary>
         ''' <param name="list"></param>
         ''' <param name="filter"></param>
-        ''' <returns></returns>
+        ''' <returns>a new sequence that not have any elements 
+        ''' inside the <paramref name="filter"/> list.
+        ''' </returns>
         Public Shared Operator -(list As T(), filter As Index(Of T)) As T()
             Return list.Where(Function(i) Not i Like filter).ToArray
         End Operator

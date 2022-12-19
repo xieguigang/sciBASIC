@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::5104fdd3a2f74fdbe1790f9834974a1a, sciBASIC#\Data_science\NLP\LDA\LdaGibbsSampler.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 437
-    '    Code Lines: 189
-    ' Comment Lines: 189
-    '   Blank Lines: 59
-    '     File Size: 16.41 KB
+' Summaries:
 
 
-    '     Class LdaGibbsSampler
-    ' 
-    '         Properties: Phi, Theta
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: configure, sampleFullConditional, sampling
-    ' 
-    '         Sub: (+2 Overloads) gibbs, initialState, updateParams
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 437
+'    Code Lines: 189
+' Comment Lines: 189
+'   Blank Lines: 59
+'     File Size: 16.41 KB
+
+
+'     Class LdaGibbsSampler
+' 
+'         Properties: Phi, Theta
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: configure, sampleFullConditional, sampling
+' 
+'         Sub: (+2 Overloads) gibbs, initialState, updateParams
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -227,6 +227,7 @@ Namespace LDA
             Dim lM = documents.Length
             Dim lN As Integer
             Dim topic As Integer
+            Dim t0 = Now
 
             Call println("allocating memory...")
 
@@ -259,6 +260,8 @@ Namespace LDA
                 ' total number of words in document i
                 ndsum(m) = lN
             Next
+
+            Call println($"initial_markov_state[{(Now - t0).FormatTime}]")
         End Sub
 
         ''' <summary>
@@ -276,12 +279,12 @@ Namespace LDA
         ''' </summary>
         ''' <param name="zi"></param>
         ''' <returns></returns>
-        Private Function sampling(zi As Integer) As Integer
+        Private Function Sampling(zi As Integer) As Integer
             ' For m As Integer = 0 To z.Length - 1
             For n As Integer = 0 To z(zi).Length - 1
                 ' (z_i = z[m][n])
                 ' sample from p(z_i|z_-i, w)
-                z(zi)(n) = sampleFullConditional(zi, n)
+                z(zi)(n) = SampleFullConditional(zi, n)
             Next
             ' Next
 
@@ -320,7 +323,7 @@ Namespace LDA
                 ' for all z_i
                 Call (From m As Integer
                       In zIndex
-                      Select sampling(zi:=m)).ToArray
+                      Select Sampling(zi:=m)).ToArray
 
                 If i < BURN_IN AndAlso i Mod THIN_INTERVAL = 0 Then
                     dispcol += 1
@@ -333,7 +336,7 @@ Namespace LDA
                 End If
                 ' get statistics after burn-in
                 If i > BURN_IN AndAlso SAMPLE_LAG > 0 AndAlso i Mod SAMPLE_LAG = 0 Then
-                    Call updateParams()
+                    Call UpdateParams()
                     Call println($"[{i}/{ITERATIONS}] get statistics after burn-in!")
 
                     If i Mod THIN_INTERVAL <> 0 Then
@@ -355,7 +358,7 @@ Namespace LDA
         ''' </summary>
         ''' <param name="m"> document </param>
         ''' <param name="n"> word </param> 
-        Private Function sampleFullConditional(m As Integer, n As Integer) As Integer
+        Private Function SampleFullConditional(m As Integer, n As Integer) As Integer
             ' remove z_i from the count variables
             ' 先将这个词从计数器中抹掉
             Dim topic As Integer = z(m)(n)
@@ -403,7 +406,9 @@ Namespace LDA
         ''' Add to the statistics the values of theta and phi for the current state.
         ''' 更新参数
         ''' </summary>
-        Private Sub updateParams()
+        Private Sub UpdateParams()
+            Dim t0 = Now
+
             For m As Integer = 0 To documents.Length - 1
                 For K As Integer = 0 To Me.K - 1
                     thetasum(m)(K) += (nd(m)(K) + alpha) / (ndsum(m) + Me.K * alpha)
@@ -417,6 +422,7 @@ Namespace LDA
             Next
 
             numstats += 1
+            println($"update_params[{(Now - t0).FormatTime}]")
         End Sub
 
         ''' <summary>
