@@ -68,7 +68,10 @@ Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Parallel.Linq
 Imports Microsoft.VisualBasic.Parallel.Tasks
-Imports TaskBinding = Microsoft.VisualBasic.ComponentModel.Binding(Of System.Action, System.Action(Of Long))
+Imports TaskBinding = Microsoft.VisualBasic.ComponentModel.Binding(Of
+    System.Action(Of Microsoft.VisualBasic.Parallel.Tasks.TaskWorker),
+    System.Action(Of Long)
+)
 
 Namespace Parallel.Threads
 
@@ -104,7 +107,7 @@ Namespace Parallel.Threads
                 Dim n As Integer
 
                 For Each t In threads
-                    If t.Tasks > 0 Then
+                    If t.Tasks > 0 OrElse t.RunningTask Then
                         n += 1
                     End If
                 Next
@@ -192,12 +195,36 @@ Namespace Parallel.Threads
         ''' <param name="task"></param>
         ''' <param name="callback">回调函数里面的参数是任务的执行的时间长度</param>
         ''' <param name="name">the name of current task</param>
-        Public Sub RunTask(task As Action,
+        Public Sub RunTask(task As Action(Of TaskWorker),
                            Optional callback As Action(Of Long) = Nothing,
                            Optional name As String = Nothing)
 
             Dim pends As New TaskBinding With {
                 .Bind = task,
+                .Target = callback,
+                .name = name
+            }
+
+            totalTask += 1
+
+            SyncLock pendings
+                Call pendings.Enqueue(pends)
+            End SyncLock
+        End Sub
+
+        ''' <summary>
+        ''' Push a new task into the parallel task queue.
+        ''' (使用线程池里面的空闲线程来执行任务)
+        ''' </summary>
+        ''' <param name="task"></param>
+        ''' <param name="callback">回调函数里面的参数是任务的执行的时间长度</param>
+        ''' <param name="name">the name of current task</param>
+        Public Sub RunTask(task As Action,
+                           Optional callback As Action(Of Long) = Nothing,
+                           Optional name As String = Nothing)
+
+            Dim pends As New TaskBinding With {
+                .Bind = Sub(worker) task(),
                 .Target = callback,
                 .name = name
             }
@@ -256,7 +283,7 @@ Namespace Parallel.Threads
                     End SyncLock
 
                     If Not task.IsEmpty Then
-                        Dim h As Func(Of Long) = AddressOf New __taskInvoke With {.task = task.Bind}.Run
+                        Dim h As Func(Of TaskWorker, Long) = AddressOf New __taskInvoke With {.task = task.Bind}.Run
                         Dim callback As Action(Of Long) = task.Target
 
                         ' 当线程池里面的线程数量非常多的时候，这个事件会变长，
@@ -271,15 +298,16 @@ Namespace Parallel.Threads
         End Sub
 
         Private Structure __taskInvoke
-            Dim task As Action
+
+            Dim task As Action(Of TaskWorker)
 
             ''' <summary>
             ''' 不清楚是不是因为lambda有问题，所以导致计时器没有正常的工作，所以在这里使用内部类来工作
             ''' </summary>
             ''' <returns></returns>
-            Public Function Run() As Long
+            Public Function Run(worker As TaskWorker) As Long
                 Dim time& = App.NanoTime
-                Call task()
+                Call task(worker)
                 Return App.NanoTime - time
             End Function
         End Structure
@@ -294,12 +322,14 @@ Namespace Parallel.Threads
         Private Function GetAvaliableThread() As TaskQueue(Of Long)
             Dim [short] As TaskQueue(Of Long) = threads.First
 
-            If [short].Tasks = 0 Then
+            If Not [short].RunningTask Then
                 Return [short]
             End If
 
             For Each t As TaskQueue(Of Long) In threads
-                If t.Tasks = 0 OrElse Not t.RunningTask Then
+                If Not t.RunningTask Then
+                    Return t
+                ElseIf t.Tasks = 0 Then
                     Return t
                 ElseIf t.MaximumQueue Then
                     Continue For

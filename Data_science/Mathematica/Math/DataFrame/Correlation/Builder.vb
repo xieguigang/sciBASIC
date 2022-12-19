@@ -111,7 +111,10 @@ Public Module Builder
     ''' <param name="type"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function MatrixBuilder(Of DataSet As INamedValue)(allData As DataSet(), vector As Func(Of DataSet, Double()), eval As Func(Of Double(), Double(), (Double, Double)), type As DataType) As DataMatrix
+    Public Function MatrixBuilder(Of DataSet As INamedValue)(allData As DataSet(),
+                                                             vector As Func(Of DataSet, Double()),
+                                                             eval As Func(Of Double(), Double(), (Double, Double)),
+                                                             type As DataType) As DataMatrix
         Dim keys As String() = allData.Keys
         Dim evalData = allData _
             .SeqIterator _

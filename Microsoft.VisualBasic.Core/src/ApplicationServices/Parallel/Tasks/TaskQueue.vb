@@ -1,79 +1,82 @@
 ﻿#Region "Microsoft.VisualBasic::b5148df1a3c3b3445636ec0d53ba3fb3, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\TaskQueue.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 228
-    '    Code Lines: 134
-    ' Comment Lines: 57
-    '   Blank Lines: 37
-    '     File Size: 8.00 KB
+' Summaries:
 
 
-    '     Interface ITaskHandle
-    ' 
-    '         Function: Run
-    ' 
-    '     Class TaskQueue
-    ' 
-    '         Properties: MaximumQueue, RunningTask, Tasks, uid
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: (+2 Overloads) Join, ToString
-    ' 
-    '         Sub: __calls, __taskQueueEXEC, (+2 Overloads) Dispose, (+2 Overloads) Enqueue
-    '         Structure __task
-    ' 
-    '             Properties: Value
-    ' 
-    '             Sub: Run
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 228
+'    Code Lines: 134
+' Comment Lines: 57
+'   Blank Lines: 37
+'     File Size: 8.00 KB
+
+
+'     Interface ITaskHandle
+' 
+'         Function: Run
+' 
+'     Class TaskQueue
+' 
+'         Properties: MaximumQueue, RunningTask, Tasks, uid
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: (+2 Overloads) Join, ToString
+' 
+'         Sub: __calls, __taskQueueEXEC, (+2 Overloads) Dispose, (+2 Overloads) Enqueue
+'         Structure __task
+' 
+'             Properties: Value
+' 
+'             Sub: Run
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Threading
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 
 Namespace Parallel.Tasks
 
     Public Interface ITaskHandle(Of T)
+
         Function Run() As T
+
     End Interface
 
     ''' <summary>
@@ -87,7 +90,7 @@ Namespace Parallel.Tasks
         ''' 如果直接在这里使用<see cref="App.BufferSize"/>的话，极端的情况下会导致服务器的内存直接被耗尽
         ''' 所以在这里使用一个较小的常数值
         ''' </summary>
-        ReadOnly __tasks As Queue(Of __task)
+        ReadOnly __tasks As Queue(Of TaskWorker)
 
         ''' <summary>
         ''' 返回当前的任务池之中的任务数量
@@ -97,7 +100,7 @@ Namespace Parallel.Tasks
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 SyncLock __tasks
-                    Return __tasks.Count
+                    Return __tasks.Count + If(RunningTask, 1, 0)
                 End SyncLock
             End Get
         End Property
@@ -125,6 +128,7 @@ Namespace Parallel.Tasks
         Dim task_name As String
         Dim queueSize As Integer
         Dim exceptionCallback As Action(Of String, Exception)
+        Dim worker As TaskWorker
 
         ''' <summary>
         ''' 会单独启动一条新的线程来用来执行任务队列
@@ -133,7 +137,7 @@ Namespace Parallel.Tasks
                 Optional queueSize As Integer = 16,
                 Optional exceptionCallback As Action(Of String, Exception) = Nothing)
 
-            __tasks = New Queue(Of __task)(queueSize)
+            __tasks = New Queue(Of TaskWorker)(queueSize)
 
 #If DEBUG Then
             Call $"Using default buffer_size={App.BufferSize}".__DEBUG_ECHO
@@ -146,7 +150,11 @@ Namespace Parallel.Tasks
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"[{uid}{task_name}] {If(RunningTask, "running", "stop")}, queue {Tasks} tasks."
+            If worker.progress >= 0 Then
+                Return $"[{uid}{task_name}] {If(RunningTask, "running", "stop")}, queue {Tasks} tasks. [current '{worker.ToString}' {worker.progress}%]"
+            Else
+                Return $"[{uid}{task_name}] {If(RunningTask, "running", "stop")}, queue {Tasks} tasks."
+            End If
         End Function
 
         ''' <summary>
@@ -156,8 +164,8 @@ Namespace Parallel.Tasks
         ''' </summary>
         ''' <param name="handle"></param>
         ''' <returns>假若本对象已经开始Dispose了，则为完成的任务都会返回Nothing</returns>
-        Public Function Join(handle As Func(Of T)) As T
-            Dim task As New __task With {
+        Public Function Join(handle As Func(Of TaskWorker, T)) As T
+            Dim task As New TaskWorker With {
                 .handle = handle,
                 .receiveDone = New ManualResetEvent(False)
             }
@@ -184,11 +192,11 @@ Namespace Parallel.Tasks
         ''' 这个函数只会任务添加到队列之中，而不会阻塞线程
         ''' </summary>
         ''' <param name="handle"></param>
-        Public Sub Enqueue(handle As Func(Of T),
+        Public Sub Enqueue(handle As Func(Of TaskWorker, T),
                            Optional callback As Action(Of T) = Nothing,
                            Optional name As String = Nothing)
 
-            Dim task As New __task With {
+            Dim task As New TaskWorker With {
                 .handle = handle,
                 .callback = callback,
                 .name = name
@@ -214,10 +222,11 @@ Namespace Parallel.Tasks
         End Sub
 
         Private Sub __calls()
-            Dim task As __task
+            Dim task As TaskWorker
 
             SyncLock __tasks
                 task = __tasks.Dequeue
+                worker = task
             End SyncLock
 
             task_name = If(task.name.StringEmpty, "", $"::{task.name}")
@@ -229,18 +238,29 @@ Namespace Parallel.Tasks
             _RunningTask = False
         End Sub
 
-        Private Structure __task
+        ''' <summary>
+        ''' A task
+        ''' </summary>
+        Public Class TaskWorker
 
             Public callback As Action(Of T)
-            Public handle As Func(Of T)
+            Public handle As Func(Of TaskWorker, T)
             Public receiveDone As ManualResetEvent
             Public name As String
+
+            ''' <summary>
+            ''' [0,100]
+            ''' </summary>
+            ''' <remarks>
+            ''' negative value means no progress report
+            ''' </remarks>
+            Public progress As Double = -1
 
             Public ReadOnly Property Value As T
 
             Sub Run(q As TaskQueue(Of T))
                 Try
-                    _Value = handle()
+                    _Value = handle(Me)
                 Catch ex As Exception
                     Call App.LogException(ex)
                     Call ex.PrintException
@@ -254,7 +274,15 @@ Namespace Parallel.Tasks
                     Call callback(Value)
                 End If
             End Sub
-        End Structure
+
+            Public Overrides Function ToString() As String
+                If progress < 0 Then
+                    Return "<TASK>"
+                Else
+                    Return Program.ProgressText(progress / 100, 16)
+                End If
+            End Function
+        End Class
 
 #Region "IDisposable Support"
         Private disposedValue As Boolean ' To detect redundant calls
@@ -264,7 +292,7 @@ Namespace Parallel.Tasks
             If Not Me.disposedValue Then
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
-                    For Each x As __task In __tasks
+                    For Each x As TaskWorker In __tasks
                         If Not x.receiveDone Is Nothing Then
                             ' 释放所有的线程阻塞
                             Call x.receiveDone.Set()
@@ -294,4 +322,5 @@ Namespace Parallel.Tasks
         End Sub
 #End Region
     End Class
+
 End Namespace
