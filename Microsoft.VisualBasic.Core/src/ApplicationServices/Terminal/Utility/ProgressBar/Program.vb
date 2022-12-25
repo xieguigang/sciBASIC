@@ -77,7 +77,13 @@ Namespace ApplicationServices.Terminal.ProgressBar
         ''' 
         ''' </summary>
         ''' <param name="p">[0,1] represents the progress percentage</param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' a progress bar liked string value, example as:
+        ''' 
+        ''' ```
+        ''' ####.......
+        ''' ```
+        ''' </returns>
         Public Function ProgressText(p As Double,
                                      Optional width As Integer = 16,
                                      Optional fill As Char = "#"c,
