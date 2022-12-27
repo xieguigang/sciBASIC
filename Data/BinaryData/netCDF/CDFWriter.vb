@@ -486,6 +486,13 @@ Public Class CDFWriter : Implements IDisposable
         Call AddVariable(name, CType(vec.ToArray, doubles), [dim], attrs)
     End Sub
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="name"></param>
+    ''' <param name="data"></param>
+    ''' <param name="dim">the data dimension will be added into cdf header automatically if the dimension name is missing</param>
+    ''' <param name="attrs"></param>
     Public Sub AddVariable(name$, data As ICDFDataVector, [dim] As Dimension, Optional attrs As attribute() = Nothing)
         Call AddVariable(name, data, {[dim]}, attrs)
     End Sub

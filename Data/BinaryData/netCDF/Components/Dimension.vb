@@ -56,6 +56,7 @@
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
 
 Namespace Components
 
@@ -85,6 +86,19 @@ Namespace Components
 
         Public Overrides Function ToString() As String
             Return $"{name}(size={size})"
+        End Function
+
+        Public Shared Function FromVector(Of T)(data As CDFData(Of T), Optional dimName As String = Nothing) As Dimension
+            Dim dimSize As Integer = data.Length
+
+            If dimName.StringEmpty Then
+                dimName = $"{App.GetNextUniqueName("sizeof_")}_{GetType(T).Name.ToLower}"
+            End If
+
+            Return New Dimension With {
+                .name = dimName,
+                .size = dimSize
+            }
         End Function
     End Structure
 

@@ -66,6 +66,26 @@ Namespace DataVector
             End Get
         End Property
 
+        Sub New(str As String)
+            buffer = str.ToArray
+        End Sub
+
+        Sub New()
+        End Sub
+
+        ''' <summary>
+        ''' convert the string collection into json string
+        ''' </summary>
+        ''' <param name="strs"></param>
+        Sub New(strs As IEnumerable(Of String))
+            buffer = strs.ToArray.GetJson.ToArray
+        End Sub
+
+        ''' <summary>
+        ''' treat the char data in this vector as the json string, and the load string vector from the json string
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <returns></returns>
         Public Function LoadJSON(Of T)() As T
             Return New String(buffer).LoadJSON(Of T)
         End Function
