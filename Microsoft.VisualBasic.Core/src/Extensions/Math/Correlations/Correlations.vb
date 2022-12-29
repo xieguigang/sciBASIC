@@ -323,7 +323,10 @@ Namespace Math.Correlations
         ''' <summary>
         ''' will regularize the unusual case of complete correlation
         ''' </summary>
-        Const TINY As Double = 1.0E-20
+        ''' <remarks>
+        ''' A this tiny value for avoid divid ZERO
+        ''' </remarks>
+        Public Const TINY As Double = 1.0E-20
 
         ''' <summary>
         '''
@@ -333,6 +336,10 @@ Namespace Math.Correlations
         ''' <param name="prob">p-value in R ``cor.test`` function.</param>
         ''' <param name="prob2"></param>
         ''' <param name="z">fisher's z trasnformation</param>
+        ''' <param name="df">degree of freedom</param>
+        ''' <param name="t">
+        ''' student's t probability
+        ''' </param>
         ''' <returns></returns>
         ''' <remarks>
         ''' checked by Excel
@@ -342,8 +349,10 @@ Namespace Math.Correlations
                                    Optional ByRef prob# = 0,
                                    Optional ByRef prob2# = 0,
                                    Optional ByRef z# = 0,
+                                   Optional ByRef t# = 0,
+                                   Optional ByRef df# = 0,
                                    Optional throwMaxIterError As Boolean = True) As Double
-            Dim t#, df#
+
             Dim pcc As Double = GetPearson(x, y)
             Dim n As Integer = x.Length
 
@@ -358,7 +367,7 @@ Namespace Math.Correlations
             df = n - 2
             t = pcc * stdNum.Sqrt(df / ((1.0 - pcc + TINY) * (1.0 + pcc + TINY)))
 
-            prob = Beta.betai(0.5 * df, 0.5, df / (df + t * t), throwMaxIterError)
+            prob = Beta.betai(0.5 * df, 0.5, df / (df + t ^ 2), throwMaxIterError)
             ' for a large n
             prob2 = Beta.erfcc(stdNum.Abs(z * stdNum.Sqrt(n - 1.0)) / 1.4142136)
 

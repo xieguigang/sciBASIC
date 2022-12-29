@@ -100,7 +100,8 @@ Public Module WebServiceUtils
     ''' <returns></returns>
     Public ReadOnly Property Protocols As IReadOnlyCollection(Of String) = {"http://", "https://", "ftp://", "sftp://"}
 
-    Public Const URLPattern$ = "http(s)?://([\w+?\.\w+])+([a-zA-Z0-9\~\!\@\#\$\%\^\&\*\(\)_\-\=\+\\\/\?\.\:\;\'\,]*)?"
+    Public Const UnixPathPattern$ = "([a-zA-Z0-9\~\!\@\#\$\%\^\&\*\(\)_\-\=\+\\\/\?\.\:\;\'\,]*)?"
+    Public Const URLPattern$ = "http(s)?://([\w+?\.\w+])+" & UnixPathPattern
 
     ''' <summary>
     ''' Determine that is this uri string is a network location?
@@ -113,6 +114,30 @@ Public Module WebServiceUtils
     <Extension>
     Public Function isURL(url As String) As Boolean
         Return url.IndexOfAny({ASCII.LF, ASCII.CR}) = -1 AndAlso url.InStrAny(DirectCast(Protocols, String())) = 1
+    End Function
+
+    ''' <summary>
+    ''' is the file path in the url data or a unix file path?
+    ''' </summary>
+    ''' <param name="url"></param>
+    ''' <param name="includeWindowsFs">
+    ''' and also test for the windows file path pattern?
+    ''' </param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function isFilePath(url As String, Optional includeWindowsFs As Boolean = False) As Boolean
+        If url.IndexOfAny({ASCII.LF, ASCII.CR}) > -1 Then
+            Return False
+        End If
+        If url.IsPattern(UnixPathPattern) Then
+            Return True
+        ElseIf Not includeWindowsFs Then
+            Return False
+        End If
+
+        Const windowsPathPattern As String = "[A-Za-z][:][/\\]+" & UnixPathPattern
+
+        Return url.IsPattern(windowsPathPattern)
     End Function
 
     ''' <summary>

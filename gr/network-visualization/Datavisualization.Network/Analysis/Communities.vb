@@ -59,6 +59,12 @@ Namespace Analysis
 
     Public Class Communities
 
+        ''' <summary>
+        ''' extract community cluster information from the property value 
+        ''' <see cref="NamesOf.REFLECTION_ID_MAPPING_NODETYPE"/>.
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <returns></returns>
         Public Shared Function Community(g As NetworkGraph) As Dictionary(Of String, String)
             Return g.vertex _
                 .ToDictionary(Function(v) v.label,
@@ -68,7 +74,8 @@ Namespace Analysis
         End Function
 
         ''' <summary>
-        ''' just group the node vertex via the data property <see cref="NamesOf.REFLECTION_ID_MAPPING_NODETYPE"/>
+        ''' just group the node vertex via the data property 
+        ''' <see cref="NamesOf.REFLECTION_ID_MAPPING_NODETYPE"/>
         ''' </summary>
         ''' <param name="g"></param>
         ''' <returns></returns>

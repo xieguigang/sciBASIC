@@ -108,6 +108,16 @@ Namespace Drawing2D.HeatMap
             Me.Scale = scale
         End Sub
 
+        ''' <summary>
+        ''' spot data is zero
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        Sub New(x As Integer, y As Integer)
+            Me.X = x
+            Me.Y = y
+        End Sub
+
         Public Overrides Function ToString() As String
             Return $"[{X},{Y} = {Scale.ToString("G4")}]"
         End Function
