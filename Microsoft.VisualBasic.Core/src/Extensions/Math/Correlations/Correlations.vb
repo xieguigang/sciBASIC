@@ -1,67 +1,67 @@
 ﻿#Region "Microsoft.VisualBasic::12b5a8d0054957b19b566a20290ad405, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\Correlations.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 501
-    '    Code Lines: 301
-    ' Comment Lines: 123
-    '   Blank Lines: 77
-    '     File Size: 19.43 KB
+' Summaries:
 
 
-    '     Module Correlations
-    ' 
-    '         Properties: PearsonDefault
-    ' 
-    '         Function: (+2 Overloads) GetPearson, JaccardIndex, JSD, kendallTauBeta, KLD
-    '                   KLDi, rankKendallTauBeta, SW
-    '         Structure Pearson
-    ' 
-    '             Properties: P
-    ' 
-    '             Function: Measure, RankPearson, ToString
-    ' 
-    '         Delegate Function
-    ' 
-    '             Function: CorrelationMatrix, rankingOrder, Spearman
-    ' 
-    '             Sub: throwNotAgree
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 501
+'    Code Lines: 301
+' Comment Lines: 123
+'   Blank Lines: 77
+'     File Size: 19.43 KB
+
+
+'     Module Correlations
+' 
+'         Properties: PearsonDefault
+' 
+'         Function: (+2 Overloads) GetPearson, JaccardIndex, JSD, kendallTauBeta, KLD
+'                   KLDi, rankKendallTauBeta, SW
+'         Structure Pearson
+' 
+'             Properties: P
+' 
+'             Function: Measure, RankPearson, ToString
+' 
+'         Delegate Function
+' 
+'             Function: CorrelationMatrix, rankingOrder, Spearman
+' 
+'             Sub: throwNotAgree
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -100,7 +100,10 @@ Namespace Math.Correlations
         ''' <param name="b"></param>
         ''' <param name="equal"></param>
         ''' <returns></returns>
-        Public Function JaccardIndex(Of T)(a As IEnumerable(Of T), b As IEnumerable(Of T), Optional equal As Func(Of Object, Object, Boolean) = Nothing) As Double
+        Public Function JaccardIndex(Of T)(a As IEnumerable(Of T),
+                                           b As IEnumerable(Of T),
+                                           Optional equal As Func(Of Object, Object, Boolean) = Nothing) As Double
+
             Dim setA As New [Set](a, equal Or objectEquals)
             Dim setB As New [Set](b, equal Or objectEquals)
 
@@ -117,7 +120,8 @@ Namespace Math.Correlations
         End Function
 
         ''' <summary>
-        ''' Sandelin-Wasserman similarity function.(假若所有的元素都是0-1之间的话，结果除以2可以得到相似度)
+        ''' Sandelin-Wasserman similarity function.
+        ''' (假若所有的元素都是0-1之间的话，结果除以2可以得到相似度)
         ''' </summary>
         ''' <param name="x"></param>
         ''' <param name="y"></param>
@@ -254,7 +258,7 @@ Namespace Math.Correlations
         ''' <remarks>
         ''' https://github.com/felipebravom/RankCorrelation
         ''' </remarks>
-        Public Function kendallTauBeta(x As Double(), y As Double()) As Double
+        Private Function kendallTauBeta(x As Double(), y As Double()) As Double
             Dim c As Integer = 0
             Dim d As Integer = 0
             Dim xTies As New Dictionary(Of Double?, HashSet(Of Integer?))()
@@ -360,19 +364,41 @@ Namespace Math.Correlations
                 pcc = 1
             End If
 
-            ' fisher's z trasnformation
-            z = 0.5 * stdNum.Log((1.0 + pcc + TINY) / (1.0 - pcc + TINY))
-
-            ' student's t probability
-            df = n - 2
-            t = pcc * stdNum.Sqrt(df / ((1.0 - pcc + TINY) * (1.0 + pcc + TINY)))
-
-            prob = Beta.betai(0.5 * df, 0.5, df / (df + t ^ 2), throwMaxIterError)
-            ' for a large n
-            prob2 = Beta.erfcc(stdNum.Abs(z * stdNum.Sqrt(n - 1.0)) / 1.4142136)
+            Call TestStats(pcc, n, z, prob, prob2, t, df, throwMaxIterError)
 
             Return pcc
         End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="cor"></param>
+        ''' <param name="n">should be the length of x or y vector</param>
+        ''' <param name="z#"></param>
+        ''' <param name="pvalue#"></param>
+        ''' <param name="prob2#"></param>
+        ''' <param name="t#"></param>
+        ''' <param name="df#"></param>
+        ''' <param name="throwMaxIterError"></param>
+        Public Sub TestStats(cor As Double, n As Integer,
+                             ByRef z#,
+                             ByRef pvalue#,
+                             ByRef prob2#,
+                             ByRef t#,
+                             ByRef df#,
+                             Optional throwMaxIterError As Boolean = True)
+
+            ' fisher's z trasnformation
+            z = 0.5 * stdNum.Log((1.0 + cor + TINY) / (1.0 - cor + TINY))
+
+            ' student's t probability
+            df = n - 2
+            t = cor * stdNum.Sqrt(df / ((1.0 - cor + TINY) * (1.0 + cor + TINY)))
+
+            pvalue = Beta.betai(0.5 * df, 0.5, df / (df + t ^ 2), throwMaxIterError)
+            ' for a large n
+            prob2 = Beta.erfcc(stdNum.Abs(z * stdNum.Sqrt(n - 1.0)) / 1.4142136)
+        End Sub
 
         Public Structure Pearson
             Dim pearson#
@@ -479,70 +505,50 @@ Namespace Math.Correlations
         ''' <returns></returns>
         ''' <remarks>
         ''' https://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient
-        ''' checked!
+        ''' spearman rho checked!
         ''' </remarks>
         '''
-        Public Function Spearman(X#(), Y#()) As Double
-            If X.Length <> Y.Length Then
-                Call throwNotAgree(X, Y)
-            ElseIf X.Length = 1 Then
-                Throw New DataException(UnableMeasures)
-            End If
+        Public Function Spearman(x As Double(), y As Double()) As Double
+            Dim x_rank As Double() = x.sortRanking
+            Dim y_rank As Double() = y.sortRanking
 
-            ' size n
-            Dim n As Integer = X.Length
-            Dim Xx As RankOrder(Of Double)() = rankingOrder(X)
-            Dim Yy As RankOrder(Of Double)() = rankingOrder(Y)
-
-            Dim deltaSum# = Aggregate i As Integer
-                            In n.Sequence
-                            Into Sum((Xx(i).rank - Yy(i).rank) ^ 2)
-
-            Dim spcc = 1 - 6 * deltaSum / (n ^ 3 - n)
-
-            Return spcc
+            Return GetPearson(x_rank, y_rank)
         End Function
 
-        Const UnableMeasures$ = "Samples number just equals 1, the function unable to measure the correlation!!!"
+        <Extension>
+        Private Function sortRanking(x As Double()) As Double()
+            Dim sorted As New Dictionary(Of Double?, HashSet(Of Integer?))()
+            Dim size As Integer = x.Length
+            Dim ranks As Double() = New Double(size - 1) {}
+            Dim v As Double
+            Dim c As Double = 1
 
-        Private Function rankingOrder(samples#()) As RankOrder(Of Double)()
-            ' 从小到大排序
-            Dim dat = (From i As RankOrder(Of Double)
-                       In RankOrder(Of Double).Input(samples)
-                       Order By i.value Ascending).ToArray
-            Dim buf = RankOrder(Of Double).Ranking(dat) _
-                .GroupBy(Function(spcc) spcc.value) _
-                .ToDictionary(Function(x) x.Key,
-                              Function(x)
-                                  Return x.ToArray
-                              End Function)
+            For i As Integer = 0 To size - 1
+                v = x(i)
 
-            Dim rankList As New List(Of RankOrder(Of Double))
-
-            For Each item As RankOrder(Of Double)() In buf.Values
-                If item.Length = 1 Then
-                    Call rankList.Add(item(Scan0))
-                Else
-                    Dim rank As Double = item.Select(Function(x) x.rank).Average
-                    Dim array As RankOrder(Of Double)() = item _
-                        .Select(Function(x)
-                                    Return New RankOrder(Of Double) With {
-                                        .rank = rank,
-                                        .i = x.i,
-                                        .value = x.value
-                                    }
-                                End Function) _
-                        .ToArray
-
-                    Call rankList.AddRange(array)
+                If sorted.ContainsKey(v) = False Then
+                    sorted(v) = New HashSet(Of Integer?)()
                 End If
+
+                Call sorted(v).Add(i)
             Next
 
-            ' 重新按照原有的顺序返回
-            Return (From x As RankOrder(Of Double)
-                    In rankList
-                    Select x
-                    Order By x.i Ascending).ToArray
+            For Each vi As Double In sorted.Keys.OrderByDescending(Function(xi) xi)
+                Dim r As Double = 0
+
+                For Each i As Integer In sorted(vi)
+                    r += c
+                    c += 1
+                Next
+
+                r /= sorted(vi).Count
+
+                For Each i As Integer In sorted(vi)
+                    ranks(i) = r
+                Next
+            Next
+
+            Return ranks
         End Function
 
         ''' <summary>
