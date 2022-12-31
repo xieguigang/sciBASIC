@@ -1,79 +1,80 @@
 ﻿#Region "Microsoft.VisualBasic::7017900d19110e668b6ac7163894abda, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\Models\ListOf.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 108
-    '    Code Lines: 69
-    ' Comment Lines: 22
-    '   Blank Lines: 17
-    '     File Size: 3.58 KB
+' Summaries:
 
 
-    '     Interface IList
-    ' 
-    '         Properties: size
-    ' 
-    '     Class ListOf
-    ' 
-    '         Properties: size
-    ' 
-    '         Function: GenericEnumerator, GetEnumerator
-    ' 
-    '     Class XmlList
-    ' 
-    '         Properties: items, TypeComment
-    ' 
-    '         Function: getCollection, getSize
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 108
+'    Code Lines: 69
+' Comment Lines: 22
+'   Blank Lines: 17
+'     File Size: 3.58 KB
+
+
+'     Interface IList
+' 
+'         Properties: size
+' 
+'     Class ListOf
+' 
+'         Properties: size
+' 
+'         Function: GenericEnumerator, GetEnumerator
+' 
+'     Class XmlList
+' 
+'         Properties: items, TypeComment
+' 
+'         Function: getCollection, getSize
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-#If netcore5 = 0 Then
-Imports System.Web.Script.Serialization
-#Else
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-#End If
-
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.InteropServices
 Imports System.Runtime.Serialization
 Imports System.Xml
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq
+
+#If NETCOREAPP Then
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+#Else
+Imports System.Web.Script.Serialization
+#End If
 
 Namespace Text.Xml.Models
 
@@ -87,6 +88,9 @@ Namespace Text.Xml.Models
     ''' 可以通过<see cref="AsEnumerable"/>拓展函数转换这个列表对象为枚举类型
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
+    ''' 
+    <ClassInterface(ClassInterfaceType.AutoDual)>
+    <ComVisible(True)>
     Public MustInherit Class ListOf(Of T) : Implements Enumeration(Of T)
 
         ''' <summary>
