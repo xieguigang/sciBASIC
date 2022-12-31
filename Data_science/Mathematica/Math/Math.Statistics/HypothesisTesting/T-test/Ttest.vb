@@ -227,7 +227,9 @@ Namespace Hypothesis
         Public Function Tcdf(t#, v#) As Double
             Dim x# = v / (v + t ^ 2)
             Dim inc = SpecialFunctions.RegularizedIncompleteBetaFunction(v / 2, 0.5, x)
-            Dim halfInc As Double = inc / 2
+            Dim halfInc As Double = inc / 2.0
+            ' there is a bug about the precision in small number
+            ' this probelm case the pvalue zero
             Dim cdf# = 1.0 - halfInc
 
             Return cdf

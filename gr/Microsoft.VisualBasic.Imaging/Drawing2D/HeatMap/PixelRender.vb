@@ -1,53 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::64a9cafe5b1cdcc61e56df6500e96c6e, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\PixelRender.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 111
-    '    Code Lines: 78
-    ' Comment Lines: 16
-    '   Blank Lines: 17
-    '     File Size: 4.18 KB
+' Summaries:
 
 
-    '     Class PixelRender
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: RenderRasterImage, ScalePixels
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 111
+'    Code Lines: 78
+' Comment Lines: 16
+'   Blank Lines: 17
+'     File Size: 4.18 KB
+
+
+'     Class PixelRender
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: RenderRasterImage, ScalePixels
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -76,12 +76,16 @@ Namespace Drawing2D.HeatMap
             End If
         End Sub
 
+        Public Function ScalePixels(allPixels As Pixel()) As IEnumerable(Of Pixel)
+            Return ScalePixels(allPixels, indexRange)
+        End Function
+
         ''' <summary>
         ''' scale raw data into <see cref="indexRange"/> for get 
         ''' corresponding color data.
         ''' </summary>
         ''' <returns></returns>
-        Public Iterator Function ScalePixels(allPixels As Pixel()) As IEnumerable(Of Pixel)
+        Public Shared Iterator Function ScalePixels(allPixels As Pixel(), indexRange As DoubleRange) As IEnumerable(Of Pixel)
             Dim range As DoubleRange = allPixels _
                 .Select(Function(p) p.Scale) _
                 .ToArray
@@ -104,61 +108,87 @@ Namespace Drawing2D.HeatMap
         ''' <param name="pixels"></param>
         ''' <param name="size"></param>
         ''' <returns></returns>
-        Public Function RenderRasterImage(Of T As Pixel)(pixels As IEnumerable(Of T), size As Size, Optional fillRect As Boolean = True) As Bitmap
+        ''' <remarks>
+        ''' do heatmap rendering based on the <see cref="HeatMapRaster"/>
+        ''' </remarks>
+        Public Function RenderRasterImage(Of T As Pixel)(pixels As IEnumerable(Of T),
+                                                         size As Size,
+                                                         Optional fillRect As Boolean = True) As Bitmap
+
             Dim raw As New Bitmap(size.Width, size.Height, PixelFormat.Format32bppArgb)
-            Dim level As Integer
-            Dim color As Color
             Dim full As New Rectangle(0, 0, raw.Width, raw.Height)
-            Dim pixel As RectangleF
             Dim g As IGraphics = raw.CreateCanvas2D(directAccess:=True)
             Dim raster As Pixel() = New HeatMapRaster(Of T)() _
-                .SetDatas(pixels.ToList) _
+                .SetDatas(pixels) _
                 .GetRasterPixels _
                 .ToArray
 
             Call g.Clear(defaultColor)
-            '
-            ' 20220525 set pixels is not working on the linux server platform
+
+            ' 20220525 set pixels is not working on the
+            ' linux server platform
             '
             If fillRect Then
-                Dim solids As SolidBrush() = colors _
-                    .Select(Function(c) New SolidBrush(c)) _
-                    .ToArray
-                Dim paint As SolidBrush
-                Dim defaultPaint As New SolidBrush(defaultColor)
-
-                For Each point As Pixel In ScalePixels(raster)
-                    level = CInt(point.Scale)
-
-                    If level <= 0.0 Then
-                        paint = defaultPaint
-                    Else
-                        paint = solids(level)
-                    End If
-
-                    pixel = New RectangleF(point.X, point.Y, 1, 1)
-                    g.FillRectangle(paint, pixel)
-                Next
+                Call FillRectangles(
+                    g:=g,
+                    raster:=raster,
+                    cw:=1,
+                    ch:=1,
+                    colors:=colors,
+                    defaultColor:=defaultColor
+                )
             Else
-                Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(raw, ImageLockMode.WriteOnly)
-                    For Each point As Pixel In ScalePixels(raster)
-                        level = CInt(point.Scale)
-
-                        If level <= 0.0 Then
-                            color = defaultColor
-                        Else
-                            color = colors(level)
-                        End If
-
-                        ' imzXML里面的坐标是从1开始的
-                        ' 需要减一转换为.NET中从零开始的位置
-                        Call buffer.SetPixel(point.X - 1, point.Y - 1, color)
-                    Next
-                End Using
+                Call SetPixels(raw, raster)
             End If
 
             Return raw
         End Function
 
+        Private Sub SetPixels(raw As Bitmap, raster As Pixel())
+            Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(raw, ImageLockMode.WriteOnly)
+                For Each point As Pixel In ScalePixels(raster)
+                    Dim level = CInt(point.Scale)
+                    Dim color As Color
+
+                    If level <= 0.0 Then
+                        color = defaultColor
+                    Else
+                        color = colors(level)
+                    End If
+
+                    ' imzXML里面的坐标是从1开始的
+                    ' 需要减一转换为.NET中从零开始的位置
+                    Call buffer.SetPixel(point.X - 1, point.Y - 1, color)
+                Next
+            End Using
+        End Sub
+
+        Public Shared Sub FillRectangles(Of T As Pixel)(g As IGraphics,
+                                                        raster As T(),
+                                                        colors As Color(),
+                                                        defaultColor As Color,
+                                                        cw As Double,
+                                                        ch As Double)
+            Dim solids As SolidBrush() = colors _
+                .Select(Function(c) New SolidBrush(c)) _
+                .ToArray
+            Dim paint As SolidBrush
+            Dim defaultPaint As New SolidBrush(defaultColor)
+            Dim indexRange As New DoubleRange(0, solids.Length - 1)
+
+            For Each point As Pixel In ScalePixels(raster, indexRange)
+                Dim level = CInt(point.Scale)
+                Dim pixel As RectangleF
+
+                If level <= 0.0 Then
+                    paint = defaultPaint
+                Else
+                    paint = solids(level)
+                End If
+
+                pixel = New RectangleF(point.X, point.Y, cw, ch)
+                g.FillRectangle(paint, pixel)
+            Next
+        End Sub
     End Class
 End Namespace

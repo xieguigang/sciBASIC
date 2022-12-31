@@ -175,6 +175,9 @@ Namespace FileStream
         Public Iterator Function CreateNodesMetaData(g As NetworkGraph, properties$(), is2Dlayout As Boolean) As IEnumerable(Of Node)
             If Not properties.IsNullOrEmpty AndAlso properties.Length = 1 AndAlso properties(Scan0) = "*" Then
                 properties = (From v In g.vertex Select v.data).GetUnionProperties
+                properties = properties _
+                    .Where(Function(name) name <> names.REFLECTION_ID_MAPPING_NODETYPE) _
+                    .ToArray
             End If
 
             For Each n As Graph.Node In g.vertex
@@ -229,6 +232,9 @@ Namespace FileStream
             ' 所以在这里修改为label
             If Not data.ContainsKey("label") Then
                 Call data.Add("label", n.data.label)
+            End If
+            If Not data.ContainsKey(NameOf(NodeData.origID)) Then
+                Call data.Add(NameOf(NodeData.origID), n.data.origID.Replace(","c, "."c).Replace(""""c, "'"c))
             End If
 
             Return New Node With {

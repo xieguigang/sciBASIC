@@ -462,6 +462,12 @@ Namespace Graph
             Return _index.GetEdges(iNode.label)
         End Function
 
+        ''' <summary>
+        ''' removes a target node from graph object via a given <see cref="Node.label"/>.
+        ''' </summary>
+        ''' <param name="labelId"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub RemoveNode(labelId As String)
             Call RemoveNode(GetElementByID(labelId))
         End Sub
@@ -640,7 +646,10 @@ Namespace Graph
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks>
-        ''' 经过克隆之后，节点和边对象已经完全切断了和之前的副本的所有引用关联
+        ''' 1. 经过克隆之后，节点和边对象已经完全切断了和之前的副本的所有引用关联
+        ''' 2. the node id may be have some gap or shift after delete some nodes,
+        ''' this situation will makes the cluster analysis failure, so this graph
+        ''' copy operation will fix this problem
         ''' </remarks>
         Public Function Copy() As NetworkGraph
             Return DirectCast(Clone(), NetworkGraph)

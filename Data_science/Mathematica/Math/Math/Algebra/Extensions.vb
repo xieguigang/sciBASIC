@@ -114,17 +114,26 @@ Namespace LinearAlgebra
         ''' w(i->j) should be equal to w(j->i). In some case i->j has weights while j&lt;-i has no
         ''' intersections, only w(i->j) Is recorded. This Is determinded in code `if(u>0)`. 
         ''' In this way, the undirected graph Is symmetrized by halfing the weight 
-        ''' in code `weights(r, 2) = u/(2.0*ncol - u)/2`.
+        ''' in code ``weights(r, 2) = u/(2.0*ncol - u)/2``.
         ''' </summary>
         ''' <param name="idx"></param>
-        ''' <returns></returns>
-        Public Function jaccard_coeff(idx As Integer()()) As GeneralMatrix
+        ''' <returns>
+        ''' the weight value of this function will affects by the 
+        ''' <paramref name="symmetrize"/> parameters, when 
+        ''' 
+        ''' + symmetrize = TRUE(default), weight in value range ``(0, 0.5]``,
+        ''' + FALSE, weight in value range ``(0, 1]``.
+        ''' </returns>
+        Public Function jaccard_coeff(idx As Integer()(), Optional symmetrize As Boolean = True) As GeneralMatrix
             Dim nrow As Integer = idx.Length
             Dim weights As New List(Of Double())
+            Dim div As Double = If(symmetrize, 2, 1)
 
             For i As Integer = 0 To nrow - 1
                 For Each k As Integer In idx(i)
-                    If k < 0 Then
+                    If k < 0 OrElse i = k Then
+                        ' removes no links
+                        ' or selfloop
                         Continue For
                     End If
 
@@ -134,12 +143,48 @@ Namespace LinearAlgebra
 
                     If u > 0 Then
                         ' symmetrize the graph
-                        weights.Add({i, k, u / (2.0 * nodei.Length - u) / 2})
+                        ' u is the intersect of the i and j
+                        ' so nodei size is greater than u always
+                        ' weight value no negative value
+                        Call weights.Add({i, k, u / (2.0 * nodei.Length - u) / div})
                     End If
                 Next
             Next
 
             Return New NumericMatrix(weights.ToArray)
+        End Function
+
+        Public Function jaccard_coeff_parallel(idx As Integer()(), Optional symmetrize As Boolean = True) As GeneralMatrix
+            Dim nrow As Integer = idx.Length
+            Dim div As Double = If(symmetrize, 2, 1)
+            Dim weightMatrixFold = (From i As Integer
+                                    In Enumerable.Range(0, nrow).AsParallel
+                                    Let node = idx(i).ToArray
+                                    Select node.jaccard_row(i, idx, div).ToArray).ToArray
+
+            Return New NumericMatrix(weightMatrixFold.IteratesALL.ToArray)
+        End Function
+
+        <Extension>
+        Private Iterator Function jaccard_row(nodei As Integer(), i As Integer, idx As Integer()(), div As Double) As IEnumerable(Of Double())
+            For Each k As Integer In idx(i)
+                If k < 0 OrElse i = k Then
+                    ' removes no links
+                    ' or selfloop
+                    Continue For
+                End If
+
+                Dim nodej As Integer() = idx(k)
+                Dim u As Integer = nodei.Intersect(nodej).Count
+
+                If u > 0 Then
+                    ' symmetrize the graph
+                    ' u is the intersect of the i and j
+                    ' so nodei size is greater than u always
+                    ' weight value no negative value
+                    Yield {i, k, u / (2.0 * nodei.Length - u) / div}
+                End If
+            Next
         End Function
     End Module
 End Namespace

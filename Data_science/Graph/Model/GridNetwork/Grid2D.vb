@@ -320,4 +320,23 @@ Public Class Grid(Of T)
         Return Grid(Of Point).Create(data, Function(p) p.X, Function(p) p.Y)
     End Function
 
+    Public Shared Function Blank(dims As Size,
+                                 blankSpot As Func(Of Integer, Integer, T),
+                                 getSpot As Func(Of T, Point),
+                                 Optional steps As SizeF = Nothing) As Grid(Of T)
+
+        Dim cells As New List(Of T)
+
+        If steps.IsEmpty Then
+            steps = New SizeF(1, 1)
+        End If
+
+        For x As Double = 0 To dims.Width Step steps.Width
+            For y As Double = 0 To dims.Height Step steps.Height
+                cells.Add(blankSpot(x, y))
+            Next
+        Next
+
+        Return Create(cells, getSpot)
+    End Function
 End Class
