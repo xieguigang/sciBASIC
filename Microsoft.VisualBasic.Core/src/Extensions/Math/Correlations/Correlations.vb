@@ -517,7 +517,7 @@ Namespace Math.Correlations
 
         <Extension>
         Private Function sortRanking(x As Double()) As Double()
-            Dim sorted As New Dictionary(Of Double?, HashSet(Of Integer?))()
+            Dim sorted As New Dictionary(Of Double, List(Of Integer))()
             Dim size As Integer = x.Length
             Dim ranks As Double() = New Double(size - 1) {}
             Dim v As Double
@@ -527,7 +527,7 @@ Namespace Math.Correlations
                 v = x(i)
 
                 If sorted.ContainsKey(v) = False Then
-                    sorted(v) = New HashSet(Of Integer?)()
+                    sorted(v) = New List(Of Integer)
                 End If
 
                 Call sorted(v).Add(i)
@@ -535,15 +535,16 @@ Namespace Math.Correlations
 
             For Each vi As Double In sorted.Keys.OrderByDescending(Function(xi) xi)
                 Dim r As Double = 0
+                Dim sortSet = sorted(vi)
 
-                For Each i As Integer In sorted(vi)
+                For Each i As Integer In sortSet
                     r += c
                     c += 1
                 Next
 
-                r /= sorted(vi).Count
+                r /= sortSet.Count
 
-                For Each i As Integer In sorted(vi)
+                For Each i As Integer In sortSet
                     ranks(i) = r
                 Next
             Next
