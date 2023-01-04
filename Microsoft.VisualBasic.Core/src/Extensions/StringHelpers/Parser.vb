@@ -202,7 +202,7 @@ Public Module PrimitiveParser
         Next
 
         ' 20220922 handling of 2147483647
-        If num.Length = 10 Then
+        If num.Length = 10 AndAlso Not num.Any(Function(cc) cc = "E"c OrElse cc = "e"c) Then
             If Integer.Parse(num.First) > 2 Then
                 ' is long
                 Return False
