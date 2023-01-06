@@ -68,8 +68,8 @@ Namespace Net.Http
         Public Function Zip(stream As Stream) As MemoryStream
             Dim deflatMs As New MemoryStream()
 
-            Using deflatestream As New DeflateStream(stream, CompressionMode.Compress)
-                deflatestream.CopyTo(deflatMs, 8192)
+            Using deflatestream As New DeflateStream(deflatMs, CompressionMode.Compress, True)
+                Call stream.CopyTo(deflatestream, 8192)
             End Using
 
             Return deflatMs
