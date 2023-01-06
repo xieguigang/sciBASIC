@@ -69,22 +69,28 @@ Namespace Net.Http
             Dim deflatMs As New MemoryStream()
 
             Using deflatestream As New DeflateStream(deflatMs, CompressionMode.Compress, True)
-                ' zlib stream missing the magic header bytes
-                ' add byte to the stream
-                ' based on the options
-                If magicHeader Then
-                    ' pako.js inflate stream data required of the
-                    ' zlib magic bytes, or error will happends
-                    '
-                    ' ERROR_-3: incorrect header check
-                    '
-                    Call deflatMs.Write(New Byte() {120, 218}, Scan0, 2)
-                End If
-
                 Call stream.CopyTo(deflatestream, 8192)
             End Using
 
-            Return deflatMs
+            If magicHeader Then
+                Dim newBuf As New MemoryStream
+
+                '
+                ' zlib stream missing the magic header bytes
+                ' add byte to the stream based on the options
+                '
+                ' pako.js inflate stream data required of the
+                ' zlib magic bytes, or error will happends
+                '
+                ' ERROR_-3: incorrect header check
+                '
+                Call newBuf.Write(New Byte() {120, 218}, Scan0, 2)
+                Call newBuf.Write(deflatMs.ToArray, Scan0, deflatMs.Length)
+
+                Return newBuf
+            Else
+                Return deflatMs
+            End If
         End Function
 
         ''' <summary>
