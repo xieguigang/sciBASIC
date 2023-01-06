@@ -60,6 +60,22 @@ Namespace Net.Http
     Public Module ZipStreamExtensions
 
         ''' <summary>
+        ''' zip stream compression
+        ''' </summary>
+        ''' <param name="stream"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Zip(stream As Stream) As MemoryStream
+            Dim deflatMs As New MemoryStream()
+
+            Using deflatestream As New DeflateStream(stream, CompressionMode.Compress)
+                deflatestream.CopyTo(deflatMs, 8192)
+            End Using
+
+            Return deflatMs
+        End Function
+
+        ''' <summary>
         ''' 进行zlib数据流的zip解压缩
         ''' 
         ''' > https://bbs.csdn.net/topics/392275364
@@ -101,6 +117,7 @@ Namespace Net.Http
         End Function
 
         ''' <summary>
+        ''' Decompress.
         ''' 在这里应该是正确的跳过了deflate压缩算法标识字节的数据流
         ''' </summary>
         ''' <returns></returns>
